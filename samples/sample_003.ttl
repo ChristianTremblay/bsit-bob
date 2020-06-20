@@ -1,0 +1,82 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s4syst: <https://saref.etsi.org/> .
+
+<urn:ex:00001> a s4syst:Connection,
+        <urn:ex:ChilledWaterConnection> ;
+    s4syst:connectsSystemAt <urn:ex:00005> .
+
+<urn:ex:00006> a s4syst:ConnectionPoint,
+        <urn:ex:ChilledWaterOut> ;
+    rdfs:label "CW-Coil-1.cwr" ;
+    s4syst:connectionPointOf <urn:ex:00002> .
+
+<urn:ex:00008> a s4syst:ConnectionPoint,
+        <urn:ex:AirIn> ;
+    rdfs:label "F.ain" ;
+    s4syst:connectionPointOf <urn:ex:00007> .
+
+<urn:ex:00013> a s4syst:ConnectionPoint,
+        <urn:ex:AirOut> ;
+    rdfs:label "Zone-1.ra" ;
+    s4syst:connectionPointOf <urn:ex:00011> .
+
+<urn:ex:00003> a s4syst:ConnectionPoint,
+        <urn:ex:AirIn> ;
+    rdfs:label "CW-Coil-1.ain" ;
+    s4syst:connectedThrough <urn:ex:00010> ;
+    s4syst:connectionPointOf <urn:ex:00002> .
+
+<urn:ex:00004> a s4syst:ConnectionPoint,
+        <urn:ex:AirOut> ;
+    rdfs:label "CW-Coil-1.aout" ;
+    s4syst:connectedThrough <urn:ex:00014> ;
+    s4syst:connectionPointOf <urn:ex:00002> .
+
+<urn:ex:00005> a s4syst:ConnectionPoint,
+        <urn:ex:ChilledWaterIn> ;
+    rdfs:label "CW-Coil-1.cws" ;
+    s4syst:connectedThrough <urn:ex:00001> ;
+    s4syst:connectionPointOf <urn:ex:00002> .
+
+<urn:ex:00007> a s4syst:System,
+        <urn:ex:Fan> ;
+    rdfs:label "F" ;
+    s4syst:connectsAt <urn:ex:00008>,
+        <urn:ex:00009> .
+
+<urn:ex:00009> a s4syst:ConnectionPoint,
+        <urn:ex:AirOut> ;
+    rdfs:label "F.aout" ;
+    s4syst:connectedThrough <urn:ex:00010> ;
+    s4syst:connectionPointOf <urn:ex:00007> .
+
+<urn:ex:00010> a s4syst:Connection,
+        <urn:ex:AirConnection> ;
+    s4syst:connectsSystemAt <urn:ex:00003>,
+        <urn:ex:00009> .
+
+<urn:ex:00011> a s4syst:System,
+        <urn:ex:Zone> ;
+    rdfs:label "Zone-1" ;
+    s4syst:connectsAt <urn:ex:00012>,
+        <urn:ex:00013> .
+
+<urn:ex:00012> a s4syst:ConnectionPoint,
+        <urn:ex:AirIn> ;
+    rdfs:label "Zone-1.sa" ;
+    s4syst:connectedThrough <urn:ex:00014> ;
+    s4syst:connectionPointOf <urn:ex:00011> .
+
+<urn:ex:00014> a s4syst:Connection,
+        <urn:ex:AirConnection> ;
+    s4syst:connectsSystemAt <urn:ex:00004>,
+        <urn:ex:00012> .
+
+<urn:ex:00002> a s4syst:System,
+        <urn:ex:ChilledWaterCoil> ;
+    rdfs:label "CW-Coil-1" ;
+    s4syst:connectsAt <urn:ex:00003>,
+        <urn:ex:00004>,
+        <urn:ex:00005>,
+        <urn:ex:00006> .
+
