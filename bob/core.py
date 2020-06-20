@@ -32,26 +32,26 @@ def register_connection_type(connection_class):
 
 class Node:
     """
-    A node in the graph that optionally has a name.  Instances of this
+    A node in the graph that optionally has a label.  Instances of this
     would be something like blank nodes.
     """
 
     node: URIRef
-    name: str
+    label: str
 
-    def __init__(self, *, name: str = "", **kwargs: Any) -> None:
+    def __init__(self, *, label: str = "", **kwargs: Any) -> None:
         global _next_node
 
         self.node = ex[f"{_next_node:05d}"]
         _next_node += 1
 
-        self.name = name
-        if name:
-            g.add((self.node, RDFS.label, Literal(name)))
+        self.label = label
+        if label:
+            g.add((self.node, RDFS.label, Literal(label)))
 
     def __repr__(self) -> str:
-        name = (" " + self.name) if self.name else ""
-        return f"<{self.__class__.__name__}{name}>"
+        label = (" " + self.label) if self.label else ""
+        return f"<{self.__class__.__label__}{label}>"
 
 
 class ConnectionType:
@@ -348,8 +348,8 @@ class ConnectionPoint(Node):
             raise TypeError(f"{self!r} connection to {other!r}")
 
     def __repr__(self) -> str:
-        name = (" " + self.name) if self.name else ""
-        rslt = f"<{self.__class__.__name__}{name}"
+        label = (" " + self.label) if self.label else ""
+        rslt = f"<{self.__class__.__name__}{label}"
         if self.connectedThrough:
             rslt += " connected through " + repr(self.connectedThrough)
         rslt += ">"
@@ -385,7 +385,7 @@ class System(Node):
                 continue
 
             # build and instance of this connection point
-            var_element = var_annotation(self, name=self.name + "." + var_name)
+            var_element = var_annotation(self, label=self.label + "." + var_name)
             self._connection_points[var_name] = var_element
 
             setattr(self, var_name, var_element)

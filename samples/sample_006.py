@@ -1,10 +1,11 @@
 from typing import Any
 
 from bob import dump
+from bob.air import AirConnection
 from bob.hw import HotWaterCoil, HotWaterValve
 
 
-class SmartHotWaterCoil(HotWaterCoil):
+class HotWaterCoil2(HotWaterCoil):
     """
     This is an example of a hot water coil that contains its valve as a
     subsystem and makes the valve position available as its own connection
@@ -26,7 +27,13 @@ class SmartHotWaterCoil(HotWaterCoil):
 
 
 # make a sample
-sample = SmartHotWaterCoil()
+hot_water_coil = HotWaterCoil2()
+
+cold_side_air_connection = AirConnection(label="Cold Air")
+hot_side_air_connection = AirConnection(label="Hot Air")
+
+cold_side_air_connection >> hot_water_coil
+hot_water_coil >> hot_side_air_connection
 
 # dump the result
 if __name__ == "__main__":

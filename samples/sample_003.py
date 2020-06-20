@@ -8,17 +8,17 @@ c = ChilledWaterConnection()
 
 # there is a chilled water coil (itself a system) that is a subsystem
 # of a larger context
-coil1 = ChilledWaterCoil(name="CW-Coil-1")
+coil1 = ChilledWaterCoil(label="CW-Coil-1")
 
 # the coil gets its chilled water from the connection
 c >> coil1
 
 # there is a fan, and the air output of the fan goes into the coil
-f = Fan(name="F")
+f = Fan(label="F")
 f >> coil1
 
 # there is a zone, and the air output of the coil is goes into the zone
-z = Zone(name="Zone-1")
+z = Zone(label="Zone-1")
 coil1 >> z
 
 # dump the result
