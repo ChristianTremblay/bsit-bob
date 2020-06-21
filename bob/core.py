@@ -5,9 +5,12 @@ Bob the SI-WG Builder
 import sys
 from collections import defaultdict
 
-from typing import Dict, Any, Optional, TextIO
+from typing import Dict, Any, Optional, TextIO, Type, TypeVar
 
 from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS  # type: ignore
+
+# options
+MANDITORY_LABEL = True
 
 # globals
 g = Graph()
@@ -25,8 +28,12 @@ g.namespace_manager.bind("s4syst", URIRef("https://saref.etsi.org/"))
 connection_classes: Dict[str, Any] = {}
 
 
-def register_connection_type(connection_class):
-    connection_classes[connection_class.connection_type] = connection_class
+T = TypeVar("T")
+
+
+def register_connection_type(connection_class: Type[T]) -> Type[T]:
+    connection_type: str = connection_class.connection_type  # type: ignore[attr-defined]
+    connection_classes[connection_type] = connection_class
     return connection_class
 
 
@@ -51,7 +58,7 @@ class Node:
 
     def __repr__(self) -> str:
         label = (" " + self.label) if self.label else ""
-        return f"<{self.__class__.__label__}{label}>"
+        return f"<{self.__class__.__name__}{label}>"
 
 
 class ConnectionType:
@@ -193,7 +200,7 @@ class Connection(Node, ConnectionType):
         else:
             raise TypeError(f"{self!r} connection to {other!r}")
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         xid = id(self)
         if xid < 0:
             xid += 1 << 32
@@ -370,6 +377,12 @@ class System(Node):
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
+
+        if MANDITORY_LABEL:
+            if "label" not in kwargs:
+                raise RuntimeError("no label")
+            if not kwargs["label"]:
+                raise RuntimeError("empty label")
 
         # <self> a System
         g.add((self.node, RDF.type, s4syst.System))

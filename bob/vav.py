@@ -12,10 +12,10 @@ class VAV1(System):
         super().__init__(**kwargs)
 
         # create an air flow station and damper
-        self.air_flow_station = AirFlowStation()
+        self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
         self > self.air_flow_station
 
-        self.damper = Damper()
+        self.damper = Damper(label=self.label + ".damper")
         self > self.damper
 
         # link the air pieces together, the tool notices that the air flow
@@ -37,19 +37,19 @@ class VAV2(System):
         super().__init__(**kwargs)
 
         # create an air flow station
-        self.air_flow_station = AirFlowStation()
+        self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
         self > self.air_flow_station
 
         # create a damper
-        self.damper = Damper()
+        self.damper = Damper(label=self.label + ".damper")
         self > self.damper
 
         # create a hot water coil
-        self.hw_coil = HotWaterCoil()
+        self.hw_coil = HotWaterCoil(label=self.label + ".hw_coil")
         self > self.hw_coil
 
         # create a hot water valve
-        self.hw_valve = HotWaterValve()
+        self.hw_valve = HotWaterValve(label=self.label + ".hw_valve")
         self > self.hw_valve
 
         # link the air pieces together, the tool notices that the air flow
