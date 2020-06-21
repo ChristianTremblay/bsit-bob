@@ -2,32 +2,11 @@ from typing import Any
 
 from bob import dump
 from bob.air import AirConnection
-from bob.hw import HotWaterCoil, HotWaterValve
-
-
-class HotWaterCoil2(HotWaterCoil):
-    """
-    This is an example of a hot water coil that contains its valve as a
-    subsystem and makes the valve position available as its own connection
-    point.
-    """
-
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-
-        # create a hot water valve subsystem
-        self.hw_valve = HotWaterValve()
-        self > self.hw_valve
-
-        # link the hot water pieces together
-        self.hw_valve >> self
-
-        # lift the connection
-        self.hw_valve_pos = self._connection_points["hw_valve_pos"] = self.hw_valve.pos
+from bob.hw import HotWaterCoil2, HotWaterValve
 
 
 # make a sample
-hot_water_coil = HotWaterCoil2()
+hot_water_coil = HotWaterCoil2(label="hot_water_coil")
 
 cold_side_air_connection = AirConnection(label="Cold Air")
 hot_side_air_connection = AirConnection(label="Hot Air")
