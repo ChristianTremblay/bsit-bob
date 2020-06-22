@@ -11,13 +11,6 @@ class Outside(System):
     ea: AirIn  # from exhaust fan going out
 
 
-class MixedAir(System):
-    oa: AirIn  # outside air comes in
-    econ: AirIn  # from economizer damper
-    ra: AirIn  # return air from the zone
-    ma: AirOut  # mixed air to become supply air to the zones
-
-
 # start with outside air
 outside_air = Outside(label="outside_air")
 
@@ -30,12 +23,12 @@ min_oa_damper >> outside_air_afms
 economizer_oa_damper = Damper(label="economizer_oa_damper")
 outside_air.econ >> economizer_oa_damper.ain
 
-mixed_air = MixedAir(label="mixed_air")
-outside_air_afms.aout >> mixed_air.oa
-economizer_oa_damper.aout >> mixed_air.econ
+mixed_air = AirConnection(label="mixed_air")
+outside_air_afms.aout >> mixed_air
+economizer_oa_damper.aout >> mixed_air
 
 mixed_air_damper = Damper(label="mixed_air_damper")
-mixed_air.ma >> mixed_air_damper.ain
+mixed_air_damper.ain << mixed_air
 
 hot_water_coil = HotWaterCoil2(label="hot_water_coil")
 mixed_air_damper >> hot_water_coil
@@ -82,7 +75,7 @@ exhaust_air_damper.aout >> outside_air.ea
 # into the mixed air
 return_air_damper = Damper(label="return_air_damper")
 return_fan.aout.connectedThrough >> return_air_damper  # type: ignore[operator]
-return_air_damper.aout >> mixed_air.ra
+return_air_damper.aout >> mixed_air
 
 # dump the result
 if __name__ == "__main__":
