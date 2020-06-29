@@ -1,3 +1,4 @@
+@prefix brick: <https://brickschema.org/schema/1.1.0/Brick#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s4syst: <https://saref.etsi.org/> .
 
@@ -38,9 +39,11 @@
     s4syst:connectedThrough <urn:ex:00001> ;
     s4syst:connectionPointOf <urn:ex:00002> .
 
-<urn:ex:00007> a s4syst:System,
+<urn:ex:00007> a brick:Fan,
+        s4syst:System,
         <urn:ex:Fan> ;
     rdfs:label "F" ;
+    brick:feeds <urn:ex:00002> ;
     s4syst:connectsAt <urn:ex:00008>,
         <urn:ex:00009> .
 
@@ -55,12 +58,6 @@
     s4syst:connectsSystemAt <urn:ex:00003>,
         <urn:ex:00009> .
 
-<urn:ex:00011> a s4syst:System,
-        <urn:ex:Zone> ;
-    rdfs:label "Zone-1" ;
-    s4syst:connectsAt <urn:ex:00012>,
-        <urn:ex:00013> .
-
 <urn:ex:00012> a s4syst:ConnectionPoint,
         <urn:ex:AirIn> ;
     rdfs:label "Zone-1.sa" ;
@@ -72,9 +69,18 @@
     s4syst:connectsSystemAt <urn:ex:00004>,
         <urn:ex:00012> .
 
-<urn:ex:00002> a s4syst:System,
+<urn:ex:00011> a brick:HVAC_Zone,
+        s4syst:System,
+        <urn:ex:Zone> ;
+    rdfs:label "Zone-1" ;
+    s4syst:connectsAt <urn:ex:00012>,
+        <urn:ex:00013> .
+
+<urn:ex:00002> a brick:Chilled_Water_Coil,
+        s4syst:System,
         <urn:ex:ChilledWaterCoil> ;
     rdfs:label "CW-Coil-1" ;
+    brick:feeds <urn:ex:00011> ;
     s4syst:connectsAt <urn:ex:00003>,
         <urn:ex:00004>,
         <urn:ex:00005>,
