@@ -2,6 +2,7 @@ from .core import ConnectionType, register_connection_type, Connection, In, Out
 
 
 class AnalogSignal(ConnectionType):
+    __brick__: "Point"
     connection_type: str = "AnalogSignal"
 
 
@@ -19,6 +20,7 @@ class AnalogOut(Out, AnalogSignal):
 
 
 class BinarySignal(ConnectionType):
+    __brick__: "Point"
     connection_type: str = "BinarySignal"
 
 

@@ -6,6 +6,7 @@ from .signal import AnalogIn
 
 
 class HotWater(ConnectionType):
+    __brick__: "Hot_Water"
     connection_type: str = "HotWater"
 
 
@@ -23,12 +24,14 @@ class HotWaterOut(Out, HotWater):
 
 
 class HotWaterValve(System):
+    __brick__: "Hot_Water_Valve"
     pos: AnalogIn
     hwin: HotWaterIn
     hwout: HotWaterOut
 
 
 class HotWaterCoil(System):
+    __brick__: "Hot_Water_Coil"
     ain: AirIn
     aout: AirOut
     hws: HotWaterIn

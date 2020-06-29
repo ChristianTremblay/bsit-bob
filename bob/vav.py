@@ -8,6 +8,7 @@ from .signal import AnalogOut
 
 
 class VAV1(System):
+    __brick__: "VAV"
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
@@ -32,6 +33,7 @@ class VAV1(System):
 
 class VAV2(System):
     temp: AnalogOut
+    __brick__: "VAV"
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)

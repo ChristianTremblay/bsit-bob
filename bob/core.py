@@ -24,6 +24,9 @@ g.namespace_manager.bind("ex", URIRef("urn:ex:"))
 s4syst = Namespace("https://saref.etsi.org/")
 g.namespace_manager.bind("s4syst", URIRef("https://saref.etsi.org/"))
 
+brick = Namespace("https://brickschema.org/schema/1.1.0/Brick#")
+g.namespace_manager.bind("brick", URIRef("https://brickschema.org/schema/1.1.0/Brick#"))
+
 # connection type (air, etc) to connection classes
 connection_classes: Dict[str, Any] = {}
 
@@ -387,6 +390,9 @@ class System(Node):
         # <self> a System
         g.add((self.node, RDF.type, s4syst.System))
 
+        # if there is a brick annotation, refer this instance to that class
+        if self.__annotations__.get('__brick__'):
+            g.add((self.node, RDF.type, brick[self.__annotations__['__brick__']]))
         # <self> a something
         g.add((self.node, RDF.type, ex[self.__class__.__name__]))
 
@@ -454,6 +460,9 @@ class System(Node):
         # build the connection
         from_connection_point >> to_connection_point
 
+        # add brick:feeds between the systems
+        g.add((from_system.node, brick.feeds, to_system.node))
+
     def __rshift__(self, other: Any) -> None:
         """self >> other
 
@@ -484,7 +493,9 @@ class System(Node):
     def system_heirarchy(system: "System", subsystem: "System") -> None:
         """Connect the two systems in a heirarchy."""
         g.add((system.node, s4syst.hasSubSystem, subsystem.node))
+        g.add((system.node, brick.hasPart, subsystem.node))
         g.add((subsystem.node, s4syst.subSystemOf, system.node))
+        g.add((subsystem.node, brick.isPartOf, system.node))
 
     def __gt__(self, other: Any) -> None:
         """self > other
