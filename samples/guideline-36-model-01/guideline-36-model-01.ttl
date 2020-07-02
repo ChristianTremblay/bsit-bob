@@ -1,3 +1,4 @@
+@prefix brick: <https://brickschema.org/schema/1.1.0/Brick#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s4syst: <https://saref.etsi.org/> .
 
@@ -26,9 +27,11 @@
     s4syst:connectedThrough <urn:ex:00113> ;
     s4syst:connectionPointOf <urn:ex:00001> .
 
-<urn:ex:00005> a s4syst:System,
+<urn:ex:00005> a brick:Damper,
+        s4syst:System,
         <urn:ex:Damper> ;
     rdfs:label "min_oa_damper" ;
+    brick:feeds <urn:ex:00010> ;
     s4syst:connectsAt <urn:ex:00006>,
         <urn:ex:00007>,
         <urn:ex:00008> .
@@ -84,7 +87,8 @@
     s4syst:connectsSystemAt <urn:ex:00007>,
         <urn:ex:00011> .
 
-<urn:ex:00015> a s4syst:System,
+<urn:ex:00015> a brick:Damper,
+        s4syst:System,
         <urn:ex:Damper> ;
     rdfs:label "economizer_oa_damper" ;
     s4syst:connectsAt <urn:ex:00016>,
@@ -117,9 +121,11 @@
         <urn:ex:AirConnection> ;
     rdfs:label "mixed_air" .
 
-<urn:ex:00021> a s4syst:System,
+<urn:ex:00021> a brick:Damper,
+        s4syst:System,
         <urn:ex:Damper> ;
     rdfs:label "mixed_air_damper" ;
+    brick:feeds <urn:ex:00025> ;
     s4syst:connectsAt <urn:ex:00022>,
         <urn:ex:00023>,
         <urn:ex:00024> .
@@ -141,9 +147,12 @@
     rdfs:label "mixed_air_damper.pos" ;
     s4syst:connectionPointOf <urn:ex:00021> .
 
-<urn:ex:00025> a s4syst:System,
+<urn:ex:00025> a brick:Hot_Water_Coil,
+        s4syst:System,
         <urn:ex:HotWaterCoil2> ;
     rdfs:label "hot_water_coil" ;
+    brick:feeds <urn:ex:00036> ;
+    brick:hasPart <urn:ex:00030> ;
     s4syst:connectsAt <urn:ex:00026>,
         <urn:ex:00027>,
         <urn:ex:00028>,
@@ -173,9 +182,12 @@
     rdfs:label "hot_water_coil.hwr" ;
     s4syst:connectionPointOf <urn:ex:00025> .
 
-<urn:ex:00030> a s4syst:System,
+<urn:ex:00030> a brick:Hot_Water_Valve,
+        s4syst:System,
         <urn:ex:HotWaterValve> ;
     rdfs:label "hot_water_coil.hw_valve" ;
+    brick:feeds <urn:ex:00025> ;
+    brick:isPartOf <urn:ex:00025> ;
     s4syst:connectsAt <urn:ex:00031>,
         <urn:ex:00032>,
         <urn:ex:00033> ;
@@ -207,9 +219,12 @@
     s4syst:connectsSystemAt <urn:ex:00023>,
         <urn:ex:00026> .
 
-<urn:ex:00036> a s4syst:System,
+<urn:ex:00036> a brick:Chilled_Water_Coil,
+        s4syst:System,
         <urn:ex:ChilledWaterCoil2> ;
     rdfs:label "chilled_water_coil" ;
+    brick:feeds <urn:ex:00047> ;
+    brick:hasPart <urn:ex:00041> ;
     s4syst:connectsAt <urn:ex:00037>,
         <urn:ex:00038>,
         <urn:ex:00039>,
@@ -239,9 +254,12 @@
     rdfs:label "chilled_water_coil.cwr" ;
     s4syst:connectionPointOf <urn:ex:00036> .
 
-<urn:ex:00041> a s4syst:System,
+<urn:ex:00041> a brick:Chilled_Water_Valve,
+        s4syst:System,
         <urn:ex:ChilledWaterValve> ;
     rdfs:label "chilled_water_coil.cw_valve" ;
+    brick:feeds <urn:ex:00036> ;
+    brick:isPartOf <urn:ex:00036> ;
     s4syst:connectsAt <urn:ex:00042>,
         <urn:ex:00043>,
         <urn:ex:00044> ;
@@ -273,7 +291,8 @@
     s4syst:connectsSystemAt <urn:ex:00027>,
         <urn:ex:00037> .
 
-<urn:ex:00047> a s4syst:System,
+<urn:ex:00047> a brick:Fan,
+        s4syst:System,
         <urn:ex:Fan> ;
     rdfs:label "supply_fan" ;
     s4syst:connectsAt <urn:ex:00048>,
@@ -296,7 +315,8 @@
     s4syst:connectsSystemAt <urn:ex:00038>,
         <urn:ex:00048> .
 
-<urn:ex:00051> a s4syst:System,
+<urn:ex:00051> a brick:HVAC_Zone,
+        s4syst:System,
         <urn:ex:Zone> ;
     rdfs:label "zone_1" ;
     s4syst:connectsAt <urn:ex:00052>,
@@ -314,9 +334,15 @@
     s4syst:connectedThrough <urn:ex:00104> ;
     s4syst:connectionPointOf <urn:ex:00051> .
 
-<urn:ex:00054> a s4syst:System,
+<urn:ex:00054> a brick:VAV,
+        s4syst:System,
         <urn:ex:VAV2> ;
     rdfs:label "vav_1" ;
+    brick:feeds <urn:ex:00051> ;
+    brick:hasPart <urn:ex:00056>,
+        <urn:ex:00060>,
+        <urn:ex:00064>,
+        <urn:ex:00069> ;
     s4syst:connectsAt <urn:ex:00055> ;
     s4syst:hasSubSystem <urn:ex:00056>,
         <urn:ex:00060>,
@@ -331,6 +357,7 @@
 <urn:ex:00056> a s4syst:System,
         <urn:ex:AirFlowStation> ;
     rdfs:label "vav_1.air_flow_station" ;
+    brick:isPartOf <urn:ex:00054> ;
     s4syst:connectsAt <urn:ex:00057>,
         <urn:ex:00058>,
         <urn:ex:00059> ;
@@ -353,9 +380,12 @@
     rdfs:label "vav_1.air_flow_station.flow" ;
     s4syst:connectionPointOf <urn:ex:00056> .
 
-<urn:ex:00060> a s4syst:System,
+<urn:ex:00060> a brick:Damper,
+        s4syst:System,
         <urn:ex:Damper> ;
     rdfs:label "vav_1.damper" ;
+    brick:feeds <urn:ex:00064> ;
+    brick:isPartOf <urn:ex:00054> ;
     s4syst:connectsAt <urn:ex:00061>,
         <urn:ex:00062>,
         <urn:ex:00063> ;
@@ -378,9 +408,11 @@
     rdfs:label "vav_1.damper.pos" ;
     s4syst:connectionPointOf <urn:ex:00060> .
 
-<urn:ex:00064> a s4syst:System,
+<urn:ex:00064> a brick:Hot_Water_Coil,
+        s4syst:System,
         <urn:ex:HotWaterCoil> ;
     rdfs:label "vav_1.hw_coil" ;
+    brick:isPartOf <urn:ex:00054> ;
     s4syst:connectsAt <urn:ex:00065>,
         <urn:ex:00066>,
         <urn:ex:00067>,
@@ -410,9 +442,12 @@
     rdfs:label "vav_1.hw_coil.hwr" ;
     s4syst:connectionPointOf <urn:ex:00064> .
 
-<urn:ex:00069> a s4syst:System,
+<urn:ex:00069> a brick:Hot_Water_Valve,
+        s4syst:System,
         <urn:ex:HotWaterValve> ;
     rdfs:label "vav_1.hw_valve" ;
+    brick:feeds <urn:ex:00064> ;
+    brick:isPartOf <urn:ex:00054> ;
     s4syst:connectsAt <urn:ex:00070>,
         <urn:ex:00071>,
         <urn:ex:00072> ;
@@ -454,7 +489,8 @@
     s4syst:connectsSystemAt <urn:ex:00052>,
         <urn:ex:00066> .
 
-<urn:ex:00077> a s4syst:System,
+<urn:ex:00077> a brick:HVAC_Zone,
+        s4syst:System,
         <urn:ex:Zone> ;
     rdfs:label "zone_2" ;
     s4syst:connectsAt <urn:ex:00078>,
@@ -472,9 +508,15 @@
     s4syst:connectedThrough <urn:ex:00104> ;
     s4syst:connectionPointOf <urn:ex:00077> .
 
-<urn:ex:00080> a s4syst:System,
+<urn:ex:00080> a brick:VAV,
+        s4syst:System,
         <urn:ex:VAV2> ;
     rdfs:label "vav_2" ;
+    brick:feeds <urn:ex:00077> ;
+    brick:hasPart <urn:ex:00082>,
+        <urn:ex:00086>,
+        <urn:ex:00090>,
+        <urn:ex:00095> ;
     s4syst:connectsAt <urn:ex:00081> ;
     s4syst:hasSubSystem <urn:ex:00082>,
         <urn:ex:00086>,
@@ -489,6 +531,7 @@
 <urn:ex:00082> a s4syst:System,
         <urn:ex:AirFlowStation> ;
     rdfs:label "vav_2.air_flow_station" ;
+    brick:isPartOf <urn:ex:00080> ;
     s4syst:connectsAt <urn:ex:00083>,
         <urn:ex:00084>,
         <urn:ex:00085> ;
@@ -511,9 +554,12 @@
     rdfs:label "vav_2.air_flow_station.flow" ;
     s4syst:connectionPointOf <urn:ex:00082> .
 
-<urn:ex:00086> a s4syst:System,
+<urn:ex:00086> a brick:Damper,
+        s4syst:System,
         <urn:ex:Damper> ;
     rdfs:label "vav_2.damper" ;
+    brick:feeds <urn:ex:00090> ;
+    brick:isPartOf <urn:ex:00080> ;
     s4syst:connectsAt <urn:ex:00087>,
         <urn:ex:00088>,
         <urn:ex:00089> ;
@@ -536,9 +582,11 @@
     rdfs:label "vav_2.damper.pos" ;
     s4syst:connectionPointOf <urn:ex:00086> .
 
-<urn:ex:00090> a s4syst:System,
+<urn:ex:00090> a brick:Hot_Water_Coil,
+        s4syst:System,
         <urn:ex:HotWaterCoil> ;
     rdfs:label "vav_2.hw_coil" ;
+    brick:isPartOf <urn:ex:00080> ;
     s4syst:connectsAt <urn:ex:00091>,
         <urn:ex:00092>,
         <urn:ex:00093>,
@@ -568,9 +616,12 @@
     rdfs:label "vav_2.hw_coil.hwr" ;
     s4syst:connectionPointOf <urn:ex:00090> .
 
-<urn:ex:00095> a s4syst:System,
+<urn:ex:00095> a brick:Hot_Water_Valve,
+        s4syst:System,
         <urn:ex:HotWaterValve> ;
     rdfs:label "vav_2.hw_valve" ;
+    brick:feeds <urn:ex:00090> ;
+    brick:isPartOf <urn:ex:00080> ;
     s4syst:connectsAt <urn:ex:00096>,
         <urn:ex:00097>,
         <urn:ex:00098> ;
@@ -626,9 +677,11 @@
         <urn:ex:00079>,
         <urn:ex:00106> .
 
-<urn:ex:00105> a s4syst:System,
+<urn:ex:00105> a brick:Fan,
+        s4syst:System,
         <urn:ex:Fan> ;
     rdfs:label "return_fan" ;
+    brick:feeds <urn:ex:00108> ;
     s4syst:connectsAt <urn:ex:00106>,
         <urn:ex:00107> .
 
@@ -644,7 +697,8 @@
     s4syst:connectedThrough <urn:ex:00112> ;
     s4syst:connectionPointOf <urn:ex:00105> .
 
-<urn:ex:00108> a s4syst:System,
+<urn:ex:00108> a brick:Damper,
+        s4syst:System,
         <urn:ex:Damper> ;
     rdfs:label "exhaust_air_damper" ;
     s4syst:connectsAt <urn:ex:00109>,
@@ -679,7 +733,8 @@
     s4syst:connectsSystemAt <urn:ex:00004>,
         <urn:ex:00110> .
 
-<urn:ex:00114> a s4syst:System,
+<urn:ex:00114> a brick:Damper,
+        s4syst:System,
         <urn:ex:Damper> ;
     rdfs:label "return_air_damper" ;
     s4syst:connectsAt <urn:ex:00115>,
