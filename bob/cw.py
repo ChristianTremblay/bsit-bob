@@ -1,12 +1,18 @@
 from typing import Any
 
-from .core import ConnectionType, register_connection_type, Connection, In, Out, System
-from .air import AirIn, AirOut
+from .core import (
+    ConnectionType,
+    register_connection_type,
+    Connection,
+    Inlet,
+    Outlet,
+    System,
+)
+from .air import AirInlet, AirOutlet
 from .signal import AnalogIn
 
 
 class ChilledWater(ConnectionType):
-    __brick__: "Chilled_Water"
     connection_type: str = "ChilledWater"
 
 
@@ -15,27 +21,25 @@ class ChilledWaterConnection(ChilledWater, Connection):
     pass
 
 
-class ChilledWaterIn(In, ChilledWater):
+class ChilledWaterInlet(Inlet, ChilledWater):
     pass
 
 
-class ChilledWaterOut(Out, ChilledWater):
+class ChilledWaterOutlet(Outlet, ChilledWater):
     pass
 
 
 class ChilledWaterValve(System):
-    __brick__: "Chilled_Water_Valve"
     pos: AnalogIn
-    cwin: ChilledWaterIn
-    cwout: ChilledWaterOut
+    cwin: ChilledWaterInlet
+    cwout: ChilledWaterOutlet
 
 
 class ChilledWaterCoil(System):
-    __brick__: "Chilled_Water_Coil"
-    ain: AirIn
-    aout: AirOut
-    cws: ChilledWaterIn
-    cwr: ChilledWaterOut
+    ain: AirInlet
+    aout: AirOutlet
+    cws: ChilledWaterInlet
+    cwr: ChilledWaterOutlet
 
 
 class ChilledWaterCoil2(ChilledWaterCoil):

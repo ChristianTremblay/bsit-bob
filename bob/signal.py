@@ -1,8 +1,7 @@
-from .core import ConnectionType, register_connection_type, Connection, In, Out
+from .core import ConnectionType, register_connection_type, Connection, Inlet, Outlet
 
 
 class AnalogSignal(ConnectionType):
-    __brick__: "Point"
     connection_type: str = "AnalogSignal"
 
 
@@ -11,16 +10,15 @@ class AnalogSignalConnection(AnalogSignal, Connection):
     pass
 
 
-class AnalogIn(In, AnalogSignal):
+class AnalogIn(Inlet, AnalogSignal):
     pass
 
 
-class AnalogOut(Out, AnalogSignal):
+class AnalogOut(Outlet, AnalogSignal):
     pass
 
 
 class BinarySignal(ConnectionType):
-    __brick__: "Point"
     connection_type: str = "BinarySignal"
 
 
@@ -29,9 +27,9 @@ class BinarySignalConnection(BinarySignal, Connection):
     pass
 
 
-class BinaryIn(In, BinarySignal):
+class BinaryIn(Inlet, BinarySignal):
     pass
 
 
-class BinaryOut(Out, BinarySignal):
+class BinaryOut(Outlet, BinarySignal):
     pass

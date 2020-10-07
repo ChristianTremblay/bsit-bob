@@ -1,14 +1,14 @@
 from bob.core import System, dump
-from bob.air import AirConnection, AirIn, AirOut, Damper, Fan, AirFlowStation, Zone
+from bob.air import AirConnection, AirInlet, AirOutlet, Damper, Fan, AirFlowStation, Zone
 from bob.cw import ChilledWaterCoil2
 from bob.hw import HotWaterCoil2
 from bob.vav import VAV2
 
 
 class Outside(System):
-    oa: AirOut  # outside air goes in someplace
-    econ: AirOut  # outside air going into the economizer
-    ea: AirIn  # from exhaust fan going out
+    oa: AirOutlet  # outside air goes in someplace
+    econ: AirOutlet  # outside air going into the economizer
+    ea: AirInlet  # from exhaust fan going out
 
 
 # start with outside air

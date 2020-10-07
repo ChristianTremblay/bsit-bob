@@ -1,12 +1,18 @@
 from typing import Any
 
-from .core import ConnectionType, register_connection_type, Connection, In, Out, System
-from .air import AirIn, AirOut
+from .core import (
+    ConnectionType,
+    register_connection_type,
+    Connection,
+    Inlet,
+    Outlet,
+    System,
+)
+from .air import AirInlet, AirOutlet
 from .signal import AnalogIn
 
 
 class HotWater(ConnectionType):
-    __brick__: "Hot_Water"
     connection_type: str = "HotWater"
 
 
@@ -15,27 +21,25 @@ class HotWaterConnection(HotWater, Connection):
     pass
 
 
-class HotWaterIn(In, HotWater):
+class HotWaterInlet(Inlet, HotWater):
     pass
 
 
-class HotWaterOut(Out, HotWater):
+class HotWaterOutlet(Outlet, HotWater):
     pass
 
 
 class HotWaterValve(System):
-    __brick__: "Hot_Water_Valve"
     pos: AnalogIn
-    hwin: HotWaterIn
-    hwout: HotWaterOut
+    hwin: HotWaterInlet
+    hwout: HotWaterOutlet
 
 
 class HotWaterCoil(System):
-    __brick__: "Hot_Water_Coil"
-    ain: AirIn
-    aout: AirOut
-    hws: HotWaterIn
-    hwr: HotWaterOut
+    ain: AirInlet
+    aout: AirOutlet
+    hws: HotWaterInlet
+    hwr: HotWaterOutlet
 
 
 class HotWaterCoil2(HotWaterCoil):

@@ -1,8 +1,6 @@
-from typing import Any
-
 from bob import dump
 from bob.air import AirConnection
-from bob.hw import HotWaterCoil2, HotWaterValve
+from bob.hw import HotWaterCoil2
 
 
 # make a sample

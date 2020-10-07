@@ -24,8 +24,8 @@ g.namespace_manager.bind("ex", URIRef("urn:ex:"))
 s4syst = Namespace("https://saref.etsi.org/")
 g.namespace_manager.bind("s4syst", URIRef("https://saref.etsi.org/"))
 
-brick = Namespace("https://brickschema.org/schema/1.1.0/Brick#")
-g.namespace_manager.bind("brick", URIRef("https://brickschema.org/schema/1.1.0/Brick#"))
+# brick = Namespace("https://brickschema.org/schema/1.1.0/Brick#")
+# g.namespace_manager.bind("brick", URIRef("https://brickschema.org/schema/1.1.0/Brick#"))
 
 # connection type (air, etc) to connection classes
 connection_classes: Dict[str, Any] = {}
@@ -91,7 +91,7 @@ class Connection(Node, ConnectionType):
                 raise RuntimeError(f"already connected: {other!r}")
 
             # check the connection direction
-            if isinstance(other, Out):
+            if isinstance(other, Outlet):
                 raise TypeError("connection point direction")
 
             other_connection_type = getattr(other, "connection_type", "")
@@ -113,7 +113,7 @@ class Connection(Node, ConnectionType):
                 connection_point,
             ) in other._connection_points.items():
                 # check the connection direction
-                if isinstance(connection_point, Out):
+                if isinstance(connection_point, Outlet):
                     continue
 
                 connection_point_type = getattr(connection_point, "connection_type", "")
@@ -151,7 +151,7 @@ class Connection(Node, ConnectionType):
                 raise RuntimeError(f"already connected: {other!r}")
 
             # check the connection direction
-            if isinstance(other, In):
+            if isinstance(other, Inlet):
                 raise TypeError("connection point direction")
 
             other_connection_type = getattr(other, "connection_type", "")
@@ -173,7 +173,7 @@ class Connection(Node, ConnectionType):
                 connection_point,
             ) in other._connection_points.items():
                 # check the connection direction
-                if isinstance(connection_point, In):
+                if isinstance(connection_point, Inlet):
                     continue
 
                 connection_point_type = getattr(connection_point, "connection_type", "")
@@ -243,7 +243,7 @@ class ConnectionPoint(Node):
 
         if self.connectedThrough:
             raise RuntimeError(f"already connected: {self!r}")
-        if isinstance(self, In):
+        if isinstance(self, Inlet):
             raise RuntimeError("connection point direction")
 
         self_connection_type: str
@@ -259,7 +259,7 @@ class ConnectionPoint(Node):
             self.connectedThrough = other
 
         elif isinstance(other, ConnectionPoint):
-            if isinstance(other, Out):
+            if isinstance(other, Outlet):
                 raise RuntimeError("connection point direction")
 
             self_connection_type = getattr(self, "connection_type", "")
@@ -306,7 +306,7 @@ class ConnectionPoint(Node):
 
         if self.connectedThrough:
             raise RuntimeError(f"already connected: {self!r}")
-        if isinstance(self, Out):
+        if isinstance(self, Outlet):
             raise RuntimeError("connection point direction")
 
         if isinstance(other, Connection):
@@ -319,7 +319,7 @@ class ConnectionPoint(Node):
             self.connectedThrough = other
 
         elif isinstance(other, ConnectionPoint):
-            if isinstance(other, In):
+            if isinstance(other, Inlet):
                 raise RuntimeError("connection point direction")
 
             self_connection_type = getattr(self, "connection_type", "")
@@ -367,11 +367,11 @@ class ConnectionPoint(Node):
         return rslt
 
 
-class In(ConnectionPoint):
+class Inlet(ConnectionPoint):
     pass
 
 
-class Out(ConnectionPoint):
+class Outlet(ConnectionPoint):
     pass
 
 
@@ -391,8 +391,9 @@ class System(Node):
         g.add((self.node, RDF.type, s4syst.System))
 
         # if there is a brick annotation, refer this instance to that class
-        if self.__annotations__.get('__brick__'):
-            g.add((self.node, RDF.type, brick[self.__annotations__['__brick__']]))
+        # if self.__annotations__.get("__brick__"):
+        #     g.add((self.node, RDF.type, brick[self.__annotations__["__brick__"]]))
+
         # <self> a something
         g.add((self.node, RDF.type, ex[self.__class__.__name__]))
 
@@ -403,7 +404,7 @@ class System(Node):
             if not issubclass(var_annotation, ConnectionPoint):
                 continue
 
-            # build and instance of this connection point
+            # build an instance of this connection point
             var_element = var_annotation(self, label=self.label + "." + var_name)
             self._connection_points[var_name] = var_element
 
@@ -416,8 +417,9 @@ class System(Node):
         for connection_point in from_system._connection_points.values():
             if connection_point.connectedThrough:
                 continue
-            if not isinstance(connection_point, Out):
+            if not isinstance(connection_point, Outlet):
                 continue
+
             connection_type = getattr(connection_point, "connection_type", "")
             from_out[connection_type].append(connection_point)
 
@@ -433,7 +435,7 @@ class System(Node):
         for connection_point in to_system._connection_points.values():
             if connection_point.connectedThrough:
                 continue
-            if not isinstance(connection_point, In):
+            if not isinstance(connection_point, Inlet):
                 continue
             connection_type = getattr(connection_point, "connection_type", "")
             to_in[connection_type].append(connection_point)
@@ -461,7 +463,7 @@ class System(Node):
         from_connection_point >> to_connection_point
 
         # add brick:feeds between the systems
-        g.add((from_system.node, brick.feeds, to_system.node))
+        # g.add((from_system.node, brick.feeds, to_system.node))
 
     def __rshift__(self, other: Any) -> None:
         """self >> other
@@ -493,9 +495,9 @@ class System(Node):
     def system_heirarchy(system: "System", subsystem: "System") -> None:
         """Connect the two systems in a heirarchy."""
         g.add((system.node, s4syst.hasSubSystem, subsystem.node))
-        g.add((system.node, brick.hasPart, subsystem.node))
+        # g.add((system.node, brick.hasPart, subsystem.node))
         g.add((subsystem.node, s4syst.subSystemOf, system.node))
-        g.add((subsystem.node, brick.isPartOf, system.node))
+        # g.add((subsystem.node, brick.isPartOf, system.node))
 
     def __gt__(self, other: Any) -> None:
         """self > other
