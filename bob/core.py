@@ -23,7 +23,9 @@ ex = Namespace("urn:ex/")
 g.namespace_manager.bind("ex", URIRef("urn:ex/"))
 
 c223 = Namespace("http://data.ashrae.org/standard223/1.0/model/core#")
-g.namespace_manager.bind("c223", URIRef("http://data.ashrae.org/standard223/1.0/model/core#"))
+g.namespace_manager.bind(
+    "c223", URIRef("http://data.ashrae.org/standard223/1.0/model/core#")
+)
 
 qudt = Namespace("http://qudt.org/schema/qudt/")
 g.namespace_manager.bind("qudt", URIRef("http://qudt.org/schema/qudt/"))
@@ -80,6 +82,8 @@ class NodeMetaclass(type):
         # pick up the attributes defined by annotations
         annotations = attributedict.get("__annotations__", {})
         for attr, attr_type in annotations.items():
+            if attr.startswith("_"):
+                continue
             if attr in ("node", "node_type", "label"):
                 continue
 
@@ -241,7 +245,18 @@ class Node(metaclass=NodeMetaclass):
 
     def __repr__(self) -> str:
         label = (" " + self.label) if self.label else ""
-        return f"<{self.__class__.__name__}{label}>"
+        return f"<{self.__class__.__name__}{label} at {self.node}>"
+
+    def __iand__(self, value: "Property") -> "Node":
+        """Add a property to a node."""
+        if not isinstance(value, Property):
+            value = Property(value)
+
+        # link the two together
+        g.add((self.node, ex.hasProperty, value.node))
+        g.add((value.node, ex.isPropertyOf, self.node))
+
+        return self
 
 
 class ConnectionType:
@@ -529,14 +544,14 @@ class ConnectionPoint(Node):
         else:
             raise TypeError(f"{self!r} connection to {other!r}")
 
-    def __repr__(self) -> str:
-        label = (" " + self.label) if self.label else ""
-        rslt = f"<{self.__class__.__name__}{label}"
-        if self.connectedThrough:
-            rslt += " connected through " + repr(self.connectedThrough)
-        rslt += ">"
-
-        return rslt
+    # def __repr__(self) -> str:
+    #     label = (" " + self.label) if self.label else ""
+    #     rslt = f"<{self.__class__.__name__}{label}"
+    #     if self.connectedThrough:
+    #         rslt += " connected through " + repr(self.connectedThrough)
+    #     rslt += ">"
+    #
+    #     return rslt
 
 
 class Inlet(ConnectionPoint):
@@ -690,11 +705,23 @@ class System(Node):
         self.system_heirarchy(other, self)
 
 
-class Device(System):
+class Value(Node):
     """
     """
 
-    node_type: URIRef = ex.Device
+    node_type: URIRef = ex.Value
+
+    hasTimestamp: Literal
+    hasValue: Literal
+    hasUnits: URIRef
+
+    def __init__(self, arg: Any = None, **kwargs: Any):
+        if arg is not None:
+            if "hasValue" in kwargs:
+                raise RuntimeError("initialization conflict")
+            kwargs["hasValue"] = arg
+
+        super().__init__(**kwargs)
 
 
 class Property(Node):
@@ -702,13 +729,37 @@ class Property(Node):
     """
 
     node_type: URIRef = ex.Property
+    hasValue: Value
+    hasQuantityKind: URIRef
+
+    def __init__(self, arg: Any = None, **kwargs: Any):
+        if arg is not None:
+            if "hasValue" in kwargs:
+                raise RuntimeError("initialization conflict")
+            kwargs["hasValue"] = arg
+
+        super().__init__(**kwargs)
+
+        # link the two together
+        if self.hasValue:
+            g.add((self.node, ex.hasValue, self.hasValue.node))
+            g.add((self.hasValue.node, ex.isValueOf, self.node))
 
 
-class Value(Node):
+class QuantifiableProperty(Property):
     """
     """
 
-    node_type: URIRef = ex.Value
+    node_type: URIRef = ex.QuantifiableProperty
+    hasQuantityKind: URIRef
+    hasUnits: URIRef
+
+
+class Device(System):
+    """
+    """
+
+    node_type: URIRef = ex.Device
 
 
 def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:

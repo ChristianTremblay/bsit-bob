@@ -8,7 +8,18 @@ __version__ = "0.0.5"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
-from .core import Node, ConnectionType, Connection, Inlet, Outlet, System, Device, dump
+from .core import (
+    Node,
+    ConnectionType,
+    Connection,
+    Inlet,
+    Outlet,
+    System,
+    Device,
+    Property,
+    Value,
+    dump,
+)
 
 from . import air
 from . import cw
