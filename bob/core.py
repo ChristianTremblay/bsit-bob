@@ -3,11 +3,12 @@ Bob the SI-WG Builder
 """
 
 import sys
+import inspect
 from collections import defaultdict
 
-from typing import Dict, Any, Optional, TextIO, Type, TypeVar
+from typing import Dict, Any, List, TextIO, Tuple, Type, TypeVar, Union, cast
 
-from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS  # type: ignore
+from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, XSD  # type: ignore
 
 # options
 MANDITORY_LABEL = True
@@ -18,8 +19,17 @@ document = ""
 _next_node = 1
 
 # namespaces
-ex = Namespace("urn:ex:")
-g.namespace_manager.bind("ex", URIRef("urn:ex:"))
+ex = Namespace("urn:ex/")
+g.namespace_manager.bind("ex", URIRef("urn:ex/"))
+
+c223 = Namespace("http://data.ashrae.org/standard223/1.0/model/core#")
+g.namespace_manager.bind("c223", URIRef("http://data.ashrae.org/standard223/1.0/model/core#"))
+
+qudt = Namespace("http://qudt.org/schema/qudt/")
+g.namespace_manager.bind("qudt", URIRef("http://qudt.org/schema/qudt/"))
+
+quantitykind = Namespace("http://qudt.org/vocab/quantitykind/")
+g.namespace_manager.bind("quantitykind", URIRef("http://qudt.org/vocab/quantitykind/"))
 
 s4syst = Namespace("https://saref.etsi.org/")
 g.namespace_manager.bind("s4syst", URIRef("https://saref.etsi.org/"))
@@ -33,6 +43,10 @@ connection_classes: Dict[str, Any] = {}
 
 T = TypeVar("T")
 
+# cleanup annotation references, i.e. "System" to _nodes[attr] = System
+NodeMap = Dict[str, Union[type, str]]
+_annotation_forwards: Dict[str, List[Tuple[NodeMap, str]]] = defaultdict(list)
+
 
 def register_connection_type(connection_class: Type[T]) -> Type[T]:
     connection_type: str = connection_class.connection_type  # type: ignore[attr-defined]
@@ -40,7 +54,99 @@ def register_connection_type(connection_class: Type[T]) -> Type[T]:
     return connection_class
 
 
-class Node:
+class NodeMetaclass(type):
+    def __new__(
+        cls: Any,
+        clsname: str,
+        superclasses: Tuple[type, ...],
+        attributedict: Dict[str, Any],
+    ) -> "NodeMetaclass":
+        # do this for every subclass of Node
+
+        # start with empty maps
+        _nodes: NodeMap = {}
+        _datatypes: Dict[str, Literal] = {}
+        _inits: Dict[str, Any] = {}
+
+        # include the maps this class is inheriting
+        for supercls in reversed(superclasses):
+            if hasattr(supercls, "_nodes"):
+                _nodes.update(supercls._nodes)  # type: ignore[attr-defined]
+            if hasattr(supercls, "_datatypes"):
+                _datatypes.update(supercls._datatypes)  # type: ignore[attr-defined]
+            if hasattr(supercls, "_inits"):
+                _inits.update(supercls._inits)  # type: ignore[attr-defined]
+
+        # pick up the attributes defined by annotations
+        annotations = attributedict.get("__annotations__", {})
+        for attr, attr_type in annotations.items():
+            if attr in ("node", "node_type", "label"):
+                continue
+
+            if isinstance(attr_type, URIRef):
+                if attr_type.startswith(XSD):
+                    _datatypes[attr] = attr_type
+                else:
+                    raise ValueError(f"datatype URI expected for {attr}: {attr_type}")
+            elif inspect.isclass(attr_type):
+                _nodes[attr] = attr_type
+            elif isinstance(attr_type, str):
+                _nodes[attr] = attr_type
+                _annotation_forwards[attr].append((_nodes, attr))
+            else:
+                raise ValueError(f"unknown annotation for {attr}: {attr_type}")
+
+        # look for initializers like hasUnit = QUDT.DEG_F
+        for attr, value in attributedict.items():
+            if attr.startswith("_"):
+                continue
+
+            if attr in _nodes:
+                if isinstance(value, cast(type, _nodes[attr])):
+                    _inits[attr] = value
+                else:
+                    raise TypeError(f"initializing {attr}: {_inits[attr]} expected")
+
+            elif attr in _datatypes:
+                if isinstance(value, Literal):
+                    if value.datatype != _datatypes[attr]:
+                        raise TypeError(
+                            f"initializing {attr}: literal {_datatypes[attr]} expected"
+                        )
+                elif isinstance(value, str):
+                    value = Literal(value, datatype=_datatypes[attr])
+                else:
+                    value = Literal(value)
+                    if value.datatype != _datatypes[attr]:
+                        raise TypeError(
+                            f"initializing {attr}: literal {_datatypes[attr]} expected"
+                        )
+
+            else:
+                continue
+
+            _inits[attr] = value
+
+        # add these special attributes to the class before building it
+        attributedict["_nodes"] = _nodes
+        attributedict["_datatypes"] = _datatypes
+        attributedict["_inits"] = _inits
+
+        # make sure it has a type
+        if "node_type" not in attributedict:
+            attributedict["node_type"] = ex[clsname]
+
+        metaclass = cast(
+            NodeMetaclass,
+            super(NodeMetaclass, cls).__new__(
+                cls, clsname, superclasses, attributedict
+            ),
+        )
+
+        return metaclass
+
+
+class Node(metaclass=NodeMetaclass):
     """
     A node in the graph that optionally has a label.  Instances of this
     would be something like blank nodes.
@@ -59,6 +165,80 @@ class Node:
         if label:
             g.add((self.node, RDFS.label, Literal(label)))
 
+        if hasattr(self, "node_type"):
+            g.add((self.node, RDF.type, self.node_type))
+
+        for attr, attr_type in self._nodes.items():
+            setattr(self, attr, None)
+            if attr in kwargs:
+                setattr(self, attr, kwargs.pop(attr))
+
+        for attr, value in self._inits.items():
+            if attr in kwargs:
+                setattr(self, attr, kwargs.pop(attr))
+            elif inspect.isclass(value):
+                setattr(self, attr, value())
+            else:
+                setattr(self, attr, value)
+
+        for attr, value in kwargs.items():
+            if attr in self._datatypes:
+                setattr(self, attr, value)
+            else:
+                raise TypeError(f"unexpected keyword argument: {attr}")
+
+    def __getattr__(self, attr: str) -> Any:
+        if attr.startswith("_") or (attr not in self._nodes):
+            return object.__getattribute__(self, attr)
+
+        # if this already has a child node, return it or make one
+        attr_value = object.__getattribute__(self, attr)
+        if not attr_value:
+            attr_value = self._nodes[attr]()
+
+        return attr_value
+
+    def __setattr__(self, attr: str, value: Any) -> None:
+        if attr.startswith("_") or (value is None):
+            super().__setattr__(attr, value)
+            return
+
+        # if this is a node, double check the type
+        if attr in self._nodes:
+            # pass the value to the class to build one
+            if not isinstance(value, self._nodes[attr]):
+                value = self._nodes[attr](value)
+
+            # break the reference to the current child node
+            g.remove((self.node, ex[attr], None))
+
+            # add the link
+            if isinstance(value, (URIRef, Literal)):
+                g.add((self.node, ex[attr], value))
+            elif isinstance(value, Node):
+                g.add((self.node, ex[attr], value.node))
+
+        # if this needs some datatype decoration, turn it into a literal
+        if attr in self._datatypes:
+            if isinstance(value, Literal):
+                if value.datatype != self._datatypes[attr]:
+                    raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
+            elif isinstance(value, str):
+                value = Literal(value, datatype=self._datatypes[attr])
+            else:
+                value = Literal(value)
+                if value.datatype != self._datatypes[attr]:
+                    raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
+
+            # remove the current value
+            g.remove((self.node, ex[attr], None))
+
+            # add the literal
+            g.add((self.node, ex[attr], value))
+
+        # carry on
+        super().__setattr__(attr, value)
+
     def __repr__(self) -> str:
         label = (" " + self.label) if self.label else ""
         return f"<{self.__class__.__name__}{label}>"
@@ -74,11 +254,10 @@ class Connection(Node, ConnectionType):
     Generic connection object type, unrestricted.
     """
 
+    node_type: URIRef = s4syst.Connection
+
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-
-        # <self> a Connection
-        g.add((self.node, RDF.type, s4syst.Connection))
 
         if self.connection_type:
             g.add((self.node, RDF.type, ex[self.connection_type + "Connection"]))
@@ -212,20 +391,13 @@ class Connection(Node, ConnectionType):
 
 
 class ConnectionPoint(Node):
-    connectedThrough: Optional[Connection]
+    node_type: URIRef = s4syst.ConnectionPoint
+
+    connectedThrough: Connection
     connectionPointOf: "System"
 
     def __init__(self, system: "System", **kwargs: Any) -> None:
         super().__init__(**kwargs)
-
-        # start out unconnected
-        self.connectedThrough = None
-
-        # <self> a ConnectionPoint
-        g.add((self.node, RDF.type, s4syst.ConnectionPoint))
-
-        # <self> a something
-        g.add((self.node, RDF.type, ex[self.__class__.__name__]))
 
         # <self> connection point of <system>
         g.add((self.node, s4syst.connectionPointOf, system.node))
@@ -516,6 +688,27 @@ class System(Node):
         """
 
         self.system_heirarchy(other, self)
+
+
+class Device(System):
+    """
+    """
+
+    node_type: URIRef = ex.Device
+
+
+class Property(Node):
+    """
+    """
+
+    node_type: URIRef = ex.Property
+
+
+class Value(Node):
+    """
+    """
+
+    node_type: URIRef = ex.Value
 
 
 def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:
