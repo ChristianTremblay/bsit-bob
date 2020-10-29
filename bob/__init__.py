@@ -18,6 +18,7 @@ from .core import (
     Device,
     Part,
     Property,
+    QuantifiableProperty,
     Value,
     dump,
     clear,

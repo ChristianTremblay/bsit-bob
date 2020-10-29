@@ -156,6 +156,11 @@ class Node(metaclass=NodeMetaclass):
     would be something like blank nodes.
     """
 
+    # assigned by NodeMetaclass
+    _nodes: NodeMap
+    _datatypes: Dict[str, Literal]
+    _inits: Dict[str, Any]
+
     node: URIRef
     node_type: URIRef
     label: str
@@ -211,9 +216,13 @@ class Node(metaclass=NodeMetaclass):
 
         # if this is a node, double check the type
         if attr in self._nodes:
+            if isinstance(self._nodes[attr], str):
+                raise NotImplementedError("get the class for {self._nodes[attr]}")
+            node_class = cast(type, self._nodes[attr])
+
             # pass the value to the class to build one
-            if not isinstance(value, self._nodes[attr]):
-                value = self._nodes[attr](value)
+            if not isinstance(value, node_class):
+                value = node_class(value)
 
             # break the reference to the current child node
             # g.remove((self.node, ex[attr], None))
@@ -249,7 +258,7 @@ class Node(metaclass=NodeMetaclass):
         label = (" " + self.label) if self.label else ""
         return f"<{self.__class__.__name__}{label} at {self.node}>"
 
-    def __iand__(self, value: "Property") -> "Node":
+    def __iand__(self, value: "Property") -> None:
         """Add a property to a node."""
         if not isinstance(value, Property):
             value = Property(value)
@@ -257,8 +266,6 @@ class Node(metaclass=NodeMetaclass):
         # link the two together
         g.add((self.node, ex.hasProperty, value.node))
         g.add((value.node, ex.isPropertyOf, self.node))
-
-        return self
 
 
 class ConnectionType:
@@ -679,7 +686,7 @@ class System(Node):
         g.add((subsystem.node, s4syst.subSystemOf, system.node))
         # g.add((subsystem.node, brick.isPartOf, system.node))
 
-    def __gt__(self, other: Any) -> None:
+    def __gt__(self, other: "System") -> "System":
         """self > other
 
         Build a subsystem heirarchy, the other system is a subsystem of
@@ -687,8 +694,9 @@ class System(Node):
         """
 
         self.system_heirarchy(self, other)
+        return self
 
-    def __lt__(self, other: Any) -> None:
+    def __lt__(self, other: "System") -> "System":
         """self < other
 
         Build a subsystem heirarchy, this is a subsystem of some other
@@ -696,6 +704,7 @@ class System(Node):
         """
 
         self.system_heirarchy(other, self)
+        return other
 
 
 class Value(Node):
