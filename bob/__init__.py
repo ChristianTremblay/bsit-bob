@@ -16,9 +16,11 @@ from .core import (
     Outlet,
     System,
     Device,
+    Part,
     Property,
     Value,
     dump,
+    clear,
 )
 
 from . import air

@@ -157,6 +157,7 @@ class Node(metaclass=NodeMetaclass):
     """
 
     node: URIRef
+    node_type: URIRef
     label: str
 
     def __init__(self, *, label: str = "", **kwargs: Any) -> None:
@@ -173,7 +174,7 @@ class Node(metaclass=NodeMetaclass):
             g.add((self.node, RDF.type, self.node_type))
 
         for attr, attr_type in self._nodes.items():
-            setattr(self, attr, None)
+            super().__setattr__(attr, None)
             if attr in kwargs:
                 setattr(self, attr, kwargs.pop(attr))
 
@@ -191,21 +192,22 @@ class Node(metaclass=NodeMetaclass):
             else:
                 raise TypeError(f"unexpected keyword argument: {attr}")
 
-    def __getattr__(self, attr: str) -> Any:
-        if attr.startswith("_") or (attr not in self._nodes):
-            return object.__getattribute__(self, attr)
-
-        # if this already has a child node, return it or make one
-        attr_value = object.__getattribute__(self, attr)
-        if not attr_value:
-            attr_value = self._nodes[attr]()
-
-        return attr_value
-
     def __setattr__(self, attr: str, value: Any) -> None:
-        if attr.startswith("_") or (value is None):
+        """
+        """
+        # continue with normal process for attributes that aren't special to us
+        if attr.startswith("_") or ((attr not in self._nodes) and (attr not in self._datatypes)):
             super().__setattr__(attr, value)
             return
+
+        # make sure the value isn't None, no "deleting" content
+        if (value is None):
+            raise ValueError(f"{attr}")
+
+        # make sure the current value is None, no "reassigning" content
+        current_value = super().__getattribute__(attr)
+        if (current_value is not None):
+            raise RuntimeError(f"attribute {attr} already has a value")
 
         # if this is a node, double check the type
         if attr in self._nodes:
@@ -214,7 +216,7 @@ class Node(metaclass=NodeMetaclass):
                 value = self._nodes[attr](value)
 
             # break the reference to the current child node
-            g.remove((self.node, ex[attr], None))
+            # g.remove((self.node, ex[attr], None))
 
             # add the link
             if isinstance(value, (URIRef, Literal)):
@@ -235,7 +237,7 @@ class Node(metaclass=NodeMetaclass):
                     raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
 
             # remove the current value
-            g.remove((self.node, ex[attr], None))
+            # g.remove((self.node, ex[attr], None))
 
             # add the literal
             g.add((self.node, ex[attr], value))
@@ -544,15 +546,6 @@ class ConnectionPoint(Node):
         else:
             raise TypeError(f"{self!r} connection to {other!r}")
 
-    # def __repr__(self) -> str:
-    #     label = (" " + self.label) if self.label else ""
-    #     rslt = f"<{self.__class__.__name__}{label}"
-    #     if self.connectedThrough:
-    #         rslt += " connected through " + repr(self.connectedThrough)
-    #     rslt += ">"
-    #
-    #     return rslt
-
 
 class Inlet(ConnectionPoint):
     pass
@@ -712,14 +705,14 @@ class Value(Node):
     node_type: URIRef = ex.Value
 
     hasTimestamp: Literal
-    hasValue: Literal
+    hasSimpleValue: Literal
     hasUnits: URIRef
 
     def __init__(self, arg: Any = None, **kwargs: Any):
         if arg is not None:
-            if "hasValue" in kwargs:
+            if "hasSimpleValue" in kwargs:
                 raise RuntimeError("initialization conflict")
-            kwargs["hasValue"] = arg
+            kwargs["hasSimpleValue"] = arg
 
         super().__init__(**kwargs)
 
@@ -733,18 +726,31 @@ class Property(Node):
     hasQuantityKind: URIRef
 
     def __init__(self, arg: Any = None, **kwargs: Any):
-        if arg is not None:
+        init_value = None
+        if arg is None:
             if "hasValue" in kwargs:
-                raise RuntimeError("initialization conflict")
-            kwargs["hasValue"] = arg
+                init_value = kwargs.pop("hasValue")
+        elif "hasValue" in kwargs:
+            raise RuntimeError("initialization conflict")
+        else:
+            init_value = arg
 
         super().__init__(**kwargs)
 
-        # link the two together
-        if self.hasValue:
-            g.add((self.node, ex.hasValue, self.hasValue.node))
-            g.add((self.hasValue.node, ex.isValueOf, self.node))
+        # if there is an initial value, add/create and link to it
+        if init_value is not None:
+            self += init_value
 
+    def __iadd__(self, value: Any) -> "Property":
+        """Add a value to a property."""
+        if not isinstance(value, Value):
+            value = Value(value)
+
+        # link the two together
+        g.add((self.node, ex.hasValue, value.node))
+        g.add((value.node, ex.isValueOf, self.node))
+
+        return self
 
 class QuantifiableProperty(Property):
     """
@@ -761,6 +767,59 @@ class Device(System):
 
     node_type: URIRef = ex.Device
 
+    def __gt__(self, other: Any) -> "Device":
+        """self > other
+
+        Build a subsystem heirarchy, the other system is a subsystem of
+        this system.
+        """
+        if isinstance(other, Part):
+            g.add((self.node, ex.hasDirectPart, other.node))
+            g.add((other.node, s4syst.isDirectPartOf, self.node))
+        else:
+            self.system_heirarchy(self, other)
+
+        return self
+
+
+class Part(Node):
+    """
+    """
+
+    node_type: URIRef = ex.Part
+
+    def __gt__(self, other: Any) -> "Part":
+        """self > other
+
+        Build a part heirarchy, the other system is a direct part of
+        this system.
+        """
+        if not isinstance(other, (Device, Part)):
+            raise ValueError(f"device or part expected")
+
+        g.add((self.node, ex.hasDirectPart, other.node))
+        g.add((other.node, s4syst.isDirectPartOf, self.node))
+
+        return self
+
+    def __lt__(self, other: Any) -> Any:
+        """self < other
+
+        Build a part heirarchy, this part is a direct part of the other part.
+        """
+        if not isinstance(other, (Device, Part)):
+            raise ValueError(f"device or part expected")
+
+        g.add((other.node, ex.hasDirectPart, self.node))
+        g.add((self.node, s4syst.isDirectPartOf, other.node))
+
+        return other
+
 
 def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:
     file.write(g.serialize(format="turtle").decode())
+
+
+def clear() -> None:
+    """Remove all the triples from the graph."""
+    g.remove((None, None, None))
