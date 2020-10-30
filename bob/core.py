@@ -6,7 +6,7 @@ import sys
 import inspect
 from collections import defaultdict
 
-from typing import Dict, Any, List, TextIO, Tuple, Type, TypeVar, Union, cast
+from typing import Dict, Any, TextIO, Tuple, Type, TypeVar, Union, cast
 
 from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, XSD  # type: ignore
 
@@ -47,7 +47,7 @@ T = TypeVar("T")
 
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
 NodeMap = Dict[str, Union[type, str]]
-_annotation_forwards: Dict[str, List[Tuple[NodeMap, str]]] = defaultdict(list)
+_annotation_forwards: Dict[str, type] = {}
 
 
 def register_connection_type(connection_class: Type[T]) -> Type[T]:
@@ -96,7 +96,7 @@ class NodeMetaclass(type):
                 _nodes[attr] = attr_type
             elif isinstance(attr_type, str):
                 _nodes[attr] = attr_type
-                _annotation_forwards[attr].append((_nodes, attr))
+                _annotation_forwards[attr_type] = None  # unresolved
             else:
                 raise ValueError(f"unknown annotation for {attr}: {attr_type}")
 
@@ -146,6 +146,9 @@ class NodeMetaclass(type):
                 cls, clsname, superclasses, attributedict
             ),
         )
+
+        # save the reference
+        _annotation_forwards[metaclass.__name__] = metaclass
 
         return metaclass
 
@@ -201,24 +204,32 @@ class Node(metaclass=NodeMetaclass):
         """
         """
         # continue with normal process for attributes that aren't special to us
-        if attr.startswith("_") or ((attr not in self._nodes) and (attr not in self._datatypes)):
+        if attr.startswith("_") or (
+            (attr not in self._nodes) and (attr not in self._datatypes)
+        ):
             super().__setattr__(attr, value)
             return
 
         # make sure the value isn't None, no "deleting" content
-        if (value is None):
+        if value is None:
             raise ValueError(f"{attr}")
 
         # make sure the current value is None, no "reassigning" content
         current_value = super().__getattribute__(attr)
-        if (current_value is not None):
+        if current_value is not None:
             raise RuntimeError(f"attribute {attr} already has a value")
 
         # if this is a node, double check the type
         if attr in self._nodes:
             if isinstance(self._nodes[attr], str):
-                raise NotImplementedError("get the class for {self._nodes[attr]}")
-            node_class = cast(type, self._nodes[attr])
+                node_class = _annotation_forwards.get(self._nodes[attr], None)
+                if not node_class:
+                    raise NotImplementedError(
+                        f"class {self._nodes[attr]!r} for attribute {attr!r} not found"
+                    )
+                self._nodes[attr] = node_class
+            else:
+                node_class = cast(type, self._nodes[attr])
 
             # pass the value to the class to build one
             if not isinstance(value, node_class):
@@ -761,6 +772,7 @@ class Property(Node):
 
         return self
 
+
 class QuantifiableProperty(Property):
     """
     """
@@ -779,14 +791,16 @@ class Device(System):
     def __gt__(self, other: Any) -> "Device":
         """self > other
 
-        Build a subsystem heirarchy, the other system is a subsystem of
-        this system.
+        Build a part or subsystem heirarchy, the other is a Part and a part of
+        this Device, or the other is a System and a subsystem of this system.
         """
         if isinstance(other, Part):
             g.add((self.node, ex.hasDirectPart, other.node))
-            g.add((other.node, s4syst.isDirectPartOf, self.node))
-        else:
+            g.add((other.node, ex.isDirectPartOf, self.node))
+        elif isinstance(other, System):
             self.system_heirarchy(self, other)
+        else:
+            raise TypeError(f"{other} must be a Part or a System")
 
         return self
 
@@ -804,10 +818,10 @@ class Part(Node):
         this system.
         """
         if not isinstance(other, (Device, Part)):
-            raise ValueError(f"device or part expected")
+            raise ValueError("device or part expected")
 
         g.add((self.node, ex.hasDirectPart, other.node))
-        g.add((other.node, s4syst.isDirectPartOf, self.node))
+        g.add((other.node, ex.isDirectPartOf, self.node))
 
         return self
 
@@ -817,10 +831,10 @@ class Part(Node):
         Build a part heirarchy, this part is a direct part of the other part.
         """
         if not isinstance(other, (Device, Part)):
-            raise ValueError(f"device or part expected")
+            raise ValueError("device or part expected")
 
         g.add((other.node, ex.hasDirectPart, self.node))
-        g.add((self.node, s4syst.isDirectPartOf, other.node))
+        g.add((self.node, ex.isDirectPartOf, other.node))
 
         return other
 
