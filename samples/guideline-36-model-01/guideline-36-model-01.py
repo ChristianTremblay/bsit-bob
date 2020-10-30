@@ -62,7 +62,7 @@ zone_2 >> return_air
 # start with the return fan
 return_fan = Fan(label="return_fan")
 
-# connect the supply air and return ait connections
+# connect the supply air and return air connections
 supply_fan >> supply_air
 return_air >> return_fan
 
