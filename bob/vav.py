@@ -1,12 +1,12 @@
 from typing import Any
 
-from .core import System
+from .core import Device
 from .air import AirFlowStation, Damper
 from .hw import HotWaterCoil, HotWaterValve
 from .signal import AnalogOut
 
 
-class VAV1(System):
+class VAV1(Device):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
@@ -29,7 +29,7 @@ class VAV1(System):
         self.damper_pos = self._connection_points["damper_pos"] = self.damper.pos
 
 
-class VAV2(System):
+class VAV2(Device):
     temp: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:

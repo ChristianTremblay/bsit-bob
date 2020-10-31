@@ -15,7 +15,6 @@ MANDITORY_LABEL = True
 
 # globals
 g = Graph()
-document = ""
 _next_node = 1
 
 # namespaces
@@ -32,9 +31,6 @@ g.namespace_manager.bind("qudt", URIRef("http://qudt.org/schema/qudt/"))
 
 quantitykind = Namespace("http://qudt.org/vocab/quantitykind/")
 g.namespace_manager.bind("quantitykind", URIRef("http://qudt.org/vocab/quantitykind/"))
-
-s4syst = Namespace("https://saref.etsi.org/")
-g.namespace_manager.bind("s4syst", URIRef("https://saref.etsi.org/"))
 
 # brick = Namespace("https://brickschema.org/schema/1.1.0/Brick#")
 # g.namespace_manager.bind("brick", URIRef("https://brickschema.org/schema/1.1.0/Brick#"))
@@ -96,7 +92,7 @@ class NodeMetaclass(type):
                 _nodes[attr] = attr_type
             elif isinstance(attr_type, str):
                 _nodes[attr] = attr_type
-                _annotation_forwards[attr_type] = None  # unresolved
+                _annotation_forwards[attr_type] = None  # type: ignore[assignment]
             else:
                 raise ValueError(f"unknown annotation for {attr}: {attr_type}")
 
@@ -222,7 +218,7 @@ class Node(metaclass=NodeMetaclass):
         # if this is a node, double check the type
         if attr in self._nodes:
             if isinstance(self._nodes[attr], str):
-                node_class = _annotation_forwards.get(self._nodes[attr], None)
+                node_class = _annotation_forwards.get(self._nodes[attr], None)  # type: ignore[arg-type]
                 if not node_class:
                     raise NotImplementedError(
                         f"class {self._nodes[attr]!r} for attribute {attr!r} not found"
@@ -275,8 +271,8 @@ class Node(metaclass=NodeMetaclass):
             value = Property(value)
 
         # link the two together
-        g.add((self.node, ex.hasProperty, value.node))
-        g.add((value.node, ex.isPropertyOf, self.node))
+        g.add((self.node, c223.hasProperty, value.node))
+        g.add((value.node, c223.isPropertyOf, self.node))
 
 
 class ConnectionType:
@@ -289,7 +285,7 @@ class Connection(Node, ConnectionType):
     Generic connection object type, unrestricted.
     """
 
-    node_type: URIRef = s4syst.Connection
+    node_type: URIRef = c223.Connection
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -313,13 +309,13 @@ class Connection(Node, ConnectionType):
                 raise TypeError("connection point type")
 
             # <self> connects system at <other>
-            g.add((self.node, s4syst.connectsSystemAt, other.node))
+            g.add((self.node, c223.connectsDeviceAt, other.node))
 
             # <other> connected through <self>
-            g.add((other.node, s4syst.connectedThrough, self.node))
+            g.add((other.node, c223.connectedThrough, self.node))
             other.connectedThrough = self
 
-        elif isinstance(other, System):
+        elif isinstance(other, Device):
             # look for <system> unconnected connection points for this connection type
             unbound_connection_points = set()
             for (
@@ -348,10 +344,10 @@ class Connection(Node, ConnectionType):
             connection_point = unbound_connection_points.pop()
 
             # <self> connects system at <connection_point>
-            g.add((self.node, s4syst.connectsSystemAt, connection_point.node))
+            g.add((self.node, c223.connectsDeviceAt, connection_point.node))
 
             # <connection_point> connected through <self>
-            g.add((connection_point.node, s4syst.connectedThrough, self.node))
+            g.add((connection_point.node, c223.connectedThrough, self.node))
             connection_point.connectedThrough = self
 
         else:
@@ -373,13 +369,13 @@ class Connection(Node, ConnectionType):
                 raise TypeError("connection point type")
 
             # <self> connects system at <other>
-            g.add((self.node, s4syst.connectsSystemAt, other.node))
+            g.add((self.node, c223.connectsDeviceAt, other.node))
 
             # <other> connected through <self>
-            g.add((other.node, s4syst.connectedThrough, self.node))
+            g.add((other.node, c223.connectedThrough, self.node))
             other.connectedThrough = self
 
-        elif isinstance(other, System):
+        elif isinstance(other, Device):
             # look for <system> unconnected connection points for this connection type
             unbound_connection_points = set()
             for (
@@ -408,10 +404,10 @@ class Connection(Node, ConnectionType):
             connection_point = unbound_connection_points.pop()
 
             # <self> connects system at <connection_point>
-            g.add((self.node, s4syst.connectsSystemAt, connection_point.node))
+            g.add((self.node, c223.connectsDeviceAt, connection_point.node))
 
             # <connection_point> connected through <self>
-            g.add((connection_point.node, s4syst.connectedThrough, self.node))
+            g.add((connection_point.node, c223.connectedThrough, self.node))
             connection_point.connectedThrough = self
 
         else:
@@ -426,20 +422,20 @@ class Connection(Node, ConnectionType):
 
 
 class ConnectionPoint(Node):
-    node_type: URIRef = s4syst.ConnectionPoint
+    node_type: URIRef = c223.ConnectionPoint
 
     connectedThrough: Connection
-    connectionPointOf: "System"
+    connectionPointOf: "Device"
 
-    def __init__(self, system: "System", **kwargs: Any) -> None:
+    def __init__(self, device: "Device", **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
         # <self> connection point of <system>
-        g.add((self.node, s4syst.connectionPointOf, system.node))
-        self.connectionPointOf = system
+        g.add((self.node, c223.connectionPointOf, device.node))
+        self.connectionPointOf = device
 
         # <system> connects at <self>
-        g.add((system.node, s4syst.connectsAt, self.node))
+        g.add((device.node, c223.connectsAt, self.node))
 
     def __rshift__(self, other: Any) -> None:
         """self >> other
@@ -462,7 +458,7 @@ class ConnectionPoint(Node):
                 raise TypeError("connection point type")
 
             # <self> connected through <other>
-            g.add((self.node, s4syst.connectedThrough, other.node))
+            g.add((self.node, c223.connectedThrough, other.node))
             self.connectedThrough = other
 
         elif isinstance(other, ConnectionPoint):
@@ -484,20 +480,12 @@ class ConnectionPoint(Node):
             for connection_point in (self, other):
                 # <new_connection> connects system at <connection_point>
                 g.add(
-                    (
-                        new_connection.node,
-                        s4syst.connectsSystemAt,
-                        connection_point.node,
-                    )
+                    (new_connection.node, c223.connectsDeviceAt, connection_point.node,)
                 )
 
                 # <connection_point> connected through <new_connection>
                 g.add(
-                    (
-                        connection_point.node,
-                        s4syst.connectedThrough,
-                        new_connection.node,
-                    )
+                    (connection_point.node, c223.connectedThrough, new_connection.node,)
                 )
                 connection_point.connectedThrough = new_connection
 
@@ -522,7 +510,7 @@ class ConnectionPoint(Node):
                 raise TypeError("connection point type")
 
             # <self> connected through <other>
-            g.add((self.node, s4syst.connectedThrough, other.node))
+            g.add((self.node, c223.connectedThrough, other.node))
             self.connectedThrough = other
 
         elif isinstance(other, ConnectionPoint):
@@ -544,20 +532,12 @@ class ConnectionPoint(Node):
             for connection_point in (self, other):
                 # <new_connection> connects system at <connection_point>
                 g.add(
-                    (
-                        new_connection.node,
-                        s4syst.connectsSystemAt,
-                        connection_point.node,
-                    )
+                    (new_connection.node, c223.connectsDeviceAt, connection_point.node,)
                 )
 
                 # <connection_point> connected through <new_connection>
                 g.add(
-                    (
-                        connection_point.node,
-                        s4syst.connectedThrough,
-                        new_connection.node,
-                    )
+                    (connection_point.node, c223.connectedThrough, new_connection.node,)
                 )
                 connection_point.connectedThrough = new_connection
 
@@ -573,7 +553,11 @@ class Outlet(ConnectionPoint):
     pass
 
 
-class System(Node):
+class Device(Node):
+    """
+    """
+
+    node_type: URIRef = c223.Device
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -585,8 +569,8 @@ class System(Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # <self> a System
-        g.add((self.node, RDF.type, s4syst.System))
+        # <self> a Device
+        g.add((self.node, RDF.type, c223.Device))
 
         # if there is a brick annotation, refer this instance to that class
         # if self.__annotations__.get("__brick__"):
@@ -609,10 +593,10 @@ class System(Node):
             setattr(self, var_name, var_element)
 
     @staticmethod
-    def join_systems(from_system: "System", to_system: "System") -> None:
+    def join_devices(from_device: "Device", to_device: "Device") -> None:
         """Find an unambiguous way to connect <from> to <to>"""
         from_out = defaultdict(list)
-        for connection_point in from_system._connection_points.values():
+        for connection_point in from_device._connection_points.values():
             if connection_point.connectedThrough:
                 continue
             if not isinstance(connection_point, Outlet):
@@ -627,10 +611,10 @@ class System(Node):
             if len(from_out[connection_type]) == 1
         )
         if not from_types:
-            raise RuntimeError(f"no candidate sources: {from_system!r}")
+            raise RuntimeError(f"no candidate sources: {from_device!r}")
 
         to_in = defaultdict(list)
-        for connection_point in to_system._connection_points.values():
+        for connection_point in to_device._connection_points.values():
             if connection_point.connectedThrough:
                 continue
             if not isinstance(connection_point, Inlet):
@@ -643,7 +627,7 @@ class System(Node):
             if len(to_in[connection_type]) == 1
         )
         if not to_types:
-            raise RuntimeError(f"no candidate destinations: {to_system!r}")
+            raise RuntimeError(f"no candidate destinations: {to_device!r}")
 
         # find the connection type that has one unconnected <from> and
         # one unconnected <to>
@@ -666,11 +650,11 @@ class System(Node):
     def __rshift__(self, other: Any) -> None:
         """self >> other
 
-        Build a connection from this system to another system.
+        Build a connection from this device to another device.
         """
 
-        if isinstance(other, System):
-            self.join_systems(self, other)
+        if isinstance(other, Device):
+            self.join_devices(self, other)
         elif isinstance(other, Connection):
             other << self
         else:
@@ -679,23 +663,59 @@ class System(Node):
     def __lshift__(self, other: Any) -> None:
         """self << other
 
-        Build a connection to this system from another system.
+        Build a connection to this device from another device.
         """
 
-        if isinstance(other, System):
-            self.join_systems(other, self)
+        if isinstance(other, Device):
+            self.join_devices(other, self)
         elif isinstance(other, Connection):
             other >> self
         else:
             raise TypeError(repr(other))
 
+    def __gt__(self, other: Any) -> "Device":
+        """self > other
+
+        Build a part heirarchy, the other device is a direct part of
+        this device.
+        """
+        if not isinstance(other, (Device, Part)):
+            raise ValueError("device or part expected")
+
+        g.add((self.node, c223.hasDirectPart, other.node))
+        g.add((other.node, c223.isDirectPartOf, self.node))
+
+        return self
+
+    def __lt__(self, other: Any) -> "Device":
+        """self < other
+
+        Build a part heirarchy, this part is a direct part of the other part.
+        """
+        if not isinstance(other, (Device, Part)):
+            raise ValueError("device or part expected")
+
+        g.add((other.node, c223.hasDirectPart, self.node))
+        g.add((self.node, c223.isDirectPartOf, other.node))
+
+        return other
+
+
+class System(Node):
+    """
+    """
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+        # <self> a System
+        g.add((self.node, RDF.type, c223.System))
+
     @staticmethod
     def system_heirarchy(system: "System", subsystem: "System") -> None:
         """Connect the two systems in a heirarchy."""
-        g.add((system.node, s4syst.hasSubSystem, subsystem.node))
-        # g.add((system.node, brick.hasPart, subsystem.node))
-        g.add((subsystem.node, s4syst.subSystemOf, system.node))
-        # g.add((subsystem.node, brick.isPartOf, system.node))
+        g.add((system.node, c223.hasSubSystem, subsystem.node))
+        g.add((subsystem.node, c223.subSystemOf, system.node))
 
     def __gt__(self, other: "System") -> "System":
         """self > other
@@ -703,6 +723,7 @@ class System(Node):
         Build a subsystem heirarchy, the other system is a subsystem of
         this system.
         """
+        assert isinstance(other, System)
 
         self.system_heirarchy(self, other)
         return self
@@ -713,8 +734,49 @@ class System(Node):
         Build a subsystem heirarchy, this is a subsystem of some other
         system.
         """
+        assert isinstance(other, System)
 
         self.system_heirarchy(other, self)
+        return other
+
+
+class Part(Node):
+    """
+    """
+
+    node_type: URIRef = c223.Part
+
+    def __gt__(self, other: Any) -> "Part":
+        """self > other
+
+        Build a part heirarchy, the other system is a direct part of
+        this system.
+        """
+        if not isinstance(other, (Device, Part)):
+            raise ValueError("device or part expected")
+
+        g.add((self.node, c223.hasDirectPart, other.node))
+        g.add((other.node, c223.isDirectPartOf, self.node))
+
+        # g.add((self.node, brick.hasPart, other.node))
+        # g.add((other.node, brick.isPartOf, self.node))
+
+        return self
+
+    def __lt__(self, other: Any) -> Any:
+        """self < other
+
+        Build a part heirarchy, this part is a direct part of the other part.
+        """
+        if not isinstance(other, (Device, Part)):
+            raise ValueError("device or part expected")
+
+        g.add((other.node, c223.hasDirectPart, self.node))
+        g.add((self.node, c223.isDirectPartOf, other.node))
+
+        # g.add((other.node, brick.hasPart, self.node))
+        # g.add((self.node, brick.isPartOf, other.node))
+
         return other
 
 
@@ -722,7 +784,7 @@ class Value(Node):
     """
     """
 
-    node_type: URIRef = ex.Value
+    node_type: URIRef = c223.Value
 
     hasTimestamp: Literal
     hasSimpleValue: Literal
@@ -741,9 +803,12 @@ class Property(Node):
     """
     """
 
-    node_type: URIRef = ex.Property
+    node_type: URIRef = c223.Property
     hasValue: Value
     hasQuantityKind: URIRef
+
+    # override this for a specialize subclass
+    _value_class: type = Value
 
     def __init__(self, arg: Any = None, **kwargs: Any):
         init_value = None
@@ -764,11 +829,11 @@ class Property(Node):
     def __iadd__(self, value: Any) -> "Property":
         """Add a value to a property."""
         if not isinstance(value, Value):
-            value = Value(value)
+            value = self._value_class(value)
 
         # link the two together
-        g.add((self.node, ex.hasValue, value.node))
-        g.add((value.node, ex.isValueOf, self.node))
+        g.add((self.node, c223.hasValue, value.node))
+        g.add((value.node, c223.isValueOf, self.node))
 
         return self
 
@@ -777,66 +842,9 @@ class QuantifiableProperty(Property):
     """
     """
 
-    node_type: URIRef = ex.QuantifiableProperty
+    node_type: URIRef = c223.QuantifiableProperty
     hasQuantityKind: URIRef
     hasUnits: URIRef
-
-
-class Device(System):
-    """
-    """
-
-    node_type: URIRef = ex.Device
-
-    def __gt__(self, other: Any) -> "Device":
-        """self > other
-
-        Build a part or subsystem heirarchy, the other is a Part and a part of
-        this Device, or the other is a System and a subsystem of this system.
-        """
-        if isinstance(other, Part):
-            g.add((self.node, ex.hasDirectPart, other.node))
-            g.add((other.node, ex.isDirectPartOf, self.node))
-        elif isinstance(other, System):
-            self.system_heirarchy(self, other)
-        else:
-            raise TypeError(f"{other} must be a Part or a System")
-
-        return self
-
-
-class Part(Node):
-    """
-    """
-
-    node_type: URIRef = ex.Part
-
-    def __gt__(self, other: Any) -> "Part":
-        """self > other
-
-        Build a part heirarchy, the other system is a direct part of
-        this system.
-        """
-        if not isinstance(other, (Device, Part)):
-            raise ValueError("device or part expected")
-
-        g.add((self.node, ex.hasDirectPart, other.node))
-        g.add((other.node, ex.isDirectPartOf, self.node))
-
-        return self
-
-    def __lt__(self, other: Any) -> Any:
-        """self < other
-
-        Build a part heirarchy, this part is a direct part of the other part.
-        """
-        if not isinstance(other, (Device, Part)):
-            raise ValueError("device or part expected")
-
-        g.add((other.node, ex.hasDirectPart, self.node))
-        g.add((self.node, ex.isDirectPartOf, other.node))
-
-        return other
 
 
 def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:

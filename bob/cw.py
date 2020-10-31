@@ -6,7 +6,7 @@ from .core import (
     Connection,
     Inlet,
     Outlet,
-    System,
+    Device,
 )
 from .air import AirInlet, AirOutlet
 from .signal import AnalogIn
@@ -29,13 +29,13 @@ class ChilledWaterOutlet(Outlet, ChilledWater):
     pass
 
 
-class ChilledWaterValve(System):
+class ChilledWaterValve(Device):
     pos: AnalogIn
     cwin: ChilledWaterInlet
     cwout: ChilledWaterOutlet
 
 
-class ChilledWaterCoil(System):
+class ChilledWaterCoil(Device):
     ain: AirInlet
     aout: AirOutlet
     cws: ChilledWaterInlet

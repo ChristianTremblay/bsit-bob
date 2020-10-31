@@ -4,7 +4,7 @@ from .core import (
     Connection,
     Inlet,
     Outlet,
-    System,
+    Device,
 )
 
 from .signal import AnalogIn, AnalogOut
@@ -27,34 +27,34 @@ class AirOutlet(Outlet, Air):
     pass
 
 
-class Fan(System):
+class Fan(Device):
     ain: AirInlet
     aout: AirOutlet
 
 
-class Damper(System):
+class Damper(Device):
     ain: AirInlet
     aout: AirOutlet
     pos: AnalogIn
 
 
-class AirFlowStation(System):
+class AirFlowStation(Device):
     ain: AirInlet
     aout: AirOutlet
     flow: AnalogOut
 
 
-class Zone(System):
+class Zone(Device):
     sa: AirInlet  # supply air goes in
     ra: AirOutlet  # return air goes out
 
 
-class Outside(System):
+class Outside(Device):
     oa: AirOutlet  # outside air goes in someplace
     ea: AirOutlet  # from exhaust fan going out
 
 
-class MixedAir(System):
+class MixedAir(Device):
     oa: AirInlet  # outside air goes in someplace
     ra: AirInlet  # return air from the zone air goes in someplace
     ma: AirOutlet  # mixed air to become supply air to the zone
