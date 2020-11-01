@@ -1,120 +1,83 @@
-! <class 'bob.core.Node'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.Connection'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.ConnectionPoint'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.Inlet'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.Outlet'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.Device'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.System'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.Part'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.Value'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.Property'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.core.QuantifiableProperty'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
-! <class 'bob.signal.AnalogIn'> namespace in superclass <class 'bob.core.Property'>
-! <class 'bob.signal.AnalogOut'> namespace in superclass <class 'bob.core.Property'>
-! <class 'bob.signal.BinaryIn'> namespace in superclass <class 'bob.core.Property'>
-! <class 'bob.signal.BinaryOut'> namespace in superclass <class 'bob.core.Property'>
-! <class 'bob.air.AirConnection'> namespace in superclass <class 'bob.core.Connection'>
-! <class 'bob.air.AirInlet'> namespace in superclass <class 'bob.core.Inlet'>
-! <class 'bob.air.AirOutlet'> namespace in superclass <class 'bob.core.Outlet'>
-! <class 'bob.air.Fan'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.air.Damper'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.air.AirFlowStation'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.air.Zone'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.air.Outside'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.air.MixedAir'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.cw.ChilledWaterConnection'> namespace in superclass <class 'bob.core.Connection'>
-! <class 'bob.cw.ChilledWaterInlet'> namespace in superclass <class 'bob.core.Inlet'>
-! <class 'bob.cw.ChilledWaterOutlet'> namespace in superclass <class 'bob.core.Outlet'>
-! <class 'bob.cw.ChilledWaterValve'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.cw.ChilledWaterCoil'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.cw.ChilledWaterCoil2'> namespace in superclass <class 'bob.cw.ChilledWaterCoil'>
-! <class 'bob.hw.HotWaterConnection'> namespace in superclass <class 'bob.core.Connection'>
-! <class 'bob.hw.HotWaterInlet'> namespace in superclass <class 'bob.core.Inlet'>
-! <class 'bob.hw.HotWaterOutlet'> namespace in superclass <class 'bob.core.Outlet'>
-! <class 'bob.hw.HotWaterValve'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.hw.HotWaterCoil'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.hw.HotWaterCoil2'> namespace in superclass <class 'bob.hw.HotWaterCoil'>
-! <class 'bob.vav.VAV1'> namespace in superclass <class 'bob.core.Device'>
-! <class 'bob.vav.VAV2'> namespace in superclass <class 'bob.core.Device'>
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix ex: <urn:ex/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-c223:00001 a c223:ChilledWaterConnection,
+ex:00001 a c223:ChilledWaterConnection,
         c223:Connection ;
-    c223:connectsDeviceAt c223:00005 .
+    c223:connectsDeviceAt ex:00005 .
 
-c223:00002 a c223:ChilledWaterCoil,
+ex:00002 a c223:ChilledWaterCoil,
         c223:Device ;
     rdfs:label "CW-Coil-1" ;
-    c223:ain c223:00003 ;
-    c223:aout c223:00004 ;
-    c223:connectsAt c223:00003,
-        c223:00004,
-        c223:00005,
-        c223:00006 ;
-    c223:cwr c223:00006 ;
-    c223:cws c223:00005 .
+    c223:airInlet ex:00003 ;
+    c223:airOutlet ex:00004 ;
+    c223:chilledWaterReturn ex:00006 ;
+    c223:chilledWaterSupply ex:00005 .
 
-c223:00003 a c223:ConnectionPoint ;
-    rdfs:label "CW-Coil-1.ain" ;
-    c223:connectedThrough c223:00010 ;
-    c223:connectionPointOf c223:00002 .
+ex:00003 a c223:AirConnectionPoint,
+        c223:ConnectionPoint ;
+    rdfs:label "CW-Coil-1.airInlet" ;
+    c223:connectedThrough ex:00010 ;
+    c223:connectionPointOf ex:00002 .
 
-c223:00004 a c223:ConnectionPoint ;
-    rdfs:label "CW-Coil-1.aout" ;
-    c223:connectedThrough c223:00014 ;
-    c223:connectionPointOf c223:00002 .
+ex:00004 a c223:AirConnectionPoint,
+        c223:ConnectionPoint ;
+    rdfs:label "CW-Coil-1.airOutlet" ;
+    c223:connectedThrough ex:00014 ;
+    c223:connectionPointOf ex:00002 .
 
-c223:00005 a c223:ConnectionPoint ;
-    rdfs:label "CW-Coil-1.cws" ;
-    c223:connectedThrough c223:00001 ;
-    c223:connectionPointOf c223:00002 .
+ex:00005 a c223:ChilledWaterConnectionPoint,
+        c223:ConnectionPoint ;
+    rdfs:label "CW-Coil-1.chilledWaterSupply" ;
+    c223:connectedThrough ex:00001 ;
+    c223:connectionPointOf ex:00002 .
 
-c223:00006 a c223:ConnectionPoint ;
-    rdfs:label "CW-Coil-1.cwr" ;
-    c223:connectionPointOf c223:00002 .
+ex:00006 a c223:ChilledWaterConnectionPoint,
+        c223:ConnectionPoint ;
+    rdfs:label "CW-Coil-1.chilledWaterReturn" ;
+    c223:connectionPointOf ex:00002 .
 
-c223:00007 a c223:Device,
+ex:00007 a c223:Device,
         c223:Fan ;
     rdfs:label "F" ;
-    c223:ain c223:00008 ;
-    c223:aout c223:00009 ;
-    c223:connectsAt c223:00008,
-        c223:00009 .
+    c223:airInlet ex:00008 ;
+    c223:airOutlet ex:00009 .
 
-c223:00008 a c223:ConnectionPoint ;
-    rdfs:label "F.ain" ;
-    c223:connectionPointOf c223:00007 .
+ex:00008 a c223:AirConnectionPoint,
+        c223:ConnectionPoint ;
+    rdfs:label "F.airInlet" ;
+    c223:connectionPointOf ex:00007 .
 
-c223:00009 a c223:ConnectionPoint ;
-    rdfs:label "F.aout" ;
-    c223:connectedThrough c223:00010 ;
-    c223:connectionPointOf c223:00007 .
+ex:00009 a c223:AirConnectionPoint,
+        c223:ConnectionPoint ;
+    rdfs:label "F.airOutlet" ;
+    c223:connectedThrough ex:00010 ;
+    c223:connectionPointOf ex:00007 .
 
-c223:00010 a c223:AirConnection,
+ex:00010 a c223:AirConnection,
         c223:Connection ;
-    c223:connectsDeviceAt c223:00003,
-        c223:00009 .
+    c223:connectsDeviceAt ex:00003,
+        ex:00009 .
 
-c223:00011 a c223:Device,
+ex:00011 a c223:Device,
         c223:Zone ;
     rdfs:label "Zone-1" ;
-    c223:connectsAt c223:00012,
-        c223:00013 ;
-    c223:ra c223:00013 ;
-    c223:sa c223:00012 .
+    c223:returnAirOutlet ex:00013 ;
+    c223:supplyAirInlet ex:00012 .
 
-c223:00012 a c223:ConnectionPoint ;
-    rdfs:label "Zone-1.sa" ;
-    c223:connectedThrough c223:00014 ;
-    c223:connectionPointOf c223:00011 .
+ex:00012 a c223:AirConnectionPoint,
+        c223:ConnectionPoint ;
+    rdfs:label "Zone-1.supplyAirInlet" ;
+    c223:connectedThrough ex:00014 ;
+    c223:connectionPointOf ex:00011 .
 
-c223:00013 a c223:ConnectionPoint ;
-    rdfs:label "Zone-1.ra" ;
-    c223:connectionPointOf c223:00011 .
+ex:00013 a c223:AirConnectionPoint,
+        c223:ConnectionPoint ;
+    rdfs:label "Zone-1.returnAirOutlet" ;
+    c223:connectionPointOf ex:00011 .
 
-c223:00014 a c223:AirConnection,
+ex:00014 a c223:AirConnection,
         c223:Connection ;
-    c223:connectsDeviceAt c223:00004,
-        c223:00012 .
+    c223:connectsDeviceAt ex:00004,
+        ex:00012 .
 
