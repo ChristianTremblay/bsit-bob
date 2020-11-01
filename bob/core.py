@@ -12,6 +12,7 @@ from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # t
 
 # options
 MANDITORY_LABEL = True
+EXPLICIT_CORE_TYPES = True
 
 # globals
 g = Graph()
@@ -20,6 +21,7 @@ _next_node = 1
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
 NodeMap = Dict[str, Union[type, str]]
 _annotation_forwards: Dict[str, type] = {}
+
 
 def bind_namespace(prefix: str, uri: str) -> Namespace:
     """
@@ -44,6 +46,7 @@ __namespace__ = c223
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
 model_namespace = None
+
 
 def bind_model_namespace(prefix: str, uri: str) -> Namespace:
     """
@@ -342,14 +345,10 @@ class Connection(Node, ConnectionType):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        if self.connection_type:
-            g.add(
-                (
-                    self.node,
-                    RDF.type,
-                    self._namespace[self.connection_type + "Connection"],
-                )
-            )
+        if EXPLICIT_CORE_TYPES:
+            if self.connection_type:
+                connection_type = self.connection_type + "Connection"
+                g.add((self.node, RDF.type, self._namespace[connection_type],))
 
     def __rshift__(self, other: Any) -> None:
         """self >> other"""
@@ -488,12 +487,19 @@ class ConnectionPoint(Node):
     def __init__(self, device: "Device", **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
+        if EXPLICIT_CORE_TYPES:
+            if self.connection_type:
+                connection_point_type = self.connection_type + "ConnectionPoint"
+                g.add((self.node, RDF.type, self._namespace[connection_point_type],))
+
         # <self> connection point of <device>
         # g.add((self.node, c223.connectionPointOf, device.node))
         self.connectionPointOf = device
 
-        # <device> connects at <self>
-        g.add((device.node, c223.connectsAt, self.node))
+        # <device> connects at <self> is implicit because the connection
+        # points are attirbutes of the device and it is assumed that the
+        # corresponding predicate is an rdf:subPropertyOf c223:connectsAt
+        # g.add((device.node, c223.connectsAt, self.node))
 
     def __rshift__(self, other: Any) -> None:
         """self >> other
@@ -516,7 +522,7 @@ class ConnectionPoint(Node):
                 raise TypeError("connection point type")
 
             # <self> connected through <other>
-            g.add((self.node, c223.connectedThrough, other.node))
+            # g.add((self.node, c223.connectedThrough, other.node))
             self.connectedThrough = other
 
         elif isinstance(other, ConnectionPoint):
@@ -568,7 +574,7 @@ class ConnectionPoint(Node):
                 raise TypeError("connection point type")
 
             # <self> connected through <other>
-            g.add((self.node, c223.connectedThrough, other.node))
+            # g.add((self.node, c223.connectedThrough, other.node))
             self.connectedThrough = other
 
         elif isinstance(other, ConnectionPoint):
@@ -628,7 +634,8 @@ class Device(Node):
                 raise RuntimeError("empty label")
 
         # <self> a Device
-        g.add((self.node, RDF.type, c223.Device))
+        if EXPLICIT_CORE_TYPES:
+            g.add((self.node, RDF.type, c223.Device))
 
         # if there is a brick annotation, refer this instance to that class
         # if self.__annotations__.get("__brick__"):
@@ -767,7 +774,8 @@ class System(Node):
         super().__init__(**kwargs)
 
         # <self> a System
-        g.add((self.node, RDF.type, c223.System))
+        if EXPLICIT_CORE_TYPES:
+            g.add((self.node, RDF.type, c223.System))
 
     @staticmethod
     def system_heirarchy(system: "System", subsystem: "System") -> None:
@@ -803,6 +811,13 @@ class Part(Node):
     """
 
     node_type: URIRef = c223.Part
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+        # <self> a Part
+        if EXPLICIT_CORE_TYPES:
+            g.add((self.node, RDF.type, c223.Part))
 
     def __gt__(self, other: Any) -> "Part":
         """self > other
@@ -856,6 +871,10 @@ class Value(Node):
 
         super().__init__(**kwargs)
 
+        # <self> a System
+        if EXPLICIT_CORE_TYPES:
+            g.add((self.node, RDF.type, c223.Value))
+
 
 class Property(Node):
     """
@@ -881,7 +900,8 @@ class Property(Node):
         super().__init__(**kwargs)
 
         # <self> a Property
-        g.add((self.node, RDF.type, c223.Property))
+        if EXPLICIT_CORE_TYPES:
+            g.add((self.node, RDF.type, c223.Property))
 
         # if there is an initial value, add/create and link to it
         if init_value is not None:
@@ -906,6 +926,20 @@ class QuantifiableProperty(Property):
     node_type: URIRef = c223.QuantifiableProperty
     hasQuantityKind: URIRef
     hasUnits: URIRef
+
+    def __init__(self, arg: Any = None, **kwargs: Any) -> None:
+        # promote the arg to hasValue
+        if arg is not None:
+            if "hasValue" in kwargs:
+                raise RuntimeError("initialization conflict")
+            else:
+                kwargs["hasValue"] = arg
+
+        super().__init__(**kwargs)
+
+        # <self> a Part
+        if EXPLICIT_CORE_TYPES:
+            g.add((self.node, RDF.type, c223.QuantifiableProperty))
 
 
 def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:
