@@ -21,11 +21,13 @@ class VAV1(Device):
         # link the air pieces together, the tool notices that the air flow
         # station flow output could be connected to the damper position so
         # the simplest (self.air_flow_station >> self.damper) is an error
-        self.air_flow_station.aout >> self.damper.ain
+        self.air_flow_station.airOutlet >> self.damper.airInlet
 
         # lift the connections
-        self.ain = self._connection_points["ain"] = self.air_flow_station.ain
-        self.aout = self._connection_points["aout"] = self.damper.aout
+        self.airInlet = self._connection_points[
+            "airInlet"
+        ] = self.air_flow_station.airInlet
+        self.airOutlet = self._connection_points["airOutlet"] = self.damper.airOutlet
         self.flow = self.air_flow_station.flow
         self.damper_pos = self.damper.pos
 
@@ -45,25 +47,27 @@ class VAV2(Device):
         self > self.damper
 
         # create a hot water coil
-        self.hw_coil = HotWaterCoil(label=self.label + ".hw_coil")
-        self > self.hw_coil
+        self.hot_water_coil = HotWaterCoil(label=self.label + ".hw_coil")
+        self > self.hot_water_coil
 
         # create a hot water valve
-        self.hw_valve = HotWaterValve(label=self.label + ".hw_valve")
-        self > self.hw_valve
+        self.hot_water_valve = HotWaterValve(label=self.label + ".hw_valve")
+        self > self.hot_water_valve
 
-        # link the air pieces together, the tool notices that the air flow
-        # station flow output could be connected to the damper position so
-        # the simplest (self.air_flow_station >> self.damper) is an error
-        self.air_flow_station.aout >> self.damper.ain
-        self.damper >> self.hw_coil
+        # link them together
+        self.air_flow_station.airOutlet >> self.damper.airInlet
+        self.damper >> self.hot_water_coil
 
         # link the hot water pieces together
-        self.hw_valve >> self.hw_coil
+        self.hot_water_valve >> self.hot_water_coil
 
         # lift the connections
-        self.ain = self._connection_points["ain"] = self.air_flow_station.ain
-        self.aout = self._connection_points["aout"] = self.hw_coil.aout
+        self.airInlet = self._connection_points[
+            "airInlet"
+        ] = self.air_flow_station.airInlet
+        self.airOutlet = self._connection_points[
+            "airOutlet"
+        ] = self.hot_water_coil.airOutlet
         self.flow = self.air_flow_station.flow
         self.damper_pos = self.damper.pos
-        self.hw_valve_pos = self.hw_valve.pos
+        self.hot_water_valve_pos = self.hot_water_valve.pos

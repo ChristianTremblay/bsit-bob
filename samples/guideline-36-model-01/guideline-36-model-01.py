@@ -9,29 +9,29 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class OutsideAir(Device):
-    oa: AirOutlet  # outside air goes in someplace
-    econ: AirOutlet  # outside air going into the economizer
-    ea: AirInlet  # from exhaust fan going out
+    outsideAir: AirOutlet  # outside air goes in someplace
+    economizerAir: AirOutlet  # outside air going into the economizer
+    exhaustAir: AirInlet  # from exhaust fan going out
 
 
 # start with outside air
 outside_air = OutsideAir(label="outside_air")
 
 min_oa_damper = Damper(label="min_oa_damper")
-outside_air.oa >> min_oa_damper.ain
+outside_air.outsideAir >> min_oa_damper.airInlet
 
 outside_air_afms = AirFlowStation(label="outside_air_afms")
 min_oa_damper >> outside_air_afms
 
 economizer_oa_damper = Damper(label="economizer_oa_damper")
-outside_air.econ >> economizer_oa_damper.ain
+outside_air.economizerAir >> economizer_oa_damper.airInlet
 
 mixed_air = AirConnection(label="mixed_air")
-outside_air_afms.aout >> mixed_air
-economizer_oa_damper.aout >> mixed_air
+outside_air_afms.airOutlet >> mixed_air
+economizer_oa_damper.airOutlet >> mixed_air
 
 mixed_air_damper = Damper(label="mixed_air_damper")
-mixed_air_damper.ain << mixed_air
+mixed_air_damper.airInlet << mixed_air
 
 hot_water_coil = HotWaterCoil2(label="hot_water_coil")
 mixed_air_damper >> hot_water_coil
@@ -72,13 +72,13 @@ return_air >> return_fan
 # make the exhaust air damper and connect it
 exhaust_air_damper = Damper(label="exhaust_air_damper")
 return_fan >> exhaust_air_damper
-exhaust_air_damper.aout >> outside_air.ea
+exhaust_air_damper.airOutlet >> outside_air.exhaustAir
 
 # the return air damper gets its input from the return fan and goes to
 # into the mixed air
 return_air_damper = Damper(label="return_air_damper")
-return_fan.aout.connectedThrough >> return_air_damper  # type: ignore[operator]
-return_air_damper.aout >> mixed_air
+return_fan.airOutlet.connectedThrough >> return_air_damper
+return_air_damper.airOutlet >> mixed_air
 
 # dump the result
 if __name__ == "__main__":

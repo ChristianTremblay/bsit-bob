@@ -30,16 +30,16 @@ class HotWaterOutlet(Outlet, HotWater):
 
 
 class HotWaterValve(Device):
-    hwin: HotWaterInlet
-    hwout: HotWaterOutlet
+    hotWaterInlet: HotWaterInlet
+    hotWaterOutlet: HotWaterOutlet
     pos = AnalogIn
 
 
 class HotWaterCoil(Device):
-    ain: AirInlet
-    aout: AirOutlet
-    hws: HotWaterInlet
-    hwr: HotWaterOutlet
+    airInlet: AirInlet
+    airOutlet: AirOutlet
+    hotWaterInlet: HotWaterInlet
+    hotWaterOutlet: HotWaterOutlet
 
 
 class HotWaterCoil2(HotWaterCoil):
@@ -53,11 +53,11 @@ class HotWaterCoil2(HotWaterCoil):
         super().__init__(**kwargs)
 
         # create a hot water valve subsystem
-        self.hw_valve = HotWaterValve(label=self.label + ".hw_valve")
-        self > self.hw_valve
+        self.hot_water_valve = HotWaterValve(label=self.label + ".hw_valve")
+        self > self.hot_water_valve
 
         # link the hot water pieces together
-        self.hw_valve >> self
+        self.hot_water_valve >> self
 
         # lift the connection
-        self.hw_valve_pos = self.hw_valve.pos
+        self.hot_water_valve_pos = self.hot_water_valve.pos

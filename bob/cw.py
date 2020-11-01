@@ -30,16 +30,16 @@ class ChilledWaterOutlet(Outlet, ChilledWater):
 
 
 class ChilledWaterValve(Device):
-    cwin: ChilledWaterInlet
-    cwout: ChilledWaterOutlet
+    chilledWaterInlet: ChilledWaterInlet
+    chilledWaterOutlet: ChilledWaterOutlet
     pos = AnalogIn
 
 
 class ChilledWaterCoil(Device):
-    ain: AirInlet
-    aout: AirOutlet
-    cws: ChilledWaterInlet
-    cwr: ChilledWaterOutlet
+    airInlet: AirInlet
+    airOutlet: AirOutlet
+    chilledWaterSupply: ChilledWaterInlet
+    chilledWaterReturn: ChilledWaterOutlet
 
 
 class ChilledWaterCoil2(ChilledWaterCoil):
@@ -53,11 +53,13 @@ class ChilledWaterCoil2(ChilledWaterCoil):
         super().__init__(**kwargs)
 
         # create a chilled water valve subsystem
-        self.cw_valve = ChilledWaterValve(label=self.label + ".cw_valve")
-        self > self.cw_valve
+        self.chilled_water_valve = ChilledWaterValve(
+            label=self.label + ".chilled_water_valve"
+        )
+        self > self.chilled_water_valve
 
         # link the chilled water pieces together
-        self.cw_valve >> self
+        self.chilled_water_valve >> self
 
         # lift the position
-        self.cw_valve_pos = self.cw_valve.pos
+        self.chilled_water_valve_pos = self.chilled_water_valve.pos

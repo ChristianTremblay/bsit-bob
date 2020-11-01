@@ -28,34 +28,34 @@ class AirOutlet(Outlet, Air):
 
 
 class Fan(Device):
-    ain: AirInlet
-    aout: AirOutlet
+    airInlet: AirInlet
+    airOutlet: AirOutlet
 
 
 class Damper(Device):
-    ain: AirInlet
-    aout: AirOutlet
+    airInlet: AirInlet
+    airOutlet: AirOutlet
     pos: AnalogIn
 
 
 class AirFlowStation(Device):
-    ain: AirInlet
-    aout: AirOutlet
+    airInlet: AirInlet
+    airOutlet: AirOutlet
     flow = AnalogOut  # create an instance
 
 
 class Zone(Device):
-    sa: AirInlet  # supply air goes in
-    ra: AirOutlet  # return air goes out
+    supplyAirInlet: AirInlet  # supply air goes in
+    returnAirOutlet: AirOutlet  # return air goes out
 
 
 class OutsideAir(Device):
-    oa: AirOutlet  # outside air goes in someplace
-    ea: AirInlet  # from exhaust fan going out
+    outsideAir: AirOutlet  # outside air goes in someplace
+    exhaustAir: AirInlet  # from exhaust fan going out
 
 
 class MixedAir(Device):
-    oa: AirInlet  # outside air goes in someplace
-    ra: AirInlet  # return air from the zone air goes in someplace
-    ma: AirOutlet  # mixed air to become supply air to the zone
-    ea: AirOutlet  # exhaust air going to the outside
+    outsideAirInlet: AirInlet  # outside air goes in someplace
+    returnAirInlet: AirInlet  # return air from the zone air goes in someplace
+    mixedAirInlet: AirOutlet  # mixed air to become supply air to the zone
+    exhaustAirOutlet: AirOutlet  # exhaust air going to the outside
