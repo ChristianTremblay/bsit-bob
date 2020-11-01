@@ -10,10 +10,11 @@ class VAV1(Device):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        # create an air flow station and damper
+        # create an air flow station
         self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
         self > self.air_flow_station
 
+        # create a damper
         self.damper = Damper(label=self.label + ".damper")
         self > self.damper
 
@@ -25,8 +26,8 @@ class VAV1(Device):
         # lift the connections
         self.ain = self._connection_points["ain"] = self.air_flow_station.ain
         self.aout = self._connection_points["aout"] = self.damper.aout
-        self.flow = self._connection_points["flow"] = self.air_flow_station.flow
-        self.damper_pos = self._connection_points["damper_pos"] = self.damper.pos
+        self.flow = self.air_flow_station.flow
+        self.damper_pos = self.damper.pos
 
 
 class VAV2(Device):
@@ -63,6 +64,6 @@ class VAV2(Device):
         # lift the connections
         self.ain = self._connection_points["ain"] = self.air_flow_station.ain
         self.aout = self._connection_points["aout"] = self.hw_coil.aout
-        self.flow = self._connection_points["flow"] = self.air_flow_station.flow
-        self.damper_pos = self._connection_points["damper_pos"] = self.damper.pos
-        self.hw_valve_pos = self._connection_points["hw_valve_pos"] = self.hw_valve.pos
+        self.flow = self.air_flow_station.flow
+        self.damper_pos = self.damper.pos
+        self.hw_valve_pos = self.hw_valve.pos

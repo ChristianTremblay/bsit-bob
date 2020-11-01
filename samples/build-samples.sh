@@ -4,5 +4,5 @@ for f in *.py
 do
     ttl=${f/[.]py/.ttl}
     echo $ttl
-    python $f > $ttl
+    python $f | python sort_turtle_file.py > $ttl
 done

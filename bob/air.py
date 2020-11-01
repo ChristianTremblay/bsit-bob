@@ -41,7 +41,7 @@ class Damper(Device):
 class AirFlowStation(Device):
     ain: AirInlet
     aout: AirOutlet
-    flow: AnalogOut
+    flow = AnalogOut  # create an instance
 
 
 class Zone(Device):
@@ -49,9 +49,9 @@ class Zone(Device):
     ra: AirOutlet  # return air goes out
 
 
-class Outside(Device):
+class OutsideAir(Device):
     oa: AirOutlet  # outside air goes in someplace
-    ea: AirOutlet  # from exhaust fan going out
+    ea: AirInlet  # from exhaust fan going out
 
 
 class MixedAir(Device):

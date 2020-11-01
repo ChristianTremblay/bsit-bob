@@ -9,6 +9,8 @@ __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
 from .core import (
+    bind_namespace,
+    bind_model_namespace,
     Node,
     ConnectionType,
     Connection,

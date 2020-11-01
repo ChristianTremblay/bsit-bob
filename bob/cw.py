@@ -30,9 +30,9 @@ class ChilledWaterOutlet(Outlet, ChilledWater):
 
 
 class ChilledWaterValve(Device):
-    pos: AnalogIn
     cwin: ChilledWaterInlet
     cwout: ChilledWaterOutlet
+    pos = AnalogIn
 
 
 class ChilledWaterCoil(Device):
@@ -59,5 +59,5 @@ class ChilledWaterCoil2(ChilledWaterCoil):
         # link the chilled water pieces together
         self.cw_valve >> self
 
-        # lift the connection
-        self.cw_valve_pos = self._connection_points["cw_valve_pos"] = self.cw_valve.pos
+        # lift the position
+        self.cw_valve_pos = self.cw_valve.pos

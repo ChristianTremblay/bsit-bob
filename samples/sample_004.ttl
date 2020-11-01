@@ -1,96 +1,117 @@
-@prefix ex: <urn:ex/> .
+! <class 'bob.core.Node'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.Connection'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.ConnectionPoint'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.Inlet'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.Outlet'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.Device'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.System'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.Part'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.Value'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.Property'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.core.QuantifiableProperty'> namespace in module <module 'bob.core' from '/home/joel/.local/share/virtualenvs/si-builder-eh5XPvz1/lib/python3.8/site-packages/bob-0.0.5-py3.8.egg/bob/core.py'>
+! <class 'bob.signal.AnalogIn'> namespace in superclass <class 'bob.core.Property'>
+! <class 'bob.signal.AnalogOut'> namespace in superclass <class 'bob.core.Property'>
+! <class 'bob.signal.BinaryIn'> namespace in superclass <class 'bob.core.Property'>
+! <class 'bob.signal.BinaryOut'> namespace in superclass <class 'bob.core.Property'>
+! <class 'bob.air.AirConnection'> namespace in superclass <class 'bob.core.Connection'>
+! <class 'bob.air.AirInlet'> namespace in superclass <class 'bob.core.Inlet'>
+! <class 'bob.air.AirOutlet'> namespace in superclass <class 'bob.core.Outlet'>
+! <class 'bob.air.Fan'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.air.Damper'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.air.AirFlowStation'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.air.Zone'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.air.Outside'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.air.MixedAir'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.cw.ChilledWaterConnection'> namespace in superclass <class 'bob.core.Connection'>
+! <class 'bob.cw.ChilledWaterInlet'> namespace in superclass <class 'bob.core.Inlet'>
+! <class 'bob.cw.ChilledWaterOutlet'> namespace in superclass <class 'bob.core.Outlet'>
+! <class 'bob.cw.ChilledWaterValve'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.cw.ChilledWaterCoil'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.cw.ChilledWaterCoil2'> namespace in superclass <class 'bob.cw.ChilledWaterCoil'>
+! <class 'bob.hw.HotWaterConnection'> namespace in superclass <class 'bob.core.Connection'>
+! <class 'bob.hw.HotWaterInlet'> namespace in superclass <class 'bob.core.Inlet'>
+! <class 'bob.hw.HotWaterOutlet'> namespace in superclass <class 'bob.core.Outlet'>
+! <class 'bob.hw.HotWaterValve'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.hw.HotWaterCoil'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.hw.HotWaterCoil2'> namespace in superclass <class 'bob.hw.HotWaterCoil'>
+! <class 'bob.vav.VAV1'> namespace in superclass <class 'bob.core.Device'>
+! <class 'bob.vav.VAV2'> namespace in superclass <class 'bob.core.Device'>
+flow an new instance of <class 'bob.signal.AnalogOut'>
+! flow <AnalogOut at http://data.ashrae.org/standard223/1.0/model/core#00006>
+@prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix s4syst: <https://saref.etsi.org/> .
 
-ex:00003 a ex:AirOutlet ;
-    rdfs:label "Zone.ra" ;
-    s4syst:connectionPointOf ex:00001 ;
-    ex:connectionPointOf ex:00001 .
-
-ex:00004 a s4syst:System,
-        ex:VAV1 ;
-    rdfs:label "Zone.VAV" ;
-    s4syst:hasSubSystem ex:00005,
-        ex:00009 .
-
-ex:00006 a ex:AirInlet ;
-    rdfs:label "Zone.VAV.air_flow_station.ain" ;
-    s4syst:connectionPointOf ex:00005 ;
-    ex:connectionPointOf ex:00005 .
-
-ex:00008 a ex:AnalogOut ;
-    rdfs:label "Zone.VAV.air_flow_station.flow" ;
-    s4syst:connectionPointOf ex:00005 ;
-    ex:connectionPointOf ex:00005 .
-
-ex:00012 a ex:AnalogIn ;
-    rdfs:label "Zone.VAV.damper.pos" ;
-    s4syst:connectionPointOf ex:00009 ;
-    ex:connectionPointOf ex:00009 .
-
-ex:00002 a ex:AirInlet ;
-    rdfs:label "Zone.sa" ;
-    s4syst:connectedThrough ex:00014 ;
-    s4syst:connectionPointOf ex:00001 ;
-    ex:connectedThrough ex:00014 ;
-    ex:connectionPointOf ex:00001 .
-
-ex:00007 a ex:AirOutlet ;
-    rdfs:label "Zone.VAV.air_flow_station.aout" ;
-    s4syst:connectedThrough ex:00013 ;
-    s4syst:connectionPointOf ex:00005 ;
-    ex:connectedThrough ex:00013 ;
-    ex:connectionPointOf ex:00005 .
-
-ex:00010 a ex:AirInlet ;
-    rdfs:label "Zone.VAV.damper.ain" ;
-    s4syst:connectedThrough ex:00013 ;
-    s4syst:connectionPointOf ex:00009 ;
-    ex:connectedThrough ex:00013 ;
-    ex:connectionPointOf ex:00009 .
-
-ex:00011 a ex:AirOutlet ;
-    rdfs:label "Zone.VAV.damper.aout" ;
-    s4syst:connectedThrough ex:00014 ;
-    s4syst:connectionPointOf ex:00009 ;
-    ex:connectedThrough ex:00014 ;
-    ex:connectionPointOf ex:00009 .
-
-ex:00001 a s4syst:System,
-        ex:Zone ;
+c223:00001 a c223:Device,
+        c223:Zone ;
     rdfs:label "Zone" ;
-    s4syst:connectsAt ex:00002,
-        ex:00003 ;
-    ex:ra ex:00003 ;
-    ex:sa ex:00002 .
+    c223:connectsAt c223:00002,
+        c223:00003 ;
+    c223:ra c223:00003 ;
+    c223:sa c223:00002 .
 
-ex:00013 a ex:AirConnection ;
-    s4syst:connectsSystemAt ex:00007,
-        ex:00010 .
+c223:00002 a c223:ConnectionPoint ;
+    rdfs:label "Zone.sa" ;
+    c223:connectedThrough c223:00013 ;
+    c223:connectionPointOf c223:00001 .
 
-ex:00014 a ex:AirConnection ;
-    s4syst:connectsSystemAt ex:00002,
-        ex:00011 .
+c223:00003 a c223:ConnectionPoint ;
+    rdfs:label "Zone.ra" ;
+    c223:connectionPointOf c223:00001 .
 
-ex:00005 a s4syst:System,
-        ex:AirFlowStation ;
+c223:00004 a c223:Device,
+        c223:VAV1 ;
+    rdfs:label "Zone.VAV" ;
+    c223:hasDirectPart c223:00005,
+        c223:00009 .
+
+c223:00005 a c223:AirFlowStation,
+        c223:Device ;
     rdfs:label "Zone.VAV.air_flow_station" ;
-    s4syst:connectsAt ex:00006,
-        ex:00007,
-        ex:00008 ;
-    s4syst:subSystemOf ex:00004 ;
-    ex:ain ex:00006 ;
-    ex:aout ex:00007 ;
-    ex:flow ex:00008 .
+    c223:ain c223:00007 ;
+    c223:aout c223:00008 ;
+    c223:connectsAt c223:00007,
+        c223:00008 ;
+    c223:flow c223:00006 ;
+    c223:isDirectPartOf c223:00004 .
 
-ex:00009 a s4syst:System,
-        ex:Damper ;
+c223:00006 a c223:Property ;
+    c223:isPropertyOf c223:00005 .
+
+c223:00007 a c223:ConnectionPoint ;
+    rdfs:label "Zone.VAV.air_flow_station.ain" ;
+    c223:connectionPointOf c223:00005 .
+
+c223:00008 a c223:ConnectionPoint ;
+    rdfs:label "Zone.VAV.air_flow_station.aout" ;
+    c223:connectedThrough c223:00012 ;
+    c223:connectionPointOf c223:00005 .
+
+c223:00009 a c223:Damper,
+        c223:Device ;
     rdfs:label "Zone.VAV.damper" ;
-    s4syst:connectsAt ex:00010,
-        ex:00011,
-        ex:00012 ;
-    s4syst:subSystemOf ex:00004 ;
-    ex:ain ex:00010 ;
-    ex:aout ex:00011 ;
-    ex:pos ex:00012 .
+    c223:ain c223:00010 ;
+    c223:aout c223:00011 ;
+    c223:connectsAt c223:00010,
+        c223:00011 ;
+    c223:isDirectPartOf c223:00004 .
+
+c223:00010 a c223:ConnectionPoint ;
+    rdfs:label "Zone.VAV.damper.ain" ;
+    c223:connectedThrough c223:00012 ;
+    c223:connectionPointOf c223:00009 .
+
+c223:00011 a c223:ConnectionPoint ;
+    rdfs:label "Zone.VAV.damper.aout" ;
+    c223:connectedThrough c223:00013 ;
+    c223:connectionPointOf c223:00009 .
+
+c223:00012 a c223:AirConnection,
+        c223:Connection ;
+    c223:connectsDeviceAt c223:00008,
+        c223:00010 .
+
+c223:00013 a c223:AirConnection,
+        c223:Connection ;
+    c223:connectsDeviceAt c223:00002,
+        c223:00011 .
 

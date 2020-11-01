@@ -1,18 +1,21 @@
-from bob.core import System, dump
+from bob.core import bind_model_namespace, Device, dump
 from bob.air import AirConnection, AirInlet, AirOutlet, Damper, Fan, AirFlowStation, Zone
 from bob.cw import ChilledWaterCoil2
 from bob.hw import HotWaterCoil2
 from bob.vav import VAV2
 
 
-class Outside(System):
+__namespace__ = bind_model_namespace("ex", "urn:ex/")
+
+
+class OutsideAir(Device):
     oa: AirOutlet  # outside air goes in someplace
     econ: AirOutlet  # outside air going into the economizer
     ea: AirInlet  # from exhaust fan going out
 
 
 # start with outside air
-outside_air = Outside(label="outside_air")
+outside_air = OutsideAir(label="outside_air")
 
 min_oa_damper = Damper(label="min_oa_damper")
 outside_air.oa >> min_oa_damper.ain

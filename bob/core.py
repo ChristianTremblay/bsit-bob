@@ -8,7 +8,7 @@ from collections import defaultdict
 
 from typing import Dict, Any, TextIO, Tuple, Type, TypeVar, Union, cast
 
-from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, XSD  # type: ignore
+from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
 
 # options
 MANDITORY_LABEL = True
@@ -17,23 +17,43 @@ MANDITORY_LABEL = True
 g = Graph()
 _next_node = 1
 
-# namespaces
-ex = Namespace("urn:ex/")
-g.namespace_manager.bind("ex", URIRef("urn:ex/"))
+# cleanup annotation references, i.e. "System" to _nodes[attr] = System
+NodeMap = Dict[str, Union[type, str]]
+_annotation_forwards: Dict[str, type] = {}
 
-c223 = Namespace("http://data.ashrae.org/standard223/1.0/model/core#")
-g.namespace_manager.bind(
-    "c223", URIRef("http://data.ashrae.org/standard223/1.0/model/core#")
-)
+def bind_namespace(prefix: str, uri: str) -> Namespace:
+    """
+    Create a Namespace and bind a prefix to it in the graph.
+    """
+    namespace = Namespace(uri)
+    g.namespace_manager.bind(prefix, URIRef(uri))
+    return namespace
 
-qudt = Namespace("http://qudt.org/schema/qudt/")
-g.namespace_manager.bind("qudt", URIRef("http://qudt.org/schema/qudt/"))
 
-quantitykind = Namespace("http://qudt.org/vocab/quantitykind/")
-g.namespace_manager.bind("quantitykind", URIRef("http://qudt.org/vocab/quantitykind/"))
+# common namespaces
+c223 = bind_namespace("c223", "http://data.ashrae.org/standard223/1.0/model/core#")
+qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
+quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
+brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
 
-# brick = Namespace("https://brickschema.org/schema/1.1.0/Brick#")
-# g.namespace_manager.bind("brick", URIRef("https://brickschema.org/schema/1.1.0/Brick#"))
+# the namespace for a node is defined in the node as the _namespace attribute,
+# or in its module as the __namespace__ special global, and if it's not one
+# of those two, it inherits the namespace from its superclass
+__namespace__ = c223
+
+# the model_namespace is used to create "blank" node identifiers, a serial
+# number to make it easier to debug a constructed file
+model_namespace = None
+
+def bind_model_namespace(prefix: str, uri: str) -> Namespace:
+    """
+    Create a Namespace for blank node identifiers and bind a prefix to the
+    prefix in the graph.
+    """
+    global model_namespace
+    model_namespace = bind_namespace(prefix, uri)
+    return model_namespace
+
 
 # connection type (air, etc) to connection classes
 connection_classes: Dict[str, Any] = {}
@@ -41,12 +61,12 @@ connection_classes: Dict[str, Any] = {}
 
 T = TypeVar("T")
 
-# cleanup annotation references, i.e. "System" to _nodes[attr] = System
-NodeMap = Dict[str, Union[type, str]]
-_annotation_forwards: Dict[str, type] = {}
-
 
 def register_connection_type(connection_class: Type[T]) -> Type[T]:
+    """
+    Register a connection type so that the connection operators can line up the
+    correct types.
+    """
     connection_type: str = connection_class.connection_type  # type: ignore[attr-defined]
     connection_classes[connection_type] = connection_class
     return connection_class
@@ -122,6 +142,9 @@ class NodeMetaclass(type):
                             f"initializing {attr}: literal {_datatypes[attr]} expected"
                         )
 
+            elif inspect.isclass(value) and issubclass(value, Node):
+                _nodes[attr] = value
+
             else:
                 continue
 
@@ -132,16 +155,35 @@ class NodeMetaclass(type):
         attributedict["_datatypes"] = _datatypes
         attributedict["_inits"] = _inits
 
-        # make sure it has a type
-        if "node_type" not in attributedict:
-            attributedict["node_type"] = ex[clsname]
-
+        # build the class
         metaclass = cast(
             NodeMetaclass,
             super(NodeMetaclass, cls).__new__(
                 cls, clsname, superclasses, attributedict
             ),
         )
+
+        # find the namespace in the class definition
+        if "_namespace" in attributedict:
+            _namespace = attributedict["_namespace"]
+        else:
+            # check the module
+            cls_module = inspect.getmodule(metaclass)
+            _namespace = getattr(cls_module, "__namespace__", None)
+            if not _namespace:
+                # check the superclasses
+                for supercls in superclasses:
+                    _namespace = getattr(supercls, "_namespace", None)
+                    if _namespace:
+                        break
+                else:
+                    raise AttributeError(f"namespace not found: {clsname}")
+
+            metaclass._namespace = _namespace  # type: ignore[attr-defined]
+
+        # make sure it has a type
+        if "node_type" not in attributedict:
+            attributedict["node_type"] = _namespace[clsname]
 
         # save the reference
         _annotation_forwards[metaclass.__name__] = metaclass
@@ -155,6 +197,8 @@ class Node(metaclass=NodeMetaclass):
     would be something like blank nodes.
     """
 
+    _namespace: Namespace
+
     # assigned by NodeMetaclass
     _nodes: NodeMap
     _datatypes: Dict[str, Literal]
@@ -165,10 +209,13 @@ class Node(metaclass=NodeMetaclass):
     label: str
 
     def __init__(self, *, label: str = "", **kwargs: Any) -> None:
-        global _next_node
+        global _next_node, model_namespace
 
-        self.node = ex[f"{_next_node:05d}"]
-        _next_node += 1
+        if model_namespace:
+            self.node = model_namespace[f"{_next_node:05d}"]
+            _next_node += 1
+        else:
+            self.node = BNode()
 
         self.label = label
         if label:
@@ -232,13 +279,18 @@ class Node(metaclass=NodeMetaclass):
                 value = node_class(value)
 
             # break the reference to the current child node
-            # g.remove((self.node, ex[attr], None))
+            # g.remove((self.node, self._namespace[attr], None))
 
-            # add the link
+            # add the link(s)
             if isinstance(value, (URIRef, Literal)):
-                g.add((self.node, ex[attr], value))
-            elif isinstance(value, Node):
-                g.add((self.node, ex[attr], value.node))
+                g.add((self.node, self._namespace[attr], value))
+            if isinstance(value, Node):
+                g.add((self.node, self._namespace[attr], value.node))
+            if isinstance(value, Property):
+                # if the value is a property, then attr should be a subproperty
+                # of hasProperty
+                # g.add((self.node, c223.hasProperty, value.node))
+                g.add((value.node, c223.isPropertyOf, self.node))
 
         # if this needs some datatype decoration, turn it into a literal
         if attr in self._datatypes:
@@ -253,10 +305,10 @@ class Node(metaclass=NodeMetaclass):
                     raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
 
             # remove the current value
-            # g.remove((self.node, ex[attr], None))
+            # g.remove((self.node, self._namespace[attr], None))
 
             # add the literal
-            g.add((self.node, ex[attr], value))
+            g.add((self.node, self._namespace[attr], value))
 
         # carry on
         super().__setattr__(attr, value)
@@ -291,7 +343,13 @@ class Connection(Node, ConnectionType):
         super().__init__(**kwargs)
 
         if self.connection_type:
-            g.add((self.node, RDF.type, ex[self.connection_type + "Connection"]))
+            g.add(
+                (
+                    self.node,
+                    RDF.type,
+                    self._namespace[self.connection_type + "Connection"],
+                )
+            )
 
     def __rshift__(self, other: Any) -> None:
         """self >> other"""
@@ -430,11 +488,11 @@ class ConnectionPoint(Node):
     def __init__(self, device: "Device", **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        # <self> connection point of <system>
-        g.add((self.node, c223.connectionPointOf, device.node))
+        # <self> connection point of <device>
+        # g.add((self.node, c223.connectionPointOf, device.node))
         self.connectionPointOf = device
 
-        # <system> connects at <self>
+        # <device> connects at <self>
         g.add((device.node, c223.connectsAt, self.node))
 
     def __rshift__(self, other: Any) -> None:
@@ -577,7 +635,7 @@ class Device(Node):
         #     g.add((self.node, RDF.type, brick[self.__annotations__["__brick__"]]))
 
         # <self> a something
-        g.add((self.node, RDF.type, ex[self.__class__.__name__]))
+        g.add((self.node, RDF.type, self._namespace[self.__class__.__name__]))
 
         self._connection_points = {}
         for var_name, var_annotation in self.__annotations__.items():
@@ -698,7 +756,7 @@ class Device(Node):
         g.add((other.node, c223.hasDirectPart, self.node))
         g.add((self.node, c223.isDirectPartOf, other.node))
 
-        return other
+        return cast(Device, other)
 
 
 class System(Node):
@@ -821,6 +879,9 @@ class Property(Node):
             init_value = arg
 
         super().__init__(**kwargs)
+
+        # <self> a Property
+        g.add((self.node, RDF.type, c223.Property))
 
         # if there is an initial value, add/create and link to it
         if init_value is not None:

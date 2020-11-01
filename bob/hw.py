@@ -30,9 +30,9 @@ class HotWaterOutlet(Outlet, HotWater):
 
 
 class HotWaterValve(Device):
-    pos: AnalogIn
     hwin: HotWaterInlet
     hwout: HotWaterOutlet
+    pos = AnalogIn
 
 
 class HotWaterCoil(Device):
@@ -60,4 +60,4 @@ class HotWaterCoil2(HotWaterCoil):
         self.hw_valve >> self
 
         # lift the connection
-        self.hw_valve_pos = self._connection_points["hw_valve_pos"] = self.hw_valve.pos
+        self.hw_valve_pos = self.hw_valve.pos

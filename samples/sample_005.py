@@ -1,6 +1,9 @@
-from bob import dump
+from bob import bind_model_namespace, dump
 from bob.air import AirConnection, Zone
 from bob.vav import VAV2
+
+# instances will come from this namespace, otherwise they would be BNode's
+bind_model_namespace("ex", "urn:ex/")
 
 # create Zone-1 and its VAV connected together
 zone1 = Zone(label="Zone-1")

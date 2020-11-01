@@ -1,35 +1,17 @@
-from .core import ConnectionType, register_connection_type, Connection, Inlet, Outlet
+from .core import Property
 
 
-class AnalogSignal(ConnectionType):
-    connection_type: str = "AnalogSignal"
-
-
-@register_connection_type
-class AnalogSignalConnection(AnalogSignal, Connection):
+class AnalogIn(Property):
     pass
 
 
-class AnalogIn(Inlet, AnalogSignal):
+class AnalogOut(Property):
     pass
 
 
-class AnalogOut(Outlet, AnalogSignal):
+class BinaryIn(Property):
     pass
 
 
-class BinarySignal(ConnectionType):
-    connection_type: str = "BinarySignal"
-
-
-@register_connection_type
-class BinarySignalConnection(BinarySignal, Connection):
-    pass
-
-
-class BinaryIn(Inlet, BinarySignal):
-    pass
-
-
-class BinaryOut(Outlet, BinarySignal):
+class BinaryOut(Property):
     pass

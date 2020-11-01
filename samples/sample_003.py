@@ -1,6 +1,9 @@
-from bob import dump
+from bob import bind_model_namespace, dump
 from bob.air import Fan, Zone
 from bob.cw import ChilledWaterConnection, ChilledWaterCoil
+
+# instances will come from this namespace, otherwise they would be BNode's
+bind_model_namespace("ex", "urn:ex/")
 
 # there is a chilled water connection, we don't know where the chilled
 # is coming from
