@@ -1,12 +1,18 @@
 from typing import Any
 
 from .core import Device
-from .air import AirFlowStation, Damper
+from .air import AirInlet, AirOutlet, AirFlowStation, Damper
+from .signal import AnalogIn, AnalogOut
 from .hw import HotWaterCoil, HotWaterValve
 from .signal import AnalogOut
 
 
 class VAV1(Device):
+    airInlet: AirInlet
+    airOutlet: AirOutlet
+    airFlow: AnalogIn
+    damperPosition: AnalogOut
+
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
@@ -24,12 +30,10 @@ class VAV1(Device):
         self.air_flow_station.airOutlet >> self.damper.airInlet
 
         # lift the connections
-        self.airInlet = self._connection_points[
-            "airInlet"
-        ] = self.air_flow_station.airInlet
-        self.airOutlet = self._connection_points["airOutlet"] = self.damper.airOutlet
-        self.flow = self.air_flow_station.flow
-        self.damper_pos = self.damper.pos
+        self.airInlet = self.air_flow_station.airInlet
+        self.airOutlet = self.damper.airOutlet
+        self.airFlow = self.air_flow_station.flow
+        self.damperPosition = self.damper.position
 
 
 class VAV2(Device):

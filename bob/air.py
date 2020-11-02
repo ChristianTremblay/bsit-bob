@@ -35,7 +35,7 @@ class Fan(Device):
 class Damper(Device):
     airInlet: AirInlet
     airOutlet: AirOutlet
-    pos: AnalogIn
+    position = AnalogIn
 
 
 class AirFlowStation(Device):
