@@ -12,25 +12,25 @@ ex:00001 a c223:Device,
     c223:hotWaterOutlet ex:00005 .
 
 ex:00002 a c223:AirConnectionPoint,
-        c223:ConnectionPoint ;
+        c223:AirInlet ;
     rdfs:label "hot_water_coil.airInlet" ;
     c223:connectedThrough ex:00011 ;
     c223:connectionPointOf ex:00001 .
 
 ex:00003 a c223:AirConnectionPoint,
-        c223:ConnectionPoint ;
+        c223:AirOutlet ;
     rdfs:label "hot_water_coil.airOutlet" ;
     c223:connectedThrough ex:00012 ;
     c223:connectionPointOf ex:00001 .
 
-ex:00004 a c223:ConnectionPoint,
-        c223:HotWaterConnectionPoint ;
+ex:00004 a c223:HotWaterConnectionPoint,
+        c223:HotWaterInlet ;
     rdfs:label "hot_water_coil.hotWaterInlet" ;
     c223:connectedThrough ex:00010 ;
     c223:connectionPointOf ex:00001 .
 
-ex:00005 a c223:ConnectionPoint,
-        c223:HotWaterConnectionPoint ;
+ex:00005 a c223:HotWaterConnectionPoint,
+        c223:HotWaterOutlet ;
     rdfs:label "hot_water_coil.hotWaterOutlet" ;
     c223:connectionPointOf ex:00001 .
 
@@ -42,32 +42,30 @@ ex:00006 a c223:Device,
     c223:isDirectPartOf ex:00001 ;
     c223:pos ex:00007 .
 
-ex:00007 a c223:Property ;
+ex:00007 a c223:AnalogIn,
+        c223:Property ;
     c223:isPropertyOf ex:00006 .
 
-ex:00008 a c223:ConnectionPoint,
-        c223:HotWaterConnectionPoint ;
+ex:00008 a c223:HotWaterConnectionPoint,
+        c223:HotWaterInlet ;
     rdfs:label "hot_water_coil.hw_valve.hotWaterInlet" ;
     c223:connectionPointOf ex:00006 .
 
-ex:00009 a c223:ConnectionPoint,
-        c223:HotWaterConnectionPoint ;
+ex:00009 a c223:HotWaterConnectionPoint,
+        c223:HotWaterOutlet ;
     rdfs:label "hot_water_coil.hw_valve.hotWaterOutlet" ;
     c223:connectedThrough ex:00010 ;
     c223:connectionPointOf ex:00006 .
 
-ex:00010 a c223:Connection,
-        c223:HotWaterConnection ;
+ex:00010 a c223:HotWaterConnection ;
     c223:connectsDeviceAt ex:00004,
         ex:00009 .
 
-ex:00011 a c223:AirConnection,
-        c223:Connection ;
+ex:00011 a c223:AirConnection ;
     rdfs:label "Cold Air" ;
     c223:connectsDeviceAt ex:00002 .
 
-ex:00012 a c223:AirConnection,
-        c223:Connection ;
+ex:00012 a c223:AirConnection ;
     rdfs:label "Hot Air" ;
     c223:connectsDeviceAt ex:00003 .
 

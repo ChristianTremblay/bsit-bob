@@ -9,13 +9,13 @@ ex:00001 a c223:Device,
     c223:supplyAirInlet ex:00002 .
 
 ex:00002 a c223:AirConnectionPoint,
-        c223:ConnectionPoint ;
+        c223:AirInlet ;
     rdfs:label "Zone.supplyAirInlet" ;
     c223:connectedThrough ex:00013 ;
     c223:connectionPointOf ex:00001 .
 
 ex:00003 a c223:AirConnectionPoint,
-        c223:ConnectionPoint ;
+        c223:AirOutlet ;
     rdfs:label "Zone.returnAirOutlet" ;
     c223:connectionPointOf ex:00001 .
 
@@ -33,16 +33,17 @@ ex:00005 a c223:AirFlowStation,
     c223:flow ex:00006 ;
     c223:isDirectPartOf ex:00004 .
 
-ex:00006 a c223:Property ;
+ex:00006 a c223:AnalogOut,
+        c223:Property ;
     c223:isPropertyOf ex:00005 .
 
 ex:00007 a c223:AirConnectionPoint,
-        c223:ConnectionPoint ;
+        c223:AirInlet ;
     rdfs:label "Zone.VAV.air_flow_station.airInlet" ;
     c223:connectionPointOf ex:00005 .
 
 ex:00008 a c223:AirConnectionPoint,
-        c223:ConnectionPoint ;
+        c223:AirOutlet ;
     rdfs:label "Zone.VAV.air_flow_station.airOutlet" ;
     c223:connectedThrough ex:00012 ;
     c223:connectionPointOf ex:00005 .
@@ -55,24 +56,22 @@ ex:00009 a c223:Damper,
     c223:isDirectPartOf ex:00004 .
 
 ex:00010 a c223:AirConnectionPoint,
-        c223:ConnectionPoint ;
+        c223:AirInlet ;
     rdfs:label "Zone.VAV.damper.airInlet" ;
     c223:connectedThrough ex:00012 ;
     c223:connectionPointOf ex:00009 .
 
 ex:00011 a c223:AirConnectionPoint,
-        c223:ConnectionPoint ;
+        c223:AirOutlet ;
     rdfs:label "Zone.VAV.damper.airOutlet" ;
     c223:connectedThrough ex:00013 ;
     c223:connectionPointOf ex:00009 .
 
-ex:00012 a c223:AirConnection,
-        c223:Connection ;
+ex:00012 a c223:AirConnection ;
     c223:connectsDeviceAt ex:00008,
         ex:00010 .
 
-ex:00013 a c223:AirConnection,
-        c223:Connection ;
+ex:00013 a c223:AirConnection ;
     c223:connectsDeviceAt ex:00002,
         ex:00011 .
 
