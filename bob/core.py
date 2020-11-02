@@ -186,7 +186,7 @@ class NodeMetaclass(type):
 
         # make sure it has a type
         if "node_type" not in attributedict:
-            attributedict["node_type"] = _namespace[clsname]
+            metaclass.node_type = _namespace[clsname]
 
         # save the reference
         _annotation_forwards[metaclass.__name__] = metaclass
