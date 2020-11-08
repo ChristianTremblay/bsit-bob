@@ -2,6 +2,8 @@ from bob import bind_model_namespace, dump
 from bob.air import Fan, Zone
 from bob.cw import ChilledWaterConnection, ChilledWaterCoil
 
+from samples import sample_header
+
 # instances will come from this namespace, otherwise they would be BNode's
 bind_model_namespace("ex", "urn:ex/")
 
@@ -26,4 +28,5 @@ coil1 >> z
 
 # dump the result
 if __name__ == "__main__":
+    sample_header("sample003")
     dump()
