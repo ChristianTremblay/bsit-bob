@@ -1,13 +1,13 @@
 from typing import Any
 
-from .core import Device
+from .core import System, Device
 from .air import AirInlet, AirOutlet, AirFlowStation, Damper
 from .signal import AnalogIn, AnalogOut
 from .hw import HotWaterCoil, HotWaterValve
 from .signal import AnalogOut
 
 
-class VAV1(Device):
+class VAV1(System):
     airInlet: AirInlet
     airOutlet: AirOutlet
     airFlow: AnalogIn
@@ -24,20 +24,22 @@ class VAV1(Device):
         self.damper = Damper(label=self.label + ".damper")
         self > self.damper
 
-        # link the air pieces together, the tool notices that the air flow
-        # station flow output could be connected to the damper position so
-        # the simplest (self.air_flow_station >> self.damper) is an error
-        self.air_flow_station.airOutlet >> self.damper.airInlet
+        # link the air pieces together
+        self.air_flow_station >> self.damper
 
-        # lift the connections
+        # reference the connections
         self.airInlet = self.air_flow_station.airInlet
         self.airOutlet = self.damper.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
 
 
-class VAV2(Device):
-    temp: AnalogOut
+class VAV2(System):
+    airInlet: AirInlet
+    airOutlet: AirOutlet
+    airFlow: AnalogIn
+    damperPosition: AnalogOut
+    hwValvePosition: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -65,13 +67,9 @@ class VAV2(Device):
         # link the hot water pieces together
         self.hot_water_valve >> self.hot_water_coil
 
-        # lift the connections
-        self.airInlet = self._connection_points[
-            "airInlet"
-        ] = self.air_flow_station.airInlet
-        self.airOutlet = self._connection_points[
-            "airOutlet"
-        ] = self.hot_water_coil.airOutlet
-        self.flow = self.air_flow_station.flow
-        self.damper_pos = self.damper.pos
-        self.hot_water_valve_pos = self.hot_water_valve.pos
+        # reference the connections
+        self.airInlet = self.air_flow_station.airInlet
+        self.airOutlet = self.hot_water_coil.airOutlet
+        self.airFlow = self.air_flow_station.flow
+        self.damperPosition = self.damper.position
+        self.hwValvePosition = self.hot_water_valve.position

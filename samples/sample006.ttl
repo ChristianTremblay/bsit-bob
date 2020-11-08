@@ -1,13 +1,25 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/data/sample006
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
 @prefix ex: <urn:ex/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/1.0/data/sample006>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/data/sample006> ;
+  rdfs:label "sample006" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex:00001 a c223:Device,
         c223:HotWaterCoil2 ;
     rdfs:label "hot_water_coil" ;
     c223:airInlet ex:00002 ;
     c223:airOutlet ex:00003 ;
-    c223:hasDirectPart ex:00006 ;
+    c223:hasPart ex:00006 ;
     c223:hotWaterInlet ex:00004 ;
     c223:hotWaterOutlet ex:00005 .
 
@@ -39,8 +51,8 @@ ex:00006 a c223:Device,
     rdfs:label "hot_water_coil.hw_valve" ;
     c223:hotWaterInlet ex:00008 ;
     c223:hotWaterOutlet ex:00009 ;
-    c223:isDirectPartOf ex:00001 ;
-    c223:pos ex:00007 .
+    c223:isPartOf ex:00001 ;
+    c223:position ex:00007 .
 
 ex:00007 a c223:AnalogIn,
         c223:Property ;

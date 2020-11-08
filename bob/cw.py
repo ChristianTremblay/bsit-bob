@@ -32,7 +32,7 @@ class ChilledWaterOutlet(Outlet, ChilledWater):
 class ChilledWaterValve(Device):
     chilledWaterInlet: ChilledWaterInlet
     chilledWaterOutlet: ChilledWaterOutlet
-    pos = AnalogIn
+    position = AnalogIn
 
 
 class ChilledWaterCoil(Device):
@@ -62,4 +62,4 @@ class ChilledWaterCoil2(ChilledWaterCoil):
         self.chilled_water_valve >> self
 
         # lift the position
-        self.chilled_water_valve_pos = self.chilled_water_valve.pos
+        self.chilled_water_valve_pos = self.chilled_water_valve.position

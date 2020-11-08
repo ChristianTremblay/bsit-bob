@@ -35,13 +35,13 @@ class Fan(Device):
 class Damper(Device):
     airInlet: AirInlet
     airOutlet: AirOutlet
-    position = AnalogIn
+    position = AnalogOut
 
 
 class AirFlowStation(Device):
     airInlet: AirInlet
     airOutlet: AirOutlet
-    flow = AnalogOut  # create an instance
+    flow = AnalogIn
 
 
 class Zone(Device):

@@ -186,7 +186,7 @@ class NodeMetaclass(type):
 
         # make sure it has a type
         if "node_type" not in attributedict:
-            metaclass.node_type = _namespace[clsname]
+            metaclass.node_type = _namespace[clsname]  # type: ignore[attr-defined]
 
         # save the reference
         _annotation_forwards[metaclass.__name__] = metaclass
@@ -316,6 +316,108 @@ class Node(metaclass=NodeMetaclass):
         # carry on
         super().__setattr__(attr, value)
 
+    @staticmethod
+    def containment_heirarchy(a_node: "Node", b_node: "Node") -> None:
+        """Connect the two things in a heirarchy."""
+        g.add((a_node.node, c223.contains, b_node.node))
+        g.add((b_node.node, c223.isContainedBy, a_node.node))
+
+    @staticmethod
+    def join_things(from_thing: Any, to_thing: Any) -> None:
+        """Find an unambiguous way to connect <from> to <to>"""
+
+        from_out = defaultdict(list)
+        if isinstance(from_thing, System):
+            for var_name, var_annotation in from_thing.__annotations__.items():
+                if var_name.startswith("_"):
+                    continue
+                if not issubclass(var_annotation, ConnectionPoint):
+                    continue
+
+                connection_point = getattr(from_thing, var_name, None)
+                if not connection_point:
+                    continue
+                if connection_point.connectedThrough:
+                    continue
+                if not isinstance(connection_point, Outlet):
+                    continue
+
+                connection_type = getattr(connection_point, "connection_type", "")
+                from_out[connection_type].append(connection_point)
+
+        elif isinstance(from_thing, Device):
+            for connection_point in from_thing._connection_points.values():
+                if connection_point.connectedThrough:
+                    continue
+                if not isinstance(connection_point, Outlet):
+                    continue
+
+                connection_type = getattr(connection_point, "connection_type", "")
+                from_out[connection_type].append(connection_point)
+
+        from_types = set(
+            connection_type
+            for connection_type in from_out
+            if len(from_out[connection_type]) == 1
+        )
+        if not from_types:
+            raise RuntimeError(f"no candidate sources: {from_thing!r}")
+
+        to_in = defaultdict(list)
+        if isinstance(to_thing, System):
+            for var_name, var_annotation in to_thing.__annotations__.items():
+                if var_name.startswith("_"):
+                    continue
+                if not issubclass(var_annotation, ConnectionPoint):
+                    continue
+
+                connection_point = getattr(to_thing, var_name, None)
+                if not connection_point:
+                    continue
+                if connection_point.connectedThrough:
+                    continue
+                if not isinstance(connection_point, Inlet):
+                    continue
+
+                connection_type = getattr(connection_point, "connection_type", "")
+                to_in[connection_type].append(connection_point)
+
+        elif isinstance(to_thing, Device):
+            for connection_point in to_thing._connection_points.values():
+                if connection_point.connectedThrough:
+                    continue
+                if not isinstance(connection_point, Inlet):
+                    continue
+
+                connection_type = getattr(connection_point, "connection_type", "")
+                to_in[connection_type].append(connection_point)
+
+        to_types = set(
+            connection_type
+            for connection_type in to_in
+            if len(to_in[connection_type]) == 1
+        )
+        if not to_types:
+            raise RuntimeError(f"no candidate destinations: {to_thing!r}")
+
+        # find the connection type that has one unconnected <from> and
+        # one unconnected <to>
+        common_types = from_types.intersection(to_types)
+        if not common_types:
+            raise RuntimeError("no common connection points")
+        if len(common_types) > 1:
+            raise RuntimeError("too many common types")
+
+        connection_type = common_types.pop()
+        from_connection_point = from_out[connection_type][0]
+        to_connection_point = to_in[connection_type][0]
+
+        # build the connection
+        from_connection_point >> to_connection_point
+
+        # add brick:feeds between the systems
+        # g.add((from_system.node, brick.feeds, to_system.node))
+
     def __repr__(self) -> str:
         label = (" " + self.label) if self.label else ""
         return f"<{self.__class__.__name__}{label} at {self.node}>"
@@ -353,6 +455,9 @@ class Connection(Node, ConnectionType):
     def __rshift__(self, other: Any) -> None:
         """self >> other"""
 
+        # look for <system> unconnected connection points for this connection type
+        unbound_connection_points = set()
+
         if isinstance(other, ConnectionPoint):
             if other.connectedThrough:
                 raise RuntimeError(f"already connected: {other!r}")
@@ -372,53 +477,76 @@ class Connection(Node, ConnectionType):
             g.add((other.node, c223.connectedThrough, self.node))
             other.connectedThrough = self
 
-        elif isinstance(other, Device):
-            # look for <system> unconnected connection points for this connection type
-            unbound_connection_points = set()
-            for (
-                connection_point_name,
-                connection_point,
-            ) in other._connection_points.items():
-                # check the connection direction
-                if isinstance(connection_point, Outlet):
+        elif isinstance(other, System):
+            for var_name, var_annotation in other.__annotations__.items():
+                if var_name.startswith("_"):
+                    continue
+                if not issubclass(var_annotation, ConnectionPoint):
                     continue
 
-                connection_point_type = getattr(connection_point, "connection_type", "")
+                connection_point = getattr(other, var_name, None)
+                if not connection_point:
+                    continue
+                if connection_point.connectedThrough:
+                    continue
+                if not isinstance(connection_point, Inlet):
+                    continue
 
                 # the connection type needs to match
+                connection_point_type = getattr(connection_point, "connection_type", "")
                 if connection_point_type != self.connection_type:
-                    continue
-                # the connection point must not be already connected
-                if connection_point.connectedThrough:
                     continue
 
                 # this is a candidate
                 unbound_connection_points.add(connection_point)
 
-            if not unbound_connection_points:
-                raise RuntimeError("no unbound connection points: {other!r}")
+        elif isinstance(other, Device):
+            for (
+                connection_point_name,
+                connection_point,
+            ) in other._connection_points.items():
+                # check the connection direction
+                if not isinstance(connection_point, Inlet):
+                    continue
+                # the connection point must not be already connected
+                if connection_point.connectedThrough:
+                    continue
 
-            connection_point = unbound_connection_points.pop()
+                # the connection type needs to match
+                connection_point_type = getattr(connection_point, "connection_type", "")
+                if connection_point_type != self.connection_type:
+                    continue
 
-            # <self> connects system at <connection_point>
-            g.add((self.node, c223.connectsDeviceAt, connection_point.node))
-
-            # <connection_point> connected through <self>
-            g.add((connection_point.node, c223.connectedThrough, self.node))
-            connection_point.connectedThrough = self
+                # this is a candidate
+                unbound_connection_points.add(connection_point)
 
         else:
             raise TypeError(f"{self!r} connection to {other!r}")
 
+        if not unbound_connection_points:
+            raise RuntimeError("no unbound connection points: {other!r}")
+
+        connection_point = unbound_connection_points.pop()
+
+        # <self> connects system at <connection_point>
+        g.add((self.node, c223.connectsDeviceAt, connection_point.node))
+
+        # <connection_point> connected through <self>
+        g.add((connection_point.node, c223.connectedThrough, self.node))
+        connection_point.connectedThrough = self
+
     def __lshift__(self, other: Any) -> None:
         """self << other"""
+
+        # look for <system> unconnected connection points for this connection type
+        unbound_connection_points = set()
 
         if isinstance(other, ConnectionPoint):
             if other.connectedThrough:
                 raise RuntimeError(f"already connected: {other!r}")
 
             # check the connection direction
-            if isinstance(other, Inlet):
+            if not isinstance(other, Outlet):
                 raise TypeError("connection point direction")
 
             other_connection_type = getattr(other, "connection_type", "")
@@ -432,15 +560,36 @@ class Connection(Node, ConnectionType):
             g.add((other.node, c223.connectedThrough, self.node))
             other.connectedThrough = self
 
+        elif isinstance(other, System):
+            for var_name, var_annotation in other.__annotations__.items():
+                if var_name.startswith("_"):
+                    continue
+                if not issubclass(var_annotation, ConnectionPoint):
+                    continue
+
+                connection_point = getattr(other, var_name, None)
+                if not connection_point:
+                    continue
+                if connection_point.connectedThrough:
+                    continue
+                if not isinstance(connection_point, Outlet):
+                    continue
+
+                # the connection type needs to match
+                connection_point_type = getattr(connection_point, "connection_type", "")
+                if connection_point_type != self.connection_type:
+                    continue
+
+                # this is a candidate
+                unbound_connection_points.add(connection_point)
+
         elif isinstance(other, Device):
-            # look for <system> unconnected connection points for this connection type
-            unbound_connection_points = set()
             for (
                 connection_point_name,
                 connection_point,
             ) in other._connection_points.items():
                 # check the connection direction
-                if isinstance(connection_point, Inlet):
+                if not isinstance(connection_point, Outlet):
                     continue
 
                 connection_point_type = getattr(connection_point, "connection_type", "")
@@ -488,7 +637,7 @@ class ConnectionPoint(Node):
         super().__init__(**kwargs)
 
         if EXPLICIT_CORE_TYPES:
-            if self.connection_type:
+            if isinstance(self, ConnectionType) and self.connection_type:
                 connection_point_type = self.connection_type + "ConnectionPoint"
                 g.add((self.node, RDF.type, self._namespace[connection_point_type],))
 
@@ -657,69 +806,14 @@ class Device(Node):
 
             setattr(self, var_name, var_element)
 
-    @staticmethod
-    def join_devices(from_device: "Device", to_device: "Device") -> None:
-        """Find an unambiguous way to connect <from> to <to>"""
-        from_out = defaultdict(list)
-        for connection_point in from_device._connection_points.values():
-            if connection_point.connectedThrough:
-                continue
-            if not isinstance(connection_point, Outlet):
-                continue
-
-            connection_type = getattr(connection_point, "connection_type", "")
-            from_out[connection_type].append(connection_point)
-
-        from_types = set(
-            connection_type
-            for connection_type in from_out
-            if len(from_out[connection_type]) == 1
-        )
-        if not from_types:
-            raise RuntimeError(f"no candidate sources: {from_device!r}")
-
-        to_in = defaultdict(list)
-        for connection_point in to_device._connection_points.values():
-            if connection_point.connectedThrough:
-                continue
-            if not isinstance(connection_point, Inlet):
-                continue
-            connection_type = getattr(connection_point, "connection_type", "")
-            to_in[connection_type].append(connection_point)
-        to_types = set(
-            connection_type
-            for connection_type in to_in
-            if len(to_in[connection_type]) == 1
-        )
-        if not to_types:
-            raise RuntimeError(f"no candidate destinations: {to_device!r}")
-
-        # find the connection type that has one unconnected <from> and
-        # one unconnected <to>
-        common_types = from_types.intersection(to_types)
-        if not common_types:
-            raise RuntimeError("no common connection points")
-        if len(common_types) > 1:
-            raise RuntimeError("too many common types")
-
-        connection_type = common_types.pop()
-        from_connection_point = from_out[connection_type][0]
-        to_connection_point = to_in[connection_type][0]
-
-        # build the connection
-        from_connection_point >> to_connection_point
-
-        # add brick:feeds between the systems
-        # g.add((from_system.node, brick.feeds, to_system.node))
-
     def __rshift__(self, other: Any) -> None:
         """self >> other
 
-        Build a connection from this device to another device.
+        Build a connection from this device to another system or device.
         """
 
-        if isinstance(other, Device):
-            self.join_devices(self, other)
+        if isinstance(other, (System, Device)):
+            self.join_things(self, other)
         elif isinstance(other, Connection):
             other << self
         else:
@@ -728,11 +822,11 @@ class Device(Node):
     def __lshift__(self, other: Any) -> None:
         """self << other
 
-        Build a connection to this device from another device.
+        Build a connection to this device from another system or device.
         """
 
-        if isinstance(other, Device):
-            self.join_devices(other, self)
+        if isinstance(other, (System, Device)):
+            self.join_things(other, self)
         elif isinstance(other, Connection):
             other >> self
         else:
@@ -747,8 +841,8 @@ class Device(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g.add((self.node, c223.hasDirectPart, other.node))
-        g.add((other.node, c223.isDirectPartOf, self.node))
+        g.add((self.node, c223.hasPart, other.node))
+        g.add((other.node, c223.isPartOf, self.node))
 
         return self
 
@@ -760,8 +854,8 @@ class Device(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g.add((other.node, c223.hasDirectPart, self.node))
-        g.add((self.node, c223.isDirectPartOf, other.node))
+        g.add((other.node, c223.hasPart, self.node))
+        g.add((self.node, c223.isPartOf, other.node))
 
         return cast(Device, other)
 
@@ -770,6 +864,8 @@ class System(Node):
     """
     """
 
+    _connection_points: Dict[str, ConnectionPoint]
+
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
@@ -777,32 +873,52 @@ class System(Node):
         if EXPLICIT_CORE_TYPES:
             g.add((self.node, RDF.type, c223.System))
 
-    @staticmethod
-    def system_heirarchy(system: "System", subsystem: "System") -> None:
-        """Connect the two systems in a heirarchy."""
-        g.add((system.node, c223.hasSubSystem, subsystem.node))
-        g.add((subsystem.node, c223.subSystemOf, system.node))
+    def __rshift__(self, other: Any) -> None:
+        """self >> other
 
-    def __gt__(self, other: "System") -> "System":
+        Build a connection from this system to another system or device.
+        """
+
+        if isinstance(other, (System, Device)):
+            self.join_things(self, other)
+        elif isinstance(other, Connection):
+            other << self
+        else:
+            raise TypeError(repr(other))
+
+    def __lshift__(self, other: Any) -> None:
+        """self << other
+
+        Build a connection to this system from another system or device.
+        """
+
+        if isinstance(other, (System, Device)):
+            self.join_things(other, self)
+        elif isinstance(other, Connection):
+            other >> self
+        else:
+            raise TypeError(repr(other))
+
+    def __gt__(self, other: Node) -> Node:
         """self > other
 
         Build a subsystem heirarchy, the other system is a subsystem of
         this system.
         """
-        assert isinstance(other, System)
+        assert isinstance(other, (System, Device))
 
-        self.system_heirarchy(self, other)
+        self.containment_heirarchy(self, other)
         return self
 
-    def __lt__(self, other: "System") -> "System":
+    def __lt__(self, other: Node) -> Node:
         """self < other
 
         Build a subsystem heirarchy, this is a subsystem of some other
         system.
         """
-        assert isinstance(other, System)
+        assert isinstance(other, (System, Device))
 
-        self.system_heirarchy(other, self)
+        self.containment_heirarchy(other, self)
         return other
 
 
@@ -819,7 +935,7 @@ class Part(Node):
         if EXPLICIT_CORE_TYPES:
             g.add((self.node, RDF.type, c223.Part))
 
-    def __gt__(self, other: Any) -> "Part":
+    def __gt__(self, other: Node) -> Node:
         """self > other
 
         Build a part heirarchy, the other system is a direct part of
@@ -828,15 +944,10 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g.add((self.node, c223.hasDirectPart, other.node))
-        g.add((other.node, c223.isDirectPartOf, self.node))
-
-        # g.add((self.node, brick.hasPart, other.node))
-        # g.add((other.node, brick.isPartOf, self.node))
-
+        self.containment_heirarchy(self, other)
         return self
 
-    def __lt__(self, other: Any) -> Any:
+    def __lt__(self, other: Node) -> Node:
         """self < other
 
         Build a part heirarchy, this part is a direct part of the other part.
@@ -844,12 +955,7 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g.add((other.node, c223.hasDirectPart, self.node))
-        g.add((self.node, c223.isDirectPartOf, other.node))
-
-        # g.add((other.node, brick.hasPart, self.node))
-        # g.add((self.node, brick.isPartOf, other.node))
-
+        self.containment_heirarchy(other, self)
         return other
 
 

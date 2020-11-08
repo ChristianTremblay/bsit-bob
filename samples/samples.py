@@ -17,6 +17,7 @@ SAMPLE_HEADER = """# baseURI: http://data.ashrae.org/standard223/1.0/data/{sampl
 
 """
 
+
 def sample_header(sample_name):
     """Prints the sample header."""
     sys.stdout.write(SAMPLE_HEADER.format(sample_name=sample_name))
