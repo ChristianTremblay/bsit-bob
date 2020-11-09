@@ -37,9 +37,9 @@ ex:00004 a c223:System,
     c223:airFlow ex:00006 ;
     c223:airInlet ex:00007 ;
     c223:airOutlet ex:00012 ;
-    c223:contains ex:00005,
-        ex:00009 ;
-    c223:damperPosition ex:00010 .
+    c223:damperPosition ex:00010 ;
+    c223:hasDevice ex:00005,
+        ex:00009 .
 
 ex:00005 a c223:AirFlowStation,
         c223:Device ;
@@ -47,7 +47,7 @@ ex:00005 a c223:AirFlowStation,
     c223:airInlet ex:00007 ;
     c223:airOutlet ex:00008 ;
     c223:flow ex:00006 ;
-    c223:isContainedBy ex:00004 .
+    c223:isDeviceOf ex:00004 .
 
 ex:00006 a c223:AnalogIn,
         c223:Property ;
@@ -70,7 +70,7 @@ ex:00009 a c223:Damper,
     rdfs:label "Zone.VAV.damper" ;
     c223:airInlet ex:00011 ;
     c223:airOutlet ex:00012 ;
-    c223:isContainedBy ex:00004 ;
+    c223:isDeviceOf ex:00004 ;
     c223:position ex:00010 .
 
 ex:00010 a c223:AnalogOut,

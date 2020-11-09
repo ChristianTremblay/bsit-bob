@@ -38,11 +38,11 @@ ex:00004 a c223:System,
     c223:airFlow ex:00006 ;
     c223:airInlet ex:00007 ;
     c223:airOutlet ex:00015 ;
-    c223:contains ex:00005,
+    c223:damperPosition ex:00010 ;
+    c223:hasDevice ex:00005,
         ex:00009,
         ex:00013,
         ex:00018 ;
-    c223:damperPosition ex:00010 ;
     c223:hwValvePosition ex:00025 .
 
 ex:00005 a c223:AirFlowStation,
@@ -51,7 +51,7 @@ ex:00005 a c223:AirFlowStation,
     c223:airInlet ex:00007 ;
     c223:airOutlet ex:00008 ;
     c223:flow ex:00006 ;
-    c223:isContainedBy ex:00004 .
+    c223:isDeviceOf ex:00004 .
 
 ex:00006 a c223:AnalogIn,
         c223:Property ;
@@ -75,7 +75,7 @@ ex:00009 a c223:Damper,
     rdfs:label "Zone-1.VAV.damper" ;
     c223:airInlet ex:00011 ;
     c223:airOutlet ex:00012 ;
-    c223:isContainedBy ex:00004 ;
+    c223:isDeviceOf ex:00004 ;
     c223:position ex:00010 .
 
 ex:00010 a c223:AnalogOut,
@@ -102,7 +102,7 @@ ex:00013 a c223:Device,
     c223:airOutlet ex:00015 ;
     c223:hotWaterInlet ex:00016 ;
     c223:hotWaterOutlet ex:00017 ;
-    c223:isContainedBy ex:00004 .
+    c223:isDeviceOf ex:00004 .
 
 ex:00014 a c223:AirConnectionPoint,
         c223:AirInlet ;
@@ -132,7 +132,7 @@ ex:00018 a c223:Device,
     rdfs:label "Zone-1.VAV.hw_valve" ;
     c223:hotWaterInlet ex:00020 ;
     c223:hotWaterOutlet ex:00021 ;
-    c223:isContainedBy ex:00004 ;
+    c223:isDeviceOf ex:00004 ;
     c223:position ex:00019 .
 
 ex:00019 a c223:AnalogIn,
@@ -199,11 +199,11 @@ ex:00031 a c223:System,
     c223:airFlow ex:00033 ;
     c223:airInlet ex:00034 ;
     c223:airOutlet ex:00042 ;
-    c223:contains ex:00032,
+    c223:damperPosition ex:00037 ;
+    c223:hasDevice ex:00032,
         ex:00036,
         ex:00040,
         ex:00045 ;
-    c223:damperPosition ex:00037 ;
     c223:hwValvePosition ex:00052 .
 
 ex:00032 a c223:AirFlowStation,
@@ -212,7 +212,7 @@ ex:00032 a c223:AirFlowStation,
     c223:airInlet ex:00034 ;
     c223:airOutlet ex:00035 ;
     c223:flow ex:00033 ;
-    c223:isContainedBy ex:00031 .
+    c223:isDeviceOf ex:00031 .
 
 ex:00033 a c223:AnalogIn,
         c223:Property ;
@@ -236,7 +236,7 @@ ex:00036 a c223:Damper,
     rdfs:label "Zone-2.VAV.damper" ;
     c223:airInlet ex:00038 ;
     c223:airOutlet ex:00039 ;
-    c223:isContainedBy ex:00031 ;
+    c223:isDeviceOf ex:00031 ;
     c223:position ex:00037 .
 
 ex:00037 a c223:AnalogOut,
@@ -263,7 +263,7 @@ ex:00040 a c223:Device,
     c223:airOutlet ex:00042 ;
     c223:hotWaterInlet ex:00043 ;
     c223:hotWaterOutlet ex:00044 ;
-    c223:isContainedBy ex:00031 .
+    c223:isDeviceOf ex:00031 .
 
 ex:00041 a c223:AirConnectionPoint,
         c223:AirInlet ;
@@ -293,7 +293,7 @@ ex:00045 a c223:Device,
     rdfs:label "Zone-2.VAV.hw_valve" ;
     c223:hotWaterInlet ex:00047 ;
     c223:hotWaterOutlet ex:00048 ;
-    c223:isContainedBy ex:00031 ;
+    c223:isDeviceOf ex:00031 ;
     c223:position ex:00046 .
 
 ex:00046 a c223:AnalogIn,
