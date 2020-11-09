@@ -317,12 +317,6 @@ class Node(metaclass=NodeMetaclass):
         super().__setattr__(attr, value)
 
     @staticmethod
-    def containment_heirarchy(a_node: "Node", b_node: "Node") -> None:
-        """Connect the two things in a heirarchy."""
-        g.add((a_node.node, c223.contains, b_node.node))
-        g.add((b_node.node, c223.isContainedBy, a_node.node))
-
-    @staticmethod
     def join_things(from_thing: Any, to_thing: Any) -> None:
         """Find an unambiguous way to connect <from> to <to>"""
 
@@ -832,32 +826,36 @@ class Device(Node):
         else:
             raise TypeError(repr(other))
 
-    def __gt__(self, other: Any) -> "Device":
+    def __gt__(self, other: Node) -> Node:
         """self > other
 
-        Build a part heirarchy, the other device is a direct part of
-        this device.
+        Build a containment heirarchy, the other system is a subsystem of
+        this system.
         """
-        if not isinstance(other, (Device, Part)):
-            raise ValueError("device or part expected")
-
-        g.add((self.node, c223.hasPart, other.node))
-        g.add((other.node, c223.isPartOf, self.node))
+        if isinstance(other, Device):
+            g.add((self.node, c223.hasDevice, other.node))
+            g.add((other.node, c223.isDeviceOf, self.node))
+        elif isinstance(other, Part):
+            g.add((self.node, c223.hasPart, other.node))
+            g.add((other.node, c223.isPartOf, self.node))
+        else:
+            raise TypeError("system or device expected")
 
         return self
 
-    def __lt__(self, other: Any) -> "Device":
+    def __lt__(self, other: Node) -> Node:
         """self < other
 
-        Build a part heirarchy, this part is a direct part of the other part.
+        Build a containment heirarchy, this is a subsystem of some other
+        system.
         """
-        if not isinstance(other, (Device, Part)):
-            raise ValueError("device or part expected")
+        if isinstance(other, (System, Device)):
+            g.add((self.node, c223.isDeviceOf, other.node))
+            g.add((other.node, c223.hasDevice, self.node))
+        else:
+            raise TypeError("system expected")
 
-        g.add((other.node, c223.hasPart, self.node))
-        g.add((self.node, c223.isPartOf, other.node))
-
-        return cast(Device, other)
+        return other
 
 
 class System(Node):
@@ -905,9 +903,15 @@ class System(Node):
         Build a subsystem heirarchy, the other system is a subsystem of
         this system.
         """
-        assert isinstance(other, (System, Device))
+        if isinstance(other, System):
+            g.add((self.node, c223.hasSubsystem, other.node))
+            g.add((other.node, c223.isSubsystemOf, self.node))
+        elif isinstance(other, Device):
+            g.add((self.node, c223.hasDevice, other.node))
+            g.add((other.node, c223.isDeviceOf, self.node))
+        else:
+            raise TypeError("system or device expected")
 
-        self.containment_heirarchy(self, other)
         return self
 
     def __lt__(self, other: Node) -> Node:
@@ -916,9 +920,12 @@ class System(Node):
         Build a subsystem heirarchy, this is a subsystem of some other
         system.
         """
-        assert isinstance(other, (System, Device))
+        if isinstance(other, System):
+            g.add((self.node, c223.isSubsystemOf, other.node))
+            g.add((other.node, c223.hasSubsystem, self.node))
+        else:
+            raise TypeError("system expected")
 
-        self.containment_heirarchy(other, self)
         return other
 
 
@@ -944,7 +951,8 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        self.containment_heirarchy(self, other)
+        g.add((self.node, c223.hasPart, other.node))
+        g.add((other.node, c223.isPartOf, self.node))
         return self
 
     def __lt__(self, other: Node) -> Node:
@@ -955,7 +963,8 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        self.containment_heirarchy(other, self)
+        g.add((self.node, c223.isPartOf, other.node))
+        g.add((other.node, c223.hasPart, self.node))
         return other
 
 
