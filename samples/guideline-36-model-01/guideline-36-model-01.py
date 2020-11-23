@@ -54,13 +54,13 @@ vav_2 >> zone_2
 
 # common supply connection shared
 supply_air = AirConnection(label="supply_air")
-supply_air >> vav_1
-supply_air >> vav_2
+supply_air >> vav_1.airInlet
+supply_air >> vav_2.airInlet
 
 # similar for return air
 return_air = AirConnection(label="return_air")
-zone_1 >> return_air
-zone_2 >> return_air
+zone_1.returnAirOutlet >> return_air
+zone_2.returnAirOutlet >> return_air
 
 # start with the return fan
 return_fan = Fan(label="return_fan")
@@ -71,14 +71,18 @@ return_air >> return_fan
 
 # make the exhaust air damper and connect it
 exhaust_air_damper = Damper(label="exhaust_air_damper")
-return_fan >> exhaust_air_damper
 exhaust_air_damper.airOutlet >> outside_air.exhaustAir
+
+# return fan air is divided into exhaust air or mixed air
+exhaust_mixed_air = AirConnection(label="exhaust_mixed_air")
+return_fan >> exhaust_mixed_air
+exhaust_mixed_air >> exhaust_air_damper
 
 # the return air damper gets its input from the return fan and goes to
 # into the mixed air
 return_air_damper = Damper(label="return_air_damper")
-return_fan.airOutlet.connectedThrough >> return_air_damper
-return_air_damper.airOutlet >> mixed_air
+exhaust_mixed_air >> return_air_damper
+return_air_damper >> mixed_air
 
 # dump the result
 if __name__ == "__main__":
