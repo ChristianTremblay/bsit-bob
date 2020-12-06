@@ -19,7 +19,9 @@ ex:00001 a c223:Device,
     rdfs:label "hot_water_coil" ;
     c223:airInlet ex:00002 ;
     c223:airOutlet ex:00003 ;
-    c223:connectedThrough ex:00012 ;
+    c223:connectedThrough ex:00010,
+        ex:00011,
+        ex:00012 ;
     c223:hasConnectionPoint ex:00002,
         ex:00003,
         ex:00004,
@@ -80,6 +82,7 @@ ex:00009 a c223:HotWaterConnectionPoint,
 ex:00010 a c223:HotWaterConnection ;
     c223:connectedAt ex:00004,
         ex:00009 ;
+    c223:connectsFrom ex:00006 ;
     c223:connectsTo ex:00001 .
 
 ex:00011 a c223:AirConnection ;
@@ -89,5 +92,6 @@ ex:00011 a c223:AirConnection ;
 
 ex:00012 a c223:AirConnection ;
     rdfs:label "Hot Air" ;
-    c223:connectedAt ex:00003 .
+    c223:connectedAt ex:00003 ;
+    c223:connectsFrom ex:00001 .
 
