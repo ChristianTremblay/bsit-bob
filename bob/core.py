@@ -2,6 +2,8 @@
 Bob the SI-WG Builder
 """
 
+from __future__ import annotations
+
 import sys
 import inspect
 from collections import defaultdict
@@ -21,6 +23,11 @@ _next_node = 1
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
 NodeMap = Dict[str, Union[type, str]]
 _annotation_forwards: Dict[str, type] = {}
+
+# these are string annotations
+_annotation_forwards["URIRef"] = URIRef
+_annotation_forwards["BNode"] = BNode
+_annotation_forwards["Literal"] = Literal
 
 
 def bind_namespace(prefix: str, uri: str) -> Namespace:
@@ -81,7 +88,7 @@ class NodeMetaclass(type):
         clsname: str,
         superclasses: Tuple[type, ...],
         attributedict: Dict[str, Any],
-    ) -> "NodeMetaclass":
+    ) -> NodeMetaclass:
         # do this for every subclass of Node
 
         # start with empty maps
@@ -114,8 +121,11 @@ class NodeMetaclass(type):
             elif inspect.isclass(attr_type):
                 _nodes[attr] = attr_type
             elif isinstance(attr_type, str):
+                if attr_type in _annotation_forwards:
+                    attr_type = _annotation_forwards[attr_type]
+                else:
+                    _annotation_forwards[attr_type] = None  # type: ignore[assignment]
                 _nodes[attr] = attr_type
-                _annotation_forwards[attr_type] = None  # type: ignore[assignment]
             else:
                 raise ValueError(f"unknown annotation for {attr}: {attr_type}")
 
@@ -220,9 +230,9 @@ class Node(metaclass=NodeMetaclass):
         else:
             self.node = BNode()
 
-        self.label = label
-        if label:
-            g.add((self.node, RDFS.label, Literal(label)))
+        self.label = label or getattr(self, "label", "")
+        if self.label:
+            g.add((self.node, RDFS.label, Literal(self.label)))
 
         if hasattr(self, "node_type"):
             g.add((self.node, RDF.type, self.node_type))
@@ -289,8 +299,10 @@ class Node(metaclass=NodeMetaclass):
                 g.add((self.node, self._namespace[attr], value))
             if isinstance(value, Node):
                 g.add((self.node, self._namespace[attr], value.node))
-            if isinstance(value, Property):
-                # back link from the property to the node
+
+            # back link from the property to the node
+            if isinstance(value, Property) and (not isinstance(self, Value)):
+                # print(f"!!2 {self}.{attr} = {value}")
                 g.add((value.node, c223.isPropertyOf, self.node))
 
         # if this needs some datatype decoration, turn it into a literal
@@ -315,17 +327,26 @@ class Node(metaclass=NodeMetaclass):
     def join_things(from_thing: Any, to_thing: Any) -> None:
         """Find an unambiguous way to connect <from> to <to>"""
 
+        # print(f"{from_thing} join to {to_thing}")
+        # print(f"    connection points: {from_thing._connection_points}")
+
         from_out = defaultdict(list)
         for attr, connection_point in from_thing._connection_points.items():
+            # print(f"    {attr} connection point {connection_point}")
+
             if inspect.isclass(connection_point):
                 raise RuntimeError(f"{from_thing} unbound connection point: {attr}")
             if connection_point.connectsThrough:
+                # print(f"    {attr} connects through {connection_point.connectsThrough}")
                 continue
             if not isinstance(connection_point, Outlet):
+                # print(f"    {attr} not an outlet")
                 continue
 
             connection_type = getattr(connection_point, "connection_type", "")
             from_out[connection_type].append(connection_point)
+
+        # print(f"    from out {from_out}")
 
         from_types = set(
             connection_type
@@ -377,10 +398,11 @@ class Node(metaclass=NodeMetaclass):
         label = (" " + self.label) if self.label else ""
         return f"<{self.__class__.__name__}{label} at {self.node}>"
 
-    def __iand__(self, value: "Property") -> None:
+    def __iand__(self, prop: Property) -> None:
         """Add a property to a node."""
-        if not isinstance(value, Property):
-            value = Property(value)
+        assert isinstance(prop, Property)
+
+        # print(f"!!1 {value} is property of {self}")
 
         # link the two together
         g.add((self.node, c223.hasProperty, value.node))
@@ -430,8 +452,11 @@ class Connection(Node, ConnectionType):
             other.connectsThrough = self
 
             # link the connection to the device of the connection point
-            g.add((other.isConnectionPointOf.node, c223.connectedThrough, self.node,))
-            g.add((self.node, c223.connectsTo, other.isConnectionPointOf.node))
+            if not other.isConnectionPointOf:
+                sys.stderr.write(f"warning: detached connection point: {self} >> {other}\n")
+            else:
+                g.add((other.isConnectionPointOf.node, c223.connectedThrough, self.node,))
+                g.add((self.node, c223.connectsTo, other.isConnectionPointOf.node))
             return
 
         if isinstance(other, System):
@@ -494,7 +519,13 @@ class Connection(Node, ConnectionType):
         connection_point.connectsThrough = self
 
         # link the connection to the device of the connection point
-        g.add((connection_point.isConnectionPointOf.node, c223.connectedThrough, self.node,))
+        g.add(
+            (
+                connection_point.isConnectionPointOf.node,
+                c223.connectedThrough,
+                self.node,
+            )
+        )
         g.add((self.node, c223.connectsTo, connection_point.isConnectionPointOf.node))
 
     def __lshift__(self, other: Any) -> None:
@@ -520,8 +551,11 @@ class Connection(Node, ConnectionType):
             other.connectsThrough = self
 
             # link the connection to the device of the connection point
-            g.add((other.isConnectionPointOf.node, c223.connectedThrough, self.node,))
-            g.add((self.node, c223.connectsFrom, other.isConnectionPointOf.node,))
+            if not other.isConnectionPointOf:
+                sys.stderr.write(f"warning: detached connection point: {self} << {other}\n")
+            else:
+                g.add((other.isConnectionPointOf.node, c223.connectedThrough, self.node,))
+                g.add((self.node, c223.connectsFrom, other.isConnectionPointOf.node,))
             return
 
         if isinstance(other, System):
@@ -586,9 +620,16 @@ class Connection(Node, ConnectionType):
         connection_point.connectsThrough = self
 
         # link the connection to the device of the connection point
-        g.add((connection_point.isConnectionPointOf.node, c223.connectedThrough, self.node,))
-        g.add((self.node, c223.connectsFrom, connection_point.isConnectionPointOf.node,))
-
+        g.add(
+            (
+                connection_point.isConnectionPointOf.node,
+                c223.connectedThrough,
+                self.node,
+            )
+        )
+        g.add(
+            (self.node, c223.connectsFrom, connection_point.isConnectionPointOf.node,)
+        )
 
     def __repr__(self) -> str:
         xid = id(self)
@@ -602,9 +643,9 @@ class ConnectionPoint(Node):
     node_type: URIRef = c223.ConnectionPoint
 
     connectsThrough: Connection
-    isConnectionPointOf: "Device"
+    isConnectionPointOf: Device
 
-    def __init__(self, device: "Device", **kwargs: Any) -> None:
+    def __init__(self, device: Device, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
         if EXPLICIT_CORE_TYPES:
@@ -616,7 +657,10 @@ class ConnectionPoint(Node):
         g.add((device.node, c223.hasConnectionPoint, self.node))
 
         # <self> connection point of <device>
-        self.isConnectionPointOf = device
+        if not isinstance(device, Device):
+            sys.stderr.write(f"warning: {device} is not a Device\n")
+        else:
+            self.isConnectionPointOf = device
 
     def __rshift__(self, other: Any) -> None:
         """self >> other
@@ -738,6 +782,7 @@ class Device(Node):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
+        # print(f"\nDevice.__init__ {kwargs}")
         if MANDITORY_LABEL:
             if "label" not in kwargs:
                 raise RuntimeError("no label")
@@ -760,7 +805,16 @@ class Device(Node):
         for var_name, var_annotation in self.__annotations__.items():
             if var_name.startswith("_"):
                 continue
+
+            if isinstance(var_annotation, str):
+                if var_annotation not in _annotation_forwards:
+                    raise NotImplementedError(
+                        f"resolving {var_annotation!r} for attribute {attr!r}, class not found"
+                    )
+
+                var_annotation = _annotation_forwards.get(var_annotation)
             if not issubclass(var_annotation, ConnectionPoint):
+                # print(f"    not a subclass of ConnectionPoint")
                 continue
 
             # build an instance of this connection point
@@ -848,6 +902,8 @@ class System(Node):
         for var_name, var_annotation in self.__annotations__.items():
             if var_name.startswith("_"):
                 continue
+            if not inspect.isclass(var_annotation):
+                continue
             if not issubclass(var_annotation, ConnectionPoint):
                 continue
 
@@ -858,9 +914,7 @@ class System(Node):
         """
         """
         # continue with normal process for attributes that aren't special to us
-        if attr.startswith("_") or (
-            (attr not in self._connection_points)
-        ):
+        if attr.startswith("_") or ((attr not in self._connection_points)):
             super().__setattr__(attr, value)
             return
 
@@ -876,7 +930,9 @@ class System(Node):
         # double check the connection point type
         connection_point_type = self.__annotations__[attr]
         if not isinstance(value, connection_point_type):
-            raise TypeError(f"{attr}: connection point type {connection_point_type} expected")
+            raise TypeError(
+                f"{attr}: connection point type {connection_point_type} expected"
+            )
 
         # save a reference to the connection point
         self._connection_points[attr] = value
@@ -986,20 +1042,36 @@ class Value(Node):
     """
 
     node_type: URIRef = c223.Value
+    isValueOf: Property
 
     hasTimestamp: Literal
     hasSimpleValue: Literal
     hasUnits: URIRef
 
-    def __init__(self, arg: Any = None, **kwargs: Any):
+    def __init__(
+        self,
+        arg: Any = None,
+        *,
+        lang: Optional[str] = None,
+        datatype: Optional[URIRef] = None,
+        **kwargs: Any,
+    ):
         if arg is not None:
             if "hasSimpleValue" in kwargs:
                 raise RuntimeError("initialization conflict")
+
+            if isinstance(arg, Literal):
+                pass
+            elif datatype is not None:
+                arg = Literal(arg, datatype=datatype)
+            elif lang is not None:
+                arg = Literal(arg, lang=lang)
+
             kwargs["hasSimpleValue"] = arg
 
         super().__init__(**kwargs)
 
-        # <self> a System
+        # <self> a Value
         if EXPLICIT_CORE_TYPES:
             g.add((self.node, RDF.type, c223.Value))
 
@@ -1010,7 +1082,6 @@ class Property(Node):
 
     node_type: URIRef = c223.Property
     hasValue: Value
-    hasQuantityKind: URIRef
 
     # override this for a specialize subclass
     _value_class: type = Value
@@ -1035,16 +1106,32 @@ class Property(Node):
         if init_value is not None:
             self += init_value
 
-    def __iadd__(self, value: Any) -> "Property":
+    def __iadd__(self, value: Any) -> Property:
         """Add a value to a property."""
         if not isinstance(value, Value):
             value = self._value_class(value)
 
         # link the two together
-        g.add((self.node, c223.hasValue, value.node))
-        g.add((value.node, c223.isValueOf, self.node))
+        self.hasValue = value
+        value.isValueOf = self
 
         return self
+
+
+class ActuatableProperty(Property):
+    """
+    Such as the setting of a switch.
+    """
+
+    node_type: URIRef = c223.ActuatableProperty
+
+
+class ObservableProperty(Property):
+    """
+    Such as the state of an alarm detector.
+    """
+
+    node_type: URIRef = c223.ObservableProperty
 
 
 class QuantifiableProperty(Property):
@@ -1055,19 +1142,42 @@ class QuantifiableProperty(Property):
     hasQuantityKind: URIRef
     hasUnits: URIRef
 
-    def __init__(self, arg: Any = None, **kwargs: Any) -> None:
-        # promote the arg to hasValue
-        if arg is not None:
-            if "hasValue" in kwargs:
-                raise RuntimeError("initialization conflict")
-            else:
-                kwargs["hasValue"] = arg
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
 
-        super().__init__(**kwargs)
-
-        # <self> a Part
+        # <self> a QuantifiableProperty
         if EXPLICIT_CORE_TYPES:
             g.add((self.node, RDF.type, c223.QuantifiableProperty))
+
+
+class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
+    """
+    Such as a numerical setpoint.
+    """
+
+    node_type: URIRef = c223.QuantifiableActuatableProperty
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+        # <self> a QuantifiableActuatableProperty
+        if EXPLICIT_CORE_TYPES:
+            g.add((self.node, RDF.type, c223.QuantifiableActuatableProperty))
+
+
+class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
+    """
+    Such as a temperature reading.
+    """
+
+    node_type: URIRef = c223.QuantifiableObservableProperty
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+        # <self> a QuantifiableObservableProperty
+        if EXPLICIT_CORE_TYPES:
+            g.add((self.node, RDF.type, c223.QuantifiableObservableProperty))
 
 
 def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:

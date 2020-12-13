@@ -1,0 +1,192 @@
+!!2 <AirFlowStation A-3.air_flow_station at urn:ex/00002>.flow = <AnalogIn at urn:ex/00003>
+!!2 <VAV A-3 at urn:ex/00001>.supplyAirFlow = <AnalogIn at urn:ex/00003>
+!!2 <DamperPositioner A-3.damper.damper_positioner at urn:ex/00009>.position = <AnalogOut at urn:ex/00010>
+!!2 <Damper A-3.damper at urn:ex/00006>.position = <AnalogOut at urn:ex/00010>
+!!2 <VAV A-3 at urn:ex/00001>.damperPosition = <AnalogOut at urn:ex/00010>
+!!2 <ValvePositioner A-3.hot_water_coil.damper_positioner at urn:ex/00016>.position = <AnalogOut at urn:ex/00017>
+!!2 <HotWaterCoil A-3.hot_water_coil at urn:ex/00011>.valvePosition = <AnalogOut at urn:ex/00017>
+!!2 <VAV A-3 at urn:ex/00001>.hwValvePosition = <AnalogOut at urn:ex/00017>
+# baseURI: http://data.ashrae.org/standard223/1.0/data/figure003
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix ex: <urn:ex/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/1.0/data/figure003>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/data/figure003> ;
+  rdfs:label "figure003" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+ex:00001 a c223:System,
+        ex:VAV ;
+    rdfs:label "A-3" ;
+    c223:hasConnectionPoint ex:00023 ;
+    c223:hasDevice ex:00002,
+        ex:00006,
+        ex:00011,
+        ex:00019 ;
+    ex:damperPosition ex:00010 ;
+    ex:hwInlet ex:00014 ;
+    ex:hwOutlet ex:00015 ;
+    ex:hwValvePosition ex:00017 ;
+    ex:mergeAir ex:00024 ;
+    ex:returnAirInlet ex:00012 ;
+    ex:supplyAirFlow ex:00003 ;
+    ex:supplyAirInlet ex:00004 .
+
+ex:00002 a c223:Device,
+        ex:AirFlowStation ;
+    rdfs:label "A-3.air_flow_station" ;
+    c223:connectedThrough ex:00022 ;
+    c223:hasConnectionPoint ex:00004,
+        ex:00005 ;
+    c223:isDeviceOf ex:00001 ;
+    ex:airInlet ex:00004 ;
+    ex:airOutlet ex:00005 ;
+    ex:flow ex:00003 .
+
+ex:00003 a c223:AnalogIn,
+        c223:Property ;
+    c223:isPropertyOf ex:00001,
+        ex:00002 .
+
+ex:00004 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-3.air_flow_station.airInlet" ;
+    c223:isConnectionPointOf ex:00002 .
+
+ex:00005 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-3.air_flow_station.airOutlet" ;
+    c223:connectsThrough ex:00022 ;
+    c223:isConnectionPointOf ex:00002 .
+
+ex:00006 a c223:Device,
+        ex:Damper ;
+    rdfs:label "A-3.damper" ;
+    c223:hasConnectionPoint ex:00007,
+        ex:00008 ;
+    c223:hasPart ex:00009 ;
+    c223:isDeviceOf ex:00001 ;
+    ex:airInlet ex:00007 ;
+    ex:airOutlet ex:00008 ;
+    ex:position ex:00010 .
+
+ex:00007 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-3.damper.airInlet" ;
+    c223:isConnectionPointOf ex:00006 .
+
+ex:00008 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-3.damper.airOutlet" ;
+    c223:isConnectionPointOf ex:00006 .
+
+ex:00009 a c223:Part,
+        ex:DamperPositioner ;
+    rdfs:label "A-3.damper.damper_positioner" ;
+    c223:isPartOf ex:00006 ;
+    ex:position ex:00010 .
+
+ex:00010 a c223:AnalogOut,
+        c223:Property ;
+    c223:isPropertyOf ex:00001,
+        ex:00006,
+        ex:00009 .
+
+ex:00011 a c223:Device,
+        ex:HotWaterCoil ;
+    rdfs:label "A-3.hot_water_coil" ;
+    c223:hasConnectionPoint ex:00012,
+        ex:00013,
+        ex:00014,
+        ex:00015 ;
+    c223:hasPart ex:00016,
+        ex:00018 ;
+    c223:isDeviceOf ex:00001 ;
+    ex:airInlet ex:00012 ;
+    ex:airOutlet ex:00013 ;
+    ex:hwInlet ex:00014 ;
+    ex:hwOutlet ex:00015 ;
+    ex:valvePosition ex:00017 .
+
+ex:00012 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-3.hot_water_coil.airInlet" ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00013 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-3.hot_water_coil.airOutlet" ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00014 a c223:HotWaterConnectionPoint,
+        c223:HotWaterInlet ;
+    rdfs:label "A-3.hot_water_coil.hwInlet" ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00015 a c223:HotWaterConnectionPoint,
+        c223:HotWaterOutlet ;
+    rdfs:label "A-3.hot_water_coil.hwOutlet" ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00016 a c223:Part,
+        ex:ValvePositioner ;
+    rdfs:label "A-3.hot_water_coil.damper_positioner" ;
+    c223:isPartOf ex:00011 ;
+    ex:position ex:00017 .
+
+ex:00017 a c223:AnalogOut,
+        c223:Property ;
+    c223:isPropertyOf ex:00001,
+        ex:00011,
+        ex:00016 .
+
+ex:00018 a c223:Part,
+        ex:HotWaterValve ;
+    rdfs:label "A-3.hot_water_coil.hot_water_valve" ;
+    c223:isPartOf ex:00011 .
+
+ex:00019 a c223:Device,
+        c223:Fan ;
+    rdfs:label "A-3.fan" ;
+    c223:airInlet ex:00020 ;
+    c223:airOutlet ex:00021 ;
+    c223:connectedThrough ex:00022 ;
+    c223:hasConnectionPoint ex:00020,
+        ex:00021 ;
+    c223:isDeviceOf ex:00001 .
+
+ex:00020 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-3.fan.airInlet" ;
+    c223:isConnectionPointOf ex:00019 .
+
+ex:00021 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-3.fan.airOutlet" ;
+    c223:connectsThrough ex:00022 ;
+    c223:isConnectionPointOf ex:00019 .
+
+ex:00022 a c223:AirConnection ;
+    rdfs:label "A-3.merge" ;
+    c223:connectedAt ex:00005,
+        ex:00021,
+        ex:00024 ;
+    c223:connectsFrom ex:00002,
+        ex:00019 .
+
+ex:00023 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-3.merge.airOutlet" ;
+    c223:hasConnectionPoint ex:00024 .
+
+ex:00024 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    c223:connectsThrough ex:00022 .
+
