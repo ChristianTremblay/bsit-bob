@@ -77,7 +77,7 @@ class HotWaterCoil(Device):
 class VAV(System):
     supplyAirInlet: AirInlet
     returnAirInlet: AirInlet
-    mergeAir: AirInlet              ### connection direction
+    supplyAirOutlet: AirOutlet
     supplyAirFlow: AnalogIn
     damperPosition: AnalogOut
     hwInlet: HotWaterInlet
@@ -90,7 +90,7 @@ class VAV(System):
         # create an air flow station
         self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
         self > self.air_flow_station
-        self.supplyAirInlet = self.air_flow_station.airInlet
+        self.supplyAirInlet >> self.air_flow_station.airInlet
         self.supplyAirFlow = self.air_flow_station.flow
 
         # create a damper
@@ -101,26 +101,22 @@ class VAV(System):
         # create a hot water coil
         self.hot_water_coil = HotWaterCoil(label=self.label + ".hot_water_coil")
         self > self.hot_water_coil
-        self.hwInlet = self.hot_water_coil.hwInlet
-        self.hwOutlet = self.hot_water_coil.hwOutlet
+        self.hwInlet >> self.hot_water_coil.hwInlet
+        self.hwOutlet << self.hot_water_coil.hwOutlet
         self.hwValvePosition = self.hot_water_coil.valvePosition
-        self.returnAirInlet = self.hot_water_coil.airInlet
+        self.returnAirInlet >> self.hot_water_coil.airInlet
 
         # create a fan
         self.fan = Fan(label=self.label + ".fan")
         self > self.fan
 
         # connection for merge
-        self.air_merge = AirConnection(label=self.label + ".merge")
-        self.mergeAir = AirOutlet(self, label=self.label + ".merge.airOutlet")
-        self.air_merge >> self.mergeAir
+        merged_air = AirConnection(label=self.label + ".merge")
 
         # link the air pieces together
-        self.air_flow_station >> self.air_merge
-        self.fan >> self.air_merge
-
-        # reference the connections
-        self.airOutlet = self.hot_water_coil.airOutlet
+        self.air_flow_station >> merged_air
+        self.fan >> merged_air
+        merged_air >> self.supplyAirOutlet
 
 
 # make one

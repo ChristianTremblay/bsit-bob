@@ -24,7 +24,6 @@ class AirFlowStation(Device):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # print(f"AirFlowStation {self._connection_points}")
 
 class DamperPositioner(Part):
     position = AnalogOut
@@ -66,8 +65,8 @@ class VAV(System):
         self.air_flow_station >> self.damper
 
         # reference the connections
-        self.airInlet = self.air_flow_station.airInlet
-        self.airOutlet = self.damper.airOutlet
+        self.airInlet >> self.air_flow_station.airInlet
+        self.airOutlet << self.damper.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
 
