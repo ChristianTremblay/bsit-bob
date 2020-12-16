@@ -110,23 +110,30 @@ if args.info and sys.stdin.isatty():
     print("")
 
 # loop for queries
+query = ""
 while True:
     if sys.stdin.isatty():
-        print(">>> ", end="", flush=True)
+        if not query:
+            print(">>> ", end="", flush=True)
+        else:
+            print("... ", end="", flush=True)
 
-    query = sys.stdin.readline()
-    if not query:
+    line = sys.stdin.readline()
+    if not line:
         break
-    query = query[:-1]
+    query += " " + line[:-1]
+
+    if not query.endswith("}"):
+        continue
 
     try:
         query_results = g.query(query)
+
+        for result in query_results:
+            print(", ".join(result))
+
     except pyparsing.ParseException as parsing_error:
         args_query, args_offset, args_error = parsing_error.args
         print(" " * (args_offset + 4) + "^ " + args_error)
-        print("")
-        continue
 
-    for result in query_results:
-        print(", ".join(result))
-        print("")
+    query = ""
