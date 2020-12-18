@@ -1,5 +1,7 @@
 import sys
 
+from typing import TextIO
+
 SAMPLE_HEADER = """# baseURI: http://data.ashrae.org/standard223/1.0/data/{sample_name}
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
@@ -18,6 +20,6 @@ SAMPLE_HEADER = """# baseURI: http://data.ashrae.org/standard223/1.0/data/{sampl
 """
 
 
-def sample_header(sample_name):
+def sample_header(sample_name: str, file: TextIO = sys.stdout):
     """Prints the sample header."""
-    sys.stdout.write(SAMPLE_HEADER.format(sample_name=sample_name))
+    file.write(SAMPLE_HEADER.format(sample_name=sample_name))
