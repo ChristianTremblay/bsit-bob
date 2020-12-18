@@ -1007,6 +1007,14 @@ class Property(Node):
             self.hasValue = init_value
             init_value.isValueOf = self
 
+    def add_value(self, value: Value) -> None:
+        """Add an additional value to a property."""
+        assert isinstance(value, Value)
+
+        # link the two together
+        g.add((self.node, c223.hasValue, value.node))
+        value.isValueOf = self
+
 
 class ActuatableProperty(Property):
     """
@@ -1071,7 +1079,7 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
 
 
 def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:
-    file.write(g.serialize(format="turtle").decode())
+    file.write(g.serialize(format=format).decode())
 
 
 def clear() -> None:
