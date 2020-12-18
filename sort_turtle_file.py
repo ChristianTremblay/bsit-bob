@@ -6,6 +6,8 @@ import sys
 
 # read in the file
 lines = sys.stdin.readlines()
+if not lines:
+    sys.exit(1)
 
 chunks = []
 while lines:
