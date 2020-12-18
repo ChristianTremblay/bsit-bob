@@ -1,6 +1,8 @@
 from bob import bind_model_namespace, Device, QuantifiableProperty, Value, dump, clear
 from bob.core import qudt, quantitykind
 
+from samples import sample_header
+
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
@@ -22,7 +24,7 @@ class TestDevice2(Device):
     hasTemp: TemperatureProperty
 
 
-print("----- test 1 -----")
+print("----- individual pieces -----")
 d1 = TestDevice(label="Test Device 1")
 
 v = Value(hasSimpleValue=75.5, hasUnits=qudt.DEG_F)
@@ -34,7 +36,7 @@ dump()
 clear()
 print("")
 
-print("----- test 2 -----")
+print("----- auto build value -----")
 d2 = TestDevice(label="Test Device 2")
 
 d2.add_property(TemperatureProperty(90.5))
@@ -43,7 +45,7 @@ dump()
 clear()
 print("")
 
-print("----- test 3 -----")
+print("----- named property, kwarg value -----")
 d3 = TestDevice2(label="Test Device 3", hasTemp=100.5)
 
 dump()

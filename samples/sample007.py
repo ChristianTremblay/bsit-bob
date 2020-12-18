@@ -15,8 +15,7 @@ class Part2(Part):
     pass
 
 
-# build from pieces
-print("----- test 1 -----")
+print("----- device has two parts -----")
 d = TestDevice(label="TestDevice")
 p1 = Part1()
 p2 = Part2()
@@ -28,8 +27,7 @@ dump()
 clear()
 print("")
 
-# build from pieces
-print("----- test 2 -----")
+print("----- device has a part p1 which has a part p2 -----")
 d = TestDevice(label="TestDevice")
 p1 = Part1()
 p2 = Part2()
@@ -40,8 +38,7 @@ dump()
 clear()
 print("")
 
-# build from pieces
-print("----- test 3 -----")
+print("----- p1 is a part of p2 which is a part of a device -----")
 d = TestDevice(label="TestDevice")
 p1 = Part1()
 p2 = Part2()
@@ -52,23 +49,21 @@ dump()
 clear()
 print("")
 
-# build from pieces
-print("----- test 4 -----")
+print("----- device 2 is a subdevice of device 1 -----")
 d1 = TestDevice(label="Test Device 1")
 d2 = TestDevice(label="Test Device 2")
 
-d1 > d2  # subsystem relationship
+d1 > d2
 
 dump()
 clear()
 print("")
 
-# build from pieces
-print("----- test 5 -----")
+print("----- device 1 is a subdevice of device 2 -----")
 d1 = TestDevice(label="Test Device 1")
 d2 = TestDevice(label="Test Device 2")
 
-d1 < d2  # subsystem relationship
+d1 < d2
 
 dump()
 clear()

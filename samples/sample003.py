@@ -26,7 +26,5 @@ f >> coil1
 z = Zone(label="Zone-1")
 coil1 >> z
 
-# dump the result
-if __name__ == "__main__":
-    sample_header("sample003")
-    dump()
+sample_header("sample003")
+dump()

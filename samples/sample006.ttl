@@ -14,7 +14,8 @@
   rdfs:label "sample006" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex:00001 a c223:Device,
+ex:00001 a c223:Connectable,
+        c223:Device,
         c223:HotWaterCoil2 ;
     rdfs:label "hot_water_coil" ;
     c223:airInlet ex:00002 ;
@@ -53,12 +54,14 @@ ex:00005 a c223:HotWaterConnectionPoint,
     rdfs:label "hot_water_coil.hotWaterOutlet" ;
     c223:isConnectionPointOf ex:00001 .
 
-ex:00006 a c223:Device,
+ex:00006 a c223:Connectable,
+        c223:Device,
         c223:HotWaterValve ;
     rdfs:label "hot_water_coil.hw_valve" ;
     c223:connectedThrough ex:00010 ;
     c223:hasConnectionPoint ex:00008,
         ex:00009 ;
+    c223:hasProperty ex:00007 ;
     c223:hotWaterInlet ex:00008 ;
     c223:hotWaterOutlet ex:00009 ;
     c223:isDeviceOf ex:00001 ;
@@ -80,18 +83,18 @@ ex:00009 a c223:HotWaterConnectionPoint,
     c223:isConnectionPointOf ex:00006 .
 
 ex:00010 a c223:HotWaterConnection ;
-    c223:connectedAt ex:00004,
+    c223:connectsAt ex:00004,
         ex:00009 ;
     c223:connectsFrom ex:00006 ;
     c223:connectsTo ex:00001 .
 
 ex:00011 a c223:AirConnection ;
     rdfs:label "Cold Air" ;
-    c223:connectedAt ex:00002 ;
+    c223:connectsAt ex:00002 ;
     c223:connectsTo ex:00001 .
 
 ex:00012 a c223:AirConnection ;
     rdfs:label "Hot Air" ;
-    c223:connectedAt ex:00003 ;
+    c223:connectsAt ex:00003 ;
     c223:connectsFrom ex:00001 .
 

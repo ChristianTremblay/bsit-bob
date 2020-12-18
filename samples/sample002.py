@@ -13,8 +13,7 @@ class Snork(Node):
     temp: Property
 
 
-# build from pieces
-print("----- test 1 -----")
+print("----- node assignment -----")
 s = Snork()
 t = Test()
 s.test = t
@@ -22,15 +21,13 @@ dump()
 clear()
 print("")
 
-# use kwargs
-print("----- test 2 -----")
+print("----- property assignment via kwargs-----")
 s = Snork(test=Test())
 dump()
 clear()
 print("")
 
-# set a property value
-print("----- test 3 -----")
+print("----- setting a property value -----")
 p = Property()
 v = Value()
 v.hasValue = 1
@@ -39,29 +36,25 @@ dump()
 clear()
 print("")
 
-# kwargs set a property value
-print("----- test 4 -----")
+print("----- auto build Value, init property value -----")
 p = Property(4)
 dump()
 clear()
 print("")
 
-# kwargs set a property value
-print("----- test 5 -----")
+print("----- kwargs set property value -----")
 p = Property(hasValue=5)
 dump()
 clear()
 print("")
 
-# build a value that is a datetime
-print("----- test 6 -----")
+print("----- datetime value -----")
 v = Value(datetime(2021, 1, 1))
 dump()
 clear()
 print("")
 
-# build a value that has a datetime
-print("----- test 6 -----")
+print("----- value with a timestamp -----")
 v = Value(hasSimpleValue=22.5, hasTimestamp=datetime(2021, 1, 1))
 dump()
 clear()
