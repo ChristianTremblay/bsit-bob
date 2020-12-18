@@ -28,8 +28,8 @@ class VAV1(System):
         self.air_flow_station >> self.damper
 
         # reference the connections
-        self.airInlet = self.air_flow_station.airInlet
-        self.airOutlet = self.damper.airOutlet
+        self.airInlet >> self.air_flow_station.airInlet
+        self.airOutlet << self.damper.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
 
@@ -68,8 +68,8 @@ class VAV2(System):
         self.hot_water_valve >> self.hot_water_coil
 
         # reference the connections
-        self.airInlet = self.air_flow_station.airInlet
-        self.airOutlet = self.hot_water_coil.airOutlet
+        self.airInlet >> self.air_flow_station.airInlet
+        self.airOutlet << self.hot_water_coil.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
         self.hwValvePosition = self.hot_water_valve.position
