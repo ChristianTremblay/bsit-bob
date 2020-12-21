@@ -1,26 +1,26 @@
-from bob.core import bind_model_namespace, System, Device, Connection, Inlet, Outlet, dump, clear
+from bob.core import bind_model_namespace, System, Device, Connection, InletConnectionPoint, OutletConnectionPoint, dump, clear
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class DeviceIn(Device):
-    cpIn: Inlet
+    cpIn: InletConnectionPoint
 
 
 class DeviceInOut(Device):
-    cpIn: Inlet
-    cpOut: Outlet
+    cpIn: InletConnectionPoint
+    cpOut: OutletConnectionPoint
 
 
 class DeviceOut(Device):
-    cpOut: Outlet
+    cpOut: OutletConnectionPoint
 
 
 class SystemInOut(System):
-    cpIn1: Inlet
-    cpIn2: Inlet
-    cpOut1: Outlet
-    cpOut2: Outlet
+    cpIn1: InletConnectionPoint
+    cpIn2: InletConnectionPoint
+    cpOut1: OutletConnectionPoint
+    cpOut2: OutletConnectionPoint
 
 
 d1 = DeviceInOut(label="D1")

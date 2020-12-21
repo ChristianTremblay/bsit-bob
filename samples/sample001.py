@@ -24,30 +24,20 @@ class TestDevice2(Device):
     hasTemp: TemperatureProperty
 
 
-print("----- individual pieces -----")
+# individual pieces
 d1 = TestDevice(label="Test Device 1")
-
-v = Value(hasSimpleValue=75.5, hasUnits=qudt.DEG_F)
-temp = TemperatureProperty(v)
+value = Value(hasSimpleValue=75.5, hasUnits=qudt.DEG_F)
+temp = TemperatureProperty(value)
 
 d1.add_property(temp)
 
-dump()
-clear()
-print("")
-
-print("----- auto build value -----")
+# auto build value
 d2 = TestDevice(label="Test Device 2")
-
 d2.add_property(TemperatureProperty(90.5))
 
-dump()
-clear()
-print("")
-
-print("----- named property, kwarg value -----")
+# named property, kwarg value
 d3 = TestDevice2(label="Test Device 3", hasTemp=100.5)
 
+# dump the result
+sample_header("sample001")
 dump()
-clear()
-print("")

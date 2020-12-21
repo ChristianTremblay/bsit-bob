@@ -28,6 +28,5 @@ zone1 >> return_air
 zone2 >> return_air
 
 # dump the result
-if __name__ == "__main__":
-    sample_header("sample005")
-    dump()
+sample_header("sample005")
+dump()

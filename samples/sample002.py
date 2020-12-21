@@ -1,6 +1,8 @@
 from datetime import datetime
 from bob import bind_model_namespace, Node, Property, Value, dump, clear
 
+from samples import sample_header
+
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
@@ -13,49 +15,32 @@ class Snork(Node):
     temp: Property
 
 
-print("----- node assignment -----")
+# node assignment
 s = Snork()
 t = Test()
 s.test = t
-dump()
-clear()
-print("")
 
-print("----- property assignment via kwargs-----")
+# node assignment via kwargs
 s = Snork(test=Test())
-dump()
-clear()
-print("")
 
-print("----- setting a property value -----")
+# setting a property value
 p = Property()
 v = Value()
 v.hasValue = 1
 p.hasValue = v
-dump()
-clear()
-print("")
 
-print("----- auto build Value, init property value -----")
+# auto build Value, init property value
 p = Property(4)
-dump()
-clear()
-print("")
 
-print("----- kwargs set property value -----")
+# kwargs set property value
 p = Property(hasValue=5)
-dump()
-clear()
-print("")
 
-print("----- datetime value -----")
-v = Value(datetime(2021, 1, 1))
-dump()
-clear()
-print("")
+# datetime value
+datetime_value = Value(datetime(2021, 1, 1))
 
-print("----- value with a timestamp -----")
-v = Value(hasSimpleValue=22.5, hasTimestamp=datetime(2021, 1, 1))
+# value with a timestamp
+timestamp_value = Value(hasSimpleValue=22.5, hasTimestamp=datetime(2021, 1, 1))
+
+# dump the result
+sample_header("sample002")
 dump()
-clear()
-print("")

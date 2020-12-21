@@ -14,6 +14,5 @@ vav = VAV1(label="Zone.VAV")
 vav >> zone
 
 # dump the result
-if __name__ == "__main__":
-    sample_header("sample004")
-    dump()
+sample_header("sample004")
+dump()

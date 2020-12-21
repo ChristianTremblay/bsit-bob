@@ -17,6 +17,5 @@ cold_side_air_connection >> hot_water_coil
 hot_water_coil >> hot_side_air_connection
 
 # dump the result
-if __name__ == "__main__":
-    sample_header("sample006")
-    dump()
+sample_header("sample006")
+dump()

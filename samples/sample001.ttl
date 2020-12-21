@@ -1,0 +1,75 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/data/sample001
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix ex: <urn:ex/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/1.0/data/sample001>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/data/sample001> ;
+  rdfs:label "sample001" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+ex:00001 a c223:Connectable,
+        c223:Device,
+        ex:TestDevice ;
+    rdfs:label "Test Device 1" ;
+    c223:hasProperty ex:00003 .
+
+ex:00002 a c223:Value ;
+    c223:hasSimpleValue 7.55e+01 ;
+    c223:hasUnits qudt:DEG_F ;
+    c223:isValueOf ex:00003 .
+
+ex:00003 a c223:Property,
+        c223:QuantifiableProperty,
+        ex:TemperatureProperty ;
+    c223:isPropertyOf ex:00001 ;
+    ex:hasQuantityKind quantitykind:Temperature ;
+    ex:hasValue ex:00002 .
+
+ex:00004 a c223:Connectable,
+        c223:Device,
+        ex:TestDevice ;
+    rdfs:label "Test Device 2" ;
+    c223:hasProperty ex:00005 .
+
+ex:00005 a c223:Property,
+        c223:QuantifiableProperty,
+        ex:TemperatureProperty ;
+    c223:isPropertyOf ex:00004 ;
+    ex:hasQuantityKind quantitykind:Temperature ;
+    ex:hasValue ex:00006 .
+
+ex:00006 a c223:Value,
+        ex:TemperatureValue ;
+    ex:hasSimpleValue 9.05e+01 ;
+    ex:hasUnits qudt:DEG_F ;
+    ex:isValueOf ex:00005 .
+
+ex:00007 a c223:Connectable,
+        c223:Device,
+        ex:TestDevice2 ;
+    rdfs:label "Test Device 3" ;
+    c223:hasProperty ex:00008 ;
+    ex:hasTemp ex:00008 .
+
+ex:00008 a c223:Property,
+        c223:QuantifiableProperty,
+        ex:TemperatureProperty ;
+    c223:isPropertyOf ex:00007 ;
+    ex:hasQuantityKind quantitykind:Temperature ;
+    ex:hasValue ex:00009 .
+
+ex:00009 a c223:Value,
+        ex:TemperatureValue ;
+    ex:hasSimpleValue 1.005e+02 ;
+    ex:hasUnits qudt:DEG_F ;
+    ex:isValueOf ex:00008 .
+
