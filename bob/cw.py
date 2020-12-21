@@ -4,8 +4,8 @@ from .core import (
     ConnectionType,
     register_connection_type,
     Connection,
-    Inlet,
-    Outlet,
+    InletConnectionPoint,
+    OutletConnectionPoint,
     Device,
 )
 from .air import AirInlet, AirOutlet
@@ -21,11 +21,11 @@ class ChilledWaterConnection(ChilledWater, Connection):
     pass
 
 
-class ChilledWaterInlet(Inlet, ChilledWater):
+class ChilledWaterInlet(InletConnectionPoint, ChilledWater):
     pass
 
 
-class ChilledWaterOutlet(Outlet, ChilledWater):
+class ChilledWaterOutlet(OutletConnectionPoint, ChilledWater):
     pass
 
 

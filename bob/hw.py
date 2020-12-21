@@ -4,8 +4,8 @@ from .core import (
     ConnectionType,
     register_connection_type,
     Connection,
-    Inlet,
-    Outlet,
+    InletConnectionPoint,
+    OutletConnectionPoint,
     Device,
 )
 from .air import AirInlet, AirOutlet
@@ -21,11 +21,11 @@ class HotWaterConnection(HotWater, Connection):
     pass
 
 
-class HotWaterInlet(Inlet, HotWater):
+class HotWaterInlet(InletConnectionPoint, HotWater):
     pass
 
 
-class HotWaterOutlet(Outlet, HotWater):
+class HotWaterOutlet(OutletConnectionPoint, HotWater):
     pass
 
 

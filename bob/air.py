@@ -2,8 +2,8 @@ from .core import (
     ConnectionType,
     register_connection_type,
     Connection,
-    Inlet,
-    Outlet,
+    InletConnectionPoint,
+    OutletConnectionPoint,
     Device,
 )
 
@@ -19,11 +19,11 @@ class AirConnection(Air, Connection):
     pass
 
 
-class AirInlet(Inlet, Air):
+class AirInlet(InletConnectionPoint, Air):
     pass
 
 
-class AirOutlet(Outlet, Air):
+class AirOutlet(OutletConnectionPoint, Air):
     pass
 
 

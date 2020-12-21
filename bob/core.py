@@ -7,6 +7,7 @@ from __future__ import annotations
 import sys
 import inspect
 from collections import defaultdict
+import logging
 
 from typing import Dict, Any, TextIO, Tuple, Type, TypeVar, Union, cast
 
@@ -19,6 +20,7 @@ EXPLICIT_CORE_TYPES = True
 # globals
 g = Graph()
 _next_node = 1
+
 
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
 NodeMap = Dict[str, Union[type, str]]
@@ -328,12 +330,14 @@ class Node(metaclass=NodeMetaclass):
         return f"<{self.__class__.__name__}{label} at {self.node}>"
 
     def add_property(self, prop: Property) -> None:
-        """Add a property to a node."""
+        """Add a property to a node, returns the added property."""
         assert isinstance(prop, Property)
 
         # link the two together
         g.add((self.node, c223.hasProperty, prop.node))
         g.add((prop.node, c223.isPropertyOf, self.node))
+
+        return prop
 
 
 class ConnectionType:
@@ -356,7 +360,9 @@ class Connection(Node, ConnectionType):
                 connection_type = self.connection_type + "Connection"
                 g.add((self.node, RDF.type, self._namespace[connection_type],))
 
-    def __rshift__(self, other: Union[ConnectionPoint, Connectable]) -> Union[ConnectionPoint, Connectable]:
+    def __rshift__(
+        self, other: Union[ConnectionPoint, Connectable]
+    ) -> Union[ConnectionPoint, Connectable]:
         """self >> other"""
 
         # look for unconnected connection points for this connection type
@@ -366,10 +372,6 @@ class Connection(Node, ConnectionType):
             if other.connectsThrough:
                 raise RuntimeError(f"already connected: {other!r}")
 
-            # check the connection direction
-            #@ if isinstance(other, Outlet):
-            #@     raise TypeError("connection point direction")
-
             other_connection_type = getattr(other, "connection_type", "")
             if other_connection_type != self.connection_type:
                 raise TypeError("connection type")
@@ -383,7 +385,7 @@ class Connection(Node, ConnectionType):
                 connection_point,
             ) in other._connection_points.items():
                 # check the connection direction
-                if isinstance(connection_point, Outlet):
+                if isinstance(connection_point, OutletConnectionPoint):
                     continue
                 # the connection point must not be already connected
                 if connection_point.connectsThrough:
@@ -407,24 +409,33 @@ class Connection(Node, ConnectionType):
 
         connection_point = unbound_connection_points.pop()
 
-        # link connection to connection point and back
+        # link connection to connection point
         g.add((self.node, c223.connectsAt, connection_point.node))
-        connection_point.connectsThrough = self
 
-        # link the connection to the device of the connection point
-        g.add(
-            (
-                connection_point.isConnectionPointOf.node,
-                c223.connectedThrough,
-                self.node,
+        # check the connection direction
+        if isinstance(connection_point, OutletConnectionPoint):
+            logging.info(f"internal connection: {self} >> {connection_point}")
+        else:
+            connection_point.connectsThrough = self
+
+            # link the connection to the device of the connection point
+            g.add(
+                (
+                    connection_point.isConnectionPointOf.node,
+                    c223.connectedThrough,
+                    self.node,
+                )
             )
-        )
-        g.add((self.node, c223.connectsTo, connection_point.isConnectionPointOf.node))
+            g.add(
+                (self.node, c223.connectsTo, connection_point.isConnectionPointOf.node)
+            )
 
         # for chaining
         return other
 
-    def __lshift__(self, other: Union[ConnectionPoint, Connectable]) -> Union[ConnectionPoint, Connectable]:
+    def __lshift__(
+        self, other: Union[ConnectionPoint, Connectable]
+    ) -> Union[ConnectionPoint, Connectable]:
         """self << other"""
 
         # look for <system> unconnected connection points for this connection type
@@ -434,10 +445,6 @@ class Connection(Node, ConnectionType):
             if other.connectsThrough:
                 raise RuntimeError(f"already connected: {other!r}")
 
-            # check the connection direction
-            #@ if isinstance(other, Inlet):
-            #@     raise TypeError("connection point direction")
-
             other_connection_type = getattr(other, "connection_type", "")
             if other_connection_type != self.connection_type:
                 raise TypeError("connection type")
@@ -451,7 +458,7 @@ class Connection(Node, ConnectionType):
                 connection_point,
             ) in other._connection_points.items():
                 # check the connection direction
-                if isinstance(connection_point, Inlet):
+                if isinstance(connection_point, InletConnectionPoint):
                     continue
 
                 connection_point_type = getattr(connection_point, "connection_type", "")
@@ -478,30 +485,31 @@ class Connection(Node, ConnectionType):
 
         # link connection to connection point and back
         g.add((self.node, c223.connectsAt, connection_point.node))
-        connection_point.connectsThrough = self
 
-        # link the connection to the "owner" of the connection point
-        g.add(
-            (
-                connection_point.isConnectionPointOf.node,
-                c223.connectedThrough,
-                self.node,
+        # check the connection direction
+        if isinstance(connection_point, InletConnectionPoint):
+            logging.info(f"internal connection: {self} << {connection_point}")
+        else:
+            connection_point.connectsThrough = self
+
+            # link the connection to the "owner" of the connection point
+            g.add(
+                (
+                    connection_point.isConnectionPointOf.node,
+                    c223.connectedThrough,
+                    self.node,
+                )
             )
-        )
-        g.add(
-            (self.node, c223.connectsFrom, connection_point.isConnectionPointOf.node,)
-        )
+            g.add(
+                (
+                    self.node,
+                    c223.connectsFrom,
+                    connection_point.isConnectionPointOf.node,
+                )
+            )
 
         # for chaining
         return other
-
-
-    def __repr__(self) -> str:
-        xid = id(self)
-        if xid < 0:
-            xid += 1 << 32
-        sname = self.__module__ + "." + self.__class__.__name__
-        return f"<{sname} instance at 0x{xid:08x}>"
 
 
 class ConnectionPoint(Node):
@@ -521,6 +529,9 @@ class ConnectionPoint(Node):
         g.add((connectable.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = connectable
 
+        # this is one of the connection points of the connectable
+        connectable._connection_points[str(self.node)] = self
+
     def __rshift__(self, other: Any) -> Union[Connection, ConnectionPoint]:
         """self >> other
 
@@ -528,35 +539,38 @@ class ConnectionPoint(Node):
         another connection point.
         """
 
-        #@ pass through connection points?
-        #@ if self.connectsThrough:
-        #@     raise RuntimeError(f"already connected: {self!r}")
-        #@ if isinstance(self, Inlet):
-        #@     raise RuntimeError("connection point direction")
-
         self_connection_type: str
         other_connection_type: str
 
         if isinstance(other, Connection):
             self_connection_type = getattr(self, "connection_type", "")
-            if self_connection_type != other.connection_type:
+            other_connection_type = getattr(other, "connection_type", "")
+            if self_connection_type != other_connection_type:
                 raise TypeError("connection point type")
 
-            # link connection to connection point and back
-            #@ self.connectsThrough = other
-            g.add((other.node, c223.connectsAt, self.node))
+            if isinstance(self, InletConnectionPoint):
+                logging.info(f"internal connection: {self} >> {other}")
+            else:
+                logging.info(f"external connection: {self} >> {other}")
+                if self.connectsThrough:
+                    raise RuntimeError(
+                        f"already connected: {self} connects through {self.connectsThrough}"
+                    )
 
-            # link the connection points "owner" to the connection
-            g.add((self.isConnectionPointOf.node, c223.connectedThrough, other.node,))
-            g.add((other.node, c223.connectsFrom, self.isConnectionPointOf.node,))
+                # link connection to connection point and back
+                self.connectsThrough = other
+                g.add((other.node, c223.connectsAt, self.node))
+
+                # link the connection points "owner" to the connection
+                g.add(
+                    (self.isConnectionPointOf.node, c223.connectedThrough, other.node,)
+                )
+                g.add((other.node, c223.connectsFrom, self.isConnectionPointOf.node,))
 
             # for chaining
             return other
 
         elif isinstance(other, ConnectionPoint):
-            if isinstance(other, Outlet):
-                raise RuntimeError("connection point direction")
-
             self_connection_type = getattr(self, "connection_type", "")
             other_connection_type = getattr(other, "connection_type", "")
             if self_connection_type != other_connection_type:
@@ -565,14 +579,33 @@ class ConnectionPoint(Node):
                     f"{self_connection_type!r} != {other_connection_type!r}"
                 )
 
-            if other.connectsThrough:
-                raise RuntimeError(f"already connected: {other!r}")
+            if isinstance(self, InletConnectionPoint):
+                logging.info(f"internal connection: {self} >> {other}")
 
-            new_connection = connection_classes[self_connection_type]()
+                if (
+                    isinstance(other, OutletConnectionPoint)
+                    and self.isConnectionPointOf.node != other.isConnectionPointOf.node
+                ):
+                    raise RuntimeError(
+                        f"internal pass-through connection must be the same device or system: {self} >> {other}"
+                    )
 
-            # link it up
-            new_connection << self
-            new_connection >> other
+                elif isinstance(other, InletConnectionPoint):
+                    logging.info(f"pass-in connection: {self} >> {other}")
+
+            elif isinstance(other, OutletConnectionPoint):
+                logging.info(f"pass-out connection: {self} >> {other}")
+
+            else:
+                logging.info(f"external connection: {self} >> {other}")
+                if other.connectsThrough:
+                    raise RuntimeError(f"already connected: {other!r}")
+
+                new_connection = connection_classes[self_connection_type]()
+
+                # link it up
+                new_connection << self
+                new_connection >> other
 
             # for chaining
             return other
@@ -587,32 +620,38 @@ class ConnectionPoint(Node):
         another connection point.
         """
 
-        #@ pass through connection points?
-        #@ if self.connectsThrough:
-        #@     raise RuntimeError(f"already connected: {self!r}")
-        #@ if isinstance(self, Outlet):
-        #@     raise RuntimeError("connection point direction")
+        self_connection_type: str
+        other_connection_type: str
 
         if isinstance(other, Connection):
             self_connection_type = getattr(self, "connection_type", "")
-            if self_connection_type != other.connection_type:
+            other_connection_type = getattr(other, "connection_type", "")
+            if self_connection_type != other_connection_type:
                 raise TypeError("connection point type")
 
-            # link connection to connection point and back
-            #@ self.connectsThrough = other
-            g.add((other.node, c223.connectsAt, self.node))
+            if isinstance(self, OutletConnectionPoint):
+                logging.info(f"internal connection: {self} << {other}")
+            else:
+                logging.info(f"external connection: {self} << {other}")
+                if self.connectsThrough:
+                    raise RuntimeError(
+                        f"already connected: {self} connects through {self.connectsThrough}"
+                    )
 
-            # link the connection points "owner" to the connection
-            g.add((self.isConnectionPointOf.node, c223.connectedThrough, other.node,))
-            g.add((other.node, c223.connectsTo, self.isConnectionPointOf.node,))
+                # link connection to connection point and back
+                self.connectsThrough = other
+                g.add((other.node, c223.connectsAt, self.node))
+
+                # link the connection points "owner" to the connection
+                g.add(
+                    (self.isConnectionPointOf.node, c223.connectedThrough, other.node,)
+                )
+                g.add((other.node, c223.connectsTo, self.isConnectionPointOf.node,))
 
             # for chaining
             return other
 
         elif isinstance(other, ConnectionPoint):
-            if isinstance(other, Inlet):
-                raise RuntimeError("connection point direction")
-
             self_connection_type = getattr(self, "connection_type", "")
             other_connection_type = getattr(other, "connection_type", "")
             if self_connection_type != other_connection_type:
@@ -621,14 +660,33 @@ class ConnectionPoint(Node):
                     f"{self_connection_type!r} != {other_connection_type!r}"
                 )
 
-            if other.connectsThrough:
-                raise RuntimeError(f"already connected: {other!r}")
+            if isinstance(self, OutletConnectionPoint):
+                logging.info(f"internal connection: {self} << {other}")
 
-            new_connection = connection_classes[self_connection_type]()
+                if (
+                    isinstance(other, InletConnectionPoint)
+                    and self.isConnectionPointOf.node != other.isConnectionPointOf.node
+                ):
+                    raise RuntimeError(
+                        f"internal pass-through connection must be the same device or system: {self} << {other}"
+                    )
 
-            # link it up
-            new_connection << other
-            new_connection >> self
+                elif isinstance(other, OutletConnectionPoint):
+                    logging.info(f"pass-out connection: {self} << {other}")
+
+            elif isinstance(other, InletConnectionPoint):
+                logging.info(f"pass-in connection: {self} << {other}")
+
+            else:
+                logging.info(f"external connection: {self} >> {other}")
+                if other.connectsThrough:
+                    raise RuntimeError(f"already connected: {other!r}")
+
+                new_connection = connection_classes[self_connection_type]()
+
+                # link it up
+                new_connection << other
+                new_connection >> self
 
             # for chaining
             return other
@@ -637,11 +695,11 @@ class ConnectionPoint(Node):
             raise TypeError(f"{self!r} connection to {other!r}")
 
 
-class Inlet(ConnectionPoint):
+class InletConnectionPoint(ConnectionPoint):
     pass
 
 
-class Outlet(ConnectionPoint):
+class OutletConnectionPoint(ConnectionPoint):
     pass
 
 
@@ -683,7 +741,6 @@ class Connectable(Node):
 
                 var_annotation = _annotation_forwards.get(var_annotation)
             if not issubclass(var_annotation, ConnectionPoint):
-                # print(f"    not a subclass of ConnectionPoint")
                 continue
 
             # build an instance of this connection point
@@ -692,57 +749,42 @@ class Connectable(Node):
 
             setattr(self, var_name, var_element)
 
-    def add_connection_point(self, connection_point: ConnectionPoint) -> None:
-        """Add a connection point."""
-        assert isinstance(prop, ConnectionPoint)
-
-        # link the two together
-        connection_point.isConnectionPointOf = self
-        g.add((self.node, c223.hasConnectionPoint, connection_point.node))
-
-        # this connection point doesn't have a usual name, but this key
-        # will be unique (so it will not step on any other points) and
-        # it is not exposed as a label in the graph
-        self._connection_points[connection_point.node] = connection_point
-
     @staticmethod
     def join_things(from_thing: Connectable, to_thing: Connectable) -> None:
-        """Find an unambiguous way to connect <from> to <to>"""
+        """Find an unambiguous way to connect <from_thing> to <to_thing>"""
+        logging.info(f"join from {from_thing} to {to_thing}")
 
-        # print(f"{from_thing} join to {to_thing}")
-        # print(f"    connection points: {from_thing._connection_points}")
-
-        from_out = defaultdict(list)
+        from_out = defaultdict(set)
         for attr, connection_point in from_thing._connection_points.items():
+            # print(f"*** {attr!r}: {connection_point}")
             if connection_point.connectsThrough:
+                # print("***     - connected")
                 continue
-            if not isinstance(connection_point, Outlet):
+            if not isinstance(connection_point, OutletConnectionPoint):
+                # print("***     - not an outlet")
                 continue
 
             connection_type = getattr(connection_point, "connection_type", "")
-            from_out[connection_type].append(connection_point)
+            from_out[connection_type].add(connection_point)
 
-        # print(f"    from out {from_out}")
-
+        # print(f"*** from_out: {from_out}")
         from_types = set(
             connection_type
             for connection_type in from_out
             if len(from_out[connection_type]) == 1
         )
         if not from_types:
-            raise RuntimeError(f"no candidate sources: {from_thing!r}")
+            raise RuntimeError(f"no candidate sources from {from_thing} to {to_thing}")
 
-        to_in = defaultdict(list)
+        to_in = defaultdict(set)
         for attr, connection_point in to_thing._connection_points.items():
             if connection_point.connectsThrough:
                 continue
-            if not isinstance(connection_point, Inlet):
+            if not isinstance(connection_point, InletConnectionPoint):
                 continue
 
             connection_type = getattr(connection_point, "connection_type", "")
-            to_in[connection_type].append(connection_point)
-
-        # print(f"    to in {to_in}")
+            to_in[connection_type].add(connection_point)
 
         to_types = set(
             connection_type
@@ -750,7 +792,9 @@ class Connectable(Node):
             if len(to_in[connection_type]) == 1
         )
         if not to_types:
-            raise RuntimeError(f"no candidate destinations: {to_thing!r}")
+            raise RuntimeError(
+                f"no candidate destinations from {from_thing} to {to_thing}"
+            )
 
         # find the connection type that has one unconnected <from> and
         # one unconnected <to>
@@ -761,8 +805,8 @@ class Connectable(Node):
             raise RuntimeError("too many common types")
 
         connection_type = common_types.pop()
-        from_connection_point = from_out[connection_type][0]
-        to_connection_point = to_in[connection_type][0]
+        from_connection_point = from_out[connection_type].pop()
+        to_connection_point = to_in[connection_type].pop()
 
         # build the connection
         from_connection_point >> to_connection_point
@@ -1007,13 +1051,15 @@ class Property(Node):
             self.hasValue = init_value
             init_value.isValueOf = self
 
-    def add_value(self, value: Value) -> None:
-        """Add an additional value to a property."""
+    def add_value(self, value: Value) -> Value:
+        """Add an additional value to a property, returns the value added."""
         assert isinstance(value, Value)
 
         # link the two together
         g.add((self.node, c223.hasValue, value.node))
         value.isValueOf = self
+
+        return value
 
 
 class ActuatableProperty(Property):
