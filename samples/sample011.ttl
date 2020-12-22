@@ -1,0 +1,110 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/data/sample011
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix ex: <urn:ex/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/1.0/data/sample011>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/data/sample011> ;
+  rdfs:label "sample011" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+ex:00001 a c223:Connectable,
+        c223:System,
+        c223:TestSystem ;
+    rdfs:label "s1" ;
+    c223:cpIn ex:00002 ;
+    c223:cpOut ex:00003 ;
+    c223:hasConnectionPoint ex:00002,
+        ex:00003 ;
+    c223:hasDevice ex:00004 .
+
+ex:00002 a c223:InletConnectionPoint ;
+    rdfs:label "s1.cpIn" ;
+    c223:connectsThroughInternally ex:00007 ;
+    c223:isConnectionPointOf ex:00001 .
+
+ex:00003 a c223:OutletConnectionPoint ;
+    rdfs:label "s1.cpOut" ;
+    c223:connectsThroughInternally ex:00007 ;
+    c223:isConnectionPointOf ex:00001 .
+
+ex:00004 a c223:Connectable,
+        c223:Device,
+        c223:TestDevice ;
+    rdfs:label "d1" ;
+    c223:cpIn ex:00005 ;
+    c223:cpOut ex:00006 ;
+    c223:hasConnectionPoint ex:00005,
+        ex:00006 ;
+    c223:isDeviceOf ex:00001 .
+
+ex:00005 a c223:InletConnectionPoint ;
+    rdfs:label "d1.cpIn" ;
+    c223:isConnectionPointOf ex:00004 .
+
+ex:00006 a c223:OutletConnectionPoint ;
+    rdfs:label "d1.cpOut" ;
+    c223:isConnectionPointOf ex:00004 .
+
+ex:00007 a c223:Connection ;
+    c223:connectsAtInternally ex:00002,
+        ex:00003 .
+
+ex:00008 a c223:Connectable,
+        c223:System,
+        c223:TestSystem ;
+    rdfs:label "s2" ;
+    c223:cpIn ex:00009 ;
+    c223:cpOut ex:00010 ;
+    c223:hasConnectionPoint ex:00009,
+        ex:00010 ;
+    c223:hasDevice ex:00011 .
+
+ex:00009 a c223:InletConnectionPoint ;
+    rdfs:label "s2.cpIn" ;
+    c223:connectsThroughInternally ex:00014 ;
+    c223:isConnectionPointOf ex:00008 .
+
+ex:00010 a c223:OutletConnectionPoint ;
+    rdfs:label "s2.cpOut" ;
+    c223:connectsThroughInternally ex:00015 ;
+    c223:isConnectionPointOf ex:00008 .
+
+ex:00011 a c223:Connectable,
+        c223:Device,
+        c223:TestDevice ;
+    rdfs:label "d2" ;
+    c223:connectedThrough ex:00014,
+        ex:00015 ;
+    c223:cpIn ex:00012 ;
+    c223:cpOut ex:00013 ;
+    c223:hasConnectionPoint ex:00012,
+        ex:00013 ;
+    c223:isDeviceOf ex:00008 .
+
+ex:00012 a c223:InletConnectionPoint ;
+    rdfs:label "d2.cpIn" ;
+    c223:connectsThrough ex:00014 ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00013 a c223:OutletConnectionPoint ;
+    rdfs:label "d2.cpOut" ;
+    c223:connectsThrough ex:00015 ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00014 a c223:Connection ;
+    c223:connectsAt ex:00012 ;
+    c223:connectsAtInternally ex:00009 ;
+    c223:connectsTo ex:00011 .
+
+ex:00015 a c223:Connection ;
+    c223:connectsAt ex:00013 ;
+    c223:connectsAtInternally ex:00010 ;
+    c223:connectsFrom ex:00011 .
+

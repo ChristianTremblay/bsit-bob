@@ -18,7 +18,7 @@ ex:00001 a c223:Connectable,
         c223:Device,
         c223:Zone ;
     rdfs:label "Zone" ;
-    c223:connectedThrough ex:00016 ;
+    c223:connectedThrough ex:00018 ;
     c223:hasConnectionPoint ex:00002,
         ex:00003 ;
     c223:returnAirOutlet ex:00003 ;
@@ -27,7 +27,7 @@ ex:00001 a c223:Connectable,
 ex:00002 a c223:AirConnectionPoint,
         c223:AirInlet ;
     rdfs:label "Zone.supplyAirInlet" ;
-    c223:connectsThrough ex:00016 ;
+    c223:connectsThrough ex:00018 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00003 a c223:AirConnectionPoint,
@@ -42,7 +42,7 @@ ex:00004 a c223:Connectable,
     c223:airFlow ex:00008 ;
     c223:airInlet ex:00005 ;
     c223:airOutlet ex:00006 ;
-    c223:connectedThrough ex:00016 ;
+    c223:connectedThrough ex:00018 ;
     c223:damperPosition ex:00012 ;
     c223:hasConnectionPoint ex:00005,
         ex:00006 ;
@@ -54,12 +54,14 @@ ex:00004 a c223:Connectable,
 ex:00005 a c223:AirConnectionPoint,
         c223:AirInlet ;
     rdfs:label "Zone.VAV.airInlet" ;
+    c223:connectsThroughInternally ex:00016 ;
     c223:isConnectionPointOf ex:00004 .
 
 ex:00006 a c223:AirConnectionPoint,
         c223:AirOutlet ;
     rdfs:label "Zone.VAV.airOutlet" ;
-    c223:connectsThrough ex:00016 ;
+    c223:connectsThrough ex:00018 ;
+    c223:connectsThroughInternally ex:00017 ;
     c223:isConnectionPointOf ex:00004 .
 
 ex:00007 a c223:AirFlowStation,
@@ -68,7 +70,8 @@ ex:00007 a c223:AirFlowStation,
     rdfs:label "Zone.VAV.air_flow_station" ;
     c223:airInlet ex:00009 ;
     c223:airOutlet ex:00010 ;
-    c223:connectedThrough ex:00015 ;
+    c223:connectedThrough ex:00015,
+        ex:00016 ;
     c223:flow ex:00008 ;
     c223:hasConnectionPoint ex:00009,
         ex:00010 ;
@@ -83,6 +86,7 @@ ex:00008 a c223:AnalogIn,
 ex:00009 a c223:AirConnectionPoint,
         c223:AirInlet ;
     rdfs:label "Zone.VAV.air_flow_station.airInlet" ;
+    c223:connectsThrough ex:00016 ;
     c223:isConnectionPointOf ex:00007 .
 
 ex:00010 a c223:AirConnectionPoint,
@@ -118,6 +122,7 @@ ex:00013 a c223:AirConnectionPoint,
 ex:00014 a c223:AirConnectionPoint,
         c223:AirOutlet ;
     rdfs:label "Zone.VAV.damper.airOutlet" ;
+    c223:connectsThroughInternally ex:00017 ;
     c223:isConnectionPointOf ex:00011 .
 
 ex:00015 a c223:AirConnection ;
@@ -127,6 +132,15 @@ ex:00015 a c223:AirConnection ;
     c223:connectsTo ex:00011 .
 
 ex:00016 a c223:AirConnection ;
+    c223:connectsAt ex:00009 ;
+    c223:connectsAtInternally ex:00005 ;
+    c223:connectsTo ex:00007 .
+
+ex:00017 a c223:AirConnection ;
+    c223:connectsAtInternally ex:00006,
+        ex:00014 .
+
+ex:00018 a c223:AirConnection ;
     c223:connectsAt ex:00002,
         ex:00006 ;
     c223:connectsFrom ex:00004 ;

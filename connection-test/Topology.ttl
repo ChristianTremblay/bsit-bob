@@ -201,12 +201,13 @@ ex:00028 a c223:Connection ;
 ex:00029 a c223:Connection ;
     rdfs:label "C4" ;
     c223:connectsAt ex:00014 ;
+    c223:connectsAtInternally ex:00036 ;
     c223:connectsTo ex:00013 .
 
 ex:00030 a c223:Connection ;
     rdfs:label "C5" ;
-    c223:connectsAt ex:00015,
-        ex:00038 ;
+    c223:connectsAt ex:00015 ;
+    c223:connectsAtInternally ex:00038 ;
     c223:connectsFrom ex:00013 .
 
 ex:00031 a c223:Connection ;
@@ -227,14 +228,15 @@ ex:00033 a c223:Connection ;
     rdfs:label "C8" ;
     c223:connectsAt ex:00021,
         ex:00024 ;
+    c223:connectsAtInternally ex:00037 ;
     c223:connectsTo ex:00020,
         ex:00023 .
 
 ex:00034 a c223:Connection ;
     rdfs:label "C9" ;
     c223:connectsAt ex:00022,
-        ex:00025,
-        ex:00039 ;
+        ex:00025 ;
+    c223:connectsAtInternally ex:00039 ;
     c223:connectsFrom ex:00020,
         ex:00023 .
 
@@ -260,19 +262,23 @@ ex:00035 a c223:Connectable,
 ex:00036 a c223:InletConnectionPoint ;
     rdfs:label "S1.cpIn1" ;
     c223:connectsThrough ex:00028 ;
+    c223:connectsThroughInternally ex:00029 ;
     c223:isConnectionPointOf ex:00035 .
 
 ex:00037 a c223:InletConnectionPoint ;
     rdfs:label "S1.cpIn2" ;
     c223:connectsThrough ex:00032 ;
+    c223:connectsThroughInternally ex:00033 ;
     c223:isConnectionPointOf ex:00035 .
 
 ex:00038 a c223:OutletConnectionPoint ;
     rdfs:label "S1.cpOut1" ;
     c223:connectsThrough ex:00031 ;
+    c223:connectsThroughInternally ex:00030 ;
     c223:isConnectionPointOf ex:00035 .
 
 ex:00039 a c223:OutletConnectionPoint ;
     rdfs:label "S1.cpOut2" ;
+    c223:connectsThroughInternally ex:00034 ;
     c223:isConnectionPointOf ex:00035 .
 

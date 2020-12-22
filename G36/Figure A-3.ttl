@@ -18,11 +18,6 @@ ex:00001 a c223:Connectable,
         c223:System,
         ex:VAV ;
     rdfs:label "A-3" ;
-    c223:connectedThrough ex:00011,
-        ex:00025,
-        ex:00026,
-        ex:00027,
-        ex:00031 ;
     c223:hasConnectionPoint ex:00002,
         ex:00003,
         ex:00004,
@@ -47,31 +42,31 @@ ex:00001 a c223:Connectable,
 ex:00002 a c223:AirConnectionPoint,
         c223:AirInlet ;
     rdfs:label "A-3.supplyAirInlet" ;
-    c223:connectsThrough ex:00011 ;
+    c223:connectsThroughInternally ex:00011 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00003 a c223:AirConnectionPoint,
         c223:AirInlet ;
     rdfs:label "A-3.returnAirInlet" ;
-    c223:connectsThrough ex:00027 ;
+    c223:connectsThroughInternally ex:00027 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00004 a c223:AirConnectionPoint,
         c223:AirOutlet ;
     rdfs:label "A-3.supplyAirOutlet" ;
-    c223:connectsThrough ex:00031 ;
+    c223:connectsThroughInternally ex:00031 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00005 a c223:HotWaterConnectionPoint,
         c223:HotWaterInlet ;
     rdfs:label "A-3.hwInlet" ;
-    c223:connectsThrough ex:00025 ;
+    c223:connectsThroughInternally ex:00025 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00006 a c223:HotWaterConnectionPoint,
         c223:HotWaterOutlet ;
     rdfs:label "A-3.hwOutlet" ;
-    c223:connectsThrough ex:00026 ;
+    c223:connectsThroughInternally ex:00026 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00007 a c223:Connectable,
@@ -106,9 +101,8 @@ ex:00010 a c223:AirConnectionPoint,
     c223:isConnectionPointOf ex:00007 .
 
 ex:00011 a c223:AirConnection ;
-    c223:connectsAt ex:00002,
-        ex:00009 ;
-    c223:connectsFrom ex:00001 ;
+    c223:connectsAt ex:00009 ;
+    c223:connectsAtInternally ex:00002 ;
     c223:connectsTo ex:00007 .
 
 ex:00012 a c223:Connectable,
@@ -152,7 +146,6 @@ ex:00017 a c223:Connectable,
         ex:HotWaterCoil ;
     rdfs:label "A-3.hot_water_coil" ;
     c223:connectedThrough ex:00025,
-        ex:00026,
         ex:00027 ;
     c223:hasConnectionPoint ex:00018,
         ex:00019,
@@ -188,7 +181,7 @@ ex:00020 a c223:HotWaterConnectionPoint,
 ex:00021 a c223:HotWaterConnectionPoint,
         c223:HotWaterOutlet ;
     rdfs:label "A-3.hot_water_coil.hwOutlet" ;
-    c223:connectsThrough ex:00026 ;
+    c223:connectsThroughInternally ex:00026 ;
     c223:isConnectionPointOf ex:00017 .
 
 ex:00022 a c223:Part,
@@ -210,21 +203,17 @@ ex:00024 a c223:Part,
     c223:isPartOf ex:00017 .
 
 ex:00025 a c223:HotWaterConnection ;
-    c223:connectsAt ex:00005,
-        ex:00020 ;
-    c223:connectsFrom ex:00001 ;
+    c223:connectsAt ex:00020 ;
+    c223:connectsAtInternally ex:00005 ;
     c223:connectsTo ex:00017 .
 
 ex:00026 a c223:HotWaterConnection ;
-    c223:connectsAt ex:00006,
-        ex:00021 ;
-    c223:connectsFrom ex:00017 ;
-    c223:connectsTo ex:00001 .
+    c223:connectsAtInternally ex:00006,
+        ex:00021 .
 
 ex:00027 a c223:AirConnection ;
-    c223:connectsAt ex:00003,
-        ex:00018 ;
-    c223:connectsFrom ex:00001 ;
+    c223:connectsAt ex:00018 ;
+    c223:connectsAtInternally ex:00003 ;
     c223:connectsTo ex:00017 .
 
 ex:00028 a c223:Connectable,
@@ -251,10 +240,9 @@ ex:00030 a c223:AirConnectionPoint,
 
 ex:00031 a c223:AirConnection ;
     rdfs:label "A-3.merge" ;
-    c223:connectsAt ex:00004,
-        ex:00010,
+    c223:connectsAt ex:00010,
         ex:00030 ;
+    c223:connectsAtInternally ex:00004 ;
     c223:connectsFrom ex:00007,
-        ex:00028 ;
-    c223:connectsTo ex:00001 .
+        ex:00028 .
 
