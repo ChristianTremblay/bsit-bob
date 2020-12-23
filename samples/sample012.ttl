@@ -80,6 +80,8 @@ ex:00011 a c223:Connectable,
         c223:Device,
         c223:TestDevice ;
     rdfs:label "d2" ;
+    c223:connectedThrough ex:00014,
+        ex:00015 ;
     c223:cpIn ex:00012 ;
     c223:cpOut ex:00013 ;
     c223:hasConnectionPoint ex:00012,
@@ -88,19 +90,21 @@ ex:00011 a c223:Connectable,
 
 ex:00012 a c223:InletConnectionPoint ;
     rdfs:label "d2.cpIn" ;
-    c223:connectsThroughInternally ex:00014 ;
+    c223:connectsThrough ex:00014 ;
     c223:isConnectionPointOf ex:00011 .
 
 ex:00013 a c223:OutletConnectionPoint ;
     rdfs:label "d2.cpOut" ;
-    c223:connectsThroughInternally ex:00015 ;
+    c223:connectsThrough ex:00015 ;
     c223:isConnectionPointOf ex:00011 .
 
 ex:00014 a c223:Connection ;
-    c223:connectsAtInternally ex:00009,
-        ex:00012 .
+    c223:connectsAt ex:00012 ;
+    c223:connectsAtInternally ex:00009 ;
+    c223:connectsTo ex:00011 .
 
 ex:00015 a c223:Connection ;
-    c223:connectsAtInternally ex:00010,
-        ex:00013 .
+    c223:connectsAt ex:00013 ;
+    c223:connectsAtInternally ex:00010 ;
+    c223:connectsFrom ex:00011 .
 
