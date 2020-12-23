@@ -626,10 +626,9 @@ class ConnectionPoint(Node):
                     new_connection >> other
 
             elif isinstance(other, OutletConnectionPoint):
-                logging.info(f"pass-out connection: {self} >> {other}")
-
                 # create a connection
                 new_connection = connection_classes[self_connection_type]()
+                logging.info(f"pass-out connection: {self} ex >> {new_connection} >> in {other}")
 
                 # self side is external
                 new_connection << self
@@ -639,11 +638,11 @@ class ConnectionPoint(Node):
                 g.add((other.node, c223.connectsThroughInternally, new_connection.node))
 
             else:
-                logging.info(f"external connection: {self} >> {other}")
                 if other.connectsThrough:
                     raise RuntimeError(f"already connected: {other!r}")
 
                 new_connection = connection_classes[self_connection_type]()
+                logging.info(f"external connection: {self} ex >> {new_connection} >> ex {other}")
 
                 # link it up
                 new_connection << self
@@ -672,13 +671,13 @@ class ConnectionPoint(Node):
                 raise TypeError("connection point type")
 
             if isinstance(self, OutletConnectionPoint):
-                logging.info(f"internal connection: {self} << {other}")
+                logging.info(f"internal connection: {other} >> in {self}")
 
                 # link connection to connection point and back
                 g.add((other.node, c223.connectsAtInternally, self.node))
                 g.add((self.node, c223.connectsThroughInternally, other.node))
             else:
-                logging.info(f"external connection: {self} << {other}")
+                logging.info(f"external connection: {other} >> ex {self}")
                 if self.connectsThrough:
                     raise RuntimeError(
                         f"already connected: {self} connects through {self.connectsThrough}"
@@ -719,36 +718,35 @@ class ConnectionPoint(Node):
                         raise RuntimeError(
                             f"internal pass-through connection must be the same device or system: {self} << {other}"
                         )
-                    logging.info(f"pass-through connection: {self} << {other}")
+                    logging.info(f"pass-through connection: {other} in >> {new_connection} >> in {self}")
 
                     # other side is also internal
                     g.add((new_connection.node, c223.connectsAtInternally, other.node))
                     g.add((other.node, c223.connectsThroughInternally, new_connection.node))
 
                 elif isinstance(other, OutletConnectionPoint):
-                    logging.info(f"pass-out connection: {self} << {other}")
+                    logging.info(f"pass-out connection: {other} ex >> {new_connection} >> in {self}")
 
-                    new_connection >> other
+                    new_connection << other
 
             elif isinstance(other, InletConnectionPoint):
-                logging.info(f"pass-in connection: {self} << {other}")
-
                 # create a connection
                 new_connection = connection_classes[self_connection_type]()
+                logging.info(f"pass-in connection: {other} in >> {new_connection} >> ex {self}")
 
                 # self side is external
-                new_connection << self
+                new_connection >> self
 
                 # other side is internal
                 g.add((new_connection.node, c223.connectsAtInternally, other.node))
                 g.add((other.node, c223.connectsThroughInternally, new_connection.node))
 
             else:
-                logging.info(f"external connection: {self} << {other}")
                 if other.connectsThrough:
                     raise RuntimeError(f"already connected: {other!r}")
 
                 new_connection = connection_classes[self_connection_type]()
+                logging.info(f"external connection: {other} ex >> {new_connection} >> ex {self}")
 
                 # link it up
                 new_connection << other
