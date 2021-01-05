@@ -1,5 +1,5 @@
 """
-Figure A-3
+Figure A-5
 """
 
 from __future__ import annotations
