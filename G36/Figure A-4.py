@@ -1,5 +1,5 @@
 """
-Figure A-3
+Figure A-4
 """
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ from bob import bind_model_namespace, dump
 from bob.core import System, Device, Part
 from bob.air import Fan, AirInlet, AirOutlet, AirConnection
 from bob.hw import HotWaterInlet, HotWaterOutlet
-from bob.signal import AnalogIn, AnalogOut
+from bob.signal import AnalogIn, AnalogOut, BinaryOut
 
 from header import g36_header
 
@@ -52,6 +52,18 @@ class ValvePositioner(Part):
 
 class HotWaterValve(Part):
     pass
+
+
+class ECMFan(Fan):
+    # airInlet: AirInlet
+    # airOutlet: AirOutlet
+    pass
+
+
+class ECM(Part):
+    fanStart = BinaryOut
+    fanSpeedFeedback = AnalogIn
+    fanSpeedCommand = AnalogOut
 
 
 class HotWaterCoil(Device):
@@ -108,9 +120,10 @@ class VAV(System):
         self.hwValvePosition = self.hot_water_coil.valvePosition
         self.returnAirInlet >> self.hot_water_coil.airInlet
 
-        # create a fan
-        self.fan = Fan(label=self.label + ".fan")
-        self > self.fan
+        # create a fan with an ECM part
+        self.fan = ECMFan(label=self.label + ".fan")
+        self.fan_ecm = ECM(label=self.label + ".fan.ecm")
+        self > self.fan > self.fan_ecm
 
         # connection for merge
         merged_air = AirConnection(label=self.label + ".merge")
@@ -122,7 +135,7 @@ class VAV(System):
 
 
 # make one
-vav = VAV(label="A-3")
+vav = VAV(label="A-4")
 
-g36_header("figure003")
+g36_header("figure004")
 dump()

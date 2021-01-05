@@ -25,8 +25,10 @@ class AirFlowStation(Device):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
 class DamperPositioner(Part):
     position = AnalogOut
+
 
 class Damper(Device):
     airInlet: AirInlet
@@ -37,7 +39,9 @@ class Damper(Device):
         super().__init__(**kwargs)
 
         # create a positioner
-        self.damper_positioner = DamperPositioner(label=self.label + ".damper_positioner")
+        self.damper_positioner = DamperPositioner(
+            label=self.label + ".damper_positioner"
+        )
         self > self.damper_positioner
 
         # reference the connections

@@ -37,7 +37,9 @@ class Damper(Device):
         super().__init__(**kwargs)
 
         # create a positioner
-        self.damper_positioner = DamperPositioner(label=self.label + ".damper_positioner")
+        self.damper_positioner = DamperPositioner(
+            label=self.label + ".damper_positioner"
+        )
         self > self.damper_positioner
 
         # reference the connections
@@ -111,6 +113,7 @@ class VAV(System):
         self.hwInlet >> self.hot_water_coil.hwInlet
         self.hwOutlet << self.hot_water_coil.hwOutlet
         self.valvePosition = self.hot_water_coil.valvePosition
+
 
 # make one
 vav = VAV(label="A-2")
