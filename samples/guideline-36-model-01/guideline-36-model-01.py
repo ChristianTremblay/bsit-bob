@@ -8,23 +8,21 @@ from bob.vav import VAV2
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
-class OutsideAir(Device):
-    outsideAir: AirOutlet  # outside air goes in someplace
-    economizerAir: AirOutlet  # outside air going into the economizer
-    exhaustAir: AirInlet  # from exhaust fan going out
+class OutsideAir(AirConnection):
+    pass
 
 
 # start with outside air
 outside_air = OutsideAir(label="outside_air")
 
 min_oa_damper = Damper(label="min_oa_damper")
-outside_air.outsideAir >> min_oa_damper.airInlet
+outside_air >> min_oa_damper.airInlet
 
 outside_air_afms = AirFlowStation(label="outside_air_afms")
 min_oa_damper >> outside_air_afms
 
 economizer_oa_damper = Damper(label="economizer_oa_damper")
-outside_air.economizerAir >> economizer_oa_damper.airInlet
+outside_air >> economizer_oa_damper.airInlet
 
 mixed_air = AirConnection(label="mixed_air")
 outside_air_afms.airOutlet >> mixed_air
@@ -71,7 +69,7 @@ return_air >> return_fan
 
 # make the exhaust air damper and connect it
 exhaust_air_damper = Damper(label="exhaust_air_damper")
-exhaust_air_damper.airOutlet >> outside_air.exhaustAir
+exhaust_air_damper.airOutlet >> outside_air
 
 # return fan air is divided into exhaust air or mixed air
 exhaust_mixed_air = AirConnection(label="exhaust_mixed_air")
