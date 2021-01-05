@@ -114,7 +114,7 @@ class VAV(System):
         merged_air = AirConnection(label=self.label + ".merge")
 
         # link the air pieces together
-        self.air_flow_station >> merged_air
+        self.damper.airOutlet >> merged_air
         self.fan >> merged_air
         merged_air >> self.supplyAirOutlet
 

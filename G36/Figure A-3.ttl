@@ -73,8 +73,7 @@ ex:00007 a c223:Connectable,
         c223:Device,
         ex:AirFlowStation ;
     rdfs:label "A-3.air_flow_station" ;
-    c223:connectedThrough ex:00011,
-        ex:00031 ;
+    c223:connectedThrough ex:00011 ;
     c223:hasConnectionPoint ex:00009,
         ex:00010 ;
     c223:hasProperty ex:00008 ;
@@ -97,7 +96,6 @@ ex:00009 a c223:AirConnectionPoint,
 ex:00010 a c223:AirConnectionPoint,
         c223:AirOutlet ;
     rdfs:label "A-3.air_flow_station.airOutlet" ;
-    c223:connectsThrough ex:00031 ;
     c223:isConnectionPointOf ex:00007 .
 
 ex:00011 a c223:AirConnection ;
@@ -109,6 +107,7 @@ ex:00012 a c223:Connectable,
         c223:Device,
         ex:Damper ;
     rdfs:label "A-3.damper" ;
+    c223:connectedThrough ex:00031 ;
     c223:hasConnectionPoint ex:00013,
         ex:00014 ;
     c223:hasPart ex:00015 ;
@@ -126,6 +125,7 @@ ex:00013 a c223:AirConnectionPoint,
 ex:00014 a c223:AirConnectionPoint,
         c223:AirOutlet ;
     rdfs:label "A-3.damper.airOutlet" ;
+    c223:connectsThrough ex:00031 ;
     c223:isConnectionPointOf ex:00012 .
 
 ex:00015 a c223:Part,
@@ -242,9 +242,9 @@ ex:00030 a c223:AirConnectionPoint,
 
 ex:00031 a c223:AirConnection ;
     rdfs:label "A-3.merge" ;
-    c223:connectsAt ex:00010,
+    c223:connectsAt ex:00014,
         ex:00030 ;
     c223:connectsAtInternally ex:00004 ;
-    c223:connectsFrom ex:00007,
+    c223:connectsFrom ex:00012,
         ex:00028 .
 
