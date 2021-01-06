@@ -18,7 +18,7 @@ from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # t
 log_level = os.getenv("LOG", "WARNING")
 numeric_level = getattr(logging, log_level.upper(), None)
 if not isinstance(numeric_level, int):
-    raise ValueError('Invalid log level: %s' % log_level)
+    raise ValueError("Invalid log level: %s" % log_level)
 logging.basicConfig(level=numeric_level)
 
 # options
@@ -610,7 +610,7 @@ class ConnectionPoint(Node):
                 g.add((self.node, c223.connectsThroughInternally, new_connection.node))
 
                 if isinstance(other, OutletConnectionPoint):
-                    if (self.isConnectionPointOf.node != other.isConnectionPointOf.node):
+                    if self.isConnectionPointOf.node != other.isConnectionPointOf.node:
                         raise RuntimeError(
                             f"internal pass-through connection must be the same device or system: {self} >> {other}"
                         )
@@ -618,7 +618,13 @@ class ConnectionPoint(Node):
 
                     # other side is also internal
                     g.add((new_connection.node, c223.connectsAtInternally, other.node))
-                    g.add((other.node, c223.connectsThroughInternally, new_connection.node))
+                    g.add(
+                        (
+                            other.node,
+                            c223.connectsThroughInternally,
+                            new_connection.node,
+                        )
+                    )
 
                 elif isinstance(other, InletConnectionPoint):
                     logging.info(f"pass-in connection: {self} >> {other}")
@@ -628,7 +634,9 @@ class ConnectionPoint(Node):
             elif isinstance(other, OutletConnectionPoint):
                 # create a connection
                 new_connection = connection_classes[self_connection_type]()
-                logging.info(f"pass-out connection: {self} ex >> {new_connection} >> in {other}")
+                logging.info(
+                    f"pass-out connection: {self} ex >> {new_connection} >> in {other}"
+                )
 
                 # self side is external
                 new_connection << self
@@ -642,7 +650,9 @@ class ConnectionPoint(Node):
                     raise RuntimeError(f"already connected: {other!r}")
 
                 new_connection = connection_classes[self_connection_type]()
-                logging.info(f"external connection: {self} ex >> {new_connection} >> ex {other}")
+                logging.info(
+                    f"external connection: {self} ex >> {new_connection} >> ex {other}"
+                )
 
                 # link it up
                 new_connection << self
@@ -714,25 +724,37 @@ class ConnectionPoint(Node):
                 g.add((self.node, c223.connectsThroughInternally, new_connection.node))
 
                 if isinstance(other, InletConnectionPoint):
-                    if (self.isConnectionPointOf.node != other.isConnectionPointOf.node):
+                    if self.isConnectionPointOf.node != other.isConnectionPointOf.node:
                         raise RuntimeError(
                             f"internal pass-through connection must be the same device or system: {self} << {other}"
                         )
-                    logging.info(f"pass-through connection: {other} in >> {new_connection} >> in {self}")
+                    logging.info(
+                        f"pass-through connection: {other} in >> {new_connection} >> in {self}"
+                    )
 
                     # other side is also internal
                     g.add((new_connection.node, c223.connectsAtInternally, other.node))
-                    g.add((other.node, c223.connectsThroughInternally, new_connection.node))
+                    g.add(
+                        (
+                            other.node,
+                            c223.connectsThroughInternally,
+                            new_connection.node,
+                        )
+                    )
 
                 elif isinstance(other, OutletConnectionPoint):
-                    logging.info(f"pass-out connection: {other} ex >> {new_connection} >> in {self}")
+                    logging.info(
+                        f"pass-out connection: {other} ex >> {new_connection} >> in {self}"
+                    )
 
                     new_connection << other
 
             elif isinstance(other, InletConnectionPoint):
                 # create a connection
                 new_connection = connection_classes[self_connection_type]()
-                logging.info(f"pass-in connection: {other} in >> {new_connection} >> ex {self}")
+                logging.info(
+                    f"pass-in connection: {other} in >> {new_connection} >> ex {self}"
+                )
 
                 # self side is external
                 new_connection >> self
@@ -746,7 +768,9 @@ class ConnectionPoint(Node):
                     raise RuntimeError(f"already connected: {other!r}")
 
                 new_connection = connection_classes[self_connection_type]()
-                logging.info(f"external connection: {other} ex >> {new_connection} >> ex {self}")
+                logging.info(
+                    f"external connection: {other} ex >> {new_connection} >> ex {self}"
+                )
 
                 # link it up
                 new_connection << other
