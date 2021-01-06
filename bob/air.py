@@ -38,6 +38,12 @@ class Damper(Device):
     position = AnalogOut
 
 
+class Filter(Device):
+    airInlet: AirInlet
+    airOutlet: AirOutlet
+    dp = AnalogOut
+
+
 class AirFlowStation(Device):
     airInlet: AirInlet
     airOutlet: AirOutlet
@@ -47,15 +53,3 @@ class AirFlowStation(Device):
 class Zone(Device):
     supplyAirInlet: AirInlet  # supply air goes in
     returnAirOutlet: AirOutlet  # return air goes out
-
-
-class OutsideAir(Device):
-    outsideAir: AirOutlet  # outside air goes in someplace
-    exhaustAir: AirInlet  # from exhaust fan going out
-
-
-class MixedAir(Device):
-    outsideAirInlet: AirInlet  # outside air goes in someplace
-    returnAirInlet: AirInlet  # return air from the zone air goes in someplace
-    mixedAirInlet: AirOutlet  # mixed air to become supply air to the zone
-    exhaustAirOutlet: AirOutlet  # exhaust air going to the outside
