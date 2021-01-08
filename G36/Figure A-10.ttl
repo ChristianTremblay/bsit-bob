@@ -1,0 +1,445 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/data/figure010
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix ex: <urn:ex/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/1.0/data/figure010>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/data/figure010> ;
+  rdfs:label "figure010" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+ex:00001 a c223:Connectable,
+        c223:System,
+        ex:AHU ;
+    rdfs:label "A-10" ;
+    c223:hasConnectionPoint ex:00002,
+        ex:00003,
+        ex:00004,
+        ex:00005 ;
+    ex:exhaustAirOutlet ex:00005 ;
+    ex:outsideAirInlet ex:00002 ;
+    ex:returnAirInlet ex:00004 ;
+    ex:supplyAirOutlet ex:00003 .
+
+ex:00002 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.outsideAirInlet" ;
+    c223:connectsThroughInternally ex:00006 ;
+    c223:isConnectionPointOf ex:00001 .
+
+ex:00003 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.supplyAirOutlet" ;
+    c223:isConnectionPointOf ex:00001 .
+
+ex:00004 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.returnAirInlet" ;
+    c223:connectsThroughInternally ex:00046 ;
+    c223:isConnectionPointOf ex:00001 .
+
+ex:00005 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.exhaustAirOutlet" ;
+    c223:connectsThroughInternally ex:00059 ;
+    c223:isConnectionPointOf ex:00001 .
+
+ex:00006 a c223:AirConnection ;
+    rdfs:label "A-10.outside_air" ;
+    c223:connectsAt ex:00009,
+        ex:00013 ;
+    c223:connectsAtInternally ex:00002 ;
+    c223:connectsTo ex:00007,
+        ex:00011 .
+
+ex:00007 a c223:Connectable,
+        c223:Damper,
+        c223:Device ;
+    rdfs:label "A-10.min_oa_damper" ;
+    c223:airInlet ex:00009 ;
+    c223:airOutlet ex:00010 ;
+    c223:connectedThrough ex:00006,
+        ex:00015 ;
+    c223:hasConnectionPoint ex:00009,
+        ex:00010 ;
+    c223:hasProperty ex:00008 ;
+    c223:position ex:00008 .
+
+ex:00008 a c223:AnalogOut,
+        c223:Property ;
+    c223:isPropertyOf ex:00007 .
+
+ex:00009 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.min_oa_damper.airInlet" ;
+    c223:connectsThrough ex:00006 ;
+    c223:isConnectionPointOf ex:00007 .
+
+ex:00010 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.min_oa_damper.airOutlet" ;
+    c223:connectsThrough ex:00015 ;
+    c223:isConnectionPointOf ex:00007 .
+
+ex:00011 a c223:Connectable,
+        c223:Damper,
+        c223:Device ;
+    rdfs:label "A-10.economizer_oa_damper" ;
+    c223:airInlet ex:00013 ;
+    c223:airOutlet ex:00014 ;
+    c223:connectedThrough ex:00006,
+        ex:00015 ;
+    c223:hasConnectionPoint ex:00013,
+        ex:00014 ;
+    c223:hasProperty ex:00012 ;
+    c223:position ex:00012 .
+
+ex:00012 a c223:AnalogOut,
+        c223:Property ;
+    c223:isPropertyOf ex:00011 .
+
+ex:00013 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.economizer_oa_damper.airInlet" ;
+    c223:connectsThrough ex:00006 ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00014 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.economizer_oa_damper.airOutlet" ;
+    c223:connectsThrough ex:00015 ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00015 a c223:AirConnection ;
+    rdfs:label "A-10.mixed_air" ;
+    c223:connectsAt ex:00010,
+        ex:00014,
+        ex:00018,
+        ex:00053 ;
+    c223:connectsFrom ex:00007,
+        ex:00011,
+        ex:00050 ;
+    c223:connectsTo ex:00016 .
+
+ex:00016 a c223:Connectable,
+        c223:Device,
+        c223:Filter ;
+    rdfs:label "A-10.mixed_air_filter" ;
+    c223:airInlet ex:00018 ;
+    c223:airOutlet ex:00019 ;
+    c223:connectedThrough ex:00015,
+        ex:00030 ;
+    c223:dp ex:00017 ;
+    c223:hasConnectionPoint ex:00018,
+        ex:00019 ;
+    c223:hasProperty ex:00017 .
+
+ex:00017 a c223:AnalogOut,
+        c223:Property ;
+    c223:isPropertyOf ex:00016 .
+
+ex:00018 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.mixed_air_filter.airInlet" ;
+    c223:connectsThrough ex:00015 ;
+    c223:isConnectionPointOf ex:00016 .
+
+ex:00019 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.mixed_air_filter.airOutlet" ;
+    c223:connectsThrough ex:00030 ;
+    c223:isConnectionPointOf ex:00016 .
+
+ex:00020 a c223:Connectable,
+        c223:Device,
+        c223:HotWaterCoil2 ;
+    rdfs:label "A-10.hot_water_coil" ;
+    c223:airInlet ex:00021 ;
+    c223:airOutlet ex:00022 ;
+    c223:connectedThrough ex:00029,
+        ex:00030,
+        ex:00041 ;
+    c223:hasConnectionPoint ex:00021,
+        ex:00022,
+        ex:00023,
+        ex:00024 ;
+    c223:hasDevice ex:00025 ;
+    c223:hotWaterInlet ex:00023 ;
+    c223:hotWaterOutlet ex:00024 .
+
+ex:00021 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.hot_water_coil.airInlet" ;
+    c223:connectsThrough ex:00030 ;
+    c223:isConnectionPointOf ex:00020 .
+
+ex:00022 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.hot_water_coil.airOutlet" ;
+    c223:connectsThrough ex:00041 ;
+    c223:isConnectionPointOf ex:00020 .
+
+ex:00023 a c223:HotWaterConnectionPoint,
+        c223:HotWaterInlet ;
+    rdfs:label "A-10.hot_water_coil.hotWaterInlet" ;
+    c223:connectsThrough ex:00029 ;
+    c223:isConnectionPointOf ex:00020 .
+
+ex:00024 a c223:HotWaterConnectionPoint,
+        c223:HotWaterOutlet ;
+    rdfs:label "A-10.hot_water_coil.hotWaterOutlet" ;
+    c223:isConnectionPointOf ex:00020 .
+
+ex:00025 a c223:Connectable,
+        c223:Device,
+        c223:HotWaterValve ;
+    rdfs:label "A-10.hot_water_coil.hw_valve" ;
+    c223:connectedThrough ex:00029 ;
+    c223:hasConnectionPoint ex:00027,
+        ex:00028 ;
+    c223:hasProperty ex:00026 ;
+    c223:hotWaterInlet ex:00027 ;
+    c223:hotWaterOutlet ex:00028 ;
+    c223:isDeviceOf ex:00020 ;
+    c223:position ex:00026 .
+
+ex:00026 a c223:AnalogIn,
+        c223:Property ;
+    c223:isPropertyOf ex:00025 .
+
+ex:00027 a c223:HotWaterConnectionPoint,
+        c223:HotWaterInlet ;
+    rdfs:label "A-10.hot_water_coil.hw_valve.hotWaterInlet" ;
+    c223:isConnectionPointOf ex:00025 .
+
+ex:00028 a c223:HotWaterConnectionPoint,
+        c223:HotWaterOutlet ;
+    rdfs:label "A-10.hot_water_coil.hw_valve.hotWaterOutlet" ;
+    c223:connectsThrough ex:00029 ;
+    c223:isConnectionPointOf ex:00025 .
+
+ex:00029 a c223:HotWaterConnection ;
+    c223:connectsAt ex:00023,
+        ex:00028 ;
+    c223:connectsFrom ex:00025 ;
+    c223:connectsTo ex:00020 .
+
+ex:00030 a c223:AirConnection ;
+    c223:connectsAt ex:00019,
+        ex:00021 ;
+    c223:connectsFrom ex:00016 ;
+    c223:connectsTo ex:00020 .
+
+ex:00031 a c223:ChilledWaterCoil2,
+        c223:Connectable,
+        c223:Device ;
+    rdfs:label "A-10.chilled_water_coil" ;
+    c223:airInlet ex:00032 ;
+    c223:airOutlet ex:00033 ;
+    c223:chilledWaterReturn ex:00035 ;
+    c223:chilledWaterSupply ex:00034 ;
+    c223:connectedThrough ex:00040,
+        ex:00041,
+        ex:00045 ;
+    c223:hasConnectionPoint ex:00032,
+        ex:00033,
+        ex:00034,
+        ex:00035 ;
+    c223:hasDevice ex:00036 .
+
+ex:00032 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.chilled_water_coil.airInlet" ;
+    c223:connectsThrough ex:00041 ;
+    c223:isConnectionPointOf ex:00031 .
+
+ex:00033 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.chilled_water_coil.airOutlet" ;
+    c223:connectsThrough ex:00045 ;
+    c223:isConnectionPointOf ex:00031 .
+
+ex:00034 a c223:ChilledWaterConnectionPoint,
+        c223:ChilledWaterInlet ;
+    rdfs:label "A-10.chilled_water_coil.chilledWaterSupply" ;
+    c223:connectsThrough ex:00040 ;
+    c223:isConnectionPointOf ex:00031 .
+
+ex:00035 a c223:ChilledWaterConnectionPoint,
+        c223:ChilledWaterOutlet ;
+    rdfs:label "A-10.chilled_water_coil.chilledWaterReturn" ;
+    c223:isConnectionPointOf ex:00031 .
+
+ex:00036 a c223:ChilledWaterValve,
+        c223:Connectable,
+        c223:Device ;
+    rdfs:label "A-10.chilled_water_coil.chilled_water_valve" ;
+    c223:chilledWaterInlet ex:00038 ;
+    c223:chilledWaterOutlet ex:00039 ;
+    c223:connectedThrough ex:00040 ;
+    c223:hasConnectionPoint ex:00038,
+        ex:00039 ;
+    c223:hasProperty ex:00037 ;
+    c223:isDeviceOf ex:00031 ;
+    c223:position ex:00037 .
+
+ex:00037 a c223:AnalogIn,
+        c223:Property ;
+    c223:isPropertyOf ex:00036 .
+
+ex:00038 a c223:ChilledWaterConnectionPoint,
+        c223:ChilledWaterInlet ;
+    rdfs:label "A-10.chilled_water_coil.chilled_water_valve.chilledWaterInlet" ;
+    c223:isConnectionPointOf ex:00036 .
+
+ex:00039 a c223:ChilledWaterConnectionPoint,
+        c223:ChilledWaterOutlet ;
+    rdfs:label "A-10.chilled_water_coil.chilled_water_valve.chilledWaterOutlet" ;
+    c223:connectsThrough ex:00040 ;
+    c223:isConnectionPointOf ex:00036 .
+
+ex:00040 a c223:ChilledWaterConnection ;
+    c223:connectsAt ex:00034,
+        ex:00039 ;
+    c223:connectsFrom ex:00036 ;
+    c223:connectsTo ex:00031 .
+
+ex:00041 a c223:AirConnection ;
+    c223:connectsAt ex:00022,
+        ex:00032 ;
+    c223:connectsFrom ex:00020 ;
+    c223:connectsTo ex:00031 .
+
+ex:00042 a c223:Connectable,
+        c223:Device,
+        c223:Fan ;
+    rdfs:label "A-10.supply_fan" ;
+    c223:airInlet ex:00043 ;
+    c223:airOutlet ex:00044 ;
+    c223:connectedThrough ex:00045 ;
+    c223:hasConnectionPoint ex:00043,
+        ex:00044 .
+
+ex:00043 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.supply_fan.airInlet" ;
+    c223:connectsThrough ex:00045 ;
+    c223:isConnectionPointOf ex:00042 .
+
+ex:00044 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.supply_fan.airOutlet" ;
+    c223:isConnectionPointOf ex:00042 .
+
+ex:00045 a c223:AirConnection ;
+    c223:connectsAt ex:00033,
+        ex:00043 ;
+    c223:connectsFrom ex:00031 ;
+    c223:connectsTo ex:00042 .
+
+ex:00046 a c223:AirConnection ;
+    rdfs:label "A-10.return_air" ;
+    c223:connectsAt ex:00048,
+        ex:00052 ;
+    c223:connectsAtInternally ex:00004 ;
+    c223:connectsTo ex:00047,
+        ex:00050 .
+
+ex:00047 a c223:Connectable,
+        c223:Device,
+        c223:Fan ;
+    rdfs:label "A-10.return_fan" ;
+    c223:airInlet ex:00048 ;
+    c223:airOutlet ex:00049 ;
+    c223:connectedThrough ex:00046,
+        ex:00058 ;
+    c223:hasConnectionPoint ex:00048,
+        ex:00049 .
+
+ex:00048 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.return_fan.airInlet" ;
+    c223:connectsThrough ex:00046 ;
+    c223:isConnectionPointOf ex:00047 .
+
+ex:00049 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.return_fan.airOutlet" ;
+    c223:connectsThrough ex:00058 ;
+    c223:isConnectionPointOf ex:00047 .
+
+ex:00050 a c223:Connectable,
+        c223:Damper,
+        c223:Device ;
+    rdfs:label "A-10.mixed_air_damper" ;
+    c223:airInlet ex:00052 ;
+    c223:airOutlet ex:00053 ;
+    c223:connectedThrough ex:00015,
+        ex:00046 ;
+    c223:hasConnectionPoint ex:00052,
+        ex:00053 ;
+    c223:hasProperty ex:00051 ;
+    c223:position ex:00051 .
+
+ex:00051 a c223:AnalogOut,
+        c223:Property ;
+    c223:isPropertyOf ex:00050 .
+
+ex:00052 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.mixed_air_damper.airInlet" ;
+    c223:connectsThrough ex:00046 ;
+    c223:isConnectionPointOf ex:00050 .
+
+ex:00053 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.mixed_air_damper.airOutlet" ;
+    c223:connectsThrough ex:00015 ;
+    c223:isConnectionPointOf ex:00050 .
+
+ex:00054 a c223:Connectable,
+        c223:Damper,
+        c223:Device ;
+    rdfs:label "A-10.relief_air_damper" ;
+    c223:airInlet ex:00056 ;
+    c223:airOutlet ex:00057 ;
+    c223:connectedThrough ex:00058,
+        ex:00059 ;
+    c223:hasConnectionPoint ex:00056,
+        ex:00057 ;
+    c223:hasProperty ex:00055 ;
+    c223:position ex:00055 .
+
+ex:00055 a c223:AnalogOut,
+        c223:Property ;
+    c223:isPropertyOf ex:00054 .
+
+ex:00056 a c223:AirConnectionPoint,
+        c223:AirInlet ;
+    rdfs:label "A-10.relief_air_damper.airInlet" ;
+    c223:connectsThrough ex:00058 ;
+    c223:isConnectionPointOf ex:00054 .
+
+ex:00057 a c223:AirConnectionPoint,
+        c223:AirOutlet ;
+    rdfs:label "A-10.relief_air_damper.airOutlet" ;
+    c223:connectsThrough ex:00059 ;
+    c223:isConnectionPointOf ex:00054 .
+
+ex:00058 a c223:AirConnection ;
+    c223:connectsAt ex:00049,
+        ex:00056 ;
+    c223:connectsFrom ex:00047 ;
+    c223:connectsTo ex:00054 .
+
+ex:00059 a c223:AirConnection ;
+    c223:connectsAt ex:00057 ;
+    c223:connectsAtInternally ex:00005 ;
+    c223:connectsFrom ex:00054 .
+
