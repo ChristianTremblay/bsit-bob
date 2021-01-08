@@ -99,6 +99,7 @@ class NodeMetaclass(type):
         superclasses: Tuple[type, ...],
         attributedict: Dict[str, Any],
     ) -> NodeMetaclass:
+        logging.debug(f"NodeMetaclass.__new__ {clsname}")
         # do this for every subclass of Node
 
         # start with empty maps
@@ -232,6 +233,7 @@ class Node(metaclass=NodeMetaclass):
     label: str
 
     def __init__(self, *, label: str = "", **kwargs: Any) -> None:
+        logging.debug(f"Node.__init__ label={label!r} {kwargs}")
         global _next_node, model_namespace
 
         if model_namespace:
@@ -800,6 +802,7 @@ class Connectable(Node):
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
+        logging.debug(f"Connectable.__init__ {kwargs}")
         super().__init__(**kwargs)
 
         if MANDITORY_LABEL:
@@ -834,6 +837,7 @@ class Connectable(Node):
             # build an instance of this connection point
             var_element = var_annotation(self, label=self.label + "." + var_name)
             self._connection_points[var_name] = var_element
+            logging.debug(f"    - connection point {var_name}: {var_element}")
 
             setattr(self, var_name, var_element)
 
@@ -939,6 +943,7 @@ class System(Connectable):
     def __init__(self, **kwargs: Any) -> None:
         """
         """
+        logging.debug(f"System.__init__ {kwargs}")
         super().__init__(**kwargs)
 
         # <self> a System
@@ -987,6 +992,7 @@ class Device(Connectable):
     def __init__(self, **kwargs: Any) -> None:
         """
         """
+        logging.debug(f"Device.__init__ {kwargs}")
         super().__init__(**kwargs)
 
         # <self> a System
@@ -1084,6 +1090,7 @@ class Value(Node):
         datatype: Optional[URIRef] = None,
         **kwargs: Any,
     ):
+        logging.debug(f"Value.__init__ {arg!r} lang={lang!r} datetype={datatype!r} {kwargs}")
         if arg is not None:
             if "hasSimpleValue" in kwargs:
                 raise RuntimeError("initialization conflict")
@@ -1115,6 +1122,7 @@ class Property(Node):
     _value_class: type = Value
 
     def __init__(self, arg: Any = None, **kwargs: Any):
+        logging.debug(f"Property.__init__ {arg!r} {kwargs}")
         init_value = None
         if arg is None:
             if "hasValue" in kwargs:
