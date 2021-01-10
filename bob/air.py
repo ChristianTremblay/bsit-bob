@@ -1,4 +1,5 @@
 from .core import (
+    c223,
     ConnectionType,
     register_connection_type,
     Connection,
@@ -6,8 +7,9 @@ from .core import (
     OutletConnectionPoint,
     Device,
 )
-
 from .signal import AnalogIn, AnalogOut
+
+__namespace__ = c223
 
 
 class Air(ConnectionType):

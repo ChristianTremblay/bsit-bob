@@ -11,7 +11,7 @@ from bob.core import (
 from samples import sample_header
 
 # instances will come from this namespace, otherwise they would be BNode's
-bind_model_namespace("ex", "urn:ex/")
+__namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class TestSystem(System):

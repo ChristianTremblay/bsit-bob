@@ -1,6 +1,7 @@
 from typing import Any
 
 from .core import (
+    c223,
     ConnectionType,
     register_connection_type,
     Connection,
@@ -10,6 +11,8 @@ from .core import (
 )
 from .air import AirInlet, AirOutlet
 from .signal import AnalogIn
+
+__namespace__ = c223
 
 
 class HotWater(ConnectionType):
