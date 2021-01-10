@@ -10,7 +10,7 @@ import inspect
 from collections import defaultdict
 import logging
 
-from typing import Dict, Any, TextIO, Tuple, Type, TypeVar, Union, cast
+from typing import Dict, Set, Any, TextIO, Tuple, Type, TypeVar, Union, cast
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
 
@@ -55,9 +55,10 @@ qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
 quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
 brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
 
-# the namespace for a node is defined in the node as the _namespace attribute,
-# or in its module as the __namespace__ special global, and if it's not one
-# of those two, it inherits the namespace from its superclass
+# the namespace for a node is defined in the node as the _namespace attribute
+# or in the __namespace__ special global for the module of the class, or the
+# parent module, or it is inherited from a superclass that is defined in the
+# same module
 __namespace__ = c223
 
 # the model_namespace is used to create "blank" node identifiers, a serial
@@ -107,6 +108,9 @@ class NodeMetaclass(type):
         _datatypes: Dict[str, Literal] = {}
         _inits: Dict[str, Any] = {}
 
+        attr_names: Set(str) = set()
+        _attr_uriref: Dict[str, URIRef] = {}
+
         # include the maps this class is inheriting
         for supercls in reversed(superclasses):
             if hasattr(supercls, "_nodes"):
@@ -115,10 +119,14 @@ class NodeMetaclass(type):
                 _datatypes.update(supercls._datatypes)  # type: ignore[attr-defined]
             if hasattr(supercls, "_inits"):
                 _inits.update(supercls._inits)  # type: ignore[attr-defined]
+            if hasattr(supercls, "_attr_uriref"):
+                _attr_uriref.update(supercls._attr_uriref)  # type: ignore[attr-defined]
 
         # pick up the attributes defined by annotations
         annotations = attributedict.get("__annotations__", {})
         for attr, attr_type in annotations.items():
+            logging.debug(f"    - attr, attr_type: {attr!r}, {attr_type!r}")
+
             if attr.startswith("_"):
                 continue
             if attr in ("node", "node_type", "label"):
@@ -131,12 +139,14 @@ class NodeMetaclass(type):
                     raise ValueError(f"datatype URI expected for {attr}: {attr_type}")
             elif inspect.isclass(attr_type):
                 _nodes[attr] = attr_type
+                attr_names.add(attr)
             elif isinstance(attr_type, str):
                 if attr_type in _annotation_forwards:
                     attr_type = _annotation_forwards[attr_type]
                 else:
                     _annotation_forwards[attr_type] = None  # type: ignore[assignment]
                 _nodes[attr] = attr_type
+                attr_names.add(attr)
             else:
                 raise ValueError(f"unknown annotation for {attr}: {attr_type}")
 
@@ -146,9 +156,7 @@ class NodeMetaclass(type):
                 continue
 
             if attr in _nodes:
-                if isinstance(value, cast(type, _nodes[attr])):
-                    _inits[attr] = value
-                else:
+                if not isinstance(value, cast(type, _nodes[attr])):
                     raise TypeError(f"initializing {attr}: {_inits[attr]} expected")
 
             elif attr in _datatypes:
@@ -173,11 +181,13 @@ class NodeMetaclass(type):
                 continue
 
             _inits[attr] = value
+            attr_names.add(attr)
 
         # add these special attributes to the class before building it
         attributedict["_nodes"] = _nodes
         attributedict["_datatypes"] = _datatypes
         attributedict["_inits"] = _inits
+        attributedict["_attr_uriref"] = _attr_uriref
 
         # build the class
         metaclass = cast(
@@ -188,22 +198,54 @@ class NodeMetaclass(type):
         )
 
         # find the namespace in the class definition
+        _namespace = None
         if "_namespace" in attributedict:
             _namespace = attributedict["_namespace"]
+            logging.debug(f"    - class namespace: {_namespace}")
         else:
             # check the module
             cls_module = inspect.getmodule(metaclass)
+            logging.debug(f"    - cls_module: {cls_module} {cls_module.__name__}")
             _namespace = getattr(cls_module, "__namespace__", None)
-            if not _namespace:
-                # check the superclasses
-                for supercls in superclasses:
-                    _namespace = getattr(supercls, "_namespace", None)
-                    if _namespace:
-                        break
+            if _namespace:
+                logging.debug(f"    - module {cls_module} namespace: {_namespace}")
+            else:
+                # check the parent module
+                parent_module = sys.modules[
+                    ".".join(cls_module.__name__.split(".")[:-1]) or "__main__"
+                ]
+                logging.debug(f"    - parent_module: {parent_module}")
+                _namespace = getattr(parent_module, "__namespace__", None)
+                if _namespace:
+                    logging.debug(
+                        f"    - parent module {parent_module} namespace: {_namespace}"
+                    )
                 else:
-                    raise AttributeError(f"namespace not found: {clsname}")
+                    # check the superclasses that are in the same module
+                    for supercls in superclasses:
+                        supercls_module = inspect.getmodule(supercls)
+                        logging.debug(
+                            f"    - supercls {supercls} module: {supercls_module}"
+                        )
+                        if supercls_module is not cls_module:
+                            continue
 
-            metaclass._namespace = _namespace  # type: ignore[attr-defined]
+                        _namespace = getattr(supercls, "_namespace", None)
+                        if _namespace:
+                            logging.debug(
+                                f"    - supercls {supercls} namespace: {_namespace}"
+                            )
+                            break
+
+        if _namespace is None:
+            raise AttributeError(f"namespace not found: {clsname}")
+        metaclass._namespace = _namespace  # type: ignore[attr-defined]
+
+        # set the URIRef for the attrs defined in this class based on the
+        # namespace that was just discovered _after_ the class is created
+        for attr in attr_names:
+            _attr_uriref[attr] = _namespace[attr]
+        metaclass._attr_uriref = _attr_uriref  # type: ignore[attr-defined]
 
         # make sure it has a type
         if "node_type" not in attributedict:
@@ -308,9 +350,9 @@ class Node(metaclass=NodeMetaclass):
 
             # add the link(s)
             if isinstance(value, (URIRef, Literal)):
-                g.add((self.node, self._namespace[attr], value))
+                g.add((self.node, self._attr_uriref[attr], value))
             if isinstance(value, Node):
-                g.add((self.node, self._namespace[attr], value.node))
+                g.add((self.node, self._attr_uriref[attr], value.node))
 
             # if the value is a property, link property to the node.  The
             # Value has a property called 'isValueOf' that is excluded.
@@ -330,7 +372,7 @@ class Node(metaclass=NodeMetaclass):
                     raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
 
             # add the literal
-            g.add((self.node, self._namespace[attr], value))
+            g.add((self.node, self._attr_uriref[attr], value))
 
         # carry on
         super().__setattr__(attr, value)
@@ -798,7 +840,7 @@ class Connectable(Node):
     A type of thing that can has connection points.
     """
 
-    node_type: URIRef = c223.Device
+    node_type: URIRef = c223.Connectable
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -1090,7 +1132,9 @@ class Value(Node):
         datatype: Optional[URIRef] = None,
         **kwargs: Any,
     ):
-        logging.debug(f"Value.__init__ {arg!r} lang={lang!r} datetype={datatype!r} {kwargs}")
+        logging.debug(
+            f"Value.__init__ {arg!r} lang={lang!r} datetype={datatype!r} {kwargs}"
+        )
         if arg is not None:
             if "hasSimpleValue" in kwargs:
                 raise RuntimeError("initialization conflict")
