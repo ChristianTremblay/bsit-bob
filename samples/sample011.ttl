@@ -16,13 +16,13 @@
 
 ex:00001 a c223:Connectable,
         c223:System,
-        c223:TestSystem ;
+        ex:TestSystem ;
     rdfs:label "s1" ;
-    c223:cpIn ex:00002 ;
-    c223:cpOut ex:00003 ;
     c223:hasConnectionPoint ex:00002,
         ex:00003 ;
-    c223:hasDevice ex:00004 .
+    c223:hasDevice ex:00004 ;
+    ex:cpIn ex:00002 ;
+    ex:cpOut ex:00003 .
 
 ex:00002 a c223:InletConnectionPoint ;
     rdfs:label "s1.cpIn" ;
@@ -36,13 +36,13 @@ ex:00003 a c223:OutletConnectionPoint ;
 
 ex:00004 a c223:Connectable,
         c223:Device,
-        c223:TestDevice ;
+        ex:TestDevice ;
     rdfs:label "d1" ;
-    c223:cpIn ex:00005 ;
-    c223:cpOut ex:00006 ;
     c223:hasConnectionPoint ex:00005,
         ex:00006 ;
-    c223:isDeviceOf ex:00001 .
+    c223:isDeviceOf ex:00001 ;
+    ex:cpIn ex:00005 ;
+    ex:cpOut ex:00006 .
 
 ex:00005 a c223:InletConnectionPoint ;
     rdfs:label "d1.cpIn" ;
@@ -58,13 +58,13 @@ ex:00007 a c223:Connection ;
 
 ex:00008 a c223:Connectable,
         c223:System,
-        c223:TestSystem ;
+        ex:TestSystem ;
     rdfs:label "s2" ;
-    c223:cpIn ex:00009 ;
-    c223:cpOut ex:00010 ;
     c223:hasConnectionPoint ex:00009,
         ex:00010 ;
-    c223:hasDevice ex:00011 .
+    c223:hasDevice ex:00011 ;
+    ex:cpIn ex:00009 ;
+    ex:cpOut ex:00010 .
 
 ex:00009 a c223:InletConnectionPoint ;
     rdfs:label "s2.cpIn" ;
@@ -78,15 +78,15 @@ ex:00010 a c223:OutletConnectionPoint ;
 
 ex:00011 a c223:Connectable,
         c223:Device,
-        c223:TestDevice ;
+        ex:TestDevice ;
     rdfs:label "d2" ;
     c223:connectedThrough ex:00014,
         ex:00015 ;
-    c223:cpIn ex:00012 ;
-    c223:cpOut ex:00013 ;
     c223:hasConnectionPoint ex:00012,
         ex:00013 ;
-    c223:isDeviceOf ex:00008 .
+    c223:isDeviceOf ex:00008 ;
+    ex:cpIn ex:00012 ;
+    ex:cpOut ex:00013 .
 
 ex:00012 a c223:InletConnectionPoint ;
     rdfs:label "d2.cpIn" ;
