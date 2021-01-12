@@ -9,7 +9,7 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import Fan, AirInlet, AirOutlet, AirConnection
+from bob.air import Fan, AirInletConnectionPoint, AirOutletConnectionPoint, AirConnection
 from bob.hw import HotWaterInlet, HotWaterOutlet
 from bob.signal import AnalogIn, AnalogOut, BinaryOut
 
@@ -19,8 +19,8 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class AirFlowStation(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     flow = AnalogIn
 
 
@@ -29,8 +29,8 @@ class DamperPositioner(Part):
 
 
 class Damper(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     position: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:
@@ -55,8 +55,8 @@ class HotWaterValve(Part):
 
 
 class ECMFan(Fan):
-    # airInlet: AirInlet
-    # airOutlet: AirOutlet
+    # airInlet: AirInletConnectionPoint
+    # airOutlet: AirOutletConnectionPoint
     pass
 
 
@@ -67,8 +67,8 @@ class ECM(Part):
 
 
 class HotWaterCoil(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     hwInlet: HotWaterInlet
     hwOutlet: HotWaterOutlet
     valvePosition: AnalogOut
@@ -89,9 +89,9 @@ class HotWaterCoil(Device):
 
 
 class VAV(System):
-    supplyAirInlet: AirInlet
-    returnAirInlet: AirInlet
-    supplyAirOutlet: AirOutlet
+    supplyAirInlet: AirInletConnectionPoint
+    returnAirInlet: AirInletConnectionPoint
+    supplyAirOutlet: AirOutletConnectionPoint
     supplyAirFlow: AnalogIn
     damperPosition: AnalogOut
     hwInlet: HotWaterInlet

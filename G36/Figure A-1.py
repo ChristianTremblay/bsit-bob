@@ -9,7 +9,7 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import AirInlet, AirOutlet
+from bob.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.signal import AnalogIn, AnalogOut
 
 from header import g36_header
@@ -18,8 +18,8 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class AirFlowStation(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     flow = AnalogIn
 
     def __init__(self, *args, **kwargs):
@@ -31,8 +31,8 @@ class DamperPositioner(Part):
 
 
 class Damper(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     position: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:
@@ -49,8 +49,8 @@ class Damper(Device):
 
 
 class VAV(System):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     airFlow: AnalogIn
     damperPosition: AnalogOut
 
