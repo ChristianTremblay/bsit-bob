@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -15,8 +16,8 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex:00001 a c223:Connectable,
-        c223:Device,
-        c223:Zone ;
+        c223:Zone,
+        d223:Device ;
     rdfs:label "Zone-1" ;
     c223:connectedThrough ex:00031,
         ex:00064 ;
@@ -74,7 +75,7 @@ ex:00006 a c223:AirConnectionPoint,
 
 ex:00007 a c223:AirFlowStation,
         c223:Connectable,
-        c223:Device ;
+        d223:Device ;
     rdfs:label "Zone-1.VAV.air_flow_station" ;
     c223:airInlet ex:00009 ;
     c223:airOutlet ex:00010 ;
@@ -105,7 +106,7 @@ ex:00010 a c223:AirConnectionPoint,
 
 ex:00011 a c223:Connectable,
         c223:Damper,
-        c223:Device ;
+        d223:Device ;
     rdfs:label "Zone-1.VAV.damper" ;
     c223:airInlet ex:00013 ;
     c223:airOutlet ex:00014 ;
@@ -135,8 +136,8 @@ ex:00014 a c223:AirConnectionPoint,
     c223:isConnectionPointOf ex:00011 .
 
 ex:00015 a c223:Connectable,
-        c223:Device,
-        c223:HotWaterCoil ;
+        c223:HotWaterCoil,
+        d223:Device ;
     rdfs:label "Zone-1.VAV.hw_coil" ;
     c223:airInlet ex:00016 ;
     c223:airOutlet ex:00017 ;
@@ -175,8 +176,8 @@ ex:00019 a c223:HotWaterConnectionPoint,
     c223:isConnectionPointOf ex:00015 .
 
 ex:00020 a c223:Connectable,
-        c223:Device,
-        c223:HotWaterValve ;
+        c223:HotWaterValve,
+        d223:Device ;
     rdfs:label "Zone-1.VAV.hw_valve" ;
     c223:connectedThrough ex:00026 ;
     c223:hasConnectionPoint ex:00022,
@@ -246,8 +247,8 @@ ex:00031 a c223:AirConnection ;
     c223:connectsTo ex:00001 .
 
 ex:00032 a c223:Connectable,
-        c223:Device,
-        c223:Zone ;
+        c223:Zone,
+        d223:Device ;
     rdfs:label "Zone-2" ;
     c223:connectedThrough ex:00062,
         ex:00064 ;
@@ -305,7 +306,7 @@ ex:00037 a c223:AirConnectionPoint,
 
 ex:00038 a c223:AirFlowStation,
         c223:Connectable,
-        c223:Device ;
+        d223:Device ;
     rdfs:label "Zone-2.VAV.air_flow_station" ;
     c223:airInlet ex:00040 ;
     c223:airOutlet ex:00041 ;
@@ -336,7 +337,7 @@ ex:00041 a c223:AirConnectionPoint,
 
 ex:00042 a c223:Connectable,
         c223:Damper,
-        c223:Device ;
+        d223:Device ;
     rdfs:label "Zone-2.VAV.damper" ;
     c223:airInlet ex:00044 ;
     c223:airOutlet ex:00045 ;
@@ -366,8 +367,8 @@ ex:00045 a c223:AirConnectionPoint,
     c223:isConnectionPointOf ex:00042 .
 
 ex:00046 a c223:Connectable,
-        c223:Device,
-        c223:HotWaterCoil ;
+        c223:HotWaterCoil,
+        d223:Device ;
     rdfs:label "Zone-2.VAV.hw_coil" ;
     c223:airInlet ex:00047 ;
     c223:airOutlet ex:00048 ;
@@ -406,8 +407,8 @@ ex:00050 a c223:HotWaterConnectionPoint,
     c223:isConnectionPointOf ex:00046 .
 
 ex:00051 a c223:Connectable,
-        c223:Device,
-        c223:HotWaterValve ;
+        c223:HotWaterValve,
+        d223:Device ;
     rdfs:label "Zone-2.VAV.hw_valve" ;
     c223:connectedThrough ex:00057 ;
     c223:hasConnectionPoint ex:00053,

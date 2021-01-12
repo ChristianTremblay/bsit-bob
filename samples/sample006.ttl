@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -15,8 +16,8 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex:00001 a c223:Connectable,
-        c223:Device,
-        c223:HotWaterCoil2 ;
+        c223:HotWaterCoil2,
+        d223:Device ;
     rdfs:label "hot_water_coil" ;
     c223:airInlet ex:00002 ;
     c223:airOutlet ex:00003 ;
@@ -55,8 +56,8 @@ ex:00005 a c223:HotWaterConnectionPoint,
     c223:isConnectionPointOf ex:00001 .
 
 ex:00006 a c223:Connectable,
-        c223:Device,
-        c223:HotWaterValve ;
+        c223:HotWaterValve,
+        d223:Device ;
     rdfs:label "hot_water_coil.hw_valve" ;
     c223:connectedThrough ex:00010 ;
     c223:hasConnectionPoint ex:00008,

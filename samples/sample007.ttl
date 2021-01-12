@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -15,7 +16,7 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex:00001 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 1" ;
     c223:hasPart ex:00002,
@@ -30,7 +31,7 @@ ex:00003 a c223:Part,
     c223:isPartOf ex:00001 .
 
 ex:00004 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 2" ;
     c223:hasPart ex:00005 .
@@ -45,7 +46,7 @@ ex:00006 a c223:Part,
     c223:isPartOf ex:00005 .
 
 ex:00007 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 3" ;
     c223:hasPart ex:00009 .
@@ -60,25 +61,25 @@ ex:00009 a c223:Part,
     c223:isPartOf ex:00007 .
 
 ex:00010 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 4" ;
     c223:hasDevice ex:00011 .
 
 ex:00011 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 5" ;
     c223:isDeviceOf ex:00010 .
 
 ex:00012 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 6" ;
     c223:hasDevice ex:00013 .
 
 ex:00013 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 7" ;
     c223:isDeviceOf ex:00012 .

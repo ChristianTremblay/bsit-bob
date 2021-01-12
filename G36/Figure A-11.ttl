@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -71,7 +72,7 @@ ex:00006 a c223:HotWaterConnectionPoint,
 
 ex:00007 a c223:AirFlowStation,
         c223:Connectable,
-        c223:Device ;
+        d223:Device ;
     rdfs:label "A-11.air_flow_station" ;
     c223:airInlet ex:00009 ;
     c223:airOutlet ex:00010 ;
@@ -104,7 +105,7 @@ ex:00011 a c223:AirConnection ;
     c223:connectsTo ex:00007 .
 
 ex:00012 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:Damper ;
     rdfs:label "A-11.damper" ;
     c223:connectedThrough ex:00035 ;
@@ -142,7 +143,7 @@ ex:00016 a c223:AnalogOut,
         ex:00015 .
 
 ex:00017 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:HotWaterCoil ;
     rdfs:label "A-11.hot_water_coil" ;
     c223:connectedThrough ex:00025,
@@ -219,7 +220,7 @@ ex:00027 a c223:AirConnection ;
     c223:connectsTo ex:00017 .
 
 ex:00028 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:VFDFan ;
     rdfs:label "A-11.fan" ;
     c223:connectedThrough ex:00035 ;
