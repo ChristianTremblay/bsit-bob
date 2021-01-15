@@ -3,6 +3,7 @@ from .core import (
     ConnectionType,
     register_connection_type,
     Connection,
+    ConnectionPoint,
     InletConnectionPoint,
     OutletConnectionPoint,
     Device,
@@ -21,37 +22,41 @@ class AirConnection(Air, Connection):
     pass
 
 
-class AirInlet(InletConnectionPoint, Air):
+class AirConnectionPoint(Air, ConnectionPoint):
     pass
 
 
-class AirOutlet(OutletConnectionPoint, Air):
+class AirInletConnectionPoint(AirConnectionPoint, InletConnectionPoint):
+    pass
+
+
+class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
     pass
 
 
 class Fan(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
 
 
 class Damper(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     position = AnalogOut
 
 
 class Filter(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     dp = AnalogOut
 
 
 class AirFlowStation(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     flow = AnalogIn
 
 
 class Zone(Device):
-    supplyAirInlet: AirInlet  # supply air goes in
-    returnAirOutlet: AirOutlet  # return air goes out
+    supplyAirInlet: AirInletConnectionPoint  # supply air goes in
+    returnAirOutlet: AirOutletConnectionPoint  # return air goes out

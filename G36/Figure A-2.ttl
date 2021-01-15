@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -37,13 +38,13 @@ ex:00001 a c223:Connectable,
     ex:valvePosition ex:00021 .
 
 ex:00002 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-2.airInlet" ;
     c223:connectsThroughInternally ex:00025 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00003 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-2.airOutlet" ;
     c223:connectsThroughInternally ex:00026 ;
     c223:isConnectionPointOf ex:00001 .
@@ -61,7 +62,7 @@ ex:00005 a c223:HotWaterConnectionPoint,
     c223:isConnectionPointOf ex:00001 .
 
 ex:00006 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:AirFlowStation ;
     rdfs:label "A-2.air_flow_station" ;
     c223:connectedThrough ex:00023,
@@ -80,19 +81,19 @@ ex:00007 a c223:AnalogIn,
         ex:00006 .
 
 ex:00008 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-2.air_flow_station.airInlet" ;
     c223:connectsThrough ex:00025 ;
     c223:isConnectionPointOf ex:00006 .
 
 ex:00009 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-2.air_flow_station.airOutlet" ;
     c223:connectsThrough ex:00023 ;
     c223:isConnectionPointOf ex:00006 .
 
 ex:00010 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:Damper ;
     rdfs:label "A-2.damper" ;
     c223:connectedThrough ex:00023,
@@ -107,13 +108,13 @@ ex:00010 a c223:Connectable,
     ex:position ex:00014 .
 
 ex:00011 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-2.damper.airInlet" ;
     c223:connectsThrough ex:00023 ;
     c223:isConnectionPointOf ex:00010 .
 
 ex:00012 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-2.damper.airOutlet" ;
     c223:connectsThrough ex:00024 ;
     c223:isConnectionPointOf ex:00010 .
@@ -132,7 +133,7 @@ ex:00014 a c223:AnalogOut,
         ex:00013 .
 
 ex:00015 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:HotWaterCoil ;
     rdfs:label "A-2.hot_water_coil" ;
     c223:connectedThrough ex:00024,
@@ -154,13 +155,13 @@ ex:00015 a c223:Connectable,
     ex:valvePosition ex:00021 .
 
 ex:00016 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-2.hot_water_coil.airInlet" ;
     c223:connectsThrough ex:00024 ;
     c223:isConnectionPointOf ex:00015 .
 
 ex:00017 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-2.hot_water_coil.airOutlet" ;
     c223:connectsThrough ex:00026 ;
     c223:isConnectionPointOf ex:00015 .

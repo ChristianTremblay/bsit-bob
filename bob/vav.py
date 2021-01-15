@@ -1,7 +1,7 @@
 from typing import Any
 
 from .core import c223, System, Device
-from .air import AirInlet, AirOutlet, AirFlowStation, Damper
+from .air import AirInletConnectionPoint, AirOutletConnectionPoint, AirFlowStation, Damper
 from .signal import AnalogIn, AnalogOut
 from .hw import HotWaterCoil, HotWaterValve
 from .signal import AnalogOut
@@ -10,8 +10,8 @@ __namespace__ = c223
 
 
 class VAV1(System):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     airFlow: AnalogIn
     damperPosition: AnalogOut
 
@@ -37,8 +37,8 @@ class VAV1(System):
 
 
 class VAV2(System):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     airFlow: AnalogIn
     damperPosition: AnalogOut
     hwValvePosition: AnalogOut

@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -38,25 +39,25 @@ ex:00001 a c223:Connectable,
     ex:supplyAirOutlet ex:00004 .
 
 ex:00002 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-7.hotDeckAirInlet" ;
     c223:connectsThroughInternally ex:00009 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00003 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-7.coldDeckAirInlet" ;
     c223:connectsThroughInternally ex:00020 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00004 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-7.supplyAirOutlet" ;
     c223:connectsThroughInternally ex:00027 ;
     c223:isConnectionPointOf ex:00001 .
 
 ex:00005 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:AirFlowStation ;
     rdfs:label "A-7.hot_deck_air_flow_station" ;
     c223:connectedThrough ex:00009,
@@ -75,13 +76,13 @@ ex:00006 a c223:AnalogIn,
         ex:00005 .
 
 ex:00007 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-7.hot_deck_air_flow_station.airInlet" ;
     c223:connectsThrough ex:00009 ;
     c223:isConnectionPointOf ex:00005 .
 
 ex:00008 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-7.hot_deck_air_flow_station.airOutlet" ;
     c223:connectsThrough ex:00015 ;
     c223:isConnectionPointOf ex:00005 .
@@ -92,7 +93,7 @@ ex:00009 a c223:AirConnection ;
     c223:connectsTo ex:00005 .
 
 ex:00010 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:Damper ;
     rdfs:label "A-7.hot_deck_damper" ;
     c223:connectedThrough ex:00015,
@@ -107,13 +108,13 @@ ex:00010 a c223:Connectable,
     ex:position ex:00014 .
 
 ex:00011 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-7.hot_deck_damper.airInlet" ;
     c223:connectsThrough ex:00015 ;
     c223:isConnectionPointOf ex:00010 .
 
 ex:00012 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-7.hot_deck_damper.airOutlet" ;
     c223:connectsThrough ex:00027 ;
     c223:isConnectionPointOf ex:00010 .
@@ -138,7 +139,7 @@ ex:00015 a c223:AirConnection ;
     c223:connectsTo ex:00010 .
 
 ex:00016 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:AirFlowStation ;
     rdfs:label "A-7.cold_deck_air_flow_station" ;
     c223:connectedThrough ex:00020,
@@ -157,13 +158,13 @@ ex:00017 a c223:AnalogIn,
         ex:00016 .
 
 ex:00018 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-7.cold_deck_air_flow_station.airInlet" ;
     c223:connectsThrough ex:00020 ;
     c223:isConnectionPointOf ex:00016 .
 
 ex:00019 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-7.cold_deck_air_flow_station.airOutlet" ;
     c223:connectsThrough ex:00026 ;
     c223:isConnectionPointOf ex:00016 .
@@ -174,7 +175,7 @@ ex:00020 a c223:AirConnection ;
     c223:connectsTo ex:00016 .
 
 ex:00021 a c223:Connectable,
-        c223:Device,
+        d223:Device,
         ex:Damper ;
     rdfs:label "A-7.cold_deck_damper" ;
     c223:connectedThrough ex:00026,
@@ -189,13 +190,13 @@ ex:00021 a c223:Connectable,
     ex:position ex:00025 .
 
 ex:00022 a c223:AirConnectionPoint,
-        c223:AirInlet ;
+        c223:AirInletConnectionPoint ;
     rdfs:label "A-7.cold_deck_damper.airInlet" ;
     c223:connectsThrough ex:00026 ;
     c223:isConnectionPointOf ex:00021 .
 
 ex:00023 a c223:AirConnectionPoint,
-        c223:AirOutlet ;
+        c223:AirOutletConnectionPoint ;
     rdfs:label "A-7.cold_deck_damper.airOutlet" ;
     c223:connectsThrough ex:00027 ;
     c223:isConnectionPointOf ex:00021 .
