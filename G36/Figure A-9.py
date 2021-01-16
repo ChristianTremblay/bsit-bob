@@ -9,8 +9,8 @@ from typing import Any
 from bob.core import bind_model_namespace, System, Device, dump
 from bob.air import (
     AirConnection,
-    AirInlet,
-    AirOutlet,
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
     Damper,
     Fan,
     Filter,
@@ -27,10 +27,10 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class AHU(System):
-    outsideAirInlet: AirInlet
-    supplyAirOutlet: AirOutlet
-    returnAirInlet: AirInlet
-    exhaustAirOutlet: AirOutlet
+    outsideAirInlet: AirInletConnectionPoint
+    supplyAirOutlet: AirOutletConnectionPoint
+    returnAirInlet: AirInletConnectionPoint
+    exhaustAirOutlet: AirOutletConnectionPoint
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)

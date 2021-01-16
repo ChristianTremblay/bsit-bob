@@ -9,7 +9,7 @@ from .core import (
     OutletConnectionPoint,
     Device,
 )
-from .air import AirInlet, AirOutlet
+from .air import AirInletConnectionPoint, AirOutletConnectionPoint
 from .signal import AnalogIn
 
 __namespace__ = c223
@@ -39,8 +39,8 @@ class HotWaterValve(Device):
 
 
 class HotWaterCoil(Device):
-    airInlet: AirInlet
-    airOutlet: AirOutlet
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     hotWaterInlet: HotWaterInlet
     hotWaterOutlet: HotWaterOutlet
 

@@ -51,6 +51,7 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 
 # common namespaces
 c223 = bind_namespace("c223", "http://data.ashrae.org/standard223/1.0/model/core#")
+d223 = bind_namespace("d223", "http://data.ashrae.org/standard223/1.0/model/device#")
 qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
 quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
 brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
@@ -853,12 +854,9 @@ class Connectable(Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # <self> a Device
+        # <self> a Connectable
         if EXPLICIT_CORE_TYPES:
             g.add((self.node, RDF.type, c223.Connectable))
-
-        # <self> a something
-        g.add((self.node, RDF.type, self._namespace[self.__class__.__name__]))
 
         # instantiate and associate all of the connection points
         self._connection_points = {}
@@ -1029,7 +1027,7 @@ class Device(Connectable):
     Devices are connectable.
     """
 
-    node_type: URIRef = c223.Device
+    node_type: URIRef = d223.Device
 
     def __init__(self, **kwargs: Any) -> None:
         """
@@ -1039,7 +1037,7 @@ class Device(Connectable):
 
         # <self> a System
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.Device))
+            g.add((self.node, RDF.type, d223.Device))
 
     def __gt__(self, other: Node) -> Node:
         """self > other
