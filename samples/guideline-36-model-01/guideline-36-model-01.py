@@ -20,8 +20,11 @@ from bob.vav import VAV2
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
-class OutsideAir(AirConnection):
-    pass
+class OutsideAirSupply(System):
+    airOutlet: AirOutlet
+
+class OutsideAirExhaust(System):
+    airInlet: AirInlet
 
 
 class AHU(System):
@@ -78,12 +81,15 @@ class AHU(System):
         return_air >> return_air_damper >> mixed_air
 
 
-# create the air handler and connect it to the outside air
+# create the air handler
 ahu = AHU(label="ahu_1")
-outside_air = OutsideAir(label="outside_air")
 
-outside_air >> ahu.outsideAirInlet
-ahu.exhaustAirOutlet >> outside_air
+# connect to outside air instances
+outside_air_supply = OutsideAirSupply(label="outside_air_supply")
+outside_air_supply.airOutlet >> ahu.outsideAirInlet
+
+outside_air_exhaust = OutsideAirExhaust(label="outside_air_exhaust")
+ahu.exhaustAirOutlet >> outside_air_exhaust.airInlet
 
 # create Zone-1 and its VAV connected together
 zone_1 = Zone(label="zone_1")
