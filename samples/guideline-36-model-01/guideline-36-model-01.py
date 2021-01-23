@@ -13,7 +13,7 @@ from bob.air import (
     Zone,
 )
 from bob.cw import ChilledWaterCoil2
-from bob.hw import HotWaterCoil2
+from bob.hw import HotWaterConnection, HotWaterBoiler, HotWaterCoil2
 from bob.vav import VAV2
 
 
@@ -21,10 +21,11 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class OutsideAirSupply(System):
-    airOutlet: AirOutlet
+    airOutlet: AirOutletConnectionPoint
+
 
 class OutsideAirExhaust(System):
-    airInlet: AirInlet
+    airInlet: AirInletConnectionPoint
 
 
 class AHU(System):
@@ -55,14 +56,16 @@ class AHU(System):
         mixed_air_filter = Filter(label=self.label + ".mixed_air_filter")
         mixed_air >> mixed_air_filter.airInlet
 
-        hot_water_coil = HotWaterCoil2(label=self.label + ".hot_water_coil")
-        mixed_air_filter >> hot_water_coil
+        self.hot_water_coil = HotWaterCoil2(label=self.label + ".hot_water_coil")
+        mixed_air_filter >> self.hot_water_coil
 
-        chilled_water_coil = ChilledWaterCoil2(label=self.label + ".chilled_water_coil")
-        hot_water_coil >> chilled_water_coil
+        self.chilled_water_coil = ChilledWaterCoil2(
+            label=self.label + ".chilled_water_coil"
+        )
+        self.hot_water_coil >> self.chilled_water_coil
 
         supply_fan = Fan(label=self.label + ".supply_fan")
-        chilled_water_coil >> supply_fan
+        self.chilled_water_coil >> supply_fan
 
         return_fan = Fan(label=self.label + ".return_fan")
         self.returnAirInlet >> return_fan.airInlet
@@ -112,6 +115,30 @@ return_air = AirConnection(label="return_air")
 zone_1.returnAirOutlet >> return_air
 zone_2.returnAirOutlet >> return_air
 return_air >> ahu.returnAirInlet
+
+# create a hot water system with a boiler
+hw_sys = System(label="hw_sys")
+boiler_1 = HotWaterBoiler(label="boiler_1")
+
+# add the components to the system
+hw_sys > boiler_1
+hw_sys > ahu.hot_water_coil
+hw_sys > vav_1.hot_water_coil
+hw_sys > vav_2.hot_water_coil
+
+# hot water supply side
+hw_sys_supply = HotWaterConnection(label="hw_sys.supply")
+boiler_1 >> hw_sys_supply
+hw_sys_supply >> ahu.hot_water_coil.hot_water_valve.hotWaterInlet
+hw_sys_supply >> vav_1.hot_water_valve.hotWaterInlet
+hw_sys_supply >> vav_2.hot_water_valve.hotWaterInlet
+
+# hot water return side
+hw_sys_return = HotWaterConnection(label="hw_sys.return")
+ahu.hot_water_coil >> hw_sys_return
+vav_1.hot_water_coil >> hw_sys_return
+vav_2.hot_water_coil >> hw_sys_return
+hw_sys_return >> boiler_1
 
 # dump the result
 if __name__ == "__main__":

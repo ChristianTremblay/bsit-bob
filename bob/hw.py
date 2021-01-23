@@ -45,6 +45,11 @@ class HotWaterCoil(Device):
     hotWaterOutlet: HotWaterOutlet
 
 
+class HotWaterBoiler(Device):
+    hotWaterSupply: HotWaterInlet
+    hotWaterReturn: HotWaterOutlet
+
+
 class HotWaterCoil2(HotWaterCoil):
     """
     This is an example of a hot water coil that contains its valve as a
