@@ -10,16 +10,38 @@ import inspect
 from collections import defaultdict
 import logging
 
-from typing import Dict, Set, Any, TextIO, Tuple, Type, TypeVar, Union, cast
+from typing import Dict, Optional, Set, Any, TextIO, Tuple, Type, TypeVar, Union, cast
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
 
 # logging
-log_level = os.getenv("LOG", "WARNING")
+log_level = os.getenv("BOB_LOG", "WARNING")
 numeric_level = getattr(logging, log_level.upper(), None)
 if not isinstance(numeric_level, int):
     raise ValueError("Invalid log level: %s" % log_level)
 logging.basicConfig(level=numeric_level)
+
+# include/exclude predicates
+include_predicates: Set[str] = set(os.getenv("BOB_INCLUDE", "").split())
+exclude_predicates: Set[str] = set(os.getenv("BOB_EXCLUDE", "").split())
+
+# include/exclude defaults
+if (not include_predicates) and (not exclude_predicates):
+    include_predicates.add("*")
+
+# include/exlude combination error checking
+if "*" in exclude_predicates:
+    if len(exclude_predicates) != 1:
+        raise RuntimeError("no")
+    if not include_predicates:
+        raise RuntimeError("no")
+if "*" in include_predicates:
+    if len(include_predicates) != 1:
+        raise RuntimeError("no")
+if include_predicates.intersection(exclude_predicates):
+    raise RuntimeError("include/exclude overlap")
+logging.debug(f"include_predicates {include_predicates}")
+logging.debug(f"exclude_predicates {exclude_predicates}")
 
 # options
 MANDITORY_LABEL = True
@@ -28,6 +50,24 @@ EXPLICIT_CORE_TYPES = True
 # globals
 g = Graph()
 _next_node = 1
+
+
+def g_add(triple: Tuple[Any, Any, Any]) -> None:
+    """
+    Add a triple to the graph, checking the predicate to see if it should
+    be included or excluded.
+    """
+    subj, pred, obj = triple
+
+    namespace, namespace_uriref, suffix = g.namespace_manager.compute_qname(pred)
+    for test_name in (namespace + ":" + suffix, namespace + ":*", "*"):
+        if test_name in include_predicates:
+            break
+        if test_name in exclude_predicates:
+            return
+
+    # passes the tests
+    g.add(triple)
 
 
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
@@ -109,7 +149,7 @@ class NodeMetaclass(type):
         _datatypes: Dict[str, Literal] = {}
         _inits: Dict[str, Any] = {}
 
-        attr_names: Set(str) = set()
+        attr_names: Set[str] = set()
         _attr_uriref: Dict[str, URIRef] = {}
 
         # include the maps this class is inheriting
@@ -206,7 +246,9 @@ class NodeMetaclass(type):
         else:
             # check the module
             cls_module = inspect.getmodule(metaclass)
+            assert cls_module
             logging.debug(f"    - cls_module: {cls_module} {cls_module.__name__}")
+
             _namespace = getattr(cls_module, "__namespace__", None)
             if _namespace:
                 logging.debug(f"    - module {cls_module} namespace: {_namespace}")
@@ -287,10 +329,10 @@ class Node(metaclass=NodeMetaclass):
 
         self.label = label or getattr(self, "label", "")
         if self.label:
-            g.add((self.node, RDFS.label, Literal(self.label)))
+            g_add((self.node, RDFS.label, Literal(self.label)))
 
         if hasattr(self, "node_type"):
-            g.add((self.node, RDF.type, self.node_type))
+            g_add((self.node, RDF.type, self.node_type))
 
         for attr, attr_type in self._nodes.items():
             super().__setattr__(attr, None)
@@ -351,9 +393,9 @@ class Node(metaclass=NodeMetaclass):
 
             # add the link(s)
             if isinstance(value, (URIRef, Literal)):
-                g.add((self.node, self._attr_uriref[attr], value))
+                g_add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
             if isinstance(value, Node):
-                g.add((self.node, self._attr_uriref[attr], value.node))
+                g_add((self.node, self._attr_uriref[attr], value.node))  # type: ignore[attr-defined]
 
             # if the value is a property, link property to the node.  The
             # Value has a property called 'isValueOf' that is excluded.
@@ -373,7 +415,7 @@ class Node(metaclass=NodeMetaclass):
                     raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
 
             # add the literal
-            g.add((self.node, self._attr_uriref[attr], value))
+            g_add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
 
         # carry on
         super().__setattr__(attr, value)
@@ -382,13 +424,13 @@ class Node(metaclass=NodeMetaclass):
         label = (" " + self.label) if self.label else ""
         return f"<{self.__class__.__name__}{label} at {self.node}>"
 
-    def add_property(self, prop: Property) -> None:
+    def add_property(self, prop: Property) -> Property:
         """Add a property to a node, returns the added property."""
         assert isinstance(prop, Property)
 
         # link the two together
-        g.add((self.node, c223.hasProperty, prop.node))
-        g.add((prop.node, c223.isPropertyOf, self.node))
+        g_add((self.node, c223.hasProperty, prop.node))
+        g_add((prop.node, c223.isPropertyOf, self.node))
 
         return prop
 
@@ -411,7 +453,7 @@ class Connection(Node, ConnectionType):
         if EXPLICIT_CORE_TYPES:
             if self.connection_type:
                 connection_type = self.connection_type + "Connection"
-                g.add((self.node, RDF.type, self._namespace[connection_type],))
+                g_add((self.node, RDF.type, self._namespace[connection_type],))
 
     def __rshift__(
         self, other: Union[ConnectionPoint, Connectable]
@@ -467,24 +509,24 @@ class Connection(Node, ConnectionType):
             logging.info(f"internal connection: {self} >> {connection_point}")
 
             # link connection to connection point and back
-            g.add((self.node, c223.connectsAtInternally, connection_point.node))
-            g.add((connection_point.node, c223.connectsThroughInternally, self.node))
+            g_add((self.node, c223.connectsAtInternally, connection_point.node))
+            g_add((connection_point.node, c223.connectsThroughInternally, self.node))
         else:
             logging.info(f"external connection: {self} >> {connection_point}")
 
             # link connection to connection point
-            g.add((self.node, c223.connectsAt, connection_point.node))
+            g_add((self.node, c223.connectsAt, connection_point.node))
             connection_point.connectsThrough = self
 
             # link the connection to the device of the connection point
-            g.add(
+            g_add(
                 (
                     connection_point.isConnectionPointOf.node,
                     c223.connectedThrough,
                     self.node,
                 )
             )
-            g.add(
+            g_add(
                 (self.node, c223.connectsTo, connection_point.isConnectionPointOf.node)
             )
 
@@ -546,24 +588,24 @@ class Connection(Node, ConnectionType):
             logging.info(f"internal connection: {self} << {connection_point}")
 
             # link connection to connection point and back
-            g.add((self.node, c223.connectsAtInternally, connection_point.node))
-            g.add((connection_point.node, c223.connectsThroughInternally, self.node))
+            g_add((self.node, c223.connectsAtInternally, connection_point.node))
+            g_add((connection_point.node, c223.connectsThroughInternally, self.node))
         else:
             logging.info(f"external connection: {self} << {connection_point}")
 
             # link connection to connection point and back
-            g.add((self.node, c223.connectsAt, connection_point.node))
+            g_add((self.node, c223.connectsAt, connection_point.node))
             connection_point.connectsThrough = self
 
             # link the connection to the "owner" of the connection point
-            g.add(
+            g_add(
                 (
                     connection_point.isConnectionPointOf.node,
                     c223.connectedThrough,
                     self.node,
                 )
             )
-            g.add(
+            g_add(
                 (
                     self.node,
                     c223.connectsFrom,
@@ -587,9 +629,9 @@ class ConnectionPoint(Node):
         if EXPLICIT_CORE_TYPES:
             if isinstance(self, ConnectionType) and self.connection_type:
                 connection_point_type = self.connection_type + "ConnectionPoint"
-                g.add((self.node, RDF.type, self._namespace[connection_point_type],))
+                g_add((self.node, RDF.type, self._namespace[connection_point_type],))
 
-        g.add((connectable.node, c223.hasConnectionPoint, self.node))
+        g_add((connectable.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = connectable
 
         # this is one of the connection points of the connectable
@@ -615,8 +657,8 @@ class ConnectionPoint(Node):
                 logging.info(f"internal connection: {self} >> {other}")
 
                 # link connection to connection point and back
-                g.add((other.node, c223.connectsAtInternally, self.node))
-                g.add((self.node, c223.connectsThroughInternally, other.node))
+                g_add((other.node, c223.connectsAtInternally, self.node))
+                g_add((self.node, c223.connectsThroughInternally, other.node))
             else:
                 logging.info(f"external connection: {self} >> {other}")
                 if self.connectsThrough:
@@ -626,13 +668,13 @@ class ConnectionPoint(Node):
 
                 # link connection to connection point and back
                 self.connectsThrough = other
-                g.add((other.node, c223.connectsAt, self.node))
+                g_add((other.node, c223.connectsAt, self.node))
 
                 # link the connection points "owner" to the connection
-                g.add(
+                g_add(
                     (self.isConnectionPointOf.node, c223.connectedThrough, other.node,)
                 )
-                g.add((other.node, c223.connectsFrom, self.isConnectionPointOf.node,))
+                g_add((other.node, c223.connectsFrom, self.isConnectionPointOf.node,))
 
             # for chaining
             return other
@@ -651,8 +693,8 @@ class ConnectionPoint(Node):
                 new_connection = connection_classes[self_connection_type]()
 
                 # self side is internal
-                g.add((new_connection.node, c223.connectsAtInternally, self.node))
-                g.add((self.node, c223.connectsThroughInternally, new_connection.node))
+                g_add((new_connection.node, c223.connectsAtInternally, self.node))
+                g_add((self.node, c223.connectsThroughInternally, new_connection.node))
 
                 if isinstance(other, OutletConnectionPoint):
                     if self.isConnectionPointOf.node != other.isConnectionPointOf.node:
@@ -662,8 +704,8 @@ class ConnectionPoint(Node):
                     logging.info(f"pass-through connection: {self} >> {other}")
 
                     # other side is also internal
-                    g.add((new_connection.node, c223.connectsAtInternally, other.node))
-                    g.add(
+                    g_add((new_connection.node, c223.connectsAtInternally, other.node))
+                    g_add(
                         (
                             other.node,
                             c223.connectsThroughInternally,
@@ -687,8 +729,8 @@ class ConnectionPoint(Node):
                 new_connection << self
 
                 # other side is internal
-                g.add((new_connection.node, c223.connectsAtInternally, other.node))
-                g.add((other.node, c223.connectsThroughInternally, new_connection.node))
+                g_add((new_connection.node, c223.connectsAtInternally, other.node))
+                g_add((other.node, c223.connectsThroughInternally, new_connection.node))
 
             else:
                 if other.connectsThrough:
@@ -729,8 +771,8 @@ class ConnectionPoint(Node):
                 logging.info(f"internal connection: {other} >> in {self}")
 
                 # link connection to connection point and back
-                g.add((other.node, c223.connectsAtInternally, self.node))
-                g.add((self.node, c223.connectsThroughInternally, other.node))
+                g_add((other.node, c223.connectsAtInternally, self.node))
+                g_add((self.node, c223.connectsThroughInternally, other.node))
             else:
                 logging.info(f"external connection: {other} >> ex {self}")
                 if self.connectsThrough:
@@ -740,13 +782,13 @@ class ConnectionPoint(Node):
 
                 # link connection to connection point and back
                 self.connectsThrough = other
-                g.add((other.node, c223.connectsAt, self.node))
+                g_add((other.node, c223.connectsAt, self.node))
 
                 # link the connection points "owner" to the connection
-                g.add(
+                g_add(
                     (self.isConnectionPointOf.node, c223.connectedThrough, other.node,)
                 )
-                g.add((other.node, c223.connectsTo, self.isConnectionPointOf.node,))
+                g_add((other.node, c223.connectsTo, self.isConnectionPointOf.node,))
 
             # for chaining
             return other
@@ -765,8 +807,8 @@ class ConnectionPoint(Node):
                 new_connection = connection_classes[self_connection_type]()
 
                 # self side is internal
-                g.add((new_connection.node, c223.connectsAtInternally, self.node))
-                g.add((self.node, c223.connectsThroughInternally, new_connection.node))
+                g_add((new_connection.node, c223.connectsAtInternally, self.node))
+                g_add((self.node, c223.connectsThroughInternally, new_connection.node))
 
                 if isinstance(other, InletConnectionPoint):
                     if self.isConnectionPointOf.node != other.isConnectionPointOf.node:
@@ -778,8 +820,8 @@ class ConnectionPoint(Node):
                     )
 
                     # other side is also internal
-                    g.add((new_connection.node, c223.connectsAtInternally, other.node))
-                    g.add(
+                    g_add((new_connection.node, c223.connectsAtInternally, other.node))
+                    g_add(
                         (
                             other.node,
                             c223.connectsThroughInternally,
@@ -805,8 +847,8 @@ class ConnectionPoint(Node):
                 new_connection >> self
 
                 # other side is internal
-                g.add((new_connection.node, c223.connectsAtInternally, other.node))
-                g.add((other.node, c223.connectsThroughInternally, new_connection.node))
+                g_add((new_connection.node, c223.connectsAtInternally, other.node))
+                g_add((other.node, c223.connectsThroughInternally, new_connection.node))
 
             else:
                 if other.connectsThrough:
@@ -856,7 +898,7 @@ class Connectable(Node):
 
         # <self> a Connectable
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.Connectable))
+            g_add((self.node, RDF.type, c223.Connectable))
 
         # instantiate and associate all of the connection points
         self._connection_points = {}
@@ -867,7 +909,7 @@ class Connectable(Node):
             if isinstance(var_annotation, str):
                 if var_annotation not in _annotation_forwards:
                     raise NotImplementedError(
-                        f"resolving {var_annotation!r} for attribute {attr!r}, class not found"
+                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
                     )
 
                 var_annotation = _annotation_forwards.get(var_annotation)
@@ -988,7 +1030,7 @@ class System(Connectable):
 
         # <self> a System
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.System))
+            g_add((self.node, RDF.type, c223.System))
 
     def __gt__(self, other: Node) -> Node:
         """self > other
@@ -997,11 +1039,11 @@ class System(Connectable):
         this system.
         """
         if isinstance(other, System):
-            g.add((self.node, c223.hasSubsystem, other.node))
-            g.add((other.node, c223.isSubsystemOf, self.node))
+            g_add((self.node, c223.hasSubsystem, other.node))
+            g_add((other.node, c223.isSubsystemOf, self.node))
         elif isinstance(other, Device):
-            g.add((self.node, c223.hasDevice, other.node))
-            g.add((other.node, c223.isDeviceOf, self.node))
+            g_add((self.node, c223.hasDevice, other.node))
+            g_add((other.node, c223.isDeviceOf, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1014,8 +1056,8 @@ class System(Connectable):
         system.
         """
         if isinstance(other, System):
-            g.add((self.node, c223.isSubsystemOf, other.node))
-            g.add((other.node, c223.hasSubsystem, self.node))
+            g_add((self.node, c223.isSubsystemOf, other.node))
+            g_add((other.node, c223.hasSubsystem, self.node))
         else:
             raise TypeError("system expected")
 
@@ -1037,7 +1079,7 @@ class Device(Connectable):
 
         # <self> a System
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, d223.Device))
+            g_add((self.node, RDF.type, d223.Device))
 
     def __gt__(self, other: Node) -> Node:
         """self > other
@@ -1045,11 +1087,11 @@ class Device(Connectable):
         Build a subsystem heirarchy, the other is a device or a part.
         """
         if isinstance(other, Device):
-            g.add((self.node, c223.hasDevice, other.node))
-            g.add((other.node, c223.isDeviceOf, self.node))
+            g_add((self.node, c223.hasDevice, other.node))
+            g_add((other.node, c223.isDeviceOf, self.node))
         elif isinstance(other, Part):
-            g.add((self.node, c223.hasPart, other.node))
-            g.add((other.node, c223.isPartOf, self.node))
+            g_add((self.node, c223.hasPart, other.node))
+            g_add((other.node, c223.isPartOf, self.node))
         else:
             raise TypeError("device or part expected")
 
@@ -1062,8 +1104,8 @@ class Device(Connectable):
         system.
         """
         if isinstance(other, (System, Device)):
-            g.add((self.node, c223.isDeviceOf, other.node))
-            g.add((other.node, c223.hasDevice, self.node))
+            g_add((self.node, c223.isDeviceOf, other.node))
+            g_add((other.node, c223.hasDevice, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1081,7 +1123,7 @@ class Part(Node):
 
         # <self> a Part
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.Part))
+            g_add((self.node, RDF.type, c223.Part))
 
     def __gt__(self, other: Node) -> Node:
         """self > other
@@ -1092,8 +1134,8 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g.add((self.node, c223.hasPart, other.node))
-        g.add((other.node, c223.isPartOf, self.node))
+        g_add((self.node, c223.hasPart, other.node))
+        g_add((other.node, c223.isPartOf, self.node))
         return self
 
     def __lt__(self, other: Node) -> Node:
@@ -1104,8 +1146,8 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g.add((self.node, c223.isPartOf, other.node))
-        g.add((other.node, c223.hasPart, self.node))
+        g_add((self.node, c223.isPartOf, other.node))
+        g_add((other.node, c223.hasPart, self.node))
         return other
 
 
@@ -1150,7 +1192,7 @@ class Value(Node):
 
         # <self> a Value
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.Value))
+            g_add((self.node, RDF.type, c223.Value))
 
 
 class Property(Node):
@@ -1178,7 +1220,7 @@ class Property(Node):
 
         # <self> a Property
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.Property))
+            g_add((self.node, RDF.type, c223.Property))
 
         # if there is an initial value, add/create and link to it
         if init_value is not None:
@@ -1194,7 +1236,7 @@ class Property(Node):
         assert isinstance(value, Value)
 
         # link the two together
-        g.add((self.node, c223.hasValue, value.node))
+        g_add((self.node, c223.hasValue, value.node))
         value.isValueOf = self
 
         return value
@@ -1229,7 +1271,7 @@ class QuantifiableProperty(Property):
 
         # <self> a QuantifiableProperty
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.QuantifiableProperty))
+            g_add((self.node, RDF.type, c223.QuantifiableProperty))
 
 
 class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
@@ -1244,7 +1286,7 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
 
         # <self> a QuantifiableActuatableProperty
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.QuantifiableActuatableProperty))
+            g_add((self.node, RDF.type, c223.QuantifiableActuatableProperty))
 
 
 class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
@@ -1259,7 +1301,7 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
 
         # <self> a QuantifiableObservableProperty
         if EXPLICIT_CORE_TYPES:
-            g.add((self.node, RDF.type, c223.QuantifiableObservableProperty))
+            g_add((self.node, RDF.type, c223.QuantifiableObservableProperty))
 
 
 def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:
