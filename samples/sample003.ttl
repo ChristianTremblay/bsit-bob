@@ -2,7 +2,6 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
-@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -20,13 +19,12 @@ ex:00001 a c223:ChilledWaterConnection ;
     c223:connectsTo ex:00002 .
 
 ex:00002 a c223:ChilledWaterCoil,
-        c223:Connectable,
-        d223:Device ;
+        c223:Device ;
     rdfs:label "CW-Coil-1" ;
     c223:airInlet ex:00003 ;
     c223:airOutlet ex:00004 ;
-    c223:chilledWaterReturn ex:00006 ;
-    c223:chilledWaterSupply ex:00005 ;
+    c223:chilledWaterInlet ex:00005 ;
+    c223:chilledWaterOutlet ex:00006 ;
     c223:connectedThrough ex:00001,
         ex:00010,
         ex:00014 ;
@@ -49,18 +47,17 @@ ex:00004 a c223:AirConnectionPoint,
 
 ex:00005 a c223:ChilledWaterConnectionPoint,
         c223:ChilledWaterInlet ;
-    rdfs:label "CW-Coil-1.chilledWaterSupply" ;
+    rdfs:label "CW-Coil-1.chilledWaterInlet" ;
     c223:connectsThrough ex:00001 ;
     c223:isConnectionPointOf ex:00002 .
 
 ex:00006 a c223:ChilledWaterConnectionPoint,
         c223:ChilledWaterOutlet ;
-    rdfs:label "CW-Coil-1.chilledWaterReturn" ;
+    rdfs:label "CW-Coil-1.chilledWaterOutlet" ;
     c223:isConnectionPointOf ex:00002 .
 
-ex:00007 a c223:Connectable,
-        c223:Fan,
-        d223:Device ;
+ex:00007 a c223:Device,
+        c223:Fan ;
     rdfs:label "F" ;
     c223:airInlet ex:00008 ;
     c223:airOutlet ex:00009 ;
@@ -85,9 +82,8 @@ ex:00010 a c223:AirConnection ;
     c223:connectsFrom ex:00007 ;
     c223:connectsTo ex:00002 .
 
-ex:00011 a c223:Connectable,
-        c223:Zone,
-        d223:Device ;
+ex:00011 a c223:Device,
+        c223:Zone ;
     rdfs:label "Zone-1" ;
     c223:connectedThrough ex:00014 ;
     c223:hasConnectionPoint ex:00012,

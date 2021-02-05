@@ -9,8 +9,18 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from bob.hw import HotWaterInlet, HotWaterOutlet
+from bob.air import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
+from bob.hw import (
+    HotWaterInlet,
+    HotWaterOutlet,
+    HotWaterSystemInlet,
+    HotWaterSystemOutlet,
+)
 from bob.signal import AnalogIn, AnalogOut
 
 from header import g36_header
@@ -77,12 +87,12 @@ class HotWaterCoil(Device):
 
 
 class VAV(System):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
     airFlow: AnalogIn
     damperPosition: AnalogOut
-    hwInlet: HotWaterInlet
-    hwOutlet: HotWaterOutlet
+    hwInlet: HotWaterSystemInlet
+    hwOutlet: HotWaterSystemOutlet
     valvePosition: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:
@@ -105,8 +115,8 @@ class VAV(System):
         self.damper >> self.hot_water_coil
 
         # reference the connections
-        self.airInlet >> self.air_flow_station.airInlet
-        self.airOutlet << self.hot_water_coil.airOutlet
+        self.airInlet > self.air_flow_station.airInlet
+        self.airOutlet > self.hot_water_coil.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
 

@@ -9,8 +9,10 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import Fan, AirInletConnectionPoint, AirOutletConnectionPoint, AirConnection, AirFlowStation
-from bob.hw import HotWaterInlet, HotWaterOutlet
+from bob.air import (Fan, AirInletConnectionPoint, AirOutletConnectionPoint, AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,AirConnection, AirFlowStation)
+from bob.hw import (HotWaterInlet, HotWaterOutlet, HotWaterSystemInlet,
+    HotWaterSystemOutlet,)
 from bob.signal import AnalogIn, AnalogOut, BinaryIn, BinaryOut
 
 from header import g36_header
@@ -57,8 +59,8 @@ class VFD(Part):
 
 
 class VFDFan(Fan):
-    airInlet: AirInletConnectionPoint  ## bug, should inherit from Fan
-    airOutlet: AirOutletConnectionPoint  ## bug, should inherit from Fan
+    # airInlet: AirInletConnectionPoint - inherits from Fan
+    # airOutlet: AirOutletConnectionPoint - inherits from Fan
     fanStatus: BinaryIn
     fanSpeedCommand: AnalogOut
     fanStart: BinaryOut
@@ -110,48 +112,39 @@ class HotWaterCoil(Device):
 
 
 class VAV(System):
-    supplyAirInlet: AirInletConnectionPoint
-    returnAirInlet: AirInletConnectionPoint
-    supplyAirOutlet: AirOutletConnectionPoint
-    supplyAirFlow: AnalogIn
-    damperPosition: AnalogOut
-    hwInlet: HotWaterInlet
-    hwOutlet: HotWaterOutlet
+    returnAirInlet: AirInletSystemConnectionPoint
+    returnAirFilterDP: AnalogIn
+    supplyAirOutlet: AirOutletSystemConnectionPoint
+    supplyAirDP: AnalogIn
+    hwInlet: HotWaterSystemInlet
+    hwOutlet: HotWaterSystemOutlet
     hwValvePosition: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        # create an air flow station
-        self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
-        self > self.air_flow_station
-        self.supplyAirInlet >> self.air_flow_station.airInlet
-        self.supplyAirFlow = self.air_flow_station.flow
-
-        # create a damper
-        self.damper = Damper(label=self.label + ".damper")
-        self > self.damper
-        self.damperPosition = self.damper.position
+        # create an air filter
+        self.air_filter = AirFilter(label=self.label + ".air_filter")
+        self.returnAirInlet > self.air_filter.airInlet
+        self.returnAirFilterDP = self.air_filter.dp
 
         # create a hot water coil
         self.hot_water_coil = HotWaterCoil(label=self.label + ".hot_water_coil")
         self > self.hot_water_coil
-        self.hwInlet >> self.hot_water_coil.hwInlet
-        self.hwOutlet << self.hot_water_coil.hwOutlet
+        self.hwInlet > self.hot_water_coil.hwInlet
+        self.hwOutlet > self.hot_water_coil.hwOutlet
         self.hwValvePosition = self.hot_water_coil.valvePosition
-        self.returnAirInlet >> self.hot_water_coil.airInlet
+
+        # filter to hot water coil
+        self.air_filter.airOutlet >> self.hot_water_coil.airInlet
 
         # create a fan with a variable frequency drive
         self.fan = VFDFan(label=self.label + ".fan")
         self > self.fan
 
-        # connection for merge
-        merged_air = AirConnection(label=self.label + ".merge")
-
         # link the air pieces together
-        self.damper.airOutlet >> merged_air
-        self.fan >> merged_air
-        merged_air >> self.supplyAirOutlet
+        self.hot_water_coil >> self.fan
+        self.supplyAirOutlet > self.fan.airOutlet
 
 
 # make one

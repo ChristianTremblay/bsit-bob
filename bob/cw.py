@@ -5,11 +5,19 @@ from .core import (
     ConnectionType,
     register_connection_type,
     Connection,
+    Device,
     InletConnectionPoint,
     OutletConnectionPoint,
-    Device,
+    System,
+    SystemInletConnectionPoint,
+    SystemOutletConnectionPoint,
 )
-from .air import AirInletConnectionPoint, AirOutletConnectionPoint
+from .air import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
 from .signal import AnalogIn
 
 __namespace__ = c223
@@ -32,6 +40,14 @@ class ChilledWaterOutlet(OutletConnectionPoint, ChilledWater):
     pass
 
 
+class ChilledWaterSystemInlet(SystemInletConnectionPoint, ChilledWater):
+    pass
+
+
+class ChilledWaterSystemOutlet(SystemOutletConnectionPoint, ChilledWater):
+    pass
+
+
 class ChilledWaterValve(Device):
     chilledWaterInlet: ChilledWaterInlet
     chilledWaterOutlet: ChilledWaterOutlet
@@ -41,28 +57,35 @@ class ChilledWaterValve(Device):
 class ChilledWaterCoil(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    chilledWaterSupply: ChilledWaterInlet
-    chilledWaterReturn: ChilledWaterOutlet
+    chilledWaterInlet: ChilledWaterInlet
+    chilledWaterOutlet: ChilledWaterOutlet
 
 
-class ChilledWaterCoil2(ChilledWaterCoil):
+class ChilledWaterCoil2(System):
     """
     This is an example of a chilled water coil that contains its valve as a
     subsystem and makes the valve position available as its own connection
     point.
     """
 
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
+    chilledWaterSupply: ChilledWaterSystemInlet
+    chilledWaterReturn: ChilledWaterSystemOutlet
+
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        # create a chilled water valve subsystem
-        self.chilled_water_valve = ChilledWaterValve(
-            label=self.label + ".chilled_water_valve"
-        )
-        self > self.chilled_water_valve
+        # create a hot water coil
+        self.chilled_water_coil = ChilledWaterCoil(label=self.label + ".cw_coil")
+        self.airInlet > self.chilled_water_coil.airInlet
+        self.airOutlet > self.chilled_water_coil.airOutlet
 
-        # link the chilled water pieces together
-        self.chilled_water_valve >> self
+        # create a hot water valve
+        self.chilled_water_valve = ChilledWaterValve(label=self.label + ".cw_valve")
+        self.chilledWaterSupply > self.chilled_water_valve.chilledWaterInlet
+        self.chilled_water_valve >> self.chilled_water_coil
+        self.chilledWaterReturn > self.chilled_water_coil.chilledWaterOutlet
 
-        # lift the position
+        # reference the valve position
         self.chilled_water_valve_pos = self.chilled_water_valve.position

@@ -6,7 +6,7 @@
 
 python ../sparql-query.py Topology.ttl $@ << EOF
 select ?x ?y where {
-    ?x rdf:type d223:Device .
+    ?x rdf:type c223:Device .
     ?x rdfs:label ?y .
     }
 EOF
