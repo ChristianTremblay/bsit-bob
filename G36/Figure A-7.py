@@ -9,9 +9,13 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import Fan, AirInletConnectionPoint, AirOutletConnectionPoint, AirConnection
-from bob.hw import HotWaterInlet, HotWaterOutlet
-from bob.signal import AnalogIn, AnalogOut, BinaryOut
+from bob.air import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
+from bob.signal import AnalogIn, AnalogOut
 
 from header import g36_header
 
@@ -47,9 +51,9 @@ class Damper(Device):
 
 
 class VAV(System):
-    hotDeckAirInlet: AirInletConnectionPoint
-    coldDeckAirInlet: AirInletConnectionPoint
-    supplyAirOutlet: AirOutletConnectionPoint
+    hotDeckAirInlet: AirInletSystemConnectionPoint
+    coldDeckAirInlet: AirInletSystemConnectionPoint
+    supplyAirOutlet: AirOutletSystemConnectionPoint
     hotDeckAirFlow: AnalogIn
     coldDeckAirFlow: AnalogIn
     hotDeckDamperPosition: AnalogOut
@@ -63,7 +67,7 @@ class VAV(System):
             label=self.label + ".hot_deck_air_flow_station"
         )
         self > self.hot_deck_air_flow_station
-        self.hotDeckAirInlet >> self.hot_deck_air_flow_station.airInlet
+        self.hotDeckAirInlet > self.hot_deck_air_flow_station.airInlet
         self.hotDeckAirFlow = self.hot_deck_air_flow_station.flow
 
         # create a hot deck damper
@@ -77,7 +81,7 @@ class VAV(System):
             label=self.label + ".cold_deck_air_flow_station"
         )
         self > self.cold_deck_air_flow_station
-        self.coldDeckAirInlet >> self.cold_deck_air_flow_station.airInlet
+        self.coldDeckAirInlet > self.cold_deck_air_flow_station.airInlet
         self.coldDeckAirFlow = self.cold_deck_air_flow_station.flow
 
         # create a cold deck damper
@@ -86,13 +90,9 @@ class VAV(System):
         self.cold_deck_air_flow_station >> self.cold_deck_damper
         self.coldDeckDamperPosition = self.cold_deck_damper.position
 
-        # connection for merge
-        merged_air = AirConnection(label=self.label + ".merge")
-
         # link the air pieces together
-        self.hot_deck_damper.airOutlet >> merged_air
-        self.cold_deck_damper.airOutlet >> merged_air
-        merged_air >> self.supplyAirOutlet
+        self.supplyAirOutlet > self.hot_deck_damper.airOutlet
+        self.supplyAirOutlet > self.cold_deck_damper.airOutlet
 
 
 # make one

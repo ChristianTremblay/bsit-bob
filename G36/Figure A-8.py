@@ -9,9 +9,14 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import Fan, AirInletConnectionPoint, AirOutletConnectionPoint, AirConnection
-from bob.hw import HotWaterInlet, HotWaterOutlet
-from bob.signal import AnalogIn, AnalogOut, BinaryOut
+from bob.air import (
+    AirConnection,
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
+from bob.signal import AnalogIn, AnalogOut
 
 from header import g36_header
 
@@ -47,9 +52,9 @@ class Damper(Device):
 
 
 class VAV(System):
-    hotDeckAirInlet: AirInletConnectionPoint
-    coldDeckAirInlet: AirInletConnectionPoint
-    supplyAirOutlet: AirOutletConnectionPoint
+    hotDeckAirInlet: AirInletSystemConnectionPoint
+    coldDeckAirInlet: AirInletSystemConnectionPoint
+    supplyAirOutlet: AirOutletSystemConnectionPoint
     supplyAirFlow: AnalogIn
     hotDeckDamperPosition: AnalogOut
     coldDeckDamperPosition: AnalogOut
@@ -60,13 +65,13 @@ class VAV(System):
         # create a hot deck damper
         self.hot_deck_damper = Damper(label=self.label + ".hot_deck_damper")
         self > self.hot_deck_damper
-        self.hotDeckAirInlet >> self.hot_deck_damper.airInlet
+        self.hotDeckAirInlet > self.hot_deck_damper.airInlet
         self.hotDeckDamperPosition = self.hot_deck_damper.position
 
         # create a cold deck damper
         self.cold_deck_damper = Damper(label=self.label + ".cold_deck_damper")
         self > self.cold_deck_damper
-        self.coldDeckAirInlet >> self.cold_deck_damper.airInlet
+        self.coldDeckAirInlet > self.cold_deck_damper.airInlet
         self.coldDeckDamperPosition = self.cold_deck_damper.position
 
         # create an air flow station
@@ -81,7 +86,9 @@ class VAV(System):
         self.hot_deck_damper.airOutlet >> merged_air
         self.cold_deck_damper.airOutlet >> merged_air
         merged_air >> self.air_flow_station.airInlet
-        self.air_flow_station.airOutlet >> self.supplyAirOutlet
+
+        # supply air outlet comes from the air flow station
+        self.supplyAirOutlet > self.air_flow_station.airOutlet
 
 
 # make one

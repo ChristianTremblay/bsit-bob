@@ -9,7 +9,12 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from bob.air import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
 from bob.signal import AnalogIn, AnalogOut
 
 from header import g36_header
@@ -49,8 +54,8 @@ class Damper(Device):
 
 
 class VAV(System):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
     airFlow: AnalogIn
     damperPosition: AnalogOut
 
@@ -69,8 +74,8 @@ class VAV(System):
         self.air_flow_station >> self.damper
 
         # reference the connections
-        self.airInlet >> self.air_flow_station.airInlet
-        self.airOutlet << self.damper.airOutlet
+        self.airInlet > self.air_flow_station.airInlet
+        self.airOutlet > self.damper.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
 

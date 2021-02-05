@@ -9,8 +9,19 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import Fan, AirInletConnectionPoint, AirOutletConnectionPoint, AirConnection
-from bob.hw import HotWaterInlet, HotWaterOutlet
+from bob.air import (
+    Fan,
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
+from bob.hw import (
+    HotWaterInlet,
+    HotWaterOutlet,
+    HotWaterSystemInlet,
+    HotWaterSystemOutlet,
+)
 from bob.signal import AnalogIn, AnalogOut
 
 from header import g36_header
@@ -77,13 +88,13 @@ class HotWaterCoil(Device):
 
 
 class VAV(System):
-    supplyAirInlet: AirInletConnectionPoint
-    returnAirInlet: AirInletConnectionPoint
-    supplyAirOutlet: AirOutletConnectionPoint
+    supplyAirInlet: AirInletSystemConnectionPoint
+    returnAirInlet: AirInletSystemConnectionPoint
+    supplyAirOutlet: AirOutletSystemConnectionPoint
     supplyAirFlow: AnalogIn
     damperPosition: AnalogOut
-    hwInlet: HotWaterInlet
-    hwOutlet: HotWaterOutlet
+    hwInlet: HotWaterSystemInlet
+    hwOutlet: HotWaterSystemOutlet
     hwValvePosition: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:
@@ -92,7 +103,7 @@ class VAV(System):
         # create an air flow station
         self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
         self > self.air_flow_station
-        self.supplyAirInlet >> self.air_flow_station.airInlet
+        self.supplyAirInlet > self.air_flow_station.airInlet
         self.supplyAirFlow = self.air_flow_station.flow
 
         # create a damper
@@ -106,19 +117,15 @@ class VAV(System):
         self.hwInlet >> self.hot_water_coil.hwInlet
         self.hwOutlet << self.hot_water_coil.hwOutlet
         self.hwValvePosition = self.hot_water_coil.valvePosition
-        self.returnAirInlet >> self.hot_water_coil.airInlet
+        self.returnAirInlet > self.hot_water_coil.airInlet
 
         # create a fan
         self.fan = Fan(label=self.label + ".fan")
         self > self.fan
 
-        # connection for merge
-        merged_air = AirConnection(label=self.label + ".merge")
-
-        # link the air pieces together
-        self.damper.airOutlet >> merged_air
-        self.fan >> merged_air
-        merged_air >> self.supplyAirOutlet
+        # merge the outlets together
+        self.supplyAirOutlet > self.damper.airOutlet
+        self.supplyAirOutlet > self.fan.airOutlet
 
 
 # make one

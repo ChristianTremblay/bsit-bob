@@ -9,8 +9,19 @@ from typing import Any
 from bob import bind_model_namespace, dump
 
 from bob.core import System, Device, Part
-from bob.air import Fan, AirInletConnectionPoint, AirOutletConnectionPoint, AirConnection
-from bob.hw import HotWaterInlet, HotWaterOutlet
+from bob.air import (
+    Fan,
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
+from bob.hw import (
+    HotWaterInlet,
+    HotWaterOutlet,
+    HotWaterSystemInlet,
+    HotWaterSystemOutlet,
+)
 from bob.signal import AnalogIn, AnalogOut
 
 from header import g36_header
@@ -77,13 +88,13 @@ class HotWaterCoil(Device):
 
 
 class VAV(System):
-    supplyAirInlet: AirInletConnectionPoint
-    returnAirInlet: AirInletConnectionPoint
-    supplyAirOutlet: AirOutletConnectionPoint
+    supplyAirInlet: AirInletSystemConnectionPoint
+    returnAirInlet: AirInletSystemConnectionPoint
+    supplyAirOutlet: AirOutletSystemConnectionPoint
     supplyAirFlow: AnalogIn
     damperPosition: AnalogOut
-    hwInlet: HotWaterInlet
-    hwOutlet: HotWaterOutlet
+    hwInlet: HotWaterSystemInlet
+    hwOutlet: HotWaterSystemOutlet
     hwValvePosition: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:
@@ -92,7 +103,7 @@ class VAV(System):
         # create an air flow station
         self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
         self > self.air_flow_station
-        self.supplyAirInlet >> self.air_flow_station.airInlet
+        self.supplyAirInlet > self.air_flow_station.airInlet
         self.supplyAirFlow = self.air_flow_station.flow
 
         # create a damper
@@ -107,21 +118,17 @@ class VAV(System):
         # create a hot water coil
         self.hot_water_coil = HotWaterCoil(label=self.label + ".hot_water_coil")
         self > self.hot_water_coil
-        self.hwInlet >> self.hot_water_coil.hwInlet
-        self.hwOutlet << self.hot_water_coil.hwOutlet
+        self.hwInlet > self.hot_water_coil.hwInlet
+        self.hwOutlet > self.hot_water_coil.hwOutlet
         self.hwValvePosition = self.hot_water_coil.valvePosition
 
         # fan output goes to the hot water coil
         self.fan >> self.hot_water_coil
-        self.hot_water_coil.airOutlet >> self.supplyAirOutlet
+        self.supplyAirOutlet > self.hot_water_coil.airOutlet
 
-        # connection for merge
-        merged_air = AirConnection(label=self.label + ".merge")
-
-        # link the air pieces together
-        self.returnAirInlet >> merged_air
-        self.damper >> merged_air
-        merged_air >> self.fan
+        # merge the inlets together
+        self.returnAirInlet > self.damper.airOutlet
+        self.returnAirInlet > self.fan.airInlet
 
 
 # make one

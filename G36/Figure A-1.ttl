@@ -2,7 +2,6 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
-@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -15,8 +14,7 @@
   rdfs:label "figure001" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex:00001 a c223:Connectable,
-        c223:System,
+ex:00001 a c223:System,
         ex:VAV ;
     rdfs:label "A-1" ;
     c223:hasConnectionPoint ex:00002,
@@ -30,24 +28,22 @@ ex:00001 a c223:Connectable,
     ex:airOutlet ex:00003 ;
     ex:damperPosition ex:00012 .
 
-ex:00002 a c223:AirConnectionPoint,
-        c223:AirInletConnectionPoint ;
+ex:00002 a c223:AirInletSystemConnectionPoint,
+        c223:AirSystemConnectionPoint ;
     rdfs:label "A-1.airInlet" ;
-    c223:connectsThroughInternally ex:00014 ;
-    c223:isConnectionPointOf ex:00001 .
+    c223:isConnectionPointOf ex:00001 ;
+    c223:mapsTo ex:00006 .
 
-ex:00003 a c223:AirConnectionPoint,
-        c223:AirOutletConnectionPoint ;
+ex:00003 a c223:AirOutletSystemConnectionPoint,
+        c223:AirSystemConnectionPoint ;
     rdfs:label "A-1.airOutlet" ;
-    c223:connectsThroughInternally ex:00015 ;
-    c223:isConnectionPointOf ex:00001 .
+    c223:isConnectionPointOf ex:00001 ;
+    c223:mapsTo ex:00010 .
 
-ex:00004 a c223:Connectable,
-        d223:Device,
+ex:00004 a c223:Device,
         ex:AirFlowStation ;
     rdfs:label "A-1.air_flow_station" ;
-    c223:connectedThrough ex:00013,
-        ex:00014 ;
+    c223:connectedThrough ex:00013 ;
     c223:hasConnectionPoint ex:00006,
         ex:00007 ;
     c223:hasProperty ex:00005 ;
@@ -64,7 +60,6 @@ ex:00005 a c223:AnalogIn,
 ex:00006 a c223:AirConnectionPoint,
         c223:AirInletConnectionPoint ;
     rdfs:label "A-1.air_flow_station.airInlet" ;
-    c223:connectsThrough ex:00014 ;
     c223:isConnectionPointOf ex:00004 .
 
 ex:00007 a c223:AirConnectionPoint,
@@ -73,12 +68,10 @@ ex:00007 a c223:AirConnectionPoint,
     c223:connectsThrough ex:00013 ;
     c223:isConnectionPointOf ex:00004 .
 
-ex:00008 a c223:Connectable,
-        d223:Device,
+ex:00008 a c223:Device,
         ex:Damper ;
     rdfs:label "A-1.damper" ;
-    c223:connectedThrough ex:00013,
-        ex:00015 ;
+    c223:connectedThrough ex:00013 ;
     c223:hasConnectionPoint ex:00009,
         ex:00010 ;
     c223:hasPart ex:00011 ;
@@ -97,7 +90,6 @@ ex:00009 a c223:AirConnectionPoint,
 ex:00010 a c223:AirConnectionPoint,
         c223:AirOutletConnectionPoint ;
     rdfs:label "A-1.damper.airOutlet" ;
-    c223:connectsThrough ex:00015 ;
     c223:isConnectionPointOf ex:00008 .
 
 ex:00011 a c223:Part,
@@ -118,14 +110,4 @@ ex:00013 a c223:AirConnection ;
         ex:00009 ;
     c223:connectsFrom ex:00004 ;
     c223:connectsTo ex:00008 .
-
-ex:00014 a c223:AirConnection ;
-    c223:connectsAt ex:00006 ;
-    c223:connectsAtInternally ex:00002 ;
-    c223:connectsTo ex:00004 .
-
-ex:00015 a c223:AirConnection ;
-    c223:connectsAt ex:00010 ;
-    c223:connectsAtInternally ex:00003 ;
-    c223:connectsFrom ex:00008 .
 

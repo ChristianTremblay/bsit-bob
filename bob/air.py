@@ -6,6 +6,9 @@ from .core import (
     ConnectionPoint,
     InletConnectionPoint,
     OutletConnectionPoint,
+    SystemConnectionPoint,
+    SystemInletConnectionPoint,
+    SystemOutletConnectionPoint,
     Device,
 )
 from .signal import AnalogIn, AnalogOut
@@ -31,6 +34,22 @@ class AirInletConnectionPoint(AirConnectionPoint, InletConnectionPoint):
 
 
 class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
+    pass
+
+
+class AirSystemConnectionPoint(Air, SystemConnectionPoint):
+    pass
+
+
+class AirInletSystemConnectionPoint(
+    AirSystemConnectionPoint, SystemInletConnectionPoint
+):
+    pass
+
+
+class AirOutletSystemConnectionPoint(
+    AirSystemConnectionPoint, SystemOutletConnectionPoint
+):
     pass
 
 

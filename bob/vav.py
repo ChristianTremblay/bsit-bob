@@ -1,17 +1,21 @@
 from typing import Any
 
-from .core import c223, System, Device
-from .air import AirInletConnectionPoint, AirOutletConnectionPoint, AirFlowStation, Damper
+from .core import c223, System
+from .air import (
+    AirFlowStation,
+    Damper,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
 from .signal import AnalogIn, AnalogOut
 from .hw import HotWaterCoil, HotWaterValve
-from .signal import AnalogOut
 
 __namespace__ = c223
 
 
 class VAV1(System):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
     airFlow: AnalogIn
     damperPosition: AnalogOut
 
@@ -30,15 +34,15 @@ class VAV1(System):
         self.air_flow_station >> self.damper
 
         # reference the connections
-        self.airInlet >> self.air_flow_station.airInlet
-        self.airOutlet << self.damper.airOutlet
+        self.airInlet > self.air_flow_station.airInlet
+        self.airOutlet < self.damper.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
 
 
 class VAV2(System):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
     airFlow: AnalogIn
     damperPosition: AnalogOut
     hwValvePosition: AnalogOut
@@ -70,8 +74,8 @@ class VAV2(System):
         self.hot_water_valve >> self.hot_water_coil
 
         # reference the connections
-        self.airInlet >> self.air_flow_station.airInlet
-        self.airOutlet << self.hot_water_coil.airOutlet
+        self.airInlet > self.air_flow_station.airInlet
+        self.airOutlet < self.hot_water_coil.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
         self.hwValvePosition = self.hot_water_valve.position

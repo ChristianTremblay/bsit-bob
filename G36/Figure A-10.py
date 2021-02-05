@@ -11,6 +11,8 @@ from bob.air import (
     AirConnection,
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
     Damper,
     Fan,
     Filter,
@@ -27,22 +29,19 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class AHU(System):
-    outsideAirInlet: AirInletConnectionPoint
-    supplyAirOutlet: AirOutletConnectionPoint
-    returnAirInlet: AirInletConnectionPoint
-    exhaustAirOutlet: AirOutletConnectionPoint
+    outsideAirInlet: AirInletSystemConnectionPoint
+    supplyAirOutlet: AirOutletSystemConnectionPoint
+    returnAirInlet: AirInletSystemConnectionPoint
+    exhaustAirOutlet: AirOutletSystemConnectionPoint
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        outside_air = AirConnection(label=self.label + ".outside_air")
-        self.outsideAirInlet >> outside_air
-
         min_oa_damper = Damper(label=self.label + ".min_oa_damper")
-        outside_air >> min_oa_damper.airInlet
+        self.outsideAirInlet > min_oa_damper.airInlet
 
         economizer_oa_damper = Damper(label=self.label + ".economizer_oa_damper")
-        outside_air >> economizer_oa_damper.airInlet
+        self.outsideAirInlet > economizer_oa_damper.airInlet
 
         mixed_air = AirConnection(label=self.label + ".mixed_air")
         min_oa_damper >> mixed_air
@@ -60,20 +59,20 @@ class AHU(System):
         supply_fan = Fan(label=self.label + ".supply_fan")
         chilled_water_coil >> supply_fan
 
-        # return air goes to the mixed air damper or the fan
-        return_air = AirConnection(label=self.label + ".return_air")
-        self.returnAirInlet >> return_air
-
-        return_fan = Fan(label=self.label + ".return_fan")
-        return_air >> return_fan
+        relief_fan = Fan(label=self.label + ".relief_fan")
+        self.returnAirInlet > relief_fan.airInlet
 
         mixed_air_damper = Damper(label=self.label + ".mixed_air_damper")
-        return_air >> mixed_air_damper >> mixed_air
+        self.returnAirInlet > mixed_air_damper.airInlet
+
+        # output of the damper is mixed air
+        mixed_air_damper >> mixed_air
 
         # make the relief air damper and connect it
         relief_air_damper = Damper(label=self.label + ".relief_air_damper")
-        return_fan >> relief_air_damper
-        relief_air_damper.airOutlet >> self.exhaustAirOutlet
+        relief_fan >> relief_air_damper
+
+        self.exhaustAirOutlet > relief_air_damper.airOutlet
 
 # make one
 ahu = AHU(label="A-10")

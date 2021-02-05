@@ -11,6 +11,8 @@ from bob.air import (
     AirConnection,
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
     Damper,
     Fan,
     Filter,
@@ -27,25 +29,22 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 class AHU(System):
-    outsideAirInlet: AirInletConnectionPoint
-    supplyAirOutlet: AirOutletConnectionPoint
-    returnAirInlet: AirInletConnectionPoint
-    exhaustAirOutlet: AirOutletConnectionPoint
+    outsideAirInlet: AirInletSystemConnectionPoint
+    supplyAirOutlet: AirOutletSystemConnectionPoint
+    returnAirInlet: AirInletSystemConnectionPoint
+    exhaustAirOutlet: AirOutletSystemConnectionPoint
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        outside_air = AirConnection(label=self.label + ".outside_air")
-        self.outsideAirInlet >> outside_air
-
         min_oa_damper = Damper(label=self.label + ".min_oa_damper")
-        outside_air >> min_oa_damper.airInlet
+        self.outsideAirInlet > min_oa_damper.airInlet
 
         outside_air_afms = AirFlowStation(label=self.label + ".outside_air_afms")
         min_oa_damper >> outside_air_afms
 
         economizer_oa_damper = Damper(label=self.label + ".economizer_oa_damper")
-        outside_air >> economizer_oa_damper.airInlet
+        self.outsideAirInlet > economizer_oa_damper.airInlet
 
         mixed_air = AirConnection(label=self.label + ".mixed_air")
         outside_air_afms >> mixed_air
@@ -62,9 +61,10 @@ class AHU(System):
 
         supply_fan = Fan(label=self.label + ".supply_fan")
         chilled_water_coil >> supply_fan
+        self.supplyAirOutlet > supply_fan.airOutlet
 
         return_fan = Fan(label=self.label + ".return_fan")
-        self.returnAirInlet >> return_fan.airInlet
+        self.returnAirInlet > return_fan.airInlet
 
         # return air goes to two dampers
         return_air = AirConnection(label=self.label + ".return_air")
@@ -72,7 +72,7 @@ class AHU(System):
         # make the exhaust air damper and connect it
         exhaust_air_damper = Damper(label=self.label + ".exhaust_air_damper")
         return_air >> exhaust_air_damper
-        exhaust_air_damper.airOutlet >> self.exhaustAirOutlet
+        self.exhaustAirOutlet > exhaust_air_damper.airOutlet
 
         # the return air damper gets its input from the return fan and goes to
         # into the mixed air
