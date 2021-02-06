@@ -1744,6 +1744,9 @@ class System(Node):
             new_connection << from_connection_point
             new_connection >> to_connection_point
 
+        elif isinstance(other, Connection):
+            other << self
+
         else:
             raise NotImplementedError(f"from {self} to {other}")
 
@@ -1820,6 +1823,9 @@ class System(Node):
             # link it up
             new_connection << from_connection_point
             new_connection >> to_connection_point
+
+        elif isinstance(other, Connection):
+            other >> self
 
         else:
             raise NotImplementedError(f"from {other} to {self}")
