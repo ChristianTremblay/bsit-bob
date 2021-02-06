@@ -1,0 +1,253 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/sample/sample009
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix ex: <urn:ex/> .
+@prefix ex: <urn:ex/sample009/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/1.0/data/sample009>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample009> ;
+  rdfs:label "sample009" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+ex:00001 a c223:System,
+        ex:SystemIn1 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00002 ;
+    ex:cp ex:00002 .
+
+ex:00002 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s1.cp" ;
+    c223:isConnectionPointOf ex:00001 .
+
+ex:00003 a c223:System,
+        ex:SystemOut1 ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00004 ;
+    ex:cp ex:00004 .
+
+ex:00004 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp" ;
+    c223:isConnectionPointOf ex:00003 .
+
+ex:00005 a c223:System,
+        ex:SystemIn1 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00006 ;
+    ex:cp ex:00006 .
+
+ex:00006 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s1.cp" ;
+    c223:isConnectionPointOf ex:00005 .
+
+ex:00007 a c223:System,
+        ex:SystemOut1 ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00008 ;
+    ex:cp ex:00008 .
+
+ex:00008 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp" ;
+    c223:isConnectionPointOf ex:00007 .
+
+ex:00009 a c223:System,
+        ex:SystemIn1 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00010 ;
+    ex:cp ex:00010 .
+
+ex:00010 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s1.cp" ;
+    c223:isConnectionPointOf ex:00009 .
+
+ex:00011 a c223:System,
+        ex:SystemOut1 ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00012 ;
+    ex:cp ex:00012 .
+
+ex:00012 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp" ;
+    c223:isConnectionPointOf ex:00011 .
+
+ex:00013 a c223:Connection .
+
+ex:00014 a c223:System,
+        ex:SystemIn1 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00015 ;
+    ex:cp ex:00015 .
+
+ex:00015 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s1.cp" ;
+    c223:isConnectionPointOf ex:00014 .
+
+ex:00016 a c223:System,
+        ex:SystemOut1 ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00017 ;
+    ex:cp ex:00017 .
+
+ex:00017 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp" ;
+    c223:isConnectionPointOf ex:00016 .
+
+ex:00018 a c223:System,
+        ex:SystemIn1 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00019 ;
+    ex:cp ex:00019 .
+
+ex:00019 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s1.cp" ;
+    c223:isConnectionPointOf ex:00018 .
+
+ex:00020 a c223:System,
+        ex:SystemOut1 ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00021 ;
+    ex:cp ex:00021 .
+
+ex:00021 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp" ;
+    c223:isConnectionPointOf ex:00020 .
+
+ex:00022 a c223:Connection .
+
+ex:00023 a c223:System,
+        ex:SystemIn2 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00024,
+        ex:00025 ;
+    ex:cp1 ex:00024 ;
+    ex:cp2 ex:00025 .
+
+ex:00024 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s1.cp1" ;
+    c223:isConnectionPointOf ex:00023 .
+
+ex:00025 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s1.cp2" ;
+    c223:isConnectionPointOf ex:00023 .
+
+ex:00026 a c223:System,
+        ex:SystemOut1 ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00027 ;
+    ex:cp ex:00027 .
+
+ex:00027 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp" ;
+    c223:isConnectionPointOf ex:00026 .
+
+ex:00028 a c223:System,
+        ex:SystemIn1 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00029 ;
+    ex:cp ex:00029 .
+
+ex:00029 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s1.cp" ;
+    c223:isConnectionPointOf ex:00028 .
+
+ex:00030 a c223:System,
+        ex:SystemOut2 ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00031,
+        ex:00032 ;
+    ex:cp1 ex:00031 ;
+    ex:cp2 ex:00032 .
+
+ex:00031 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp1" ;
+    c223:isConnectionPointOf ex:00030 .
+
+ex:00032 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp2" ;
+    c223:isConnectionPointOf ex:00030 .
+
+ex:00033 a c223:System,
+        ex:SystemOut1 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00034 ;
+    ex:cp ex:00034 .
+
+ex:00034 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s1.cp" ;
+    c223:isConnectionPointOf ex:00033 .
+
+ex:00035 a c223:System,
+        ex:SystemInOut ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00036,
+        ex:00037 ;
+    ex:cp1 ex:00036 ;
+    ex:cp2 ex:00037 .
+
+ex:00036 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s2.cp1" ;
+    c223:isConnectionPointOf ex:00035 .
+
+ex:00037 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp2" ;
+    c223:isConnectionPointOf ex:00035 .
+
+ex:00038 a c223:System,
+        ex:SystemIn1 ;
+    rdfs:label "s3" ;
+    c223:hasConnectionPoint ex:00039 ;
+    ex:cp ex:00039 .
+
+ex:00039 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s3.cp" ;
+    c223:isConnectionPointOf ex:00038 .
+
+ex:00040 a c223:Connection .
+
+ex:00041 a c223:Connection .
+
+ex:00042 a c223:System,
+        ex:SystemOut1 ;
+    rdfs:label "s1" ;
+    c223:hasConnectionPoint ex:00043 ;
+    ex:cp ex:00043 .
+
+ex:00043 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s1.cp" ;
+    c223:isConnectionPointOf ex:00042 .
+
+ex:00044 a c223:System,
+        ex:SystemInOut ;
+    rdfs:label "s2" ;
+    c223:hasConnectionPoint ex:00045,
+        ex:00046 ;
+    ex:cp1 ex:00045 ;
+    ex:cp2 ex:00046 .
+
+ex:00045 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s2.cp1" ;
+    c223:isConnectionPointOf ex:00044 .
+
+ex:00046 a c223:SystemOutletConnectionPoint ;
+    rdfs:label "s2.cp2" ;
+    c223:isConnectionPointOf ex:00044 .
+
+ex:00047 a c223:System,
+        ex:SystemIn1 ;
+    rdfs:label "s3" ;
+    c223:hasConnectionPoint ex:00048 ;
+    ex:cp ex:00048 .
+
+ex:00048 a c223:SystemInletConnectionPoint ;
+    rdfs:label "s3.cp" ;
+    c223:isConnectionPointOf ex:00047 .
+
+ex:00049 a c223:Connection .
+
+ex:00050 a c223:Connection .
+

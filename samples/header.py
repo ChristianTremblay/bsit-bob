@@ -1,8 +1,6 @@
 import sys
 
-from typing import TextIO
-
-SAMPLE_HEADER = """# baseURI: http://data.ashrae.org/standard223/1.0/data/{sample_name}
+SAMPLE_HEADER = """# baseURI: http://data.ashrae.org/standard223/1.0/sample/{sample_name}
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix ex: <urn:ex/> .
@@ -13,13 +11,13 @@ SAMPLE_HEADER = """# baseURI: http://data.ashrae.org/standard223/1.0/data/{sampl
 
 <http://data.ashrae.org/standard223/1.0/data/{sample_name}>
   a owl:Ontology ;
-  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/data/{sample_name}> ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/{sample_name}> ;
   rdfs:label "{sample_name}" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 """
 
 
-def sample_header(sample_name: str, file: TextIO = sys.stdout):
+def sample_header(sample_name):
     """Prints the sample header."""
-    file.write(SAMPLE_HEADER.format(sample_name=sample_name))
+    sys.stdout.write(SAMPLE_HEADER.format(sample_name=sample_name))

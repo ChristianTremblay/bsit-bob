@@ -1,9 +1,12 @@
+from pathlib import Path
+
 from bob import bind_model_namespace, Device, Part, dump, clear
 
-from samples import sample_header
+from header import sample_header
 
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TestDevice(Device):
@@ -40,18 +43,6 @@ p2 = Part2()
 
 p1 < p2 < d
 
-# device 5 is a subdevice of device 4
-d4 = TestDevice(label="Test Device 4")
-d5 = TestDevice(label="Test Device 5")
-
-d4 > d5
-
-# device 7 is a subdevice of device 6
-d6 = TestDevice(label="Test Device 6")
-d7 = TestDevice(label="Test Device 7")
-
-d7 < d6
-
 # dump the result
-sample_header("sample007")
+sample_header(model_name)
 dump()

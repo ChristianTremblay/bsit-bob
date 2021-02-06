@@ -1,32 +1,43 @@
+from pathlib import Path
+
 import logging
-from bob.core import bind_model_namespace, System, InletConnectionPoint, OutletConnectionPoint, dump, clear
+from bob.core import (
+    bind_model_namespace,
+    System,
+    SystemInletConnectionPoint,
+    SystemOutletConnectionPoint,
+    dump,
+    clear,
+)
 
-from samples import sample_header
+from header import sample_header
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class SystemIn1(System):
-    cp: InletConnectionPoint
+    cp: SystemInletConnectionPoint
 
 
 class SystemIn2(System):
-    cp1: InletConnectionPoint
-    cp2: InletConnectionPoint
+    cp1: SystemInletConnectionPoint
+    cp2: SystemInletConnectionPoint
 
 
 class SystemOut1(System):
-    cp: OutletConnectionPoint
+    cp: SystemOutletConnectionPoint
 
 
 class SystemOut2(System):
-    cp1: OutletConnectionPoint
-    cp2: OutletConnectionPoint
+    cp1: SystemOutletConnectionPoint
+    cp2: SystemOutletConnectionPoint
 
 
 class SystemInOut(System):
-    cp1: InletConnectionPoint
-    cp2: OutletConnectionPoint
+    cp1: SystemInletConnectionPoint
+    cp2: SystemOutletConnectionPoint
 
 
 # two independant systems
@@ -40,7 +51,7 @@ s2 = SystemOut1(label="s2")
 try:
     s1.cp >> s2.cp
     raise AssertionError("failed to raise runtime error")
-except RuntimeError as err:
+except TypeError as err:
     logging.info(f"caught: {err}\n")
 
 # s1 is connected from s2 (correct direction) via connection points
@@ -100,5 +111,5 @@ s3 = SystemIn1(label="s3")
 s3 << s2 << s1
 
 # dump the result
-sample_header("sample009")
+sample_header(model_name)
 dump()

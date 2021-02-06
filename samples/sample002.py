@@ -1,9 +1,13 @@
+from pathlib import Path
+
 from datetime import datetime
 from bob import bind_model_namespace, Node, Property, Value, dump, clear
 
-from samples import sample_header
+from header import sample_header
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class Test(Node):
@@ -42,5 +46,5 @@ datetime_value = Value(datetime(2021, 1, 1))
 timestamp_value = Value(hasSimpleValue=22.5, hasTimestamp=datetime(2021, 1, 1))
 
 # dump the result
-sample_header("sample002")
+sample_header(model_name)
 dump()

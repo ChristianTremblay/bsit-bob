@@ -1,11 +1,15 @@
+from pathlib import Path
+
 from bob import bind_model_namespace, dump
 from bob.air import AirConnection, Zone
 from bob.vav import VAV2
 
-from samples import sample_header
+from header import sample_header
 
-# instances will come from this namespace, otherwise they would be BNode's
-bind_model_namespace("ex", "urn:ex/")
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+
 
 # create Zone-1 and its VAV connected together
 zone1 = Zone(label="Zone-1")
@@ -28,5 +32,5 @@ zone1 >> return_air
 zone2 >> return_air
 
 # dump the result
-sample_header("sample005")
+sample_header(model_name)
 dump()

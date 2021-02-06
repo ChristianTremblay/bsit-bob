@@ -1,13 +1,17 @@
 import logging
-from bob.core import bind_model_namespace, System, ConnectionPoint, dump, clear
+from pathlib import Path
 
-from samples import sample_header
+from bob.core import bind_model_namespace, System, SystemConnectionPoint, dump, clear
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+from header import sample_header
+
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TestSystem(System):
-    cp: ConnectionPoint
+    cp: SystemConnectionPoint
 
 
 # two independant systems
@@ -49,5 +53,5 @@ except RuntimeError as err:
     logging.info(f"caught: {err}\n")
 
 # dump the result
-sample_header("sample008")
+sample_header(model_name)
 dump()

@@ -1,10 +1,13 @@
+from pathlib import Path
+
 from bob import bind_model_namespace, Device, QuantifiableProperty, Value, dump, clear
 from bob.core import qudt, quantitykind
 
-from samples import sample_header
+from header import sample_header
 
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TemperatureValue(Value):
@@ -39,5 +42,5 @@ d2.add_property(TemperatureProperty(90.5))
 d3 = TestDevice2(label="Test Device 3", hasTemp=100.5)
 
 # dump the result
-sample_header("sample001")
+sample_header(model_name)
 dump()
