@@ -56,29 +56,11 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 
 # options
 MANDITORY_LABEL = True
-EXPLICIT_CORE_TYPES = True
 
 # globals
-g = Graph()
+data_graph = Graph()
+schema_graph = Graph()
 _next_node = 1
-
-
-def g_add(triple: Tuple[Any, Any, Any]) -> None:
-    """
-    Add a triple to the graph, checking the predicate to see if it should
-    be included or excluded.
-    """
-    subj, pred, obj = triple
-
-    namespace, namespace_uriref, suffix = g.namespace_manager.compute_qname(pred)
-    for test_name in (namespace + ":" + suffix, namespace + ":*", "*"):
-        if test_name in include_predicates:
-            break
-        if test_name in exclude_predicates:
-            return
-
-    # passes the tests
-    g.add(triple)
 
 
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
@@ -93,10 +75,11 @@ _annotation_forwards["Literal"] = Literal
 
 def bind_namespace(prefix: str, uri: str) -> Namespace:
     """
-    Create a Namespace and bind a prefix to it in the graph.
+    Create a Namespace and bind a prefix to it in the graphs.
     """
     namespace = Namespace(uri)
-    g.namespace_manager.bind(prefix, URIRef(uri))
+    data_graph.namespace_manager.bind(prefix, URIRef(uri))
+    schema_graph.namespace_manager.bind(prefix, URIRef(uri))
     return namespace
 
 
@@ -116,6 +99,44 @@ __namespace__ = c223
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
 model_namespace = None
+
+
+def data_graph_add(triple: Tuple[Any, Any, Any]) -> None:
+    """
+    Add a triple to the data graph, checking the predicate to see if it should
+    be included or excluded.
+    """
+    global data_graph
+    subj, pred, obj = triple
+
+    namespace, namespace_uriref, suffix = data_graph.namespace_manager.compute_qname(
+        pred
+    )
+    for test_name in (namespace + ":" + suffix, namespace + ":*", "*"):
+        if test_name in include_predicates:
+            break
+        if test_name in exclude_predicates:
+            return
+
+    # passes the tests
+    data_graph.add(triple)
+
+
+def schema_graph_add(triple: Tuple[Any, Any, Any]) -> None:
+    """
+    Add a triple to the schema graph for statements about things in the
+    model being build (like subtypes of a Device) but not about things
+    in the c223 namespace.
+    """
+    global schema_graph
+    subj, pred, obj = triple
+
+    # exclude the schema content in the c223 namespace by default
+    if subj.startswith(c223):
+        return
+
+    # passes the tests
+    schema_graph.add(triple)
 
 
 def bind_model_namespace(prefix: str, uri: str) -> Namespace:
@@ -305,6 +326,42 @@ class NodeMetaclass(type):
         if "node_type" not in attributedict:
             metaclass.node_type = _namespace[clsname]  # type: ignore[attr-defined]
 
+        # this is a class, and a subclass of the super classes
+        schema_graph_add((metaclass.node_type, RDF.type, RDFS.Class))
+        for supercls in superclasses:
+            if issubclass(supercls, Node):
+                schema_graph_add(
+                    (metaclass.node_type, RDFS.subClassOf, supercls.node_type)
+                )
+
+        # attributes are properties
+        for attr in attr_names:
+            schema_graph_add((_attr_uriref[attr], RDF.type, RDF.Property))
+
+            # check for automatic sub-properties
+            if all(
+                _annotation_forwards.get(cname, None)
+                for cname in (
+                    "Property",
+                    "ConnectionPoint",
+                    "SystemConnectionPoint",
+                )
+            ):
+                if attr in _nodes:
+                    attr_type = _nodes[attr]
+                    if issubclass(attr_type, Property):
+                        schema_graph_add(
+                            (_attr_uriref[attr], RDFS.subPropertyOf, c223.hasProperty)
+                        )
+                    if issubclass(attr_type, (ConnectionPoint, SystemConnectionPoint)):
+                        schema_graph_add(
+                            (
+                                _attr_uriref[attr],
+                                RDFS.subPropertyOf,
+                                c223.hasConnectionPoint,
+                            )
+                        )
+
         # save the reference
         _annotation_forwards[metaclass.__name__] = metaclass
 
@@ -340,10 +397,10 @@ class Node(metaclass=NodeMetaclass):
 
         self.label = label or getattr(self, "label", "")
         if self.label:
-            g_add((self.node, RDFS.label, Literal(self.label)))
+            data_graph_add((self.node, RDFS.label, Literal(self.label)))
 
         if hasattr(self, "node_type"):
-            g_add((self.node, RDF.type, self.node_type))
+            data_graph_add((self.node, RDF.type, self.node_type))
 
         for attr, attr_type in self._nodes.items():
             super().__setattr__(attr, None)
@@ -398,14 +455,11 @@ class Node(metaclass=NodeMetaclass):
             if not isinstance(value, node_class):
                 value = node_class(value)
 
-            # break the reference to the current child node
-            # g.remove((self.node, self._namespace[attr], None))
-
             # add the link(s)
             if isinstance(value, (URIRef, Literal)):
-                g_add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+                data_graph_add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
             if isinstance(value, Node):
-                g_add((self.node, self._attr_uriref[attr], value.node))  # type: ignore[attr-defined]
+                data_graph_add((self.node, self._attr_uriref[attr], value.node))  # type: ignore[attr-defined]
 
             # if the value is a property, link property to the node.  The
             # Value has a property called 'isValueOf' that is excluded.
@@ -425,7 +479,7 @@ class Node(metaclass=NodeMetaclass):
                     raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
 
             # add the literal
-            g_add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+            data_graph_add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
 
         # carry on
         super().__setattr__(attr, value)
@@ -439,8 +493,8 @@ class Node(metaclass=NodeMetaclass):
         assert isinstance(prop, Property)
 
         # link the two together
-        g_add((self.node, c223.hasProperty, prop.node))
-        g_add((prop.node, c223.isPropertyOf, self.node))
+        data_graph_add((self.node, c223.hasProperty, prop.node))
+        data_graph_add((prop.node, c223.isPropertyOf, self.node))
 
         return prop
 
@@ -460,16 +514,15 @@ class Connection(Node, ConnectionType):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        if EXPLICIT_CORE_TYPES:
-            if self.connection_type:
-                connection_type = self.connection_type + "Connection"
-                g_add(
-                    (
-                        self.node,
-                        RDF.type,
-                        self._namespace[connection_type],
-                    )
+        if self.connection_type:
+            connection_type = self.connection_type + "Connection"
+            data_graph_add(
+                (
+                    self.node,
+                    RDF.type,
+                    self._namespace[connection_type],
                 )
+            )
 
     def __rshift__(
         self, other: Union[ConnectionPoint, SystemConnectionPoint, Device, System]
@@ -549,18 +602,18 @@ class Connection(Node, ConnectionType):
         # loop around and link them up
         for connection_point in unbound_connection_points:
             # link connection to connection point
-            g_add((self.node, c223.connectsAt, connection_point.node))
+            data_graph_add((self.node, c223.connectsAt, connection_point.node))
             connection_point.connectsThrough = self
 
             # link the connection to the device/system of the connection point
-            g_add(
+            data_graph_add(
                 (
                     connection_point.isConnectionPointOf.node,
                     c223.connectedThrough,
                     self.node,
                 )
             )
-            g_add(
+            data_graph_add(
                 (self.node, c223.connectsTo, connection_point.isConnectionPointOf.node)
             )
 
@@ -645,18 +698,18 @@ class Connection(Node, ConnectionType):
         # loop around and link them up
         for connection_point in unbound_connection_points:
             # link connection to connection point and back
-            g_add((self.node, c223.connectsAt, connection_point.node))
+            data_graph_add((self.node, c223.connectsAt, connection_point.node))
             connection_point.connectsThrough = self
 
             # link the connection to the "owner" of the connection point
-            g_add(
+            data_graph_add(
                 (
                     connection_point.isConnectionPointOf.node,
                     c223.connectedThrough,
                     self.node,
                 )
             )
-            g_add(
+            data_graph_add(
                 (
                     self.node,
                     c223.connectsFrom,
@@ -677,18 +730,17 @@ class ConnectionPoint(Node):
     def __init__(self, device: Device, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        if EXPLICIT_CORE_TYPES:
-            if isinstance(self, ConnectionType) and self.connection_type:
-                connection_point_type = self.connection_type + "ConnectionPoint"
-                g_add(
-                    (
-                        self.node,
-                        RDF.type,
-                        self._namespace[connection_point_type],
-                    )
+        if isinstance(self, ConnectionType) and self.connection_type:
+            connection_point_type = self.connection_type + "ConnectionPoint"
+            data_graph_add(
+                (
+                    self.node,
+                    RDF.type,
+                    self._namespace[connection_point_type],
                 )
+            )
 
-        g_add((device.node, c223.hasConnectionPoint, self.node))
+        data_graph_add((device.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = device
 
         # this is one of the connection points of the device
@@ -720,17 +772,17 @@ class ConnectionPoint(Node):
 
             # link connection to connection point and back
             self.connectsThrough = other
-            g_add((other.node, c223.connectsAt, self.node))
+            data_graph_add((other.node, c223.connectsAt, self.node))
 
             # link the connection points "owner" to the connection
-            g_add(
+            data_graph_add(
                 (
                     self.isConnectionPointOf.node,
                     c223.connectedThrough,
                     other.node,
                 )
             )
-            g_add(
+            data_graph_add(
                 (
                     other.node,
                     c223.connectsFrom,
@@ -847,17 +899,17 @@ class ConnectionPoint(Node):
 
             # link connection to connection point and back
             self.connectsThrough = other
-            g_add((other.node, c223.connectsAt, self.node))
+            data_graph_add((other.node, c223.connectsAt, self.node))
 
             # link the connection points "owner" to the connection
-            g_add(
+            data_graph_add(
                 (
                     self.isConnectionPointOf.node,
                     c223.connectedThrough,
                     other.node,
                 )
             )
-            g_add(
+            data_graph_add(
                 (
                     other.node,
                     c223.connectsTo,
@@ -976,8 +1028,7 @@ class Device(Node):
                 raise RuntimeError("empty label")
 
         # <self> a Device
-        if EXPLICIT_CORE_TYPES:
-            g_add((self.node, RDF.type, c223.Device))
+        data_graph_add((self.node, RDF.type, c223.Device))
 
         # merge the annotations
         merged_annotations = {}
@@ -1077,8 +1128,8 @@ class Device(Node):
         if not isinstance(other, Part):
             raise TypeError("part expected")
 
-        g_add((self.node, c223.contains, other.node))
-        g_add((other.node, c223.isContainedIn, self.node))
+        data_graph_add((self.node, c223.contains, other.node))
+        data_graph_add((other.node, c223.isContainedIn, self.node))
 
         return self
 
@@ -1090,8 +1141,8 @@ class Device(Node):
         if not isinstance(other, System):
             raise TypeError("system expected")
 
-        g_add((self.node, c223.isContainedIn, other.node))
-        g_add((other.node, c223.contains, self.node))
+        data_graph_add((self.node, c223.isContainedIn, other.node))
+        data_graph_add((other.node, c223.contains, self.node))
 
         return other
 
@@ -1324,18 +1375,17 @@ class SystemConnectionPoint(Node):
     def __init__(self, system: System, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        if EXPLICIT_CORE_TYPES:
-            if isinstance(self, ConnectionType) and self.connection_type:
-                connection_point_type = self.connection_type + "SystemConnectionPoint"
-                g_add(
-                    (
-                        self.node,
-                        RDF.type,
-                        self._namespace[connection_point_type],
-                    )
+        if isinstance(self, ConnectionType) and self.connection_type:
+            connection_point_type = self.connection_type + "SystemConnectionPoint"
+            data_graph_add(
+                (
+                    self.node,
+                    RDF.type,
+                    self._namespace[connection_point_type],
                 )
+            )
 
-        g_add((system.node, c223.hasConnectionPoint, self.node))
+        data_graph_add((system.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = system
 
         # this is one of the connection points of the connectable
@@ -1374,7 +1424,7 @@ class SystemConnectionPoint(Node):
                 f"already connected: {other} connects through {other.connectsThrough}"
             )
 
-        g_add((self.node, c223.mapsTo, other.node))
+        data_graph_add((self.node, c223.mapsTo, other.node))
         self._maps_to.add(other)
 
         return self
@@ -1409,7 +1459,7 @@ class SystemConnectionPoint(Node):
                 f"already connected: {other} connects through {other.connectsThrough}"
             )
 
-        g_add((self.node, c223.mapsTo, other.node))
+        data_graph_add((self.node, c223.mapsTo, other.node))
         self._maps_to.add(other)
 
         return other
@@ -1543,17 +1593,17 @@ class SystemConnectionPoint(Node):
 
             # link connection to connection point and back
             self.connectsThrough = other
-            g_add((other.node, c223.connectsAt, self.node))
+            data_graph_add((other.node, c223.connectsAt, self.node))
 
             # link the connection points "owner" to the connection
-            g_add(
+            data_graph_add(
                 (
                     self.isConnectionPointOf.node,
                     c223.connectedThrough,
                     other.node,
                 )
             )
-            g_add(
+            data_graph_add(
                 (
                     other.node,
                     c223.connectsTo,
@@ -1662,8 +1712,7 @@ class System(Node):
                 raise RuntimeError("empty label")
 
         # <self> a System
-        if EXPLICIT_CORE_TYPES:
-            g_add((self.node, RDF.type, c223.System))
+        data_graph_add((self.node, RDF.type, c223.System))
 
         # merge the annotations
         merged_annotations = {}
@@ -1775,8 +1824,8 @@ class System(Node):
         logging.debug(f"__gt__ {self} {other}")
 
         if isinstance(other, (Device, System)):
-            g_add((self.node, c223.contains, other.node))
-            g_add((other.node, c223.isContainedIn, self.node))
+            data_graph_add((self.node, c223.contains, other.node))
+            data_graph_add((other.node, c223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1791,8 +1840,8 @@ class System(Node):
         logging.debug(f"__lt__ {self} {other}")
 
         if isinstance(other, System):
-            g_add((self.node, c223.isContainedIn, other.node))
-            g_add((other.node, c223.contains, self.node))
+            data_graph_add((self.node, c223.isContainedIn, other.node))
+            data_graph_add((other.node, c223.contains, self.node))
         else:
             raise TypeError("system expected")
 
@@ -1964,8 +2013,7 @@ class Part(Node):
         super().__init__(**kwargs)
 
         # <self> a Part
-        if EXPLICIT_CORE_TYPES:
-            g_add((self.node, RDF.type, c223.Part))
+        data_graph_add((self.node, RDF.type, c223.Part))
 
     def __gt__(self, other: Node) -> Node:
         """self > other
@@ -1976,8 +2024,8 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g_add((self.node, c223.contains, other.node))
-        g_add((other.node, c223.isContainedIn, self.node))
+        data_graph_add((self.node, c223.contains, other.node))
+        data_graph_add((other.node, c223.isContainedIn, self.node))
         return self
 
     def __lt__(self, other: Node) -> Node:
@@ -1988,8 +2036,8 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g_add((self.node, c223.isContainedIn, other.node))
-        g_add((other.node, c223.contains, self.node))
+        data_graph_add((self.node, c223.isContainedIn, other.node))
+        data_graph_add((other.node, c223.contains, self.node))
         return other
 
 
@@ -2033,8 +2081,7 @@ class Value(Node):
         super().__init__(**kwargs)
 
         # <self> a Value
-        if EXPLICIT_CORE_TYPES:
-            g_add((self.node, RDF.type, c223.Value))
+        data_graph_add((self.node, RDF.type, c223.Value))
 
 
 class Property(Node):
@@ -2060,8 +2107,7 @@ class Property(Node):
         super().__init__(**kwargs)
 
         # <self> a Property
-        if EXPLICIT_CORE_TYPES:
-            g_add((self.node, RDF.type, c223.Property))
+        data_graph_add((self.node, RDF.type, c223.Property))
 
         # if there is an initial value, add/create and link to it
         if init_value is not None:
@@ -2077,7 +2123,7 @@ class Property(Node):
         assert isinstance(value, Value)
 
         # link the two together
-        g_add((self.node, c223.hasValue, value.node))
+        data_graph_add((self.node, c223.hasValue, value.node))
         value.isValueOf = self
 
         return value
@@ -2110,8 +2156,7 @@ class QuantifiableProperty(Property):
         super().__init__(*args, **kwargs)
 
         # <self> a QuantifiableProperty
-        if EXPLICIT_CORE_TYPES:
-            g_add((self.node, RDF.type, c223.QuantifiableProperty))
+        data_graph_add((self.node, RDF.type, c223.QuantifiableProperty))
 
 
 class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
@@ -2125,8 +2170,7 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
         super().__init__(*args, **kwargs)
 
         # <self> a QuantifiableActuatableProperty
-        if EXPLICIT_CORE_TYPES:
-            g_add((self.node, RDF.type, c223.QuantifiableActuatableProperty))
+        data_graph_add((self.node, RDF.type, c223.QuantifiableActuatableProperty))
 
 
 class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
@@ -2140,14 +2184,15 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
         super().__init__(*args, **kwargs)
 
         # <self> a QuantifiableObservableProperty
-        if EXPLICIT_CORE_TYPES:
-            g_add((self.node, RDF.type, c223.QuantifiableObservableProperty))
+        data_graph_add((self.node, RDF.type, c223.QuantifiableObservableProperty))
 
 
-def dump(file: TextIO = sys.stdout, format: str = "turtle") -> None:
-    file.write(g.serialize(format=format).decode())
+def dump(
+    graph: Graph = data_graph, file: TextIO = sys.stdout, format: str = "turtle"
+) -> None:
+    file.write(graph.serialize(format=format).decode())
 
 
-def clear() -> None:
+def clear(graph: Graph = data_graph) -> None:
     """Remove all the triples from the graph."""
-    g.remove((None, None, None))
+    graph.remove((None, None, None))
