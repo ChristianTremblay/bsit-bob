@@ -38,7 +38,7 @@ ex:00005 a c223:System,
         ex:TestSystem ;
     rdfs:label "s1" ;
     c223:hasConnectionPoint ex:00006 ;
-    c223:isSubsystemOf ex:00007 ;
+    c223:isContainedIn ex:00007 ;
     ex:cp ex:00006 .
 
 ex:00006 a c223:SystemConnectionPoint ;
@@ -48,8 +48,8 @@ ex:00006 a c223:SystemConnectionPoint ;
 ex:00007 a c223:System,
         ex:TestSystem ;
     rdfs:label "s2" ;
+    c223:contains ex:00005 ;
     c223:hasConnectionPoint ex:00008 ;
-    c223:hasSubsystem ex:00005 ;
     ex:cp ex:00008 .
 
 ex:00008 a c223:SystemConnectionPoint ;
@@ -59,8 +59,8 @@ ex:00008 a c223:SystemConnectionPoint ;
 ex:00009 a c223:System,
         ex:TestSystem ;
     rdfs:label "s1" ;
+    c223:contains ex:00011 ;
     c223:hasConnectionPoint ex:00010 ;
-    c223:hasSubsystem ex:00011 ;
     ex:cp ex:00010 .
 
 ex:00010 a c223:SystemConnectionPoint ;
@@ -71,7 +71,7 @@ ex:00011 a c223:System,
         ex:TestSystem ;
     rdfs:label "s2" ;
     c223:hasConnectionPoint ex:00012 ;
-    c223:isSubsystemOf ex:00009 ;
+    c223:isContainedIn ex:00009 ;
     ex:cp ex:00012 .
 
 ex:00012 a c223:SystemConnectionPoint ;

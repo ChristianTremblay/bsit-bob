@@ -966,10 +966,10 @@ class Device(Node):
         Build a part heirarchy.
         """
         if not isinstance(other, Part):
-            raise TypeError("device or part expected")
+            raise TypeError("part expected")
 
-        g_add((self.node, c223.hasPart, other.node))
-        g_add((other.node, c223.isPartOf, self.node))
+        g_add((self.node, c223.contains, other.node))
+        g_add((other.node, c223.isContainedIn, self.node))
 
         return self
 
@@ -981,8 +981,8 @@ class Device(Node):
         if not isinstance(other, System):
             raise TypeError("system expected")
 
-        g_add((self.node, c223.isDeviceOf, other.node))
-        g_add((other.node, c223.hasDevice, self.node))
+        g_add((self.node, c223.isContainedIn, other.node))
+        g_add((other.node, c223.contains, self.node))
 
         return other
 
@@ -1649,12 +1649,9 @@ class System(Node):
         """
         logging.debug(f"__gt__ {self} {other}")
 
-        if isinstance(other, System):
-            g_add((self.node, c223.hasSubsystem, other.node))
-            g_add((other.node, c223.isSubsystemOf, self.node))
-        elif isinstance(other, Device):
-            g_add((self.node, c223.hasDevice, other.node))
-            g_add((other.node, c223.isDeviceOf, self.node))
+        if isinstance(other, (Device, System)):
+            g_add((self.node, c223.contains, other.node))
+            g_add((other.node, c223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1669,8 +1666,8 @@ class System(Node):
         logging.debug(f"__lt__ {self} {other}")
 
         if isinstance(other, System):
-            g_add((self.node, c223.isSubsystemOf, other.node))
-            g_add((other.node, c223.hasSubsystem, self.node))
+            g_add((self.node, c223.isContainedIn, other.node))
+            g_add((other.node, c223.contains, self.node))
         else:
             raise TypeError("system expected")
 
@@ -1855,8 +1852,8 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g_add((self.node, c223.hasPart, other.node))
-        g_add((other.node, c223.isPartOf, self.node))
+        g_add((self.node, c223.contains, other.node))
+        g_add((other.node, c223.isContainedIn, self.node))
         return self
 
     def __lt__(self, other: Node) -> Node:
@@ -1867,8 +1864,8 @@ class Part(Node):
         if not isinstance(other, (Device, Part)):
             raise ValueError("device or part expected")
 
-        g_add((self.node, c223.isPartOf, other.node))
-        g_add((other.node, c223.hasPart, self.node))
+        g_add((self.node, c223.isContainedIn, other.node))
+        g_add((other.node, c223.contains, self.node))
         return other
 
 
