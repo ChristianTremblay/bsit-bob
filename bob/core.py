@@ -365,8 +365,7 @@ class Node(metaclass=NodeMetaclass):
                 raise TypeError(f"unexpected keyword argument: {attr}")
 
     def __setattr__(self, attr: str, value: Any) -> None:
-        """
-        """
+        """"""
         # continue with normal process for attributes that aren't special to us
         if attr.startswith("_") or (
             (attr not in self._nodes) and (attr not in self._datatypes)
@@ -464,7 +463,13 @@ class Connection(Node, ConnectionType):
         if EXPLICIT_CORE_TYPES:
             if self.connection_type:
                 connection_type = self.connection_type + "Connection"
-                g_add((self.node, RDF.type, self._namespace[connection_type],))
+                g_add(
+                    (
+                        self.node,
+                        RDF.type,
+                        self._namespace[connection_type],
+                    )
+                )
 
     def __rshift__(
         self, other: Union[ConnectionPoint, SystemConnectionPoint, Device, System]
@@ -675,7 +680,13 @@ class ConnectionPoint(Node):
         if EXPLICIT_CORE_TYPES:
             if isinstance(self, ConnectionType) and self.connection_type:
                 connection_point_type = self.connection_type + "ConnectionPoint"
-                g_add((self.node, RDF.type, self._namespace[connection_point_type],))
+                g_add(
+                    (
+                        self.node,
+                        RDF.type,
+                        self._namespace[connection_point_type],
+                    )
+                )
 
         g_add((device.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = device
@@ -712,8 +723,20 @@ class ConnectionPoint(Node):
             g_add((other.node, c223.connectsAt, self.node))
 
             # link the connection points "owner" to the connection
-            g_add((self.isConnectionPointOf.node, c223.connectedThrough, other.node,))
-            g_add((other.node, c223.connectsFrom, self.isConnectionPointOf.node,))
+            g_add(
+                (
+                    self.isConnectionPointOf.node,
+                    c223.connectedThrough,
+                    other.node,
+                )
+            )
+            g_add(
+                (
+                    other.node,
+                    c223.connectsFrom,
+                    self.isConnectionPointOf.node,
+                )
+            )
 
             # for chaining
             return other
@@ -743,6 +766,43 @@ class ConnectionPoint(Node):
                 raise RuntimeError(
                     f"already connected: {other} connects through {other.connectsThrough}"
                 )
+
+            # make a new connection
+            new_connection = connection_classes[self_connection_type]()
+            logging.info(f"connection: {self} >> {new_connection} >> {other}")
+
+            # link it up
+            new_connection << self
+            new_connection >> other
+
+            # for chaining
+            return other
+
+        elif isinstance(other, SystemConnectionPoint):
+            # check the direction
+            if isinstance(other, SystemOutletConnectionPoint):
+                raise TypeError(
+                    f"connection point direction: {other} is a system outlet connection point"
+                )
+
+            # check the connection type
+            self_connection_type = getattr(self, "connection_type", "")
+            other_connection_type = getattr(other, "connection_type", "")
+            if self_connection_type != other_connection_type:
+                raise TypeError(
+                    "connection point type: "
+                    f"{self_connection_type!r} != {other_connection_type!r}"
+                )
+
+            # make sure they aren't already connected
+            if self.connectsThrough:
+                raise RuntimeError(
+                    f"already connected: {self} connects through {self.connectsThrough}"
+                )
+            # if other.connectsThrough:
+            #     raise RuntimeError(
+            #         f"already connected: {other} connects through {other.connectsThrough}"
+            #     )
 
             # make a new connection
             new_connection = connection_classes[self_connection_type]()
@@ -790,8 +850,20 @@ class ConnectionPoint(Node):
             g_add((other.node, c223.connectsAt, self.node))
 
             # link the connection points "owner" to the connection
-            g_add((self.isConnectionPointOf.node, c223.connectedThrough, other.node,))
-            g_add((other.node, c223.connectsTo, self.isConnectionPointOf.node,))
+            g_add(
+                (
+                    self.isConnectionPointOf.node,
+                    c223.connectedThrough,
+                    other.node,
+                )
+            )
+            g_add(
+                (
+                    other.node,
+                    c223.connectsTo,
+                    self.isConnectionPointOf.node,
+                )
+            )
 
             # for chaining
             return other
@@ -821,6 +893,43 @@ class ConnectionPoint(Node):
                 raise RuntimeError(
                     f"already connected: {other} connects through {other.connectsThrough}"
                 )
+
+            # make a new connection
+            new_connection = connection_classes[self_connection_type]()
+            logging.info(f"connection: {other} >> {new_connection} >> {self}")
+
+            # link it up
+            new_connection << other
+            new_connection >> self
+
+            # for chaining
+            return other
+
+        elif isinstance(other, SystemConnectionPoint):
+            # check the direction
+            if isinstance(other, SystemInletConnectionPoint):
+                raise TypeError(
+                    f"connection point direction: {other} is a system inlet connection point"
+                )
+
+            # check the connection type
+            self_connection_type = getattr(self, "connection_type", "")
+            other_connection_type = getattr(other, "connection_type", "")
+            if self_connection_type != other_connection_type:
+                raise TypeError(
+                    "connection point type: "
+                    f"{self_connection_type!r} != {other_connection_type!r}"
+                )
+
+            # make sure they aren't already connected
+            if self.connectsThrough:
+                raise RuntimeError(
+                    f"already connected: {self} connects through {self.connectsThrough}"
+                )
+            # if other.connectsThrough:
+            #     raise RuntimeError(
+            #         f"already connected: {other} connects through {other.connectsThrough}"
+            #     )
 
             # make a new connection
             new_connection = connection_classes[self_connection_type]()
@@ -1204,8 +1313,7 @@ class Device(Node):
 
 
 class SystemConnectionPoint(Node):
-    """
-    """
+    """"""
 
     node_type: URIRef = c223.SystemConnectionPoint
 
@@ -1219,7 +1327,13 @@ class SystemConnectionPoint(Node):
         if EXPLICIT_CORE_TYPES:
             if isinstance(self, ConnectionType) and self.connection_type:
                 connection_point_type = self.connection_type + "SystemConnectionPoint"
-                g_add((self.node, RDF.type, self._namespace[connection_point_type],))
+                g_add(
+                    (
+                        self.node,
+                        RDF.type,
+                        self._namespace[connection_point_type],
+                    )
+                )
 
         g_add((system.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = system
@@ -1432,8 +1546,20 @@ class SystemConnectionPoint(Node):
             g_add((other.node, c223.connectsAt, self.node))
 
             # link the connection points "owner" to the connection
-            g_add((self.isConnectionPointOf.node, c223.connectedThrough, other.node,))
-            g_add((other.node, c223.connectsTo, self.isConnectionPointOf.node,))
+            g_add(
+                (
+                    self.isConnectionPointOf.node,
+                    c223.connectedThrough,
+                    other.node,
+                )
+            )
+            g_add(
+                (
+                    other.node,
+                    c223.connectsTo,
+                    self.isConnectionPointOf.node,
+                )
+            )
 
         elif isinstance(other, (ConnectionPoint, SystemConnectionPoint)):
             # check the direction
@@ -1521,8 +1647,7 @@ class SystemOutletConnectionPoint(SystemConnectionPoint):
 
 
 class System(Node):
-    """
-    """
+    """"""
 
     _connection_points: Dict[str, SystemConnectionPoint]
 
@@ -1831,8 +1956,7 @@ class System(Node):
 
 
 class Part(Node):
-    """
-    """
+    """"""
 
     node_type: URIRef = c223.Part
 
@@ -1914,8 +2038,7 @@ class Value(Node):
 
 
 class Property(Node):
-    """
-    """
+    """"""
 
     node_type: URIRef = c223.Property
     hasValue: Value
@@ -1977,8 +2100,7 @@ class ObservableProperty(Property):
 
 
 class QuantifiableProperty(Property):
-    """
-    """
+    """"""
 
     node_type: URIRef = c223.QuantifiableProperty
     hasQuantityKind: URIRef
