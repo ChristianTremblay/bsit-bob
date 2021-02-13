@@ -230,7 +230,7 @@ class NodeMetaclass(type):
 
             if attr in _nodes:
                 if not isinstance(value, cast(type, _nodes[attr])):
-                    raise TypeError(f"initializing {attr}: {_inits[attr]} expected")
+                    raise TypeError(f"initializing {attr}: {_nodes[attr]} expected")
 
             elif attr in _datatypes:
                 if isinstance(value, Literal):
