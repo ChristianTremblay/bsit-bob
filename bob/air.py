@@ -1,7 +1,6 @@
 from .core import (
     c223,
-    ConnectionType,
-    register_connection_type,
+    Substance,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -16,17 +15,16 @@ from .signal import AnalogIn, AnalogOut
 __namespace__ = c223
 
 
-class Air(ConnectionType):
-    connection_type: str = "Air"
-
-
-@register_connection_type
-class AirConnection(Air, Connection):
+class Air(Substance):
     pass
 
 
-class AirConnectionPoint(Air, ConnectionPoint):
-    pass
+class AirConnection(Connection):
+    substance = Air.node_type
+
+
+class AirConnectionPoint(ConnectionPoint):
+    substance = Air.node_type
 
 
 class AirInletConnectionPoint(AirConnectionPoint, InletConnectionPoint):
@@ -38,7 +36,7 @@ class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
 
 
 class AirSystemConnectionPoint(Air, SystemConnectionPoint):
-    pass
+    substance = Air.node_type
 
 
 class AirInletSystemConnectionPoint(

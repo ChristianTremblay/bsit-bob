@@ -4,7 +4,7 @@
 #   Project Metadata
 #
 
-__version__ = "0.7"
+__version__ = "0.8"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
@@ -12,7 +12,7 @@ from .core import (
     bind_namespace,
     bind_model_namespace,
     Node,
-    ConnectionType,
+    Substance,
     Connection,
     Device,
     ConnectionPoint,
@@ -24,7 +24,11 @@ from .core import (
     SystemOutletConnectionPoint,
     Part,
     Property,
+    ActuatableProperty,
+    ObservableProperty,
     QuantifiableProperty,
+    QuantifiableActuatableProperty,
+    QuantifiableObservableProperty,
     Value,
     dump,
     clear,

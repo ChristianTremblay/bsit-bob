@@ -2,13 +2,14 @@ from typing import Any
 
 from .core import (
     c223,
-    ConnectionType,
-    register_connection_type,
+    Substance,
     Connection,
     Device,
+    ConnectionPoint,
     InletConnectionPoint,
     OutletConnectionPoint,
     System,
+    SystemConnectionPoint,
     SystemInletConnectionPoint,
     SystemOutletConnectionPoint,
 )
@@ -23,42 +24,57 @@ from .signal import AnalogIn
 __namespace__ = c223
 
 
-class ChilledWater(ConnectionType):
-    connection_type: str = "ChilledWater"
-
-
-@register_connection_type
-class ChilledWaterConnection(ChilledWater, Connection):
+class ChilledWater(Substance):
     pass
 
 
-class ChilledWaterInlet(InletConnectionPoint, ChilledWater):
+class ChilledWaterConnection(Connection):
+    substance = ChilledWater.node_type
+
+
+class ChilledWaterConnectionPoint(ConnectionPoint):
+    substance = ChilledWater.node_type
+
+
+class ChilledWaterInletConnectionPoint(
+    InletConnectionPoint, ChilledWaterConnectionPoint
+):
     pass
 
 
-class ChilledWaterOutlet(OutletConnectionPoint, ChilledWater):
+class ChilledWaterOutletConnectionPoint(
+    OutletConnectionPoint, ChilledWaterConnectionPoint
+):
     pass
 
 
-class ChilledWaterSystemInlet(SystemInletConnectionPoint, ChilledWater):
+class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
+    substance = ChilledWater.node_type
+
+
+class ChilledWaterSystemInlet(
+    SystemInletConnectionPoint, ChilledWaterSystemConnectionPoint
+):
     pass
 
 
-class ChilledWaterSystemOutlet(SystemOutletConnectionPoint, ChilledWater):
+class ChilledWaterSystemOutlet(
+    SystemOutletConnectionPoint, ChilledWaterSystemConnectionPoint
+):
     pass
 
 
 class ChilledWaterValve(Device):
-    chilledWaterInlet: ChilledWaterInlet
-    chilledWaterOutlet: ChilledWaterOutlet
+    chilledWaterInlet: ChilledWaterInletConnectionPoint
+    chilledWaterOutlet: ChilledWaterOutletConnectionPoint
     position = AnalogIn
 
 
 class ChilledWaterCoil(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    chilledWaterInlet: ChilledWaterInlet
-    chilledWaterOutlet: ChilledWaterOutlet
+    chilledWaterInlet: ChilledWaterInletConnectionPoint
+    chilledWaterOutlet: ChilledWaterOutletConnectionPoint
 
 
 class ChilledWaterCoil2(System):

@@ -72,6 +72,9 @@ _annotation_forwards["URIRef"] = URIRef
 _annotation_forwards["BNode"] = BNode
 _annotation_forwards["Literal"] = Literal
 
+# I shouldn't need these!
+_annotation_forwards["str"] = str
+
 
 def bind_namespace(prefix: str, uri: str) -> Namespace:
     """
@@ -149,21 +152,19 @@ def bind_model_namespace(prefix: str, uri: str) -> Namespace:
     return model_namespace
 
 
-# connection type (air, etc) to connection classes
-connection_classes: Dict[str, Any] = {}
+# substance identifier (c223.Air, etc) to Connection subclass
+substance_classes: Dict[URIRef, Any] = {}
 
 
 T = TypeVar("T")
 
 
-def register_connection_type(connection_class: Type[T]) -> Type[T]:
+def register_substance(substance_uri: URIRef, cls: Any) -> None:
     """
-    Register a connection type so that the connection operators can line up the
+    Register a substance so that the connection operators can line up the
     correct types.
     """
-    connection_type: str = connection_class.connection_type  # type: ignore[attr-defined]
-    connection_classes[connection_type] = connection_class
-    return connection_class
+    substance_classes[substance_uri] = cls
 
 
 class NodeMetaclass(type):
@@ -385,11 +386,17 @@ class Node(metaclass=NodeMetaclass):
     node_type: URIRef
     label: str
 
-    def __init__(self, *, label: str = "", **kwargs: Any) -> None:
+    def __init__(
+        self, *, node_iri: URIRef = None, label: str = "", **kwargs: Any
+    ) -> None:
         logging.debug(f"Node.__init__ label={label!r} {kwargs}")
         global _next_node, model_namespace
 
-        if model_namespace:
+        if node_iri is not None:
+            if not isinstance(node_iri, URIRef):
+                raise TypeError(f"URIRef expected: {node_iri}")
+            self.node = node_iri
+        elif model_namespace:
             self.node = model_namespace[f"{_next_node:05d}"]
             _next_node += 1
         else:
@@ -499,30 +506,81 @@ class Node(metaclass=NodeMetaclass):
         return prop
 
 
-class ConnectionType:
-    connection_type: str = ""  # unrestricted by default
+class SubstanceMetaclass(NodeMetaclass):
+    def __new__(
+        cls: _Any,
+        clsname: str,
+        superclasses: Tuple[type, ...],
+        attributedict: Dict[str, _Any],
+    ) -> SubstanceMetaclass:
+        logging.debug(f"SubstanceMetaclass.__new__ {clsname}")
+
+        # build the class
+        new_class = cast(
+            SubstanceMetaclass,
+            super().__new__(cls, clsname, superclasses, attributedict),
+        )
+        logging.debug(f"    - new_class.node_type: {new_class.node_type}")
+
+        return new_class
 
 
-@register_connection_type
-class Connection(Node, ConnectionType):
+class Substance(Node, metaclass=SubstanceMetaclass):
+    pass
+
+
+class ConnectionMetaclass(NodeMetaclass):
+    def __new__(
+        cls: _Any,
+        clsname: str,
+        superclasses: Tuple[type, ...],
+        attributedict: Dict[str, _Any],
+    ) -> SubstanceMetaclass:
+        logging.debug(f"ConnectionMetaclass.__new__ {clsname}")
+        global substance_classes
+
+        # build the class
+        new_class = cast(
+            ConnectionMetaclass,
+            super().__new__(cls, clsname, superclasses, attributedict),
+        )
+
+        # if the class has a 'substance' initialized then register this
+        # class for the substance
+        substance = new_class._inits.get("substance", None)
+        logging.debug(f"    - connection substance: {substance!r}")
+
+        # make sure it's not already defined someplace else
+        if substance in substance_classes:
+            raise RuntimeError(
+                f"substance {substance} already defined: {substance_classes[substance]}"
+            )
+        substance_classes[substance] = new_class
+
+        return new_class
+
+
+# @register_substance
+class Connection(Node, metaclass=ConnectionMetaclass):
     """
     Generic connection object type, unrestricted.
     """
 
     node_type: URIRef = c223.Connection
+    substance: URIRef
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        if self.connection_type:
-            connection_type = self.connection_type + "Connection"
-            data_graph_add(
-                (
-                    self.node,
-                    RDF.type,
-                    self._namespace[connection_type],
-                )
-            )
+        # if self.substance:
+        #     substance = self.substance + "Connection"
+        #     data_graph_add(
+        #         (
+        #             self.node,
+        #             RDF.type,
+        #             self._namespace[substance],
+        #         )
+        #     )
 
     def __rshift__(
         self, other: Union[ConnectionPoint, SystemConnectionPoint, Device, System]
@@ -536,8 +594,8 @@ class Connection(Node, ConnectionType):
             if other.connectsThrough:
                 raise RuntimeError(f"already connected: {other!r}")
 
-            other_connection_type = getattr(other, "connection_type", "")
-            if other_connection_type != self.connection_type:
+            other_substance = getattr(other, "substance", None)
+            if other_substance != self.substance:
                 raise TypeError("connection type")
 
             # this is a candidate
@@ -556,8 +614,8 @@ class Connection(Node, ConnectionType):
                     continue
 
                 # the connection type needs to match
-                connection_point_type = getattr(connection_point, "connection_type", "")
-                if connection_point_type != self.connection_type:
+                connection_point_type = getattr(connection_point, "substance", None)
+                if connection_point_type != self.substance:
                     continue
 
                 # this is a candidate
@@ -576,8 +634,8 @@ class Connection(Node, ConnectionType):
                     continue
 
                 # the connection type needs to match
-                connection_point_type = getattr(connection_point, "connection_type", "")
-                if connection_point_type != self.connection_type:
+                connection_point_type = getattr(connection_point, "substance", None)
+                if connection_point_type != self.substance:
                     continue
 
                 # this is a candidate
@@ -632,8 +690,8 @@ class Connection(Node, ConnectionType):
             if other.connectsThrough:
                 raise RuntimeError(f"already connected: {other!r}")
 
-            other_connection_type = getattr(other, "connection_type", "")
-            if other_connection_type != self.connection_type:
+            other_substance = getattr(other, "substance", None)
+            if other_substance != self.substance:
                 raise TypeError("connection type")
 
             # this is a candidate
@@ -652,8 +710,8 @@ class Connection(Node, ConnectionType):
                     continue
 
                 # the connection type needs to match
-                connection_point_type = getattr(connection_point, "connection_type", "")
-                if connection_point_type != self.connection_type:
+                connection_point_type = getattr(connection_point, "substance", None)
+                if connection_point_type != self.substance:
                     continue
 
                 # this is a candidate
@@ -672,8 +730,8 @@ class Connection(Node, ConnectionType):
                     continue
 
                 # the connection type needs to match
-                connection_point_type = getattr(connection_point, "connection_type", "")
-                if connection_point_type != self.connection_type:
+                connection_point_type = getattr(connection_point, "substance", None)
+                if connection_point_type != self.substance:
                     continue
 
                 # this is a candidate
@@ -721,8 +779,20 @@ class Connection(Node, ConnectionType):
         return other
 
 
+class Direction(Node):
+    pass
+
+
+# these instances show up in the data graph
+# Inlet = Direction(node_iri=c223.Inlet, label="inlet")
+# Outlet = Direction(node_iri=c223.Outlet, label="outlet")
+# Bidirectional = Direction(node_iri=c223.Bidirectional, label="bidirectional")
+
+
 class ConnectionPoint(Node):
     node_type: URIRef = c223.ConnectionPoint
+    substance: URIRef  # identifier of a subclass of Substance
+    direction: URIRef  # one of c223.Inlet, c223.Outlet, c223.Bidirectional
 
     connectsThrough: Connection
     isConnectionPointOf: Device
@@ -730,15 +800,15 @@ class ConnectionPoint(Node):
     def __init__(self, device: Device, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        if isinstance(self, ConnectionType) and self.connection_type:
-            connection_point_type = self.connection_type + "ConnectionPoint"
-            data_graph_add(
-                (
-                    self.node,
-                    RDF.type,
-                    self._namespace[connection_point_type],
-                )
-            )
+        # if isinstance(self, ConnectionType) and self.substance:
+        #     connection_point_type = self.substance + "ConnectionPoint"
+        #     data_graph_add(
+        #         (
+        #             self.node,
+        #             RDF.type,
+        #             self._namespace[connection_point_type],
+        #         )
+        #     )
 
         data_graph_add((device.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = device
@@ -755,13 +825,13 @@ class ConnectionPoint(Node):
         another connection point.
         """
 
-        self_connection_type: str
-        other_connection_type: str
+        self_substance: str
+        other_substance: str
 
         if isinstance(other, Connection):
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError("connection point type")
 
             logging.info(f"connection: {self} >> {other}")
@@ -801,12 +871,12 @@ class ConnectionPoint(Node):
                 )
 
             # check the connection type
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError(
                     "connection point type: "
-                    f"{self_connection_type!r} != {other_connection_type!r}"
+                    f"{self_substance!r} != {other_substance!r}"
                 )
 
             # make sure they aren't already connected
@@ -820,7 +890,7 @@ class ConnectionPoint(Node):
                 )
 
             # make a new connection
-            new_connection = connection_classes[self_connection_type]()
+            new_connection = substance_classes[self_substance]()
             logging.info(f"connection: {self} >> {new_connection} >> {other}")
 
             # link it up
@@ -838,12 +908,12 @@ class ConnectionPoint(Node):
                 )
 
             # check the connection type
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError(
                     "connection point type: "
-                    f"{self_connection_type!r} != {other_connection_type!r}"
+                    f"{self_substance!r} != {other_substance!r}"
                 )
 
             # make sure they aren't already connected
@@ -857,7 +927,7 @@ class ConnectionPoint(Node):
             #     )
 
             # make a new connection
-            new_connection = connection_classes[self_connection_type]()
+            new_connection = substance_classes[self_substance]()
             logging.info(f"connection: {self} >> {new_connection} >> {other}")
 
             # link it up
@@ -882,13 +952,13 @@ class ConnectionPoint(Node):
         another connection point.
         """
 
-        self_connection_type: str
-        other_connection_type: str
+        self_substance: str
+        other_substance: str
 
         if isinstance(other, Connection):
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError("connection point type")
 
             logging.info(f"connection: {other} >> {self}")
@@ -928,12 +998,12 @@ class ConnectionPoint(Node):
                 )
 
             # check the connection type
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError(
                     "connection point type: "
-                    f"{self_connection_type!r} != {other_connection_type!r}"
+                    f"{self_substance!r} != {other_substance!r}"
                 )
 
             # make sure they aren't already connected
@@ -947,7 +1017,7 @@ class ConnectionPoint(Node):
                 )
 
             # make a new connection
-            new_connection = connection_classes[self_connection_type]()
+            new_connection = substance_classes[self_substance]()
             logging.info(f"connection: {other} >> {new_connection} >> {self}")
 
             # link it up
@@ -965,12 +1035,12 @@ class ConnectionPoint(Node):
                 )
 
             # check the connection type
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError(
                     "connection point type: "
-                    f"{self_connection_type!r} != {other_connection_type!r}"
+                    f"{self_substance!r} != {other_substance!r}"
                 )
 
             # make sure they aren't already connected
@@ -984,7 +1054,7 @@ class ConnectionPoint(Node):
             #     )
 
             # make a new connection
-            new_connection = connection_classes[self_connection_type]()
+            new_connection = substance_classes[self_substance]()
             logging.info(f"connection: {other} >> {new_connection} >> {self}")
 
             # link it up
@@ -1002,11 +1072,11 @@ class ConnectionPoint(Node):
 
 
 class InletConnectionPoint(ConnectionPoint):
-    pass
+    direction: URIRef = c223.Inlet
 
 
 class OutletConnectionPoint(ConnectionPoint):
-    pass
+    direction: URIRef = c223.Outlet
 
 
 class Device(Node):
@@ -1072,18 +1142,17 @@ class Device(Node):
             if not isinstance(connection_point, OutletConnectionPoint):
                 continue
 
-            connection_type = getattr(connection_point, "connection_type", "")
-            from_out[connection_type].add(connection_point)
+            substance = getattr(connection_point, "substance", None)
+            from_out[substance].add(connection_point)
 
         from_types = set(
-            connection_type
-            for connection_type in from_out
-            if len(from_out[connection_type]) == 1
+            substance for substance in from_out if len(from_out[substance]) == 1
         )
         if not from_types:
             raise RuntimeError(
                 f"no candidate sources from {from_device} to {to_device}"
             )
+        logging.debug(f"    - from_types: {from_types}")
 
         to_in = defaultdict(set)
         for attr, connection_point in to_device._connection_points.items():
@@ -1092,18 +1161,15 @@ class Device(Node):
             if not isinstance(connection_point, InletConnectionPoint):
                 continue
 
-            connection_type = getattr(connection_point, "connection_type", "")
-            to_in[connection_type].add(connection_point)
+            substance = getattr(connection_point, "substance", None)
+            to_in[substance].add(connection_point)
 
-        to_types = set(
-            connection_type
-            for connection_type in to_in
-            if len(to_in[connection_type]) == 1
-        )
+        to_types = set(substance for substance in to_in if len(to_in[substance]) == 1)
         if not to_types:
             raise RuntimeError(
                 f"no candidate destinations from {from_device} to {to_device}"
             )
+        logging.debug(f"    - to_types: {to_types}")
 
         # find the connection type that has one unconnected <from> and
         # one unconnected <to>
@@ -1113,9 +1179,9 @@ class Device(Node):
         if len(common_types) > 1:
             raise RuntimeError("too many common connection types")
 
-        connection_type = common_types.pop()
-        from_connection_point = from_out[connection_type].pop()
-        to_connection_point = to_in[connection_type].pop()
+        substance = common_types.pop()
+        from_connection_point = from_out[substance].pop()
+        to_connection_point = to_in[substance].pop()
 
         # build the connection
         from_connection_point >> to_connection_point
@@ -1165,13 +1231,11 @@ class Device(Node):
                 if not isinstance(connection_point, OutletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                from_out[connection_type].add(connection_point)
+                substance = getattr(connection_point, "substance", None)
+                from_out[substance].add(connection_point)
 
             from_types = set(
-                connection_type
-                for connection_type in from_out
-                if len(from_out[connection_type]) == 1
+                substance for substance in from_out if len(from_out[substance]) == 1
             )
             if not from_types:
                 raise RuntimeError(f"no candidate sources from {self} to {other}")
@@ -1183,13 +1247,11 @@ class Device(Node):
                 if not isinstance(connection_point, SystemInletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                to_in[connection_type].add(connection_point)
+                substance = getattr(connection_point, "substance", None)
+                to_in[substance].add(connection_point)
 
             to_types = set(
-                connection_type
-                for connection_type in to_in
-                if len(to_in[connection_type]) == 1
+                substance for substance in to_in if len(to_in[substance]) == 1
             )
             if not to_types:
                 raise RuntimeError(f"no candidate destinations from {self} to {other}")
@@ -1202,12 +1264,12 @@ class Device(Node):
             if len(common_types) > 1:
                 raise RuntimeError("too many common connection types")
 
-            connection_type = common_types.pop()
-            from_connection_point = from_out[connection_type].pop()
-            to_connection_point = to_in[connection_type].pop()
+            substance = common_types.pop()
+            from_connection_point = from_out[substance].pop()
+            to_connection_point = to_in[substance].pop()
 
             # make a new connection
-            new_connection = connection_classes[connection_type]()
+            new_connection = substance_classes[substance]()
             logging.info(
                 f"connection: {from_connection_point} >> {new_connection} >> {to_connection_point}"
             )
@@ -1217,7 +1279,7 @@ class Device(Node):
             new_connection >> to_connection_point
 
         elif isinstance(other, (ConnectionPoint, SystemConnectionPoint)):
-            other_connection_type = getattr(other, "connection_type", "")
+            other_substance = getattr(other, "substance", None)
             if other.connectsThrough:
                 raise RuntimeError(f"already connected: {other}")
 
@@ -1228,8 +1290,8 @@ class Device(Node):
                 if not isinstance(connection_point, OutletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                if connection_type != other_connection_type:
+                substance = getattr(connection_point, "substance", None)
+                if substance != other_substance:
                     continue
 
                 from_out.add(connection_point)
@@ -1240,7 +1302,7 @@ class Device(Node):
             from_connection_point = from_out.pop()
 
             # make a new connection
-            new_connection = connection_classes[other_connection_type]()
+            new_connection = substance_classes[other_substance]()
             logging.info(
                 f"connection: {from_connection_point} >> {new_connection} >> {other}"
             )
@@ -1273,13 +1335,11 @@ class Device(Node):
                 if not isinstance(connection_point, SystemOutletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                from_out[connection_type].add(connection_point)
+                substance = getattr(connection_point, "substance", None)
+                from_out[substance].add(connection_point)
 
             from_types = set(
-                connection_type
-                for connection_type in from_out
-                if len(from_out[connection_type]) == 1
+                substance for substance in from_out if len(from_out[substance]) == 1
             )
             if not from_types:
                 raise RuntimeError(f"no candidate sources from {other} to {self}")
@@ -1291,13 +1351,11 @@ class Device(Node):
                 if not isinstance(connection_point, InletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                to_in[connection_type].add(connection_point)
+                substance = getattr(connection_point, "substance", None)
+                to_in[substance].add(connection_point)
 
             to_types = set(
-                connection_type
-                for connection_type in to_in
-                if len(to_in[connection_type]) == 1
+                substance for substance in to_in if len(to_in[substance]) == 1
             )
             if not to_types:
                 raise RuntimeError(f"no candidate destinations from {other} to {self}")
@@ -1310,11 +1368,11 @@ class Device(Node):
             if len(common_types) > 1:
                 raise RuntimeError("too many common connection types")
 
-            connection_type = common_types.pop()
+            substance = common_types.pop()
             to_connection_point = to_in.pop()
 
             # make a new connection
-            new_connection = connection_classes[connection_type]()
+            new_connection = substance_classes[substance]()
             logging.info(f"connection: {other} >> {new_connection} >> {self}")
 
             # link it up
@@ -1322,7 +1380,7 @@ class Device(Node):
             new_connection >> self
 
         elif isinstance(other, (ConnectionPoint, SystemConnectionPoint)):
-            other_connection_type = getattr(other, "connection_type", "")
+            other_substance = getattr(other, "substance", None)
             if other.connectsThrough:
                 raise RuntimeError(f"already connected: {other}")
 
@@ -1333,8 +1391,8 @@ class Device(Node):
                 if not isinstance(connection_point, InletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                if connection_type != other_connection_type:
+                substance = getattr(connection_point, "substance", None)
+                if substance != other_substance:
                     continue
 
                 self_in.add(connection_point)
@@ -1348,7 +1406,7 @@ class Device(Node):
             to_connection_point = self_in.pop()
 
             # make a new connection
-            new_connection = connection_classes[other_connection_type]()
+            new_connection = substance_classes[other_substance]()
             logging.info(
                 f"connection: {other} >> {new_connection} >> {to_connection_point}"
             )
@@ -1375,15 +1433,15 @@ class SystemConnectionPoint(Node):
     def __init__(self, system: System, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        if isinstance(self, ConnectionType) and self.connection_type:
-            connection_point_type = self.connection_type + "SystemConnectionPoint"
-            data_graph_add(
-                (
-                    self.node,
-                    RDF.type,
-                    self._namespace[connection_point_type],
-                )
-            )
+        # if isinstance(self, ConnectionType) and self.substance:
+        #     connection_point_type = self.substance + "SystemConnectionPoint"
+        #     data_graph_add(
+        #         (
+        #             self.node,
+        #             RDF.type,
+        #             self._namespace[connection_point_type],
+        #         )
+        #     )
 
         data_graph_add((system.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = system
@@ -1472,13 +1530,13 @@ class SystemConnectionPoint(Node):
         Build a connection from this system connection point to ...
         """
 
-        self_connection_type: str
-        other_connection_type: str
+        self_substance: str
+        other_substance: str
 
         if isinstance(other, Connection):
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError("connection point type")
 
             logging.info(f"connection: {self} >> {other}")
@@ -1498,12 +1556,12 @@ class SystemConnectionPoint(Node):
                 )
 
             # check the connection type
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError(
                     "connection point type: "
-                    f"{self_connection_type!r} != {other_connection_type!r}"
+                    f"{self_substance!r} != {other_substance!r}"
                 )
 
             # make sure they aren't already connected
@@ -1517,7 +1575,7 @@ class SystemConnectionPoint(Node):
                 )
 
             # make a new connection
-            new_connection = connection_classes[self_connection_type]()
+            new_connection = substance_classes[self_substance]()
             logging.info(f"connection: {self} >> {new_connection} >> {other}")
 
             # link it up, includes mapped connection points
@@ -1526,7 +1584,7 @@ class SystemConnectionPoint(Node):
 
         elif isinstance(other, (Device, System)):
             # check the connection type
-            self_connection_type = getattr(self, "connection_type", "")
+            self_substance = getattr(self, "substance", None)
 
             to_in = set()
             for attr, connection_point in other._connection_points.items():
@@ -1537,8 +1595,8 @@ class SystemConnectionPoint(Node):
                 ):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                if connection_type != self_connection_type:
+                substance = getattr(connection_point, "substance", None)
+                if substance != self_substance:
                     continue
 
                 to_in.add(connection_point)
@@ -1552,7 +1610,7 @@ class SystemConnectionPoint(Node):
             to_connection_point = to_in.pop()
 
             # make a new connection
-            new_connection = connection_classes[self_connection_type]()
+            new_connection = substance_classes[self_substance]()
             logging.info(
                 f"connection: {self} >> {new_connection} >> {to_connection_point}"
             )
@@ -1576,13 +1634,13 @@ class SystemConnectionPoint(Node):
         another connection point.
         """
 
-        self_connection_type: str
-        other_connection_type: str
+        self_substance: str
+        other_substance: str
 
         if isinstance(other, Connection):
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError("connection point type")
 
             logging.info(f"connection: {other} >> {self}")
@@ -1619,12 +1677,12 @@ class SystemConnectionPoint(Node):
                 )
 
             # check the connection type
-            self_connection_type = getattr(self, "connection_type", "")
-            other_connection_type = getattr(other, "connection_type", "")
-            if self_connection_type != other_connection_type:
+            self_substance = getattr(self, "substance", None)
+            other_substance = getattr(other, "substance", None)
+            if self_substance != other_substance:
                 raise TypeError(
                     "connection point type: "
-                    f"{self_connection_type!r} != {other_connection_type!r}"
+                    f"{self_substance!r} != {other_substance!r}"
                 )
 
             # make sure they aren't already connected
@@ -1638,7 +1696,7 @@ class SystemConnectionPoint(Node):
                 )
 
             # make a new connection
-            new_connection = connection_classes[self_connection_type]()
+            new_connection = substance_classes[self_substance]()
             logging.info(f"connection: {other} >> {new_connection} >> {self}")
 
             # link it up
@@ -1647,7 +1705,7 @@ class SystemConnectionPoint(Node):
 
         elif isinstance(other, (Device, System)):
             # check the connection type
-            self_connection_type = getattr(self, "connection_type", "")
+            self_substance = getattr(self, "substance", None)
 
             from_out = set()
             for attr, connection_point in other._connection_points.items():
@@ -1659,8 +1717,8 @@ class SystemConnectionPoint(Node):
                 ):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                if connection_type != self_connection_type:
+                substance = getattr(connection_point, "substance", None)
+                if substance != self_substance:
                     continue
 
                 from_out.add(connection_point)
@@ -1672,7 +1730,7 @@ class SystemConnectionPoint(Node):
             from_connection_point = from_out.pop()
 
             # make a new connection
-            new_connection = connection_classes[self_connection_type]()
+            new_connection = substance_classes[self_substance]()
             logging.info(
                 f"connection: {from_connection_point} >> {new_connection} >> {self}"
             )
@@ -1759,13 +1817,11 @@ class System(Node):
             if not isinstance(system_connection_point, SystemOutletConnectionPoint):
                 continue
 
-            connection_type = getattr(system_connection_point, "connection_type", "")
-            from_out[connection_type].add(system_connection_point)
+            substance = getattr(system_connection_point, "substance", None)
+            from_out[substance].add(system_connection_point)
 
         from_types = set(
-            connection_type
-            for connection_type in from_out
-            if len(from_out[connection_type]) == 1
+            substance for substance in from_out if len(from_out[substance]) == 1
         )
         if not from_types:
             raise RuntimeError(
@@ -1779,14 +1835,10 @@ class System(Node):
             if not isinstance(system_connection_point, SystemInletConnectionPoint):
                 continue
 
-            connection_type = getattr(system_connection_point, "connection_type", "")
-            to_in[connection_type].add(system_connection_point)
+            substance = getattr(system_connection_point, "substance", None)
+            to_in[substance].add(system_connection_point)
 
-        to_types = set(
-            connection_type
-            for connection_type in to_in
-            if len(to_in[connection_type]) == 1
-        )
+        to_types = set(substance for substance in to_in if len(to_in[substance]) == 1)
         if not to_types:
             raise RuntimeError(
                 f"no candidate destinations from {from_system} to {to_system}"
@@ -1801,12 +1853,12 @@ class System(Node):
             raise RuntimeError("too many common connection types")
 
         # get the connection type and the connection points
-        connection_type = common_types.pop()
-        from_system_connection_point = from_out[connection_type].pop()
-        to_system_connection_point = to_in[connection_type].pop()
+        substance = common_types.pop()
+        from_system_connection_point = from_out[substance].pop()
+        to_system_connection_point = to_in[substance].pop()
 
         # make a new connection
-        new_connection = connection_classes[connection_type]()
+        new_connection = substance_classes[substance]()
         logging.info(
             f"connection: {from_system_connection_point} >> {new_connection} >> {to_system_connection_point}"
         )
@@ -1864,13 +1916,11 @@ class System(Node):
                 if not isinstance(connection_point, SystemOutletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                from_out[connection_type].add(connection_point)
+                substance = getattr(connection_point, "substance", None)
+                from_out[substance].add(connection_point)
 
             from_types = set(
-                connection_type
-                for connection_type in from_out
-                if len(from_out[connection_type]) == 1
+                substance for substance in from_out if len(from_out[substance]) == 1
             )
             if not from_types:
                 raise RuntimeError(f"no candidate sources from {self} to {other}")
@@ -1882,13 +1932,11 @@ class System(Node):
                 if not isinstance(connection_point, InletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                to_in[connection_type].add(connection_point)
+                substance = getattr(connection_point, "substance", None)
+                to_in[substance].add(connection_point)
 
             to_types = set(
-                connection_type
-                for connection_type in to_in
-                if len(to_in[connection_type]) == 1
+                substance for substance in to_in if len(to_in[substance]) == 1
             )
             if not to_types:
                 raise RuntimeError(f"no candidate destinations from {self} to {other}")
@@ -1901,12 +1949,12 @@ class System(Node):
             if len(common_types) > 1:
                 raise RuntimeError("too many common connection types")
 
-            connection_type = common_types.pop()
-            from_connection_point = from_out[connection_type].pop()
-            to_connection_point = to_in[connection_type].pop()
+            substance = common_types.pop()
+            from_connection_point = from_out[substance].pop()
+            to_connection_point = to_in[substance].pop()
 
             # make a new connection
-            new_connection = connection_classes[connection_type]()
+            new_connection = substance_classes[substance]()
             logging.info(
                 f"connection: {from_connection_point} >> {new_connection} >> {to_connection_point}"
             )
@@ -1943,14 +1991,12 @@ class System(Node):
                     # print("***     - not an outlet")
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                from_out[connection_type].add(connection_point)
+                substance = getattr(connection_point, "substance", None)
+                from_out[substance].add(connection_point)
 
             # print(f"*** from_out: {from_out}")
             from_types = set(
-                connection_type
-                for connection_type in from_out
-                if len(from_out[connection_type]) == 1
+                substance for substance in from_out if len(from_out[substance]) == 1
             )
             if not from_types:
                 raise RuntimeError(f"no candidate sources from {other} to {self}")
@@ -1962,13 +2008,11 @@ class System(Node):
                 if not isinstance(connection_point, SystemInletConnectionPoint):
                     continue
 
-                connection_type = getattr(connection_point, "connection_type", "")
-                to_in[connection_type].add(connection_point)
+                substance = getattr(connection_point, "substance", None)
+                to_in[substance].add(connection_point)
 
             to_types = set(
-                connection_type
-                for connection_type in to_in
-                if len(to_in[connection_type]) == 1
+                substance for substance in to_in if len(to_in[substance]) == 1
             )
             if not to_types:
                 raise RuntimeError(f"no candidate destinations from {other} to {self}")
@@ -1981,12 +2025,12 @@ class System(Node):
             if len(common_types) > 1:
                 raise RuntimeError("too many common connection types")
 
-            connection_type = common_types.pop()
-            from_connection_point = from_out[connection_type].pop()
-            to_connection_point = to_in[connection_type].pop()
+            substance = common_types.pop()
+            from_connection_point = from_out[substance].pop()
+            to_connection_point = to_in[substance].pop()
 
             # make a new connection
-            new_connection = connection_classes[connection_type]()
+            new_connection = substance_classes[substance]()
             logging.info(
                 f"connection: {from_connection_point} >> {new_connection} >> {to_connection_point}"
             )

@@ -17,42 +17,59 @@ import pyparsing
 
 # build a parser for the command line arguments
 parser = argparse.ArgumentParser(
-    description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter,
+    description=__doc__,
+    formatter_class=argparse.RawDescriptionHelpFormatter,
 )
 
 # sample additional option to load/store from/to the expanded graph
 parser.add_argument(
-    "ttl", type=str, nargs="+", help="turtle files to load",
+    "ttl",
+    type=str,
+    nargs="+",
+    help="turtle files to load",
 )
 
 # add an option to run RDFS semantics
 parser.add_argument(
-    "--rdfs", action="store_true", help="run RDFS semantics",
+    "--rdfs",
+    action="store_true",
+    help="run RDFS semantics",
 )
 
 # add an option to run OWLRL semantics
 parser.add_argument(
-    "--owlrl", action="store_true", help="run OWLRL semantics",
+    "--owlrl",
+    action="store_true",
+    help="run OWLRL semantics",
 )
 
 # add an option to run both RDFS and OWLRL semantics
 parser.add_argument(
-    "--both", action="store_true", help="run both RDFS and OWLRL semantics",
+    "--both",
+    action="store_true",
+    help="run both RDFS and OWLRL semantics",
 )
 
 # add an option to run both RDFS and OWLRL semantics
 parser.add_argument(
-    "--clean", action="store_true", help="clean out useless statements",
+    "--clean",
+    action="store_true",
+    help="clean out useless statements",
 )
 
 # sample additional option to store the expanded graph
 parser.add_argument(
-    "--expanded", type=str, help="load/store the expanded graph",
+    "--expanded",
+    type=str,
+    help="load/store the expanded graph",
 )
 
 # information about the loaded/interpreted graph
 parser.add_argument(
-    "--info", "-i", action="store_true", help="print prefixes in interactive mode",
+    "--info",
+    "-i",
+    action="store_true",
+    help="print prefixes in interactive mode",
 )
 
 # parse the command line arguments

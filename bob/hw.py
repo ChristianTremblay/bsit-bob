@@ -2,13 +2,14 @@ from typing import Any
 
 from .core import (
     c223,
-    ConnectionType,
-    register_connection_type,
+    Substance,
     Connection,
     Device,
+    ConnectionPoint,
     InletConnectionPoint,
     OutletConnectionPoint,
     System,
+    SystemConnectionPoint,
     SystemInletConnectionPoint,
     SystemOutletConnectionPoint,
 )
@@ -24,47 +25,58 @@ from .signal import AnalogIn
 __namespace__ = c223
 
 
-class HotWater(ConnectionType):
-    connection_type: str = "HotWater"
-
-
-@register_connection_type
-class HotWaterConnection(HotWater, Connection):
+class HotWater(Substance):
     pass
 
 
-class HotWaterInlet(InletConnectionPoint, HotWater):
+class HotWaterConnection(Connection):
+    substance = HotWater.node_type
+
+
+class HotWaterConnectionPoint(ConnectionPoint):
+    substance = HotWater.node_type
+
+
+class HotWaterInletConnectionPoint(InletConnectionPoint, HotWaterConnectionPoint):
     pass
 
 
-class HotWaterOutlet(OutletConnectionPoint, HotWater):
+class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoint):
     pass
 
 
-class HotWaterSystemInlet(SystemInletConnectionPoint, HotWater):
+class HotWaterSystemConnectionPoint(SystemConnectionPoint):
+    substance = HotWater.node_type
+
+
+class HotWaterSystemInletConnectionPoint(
+    SystemInletConnectionPoint, HotWaterSystemConnectionPoint
+):
     pass
 
 
-class HotWaterSystemOutlet(SystemOutletConnectionPoint, HotWater):
+class HotWaterSystemOutletConnectionPoint(
+    SystemOutletConnectionPoint, HotWaterSystemConnectionPoint
+):
     pass
 
 
 class HotWaterValve(Device):
-    hotWaterInlet: HotWaterInlet
-    hotWaterOutlet: HotWaterOutlet
+    hotWaterInlet: HotWaterInletConnectionPoint
+    hotWaterOutlet: HotWaterOutletConnectionPoint
     position = AnalogIn
 
 
 class HotWaterCoil(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    hotWaterInlet: HotWaterInlet
-    hotWaterOutlet: HotWaterOutlet
+    hotWaterInlet: HotWaterInletConnectionPoint
+    hotWaterOutlet: HotWaterOutletConnectionPoint
 
 
 class HotWaterBoiler(Device):
-    hotWaterSupply: HotWaterInlet
-    hotWaterReturn: HotWaterOutlet
+    hotWaterSupply: HotWaterInletConnectionPoint
+    hotWaterReturn: HotWaterOutletConnectionPoint
 
 
 class HotWaterCoil2(System):
@@ -76,8 +88,8 @@ class HotWaterCoil2(System):
 
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
-    hotWaterInlet: HotWaterSystemInlet
-    hotWaterOutlet: HotWaterSystemOutlet
+    hotWaterInlet: HotWaterSystemInletConnectionPoint
+    hotWaterOutlet: HotWaterSystemOutletConnectionPoint
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
