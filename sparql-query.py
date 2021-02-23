@@ -9,7 +9,7 @@ and prompt for SPARQL queries.
 
 import argparse
 import sys
-from rdflib import Graph, Namespace, RDF, RDFS, OWL
+from rdflib import Graph, Namespace, URIRef, RDF, RDFS, OWL
 import owlrl
 
 import pyparsing
@@ -113,16 +113,11 @@ if args.expanded:
     with open(args.expanded, "wb") as f:
         g.serialize(f, format="turtle")
 
-# make a reverse namespace
-namespace_map = {}
-for prefix, uriref in g.namespaces():
-    namespace_map[prefix] = Namespace(uriref)
-
 # print out the prefixes
 if args.info and sys.stdin.isatty():
     print(f"triples: {len(g)}")
     print("prefixes:")
-    for prefix, uriref in namespace_map.items():
+    for prefix, uriref in g.namespaces():
         print(f"    {prefix}: {uriref}")
     print("")
 
@@ -147,7 +142,13 @@ while True:
         query_results = g.query(query)
 
         for result in query_results:
-            print(", ".join(result))
+            str_result = []
+            for item in result:
+                if isinstance(item, URIRef):
+                    str_result.append(item.n3(g.namespace_manager))
+                else:
+                    str_result.append(item)
+            print(", ".join(str_result))
 
     except pyparsing.ParseException as parsing_error:
         args_query, args_offset, args_error = parsing_error.args
