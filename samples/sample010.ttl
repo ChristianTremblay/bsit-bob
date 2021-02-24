@@ -40,12 +40,16 @@ ex:00007 a c223:System ;
     rdfs:label "s4" ;
     c223:hasConnectionPoint ex:00009 .
 
-ex:00008 a c223:SystemOutletConnectionPoint ;
+ex:00008 a c223:SystemConnectionPoint,
+        c223:SystemOutletConnectionPoint ;
     rdfs:label "s3.ocp" ;
+    c223:direction c223:Outlet ;
     c223:isConnectionPointOf ex:00006 .
 
-ex:00009 a c223:SystemInletConnectionPoint ;
+ex:00009 a c223:SystemConnectionPoint,
+        c223:SystemInletConnectionPoint ;
     rdfs:label "s4.icp" ;
+    c223:direction c223:Inlet ;
     c223:isConnectionPointOf ex:00007 .
 
 ex:00010 a c223:Connection .

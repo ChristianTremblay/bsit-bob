@@ -49,19 +49,20 @@ class ChilledWaterOutletConnectionPoint(
 
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
+    node_type = None
     substance = ChilledWater.node_type
 
 
 class ChilledWaterSystemInlet(
     SystemInletConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
-    pass
+    node_type = None
 
 
 class ChilledWaterSystemOutlet(
     SystemOutletConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
-    pass
+    node_type = None
 
 
 class ChilledWaterValve(Device):
