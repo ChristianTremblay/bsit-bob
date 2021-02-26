@@ -26,23 +26,33 @@ ex:00001 a c223:HotWaterCoil2,
     c223:hotWaterInlet ex:00004 ;
     c223:hotWaterOutlet ex:00005 .
 
-ex:00002 a c223:AirInletSystemConnectionPoint ;
+ex:00002 a c223:SystemConnectionPoint,
+        c223:SystemInletConnectionPoint ;
     rdfs:label "hot_water_coil.airInlet" ;
+    c223:direction c223:Inlet ;
     c223:isConnectionPointOf ex:00001 ;
-    c223:mapsTo ex:00007 .
+    c223:mapsTo ex:00007 ;
+    c223:substance c223:Air .
 
-ex:00003 a c223:AirOutletSystemConnectionPoint ;
+ex:00003 a c223:SystemConnectionPoint,
+        c223:SystemOutletConnectionPoint ;
     rdfs:label "hot_water_coil.airOutlet" ;
+    c223:direction c223:Outlet ;
     c223:isConnectionPointOf ex:00001 ;
-    c223:mapsTo ex:00008 .
+    c223:mapsTo ex:00008 ;
+    c223:substance c223:Air .
 
-ex:00004 a c223:HotWaterSystemInletConnectionPoint ;
+ex:00004 a c223:SystemConnectionPoint,
+        c223:SystemInletConnectionPoint ;
     rdfs:label "hot_water_coil.hotWaterInlet" ;
+    c223:direction c223:Inlet ;
     c223:isConnectionPointOf ex:00001 ;
     c223:mapsTo ex:00013 .
 
-ex:00005 a c223:HotWaterSystemOutletConnectionPoint ;
+ex:00005 a c223:SystemConnectionPoint,
+        c223:SystemOutletConnectionPoint ;
     rdfs:label "hot_water_coil.hotWaterOutlet" ;
+    c223:direction c223:Outlet ;
     c223:isConnectionPointOf ex:00001 ;
     c223:mapsTo ex:00010 .
 
@@ -61,28 +71,40 @@ ex:00006 a c223:Device,
     c223:hotWaterInlet ex:00009 ;
     c223:hotWaterOutlet ex:00010 .
 
-ex:00007 a c223:AirInletConnectionPoint ;
+ex:00007 a c223:AirConnectionPoint,
+        c223:AirInletConnectionPoint,
+        c223:ConnectionPoint,
+        c223:InletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_coil.airInlet" ;
     c223:connectsThrough ex:00016 ;
     c223:direction c223:Inlet ;
     c223:isConnectionPointOf ex:00006 ;
     c223:substance c223:Air .
 
-ex:00008 a c223:AirOutletConnectionPoint ;
+ex:00008 a c223:AirConnectionPoint,
+        c223:AirOutletConnectionPoint,
+        c223:ConnectionPoint,
+        c223:OutletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_coil.airOutlet" ;
     c223:connectsThrough ex:00017 ;
     c223:direction c223:Outlet ;
     c223:isConnectionPointOf ex:00006 ;
     c223:substance c223:Air .
 
-ex:00009 a c223:HotWaterInletConnectionPoint ;
+ex:00009 a c223:ConnectionPoint,
+        c223:HotWaterConnectionPoint,
+        c223:HotWaterInletConnectionPoint,
+        c223:InletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_coil.hotWaterInlet" ;
     c223:connectsThrough ex:00015 ;
     c223:direction c223:Inlet ;
     c223:isConnectionPointOf ex:00006 ;
     c223:substance c223:HotWater .
 
-ex:00010 a c223:HotWaterOutletConnectionPoint ;
+ex:00010 a c223:ConnectionPoint,
+        c223:HotWaterConnectionPoint,
+        c223:HotWaterOutletConnectionPoint,
+        c223:OutletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_coil.hotWaterOutlet" ;
     c223:direction c223:Outlet ;
     c223:isConnectionPointOf ex:00006 ;
@@ -103,33 +125,42 @@ ex:00012 a c223:AnalogIn,
         c223:Property ;
     c223:isPropertyOf ex:00011 .
 
-ex:00013 a c223:HotWaterInletConnectionPoint ;
+ex:00013 a c223:ConnectionPoint,
+        c223:HotWaterConnectionPoint,
+        c223:HotWaterInletConnectionPoint,
+        c223:InletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_valve.hotWaterInlet" ;
     c223:direction c223:Inlet ;
     c223:isConnectionPointOf ex:00011 ;
     c223:substance c223:HotWater .
 
-ex:00014 a c223:HotWaterOutletConnectionPoint ;
+ex:00014 a c223:ConnectionPoint,
+        c223:HotWaterConnectionPoint,
+        c223:HotWaterOutletConnectionPoint,
+        c223:OutletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_valve.hotWaterOutlet" ;
     c223:connectsThrough ex:00015 ;
     c223:direction c223:Outlet ;
     c223:isConnectionPointOf ex:00011 ;
     c223:substance c223:HotWater .
 
-ex:00015 a c223:HotWaterConnection ;
+ex:00015 a c223:Connection,
+        c223:HotWaterConnection ;
     c223:connectsAt ex:00009,
         ex:00014 ;
     c223:connectsFrom ex:00011 ;
     c223:connectsTo ex:00006 ;
     c223:substance c223:HotWater .
 
-ex:00016 a c223:AirConnection ;
+ex:00016 a c223:AirConnection,
+        c223:Connection ;
     rdfs:label "Cold Air" ;
     c223:connectsAt ex:00007 ;
     c223:connectsTo ex:00006 ;
     c223:substance c223:Air .
 
-ex:00017 a c223:AirConnection ;
+ex:00017 a c223:AirConnection,
+        c223:Connection ;
     rdfs:label "Hot Air" ;
     c223:connectsAt ex:00008 ;
     c223:connectsFrom ex:00006 ;

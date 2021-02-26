@@ -1,3 +1,4 @@
+from rdflib import URIRef
 from .core import (
     c223,
     Substance,
@@ -20,11 +21,11 @@ class Air(Substance):
 
 
 class AirConnection(Connection):
-    substance = Air.node_type
+    substance: URIRef = Air.node_type
 
 
 class AirConnectionPoint(ConnectionPoint):
-    substance = Air.node_type
+    substance: URIRef = Air.node_type
 
 
 class AirInletConnectionPoint(AirConnectionPoint, InletConnectionPoint):
@@ -35,20 +36,21 @@ class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
     pass
 
 
-class AirSystemConnectionPoint(Air, SystemConnectionPoint):
-    substance = Air.node_type
+class AirSystemConnectionPoint(SystemConnectionPoint):
+    node_type = None
+    substance: URIRef = Air.node_type
 
 
 class AirInletSystemConnectionPoint(
     AirSystemConnectionPoint, SystemInletConnectionPoint
 ):
-    pass
+    node_type = None
 
 
 class AirOutletSystemConnectionPoint(
     AirSystemConnectionPoint, SystemOutletConnectionPoint
 ):
-    pass
+    node_type = None
 
 
 class Fan(Device):

@@ -328,12 +328,15 @@ class NodeMetaclass(type):
             metaclass.node_type = _namespace[clsname]  # type: ignore[attr-defined]
 
         # this is a class, and a subclass of the super classes
-        schema_graph_add((metaclass.node_type, RDF.type, RDFS.Class))
-        for supercls in superclasses:
-            if issubclass(supercls, Node):
-                schema_graph_add(
-                    (metaclass.node_type, RDFS.subClassOf, supercls.node_type)
-                )
+        if metaclass.node_type is not None:
+            schema_graph_add((metaclass.node_type, RDF.type, RDFS.Class))
+            for supercls in superclasses:
+                if issubclass(supercls, Node):
+                    node_type = getattr(supercls, "node_type", None)
+                    if node_type is not None:
+                        schema_graph_add(
+                            (metaclass.node_type, RDFS.subClassOf, supercls.node_type)
+                        )
 
         # attributes are properties
         for attr in attr_names:
@@ -383,7 +386,7 @@ class Node(metaclass=NodeMetaclass):
     _inits: Dict[str, Any]
 
     node: URIRef
-    node_type: URIRef
+    node_type: Optional[URIRef] = None
     label: str
 
     def __init__(
@@ -407,7 +410,14 @@ class Node(metaclass=NodeMetaclass):
             data_graph_add((self.node, RDFS.label, Literal(self.label)))
 
         if hasattr(self, "node_type"):
-            data_graph_add((self.node, RDF.type, self.node_type))
+            if self.node_type is not None:
+                data_graph_add((self.node, RDF.type, self.node_type))
+
+        for supercls in self.__class__.__mro__:
+            if issubclass(supercls, Node):
+                node_type = getattr(supercls, "node_type", None)
+                if node_type is not None:
+                    data_graph_add((self.node, RDF.type, node_type))
 
         for attr, attr_type in self._nodes.items():
             super().__setattr__(attr, None)
@@ -571,16 +581,6 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-
-        # if self.substance:
-        #     substance = self.substance + "Connection"
-        #     data_graph_add(
-        #         (
-        #             self.node,
-        #             RDF.type,
-        #             self._namespace[substance],
-        #         )
-        #     )
 
     def __rshift__(
         self, other: Union[ConnectionPoint, SystemConnectionPoint, Device, System]
@@ -799,16 +799,6 @@ class ConnectionPoint(Node):
 
     def __init__(self, device: Device, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-
-        # if isinstance(self, ConnectionType) and self.substance:
-        #     connection_point_type = self.substance + "ConnectionPoint"
-        #     data_graph_add(
-        #         (
-        #             self.node,
-        #             RDF.type,
-        #             self._namespace[connection_point_type],
-        #         )
-        #     )
 
         data_graph_add((device.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = device
@@ -1096,9 +1086,6 @@ class Device(Node):
                 raise RuntimeError("no label")
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
-
-        # <self> a Device
-        data_graph_add((self.node, RDF.type, c223.Device))
 
         # merge the annotations
         merged_annotations = {}
@@ -1422,7 +1409,9 @@ class Device(Node):
 
 
 class SystemConnectionPoint(Node):
-    """"""
+    """
+    System Connection Point
+    """
 
     node_type: URIRef = c223.SystemConnectionPoint
 
@@ -1432,16 +1421,6 @@ class SystemConnectionPoint(Node):
 
     def __init__(self, system: System, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-
-        # if isinstance(self, ConnectionType) and self.substance:
-        #     connection_point_type = self.substance + "SystemConnectionPoint"
-        #     data_graph_add(
-        #         (
-        #             self.node,
-        #             RDF.type,
-        #             self._namespace[connection_point_type],
-        #         )
-        #     )
 
         data_graph_add((system.node, c223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = system
@@ -1747,15 +1726,19 @@ class SystemConnectionPoint(Node):
 
 
 class SystemInletConnectionPoint(SystemConnectionPoint):
-    pass
+    direction: URIRef = c223.Inlet
 
 
 class SystemOutletConnectionPoint(SystemConnectionPoint):
-    pass
+    direction: URIRef = c223.Outlet
 
 
 class System(Node):
-    """"""
+    """
+    System
+    """
+
+    node_type: URIRef = c223.System
 
     _connection_points: Dict[str, SystemConnectionPoint]
 
@@ -1768,9 +1751,6 @@ class System(Node):
                 raise RuntimeError("no label")
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
-
-        # <self> a System
-        data_graph_add((self.node, RDF.type, c223.System))
 
         # merge the annotations
         merged_annotations = {}
@@ -2049,15 +2029,14 @@ class System(Node):
 
 
 class Part(Node):
-    """"""
+    """
+    Part
+    """
 
     node_type: URIRef = c223.Part
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-
-        # <self> a Part
-        data_graph_add((self.node, RDF.type, c223.Part))
 
     def __gt__(self, other: Node) -> Node:
         """self > other
@@ -2124,9 +2103,6 @@ class Value(Node):
 
         super().__init__(**kwargs)
 
-        # <self> a Value
-        data_graph_add((self.node, RDF.type, c223.Value))
-
 
 class Property(Node):
     """"""
@@ -2149,9 +2125,6 @@ class Property(Node):
             init_value = arg
 
         super().__init__(**kwargs)
-
-        # <self> a Property
-        data_graph_add((self.node, RDF.type, c223.Property))
 
         # if there is an initial value, add/create and link to it
         if init_value is not None:
@@ -2199,9 +2172,6 @@ class QuantifiableProperty(Property):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-        # <self> a QuantifiableProperty
-        data_graph_add((self.node, RDF.type, c223.QuantifiableProperty))
-
 
 class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
     """
@@ -2213,9 +2183,6 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-        # <self> a QuantifiableActuatableProperty
-        data_graph_add((self.node, RDF.type, c223.QuantifiableActuatableProperty))
-
 
 class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
     """
@@ -2226,9 +2193,6 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-
-        # <self> a QuantifiableObservableProperty
-        data_graph_add((self.node, RDF.type, c223.QuantifiableObservableProperty))
 
 
 def dump(

@@ -46,19 +46,20 @@ class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoi
 
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
+    node_type = None
     substance = HotWater.node_type
 
 
 class HotWaterSystemInletConnectionPoint(
     SystemInletConnectionPoint, HotWaterSystemConnectionPoint
 ):
-    pass
+    node_type = None
 
 
 class HotWaterSystemOutletConnectionPoint(
     SystemOutletConnectionPoint, HotWaterSystemConnectionPoint
 ):
-    pass
+    node_type = None
 
 
 class HotWaterValve(Device):
