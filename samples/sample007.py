@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bob import bind_model_namespace, Device, Part, dump, clear
+from bob import bind_model_namespace, Device, dump, clear
 
 from header import sample_header
 
@@ -13,35 +13,35 @@ class TestDevice(Device):
     pass
 
 
-class Part1(Part):
+class Part1(Device):
     pass
 
 
-class Part2(Part):
+class Part2(Device):
     pass
 
 
 # device has two parts
-d = TestDevice(label="Test Device 1")
-p1 = Part1()
-p2 = Part2()
+d1 = TestDevice(label="Test Device 1")
+p11 = Part1(label="p11")
+p12 = Part2(label="p12")
 
-d > p1
-d > p2
+d1 > p11
+d1 > p12
 
 # device has a part p1 which has a part p2
-d = TestDevice(label="Test Device 2")
-p1 = Part1()
-p2 = Part2()
+d2 = TestDevice(label="Test Device 2")
+p21 = Part1(label="p21")
+p22 = Part2(label="p22")
 
-d > p1 > p2
+d2 > p21 > p22
 
 # p1 is a part of p2 which is a part of a device
-d = TestDevice(label="Test Device 3")
-p1 = Part1()
-p2 = Part2()
+d3 = TestDevice(label="Test Device 3")
+p31 = Part1(label="p31")
+p32 = Part2(label="p32")
 
-p1 < p2 < d
+p31 < p32 < d3
 
 # dump the result
 sample_header(model_name)

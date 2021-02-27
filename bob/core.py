@@ -1178,7 +1178,7 @@ class Device(Node):
 
         Build a part heirarchy.
         """
-        if not isinstance(other, Part):
+        if not isinstance(other, Device):
             raise TypeError("part expected")
 
         data_graph_add((self.node, c223.contains, other.node))
@@ -1191,7 +1191,7 @@ class Device(Node):
 
         Build a heirarchy, this is a device within a system.
         """
-        if not isinstance(other, System):
+        if not isinstance(other, (System, Device)):
             raise TypeError("system expected")
 
         data_graph_add((self.node, c223.isContainedIn, other.node))
@@ -2025,42 +2025,6 @@ class System(Node):
         else:
             raise NotImplementedError(f"from {other} to {self}")
 
-        return other
-
-
-class Part(Node):
-    """
-    Part
-    """
-
-    node_type: URIRef = c223.Part
-
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-
-    def __gt__(self, other: Node) -> Node:
-        """self > other
-
-        Build a part heirarchy, the other system is a direct part of
-        this system.
-        """
-        if not isinstance(other, (Device, Part)):
-            raise ValueError("device or part expected")
-
-        data_graph_add((self.node, c223.contains, other.node))
-        data_graph_add((other.node, c223.isContainedIn, self.node))
-        return self
-
-    def __lt__(self, other: Node) -> Node:
-        """self < other
-
-        Build a part heirarchy, this part is a direct part of the other part.
-        """
-        if not isinstance(other, (Device, Part)):
-            raise ValueError("device or part expected")
-
-        data_graph_add((self.node, c223.isContainedIn, other.node))
-        data_graph_add((other.node, c223.contains, self.node))
         return other
 
 
