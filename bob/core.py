@@ -539,6 +539,28 @@ class Substance(Node, metaclass=SubstanceMetaclass):
     pass
 
 
+class Junction(Node):
+    """
+    Junction.
+    """
+
+    node_type: URIRef = c223.Junction
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+
+class Segment(Node):
+    """
+    Segment.
+    """
+
+    node_type: URIRef = c223.Segment
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+
 class ConnectionMetaclass(NodeMetaclass):
     def __new__(
         cls: _Any,
@@ -570,7 +592,6 @@ class ConnectionMetaclass(NodeMetaclass):
         return new_class
 
 
-# @register_substance
 class Connection(Node, metaclass=ConnectionMetaclass):
     """
     Generic connection object type, unrestricted.
@@ -673,106 +694,6 @@ class Connection(Node, metaclass=ConnectionMetaclass):
             )
             data_graph_add(
                 (self.node, c223.connectsTo, connection_point.isConnectionPointOf.node)
-            )
-
-        # for chaining
-        return other
-
-    def __lshift__(
-        self, other: Union[ConnectionPoint, SystemConnectionPoint, Device, System]
-    ) -> Union[ConnectionPoint, SystemConnectionPoint, Device, System]:
-        """self << other"""
-
-        # look for <system> unconnected connection points for this connection type
-        unbound_connection_points = set()
-
-        if isinstance(other, (ConnectionPoint, SystemConnectionPoint)):
-            if other.connectsThrough:
-                raise RuntimeError(f"already connected: {other!r}")
-
-            other_substance = getattr(other, "substance", None)
-            if other_substance != self.substance:
-                raise TypeError("connection type")
-
-            # this is a candidate
-            unbound_connection_points.add(other)
-
-        elif isinstance(other, Device):
-            for (
-                connection_point_name,
-                connection_point,
-            ) in other._connection_points.items():
-                # check the connection direction
-                if isinstance(connection_point, InletConnectionPoint):
-                    continue
-                # the connection point must not be already connected
-                if connection_point.connectsThrough:
-                    continue
-
-                # the connection type needs to match
-                connection_point_type = getattr(connection_point, "substance", None)
-                if connection_point_type != self.substance:
-                    continue
-
-                # this is a candidate
-                unbound_connection_points.add(connection_point)
-
-        elif isinstance(other, System):
-            for (
-                connection_point_name,
-                connection_point,
-            ) in other._connection_points.items():
-                # check the connection direction
-                if isinstance(connection_point, SystemInletConnectionPoint):
-                    continue
-                # the connection point must not be already connected
-                if connection_point.connectsThrough:
-                    continue
-
-                # the connection type needs to match
-                connection_point_type = getattr(connection_point, "substance", None)
-                if connection_point_type != self.substance:
-                    continue
-
-                # this is a candidate
-                unbound_connection_points.add(connection_point)
-
-        else:
-            raise TypeError(f"{self!r} connection from {other!r}")
-
-        if not unbound_connection_points:
-            raise RuntimeError(f"no unbound connection points: {other!r}")
-        if len(unbound_connection_points) > 1:
-            raise RuntimeError(f"multiple unbound connection points: {other!r}")
-
-        # peek at the connection point and maybe include mapped connection points
-        connection_point = unbound_connection_points.pop()
-        if isinstance(connection_point, SystemConnectionPoint):
-            unbound_connection_points.update(connection_point._maps_to)
-        else:
-            unbound_connection_points.add(connection_point)
-        logging.info(f"connection: {self} << {unbound_connection_points}")
-
-        # loop around and link them up
-        for connection_point in unbound_connection_points:
-            # link connection to connection point and back
-            data_graph_add((self.node, c223.connectsAt, connection_point.node))
-            connection_point.connectsThrough = self
-
-            # link the connection to the "owner" of the connection point
-            data_graph_add(
-                (
-                    connection_point.isConnectionPointOf.node,
-                    c223.connectedThrough,
-                    self.node,
-                )
-            )
-            data_graph_add(
-                (
-                    self.node,
-                    c223.connectsFrom,
-                    connection_point.isConnectionPointOf.node,
-                )
             )
 
         # for chaining
@@ -932,133 +853,6 @@ class ConnectionPoint(Node):
 
         else:
             raise TypeError(f"{self!r} connection to {other!r}")
-
-    def __lshift__(
-        self, other: Any
-    ) -> Union[Connection, ConnectionPoint, Device, System]:
-        """self << other
-
-        Build a connection to this connection point from a connection or
-        another connection point.
-        """
-
-        self_substance: str
-        other_substance: str
-
-        if isinstance(other, Connection):
-            self_substance = getattr(self, "substance", None)
-            other_substance = getattr(other, "substance", None)
-            if self_substance != other_substance:
-                raise TypeError("connection point type")
-
-            logging.info(f"connection: {other} >> {self}")
-            if self.connectsThrough:
-                raise RuntimeError(
-                    f"already connected: {self} connects through {self.connectsThrough}"
-                )
-
-            # link connection to connection point and back
-            self.connectsThrough = other
-            data_graph_add((other.node, c223.connectsAt, self.node))
-
-            # link the connection points "owner" to the connection
-            data_graph_add(
-                (
-                    self.isConnectionPointOf.node,
-                    c223.connectedThrough,
-                    other.node,
-                )
-            )
-            data_graph_add(
-                (
-                    other.node,
-                    c223.connectsTo,
-                    self.isConnectionPointOf.node,
-                )
-            )
-
-            # for chaining
-            return other
-
-        elif isinstance(other, ConnectionPoint):
-            # check the direction
-            if isinstance(self, InletConnectionPoint):
-                raise TypeError(
-                    f"connection point direction: {other} is an inlet connection point"
-                )
-
-            # check the connection type
-            self_substance = getattr(self, "substance", None)
-            other_substance = getattr(other, "substance", None)
-            if self_substance != other_substance:
-                raise TypeError(
-                    "connection point type: "
-                    f"{self_substance!r} != {other_substance!r}"
-                )
-
-            # make sure they aren't already connected
-            if self.connectsThrough:
-                raise RuntimeError(
-                    f"already connected: {self} connects through {self.connectsThrough}"
-                )
-            if other.connectsThrough:
-                raise RuntimeError(
-                    f"already connected: {other} connects through {other.connectsThrough}"
-                )
-
-            # make a new connection
-            new_connection = substance_classes[self_substance]()
-            logging.info(f"connection: {other} >> {new_connection} >> {self}")
-
-            # link it up
-            new_connection << other
-            new_connection >> self
-
-            # for chaining
-            return other
-
-        elif isinstance(other, SystemConnectionPoint):
-            # check the direction
-            if isinstance(other, SystemInletConnectionPoint):
-                raise TypeError(
-                    f"connection point direction: {other} is a system inlet connection point"
-                )
-
-            # check the connection type
-            self_substance = getattr(self, "substance", None)
-            other_substance = getattr(other, "substance", None)
-            if self_substance != other_substance:
-                raise TypeError(
-                    "connection point type: "
-                    f"{self_substance!r} != {other_substance!r}"
-                )
-
-            # make sure they aren't already connected
-            if self.connectsThrough:
-                raise RuntimeError(
-                    f"already connected: {self} connects through {self.connectsThrough}"
-                )
-            # if other.connectsThrough:
-            #     raise RuntimeError(
-            #         f"already connected: {other} connects through {other.connectsThrough}"
-            #     )
-
-            # make a new connection
-            new_connection = substance_classes[self_substance]()
-            logging.info(f"connection: {other} >> {new_connection} >> {self}")
-
-            # link it up
-            new_connection << other
-            new_connection >> self
-
-            # for chaining
-            return other
-
-        elif isinstance(other, (Device, System)):
-            raise NotImplementedError(f"{self!r} connection from {other!r}")
-
-        else:
-            raise TypeError(f"{self!r} connection from {other!r}")
 
 
 class InletConnectionPoint(ConnectionPoint):
@@ -1303,110 +1097,6 @@ class Device(Node):
 
         return other
 
-    def __lshift__(self, other: Any) -> Any:
-        """self << other
-
-        Build a connection to this device from another device, connection, or
-        system.
-        """
-
-        if isinstance(other, Device):
-            Device.join_devices(other, self)
-        elif isinstance(other, Connection):
-            other >> self
-        elif isinstance(other, System):
-            from_out = defaultdict(set)
-            for attr, connection_point in other._connection_points.items():
-                if connection_point.connectsThrough:
-                    continue
-                if not isinstance(connection_point, SystemOutletConnectionPoint):
-                    continue
-
-                substance = getattr(connection_point, "substance", None)
-                from_out[substance].add(connection_point)
-
-            from_types = set(
-                substance for substance in from_out if len(from_out[substance]) == 1
-            )
-            if not from_types:
-                raise RuntimeError(f"no candidate sources from {other} to {self}")
-
-            to_in = defaultdict(set)
-            for attr, connection_point in self._connection_points.items():
-                if connection_point.connectsThrough:
-                    continue
-                if not isinstance(connection_point, InletConnectionPoint):
-                    continue
-
-                substance = getattr(connection_point, "substance", None)
-                to_in[substance].add(connection_point)
-
-            to_types = set(
-                substance for substance in to_in if len(to_in[substance]) == 1
-            )
-            if not to_types:
-                raise RuntimeError(f"no candidate destinations from {other} to {self}")
-
-            # find the connection type that has one unconnected <from> and
-            # one unconnected <to>
-            common_types = from_types.intersection(to_types)
-            if not common_types:
-                raise RuntimeError("no common connection types")
-            if len(common_types) > 1:
-                raise RuntimeError("too many common connection types")
-
-            substance = common_types.pop()
-            to_connection_point = to_in.pop()
-
-            # make a new connection
-            new_connection = substance_classes[substance]()
-            logging.info(f"connection: {other} >> {new_connection} >> {self}")
-
-            # link it up
-            new_connection << other
-            new_connection >> self
-
-        elif isinstance(other, (ConnectionPoint, SystemConnectionPoint)):
-            other_substance = getattr(other, "substance", None)
-            if other.connectsThrough:
-                raise RuntimeError(f"already connected: {other}")
-
-            self_in = set()
-            for attr, connection_point in self._connection_points.items():
-                if connection_point.connectsThrough:
-                    continue
-                if not isinstance(connection_point, InletConnectionPoint):
-                    continue
-
-                substance = getattr(connection_point, "substance", None)
-                if substance != other_substance:
-                    continue
-
-                self_in.add(connection_point)
-
-            if not self_in:
-                raise RuntimeError(f"no candidate sources from {other} to {self}")
-            if len(self_in) > 1:
-                raise RuntimeError(
-                    f"too many candidate destinations from {other} to {self}"
-                )
-            to_connection_point = self_in.pop()
-
-            # make a new connection
-            new_connection = substance_classes[other_substance]()
-            logging.info(
-                f"connection: {other} >> {new_connection} >> {to_connection_point}"
-            )
-
-            # link it up
-            new_connection << other
-            new_connection >> to_connection_point
-
-        else:
-            raise TypeError(f"{self!r} connection to {other!r}")
-
-        return other
-
 
 class SystemConnectionPoint(Node):
     """
@@ -1600,126 +1290,6 @@ class SystemConnectionPoint(Node):
 
         else:
             raise TypeError(f"{self!r} connection to {other!r}")
-
-        # for chaining
-        return other
-
-    def __lshift__(
-        self, other: Any
-    ) -> Union[Connection, ConnectionPoint, Device, SystemConnectionPoint, System]:
-        """self << other
-
-        Build a connection to this connection point from a connection or
-        another connection point.
-        """
-
-        self_substance: str
-        other_substance: str
-
-        if isinstance(other, Connection):
-            self_substance = getattr(self, "substance", None)
-            other_substance = getattr(other, "substance", None)
-            if self_substance != other_substance:
-                raise TypeError("connection point type")
-
-            logging.info(f"connection: {other} >> {self}")
-            if self.connectsThrough:
-                raise RuntimeError(
-                    f"already connected: {self} connects through {self.connectsThrough}"
-                )
-
-            # link connection to connection point and back
-            self.connectsThrough = other
-            data_graph_add((other.node, c223.connectsAt, self.node))
-
-            # link the connection points "owner" to the connection
-            data_graph_add(
-                (
-                    self.isConnectionPointOf.node,
-                    c223.connectedThrough,
-                    other.node,
-                )
-            )
-            data_graph_add(
-                (
-                    other.node,
-                    c223.connectsTo,
-                    self.isConnectionPointOf.node,
-                )
-            )
-
-        elif isinstance(other, (ConnectionPoint, SystemConnectionPoint)):
-            # check the direction
-            if isinstance(other, (InletConnectionPoint, SystemInletConnectionPoint)):
-                raise TypeError(
-                    f"connection point direction: {other} is an inlet connection point"
-                )
-
-            # check the connection type
-            self_substance = getattr(self, "substance", None)
-            other_substance = getattr(other, "substance", None)
-            if self_substance != other_substance:
-                raise TypeError(
-                    "connection point type: "
-                    f"{self_substance!r} != {other_substance!r}"
-                )
-
-            # make sure they aren't already connected
-            if self.connectsThrough:
-                raise RuntimeError(
-                    f"already connected: {self} connects through {self.connectsThrough}"
-                )
-            if other.connectsThrough:
-                raise RuntimeError(
-                    f"already connected: {other} connects through {other.connectsThrough}"
-                )
-
-            # make a new connection
-            new_connection = substance_classes[self_substance]()
-            logging.info(f"connection: {other} >> {new_connection} >> {self}")
-
-            # link it up
-            new_connection << other
-            new_connection >> self
-
-        elif isinstance(other, (Device, System)):
-            # check the connection type
-            self_substance = getattr(self, "substance", None)
-
-            from_out = set()
-            for attr, connection_point in other._connection_points.items():
-                if connection_point.connectsThrough:
-                    continue
-                if not isinstance(
-                    connection_point,
-                    (OutletConnectionPoint, SystemOutletConnectionPoint),
-                ):
-                    continue
-
-                substance = getattr(connection_point, "substance", None)
-                if substance != self_substance:
-                    continue
-
-                from_out.add(connection_point)
-
-            if not from_out:
-                raise RuntimeError(f"no candidate sources from {other} to {self}")
-            if len(from_out) > 1:
-                raise RuntimeError("too many candidate sources from {other} to {self}")
-            from_connection_point = from_out.pop()
-
-            # make a new connection
-            new_connection = substance_classes[self_substance]()
-            logging.info(
-                f"connection: {from_connection_point} >> {new_connection} >> {self}"
-            )
-
-            # link it up
-            new_connection << from_connection_point
-            new_connection >> self
-
-        else:
-            raise TypeError(f"{self!r} connection from {other!r}")
 
         # for chaining
         return other
@@ -1948,82 +1518,6 @@ class System(Node):
 
         else:
             raise NotImplementedError(f"from {self} to {other}")
-
-        return other
-
-    def __lshift__(self, other: Any) -> Any:
-        """self << other
-
-        Build a connection to this system from ...
-        """
-        logging.debug(f"__lshift__ {self} {other}")
-
-        if isinstance(other, System):
-            self.join_system(other, self)
-        elif isinstance(other, Device):
-            from_out = defaultdict(set)
-            for attr, connection_point in other._connection_points.items():
-                # print(f"*** {attr!r}: {connection_point}")
-                if connection_point.connectsThrough:
-                    # print("***     - connected")
-                    continue
-                if not isinstance(connection_point, OutletConnectionPoint):
-                    # print("***     - not an outlet")
-                    continue
-
-                substance = getattr(connection_point, "substance", None)
-                from_out[substance].add(connection_point)
-
-            # print(f"*** from_out: {from_out}")
-            from_types = set(
-                substance for substance in from_out if len(from_out[substance]) == 1
-            )
-            if not from_types:
-                raise RuntimeError(f"no candidate sources from {other} to {self}")
-
-            to_in = defaultdict(set)
-            for attr, connection_point in self._connection_points.items():
-                if connection_point.connectsThrough:
-                    continue
-                if not isinstance(connection_point, SystemInletConnectionPoint):
-                    continue
-
-                substance = getattr(connection_point, "substance", None)
-                to_in[substance].add(connection_point)
-
-            to_types = set(
-                substance for substance in to_in if len(to_in[substance]) == 1
-            )
-            if not to_types:
-                raise RuntimeError(f"no candidate destinations from {other} to {self}")
-
-            # find the connection type that has one unconnected <from> and
-            # one unconnected <to>
-            common_types = from_types.intersection(to_types)
-            if not common_types:
-                raise RuntimeError("no common connection types")
-            if len(common_types) > 1:
-                raise RuntimeError("too many common connection types")
-
-            substance = common_types.pop()
-            from_connection_point = from_out[substance].pop()
-            to_connection_point = to_in[substance].pop()
-
-            # make a new connection
-            new_connection = substance_classes[substance]()
-            logging.info(
-                f"connection: {from_connection_point} >> {new_connection} >> {to_connection_point}"
-            )
-
-            # link it up
-            new_connection << from_connection_point
-            new_connection >> to_connection_point
-
-        elif isinstance(other, Connection):
-            other >> self
-
-        else:
-            raise NotImplementedError(f"from {other} to {self}")
 
         return other
 

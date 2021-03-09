@@ -35,9 +35,6 @@ s1 = TestSystem(label="s1")
 d1 = TestDevice(label="d1")
 d1 < s1
 
-# pass through the system connection points
-# s1.cpOut << s1.cpIn
-
 # make a system and a device
 s2 = TestSystem(label="s2")
 d2 = TestDevice(label="d2")

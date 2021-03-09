@@ -36,12 +36,6 @@ s2 = TestSystem(label="s2")
 
 s1.cp >> s2.cp
 
-# s1 is connected from s2
-s1 = TestSystem(label="s1")
-s2 = TestSystem(label="s2")
-
-s1.cp << s2.cp
-
 # s1 is connected to s2, ambiguous
 s1 = TestSystem(label="s1")
 s2 = TestSystem(label="s2")

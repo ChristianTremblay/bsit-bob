@@ -103,13 +103,6 @@ s3 = SystemIn1(label="s3")
 
 s1 >> s2 >> s3
 
-# s3 << s2 << s1
-s1 = SystemOut1(label="s1")
-s2 = SystemInOut(label="s2")
-s3 = SystemIn1(label="s3")
-
-s3 << s2 << s1
-
 # dump the result
 sample_header(model_name)
 dump()
