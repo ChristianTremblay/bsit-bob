@@ -44,10 +44,10 @@ d2 = TestDevice(label="d2")
 d2 < s2
 
 # pass-in from the system to the device
-s2.cpIn > d2.cpIn
+s2.cpIn.mapsTo = d2.cpIn
 
 # pass-out from the device to the system
-d2.cpOut > s2.cpOut
+d2.cpOut.mapsTo = s2.cpOut
 
 # dump the result
 sample_header(model_name)

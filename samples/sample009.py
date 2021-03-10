@@ -3,6 +3,9 @@ from pathlib import Path
 import logging
 from bob.core import (
     bind_model_namespace,
+    Device,
+    InletConnectionPoint,
+    OutletConnectionPoint,
     System,
     SystemInletConnectionPoint,
     SystemOutletConnectionPoint,
@@ -17,27 +20,83 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
+class DeviceIn1(Device):
+    cp: InletConnectionPoint
+
+
 class SystemIn1(System):
     cp: SystemInletConnectionPoint
+
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+
+        device = DeviceIn1(label=kwargs["label"] + "-d")
+        self.cp.mapsTo = device.cp
+
+
+class DeviceIn2(Device):
+    cp1: InletConnectionPoint
+    cp2: InletConnectionPoint
 
 
 class SystemIn2(System):
     cp1: SystemInletConnectionPoint
     cp2: SystemInletConnectionPoint
 
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+
+        device = DeviceIn2(label=kwargs["label"] + "-d")
+        self.cp1.mapsTo = device.cp1
+        self.cp2.mapsTo = device.cp2
+
+
+class DeviceOut1(Device):
+    cp: OutletConnectionPoint
+
 
 class SystemOut1(System):
     cp: SystemOutletConnectionPoint
+
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+
+        device = DeviceOut1(label=kwargs["label"] + "-d")
+        self.cp.mapsTo = device.cp
+
+
+class DeviceOut2(Device):
+    cp1: OutletConnectionPoint
+    cp2: OutletConnectionPoint
 
 
 class SystemOut2(System):
     cp1: SystemOutletConnectionPoint
     cp2: SystemOutletConnectionPoint
 
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+
+        device = DeviceOut2(label=kwargs["label"] + "-d")
+        self.cp1.mapsTo = device.cp1
+        self.cp2.mapsTo = device.cp2
+
+
+class DeviceInOut(Device):
+    cp1: InletConnectionPoint
+    cp2: OutletConnectionPoint
+
 
 class SystemInOut(System):
     cp1: SystemInletConnectionPoint
     cp2: SystemOutletConnectionPoint
+
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+
+        device = DeviceInOut(label=kwargs["label"] + "-d")
+        self.cp1.mapsTo = device.cp1
+        self.cp2.mapsTo = device.cp2
 
 
 # two independant systems

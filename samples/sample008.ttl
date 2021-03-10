@@ -16,129 +16,235 @@
 
 ex:00001 a c223:System,
         ex:TestSystem ;
-    rdfs:label "s1" ;
+    rdfs:label "1-s1" ;
     c223:hasConnectionPoint ex:00002 ;
     ex:cp ex:00002 .
 
 ex:00002 a c223:SystemConnectionPoint ;
-    rdfs:label "s1.cp" ;
-    c223:isConnectionPointOf ex:00001 .
+    rdfs:label "1-s1.cp" ;
+    c223:isConnectionPointOf ex:00001 ;
+    c223:mapsTo ex:00004 .
 
-ex:00003 a c223:System,
-        ex:TestSystem ;
-    rdfs:label "s2" ;
+ex:00003 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "1-s1-d" ;
     c223:hasConnectionPoint ex:00004 ;
     ex:cp ex:00004 .
 
-ex:00004 a c223:SystemConnectionPoint ;
-    rdfs:label "s2.cp" ;
+ex:00004 a c223:ConnectionPoint ;
+    rdfs:label "1-s1-d.cp" ;
     c223:isConnectionPointOf ex:00003 .
 
 ex:00005 a c223:System,
         ex:TestSystem ;
-    rdfs:label "s1" ;
+    rdfs:label "1-s2" ;
     c223:hasConnectionPoint ex:00006 ;
-    c223:isContainedIn ex:00007 ;
     ex:cp ex:00006 .
 
 ex:00006 a c223:SystemConnectionPoint ;
-    rdfs:label "s1.cp" ;
-    c223:isConnectionPointOf ex:00005 .
+    rdfs:label "1-s2.cp" ;
+    c223:isConnectionPointOf ex:00005 ;
+    c223:mapsTo ex:00008 .
 
-ex:00007 a c223:System,
-        ex:TestSystem ;
-    rdfs:label "s2" ;
-    c223:contains ex:00005 ;
+ex:00007 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "1-s2-d" ;
     c223:hasConnectionPoint ex:00008 ;
     ex:cp ex:00008 .
 
-ex:00008 a c223:SystemConnectionPoint ;
-    rdfs:label "s2.cp" ;
+ex:00008 a c223:ConnectionPoint ;
+    rdfs:label "1-s2-d.cp" ;
     c223:isConnectionPointOf ex:00007 .
 
 ex:00009 a c223:System,
         ex:TestSystem ;
-    rdfs:label "s1" ;
-    c223:contains ex:00011 ;
+    rdfs:label "2-s1" ;
     c223:hasConnectionPoint ex:00010 ;
+    c223:isContainedIn ex:00013 ;
     ex:cp ex:00010 .
 
 ex:00010 a c223:SystemConnectionPoint ;
-    rdfs:label "s1.cp" ;
-    c223:isConnectionPointOf ex:00009 .
+    rdfs:label "2-s1.cp" ;
+    c223:isConnectionPointOf ex:00009 ;
+    c223:mapsTo ex:00012 .
 
-ex:00011 a c223:System,
-        ex:TestSystem ;
-    rdfs:label "s2" ;
+ex:00011 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "2-s1-d" ;
     c223:hasConnectionPoint ex:00012 ;
-    c223:isContainedIn ex:00009 ;
     ex:cp ex:00012 .
 
-ex:00012 a c223:SystemConnectionPoint ;
-    rdfs:label "s2.cp" ;
+ex:00012 a c223:ConnectionPoint ;
+    rdfs:label "2-s1-d.cp" ;
     c223:isConnectionPointOf ex:00011 .
 
 ex:00013 a c223:System,
         ex:TestSystem ;
-    rdfs:label "s1" ;
+    rdfs:label "2-s2" ;
+    c223:contains ex:00009 ;
     c223:hasConnectionPoint ex:00014 ;
     ex:cp ex:00014 .
 
 ex:00014 a c223:SystemConnectionPoint ;
-    rdfs:label "s1.cp" ;
-    c223:isConnectionPointOf ex:00013 .
+    rdfs:label "2-s2.cp" ;
+    c223:isConnectionPointOf ex:00013 ;
+    c223:mapsTo ex:00016 .
 
-ex:00015 a c223:System,
-        ex:TestSystem ;
-    rdfs:label "s2" ;
+ex:00015 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "2-s2-d" ;
     c223:hasConnectionPoint ex:00016 ;
     ex:cp ex:00016 .
 
-ex:00016 a c223:SystemConnectionPoint ;
-    rdfs:label "s2.cp" ;
+ex:00016 a c223:ConnectionPoint ;
+    rdfs:label "2-s2-d.cp" ;
     c223:isConnectionPointOf ex:00015 .
 
-ex:00017 a c223:Connection .
-
-ex:00018 a c223:System,
+ex:00017 a c223:System,
         ex:TestSystem ;
-    rdfs:label "s1" ;
-    c223:hasConnectionPoint ex:00019 ;
-    ex:cp ex:00019 .
+    rdfs:label "3-s1" ;
+    c223:contains ex:00021 ;
+    c223:hasConnectionPoint ex:00018 ;
+    ex:cp ex:00018 .
 
-ex:00019 a c223:SystemConnectionPoint ;
-    rdfs:label "s1.cp" ;
-    c223:isConnectionPointOf ex:00018 .
+ex:00018 a c223:SystemConnectionPoint ;
+    rdfs:label "3-s1.cp" ;
+    c223:isConnectionPointOf ex:00017 ;
+    c223:mapsTo ex:00020 .
 
-ex:00020 a c223:System,
+ex:00019 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "3-s1-d" ;
+    c223:hasConnectionPoint ex:00020 ;
+    ex:cp ex:00020 .
+
+ex:00020 a c223:ConnectionPoint ;
+    rdfs:label "3-s1-d.cp" ;
+    c223:isConnectionPointOf ex:00019 .
+
+ex:00021 a c223:System,
         ex:TestSystem ;
-    rdfs:label "s2" ;
-    c223:hasConnectionPoint ex:00021 ;
-    ex:cp ex:00021 .
+    rdfs:label "3-s2" ;
+    c223:hasConnectionPoint ex:00022 ;
+    c223:isContainedIn ex:00017 ;
+    ex:cp ex:00022 .
 
-ex:00021 a c223:SystemConnectionPoint ;
-    rdfs:label "s2.cp" ;
-    c223:isConnectionPointOf ex:00020 .
+ex:00022 a c223:SystemConnectionPoint ;
+    rdfs:label "3-s2.cp" ;
+    c223:isConnectionPointOf ex:00021 ;
+    c223:mapsTo ex:00024 .
 
-ex:00022 a c223:Connection .
-
-ex:00023 a c223:System,
-        ex:TestSystem ;
-    rdfs:label "s1" ;
+ex:00023 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "3-s2-d" ;
     c223:hasConnectionPoint ex:00024 ;
     ex:cp ex:00024 .
 
-ex:00024 a c223:SystemConnectionPoint ;
-    rdfs:label "s1.cp" ;
+ex:00024 a c223:ConnectionPoint ;
+    rdfs:label "3-s2-d.cp" ;
     c223:isConnectionPointOf ex:00023 .
 
 ex:00025 a c223:System,
         ex:TestSystem ;
-    rdfs:label "s2" ;
+    rdfs:label "4-s1" ;
     c223:hasConnectionPoint ex:00026 ;
     ex:cp ex:00026 .
 
 ex:00026 a c223:SystemConnectionPoint ;
-    rdfs:label "s2.cp" ;
-    c223:isConnectionPointOf ex:00025 .
+    rdfs:label "4-s1.cp" ;
+    c223:isConnectionPointOf ex:00025 ;
+    c223:mapsTo ex:00028 .
+
+ex:00027 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "4-s1-d" ;
+    c223:connectedThrough ex:00033 ;
+    c223:hasConnectionPoint ex:00028 ;
+    ex:cp ex:00028 .
+
+ex:00028 a c223:ConnectionPoint ;
+    rdfs:label "4-s1-d.cp" ;
+    c223:connectsThrough ex:00033 ;
+    c223:isConnectionPointOf ex:00027 .
+
+ex:00029 a c223:System,
+        ex:TestSystem ;
+    rdfs:label "4-s2" ;
+    c223:hasConnectionPoint ex:00030 ;
+    ex:cp ex:00030 .
+
+ex:00030 a c223:SystemConnectionPoint ;
+    rdfs:label "4-s2.cp" ;
+    c223:isConnectionPointOf ex:00029 ;
+    c223:mapsTo ex:00032 .
+
+ex:00031 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "4-s2-d" ;
+    c223:connectedThrough ex:00033 ;
+    c223:hasConnectionPoint ex:00032 ;
+    ex:cp ex:00032 .
+
+ex:00032 a c223:ConnectionPoint ;
+    rdfs:label "4-s2-d.cp" ;
+    c223:connectsThrough ex:00033 ;
+    c223:isConnectionPointOf ex:00031 .
+
+ex:00033 a c223:Connection ;
+    c223:connectsAt ex:00028,
+        ex:00032 ;
+    c223:connectsFrom ex:00027 ;
+    c223:connectsTo ex:00031 .
+
+ex:00034 a c223:System,
+        ex:TestSystem ;
+    rdfs:label "5-s1" ;
+    c223:hasConnectionPoint ex:00035 ;
+    ex:cp ex:00035 .
+
+ex:00035 a c223:SystemConnectionPoint ;
+    rdfs:label "5-s1.cp" ;
+    c223:isConnectionPointOf ex:00034 ;
+    c223:mapsTo ex:00037 .
+
+ex:00036 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "5-s1-d" ;
+    c223:connectedThrough ex:00042 ;
+    c223:hasConnectionPoint ex:00037 ;
+    ex:cp ex:00037 .
+
+ex:00037 a c223:ConnectionPoint ;
+    rdfs:label "5-s1-d.cp" ;
+    c223:connectsThrough ex:00042 ;
+    c223:isConnectionPointOf ex:00036 .
+
+ex:00038 a c223:System,
+        ex:TestSystem ;
+    rdfs:label "5-s2" ;
+    c223:hasConnectionPoint ex:00039 ;
+    ex:cp ex:00039 .
+
+ex:00039 a c223:SystemConnectionPoint ;
+    rdfs:label "5-s2.cp" ;
+    c223:isConnectionPointOf ex:00038 ;
+    c223:mapsTo ex:00041 .
+
+ex:00040 a c223:Device,
+        ex:TestDevice ;
+    rdfs:label "5-s2-d" ;
+    c223:connectedThrough ex:00042 ;
+    c223:hasConnectionPoint ex:00041 ;
+    ex:cp ex:00041 .
+
+ex:00041 a c223:ConnectionPoint ;
+    rdfs:label "5-s2-d.cp" ;
+    c223:connectsThrough ex:00042 ;
+    c223:isConnectionPointOf ex:00040 .
+
+ex:00042 a c223:Connection ;
+    c223:connectsAt ex:00037,
+        ex:00041 ;
+    c223:connectsFrom ex:00036 ;
+    c223:connectsTo ex:00040 .
 
