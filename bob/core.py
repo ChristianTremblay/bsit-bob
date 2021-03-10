@@ -553,6 +553,7 @@ class Junction(Node):
     """
 
     node_type: URIRef = c223.Junction
+    substance: URIRef
     _lnx: Set[Segment]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -614,6 +615,7 @@ class Segment(Node):
     """
 
     node_type: URIRef = c223.Segment
+    substance: URIRef
     _lnx: Set[Union[Junction, ConnectionPoint]]
 
     def __init__(self, **kwargs: Any) -> None:

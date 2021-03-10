@@ -95,14 +95,16 @@ class ChilledWaterCoil2(System):
 
         # create a hot water coil
         self.chilled_water_coil = ChilledWaterCoil(label=self.label + ".cw_coil")
-        self.airInlet > self.chilled_water_coil.airInlet
-        self.airOutlet > self.chilled_water_coil.airOutlet
+        self.airInlet.mapsTo = self.chilled_water_coil.airInlet
+        self.airOutlet.mapsTo = self.chilled_water_coil.airOutlet
 
         # create a hot water valve
         self.chilled_water_valve = ChilledWaterValve(label=self.label + ".cw_valve")
-        self.chilledWaterSupply > self.chilled_water_valve.chilledWaterInlet
+        self.chilledWaterSupply.mapsTo = self.chilled_water_valve.chilledWaterInlet
+        self.chilledWaterReturn.mapsTo = self.chilled_water_coil.chilledWaterOutlet
+
+        # connect the valve to the coil
         self.chilled_water_valve >> self.chilled_water_coil
-        self.chilledWaterReturn > self.chilled_water_coil.chilledWaterOutlet
 
         # reference the valve position
         self.chilled_water_valve_pos = self.chilled_water_valve.position
