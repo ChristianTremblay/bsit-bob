@@ -593,6 +593,20 @@ class Junction(Node):
         segment.link_to(other)
         segment.link_to(self)
 
+    def __rshift__(self, other: Any) -> Any:
+        """
+        Build a connection (actaully a segment) from this thing to another thing.
+        """
+        self.connect_to(other)
+        return other
+
+    def __lshift__(self, other: Any) -> Any:
+        """
+        Build a connection (actually a segment) to this thing from another thing.
+        """
+        self.connect_to(other)
+        return self
+
 
 class Segment(Node):
     """
