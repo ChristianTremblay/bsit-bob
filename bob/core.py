@@ -353,12 +353,20 @@ class NodeMetaclass(type):
                         schema_graph_add(
                             (_attr_uriref[attr], RDFS.subPropertyOf, c223.hasProperty)
                         )
-                    if issubclass(attr_type, (ConnectionPoint, SystemConnectionPoint)):
+                    if issubclass(attr_type, ConnectionPoint):
                         schema_graph_add(
                             (
                                 _attr_uriref[attr],
                                 RDFS.subPropertyOf,
                                 c223.hasConnectionPoint,
+                            )
+                        )
+                    if issubclass(attr_type, SystemConnectionPoint):
+                        schema_graph_add(
+                            (
+                                _attr_uriref[attr],
+                                RDFS.subPropertyOf,
+                                c223.hasSystemConnectionPoint,
                             )
                         )
 
@@ -918,17 +926,17 @@ class SystemConnectionPoint(Node):
     node_type: URIRef = c223.SystemConnectionPoint
 
     connectsThrough: Connection
-    isConnectionPointOf: System
+    isSystemConnectionPointOf: System
     mapsTo: Node  # Union[Junction, ConnectionPoint]
 
     def __init__(self, system: System, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        data_graph_add((system.node, c223.hasConnectionPoint, self.node))
-        self.isConnectionPointOf = system
+        data_graph_add((system.node, c223.hasSystemConnectionPoint, self.node))
+        self.isSystemConnectionPointOf = system
 
-        # this is one of the connection points of the connectable
-        system._connection_points[str(self.node)] = self
+        # this is one of the connection points of the system
+        system._system_connection_points[str(self.node)] = self
 
 
 class SystemInletConnectionPoint(SystemConnectionPoint):
@@ -946,7 +954,7 @@ class System(Node):
 
     node_type: URIRef = c223.System
 
-    _connection_points: Dict[str, SystemConnectionPoint]
+    _system_connection_points: Dict[str, SystemConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
         logging.debug(f"System.__init__ {kwargs}")
@@ -964,7 +972,7 @@ class System(Node):
             merged_annotations.update(cls.__annotations__)
 
         # instantiate and associate all of the system connection points
-        self._connection_points = {}
+        self._system_connection_points = {}
         for var_name, var_annotation in merged_annotations.items():
             if var_name.startswith("_"):
                 continue
@@ -986,7 +994,7 @@ class System(Node):
 
             # build an instance of this connection point
             var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._connection_points[var_name] = var_element
+            self._system_connection_points[var_name] = var_element
             logging.debug(f"    - connection point {var_name}: {var_element}")
 
             setattr(self, var_name, var_element)
@@ -1202,7 +1210,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         from_out[substance].add(connection_point)
 
     elif isinstance(from_thing, System):
-        for attr, connection_point in from_thing._connection_points.items():
+        for attr, connection_point in from_thing._system_connection_points.items():
             if not connection_point.mapsTo:
                 continue
             connection_point = connection_point.mapsTo
@@ -1269,7 +1277,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         to_in[substance].add(connection_point)
 
     elif isinstance(to_thing, System):
-        for attr, connection_point in to_thing._connection_points.items():
+        for attr, connection_point in to_thing._system_connection_points.items():
             if not connection_point.mapsTo:
                 continue
             connection_point = connection_point.mapsTo

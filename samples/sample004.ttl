@@ -52,16 +52,16 @@ ex:00004 a c223:System,
     c223:contains ex:00007,
         ex:00011 ;
     c223:damperPosition ex:00012 ;
-    c223:hasConnectionPoint ex:00005,
-        ex:00006 ;
     c223:hasProperty ex:00008,
-        ex:00012 .
+        ex:00012 ;
+    c223:hasSystemConnectionPoint ex:00005,
+        ex:00006 .
 
 ex:00005 a c223:SystemConnectionPoint,
         c223:SystemInletConnectionPoint ;
     rdfs:label "Zone.VAV.airInlet" ;
     c223:direction c223:Inlet ;
-    c223:isConnectionPointOf ex:00004 ;
+    c223:isSystemConnectionPointOf ex:00004 ;
     c223:mapsTo ex:00009 ;
     c223:substance c223:Air .
 
@@ -69,7 +69,7 @@ ex:00006 a c223:SystemConnectionPoint,
         c223:SystemOutletConnectionPoint ;
     rdfs:label "Zone.VAV.airOutlet" ;
     c223:direction c223:Outlet ;
-    c223:isConnectionPointOf ex:00004 ;
+    c223:isSystemConnectionPointOf ex:00004 ;
     c223:mapsTo ex:00014 ;
     c223:substance c223:Air .
 
