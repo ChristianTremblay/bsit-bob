@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/sample001/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -16,7 +17,7 @@
   rdfs:label "sample001" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex:00001 a c223:Device,
+ex:00001 a d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 1" ;
     c223:hasProperty ex:00003 .
@@ -33,7 +34,7 @@ ex:00003 a c223:Property,
     c223:isPropertyOf ex:00001 ;
     ex:hasQuantityKind quantitykind:Temperature .
 
-ex:00004 a c223:Device,
+ex:00004 a d223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 2" ;
     c223:hasProperty ex:00005 .
@@ -51,7 +52,7 @@ ex:00006 a c223:Value,
     c223:isValueOf ex:00005 ;
     ex:hasUnits qudt:DEG_F .
 
-ex:00007 a c223:Device,
+ex:00007 a d223:Device,
         ex:TestDevice2 ;
     rdfs:label "Test Device 3" ;
     c223:hasProperty ex:00008 ;

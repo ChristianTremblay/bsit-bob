@@ -840,7 +840,7 @@ class Device(Node):
     A type of thing that can has connection points.
     """
 
-    node_type: URIRef = c223.Device
+    node_type: URIRef = d223.Device
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
