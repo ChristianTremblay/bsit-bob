@@ -30,11 +30,11 @@ class HotWater(Substance):
 
 
 class HotWaterConnection(Connection):
-    substance = HotWater.node_type
+    hasSubstance = HotWater.node_type
 
 
 class HotWaterConnectionPoint(ConnectionPoint):
-    substance = HotWater.node_type
+    hasSubstance = HotWater.node_type
 
 
 class HotWaterInletConnectionPoint(InletConnectionPoint, HotWaterConnectionPoint):
@@ -47,7 +47,7 @@ class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoi
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
     node_type = None
-    substance = HotWater.node_type
+    hasSubstance = HotWater.node_type
 
 
 class HotWaterSystemInletConnectionPoint(

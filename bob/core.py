@@ -561,7 +561,7 @@ class Junction(Node):
     """
 
     node_type: URIRef = c223.Junction
-    substance: URIRef
+    hasSubstance: URIRef
     _lnx: Set[Segment]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -623,7 +623,7 @@ class Segment(Node):
     """
 
     node_type: URIRef = c223.Segment
-    substance: URIRef
+    hasSubstance: URIRef
     _lnx: Set[Union[Junction, ConnectionPoint]]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -679,7 +679,7 @@ class ConnectionMetaclass(NodeMetaclass):
 
         # if the class has a 'substance' initialized then register this
         # class for the substance
-        substance = new_class._inits.get("substance", None)
+        substance = new_class._inits.get("hasSubstance", None)
         logging.debug(f"    - connection substance: {substance!r}")
 
         # make sure it's not already defined someplace else
@@ -698,7 +698,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     """
 
     node_type: URIRef = c223.Connection
-    substance: URIRef
+    hasSubstance: URIRef
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -760,8 +760,8 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
 class ConnectionPoint(Node):
     node_type: URIRef = c223.ConnectionPoint
-    substance: URIRef  # identifier of a subclass of Substance
-    direction: URIRef  # one of c223.Inlet, c223.Outlet, c223.Bidirectional
+    hasSubstance: URIRef  # identifier of a subclass of Substance
+    hasDirection: URIRef  # one of c223.Inlet, c223.Outlet, c223.Bidirectional
 
     lnx: Segment
     connectsThrough: Connection
@@ -805,8 +805,8 @@ class ConnectionPoint(Node):
             connection = other
         elif isinstance(other, ConnectionPoint):
             connection = Connection()
-            if self.substance:
-                connection.substance = self.substance
+            if self.hasSubstance:
+                connection.hasSubstance = self.hasSubstance
             connection.connect_to(other)
         else:
             raise TypeError("connection or connection point expected")
@@ -825,8 +825,8 @@ class ConnectionPoint(Node):
             connection = other
         elif isinstance(other, ConnectionPoint):
             connection = Connection()
-            if self.substance:
-                connection.substance = self.substance
+            if self.hasSubstance:
+                connection.hasSubstance = self.hasSubstance
             connection.connect_from(other)
         else:
             raise TypeError("connection or connection point expected")
@@ -836,11 +836,11 @@ class ConnectionPoint(Node):
 
 
 class InletConnectionPoint(ConnectionPoint):
-    direction: URIRef = c223.Inlet
+    hasDirection: URIRef = c223.Inlet
 
 
 class OutletConnectionPoint(ConnectionPoint):
-    direction: URIRef = c223.Outlet
+    hasDirection: URIRef = c223.Outlet
 
 
 class Device(Node):
@@ -940,11 +940,11 @@ class SystemConnectionPoint(Node):
 
 
 class SystemInletConnectionPoint(SystemConnectionPoint):
-    direction: URIRef = c223.Inlet
+    hasDirection: URIRef = c223.Inlet
 
 
 class SystemOutletConnectionPoint(SystemConnectionPoint):
-    direction: URIRef = c223.Outlet
+    hasDirection: URIRef = c223.Outlet
 
 
 class System(Node):
@@ -1175,7 +1175,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     from_out = defaultdict(set)
     if isinstance(from_thing, ConnectionPoint):
-        substance = getattr(from_thing, "substance", None)
+        substance = getattr(from_thing, "hasSubstance", None)
         from_out[substance].add(from_thing)
 
     elif isinstance(from_thing, Connection):
@@ -1188,7 +1188,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             if not isinstance(connection_point, OutletConnectionPoint):
                 continue
 
-            substance = getattr(connection_point, "substance", None)
+            substance = getattr(connection_point, "hasSubstance", None)
             from_out[substance].add(connection_point)
 
     elif isinstance(from_thing, SystemConnectionPoint):
@@ -1206,7 +1206,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         elif isinstance(connection_point, Junction):
             pass
 
-        substance = getattr(connection_point, "substance", None)
+        substance = getattr(connection_point, "hasSubstance", None)
         from_out[substance].add(connection_point)
 
     elif isinstance(from_thing, System):
@@ -1223,7 +1223,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            substance = getattr(connection_point, "substance", None)
+            substance = getattr(connection_point, "hasSubstance", None)
             from_out[substance].add(connection_point)
 
     else:
@@ -1231,7 +1231,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     from_types: Set[URIRef]
     if isinstance(from_thing, Connection):
-        from_types = set([from_thing.substance])
+        from_types = set([from_thing.hasSubstance])
     else:
         from_types = set(
             substance for substance in from_out if len(from_out[substance]) == 1
@@ -1242,7 +1242,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     to_in = defaultdict(set)
     if isinstance(to_thing, ConnectionPoint):
-        substance = getattr(to_thing, "substance", None)
+        substance = getattr(to_thing, "hasSubstance", None)
         to_in[substance].add(to_thing)
 
     elif isinstance(to_thing, Connection):
@@ -1255,7 +1255,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             if not isinstance(connection_point, InletConnectionPoint):
                 continue
 
-            substance = getattr(connection_point, "substance", None)
+            substance = getattr(connection_point, "hasSubstance", None)
             to_in[substance].add(connection_point)
 
     elif isinstance(to_thing, SystemConnectionPoint):
@@ -1273,7 +1273,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         elif isinstance(connection_point, Junction):
             pass
 
-        substance = getattr(connection_point, "substance", None)
+        substance = getattr(connection_point, "hasSubstance", None)
         to_in[substance].add(connection_point)
 
     elif isinstance(to_thing, System):
@@ -1290,7 +1290,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            substance = getattr(connection_point, "substance", None)
+            substance = getattr(connection_point, "hasSubstance", None)
             to_in[substance].add(connection_point)
 
     else:
@@ -1298,7 +1298,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     to_types: Set[URIRef]
     if isinstance(to_thing, Connection):
-        to_types = set([to_thing.substance])
+        to_types = set([to_thing.hasSubstance])
     else:
         to_types = set(substance for substance in to_in if len(to_in[substance]) == 1)
         if not to_types:

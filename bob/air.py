@@ -21,11 +21,11 @@ class Air(Substance):
 
 
 class AirConnection(Connection):
-    substance: URIRef = Air.node_type
+    hasSubstance: URIRef = Air.node_type
 
 
 class AirConnectionPoint(ConnectionPoint):
-    substance: URIRef = Air.node_type
+    hasSubstance: URIRef = Air.node_type
 
 
 class AirInletConnectionPoint(AirConnectionPoint, InletConnectionPoint):
@@ -38,7 +38,7 @@ class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
 
 class AirSystemConnectionPoint(SystemConnectionPoint):
     node_type = None
-    substance: URIRef = Air.node_type
+    hasSubstance: URIRef = Air.node_type
 
 
 class AirInletSystemConnectionPoint(
