@@ -35,19 +35,16 @@ s1 = TestSystem(label="s1")
 d1 = TestDevice(label="d1")
 d1 < s1
 
-# pass through the system connection points
-# s1.cpOut << s1.cpIn
-
 # make a system and a device
 s2 = TestSystem(label="s2")
 d2 = TestDevice(label="d2")
 d2 < s2
 
 # pass-in from the system to the device
-d2.cpIn < s2.cpIn
+s2.cpIn.mapsTo = d2.cpIn
 
 # pass-out from the device to the system
-s2.cpOut < d2.cpOut
+s2.cpOut.mapsTo = d2.cpOut
 
 # dump the result
 sample_header(model_name)

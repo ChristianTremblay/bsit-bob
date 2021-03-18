@@ -1,5 +1,6 @@
 from bob.core import (
     bind_model_namespace,
+    Junction,
     Connection,
     Device,
     InletConnectionPoint,
@@ -55,13 +56,24 @@ d8 < s1
 d9 < s1
 
 # map the system conncetion points
-s1.cpIn1 > d5.cpIn
-s1.cpOut1 < d5.cpOut
+s1.cpIn1.mapsTo = d5.cpIn
+s1.cpOut1.mapsTo = d5.cpOut
 
-s1.cpIn2 > d8.cpIn
-s1.cpIn2 > d9.cpIn
-s1.cpOut2 < d8.cpOut
-s1.cpOut2 < d9.cpOut
+# someday maybe: s1.cpIn2 >> [d8, d9]
+
+# make a junction on the inlet side
+j1 = Junction()
+j1 >> d8.cpIn
+j1 >> d9.cpIn
+s1.cpIn2.mapsTo = j1
+
+# someday maybe: s1.cpOut2 >> [d8, d9]
+
+# make a junction on the outlet side
+j2 = Junction()
+j2 >> d8.cpOut
+j2 >> d9.cpOut
+s1.cpOut2.mapsTo = j2
 
 # simple connections
 d1 >> c1 >> d2
