@@ -7,8 +7,8 @@ from bob.core import (
     InletConnectionPoint,
     OutletConnectionPoint,
     System,
-    SystemInletConnectionPoint,
-    SystemOutletConnectionPoint,
+    InletSystemConnectionPoint,
+    OutletSystemConnectionPoint,
     dump,
     clear,
 )
@@ -25,7 +25,7 @@ class DeviceIn1(Device):
 
 
 class SystemIn1(System):
-    cp: SystemInletConnectionPoint
+    cp: InletSystemConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -40,8 +40,8 @@ class DeviceIn2(Device):
 
 
 class SystemIn2(System):
-    cp1: SystemInletConnectionPoint
-    cp2: SystemInletConnectionPoint
+    cp1: InletSystemConnectionPoint
+    cp2: InletSystemConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -56,7 +56,7 @@ class DeviceOut1(Device):
 
 
 class SystemOut1(System):
-    cp: SystemOutletConnectionPoint
+    cp: OutletSystemConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -71,8 +71,8 @@ class DeviceOut2(Device):
 
 
 class SystemOut2(System):
-    cp1: SystemOutletConnectionPoint
-    cp2: SystemOutletConnectionPoint
+    cp1: OutletSystemConnectionPoint
+    cp2: OutletSystemConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -88,8 +88,8 @@ class DeviceInOut(Device):
 
 
 class SystemInOut(System):
-    cp1: SystemInletConnectionPoint
-    cp2: SystemOutletConnectionPoint
+    cp1: InletSystemConnectionPoint
+    cp2: OutletSystemConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)

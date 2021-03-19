@@ -8,8 +8,8 @@ from bob.core import (
     OutletConnectionPoint,
     System,
     SystemConnectionPoint,
-    SystemInletConnectionPoint,
-    SystemOutletConnectionPoint,
+    InletSystemConnectionPoint,
+    OutletSystemConnectionPoint,
     dump,
 )
 
@@ -21,8 +21,8 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TestSystem(System):
-    cpIn: SystemInletConnectionPoint
-    cpOut: SystemOutletConnectionPoint
+    cpIn: InletSystemConnectionPoint
+    cpOut: OutletSystemConnectionPoint
 
 
 class TestDevice(Device):

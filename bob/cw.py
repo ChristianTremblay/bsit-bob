@@ -10,8 +10,8 @@ from .core import (
     OutletConnectionPoint,
     System,
     SystemConnectionPoint,
-    SystemInletConnectionPoint,
-    SystemOutletConnectionPoint,
+    InletSystemConnectionPoint,
+    OutletSystemConnectionPoint,
 )
 from .air import (
     AirInletConnectionPoint,
@@ -53,14 +53,14 @@ class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
     hasSubstance = ChilledWater.node_type
 
 
-class ChilledWaterSystemInlet(
-    SystemInletConnectionPoint, ChilledWaterSystemConnectionPoint
+class ChilledWaterInletSystemConnectionPoint(
+    InletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
     node_type = None
 
 
-class ChilledWaterSystemOutlet(
-    SystemOutletConnectionPoint, ChilledWaterSystemConnectionPoint
+class ChilledWaterOutletSystemConnectionPoint(
+    OutletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
     node_type = None
 
@@ -87,8 +87,8 @@ class ChilledWaterCoil2(System):
 
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
-    chilledWaterSupply: ChilledWaterSystemInlet
-    chilledWaterReturn: ChilledWaterSystemOutlet
+    chilledWaterSupply: ChilledWaterInletSystemConnectionPoint
+    chilledWaterReturn: ChilledWaterOutletSystemConnectionPoint
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)

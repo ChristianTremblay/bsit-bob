@@ -9,7 +9,7 @@ class A(Device):
 
 
 class X(System):
-    cOut: SystemOutletConnectionPoint
+    cOut: OutletSystemConnectionPoint
 
 
 class B(Device):
@@ -17,7 +17,7 @@ class B(Device):
 
 
 class Y(System):
-    cIn: SystemInletConnectionPoint
+    cIn: InletSystemConnectionPoint
 
 
 a = A(label="a")
