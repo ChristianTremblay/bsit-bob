@@ -939,11 +939,11 @@ class SystemConnectionPoint(Node):
         system._system_connection_points[str(self.node)] = self
 
 
-class SystemInletConnectionPoint(SystemConnectionPoint):
+class InletSystemConnectionPoint(SystemConnectionPoint):
     hasDirection: URIRef = c223.Inlet
 
 
-class SystemOutletConnectionPoint(SystemConnectionPoint):
+class OutletSystemConnectionPoint(SystemConnectionPoint):
     hasDirection: URIRef = c223.Outlet
 
 

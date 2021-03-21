@@ -6,8 +6,8 @@ from bob.core import (
     InletConnectionPoint,
     OutletConnectionPoint,
     System,
-    SystemInletConnectionPoint,
-    SystemOutletConnectionPoint,
+    InletSystemConnectionPoint,
+    OutletSystemConnectionPoint,
     dump,
     clear,
 )
@@ -29,10 +29,10 @@ class DeviceOut(Device):
 
 
 class SystemInOut(System):
-    cpIn1: SystemInletConnectionPoint
-    cpIn2: SystemInletConnectionPoint
-    cpOut1: SystemOutletConnectionPoint
-    cpOut2: SystemOutletConnectionPoint
+    cpIn1: InletSystemConnectionPoint
+    cpIn2: InletSystemConnectionPoint
+    cpOut1: OutletSystemConnectionPoint
+    cpOut2: OutletSystemConnectionPoint
 
 
 d1 = DeviceInOut(label="D1")

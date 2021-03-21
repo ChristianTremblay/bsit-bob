@@ -8,8 +8,8 @@ from bob.core import (
     OutletConnectionPoint,
     System,
     SystemConnectionPoint,
-    SystemInletConnectionPoint,
-    SystemOutletConnectionPoint,
+    InletSystemConnectionPoint,
+    OutletSystemConnectionPoint,
     dump,
     clear,
 )
@@ -53,8 +53,8 @@ s3 = System(label="s3")
 s4 = System(label="s4")
 
 # create some directional connection points on the fly
-s3_ocp = SystemOutletConnectionPoint(s3, label="s3.ocp", mapsTo=d3_cp)
-s4_icp = SystemInletConnectionPoint(s4, label="s4.icp", mapsTo=d4_cp)
+s3_ocp = OutletSystemConnectionPoint(s3, label="s3.ocp", mapsTo=d3_cp)
+s4_icp = InletSystemConnectionPoint(s4, label="s4.icp", mapsTo=d4_cp)
 
 # connect the systems together
 s3 >> s4

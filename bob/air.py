@@ -7,8 +7,8 @@ from .core import (
     InletConnectionPoint,
     OutletConnectionPoint,
     SystemConnectionPoint,
-    SystemInletConnectionPoint,
-    SystemOutletConnectionPoint,
+    InletSystemConnectionPoint,
+    OutletSystemConnectionPoint,
     Device,
 )
 from .signal import AnalogIn, AnalogOut
@@ -42,13 +42,13 @@ class AirSystemConnectionPoint(SystemConnectionPoint):
 
 
 class AirInletSystemConnectionPoint(
-    AirSystemConnectionPoint, SystemInletConnectionPoint
+    AirSystemConnectionPoint, InletSystemConnectionPoint
 ):
     node_type = None
 
 
 class AirOutletSystemConnectionPoint(
-    AirSystemConnectionPoint, SystemOutletConnectionPoint
+    AirSystemConnectionPoint, OutletSystemConnectionPoint
 ):
     node_type = None
 
