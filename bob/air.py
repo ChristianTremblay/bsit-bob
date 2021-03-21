@@ -22,23 +22,25 @@ class Air(Substance):
 
 class AirConnection(Connection):
     hasSubstance: URIRef = Air.node_type
+    node_type = None
 
 
 class AirConnectionPoint(ConnectionPoint):
     hasSubstance: URIRef = Air.node_type
+    node_type = None
 
 
 class AirInletConnectionPoint(AirConnectionPoint, InletConnectionPoint):
-    pass
+    node_type = None
 
 
 class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
-    pass
+    node_type = None
 
 
 class AirSystemConnectionPoint(SystemConnectionPoint):
-    node_type = None
     hasSubstance: URIRef = Air.node_type
+    node_type = None
 
 
 class AirInletSystemConnectionPoint(

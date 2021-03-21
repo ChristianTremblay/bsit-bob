@@ -15,8 +15,7 @@
   rdfs:label "sample003" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex:00001 a c223:ChilledWaterConnection,
-        c223:Connection ;
+ex:00001 a c223:Connection ;
     c223:connectsAt ex:00005 ;
     c223:connectsTo ex:00002 ;
     c223:hasSubstance c223:ChilledWater .
@@ -36,9 +35,7 @@ ex:00002 a c223:ChilledWaterCoil,
         ex:00005,
         ex:00006 .
 
-ex:00003 a c223:AirConnectionPoint,
-        c223:AirInletConnectionPoint,
-        c223:ConnectionPoint,
+ex:00003 a c223:ConnectionPoint,
         c223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
     c223:connectsThrough ex:00010 ;
@@ -46,9 +43,7 @@ ex:00003 a c223:AirConnectionPoint,
     c223:hasSubstance c223:Air ;
     c223:isConnectionPointOf ex:00002 .
 
-ex:00004 a c223:AirConnectionPoint,
-        c223:AirOutletConnectionPoint,
-        c223:ConnectionPoint,
+ex:00004 a c223:ConnectionPoint,
         c223:OutletConnectionPoint ;
     rdfs:label "CW-Coil-1.airOutlet" ;
     c223:connectsThrough ex:00014 ;
@@ -56,9 +51,7 @@ ex:00004 a c223:AirConnectionPoint,
     c223:hasSubstance c223:Air ;
     c223:isConnectionPointOf ex:00002 .
 
-ex:00005 a c223:ChilledWaterConnectionPoint,
-        c223:ChilledWaterInletConnectionPoint,
-        c223:ConnectionPoint,
+ex:00005 a c223:ConnectionPoint,
         c223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterInlet" ;
     c223:connectsThrough ex:00001 ;
@@ -66,9 +59,7 @@ ex:00005 a c223:ChilledWaterConnectionPoint,
     c223:hasSubstance c223:ChilledWater ;
     c223:isConnectionPointOf ex:00002 .
 
-ex:00006 a c223:ChilledWaterConnectionPoint,
-        c223:ChilledWaterOutletConnectionPoint,
-        c223:ConnectionPoint,
+ex:00006 a c223:ConnectionPoint,
         c223:OutletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterOutlet" ;
     c223:hasDirection c223:Outlet ;
@@ -84,18 +75,14 @@ ex:00007 a c223:Fan,
     c223:hasConnectionPoint ex:00008,
         ex:00009 .
 
-ex:00008 a c223:AirConnectionPoint,
-        c223:AirInletConnectionPoint,
-        c223:ConnectionPoint,
+ex:00008 a c223:ConnectionPoint,
         c223:InletConnectionPoint ;
     rdfs:label "F.airInlet" ;
     c223:hasDirection c223:Inlet ;
     c223:hasSubstance c223:Air ;
     c223:isConnectionPointOf ex:00007 .
 
-ex:00009 a c223:AirConnectionPoint,
-        c223:AirOutletConnectionPoint,
-        c223:ConnectionPoint,
+ex:00009 a c223:ConnectionPoint,
         c223:OutletConnectionPoint ;
     rdfs:label "F.airOutlet" ;
     c223:connectsThrough ex:00010 ;
@@ -119,9 +106,7 @@ ex:00011 a c223:Zone,
     c223:returnAirOutlet ex:00013 ;
     c223:supplyAirInlet ex:00012 .
 
-ex:00012 a c223:AirConnectionPoint,
-        c223:AirInletConnectionPoint,
-        c223:ConnectionPoint,
+ex:00012 a c223:ConnectionPoint,
         c223:InletConnectionPoint ;
     rdfs:label "Zone-1.supplyAirInlet" ;
     c223:connectsThrough ex:00014 ;
@@ -129,9 +114,7 @@ ex:00012 a c223:AirConnectionPoint,
     c223:hasSubstance c223:Air ;
     c223:isConnectionPointOf ex:00011 .
 
-ex:00013 a c223:AirConnectionPoint,
-        c223:AirOutletConnectionPoint,
-        c223:ConnectionPoint,
+ex:00013 a c223:ConnectionPoint,
         c223:OutletConnectionPoint ;
     rdfs:label "Zone-1.returnAirOutlet" ;
     c223:hasDirection c223:Outlet ;
