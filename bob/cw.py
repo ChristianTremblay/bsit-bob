@@ -30,27 +30,29 @@ class ChilledWater(Substance):
 
 class ChilledWaterConnection(Connection):
     hasSubstance = ChilledWater.node_type
+    node_type = None
 
 
 class ChilledWaterConnectionPoint(ConnectionPoint):
     hasSubstance = ChilledWater.node_type
+    node_type = None
 
 
 class ChilledWaterInletConnectionPoint(
     InletConnectionPoint, ChilledWaterConnectionPoint
 ):
-    pass
+    node_type = None
 
 
 class ChilledWaterOutletConnectionPoint(
     OutletConnectionPoint, ChilledWaterConnectionPoint
 ):
-    pass
+    node_type = None
 
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
-    node_type = None
     hasSubstance = ChilledWater.node_type
+    node_type = None
 
 
 class ChilledWaterInletSystemConnectionPoint(
