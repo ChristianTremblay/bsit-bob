@@ -88,7 +88,7 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 
 # common namespaces
 c223 = bind_namespace("c223", "http://data.ashrae.org/standard223/1.0/model/core#")
-d223 = bind_namespace("d223", "http://data.ashrae.org/standard223/1.0/model/device#")
+# d223 = bind_namespace("d223", "http://data.ashrae.org/standard223/1.0/model/device#")
 qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
 quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
 brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
@@ -848,7 +848,7 @@ class Device(Node):
     A type of thing that can has connection points.
     """
 
-    node_type: URIRef = d223.Device
+    node_type: URIRef = c223.Device
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:

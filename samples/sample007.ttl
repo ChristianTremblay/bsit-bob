@@ -2,7 +2,6 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix c223: <http://data.ashrae.org/standard223/1.0/model/core#> .
-@prefix d223: <http://data.ashrae.org/standard223/1.0/model/device#> .
 @prefix ex: <urn:ex/sample007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -15,49 +14,49 @@
   rdfs:label "sample007" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex:00001 a d223:Device,
+ex:00001 a c223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 1" ;
     c223:contains ex:00002,
         ex:00003 .
 
-ex:00002 a d223:Device,
+ex:00002 a c223:Device,
         ex:Part1 ;
     rdfs:label "p11" ;
     c223:isContainedIn ex:00001 .
 
-ex:00003 a d223:Device,
+ex:00003 a c223:Device,
         ex:Part2 ;
     rdfs:label "p12" ;
     c223:isContainedIn ex:00001 .
 
-ex:00004 a d223:Device,
+ex:00004 a c223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 2" ;
     c223:contains ex:00005 .
 
-ex:00005 a d223:Device,
+ex:00005 a c223:Device,
         ex:Part1 ;
     rdfs:label "p21" ;
     c223:contains ex:00006 ;
     c223:isContainedIn ex:00004 .
 
-ex:00006 a d223:Device,
+ex:00006 a c223:Device,
         ex:Part2 ;
     rdfs:label "p22" ;
     c223:isContainedIn ex:00005 .
 
-ex:00007 a d223:Device,
+ex:00007 a c223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 3" ;
     c223:contains ex:00009 .
 
-ex:00008 a d223:Device,
+ex:00008 a c223:Device,
         ex:Part1 ;
     rdfs:label "p31" ;
     c223:isContainedIn ex:00009 .
 
-ex:00009 a d223:Device,
+ex:00009 a c223:Device,
         ex:Part2 ;
     rdfs:label "p32" ;
     c223:contains ex:00008 ;
