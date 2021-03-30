@@ -1,7 +1,7 @@
 from typing import Any
 
 from .core import (
-    c223,
+    s223,
     Substance,
     Connection,
     Device,
@@ -21,7 +21,7 @@ from .air import (
 )
 from .signal import AnalogIn
 
-__namespace__ = c223
+__namespace__ = s223
 
 
 class ChilledWater(Substance):

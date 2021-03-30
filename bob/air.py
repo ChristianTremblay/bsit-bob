@@ -1,6 +1,6 @@
 from rdflib import URIRef
 from .core import (
-    c223,
+    s223,
     Substance,
     Connection,
     ConnectionPoint,
@@ -13,7 +13,7 @@ from .core import (
 )
 from .signal import AnalogIn, AnalogOut
 
-__namespace__ = c223
+__namespace__ = s223
 
 
 class Air(Substance):

@@ -1,6 +1,6 @@
-from .core import c223, Property
+from .core import s223, Property
 
-__namespace__ = c223
+__namespace__ = s223
 
 
 class AnalogIn(Property):

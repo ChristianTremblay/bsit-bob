@@ -1,6 +1,6 @@
 from typing import Any
 
-from .core import c223, System
+from .core import s223, System
 from .air import (
     AirFlowStation,
     Damper,
@@ -10,7 +10,7 @@ from .air import (
 from .signal import AnalogIn, AnalogOut
 from .hw import HotWaterCoil, HotWaterValve
 
-__namespace__ = c223
+__namespace__ = s223
 
 
 class VAV1(System):

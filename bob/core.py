@@ -87,7 +87,7 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 
 
 # common namespaces
-c223 = bind_namespace("c223", "http://data.ashrae.org/standard223/1.0/model/core#")
+s223 = bind_namespace("s223", "http://data.ashrae.org/standard223/1.0/model/core#")
 # d223 = bind_namespace("d223", "http://data.ashrae.org/standard223/1.0/model/device#")
 qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
 quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
@@ -97,7 +97,7 @@ brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
 # or in the __namespace__ special global for the module of the class, or the
 # parent module, or it is inherited from a superclass that is defined in the
 # same module
-__namespace__ = c223
+__namespace__ = s223
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
@@ -129,13 +129,13 @@ def schema_graph_add(triple: Tuple[Any, Any, Any]) -> None:
     """
     Add a triple to the schema graph for statements about things in the
     model being build (like subtypes of a Device) but not about things
-    in the c223 namespace.
+    in the s223 namespace.
     """
     global schema_graph
     subj, pred, obj = triple
 
-    # exclude the schema content in the c223 namespace by default
-    if subj.startswith(c223):
+    # exclude the schema content in the s223 namespace by default
+    if subj.startswith(s223):
         return
 
     # passes the tests
@@ -152,7 +152,7 @@ def bind_model_namespace(prefix: str, uri: str) -> Namespace:
     return model_namespace
 
 
-# substance identifier (c223.Air, etc) to Connection subclass
+# substance identifier (s223.Air, etc) to Connection subclass
 substance_classes: Dict[URIRef, Any] = {}
 
 
@@ -351,14 +351,14 @@ class NodeMetaclass(type):
                     attr_type = _nodes[attr]
                     if issubclass(attr_type, Property):
                         schema_graph_add(
-                            (_attr_uriref[attr], RDFS.subPropertyOf, c223.hasProperty)
+                            (_attr_uriref[attr], RDFS.subPropertyOf, s223.hasProperty)
                         )
                     if issubclass(attr_type, ConnectionPoint):
                         schema_graph_add(
                             (
                                 _attr_uriref[attr],
                                 RDFS.subPropertyOf,
-                                c223.hasConnectionPoint,
+                                s223.hasConnectionPoint,
                             )
                         )
                     if issubclass(attr_type, SystemConnectionPoint):
@@ -366,7 +366,7 @@ class NodeMetaclass(type):
                             (
                                 _attr_uriref[attr],
                                 RDFS.subPropertyOf,
-                                c223.hasSystemConnectionPoint,
+                                s223.hasSystemConnectionPoint,
                             )
                         )
 
@@ -526,8 +526,8 @@ class Node(metaclass=NodeMetaclass):
         assert isinstance(prop, Property)
 
         # link the two together
-        data_graph_add((self.node, c223.hasProperty, prop.node))
-        data_graph_add((prop.node, c223.isPropertyOf, self.node))
+        data_graph_add((self.node, s223.hasProperty, prop.node))
+        data_graph_add((prop.node, s223.isPropertyOf, self.node))
 
         return prop
 
@@ -560,7 +560,7 @@ class Junction(Node):
     Junction.
     """
 
-    node_type: URIRef = c223.Junction
+    node_type: URIRef = s223.Junction
     hasSubstance: URIRef
     _lnx: Set[Segment]
 
@@ -622,7 +622,7 @@ class Segment(Node):
     Segment.
     """
 
-    node_type: URIRef = c223.Segment
+    node_type: URIRef = s223.Segment
     hasSubstance: URIRef
     _lnx: Set[Union[Junction, ConnectionPoint]]
 
@@ -641,7 +641,7 @@ class Segment(Node):
         if isinstance(other, Junction):
             # link the junction to the segment
             other._lnx.add(self)
-            data_graph_add((other.node, c223.lnx, self.node,))
+            data_graph_add((other.node, s223.lnx, self.node,))
         elif isinstance(other, ConnectionPoint):
             other.lnx = self
         else:
@@ -649,16 +649,16 @@ class Segment(Node):
 
         # link the segment to the end point
         self._lnx.add(other)
-        data_graph_add((self.node, c223.lnx, other.node,))
+        data_graph_add((self.node, s223.lnx, other.node,))
 
 
 class Direction(Node):
     pass
 
 
-inlet_iri = c223.Inlet
-outlet_iri = c223.Outlet
-bidirectional_iri = c223.Bidirectional
+inlet_iri = s223.Inlet
+outlet_iri = s223.Outlet
+bidirectional_iri = s223.Bidirectional
 
 
 class ConnectionMetaclass(NodeMetaclass):
@@ -697,7 +697,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     Generic connection object type, unrestricted.
     """
 
-    node_type: URIRef = c223.Connection
+    node_type: URIRef = s223.Connection
     hasSubstance: URIRef
 
     def __init__(self, **kwargs: Any) -> None:
@@ -718,16 +718,16 @@ class Connection(Node, metaclass=ConnectionMetaclass):
         connection_point.connectsThrough = self
 
         # link connection to the connection point and its device
-        data_graph_add((self.node, c223.connectsAt, connection_point.node))
+        data_graph_add((self.node, s223.connectsAt, connection_point.node))
         data_graph_add(
             (
                 connection_point.isConnectionPointOf.node,
-                c223.connectedThrough,
+                s223.connectedThrough,
                 self.node,
             )
         )
         data_graph_add(
-            (self.node, c223.connectsTo, connection_point.isConnectionPointOf.node)
+            (self.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
         )
 
     def connect_from(self, connection_point: ConnectionPoint) -> None:
@@ -745,23 +745,23 @@ class Connection(Node, metaclass=ConnectionMetaclass):
         connection_point.connectsThrough = self
 
         # link connection to the connection point and its device
-        data_graph_add((self.node, c223.connectsAt, connection_point.node))
+        data_graph_add((self.node, s223.connectsAt, connection_point.node))
         data_graph_add(
             (
                 connection_point.isConnectionPointOf.node,
-                c223.connectedThrough,
+                s223.connectedThrough,
                 self.node,
             )
         )
         data_graph_add(
-            (self.node, c223.connectsFrom, connection_point.isConnectionPointOf.node)
+            (self.node, s223.connectsFrom, connection_point.isConnectionPointOf.node)
         )
 
 
 class ConnectionPoint(Node):
-    node_type: URIRef = c223.ConnectionPoint
+    node_type: URIRef = s223.ConnectionPoint
     hasSubstance: URIRef  # identifier of a subclass of Substance
-    hasDirection: URIRef  # one of c223.Inlet, c223.Outlet, c223.Bidirectional
+    hasDirection: URIRef  # one of s223.Inlet, s223.Outlet, s223.Bidirectional
 
     lnx: Segment
     connectsThrough: Connection
@@ -770,7 +770,7 @@ class ConnectionPoint(Node):
     def __init__(self, device: Device, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        data_graph_add((device.node, c223.hasConnectionPoint, self.node))
+        data_graph_add((device.node, s223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = device
 
         # this is one of the connection points of the device
@@ -836,11 +836,11 @@ class ConnectionPoint(Node):
 
 
 class InletConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = c223.Inlet
+    hasDirection: URIRef = s223.Inlet
 
 
 class OutletConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = c223.Outlet
+    hasDirection: URIRef = s223.Outlet
 
 
 class Device(Node):
@@ -848,7 +848,7 @@ class Device(Node):
     A type of thing that can has connection points.
     """
 
-    node_type: URIRef = c223.Device
+    node_type: URIRef = s223.Device
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -899,8 +899,8 @@ class Device(Node):
         if not isinstance(other, (Device, System)):
             raise TypeError("device or system expected")
 
-        data_graph_add((self.node, c223.contains, other.node))
-        data_graph_add((other.node, c223.isContainedIn, self.node))
+        data_graph_add((self.node, s223.contains, other.node))
+        data_graph_add((other.node, s223.isContainedIn, self.node))
 
         return self
 
@@ -912,8 +912,8 @@ class Device(Node):
         if not isinstance(other, (Device, System)):
             raise TypeError("device or system expected")
 
-        data_graph_add((self.node, c223.isContainedIn, other.node))
-        data_graph_add((other.node, c223.contains, self.node))
+        data_graph_add((self.node, s223.isContainedIn, other.node))
+        data_graph_add((other.node, s223.contains, self.node))
 
         return other
 
@@ -923,7 +923,7 @@ class SystemConnectionPoint(Node):
     System Connection Point
     """
 
-    node_type: URIRef = c223.SystemConnectionPoint
+    node_type: URIRef = s223.SystemConnectionPoint
 
     connectsThrough: Connection
     isSystemConnectionPointOf: System
@@ -932,7 +932,7 @@ class SystemConnectionPoint(Node):
     def __init__(self, system: System, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        data_graph_add((system.node, c223.hasSystemConnectionPoint, self.node))
+        data_graph_add((system.node, s223.hasSystemConnectionPoint, self.node))
         self.isSystemConnectionPointOf = system
 
         # this is one of the connection points of the system
@@ -940,11 +940,11 @@ class SystemConnectionPoint(Node):
 
 
 class InletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: URIRef = c223.Inlet
+    hasDirection: URIRef = s223.Inlet
 
 
 class OutletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: URIRef = c223.Outlet
+    hasDirection: URIRef = s223.Outlet
 
 
 class System(Node):
@@ -952,7 +952,7 @@ class System(Node):
     System
     """
 
-    node_type: URIRef = c223.System
+    node_type: URIRef = s223.System
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
 
@@ -1008,8 +1008,8 @@ class System(Node):
         logging.debug(f"__gt__ {self} {other}")
 
         if isinstance(other, (Device, System)):
-            data_graph_add((self.node, c223.contains, other.node))
-            data_graph_add((other.node, c223.isContainedIn, self.node))
+            data_graph_add((self.node, s223.contains, other.node))
+            data_graph_add((other.node, s223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1024,8 +1024,8 @@ class System(Node):
         logging.debug(f"__lt__ {self} {other}")
 
         if isinstance(other, System):
-            data_graph_add((self.node, c223.isContainedIn, other.node))
-            data_graph_add((other.node, c223.contains, self.node))
+            data_graph_add((self.node, s223.isContainedIn, other.node))
+            data_graph_add((other.node, s223.contains, self.node))
         else:
             raise TypeError("system expected")
 
@@ -1038,7 +1038,7 @@ class Value(Node):
     Literal.  The 'lang' and 'datatype' values are forwarded to rdflib.
     """
 
-    node_type: URIRef = c223.Value
+    node_type: URIRef = s223.Value
     isValueOf: Property
 
     hasTimestamp: Literal
@@ -1077,7 +1077,7 @@ class Property(Node):
     An attribute, quality, or characteristic of a feature of interest.
     """
 
-    node_type: URIRef = c223.Property
+    node_type: URIRef = s223.Property
     hasValue: Value
 
     # override this for a specialize subclass
@@ -1110,7 +1110,7 @@ class Property(Node):
         assert isinstance(value, Value)
 
         # link the two together
-        data_graph_add((self.node, c223.hasValue, value.node))
+        data_graph_add((self.node, s223.hasValue, value.node))
         value.isValueOf = self
 
         return value
@@ -1121,7 +1121,7 @@ class ActuatableProperty(Property):
     Such as the setting of a switch.
     """
 
-    node_type: URIRef = c223.ActuatableProperty
+    node_type: URIRef = s223.ActuatableProperty
 
 
 class ObservableProperty(Property):
@@ -1129,7 +1129,7 @@ class ObservableProperty(Property):
     Such as the state of an alarm detector.
     """
 
-    node_type: URIRef = c223.ObservableProperty
+    node_type: URIRef = s223.ObservableProperty
 
 
 class QuantifiableProperty(Property):
@@ -1137,7 +1137,7 @@ class QuantifiableProperty(Property):
     A property to be expressed as a quantity, it has units.
     """
 
-    node_type: URIRef = c223.QuantifiableProperty
+    node_type: URIRef = s223.QuantifiableProperty
     hasQuantityKind: URIRef
     hasUnits: URIRef
 
@@ -1150,7 +1150,7 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
     Such as a numerical setpoint.
     """
 
-    node_type: URIRef = c223.QuantifiableActuatableProperty
+    node_type: URIRef = s223.QuantifiableActuatableProperty
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -1161,7 +1161,7 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
     Such as a temperature reading.
     """
 
-    node_type: URIRef = c223.QuantifiableObservableProperty
+    node_type: URIRef = s223.QuantifiableObservableProperty
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
