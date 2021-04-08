@@ -76,8 +76,3 @@ class AirFlowStation(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flow = AnalogIn
-
-
-class Zone(Device):
-    supplyAirInlet: AirInletConnectionPoint  # supply air goes in
-    returnAirOutlet: AirOutletConnectionPoint  # return air goes out

@@ -87,8 +87,7 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 
 
 # common namespaces
-s223 = bind_namespace("s223", "http://data.ashrae.org/standard223/1.0/model/core#")
-# d223 = bind_namespace("d223", "http://data.ashrae.org/standard223/1.0/model/device#")
+s223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
 qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
 quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
 brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
@@ -1344,6 +1343,79 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             segment.link_to(to_connection_point)
         else:
             from_connection_point.connect_to(to_connection_point)
+
+
+class Zone(System):
+    """
+    A collection of spaces.
+    """
+
+    node_type: URIRef = s223.Zone
+
+    def __gt__(self, other: Space) -> Node:
+        """self > other
+
+        Build a containment heirarchy, the other system is a subsystem of
+        this system.
+        """
+        logging.debug(f"__gt__ {self} {other}")
+
+        if not isinstance(other, Space):
+            raise TypeError("space expected")
+
+        data_graph_add((self.node, s223.contains, other.node))
+        data_graph_add((other.node, s223.isContainedIn, self.node))
+
+        return self
+
+
+class Space(Device):
+    """
+    A part of the physical world or a virtual world whose 3D spatial extent is
+    bounded actually or theoretically, and provides for certain functions
+    within the zone it is contained in.
+    """
+
+    node_type: URIRef = s223.Space
+
+    def __lt__(self, other: Node) -> Node:
+        """self < other
+
+        Build a containment heirarchy, this is contained in a zone or enclosure.
+        """
+        logging.debug(f"__lt__ {self} {other}")
+
+        if not isinstance(other, (Zone, Enclosure)):
+            raise TypeError("zone or enclosure expected")
+
+        data_graph_add((other.node, s223.contains, self.node))
+        data_graph_add((self.node, s223.isContainedIn, other.node))
+
+        return self
+
+
+class Enclosure(Node):
+    """
+    A part of the physical world whose 3D spatial extent is bounded by walls.
+    """
+
+    node_type: URIRef = s223.Enclosure
+
+    def __gt__(self, other: Space) -> Node:
+        """self > other
+
+        Build a containment heirarchy, the other system is a subsystem of
+        this system.
+        """
+        logging.debug(f"__gt__ {self} {other}")
+
+        if not isinstance(other, Space):
+            raise TypeError("space expected")
+
+        data_graph_add((self.node, s223.contains, other.node))
+        data_graph_add((other.node, s223.isContainedIn, self.node))
+
+        return self
 
 
 def dump(
