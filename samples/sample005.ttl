@@ -5,7 +5,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix s223: <http://data.ashrae.org/standard223/1.0/model/core#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://data.ashrae.org/standard223/1.0/data/sample005>
@@ -15,18 +15,19 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex:00001 a s223:Device,
-        s223:Zone ;
+        s223:Space,
+        ex:HVACZone ;
     rdfs:label "Zone-1" ;
     s223:connectedThrough ex:00029,
         ex:00060 ;
     s223:hasConnectionPoint ex:00002,
         ex:00003 ;
-    s223:returnAirOutlet ex:00003 ;
-    s223:supplyAirInlet ex:00002 .
+    ex:aicp ex:00002 ;
+    ex:aocp ex:00003 .
 
 ex:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "Zone-1.supplyAirInlet" ;
+    rdfs:label "Zone-1.aicp" ;
     s223:connectsThrough ex:00029 ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
@@ -34,7 +35,7 @@ ex:00002 a s223:ConnectionPoint,
 
 ex:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "Zone-1.returnAirOutlet" ;
+    rdfs:label "Zone-1.aocp" ;
     s223:connectsThrough ex:00060 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:Air ;
@@ -258,18 +259,19 @@ ex:00029 a s223:Connection ;
     s223:hasSubstance s223:Air .
 
 ex:00030 a s223:Device,
-        s223:Zone ;
+        s223:Space,
+        ex:HVACZone ;
     rdfs:label "Zone-2" ;
     s223:connectedThrough ex:00058,
         ex:00060 ;
     s223:hasConnectionPoint ex:00031,
         ex:00032 ;
-    s223:returnAirOutlet ex:00032 ;
-    s223:supplyAirInlet ex:00031 .
+    ex:aicp ex:00031 ;
+    ex:aocp ex:00032 .
 
 ex:00031 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "Zone-2.supplyAirInlet" ;
+    rdfs:label "Zone-2.aicp" ;
     s223:connectsThrough ex:00058 ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
@@ -277,7 +279,7 @@ ex:00031 a s223:ConnectionPoint,
 
 ex:00032 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "Zone-2.returnAirOutlet" ;
+    rdfs:label "Zone-2.aocp" ;
     s223:connectsThrough ex:00060 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:Air ;

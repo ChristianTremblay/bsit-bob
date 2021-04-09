@@ -1,7 +1,8 @@
 from pathlib import Path
 
 from bob import bind_model_namespace, dump
-from bob.air import Fan, Zone
+from bob.core import Space
+from bob.air import Fan, AirInletConnectionPoint
 from bob.cw import ChilledWaterConnection, ChilledWaterCoil
 
 from header import sample_header
@@ -9,6 +10,10 @@ from header import sample_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+
+
+class HVACZone(Space):
+    aicp: AirInletConnectionPoint
 
 
 # there is a chilled water connection, we don't know where the chilled
@@ -27,7 +32,7 @@ f = Fan(label="F")
 f >> coil1
 
 # there is a zone, and the air output of the coil is goes into the zone
-z = Zone(label="Zone-1")
+z = HVACZone(label="Zone-1")
 coil1 >> z
 
 sample_header(model_name)
