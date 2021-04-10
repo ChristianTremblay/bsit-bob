@@ -1348,6 +1348,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 class Zone(System):
     """
     A collection of spaces.
+    ex. HVAC zone feeding rooms 1,2,3
     """
 
     node_type: URIRef = s223.Zone
@@ -1355,7 +1356,7 @@ class Zone(System):
     def __gt__(self, other: Space) -> Node:
         """self > other
 
-        Build a containment heirarchy, the other system is a subsystem of
+        Build a containment hierarchy, the other system is a subsystem of
         this system.
         """
         logging.debug(f"__gt__ {self} {other}")
@@ -1373,8 +1374,12 @@ class Space(Device):
     """
     A part of the physical world or a virtual world whose 3D spatial extent is
     bounded actually or theoretically, and provides for certain functions
-    within the zone it is contained in.
+    within the enclosure it is contained in.
+    ex. office space in a room
     """
+
+    # Mandatory : being contained in enclosure
+    # Optional : contained in zone
 
     node_type: URIRef = s223.Space
 
@@ -1397,6 +1402,7 @@ class Space(Device):
 class Enclosure(Node):
     """
     A part of the physical world whose 3D spatial extent is bounded by walls.
+    ex. a room
     """
 
     node_type: URIRef = s223.Enclosure

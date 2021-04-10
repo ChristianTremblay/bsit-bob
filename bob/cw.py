@@ -13,59 +13,23 @@ from .core import (
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
 )
-from .air import (
+from .connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+
+from .connections.water import (
+    ChilledWaterInletConnectionPoint,
+    ChilledWaterOutletConnectionPoint,
+    ChilledWaterInletSystemConnectionPoint,
+    ChilledWaterOutletSystemConnectionPoint,
+)
+
 from .signal import AnalogIn
 
 __namespace__ = s223
-
-
-class ChilledWater(Substance):
-    pass
-
-
-class ChilledWaterConnection(Connection):
-    hasSubstance = ChilledWater.node_type
-    node_type = None
-
-
-class ChilledWaterConnectionPoint(ConnectionPoint):
-    hasSubstance = ChilledWater.node_type
-    node_type = None
-
-
-class ChilledWaterInletConnectionPoint(
-    InletConnectionPoint, ChilledWaterConnectionPoint
-):
-    node_type = None
-
-
-class ChilledWaterOutletConnectionPoint(
-    OutletConnectionPoint, ChilledWaterConnectionPoint
-):
-    node_type = None
-
-
-class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance = ChilledWater.node_type
-    node_type = None
-
-
-class ChilledWaterInletSystemConnectionPoint(
-    InletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
-):
-    node_type = None
-
-
-class ChilledWaterOutletSystemConnectionPoint(
-    OutletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
-):
-    node_type = None
-
 
 class ChilledWaterValve(Device):
     chilledWaterInlet: ChilledWaterInletConnectionPoint
@@ -78,6 +42,7 @@ class ChilledWaterCoil(Device):
     airOutlet: AirOutletConnectionPoint
     chilledWaterInlet: ChilledWaterInletConnectionPoint
     chilledWaterOutlet: ChilledWaterOutletConnectionPoint
+
 
 
 class ChilledWaterCoil2(System):

@@ -13,55 +13,24 @@ from .core import (
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
 )
-from .air import (
+from .connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-
+from .connections.water import (
+    HotWaterInletConnectionPoint,
+    HotWaterOutletConnectionPoint,
+    HotWaterInletSystemConnectionPoint,
+    HotWaterOutletSystemConnectionPoint,
+)
 from .signal import AnalogIn
 
 __namespace__ = s223
 
 
-class HotWater(Substance):
-    pass
 
-
-class HotWaterConnection(Connection):
-    hasSubstance = HotWater.node_type
-    node_type = None
-
-
-class HotWaterConnectionPoint(ConnectionPoint):
-    hasSubstance = HotWater.node_type
-    node_type = None
-
-
-class HotWaterInletConnectionPoint(InletConnectionPoint, HotWaterConnectionPoint):
-    node_type = None
-
-
-class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoint):
-    node_type = None
-
-
-class HotWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance = HotWater.node_type
-    node_type = None
-
-
-class HotWaterInletSystemConnectionPoint(
-    InletSystemConnectionPoint, HotWaterSystemConnectionPoint
-):
-    node_type = None
-
-
-class HotWaterOutletSystemConnectionPoint(
-    OutletSystemConnectionPoint, HotWaterSystemConnectionPoint
-):
-    node_type = None
 
 
 class HotWaterValve(Device):
