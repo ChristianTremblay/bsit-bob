@@ -4,7 +4,7 @@
 #   Project Metadata
 #
 
-__version__ = "0.15"
+__version__ = "0.15.dev"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
@@ -33,10 +33,9 @@ from .core import (
     clear,
 )
 
-from . import air
-from . import cw
-from . import hw
+#from . import devices
+#from . import connections
+#from . import systems
 
 # from . import hx
-from . import signal
-from . import vav
+#from . import signal

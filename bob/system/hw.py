@@ -1,6 +1,6 @@
 from typing import Any
 
-from .core import (
+from ..core import (
     s223,
     Substance,
     Connection,
@@ -13,42 +13,27 @@ from .core import (
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
 )
-from .connections.air import (
+from ..connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from .connections.water import (
+from ..connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
     HotWaterInletSystemConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
-from .signal import AnalogIn
+
+from ..devices.valve import HotWaterValve
+from ..devices.boiler import HotWaterBoiler
+from ..devices.htg_coil import HotWaterCoil
+
+from ..signal import AnalogIn
 
 __namespace__ = s223
 
-
-
-
-
-class HotWaterValve(Device):
-    hotWaterInlet: HotWaterInletConnectionPoint
-    hotWaterOutlet: HotWaterOutletConnectionPoint
-    position = AnalogIn
-
-
-class HotWaterCoil(Device):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
-    hotWaterInlet: HotWaterInletConnectionPoint
-    hotWaterOutlet: HotWaterOutletConnectionPoint
-
-
-class HotWaterBoiler(Device):
-    hotWaterSupply: HotWaterInletConnectionPoint
-    hotWaterReturn: HotWaterOutletConnectionPoint
 
 
 class HotWaterCoil2(System):

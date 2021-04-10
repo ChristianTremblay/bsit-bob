@@ -1,6 +1,6 @@
 from typing import Any
 
-from .core import (
+from ..core import (
     s223,
     Substance,
     Connection,
@@ -13,35 +13,24 @@ from .core import (
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
 )
-from .connections.air import (
+from ..connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
 
-from .connections.water import (
+from ..connections.water import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
     ChilledWaterInletSystemConnectionPoint,
     ChilledWaterOutletSystemConnectionPoint,
 )
-
-from .signal import AnalogIn
+from ..devices.clg_coil import ChilledWaterCoil
+from ..devices.valve import ChilledWaterValve
+from ..signal import AnalogIn
 
 __namespace__ = s223
-
-class ChilledWaterValve(Device):
-    chilledWaterInlet: ChilledWaterInletConnectionPoint
-    chilledWaterOutlet: ChilledWaterOutletConnectionPoint
-    position = AnalogIn
-
-
-class ChilledWaterCoil(Device):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
-    chilledWaterInlet: ChilledWaterInletConnectionPoint
-    chilledWaterOutlet: ChilledWaterOutletConnectionPoint
 
 
 

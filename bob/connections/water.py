@@ -15,10 +15,35 @@ from .signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 
-
-class HotWater(Substance):
+# Substances
+class Water(Substance):
     pass
 
+class DomesticWater(Water):
+    pass
+
+class DomesticHotWater(Water):
+    pass
+
+class ChilledWater(Water):
+    pass
+
+class HotWater(Water):
+    pass
+
+class CondensedWater(Water):
+    pass
+
+class GlycoledWater(Water):
+    # glycol_proportion = 
+    pass 
+
+# Connections
+
+# A class factory that would build everything ?
+# lst_of_substance_classes = [HotWater, ChilledWater, ... ]
+# for each in lst_of_substance_classes:
+    
 
 class HotWaterConnection(Connection):
     hasSubstance = HotWater.node_type
@@ -53,9 +78,6 @@ class HotWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, HotWaterSystemConnectionPoint
 ):
     node_type = None
-
-class ChilledWater(Substance):
-    pass
 
 
 class ChilledWaterConnection(Connection):
@@ -95,3 +117,4 @@ class ChilledWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
     node_type = None
+

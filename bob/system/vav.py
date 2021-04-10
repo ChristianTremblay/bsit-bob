@@ -1,15 +1,15 @@
 from typing import Any
 
-from .core import s223, System
-from .air import (
-    AirFlowStation,
-    Damper,
+from ..core import s223, System
+from ..connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from .signal import AnalogIn, AnalogOut
-from .hw import HotWaterCoil, HotWaterValve
-
+from ..signal import AnalogIn, AnalogOut
+from ..devices.valve import HotWaterValve
+from ..devices.htg_coil import HotWaterCoil
+from ..devices.measuring import AirFlowStation
+from ..devices.damper import Damper
 __namespace__ = s223
 
 

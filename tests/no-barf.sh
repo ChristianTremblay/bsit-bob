@@ -2,5 +2,5 @@
 
 for f in *.py
 do
-    python3 $f > /dev/null
+    python $f > /dev/null
 done
