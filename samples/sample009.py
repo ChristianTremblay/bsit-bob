@@ -10,7 +10,6 @@ from bob.core import (
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
     dump,
-    clear,
 )
 
 from header import sample_header

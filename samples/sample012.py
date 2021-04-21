@@ -3,11 +3,9 @@ from pathlib import Path
 from bob.core import (
     bind_model_namespace,
     Device,
-    ConnectionPoint,
     InletConnectionPoint,
     OutletConnectionPoint,
     System,
-    SystemConnectionPoint,
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
     dump,

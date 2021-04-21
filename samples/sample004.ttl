@@ -14,129 +14,158 @@
   rdfs:label "sample004" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex:00001 a s223:Device,
-        s223:Space,
-        ex:HVACZone ;
+ex:00001 a s223:HVACZone,
+        s223:Zone ;
     rdfs:label "Zone" ;
-    s223:connectedThrough ex:00015 ;
-    s223:hasConnectionPoint ex:00002 ;
-    ex:aicp ex:00002 .
+    s223:hasZoneConnectionPoint ex:00002,
+        ex:00003 ;
+    s223:returnAir ex:00003 ;
+    s223:supplyAir ex:00002 .
 
-ex:00002 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "Zone.aicp" ;
-    s223:connectsThrough ex:00015 ;
+ex:00002 a s223:InletZoneConnectionPoint,
+        s223:ZoneConnectionPoint ;
+    rdfs:label "Zone.supplyAir" ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00001 .
+    s223:isZoneConnectionPointOf ex:00001 ;
+    s223:mapsTo ex:00005 .
 
-ex:00003 a s223:System,
+ex:00003 a s223:OutletZoneConnectionPoint,
+        s223:ZoneConnectionPoint ;
+    rdfs:label "Zone.returnAir" ;
+    s223:hasDirection s223:Outlet ;
+    s223:hasSubstance s223:Air ;
+    s223:isZoneConnectionPointOf ex:00001 ;
+    s223:mapsTo ex:00006 .
+
+ex:00004 a s223:Space ;
+    rdfs:label "Space" ;
+    s223:connectedThrough ex:00019 ;
+    s223:hasSpaceConnectionPoint ex:00005,
+        ex:00006 .
+
+ex:00005 a s223:InletSpaceConnectionPoint,
+        s223:SpaceConnectionPoint ;
+    rdfs:label "Zone.space.supplyAir" ;
+    s223:connectsThrough ex:00019 ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasSubstance s223:Air ;
+    s223:isConnectionPointOf ex:00004 .
+
+ex:00006 a s223:OutletSpaceConnectionPoint,
+        s223:SpaceConnectionPoint ;
+    rdfs:label "Zone.space.returnAir" ;
+    s223:hasDirection s223:Outlet ;
+    s223:hasSubstance s223:Air ;
+    s223:isConnectionPointOf ex:00004 .
+
+ex:00007 a s223:System,
         s223:VAV1 ;
     rdfs:label "Zone.VAV" ;
-    s223:airFlow ex:00007 ;
-    s223:airInlet ex:00004 ;
-    s223:airOutlet ex:00005 ;
-    s223:contains ex:00006,
-        ex:00010 ;
-    s223:damperPosition ex:00011 ;
-    s223:hasProperty ex:00007,
-        ex:00011 ;
-    s223:hasSystemConnectionPoint ex:00004,
-        ex:00005 .
+    s223:airFlow ex:00011 ;
+    s223:airInlet ex:00008 ;
+    s223:airOutlet ex:00009 ;
+    s223:contains ex:00010,
+        ex:00014 ;
+    s223:damperPosition ex:00015 ;
+    s223:hasProperty ex:00011,
+        ex:00015 ;
+    s223:hasSystemConnectionPoint ex:00008,
+        ex:00009 .
 
-ex:00004 a s223:InletSystemConnectionPoint,
+ex:00008 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Zone.VAV.airInlet" ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
-    s223:isSystemConnectionPointOf ex:00003 ;
-    s223:mapsTo ex:00008 .
+    s223:isSystemConnectionPointOf ex:00007 ;
+    s223:mapsTo ex:00012 .
 
-ex:00005 a s223:OutletSystemConnectionPoint,
+ex:00009 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Zone.VAV.airOutlet" ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:Air ;
-    s223:isSystemConnectionPointOf ex:00003 ;
-    s223:mapsTo ex:00013 .
+    s223:isSystemConnectionPointOf ex:00007 ;
+    s223:mapsTo ex:00017 .
 
-ex:00006 a s223:AirFlowStation,
+ex:00010 a s223:AirFlowStation,
         s223:Device ;
     rdfs:label "Zone.VAV.air_flow_station" ;
-    s223:airInlet ex:00008 ;
-    s223:airOutlet ex:00009 ;
-    s223:connectedThrough ex:00014 ;
-    s223:flow ex:00007 ;
-    s223:hasConnectionPoint ex:00008,
-        ex:00009 ;
-    s223:hasProperty ex:00007 ;
-    s223:isContainedIn ex:00003 .
-
-ex:00007 a s223:AnalogIn,
-        s223:Property ;
-    s223:isPropertyOf ex:00003,
-        ex:00006 .
-
-ex:00008 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "Zone.VAV.air_flow_station.airInlet" ;
-    s223:hasDirection s223:Inlet ;
-    s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00006 .
-
-ex:00009 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "Zone.VAV.air_flow_station.airOutlet" ;
-    s223:connectsThrough ex:00014 ;
-    s223:hasDirection s223:Outlet ;
-    s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00006 .
-
-ex:00010 a s223:Damper,
-        s223:Device ;
-    rdfs:label "Zone.VAV.damper" ;
     s223:airInlet ex:00012 ;
     s223:airOutlet ex:00013 ;
-    s223:connectedThrough ex:00014,
-        ex:00015 ;
+    s223:connectedThrough ex:00018 ;
+    s223:flow ex:00011 ;
     s223:hasConnectionPoint ex:00012,
         ex:00013 ;
     s223:hasProperty ex:00011 ;
-    s223:isContainedIn ex:00003 ;
-    s223:position ex:00011 .
+    s223:isContainedIn ex:00007 .
 
-ex:00011 a s223:AnalogOut,
+ex:00011 a s223:AnalogIn,
         s223:Property ;
-    s223:isPropertyOf ex:00003,
+    s223:isPropertyOf ex:00007,
         ex:00010 .
 
 ex:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "Zone.VAV.damper.airInlet" ;
-    s223:connectsThrough ex:00014 ;
+    rdfs:label "Zone.VAV.air_flow_station.airInlet" ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
     s223:isConnectionPointOf ex:00010 .
 
 ex:00013 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "Zone.VAV.damper.airOutlet" ;
-    s223:connectsThrough ex:00015 ;
+    rdfs:label "Zone.VAV.air_flow_station.airOutlet" ;
+    s223:connectsThrough ex:00018 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:Air ;
     s223:isConnectionPointOf ex:00010 .
 
-ex:00014 a s223:Connection ;
-    s223:connectsAt ex:00009,
-        ex:00012 ;
-    s223:connectsFrom ex:00006 ;
-    s223:connectsTo ex:00010 ;
+ex:00014 a s223:Damper,
+        s223:Device ;
+    rdfs:label "Zone.VAV.damper" ;
+    s223:airInlet ex:00016 ;
+    s223:airOutlet ex:00017 ;
+    s223:connectedThrough ex:00018,
+        ex:00019 ;
+    s223:hasConnectionPoint ex:00016,
+        ex:00017 ;
+    s223:hasProperty ex:00015 ;
+    s223:isContainedIn ex:00007 ;
+    s223:position ex:00015 .
+
+ex:00015 a s223:AnalogOut,
+        s223:Property ;
+    s223:isPropertyOf ex:00007,
+        ex:00014 .
+
+ex:00016 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Zone.VAV.damper.airInlet" ;
+    s223:connectsThrough ex:00018 ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasSubstance s223:Air ;
+    s223:isConnectionPointOf ex:00014 .
+
+ex:00017 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Zone.VAV.damper.airOutlet" ;
+    s223:connectsThrough ex:00019 ;
+    s223:hasDirection s223:Outlet ;
+    s223:hasSubstance s223:Air ;
+    s223:isConnectionPointOf ex:00014 .
+
+ex:00018 a s223:Connection ;
+    s223:connectsAt ex:00013,
+        ex:00016 ;
+    s223:connectsFrom ex:00010 ;
+    s223:connectsTo ex:00014 ;
     s223:hasSubstance s223:Air .
 
-ex:00015 a s223:Connection ;
-    s223:connectsAt ex:00002,
-        ex:00013 ;
-    s223:connectsFrom ex:00010 ;
-    s223:connectsTo ex:00001 ;
+ex:00019 a s223:Connection ;
+    s223:connectsAt ex:00005,
+        ex:00017 ;
+    s223:connectsFrom ex:00014 ;
+    s223:connectsTo ex:00004 ;
     s223:hasSubstance s223:Air .
 
