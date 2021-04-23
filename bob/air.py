@@ -129,7 +129,7 @@ class HVACZone(Zone):
         super().__init__(label=label)
 
         # there is a space that is the destination of the air
-        space = Space(label="Space")
+        space = Space(label=label + ".space")
         space_supply_air = AirInletSpaceConnectionPoint(
             space, label=label + ".space.supplyAir"
         )
