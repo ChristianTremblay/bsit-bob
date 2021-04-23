@@ -1,15 +1,23 @@
 from rdflib import URIRef
 from .core import (
     s223,
-    Substance,
     Connection,
     ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
     Device,
+    InletConnectionPoint,
+    InletSpaceConnectionPoint,
+    InletSystemConnectionPoint,
+    InletZoneConnectionPoint,
+    OutletConnectionPoint,
+    OutletSpaceConnectionPoint,
+    OutletSystemConnectionPoint,
+    OutletZoneConnectionPoint,
+    Space,
+    SpaceConnectionPoint,
+    Substance,
+    SystemConnectionPoint,
+    Zone,
+    ZoneConnectionPoint,
 )
 from .signal import AnalogIn, AnalogOut
 
@@ -55,6 +63,36 @@ class AirOutletSystemConnectionPoint(
     node_type = None
 
 
+class AirZoneConnectionPoint(ZoneConnectionPoint):
+    hasSubstance: URIRef = Air.node_type
+    node_type = None
+
+
+class AirInletZoneConnectionPoint(AirZoneConnectionPoint, InletZoneConnectionPoint):
+    node_type = None
+
+
+class AirOutletZoneConnectionPoint(AirZoneConnectionPoint, OutletZoneConnectionPoint):
+    node_type = None
+
+
+class AirSpaceConnectionPoint(SpaceConnectionPoint):
+    node_type = None
+    hasSubstance: URIRef = Air.node_type
+
+
+class AirInletSpaceConnectionPoint(AirSpaceConnectionPoint, InletSpaceConnectionPoint):
+    node_type = None
+    hasDirection: URIRef = s223.Inlet
+
+
+class AirOutletSpaceConnectionPoint(
+    AirSpaceConnectionPoint, OutletSpaceConnectionPoint
+):
+    node_type = None
+    hasDirection: URIRef = s223.Outlet
+
+
 class Fan(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
@@ -76,3 +114,29 @@ class AirFlowStation(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flow = AnalogIn
+
+
+class HVACZone(Zone):
+    """
+    A simple HVAC Zone with a single space, and supply and return air
+    connection points.
+    """
+
+    supplyAir: AirInletZoneConnectionPoint
+    returnAir: AirOutletZoneConnectionPoint
+
+    def __init__(self, label: str) -> None:
+        super().__init__(label=label)
+
+        # there is a space that is the destination of the air
+        space = Space(label=label + ".space")
+        space_supply_air = AirInletSpaceConnectionPoint(
+            space, label=label + ".space.supplyAir"
+        )
+        space_return_air = AirOutletSpaceConnectionPoint(
+            space, label=label + ".space.returnAir"
+        )
+
+        # map the zone connection points to the space
+        self.supplyAir.maps_to(space_supply_air)
+        self.returnAir.maps_to(space_return_air)

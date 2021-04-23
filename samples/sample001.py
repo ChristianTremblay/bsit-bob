@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bob import bind_model_namespace, Device, QuantifiableProperty, Value, dump, clear
+from bob import bind_model_namespace, Device, QuantifiableProperty, Value, dump
 from bob.core import qudt, quantitykind
 
 from header import sample_header

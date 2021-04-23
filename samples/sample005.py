@@ -1,8 +1,10 @@
 from pathlib import Path
 
 from bob import bind_model_namespace, dump
-from bob.core import Space
-from bob.air import AirConnection, AirInletConnectionPoint, AirOutletConnectionPoint
+from bob.air import (
+    AirConnection,
+    HVACZone,
+)
 from bob.vav import VAV2
 
 from header import sample_header
@@ -11,10 +13,6 @@ from header import sample_header
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
-
-class HVACZone(Space):
-    aicp: AirInletConnectionPoint
-    aocp: AirOutletConnectionPoint
 
 # create Zone-1 and its VAV connected together
 zone1 = HVACZone(label="Zone-1")

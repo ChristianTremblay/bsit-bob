@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bob import bind_model_namespace, Device, dump, clear
+from bob import bind_model_namespace, Device, dump
 
 from header import sample_header
 
