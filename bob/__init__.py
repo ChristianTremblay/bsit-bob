@@ -24,6 +24,7 @@ from .core import (
     OutletSystemConnectionPoint,
     Space,
     SpaceConnectionPoint,
+    PhysicalSpace,
     InletSpaceConnectionPoint,
     OutletSpaceConnectionPoint,
     Zone,

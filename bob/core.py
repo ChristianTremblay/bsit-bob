@@ -1284,6 +1284,14 @@ class OutletSpaceConnectionPoint(SpaceConnectionPoint):
     hasDirection: URIRef = s223.Outlet
 
 
+class PhysicalSpace(Space):
+    """
+    A part of the physical world whose 3D spatial extent is bounded.
+    """
+
+    pass
+
+
 class Enclosure(Node):
     """
     A part of the physical world whose 3D spatial extent is bounded.
@@ -1356,10 +1364,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             substance = getattr(connection_point, "hasSubstance", None)
             from_out[substance].add(connection_point)
 
-    elif isinstance(
-        from_thing,
-        (SystemConnectionPoint, ZoneConnectionPoint),
-    ):
+    elif isinstance(from_thing, (SystemConnectionPoint, ZoneConnectionPoint)):
         if not from_thing.mapsTo:
             if isinstance(from_thing, SystemConnectionPoint):
                 raise RuntimeError(f"unmapped system connection point {to_thing}")
@@ -1446,9 +1451,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             substance = getattr(connection_point, "hasSubstance", None)
             to_in[substance].add(connection_point)
 
-    elif isinstance(
-        to_thing, (SystemConnectionPoint, ZoneConnectionPoint)
-    ):
+    elif isinstance(to_thing, (SystemConnectionPoint, ZoneConnectionPoint)):
         if not to_thing.mapsTo:
             if isinstance(to_thing, SystemConnectionPoint):
                 raise RuntimeError(f"unmapped system connection point {to_thing}")
