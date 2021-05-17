@@ -1197,7 +1197,7 @@ class Space(Node):
 
             setattr(self, var_name, var_element)
 
-    def __lt__(self, other: Node) -> Node:
+    def __lt__(self, other: Union[Zone, Enclosure]) -> Node:
         """self < other
 
         Build a containment heirarchy, this is contained in a zone or enclosure.
@@ -1290,7 +1290,6 @@ class Enclosure(Node):
     """
 
     node_type: URIRef = s223.Enclosure
-    _enclosure_connection_points: Dict[str, EnclosureConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
         logging.debug(f"Enclosure.__init__ {kwargs}")
@@ -1302,89 +1301,35 @@ class Enclosure(Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-        logging.debug(f"    - merged_annotations: {merged_annotations}")
-
-        # instantiate and associate all of the connection points
-        self._enclosure_connection_points = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
-                continue
-
-            if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_forwards:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = _annotation_forwards.get(var_annotation)
-
-            if not issubclass(var_annotation, EnclosureConnectionPoint):
-                continue
-
-            # build an instance of this connection point
-            var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._enclosure_connection_points[var_name] = var_element
-            logging.debug(f"    - connection point {var_name}: {var_element}")
-
-            setattr(self, var_name, var_element)
-
-    def __gt__(self, other: Space) -> Node:
+    def __gt__(self, other: Union[Space, Enclosure]) -> Node:
         """self > other
 
-        Build a containment heirarchy, the other system is a subsystem of
-        this system.
+        Build a containment heirarchy, this contains other.
         """
         logging.debug(f"__gt__ {self} {other}")
 
         if not isinstance(other, (Space, Enclosure)):
-            raise TypeError("space expected")
+            raise TypeError("space or enclosure expected")
 
         data_graph_add((self.node, s223.contains, other.node))
         data_graph_add((other.node, s223.isContainedIn, self.node))
 
         return self
 
+    def __lt__(self, other: Enclosure) -> Node:
+        """self < other
 
-class EnclosureConnectionPoint(Node):
-    node_type: URIRef = s223.EnclosureConnectionPoint
-
-    isEnclosureConnectionPointOf: Enclosure
-    mapsTo: SpaceConnectionPoint  # Union[Junction, SpaceConnectionPoint]
-
-    def __init__(self, enclosure: Enclosure, **kwargs: Any) -> None:
-        logging.debug(f"EnclosureConnectionPoint.__init__ {enclosure} {kwargs}")
-        super().__init__(**kwargs)
-
-        data_graph_add((enclosure.node, s223.hasEnclosureConnectionPoint, self.node))
-        self.isEnclosureConnectionPointOf = enclosure
-
-        # this is one of the connection points of the zone
-        space._enclosure_connection_points[str(self.node)] = self
-
-    def maps_to(self, other: SpaceConnectionPoint) -> None:
+        Build a containment heirarchy, this is contained in some other enclosure.
         """
-        Maps this connection point to a space connection point.
-        """
-        logging.debug(f"EnclosureConnectionPoint.maps_to {other}")
-        if self.mapsTo:
-            raise RuntimeError("zone connection point already mapped")
+        logging.debug(f"__lt__ {self} {other}")
 
-        if not isinstance(other, SpaceConnectionPoint):
-            raise TypeError("SpaceConnectionPoint expected")
+        if not isinstance(other, Enclosure):
+            raise TypeError("space expected")
 
-        self.mapsTo = other
+        data_graph_add((other.node, s223.contains, self.node))
+        data_graph_add((self.node, s223.isContainedIn, other.node))
 
-
-class InletEnclosureConnectionPoint(EnclosureConnectionPoint):
-    hasDirection: URIRef = s223.Inlet
-
-
-class OutletEnclosureConnectionPoint(EnclosureConnectionPoint):
-    hasDirection: URIRef = s223.Outlet
+        return other
 
 
 def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
@@ -1413,15 +1358,13 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     elif isinstance(
         from_thing,
-        (SystemConnectionPoint, ZoneConnectionPoint, EnclosureConnectionPoint),
+        (SystemConnectionPoint, ZoneConnectionPoint),
     ):
         if not from_thing.mapsTo:
             if isinstance(from_thing, SystemConnectionPoint):
                 raise RuntimeError(f"unmapped system connection point {to_thing}")
             if isinstance(from_thing, ZoneConnectionPoint):
                 raise RuntimeError(f"unmapped zone connection point {to_thing}")
-            if isinstance(from_thing, EnclosureConnectionPoint):
-                raise RuntimeError(f"unmapped enclosure connection point {to_thing}")
         connection_point = from_thing.mapsTo
 
         if isinstance(connection_point, ConnectionPoint):
@@ -1504,15 +1447,13 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             to_in[substance].add(connection_point)
 
     elif isinstance(
-        to_thing, (SystemConnectionPoint, ZoneConnectionPoint, EnclosureConnectionPoint)
+        to_thing, (SystemConnectionPoint, ZoneConnectionPoint)
     ):
         if not to_thing.mapsTo:
             if isinstance(to_thing, SystemConnectionPoint):
                 raise RuntimeError(f"unmapped system connection point {to_thing}")
             if isinstance(to_thing, ZoneConnectionPoint):
                 raise RuntimeError(f"unmapped zone connection point {to_thing}")
-            if isinstance(to_thing, EnclosureConnectionPoint):
-                raise RuntimeError(f"unmapped enclosure connection point {to_thing}")
         connection_point = to_thing.mapsTo
 
         if isinstance(connection_point, ConnectionPoint):

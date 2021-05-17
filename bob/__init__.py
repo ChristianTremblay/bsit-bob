@@ -4,7 +4,7 @@
 #   Project Metadata
 #
 
-__version__ = "0.16"
+__version__ = "0.17"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
@@ -22,6 +22,15 @@ from .core import (
     SystemConnectionPoint,
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
+    Space,
+    SpaceConnectionPoint,
+    InletSpaceConnectionPoint,
+    OutletSpaceConnectionPoint,
+    Zone,
+    ZoneConnectionPoint,
+    InletZoneConnectionPoint,
+    OutletZoneConnectionPoint,
+    Enclosure,
     Property,
     ActuatableProperty,
     ObservableProperty,
