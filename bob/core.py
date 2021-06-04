@@ -343,7 +343,11 @@ class NodeMetaclass(type):
             # check for automatic sub-properties
             if all(
                 _annotation_forwards.get(cname, None)
-                for cname in ("Property", "ConnectionPoint", "SystemConnectionPoint",)
+                for cname in (
+                    "Property",
+                    "ConnectionPoint",
+                    "SystemConnectionPoint",
+                )
             ):
                 if attr in _nodes:
                     attr_type = _nodes[attr]
@@ -639,7 +643,13 @@ class Segment(Node):
         if isinstance(other, Junction):
             # link the junction to the segment
             other._lnx.add(self)
-            data_graph_add((other.node, s223.lnx, self.node,))
+            data_graph_add(
+                (
+                    other.node,
+                    s223.lnx,
+                    self.node,
+                )
+            )
         elif isinstance(other, ConnectionPoint):
             other.lnx = self
         else:
@@ -647,7 +657,13 @@ class Segment(Node):
 
         # link the segment to the end point
         self._lnx.add(other)
-        data_graph_add((self.node, s223.lnx, other.node,))
+        data_graph_add(
+            (
+                self.node,
+                s223.lnx,
+                other.node,
+            )
+        )
 
 
 class Direction(Node):
@@ -1197,15 +1213,16 @@ class Space(Node):
 
             setattr(self, var_name, var_element)
 
-    def __lt__(self, other: Union[Zone, Enclosure]) -> Node:
+    def __lt__(self, other: Union[Zone, PhysicalSpace]) -> Node:
         """self < other
 
-        Build a containment heirarchy, this is contained in a zone or enclosure.
+        Build a containment heirarchy, this is contained in a zone or physical
+        space.
         """
         logging.debug(f"__lt__ {self} {other}")
 
-        if not isinstance(other, (Zone, Enclosure)):
-            raise TypeError("zone or enclosure expected")
+        if not isinstance(other, (Zone, PhysicalSpace)):
+            raise TypeError("zone or physical space expected")
 
         data_graph_add((other.node, s223.contains, self.node))
         data_graph_add((self.node, s223.isContainedIn, other.node))
@@ -1284,12 +1301,40 @@ class OutletSpaceConnectionPoint(SpaceConnectionPoint):
     hasDirection: URIRef = s223.Outlet
 
 
-class PhysicalSpace(Space):
+class PhysicalSpace(Node):
     """
     A part of the physical world whose 3D spatial extent is bounded.
     """
 
-    pass
+    def __gt__(self, other: Space) -> Node:
+        """self > other
+
+        Build a containment heirarchy, this contains some other space.
+        """
+        logging.debug(f"__gt__ {self} {other}")
+
+        if not isinstance(other, Space):
+            raise TypeError("space expected")
+
+        data_graph_add((self.node, s223.contains, other.node))
+        data_graph_add((other.node, s223.isContainedIn, self.node))
+
+        return self
+
+    def __lt__(self, other: Enclosure) -> Node:
+        """self < other
+
+        Build a containment heirarchy, this is contained in some other enclosure.
+        """
+        logging.debug(f"__lt__ {self} {other}")
+
+        if not isinstance(other, Enclosure):
+            raise TypeError("space expected")
+
+        data_graph_add((other.node, s223.contains, self.node))
+        data_graph_add((self.node, s223.isContainedIn, other.node))
+
+        return other
 
 
 class Enclosure(Node):
@@ -1309,14 +1354,14 @@ class Enclosure(Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-    def __gt__(self, other: Union[Space, Enclosure]) -> Node:
+    def __gt__(self, other: Union[PhysicalSpace, Enclosure]) -> Node:
         """self > other
 
         Build a containment heirarchy, this contains other.
         """
         logging.debug(f"__gt__ {self} {other}")
 
-        if not isinstance(other, (Space, Enclosure)):
+        if not isinstance(other, (PhysicalSpace, Enclosure)):
             raise TypeError("space or enclosure expected")
 
         data_graph_add((self.node, s223.contains, other.node))
@@ -1332,7 +1377,7 @@ class Enclosure(Node):
         logging.debug(f"__lt__ {self} {other}")
 
         if not isinstance(other, Enclosure):
-            raise TypeError("space expected")
+            raise TypeError("enclosure expected")
 
         data_graph_add((other.node, s223.contains, self.node))
         data_graph_add((self.node, s223.isContainedIn, other.node))
