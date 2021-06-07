@@ -1,4 +1,3 @@
-import logging
 from pathlib import Path
 
 from bob.core import (
@@ -8,7 +7,6 @@ from bob.core import (
     System,
     SystemConnectionPoint,
     dump,
-    clear,
 )
 
 from header import sample_header
