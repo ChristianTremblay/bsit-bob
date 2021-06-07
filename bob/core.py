@@ -718,12 +718,12 @@ class Connection(Node, metaclass=ConnectionMetaclass):
         super().__init__(**kwargs)
 
     def connect_to(
-        self, connection_point: Union[ConnectionPoint, SpaceConnectionPoint]
+        self, connection_point: ConnectionPoint
     ) -> None:
         """
         Connects from this connection to a connection point.
         """
-        if not isinstance(connection_point, (ConnectionPoint, SpaceConnectionPoint)):
+        if not isinstance(connection_point, ConnectionPoint):
             raise TypeError("ConnectionPoint expected")
         if isinstance(connection_point, OutletConnectionPoint):
             raise TypeError("connection point direction")
@@ -747,12 +747,12 @@ class Connection(Node, metaclass=ConnectionMetaclass):
         )
 
     def connect_from(
-        self, connection_point: Union[ConnectionPoint, SpaceConnectionPoint]
+        self, connection_point: ConnectionPoint
     ) -> None:
         """
         Connects from a connection point to this connection.
         """
-        if not isinstance(connection_point, (ConnectionPoint, SpaceConnectionPoint)):
+        if not isinstance(connection_point, ConnectionPoint):
             raise TypeError("ConnectionPoint expected")
         if isinstance(connection_point, InletConnectionPoint):
             raise TypeError("connection point direction")
@@ -776,105 +776,18 @@ class Connection(Node, metaclass=ConnectionMetaclass):
         )
 
 
-class ConnectionPoint(Node):
-    node_type: URIRef = s223.ConnectionPoint
-    hasSubstance: URIRef  # identifier of a subclass of Substance
-    hasDirection: URIRef  # one of s223.Inlet, s223.Outlet, s223.Bidirectional
-
-    lnx: Segment
-    connectsThrough: Connection
-    isConnectionPointOf: Device
-
-    def __init__(self, device: Device, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-
-        data_graph_add((device.node, s223.hasConnectionPoint, self.node))
-        self.isConnectionPointOf = device
-
-        # this is one of the connection points of the device
-        device._connection_points[str(self.node)] = self
-
-    def link_to(self, other: Union[Junction, Segment]) -> None:
-        """
-        Links this connection point to a junction or a segment.
-        """
-        if self.lnx:
-            raise RuntimeError("connection point already linked")
-
-        if isinstance(other, Segment):
-            segment = other
-        elif isinstance(other, Junction):
-            segment = Segment()
-            segment.link_to(other)
-        else:
-            raise TypeError("Junction or Segment expected")
-
-        # link the segment back
-        segment.link_to(self)
-
-    def connect_to(
-        self, other: Union[Connection, ConnectionPoint, SpaceConnectionPoint]
-    ) -> None:
-        """
-        Connects to a connection or a connection point.
-        """
-        if self.connectsThrough:
-            raise RuntimeError("connection point already connected")
-
-        if isinstance(other, Connection):
-            connection = other
-        elif isinstance(other, (ConnectionPoint, SpaceConnectionPoint)):
-            connection = Connection()
-            if self.hasSubstance:
-                connection.hasSubstance = self.hasSubstance
-            connection.connect_to(other)
-        else:
-            raise TypeError("connection or connection point expected")
-
-        # link connection back from this connection point
-        connection.connect_from(self)
-
-    def connect_from(
-        self, other: Union[Connection, ConnectionPoint, SpaceConnectionPoint]
-    ) -> None:
-        """
-        Connects from a connection or a connection point.
-        """
-        if self.connectsThrough:
-            raise RuntimeError("connection point already connected")
-
-        if isinstance(other, Connection):
-            connection = other
-        elif isinstance(other, (ConnectionPoint, SpaceConnectionPoint)):
-            connection = Connection()
-            if self.hasSubstance:
-                connection.hasSubstance = self.hasSubstance
-            connection.connect_from(other)
-        else:
-            raise TypeError("connection or connection point expected")
-
-        # link connection to this connection point
-        connection.connect_to(self)
-
-
-class InletConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = s223.Inlet
-
-
-class OutletConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = s223.Outlet
-
-
-class Device(Node):
+class Connectable(Node):
     """
-    A type of thing that can has connection points.
+    A type of thing that can have connection points.
     """
 
-    node_type: URIRef = s223.Device
+    node_type: URIRef = None
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
-        logging.debug(f"Device.__init__ {kwargs}")
+        logging.debug(f"Connectable.__init__ {kwargs}")
+        if self.__class__ is Connectable:
+            raise RuntimeError("Connectable is an abstract base class")
         super().__init__(**kwargs)
 
         if MANDITORY_LABEL:
@@ -912,6 +825,102 @@ class Device(Node):
             logging.debug(f"    - connection point {var_name}: {var_element}")
 
             setattr(self, var_name, var_element)
+
+class ConnectionPoint(Node):
+    node_type: URIRef = s223.ConnectionPoint
+    hasSubstance: URIRef  # identifier of a subclass of Substance
+    hasDirection: URIRef  # one of s223.Inlet, s223.Outlet, s223.Bidirectional
+
+    lnx: Segment
+    connectsThrough: Connection
+    isConnectionPointOf: Connectable
+
+    def __init__(self, thing: Connectable, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+        data_graph_add((thing.node, s223.hasConnectionPoint, self.node))
+        self.isConnectionPointOf = thing
+
+        # this is one of the connection points of the device
+        thing._connection_points[str(self.node)] = self
+
+    def link_to(self, other: Union[Junction, Segment]) -> None:
+        """
+        Links this connection point to a junction or a segment.
+        """
+        if self.lnx:
+            raise RuntimeError("connection point already linked")
+
+        if isinstance(other, Segment):
+            segment = other
+        elif isinstance(other, Junction):
+            segment = Segment()
+            segment.link_to(other)
+        else:
+            raise TypeError("Junction or Segment expected")
+
+        # link the segment back
+        segment.link_to(self)
+
+    def connect_to(
+        self, other: Union[Connection, ConnectionPoint]
+    ) -> None:
+        """
+        Connects to a connection or a connection point.
+        """
+        if self.connectsThrough:
+            raise RuntimeError("connection point already connected")
+
+        if isinstance(other, Connection):
+            connection = other
+        elif isinstance(other, ConnectionPoint):
+            connection = Connection()
+            if self.hasSubstance:
+                connection.hasSubstance = self.hasSubstance
+            connection.connect_to(other)
+        else:
+            raise TypeError("connection or connection point expected")
+
+        # link connection back from this connection point
+        connection.connect_from(self)
+
+    def connect_from(
+        self, other: Union[Connection, ConnectionPoint]
+    ) -> None:
+        """
+        Connects from a connection or a connection point.
+        """
+        if self.connectsThrough:
+            raise RuntimeError("connection point already connected")
+
+        if isinstance(other, Connection):
+            connection = other
+        elif isinstance(other, ConnectionPoint):
+            connection = Connection()
+            if self.hasSubstance:
+                connection.hasSubstance = self.hasSubstance
+            connection.connect_from(other)
+        else:
+            raise TypeError("connection or connection point expected")
+
+        # link connection to this connection point
+        connection.connect_to(self)
+
+
+class InletConnectionPoint(ConnectionPoint):
+    hasDirection: URIRef = s223.Inlet
+
+
+class OutletConnectionPoint(ConnectionPoint):
+    hasDirection: URIRef = s223.Outlet
+
+
+class Device(Connectable):
+    """
+    .
+    """
+
+    node_type: URIRef = s223.Device
 
     def __gt__(self, other: Union[Device, System]) -> Union[Device, System]:
         """self > other
@@ -1065,7 +1074,7 @@ class Zone(Node):
     _zone_connection_points: Dict[str, ZoneConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
-        logging.debug(f"Space.__init__ {kwargs}")
+        logging.debug(f"Zone.__init__ {kwargs}")
         super().__init__(**kwargs)
 
         if MANDITORY_LABEL:
@@ -1104,15 +1113,15 @@ class Zone(Node):
 
             setattr(self, var_name, var_element)
 
-    def __gt__(self, other: Space) -> Node:
+    def __gt__(self, other: DomainSpace) -> Node:
         """self > other
 
-        Build a containment heirarchy, the other zone is contined in this
-        zone.
+        Build a containment heirarchy, the other domain space is contained in
+        this zone.
         """
         logging.debug(f"__gt__ {self} {other}")
 
-        if not isinstance(other, Space):
+        if not isinstance(other, DomainSpace):
             raise TypeError("space expected")
 
         data_graph_add((self.node, s223.contains, other.node))
@@ -1129,7 +1138,7 @@ class ZoneConnectionPoint(Node):
     node_type: URIRef = s223.ZoneConnectionPoint
 
     isZoneConnectionPointOf: Zone
-    mapsTo: SpaceConnectionPoint  # Union[Junction, SpaceConnectionPoint]
+    mapsTo: Node
 
     def __init__(self, zone: Zone, **kwargs: Any) -> None:
         logging.debug(f"ZoneConnectionPoint.__init__ {zone} {kwargs}")
@@ -1141,7 +1150,7 @@ class ZoneConnectionPoint(Node):
         # this is one of the connection points of the zone
         zone._zone_connection_points[str(self.node)] = self
 
-    def maps_to(self, other: SpaceConnectionPoint) -> None:
+    def maps_to(self, other: Union[Junction, ConnectionPoint]) -> None:
         """
         Maps this connection point to a space connection point.
         """
@@ -1149,8 +1158,8 @@ class ZoneConnectionPoint(Node):
         if self.mapsTo:
             raise RuntimeError("zone connection point already mapped")
 
-        if not isinstance(other, SpaceConnectionPoint):
-            raise TypeError("SpaceConnectionPoint expected")
+        if not isinstance(other, (Junction, ConnectionPoint)):
+            raise TypeError("ConnectionPoint expected")
 
         self.mapsTo = other
 
@@ -1163,55 +1172,14 @@ class OutletZoneConnectionPoint(ZoneConnectionPoint):
     hasDirection: URIRef = s223.Outlet
 
 
-class Space(Node):
+class DomainSpace(Connectable):
     """
     A part of the physical world or a virtual world whose 3D spatial extent is
     bounded actually or theoretically, and provides for certain functions
     within the zone it is contained in.
     """
 
-    node_type: URIRef = s223.Space
-    _space_connection_points: Dict[str, SpaceConnectionPoint]
-
-    def __init__(self, **kwargs: Any) -> None:
-        logging.debug(f"Space.__init__ {kwargs}")
-        super().__init__(**kwargs)
-
-        if MANDITORY_LABEL:
-            if "label" not in kwargs:
-                raise RuntimeError("no label")
-            if not kwargs["label"]:
-                raise RuntimeError("empty label")
-
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-        logging.debug(f"    - merged_annotations: {merged_annotations}")
-
-        # instantiate and associate all of the connection points
-        self._space_connection_points = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
-                continue
-
-            if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_forwards:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = _annotation_forwards.get(var_annotation)
-
-            if not issubclass(var_annotation, SpaceConnectionPoint):
-                continue
-
-            # build an instance of this connection point
-            var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._space_connection_points[var_name] = var_element
-            logging.debug(f"    - connection point {var_name}: {var_element}")
-
-            setattr(self, var_name, var_element)
+    node_type: URIRef = s223.DomainSpace
 
     def __lt__(self, other: Union[Zone, PhysicalSpace]) -> Node:
         """self < other
@@ -1230,91 +1198,22 @@ class Space(Node):
         return self
 
 
-class SpaceConnectionPoint(Node):
-    node_type: URIRef = s223.SpaceConnectionPoint
-    hasSubstance: URIRef  # identifier of a subclass of Substance
-    hasDirection: URIRef  # one of s223.Inlet, s223.Outlet, s223.Bidirectional
-
-    isConnectionPointOf: Space
-    connectsThrough: Connection
-
-    def __init__(self, space: Space, **kwargs: Any) -> None:
-        logging.debug(f"SpaceConnectionPoint.__init__ {space} {kwargs}")
-        super().__init__(**kwargs)
-
-        data_graph_add((space.node, s223.hasSpaceConnectionPoint, self.node))
-        self.isConnectionPointOf = space
-
-        # this is one of the connection points of the zone
-        space._space_connection_points[str(self.node)] = self
-
-    def connect_to(
-        self, other: Union[Connection, ConnectionPoint, SpaceConnectionPoint]
-    ) -> None:
-        """
-        Connects to a connection or a connection point.
-        """
-        if self.connectsThrough:
-            raise RuntimeError("connection point already connected")
-
-        if isinstance(other, Connection):
-            connection = other
-        elif isinstance(other, (ConnectionPoint, SpaceConnectionPoint)):
-            connection = Connection()
-            if self.hasSubstance:
-                connection.hasSubstance = self.hasSubstance
-            connection.connect_to(other)
-        else:
-            raise TypeError("connection or connection point expected")
-
-        # link connection back from this connection point
-        connection.connect_from(self)
-
-    def connect_from(
-        self, other: Union[Connection, ConnectionPoint, SpaceConnectionPoint]
-    ) -> None:
-        """
-        Connects from a connection or a connection point.
-        """
-        if self.connectsThrough:
-            raise RuntimeError("connection point already connected")
-
-        if isinstance(other, Connection):
-            connection = other
-        elif isinstance(other, (ConnectionPoint, SpaceConnectionPoint)):
-            connection = Connection()
-            if self.hasSubstance:
-                connection.hasSubstance = self.hasSubstance
-            connection.connect_from(other)
-        else:
-            raise TypeError("connection or connection point expected")
-
-        # link connection to this connection point
-        connection.connect_to(self)
-
-
-class InletSpaceConnectionPoint(SpaceConnectionPoint):
-    hasDirection: URIRef = s223.Inlet
-
-
-class OutletSpaceConnectionPoint(SpaceConnectionPoint):
-    hasDirection: URIRef = s223.Outlet
-
-
 class PhysicalSpace(Node):
     """
     A part of the physical world whose 3D spatial extent is bounded.
     """
 
-    def __gt__(self, other: Space) -> Node:
+    node_type: URIRef = s223.PhysicalSpace
+
+    def __gt__(self, other: DomainSpace) -> Node:
         """self > other
 
         Build a containment heirarchy, this contains some other space.
         """
         logging.debug(f"__gt__ {self} {other}")
 
-        if not isinstance(other, Space):
-            raise TypeError("space expected")
+        if not isinstance(other, DomainSpace):
+            raise TypeError("domain space expected")
 
         data_graph_add((self.node, s223.contains, other.node))
         data_graph_add((other.node, s223.isContainedIn, self.node))
@@ -1392,14 +1291,14 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     logging.info(f"connect from {from_thing} to {to_thing}")
 
     from_out = defaultdict(set)
-    if isinstance(from_thing, (ConnectionPoint, SpaceConnectionPoint)):
+    if isinstance(from_thing, ConnectionPoint):
         substance = getattr(from_thing, "hasSubstance", None)
         from_out[substance].add(from_thing)
 
     elif isinstance(from_thing, Connection):
         pass
 
-    elif isinstance(from_thing, Device):
+    elif isinstance(from_thing, Connectable):
         for attr, connection_point in from_thing._connection_points.items():
             if connection_point.connectsThrough:
                 continue
@@ -1453,7 +1352,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
                 continue
             connection_point = connection_point.mapsTo
 
-            if isinstance(connection_point, SpaceConnectionPoint):
+            if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
                 if getattr(connection_point, "hasDirection", None) == s223.Inlet:
@@ -1479,14 +1378,14 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     logging.debug(f"    - from_types: {from_types}")
 
     to_in = defaultdict(set)
-    if isinstance(to_thing, (ConnectionPoint, SpaceConnectionPoint)):
+    if isinstance(to_thing, ConnectionPoint):
         substance = getattr(to_thing, "hasSubstance", None)
         to_in[substance].add(to_thing)
 
     elif isinstance(to_thing, Connection):
         pass
 
-    elif isinstance(to_thing, Device):
+    elif isinstance(to_thing, Connectable):
         for attr, connection_point in to_thing._connection_points.items():
             if connection_point.connectsThrough:
                 continue
@@ -1540,7 +1439,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
                 continue
             connection_point = connection_point.mapsTo
 
-            if isinstance(connection_point, SpaceConnectionPoint):
+            if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
                 if getattr(connection_point, "hasDirection", None) == s223.Outlet:

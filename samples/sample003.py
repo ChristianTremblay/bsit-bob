@@ -2,13 +2,13 @@ from pathlib import Path
 
 from bob import bind_model_namespace, dump
 from bob.core import (
-    Space,
+    DomainSpace,
     Zone,
 )
 from bob.air import (
     Fan,
+    AirInletConnectionPoint,
     AirInletZoneConnectionPoint,
-    AirInletSpaceConnectionPoint,
 )
 from bob.cw import ChilledWaterConnection, ChilledWaterCoil
 
@@ -42,8 +42,8 @@ f >> coil1
 zone = HVACZone(label="Zone-1")
 
 # there is a space that is the destination of the air
-space = Space(label="Space")
-scp = AirInletSpaceConnectionPoint(space, label="scp")
+space = DomainSpace(label="Space")
+scp = AirInletConnectionPoint(space, label="scp")
 
 # the zone contains the space, and the air input into the zone is
 # mapped to the space connection point

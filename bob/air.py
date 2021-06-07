@@ -5,15 +5,12 @@ from .core import (
     ConnectionPoint,
     Device,
     InletConnectionPoint,
-    InletSpaceConnectionPoint,
     InletSystemConnectionPoint,
     InletZoneConnectionPoint,
     OutletConnectionPoint,
-    OutletSpaceConnectionPoint,
     OutletSystemConnectionPoint,
     OutletZoneConnectionPoint,
-    Space,
-    SpaceConnectionPoint,
+    DomainSpace,
     Substance,
     SystemConnectionPoint,
     Zone,
@@ -76,23 +73,6 @@ class AirOutletZoneConnectionPoint(AirZoneConnectionPoint, OutletZoneConnectionP
     node_type = None
 
 
-class AirSpaceConnectionPoint(SpaceConnectionPoint):
-    node_type = None
-    hasSubstance: URIRef = Air.node_type
-
-
-class AirInletSpaceConnectionPoint(AirSpaceConnectionPoint, InletSpaceConnectionPoint):
-    node_type = None
-    hasDirection: URIRef = s223.Inlet
-
-
-class AirOutletSpaceConnectionPoint(
-    AirSpaceConnectionPoint, OutletSpaceConnectionPoint
-):
-    node_type = None
-    hasDirection: URIRef = s223.Outlet
-
-
 class Fan(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
@@ -129,11 +109,11 @@ class HVACZone(Zone):
         super().__init__(label=label)
 
         # there is a space that is the destination of the air
-        space = Space(label=label + ".space")
-        space_supply_air = AirInletSpaceConnectionPoint(
+        space = DomainSpace(label=label + ".space")
+        space_supply_air = AirInletConnectionPoint(
             space, label=label + ".space.supplyAir"
         )
-        space_return_air = AirOutletSpaceConnectionPoint(
+        space_return_air = AirOutletConnectionPoint(
             space, label=label + ".space.returnAir"
         )
 
