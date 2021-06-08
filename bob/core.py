@@ -1253,14 +1253,14 @@ class Enclosure(Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-    def __gt__(self, other: Union[PhysicalSpace, Enclosure]) -> Node:
+    def __gt__(self, other: Union[DomainSpace, PhysicalSpace, Enclosure]) -> Node:
         """self > other
 
         Build a containment heirarchy, this contains other.
         """
         logging.debug(f"__gt__ {self} {other}")
 
-        if not isinstance(other, (PhysicalSpace, Enclosure)):
+        if not isinstance(other, (DomainSpace, PhysicalSpace, Enclosure)):
             raise TypeError("space or enclosure expected")
 
         data_graph_add((self.node, s223.contains, other.node))
@@ -1356,7 +1356,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
                 if connection_point.connectsThrough:
                     continue
                 if getattr(connection_point, "hasDirection", None) == s223.Inlet:
-                    raise TypeError(f"connection point direction: {connection_point}")
+                    continue
             elif isinstance(connection_point, Junction):
                 pass
 
