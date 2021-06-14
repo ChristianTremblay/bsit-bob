@@ -20,22 +20,21 @@ from .air import (
     AirOutletSystemConnectionPoint,
 )
 
-from .signal import AnalogIn
+from .signal import AnalogOut
 
 __namespace__ = s223
 
 
-class HotWater(Substance):
-    pass
+HotWater = Substance(node_iri=s223.HotWater)
 
 
 class HotWaterConnection(Connection):
-    hasSubstance = HotWater.node_type
+    hasSubstance = HotWater
     node_type = None
 
 
 class HotWaterConnectionPoint(ConnectionPoint):
-    hasSubstance = HotWater.node_type
+    hasSubstance = HotWater
     node_type = None
 
 
@@ -48,7 +47,7 @@ class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoi
 
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance = HotWater.node_type
+    hasSubstance = HotWater
     node_type = None
 
 
@@ -67,7 +66,10 @@ class HotWaterOutletSystemConnectionPoint(
 class HotWaterValve(Device):
     hotWaterInlet: HotWaterInletConnectionPoint
     hotWaterOutlet: HotWaterOutletConnectionPoint
-    position = AnalogIn
+    position: AnalogOut
+
+    def __init__(self, label: str) -> None:
+        super().__init__(label=label, position=AnalogOut(label=label + ".position"))
 
 
 class HotWaterCoil(Device):

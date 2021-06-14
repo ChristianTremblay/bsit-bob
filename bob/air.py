@@ -21,17 +21,16 @@ from .signal import AnalogIn, AnalogOut
 __namespace__ = s223
 
 
-class Air(Substance):
-    pass
+Air = Substance(node_iri=s223.Air)
 
 
 class AirConnection(Connection):
-    hasSubstance: URIRef = Air.node_type
+    hasSubstance = Air
     node_type = None
 
 
 class AirConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = Air.node_type
+    hasSubstance = Air
     node_type = None
 
 
@@ -44,7 +43,7 @@ class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
 
 
 class AirSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance: URIRef = Air.node_type
+    hasSubstance = Air
     node_type = None
 
 
@@ -61,7 +60,7 @@ class AirOutletSystemConnectionPoint(
 
 
 class AirZoneConnectionPoint(ZoneConnectionPoint):
-    hasSubstance: URIRef = Air.node_type
+    hasSubstance = Air
     node_type = None
 
 
@@ -81,19 +80,28 @@ class Fan(Device):
 class Damper(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position = AnalogOut
+    position: AnalogOut
+
+    def __init__(self, label: str) -> None:
+        super().__init__(label=label, position=AnalogOut(label=label + ".position"))
 
 
 class Filter(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    dp = AnalogOut
+    dp: AnalogIn
+
+    def __init__(self, label: str) -> None:
+        super().__init__(label=label, dp=AnalogIn(label=label + ".dp"))
 
 
 class AirFlowStation(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    flow = AnalogIn
+    flow: AnalogIn
+
+    def __init__(self, label: str) -> None:
+        super().__init__(label=label, flow=AnalogIn(label=label + ".flow"))
 
 
 class HVACZone(Zone):

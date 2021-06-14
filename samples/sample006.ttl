@@ -46,6 +46,7 @@ ex:00004 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "hot_water_coil.hotWaterInlet" ;
     s223:hasDirection s223:Inlet ;
+    s223:hasSubstance s223:HotWater ;
     s223:isSystemConnectionPointOf ex:00001 ;
     s223:mapsTo ex:00013 .
 
@@ -53,6 +54,7 @@ ex:00005 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "hot_water_coil.hotWaterOutlet" ;
     s223:hasDirection s223:Outlet ;
+    s223:hasSubstance s223:HotWater ;
     s223:isSystemConnectionPointOf ex:00001 ;
     s223:mapsTo ex:00010 .
 
@@ -102,27 +104,28 @@ ex:00010 a s223:ConnectionPoint,
     s223:hasSubstance s223:HotWater ;
     s223:isConnectionPointOf ex:00006 .
 
-ex:00011 a s223:Device,
+ex:00011 a s223:AnalogOut,
+        s223:Property ;
+    rdfs:label "hot_water_coil.hw_valve.position" ;
+    s223:isPropertyOf ex:00012 .
+
+ex:00012 a s223:Device,
         s223:HotWaterValve ;
     rdfs:label "hot_water_coil.hw_valve" ;
     s223:connectedThrough ex:00015 ;
     s223:hasConnectionPoint ex:00013,
         ex:00014 ;
-    s223:hasProperty ex:00012 ;
+    s223:hasProperty ex:00011 ;
     s223:hotWaterInlet ex:00013 ;
     s223:hotWaterOutlet ex:00014 ;
-    s223:position ex:00012 .
-
-ex:00012 a s223:AnalogIn,
-        s223:Property ;
-    s223:isPropertyOf ex:00011 .
+    s223:position ex:00011 .
 
 ex:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_valve.hotWaterInlet" ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00011 .
+    s223:isConnectionPointOf ex:00012 .
 
 ex:00014 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -130,12 +133,12 @@ ex:00014 a s223:ConnectionPoint,
     s223:connectsThrough ex:00015 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00011 .
+    s223:isConnectionPointOf ex:00012 .
 
 ex:00015 a s223:Connection ;
     s223:connectsAt ex:00009,
         ex:00014 ;
-    s223:connectsFrom ex:00011 ;
+    s223:connectsFrom ex:00012 ;
     s223:connectsTo ex:00006 ;
     s223:hasSubstance s223:HotWater .
 

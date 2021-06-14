@@ -4,7 +4,7 @@
 #   Project Metadata
 #
 
-__version__ = "0.18"
+__version__ = "0.19"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
@@ -39,6 +39,9 @@ from .core import (
     dump,
     clear,
 )
+
+from . import domain
+from . import role
 
 from . import air
 from . import cw

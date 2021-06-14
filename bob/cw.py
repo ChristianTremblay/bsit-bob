@@ -19,22 +19,21 @@ from .air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from .signal import AnalogIn
+from .signal import AnalogOut
 
 __namespace__ = s223
 
 
-class ChilledWater(Substance):
-    pass
+ChilledWater = Substance(node_iri=s223.ChilledWater)
 
 
 class ChilledWaterConnection(Connection):
-    hasSubstance = ChilledWater.node_type
+    hasSubstance = ChilledWater
     node_type = None
 
 
 class ChilledWaterConnectionPoint(ConnectionPoint):
-    hasSubstance = ChilledWater.node_type
+    hasSubstance = ChilledWater
     node_type = None
 
 
@@ -51,7 +50,7 @@ class ChilledWaterOutletConnectionPoint(
 
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance = ChilledWater.node_type
+    hasSubstance = ChilledWater
     node_type = None
 
 
@@ -70,7 +69,10 @@ class ChilledWaterOutletSystemConnectionPoint(
 class ChilledWaterValve(Device):
     chilledWaterInlet: ChilledWaterInletConnectionPoint
     chilledWaterOutlet: ChilledWaterOutletConnectionPoint
-    position = AnalogIn
+    position: AnalogOut
+
+    def __init__(self, label: str) -> None:
+        super().__init__(label=label, position=AnalogOut(label=label + ".position"))
 
 
 class ChilledWaterCoil(Device):
