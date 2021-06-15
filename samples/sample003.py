@@ -5,12 +5,13 @@ from bob.core import (
     DomainSpace,
     Zone,
 )
-from bob.air import (
+from bob.hvac import (
     Fan,
     AirInletConnectionPoint,
     AirInletZoneConnectionPoint,
+    ChilledWaterConnection,
+    ChilledWaterCoil,
 )
-from bob.cw import ChilledWaterConnection, ChilledWaterCoil
 
 from header import sample_header
 
