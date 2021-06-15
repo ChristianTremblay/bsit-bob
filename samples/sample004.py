@@ -1,8 +1,7 @@
 from pathlib import Path
 
 from bob import bind_model_namespace, dump
-from bob.air import HVACZone
-from bob.vav import VAV1
+from bob.hvac import HVACZone1, VAV1
 
 from header import sample_header
 
@@ -12,7 +11,7 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 # there is a zone that contains a space
-zone = HVACZone(label="Zone")
+zone = HVACZone1(label="Zone")
 
 # there is a VAV box
 vav = VAV1(label="Zone.VAV")

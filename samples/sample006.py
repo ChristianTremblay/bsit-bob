@@ -1,8 +1,7 @@
 from pathlib import Path
 
 from bob import bind_model_namespace, dump
-from bob.air import AirConnection
-from bob.hw import HotWaterCoil2
+from bob.hvac import AirConnection, HotWaterCoil2
 
 from header import sample_header
 

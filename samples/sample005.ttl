@@ -62,22 +62,22 @@ ex:00006 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex:00004 .
 
 ex:00007 a s223:System,
-        s223:VAV2 ;
+        s223:VAV ;
     rdfs:label "Zone-1.VAV" ;
-    s223:airFlow ex:00010 ;
+    s223:airFlow ex:00011 ;
     s223:airInlet ex:00008 ;
     s223:airOutlet ex:00009 ;
-    s223:contains ex:00011,
-        ex:00015,
-        ex:00018,
-        ex:00024 ;
-    s223:damperPosition ex:00014 ;
-    s223:hasProperty ex:00010,
+    s223:contains ex:00010,
         ex:00014,
+        ex:00018,
         ex:00023 ;
+    s223:damperPosition ex:00015 ;
+    s223:hasProperty ex:00011,
+        ex:00015,
+        ex:00024 ;
     s223:hasSystemConnectionPoint ex:00008,
         ex:00009 ;
-    s223:hwValvePosition ex:00023 .
+    s223:hotWaterValvePosition ex:00024 .
 
 ex:00008 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
@@ -95,24 +95,24 @@ ex:00009 a s223:OutletSystemConnectionPoint,
     s223:isSystemConnectionPointOf ex:00007 ;
     s223:mapsTo ex:00020 .
 
-ex:00010 a s223:AnalogIn,
-        s223:Property ;
-    rdfs:label "Zone-1.VAV.air_flow_station.flow" ;
-    s223:isPropertyOf ex:00007,
-        ex:00011 .
-
-ex:00011 a s223:AirFlowStation,
+ex:00010 a s223:AirFlowStation,
         s223:Device ;
     rdfs:label "Zone-1.VAV.air_flow_station" ;
     s223:airInlet ex:00012 ;
     s223:airOutlet ex:00013 ;
     s223:connectedThrough ex:00027,
         ex:00061 ;
-    s223:flow ex:00010 ;
+    s223:flow ex:00011 ;
     s223:hasConnectionPoint ex:00012,
         ex:00013 ;
-    s223:hasProperty ex:00010 ;
+    s223:hasProperty ex:00011 ;
     s223:isContainedIn ex:00007 .
+
+ex:00011 a s223:AnalogIn,
+        s223:Property ;
+    rdfs:label "Zone-1.VAV.air_flow_station.flow" ;
+    s223:isPropertyOf ex:00007,
+        ex:00010 .
 
 ex:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -120,7 +120,7 @@ ex:00012 a s223:ConnectionPoint,
     s223:connectsThrough ex:00061 ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00011 .
+    s223:isConnectionPointOf ex:00010 .
 
 ex:00013 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -128,15 +128,9 @@ ex:00013 a s223:ConnectionPoint,
     s223:connectsThrough ex:00027 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00011 .
+    s223:isConnectionPointOf ex:00010 .
 
-ex:00014 a s223:AnalogOut,
-        s223:Property ;
-    rdfs:label "Zone-1.VAV.damper.position" ;
-    s223:isPropertyOf ex:00007,
-        ex:00015 .
-
-ex:00015 a s223:Damper,
+ex:00014 a s223:Damper,
         s223:Device ;
     rdfs:label "Zone-1.VAV.damper" ;
     s223:airInlet ex:00016 ;
@@ -145,9 +139,15 @@ ex:00015 a s223:Damper,
         ex:00028 ;
     s223:hasConnectionPoint ex:00016,
         ex:00017 ;
-    s223:hasProperty ex:00014 ;
+    s223:hasProperty ex:00015 ;
     s223:isContainedIn ex:00007 ;
-    s223:position ex:00014 .
+    s223:position ex:00015 .
+
+ex:00015 a s223:AnalogOut,
+        s223:Property ;
+    rdfs:label "Zone-1.VAV.damper.position" ;
+    s223:isPropertyOf ex:00007,
+        ex:00014 .
 
 ex:00016 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -155,7 +155,7 @@ ex:00016 a s223:ConnectionPoint,
     s223:connectsThrough ex:00027 ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00015 .
+    s223:isConnectionPointOf ex:00014 .
 
 ex:00017 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -163,7 +163,7 @@ ex:00017 a s223:ConnectionPoint,
     s223:connectsThrough ex:00028 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00015 .
+    s223:isConnectionPointOf ex:00014 .
 
 ex:00018 a s223:Device,
         s223:HotWaterCoil ;
@@ -177,8 +177,8 @@ ex:00018 a s223:Device,
         ex:00020,
         ex:00021,
         ex:00022 ;
-    s223:hotWaterInlet ex:00021 ;
-    s223:hotWaterOutlet ex:00022 ;
+    s223:hotWaterReturn ex:00022 ;
+    s223:hotWaterSupply ex:00021 ;
     s223:isContainedIn ex:00007 .
 
 ex:00019 a s223:ConnectionPoint,
@@ -199,7 +199,7 @@ ex:00020 a s223:ConnectionPoint,
 
 ex:00021 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "Zone-1.VAV.hw_coil.hotWaterInlet" ;
+    rdfs:label "Zone-1.VAV.hw_coil.hotWaterSupply" ;
     s223:connectsThrough ex:00029 ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:HotWater ;
@@ -207,35 +207,35 @@ ex:00021 a s223:ConnectionPoint,
 
 ex:00022 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "Zone-1.VAV.hw_coil.hotWaterOutlet" ;
+    rdfs:label "Zone-1.VAV.hw_coil.hotWaterReturn" ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:HotWater ;
     s223:isConnectionPointOf ex:00018 .
 
-ex:00023 a s223:AnalogOut,
-        s223:Property ;
-    rdfs:label "Zone-1.VAV.hw_valve.position" ;
-    s223:isPropertyOf ex:00007,
-        ex:00024 .
-
-ex:00024 a s223:Device,
+ex:00023 a s223:Device,
         s223:HotWaterValve ;
     rdfs:label "Zone-1.VAV.hw_valve" ;
     s223:connectedThrough ex:00029 ;
     s223:hasConnectionPoint ex:00025,
         ex:00026 ;
-    s223:hasProperty ex:00023 ;
+    s223:hasProperty ex:00024 ;
     s223:hotWaterInlet ex:00025 ;
     s223:hotWaterOutlet ex:00026 ;
     s223:isContainedIn ex:00007 ;
-    s223:position ex:00023 .
+    s223:position ex:00024 .
+
+ex:00024 a s223:AnalogOut,
+        s223:Property ;
+    rdfs:label "Zone-1.VAV.hw_valve.position" ;
+    s223:isPropertyOf ex:00007,
+        ex:00023 .
 
 ex:00025 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Zone-1.VAV.hw_valve.hotWaterInlet" ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00024 .
+    s223:isConnectionPointOf ex:00023 .
 
 ex:00026 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -243,26 +243,26 @@ ex:00026 a s223:ConnectionPoint,
     s223:connectsThrough ex:00029 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00024 .
+    s223:isConnectionPointOf ex:00023 .
 
 ex:00027 a s223:Connection ;
     s223:connectsAt ex:00013,
         ex:00016 ;
-    s223:connectsFrom ex:00011 ;
-    s223:connectsTo ex:00015 ;
+    s223:connectsFrom ex:00010 ;
+    s223:connectsTo ex:00014 ;
     s223:hasSubstance s223:Air .
 
 ex:00028 a s223:Connection ;
     s223:connectsAt ex:00017,
         ex:00019 ;
-    s223:connectsFrom ex:00015 ;
+    s223:connectsFrom ex:00014 ;
     s223:connectsTo ex:00018 ;
     s223:hasSubstance s223:Air .
 
 ex:00029 a s223:Connection ;
     s223:connectsAt ex:00021,
         ex:00026 ;
-    s223:connectsFrom ex:00024 ;
+    s223:connectsFrom ex:00023 ;
     s223:connectsTo ex:00018 ;
     s223:hasSubstance s223:HotWater .
 
@@ -321,22 +321,22 @@ ex:00036 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex:00034 .
 
 ex:00037 a s223:System,
-        s223:VAV2 ;
+        s223:VAV ;
     rdfs:label "Zone-2.VAV" ;
-    s223:airFlow ex:00040 ;
+    s223:airFlow ex:00041 ;
     s223:airInlet ex:00038 ;
     s223:airOutlet ex:00039 ;
-    s223:contains ex:00041,
-        ex:00045,
-        ex:00048,
-        ex:00054 ;
-    s223:damperPosition ex:00044 ;
-    s223:hasProperty ex:00040,
+    s223:contains ex:00040,
         ex:00044,
+        ex:00048,
         ex:00053 ;
+    s223:damperPosition ex:00045 ;
+    s223:hasProperty ex:00041,
+        ex:00045,
+        ex:00054 ;
     s223:hasSystemConnectionPoint ex:00038,
         ex:00039 ;
-    s223:hwValvePosition ex:00053 .
+    s223:hotWaterValvePosition ex:00054 .
 
 ex:00038 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
@@ -354,24 +354,24 @@ ex:00039 a s223:OutletSystemConnectionPoint,
     s223:isSystemConnectionPointOf ex:00037 ;
     s223:mapsTo ex:00050 .
 
-ex:00040 a s223:AnalogIn,
-        s223:Property ;
-    rdfs:label "Zone-2.VAV.air_flow_station.flow" ;
-    s223:isPropertyOf ex:00037,
-        ex:00041 .
-
-ex:00041 a s223:AirFlowStation,
+ex:00040 a s223:AirFlowStation,
         s223:Device ;
     rdfs:label "Zone-2.VAV.air_flow_station" ;
     s223:airInlet ex:00042 ;
     s223:airOutlet ex:00043 ;
     s223:connectedThrough ex:00057,
         ex:00061 ;
-    s223:flow ex:00040 ;
+    s223:flow ex:00041 ;
     s223:hasConnectionPoint ex:00042,
         ex:00043 ;
-    s223:hasProperty ex:00040 ;
+    s223:hasProperty ex:00041 ;
     s223:isContainedIn ex:00037 .
+
+ex:00041 a s223:AnalogIn,
+        s223:Property ;
+    rdfs:label "Zone-2.VAV.air_flow_station.flow" ;
+    s223:isPropertyOf ex:00037,
+        ex:00040 .
 
 ex:00042 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -379,7 +379,7 @@ ex:00042 a s223:ConnectionPoint,
     s223:connectsThrough ex:00061 ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00041 .
+    s223:isConnectionPointOf ex:00040 .
 
 ex:00043 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -387,15 +387,9 @@ ex:00043 a s223:ConnectionPoint,
     s223:connectsThrough ex:00057 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00041 .
+    s223:isConnectionPointOf ex:00040 .
 
-ex:00044 a s223:AnalogOut,
-        s223:Property ;
-    rdfs:label "Zone-2.VAV.damper.position" ;
-    s223:isPropertyOf ex:00037,
-        ex:00045 .
-
-ex:00045 a s223:Damper,
+ex:00044 a s223:Damper,
         s223:Device ;
     rdfs:label "Zone-2.VAV.damper" ;
     s223:airInlet ex:00046 ;
@@ -404,9 +398,15 @@ ex:00045 a s223:Damper,
         ex:00058 ;
     s223:hasConnectionPoint ex:00046,
         ex:00047 ;
-    s223:hasProperty ex:00044 ;
+    s223:hasProperty ex:00045 ;
     s223:isContainedIn ex:00037 ;
-    s223:position ex:00044 .
+    s223:position ex:00045 .
+
+ex:00045 a s223:AnalogOut,
+        s223:Property ;
+    rdfs:label "Zone-2.VAV.damper.position" ;
+    s223:isPropertyOf ex:00037,
+        ex:00044 .
 
 ex:00046 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -414,7 +414,7 @@ ex:00046 a s223:ConnectionPoint,
     s223:connectsThrough ex:00057 ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00045 .
+    s223:isConnectionPointOf ex:00044 .
 
 ex:00047 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -422,7 +422,7 @@ ex:00047 a s223:ConnectionPoint,
     s223:connectsThrough ex:00058 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00045 .
+    s223:isConnectionPointOf ex:00044 .
 
 ex:00048 a s223:Device,
         s223:HotWaterCoil ;
@@ -436,8 +436,8 @@ ex:00048 a s223:Device,
         ex:00050,
         ex:00051,
         ex:00052 ;
-    s223:hotWaterInlet ex:00051 ;
-    s223:hotWaterOutlet ex:00052 ;
+    s223:hotWaterReturn ex:00052 ;
+    s223:hotWaterSupply ex:00051 ;
     s223:isContainedIn ex:00037 .
 
 ex:00049 a s223:ConnectionPoint,
@@ -458,7 +458,7 @@ ex:00050 a s223:ConnectionPoint,
 
 ex:00051 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "Zone-2.VAV.hw_coil.hotWaterInlet" ;
+    rdfs:label "Zone-2.VAV.hw_coil.hotWaterSupply" ;
     s223:connectsThrough ex:00059 ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:HotWater ;
@@ -466,35 +466,35 @@ ex:00051 a s223:ConnectionPoint,
 
 ex:00052 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "Zone-2.VAV.hw_coil.hotWaterOutlet" ;
+    rdfs:label "Zone-2.VAV.hw_coil.hotWaterReturn" ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:HotWater ;
     s223:isConnectionPointOf ex:00048 .
 
-ex:00053 a s223:AnalogOut,
-        s223:Property ;
-    rdfs:label "Zone-2.VAV.hw_valve.position" ;
-    s223:isPropertyOf ex:00037,
-        ex:00054 .
-
-ex:00054 a s223:Device,
+ex:00053 a s223:Device,
         s223:HotWaterValve ;
     rdfs:label "Zone-2.VAV.hw_valve" ;
     s223:connectedThrough ex:00059 ;
     s223:hasConnectionPoint ex:00055,
         ex:00056 ;
-    s223:hasProperty ex:00053 ;
+    s223:hasProperty ex:00054 ;
     s223:hotWaterInlet ex:00055 ;
     s223:hotWaterOutlet ex:00056 ;
     s223:isContainedIn ex:00037 ;
-    s223:position ex:00053 .
+    s223:position ex:00054 .
+
+ex:00054 a s223:AnalogOut,
+        s223:Property ;
+    rdfs:label "Zone-2.VAV.hw_valve.position" ;
+    s223:isPropertyOf ex:00037,
+        ex:00053 .
 
 ex:00055 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Zone-2.VAV.hw_valve.hotWaterInlet" ;
     s223:hasDirection s223:Inlet ;
     s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00054 .
+    s223:isConnectionPointOf ex:00053 .
 
 ex:00056 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -502,26 +502,26 @@ ex:00056 a s223:ConnectionPoint,
     s223:connectsThrough ex:00059 ;
     s223:hasDirection s223:Outlet ;
     s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00054 .
+    s223:isConnectionPointOf ex:00053 .
 
 ex:00057 a s223:Connection ;
     s223:connectsAt ex:00043,
         ex:00046 ;
-    s223:connectsFrom ex:00041 ;
-    s223:connectsTo ex:00045 ;
+    s223:connectsFrom ex:00040 ;
+    s223:connectsTo ex:00044 ;
     s223:hasSubstance s223:Air .
 
 ex:00058 a s223:Connection ;
     s223:connectsAt ex:00047,
         ex:00049 ;
-    s223:connectsFrom ex:00045 ;
+    s223:connectsFrom ex:00044 ;
     s223:connectsTo ex:00048 ;
     s223:hasSubstance s223:Air .
 
 ex:00059 a s223:Connection ;
     s223:connectsAt ex:00051,
         ex:00056 ;
-    s223:connectsFrom ex:00054 ;
+    s223:connectsFrom ex:00053 ;
     s223:connectsTo ex:00048 ;
     s223:hasSubstance s223:HotWater .
 
@@ -536,8 +536,8 @@ ex:00061 a s223:Connection ;
     rdfs:label "SupplyAir" ;
     s223:connectsAt ex:00012,
         ex:00042 ;
-    s223:connectsTo ex:00011,
-        ex:00041 ;
+    s223:connectsTo ex:00010,
+        ex:00040 ;
     s223:hasSubstance s223:Air .
 
 ex:00062 a s223:Connection ;
