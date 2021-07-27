@@ -7,7 +7,7 @@ from bob.hvac import (
     VAV2,
 )
 
-from header import sample_header
+#from header import sample_header
 
 
 model_name = Path(__file__).stem
@@ -35,5 +35,5 @@ zone1 >> return_air
 zone2 >> return_air
 
 # dump the result
-sample_header(model_name)
+#sample_header(model_name)
 dump()

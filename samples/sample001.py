@@ -3,7 +3,7 @@ from pathlib import Path
 from bob import bind_model_namespace, Device, QuantifiableProperty, Value, dump
 from bob.core import qudt, quantitykind
 
-from header import sample_header
+from samples.header import sample_header
 
 
 model_name = Path(__file__).stem
@@ -25,7 +25,7 @@ class TestDevice(Device):
 
 class TestDevice2(Device):
     hasTemp: TemperatureProperty
-
+#test device has attribute, hastemp which is of type temperature property.
 
 # individual pieces
 d1 = TestDevice(label="Test Device 1")
