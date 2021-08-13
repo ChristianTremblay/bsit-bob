@@ -1577,10 +1577,11 @@ class Value(Node):
 
 class Property(Node):
     """
-    An attribute, quality, or characteristic of a feature of interest.
+    An attribute, quality, or characteristic of a feature of interest.  This is
+    an abstract base class.
     """
 
-    node_type: URIRef = s223.Property
+    node_type: URIRef = None
     hasValue: Value
 
     # override this for a specialize subclass
@@ -1673,7 +1674,7 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
 def dump(
     graph: Graph = data_graph, file: TextIO = sys.stdout, format: str = "turtle"
 ) -> None:
-    file.write(graph.serialize(format=format).decode())
+    file.write(graph.serialize(format=format))
 
 
 def clear(graph: Graph = data_graph) -> None:
