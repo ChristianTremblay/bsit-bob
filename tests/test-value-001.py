@@ -15,7 +15,7 @@ Value("snow", lang="en")
 Value(True)
 
 Value(Literal(5, datatype=XSD.byte))
-Value(6, datatype=XSD.single)
+Value(6, datatype=XSD.float)
 
 from bob.core import qudt
 

@@ -30,13 +30,13 @@ class TestDevice2(Device):
 # individual pieces
 d1 = TestDevice(label="Test Device 1")
 value = Value(hasSimpleValue=75.5, hasUnits=qudt.DEG_F)
-temp = TemperatureProperty(value)
+temp = TemperatureProperty(value, label="temp")
 
 d1.add_property(temp)
 
 # auto build value
 d2 = TestDevice(label="Test Device 2")
-d2.add_property(TemperatureProperty(90.5))
+d2.add_property(TemperatureProperty(90.5, label="temp"))
 
 # named property, kwarg value
 d3 = TestDevice2(label="Test Device 3", hasTemp=100.5)
