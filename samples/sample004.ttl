@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix ex: <urn:ex/sample004/> .
+@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -101,7 +102,7 @@ ex:00010 a s223:AirFlowStation,
     s223:hasProperty ex:00011 ;
     s223:isContainedIn ex:00007 .
 
-ex:00011 a s223:AnalogIn ;
+ex:00011 a g36:AnalogIn ;
     rdfs:label "Zone.VAV.air_flow_station.flow" ;
     s223:isPropertyOf ex:00007,
         ex:00010 .
@@ -134,7 +135,7 @@ ex:00014 a s223:Damper,
     s223:isContainedIn ex:00007 ;
     s223:position ex:00015 .
 
-ex:00015 a s223:AnalogOut ;
+ex:00015 a g36:AnalogOut ;
     rdfs:label "Zone.VAV.damper.position" ;
     s223:isPropertyOf ex:00007,
         ex:00014 .
