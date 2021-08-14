@@ -3,7 +3,7 @@ from pathlib import Path
 from bob import bind_model_namespace, Device, QuantifiableProperty, Value, dump
 from bob.core import qudt, quantitykind
 
-from samples.header import sample_header
+from header import sample_header
 
 
 model_name = Path(__file__).stem
