@@ -65,8 +65,21 @@ def annotation_reference(cls: type) -> type:
     Class decorator that maps the class name to the class because annotations
     are just strings.
     """
-    _annotation_reference[cls.__name__] = cls
+    global _annotation_reference
+
+    cls_name = cls.__name__
+    if cls_name in _annotation_reference:
+        raise RuntimeError(
+            f"{cls_name} already references {_annotation_reference[cls_name]}"
+        )
+
+    _annotation_reference[cls_name] = cls
     return cls
+
+
+def resolve_reference(cls_name: str) -> Optional[type]:
+    """Return the class that this name resolves to, or None."""
+    return _annotation_reference.get(cls_name, None)
 
 
 # pre-load annotation references
