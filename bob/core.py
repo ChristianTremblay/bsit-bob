@@ -57,16 +57,23 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 MANDITORY_LABEL = True
 
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
-NodeMap = Dict[str, Union[type, str]]
-_annotation_forwards: Dict[str, type] = {}
+_annotation_reference: Dict[str, type] = {}
 
-# these are string annotations
-_annotation_forwards["URIRef"] = URIRef
-_annotation_forwards["BNode"] = BNode
-_annotation_forwards["Literal"] = Literal
 
-# I shouldn't need these!
-_annotation_forwards["str"] = str
+def annotation_reference(cls: type) -> type:
+    """
+    Class decorator that maps the class name to the class because annotations
+    are just strings.
+    """
+    _annotation_reference[cls.__name__] = cls
+    return cls
+
+
+# pre-load annotation references
+annotation_reference(URIRef)
+annotation_reference(BNode)
+annotation_reference(Literal)
+annotation_reference(str)
 
 
 class DataGraph(Graph):
@@ -162,6 +169,7 @@ substance_classes: Dict[URIRef, Any] = {}
 
 
 T = TypeVar("T")
+NodeMap = Dict[str, Union[type, str]]
 
 
 def register_substance(substance_uri: URIRef, cls: Any) -> None:
@@ -227,10 +235,10 @@ class NodeMetaclass(type):
                 _nodes[attr] = attr_type
                 attr_names.add(attr)
             elif isinstance(attr_type, str):
-                if attr_type in _annotation_forwards:
-                    attr_type = _annotation_forwards[attr_type]
+                if attr_type in _annotation_reference:
+                    attr_type = _annotation_reference[attr_type]
                 else:
-                    _annotation_forwards[attr_type] = None  # type: ignore[assignment]
+                    _annotation_reference[attr_type] = None  # type: ignore[assignment]
                 _nodes[attr] = attr_type
                 attr_names.add(attr)
             else:
@@ -270,7 +278,6 @@ class NodeMetaclass(type):
                 attr_names.add(attr)
 
             else:
-                logging.debug(f"        - ?")
                 continue
 
             _inits[attr] = value
@@ -358,44 +365,50 @@ class NodeMetaclass(type):
                             (metaclass.node_type, RDFS.subClassOf, supercls.node_type)
                         )
 
+        # test to see if these special types resolve yet
+        special_types_resolved = all(
+            _annotation_reference.get(cname, None)
+            for cname in (
+                "Property",
+                "ConnectionPoint",
+                "SystemConnectionPoint",
+            )
+        )
+
         # attributes are properties
         for attr in attr_names:
             _schema_graph.add((_attr_uriref[attr], RDF.type, RDF.Property))
 
-            # check for automatic sub-properties
-            if all(
-                _annotation_forwards.get(cname, None)
-                for cname in (
-                    "Property",
-                    "ConnectionPoint",
-                    "SystemConnectionPoint",
-                )
-            ):
-                if attr in _nodes:
-                    attr_type = _nodes[attr]
-                    if issubclass(attr_type, Property):
-                        _schema_graph.add(
-                            (_attr_uriref[attr], RDFS.subPropertyOf, s223.hasProperty)
+            # special types get automatic sub-properties
+            if special_types_resolved and (attr in _nodes):
+                attr_type = _nodes[attr]
+                if isinstance(attr_type, str):
+                    raise RuntimeError(
+                        f"unable to resolve {attr_type!r} in the definition of {attr!r}"
+                    )
+                if issubclass(attr_type, Property):
+                    _schema_graph.add(
+                        (_attr_uriref[attr], RDFS.subPropertyOf, s223.hasProperty)
+                    )
+                if issubclass(attr_type, ConnectionPoint):
+                    _schema_graph.add(
+                        (
+                            _attr_uriref[attr],
+                            RDFS.subPropertyOf,
+                            s223.hasConnectionPoint,
                         )
-                    if issubclass(attr_type, ConnectionPoint):
-                        _schema_graph.add(
-                            (
-                                _attr_uriref[attr],
-                                RDFS.subPropertyOf,
-                                s223.hasConnectionPoint,
-                            )
+                    )
+                if issubclass(attr_type, SystemConnectionPoint):
+                    _schema_graph.add(
+                        (
+                            _attr_uriref[attr],
+                            RDFS.subPropertyOf,
+                            s223.hasSystemConnectionPoint,
                         )
-                    if issubclass(attr_type, SystemConnectionPoint):
-                        _schema_graph.add(
-                            (
-                                _attr_uriref[attr],
-                                RDFS.subPropertyOf,
-                                s223.hasSystemConnectionPoint,
-                            )
-                        )
+                    )
 
         # save the reference
-        _annotation_forwards[metaclass.__name__] = metaclass
+        _annotation_reference[metaclass.__name__] = metaclass
 
         return metaclass
 
@@ -494,7 +507,7 @@ class Node(metaclass=NodeMetaclass):
         # if this is a node, double check the type
         if attr in self._nodes:
             if isinstance(self._nodes[attr], str):
-                node_class = _annotation_forwards.get(self._nodes[attr], None)  # type: ignore[arg-type]
+                node_class = _annotation_reference.get(self._nodes[attr], None)  # type: ignore[arg-type]
                 if not node_class:
                     raise NotImplementedError(
                         f"class {self._nodes[attr]!r} for attribute {attr!r} not found"
@@ -821,12 +834,12 @@ class Connectable(Node):
                 continue
 
             if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_forwards:
+                if var_annotation not in _annotation_reference:
                     logging.debug(
                         f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
                     )
                     continue
-                var_annotation = _annotation_forwards.get(var_annotation)
+                var_annotation = _annotation_reference.get(var_annotation)
 
             if not issubclass(var_annotation, ConnectionPoint):
                 continue
@@ -1036,12 +1049,12 @@ class System(Node):
                 continue
 
             if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_forwards:
+                if var_annotation not in _annotation_reference:
                     logging.debug(
                         f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
                     )
                     continue
-                var_annotation = _annotation_forwards.get(var_annotation)
+                var_annotation = _annotation_reference.get(var_annotation)
 
             if issubclass(var_annotation, ConnectionPoint):
                 raise TypeError(
@@ -1123,12 +1136,12 @@ class Zone(Node):
                 continue
 
             if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_forwards:
+                if var_annotation not in _annotation_reference:
                     logging.debug(
                         f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
                     )
                     continue
-                var_annotation = _annotation_forwards.get(var_annotation)
+                var_annotation = _annotation_reference.get(var_annotation)
 
             if not issubclass(var_annotation, ZoneConnectionPoint):
                 continue
