@@ -1240,16 +1240,18 @@ class DomainSpace(Connectable):
     def __lt__(self, other: Union[Zone, PhysicalSpace]) -> Node:
         """self < other
 
-        Build a containment heirarchy, this is contained in a zone or physical
-        space.
+        Build a containment heirarchy, this is contained in a zone or enclosed
+        in a physical space.
         """
         logging.debug(f"__lt__ {self} {other}")
 
-        if not isinstance(other, (Zone, PhysicalSpace)):
+        if isinstance(other, Zone):
+            self._data_graph.add((other.node, s223.contains, self.node))
+            self._data_graph.add((self.node, s223.isContainedIn, other.node))
+        elif isinstance(other, PhysicalSpace):
+            self._data_graph.add((other.node, s223.encloses, self.node))
+        else:
             raise TypeError("zone or physical space expected")
-
-        self._data_graph.add((other.node, s223.contains, self.node))
-        self._data_graph.add((self.node, s223.isContainedIn, other.node))
 
         return self
 
@@ -1261,78 +1263,33 @@ class PhysicalSpace(Node):
 
     node_type: URIRef = s223.PhysicalSpace
 
-    def __gt__(self, other: DomainSpace) -> Node:
+    def __gt__(self, other: Union[DomainSpace, PhysicalSpace]) -> Node:
         """self > other
 
         Build a containment heirarchy, this contains some other space.
         """
         logging.debug(f"__gt__ {self} {other}")
 
-        if not isinstance(other, DomainSpace):
-            raise TypeError("domain space expected")
-
-        self._data_graph.add((self.node, s223.contains, other.node))
-        self._data_graph.add((other.node, s223.isContainedIn, self.node))
-
-        return self
-
-    def __lt__(self, other: Enclosure) -> Node:
-        """self < other
-
-        Build a containment heirarchy, this is contained in some other enclosure.
-        """
-        logging.debug(f"__lt__ {self} {other}")
-
-        if not isinstance(other, Enclosure):
-            raise TypeError("space expected")
-
-        self._data_graph.add((other.node, s223.contains, self.node))
-        self._data_graph.add((self.node, s223.isContainedIn, other.node))
-
-        return other
-
-
-class Enclosure(Node):
-    """
-    A part of the physical world whose 3D spatial extent is bounded.
-    """
-
-    node_type: URIRef = s223.Enclosure
-
-    def __init__(self, **kwargs: Any) -> None:
-        logging.debug(f"Enclosure.__init__ {kwargs}")
-        super().__init__(**kwargs)
-
-        if MANDITORY_LABEL:
-            if "label" not in kwargs:
-                raise RuntimeError("no label")
-            if not kwargs["label"]:
-                raise RuntimeError("empty label")
-
-    def __gt__(self, other: Union[DomainSpace, PhysicalSpace, Enclosure]) -> Node:
-        """self > other
-
-        Build a containment heirarchy, this contains other.
-        """
-        logging.debug(f"__gt__ {self} {other}")
-
-        if not isinstance(other, (DomainSpace, PhysicalSpace, Enclosure)):
-            raise TypeError("space or enclosure expected")
-
-        self._data_graph.add((self.node, s223.contains, other.node))
-        self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        if isinstance(other, PhysicalSpace):
+            self._data_graph.add((self.node, s223.contains, other.node))
+            self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        elif isinstance(other, DomainSpace):
+            self._data_graph.add((self.node, s223.encloses, other.node))
+        else:
+            raise TypeError("domain space or physical space expected")
 
         return self
 
-    def __lt__(self, other: Enclosure) -> Node:
+    def __lt__(self, other: PhysicalSpace) -> Node:
         """self < other
 
-        Build a containment heirarchy, this is contained in some other enclosure.
+        Build a containment heirarchy, this is contained in some other
+        physical space.
         """
         logging.debug(f"__lt__ {self} {other}")
 
-        if not isinstance(other, Enclosure):
-            raise TypeError("enclosure expected")
+        if not isinstance(other, PhysicalSpace):
+            raise TypeError("physical space expected")
 
         self._data_graph.add((other.node, s223.contains, self.node))
         self._data_graph.add((self.node, s223.isContainedIn, other.node))

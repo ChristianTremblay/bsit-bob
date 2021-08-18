@@ -5,7 +5,7 @@ from typing import Any
 from bob import bind_model_namespace, dump
 from bob.core import (
     DomainSpace,
-    Enclosure,
+    PhysicalSpace,
     System,
     Zone,
     Node,
