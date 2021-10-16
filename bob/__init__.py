@@ -4,7 +4,7 @@
 #   Project Metadata
 #
 
-__version__ = "0.23"
+__version__ = "0.24"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
@@ -28,7 +28,6 @@ from .core import (
     ZoneConnectionPoint,
     InletZoneConnectionPoint,
     OutletZoneConnectionPoint,
-    Enclosure,
     Property,
     ActuatableProperty,
     ObservableProperty,
