@@ -1,6 +1,6 @@
 from typing import Any
 
-from .core import (
+from ..core import (
     s223,
     Substance,
     Connection,

@@ -9,9 +9,8 @@ from .core import (
     SystemConnectionPoint,
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
-    Device,
 )
-from .signal import AnalogIn, AnalogOut
+from ..signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 

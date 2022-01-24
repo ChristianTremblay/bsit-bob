@@ -25,7 +25,9 @@ class TestDevice(Device):
 
 class TestDevice2(Device):
     hasTemp: TemperatureProperty
-#test device has attribute, hastemp which is of type temperature property.
+
+
+# test device has attribute, hastemp which is of type temperature property.
 
 # individual pieces
 d1 = TestDevice(label="Test Device 1")

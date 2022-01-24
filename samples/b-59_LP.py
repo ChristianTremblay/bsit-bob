@@ -36,16 +36,16 @@ from bob.hvac import (
     Filter,
 )
 from bob.role import (
-    Exhaust, 
+    Exhaust,
     Supply,
-) 
-from bob.signal import(
+)
+from bob.signal import (
     AnalogOut,
     AnalogIn,
-    )
-from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD 
+)
+from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
-#from header import g36_header
+# from header import g36_header
 
 
 model_name = Path(__file__).stem
@@ -56,12 +56,14 @@ quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykin
 
 Air = Substance(node_iri=s223.Air)
 
+
 class TemperatureSensor(Device):
     node_type: URIRef = s223.sensor
-    temperature = QuantifiableObservableProperty  #Should this be an AnalogIn???
+    temperature = QuantifiableObservableProperty  # Should this be an AnalogIn???
     temperature.hasQuantityKind = quantitykind.Temperature
 
-    hasMeasurementLocation: Connection #this is a questionable choice
+    hasMeasurementLocation: Connection  # this is a questionable choice
+
 
 class RooftopUnit(System):
     returnAirInlet: AirInletSystemConnectionPoint
@@ -69,26 +71,28 @@ class RooftopUnit(System):
     supplyAirOutlet: AirOutletSystemConnectionPoint
     exhaustAirOutlet: AirOutletSystemConnectionPoint
 
-    #should I put the basic command and feedback in the class here?
-    
-    #deciding not to use self, if I need ot access the RTU outside of this class it'd probably be good to have, but will I?
+    # should I put the basic command and feedback in the class here?
+
+    # deciding not to use self, if I need ot access the RTU outside of this class it'd probably be good to have, but will I?
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.outsideAirInlet.mapsTo = Junction()
         mixed_air_damper = Damper(label=self.label + ".mixed_air_damper")
         mixed_air = AirConnection(label=self.label + ".mixed_air")
-        
-        iso_damper = Damper(label=self.label + '.iso_damper')
+
+        iso_damper = Damper(label=self.label + ".iso_damper")
         # supply_fan >> iso_damper
 
-        #self.supplyAirOutlet.mapsTo = iso_damper.airOutlet
-        j=Junction(label=self.label + ".RTU_supply_outlet")
-        j<<(iso_damper.airOutlet)
-        self.supplyAirOutlet.mapsTo = j #if I don't map it to a junction, then it doesn't connect to the plenum
+        # self.supplyAirOutlet.mapsTo = iso_damper.airOutlet
+        j = Junction(label=self.label + ".RTU_supply_outlet")
+        j << (iso_damper.airOutlet)
+        self.supplyAirOutlet.mapsTo = (
+            j  # if I don't map it to a junction, then it doesn't connect to the plenum
+        )
 
-        sensor = TemperatureSensor(label=self.label + '.MA_sensor')
-        sensor.hasMeasurementLocation = mixed_air#This seems weird, but I kind of like it. You're measuring the mixed air connection 
-       
+        sensor = TemperatureSensor(label=self.label + ".MA_sensor")
+        sensor.hasMeasurementLocation = mixed_air  # This seems weird, but I kind of like it. You're measuring the mixed air connection
+
         # return_fan = Fan(label=self.label + ".return_fan")
         # #return_fan.hasRole = Return
         # self.returnAirInlet.mapsTo = return_fan.airInlet
@@ -125,43 +129,45 @@ class RooftopUnit(System):
         # supply_fan = Fan(label=self.label + '.supply_fan')
         # supply_fan.hasRole = Supply
         # chilled_air>>final_filter>>supply_fan
-       
-#Should a plenum be a segment or is system correct?? 
+
+
+# Should a plenum be a segment or is system correct??
 class Plenum(System):
-    AirInlet: AirInletSystemConnectionPoint #would the outlet be a junction, or just connection points??
+    AirInlet: AirInletSystemConnectionPoint  # would the outlet be a junction, or just connection points??
     AirOutlet: AirOutletSystemConnectionPoint
-    hasSubstance=Air
+    hasSubstance = Air
+
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        j=Junction(label=self.label+'.inlet')
-        #j.hasSubstance = Air
-        j2= Junction(label=self.label+'.outlet') 
-        #j2.hasSubstance = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
+        j = Junction(label=self.label + ".inlet")
+        # j.hasSubstance = Air
+        j2 = Junction(label=self.label + ".outlet")
+        # j2.hasSubstance = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
         self.AirInlet.mapsTo = j
         self.AirOutlet.mapsTo = j2
 
 
 # make an instance
 class HVACZone2(HVACZone):
-    node_type = None #Does this just mean that this isn't something in 223p yet? 
+    node_type = None  # Does this just mean that this isn't something in 223p yet?
     temperature_setpoint: AnalogOut
+
     def __init__(self, label: str) -> None:
         super().__init__(label=label)
-        #I need a junction to be the system inlet and outlet if I want to connect to another junction. 
-        j=Junction()
+        # I need a junction to be the system inlet and outlet if I want to connect to another junction.
+        j = Junction()
         self.supplyAir.mapsTo = j
 
 
-r=RooftopUnit(node_iri=ex.rtu, label="rtu")
-p=Plenum(label="plenum")
-z=HVACZone2(label="zone")
+r = RooftopUnit(node_iri=ex.rtu, label="rtu")
+p = Plenum(label="plenum")
+z = HVACZone2(label="zone")
 # can't seem to connect system connection points to junctions
-r.supplyAirOutlet >> p.AirInlet 
+r.supplyAirOutlet >> p.AirInlet
 
-#p.AirOutlet.link_to(z.supplyAir) #getting no common connection types, because supply Air isn't a junction
-p.AirOutlet>>(z.supplyAir)
+# p.AirOutlet.link_to(z.supplyAir) #getting no common connection types, because supply Air isn't a junction
+p.AirOutlet >> (z.supplyAir)
 
 
-#g36_header(model_name)
+# g36_header(model_name)
 dump()
-

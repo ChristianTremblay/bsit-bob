@@ -4,44 +4,9 @@
 #   Project Metadata
 #
 
-__version__ = "0.24.1"
+from typing import Dict, Any, Union, TypeVar
+from rdflib import URIRef
+
+__version__ = "0.25.dev1"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
-
-from .core import (
-    bind_namespace,
-    bind_model_namespace,
-    Node,
-    Substance,
-    Connection,
-    Device,
-    ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    System,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
-    DomainSpace,
-    PhysicalSpace,
-    Zone,
-    ZoneConnectionPoint,
-    InletZoneConnectionPoint,
-    OutletZoneConnectionPoint,
-    Property,
-    ActuatableProperty,
-    ObservableProperty,
-    QuantifiableProperty,
-    QuantifiableActuatableProperty,
-    QuantifiableObservableProperty,
-    Value,
-    dump,
-    clear,
-)
-
-# from . import devices
-# from . import connections
-# from . import systems
-
-# from . import hx
-# from . import signal
