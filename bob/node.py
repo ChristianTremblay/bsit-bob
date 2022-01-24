@@ -895,7 +895,6 @@ class ConnectionPoint(Node):
     isConnectionPointOf: Connectable
 
     def __init__(self, thing: Connectable, **kwargs: Any) -> None:
-        print(kwargs)
         super().__init__(**kwargs)
 
         self._data_graph.add((thing.node, s223.hasConnectionPoint, self.node))

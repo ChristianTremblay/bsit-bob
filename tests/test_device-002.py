@@ -25,3 +25,13 @@ def test_turtle_file():
     dump()
     result = turtle()
     print(result)
+
+
+if __name__ == "__main__":
+    test_create_boilers()
+    test_create_coils()
+    result = turtle()
+    with open("test_device-002_results.txt", "w") as file:
+        file.write(result)
+    print("Check file : test_device-002_results.ttl")
+    print(result)
