@@ -1,17 +1,14 @@
 from rdflib import URIRef
 from ..core import (
     s223,
-    Substance,
-    Connection,
-    ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
-    Device,
 )
-from ..connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from ..node import Device
+
+from ..connections.air import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    CompressedAirConnectionPoint,
+)
 from ..signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
@@ -33,3 +30,8 @@ class FireDamper(Damper):
 class ActuatedDamper(Damper):
     position = AnalogOut
     feedback = AnalogIn
+
+
+class PneumaticDamper(Damper):
+    compressedAirInlet: CompressedAirConnectionPoint
+    position = AnalogIn

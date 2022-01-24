@@ -1,15 +1,15 @@
 from rdflib import URIRef
-from .core import (
+from ..core import (
     s223,
+)
+
+from ..node import (
     Substance,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
     OutletConnectionPoint,
     SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
-    Device,
 )
 from ..signal import AnalogIn, AnalogOut
 
@@ -20,24 +20,24 @@ class Electricity(Substance):
     pass
 
 
-class PowerConnection(Connection):
-    hasSubstance = Electricity.node_type
+class ElectricalConnection(Connection):
+    hasSubstance: URIRef = Electricity.node_type
     node_type = None
 
 
-class PowerConnectionPoint(ConnectionPoint):
-    hasSubstance = Electricity.node_type
+class ElectricalConnectionPoint(ConnectionPoint):
+    hasSubstance: URIRef = Electricity.node_type
     node_type = None
 
 
-class PowerInletConnectionPoint(InletConnectionPoint, PowerConnectionPoint):
+class ElectricalInletConnectionPoint(InletConnectionPoint, ElectricalConnectionPoint):
     node_type = None
 
 
-class PowerOutletConnectionPoint(OutletConnectionPoint, PowerConnectionPoint):
+class ElectricalOutletConnectionPoint(OutletConnectionPoint, ElectricalConnectionPoint):
     node_type = None
 
 
 class ElectricalSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance = Electricity.node_type
+    hasSubstance: URIRef = Electricity.node_type
     node_type = None

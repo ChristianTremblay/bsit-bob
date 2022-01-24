@@ -373,7 +373,13 @@ class Node(metaclass=NodeMetaclass):
 
             # pass the value to the class to build one
             if not isinstance(value, node_class):
-                value = node_class(value)
+                # This solves a bug when creating devices
+                # where the number of argument of value is wrong
+                # TypeError: __init__() takes 1 positional argument but 2 were given
+                try:
+                    value = node_class(value)
+                except TypeError:
+                    value = node_class(node_iri=value)
 
             # add the link(s)
             if isinstance(value, (URIRef, Literal)):
@@ -889,6 +895,7 @@ class ConnectionPoint(Node):
     isConnectionPointOf: Connectable
 
     def __init__(self, thing: Connectable, **kwargs: Any) -> None:
+        print(kwargs)
         super().__init__(**kwargs)
 
         self._data_graph.add((thing.node, s223.hasConnectionPoint, self.node))

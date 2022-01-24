@@ -1,13 +1,15 @@
 from typing import Any
 
-from ..core import s223, System
+from ..core import s223
+from ..node import System
 from ..connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
 from ..signal import AnalogIn, AnalogOut
+
 from ..devices.valve import HotWaterValve
-from ..devices.htg_coil import HotWaterCoil
+from ..devices.coil import HotWaterCoil
 from ..devices.airflowstation import AirFlowStation
 from ..devices.damper import Damper
 

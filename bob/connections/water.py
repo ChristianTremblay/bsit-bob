@@ -1,6 +1,9 @@
 from rdflib import URIRef
-from .core import (
+from ..core import (
     s223,
+)
+
+from ..node import (
     Substance,
     Connection,
     ConnectionPoint,
@@ -10,6 +13,7 @@ from .core import (
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
 )
+
 from ..signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
@@ -51,13 +55,46 @@ class GlycoledWater(Water):
 # for each in lst_of_substance_classes:
 
 
+# === WATER
+class WaterConnection(Connection):
+    hasSubstance: URIRef = Water.node_type
+    node_type = None
+
+
+class WaterConnectionPoint(ConnectionPoint):
+    hasSubstance: URIRef = Water.node_type
+    node_type = None
+
+
+class WaterInletConnectionPoint(InletConnectionPoint, WaterConnectionPoint):
+    node_type = None
+
+
+class WaterOutletConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
+    node_type = None
+
+
+class WaterSystemConnectionPoint(ConnectionPoint):
+    hasSubstance: URIRef = Water.node_type
+    node_type = None
+
+
+class WaterInletSystemConnectionPoint(InletConnectionPoint, WaterConnectionPoint):
+    node_type = None
+
+
+class WaterOutletSystemConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
+    node_type = None
+
+
+# === HOT WATER
 class HotWaterConnection(Connection):
-    hasSubstance = HotWater.node_type
+    hasSubstance: URIRef = HotWater.node_type
     node_type = None
 
 
 class HotWaterConnectionPoint(ConnectionPoint):
-    hasSubstance = HotWater.node_type
+    hasSubstance: URIRef = HotWater.node_type
     node_type = None
 
 
@@ -70,7 +107,7 @@ class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoi
 
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance = HotWater.node_type
+    hasSubstance: URIRef = HotWater.node_type
     node_type = None
 
 
@@ -86,13 +123,43 @@ class HotWaterOutletSystemConnectionPoint(
     node_type = None
 
 
+# === STEAM
+class SteamConnectionPoint(ConnectionPoint):
+    hasSubstance: URIRef = Water.node_type
+    node_type = None
+
+
+class SteamInletConnectionPoint(InletConnectionPoint, SteamConnectionPoint):
+    node_type = None
+
+
+class SteamOutletConnectionPoint(OutletConnectionPoint, SteamConnectionPoint):
+    node_type = None
+
+
+class SteamSystemConnectionPoint(ConnectionPoint):
+    hasSubstance: URIRef = Water.node_type
+    node_type = None
+
+
+class SteamInletSystemConnectionPoint(InletConnectionPoint, SteamSystemConnectionPoint):
+    node_type = None
+
+
+class SteamOutletSystemConnectionPoint(
+    OutletConnectionPoint, SteamSystemConnectionPoint
+):
+    node_type = None
+
+
+# === CHILLED WATER
 class ChilledWaterConnection(Connection):
-    hasSubstance = ChilledWater.node_type
+    hasSubstance: URIRef = ChilledWater.node_type
     node_type = None
 
 
 class ChilledWaterConnectionPoint(ConnectionPoint):
-    hasSubstance = ChilledWater.node_type
+    hasSubstance: URIRef = ChilledWater.node_type
     node_type = None
 
 
@@ -109,7 +176,7 @@ class ChilledWaterOutletConnectionPoint(
 
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance = ChilledWater.node_type
+    hasSubstance: URIRef = ChilledWater.node_type
     node_type = None
 
 

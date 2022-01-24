@@ -2,23 +2,8 @@ from typing import Any
 
 from ..core import (
     s223,
-    Substance,
-    Connection,
-    Device,
-    ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    System,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
 )
-from ..connections.air import (
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-    AirInletSystemConnectionPoint,
-    AirOutletSystemConnectionPoint,
-)
+from ..node import Device
 
 from ..connections.electricity import (
     PowerInletConnectionPoint,
@@ -37,16 +22,3 @@ class SCR(Device):
     powerInlet: PowerInletConnectionPoint
     powerOutlet: PowerOutletConnectionPoint
     modulation = AnalogIn
-
-
-# class Stages(Device):
-#    # Each stages have % of power
-#    PowerInlet: PowerInletConnectionPoint
-#    PowerOutlet: PowerOutletConnectionPoint
-#    modulation = AnalogIn
-
-# Electrical Coil
-class ElectricalCoil(Device):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
-    powerInlet: PowerInletConnectionPoint

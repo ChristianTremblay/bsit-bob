@@ -2,37 +2,37 @@ from typing import Any
 
 from ..core import (
     s223,
-    Substance,
-    Connection,
-    Device,
-    ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    System,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
 )
+
+from ..node import Device
+
 from ..connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
-    AirInletSystemConnectionPoint,
-    AirOutletSystemConnectionPoint,
 )
+
 from ..connections.water import (
+    ChilledWaterInletConnectionPoint,
+    ChilledWaterOutletConnectionPoint,
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
-    HotWaterInletSystemConnectionPoint,
-    HotWaterOutletSystemConnectionPoint,
 )
+
 from ..connections.electricity import (
-    PowerInletConnectionPoint,
-    PowerOutletConnectionPoint,
+    ElectricalInletConnectionPoint,
+    ElectricalOutletConnectionPoint,
 )
 
 from ..signal import AnalogIn
 
 __namespace__ = s223
+
+
+class ChilledWaterCoil(Device):
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
+    chilledWaterInlet: ChilledWaterInletConnectionPoint
+    chilledWaterOutlet: ChilledWaterOutletConnectionPoint
 
 
 class HotWaterCoil(Device):
@@ -43,7 +43,7 @@ class HotWaterCoil(Device):
 
 
 # Electrical Coil
-class ElectricalCoil(Device):
+class ElectricalHeatingCoil(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    powerInlet: PowerInletConnectionPoint
+    powerInlet: ElectricalInletConnectionPoint  # can come from a SCR or a contactor...(maybe more than 1 contactor that would give x% of power)

@@ -2,31 +2,20 @@ from typing import Any
 
 from ..core import (
     s223,
-    Substance,
-    Connection,
-    Device,
-    ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    System,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
 )
+
+from ..node import System
+
 from ..connections.air import (
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
 
 from ..connections.water import (
-    ChilledWaterInletConnectionPoint,
-    ChilledWaterOutletConnectionPoint,
     ChilledWaterInletSystemConnectionPoint,
     ChilledWaterOutletSystemConnectionPoint,
 )
-from ..devices.clg_coil import ChilledWaterCoil
+from ..devices.coil import ChilledWaterCoil
 from ..devices.valve import ChilledWaterValve
 from ..signal import AnalogIn
 

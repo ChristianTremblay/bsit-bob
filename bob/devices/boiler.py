@@ -1,29 +1,22 @@
 from typing import Any
 
+from ..connections.naturalgas import NaturalGasInletConnectionPoint
+
+from ..connections.electricity import ElectricalInletConnectionPoint
+
 from ..core import (
     s223,
-    Substance,
-    Connection,
-    Device,
-    ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    System,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
 )
+
+from ..node import Device
+
 from ..connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
-    AirInletSystemConnectionPoint,
-    AirOutletSystemConnectionPoint,
 )
 from ..connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
-    HotWaterInletSystemConnectionPoint,
-    HotWaterOutletSystemConnectionPoint,
 )
 from ..signal import AnalogIn
 
@@ -33,3 +26,14 @@ __namespace__ = s223
 class HotWaterBoiler(Device):
     hotWaterSupply: HotWaterInletConnectionPoint
     hotWaterReturn: HotWaterOutletConnectionPoint
+
+
+class ElectricalHotWaterBoiler(HotWaterBoiler):
+    electricalInlet: ElectricalInletConnectionPoint
+
+
+class NaturalGasHotWaterBoiler(HotWaterBoiler):
+    electricalInlet: ElectricalInletConnectionPoint
+    naturalGasInlet: NaturalGasInletConnectionPoint
+    combustionAirInlet: AirInletConnectionPoint
+    combustionAirOutlet: AirOutletConnectionPoint

@@ -17,7 +17,7 @@ from ..signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 
-
+# === AIR
 class Air(Substance):
     pass
 
@@ -53,5 +53,49 @@ class AirInletSystemConnectionPoint(
 
 class AirOutletSystemConnectionPoint(
     AirSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+# === COMPRESSED AIR
+class CompressedAir(Substance):
+    pass
+
+
+class CompressedAirConnection(Connection):
+    hasSubstance: URIRef = CompressedAir.node_type
+    node_type = None
+
+
+class CompressedAirConnectionPoint(ConnectionPoint):
+    hasSubstance: URIRef = CompressedAir.node_type
+    node_type = None
+
+
+class CompressedAirInletConnectionPoint(
+    CompressedAirConnectionPoint, InletConnectionPoint
+):
+    node_type = None
+
+
+class CompressedAirOutletConnectionPoint(
+    CompressedAirConnectionPoint, OutletConnectionPoint
+):
+    node_type = None
+
+
+class CompressedAirSystemConnectionPoint(SystemConnectionPoint):
+    hasSubstance: URIRef = CompressedAir.node_type
+    node_type = None
+
+
+class CompressedAirInletSystemConnectionPoint(
+    CompressedAirSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class CompressedAirOutletSystemConnectionPoint(
+    CompressedAirSystemConnectionPoint, OutletSystemConnectionPoint
 ):
     node_type = None
