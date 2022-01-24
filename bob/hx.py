@@ -16,8 +16,12 @@ from .core import (
     OutletZoneConnectionPoint,
     System,
 )
-from .air import AirInletConnectionPoint, AirOutletConnectionPoint
-from .hw import HotWaterInletConnectionPoint, HotWaterOutletConnectionPoint
+from .hvac import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    HotWaterInletConnectionPoint,
+    HotWaterOutletConnectionPoint,
+)
 
 __namespace__ = s223
 
