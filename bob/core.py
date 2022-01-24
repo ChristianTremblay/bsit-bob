@@ -188,11 +188,17 @@ def register_substance(substance_uri: URIRef, cls: Any) -> None:
 def dump(
     graph: Graph = data_graph, file: TextIO = sys.stdout, format: str = "turtle"
 ) -> None:
-    file.write(graph.serialize(format=format).decode("utf-8"))
+    content = graph.serialize(format=format)
+    if not isinstance(content, str):
+        content = content.decode("utf-8")
+    file.write(content)
 
 
 def turtle(graph: Graph = data_graph, format: str = "turtle") -> None:
-    return graph.serialize(format=format).decode("utf-8")
+    content = graph.serialize(format=format)
+    if not isinstance(content, str):
+        content = content.decode("utf-8")
+    return content
 
 
 def clear(graph: Graph = data_graph) -> None:
