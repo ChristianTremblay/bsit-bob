@@ -1520,8 +1520,13 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
 class Value(Node):
     """
-    Value node with the option to pass a value that gets turned into a
-    Literal.  The 'lang' and 'datatype' values are forwarded to rdflib.
+    <<<<<<< HEAD
+        A collection of spaces.
+        ex. HVAC zone feeding rooms 1,2,3
+    =======
+        Value node with the option to pass a value that gets turned into a
+        Literal.  The 'lang' and 'datatype' values are forwarded to rdflib.
+    >>>>>>> 40f67d5fe585b79f68040190fe8ac7a5956145f4
     """
 
     node_type: URIRef = s223.Value

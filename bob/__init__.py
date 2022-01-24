@@ -39,8 +39,9 @@ from .core import (
     clear,
 )
 
-from . import domain
-from . import role
-from . import signal
+# from . import devices
+# from . import connections
+# from . import systems
 
-from . import hvac
+# from . import hx
+# from . import signal
