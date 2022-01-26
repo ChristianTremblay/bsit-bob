@@ -78,7 +78,7 @@ class NodeMetaclass(type):
 
             if attr.startswith("_"):
                 continue
-            if attr in ("node", "node_type", "label"):
+            if attr in ("node", "node_type", "label", "comment"):
                 continue
 
             if isinstance(attr_type, URIRef):
@@ -286,9 +286,15 @@ class Node(metaclass=NodeMetaclass):
     node: URIRef
     node_type: Optional[URIRef] = None
     label: str
+    comment: str
 
     def __init__(
-        self, *, node_iri: URIRef = None, label: str = "", **kwargs: Any
+        self,
+        *,
+        node_iri: URIRef = None,
+        label: str = "",
+        comment: str = None,
+        **kwargs: Any,
     ) -> None:
         logging.debug(f"Node.__init__ label={label!r} {kwargs}")
         global _next_node, model_namespace
@@ -306,6 +312,10 @@ class Node(metaclass=NodeMetaclass):
         self.label = label or getattr(self, "label", "")
         if self.label:
             self._data_graph.add((self.node, RDFS.label, Literal(self.label)))
+
+        self.comment = comment or getattr(self, "comment", "")
+        if self.comment:
+            self._data_graph.add((self.node, RDFS.comment, Literal(self.comment)))
 
         if hasattr(self, "node_type"):
             if self.node_type is not None:
