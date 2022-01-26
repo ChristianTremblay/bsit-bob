@@ -6,8 +6,8 @@ from ...core import (
 from ...node import Device
 
 from ...connections.electricity import (
-    PowerInletConnectionPoint,
-    PowerOutletConnectionPoint,
+    ElectricalInletConnectionPoint,
+    ElectricalOutletConnectionPoint,
 )
 
 
@@ -19,6 +19,6 @@ __namespace__ = s223
 class SCR(Device):
     # takes 600V (or 347V) in and use triacs to modulate
     # power given to electrical coil
-    powerInlet: PowerInletConnectionPoint
-    powerOutlet: PowerOutletConnectionPoint
+    electricalInlet: ElectricalInletConnectionPoint
+    electricalOutlet: ElectricalOutletConnectionPoint
     modulation = AnalogIn

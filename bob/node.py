@@ -127,7 +127,6 @@ class NodeMetaclass(type):
                         )
 
             elif inspect.isclass(value) and issubclass(value, Node):
-                print("you")
                 _nodes[attr] = value
                 attr_names.add(attr)
 
@@ -370,10 +369,6 @@ class Node(metaclass=NodeMetaclass):
 
         # if this is a node, double check the type
         if attr in self._nodes:
-            print("_n : ", self._nodes)
-            print("ar : ", _annotation_reference)
-            print("attr : ", attr)
-            print("NodeAttr : ", self._nodes[attr])
             if isinstance(self._nodes[attr], str):
                 node_class = _annotation_reference.get(self._nodes[attr], None)  # type: ignore[arg-type]
                 if not node_class:
@@ -410,7 +405,6 @@ class Node(metaclass=NodeMetaclass):
             # if the value is a property, link property to the node.  The
             # Value has a property called 'isValueOf' that is excluded.
             # ExternalDataSource have 'isExternalDataSourceOf'
-            print("VAL : ", value)
             if isinstance(value, Property) and (
                 not (isinstance(self, (Value, ExternalDataSource)))
             ):

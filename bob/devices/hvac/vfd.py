@@ -14,8 +14,8 @@ __namespace__ = s223
 
 
 class VFD(Device):
-    powerInlet: ElectricalInletConnectionPoint
-    powerOutlet: ElectricalOutletConnectionPoint
+    electricalInlet: ElectricalInletConnectionPoint
+    electricalOutlet: ElectricalOutletConnectionPoint
     actual_speed = AnalogIn  # RPM
     moter_temp = AnalogIn
     # etc

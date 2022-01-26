@@ -16,4 +16,4 @@ __namespace__ = s223
 class Fan(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    powerInlet: ElectricalInletConnectionPoint  # can come from a VFD
+    electricalInlet: ElectricalInletConnectionPoint  # can come from a VFD

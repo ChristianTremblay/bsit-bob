@@ -18,21 +18,21 @@ __namespace__ = s223
 
 class HumidityMeasure(QuantifiableObservableProperty):
     node_type: URIRef = s223.HumidityMeasure
-    hasQuantityKind: quantitykind.PressureRatio
+    hasQuantityKind: URIRef = quantitykind.PressureRatio
     # whew.... RelativeHumidity would have make sense here...
     # looks like something to talk with Steve Ray
-    hasUnit: unit.PERCENT_RH
+    hasUnit: URIRef = unit.PERCENT_RH
 
 
 class HumiditySetpoint(QuantifiableProperty):
-    hasQuantityKind: URIRef = quantitykind.Temperature
+    hasQuantityKind: URIRef = quantitykind.PressureRatio
     hasUnit: URIRef = unit.PERCENT_RH
 
 
 class AirHumiditySensor(Sensor):
     node_type: URIRef = s223.HumiditySensor
     hasSubstance: URIRef = s223.Air
-    hasQuantityKind: quantitykind.RelativeHumidity
+    hasQuantityKind: URIRef = quantitykind.PressureRatio
     observesProperty: HumidityMeasure
 
     def __init__(self, **kwargs: Any) -> None:
