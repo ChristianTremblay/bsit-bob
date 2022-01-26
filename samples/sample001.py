@@ -11,7 +11,7 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TemperatureValue(Value):
-    hasUnits = qudt.DEG_F
+    hasUnit = qudt.DEG_F
 
 
 class TemperatureProperty(QuantifiableProperty):
@@ -31,7 +31,7 @@ class TestDevice2(Device):
 
 # individual pieces
 d1 = TestDevice(label="Test Device 1")
-value = Value(hasSimpleValue=75.5, hasUnits=qudt.DEG_F)
+value = Value(hasSimpleValue=75.5, hasUnit=qudt.DEG_F)
 temp = TemperatureProperty(value, label="temp")
 
 d1.add_property(temp)
