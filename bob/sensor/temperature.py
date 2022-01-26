@@ -33,7 +33,7 @@ class TemperatureSensor(Sensor):
         elif "value" in kwargs:
             _measure = TemperatureMeasure(hasValue=kwargs.pop("value"))
         else:
-            _measure = AirTemperatureSensor()
+            _measure = TemperatureMeasure()
 
         super().__init__(**kwargs)
         self.observesProperty = _measure
