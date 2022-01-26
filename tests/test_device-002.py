@@ -1,24 +1,28 @@
 from bob.core import bind_model_namespace, dump, turtle
-from bob.devices.boiler import (
+from bob.devices.hvac.boiler import (
     HotWaterBoiler,
     ElectricalHotWaterBoiler,
     NaturalGasHotWaterBoiler,
 )
-from bob.devices.coil import HotWaterCoil, ChilledWaterCoil, ElectricalHeatingCoil
+from bob.devices.hvac.coil import HotWaterCoil, ChilledWaterCoil, ElectricalHeatingCoil
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 def test_create_boilers():
-    boiler = HotWaterBoiler(label="Boiler #1")
-    electrical_hot_water_boiler = ElectricalHotWaterBoiler(label="Boiler #2")
-    naturalgas_hot_water_boiler = NaturalGasHotWaterBoiler(label="Boiler #3")
+    boiler = HotWaterBoiler(label="Hot Water Boiler")
+    electrical_hot_water_boiler = ElectricalHotWaterBoiler(
+        label="Electrical Hot Water Boiler"
+    )
+    naturalgas_hot_water_boiler = NaturalGasHotWaterBoiler(
+        label="Natural Gas Hot Water Boiler"
+    )
 
 
 def test_create_coils():
-    hot_water_coil = HotWaterCoil(label="Coil #1")
-    chilled_water_coil = ChilledWaterCoil(label="Coil #2")
-    electrical_heating_coil = ElectricalHeatingCoil(label="Coil #3")
+    hot_water_coil = HotWaterCoil(label="Hot Water Coil")
+    chilled_water_coil = ChilledWaterCoil(label="Chilled Water Coil")
+    electrical_heating_coil = ElectricalHeatingCoil(label="Electrical Heating Coil")
 
 
 def test_turtle_file():

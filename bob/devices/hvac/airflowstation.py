@@ -1,12 +1,13 @@
 from rdflib import URIRef
-from ..core import (
+from ...core import (
     s223,
 )
-from ..connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ..signal import AnalogIn, AnalogOut
+from ...node import Device
+from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from ...signal import AnalogIn, AnalogOut
 
-from . import Device
-from ..sensor import Sensor
+
+from ...sensor import Sensor
 
 __namespace__ = s223
 

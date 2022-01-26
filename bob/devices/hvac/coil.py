@@ -1,29 +1,29 @@
 from typing import Any
 
-from ..core import (
+from ...core import (
     s223,
 )
 
-from ..node import Device
+from ...node import Device
 
-from ..connections.air import (
+from ...connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
 )
 
-from ..connections.water import (
+from ...connections.water import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
 )
 
-from ..connections.electricity import (
+from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
 )
 
-from ..signal import AnalogIn
+from ...signal import AnalogIn
 
 __namespace__ = s223
 

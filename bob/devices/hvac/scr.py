@@ -1,17 +1,17 @@
 from typing import Any
 
-from ..core import (
+from ...core import (
     s223,
 )
-from ..node import Device
+from ...node import Device
 
-from ..connections.electricity import (
+from ...connections.electricity import (
     PowerInletConnectionPoint,
     PowerOutletConnectionPoint,
 )
 
 
-from ..signal import AnalogIn
+from ...signal import AnalogIn
 
 __namespace__ = s223
 

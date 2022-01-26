@@ -6,13 +6,13 @@ from bob.connections.naturalgas import (
     NaturalGasOutletConnectionPoint,
 )
 
-from ..core import (
+from ...core import (
     s223,
 )
 
-from ..node import Device
+from ...node import Device
 
-from ..connections.water import (
+from ...connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
     ChilledWaterInletConnectionPoint,
@@ -20,7 +20,7 @@ from ..connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ..signal import AnalogIn
+from ...signal import AnalogIn
 
 __namespace__ = s223
 

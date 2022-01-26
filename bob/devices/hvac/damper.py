@@ -1,15 +1,15 @@
 from rdflib import URIRef
-from ..core import (
+from ...core import (
     s223,
 )
-from ..node import Device
+from ...node import Device
 
-from ..connections.air import (
+from ...connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
     CompressedAirConnectionPoint,
 )
-from ..signal import AnalogIn, AnalogOut
+from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 

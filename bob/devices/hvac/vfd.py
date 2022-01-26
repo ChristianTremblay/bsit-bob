@@ -1,14 +1,14 @@
 from rdflib import URIRef
-from ..core import (
+from ...core import (
     s223,
 )
 
-from ..node import Device
-from ..connections.electricity import (
+from ...node import Device
+from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
 )
-from ..signal import AnalogIn, AnalogOut
+from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 
