@@ -10,12 +10,12 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 
 def test_create_boilers():
-    boiler = HotWaterBoiler(label="Hot Water Boiler")
+    boiler = HotWaterBoiler(label="HWB-1", comment="Hot Water Boiler")
     electrical_hot_water_boiler = ElectricalHotWaterBoiler(
         label="Electrical Hot Water Boiler"
     )
     naturalgas_hot_water_boiler = NaturalGasHotWaterBoiler(
-        label="Natural Gas Hot Water Boiler"
+        label="HWB-2", comment="Natural Gas Hot Water Boiler"
     )
 
 
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     test_create_boilers()
     test_create_coils()
     result = turtle()
-    with open("test_device-002_results.txt", "w") as file:
+    with open("test_device-002_results.ttl", "w") as file:
         file.write(result)
     print("Check file : test_device-002_results.ttl")
     print(result)

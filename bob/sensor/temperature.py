@@ -1,10 +1,47 @@
 from .sensor import Sensor
 from rdflib import URIRef
-from ..core import quantitykind, s223
+from typing import Any
+from ..core import quantitykind, s223, unit
+
+from ..property import QuantifiableObservableProperty, QuantifiableProperty
+
 
 __namespace__ = s223
 
 
+class TemperatureMeasure(QuantifiableObservableProperty):
+    node_type: URIRef = s223.TemperatureMeasure
+    hasQuantityKind: URIRef = quantitykind.Temperature
+    hasUnit: URIRef = unit.DEG_C
+
+
+class TemperatureSetpoint(QuantifiableProperty):
+    hasQuantityKind: URIRef = quantitykind.Temperature
+    hasUnit: URIRef = unit.DEG_C
+
+
 class TemperatureSensor(Sensor):
     node_type: URIRef = s223.TemperatureSensor
-    hasQuantityKind: URIRef = quantitykind.Temperature
+    observesProperty: TemperatureMeasure
+
+    def __init__(self, **kwargs: Any) -> None:
+
+        if "datasource" in kwargs:
+            _measure = TemperatureMeasure(
+                hasExternalDataSource=kwargs.pop("datasource")
+            )
+        elif "value" in kwargs:
+            _measure = TemperatureMeasure(hasValue=kwargs.pop("value"))
+        else:
+            _measure = AirTemperatureSensor()
+
+        super().__init__(**kwargs)
+        self.observesProperty = _measure
+
+
+class AirTemperatureSensor(TemperatureSensor):
+    hasSubstance: URIRef = s223.Air
+
+
+class WaterTemperatureSensor(TemperatureSensor):
+    hasSubstance: URIRef = s223.Water

@@ -1,0 +1,26 @@
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+
+_:N2f926d774fc04defa5f2da6b40dcd858 a s223:ExternalDataSource ;
+    s223:hasSimpleLink "bacnet://570005/analog-input,10084/present-value" ;
+    s223:isExternalDataSourceOf _:Nbc72a9b7525349bc8d1119e25166cc63 .
+
+_:Na04d0f15fcd141b9a21beb4c368ca99c a s223:Device,
+        s223:Sensor,
+        s223:TemperatureSensor ;
+    rdfs:label "DA-T" ;
+    s223:hasProperty _:Nbc72a9b7525349bc8d1119e25166cc63 ;
+    s223:observesProperty _:Nbc72a9b7525349bc8d1119e25166cc63 ;
+    rdfs:comment "Supply Air Temperature Sensor" .
+
+_:Nbc72a9b7525349bc8d1119e25166cc63 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        s223:TemperatureMeasure ;
+    s223:hasExternalDataSource _:N2f926d774fc04defa5f2da6b40dcd858 ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:hasUnit unit:DEG_C ;
+    s223:isPropertyOf _:Na04d0f15fcd141b9a21beb4c368ca99c .
+

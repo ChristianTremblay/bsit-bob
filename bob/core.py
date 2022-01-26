@@ -160,6 +160,7 @@ __namespace__ = s223
 # common namespaces
 qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
 quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
+unit = bind_namespace("unit", "http://qudt.org/vocab/unit/")
 brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
 
 # the model_namespace is used to create "blank" node identifiers, a serial

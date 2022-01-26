@@ -24,7 +24,7 @@ from typing import (
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
-from .core import s223, MANDITORY_LABEL, model_namespace, _annotation_reference, data_graph, schema_graph, substance_classes  # type: ignore
+from .core import s223, MANDITORY_LABEL, model_namespace, _annotation_reference, data_graph, schema_graph, substance_classes, annotation_reference  # type: ignore
 
 # everything in this module belongs in the standard
 __namespace__ = s223
@@ -69,7 +69,6 @@ class NodeMetaclass(type):
                 _inits.update(supercls._inits)  # type: ignore[attr-defined]
             if hasattr(supercls, "_attr_uriref"):
                 _attr_uriref.update(supercls._attr_uriref)  # type: ignore[attr-defined]
-
         # pick up the attributes defined by annotations
         annotations = attributedict.get("__annotations__", {})
         global _annotation_reference
@@ -100,7 +99,6 @@ class NodeMetaclass(type):
                 raise ValueError(f"unknown annotation for {attr}: {attr_type}")
         logging.debug(f"    - _nodes: {_nodes!r}")
         logging.debug(f"    - _datatypes: {_datatypes!r}")
-
         # look for initializers like hasUnit = QUDT.DEG_F
         for attr, value in attributedict.items():
             if attr.startswith("_"):
@@ -129,6 +127,7 @@ class NodeMetaclass(type):
                         )
 
             elif inspect.isclass(value) and issubclass(value, Node):
+                print("you")
                 _nodes[attr] = value
                 attr_names.add(attr)
 
@@ -371,6 +370,10 @@ class Node(metaclass=NodeMetaclass):
 
         # if this is a node, double check the type
         if attr in self._nodes:
+            print("_n : ", self._nodes)
+            print("ar : ", _annotation_reference)
+            print("attr : ", attr)
+            print("NodeAttr : ", self._nodes[attr])
             if isinstance(self._nodes[attr], str):
                 node_class = _annotation_reference.get(self._nodes[attr], None)  # type: ignore[arg-type]
                 if not node_class:
@@ -378,9 +381,16 @@ class Node(metaclass=NodeMetaclass):
                         f"class {self._nodes[attr]!r} for attribute {attr!r} not found"
                     )
                 self._nodes[attr] = node_class
+            elif not self._nodes[attr]:
+                # This is weird case for isExternalDataSourceOf.
+                # Where even if it's typed as Property
+                # it's not working...
+                if attr == "isExternalDataSourceOf":
+                    node_class = Property
+                    self._nodes[attr]
+
             else:
                 node_class = cast(type, self._nodes[attr])
-
             # pass the value to the class to build one
             if not isinstance(value, node_class):
                 # This solves a bug when creating devices
@@ -399,7 +409,11 @@ class Node(metaclass=NodeMetaclass):
 
             # if the value is a property, link property to the node.  The
             # Value has a property called 'isValueOf' that is excluded.
-            if isinstance(value, Property) and (not isinstance(self, Value)):
+            # ExternalDataSource have 'isExternalDataSourceOf'
+            print("VAL : ", value)
+            if isinstance(value, Property) and (
+                not (isinstance(self, (Value, ExternalDataSource)))
+            ):
                 self.add_property(value)
 
         # if this needs some datatype decoration, turn it into a literal
@@ -456,7 +470,7 @@ class Value(Node):
 
     hasTimestamp: Literal
     hasSimpleValue: Literal
-    hasUnits: URIRef
+    hasUnit: URIRef
 
     def __init__(
         self,
@@ -485,6 +499,45 @@ class Value(Node):
         super().__init__(**kwargs)
 
 
+class ExternalDataSource(Node):
+    """
+    ExternalDataSource node
+    This is work in progress but we can start with something
+    generic. This will be subclassed by different specific datasources
+    For now I'm creating hasSimpleLink...
+    """
+
+    node_type: URIRef = s223.ExternalDataSource
+    isExternalDataSourceOf: Property
+    hasSimpleLink: Literal
+
+    def __init__(
+        self,
+        arg: Any = None,
+        *,
+        lang: Optional[str] = None,
+        datatype: Optional[URIRef] = None,
+        **kwargs: Any,
+    ):
+        logging.debug(
+            f"ExternalDataSource.__init__ {arg!r} lang={lang!r} datetype={datatype!r} {kwargs}"
+        )
+        if arg is not None:
+            if "hasSimpleLink" in kwargs:
+                raise RuntimeError("initialization conflict")
+
+            if isinstance(arg, Literal):
+                pass
+            elif datatype is not None:
+                arg = Literal(arg, datatype=datatype)
+            elif lang is not None:
+                arg = Literal(arg, lang=lang)
+
+            kwargs["hasSimpleLink"] = arg
+
+        super().__init__(**kwargs)
+
+
 class Property(Node):
     """
     An attribute, quality, or characteristic of a feature of interest.  This is
@@ -493,13 +546,16 @@ class Property(Node):
 
     node_type: URIRef = None
     hasValue: Value
+    hasExternalDataSource: ExternalDataSource
 
     # override this for a specialize subclass
     _value_class: type = Value
+    _externaldatasource_class: type = ExternalDataSource
 
     def __init__(self, arg: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {arg!r} {kwargs}")
         init_value = None
+        external_datasource = None
         if arg is None:
             if "hasValue" in kwargs:
                 init_value = kwargs.pop("hasValue")
@@ -507,6 +563,13 @@ class Property(Node):
             raise RuntimeError("initialization conflict")
         else:
             init_value = arg
+
+        if "hasExternalDataSource" in kwargs:
+            if init_value:
+                raise RuntimeError(
+                    "initialization conflict, can't have a value and an external datasource"
+                )
+            external_datasource = kwargs.pop("hasExternalDataSource")
 
         super().__init__(**kwargs)
 
@@ -518,14 +581,29 @@ class Property(Node):
             # link the two together
             self.hasValue = init_value
             init_value.isValueOf = self
+        # same for externalDataSource
+        if external_datasource is not None:
+            if not isinstance(external_datasource, ExternalDataSource):
+                external_datasource = self._externaldatasource_class(
+                    external_datasource
+                )
+
+            # link the two together
+            self.hasExternalDataSource = external_datasource
+            external_datasource.isExternalDataSourceOf = self
 
     def add_value(self, value: Value) -> Value:
         """Add an additional value to a property, returns the value added."""
-        assert isinstance(value, Value)
+        assert isinstance(value, (Value, ExternalDataSource))
+        if isinstance(value, Value):
+            # link the two together
+            self._data_graph.add((self.node, s223.hasValue, value.node))
+            value.isValueOf = self
 
-        # link the two together
-        self._data_graph.add((self.node, s223.hasValue, value.node))
-        value.isValueOf = self
+        if isinstance(value, ExternalDataSource):
+            # link the two together
+            self._data_graph.add((self.node, s223.hasExternalDataSource, value.node))
+            value.isExternalDataSourceOf = self
 
         return value
 
