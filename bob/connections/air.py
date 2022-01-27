@@ -1,6 +1,6 @@
 from rdflib import URIRef
 
-from ..node import (
+from ..core import (
     Connection,
     ConnectionPoint,
     InletConnectionPoint,

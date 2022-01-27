@@ -1,6 +1,6 @@
 import sys
 from bob.core import *
-from bob.node import (
+from bob.core import (
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     InletConnectionPoint,

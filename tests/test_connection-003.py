@@ -1,6 +1,6 @@
 from unittest import result
 from bob.core import bind_model_namespace, dump, turtle
-from bob.node import Device, ConnectionPoint, Connection
+from bob.core import Device, ConnectionPoint, Connection
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 

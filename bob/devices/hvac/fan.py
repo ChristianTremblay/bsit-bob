@@ -1,11 +1,8 @@
 from rdflib import URIRef
 
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from ...core import (
-    s223,
-)
+from ...core import s223, Device
 
-from ...node import Device
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...signal import AnalogIn, AnalogOut

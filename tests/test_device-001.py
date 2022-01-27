@@ -1,5 +1,5 @@
 from bob.core import bind_model_namespace, dump, turtle
-from bob.node import Device, Property
+from bob.core import Device, Property
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 

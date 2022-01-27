@@ -2,16 +2,16 @@ from rdflib import URIRef
 from ..core import (
     s223,
 )
-from ..node import ExternalDataSource
+from ..core import ExternalReference
 
 __namespace__ = s223
 
 
-class BACnetDataSource(ExternalDataSource):
-    hasExternalDataSource: URIRef
+class BACnetReference(ExternalReference):
+    hasExternalReference: URIRef
     node_type = None
 
 
-class NiagaraORDDataSource(ExternalDataSource):
-    hasExternalDataSource: URIRef
+class NiagaraORDRefrence(ExternalReference):
+    hasExternalReference: URIRef
     node_type = None

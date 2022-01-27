@@ -1,6 +1,6 @@
 from rdflib import Literal, XSD
 from bob.core import bind_model_namespace, dump, data_graph, schema_graph, turtle
-from bob.node import (
+from bob.core import (
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     InletConnectionPoint,

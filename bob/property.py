@@ -1,10 +1,6 @@
 from typing import List, Union, Any
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
-from .core import (
-    logging,
-    s223,
-)
-from .node import Property
+from .core import logging, s223, Property
 
 __namespace__ = s223
 

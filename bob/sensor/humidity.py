@@ -37,8 +37,8 @@ class AirHumiditySensor(Sensor):
 
     def __init__(self, **kwargs: Any) -> None:
 
-        if "datasource" in kwargs:
-            _measure = HumidityMeasure(hasExternalDataSource=kwargs.pop("datasource"))
+        if "extref" in kwargs:
+            _measure = HumidityMeasure(hasExternalReference=kwargs.pop("extref"))
         elif "value" in kwargs:
             _measure = HumidityMeasure(hasValue=kwargs.pop("value"))
         else:

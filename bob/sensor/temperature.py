@@ -26,10 +26,9 @@ class TemperatureSensor(Sensor):
 
     def __init__(self, **kwargs: Any) -> None:
 
-        if "datasource" in kwargs:
-            _measure = TemperatureMeasure(
-                hasExternalDataSource=kwargs.pop("datasource")
-            )
+        if "extref" in kwargs:
+            _refs = kwargs.pop("extref")
+            _measure = TemperatureMeasure(hasExternalReference=_refs)
         elif "value" in kwargs:
             _measure = TemperatureMeasure(hasValue=kwargs.pop("value"))
         else:

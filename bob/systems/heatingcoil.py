@@ -5,11 +5,7 @@ from ..connections.water import (
     HotWaterOutletSystemConnectionPoint,
 )
 
-from ..core import (
-    s223,
-)
-
-from ..node import System
+from ..core import s223, System
 
 from ..connections.air import (
     AirInletConnectionPoint,
@@ -22,9 +18,9 @@ from ..connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
 )
-from ..devices.coil import ElectricalHeatingCoil
-from ..devices.scr import SCR
-from ..devices.valve import HotWaterValve
+from ..devices.hvac.coil import ElectricalHeatingCoil
+from ..devices.hvac.scr import SCR
+from ..devices.hvac.valve import HotWaterValve
 
 from ..signal import AnalogIn
 

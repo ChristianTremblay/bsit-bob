@@ -1,5 +1,5 @@
 from bob.core import bind_model_namespace, dump, turtle
-from bob.node import Property
+from bob.core import Property
 from bob.property import (
     ActuatableProperty,
     ObservableProperty,

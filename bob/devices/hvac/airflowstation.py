@@ -1,8 +1,6 @@
 from rdflib import URIRef
-from ...core import (
-    s223,
-)
-from ...node import Device
+from ...core import s223, Device
+
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...signal import AnalogIn, AnalogOut
 

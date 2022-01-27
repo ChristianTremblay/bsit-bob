@@ -1,5 +1,5 @@
 from bob.core import bind_model_namespace, dump, turtle
-from bob.node import (
+from bob.core import (
     Device,
     ConnectionPoint,
     Connection,

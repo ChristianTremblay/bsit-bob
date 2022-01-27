@@ -1,7 +1,7 @@
 from rdflib import URIRef
 from ..core import s223, enum
 
-from ..node import (
+from ..core import (
     Medium,
     Connection,
     ConnectionPoint,

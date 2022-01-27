@@ -3,7 +3,7 @@ from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
 
 from ..core import s223, quantitykind, unit
-from ..node import Property, Connection, ConnectionPoint, Device, Segment, DomainSpace
+from ..core import Property, Connection, ConnectionPoint, Device, Segment, DomainSpace
 
 from ..property import (
     ObservableProperty,

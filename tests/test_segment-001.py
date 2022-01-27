@@ -1,5 +1,5 @@
 from bob.core import bind_model_namespace, dump, turtle
-from bob.node import Junction, Segment, Device, ConnectionPoint
+from bob.core import Junction, Segment, Device, ConnectionPoint
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 

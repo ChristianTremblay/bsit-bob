@@ -1,10 +1,7 @@
 from typing import Any
 
-from ..core import (
-    s223,
-)
+from ..core import s223, System
 
-from ..node import System
 
 from ..connections.air import (
     AirInletSystemConnectionPoint,

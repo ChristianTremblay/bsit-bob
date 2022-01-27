@@ -1,9 +1,6 @@
 from rdflib import URIRef
-from ...core import (
-    s223,
-)
+from ...core import s223, Device
 
-from ...node import Device
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
