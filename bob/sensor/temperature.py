@@ -1,7 +1,7 @@
 from .sensor import Sensor
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, s223, unit
+from ..core import quantitykind, s223, unit, enum
 
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
 
@@ -40,8 +40,8 @@ class TemperatureSensor(Sensor):
 
 
 class AirTemperatureSensor(TemperatureSensor):
-    hasSubstance: URIRef = s223.Air
+    hasSubstance: URIRef = enum.Medium_Air
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    hasSubstance: URIRef = s223.Water
+    hasSubstance: URIRef = enum.Medium_Water

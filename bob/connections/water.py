@@ -1,10 +1,8 @@
 from rdflib import URIRef
-from ..core import (
-    s223,
-)
+from ..core import s223, enum
 
 from ..node import (
-    Substance,
+    Medium,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -16,36 +14,41 @@ from ..node import (
 
 from ..signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+__namespace__ = enum
 
-# Substances
-class Water(Substance):
-    pass
+# Medium
+class Water(Medium):
+    node_type: URIRef = enum.Medium_Water
 
 
 class DomesticWater(Water):
-    pass
+    node_type: URIRef = enum.Water_DomesticWater
 
 
 class DomesticHotWater(Water):
-    pass
+    node_type: URIRef = enum.Water_DomesticHotWater
 
 
 class ChilledWater(Water):
-    pass
+    node_type: URIRef = enum.Water_ChilledWater
 
 
 class HotWater(Water):
-    pass
+    node_type: URIRef = enum.Water_HotWater
 
 
 class CondensedWater(Water):
-    pass
+    node_type: URIRef = enum.Water_CondensedWater
 
 
 class GlycoledWater(Water):
     # glycol_proportion =
-    pass
+    node_type: URIRef = enum.Water_GlycoledWater
+
+
+class Steam(Water):
+    # glycol_proportion =
+    node_type: URIRef = enum.Water_Steam
 
 
 # Connections
@@ -125,7 +128,7 @@ class HotWaterOutletSystemConnectionPoint(
 
 # === STEAM
 class SteamConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = Water.node_type
+    hasSubstance: URIRef = Steam.node_type
     node_type = None
 
 
@@ -138,7 +141,7 @@ class SteamOutletConnectionPoint(OutletConnectionPoint, SteamConnectionPoint):
 
 
 class SteamSystemConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = Water.node_type
+    hasSubstance: URIRef = Steam.node_type
     node_type = None
 
 

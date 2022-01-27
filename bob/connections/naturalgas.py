@@ -1,10 +1,8 @@
 from rdflib import URIRef
-from ..core import (
-    s223,
-)
+from ..core import s223, enum
 
 from ..node import (
-    Substance,
+    Medium,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -13,11 +11,11 @@ from ..node import (
 )
 from ..signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+__namespace__ = enum
 
 
-class NaturalGas(Substance):
-    pass
+class NaturalGas(Medium):
+    node_type: URIRef = enum.Medium_NaturalGas
 
 
 class NaturalGasConnection(Connection):

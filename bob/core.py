@@ -21,7 +21,7 @@ from typing import (
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
 # substance identifier (s223.Air, etc) to Connection subclass
-substance_classes: Dict[URIRef, Any] = {}
+medium_classes: Dict[URIRef, Any] = {}
 
 # logging
 log_level = os.getenv("BOB_LOG", "WARNING")
@@ -162,6 +162,12 @@ qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
 quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
 unit = bind_namespace("unit", "http://qudt.org/vocab/unit/")
 brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
+owl = bind_namespace("owl", "http://www.w3.org/2002/07/owl#")
+rdf = bind_namespace("owl", "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+enum = bind_namespace(
+    "enum", "http://data.ashrae.org/standard223/1.0/vocab/enumeration#"
+)
+
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
@@ -178,12 +184,12 @@ def bind_model_namespace(prefix: str, uri: str) -> Namespace:
     return model_namespace
 
 
-def register_substance(substance_uri: URIRef, cls: Any) -> None:
+def register_medium(medium_uri: URIRef, cls: Any) -> None:
     """
     Register a substance so that the connection operators can line up the
     correct types.
     """
-    substance_classes[substance_uri] = cls
+    medium_classes[medium_uri] = cls
 
 
 def dump(

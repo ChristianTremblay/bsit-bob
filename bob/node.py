@@ -24,7 +24,7 @@ from typing import (
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
-from .core import s223, MANDITORY_LABEL, model_namespace, _annotation_reference, data_graph, schema_graph, substance_classes, annotation_reference  # type: ignore
+from .core import s223, enum, MANDITORY_LABEL, model_namespace, _annotation_reference, data_graph, schema_graph, medium_classes, annotation_reference  # type: ignore
 
 # everything in this module belongs in the standard
 __namespace__ = s223
@@ -610,7 +610,8 @@ class Role(Node):
     _data_graph: Graph = schema_graph
 
 
-class Substance(Node):
+class Medium(Node):
+    node_type: URIRef = enum.EnumerationValue
     _data_graph: Graph = schema_graph
 
 
@@ -629,7 +630,7 @@ class Junction(Node):
     """
 
     node_type: URIRef = s223.Junction
-    hasSubstance: Substance
+    hasSubstance: Medium
     _lnx: Set[Segment]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -691,7 +692,7 @@ class Segment(Node):
     """
 
     node_type: URIRef = s223.Segment
-    hasSubstance: Substance
+    hasSubstance: Medium
     _lnx: Set[Union[Junction, ConnectionPoint]]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -827,7 +828,7 @@ class ConnectionMetaclass(NodeMetaclass):
         attributedict: Dict[str, Any],
     ) -> SubstanceMetaclass:
         logging.debug(f"ConnectionMetaclass.__new__ {clsname}")
-        global substance_classes
+        global medium_classes
 
         # build the class
         new_class = cast(
@@ -837,15 +838,15 @@ class ConnectionMetaclass(NodeMetaclass):
 
         # if the class has a 'substance' initialized then register this
         # class for the substance
-        substance = new_class._inits.get("hasSubstance", None)
-        logging.debug(f"    - connection substance: {substance!r}")
+        medium = new_class._inits.get("hasSubstance", None)
+        logging.debug(f"    - connection substance: {medium!r}")
 
         # make sure it's not already defined someplace else
-        if substance in substance_classes:
+        if medium in medium_classes:
             raise RuntimeError(
-                f"substance {substance} already defined: {substance_classes[substance]}"
+                f"medium {medium} already defined: {medium_classes[medium]}"
             )
-        substance_classes[substance] = new_class
+        medium_classes[medium] = new_class
 
         return new_class
 
@@ -856,7 +857,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     """
 
     node_type: URIRef = s223.Connection
-    hasSubstance: Substance
+    hasSubstance: Medium
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -969,7 +970,7 @@ class Connectable(Node):
 
 class ConnectionPoint(Node):
     node_type: URIRef = s223.ConnectionPoint
-    hasSubstance: Substance
+    hasSubstance: Medium
     hasDirection: Direction
 
     lnx: Segment
@@ -1058,7 +1059,7 @@ class SystemConnectionPoint(Node):
     """
 
     node_type: URIRef = s223.SystemConnectionPoint
-    hasSubstance: Substance
+    hasSubstance: Medium
     hasDirection: Direction
 
     connectsThrough: Connection
@@ -1169,7 +1170,7 @@ class ZoneConnectionPoint(Node):
     """
 
     node_type: URIRef = s223.ZoneConnectionPoint
-    hasSubstance: Substance
+    hasSubstance: Medium
     hasDirection: Direction
 
     isZoneConnectionPointOf: Zone
@@ -1266,8 +1267,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     from_out = defaultdict(set)
     if isinstance(from_thing, ConnectionPoint):
-        substance = getattr(from_thing, "hasSubstance", None)
-        from_out[substance].add(from_thing)
+        medium = getattr(from_thing, "hasSubstance", None)
+        from_out[medium].add(from_thing)
 
     elif isinstance(from_thing, Connection):
         pass
@@ -1279,8 +1280,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             if not isinstance(connection_point, OutletConnectionPoint):
                 continue
 
-            substance = getattr(connection_point, "hasSubstance", None)
-            from_out[substance].add(connection_point)
+            medium = getattr(connection_point, "hasSubstance", None)
+            from_out[medium].add(connection_point)
 
     elif isinstance(from_thing, (SystemConnectionPoint, ZoneConnectionPoint)):
         if not from_thing.mapsTo:
@@ -1300,8 +1301,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         elif isinstance(connection_point, Junction):
             pass
 
-        substance = getattr(connection_point, "hasSubstance", None)
-        from_out[substance].add(connection_point)
+        medium = getattr(connection_point, "hasSubstance", None)
+        from_out[medium].add(connection_point)
 
     elif isinstance(from_thing, System):
         for attr, connection_point in from_thing._system_connection_points.items():
@@ -1317,8 +1318,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            substance = getattr(connection_point, "hasSubstance", None)
-            from_out[substance].add(connection_point)
+            medium = getattr(connection_point, "hasSubstance", None)
+            from_out[medium].add(connection_point)
 
     elif isinstance(from_thing, Zone):
         for attr, connection_point in from_thing._zone_connection_points.items():
@@ -1334,8 +1335,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            substance = getattr(connection_point, "hasSubstance", None)
-            from_out[substance].add(connection_point)
+            medium = getattr(connection_point, "hasSubstance", None)
+            from_out[medium].add(connection_point)
 
     else:
         raise NotImplementedError(f"connecting from {from_thing}")
@@ -1345,17 +1346,15 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     if isinstance(from_thing, Connection):
         from_types = set([from_thing.hasSubstance])
     else:
-        from_types = set(
-            substance for substance in from_out if len(from_out[substance]) == 1
-        )
+        from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
         if not from_types:
             raise RuntimeError(f"no candidate sources from {from_thing} to {to_thing}")
     logging.debug(f"    - from_types: {from_types}")
 
     to_in = defaultdict(set)
     if isinstance(to_thing, ConnectionPoint):
-        substance = getattr(to_thing, "hasSubstance", None)
-        to_in[substance].add(to_thing)
+        medium = getattr(to_thing, "hasSubstance", None)
+        to_in[medium].add(to_thing)
 
     elif isinstance(to_thing, Connection):
         pass
@@ -1367,8 +1366,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             if not isinstance(connection_point, InletConnectionPoint):
                 continue
 
-            substance = getattr(connection_point, "hasSubstance", None)
-            to_in[substance].add(connection_point)
+            medium = getattr(connection_point, "hasSubstance", None)
+            to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, (SystemConnectionPoint, ZoneConnectionPoint)):
         if not to_thing.mapsTo:
@@ -1388,8 +1387,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         elif isinstance(connection_point, Junction):
             pass
 
-        substance = getattr(connection_point, "hasSubstance", None)
-        to_in[substance].add(connection_point)
+        medium = getattr(connection_point, "hasSubstance", None)
+        to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, System):
         for attr, connection_point in to_thing._system_connection_points.items():
@@ -1405,8 +1404,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            substance = getattr(connection_point, "hasSubstance", None)
-            to_in[substance].add(connection_point)
+            medium = getattr(connection_point, "hasSubstance", None)
+            to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, Zone):
         for attr, connection_point in to_thing._zone_connection_points.items():
@@ -1422,8 +1421,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            substance = getattr(connection_point, "hasSubstance", None)
-            to_in[substance].add(connection_point)
+            medium = getattr(connection_point, "hasSubstance", None)
+            to_in[medium].add(connection_point)
 
     else:
         raise NotImplementedError(f"connecting to {to_thing}")
@@ -1433,38 +1432,38 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     if isinstance(to_thing, Connection):
         to_types = set([to_thing.hasSubstance])
     else:
-        to_types = set(substance for substance in to_in if len(to_in[substance]) == 1)
+        to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
         if not to_types:
             raise RuntimeError(
                 f"no candidate destinations from {from_thing} to {to_thing}"
             )
     logging.debug(f"    - to_types: {to_types}")
 
-    # find the common substance
+    # find the common medium
     common_types = from_types.intersection(to_types)
     if not common_types:
         raise RuntimeError("no common connection types")
     if len(common_types) > 1:
         raise RuntimeError("too many common connection types")
-    substance = common_types.pop()
-    logging.debug(f"    - substance: {substance}")
+    medium = common_types.pop()
+    logging.debug(f"    - medium: {medium}")
 
     if isinstance(from_thing, Connection):
         if isinstance(to_thing, Connection):
             raise RuntimeError("connection to connection")
-        to_connection_point = to_in[substance].pop()
+        to_connection_point = to_in[medium].pop()
 
         from_thing.connect_to(to_connection_point)
 
     elif isinstance(to_thing, Connection):
-        from_connection_point = from_out[substance].pop()
+        from_connection_point = from_out[medium].pop()
 
         to_thing.connect_from(from_connection_point)
 
     else:
-        # get the substance and the two connection points
-        from_connection_point = from_out[substance].pop()
-        to_connection_point = to_in[substance].pop()
+        # get the medium and the two connection points
+        from_connection_point = from_out[medium].pop()
+        to_connection_point = to_in[medium].pop()
 
         # if either connection point is a junction, this is segmented
         if (
@@ -1515,6 +1514,9 @@ class Device(Connectable):
         self._data_graph.add((other.node, s223.contains, self.node))
 
         return other
+
+    def __repr__(self):
+        return "f{self.__dict__}"
 
 
 class DomainSpace(Connectable):

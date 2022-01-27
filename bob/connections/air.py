@@ -7,19 +7,17 @@ from ..node import (
     InletSystemConnectionPoint,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
-    Substance,
+    Medium,
     SystemConnectionPoint,
 )
-from ..core import (
-    s223,
-)
+from ..core import s223, enum
 from ..signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+__namespace__ = enum
 
 # === AIR
-class Air(Substance):
-    pass
+class Air(Medium):
+    node_type: URIRef = enum.Medium_Air
 
 
 class AirConnection(Connection):
@@ -58,8 +56,8 @@ class AirOutletSystemConnectionPoint(
 
 
 # === COMPRESSED AIR
-class CompressedAir(Substance):
-    pass
+class CompressedAir(Medium):
+    node_type: URIRef = enum.Medium_CompressedAir
 
 
 class CompressedAirConnection(Connection):
