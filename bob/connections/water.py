@@ -18,37 +18,37 @@ __namespace__ = enum
 
 # Medium
 class Water(Medium):
-    node_type: URIRef = enum.Medium_Water
+    node_type: URIRef = enum["Medium-Water"]
 
 
 class DomesticWater(Water):
-    node_type: URIRef = enum.Water_DomesticWater
+    node_type: URIRef = enum["Water-DomesticWater"]
 
 
 class DomesticHotWater(Water):
-    node_type: URIRef = enum.Water_DomesticHotWater
+    node_type: URIRef = enum["Water-DomesticHotWater"]
 
 
 class ChilledWater(Water):
-    node_type: URIRef = enum.Water_ChilledWater
+    node_type: URIRef = enum["Water-ChilledWater"]
 
 
 class HotWater(Water):
-    node_type: URIRef = enum.Water_HotWater
+    node_type: URIRef = enum["Water-HotWater"]
 
 
 class CondensedWater(Water):
-    node_type: URIRef = enum.Water_CondensedWater
+    node_type: URIRef = enum["Water-CondensedWater"]
 
 
 class GlycoledWater(Water):
     # glycol_proportion =
-    node_type: URIRef = enum.Water_GlycoledWater
+    node_type: URIRef = enum["Water-GlycoledWater"]
 
 
 class Steam(Water):
     # glycol_proportion =
-    node_type: URIRef = enum.Water_Steam
+    node_type: URIRef = enum["Water-Steam"]
 
 
 # Connections

@@ -30,8 +30,12 @@ class HumiditySetpoint(QuantifiableProperty):
 
 
 class AirHumiditySensor(Sensor):
+    """
+    Air humidity sensor. Can model room sensor or duct sensor
+    """
+
     node_type: URIRef = s223.HumiditySensor
-    hasSubstance: URIRef = enum.Medium_Air
+    hasSubstance: URIRef = enum["Medium-Air"]
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     observesProperty: HumidityMeasure
 

@@ -15,7 +15,7 @@ __namespace__ = enum
 
 
 class Electricity(Medium):
-    node_type: URIRef = enum.Medium_Electricity
+    node_type: URIRef = enum["Medium-Electricity"]
 
 
 class ElectricalConnection(Connection):

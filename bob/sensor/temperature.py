@@ -39,8 +39,8 @@ class TemperatureSensor(Sensor):
 
 
 class AirTemperatureSensor(TemperatureSensor):
-    hasSubstance: URIRef = enum.Medium_Air
+    hasSubstance: URIRef = enum["Medium-Air"]
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    hasSubstance: URIRef = enum.Medium_Water
+    hasSubstance: URIRef = enum["Medium-Water"]
