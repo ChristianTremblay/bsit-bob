@@ -18,6 +18,7 @@ __namespace__ = enum
 # === AIR
 class Air(Medium):
     node_type: URIRef = enum["Medium-Air"]
+    label = "Medium-Air"
 
 
 class AirConnection(Connection):

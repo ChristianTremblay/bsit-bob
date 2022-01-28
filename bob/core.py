@@ -591,6 +591,7 @@ class Node(metaclass=NodeMetaclass):
             # if the value is a property, link property to the node.  The
             # Value has a property called 'isValueOf' that is excluded.
             # ExternalReference have 'isExternalReferenceOf'
+            # observesProperty have isObservedBy
             if isinstance(value, Property) and (
                 not (isinstance(self, (Value, ExternalReference)))
             ):
@@ -730,15 +731,18 @@ class Property(Node):
     node_type: URIRef = None
     hasValue: Value
     hasExternalReference: ExternalReference
+    isObservedBy: Device  # a Sensor in fact, but it's not defined yet
 
     # override this for a specialize subclass
     _value_class: type = Value
     _ExternalReference_class: type = ExternalReference
+    # _observes_class: type = Sensor
 
     def __init__(self, arg: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {arg!r} {kwargs}")
         init_value = None
-        external_datasource = None
+        external_reference = None
+        observes_reference = None
         if arg is None:
             if "hasValue" in kwargs:
                 init_value = kwargs.pop("hasValue")
@@ -748,11 +752,15 @@ class Property(Node):
             init_value = arg
 
         if "hasExternalReference" in kwargs:
-            if init_value:
-                raise RuntimeError(
-                    "initialization conflict, can't have a value and an external datasource"
-                )
-            external_datasource = kwargs.pop("hasExternalReference")
+            if kwargs["hasExternalReference"]:
+                if init_value:
+                    raise RuntimeError(
+                        "initialization conflict, can't have a value and an external datasource"
+                    )
+            external_reference = kwargs.pop("hasExternalReference")
+
+        if "observesProperty" in kwargs:
+            observes_reference = kwargs.pop("observesProperty")
 
         super().__init__(**kwargs)
 
@@ -765,13 +773,23 @@ class Property(Node):
             self.hasValue = init_value
             init_value.isValueOf = self
         # same for ExternalReference
-        if external_datasource is not None:
-            if not isinstance(external_datasource, ExternalReference):
-                external_datasource = self._ExternalReference_class(external_datasource)
+        if external_reference is not None:
+            if not isinstance(external_reference, ExternalReference):
+                external_reference = self._ExternalReference_class(external_reference)
 
             # link the two together
-            self.hasExternalReference = external_datasource
-            external_datasource.isExternalReferenceOf = self
+            self.hasExternalReference = external_reference
+            external_reference.isExternalReferenceOf = self
+
+        # same for observesProperty
+        # if observes_reference is not None:
+        # if not isinstance(observes_reference, Device):
+        #    observes_reference = self._ExternalReference_class(observes_reference)
+        # sensor is not defined yet here... cross finger class type is good
+
+        # link the two together
+        #    self.observesProperty = observes_reference
+        #    observes_reference.isObservedBy = self
 
     def add_value(self, value: Value) -> Value:
         """Add an additional value to a property, returns the value added."""

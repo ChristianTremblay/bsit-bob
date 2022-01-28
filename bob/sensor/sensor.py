@@ -2,12 +2,21 @@ from typing import List, Union
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
 
-from ..core import s223, quantitykind, unit
-from ..core import Property, Connection, ConnectionPoint, Device, Segment, DomainSpace
+from ..core import s223, enum, quantitykind, unit
+from ..core import (
+    Property,
+    Connection,
+    ConnectionPoint,
+    Device,
+    Segment,
+    DomainSpace,
+    Medium,
+)
 
 from ..property import (
     ObservableProperty,
     QuantifiableProperty,
+    QuantifiableObservableProperty,
 )
 
 
@@ -32,6 +41,8 @@ class Sensor(Device):
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
     hasMinRange: QuantifiableProperty
+    hasSubstance: Medium
+    measuresSubstance: Medium
     observesProperty: ObservableProperty  # maxCount = 1
 
 
@@ -46,3 +57,23 @@ class VirtualSensor(Sensor):
     node_type: URIRef = s223.VirtualSensor
     # hasMeasurementLocation: # maxCount = 0
     hasFunctionInput: Property
+
+
+class Measurement(ObservableProperty):
+    isObservedBy: Sensor
+    ofSubstance: Medium
+    # def __init__(self, **kwargs):
+    #    if 'isObservedBy' in kwargs:
+    #        _isobservedby = kwargs.pop("isObservedBy")
+    #        self.isObservedBy = _isobservedby
+    #    super().__init__(**kwargs)
+
+
+class QuantifiableMeasurement(QuantifiableObservableProperty):
+    isObservedBy: Sensor
+    ofSubstance: Medium
+    # def __init__(self, **kwargs):
+    #    if 'isObservedBy' in kwargs:
+    #        _isobservedby = kwargs.pop("isObservedBy")
+    #        self.isObservedBy = _isobservedby
+    #    super().__init__(**kwargs)
