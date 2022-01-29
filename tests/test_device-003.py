@@ -17,6 +17,7 @@ def test_create_particulatemeasuredevice():
         comment="Particulate Measurement Station AKA particle counter",
         coarse_extref="bacnet://1/analog-value,1/present-value",
         fine_extref="bacnet://1/analog-input,2/present-value",
+        ultrafine_extref="bacnet://1/analog-input,3/present-value",
     )
 
     return pm

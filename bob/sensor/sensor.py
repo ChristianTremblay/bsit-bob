@@ -72,6 +72,8 @@ class Measurement(ObservableProperty):
 class QuantifiableMeasurement(QuantifiableObservableProperty):
     isObservedBy: Sensor
     ofSubstance: Medium
+    # hasQuantityKind: depends on sensor
+    # unit: depends on quantityKind
     # def __init__(self, **kwargs):
     #    if 'isObservedBy' in kwargs:
     #        _isobservedby = kwargs.pop("isObservedBy")

@@ -41,6 +41,7 @@ class TemperatureSensor(Sensor):
             hasValue=_val,
             ofSubstance=self.measuresSubstance,
             isObservedBy=self,
+            label=f"{self.label}.Measure",
         )
         self.observesProperty = _measure
 

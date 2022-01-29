@@ -47,7 +47,7 @@ class GasConcentrationSensor(Sensor):
             _val = kwargs.pop("value")
 
         super().__init__(**kwargs)
-        _measure = GasConcentrationMeasure(hasValue=kwargs.pop("value"), hasValue=_val, ofSubstance=self.measuresSubstance,  isObservedBy=self)
+        _measure = GasConcentrationMeasure(hasValue=kwargs.pop("value"), hasValue=_val, ofSubstance=self.measuresSubstance,  isObservedBy=self,label=f"{self.label}.Measure")
         self.observesProperty = _measure
 
 
