@@ -28,7 +28,7 @@ class QuantifiableProperty(Property):
 
     node_type: URIRef = s223.QuantifiableProperty
     hasQuantityKind: URIRef
-    hasUnit: URIRef
+    unit: URIRef
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

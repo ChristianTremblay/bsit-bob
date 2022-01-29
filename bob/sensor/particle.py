@@ -20,7 +20,7 @@ class ParticulateCountMeasure(QuantifiableMeasurement):
     node_type: URIRef = s223.ParticulateMeasure
     hasQuantityKind: URIRef = quantitykind.NumberDensity
     ofSubstance: Medium
-    hasUnit: URIRef = unit["NUM-PER-M3"]
+    unit: URIRef = unit["NUM-PER-M3"]
     isObservedBy: Sensor
     ofSubstance: Medium
 

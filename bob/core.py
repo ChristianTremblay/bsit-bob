@@ -259,7 +259,14 @@ class NodeMetaclass(type):
 
             if attr.startswith("_"):
                 continue
-            if attr in ("node", "node_type", "label", "comment"):
+            if attr in (
+                "node",
+                "node_type",
+                "label",
+                "comment",
+                "hasQuantityKind",
+                "unit",
+            ):
                 continue
 
             if isinstance(attr_type, URIRef):
@@ -501,6 +508,16 @@ class Node(metaclass=NodeMetaclass):
         if self.comment:
             self._data_graph.add((self.node, RDFS.comment, Literal(self.comment)))
 
+        if isinstance(self, (Property, Value)):
+            self.hasQuantityKind = getattr(self, "hasQuantityKind", "")
+            if self.hasQuantityKind:
+                self._data_graph.add(
+                    (self.node, qudt.hasQuantityKind, self.hasQuantityKind)
+                )
+            self.unit = getattr(self, "unit", "")
+            if self.unit:
+                self._data_graph.add((self.node, qudt.unit, self.unit))
+
         if hasattr(self, "node_type"):
             if self.node_type is not None:
                 self._data_graph.add((self.node, RDF.type, self.node_type))
@@ -515,6 +532,7 @@ class Node(metaclass=NodeMetaclass):
         for attr, attr_type in self._nodes.items():
             super().__setattr__(attr, None)
             if attr in kwargs:
+
                 setattr(self, attr, kwargs.pop(attr))
 
         logging.debug(f"    - _inits: {self._inits}")
@@ -654,7 +672,8 @@ class Value(Node):
 
     hasTimestamp: Literal
     hasSimpleValue: Literal
-    hasUnit: URIRef
+    hasQuantityKind: URIRef
+    unit: URIRef
 
     def __init__(
         self,
@@ -679,6 +698,10 @@ class Value(Node):
                 arg = Literal(arg, lang=lang)
 
             kwargs["hasSimpleValue"] = arg
+        if "unit" in kwargs:
+            self.unit = kwargs.pop("unit")
+        if "hasQuantityKind" in kwargs:
+            self.hasQuantityKind = kwargs.pop("hasQuantityKind")
 
         super().__init__(**kwargs)
 
@@ -761,6 +784,13 @@ class Property(Node):
 
         if "observesProperty" in kwargs:
             observes_reference = kwargs.pop("observesProperty")
+
+        # unit and hasQuantityKind are not in the s223 namespace
+        # but in the qudt namespace...
+        if "unit" in kwargs:
+            self.unit = kwargs.pop("unit")
+        if "hasQuantityKind" in kwargs:
+            self.hasQuantityKind = kwargs.pop("hasQuantityKind")
 
         super().__init__(**kwargs)
 

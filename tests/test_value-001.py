@@ -28,7 +28,7 @@ Value(6, datatype=XSD.float)
 
 from bob.core import qudt
 
-Value(7, hasUnit=qudt.DEG_F)
+Value(7, unit=qudt.DEG_F)
 
 from datetime import datetime, timezone, timedelta
 

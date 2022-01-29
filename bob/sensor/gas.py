@@ -20,13 +20,13 @@ class GasConcentrationMeasure(QuantifiableMeasurement):
     hasQuantityKind: URIRef = quantitykind.Concentration
     # whew.... RelativeHumidity would have make sense here...
     # looks like something to talk with Steve Ray
-    hasUnit: URIRef = unit.PPM
+    unit: URIRef = unit.PPM
     #measuresSubstance: URIRef
     isObservedBy: Sensor
 
 class GasConcentrationSetpoint(QuantifiableProperty):
     hasQuantityKind: URIRef = quantitykind.Concentration
-    hasUnit: URIRef = unit.PPM
+    unit: URIRef = unit.PPM
 
 
 class GasConcentrationSensor(Sensor):

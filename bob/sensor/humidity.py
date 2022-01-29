@@ -21,7 +21,7 @@ class HumidityMeasure(QuantifiableMeasurement):
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     # whew.... RelativeHumidity would have make sense here...
     # looks like something to talk with Steve Ray
-    hasUnit: URIRef = unit.PERCENT_RH
+    unit: URIRef = unit.PERCENT_RH
     # measuresSubstance: URIRef = enum['Medium-Air']
     # isObservedBy: Sensor
     ofSubstance: Medium
@@ -29,7 +29,7 @@ class HumidityMeasure(QuantifiableMeasurement):
 
 class HumiditySetpoint(QuantifiableProperty):
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
-    hasUnit: URIRef = unit.PERCENT_RH
+    unit: URIRef = unit.PERCENT_RH
 
 
 class AirHumiditySensor(Sensor):

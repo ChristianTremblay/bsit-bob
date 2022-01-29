@@ -12,14 +12,14 @@ __namespace__ = s223
 class TemperatureMeasure(QuantifiableMeasurement):
     node_type: URIRef = s223.TemperatureMeasure
     hasQuantityKind: URIRef = quantitykind.Temperature
-    hasUnit: URIRef = unit.DEG_C
+    unit: URIRef = unit.DEG_C
     isObservedBy: Sensor
     ofSubstance: Medium
 
 
 class TemperatureSetpoint(QuantifiableProperty):
     hasQuantityKind: URIRef = quantitykind.Temperature
-    hasUnit: URIRef = unit.DEG_C
+    unit: URIRef = unit.DEG_C
 
 
 class TemperatureSensor(Sensor):

@@ -17,7 +17,7 @@ p3 = ObservableProperty("green")
 
 from bob.core import qudt
 
-p4 = QuantifiableProperty(4.5, hasUnit=qudt.DEG_F)
+p4 = QuantifiableProperty(4.5, unit=qudt.DEG_F)
 
 #
 #
