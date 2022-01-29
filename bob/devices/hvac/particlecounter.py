@@ -22,17 +22,14 @@ __namespace__ = s223
 
 
 class ParticleCounter(Device):
+    node_type = s223.ParticleCounter
     # Air inlet provided as sometimes a tube is
     # connected and air is provided by a pump
     airInletSupply: AirInletConnectionPoint
     hasSubstance: URIRef = enum["Medium-Air"]
-    # Need "contains"
-    # coarseSensor: CoarseParticulateSensor
-    # fineSensor: FineParticulateSensor
-    # ultraFineSensor: UltraFineParticulateSensor
 
     # I probbaly need types for the extref here
-    # todo :
+    # TODO :
 
     def __init__(self, **kwargs):
         coarse_extref = None
@@ -45,6 +42,12 @@ class ParticleCounter(Device):
         if "ultrafine_extref" in kwargs:
             ultrafine_extref = kwargs.pop("ultrafine_extref")
 
-        self.coarseSensor = CoarseParticulateSensor(extref=coarse_extref)
-        self.fineSensor = FineParticulateSensor(extref=fine_extref)
-        self.ultraFineSensor = UltraFineParticulateSensor(extref=ultrafine_extref)
+        super().__init__(**kwargs)
+
+        coarseSensor = CoarseParticulateSensor(extref=coarse_extref)
+        fineSensor = FineParticulateSensor(extref=fine_extref)
+        ultraFineSensor = UltraFineParticulateSensor(extref=ultrafine_extref)
+
+        self > coarseSensor
+        self > fineSensor
+        self > ultraFineSensor
