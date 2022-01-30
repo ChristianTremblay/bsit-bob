@@ -5,7 +5,7 @@ from rdflib import URIRef
 
 from ..core import s223, enum, quantitykind, unit, Medium
 
-from .sensor import Sensor, QuantifiableMeasurement
+from .sensor import Sensor, QuantifiableMeasurement, split_kwargs
 
 from ..property import (
     ObservableProperty,
@@ -44,21 +44,14 @@ class AirHumiditySensor(Sensor):
     measuresSubstance: URIRef = enum["Medium-Air"]
 
     def __init__(self, **kwargs: Any) -> None:
-        _refs = None
-        _val = None
-        if "extref" in kwargs:
-            _refs = kwargs.pop("extref")
+        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
-        elif "value" in kwargs:
-            _val = kwargs.pop("value")
-
-        super().__init__(**kwargs)
+        super().__init__(**_sensor_kwargs)
         _measure = HumidityMeasure(
-            hasExternalReference=_refs,
-            hasValue=_val,
             ofSubstance=self.measuresSubstance,
             isObservedBy=self,
             label=f"{self.label}.Measure",
+            **_measure_kwargs,
         )
 
         self.observesProperty = _measure

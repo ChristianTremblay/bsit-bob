@@ -7,17 +7,32 @@ from bob.core import (
 )
 
 from bob.devices.hvac.particlecounter import ParticleCounter
+from bob.sensor.particle import (
+    CoarseParticulateSensor,
+    FineParticulateSensor,
+    UltraFineParticulateSensor,
+)
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
+
+particlecounter_config = {
+    ("coarse_sensor", CoarseParticulateSensor): {
+        "hasExternalReference": "bacnet://1/analog-value,1/present-value",
+    },
+    ("fine_sensor", FineParticulateSensor): {
+        "hasExternalReference": "bacnet://1/analog-input,2/present-value",
+    },
+    ("ultrafine_sensor", UltraFineParticulateSensor): {
+        "hasExternalReference": "bacnet://1/analog-input,3/present-value",
+    },
+}
 
 
 def test_create_particulatemeasuredevice():
     pm = ParticleCounter(
         label="PM-1",
         comment="Particulate Measurement Station AKA particle counter",
-        coarse_extref="bacnet://1/analog-value,1/present-value",
-        fine_extref="bacnet://1/analog-input,2/present-value",
-        ultrafine_extref="bacnet://1/analog-input,3/present-value",
+        config=particlecounter_config,
     )
 
     return pm

@@ -19,14 +19,14 @@ def test_create_air_temp_sensor():
     ats = AirTemperatureSensor(
         label="DA-T",
         comment="Supply Air Temperature Sensor",
-        extref=["bacnet://570005/analog-input,10084/present-value"],
+        hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
     )
     return ats
 
 
 def test_create_air_humidity_sensor_with_value():
     ahs = AirHumiditySensor(
-        label="ZN-H", comment="Zone Humidity Sensor with a value of 20", value=20
+        label="ZN-H", comment="Zone Humidity Sensor with a value of 20", hasValue=20
     )
     return ahs
 
@@ -35,7 +35,7 @@ def test_create_air_humidity_sensor():
     ahs = AirHumiditySensor(
         label="ZN-H",
         comment="Zone Humidity Sensor with a BACnet reference and a Niagara4 ORD",
-        extref=[
+        hasExternalReference=[
             "bacnet://570005/analog-input,10085/present-value",
             "ip:172.16.3.8|foxs:|station:|slot:/Drivers/BacnetNetwork/MSTP70/PCA$2d70$2d005_SystemeUV1/points/ZN$2dH",
         ],

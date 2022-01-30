@@ -1,1 +1,1 @@
-from .sensor import Sensor, DifferentialSensor, VirtualSensor
+from .sensor import Sensor, DifferentialSensor, VirtualSensor, define_sensors

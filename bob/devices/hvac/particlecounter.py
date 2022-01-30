@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 
 from rdflib import URIRef
 
@@ -17,37 +17,42 @@ from ...sensor.particle import (
     FineParticulateSensor,
     UltraFineParticulateSensor,
 )
+from ...sensor.sensor import Sensor, define_sensors
 
 __namespace__ = s223
 
 
+basic_particlecounter_config = {
+    ("label_of_sensor_1", CoarseParticulateSensor): {
+        "hasExternalReference": "bacnet://",
+        "comment": "Coarse Particles 10.0um or less",
+    },
+    ("label_of_sensor_2", FineParticulateSensor): {
+        "hasExternalReference": "bacnet://",
+        "comment": "Fine Particles 2.5um or less",
+    },
+    ("label_of_sensor_3", UltraFineParticulateSensor): {
+        "hasExternalReference": "bacnet://",
+        "comment": "Ultra Fine Particles 1.0um or less",
+    },
+    # other properties could go there... ?
+}
+
+
 class ParticleCounter(Device):
-    node_type = s223.ParticleCounter
-    # Air inlet provided as sometimes a tube is
-    # connected and air is provided by a pump
+    """"""
+
+    node_type: URIRef = s223.ParticleCounter
+    # Air inlet will allow air to enter the device
     airInletSupply: AirInletConnectionPoint
     hasSubstance: URIRef = enum["Medium-Air"]
 
-    # I probbaly need types for the extref here
-    # TODO :
+    def __init__(self, config: Dict = None, **kwargs):
+        if not config:
+            raise ValueError("Please provide configuration dict")
 
-    def __init__(self, **kwargs):
-        coarse_extref = None
-        fine_extref = None
-        ultrafine_extref = None
-        if "coarse_extref" in kwargs:
-            coarse_extref = kwargs.pop("coarse_extref")
-        if "fine_extref" in kwargs:
-            fine_extref = kwargs.pop("fine_extref")
-        if "ultrafine_extref" in kwargs:
-            ultrafine_extref = kwargs.pop("ultrafine_extref")
+        sensors = define_sensors(config)
 
         super().__init__(**kwargs)
-
-        coarseSensor = CoarseParticulateSensor(extref=coarse_extref)
-        fineSensor = FineParticulateSensor(extref=fine_extref)
-        ultraFineSensor = UltraFineParticulateSensor(extref=ultrafine_extref)
-
-        self > coarseSensor
-        self > fineSensor
-        self > ultraFineSensor
+        for sensor in sensors:
+            self > sensor

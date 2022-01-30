@@ -23,6 +23,37 @@ from ..property import (
 __namespace__ = s223
 
 
+def split_kwargs(given_kwargs):
+    # specific properties given to a sensor for creation
+    # but that must be applied to the measure AKA
+    # the observesProperty
+    _prop = ["hasExternalReference", "hasValue"]
+    measure_kwargs = {}
+    _given_kwargs = given_kwargs.copy()  # need a copy
+    for k, v in _given_kwargs.items():
+        if k in _prop:
+            measure_kwargs[k] = given_kwargs.pop(k)
+    sensor_kwargs = given_kwargs
+    print("Sensor : ", sensor_kwargs)
+    print("Measure :", measure_kwargs)
+    return (sensor_kwargs, measure_kwargs)
+
+
+def define_sensors(config):
+    sensors = []
+    for sensor_label_and_class, sensor_data in config.items():
+        _label, _cls = sensor_label_and_class
+        try:
+            if issubclass(_cls, Sensor):
+                _cls = _cls
+        except:
+            raise TypeError("Please provide class for sensor")
+
+        sensors.append(_cls(label=_label, **sensor_data))
+
+    return sensors
+
+
 class Sensor(Device):
     """
     A Sensor produces an ObservableProperty (which may or may not be quantifiable. For example, it might just sense an alarm state, or occupancy. But usually it will produce a number, in which case it is associated with a QuantifiableObservableProperty).

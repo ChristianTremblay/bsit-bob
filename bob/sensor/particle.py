@@ -5,7 +5,7 @@ from rdflib import URIRef, util
 
 from ..core import s223, enum, quantitykind, unit, Medium
 
-from .sensor import Sensor, Measurement, QuantifiableMeasurement
+from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
 
 from ..property import (
     ObservableProperty,
@@ -32,19 +32,14 @@ class ParticulateSensor(Sensor):
     observesProperty: ParticulateCountMeasure
 
     def __init__(self, **kwargs: Any) -> None:
-        _hasExternalReference = None
-        _hasValue = None
-        if "extref" in kwargs:
-            _hasExternalReference = kwargs.pop("extref")
-        elif "value" in kwargs:
-            _hasValue = kwargs.pop("value")
-        super().__init__(**kwargs)
+        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+
+        super().__init__(**_sensor_kwargs)
         _count = ParticulateCountMeasure(
-            hasExternalReference=_hasExternalReference,
-            hasValue=_hasValue,
             ofSubstance=self.measuresSubstance,
             isObservedBy=self,
             label=f"{self.label}.Measure",
+            **_measure_kwargs,
         )
 
         self.observesProperty = _count
@@ -56,7 +51,7 @@ class UltraFineParticulateSensor(ParticulateSensor):
     measuresSubstance: URIRef = enum["Particulate-PM1.0"]
 
     def __init__(self, **kwargs):
-        super().__init__(label="Ultra Fine Channel", comment="1.0 PM Channel", **kwargs)
+        super().__init__(**kwargs)
 
 
 class FineParticulateSensor(ParticulateSensor):
@@ -65,7 +60,7 @@ class FineParticulateSensor(ParticulateSensor):
     measuresSubstance: URIRef = enum["Particulate-PM2.5"]
 
     def __init__(self, **kwargs):
-        super().__init__(label="Fine Channel", comment="2.5 PM Channel", **kwargs)
+        super().__init__(**kwargs)
 
 
 class CoarseParticulateSensor(ParticulateSensor):
@@ -74,4 +69,4 @@ class CoarseParticulateSensor(ParticulateSensor):
     measuresSubstance: URIRef = enum["Particulate-PM10.0"]
 
     def __init__(self, **kwargs):
-        super().__init__(label="Coarse Channel", comment="10 PM Channel", **kwargs)
+        super().__init__(**kwargs)

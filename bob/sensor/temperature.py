@@ -1,4 +1,4 @@
-from .sensor import Sensor, Measurement, QuantifiableMeasurement
+from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
 from rdflib import URIRef
 from typing import Any
 from ..core import quantitykind, s223, unit, enum, Medium
@@ -27,21 +27,17 @@ class TemperatureSensor(Sensor):
     observesProperty: TemperatureMeasure
 
     def __init__(self, **kwargs: Any) -> None:
-        _refs = None
-        _val = None
-        if "extref" in kwargs:
-            _refs = kwargs.pop("extref")
-
-        elif "value" in kwargs:
-            _val = kwargs.pop("value")
-
-        super().__init__(**kwargs)
+        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        if not "measuresSubstance" in _sensor_kwargs:
+            raise ValueError(
+                "You must provide measuresSubstance property for a temperature sensor"
+            )
+        super().__init__(**_sensor_kwargs)
         _measure = TemperatureMeasure(
-            hasExternalReference=_refs,
-            hasValue=_val,
             ofSubstance=self.measuresSubstance,
             isObservedBy=self,
             label=f"{self.label}.Measure",
+            **_measure_kwargs,
         )
         self.observesProperty = _measure
 

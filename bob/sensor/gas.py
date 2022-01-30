@@ -3,26 +3,30 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef
 
-from ..core import s223, enum, quantitykind, unit
+from ..core import s223, enum, quantitykind, unit, Value
 
-from .sensor import Sensor, QuantifiableMeasurement
+from .sensor import Sensor, QuantifiableMeasurement, split_kwargs
 
 from ..property import (
-    ObservableProperty,
     QuantifiableProperty,
-    QuantifiableObservableProperty,
 )
 
 __namespace__ = s223
 
+
 class GasConcentrationMeasure(QuantifiableMeasurement):
-    node_type: URIRef = s223.HumidityMeasure
+    """
+    Doc
+    """
+
+    node_type: URIRef = s223.GasConcentrationMeasure
+
     hasQuantityKind: URIRef = quantitykind.Concentration
-    # whew.... RelativeHumidity would have make sense here...
-    # looks like something to talk with Steve Ray
+
     unit: URIRef = unit.PPM
-    #measuresSubstance: URIRef
+    # measuresSubstance: URIRef
     isObservedBy: Sensor
+
 
 class GasConcentrationSetpoint(QuantifiableProperty):
     hasQuantityKind: URIRef = quantitykind.Concentration
@@ -31,23 +35,21 @@ class GasConcentrationSetpoint(QuantifiableProperty):
 
 class GasConcentrationSensor(Sensor):
     node_type: URIRef = s223.GasConcentrationSensor
-    # hasSubstance: URIRef = enum["Medium-Air"]
     hasQuantityKind: URIRef = quantitykind.Concentration
-    hasSubstance: URIRef = enum['Medium-Air']
+    hasSubstance: URIRef = enum["Medium-Air"]
     observesProperty: GasConcentrationMeasure
 
     def __init__(self, **kwargs: Any) -> None:
+        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        print(_sensor_kwargs)
+        super().__init__(**_sensor_kwargs)
+        _measure = GasConcentrationMeasure(
+            ofSubstance=self.measuresSubstance,
+            isObservedBy=self,
+            label=f"{self.label}.Measure",
+            **_measure_kwargs,
+        )
 
-        _refs = None
-        _val = None
-        if "extref" in kwargs:
-            _refs = kwargs.pop("extref")
-            
-        elif "value" in kwargs:
-            _val = kwargs.pop("value")
-
-        super().__init__(**kwargs)
-        _measure = GasConcentrationMeasure(hasValue=kwargs.pop("value"), hasValue=_val, ofSubstance=self.measuresSubstance,  isObservedBy=self,label=f"{self.label}.Measure")
         self.observesProperty = _measure
 
 
