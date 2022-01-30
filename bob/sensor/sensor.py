@@ -34,8 +34,6 @@ def split_kwargs(given_kwargs):
         if k in _prop:
             measure_kwargs[k] = given_kwargs.pop(k)
     sensor_kwargs = given_kwargs
-    print("Sensor : ", sensor_kwargs)
-    print("Measure :", measure_kwargs)
     return (sensor_kwargs, measure_kwargs)
 
 

@@ -41,7 +41,6 @@ class GasConcentrationSensor(Sensor):
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
-        print(_sensor_kwargs)
         super().__init__(**_sensor_kwargs)
         _measure = GasConcentrationMeasure(
             ofSubstance=self.measuresSubstance,
