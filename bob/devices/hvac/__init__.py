@@ -9,3 +9,5 @@ from .particlecounter import (
     CoarseParticulateSensor,
     particlecounter_template,
 )
+
+from .coil import ChilledWaterCoil, ElectricalHeatingCoil, HotWaterCoil

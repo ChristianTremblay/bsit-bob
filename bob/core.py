@@ -1602,6 +1602,11 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
                 continue
 
             medium = getattr(connection_point, "hasSubstance", None)
+            # Here when trying to connect a connectionpoint to a device
+            # medium turned to be
+            # {'node': rdflib.term.URIRef('http://data.ashrae.org/standard223/1.0/vocab/enumeration#Water-ChilledWater'), 'label': '', 'comment': ''}
+            # and the intersection fails to recognize the substance
+            medium = getattr(medium, "node", medium)
             to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, (SystemConnectionPoint, ZoneConnectionPoint)):

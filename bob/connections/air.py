@@ -9,6 +9,9 @@ from ..core import (
     OutletSystemConnectionPoint,
     Medium,
     SystemConnectionPoint,
+    ZoneConnectionPoint,
+    InletZoneConnectionPoint,
+    OutletZoneConnectionPoint,
 )
 from ..core import s223, enum
 from ..signal import AnalogIn, AnalogOut
@@ -53,6 +56,19 @@ class AirInletSystemConnectionPoint(
 class AirOutletSystemConnectionPoint(
     AirSystemConnectionPoint, OutletSystemConnectionPoint
 ):
+    node_type = None
+
+
+class AirZoneConnectionPoint(ZoneConnectionPoint):
+    hasSubstance: URIRef = Air.node_type
+    node_type = None
+
+
+class AirInletZoneConnectionPoint(AirSystemConnectionPoint, InletZoneConnectionPoint):
+    node_type = None
+
+
+class AirOutletZoneConnectionPoint(AirSystemConnectionPoint, OutletZoneConnectionPoint):
     node_type = None
 
 
