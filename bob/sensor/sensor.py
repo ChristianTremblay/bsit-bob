@@ -38,8 +38,10 @@ def split_kwargs(given_kwargs):
 
 
 def define_sensors(config):
+    if not config:
+        return []
     sensors = []
-    for sensor_label_and_class, sensor_data in config.items():
+    for sensor_label_and_class, sensor_data in config["sensors"].items():
         _label, _cls = sensor_label_and_class
         try:
             if issubclass(_cls, Sensor):

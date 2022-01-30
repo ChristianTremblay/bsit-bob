@@ -72,7 +72,7 @@ class GasMonitor(Device):
         if not config:
             raise ValueError("Please provide configuration dict")
 
-        sensors = define_sensors(config["sensors"])
+        sensors = define_sensors(config)
         if "device" in config.keys():
             kwargs = {**config["device"], **kwargs}
 
