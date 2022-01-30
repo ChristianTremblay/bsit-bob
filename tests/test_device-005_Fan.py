@@ -29,6 +29,14 @@ def test_create_fan():
     return fan
 
 
+def test_create_fan_no_config():
+    fan = Fan(
+        label="VA-2",
+    )
+
+    return fan
+
+
 def test_turtle_file():
     dump()
     result = turtle()
@@ -37,6 +45,7 @@ def test_turtle_file():
 
 if __name__ == "__main__":
     fan = test_create_fan()
+    fan2 = test_create_fan_no_config()
     result = turtle()
     with open("test_sensor-004_results.ttl", "w") as file:
         file.write(result)
