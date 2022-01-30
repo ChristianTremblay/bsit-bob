@@ -1,5 +1,5 @@
-from bob.core import bind_model_namespace, dump, turtle, get_datagraph
-from bob.sensor.temperature import AirTemperatureSensor
+from bob.core import bind_model_namespace, dump, turtle, get_datagraph, enum
+from bob.sensor.temperature import AirTemperatureSensor, TemperatureSensor
 from bob.sensor.humidity import AirHumiditySensor
 import pytest
 
@@ -15,7 +15,27 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 #        )
 
 
-def test_create_air_temp_sensor():
+def test_create_air_temp_sensor_MissingMeasureSubstance():
+    with pytest.raises(ValueError):
+        ats = TemperatureSensor(
+            label="DA-T",
+            comment="Supply Air Temperature Sensor",
+            hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
+        )
+        return ats
+
+
+def test_create_air_temp_sensor_1():
+    ats = TemperatureSensor(
+        label="DA-T",
+        comment="Supply Air Temperature Sensor",
+        measuresSubstance=enum["Medium-Air"],
+        hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
+    )
+    return ats
+
+
+def test_create_air_temp_sensor_2():
     ats = AirTemperatureSensor(
         label="DA-T",
         comment="Supply Air Temperature Sensor",

@@ -17,25 +17,26 @@ from ...sensor.particle import (
     FineParticulateSensor,
     UltraFineParticulateSensor,
 )
-from ...sensor.sensor import Sensor, define_sensors
+from ...sensor import Sensor, define_sensors
 
 __namespace__ = s223
 
 
-basic_particlecounter_config = {
-    ("label_of_sensor_1", CoarseParticulateSensor): {
-        "hasExternalReference": "bacnet://",
-        "comment": "Coarse Particles 10.0um or less",
-    },
-    ("label_of_sensor_2", FineParticulateSensor): {
-        "hasExternalReference": "bacnet://",
-        "comment": "Fine Particles 2.5um or less",
-    },
-    ("label_of_sensor_3", UltraFineParticulateSensor): {
-        "hasExternalReference": "bacnet://",
-        "comment": "Ultra Fine Particles 1.0um or less",
-    },
-    # other properties could go there... ?
+particlecounter_template = {
+    "sensors": {
+        ("label_of_sensor_1", CoarseParticulateSensor): {
+            "hasExternalReference": "bacnet://",
+            "comment": "Coarse Particles 10.0um or less",
+        },
+        ("label_of_sensor_2", FineParticulateSensor): {
+            "hasExternalReference": "bacnet://",
+            "comment": "Fine Particles 2.5um or less",
+        },
+        ("label_of_sensor_3", UltraFineParticulateSensor): {
+            "hasExternalReference": "bacnet://",
+            "comment": "Ultra Fine Particles 1.0um or less",
+        },
+    }
 }
 
 
@@ -51,7 +52,9 @@ class ParticleCounter(Device):
         if not config:
             raise ValueError("Please provide configuration dict")
 
-        sensors = define_sensors(config)
+        sensors = define_sensors(config["sensors"])
+        if "device" in config.keys():
+            kwargs = {**config["device"], **kwargs}
 
         super().__init__(**kwargs)
         for sensor in sensors:

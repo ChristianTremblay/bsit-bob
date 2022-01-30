@@ -28,11 +28,12 @@ class TemperatureSensor(Sensor):
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
-        if not "measuresSubstance" in _sensor_kwargs:
-            raise ValueError(
-                "You must provide measuresSubstance property for a temperature sensor"
-            )
+
         super().__init__(**_sensor_kwargs)
+        if not self.measuresSubstance:
+            raise ValueError(
+                "You must provide measuresSubstance property for a temperature sensor either in config template or subclass defintion"
+            )
         _measure = TemperatureMeasure(
             ofSubstance=self.measuresSubstance,
             isObservedBy=self,

@@ -19,24 +19,26 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 def test_create_gasmonitordevice():
     dual_no2_co_configuration_example = {
-        ("CO_sensor", COSensor): {
-            "hasExternalReference": "bacnet://",
-            "hasMinRange": Value(
-                0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
-            ),
-            "hasMaxRange": Value(
-                100, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
-            ),
-        },
-        ("NO2_sensor", NO2Sensor): {
-            "hasExternalReference": "bacnet://",
-            "hasMinRange": Value(
-                0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
-            ),
-            "hasMaxRange": Value(
-                250, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
-            ),
-        },
+        "sensors": {
+            ("CO_sensor", COSensor): {
+                "hasExternalReference": "bacnet://",
+                "hasMinRange": Value(
+                    0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                ),
+                "hasMaxRange": Value(
+                    100, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                ),
+            },
+            ("NO2_sensor", NO2Sensor): {
+                "hasExternalReference": "bacnet://",
+                "hasMinRange": Value(
+                    0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                ),
+                "hasMaxRange": Value(
+                    250, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                ),
+            },
+        }
     }
     dualgasmonitor = GasMonitor(
         label="GM-1",
@@ -49,15 +51,17 @@ def test_create_gasmonitordevice():
 
 def test_create_co2monitordevice():
     _config = {
-        ("CO2_sensor", CO2Sensor): {
-            "hasExternalReference": "bacnet://",
-            "hasMinRange": Value(
-                0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
-            ),
-            "hasMaxRange": Value(
-                2000, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
-            ),
-        },
+        "sensors": {
+            ("CO2_sensor", CO2Sensor): {
+                "hasExternalReference": "bacnet://",
+                "hasMinRange": Value(
+                    0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                ),
+                "hasMaxRange": Value(
+                    2000, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                ),
+            },
+        }
     }
     co2monitor = GasMonitor(
         label="CO2-1",
@@ -70,30 +74,34 @@ def test_create_co2monitordevice():
 
 def test_create_co2monitordevice_with_temperature():
     _config = {
-        ("CO2_sensor", CO2Sensor): {
-            "hasExternalReference": "bacnet://",
-            "hasMinRange": Value(
-                0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
-            ),
-            "hasMaxRange": Value(
-                2000, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
-            ),
+        "device": {
+            "label": "CO2-2",
+            "comment": "CO2 Monitor with temperature reading",
         },
-        ("Temperature_sensor", TemperatureSensor): {
-            "measuresSubstance": enum["Medium-Air"],
-            "hasExternalReference": "bacnet://",
-            "hasMinRange": Value(
-                0, hasQuantityKind=quantitykind.Temperature, unit=unit.DEG_C
-            ),
-            "hasMaxRange": Value(
-                50, hasQuantityKind=quantitykind.Temperature, unit=unit.DEG_C
-            ),
-            "comment": "Internal temperature sensor of device",
+        "sensors": {
+            ("CO2_sensor", CO2Sensor): {
+                "hasExternalReference": "bacnet://",
+                "hasMinRange": Value(
+                    0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                ),
+                "hasMaxRange": Value(
+                    2000, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                ),
+            },
+            ("Temperature_sensor", TemperatureSensor): {
+                "measuresSubstance": enum["Medium-Air"],
+                "hasExternalReference": "bacnet://",
+                "hasMinRange": Value(
+                    0, hasQuantityKind=quantitykind.Temperature, unit=unit.DEG_C
+                ),
+                "hasMaxRange": Value(
+                    50, hasQuantityKind=quantitykind.Temperature, unit=unit.DEG_C
+                ),
+                "comment": "Internal temperature sensor of device",
+            },
         },
     }
     co2monitor = GasMonitor(
-        label="CO2-2",
-        comment="CO2 Monitor with temperature reading",
         config=_config,
     )
 

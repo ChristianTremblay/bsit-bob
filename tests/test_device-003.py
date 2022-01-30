@@ -16,15 +16,17 @@ from bob.sensor.particle import (
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 particlecounter_config = {
-    ("coarse_sensor", CoarseParticulateSensor): {
-        "hasExternalReference": "bacnet://1/analog-value,1/present-value",
-    },
-    ("fine_sensor", FineParticulateSensor): {
-        "hasExternalReference": "bacnet://1/analog-input,2/present-value",
-    },
-    ("ultrafine_sensor", UltraFineParticulateSensor): {
-        "hasExternalReference": "bacnet://1/analog-input,3/present-value",
-    },
+    "sensors": {
+        ("coarse_sensor", CoarseParticulateSensor): {
+            "hasExternalReference": "bacnet://1/analog-value,1/present-value",
+        },
+        ("fine_sensor", FineParticulateSensor): {
+            "hasExternalReference": "bacnet://1/analog-input,2/present-value",
+        },
+        ("ultrafine_sensor", UltraFineParticulateSensor): {
+            "hasExternalReference": "bacnet://1/analog-input,3/present-value",
+        },
+    }
 }
 
 
