@@ -25,7 +25,9 @@ class Fan(Device):
 
     def __init__(self, config: Dict = None, **kwargs):
         if not config and not kwargs:
-            raise ValueError("Please provide configuration dict or kwargs")
+            raise ValueError(
+                "Please provide configuration dict or kwargs, at least a label"
+            )
 
         sensors = define_sensors(config)
         devices, device_kwargs = contains_devices_list(config, **kwargs)

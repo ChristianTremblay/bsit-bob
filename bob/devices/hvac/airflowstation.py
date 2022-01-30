@@ -10,8 +10,11 @@ from ...sensor import Sensor
 __namespace__ = s223
 
 
-class AirFlowStation(Device):
+class AirFlowMonitor(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flow = AnalogIn
     flowSensor: Sensor
+
+
+# TODO : Create the template and make that the same than the others.

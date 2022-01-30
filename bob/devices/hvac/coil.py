@@ -24,6 +24,17 @@ from ...signal import AnalogIn
 
 __namespace__ = s223
 
+chilledWaterCoil_template = {
+    "device": {"label": "Name", "comment": "Description"},
+    "sensors": {},
+    "contains": {("valve", Device): {"comment": "SubDev comment"}},
+}
+# SEMANTIC QUESTION
+# here, that could be a good way to define the coil and its valve...
+# but the valve connect to the coil
+# can this be considered "contained" in the Coil device ?
+# Should this b ea system
+
 
 class ChilledWaterCoil(Device):
     airInlet: AirInletConnectionPoint

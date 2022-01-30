@@ -3,7 +3,7 @@ from typing import Any
 from ...core import (
     s223,
 )
-from ...node import Device
+from ...core import Device
 
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,

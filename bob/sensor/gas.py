@@ -13,6 +13,12 @@ from ..property import (
 
 __namespace__ = s223
 
+# TODO :
+# try to create an exmaple for the sensors found here
+# Sal will like :0)
+# And those are from Quebec
+# http://operadetectors.com/category/gas-monitors-1.aspx
+
 
 class GasConcentrationMeasure(QuantifiableMeasurement):
     """

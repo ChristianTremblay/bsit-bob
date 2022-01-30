@@ -60,6 +60,8 @@ class Sensor(Device):
     """
 
     node_type: URIRef = s223.Sensor
+    # ISSUE
+    # How can I define that ?
     # hasMeasurementLocation: Union[
     #    Device,
     #    Connection,

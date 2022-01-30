@@ -19,11 +19,7 @@ __namespace__ = s223
 class HumidityMeasure(QuantifiableMeasurement):
     node_type: URIRef = s223.HumidityMeasure
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
-    # whew.... RelativeHumidity would have make sense here...
-    # looks like something to talk with Steve Ray
     unit: URIRef = unit.PERCENT_RH
-    # measuresSubstance: URIRef = enum['Medium-Air']
-    # isObservedBy: Sensor
     ofSubstance: Medium
 
 
