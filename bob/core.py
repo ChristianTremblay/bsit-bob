@@ -157,6 +157,9 @@ __namespace__ = s223
 # common namespaces
 qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
 quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
+quantityValue = bind_namespace(
+    "quantityValue", "http://qudt.org/schema/qudt/QuantityValue"
+)
 unit = bind_namespace("unit", "http://qudt.org/vocab/unit/")
 brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
 owl = bind_namespace("owl", "http://www.w3.org/2002/07/owl#")
@@ -1516,6 +1519,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
                 continue
 
             medium = getattr(connection_point, "hasSubstance", None)
+            medium = getattr(medium, "node", medium)
+            # ISSUE...having a hard time with electrical things
             from_out[medium].add(connection_point)
 
     elif isinstance(from_thing, (SystemConnectionPoint, ZoneConnectionPoint)):
@@ -1583,12 +1588,18 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     else:
         from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
         if not from_types:
+            from_types = set(
+                medium for medium in from_out if len(from_out[medium.node]) == 1
+            )
+        if not from_types:
             raise RuntimeError(f"no candidate sources from {from_thing} to {to_thing}")
     logging.debug(f"    - from_types: {from_types}")
 
     to_in = defaultdict(set)
     if isinstance(to_thing, ConnectionPoint):
         medium = getattr(to_thing, "hasSubstance", None)
+        medium = getattr(medium, "node", medium)
+        # ISSUE...having a hard time with electrical things
         to_in[medium].add(to_thing)
 
     elif isinstance(to_thing, Connection):
@@ -1675,7 +1686,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
         if not to_types:
             raise RuntimeError(
-                f"no candidate destinations from {from_thing} to {to_thing}"
+                f"no candidate destinations from \n{from_thing}\n\n to\n {to_thing}"
             )
     logging.debug(f"    - to_types: {to_types}")
 
