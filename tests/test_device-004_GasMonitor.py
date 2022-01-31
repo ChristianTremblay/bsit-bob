@@ -8,6 +8,7 @@ from bob.core import (
     quantitykind,
     unit,
     enum,
+    quantityValue,
 )
 
 from bob.devices.hvac.gas import GasMonitor
@@ -23,19 +24,19 @@ def test_create_gasmonitordevice():
             ("CO_sensor", COSensor): {
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": Value(
-                    0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
                 "hasMaxRange": Value(
-                    100, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                    100, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
             ("NO2_sensor", NO2Sensor): {
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": Value(
-                    0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
                 "hasMaxRange": Value(
-                    250, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                    250, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
         }
@@ -55,10 +56,10 @@ def test_create_co2monitordevice():
             ("CO2_sensor", CO2Sensor): {
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": Value(
-                    0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
                 "hasMaxRange": Value(
-                    2000, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                    2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
         }
@@ -82,20 +83,20 @@ def test_create_co2monitordevice_with_temperature():
             ("CO2_sensor", CO2Sensor): {
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": Value(
-                    0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
                 "hasMaxRange": Value(
-                    2000, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                    2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
             ("Temperature_sensor", TemperatureSensor): {
                 "measuresSubstance": enum["Medium-Air"],
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": Value(
-                    0, hasQuantityKind=quantitykind.Temperature, unit=unit.DEG_C
+                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.DEG_C
                 ),
                 "hasMaxRange": Value(
-                    50, hasQuantityKind=quantitykind.Temperature, unit=unit.DEG_C
+                    50, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.DEG_C
                 ),
                 "comment": "Internal temperature sensor of device",
             },

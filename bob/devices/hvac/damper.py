@@ -2,7 +2,7 @@ from rdflib import URIRef
 from ...core import (
     s223,
 )
-from ...node import Device
+from ...core import Device
 
 from ...connections.air import (
     AirInletConnectionPoint,

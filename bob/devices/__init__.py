@@ -12,7 +12,6 @@ def contains_devices_list(config, **kwargs):
                 _cls = _cls
         except:
             raise TypeError("Please provide class for device")
-
         devices.append(_cls(label=_label, **device_data))
     kwargs = {**config["device"], **kwargs}
     return (devices, kwargs)

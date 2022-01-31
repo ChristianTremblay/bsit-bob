@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef
 
-from ..core import s223, enum, quantitykind, unit, Value
+from ..core import s223, enum, quantitykind, unit, Value, Medium
 
-from .sensor import Sensor, QuantifiableMeasurement, split_kwargs
+from .sensor import Sensor, QuantifiableObservableProperty, split_kwargs
 
 from ..property import (
     QuantifiableProperty,
@@ -20,7 +20,7 @@ __namespace__ = s223
 # http://operadetectors.com/category/gas-monitors-1.aspx
 
 
-class GasConcentrationMeasure(QuantifiableMeasurement):
+class GasConcentrationMeasure(QuantifiableObservableProperty):
     """
     Doc
     """
@@ -28,7 +28,7 @@ class GasConcentrationMeasure(QuantifiableMeasurement):
     node_type: URIRef = s223.GasConcentrationMeasure
 
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-
+    ofSubstance: Medium
     unit: URIRef = unit.PPM
     # measuresSubstance: URIRef
     isObservedBy: Sensor

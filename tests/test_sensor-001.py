@@ -70,7 +70,7 @@ def test_turtle_file():
 
 
 if __name__ == "__main__":
-    ats = test_create_air_temp_sensor()
+    ats = test_create_air_temp_sensor_2()
     ahs_val = test_create_air_humidity_sensor_with_value()
     ahs = test_create_air_humidity_sensor()
     result = turtle()
