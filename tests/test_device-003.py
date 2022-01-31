@@ -49,8 +49,8 @@ def test_turtle_file():
 if __name__ == "__main__":
     pm = test_create_particulatemeasuredevice()
     result = turtle()
-    with open("test_sensor-003_results.ttl", "w") as file:
+    with open("test_device-003_results.ttl", "w") as file:
         file.write(result)
-    print("Check file : test_sensor-003_results.ttl")
+    print("Check file : test_device-003_results.ttl")
     print(result)
     graph = get_datagraph()

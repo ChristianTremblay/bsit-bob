@@ -47,8 +47,8 @@ if __name__ == "__main__":
     fan = test_create_fan()
     fan2 = test_create_fan_no_config()
     result = turtle()
-    with open("test_sensor-004_results.ttl", "w") as file:
+    with open("test_device-005_results.ttl", "w") as file:
         file.write(result)
-    print("Check file : test_sensor-004_results.ttl")
+    print("Check file : test_device-005_results.ttl")
     print(result)
     graph = get_datagraph()

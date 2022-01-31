@@ -9,7 +9,7 @@ from bob.connections import (
 
 from bob.devices.hvac import Fan, ChilledWaterCoil
 
-# from header import sample_header
+from header import sample_header
 
 
 model_name = Path(__file__).stem

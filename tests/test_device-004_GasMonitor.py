@@ -119,8 +119,8 @@ if __name__ == "__main__":
     co2 = test_create_co2monitordevice()
     co2_temp = test_create_co2monitordevice_with_temperature()
     result = turtle()
-    with open("test_sensor-004_results.ttl", "w") as file:
+    with open("test_device-004_results.ttl", "w") as file:
         file.write(result)
-    print("Check file : test_sensor-004_results.ttl")
+    print("Check file : test_device-004_results.ttl")
     print(result)
     graph = get_datagraph()
