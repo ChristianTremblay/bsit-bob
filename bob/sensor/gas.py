@@ -27,7 +27,7 @@ class GasConcentrationMeasure(QuantifiableMeasurement):
 
     node_type: URIRef = s223.GasConcentrationMeasure
 
-    hasQuantityKind: URIRef = quantitykind.Concentration
+    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
 
     unit: URIRef = unit.PPM
     # measuresSubstance: URIRef
@@ -35,13 +35,13 @@ class GasConcentrationMeasure(QuantifiableMeasurement):
 
 
 class GasConcentrationSetpoint(QuantifiableProperty):
-    hasQuantityKind: URIRef = quantitykind.Concentration
+    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     unit: URIRef = unit.PPM
 
 
 class GasConcentrationSensor(Sensor):
     node_type: URIRef = s223.GasConcentrationSensor
-    hasQuantityKind: URIRef = quantitykind.Concentration
+    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     hasSubstance: URIRef = enum["Medium-Air"]
     observesProperty: GasConcentrationMeasure
 

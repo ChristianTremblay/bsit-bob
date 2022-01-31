@@ -33,19 +33,19 @@ gasmonitor_template = {
         ("label_of_sensor_1", COSensor): {
             "hasExternalReference": "bacnet://",
             "hasMinRange": Value(
-                0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
             ),
             "hasMaxRange": Value(
-                2000, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
             ),
         },
         ("label_of_sensor_2", NO2Sensor): {
             "hasExternalReference": "bacnet://",
             "hasMinRange": Value(
-                0, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
             ),
             "hasMaxRange": Value(
-                100, hasQuantityKind=quantitykind.Concentration, unit=unit.PPM
+                100, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
             ),
         },
         # other properties could go there... ?
