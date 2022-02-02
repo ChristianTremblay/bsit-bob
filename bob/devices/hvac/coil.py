@@ -25,7 +25,7 @@ from ...signal import AnalogIn
 __namespace__ = s223
 
 chilledWaterCoil_template = {
-    "device": {"label": "Name", "comment": "Description"},
+    "params": {"label": "Name", "comment": "Description"},
     "sensors": {},
     "contains": {("valve", Device): {"comment": "SubDev comment"}},
 }

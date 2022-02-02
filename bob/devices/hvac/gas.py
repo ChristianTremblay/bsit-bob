@@ -24,7 +24,7 @@ from ...sensor import Sensor, define_sensors
 __namespace__ = s223
 
 gasmonitor_template = {
-    "device": {
+    "params": {
         "label": "Name Of Device",
         "comment": "Description",
         # "hasMeasurementLocation": Connection,
@@ -73,8 +73,8 @@ class GasMonitor(Device):
             raise ValueError("Please provide configuration dict")
 
         sensors = define_sensors(config)
-        if "device" in config.keys():
-            kwargs = {**config["device"], **kwargs}
+        if "params" in config.keys():
+            kwargs = {**config["params"], **kwargs}
 
         super().__init__(**kwargs)
         for sensor in sensors:

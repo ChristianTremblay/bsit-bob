@@ -12,6 +12,7 @@ from bob.core import (
 )
 
 from bob.devices.hvac.gas import GasMonitor
+from bob.property import QuantifiableObservableProperty
 from bob.sensor.gas import CO2Sensor, NO2Sensor, COSensor
 from bob.sensor.temperature import TemperatureSensor
 
@@ -23,19 +24,19 @@ def test_create_gasmonitordevice():
         "sensors": {
             ("CO_sensor", COSensor): {
                 "hasExternalReference": "bacnet://",
-                "hasMinRange": Value(
+                "hasMinRange": QuantifiableObservableProperty(
                     0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
-                "hasMaxRange": Value(
+                "hasMaxRange": QuantifiableObservableProperty(
                     100, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
             ("NO2_sensor", NO2Sensor): {
                 "hasExternalReference": "bacnet://",
-                "hasMinRange": Value(
+                "hasMinRange": QuantifiableObservableProperty(
                     0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
-                "hasMaxRange": Value(
+                "hasMaxRange": QuantifiableObservableProperty(
                     250, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
@@ -55,10 +56,10 @@ def test_create_co2monitordevice():
         "sensors": {
             ("CO2_sensor", CO2Sensor): {
                 "hasExternalReference": "bacnet://",
-                "hasMinRange": Value(
+                "hasMinRange": QuantifiableObservableProperty(
                     0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
-                "hasMaxRange": Value(
+                "hasMaxRange": QuantifiableObservableProperty(
                     2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
@@ -75,27 +76,27 @@ def test_create_co2monitordevice():
 
 def test_create_co2monitordevice_with_temperature():
     _config = {
-        "device": {
+        "params": {
             "label": "CO2-2",
             "comment": "CO2 Monitor with temperature reading",
         },
         "sensors": {
             ("CO2_sensor", CO2Sensor): {
                 "hasExternalReference": "bacnet://",
-                "hasMinRange": Value(
+                "hasMinRange": QuantifiableObservableProperty(
                     0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
-                "hasMaxRange": Value(
+                "hasMaxRange": QuantifiableObservableProperty(
                     2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
             ("Temperature_sensor", TemperatureSensor): {
                 "measuresSubstance": enum["Medium-Air"],
                 "hasExternalReference": "bacnet://",
-                "hasMinRange": Value(
+                "hasMinRange": QuantifiableObservableProperty(
                     0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.DEG_C
                 ),
-                "hasMaxRange": Value(
+                "hasMaxRange": QuantifiableObservableProperty(
                     50, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.DEG_C
                 ),
                 "comment": "Internal temperature sensor of device",

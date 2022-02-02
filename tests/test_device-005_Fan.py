@@ -18,7 +18,7 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 def test_create_fan():
     _config = {
-        "device": {"label": "VA-1", "comment": "Supply Fan"},
+        "params": {"label": "VA-1", "comment": "Supply Fan"},
         "sensors": {},
         "contains": {("VA1-VFD", Device): {"comment": "VFD for VA-1"}},
     }

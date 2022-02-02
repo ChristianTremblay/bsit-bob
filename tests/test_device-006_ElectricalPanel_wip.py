@@ -24,7 +24,7 @@ __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
 def test_create_emptyelectricalpaneldevice():
     distributionpanel_template = {
-        "device": {
+        "params": {
             "label": "Name Of Panel",
             "comment": "Description",
             "electricalInlet": Electricity_120V_240V_60HzInletConnectionPoint,
@@ -47,7 +47,7 @@ def test_create_emptyelectricalpaneldevice():
 
 def test_create_electricalpaneldevice():
     distributionpanel_template = {
-        "device": {
+        "params": {
             "label": "Name Of Panel",
             "comment": "Description",
             "electricalInlet": Electricity_120V_240V_60HzInletConnectionPoint,

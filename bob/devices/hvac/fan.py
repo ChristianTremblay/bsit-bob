@@ -12,7 +12,7 @@ from ...devices import contains_devices_list
 __namespace__ = s223
 
 fan_template = {
-    "device": {"label": "Name", "comment": "Description"},
+    "params": {"label": "Name", "comment": "Description"},
     "sensors": {},
     "contains": {("sub_device1_label", Device): {"comment": "SubDev comment"}},
 }

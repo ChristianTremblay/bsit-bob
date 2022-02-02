@@ -103,7 +103,7 @@ class CircuitBreaker(Device):
 
 
 distributionpanel_template = {
-    "device": {
+    "params": {
         "label": "Name Of Panel",
         "comment": "Description",
         # "electricalInlet": Electricity_120V_240V_60HzInletConnectionPoint,

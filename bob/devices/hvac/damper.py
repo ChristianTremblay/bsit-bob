@@ -9,6 +9,9 @@ from ...connections.air import (
     AirOutletConnectionPoint,
     CompressedAirConnectionPoint,
 )
+
+from ...connections.electricity import ElectricalInletConnectionPoint
+
 from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
@@ -30,6 +33,12 @@ class FireDamper(Damper):
 class ActuatedDamper(Damper):
     position = AnalogOut
     feedback = AnalogIn
+
+
+class ElectricalActuatedDamper(Damper):
+    position = AnalogOut
+    feedback = AnalogIn
+    powerInlet: ElectricalInletConnectionPoint
 
 
 class PneumaticDamper(Damper):
