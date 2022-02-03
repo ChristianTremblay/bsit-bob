@@ -31,7 +31,7 @@ class GasConcentrationMeasure(QuantifiableObservableProperty):
     ofSubstance: Medium
     unit: URIRef = unit.PPM
     # measuresSubstance: URIRef
-    isObservedBy: Sensor
+    # isObservedBy: Sensor
 
 
 class GasConcentrationSetpoint(QuantifiableProperty):
@@ -50,7 +50,7 @@ class GasConcentrationSensor(Sensor):
         super().__init__(**_sensor_kwargs)
         _measure = GasConcentrationMeasure(
             ofSubstance=self.measuresSubstance,
-            isObservedBy=self,
+            # isObservedBy=self,
             label=f"{self.label}.Measure",
             **_measure_kwargs,
         )

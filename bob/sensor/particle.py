@@ -19,10 +19,7 @@ __namespace__ = s223
 class ParticulateCountMeasure(QuantifiableMeasurement):
     node_type: URIRef = s223.ParticulateMeasure
     hasQuantityKind: URIRef = quantitykind.NumberDensity
-    ofSubstance: Medium
     unit: URIRef = unit["NUM-PER-M3"]
-    isObservedBy: Sensor
-    ofSubstance: Medium
 
 
 class ParticulateSensor(Sensor):
@@ -37,7 +34,7 @@ class ParticulateSensor(Sensor):
         super().__init__(**_sensor_kwargs)
         _count = ParticulateCountMeasure(
             ofSubstance=self.measuresSubstance,
-            isObservedBy=self,
+            # isObservedBy=self,
             label=f"{self.label}.Measure",
             **_measure_kwargs,
         )

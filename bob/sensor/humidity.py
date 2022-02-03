@@ -45,7 +45,7 @@ class AirHumiditySensor(Sensor):
         super().__init__(**_sensor_kwargs)
         _measure = HumidityMeasure(
             ofSubstance=self.measuresSubstance,
-            isObservedBy=self,
+            # isObservedBy=self,
             label=f"{self.label}.Measure",
             **_measure_kwargs,
         )

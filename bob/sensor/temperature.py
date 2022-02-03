@@ -5,6 +5,7 @@ from ..core import quantitykind, s223, unit, enum, Medium
 
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
 
+from bob import core
 
 __namespace__ = s223
 
@@ -13,7 +14,7 @@ class TemperatureMeasure(QuantifiableMeasurement):
     node_type: URIRef = s223.TemperatureMeasure
     hasQuantityKind: URIRef = quantitykind.Temperature
     unit: URIRef = unit.DEG_C
-    isObservedBy: Sensor
+    # isObservedBy: Sensor
     ofSubstance: Medium
 
 
@@ -36,7 +37,7 @@ class TemperatureSensor(Sensor):
             )
         _measure = TemperatureMeasure(
             ofSubstance=self.measuresSubstance,
-            isObservedBy=self,
+            # isObservedBy=self,
             label=f"{self.label}.Measure",
             **_measure_kwargs,
         )

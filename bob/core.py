@@ -759,7 +759,7 @@ class Property(Node):
     node_type: URIRef = None
     hasValue: Value
     hasExternalReference: ExternalReference
-    isObservedBy: Device  # a Sensor in fact, but it's not defined yet
+    # isObservedBy: Device  # a Sensor in fact, but it's not defined yet
 
     # override this for a specialize subclass
     _value_class: type = Value

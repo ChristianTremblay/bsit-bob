@@ -1,6 +1,7 @@
 from typing import List, Union
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
+from bob import core
 
 from ..core import s223, enum, quantitykind, unit
 from ..core import (
@@ -93,22 +94,20 @@ class VirtualSensor(Sensor):
 
 
 class Measurement(ObservableProperty):
-    isObservedBy: Sensor
+    # isObservedBy: Sensor
     ofSubstance: Medium
     # def __init__(self, **kwargs):
     #    if 'isObservedBy' in kwargs:
     #        _isobservedby = kwargs.pop("isObservedBy")
     #        self.isObservedBy = _isobservedby
     #    super().__init__(**kwargs)
+
+
+#
 
 
 class QuantifiableMeasurement(QuantifiableObservableProperty):
-    isObservedBy: Sensor
+    # isObservedBy: Sensor
     ofSubstance: Medium
     # hasQuantityKind: depends on sensor
     # unit: depends on quantityKind
-    # def __init__(self, **kwargs):
-    #    if 'isObservedBy' in kwargs:
-    #        _isobservedby = kwargs.pop("isObservedBy")
-    #        self.isObservedBy = _isobservedby
-    #    super().__init__(**kwargs)
