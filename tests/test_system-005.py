@@ -13,7 +13,7 @@ from bob import core
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
-core.RECIPROCITY_RELATION = True
+core.EXPLICIT_RECIPROCITY = True
 
 
 class A(Device):

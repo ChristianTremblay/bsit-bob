@@ -14,7 +14,7 @@ from bob.core import (
 from bob.devices.hvac.gas import GasMonitor
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.gas import CO2Sensor, NO2Sensor, COSensor
-from bob.sensor.temperature import TemperatureSensor
+from bob.sensor.temperature import AirTemperatureSensor
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
@@ -90,8 +90,8 @@ def test_create_co2monitordevice_with_temperature():
                     2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
                 ),
             },
-            ("Temperature_sensor", TemperatureSensor): {
-                "measuresSubstance": enum["Medium-Air"],
+            ("Temperature_sensor", AirTemperatureSensor): {
+                # "measuresSubstance": enum["Medium-Air"],
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.DEG_C

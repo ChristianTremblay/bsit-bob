@@ -4,7 +4,7 @@ from bob.core import Device, ConnectionPoint, Connection
 from bob import core
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
-core.RECIPROCITY_RELATION = True
+core.EXPLICIT_RECIPROCITY = True
 
 d1 = Device(label="d1")
 cp1 = ConnectionPoint(d1, label="d1.out")
