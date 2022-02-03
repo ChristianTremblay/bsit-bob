@@ -22,6 +22,7 @@ from ...sensor import Sensor, define_sensors
 __namespace__ = s223
 
 
+"""
 particlecounter_template = {
     "sensors": {
         ("label_of_sensor_1", CoarseParticulateSensor): {
@@ -38,6 +39,7 @@ particlecounter_template = {
         },
     }
 }
+"""
 
 
 class ParticleCounter(Device):
