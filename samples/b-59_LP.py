@@ -15,7 +15,7 @@ from bob.core import (
     turtle,
     get_datagraph,
     bind_model_namespace,
-    dump
+    dump,
 )
 
 from bob.devices.hvac.damper import ElectricalActuatedDamper
@@ -38,39 +38,41 @@ from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
 # from header import g36_header
 
-#model_name = Path(__file__).stem
+# model_name = Path(__file__).stem
 model_name = "B59"
 __namespace__ = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
+
 def test_create_rooftop(node_iri=None):
     _config = {
-        "params": {"node_iri":node_iri, "label": "RTU-1", "comment": "Supply Fan"},
+        "params": {"node_iri": node_iri, "label": "RTU-1", "comment": "Supply Fan"},
         "sensors": {
             ("T-1", AirTemperatureSensor): {"comment": "Supply Air Temperature sensor"},
             ("T-2", AirTemperatureSensor): {"comment": "Return Air Temperature sensor"},
-            },
+        },
         "contains": {
             ("SF-1", Fan): {"comment": "Supply Fan"},
             ("RF-1", Fan): {"comment": "Return Fan"},
             ("OAD-1", ElectricalActuatedDamper): {"comment": "Outside Air Damper"},
             ("RAD-1", ElectricalActuatedDamper): {"comment": "Return Air Damper"},
-            ("CWC-1", ChilledWaterCoil): {"comment": "Chilled Water coil"},        
+            ("CWC-1", ChilledWaterCoil): {"comment": "Chilled Water coil"},
         },
     }
-    _mixedAir = AirConnection(label="MIXED-AIR", comment="Where return air and outside air mix")
+    _mixedAir = AirConnection(
+        label="MIXED-AIR", comment="Where return air and outside air mix"
+    )
     _returnAir = AirConnection(label="RETURN-AIR", comment="Air returns from zone here")
     _rtu = AirHandlingUnit(config=_config)
     # Relationships between devices
-    _rtu['OAD-1'] >> _mixedAir
-    _rtu['RF-1'] >> _mixedAir
-    _mixedAir >> _rtu['SF-1']
-    _rtu['SF-1'] >> _rtu["CWC-1"]
+    _rtu["OAD-1"] >> _mixedAir
+    _rtu["RF-1"] >> _mixedAir
+    _mixedAir >> _rtu["SF-1"]
+    _rtu["SF-1"] >> _rtu["CWC-1"]
 
     # Mapping of the system
-    _rtu.outsideAirInlet.mapsTo = _rtu['OAD-1'].airInlet
-    _rtu.returnAirInlet.mapsTo = _rtu['RF-1'].airInlet
-    _rtu.supplyAirOutlet.mapsTo = _rtu['CWC-1'].airOutlet
-
+    _rtu.outsideAirInlet.mapsTo = _rtu["OAD-1"].airInlet
+    _rtu.returnAirInlet.mapsTo = _rtu["RF-1"].airInlet
+    _rtu.supplyAirOutlet.mapsTo = _rtu["CWC-1"].airOutlet
 
     return _rtu
 
@@ -92,7 +94,7 @@ class Plenum(System):
 
 
 # make an instance
-#class HVACZone2(HVACZone):
+# class HVACZone2(HVACZone):
 #    node_type = None  # Does this just mean that this isn't something in 223p yet?
 #    temperature_setpoint: AnalogOut###
 
@@ -103,18 +105,18 @@ class Plenum(System):
 #        self.supplyAir.mapsTo = j#
 
 
-#r = RooftopUnit(node_iri=ex.rtu, label="rtu")
-#p = Plenum(label="plenum")
-#z = HVACZone2(label="zone")
+# r = RooftopUnit(node_iri=ex.rtu, label="rtu")
+# p = Plenum(label="plenum")
+# z = HVACZone2(label="zone")
 # can't seem to connect system connection points to junctions
-#r.supplyAirOutlet >> p.AirInlet
+# r.supplyAirOutlet >> p.AirInlet
 
 # p.AirOutlet.link_to(z.supplyAir) #getting no common connection types, because supply Air isn't a junction
-#p.AirOutlet >> (z.supplyAir)
+# p.AirOutlet >> (z.supplyAir)
 
 
 # g36_header(model_name)
-#dump()
+# dump()
 
 if __name__ == "__main__":
     r = test_create_rooftop(node_iri=ex.rtu)

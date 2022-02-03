@@ -52,6 +52,7 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 
 # options
 MANDITORY_LABEL = True
+RECIPROCITY_RELATION = False
 
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
 _annotation_reference: Dict[str, type] = {}
@@ -656,7 +657,8 @@ class Node(metaclass=NodeMetaclass):
 
         # link the two together
         self._data_graph.add((self.node, s223.hasProperty, prop.node))
-        self._data_graph.add((prop.node, s223.isPropertyOf, self.node))
+        if RECIPROCITY_RELATION:
+            self._data_graph.add((prop.node, s223.isPropertyOf, self.node))
 
         return prop
 
@@ -830,12 +832,14 @@ class Property(Node):
         if isinstance(value, Value):
             # link the two together
             self._data_graph.add((self.node, s223.hasValue, value.node))
-            value.isValueOf = self
+            if RECIPROCITY_RELATION:
+                value.isValueOf = self
 
         if isinstance(value, ExternalReference):
             # link the two together
             self._data_graph.add((self.node, s223.hasExternalReference, value.node))
-            value.isExternalReferenceOf = self
+            if RECIPROCITY_RELATION:
+                value.isExternalReferenceOf = self
 
         return value
 
@@ -1035,7 +1039,8 @@ class System(Node):
 
         if isinstance(other, (Device, System)):
             self._data_graph.add((self.node, s223.contains, other.node))
-            self._data_graph.add((other.node, s223.isContainedIn, self.node))
+            if RECIPROCITY_RELATION:
+                self._data_graph.add((other.node, s223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1050,7 +1055,8 @@ class System(Node):
         logging.debug(f"__lt__ {self} {other}")
 
         if isinstance(other, System):
-            self._data_graph.add((self.node, s223.isContainedIn, other.node))
+            if RECIPROCITY_RELATION:
+                self._data_graph.add((self.node, s223.isContainedIn, other.node))
             self._data_graph.add((other.node, s223.contains, self.node))
         else:
             raise TypeError("system expected")
@@ -1116,16 +1122,17 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
         # link connection to the connection point and its device
         self._data_graph.add((self.node, s223.connectsAt, connection_point.node))
-        self._data_graph.add(
-            (
-                connection_point.isConnectionPointOf.node,
-                s223.connectedThrough,
-                self.node,
+        if RECIPROCITY_RELATION:
+            self._data_graph.add(
+                (
+                    connection_point.isConnectionPointOf.node,
+                    s223.connectedThrough,
+                    self.node,
+                )
             )
-        )
-        self._data_graph.add(
-            (self.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
-        )
+            self._data_graph.add(
+                (self.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
+            )
 
     def connect_from(self, connection_point: ConnectionPoint) -> None:
         """
@@ -1143,16 +1150,21 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
         # link connection to the connection point and its device
         self._data_graph.add((self.node, s223.connectsAt, connection_point.node))
-        self._data_graph.add(
-            (
-                connection_point.isConnectionPointOf.node,
-                s223.connectedThrough,
-                self.node,
+        if RECIPROCITY_RELATION:
+            self._data_graph.add(
+                (
+                    connection_point.isConnectionPointOf.node,
+                    s223.connectedThrough,
+                    self.node,
+                )
             )
-        )
-        self._data_graph.add(
-            (self.node, s223.connectsFrom, connection_point.isConnectionPointOf.node)
-        )
+            self._data_graph.add(
+                (
+                    self.node,
+                    s223.connectsFrom,
+                    connection_point.isConnectionPointOf.node,
+                )
+            )
 
 
 class Connectable(Node):
@@ -1219,7 +1231,8 @@ class ConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add((thing.node, s223.hasConnectionPoint, self.node))
-        self.isConnectionPointOf = thing
+        if RECIPROCITY_RELATION:
+            self.isConnectionPointOf = thing
 
         # this is one of the connection points of the device
         thing._connection_points[str(self.node)] = self
@@ -1397,7 +1410,8 @@ class Zone(Node):
             raise TypeError("space expected")
 
         self._data_graph.add((self.node, s223.contains, other.node))
-        self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        if RECIPROCITY_RELATION:
+            self._data_graph.add((other.node, s223.isContainedIn, self.node))
 
         return self
 
@@ -1462,7 +1476,8 @@ class PhysicalSpace(Node):
 
         if isinstance(other, PhysicalSpace):
             self._data_graph.add((self.node, s223.contains, other.node))
-            self._data_graph.add((other.node, s223.isContainedIn, self.node))
+            if RECIPROCITY_RELATION:
+                self._data_graph.add((other.node, s223.isContainedIn, self.node))
         elif isinstance(other, DomainSpace):
             self._data_graph.add((self.node, s223.encloses, other.node))
         else:
@@ -1482,7 +1497,8 @@ class PhysicalSpace(Node):
             raise TypeError("physical space expected")
 
         self._data_graph.add((other.node, s223.contains, self.node))
-        self._data_graph.add((self.node, s223.isContainedIn, other.node))
+        if RECIPROCITY_RELATION:
+            self._data_graph.add((self.node, s223.isContainedIn, other.node))
 
         return other
 
@@ -1749,7 +1765,8 @@ class Device(Connectable):
             raise TypeError("device or system expected")
 
         self._data_graph.add((self.node, s223.contains, other.node))
-        self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        if RECIPROCITY_RELATION:
+            self._data_graph.add((other.node, s223.isContainedIn, self.node))
 
         return self
 
@@ -1760,8 +1777,8 @@ class Device(Connectable):
         """
         if not isinstance(other, (Device, System)):
             raise TypeError("device or system expected")
-
-        self._data_graph.add((self.node, s223.isContainedIn, other.node))
+        if RECIPROCITY_RELATION:
+            self._data_graph.add((self.node, s223.isContainedIn, other.node))
         self._data_graph.add((other.node, s223.contains, self.node))
 
         return other
@@ -1787,7 +1804,8 @@ class DomainSpace(Connectable):
 
         if isinstance(other, Zone):
             self._data_graph.add((other.node, s223.contains, self.node))
-            self._data_graph.add((self.node, s223.isContainedIn, other.node))
+            if RECIPROCITY_RELATION:
+                self._data_graph.add((self.node, s223.isContainedIn, other.node))
         elif isinstance(other, PhysicalSpace):
             self._data_graph.add((other.node, s223.encloses, self.node))
         else:
