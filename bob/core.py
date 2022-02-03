@@ -1322,7 +1322,8 @@ class SystemConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add((system.node, s223.hasSystemConnectionPoint, self.node))
-        self.isSystemConnectionPointOf = system
+        if RECIPROCITY_RELATION:
+            self.isSystemConnectionPointOf = system
 
         # this is one of the connection points of the system
         system._system_connection_points[str(self.node)] = self
