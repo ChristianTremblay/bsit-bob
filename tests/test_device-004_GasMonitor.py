@@ -25,19 +25,31 @@ def test_create_gasmonitordevice():
             ("CO_sensor", COSensor): {
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
-                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                    0,
+                    hasQuantityKind=quantitykind.DimensionlessRatio,
+                    unit=unit.PPM,
+                    label="CO_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
-                    100, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                    100,
+                    hasQuantityKind=quantitykind.DimensionlessRatio,
+                    unit=unit.PPM,
+                    label="CO_sensor.MaxRange",
                 ),
             },
             ("NO2_sensor", NO2Sensor): {
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
-                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                    0,
+                    hasQuantityKind=quantitykind.DimensionlessRatio,
+                    unit=unit.PPM,
+                    label="NO2_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
-                    250, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                    250,
+                    hasQuantityKind=quantitykind.DimensionlessRatio,
+                    unit=unit.PPM,
+                    label="NO2_sensor.MaxRange",
                 ),
             },
         }
@@ -57,10 +69,16 @@ def test_create_co2monitordevice():
             ("CO2_sensor", CO2Sensor): {
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
-                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                    0,
+                    hasQuantityKind=quantitykind.DimensionlessRatio,
+                    unit=unit.PPM,
+                    label="CO2_sensor.inRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
-                    2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                    2000,
+                    hasQuantityKind=quantitykind.DimensionlessRatio,
+                    unit=unit.PPM,
+                    label="CO2_sensor.MaxRange",
                 ),
             },
         }
@@ -84,20 +102,32 @@ def test_create_co2monitordevice_with_temperature():
             ("CO2_sensor", CO2Sensor): {
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
-                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                    0,
+                    hasQuantityKind=quantitykind.DimensionlessRatio,
+                    unit=unit.PPM,
+                    label="CO2_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
-                    2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                    2000,
+                    hasQuantityKind=quantitykind.DimensionlessRatio,
+                    unit=unit.PPM,
+                    label="CO2_sensor.MaxRange",
                 ),
             },
             ("Temperature_sensor", AirTemperatureSensor): {
                 # "measuresSubstance": enum["Medium-Air"],
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
-                    0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.DEG_C
+                    0,
+                    hasQuantityKind=quantitykind.Temperature,
+                    unit=unit.DEG_C,
+                    label="Temperature_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
-                    50, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.DEG_C
+                    50,
+                    hasQuantityKind=quantitykind.Temperature,
+                    unit=unit.DEG_C,
+                    label="Temperature_sensor.MaxRange",
                 ),
                 "comment": "Internal temperature sensor of device",
             },

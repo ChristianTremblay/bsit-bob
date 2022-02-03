@@ -3,7 +3,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...core import s223, enum, Device, quantitykind, unit, Value
-
+from ...property import QuantifiableObservableProperty
 
 from ...connections.air import (
     AirInletConnectionPoint,
@@ -23,6 +23,7 @@ from ...sensor import Sensor, define_sensors
 
 __namespace__ = s223
 
+"""
 gasmonitor_template = {
     "params": {
         "label": "Name Of Device",
@@ -32,25 +33,26 @@ gasmonitor_template = {
     "sensors": {
         ("label_of_sensor_1", COSensor): {
             "hasExternalReference": "bacnet://",
-            "hasMinRange": Value(
+            "hasMinRange": QuantifiableObservableProperty(
                 0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
             ),
-            "hasMaxRange": Value(
+            "hasMaxRange": QuantifiableObservableProperty(
                 2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
             ),
         },
         ("label_of_sensor_2", NO2Sensor): {
             "hasExternalReference": "bacnet://",
-            "hasMinRange": Value(
+            "hasMinRange": QuantifiableObservableProperty(
                 0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
             ),
-            "hasMaxRange": Value(
+            "hasMaxRange": QuantifiableObservableProperty(
                 100, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
             ),
         },
         # other properties could go there... ?
     },
 }
+"""
 
 
 class GasMonitor(Device):

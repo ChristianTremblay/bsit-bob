@@ -757,9 +757,10 @@ class Property(Node):
     """
 
     node_type: URIRef = None
-    hasValue: Value
+    hasValue: Literal
     hasExternalReference: ExternalReference
     # isObservedBy: Device  # a Sensor in fact, but it's not defined yet
+    isValueOf: Literal
 
     # override this for a specialize subclass
     _value_class: type = Value
@@ -801,20 +802,29 @@ class Property(Node):
 
         # if there is an initial value, add/create and link to it
         if init_value is not None:
-            if not isinstance(init_value, Value):
-                init_value = self._value_class(init_value)
+            if not isinstance(init_value, (Value, Literal)):
+                init_value = self._value_class(
+                    init_value,
+                    label=f"{self.label}.Value",
+                )
 
             # link the two together
             self.hasValue = init_value
-            init_value.isValueOf = self
+            if EXPLICIT_RECIPROCITY:
+                if not isinstance(init_value, Literal):
+                    init_value.isValueOf = self
         # same for ExternalReference
         if external_reference is not None:
             if not isinstance(external_reference, ExternalReference):
-                external_reference = self._ExternalReference_class(external_reference)
+                external_reference = self._ExternalReference_class(
+                    external_reference,
+                    label=f"{self.label}.ExternalReference",
+                )
 
             # link the two together
             self.hasExternalReference = external_reference
-            external_reference.isExternalReferenceOf = self
+            if EXPLICIT_RECIPROCITY:
+                external_reference.isExternalReferenceOf = self
 
         # same for observesProperty
         # if observes_reference is not None:

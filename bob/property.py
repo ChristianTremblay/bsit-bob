@@ -1,6 +1,7 @@
 from typing import List, Union, Any
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
 from .core import logging, s223, Property
+import decimal
 
 __namespace__ = s223
 
@@ -31,6 +32,20 @@ class QuantifiableProperty(Property):
     unit: URIRef
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
+        print("ARGS : ", args)
+        if args:
+            _args = list(args)
+            _args[0] = Literal(decimal.Decimal(args[0]), datatype=XSD.decimal)
+            args = tuple(_args)
+            if "hasValue" in kwargs:
+                raise RuntimeError("initialization conflict")
+        else:
+            if "hasValue" in kwargs:
+                init_value = kwargs.pop("hasValue")
+                kwargs["hasValue"] = Literal(
+                    decimal.Decimal(init_value), datatype=XSD.decimal
+                )
+
         super().__init__(*args, **kwargs)
 
 
