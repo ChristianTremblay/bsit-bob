@@ -17,7 +17,7 @@ __namespace__ = s223
 
 
 class HumidityMeasure(QuantifiableMeasurement):
-    node_type: URIRef = s223.HumidityMeasure
+    node_type: URIRef = s223.Measure
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     unit: URIRef = unit.PERCENT_RH
     ofSubstance: Medium

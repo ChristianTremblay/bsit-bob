@@ -25,7 +25,7 @@ class GasConcentrationMeasure(QuantifiableObservableProperty):
     Doc
     """
 
-    node_type: URIRef = s223.GasConcentrationMeasure
+    node_type: URIRef = s223.Measure
 
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     ofSubstance: Medium
@@ -40,7 +40,7 @@ class GasConcentrationSetpoint(QuantifiableProperty):
 
 
 class GasConcentrationSensor(Sensor):
-    node_type: URIRef = s223.GasConcentrationSensor
+    node_type: URIRef = s223.ConcentrationSensor
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     hasSubstance: URIRef = enum["Medium-Air"]
     observesProperty: GasConcentrationMeasure

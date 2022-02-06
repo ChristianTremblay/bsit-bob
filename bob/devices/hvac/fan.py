@@ -21,6 +21,7 @@ fan_template = {
 
 
 class Fan(Device):
+    node_type: URIRef = s223.Fan
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     electricalInlet: ElectricalInletConnectionPoint  # can come from a VFD

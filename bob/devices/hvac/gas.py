@@ -66,9 +66,8 @@ class GasMonitor(Device):
 
     """
 
-    node_type: URIRef = s223.GazMonitor
+    node_type: URIRef = s223.GasMonitor
     airInletSupply: AirInletConnectionPoint
-    hasSubstance: URIRef = enum["Medium-Air"]
 
     def __init__(self, config: Dict = None, **kwargs):
         if not config:

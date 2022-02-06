@@ -21,15 +21,18 @@ __namespace__ = s223
 
 
 class HotWaterBoiler(Device):
+    node_type = s223.Boiler
     hotWaterSupply: HotWaterInletConnectionPoint
     hotWaterReturn: HotWaterOutletConnectionPoint
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):
+    node_type = s223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
 
 
 class NaturalGasHotWaterBoiler(HotWaterBoiler):
+    node_type = s223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
     naturalGasInlet: NaturalGasInletConnectionPoint
     combustionAirInlet: AirInletConnectionPoint

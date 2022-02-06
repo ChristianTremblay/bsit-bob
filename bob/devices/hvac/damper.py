@@ -18,29 +18,33 @@ __namespace__ = s223
 
 
 class Damper(Device):
+    node_type = s223.Damper
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 
 
 class GravityDamper(Damper):
-    pass
+    node_type = s223.Damper
 
 
 class FireDamper(Damper):
-    pass
+    node_type = s223.Damper
 
 
 class ActuatedDamper(Damper):
+    node_type = s223.Damper
     position = AnalogOut
     feedback = AnalogIn
 
 
 class ElectricalActuatedDamper(Damper):
+    node_type = s223.Damper
     position = AnalogOut
     feedback = AnalogIn
     powerInlet: ElectricalInletConnectionPoint
 
 
 class PneumaticDamper(Damper):
+    node_type = s223.Damper
     compressedAirInlet: CompressedAirConnectionPoint
     position = AnalogIn

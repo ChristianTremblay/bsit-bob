@@ -72,7 +72,7 @@ def test_create_co2monitordevice():
                     0,
                     hasQuantityKind=quantitykind.DimensionlessRatio,
                     unit=unit.PPM,
-                    label="CO2_sensor.inRange",
+                    label="CO2_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
                     2000,

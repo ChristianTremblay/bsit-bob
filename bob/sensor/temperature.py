@@ -11,7 +11,7 @@ __namespace__ = s223
 
 
 class TemperatureMeasure(QuantifiableMeasurement):
-    node_type: URIRef = s223.TemperatureMeasure
+    node_type: URIRef = s223.Measure
     hasQuantityKind: URIRef = quantitykind.Temperature
     unit: URIRef = unit.DEG_C
     # isObservedBy: Sensor

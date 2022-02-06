@@ -48,7 +48,6 @@ class ParticleCounter(Device):
     node_type: URIRef = s223.ParticleCounter
     # Air inlet will allow air to enter the device
     airInletSupply: AirInletConnectionPoint
-    hasSubstance: URIRef = enum["Medium-Air"]
 
     def __init__(self, config: Dict = None, **kwargs):
         if not config:
