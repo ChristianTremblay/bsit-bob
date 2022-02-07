@@ -12,6 +12,7 @@ from ..core import (
     Segment,
     DomainSpace,
     Medium,
+    Node,
 )
 
 from ..property import (
@@ -68,9 +69,9 @@ class Sensor(Device):
     #    Connection,
     #    Segment,
     #    ConnectionPoint,
-    #    DomainSpace,
+    #    DomainSpace
     # ]
-    hasMeasuremantLocation: Connection
+    hasMeasurementLocation: Node
     hasMeasurementPrecision: QuantifiableProperty
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
