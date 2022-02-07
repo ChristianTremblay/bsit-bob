@@ -24,6 +24,9 @@ from bob.devices.hvac.fan import Fan
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.sensor.temperature import AirTemperatureSensor
 
+from bob.space.physical import Building, Floor, Roof, Office
+from bob.space.hvac import HVACSpace, HVACZone
+
 from bob.connections.air import *
 
 from bob.role import (
@@ -43,12 +46,17 @@ model_name = "B59"
 __namespace__ = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_create_rooftop(node_iri=None):
-    _config = {
-        "params": {"node_iri": node_iri, "label": "RTU-1", "comment": "Supply Fan"},
+def test_create_b59(node_iri=None):
+    config = {
+        "params": {"node_iri": node_iri, "label": "RTU-1", "comment": "Rooftop Unit"},
         "sensors": {
-            ("T-1", AirTemperatureSensor): {"comment": "Supply Air Temperature sensor"},
-            ("T-2", AirTemperatureSensor): {"comment": "Return Air Temperature sensor"},
+            ("DA-T", AirTemperatureSensor): {
+                "comment": "Supply Air Temperature sensor"
+            },
+            ("RA-T", AirTemperatureSensor): {
+                "comment": "Return Air Temperature sensor"
+            },
+            ("ZN-T", AirTemperatureSensor): {"comment": "Zone Air Temperature sensor"},
         },
         "contains": {
             ("SF-1", Fan): {"comment": "Supply Fan"},
@@ -58,39 +66,72 @@ def test_create_rooftop(node_iri=None):
             ("CWC-1", ChilledWaterCoil): {"comment": "Chilled Water coil"},
         },
     }
-    _mixedAir = AirConnection(
+    mixedAir = AirConnection(
         label="MIXED-AIR", comment="Where return air and outside air mix"
     )
-    _returnAir = AirConnection(label="RETURN-AIR", comment="Air returns from zone here")
-    _rtu = AirHandlingUnit(config=_config)
+    returnAir = AirConnection(label="RETURN-AIR", comment="Air returns from zone here")
+
+    # rtu is a System
+    rtu = AirHandlingUnit(config=config)
+
     # Relationships between devices
-    _rtu["OAD-1"] >> _mixedAir
-    _rtu["RF-1"] >> _mixedAir
-    _mixedAir >> _rtu["SF-1"]
-    _rtu["SF-1"] >> _rtu["CWC-1"]
+    rtu["OAD-1"] >> mixedAir
+    rtu["RF-1"] >> mixedAir
+    mixedAir >> rtu["SF-1"]
+    rtu["SF-1"] >> rtu["CWC-1"]
 
     # Mapping of the system
-    _rtu.outsideAirInlet.mapsTo = _rtu["OAD-1"].airInlet
-    _rtu.returnAirInlet.mapsTo = _rtu["RF-1"].airInlet
-    _rtu.supplyAirOutlet.mapsTo = _rtu["CWC-1"].airOutlet
+    rtu.outsideAirInlet.mapsTo = rtu["OAD-1"].airInlet
+    rtu.returnAirInlet.mapsTo = rtu["RF-1"].airInlet
+    rtu.supplyAirOutlet.mapsTo = rtu["CWC-1"].airOutlet
 
-    return _rtu
+    return_plenum = AirConnection(
+        label="Return Air Plenum", comment="Air returns from zone here"
+    )
+    return_plenum >> rtu["RF-1"].airInlet
+    supply_duct = AirConnection(
+        label="Supply Air Duct", comment="Air returns from zone here"
+    )
+    rtu["CWC-1"].airOutlet >> supply_duct
+    rtu["DA-T"].hasMeasurementLocation = supply_duct
+    rtu["RA-T"].hasMeasurementLocation = rtu["RF-1"].airOutlet
+
+    bldg = Building(label="B59 Building")
+    roof = Roof(label="Roof of building")
+    floor1 = Floor(label="One big floor which is a common space")
+    office1 = Office(label="Director Office")
+    floor1_hvacspace = HVACSpace(label="HVAC Space for floor 1")
+    rtu_zone = HVACZone(label="Common workspace zone for HVAC")
+
+    bldg > floor1
+    floor1_hvacspace < floor1
+
+    supply_duct >> floor1_hvacspace.airInlet
+    floor1_hvacspace.airOutlet >> return_plenum
+
+    rtu_zone > floor1_hvacspace
+    rtu_zone.airInlet.mapsTo = supply_duct
+    rtu_zone.airOutlet.mapsTo = return_plenum
+
+    rtu.hasLocation = roof
+    rtu["ZN-T"].hasMeasurementLocation = floor1_hvacspace.airOutlet
+    rtu["ZN-T"].hasLocation = office1
 
 
 # Should a plenum be a segment or is system correct??
-class Plenum(System):
-    AirInlet: AirInletSystemConnectionPoint  # would the outlet be a junction, or just connection points??
-    AirOutlet: AirOutletSystemConnectionPoint
-    hasSubstance = Air
+# class Plenum(AirConnection):
+#    AirInlet: AirInletSystemConnectionPoint  # would the outlet be a junction, or just connection points??
+#    AirOutlet: AirOutletSystemConnectionPoint
+#    hasSubstance = Air##
 
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        j = Junction(label=self.label + ".inlet")
-        # j.hasSubstance = Air
-        j2 = Junction(label=self.label + ".outlet")
-        # j2.hasSubstance = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
-        self.AirInlet.mapsTo = j
-        self.AirOutlet.mapsTo = j2
+#    def __init__(self, **kwargs: Any) -> None:
+#        super().__init__(**kwargs)
+#        j = Junction(label=self.label + ".inlet")
+#        # j.hasSubstance = Air
+#        j2 = Junction(label=self.label + ".outlet")
+#        # j2.hasSubstance = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
+#        self.AirInlet.mapsTo = j
+#        self.AirOutlet.mapsTo = j2
 
 
 # make an instance
@@ -119,7 +160,7 @@ class Plenum(System):
 # dump()
 
 if __name__ == "__main__":
-    r = test_create_rooftop(node_iri=ex.rtu)
+    r = test_create_b59(node_iri=ex.rtu)
     result = turtle()
     with open("b-59_LP.ttl", "w") as file:
         file.write(result)
