@@ -418,6 +418,7 @@ class NodeMetaclass(type):
                 "Property",
                 "ConnectionPoint",
                 "SystemConnectionPoint",
+                "ZoneConnectionPoint",
             )
         )
 
@@ -456,7 +457,14 @@ class NodeMetaclass(type):
                             s223.hasSystemConnectionPoint,
                         )
                     )
-
+                if issubclass(attr_type, ZoneConnectionPoint):
+                    _schema_graph.add(
+                        (
+                            _attr_uriref[attr],
+                            RDFS.subPropertyOf,
+                            s223.hasZoneConnectionPoint,
+                        )
+                    )
         # save the reference
         _annotation_reference[metaclass.__name__] = metaclass
 
@@ -1444,7 +1452,8 @@ class ZoneConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add((zone.node, s223.hasZoneConnectionPoint, self.node))
-        self.isZoneConnectionPointOf = zone
+        if EXPLICIT_RECIPROCITY:
+            self.isZoneConnectionPointOf = zone
 
         # this is one of the connection points of the zone
         zone._zone_connection_points[str(self.node)] = self
