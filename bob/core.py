@@ -999,6 +999,7 @@ class System(Node):
     """
 
     node_type: URIRef = s223.System
+    hasLocation: PhysicalSpace
     hasDomain: Domain
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
