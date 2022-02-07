@@ -64,11 +64,11 @@ class AirZoneConnectionPoint(ZoneConnectionPoint):
     node_type = None
 
 
-class AirInletZoneConnectionPoint(AirSystemConnectionPoint, InletZoneConnectionPoint):
+class AirInletZoneConnectionPoint(AirZoneConnectionPoint, InletZoneConnectionPoint):
     node_type = None
 
 
-class AirOutletZoneConnectionPoint(AirSystemConnectionPoint, OutletZoneConnectionPoint):
+class AirOutletZoneConnectionPoint(AirZoneConnectionPoint, OutletZoneConnectionPoint):
     node_type = None
 
 
