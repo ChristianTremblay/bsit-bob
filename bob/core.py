@@ -87,6 +87,9 @@ def resolve_reference(cls_name: str) -> Optional[type]:
 annotation_reference(URIRef)
 annotation_reference(BNode)
 annotation_reference(Literal)
+annotation_reference(bool)
+annotation_reference(int)
+annotation_reference(float)
 annotation_reference(str)
 
 
