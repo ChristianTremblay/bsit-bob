@@ -10,7 +10,7 @@ from bob.core import (
     enum,
 )
 
-from bob.devices.electricity.distribution_wip import DistributionPanel, CircuitBreaker
+from bob.devices.electricity.distribution import DistributionPanel, CircuitBreaker
 from bob.connections.electricity import (
     Electricity_120V_60HzInletConnectionPoint,
     Electricity_120V_60HzOutletConnectionPoint,
