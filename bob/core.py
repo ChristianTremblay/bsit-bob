@@ -187,7 +187,7 @@ def bind_model_namespace(prefix: str, uri: str) -> Namespace:
 
 def register_medium(medium_uri: URIRef, cls: Any) -> None:
     """
-    Register a substance so that the connection operators can line up the
+    Register a medium aka substance so that the connection operators can line up the
     correct types.
     """
     medium_classes[medium_uri] = cls
@@ -890,7 +890,7 @@ class Junction(Node):
     """
 
     node_type: URIRef = s223.Junction
-    hasSubstance: Medium
+    hasMedium: Medium
     _lnx: Set[Segment]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -952,7 +952,7 @@ class Segment(Node):
     """
 
     node_type: URIRef = s223.Segment
-    hasSubstance: Medium
+    hasMedium: Medium
     _lnx: Set[Union[Junction, ConnectionPoint]]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -1089,7 +1089,7 @@ class ConnectionMetaclass(NodeMetaclass):
         clsname: str,
         superclasses: Tuple[type, ...],
         attributedict: Dict[str, Any],
-    ) -> SubstanceMetaclass:
+    ) -> MediumMetaclass:
         logging.debug(f"ConnectionMetaclass.__new__ {clsname}")
         global medium_classes
 
@@ -1099,10 +1099,10 @@ class ConnectionMetaclass(NodeMetaclass):
             super().__new__(cls, clsname, superclasses, attributedict),
         )
 
-        # if the class has a 'substance' initialized then register this
-        # class for the substance
-        medium = new_class._inits.get("hasSubstance", None)
-        logging.debug(f"    - connection substance: {medium!r}")
+        # if the class has a 'medium' aka substance initialized then register this
+        # class for the medium
+        medium = new_class._inits.get("hasMedium", None)
+        logging.debug(f"    - connection medium: {medium!r}")
 
         # make sure it's not already defined someplace else
         if medium in medium_classes:
@@ -1120,7 +1120,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     """
 
     node_type: URIRef = s223.Connection
-    hasSubstance: Medium
+    hasMedium: Medium
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -1239,7 +1239,7 @@ class Connectable(Node):
 
 class ConnectionPoint(Node):
     node_type: URIRef = s223.ConnectionPoint
-    hasSubstance: Medium
+    hasMedium: Medium
     hasDirection: Direction
 
     lnx: Segment
@@ -1285,8 +1285,8 @@ class ConnectionPoint(Node):
             connection = other
         elif isinstance(other, ConnectionPoint):
             connection = Connection()
-            if self.hasSubstance:
-                connection.hasSubstance = self.hasSubstance
+            if self.hasMedium:
+                connection.hasMedium = self.hasMedium
             connection.connect_to(other)
         else:
             raise TypeError("connection or connection point expected")
@@ -1305,8 +1305,8 @@ class ConnectionPoint(Node):
             connection = other
         elif isinstance(other, ConnectionPoint):
             connection = Connection()
-            if self.hasSubstance:
-                connection.hasSubstance = self.hasSubstance
+            if self.hasMedium:
+                connection.hasMedium = self.hasMedium
             connection.connect_from(other)
         else:
             raise TypeError("connection or connection point expected")
@@ -1329,7 +1329,7 @@ class SystemConnectionPoint(Node):
     """
 
     node_type: URIRef = s223.SystemConnectionPoint
-    hasSubstance: Medium
+    hasMedium: Medium
     hasDirection: Direction
 
     connectsThrough: Connection
@@ -1442,7 +1442,7 @@ class ZoneConnectionPoint(Node):
     """
 
     node_type: URIRef = s223.ZoneConnectionPoint
-    hasSubstance: Medium
+    hasMedium: Medium
     hasDirection: Direction
 
     isZoneConnectionPointOf: Zone
@@ -1542,7 +1542,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     from_out = defaultdict(set)
     if isinstance(from_thing, ConnectionPoint):
-        medium = getattr(from_thing, "hasSubstance", None)
+        medium = getattr(from_thing, "hasMedium", None)
         from_out[medium].add(from_thing)
 
     elif isinstance(from_thing, Connection):
@@ -1555,7 +1555,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             if not isinstance(connection_point, OutletConnectionPoint):
                 continue
 
-            medium = getattr(connection_point, "hasSubstance", None)
+            medium = getattr(connection_point, "hasMedium", None)
             medium = getattr(medium, "node", medium)
             # ISSUE...having a hard time with electrical things
             from_out[medium].add(connection_point)
@@ -1578,7 +1578,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         elif isinstance(connection_point, Junction):
             pass
 
-        medium = getattr(connection_point, "hasSubstance", None)
+        medium = getattr(connection_point, "hasMedium", None)
         from_out[medium].add(connection_point)
 
     elif isinstance(from_thing, System):
@@ -1595,7 +1595,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            medium = getattr(connection_point, "hasSubstance", None)
+            medium = getattr(connection_point, "hasMedium", None)
             from_out[medium].add(connection_point)
 
     elif isinstance(from_thing, Zone):
@@ -1612,7 +1612,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            medium = getattr(connection_point, "hasSubstance", None)
+            medium = getattr(connection_point, "hasMedium", None)
             from_out[medium].add(connection_point)
 
     else:
@@ -1621,7 +1621,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     from_types: Set[URIRef]
     if isinstance(from_thing, Connection):
-        from_types = set([from_thing.hasSubstance])
+        from_types = set([from_thing.hasMedium])
     else:
         from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
         if not from_types:
@@ -1634,7 +1634,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     to_in = defaultdict(set)
     if isinstance(to_thing, ConnectionPoint):
-        medium = getattr(to_thing, "hasSubstance", None)
+        medium = getattr(to_thing, "hasMedium", None)
         medium = getattr(medium, "node", medium)
         # ISSUE...having a hard time with electrical things
         to_in[medium].add(to_thing)
@@ -1649,7 +1649,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             if not isinstance(connection_point, InletConnectionPoint):
                 continue
 
-            medium = getattr(connection_point, "hasSubstance", None)
+            medium = getattr(connection_point, "hasMedium", None)
             # Here when trying to connect a connectionpoint to a device
             # medium turned to be
             # {'node': rdflib.term.URIRef('http://data.ashrae.org/standard223/1.0/vocab/enumeration#Water-ChilledWater'), 'label': '', 'comment': ''}
@@ -1675,7 +1675,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         elif isinstance(connection_point, Junction):
             pass
 
-        medium = getattr(connection_point, "hasSubstance", None)
+        medium = getattr(connection_point, "hasMedium", None)
         to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, System):
@@ -1692,7 +1692,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            medium = getattr(connection_point, "hasSubstance", None)
+            medium = getattr(connection_point, "hasMedium", None)
             to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, Zone):
@@ -1709,7 +1709,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             elif isinstance(connection_point, Junction):
                 pass
 
-            medium = getattr(connection_point, "hasSubstance", None)
+            medium = getattr(connection_point, "hasMedium", None)
             to_in[medium].add(connection_point)
 
     else:
@@ -1718,7 +1718,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
 
     to_types: Set[URIRef]
     if isinstance(to_thing, Connection):
-        to_types = set([to_thing.hasSubstance])
+        to_types = set([to_thing.hasMedium])
     else:
         to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
         if not to_types:

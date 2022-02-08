@@ -25,12 +25,12 @@ class Air(Medium):
 
 
 class AirConnection(Connection):
-    hasSubstance: URIRef = Air.node_type
+    hasMedium: URIRef = Air.node_type
     node_type = None
 
 
 class AirConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = Air.node_type
+    hasMedium: URIRef = Air.node_type
     node_type = None
 
 
@@ -43,7 +43,7 @@ class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
 
 
 class AirSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance: URIRef = Air.node_type
+    hasMedium: URIRef = Air.node_type
     node_type = None
 
 
@@ -60,7 +60,7 @@ class AirOutletSystemConnectionPoint(
 
 
 class AirZoneConnectionPoint(ZoneConnectionPoint):
-    hasSubstance: URIRef = Air.node_type
+    hasMedium: URIRef = Air.node_type
     node_type = None
 
 
@@ -78,12 +78,12 @@ class CompressedAir(Medium):
 
 
 class CompressedAirConnection(Connection):
-    hasSubstance: URIRef = CompressedAir.node_type
+    hasMedium: URIRef = CompressedAir.node_type
     node_type = None
 
 
 class CompressedAirConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = CompressedAir.node_type
+    hasMedium: URIRef = CompressedAir.node_type
     node_type = None
 
 
@@ -100,7 +100,7 @@ class CompressedAirOutletConnectionPoint(
 
 
 class CompressedAirSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance: URIRef = CompressedAir.node_type
+    hasMedium: URIRef = CompressedAir.node_type
     node_type = None
 
 

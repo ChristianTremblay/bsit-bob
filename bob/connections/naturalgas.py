@@ -19,12 +19,12 @@ class NaturalGas(Medium):
 
 
 class NaturalGasConnection(Connection):
-    hasSubstance: URIRef = NaturalGas.node_type
+    hasMedium: URIRef = NaturalGas.node_type
     node_type = None
 
 
 class NaturalGasConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = NaturalGas.node_type
+    hasMedium: URIRef = NaturalGas.node_type
     node_type = None
 
 
@@ -37,7 +37,7 @@ class NaturalGasOutletConnectionPoint(OutletConnectionPoint, NaturalGasConnectio
 
 
 class NaturalGasSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance: URIRef = NaturalGas.node_type
+    hasMedium: URIRef = NaturalGas.node_type
 
 
 class NaturalGasInletSystemConnectionPoint(

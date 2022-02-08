@@ -60,12 +60,12 @@ class Steam(Water):
 
 # === WATER
 class WaterConnection(Connection):
-    hasSubstance: URIRef = Water.node_type
+    hasMedium: URIRef = Water.node_type
     node_type = None
 
 
 class WaterConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = Water.node_type
+    hasMedium: URIRef = Water.node_type
     node_type = None
 
 
@@ -78,7 +78,7 @@ class WaterOutletConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
 
 
 class WaterSystemConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = Water.node_type
+    hasMedium: URIRef = Water.node_type
     node_type = None
 
 
@@ -92,12 +92,12 @@ class WaterOutletSystemConnectionPoint(OutletConnectionPoint, WaterConnectionPoi
 
 # === HOT WATER
 class HotWaterConnection(Connection):
-    hasSubstance: URIRef = HotWater.node_type
+    hasMedium: URIRef = HotWater.node_type
     node_type = None
 
 
 class HotWaterConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = HotWater.node_type
+    hasMedium: URIRef = HotWater.node_type
     node_type = None
 
 
@@ -110,7 +110,7 @@ class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoi
 
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance: URIRef = HotWater.node_type
+    hasMedium: URIRef = HotWater.node_type
     node_type = None
 
 
@@ -128,7 +128,7 @@ class HotWaterOutletSystemConnectionPoint(
 
 # === STEAM
 class SteamConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = Steam.node_type
+    hasMedium: URIRef = Steam.node_type
     node_type = None
 
 
@@ -141,7 +141,7 @@ class SteamOutletConnectionPoint(OutletConnectionPoint, SteamConnectionPoint):
 
 
 class SteamSystemConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = Steam.node_type
+    hasMedium: URIRef = Steam.node_type
     node_type = None
 
 
@@ -157,12 +157,12 @@ class SteamOutletSystemConnectionPoint(
 
 # === CHILLED WATER
 class ChilledWaterConnection(Connection):
-    hasSubstance: URIRef = ChilledWater.node_type
+    hasMedium: URIRef = ChilledWater.node_type
     node_type = None
 
 
 class ChilledWaterConnectionPoint(ConnectionPoint):
-    hasSubstance: URIRef = ChilledWater.node_type
+    hasMedium: URIRef = ChilledWater.node_type
     node_type = None
 
 
@@ -179,7 +179,7 @@ class ChilledWaterOutletConnectionPoint(
 
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasSubstance: URIRef = ChilledWater.node_type
+    hasMedium: URIRef = ChilledWater.node_type
     node_type = None
 
 

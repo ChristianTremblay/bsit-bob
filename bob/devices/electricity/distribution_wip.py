@@ -1,5 +1,7 @@
 from re import S, sub
 from rdflib import URIRef
+
+from bob.property import QuantifiableObservableProperty
 from ...core import s223, enum, Device, Value, quantitykind, unit, Medium
 from ...connections.electricity import (
     Electricity,
@@ -9,6 +11,10 @@ from ...connections.electricity import (
     ElectricalConnectionPoint,
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
+    Electricity_120V_60HzInletConnectionPoint,
+    Electricity_120V_60HzOutletConnectionPoint,
+    Electricity_240V_60HzOutletConnectionPoint,
+    Electricity_240V_60HzInletConnectionPoint,
 )
 from typing import Dict
 from ...sensor import define_sensors
@@ -21,10 +27,11 @@ __namespace__ = s223
 ##    """
 #    Source of the building
 ###    """
-#    hasSubstance: Medium
+#    hasMedium: Medium
 
 
 class Transformer(Device):
+    node_type = s223.ElectricalTransformer
     hasPower: Value
 
     def __init__(self, **kwargs):
@@ -46,6 +53,7 @@ class DistributionPanel(Device):
     # manufacturer: str
     # modelNumber: str
     # hasNumberOfCircuits: Value()
+    node_type = s223.ElectricalDistributionPanel
 
     def __init__(self, config: Dict = None, **kwargs):
         if not config and not kwargs:
@@ -82,10 +90,10 @@ class DistributionPanel(Device):
 
 
 class CircuitBreaker(Device):
+    node_type = s223.ElectricalCircuitBreaker
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
-    hasSubstance: Medium
-    hasMaxRange: Value
+    hasMaxRange: QuantifiableObservableProperty
 
     def __init__(self, **kwargs):
         try:
@@ -115,19 +123,17 @@ distributionpanel_template = {
     "contains": {
         ("CircBreaker_120_#1", CircuitBreaker): {
             "comment": "Office lights #1",
-            "hasSubstance": enum["Electricity-120V.60Hz"],
-            # "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
-            # "electricalOutlet": Electricity_120V_60HzOutletConnectionPoint,
-            "hasMaxRange": Value(
+            "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
+            "electricalOutlet": Electricity_120V_60HzOutletConnectionPoint,
+            "hasMaxRange": QuantifiableObservableProperty(
                 15, hasQuantityKind=quantitykind.ElectricCurrent, unit=unit.A
             ),
         },
         ("CircBreaker_240_#2", CircuitBreaker): {
             "comment": "Heating Room #1",
-            "hasSubstance": enum["Electricity-240V.60Hz"],
-            # "electricalInlet": Electricity_240V_60HzInletConnectionPoint,
-            # "electricalOutlet": Electricity_240V_60HzOutletConnectionPoint,
-            "hasMaxRange": Value(
+            "electricalInlet": Electricity_240V_60HzInletConnectionPoint,
+            "electricalOutlet": Electricity_240V_60HzOutletConnectionPoint,
+            "hasMaxRange": QuantifiableObservableProperty(
                 20, hasQuantityKind=quantitykind.ElectricCurrent, unit=unit.A
             ),
         },

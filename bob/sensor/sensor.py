@@ -76,7 +76,7 @@ class Sensor(Device):
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
     hasMinRange: QuantifiableProperty
-    hasSubstance: Medium
+    hasMedium: Medium
     measuresSubstance: Medium
     observesProperty: ObservableProperty  # maxCount = 1
 

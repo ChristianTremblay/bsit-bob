@@ -34,7 +34,7 @@ class AirHumiditySensor(Sensor):
     """
 
     node_type: URIRef = s223.HumiditySensor
-    hasSubstance: URIRef = enum["Medium-Air"]
+    hasMedium: URIRef = enum["Medium-Air"]
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     observesProperty: HumidityMeasure
     measuresSubstance: URIRef = enum["Medium-Air"]

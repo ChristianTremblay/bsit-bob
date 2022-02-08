@@ -42,7 +42,7 @@ class GasConcentrationSetpoint(QuantifiableProperty):
 class GasConcentrationSensor(Sensor):
     node_type: URIRef = s223.ConcentrationSensor
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    hasSubstance: URIRef = enum["Medium-Air"]
+    hasMedium: URIRef = enum["Medium-Air"]
     observesProperty: GasConcentrationMeasure
 
     def __init__(self, **kwargs: Any) -> None:

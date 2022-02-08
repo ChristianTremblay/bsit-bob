@@ -18,6 +18,7 @@ from bob.connections.electricity import (
     Electricity_240V_60HzOutletConnectionPoint,
     Electricity_120V_240V_60HzInletConnectionPoint,
 )
+from bob.property import QuantifiableObservableProperty
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
@@ -59,20 +60,24 @@ def test_create_electricalpaneldevice():
         "contains": {
             ("CircBreaker_120_#1", CircuitBreaker): {
                 "comment": "Office lights #1",
-                "hasSubstance": enum["Electricity-120V.60Hz"],
                 "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
                 "electricalOutlet": Electricity_120V_60HzOutletConnectionPoint,
-                "hasMaxRange": Value(
-                    15, hasQuantityKind=quantitykind.ElectricCurrent, unit=unit.A
+                "hasMaxRange": QuantifiableObservableProperty(
+                    15,
+                    hasQuantityKind=quantitykind.ElectricCurrent,
+                    unit=unit.A,
+                    label="Current rating of breaker",
                 ),
             },
             ("CircBreaker_240_#2", CircuitBreaker): {
                 "comment": "Heating Room #1",
-                "hasSubstance": enum["Electricity-240V.60Hz"],
                 "electricalInlet": Electricity_240V_60HzInletConnectionPoint,
                 "electricalOutlet": Electricity_240V_60HzOutletConnectionPoint,
-                "hasMaxRange": Value(
-                    20, hasQuantityKind=quantitykind.ElectricCurrent, unit=unit.A
+                "hasMaxRange": QuantifiableObservableProperty(
+                    20,
+                    hasQuantityKind=quantitykind.ElectricCurrent,
+                    unit=unit.A,
+                    label="Current rating of breaker",
                 ),
             },
         },

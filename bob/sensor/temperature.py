@@ -45,10 +45,10 @@ class TemperatureSensor(Sensor):
 
 
 class AirTemperatureSensor(TemperatureSensor):
-    hasSubstance: URIRef = enum["Medium-Air"]
+    hasMedium: URIRef = enum["Medium-Air"]
     measuresSubstance: URIRef = enum["Medium-Air"]
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    hasSubstance: URIRef = enum["Medium-Water"]
+    hasMedium: URIRef = enum["Medium-Water"]
     measuresSubstance: URIRef = enum["Medium-Water"]

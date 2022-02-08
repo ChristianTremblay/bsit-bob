@@ -24,7 +24,7 @@ class ParticulateCountMeasure(QuantifiableMeasurement):
 
 class ParticulateSensor(Sensor):
     node_type: URIRef = s223.ParticulateSensor
-    hasSubstance: URIRef = enum.Medium_Air
+    hasMedium: URIRef = enum.Medium_Air
     measuresSubstance: Medium
     observesProperty: ParticulateCountMeasure
 
