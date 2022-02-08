@@ -69,8 +69,6 @@ def test_create_b59(node_iri=None):
     mixedAir = AirConnection(
         label="MIXED-AIR", comment="Where return air and outside air mix"
     )
-    returnAir = AirConnection(label="RETURN-AIR", comment="Air returns from zone here")
-
     # rtu is a System
     rtu = AirHandlingUnit(config=config)
 
@@ -122,14 +120,14 @@ def test_create_b59(node_iri=None):
 # class Plenum(AirConnection):
 #    AirInlet: AirInletSystemConnectionPoint  # would the outlet be a junction, or just connection points??
 #    AirOutlet: AirOutletSystemConnectionPoint
-#    hasSubstance = Air##
+#    hasMedium = Air##
 
 #    def __init__(self, **kwargs: Any) -> None:
 #        super().__init__(**kwargs)
 #        j = Junction(label=self.label + ".inlet")
-#        # j.hasSubstance = Air
+#        # j.hasMedium = Air
 #        j2 = Junction(label=self.label + ".outlet")
-#        # j2.hasSubstance = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
+#        # j2.hasMedium = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
 #        self.AirInlet.mapsTo = j
 #        self.AirOutlet.mapsTo = j2
 

@@ -152,6 +152,12 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 # same module
 s223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
 
+# This namespace is added so in the development of Bob, when new cases occurs
+# we can clearly establish that a new class is not yet part of the standard
+s223_proposal = bind_namespace(
+    "s223_proposal", "http://data.ashrae.org/proposaltostandard223#"
+)
+
 # everything in this module belongs in the standard
 __namespace__ = s223
 
