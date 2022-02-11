@@ -1008,7 +1008,7 @@ class System(Node):
     """
 
     node_type: URIRef = s223.System
-    hasLocation: PhysicalSpace
+    hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
@@ -1784,7 +1784,7 @@ class Device(Connectable):
     # hasContextualRoleShape: Any
     # hasPropertyShape: Any
     hasRole: Role
-    hasLocation: PhysicalSpace
+    hasPhysicalLocation: PhysicalSpace
 
     def __gt__(self, other: Union[Device, System]) -> Union[Device, System]:
         """self > other
