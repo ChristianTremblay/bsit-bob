@@ -31,7 +31,7 @@ def test_create_differential_static_air_pressure_sensor():
     )
     tpd01.hasMeasurementLocationHigh = clean_room_hvac
     tpd01.hasMeasurementLocationLow = SAS_hvac
-    tpd01.hasLocation = mechroom
+    tpd01.hasPhysicalLocation = mechroom
     return tpd01
 
 

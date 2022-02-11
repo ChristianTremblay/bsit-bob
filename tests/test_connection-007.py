@@ -58,8 +58,8 @@ def test_make_connections_in_building():
     office1_hvac < zone1
     office2_hvac < zone1
 
-    sf = Fan(label="Supply Fan", hasLocation=mechroom)
-    rf = Fan(label="Return Fan", hasLocation=mechroom)
+    sf = Fan(label="Supply Fan", hasPhysicalLocation=mechroom)
+    rf = Fan(label="Return Fan", hasPhysicalLocation=mechroom)
     # Here we make it a junction but it would be better to be a Simple Connection... it's for test purposes
     supply_duct = Junction(label="J1", hasMedium=enum["Medium-Air"])
     supply_duct.link_to(sf.airOutlet)
