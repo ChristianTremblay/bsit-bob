@@ -99,11 +99,19 @@ def test_create_a_building_and_put_a_heater_2():
 
     baseboard = ElectricalHeatingCoil(label="Baseboard heater")
     # AirInJoelsOfficeSpace = AirConnection(label="Air inside the office")
-    joelsoffice_hvac.airFromSpace = AirOutletConnectionPoint
-    joelsoffice_hvac.airFromBaseboard = AirInletConnectionPoint
+    airFromSpace = AirOutletConnectionPoint(
+        joelsoffice_hvac,
+        label="Internal Use To be treated",
+        comment="Air that doesn't leave the room, used internally by a radiant heater for example",
+    )
+    airFromBaseboard = AirInletConnectionPoint(
+        joelsoffice_hvac,
+        label="Internal Use treated",
+        comment="Air that doesn't leave the room, used internally",
+    )
 
-    joelsoffice_hvac << baseboard
-    joelsoffice_hvac >> baseboard
+    airFromBaseboard << baseboard
+    airFromSpace >> baseboard
 
 
 def test_turtle_file():
