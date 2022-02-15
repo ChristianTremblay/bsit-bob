@@ -21,6 +21,7 @@ __namespace__ = enum
 # === GENERAL
 class Electricity(Medium):
     node_type: URIRef = enum["Medium-Electricity"]
+    hasEnumerationKind: URIRef = enum["Medium-Electricity"]
 
 
 class ElectricalConnection(Connection):

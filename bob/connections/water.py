@@ -19,6 +19,7 @@ __namespace__ = enum
 # Medium
 class Water(Medium):
     node_type: URIRef = enum["Medium-Water"]
+    hasEnumerationKind: URIRef = enum["Medium-Water"]
 
 
 class DomesticWater(Water):

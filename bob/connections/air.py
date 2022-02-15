@@ -7,11 +7,13 @@ from ..core import (
     InletSystemConnectionPoint,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
+    BidirectionalConnectionPoint,
     Medium,
     SystemConnectionPoint,
     ZoneConnectionPoint,
     InletZoneConnectionPoint,
     OutletZoneConnectionPoint,
+    BidirectionalSystemConnectionPoint,
 )
 from ..core import s223, enum
 from ..signal import AnalogIn, AnalogOut
@@ -21,6 +23,7 @@ __namespace__ = enum
 # === AIR
 class Air(Medium):
     node_type: URIRef = enum["Medium-Air"]
+    hasEnumerationKind: URIRef = enum["Medium-Air"]
     label = "Medium-Air"
 
 
@@ -42,6 +45,10 @@ class AirOutletConnectionPoint(AirConnectionPoint, OutletConnectionPoint):
     node_type = None
 
 
+class AirBidirectionalConnectionPoint(AirConnectionPoint, BidirectionalConnectionPoint):
+    node_type = None
+
+
 class AirSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: URIRef = Air.node_type
     node_type = None
@@ -55,6 +62,12 @@ class AirInletSystemConnectionPoint(
 
 class AirOutletSystemConnectionPoint(
     AirSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+class AirBidirectionalSystemConnectionPoint(
+    AirSystemConnectionPoint, BidirectionalSystemConnectionPoint
 ):
     node_type = None
 

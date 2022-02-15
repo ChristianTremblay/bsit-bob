@@ -885,12 +885,31 @@ class Medium(Node):
 
 
 class Direction(Node):
+    node_type: URIRef = enum.EnumerationValue
     _data_graph: Graph = schema_graph
 
 
-Inlet = Direction(node_iri=s223.Inlet)
-Outlet = Direction(node_iri=s223.Outlet)
-Bidirectional = Direction(node_iri=s223.Bidirectional)
+class Inlet(Direction):
+    node_type: URIRef = enum["Direction-Inlet"]
+    hasEnumerationKind: URIRef = enum["Direction"]
+    label = "Direction-Inlet"
+
+
+class Outlet(Direction):
+    node_type: URIRef = enum["Direction-Outlet"]
+    hasEnumerationKind: URIRef = enum["Direction"]
+    label = "Direction-Outlet"
+
+
+class Bidirectional(Direction):
+    node_type: URIRef = enum["Direction-Bidirectional"]
+    hasEnumerationKind: URIRef = enum["Direction"]
+    label = "Direction-Bidirectional"
+
+
+# Inlet = Direction(node_iri=s223.Inlet)
+# Outlet = Direction(node_iri=s223.Outlet)
+# Bidirectional = Direction(node_iri=s223.Bidirectional)
 
 
 class Junction(Node):
@@ -1325,11 +1344,15 @@ class ConnectionPoint(Node):
 
 
 class InletConnectionPoint(ConnectionPoint):
-    hasDirection = Inlet
+    hasDirection: URIRef = enum["Direction-Inlet"]
 
 
 class OutletConnectionPoint(ConnectionPoint):
-    hasDirection = Outlet
+    hasDirection: URIRef = enum["Direction-Outlet"]
+
+
+class BidirectionalConnectionPoint(ConnectionPoint):
+    hasDirection: URIRef = enum["Direction-Bidirectional"]
 
 
 class SystemConnectionPoint(Node):
@@ -1371,11 +1394,15 @@ class SystemConnectionPoint(Node):
 
 
 class InletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection = Inlet
+    hasDirection: URIRef = enum["Direction-Inlet"]
 
 
 class OutletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection = Outlet
+    hasDirection: URIRef = enum["Direction-Outlet"]
+
+
+class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
+    hasDirection: URIRef = enum["Direction-Bidirectional"]
 
 
 class Zone(Node):
@@ -1483,11 +1510,15 @@ class ZoneConnectionPoint(Node):
 
 
 class InletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection = Inlet
+    hasDirection: URIRef = enum["Direction-Inlet"]
 
 
 class OutletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection = Outlet
+    hasDirection: URIRef = enum["Direction-Outlet"]
+
+
+class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
+    hasDirection: URIRef = enum["Direction-Bidirectional"]
 
 
 class PhysicalSpace(Node):

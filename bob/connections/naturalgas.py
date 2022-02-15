@@ -16,6 +16,7 @@ __namespace__ = enum
 
 class NaturalGas(Medium):
     node_type: URIRef = enum["Medium-NaturalGas"]
+    hasEnumerationKind: URIRef = enum["Medium-NaturalGas"]
 
 
 class NaturalGasConnection(Connection):
