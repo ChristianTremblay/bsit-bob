@@ -1,0 +1,82 @@
+@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
+@prefix ex: <urn:ex/test_connection-006/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+
+ex:00002 a s223:CoolingCoil,
+        s223:Device ;
+    rdfs:label "CW-Coil-1" ;
+    s223:airInlet ex:00003 ;
+    s223:airOutlet ex:00004 ;
+    s223:chilledWaterInlet ex:00005 ;
+    s223:chilledWaterOutlet ex:00006 ;
+    s223:hasConnectionPoint ex:00003,
+        ex:00004,
+        ex:00005,
+        ex:00006 ;
+    s223:hasSubstance enum:Water-ChillerWater .
+
+ex:00007 a s223:Device,
+        s223:Fan ;
+    rdfs:label "F" ;
+    s223:airInlet ex:00008 ;
+    s223:airOutlet ex:00009 ;
+    s223:electricalInlet ex:00010 ;
+    s223:hasConnectionPoint ex:00008,
+        ex:00009,
+        ex:00010 .
+
+ex:00001 a s223:Connection ;
+    s223:connectsAt ex:00005 ;
+    enum:hasSubstance enum:Water-ChilledWater .
+
+ex:00004 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CW-Coil-1.airOutlet" ;
+    s223:hasDirection s223:Outlet ;
+    enum:hasSubstance enum:Medium-Air .
+
+ex:00006 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CW-Coil-1.chilledWaterOutlet" ;
+    s223:hasDirection s223:Outlet ;
+    s223:hasSubstance enum:Water-ChilledWater .
+
+ex:00008 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "F.airInlet" ;
+    s223:hasDirection s223:Inlet ;
+    enum:hasSubstance enum:Medium-Air .
+
+ex:00010 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "F.electricalInlet" ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasSubstance enum:Medium-Electricity .
+
+ex:00011 a s223:Connection ;
+    s223:connectsAt ex:00003,
+        ex:00009 ;
+    s223:hasSubstance enum:Medium-Air .
+
+ex:00003 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CW-Coil-1.airInlet" ;
+    s223:connectsThrough ex:00011 ;
+    s223:hasDirection s223:Inlet ;
+    enum:hasSubstance enum:Medium-Air .
+
+ex:00005 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CW-Coil-1.chilledWaterInlet" ;
+    s223:connectsThrough ex:00001 ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasSubstance enum:Water-ChilledWater .
+
+ex:00009 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "F.airOutlet" ;
+    s223:connectsThrough ex:00011 ;
+    s223:hasDirection s223:Outlet ;
+    enum:hasSubstance enum:Medium-Air .
+

@@ -1,0 +1,124 @@
+@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
+@prefix ex: <urn:ex/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix s223_proposal: <http://data.ashrae.org/proposaltostandard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:00009 a s223_proposal:ElectricalDistributionPanel,
+        s223:Device ;
+    rdfs:label "P-1" ;
+    s223:contains ex:00003,
+        ex:00006 ;
+    s223:hasConnectionPoint ex:00010,
+        ex:00011,
+        ex:00012 ;
+    rdfs:comment "Electrical panel full of breakers. 120V-240VAC 60Hz" .
+
+ex:00003 a s223_proposal:ElectricalCircuitBreaker,
+        s223:Device ;
+    rdfs:label "CircBreaker_120_#1" ;
+    s223_proposal:hasMaxRange ex:00001 ;
+    s223:hasConnectionPoint ex:00004,
+        ex:00005 ;
+    s223:hasProperty ex:00001 ;
+    rdfs:comment "Office lights #1" .
+
+ex:00005 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CircBreaker_120_#1.electricalOutlet" ;
+    s223:hasDirection s223:Outlet ;
+    s223:hasMedium enum:Electricity-120V.60Hz .
+
+ex:00006 a s223_proposal:ElectricalCircuitBreaker,
+        s223:Device ;
+    rdfs:label "CircBreaker_240_#2" ;
+    s223_proposal:hasMaxRange ex:00002 ;
+    s223:hasConnectionPoint ex:00007,
+        ex:00008 ;
+    s223:hasProperty ex:00002 ;
+    rdfs:comment "Heating Room #1" .
+
+ex:00008 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CircBreaker_240_#2.electricalOutlet" ;
+    s223:hasDirection s223:Outlet ;
+    s223:hasMedium enum:Electricity-240V.60Hz .
+
+ex:00010 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-1.electricalInlet" ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasMedium enum:Electricity-120V_240V.60Hz .
+
+ex:00001 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Current rating of breaker" ;
+    s223:hasValue 15.0 ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
+    qudt:unit unit:A .
+
+ex:00002 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Current rating of breaker" ;
+    s223:hasValue 20.0 ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
+    qudt:unit unit:A .
+
+ex:00004 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CircBreaker_120_#1.electricalInlet" ;
+    s223:connectsThrough ex:00013 ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasMedium enum:Electricity-120V.60Hz .
+
+ex:00007 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CircBreaker_240_#2.electricalInlet" ;
+    s223:connectsThrough ex:00014 ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasMedium enum:Electricity-240V.60Hz .
+
+ex:00011 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-1.electricalOutletA" ;
+    s223:connectsThrough ex:00013 ;
+    s223:hasDirection s223:Outlet ;
+    s223:hasMedium enum:Electricity-120V.60Hz .
+
+ex:00012 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-1.electricalOutletB" ;
+    s223:connectsThrough ex:00014 ;
+    s223:hasDirection s223:Outlet ;
+    s223:hasMedium enum:Electricity-240V.60Hz .
+
+ex:00013 a s223:Connection ;
+    s223:connectsAt ex:00004,
+        ex:00011 ;
+    s223:hasMedium enum:Electricity-120V.60Hz .
+
+ex:00014 a s223:Connection ;
+    s223:connectsAt ex:00007,
+        ex:00012 ;
+    s223:hasMedium enum:Electricity-240V.60Hz .
+
+[] a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasValue 15.0 ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
+    qudt:unit unit:A .
+
+[] a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasValue 20.0 ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
+    qudt:unit unit:A .
+

@@ -1,0 +1,81 @@
+@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
+@prefix ex: <urn:ex/> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:00001 a s223:AirTemperatureSensor,
+        s223:Device,
+        s223:Sensor,
+        s223:TemperatureSensor ;
+    rdfs:label "DA-T" ;
+    s223:hasProperty ex:00002 ;
+    s223:hasSubstance enum:Medium-Air ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty ex:00002 ;
+    rdfs:comment "Supply Air Temperature Sensor" .
+
+ex:00004 a s223:Device,
+        s223:HumiditySensor,
+        s223:Sensor ;
+    rdfs:label "ZN-H" ;
+    s223:hasProperty ex:00005 ;
+    s223:hasSubstance enum:Medium-Air ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty ex:00005 ;
+    rdfs:comment "Zone Humidity Sensor with a value of 20" .
+
+ex:00006 a s223:Device,
+        s223:HumiditySensor,
+        s223:Sensor ;
+    rdfs:label "ZN-H" ;
+    s223:hasProperty ex:00007 ;
+    s223:hasSubstance enum:Medium-Air ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty ex:00007 ;
+    rdfs:comment "Zone Humidity Sensor with a BACnet reference and a Niagara4 ORD" .
+
+ex:00003 a s223:ExternalReference ;
+    rdfs:label "DA-T.Measure.ExternalReference" ;
+    s223:hasRef "['bacnet://570005/analog-input,10084/present-value']" .
+
+ex:00008 a s223:ExternalReference ;
+    rdfs:label "ZN-H.Measure.ExternalReference" ;
+    s223:hasRef "['bacnet://570005/analog-input,10085/present-value', 'ip:172.16.3.8|foxs:|station:|slot:/Drivers/BacnetNetwork/MSTP70/PCA$2d70$2d005_SystemeUV1/points/ZN$2dH']" .
+
+ex:00002 a s223:ObservableProperty,
+        s223:QuantifiableMeasurement,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        s223:TemperatureMeasure ;
+    rdfs:label "DA-T.Measure" ;
+    s223:hasExternalReference ex:00003 ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
+
+ex:00005 a s223:HumidityMeasure,
+        s223:ObservableProperty,
+        s223:QuantifiableMeasurement,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "ZN-H.Measure" ;
+    s223:hasValue 20.0 ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:RelativeHumidity ;
+    qudt:unit unit:PERCENT_RH .
+
+ex:00007 a s223:HumidityMeasure,
+        s223:ObservableProperty,
+        s223:QuantifiableMeasurement,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "ZN-H.Measure" ;
+    s223:hasExternalReference ex:00008 ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:RelativeHumidity ;
+    qudt:unit unit:PERCENT_RH .
+
