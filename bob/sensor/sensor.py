@@ -3,7 +3,7 @@ from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
 from bob import core
 
-from ..core import s223, enum, quantitykind, unit
+from ..core import s223, p223, enum, quantitykind, unit
 from ..core import (
     Property,
     Connection,
@@ -95,6 +95,7 @@ class VirtualSensor(Sensor):
 
 
 class Measurement(ObservableProperty):
+    node_type: URIRef = p223.Measure
     # isObservedBy: Sensor
     ofSubstance: Medium
     # def __init__(self, **kwargs):
@@ -108,6 +109,7 @@ class Measurement(ObservableProperty):
 
 
 class QuantifiableMeasurement(QuantifiableObservableProperty):
+    node_type: URIRef = p223.Measure
     # isObservedBy: Sensor
     ofSubstance: Medium
     # hasQuantityKind: depends on sensor
