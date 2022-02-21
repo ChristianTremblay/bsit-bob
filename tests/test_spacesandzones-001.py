@@ -1,6 +1,11 @@
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Roof, Floor, Office
-from bob.core import dump, turtle, get_datagraph
+from bob.core import dump, turtle, get_datagraph, bind_model_namespace
+
+from pathlib import Path
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_a_building():
@@ -45,16 +50,14 @@ def test_create_a_building():
 
 def test_turtle_file():
     dump()
-    result = turtle()
+    result = turtle(filename=f"tests/ttl/{model_name}.ttl")
     print(result)
+    return result
 
 
 if __name__ == "__main__":
     bldg = test_create_a_building()
-
-    result = turtle()
-    with open("test_spacesandzones-001_results.ttl", "w") as file:
-        file.write(result)
-    print("Check file : test_spacesandzones-001_results.ttl")
+    result = test_turtle_file()
+    print(f"Check file : tests/ttl/{model_name}.ttl")
     print(result)
-    graph = get_datagraph()
+    graph = get_datagraph()  # this is there to be used with python -i option

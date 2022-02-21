@@ -27,7 +27,10 @@ from bob.core import DomainSpace, HVAC, PhysicalSpace
 from bob.devices.hvac.fan import Fan
 from bob.connections.air import AirConnection
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+from pathlib import Path
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_make_connections_in_building():
@@ -63,15 +66,15 @@ def test_make_connections_in_building():
     # Here we make it a junction but it would be better to be a Simple Connection... it's for test purposes
     supply_duct = Junction(label="J1", hasMedium=enum["Medium-Air"])
     supply_duct.link_to(sf.airOutlet)
-    supply_duct >> office1_hvac.airInlet
-    supply_duct >> office2_hvac.airInlet
+    supply_duct >> office1_hvac.ductAirInlet
+    supply_duct >> office2_hvac.ductAirInlet
     return_plenum = AirConnection(
         label="RETURN-AIR", comment="Air returns from zone here"
     )
     # return_plenum = Junction(label="J1", hasMedium=enum['Medium-Air'])
     # return_plenum.link_to(_returnAir.airInlet)
-    office1_hvac.airOutlet >> return_plenum
-    office2_hvac.airOutlet >> return_plenum
+    office1_hvac.ductAirOutlet >> return_plenum
+    office2_hvac.ductAirOutlet >> return_plenum
     return_plenum >> rf
 
     # and the zone ?
@@ -81,16 +84,14 @@ def test_make_connections_in_building():
 
 def test_turtle_file():
     dump()
-    result = turtle()
+    result = turtle(filename=f"tests/ttl/{model_name}.ttl")
     print(result)
+    return result
 
 
 if __name__ == "__main__":
     panel = test_make_connections_in_building()
-    # panel2 = test_create_emptyelectricalpaneldevice()
-    result = turtle()
-    with open("test_connection-007_results.ttl", "w") as file:
-        file.write(result)
-    print("Check file : test_connection-007_results.ttl")
+    result = test_turtle_file()
+    print(f"Check file : tests/ttl/{model_name}.ttl")
     print(result)
-    graph = get_datagraph()
+    graph = get_datagraph()  # this is there to be used with python -i option

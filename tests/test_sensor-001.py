@@ -3,7 +3,10 @@ from bob.sensor.temperature import AirTemperatureSensor, TemperatureSensor
 from bob.sensor.humidity import AirHumiditySensor
 import pytest
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+from pathlib import Path
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 # def test_fail_to_create_air_temp_sensor():
@@ -65,17 +68,17 @@ def test_create_air_humidity_sensor():
 
 def test_turtle_file():
     dump()
-    result = turtle()
+    result = turtle(filename=f"tests/ttl/{model_name}.ttl")
     print(result)
+    return result
 
 
 if __name__ == "__main__":
     ats = test_create_air_temp_sensor_2()
     ahs_val = test_create_air_humidity_sensor_with_value()
     ahs = test_create_air_humidity_sensor()
-    result = turtle()
-    with open("test_sensor-001_results.ttl", "w") as file:
-        file.write(result)
-    print("Check file : test_sensor-001_results.ttl")
+    # panel2 = test_create_emptyelectricalpaneldevice()
+    result = test_turtle_file()
+    print(f"Check file : tests/ttl/{model_name}.ttl")
     print(result)
-    graph = get_datagraph()
+    graph = get_datagraph()  # this is there to be used with python -i option

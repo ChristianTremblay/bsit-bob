@@ -43,15 +43,14 @@ def test_connect_devices_and_map_zone():
 
 def test_turtle_file():
     dump()
-    result = turtle()
+    result = turtle(filename=f"tests/ttl/{model_name}.ttl")
     print(result)
+    return result
 
 
 if __name__ == "__main__":
     pm = test_connect_devices_and_map_zone()
-    result = turtle()
-    with open("test_connection-006_results.ttl", "w") as file:
-        file.write(result)
-    print("Check file : test_connection-006_results.ttl")
+    result = test_turtle_file()
+    print(f"Check file : tests/ttl/{model_name}.ttl")
     print(result)
-    graph = get_datagraph()
+    graph = get_datagraph()  # this is there to be used with python -i option

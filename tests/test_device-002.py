@@ -1,4 +1,4 @@
-from bob.core import bind_model_namespace, dump, turtle
+from bob.core import bind_model_namespace, dump, turtle, get_datagraph
 from bob.devices.hvac.boiler import (
     HotWaterBoiler,
     ElectricalHotWaterBoiler,
@@ -6,7 +6,10 @@ from bob.devices.hvac.boiler import (
 )
 from bob.devices.hvac.coil import HotWaterCoil, ChilledWaterCoil, ElectricalHeatingCoil
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+from pathlib import Path
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_boilers():
@@ -27,15 +30,15 @@ def test_create_coils():
 
 def test_turtle_file():
     dump()
-    result = turtle()
+    result = turtle(filename=f"tests/ttl/{model_name}.ttl")
     print(result)
+    return result
 
 
 if __name__ == "__main__":
     test_create_boilers()
     test_create_coils()
-    result = turtle()
-    with open("test_device-002_results.ttl", "w") as file:
-        file.write(result)
-    print("Check file : test_device-002_results.ttl")
+    result = test_turtle_file()
+    print(f"Check file : tests/ttl/{model_name}.ttl")
     print(result)
+    graph = get_datagraph()  # this is there to be used with python -i option

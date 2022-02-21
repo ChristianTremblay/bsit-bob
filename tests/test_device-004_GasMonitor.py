@@ -15,8 +15,54 @@ from bob.devices.hvac.gas import GasMonitor
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.gas import CO2Sensor, NO2Sensor, COSensor
 from bob.sensor.temperature import AirTemperatureSensor
+from bob.space.hvac import HVACSpace, HVACZone
+from bob.space.physical import Building, Roof, Floor, Office
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+from pathlib import Path
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+
+_config_co2_and_temp = {
+    "params": {
+        "label": "CO2-2",
+        "comment": "CO2 Monitor with temperature reading",
+    },
+    "sensors": {
+        ("CO2_sensor", CO2Sensor): {
+            "hasExternalReference": "bacnet://",
+            "hasMinRange": QuantifiableObservableProperty(
+                0,
+                hasQuantityKind=quantitykind.DimensionlessRatio,
+                unit=unit.PPM,
+                label="CO2_sensor.MinRange",
+            ),
+            "hasMaxRange": QuantifiableObservableProperty(
+                2000,
+                hasQuantityKind=quantitykind.DimensionlessRatio,
+                unit=unit.PPM,
+                label="CO2_sensor.MaxRange",
+            ),
+        },
+        ("Temperature_sensor", AirTemperatureSensor): {
+            # "measuresSubstance": enum["Medium-Air"],
+            "hasExternalReference": "bacnet://",
+            "hasMinRange": QuantifiableObservableProperty(
+                0,
+                hasQuantityKind=quantitykind.Temperature,
+                unit=unit.DEG_C,
+                label="Temperature_sensor.MinRange",
+            ),
+            "hasMaxRange": QuantifiableObservableProperty(
+                50,
+                hasQuantityKind=quantitykind.Temperature,
+                unit=unit.DEG_C,
+                label="Temperature_sensor.MaxRange",
+            ),
+            "comment": "Internal temperature sensor of device",
+        },
+    },
+}
 
 
 def test_create_gasmonitordevice():
@@ -93,66 +139,77 @@ def test_create_co2monitordevice():
 
 
 def test_create_co2monitordevice_with_temperature():
-    _config = {
-        "params": {
-            "label": "CO2-2",
-            "comment": "CO2 Monitor with temperature reading",
-        },
-        "sensors": {
-            ("CO2_sensor", CO2Sensor): {
-                "hasExternalReference": "bacnet://",
-                "hasMinRange": QuantifiableObservableProperty(
-                    0,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
-                    label="CO2_sensor.MinRange",
-                ),
-                "hasMaxRange": QuantifiableObservableProperty(
-                    2000,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
-                    label="CO2_sensor.MaxRange",
-                ),
-            },
-            ("Temperature_sensor", AirTemperatureSensor): {
-                # "measuresSubstance": enum["Medium-Air"],
-                "hasExternalReference": "bacnet://",
-                "hasMinRange": QuantifiableObservableProperty(
-                    0,
-                    hasQuantityKind=quantitykind.Temperature,
-                    unit=unit.DEG_C,
-                    label="Temperature_sensor.MinRange",
-                ),
-                "hasMaxRange": QuantifiableObservableProperty(
-                    50,
-                    hasQuantityKind=quantitykind.Temperature,
-                    unit=unit.DEG_C,
-                    label="Temperature_sensor.MaxRange",
-                ),
-                "comment": "Internal temperature sensor of device",
-            },
-        },
-    }
     co2monitor = GasMonitor(
-        config=_config,
+        config=_config_co2_and_temp,
     )
 
     return co2monitor
 
 
+def test_co2_monitor_in_a_room():
+    _config = _config_co2_and_temp
+    _config["params"]["label"] = "CO2-4"
+    co2monitor = GasMonitor(
+        label="CO2-4",
+        comment="CO2 Monitor in basement",
+        config=_config,
+    )
+    building = Building(label="My Building")
+    roof = Roof(label="Roof of building")
+    floor = Floor(label="Floor1")
+    basement = Floor(label="Basement")
+    office1 = Office(label="Office 1")
+    office2 = Office(label="Office 2")
+    office3 = Office(label="Office 3")
+    joelsoffice = Office(label="Joel's Office")
+
+    office1_hvac = HVACSpace(label="Office 1")
+    office2_hvac = HVACSpace(label="Office 2")
+    office3_hvac = HVACSpace(label="Office 3")
+    basementhvac = HVACSpace(label="Basement HVAC Space")
+
+    zone1 = HVACZone(label="Zone1")
+
+    # Physical relationships
+    building > roof
+    building > floor
+    building > basement > basementhvac
+    basement > joelsoffice
+    floor > office1
+    floor > office2
+    floor > office3
+
+    # Spaces relationships
+    # SPACES     | PHYSICAL
+    office1_hvac < office1
+    office2_hvac < office2
+    office3_hvac < office3
+
+    # basementhvac < basement
+
+    # Zones (group of spaces)
+    # Here, Zone1 contains office1 and office2
+    office1_hvac < zone1
+    office2_hvac < zone1
+
+    co2monitor.hasPhysicalLocation = basement
+    co2monitor["CO2_sensor"].hasMeasurementLocation = basementhvac
+    co2monitor["Temperature_sensor"].hasMeasurementLocation = basementhvac
+
+
 def test_turtle_file():
     dump()
-    result = turtle()
+    result = turtle(filename=f"tests/ttl/{model_name}.ttl")
     print(result)
+    return result
 
 
 if __name__ == "__main__":
     dgm = test_create_gasmonitordevice()
     co2 = test_create_co2monitordevice()
     co2_temp = test_create_co2monitordevice_with_temperature()
-    result = turtle()
-    with open("test_device-004_results.ttl", "w") as file:
-        file.write(result)
-    print("Check file : test_device-004_results.ttl")
+    test_co2_monitor_in_a_room()
+    result = test_turtle_file()
+    print(f"Check file : tests/ttl/{model_name}.ttl")
     print(result)
-    graph = get_datagraph()
+    graph = get_datagraph()  # this is there to be used with python -i option
