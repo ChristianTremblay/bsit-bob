@@ -101,19 +101,22 @@ def test_create_b59(node_iri=None):
     floor1_hvacspace = HVACSpace(label="HVAC Space for floor 1")
     rtu_zone = HVACZone(label="Common workspace zone for HVAC")
 
-    bldg > floor1
-    floor1_hvacspace < floor1
+    bldg > floor1 > floor1_hvacspace
+    bldg > roof
+    floor1 > office1
 
-    supply_duct >> floor1_hvacspace.airInlet
-    floor1_hvacspace.airOutlet >> return_plenum
+    supply_duct >> floor1_hvacspace.ductAirInlet
+    floor1_hvacspace.ductAirOutlet >> return_plenum
 
     rtu_zone > floor1_hvacspace
     rtu_zone.airInlet.mapsTo = supply_duct
     rtu_zone.airOutlet.mapsTo = return_plenum
 
     rtu.hasPhysicalLocation = roof
-    rtu["ZN-T"].hasMeasurementLocation = floor1_hvacspace.airOutlet
+    rtu["ZN-T"].hasMeasurementLocation = floor1_hvacspace.ductAirOutlet
     rtu["ZN-T"].hasPhysicalLocation = office1
+    rtu["DA-T"].hasPhysicalLocation = floor1
+    rtu["RA-T"].hasPhysicalLocation = roof
 
 
 # Should a plenum be a segment or is system correct??
