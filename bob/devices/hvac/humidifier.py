@@ -1,8 +1,10 @@
 from typing import Any
 
+from rdflib import URIRef
+
 from bob.connections.naturalgas import NaturalGasInletConnectionPoint
 
-from ...core import s223, Device
+from ...core import s223, p223, Device
 
 
 from ...connections.air import (
@@ -22,7 +24,7 @@ from ...connections.electricity import (
 
 from ...signal import AnalogOut
 
-__namespace__ = s223
+__namespace__ = p223
 
 
 class SteamPipe(Device):
@@ -34,6 +36,7 @@ class SteamPipe(Device):
 
 
 class Humidifier(Device):
+    node_type: URIRef = p223.Humidifier
     steamOutlet: SteamOutletConnectionPoint
     waterInlet: WaterInletConnectionPoint
 

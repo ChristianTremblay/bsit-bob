@@ -1,7 +1,7 @@
 from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
 from rdflib import URIRef
 from typing import Any, List
-from ..core import quantitykind, s223, unit, enum, Medium, Node
+from ..core import quantitykind, s223, p223, unit, enum, Medium, Node
 
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
 
@@ -11,7 +11,7 @@ __namespace__ = s223
 
 
 class DifferentialStaticPressureMeasure(QuantifiableMeasurement):
-    node_type: URIRef = s223.Measure
+    node_type: URIRef = p223.Measure
     hasQuantityKind: URIRef = quantitykind.ForcePerArea
     unit: URIRef = unit.PA
     # isObservedBy: Sensor

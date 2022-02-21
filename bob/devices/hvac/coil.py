@@ -6,6 +6,7 @@ from ...core import s223, Device, enum
 from ...connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
+    AirBidirectionalConnectionPoint,
 )
 
 from ...connections.water import (
@@ -60,4 +61,11 @@ class ElectricalHeatingCoil(Device):
     node_type: URIRef = s223.HeatingCoil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
+    electricalInlet: ElectricalInletConnectionPoint  # can come from a SCR or a contactor...(maybe more than 1 contactor that would give x% of power)
+
+
+# Baseboard, radiant panel, heating floor
+class ElectricalRadiantHeatingCoil(Device):
+    node_type: URIRef = s223.HeatingCoil
+    airContact: AirBidirectionalConnectionPoint
     electricalInlet: ElectricalInletConnectionPoint  # can come from a SCR or a contactor...(maybe more than 1 contactor that would give x% of power)

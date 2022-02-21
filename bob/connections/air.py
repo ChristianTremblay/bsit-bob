@@ -15,15 +15,13 @@ from ..core import (
     OutletZoneConnectionPoint,
     BidirectionalSystemConnectionPoint,
 )
-from ..core import s223, enum
-from ..signal import AnalogIn, AnalogOut
+from ..core import s223
 
-__namespace__ = enum
+__namespace__ = s223
 
 # === AIR
 class Air(Medium):
-    node_type: URIRef = enum["Medium-Air"]
-    hasEnumerationKind: URIRef = enum["Medium-Air"]
+    node_type: URIRef = s223["Medium-Air"]
     label = "Medium-Air"
 
 
@@ -87,7 +85,7 @@ class AirOutletZoneConnectionPoint(AirZoneConnectionPoint, OutletZoneConnectionP
 
 # === COMPRESSED AIR
 class CompressedAir(Medium):
-    node_type: URIRef = enum.Medium_CompressedAir
+    node_type: URIRef = s223["Medium-CompressedAir"]
 
 
 class CompressedAirConnection(Connection):

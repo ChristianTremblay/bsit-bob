@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from ...core import s223, enum, Device, quantitykind, unit, Value
+from ...core import s223, p223, enum, Device, quantitykind, unit, Value
 from ...property import QuantifiableObservableProperty
 
 from ...connections.air import (
@@ -21,7 +21,7 @@ from ...sensor.gas import (
 )
 from ...sensor import Sensor, define_sensors
 
-__namespace__ = s223
+__namespace__ = p223
 
 """
 gasmonitor_template = {
@@ -66,7 +66,7 @@ class GasMonitor(Device):
 
     """
 
-    node_type: URIRef = s223.GasMonitor
+    node_type: URIRef = p223.GasMonitor
     airInletSupply: AirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -80,3 +80,11 @@ class GasMonitor(Device):
         super().__init__(**kwargs)
         for sensor in sensors:
             self > sensor
+
+        self._contains = []
+        self._contains.extend(sensors)
+
+    def __getitem__(self, name: str) -> Any:
+        for each in self._contains:
+            if each.label == name:
+                return each

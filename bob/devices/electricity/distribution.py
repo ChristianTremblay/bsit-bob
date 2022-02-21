@@ -2,7 +2,7 @@ from re import S, sub
 from rdflib import URIRef
 
 from bob.property import QuantifiableObservableProperty
-from ...core import s223, s223_proposal, enum, Device, Value, quantitykind, unit, Medium
+from ...core import s223, p223, enum, Device, Value, quantitykind, unit, Medium
 from ...connections.electricity import (
     Electricity,
     ElectricalConnection,
@@ -20,7 +20,7 @@ from typing import Dict
 from ...sensor import define_sensors
 from .. import contains_devices_list
 
-__namespace__ = s223_proposal
+__namespace__ = p223
 
 
 # class Main(ElectricalConnectionPoint):
@@ -31,7 +31,7 @@ __namespace__ = s223_proposal
 
 
 class Transformer(Device):
-    node_type = s223_proposal.ElectricalTransformer
+    node_type = p223.ElectricalTransformer
     hasPower: Value
 
     def __init__(self, **kwargs):
@@ -53,7 +53,7 @@ class DistributionPanel(Device):
     # manufacturer: str
     # modelNumber: str
     # hasNumberOfCircuits: Value()
-    node_type = s223_proposal.ElectricalDistributionPanel
+    node_type = p223.ElectricalDistributionPanel
 
     def __init__(self, config: Dict = None, **kwargs):
         if not config and not kwargs:
@@ -90,7 +90,7 @@ class DistributionPanel(Device):
 
 
 class CircuitBreaker(Device):
-    node_type = s223_proposal.ElectricalCircuitBreaker
+    node_type = p223.ElectricalCircuitBreaker
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
     hasMaxRange: QuantifiableObservableProperty

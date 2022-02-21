@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from ...core import s223, enum, Device
+from ...core import s223, p223, enum, Device
 
 
 from ...connections.air import (
@@ -19,7 +19,7 @@ from ...sensor.particle import (
 )
 from ...sensor import Sensor, define_sensors
 
-__namespace__ = s223
+__namespace__ = p223
 
 
 """
@@ -45,7 +45,7 @@ particlecounter_template = {
 class ParticleCounter(Device):
     """"""
 
-    node_type: URIRef = s223.ParticleCounter
+    node_type: URIRef = p223.ParticleCounter
     # Air inlet will allow air to enter the device
     airInletSupply: AirInletConnectionPoint
 

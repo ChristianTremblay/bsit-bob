@@ -11,12 +11,11 @@ from ..core import (
 )
 from ..signal import AnalogIn, AnalogOut
 
-__namespace__ = enum
+__namespace__ = s223
 
 
 class NaturalGas(Medium):
-    node_type: URIRef = enum["Medium-NaturalGas"]
-    hasEnumerationKind: URIRef = enum["Medium-NaturalGas"]
+    node_type: URIRef = s223["Medium-NaturalGas"]
 
 
 class NaturalGasConnection(Connection):

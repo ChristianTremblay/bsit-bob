@@ -14,42 +14,41 @@ from ..core import (
 
 from ..signal import AnalogIn, AnalogOut
 
-__namespace__ = enum
+__namespace__ = s223
 
 # Medium
 class Water(Medium):
-    node_type: URIRef = enum["Medium-Water"]
-    hasEnumerationKind: URIRef = enum["Medium-Water"]
+    node_type: URIRef = s223["Medium-Water"]
 
 
 class DomesticWater(Water):
-    node_type: URIRef = enum["Water-DomesticWater"]
+    node_type: URIRef = s223["Water-DomesticWater"]
 
 
 class DomesticHotWater(Water):
-    node_type: URIRef = enum["Water-DomesticHotWater"]
+    node_type: URIRef = s223["Water-DomesticHotWater"]
 
 
 class ChilledWater(Water):
-    node_type: URIRef = enum["Water-ChilledWater"]
+    node_type: URIRef = s223["Water-ChilledWater"]
 
 
 class HotWater(Water):
-    node_type: URIRef = enum["Water-HotWater"]
+    node_type: URIRef = s223["Water-HotWater"]
 
 
 class CondensedWater(Water):
-    node_type: URIRef = enum["Water-CondensedWater"]
+    node_type: URIRef = s223["Water-CondensedWater"]
 
 
 class GlycoledWater(Water):
     # glycol_proportion =
-    node_type: URIRef = enum["Water-GlycoledWater"]
+    node_type: URIRef = s223["Water-GlycoledWater"]
 
 
 class Steam(Water):
     # glycol_proportion =
-    node_type: URIRef = enum["Water-Steam"]
+    node_type: URIRef = s223["Water-Steam"]
 
 
 # Connections

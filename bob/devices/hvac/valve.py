@@ -1,4 +1,6 @@
 from typing import Any
+
+from rdflib import URIRef
 from bob.connections.air import CompressedAirConnectionPoint
 
 from bob.connections.naturalgas import (
@@ -27,29 +29,34 @@ __namespace__ = s223
 
 
 class WaterValve(Device):
+    node_type: URIRef = s223.Valve
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
     position = AnalogIn
 
 
 class HotWaterValve(Device):
+    node_type: URIRef = s223.Valve
     hotWaterInlet: HotWaterInletConnectionPoint
     hotWaterOutlet: HotWaterOutletConnectionPoint
     position = AnalogIn
 
 
 class ChilledWaterValve(Device):
+    node_type: URIRef = s223.Valve
     chilledWaterInlet: ChilledWaterInletConnectionPoint
     chilledWaterOutlet: ChilledWaterOutletConnectionPoint
     position = AnalogIn
 
 
 class NaturalGasValve(Device):
+    node_type: URIRef = s223.Valve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
     position = AnalogIn
 
 
 class PneumaticValve(Device):
+    node_type: URIRef = s223.Valve
     compressedAirInlet: CompressedAirConnectionPoint
     position = AnalogIn

@@ -1,5 +1,5 @@
 from rdflib import URIRef
-from ...core import s223, Device
+from ...core import s223, p223, Device
 
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
@@ -7,7 +7,7 @@ from ...connections.electricity import (
 )
 from ...signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+__namespace__ = p223
 
 
 class VFD(Device):

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef
 
-from ..core import s223, enum, quantitykind, unit, Value, Medium
+from ..core import s223, p223, enum, quantitykind, unit, Value, Medium
 
 from .sensor import Sensor, QuantifiableObservableProperty, split_kwargs
 
@@ -11,7 +11,7 @@ from ..property import (
     QuantifiableProperty,
 )
 
-__namespace__ = s223
+__namespace__ = p223
 
 # TODO :
 # try to create an exmaple for the sensors found here
@@ -25,7 +25,7 @@ class GasConcentrationMeasure(QuantifiableObservableProperty):
     Doc
     """
 
-    node_type: URIRef = s223.Measure
+    node_type: URIRef = p223.Measure
 
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     ofSubstance: Medium

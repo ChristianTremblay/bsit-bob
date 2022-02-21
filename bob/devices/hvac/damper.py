@@ -1,12 +1,11 @@
 from rdflib import URIRef
-from ...core import (
-    s223,
-)
+from ...core import s223, p223
 from ...core import Device
 
 from ...connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
+    AirBidirectionalConnectionPoint,
     CompressedAirConnectionPoint,
 )
 
@@ -48,3 +47,9 @@ class PneumaticDamper(Damper):
     node_type = s223.Damper
     compressedAirInlet: CompressedAirConnectionPoint
     position = AnalogIn
+
+
+class Window(Device):
+    node_type = p223.Window
+    indoor: AirBidirectionalConnectionPoint
+    outdoor: AirBidirectionalConnectionPoint

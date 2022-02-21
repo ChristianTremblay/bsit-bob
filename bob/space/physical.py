@@ -42,6 +42,16 @@ class Hall(PhysicalSpace):
     hasDomain = Physical
 
 
+class Corridor(PhysicalSpace):
+    node_type: URIRef = s223.PhysicalSpace
+    hasDomain = Physical
+
+
+class Bathroom(PhysicalSpace):
+    node_type: URIRef = s223.PhysicalSpace
+    hasDomain = Physical
+
+
 class Office(PhysicalSpace):
     node_type: URIRef = s223.PhysicalSpace
     hasDomain = Physical

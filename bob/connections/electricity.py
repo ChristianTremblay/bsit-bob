@@ -15,13 +15,12 @@ from ..core import (
 )
 from ..signal import AnalogIn, AnalogOut
 
-__namespace__ = enum
+__namespace__ = s223
 
 
 # === GENERAL
 class Electricity(Medium):
-    node_type: URIRef = enum["Medium-Electricity"]
-    hasEnumerationKind: URIRef = enum["Medium-Electricity"]
+    node_type: URIRef = s223["Medium-Electricity"]
 
 
 class ElectricalConnection(Connection):
@@ -65,7 +64,7 @@ class ElectricalSystemOutletConnectionPoint(
 
 
 class Electricity_575V_60Hz(Medium):
-    node_type: URIRef = enum["Electricity-575V.60Hz"]
+    node_type: URIRef = s223["Electricity-575V.60Hz"]
 
 
 class Electricity_575V_60HzConnection(Connection):
@@ -117,7 +116,7 @@ class Electricity_575V_60HzSystemOutletConnectionPoint(
 
 
 class Electricity_120V_240V_60Hz(Medium):
-    node_type: URIRef = enum["Electricity-120V_240V.60Hz"]
+    node_type: URIRef = s223["Electricity-120V_240V.60Hz"]
 
 
 class Electricity_120V_240V_60HzConnection(Connection):
@@ -165,7 +164,7 @@ class lectricity_120V_240V_60HzSystemOutletConnectionPoint(
 
 
 class Electricity_240V_60Hz(Medium):
-    node_type: URIRef = enum["Electricity-240V.60Hz"]
+    node_type: URIRef = s223["Electricity-240V.60Hz"]
 
 
 class Electricity_240V_60HzConnection(Connection):
@@ -213,7 +212,7 @@ class lectricity_240V_60HzSystemOutletConnectionPoint(
 
 
 class Electricity_120V_60Hz(Medium):
-    node_type: URIRef = enum["Electricity-120V.60Hz"]
+    node_type: URIRef = s223["Electricity-120V.60Hz"]
 
 
 class Electricity_120V_60HzConnection(Connection):

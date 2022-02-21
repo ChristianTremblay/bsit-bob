@@ -1,8 +1,6 @@
 from typing import Any
 
-from ...core import (
-    s223,
-)
+from ...core import s223, p223
 from ...core import Device
 
 from ...connections.electricity import (
@@ -13,7 +11,7 @@ from ...connections.electricity import (
 
 from ...signal import AnalogIn
 
-__namespace__ = s223
+__namespace__ = p223
 
 # SCR
 class SCR(Device):
