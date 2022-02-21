@@ -52,7 +52,7 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 
 # options
 MANDITORY_LABEL = True
-EXPLICIT_RECIPROCITY = False
+EXPLICIT_RECIPROCITY = False  # If true, isSomethingOf kind of relationships will be added making redundant links between nodes.
 
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
 _annotation_reference: Dict[str, type] = {}
@@ -157,9 +157,8 @@ s223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
 
 # This namespace is added so in the development of Bob, when new cases occurs
 # we can clearly establish that a new class is not yet part of the standard
-s223_proposal = bind_namespace(
-    "s223_proposal", "http://data.ashrae.org/proposaltostandard223#"
-)
+p223 = bind_namespace("p223", "http://data.ashrae.org/proposal_to_standard223#")
+
 
 # everything in this module belongs in the standard
 __namespace__ = s223
@@ -211,10 +210,16 @@ def dump(
     file.write(content)
 
 
-def turtle(graph: Graph = data_graph, format: str = "turtle") -> None:
+def turtle(
+    graph: Graph = data_graph, format: str = "turtle", filename: str = None
+) -> None:
     content = graph.serialize(format=format)
     if not isinstance(content, str):
         content = content.decode("utf-8")
+
+    if filename:
+        with open(filename, "w") as file:
+            file.write(content)
     return content
 
 
@@ -879,31 +884,33 @@ class Role(Node):
     _data_graph: Graph = schema_graph
 
 
-class Medium(Node):
-    node_type: URIRef = enum.EnumerationValue
+class EnumerationKind(Node):
+    node_type: URIRef = s223.EnumerationKind
     _data_graph: Graph = schema_graph
 
 
-class Direction(Node):
-    node_type: URIRef = enum.EnumerationValue
+class Medium(EnumerationKind):
+    node_type: URIRef = s223.Medium
+    _data_graph: Graph = schema_graph
+
+
+class Direction(EnumerationKind):
+    node_type: URIRef = s223.Direction
     _data_graph: Graph = schema_graph
 
 
 class Inlet(Direction):
-    node_type: URIRef = enum["Direction-Inlet"]
-    hasEnumerationKind: URIRef = enum["Direction"]
+    node_type: URIRef = s223["Direction-Inlet"]
     label = "Direction-Inlet"
 
 
 class Outlet(Direction):
-    node_type: URIRef = enum["Direction-Outlet"]
-    hasEnumerationKind: URIRef = enum["Direction"]
+    node_type: URIRef = s223["Direction-Outlet"]
     label = "Direction-Outlet"
 
 
 class Bidirectional(Direction):
-    node_type: URIRef = enum["Direction-Bidirectional"]
-    hasEnumerationKind: URIRef = enum["Direction"]
+    node_type: URIRef = s223["Direction-Bidirectional"]
     label = "Direction-Bidirectional"
 
 
@@ -1029,6 +1036,7 @@ class System(Node):
     node_type: URIRef = s223.System
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
+    servesZone: Zone
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
 
