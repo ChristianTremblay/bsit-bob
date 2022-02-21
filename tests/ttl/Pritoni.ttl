@@ -1,0 +1,1742 @@
+@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
+@prefix ex: <urn:ex/pritoni/> .
+@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+
+ex:00001 a s223:PhysicalSpace ;
+    rdfs:label "Pritoni Building" ;
+    s223:contains ex:00002,
+        ex:00003 .
+
+ex:00128 a p223:Window,
+        s223:Device ;
+    rdfs:label "Window#1" ;
+    s223:hasConnectionPoint ex:00129,
+        ex:00130 ;
+    s223:hasPhysicalLocation ex:00004 ;
+    s223:indoor ex:00129 ;
+    s223:outdoor ex:00130 ;
+    rdfs:comment "First Window in OpenOffice" .
+
+ex:00131 a p223:Window,
+        s223:Device ;
+    rdfs:label "Window#1" ;
+    s223:hasConnectionPoint ex:00132,
+        ex:00133 ;
+    s223:hasPhysicalLocation ex:00004 ;
+    s223:indoor ex:00132 ;
+    s223:outdoor ex:00133 ;
+    rdfs:comment "Second Window in OpenOffice" .
+
+ex:00134 a s223:Device,
+        s223:Fan ;
+    rdfs:label "ExhaustFan" ;
+    s223:airInlet ex:00135 ;
+    s223:airOutlet ex:00136 ;
+    s223:electricalInlet ex:00137 ;
+    s223:hasConnectionPoint ex:00135,
+        ex:00136,
+        ex:00137 ;
+    rdfs:comment "Bathroom exhaust fan" .
+
+ex:00140 a s223:Connection ;
+    rdfs:label "RETURN-DUCT" ;
+    s223:hasMedium s223:Medium-Air ;
+    rdfs:comment "Return Air Duct extracting air from open office" .
+
+ex:00158 a p223:VAV,
+        s223:System ;
+    rdfs:label "VAVBox1" ;
+    p223:airInlet ex:00159 ;
+    p223:airOutlet ex:00160 ;
+    s223:contains ex:00141,
+        ex:00143,
+        ex:00145,
+        ex:00147,
+        ex:00153 ;
+    s223:hasSystemConnectionPoint ex:00159,
+        ex:00160 ;
+    s223:servesZone ex:00117 ;
+    rdfs:comment "VAV Serving HVAC Zone 1" .
+
+ex:00178 a p223:VAV,
+        s223:System ;
+    rdfs:label "VAVBox2" ;
+    p223:airInlet ex:00179 ;
+    p223:airOutlet ex:00180 ;
+    s223:contains ex:00161,
+        ex:00163,
+        ex:00165,
+        ex:00167,
+        ex:00173 ;
+    s223:hasSystemConnectionPoint ex:00179,
+        ex:00180 ;
+    s223:servesZone ex:00120 ;
+    rdfs:comment "VAV Serving HVAC Zone 2" .
+
+ex:00185 a p223:Light,
+        s223:Device ;
+    rdfs:label "Bulb1_Kitch" ;
+    p223:electricalInlet ex:00187 ;
+    p223:lightOutlet ex:00186 ;
+    s223:hasConnectionPoint ex:00186,
+        ex:00187 ;
+    rdfs:comment "Light Bulb in kitchenette" .
+
+ex:00188 a p223:MovementSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "Bulb1_Mov" ;
+    p223:measuresSubstance enum:Medium-Light ;
+    p223:observesProperty ex:00189 ;
+    s223:hasMeasurementLocation ex:00115 ;
+    s223:hasPhysicalLocation ex:00007 ;
+    s223:hasProperty ex:00189 ;
+    rdfs:comment "Movement sensor for kitchenette bulb 1" .
+
+ex:00191 a p223:Light,
+        s223:Device ;
+    rdfs:label "Bulb2_PrivateOffice" ;
+    p223:electricalInlet ex:00193 ;
+    p223:lightOutlet ex:00192 ;
+    s223:hasConnectionPoint ex:00192,
+        ex:00193 ;
+    rdfs:comment "Light Bulb in Private Office" .
+
+ex:00194 a p223:MovementSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "Bulb2_Mov" ;
+    p223:measuresSubstance enum:Medium-Light ;
+    p223:observesProperty ex:00195 ;
+    s223:hasMeasurementLocation ex:00113 ;
+    s223:hasPhysicalLocation ex:00006 ;
+    s223:hasProperty ex:00195 ;
+    rdfs:comment "Movement sensor for Privtae Office bulb" .
+
+ex:00197 a p223:Light,
+        s223:Device ;
+    rdfs:label "Bulb3_Corridor" ;
+    p223:electricalInlet ex:00199 ;
+    p223:lightOutlet ex:00198 ;
+    s223:hasConnectionPoint ex:00198,
+        ex:00199 ;
+    rdfs:comment "Light Bulb in Corridor" .
+
+ex:00200 a p223:MovementSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "Bulb3_Mov" ;
+    p223:measuresSubstance enum:Medium-Light ;
+    p223:observesProperty ex:00201 ;
+    s223:hasMeasurementLocation ex:00111 ;
+    s223:hasPhysicalLocation ex:00008 ;
+    s223:hasProperty ex:00201 ;
+    rdfs:comment "Movement sensor for Corridor bulb" .
+
+ex:00203 a p223:Light,
+        s223:Device ;
+    rdfs:label "Bulb4_Corridor" ;
+    p223:electricalInlet ex:00205 ;
+    p223:lightOutlet ex:00204 ;
+    s223:hasConnectionPoint ex:00204,
+        ex:00205 ;
+    rdfs:comment "Light Bulb in Bathroom" .
+
+ex:00206 a p223:MovementSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "Bulb4_Mov" ;
+    p223:measuresSubstance enum:Medium-Light ;
+    p223:observesProperty ex:00207 ;
+    s223:hasMeasurementLocation ex:00109 ;
+    s223:hasPhysicalLocation ex:00005 ;
+    s223:hasProperty ex:00207 ;
+    rdfs:comment "Movement sensor for Bathroom bulb" .
+
+ex:00209 a p223:Light,
+        s223:Device ;
+    rdfs:label "Bulb5_OpenOfficeE" ;
+    p223:electricalInlet ex:00211 ;
+    p223:lightOutlet ex:00210 ;
+    s223:hasConnectionPoint ex:00210,
+        ex:00211 ;
+    rdfs:comment "Light Bulb in OpenOffice E" .
+
+ex:00212 a p223:MovementSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "Bulb5_Mov" ;
+    p223:measuresSubstance enum:Medium-Light ;
+    p223:observesProperty ex:00213 ;
+    s223:hasMeasurementLocation ex:00105 ;
+    s223:hasPhysicalLocation ex:00004 ;
+    s223:hasProperty ex:00213 ;
+    rdfs:comment "Movement sensor for OpenOffice East" .
+
+ex:00215 a p223:Light,
+        s223:Device ;
+    rdfs:label "Bulb5_OpenOfficeW" ;
+    p223:electricalInlet ex:00217 ;
+    p223:lightOutlet ex:00216 ;
+    s223:hasConnectionPoint ex:00216,
+        ex:00217 ;
+    rdfs:comment "Light Bulb in OpenOffice A" .
+
+ex:00218 a p223:MovementSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "Bulb6_Mov" ;
+    p223:measuresSubstance enum:Medium-Light ;
+    p223:observesProperty ex:00219 ;
+    s223:hasMeasurementLocation ex:00107 ;
+    s223:hasPhysicalLocation ex:00004 ;
+    s223:hasProperty ex:00219 ;
+    rdfs:comment "Movement sensor for Open Office West" .
+
+ex:00002 a s223:PhysicalSpace ;
+    rdfs:label "Roof of building" .
+
+ex:00003 a s223:PhysicalSpace ;
+    rdfs:label "Floor on which everything is" ;
+    s223:contains ex:00004,
+        ex:00005,
+        ex:00006,
+        ex:00007,
+        ex:00008 .
+
+ex:00009 a p223:PhysicSystem,
+        s223:System ;
+    rdfs:label "Indoor air of space" ;
+    p223:airTransfer ex:00012 ;
+    p223:doors ex:00013 ;
+    p223:ductAirInlet ex:00010 ;
+    p223:ductAirOutlet ex:00011 ;
+    p223:hasMedium s223:Medium-Air ;
+    p223:radiantCooling ex:00016 ;
+    p223:radiantHeating ex:00015 ;
+    p223:windows ex:00014 ;
+    s223:hasSystemConnectionPoint ex:00010,
+        ex:00011,
+        ex:00012,
+        ex:00013,
+        ex:00014,
+        ex:00015,
+        ex:00016 .
+
+ex:00025 a p223:PhysicSystem,
+        s223:System ;
+    rdfs:label "Indoor air of space" ;
+    p223:airTransfer ex:00028 ;
+    p223:doors ex:00029 ;
+    p223:ductAirInlet ex:00026 ;
+    p223:ductAirOutlet ex:00027 ;
+    p223:hasMedium s223:Medium-Air ;
+    p223:radiantCooling ex:00032 ;
+    p223:radiantHeating ex:00031 ;
+    p223:windows ex:00030 ;
+    s223:hasSystemConnectionPoint ex:00026,
+        ex:00027,
+        ex:00028,
+        ex:00029,
+        ex:00030,
+        ex:00031,
+        ex:00032 .
+
+ex:00041 a p223:PhysicSystem,
+        s223:System ;
+    rdfs:label "Indoor air of space" ;
+    p223:airTransfer ex:00044 ;
+    p223:doors ex:00045 ;
+    p223:ductAirInlet ex:00042 ;
+    p223:ductAirOutlet ex:00043 ;
+    p223:hasMedium s223:Medium-Air ;
+    p223:radiantCooling ex:00048 ;
+    p223:radiantHeating ex:00047 ;
+    p223:windows ex:00046 ;
+    s223:hasSystemConnectionPoint ex:00042,
+        ex:00043,
+        ex:00044,
+        ex:00045,
+        ex:00046,
+        ex:00047,
+        ex:00048 .
+
+ex:00057 a p223:PhysicSystem,
+        s223:System ;
+    rdfs:label "Indoor air of space" ;
+    p223:airTransfer ex:00060 ;
+    p223:doors ex:00061 ;
+    p223:ductAirInlet ex:00058 ;
+    p223:ductAirOutlet ex:00059 ;
+    p223:hasMedium s223:Medium-Air ;
+    p223:radiantCooling ex:00064 ;
+    p223:radiantHeating ex:00063 ;
+    p223:windows ex:00062 ;
+    s223:hasSystemConnectionPoint ex:00058,
+        ex:00059,
+        ex:00060,
+        ex:00061,
+        ex:00062,
+        ex:00063,
+        ex:00064 .
+
+ex:00073 a p223:PhysicSystem,
+        s223:System ;
+    rdfs:label "Indoor air of space" ;
+    p223:airTransfer ex:00076 ;
+    p223:doors ex:00077 ;
+    p223:ductAirInlet ex:00074 ;
+    p223:ductAirOutlet ex:00075 ;
+    p223:hasMedium s223:Medium-Air ;
+    p223:radiantCooling ex:00080 ;
+    p223:radiantHeating ex:00079 ;
+    p223:windows ex:00078 ;
+    s223:hasSystemConnectionPoint ex:00074,
+        ex:00075,
+        ex:00076,
+        ex:00077,
+        ex:00078,
+        ex:00079,
+        ex:00080 .
+
+ex:00089 a p223:PhysicSystem,
+        s223:System ;
+    rdfs:label "Indoor air of space" ;
+    p223:airTransfer ex:00092 ;
+    p223:doors ex:00093 ;
+    p223:ductAirInlet ex:00090 ;
+    p223:ductAirOutlet ex:00091 ;
+    p223:hasMedium s223:Medium-Air ;
+    p223:radiantCooling ex:00096 ;
+    p223:radiantHeating ex:00095 ;
+    p223:windows ex:00094 ;
+    s223:hasSystemConnectionPoint ex:00090,
+        ex:00091,
+        ex:00092,
+        ex:00093,
+        ex:00094,
+        ex:00095,
+        ex:00096 .
+
+ex:00117 a s223:HVACZone,
+        s223:Zone ;
+    rdfs:label "HVACZone1" ;
+    s223:airInlet ex:00118 ;
+    s223:airOutlet ex:00119 ;
+    s223:contains ex:00017,
+        ex:00033,
+        ex:00049,
+        ex:00081 ;
+    s223:hasDomain s223:HVAC ;
+    s223:hasZoneConnectionPoint ex:00118,
+        ex:00119 ;
+    rdfs:comment "HVAC Zone 1 contains open office, bathroom, private office and corridor north" .
+
+ex:00120 a s223:HVACZone,
+        s223:Zone ;
+    rdfs:label "HVACZone2" ;
+    s223:airInlet ex:00121 ;
+    s223:airOutlet ex:00122 ;
+    s223:contains ex:00065,
+        ex:00097 ;
+    s223:hasDomain s223:HVAC ;
+    s223:hasZoneConnectionPoint ex:00121,
+        ex:00122 ;
+    rdfs:comment "HVAC Zone 2 contains Kitchenette and Corridor South" .
+
+ex:00141 a p223:AirFlowSensor,
+        p223:FlowSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "VAV1_SA-F" ;
+    p223:hasMedium enum:Medium-Air ;
+    p223:measuresSubstance enum:Medium-Air ;
+    p223:observesProperty ex:00142 ;
+    s223:hasMeasurementLocation ex:00150 ;
+    s223:hasProperty ex:00142 ;
+    rdfs:comment "Air flow used to control damper" .
+
+ex:00143 a s223:AirTemperatureSensor,
+        s223:Device,
+        s223:Sensor,
+        s223:TemperatureSensor ;
+    rdfs:label "VAV1_DA-T" ;
+    s223:hasMeasurementLocation ex:00155 ;
+    s223:hasMedium enum:Medium-Air ;
+    s223:hasProperty ex:00144 ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty ex:00144 ;
+    rdfs:comment "Air supplied to zone by VAV 1, AKA discharge air temperature" .
+
+ex:00145 a s223:AirTemperatureSensor,
+        s223:Device,
+        s223:Sensor,
+        s223:TemperatureSensor ;
+    rdfs:label "VAV1_ZN-T" ;
+    s223:hasMeasurementLocation ex:00017 ;
+    s223:hasMedium enum:Medium-Air ;
+    s223:hasPhysicalLocation ex:00004 ;
+    s223:hasProperty ex:00146 ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty ex:00146 ;
+    rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
+
+ex:00147 a s223:Damper,
+        s223:Device ;
+    rdfs:label "VAV1_damper" ;
+    s223:airInlet ex:00150 ;
+    s223:airOutlet ex:00151 ;
+    s223:feedback ex:00149 ;
+    s223:hasConnectionPoint ex:00150,
+        ex:00151,
+        ex:00152 ;
+    s223:hasProperty ex:00148,
+        ex:00149 ;
+    s223:position ex:00148 ;
+    s223:powerInlet ex:00152 ;
+    rdfs:comment "VAV Box 1 Air Damper" .
+
+ex:00153 a s223:Device,
+        s223:HeatingCoil ;
+    rdfs:label "VAV1_HeatingCoil" ;
+    s223:airInlet ex:00154 ;
+    s223:airOutlet ex:00155 ;
+    s223:hasConnectionPoint ex:00154,
+        ex:00155,
+        ex:00156,
+        ex:00157 ;
+    s223:hotWaterInlet ex:00156 ;
+    s223:hotWaterOutlet ex:00157 ;
+    rdfs:comment "VAV Box 1 Hot Water Coil" .
+
+ex:00161 a p223:AirFlowSensor,
+        p223:FlowSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "VAV2_SA-F" ;
+    p223:hasMedium enum:Medium-Air ;
+    p223:measuresSubstance enum:Medium-Air ;
+    p223:observesProperty ex:00162 ;
+    s223:hasMeasurementLocation ex:00170 ;
+    s223:hasProperty ex:00162 ;
+    rdfs:comment "Air flow used to control damper" .
+
+ex:00163 a s223:AirTemperatureSensor,
+        s223:Device,
+        s223:Sensor,
+        s223:TemperatureSensor ;
+    rdfs:label "VAV2_DA-T" ;
+    s223:hasMeasurementLocation ex:00175 ;
+    s223:hasMedium enum:Medium-Air ;
+    s223:hasProperty ex:00164 ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty ex:00164 ;
+    rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
+
+ex:00165 a s223:AirTemperatureSensor,
+        s223:Device,
+        s223:Sensor,
+        s223:TemperatureSensor ;
+    rdfs:label "VAV2_ZN-T" ;
+    s223:hasMeasurementLocation ex:00065 ;
+    s223:hasMedium enum:Medium-Air ;
+    s223:hasPhysicalLocation ex:00008 ;
+    s223:hasProperty ex:00166 ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty ex:00166 ;
+    rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
+
+ex:00167 a s223:Damper,
+        s223:Device ;
+    rdfs:label "VAV2_damper" ;
+    s223:airInlet ex:00170 ;
+    s223:airOutlet ex:00171 ;
+    s223:feedback ex:00169 ;
+    s223:hasConnectionPoint ex:00170,
+        ex:00171,
+        ex:00172 ;
+    s223:hasProperty ex:00168,
+        ex:00169 ;
+    s223:position ex:00168 ;
+    s223:powerInlet ex:00172 ;
+    rdfs:comment "VAV Box 2 Air Damper" .
+
+ex:00173 a s223:Device,
+        s223:HeatingCoil ;
+    rdfs:label "VAV2_HeatingCoil" ;
+    s223:airInlet ex:00174 ;
+    s223:airOutlet ex:00175 ;
+    s223:hasConnectionPoint ex:00174,
+        ex:00175,
+        ex:00176,
+        ex:00177 ;
+    s223:hotWaterInlet ex:00176 ;
+    s223:hotWaterOutlet ex:00177 ;
+    rdfs:comment "VAV Box 2 Hot Water Coil" .
+
+ex:00005 a s223:PhysicalSpace ;
+    rdfs:label "Bathroom" ;
+    s223:encloses ex:00033,
+        ex:00109 .
+
+ex:00006 a s223:PhysicalSpace ;
+    rdfs:label "Private Office" ;
+    s223:encloses ex:00081,
+        ex:00113 .
+
+ex:00007 a s223:PhysicalSpace ;
+    rdfs:label "Kitchenette" ;
+    s223:encloses ex:00097,
+        ex:00115 .
+
+ex:00010 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00018 .
+
+ex:00011 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00019 .
+
+ex:00012 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00020 .
+
+ex:00013 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00021 .
+
+ex:00014 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00022 .
+
+ex:00015 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00023 .
+
+ex:00016 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00024 .
+
+ex:00026 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00034 .
+
+ex:00027 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00035 .
+
+ex:00028 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00036 .
+
+ex:00029 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00037 .
+
+ex:00030 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00038 .
+
+ex:00031 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00039 .
+
+ex:00032 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00040 .
+
+ex:00033 a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "Bathroom.HVAC" ;
+    s223:airTransfer ex:00036 ;
+    s223:doors ex:00037 ;
+    s223:ductAirInlet ex:00034 ;
+    s223:ductAirOutlet ex:00035 ;
+    s223:hasConnectionPoint ex:00034,
+        ex:00035,
+        ex:00036,
+        ex:00037,
+        ex:00038,
+        ex:00039,
+        ex:00040 ;
+    s223:hasDomain s223:HVAC ;
+    s223:indoorAir ex:00025 ;
+    s223:radiantCooling ex:00040 ;
+    s223:radiantHeating ex:00039 ;
+    s223:windows ex:00038 .
+
+ex:00042 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00050 .
+
+ex:00043 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00051 .
+
+ex:00044 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00052 .
+
+ex:00045 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00053 .
+
+ex:00046 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00054 .
+
+ex:00047 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00055 .
+
+ex:00048 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00056 .
+
+ex:00049 a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "CorridorNorth.HVAC" ;
+    s223:airTransfer ex:00052 ;
+    s223:doors ex:00053 ;
+    s223:ductAirInlet ex:00050 ;
+    s223:ductAirOutlet ex:00051 ;
+    s223:hasConnectionPoint ex:00050,
+        ex:00051,
+        ex:00052,
+        ex:00053,
+        ex:00054,
+        ex:00055,
+        ex:00056 ;
+    s223:hasDomain s223:HVAC ;
+    s223:indoorAir ex:00041 ;
+    s223:radiantCooling ex:00056 ;
+    s223:radiantHeating ex:00055 ;
+    s223:windows ex:00054 .
+
+ex:00058 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00066 .
+
+ex:00059 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00067 .
+
+ex:00060 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00068 .
+
+ex:00061 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00069 .
+
+ex:00062 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00070 .
+
+ex:00063 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00071 .
+
+ex:00064 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00072 .
+
+ex:00074 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00082 .
+
+ex:00075 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00083 .
+
+ex:00076 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00084 .
+
+ex:00077 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00085 .
+
+ex:00078 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00086 .
+
+ex:00079 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00087 .
+
+ex:00080 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00088 .
+
+ex:00081 a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "PrivateOffice.HVAC" ;
+    s223:airTransfer ex:00084 ;
+    s223:doors ex:00085 ;
+    s223:ductAirInlet ex:00082 ;
+    s223:ductAirOutlet ex:00083 ;
+    s223:hasConnectionPoint ex:00082,
+        ex:00083,
+        ex:00084,
+        ex:00085,
+        ex:00086,
+        ex:00087,
+        ex:00088 ;
+    s223:hasDomain s223:HVAC ;
+    s223:indoorAir ex:00073 ;
+    s223:radiantCooling ex:00088 ;
+    s223:radiantHeating ex:00087 ;
+    s223:windows ex:00086 .
+
+ex:00090 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00098 .
+
+ex:00091 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00099 .
+
+ex:00092 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00100 .
+
+ex:00093 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00101 .
+
+ex:00094 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00102 .
+
+ex:00095 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00103 .
+
+ex:00096 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00104 .
+
+ex:00097 a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "Kitchenette.HVAC" ;
+    s223:airTransfer ex:00100 ;
+    s223:doors ex:00101 ;
+    s223:ductAirInlet ex:00098 ;
+    s223:ductAirOutlet ex:00099 ;
+    s223:hasConnectionPoint ex:00098,
+        ex:00099,
+        ex:00100,
+        ex:00101,
+        ex:00102,
+        ex:00103,
+        ex:00104 ;
+    s223:hasDomain s223:HVAC ;
+    s223:indoorAir ex:00089 ;
+    s223:radiantCooling ex:00104 ;
+    s223:radiantHeating ex:00103 ;
+    s223:windows ex:00102 .
+
+ex:00105 a p223:LightingSpace,
+        s223:DomainSpace ;
+    rdfs:label "OpenOfficeEast.Light" ;
+    p223:lightInlet ex:00106 ;
+    s223:hasConnectionPoint ex:00106 ;
+    s223:hasDomain s223:Lighting .
+
+ex:00107 a p223:LightingSpace,
+        s223:DomainSpace ;
+    rdfs:label "OpenOfficeWest.Light" ;
+    p223:lightInlet ex:00108 ;
+    s223:hasConnectionPoint ex:00108 ;
+    s223:hasDomain s223:Lighting .
+
+ex:00109 a p223:LightingSpace,
+        s223:DomainSpace ;
+    rdfs:label "Bathroom.Light" ;
+    p223:lightInlet ex:00110 ;
+    s223:hasConnectionPoint ex:00110 ;
+    s223:hasDomain s223:Lighting .
+
+ex:00111 a p223:LightingSpace,
+        s223:DomainSpace ;
+    rdfs:label "Corridor.Light" ;
+    p223:lightInlet ex:00112 ;
+    s223:hasConnectionPoint ex:00112 ;
+    s223:hasDomain s223:Lighting .
+
+ex:00113 a p223:LightingSpace,
+        s223:DomainSpace ;
+    rdfs:label "PrivateOffice.Light" ;
+    p223:lightInlet ex:00114 ;
+    s223:hasConnectionPoint ex:00114 ;
+    s223:hasDomain s223:Lighting .
+
+ex:00115 a p223:LightingSpace,
+        s223:DomainSpace ;
+    rdfs:label "Kitchenette.Light" ;
+    p223:lightInlet ex:00116 ;
+    s223:hasConnectionPoint ex:00116 ;
+    s223:hasDomain s223:Lighting .
+
+ex:00118 a s223:InletZoneConnectionPoint,
+        s223:ZoneConnectionPoint ;
+    rdfs:label "HVACZone1.airInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00082 .
+
+ex:00119 a s223:OutletZoneConnectionPoint,
+        s223:ZoneConnectionPoint ;
+    rdfs:label "HVACZone1.airOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00019 .
+
+ex:00121 a s223:InletZoneConnectionPoint,
+        s223:ZoneConnectionPoint ;
+    rdfs:label "HVACZone2.airInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00098 .
+
+ex:00122 a s223:OutletZoneConnectionPoint,
+        s223:ZoneConnectionPoint ;
+    rdfs:label "HVACZone2.airOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00068 .
+
+ex:00124 a s223:Connection ;
+    s223:connectsAt ex:00066,
+        ex:00101 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00125 a s223:Connection ;
+    s223:connectsAt ex:00052,
+        ex:00068 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00137 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "ExhaustFan.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00138 a s223:Connection ;
+    s223:connectsAt ex:00035,
+        ex:00135 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00139 a s223:Connection ;
+    rdfs:label "SUPPLY-DUCT" ;
+    s223:connectsAt ex:00150,
+        ex:00170 ;
+    s223:hasMedium s223:Medium-Air ;
+    rdfs:comment "Supply Air Duct that feed VAV Boxes 1 & 2" .
+
+ex:00142 a p223:Measure,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "VAV1_SA-F.Measure" ;
+    p223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:unit unit:FT3-PER-MIN .
+
+ex:00144 a p223:Measure,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "VAV1_DA-T.Measure" ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
+
+ex:00146 a p223:Measure,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "VAV1_ZN-T.Measure" ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
+
+ex:00148 a g36:AnalogOut ;
+    rdfs:label "VAV1_damper.position" .
+
+ex:00149 a g36:AnalogIn ;
+    rdfs:label "VAV1_damper.feedback" .
+
+ex:00152 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VAV1_damper.powerInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00156 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VAV1_HeatingCoil.hotWaterInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater .
+
+ex:00157 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "VAV1_HeatingCoil.hotWaterOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater .
+
+ex:00159 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "VAVBox1.airInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00150 .
+
+ex:00160 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "VAVBox1.airOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00155 .
+
+ex:00162 a p223:Measure,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "VAV2_SA-F.Measure" ;
+    p223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:unit unit:FT3-PER-MIN .
+
+ex:00164 a p223:Measure,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "VAV2_DA-T.Measure" ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
+
+ex:00166 a p223:Measure,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "VAV2_ZN-T.Measure" ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
+
+ex:00168 a g36:AnalogOut ;
+    rdfs:label "VAV2_damper.position" .
+
+ex:00169 a g36:AnalogIn ;
+    rdfs:label "VAV2_damper.feedback" .
+
+ex:00172 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VAV2_damper.powerInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00176 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VAV2_HeatingCoil.hotWaterInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater .
+
+ex:00177 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "VAV2_HeatingCoil.hotWaterOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater .
+
+ex:00179 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "VAVBox2.airInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00170 .
+
+ex:00180 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "VAVBox2.airOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00175 .
+
+ex:00181 a s223:Connection ;
+    s223:connectsAt ex:00151,
+        ex:00154 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00182 a s223:Connection ;
+    s223:connectsAt ex:00082,
+        ex:00155 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00183 a s223:Connection ;
+    s223:connectsAt ex:00171,
+        ex:00174 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00184 a s223:Connection ;
+    s223:connectsAt ex:00098,
+        ex:00175 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00187 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Bulb1_Kitch.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00189 a p223:Measure,
+        s223:ObservableProperty ;
+    rdfs:label "Bulb1_Mov.Measure" ;
+    p223:ofSubstance enum:Medium-Light ;
+    qudt:unit unit:DEG_C .
+
+ex:00190 a s223:Connection ;
+    s223:connectsAt ex:00116,
+        ex:00186 ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00193 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Bulb2_PrivateOffice.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00195 a p223:Measure,
+        s223:ObservableProperty ;
+    rdfs:label "Bulb2_Mov.Measure" ;
+    p223:ofSubstance enum:Medium-Light ;
+    qudt:unit unit:DEG_C .
+
+ex:00196 a s223:Connection ;
+    s223:connectsAt ex:00114,
+        ex:00192 ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00199 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Bulb3_Corridor.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00201 a p223:Measure,
+        s223:ObservableProperty ;
+    rdfs:label "Bulb3_Mov.Measure" ;
+    p223:ofSubstance enum:Medium-Light ;
+    qudt:unit unit:DEG_C .
+
+ex:00202 a s223:Connection ;
+    s223:connectsAt ex:00112,
+        ex:00198 ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00205 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Bulb4_Corridor.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00207 a p223:Measure,
+        s223:ObservableProperty ;
+    rdfs:label "Bulb4_Mov.Measure" ;
+    p223:ofSubstance enum:Medium-Light ;
+    qudt:unit unit:DEG_C .
+
+ex:00208 a s223:Connection ;
+    s223:connectsAt ex:00110,
+        ex:00204 ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00211 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Bulb5_OpenOfficeE.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00213 a p223:Measure,
+        s223:ObservableProperty ;
+    rdfs:label "Bulb5_Mov.Measure" ;
+    p223:ofSubstance enum:Medium-Light ;
+    qudt:unit unit:DEG_C .
+
+ex:00214 a s223:Connection ;
+    s223:connectsAt ex:00106,
+        ex:00210 ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00217 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Bulb5_OpenOfficeW.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+
+ex:00219 a p223:Measure,
+        s223:ObservableProperty ;
+    rdfs:label "Bulb6_Mov.Measure" ;
+    p223:ofSubstance enum:Medium-Light ;
+    qudt:unit unit:DEG_C .
+
+ex:00220 a s223:Connection ;
+    s223:connectsAt ex:00108,
+        ex:00216 ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00008 a s223:PhysicalSpace ;
+    rdfs:label "Corridor" ;
+    s223:encloses ex:00049,
+        ex:00065,
+        ex:00111 .
+
+ex:00017 a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "OpenOffice.HVAC" ;
+    s223:airTransfer ex:00020 ;
+    s223:doors ex:00021 ;
+    s223:ductAirInlet ex:00018 ;
+    s223:ductAirOutlet ex:00019 ;
+    s223:hasConnectionPoint ex:00018,
+        ex:00019,
+        ex:00020,
+        ex:00021,
+        ex:00022,
+        ex:00023,
+        ex:00024 ;
+    s223:hasDomain s223:HVAC ;
+    s223:indoorAir ex:00009 ;
+    s223:radiantCooling ex:00024 ;
+    s223:radiantHeating ex:00023 ;
+    s223:windows ex:00022 .
+
+ex:00018 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "OpenOffice.HVAC.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00020 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "OpenOffice.HVAC.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00023 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "OpenOffice.HVAC.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00024 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "OpenOffice.HVAC.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00034 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Bathroom.HVAC.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00036 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Bathroom.HVAC.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00038 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Bathroom.HVAC.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00039 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Bathroom.HVAC.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00040 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Bathroom.HVAC.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00050 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CorridorNorth.HVAC.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00051 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CorridorNorth.HVAC.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00053 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorNorth.HVAC.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00054 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorNorth.HVAC.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00055 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorNorth.HVAC.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00056 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorNorth.HVAC.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00065 a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "CorridorSouth.HVAC" ;
+    s223:airTransfer ex:00068 ;
+    s223:doors ex:00069 ;
+    s223:ductAirInlet ex:00066 ;
+    s223:ductAirOutlet ex:00067 ;
+    s223:hasConnectionPoint ex:00066,
+        ex:00067,
+        ex:00068,
+        ex:00069,
+        ex:00070,
+        ex:00071,
+        ex:00072 ;
+    s223:hasDomain s223:HVAC ;
+    s223:indoorAir ex:00057 ;
+    s223:radiantCooling ex:00072 ;
+    s223:radiantHeating ex:00071 ;
+    s223:windows ex:00070 .
+
+ex:00067 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CorridorSouth.HVAC.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00069 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorSouth.HVAC.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00070 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorSouth.HVAC.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00071 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorSouth.HVAC.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00072 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorSouth.HVAC.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00083 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "PrivateOffice.HVAC.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00084 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "PrivateOffice.HVAC.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00086 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "PrivateOffice.HVAC.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00087 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "PrivateOffice.HVAC.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00088 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "PrivateOffice.HVAC.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00099 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Kitchenette.HVAC.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00100 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Kitchenette.HVAC.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00102 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Kitchenette.HVAC.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00103 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Kitchenette.HVAC.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00104 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Kitchenette.HVAC.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00106 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "OpenOfficeEast.Light.lightInlet" ;
+    s223:connectsThrough ex:00214 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00108 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "OpenOfficeWest.Light.lightInlet" ;
+    s223:connectsThrough ex:00220 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00110 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Bathroom.Light.lightInlet" ;
+    s223:connectsThrough ex:00208 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00112 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Corridor.Light.lightInlet" ;
+    s223:connectsThrough ex:00202 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00114 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "PrivateOffice.Light.lightInlet" ;
+    s223:connectsThrough ex:00196 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00116 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Kitchenette.Light.lightInlet" ;
+    s223:connectsThrough ex:00190 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00123 a s223:Connection ;
+    rdfs:label "CorridorNorthDoors" ;
+    s223:connectsAt ex:00021,
+        ex:00037,
+        ex:00085 ;
+    s223:hasMedium s223:Medium-Air ;
+    rdfs:comment "There are 3 doors in this space, so I'm using a connection to model those relationships" .
+
+ex:00126 a s223:Connection ;
+    rdfs:label "Outdoor" ;
+    s223:connectsAt ex:00130,
+        ex:00133,
+        ex:00136 ;
+    s223:hasMedium s223:Medium-Air ;
+    rdfs:comment "This is where we exhaust air of bathroom, and windows of OpenOffice are connected here to" .
+
+ex:00127 a s223:Connection ;
+    rdfs:label "OpenOfficeWindows" ;
+    s223:connectsAt ex:00022,
+        ex:00129,
+        ex:00132 ;
+    s223:hasMedium s223:Medium-Air ;
+    rdfs:comment "There are 2 windows connected to the space, so I use a connection" .
+
+ex:00129 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Window#1.indoor" ;
+    s223:connectsThrough ex:00127 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00130 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Window#1.outdoor" ;
+    s223:connectsThrough ex:00126 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00132 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Window#1.indoor" ;
+    s223:connectsThrough ex:00127 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00133 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Window#1.outdoor" ;
+    s223:connectsThrough ex:00126 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00135 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "ExhaustFan.airInlet" ;
+    s223:connectsThrough ex:00138 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00136 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "ExhaustFan.airOutlet" ;
+    s223:connectsThrough ex:00126 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00151 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "VAV1_damper.airOutlet" ;
+    s223:connectsThrough ex:00181 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00154 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VAV1_HeatingCoil.airInlet" ;
+    s223:connectsThrough ex:00181 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00171 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "VAV2_damper.airOutlet" ;
+    s223:connectsThrough ex:00183 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00174 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VAV2_HeatingCoil.airInlet" ;
+    s223:connectsThrough ex:00183 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00186 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Bulb1_Kitch.lightOutlet" ;
+    s223:connectsThrough ex:00190 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00192 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Bulb2_PrivateOffice.lightOutlet" ;
+    s223:connectsThrough ex:00196 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00198 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Bulb3_Corridor.lightOutlet" ;
+    s223:connectsThrough ex:00202 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00204 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Bulb4_Corridor.lightOutlet" ;
+    s223:connectsThrough ex:00208 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00210 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Bulb5_OpenOfficeE.lightOutlet" ;
+    s223:connectsThrough ex:00214 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00216 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Bulb5_OpenOfficeW.lightOutlet" ;
+    s223:connectsThrough ex:00220 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Light .
+
+ex:00019 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "OpenOffice.HVAC.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00021 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "OpenOffice.HVAC.doors" ;
+    s223:connectsThrough ex:00123 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00022 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "OpenOffice.HVAC.windows" ;
+    s223:connectsThrough ex:00127 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00035 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Bathroom.HVAC.ductAirOutlet" ;
+    s223:connectsThrough ex:00138 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00037 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Bathroom.HVAC.doors" ;
+    s223:connectsThrough ex:00123 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00052 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorNorth.HVAC.airTransfer" ;
+    s223:connectsThrough ex:00125 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00066 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CorridorSouth.HVAC.ductAirInlet" ;
+    s223:connectsThrough ex:00124 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00085 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "PrivateOffice.HVAC.doors" ;
+    s223:connectsThrough ex:00123 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00101 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Kitchenette.HVAC.doors" ;
+    s223:connectsThrough ex:00124 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00068 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "CorridorSouth.HVAC.airTransfer" ;
+    s223:connectsThrough ex:00125 ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00082 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "PrivateOffice.HVAC.ductAirInlet" ;
+    s223:connectsThrough ex:00182 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00098 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Kitchenette.HVAC.ductAirInlet" ;
+    s223:connectsThrough ex:00184 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00150 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VAV1_damper.airInlet" ;
+    s223:connectsThrough ex:00139 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00155 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "VAV1_HeatingCoil.airOutlet" ;
+    s223:connectsThrough ex:00182 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00170 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VAV2_damper.airInlet" ;
+    s223:connectsThrough ex:00139 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00175 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "VAV2_HeatingCoil.airOutlet" ;
+    s223:connectsThrough ex:00184 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00004 a s223:PhysicalSpace ;
+    rdfs:label "Open Office" ;
+    s223:encloses ex:00017,
+        ex:00105,
+        ex:00107 .
+
