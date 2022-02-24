@@ -1352,15 +1352,15 @@ class ConnectionPoint(Node):
 
 
 class InletConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Inlet"]
+    hasDirection: URIRef = s223["Direction-Inlet"]
 
 
 class OutletConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Outlet"]
+    hasDirection: URIRef = s223["Direction-Outlet"]
 
 
 class BidirectionalConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Bidirectional"]
+    hasDirection: URIRef = s223["Direction-Bidirectional"]
 
 
 class SystemConnectionPoint(Node):
@@ -1402,15 +1402,15 @@ class SystemConnectionPoint(Node):
 
 
 class InletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Inlet"]
+    hasDirection: URIRef = s223["Direction-Inlet"]
 
 
 class OutletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Outlet"]
+    hasDirection: URIRef = s223["Direction-Outlet"]
 
 
 class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Bidirectional"]
+    hasDirection: URIRef = s223["Direction-Bidirectional"]
 
 
 class Zone(Node):
@@ -1518,15 +1518,15 @@ class ZoneConnectionPoint(Node):
 
 
 class InletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Inlet"]
+    hasDirection: URIRef = s223["Direction-Inlet"]
 
 
 class OutletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Outlet"]
+    hasDirection: URIRef = s223["Direction-Outlet"]
 
 
 class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = enum["Direction-Bidirectional"]
+    hasDirection: URIRef = s223["Direction-Bidirectional"]
 
 
 class PhysicalSpace(Node):

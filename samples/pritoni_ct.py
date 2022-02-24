@@ -260,11 +260,17 @@ def test_pritoni():
         label="OpenOfficeWindows",
         comment="There are 2 windows connected to the space, so I use a connection",
     )
-    window1 = Window(label="Window#1", comment="First Window in OpenOffice")
+    window1 = Window(
+        label="Window_West",
+        comment="First Window in OpenOffice, covering West portion of room",
+    )
     window1.outdoor >> outdoor
     window1.indoor >> openoffice_windows
     window1.hasPhysicalLocation = openoffice
-    window2 = Window(label="Window#1", comment="Second Window in OpenOffice")
+    window2 = Window(
+        label="Window_East",
+        comment="Second Window in OpenOffice, covering East portion of room",
+    )
     window2.outdoor >> outdoor
     window2.indoor >> openoffice_windows
     window2.hasPhysicalLocation = openoffice
@@ -353,6 +359,9 @@ def test_pritoni():
     openofficeEast_bulb.lightOutlet >> openofficeEast_lightspace.lightInlet
     openofficeEast_movement.hasMeasurementLocation = openofficeEast_lightspace
     openofficeEast_movement.hasPhysicalLocation = openoffice
+    # Windows are good for natural light
+    window1.naturalLight >> openofficeWest_lightspace.naturalLightInlet
+    window2.naturalLight >> openofficeEast_lightspace.naturalLightInlet
 
     # Now we build lights for OpenOffice West
     openofficeWest_bulb = Light(

@@ -8,6 +8,7 @@ from ...connections.air import (
     AirBidirectionalConnectionPoint,
     CompressedAirConnectionPoint,
 )
+from ...connections.light import LightOutletConnectionPoint
 
 from ...connections.electricity import ElectricalInletConnectionPoint
 
@@ -53,3 +54,4 @@ class Window(Device):
     node_type = p223.Window
     indoor: AirBidirectionalConnectionPoint
     outdoor: AirBidirectionalConnectionPoint
+    naturalLight: LightOutletConnectionPoint

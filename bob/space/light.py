@@ -14,6 +14,7 @@ class LightingSpace(DomainSpace):
     hasDomain = Lighting
     hasMedium = s223["Medium-Light"]
     lightInlet: LightInletConnectionPoint
+    naturalLightInlet: LightInletConnectionPoint
     indoorAir: IndoorAir
 
 
