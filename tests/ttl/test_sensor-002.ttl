@@ -2,8 +2,10 @@ ARGS :  ()
 @prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
 @prefix ex: <urn:ex/test_sensor-002/> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 
 
 ex:00001 a p223:PhysicSystem,
@@ -301,7 +303,9 @@ ex:00038 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "TPD-01.Measure" ;
     s223:hasExternalReference ex:00039 ;
-    s223:ofSubstance enum:Medium-Air .
+    s223:hasQuantityKind quantitykind:ForcePerArea ;
+    s223:ofSubstance enum:Medium-Air ;
+    s223:unit unit:PA .
 
 ex:00039 a s223:ExternalReference ;
     rdfs:label "TPD-01.Measure.ExternalReference" ;

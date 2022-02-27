@@ -5,8 +5,10 @@ ARGS :  ()
 @prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
 @prefix ex: <urn:ex/test_sensor-001/> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 
@@ -31,7 +33,9 @@ ex:00003 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "ats1.Measure" ;
     s223:hasExternalReference ex:00004 ;
-    s223:ofSubstance enum:Medium-Air .
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:ofSubstance enum:Medium-Air ;
+    s223:unit unit:DEG_C .
 
 ex:00004 a s223:ExternalReference ;
     rdfs:label "ats1.Measure.ExternalReference" ;
@@ -54,7 +58,9 @@ ex:00006 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "ats2.Measure" ;
     s223:hasExternalReference ex:00007 ;
-    s223:ofSubstance enum:Medium-Air .
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:ofSubstance enum:Medium-Air ;
+    s223:unit unit:DEG_C .
 
 ex:00007 a s223:ExternalReference ;
     rdfs:label "ats2.Measure.ExternalReference" ;
@@ -66,6 +72,7 @@ ex:00008 a p223:HumiditySensor,
     rdfs:label "ahs1" ;
     s223:hasMedium enum:Medium-Air ;
     s223:hasProperty ex:00009 ;
+    s223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:measuresSubstance enum:Medium-Air ;
     s223:observesProperty ex:00009 ;
     rdfs:comment "Zone Humidity Sensor with a value of 20" .
@@ -75,8 +82,10 @@ ex:00009 a p223:Measure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "ahs1.Measure" ;
+    s223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:hasValue 20.0 ;
-    s223:ofSubstance enum:Medium-Air .
+    s223:ofSubstance enum:Medium-Air ;
+    s223:unit unit:PERCENT_RH .
 
 ex:00010 a p223:HumiditySensor,
         s223:Device,
@@ -84,6 +93,7 @@ ex:00010 a p223:HumiditySensor,
     rdfs:label "ahs2" ;
     s223:hasMedium enum:Medium-Air ;
     s223:hasProperty ex:00011 ;
+    s223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:measuresSubstance enum:Medium-Air ;
     s223:observesProperty ex:00011 ;
     rdfs:comment "Zone Humidity Sensor with a BACnet reference and a Niagara4 ORD" .
@@ -94,7 +104,9 @@ ex:00011 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "ahs2.Measure" ;
     s223:hasExternalReference ex:00012 ;
-    s223:ofSubstance enum:Medium-Air .
+    s223:hasQuantityKind quantitykind:RelativeHumidity ;
+    s223:ofSubstance enum:Medium-Air ;
+    s223:unit unit:PERCENT_RH .
 
 ex:00012 a s223:ExternalReference ;
     rdfs:label "ahs2.Measure.ExternalReference" ;

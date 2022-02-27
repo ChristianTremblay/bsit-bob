@@ -4,8 +4,10 @@ ARGS :  ()
 @prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
 @prefix ex: <urn:ex/test_device-003/> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 
 
 ex:00001 a s223:Device,
@@ -25,7 +27,9 @@ ex:00002 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "coarse_sensor.Measure" ;
     s223:hasExternalReference ex:00003 ;
-    s223:ofSubstance enum:Particulate-PM10.0 .
+    s223:hasQuantityKind quantitykind:NumberDensity ;
+    s223:ofSubstance enum:Particulate-PM10.0 ;
+    s223:unit unit:NUM-PER-M3 .
 
 ex:00003 a s223:ExternalReference ;
     rdfs:label "coarse_sensor.Measure.ExternalReference" ;
@@ -48,7 +52,9 @@ ex:00005 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "fine_sensor.Measure" ;
     s223:hasExternalReference ex:00006 ;
-    s223:ofSubstance enum:Particulate-PM2.5 .
+    s223:hasQuantityKind quantitykind:NumberDensity ;
+    s223:ofSubstance enum:Particulate-PM2.5 ;
+    s223:unit unit:NUM-PER-M3 .
 
 ex:00006 a s223:ExternalReference ;
     rdfs:label "fine_sensor.Measure.ExternalReference" ;
@@ -71,7 +77,9 @@ ex:00008 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "ultrafine_sensor.Measure" ;
     s223:hasExternalReference ex:00009 ;
-    s223:ofSubstance enum:Particulate-PM1.0 .
+    s223:hasQuantityKind quantitykind:NumberDensity ;
+    s223:ofSubstance enum:Particulate-PM1.0 ;
+    s223:unit unit:NUM-PER-M3 .
 
 ex:00009 a s223:ExternalReference ;
     rdfs:label "ultrafine_sensor.Measure.ExternalReference" ;
