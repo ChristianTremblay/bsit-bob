@@ -256,6 +256,7 @@ class NodeMetaclass(type):
                 _inits.update(supercls._inits)  # type: ignore[attr-defined]
             if hasattr(supercls, "_attr_uriref"):
                 _attr_uriref.update(supercls._attr_uriref)  # type: ignore[attr-defined]
+
         # pick up the attributes defined by annotations
         annotations = attributedict.get("__annotations__", {})
         global _annotation_reference
@@ -269,8 +270,6 @@ class NodeMetaclass(type):
                 "node_type",
                 "label",
                 "comment",
-                "hasQuantityKind",
-                "unit",
             ):
                 continue
 
@@ -293,6 +292,7 @@ class NodeMetaclass(type):
                 raise ValueError(f"unknown annotation for {attr}: {attr_type}")
         logging.debug(f"    - _nodes: {_nodes!r}")
         logging.debug(f"    - _datatypes: {_datatypes!r}")
+
         # look for initializers like hasUnit = QUDT.DEG_F
         for attr, value in attributedict.items():
             if attr.startswith("_"):
