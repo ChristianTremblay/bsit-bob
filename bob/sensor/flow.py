@@ -19,8 +19,8 @@ class FlowMeasure(QuantifiableMeasurement):
 
 
 class FlowSetpoint(QuantifiableProperty):
-    hasQuantityKind: URIRef = quantitykind.Temperature
-    unit: URIRef = unit.DEG_C
+    hasQuantityKind: URIRef = quantitykind.VolumeFlowRate
+    unit: URIRef = unit["FT3-PER-MIN"]
 
 
 class FlowSensor(Sensor):
@@ -45,12 +45,12 @@ class FlowSensor(Sensor):
 
 
 class AirFlowSensor(FlowSensor):
-    hasMedium: URIRef = enum["Medium-Air"]
-    measuresSubstance: URIRef = enum["Medium-Air"]
+    hasMedium: URIRef = s223["Medium-Air"]
+    measuresSubstance: URIRef = s223["Medium-Air"]
     unit: URIRef = unit["FT3-PER-MIN"]
 
 
 class WaterFlowSensor(FlowSensor):
-    hasMedium: URIRef = enum["Medium-Water"]
-    measuresSubstance: URIRef = enum["Medium-Water"]
+    hasMedium: URIRef = s223["Medium-Water"]
+    measuresSubstance: URIRef = s223["Medium-Water"]
     unit: URIRef = unit["GAL_UK-PER-MIN"]

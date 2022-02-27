@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from datetime import datetime
-from bob.core import bind_model_namespace, Node, Property, Value, dump
+from bob.core import bind_model_namespace, Node, Property, dump
 
 from header import sample_header
 

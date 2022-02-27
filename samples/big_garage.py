@@ -10,7 +10,7 @@ from bob.devices.hvac.coil import ElectricalHeatingCoil
 from bob.sensor.movement import MovementSensor
 from bob.sensor.temperature import AirTemperatureSensor
 
-from bob.core import dump, turtle, get_datagraph, bind_model_namespace
+from bob.core import dump, get_datagraph, bind_model_namespace
 
 
 from pathlib import Path
@@ -71,14 +71,14 @@ def test_create_a_simple_garage():
 
 def test_turtle_file():
     dump()
-    result = turtle()
+    result = dump()
     print(result)
 
 
 if __name__ == "__main__":
     bldg = test_create_a_simple_garage()
 
-    result = turtle()
+    result = dump()
     with open("big_garage_results.ttl", "w") as file:
         file.write(result)
     print("Check file : big_garage_results.ttl")
