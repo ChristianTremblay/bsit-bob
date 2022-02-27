@@ -1,4 +1,6 @@
+import logging
 from typing import List, Union, Any
+
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
 from .core import logging, s223, Property
 import decimal
@@ -31,22 +33,27 @@ class QuantifiableProperty(Property):
     hasQuantityKind: URIRef
     unit: URIRef
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        print("ARGS : ", args)
-        if args:
-            _args = list(args)
-            _args[0] = Literal(decimal.Decimal(args[0]), datatype=XSD.decimal)
-            args = tuple(_args)
-            if "hasValue" in kwargs:
-                raise RuntimeError("initialization conflict")
-        else:
+    def __init__(self, value: Any = None, **kwargs: Any) -> None:
+        logging.debug(f"QuantifiableProperty.__init__ {value!r} {kwargs}")
+
+        init_value = None
+        if value is None:
             if "hasValue" in kwargs:
                 init_value = kwargs.pop("hasValue")
-                kwargs["hasValue"] = Literal(
-                    decimal.Decimal(init_value), datatype=XSD.decimal
-                )
+        elif "hasValue" in kwargs:
+            raise RuntimeError("initialization conflict")
+        else:
+            init_value = value
 
-        super().__init__(*args, **kwargs)
+        if init_value is not None:
+            if isinstance(init_value, (int, float)):
+                init_value = Literal(init_value, datatype=XSD.decimal)
+            elif isinstance(init_value, Literal):
+                init_value = Literal(init_value)
+            else:
+                raise TypeError(f"decimal expected: {init_value}")
+
+        super().__init__(init_value, **kwargs)
 
 
 class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):

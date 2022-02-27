@@ -1,0 +1,149 @@
+@prefix ex: <urn:ex/test_device-006_ElectricalPanel/> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+[] a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:hasValue 15.0 ;
+    s223:unit unit:A .
+
+[] a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:hasValue 20.0 ;
+    s223:unit unit:A .
+
+ex:00001 a p223:ElectricalDistributionPanel,
+        s223:Device ;
+    rdfs:label "P-1" ;
+    s223:hasConnectionPoint ex:00002,
+        ex:00003,
+        ex:00004 ;
+    rdfs:comment "Electrical panel full of breakers. 120V-240VAC 60Hz" .
+
+ex:00002 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-1.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-120V_240V.60Hz .
+
+ex:00003 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-1.electricalOutletA" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-120V.60Hz .
+
+ex:00004 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-1.electricalOutletB" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-240V.60Hz .
+
+ex:00005 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:hasValue 15.0 ;
+    s223:unit unit:A .
+
+ex:00006 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:hasValue 20.0 ;
+    s223:unit unit:A .
+
+ex:00007 a p223:ElectricalCircuitBreaker,
+        s223:Device ;
+    rdfs:label "CircBreaker_120_#1" ;
+    p223:hasMaxRange ex:00005 ;
+    s223:hasConnectionPoint ex:00008,
+        ex:00009 ;
+    s223:hasProperty ex:00005 ;
+    rdfs:comment "Office lights #1" .
+
+ex:00008 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CircBreaker_120_#1.electricalInlet" ;
+    s223:connectsThrough ex:00017 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-120V.60Hz .
+
+ex:00009 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CircBreaker_120_#1.electricalOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-120V.60Hz .
+
+ex:00010 a p223:ElectricalCircuitBreaker,
+        s223:Device ;
+    rdfs:label "CircBreaker_240_#2" ;
+    p223:hasMaxRange ex:00006 ;
+    s223:hasConnectionPoint ex:00011,
+        ex:00012 ;
+    s223:hasProperty ex:00006 ;
+    rdfs:comment "Heating Room #1" .
+
+ex:00011 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CircBreaker_240_#2.electricalInlet" ;
+    s223:connectsThrough ex:00018 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-240V.60Hz .
+
+ex:00012 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CircBreaker_240_#2.electricalOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-240V.60Hz .
+
+ex:00013 a p223:ElectricalDistributionPanel,
+        s223:Device ;
+    rdfs:label "P-1" ;
+    s223:contains ex:00007,
+        ex:00010 ;
+    s223:hasConnectionPoint ex:00014,
+        ex:00015,
+        ex:00016 ;
+    rdfs:comment "Electrical panel full of breakers. 120V-240VAC 60Hz" .
+
+ex:00014 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-1.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-120V_240V.60Hz .
+
+ex:00015 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-1.electricalOutletA" ;
+    s223:connectsThrough ex:00017 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-120V.60Hz .
+
+ex:00016 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-1.electricalOutletB" ;
+    s223:connectsThrough ex:00018 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-240V.60Hz .
+
+ex:00017 a s223:Connection ;
+    s223:connectsAt ex:00008,
+        ex:00015 ;
+    s223:hasMedium s223:Electricity-120V.60Hz .
+
+ex:00018 a s223:Connection ;
+    s223:connectsAt ex:00011,
+        ex:00016 ;
+    s223:hasMedium s223:Electricity-240V.60Hz .
+

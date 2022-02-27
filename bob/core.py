@@ -243,6 +243,7 @@ class NodeMetaclass(type):
 
         # include the maps this class is inheriting
         for supercls in reversed(superclasses):
+            logging.debug(f"    - supercls: {supercls!r}")
             if hasattr(supercls, "_data_graph"):
                 _data_graph = supercls._data_graph  # type: ignore[attr-defined]
             if hasattr(supercls, "_schema_graph"):
@@ -256,6 +257,10 @@ class NodeMetaclass(type):
                 _inits.update(supercls._inits)  # type: ignore[attr-defined]
             if hasattr(supercls, "_attr_uriref"):
                 _attr_uriref.update(supercls._attr_uriref)  # type: ignore[attr-defined]
+        logging.debug(f"    - from super classes:")
+        logging.debug(f"    -     _nodes: {_nodes!r}")
+        logging.debug(f"    -     _datatypes: {_datatypes!r}")
+        logging.debug(f"    -     _inits: {_inits!r}")
 
         # pick up the attributes defined by annotations
         annotations = attributedict.get("__annotations__", {})
@@ -733,13 +738,6 @@ class Property(Node):
         observes_reference = None
         if "observesProperty" in kwargs:
             observes_reference = kwargs.pop("observesProperty")
-
-        # unit and hasQuantityKind are not in the s223 namespace
-        # but in the qudt namespace...
-        if "unit" in kwargs:
-            self.unit = kwargs.pop("unit")
-        if "hasQuantityKind" in kwargs:
-            self.hasQuantityKind = kwargs.pop("hasQuantityKind")
 
         super().__init__(**kwargs)
 
