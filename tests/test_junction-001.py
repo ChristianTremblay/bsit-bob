@@ -1,5 +1,5 @@
-from bob.core import bind_model_namespace, dump, turtle
-from bob.core import Junction, Segment, Device, ConnectionPoint
+from bob.core import bind_model_namespace, dump
+from bob.core import Junction, Device, ConnectionPoint
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
 
@@ -13,9 +13,4 @@ j1 = Junction()
 j1.link_to(cp1)
 j1.link_to(cp2)
 
-result = turtle()
 dump()
-
-
-def test_result():
-    print(result)

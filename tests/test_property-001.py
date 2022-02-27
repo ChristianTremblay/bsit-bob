@@ -1,9 +1,11 @@
-from bob.core import bind_model_namespace, dump, turtle
-from bob.core import Property
+from bob.core import (
+    bind_model_namespace,
+    dump,
+)
 from bob.property import (
+    Property,
     ActuatableProperty,
     ObservableProperty,
-    QuantifiableActuatableProperty,
     QuantifiableProperty,
 )
 
@@ -19,15 +21,7 @@ from bob.core import qudt
 
 p4 = QuantifiableProperty(4.5, unit=qudt.DEG_F)
 
-#
-#
-#
-
 p6 = ObservableProperty("green", label="color")
-
-#
-#
-#
 
 
 class TestProperty1(Property):
@@ -36,10 +30,6 @@ class TestProperty1(Property):
 
 p7 = TestProperty1(7)
 
-#
-#
-#
-
 
 class TestProperty2(Property):
     label = "test 2"
@@ -47,9 +37,4 @@ class TestProperty2(Property):
 
 p8 = TestProperty2(8)
 
-result = turtle()
 dump()
-
-
-def test_result():
-    print(result)

@@ -1,14 +1,10 @@
+from copy import copy
+
 from bob.core import (
     bind_model_namespace,
     dump,
-    turtle,
-    ExternalReference,
-    get_datagraph,
-    Value,
     quantitykind,
     unit,
-    enum,
-    quantityValue,
 )
 
 from bob.devices.hvac.gas import GasMonitor
@@ -64,152 +60,125 @@ _config_co2_and_temp = {
     },
 }
 
-
-def test_create_gasmonitordevice():
-    dual_no2_co_configuration_example = {
-        "sensors": {
-            ("CO_sensor", COSensor): {
-                "hasExternalReference": "bacnet://",
-                "hasMinRange": QuantifiableObservableProperty(
-                    0,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
-                    label="CO_sensor.MinRange",
-                ),
-                "hasMaxRange": QuantifiableObservableProperty(
-                    100,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
-                    label="CO_sensor.MaxRange",
-                ),
-            },
-            ("NO2_sensor", NO2Sensor): {
-                "hasExternalReference": "bacnet://",
-                "hasMinRange": QuantifiableObservableProperty(
-                    0,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
-                    label="NO2_sensor.MinRange",
-                ),
-                "hasMaxRange": QuantifiableObservableProperty(
-                    250,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
-                    label="NO2_sensor.MaxRange",
-                ),
-            },
-        }
+dual_no2_co_configuration_example = {
+    "sensors": {
+        ("CO_sensor", COSensor): {
+            "hasExternalReference": "bacnet://",
+            "hasMinRange": QuantifiableObservableProperty(
+                0,
+                hasQuantityKind=quantitykind.DimensionlessRatio,
+                unit=unit.PPM,
+                label="CO_sensor.MinRange",
+            ),
+            "hasMaxRange": QuantifiableObservableProperty(
+                100,
+                hasQuantityKind=quantitykind.DimensionlessRatio,
+                unit=unit.PPM,
+                label="CO_sensor.MaxRange",
+            ),
+        },
+        ("NO2_sensor", NO2Sensor): {
+            "hasExternalReference": "bacnet://",
+            "hasMinRange": QuantifiableObservableProperty(
+                0,
+                hasQuantityKind=quantitykind.DimensionlessRatio,
+                unit=unit.PPM,
+                label="NO2_sensor.MinRange",
+            ),
+            "hasMaxRange": QuantifiableObservableProperty(
+                250,
+                hasQuantityKind=quantitykind.DimensionlessRatio,
+                unit=unit.PPM,
+                label="NO2_sensor.MaxRange",
+            ),
+        },
     }
-    dualgasmonitor = GasMonitor(
-        label="GM-1",
-        comment="Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot",
-        config=dual_no2_co_configuration_example,
-    )
+}
 
-    return dualgasmonitor
+dualgasmonitor = GasMonitor(
+    label="GM-1",
+    comment="Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot",
+    config=dual_no2_co_configuration_example,
+)
 
-
-def test_create_co2monitordevice():
-    _config = {
-        "sensors": {
-            ("CO2_sensor", CO2Sensor): {
-                "hasExternalReference": "bacnet://",
-                "hasMinRange": QuantifiableObservableProperty(
-                    0,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
-                    label="CO2_sensor.MinRange",
-                ),
-                "hasMaxRange": QuantifiableObservableProperty(
-                    2000,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
-                    label="CO2_sensor.MaxRange",
-                ),
-            },
-        }
+co2monitor_config = {
+    "sensors": {
+        ("CO2_sensor", CO2Sensor): {
+            "hasExternalReference": "bacnet://",
+            "hasMinRange": QuantifiableObservableProperty(
+                0,
+                hasQuantityKind=quantitykind.DimensionlessRatio,
+                unit=unit.PPM,
+                label="CO2_sensor.MinRange",
+            ),
+            "hasMaxRange": QuantifiableObservableProperty(
+                2000,
+                hasQuantityKind=quantitykind.DimensionlessRatio,
+                unit=unit.PPM,
+                label="CO2_sensor.MaxRange",
+            ),
+        },
     }
-    co2monitor = GasMonitor(
-        label="CO2-1",
-        comment="CO2 Monitor",
-        config=_config,
-    )
+}
 
-    return co2monitor
+co2monitor = GasMonitor(
+    label="CO2-1",
+    comment="CO2 Monitor",
+    config=co2monitor_config,
+)
 
+co2monitor = GasMonitor(
+    config=_config_co2_and_temp,
+)
 
-def test_create_co2monitordevice_with_temperature():
-    co2monitor = GasMonitor(
-        config=_config_co2_and_temp,
-    )
+_config = copy(_config_co2_and_temp)
+_config["params"]["label"] = "CO2-4"
+co2monitor = GasMonitor(
+    label="CO2-4",
+    comment="CO2 Monitor in basement",
+    config=_config,
+)
 
-    return co2monitor
+building = Building(label="My Building")
+roof = Roof(label="Roof of building")
+floor = Floor(label="Floor1")
+basement = Floor(label="Basement")
+office1 = Office(label="Office 1")
+office2 = Office(label="Office 2")
+office3 = Office(label="Office 3")
+joelsoffice = Office(label="Joel's Office")
 
+office1_hvac = HVACSpace(label="Office 1")
+office2_hvac = HVACSpace(label="Office 2")
+office3_hvac = HVACSpace(label="Office 3")
+basementhvac = HVACSpace(label="Basement HVAC Space")
 
-def test_co2_monitor_in_a_room():
-    _config = _config_co2_and_temp
-    _config["params"]["label"] = "CO2-4"
-    co2monitor = GasMonitor(
-        label="CO2-4",
-        comment="CO2 Monitor in basement",
-        config=_config,
-    )
-    building = Building(label="My Building")
-    roof = Roof(label="Roof of building")
-    floor = Floor(label="Floor1")
-    basement = Floor(label="Basement")
-    office1 = Office(label="Office 1")
-    office2 = Office(label="Office 2")
-    office3 = Office(label="Office 3")
-    joelsoffice = Office(label="Joel's Office")
+zone1 = HVACZone(label="Zone1")
 
-    office1_hvac = HVACSpace(label="Office 1")
-    office2_hvac = HVACSpace(label="Office 2")
-    office3_hvac = HVACSpace(label="Office 3")
-    basementhvac = HVACSpace(label="Basement HVAC Space")
+# Physical relationships
+building > roof
+building > floor
+building > basement > basementhvac
+basement > joelsoffice
+floor > office1
+floor > office2
+floor > office3
 
-    zone1 = HVACZone(label="Zone1")
+# Spaces relationships
+# SPACES     | PHYSICAL
+office1_hvac < office1
+office2_hvac < office2
+office3_hvac < office3
 
-    # Physical relationships
-    building > roof
-    building > floor
-    building > basement > basementhvac
-    basement > joelsoffice
-    floor > office1
-    floor > office2
-    floor > office3
+# basementhvac < basement
 
-    # Spaces relationships
-    # SPACES     | PHYSICAL
-    office1_hvac < office1
-    office2_hvac < office2
-    office3_hvac < office3
+# Zones (group of spaces)
+# Here, Zone1 contains office1 and office2
+office1_hvac < zone1
+office2_hvac < zone1
 
-    # basementhvac < basement
+co2monitor.hasPhysicalLocation = basement
+co2monitor["CO2_sensor"].hasMeasurementLocation = basementhvac
+co2monitor["Temperature_sensor"].hasMeasurementLocation = basementhvac
 
-    # Zones (group of spaces)
-    # Here, Zone1 contains office1 and office2
-    office1_hvac < zone1
-    office2_hvac < zone1
-
-    co2monitor.hasPhysicalLocation = basement
-    co2monitor["CO2_sensor"].hasMeasurementLocation = basementhvac
-    co2monitor["Temperature_sensor"].hasMeasurementLocation = basementhvac
-
-
-def test_turtle_file():
-    dump()
-    result = turtle(filename=f"tests/ttl/{model_name}.ttl")
-    print(result)
-    return result
-
-
-if __name__ == "__main__":
-    dgm = test_create_gasmonitordevice()
-    co2 = test_create_co2monitordevice()
-    co2_temp = test_create_co2monitordevice_with_temperature()
-    test_co2_monitor_in_a_room()
-    result = test_turtle_file()
-    print(f"Check file : tests/ttl/{model_name}.ttl")
-    print(result)
-    graph = get_datagraph()  # this is there to be used with python -i option
+dump()

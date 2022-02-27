@@ -1,4 +1,4 @@
-from bob.core import bind_model_namespace, dump, turtle
+from bob.core import bind_model_namespace, dump
 from bob.core import Device, Property
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
@@ -26,8 +26,3 @@ d3 = TestDevice3(label="d3")
 d3.prop = TestProperty(1)
 
 dump()
-result = turtle()
-
-
-def test_result():
-    print(result)

@@ -1,0 +1,61 @@
+@prefix ex: <urn:ex/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+
+
+ex:00001 a s223:Device,
+        ex:A ;
+    rdfs:label "a" ;
+    s223:hasConnectionPoint ex:00002 ;
+    ex:cOut ex:00002 .
+
+ex:00002 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "a.cOut" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:isConnectionPointOf ex:00001 .
+
+ex:00003 a s223:System,
+        ex:X ;
+    rdfs:label "x" ;
+    s223:hasSystemConnectionPoint ex:00004 ;
+    ex:cOut ex:00004 .
+
+ex:00004 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "x.cOut" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:isSystemConnectionPointOf ex:00003 ;
+    s223:mapsTo ex:00002 .
+
+ex:00005 a s223:Device,
+        ex:B ;
+    rdfs:label "b" ;
+    s223:connectedThrough ex:00009 ;
+    s223:hasConnectionPoint ex:00006 ;
+    ex:cIn ex:00006 .
+
+ex:00006 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "b.cIn" ;
+    s223:connectsThrough ex:00009 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:isConnectionPointOf ex:00005 .
+
+ex:00007 a s223:System,
+        ex:Y ;
+    rdfs:label "y" ;
+    s223:hasSystemConnectionPoint ex:00008 ;
+    ex:cIn ex:00008 .
+
+ex:00008 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "y.cIn" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:isSystemConnectionPointOf ex:00007 ;
+    s223:mapsTo ex:00006 .
+
+ex:00009 a s223:Connection ;
+    s223:connectsAt ex:00006 ;
+    s223:connectsTo ex:00005 .
+

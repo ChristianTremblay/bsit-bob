@@ -1,9 +1,6 @@
 from bob.core import (
     bind_model_namespace,
     dump,
-    turtle,
-    ExternalReference,
-    get_datagraph,
 )
 
 from bob.devices.hvac.particlecounter import ParticleCounter
@@ -32,27 +29,10 @@ particlecounter_config = {
     }
 }
 
+pm = ParticleCounter(
+    label="PM-1",
+    comment="Particulate Measurement Station AKA particle counter",
+    config=particlecounter_config,
+)
 
-def test_create_particulatemeasuredevice():
-    pm = ParticleCounter(
-        label="PM-1",
-        comment="Particulate Measurement Station AKA particle counter",
-        config=particlecounter_config,
-    )
-
-    return pm
-
-
-def test_turtle_file():
-    dump()
-    result = turtle(filename=f"tests/ttl/{model_name}.ttl")
-    print(result)
-    return result
-
-
-if __name__ == "__main__":
-    pm = test_create_particulatemeasuredevice()
-    result = test_turtle_file()
-    print(f"Check file : tests/ttl/{model_name}.ttl")
-    print(result)
-    graph = get_datagraph()  # this is there to be used with python -i option
+dump()

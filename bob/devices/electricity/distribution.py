@@ -1,8 +1,8 @@
 from re import S, sub
-from rdflib import URIRef
+from rdflib import URIRef, Literal
 
 from bob.property import QuantifiableObservableProperty
-from ...core import s223, p223, enum, Device, Value, quantitykind, unit, Medium
+from ...core import s223, p223, enum, Device, quantitykind, unit, Medium
 from ...connections.electricity import (
     Electricity,
     ElectricalConnection,
@@ -32,7 +32,7 @@ __namespace__ = p223
 
 class Transformer(Device):
     node_type = p223.ElectricalTransformer
-    hasPower: Value
+    hasPower: Literal
 
     def __init__(self, **kwargs):
         try:

@@ -52,7 +52,7 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 
 # options
 MANDITORY_LABEL = True
-EXPLICIT_RECIPROCITY = False  # If true, isSomethingOf kind of relationships will be added making redundant links between nodes.
+INCLUDE_INVERSE = False  # include inverse relations
 
 # cleanup annotation references, i.e. "System" to _nodes[attr] = System
 _annotation_reference: Dict[str, type] = {}
@@ -210,20 +210,7 @@ def dump(
     file.write(content)
 
 
-def turtle(
-    graph: Graph = data_graph, format: str = "turtle", filename: str = None
-) -> None:
-    content = graph.serialize(format=format)
-    if not isinstance(content, str):
-        content = content.decode("utf-8")
-
-    if filename:
-        with open(filename, "w") as file:
-            file.write(content)
-    return content
-
-
-def get_datagraph(graph: Graph = data_graph) -> None:
+def get_datagraph(graph: Graph = data_graph) -> Graph:
     content = graph
     return content
 
@@ -534,16 +521,6 @@ class Node(metaclass=NodeMetaclass):
         if self.comment:
             self._data_graph.add((self.node, RDFS.comment, Literal(self.comment)))
 
-        if isinstance(self, (Property, Value)):
-            self.hasQuantityKind = getattr(self, "hasQuantityKind", "")
-            if self.hasQuantityKind:
-                self._data_graph.add(
-                    (self.node, qudt.hasQuantityKind, self.hasQuantityKind)
-                )
-            self.unit = getattr(self, "unit", "")
-            if self.unit:
-                self._data_graph.add((self.node, qudt.unit, self.unit))
-
         if hasattr(self, "node_type"):
             if self.node_type is not None:
                 self._data_graph.add((self.node, RDF.type, self.node_type))
@@ -606,18 +583,12 @@ class Node(metaclass=NodeMetaclass):
                         f"class {self._nodes[attr]!r} for attribute {attr!r} not found"
                     )
                 self._nodes[attr] = node_class
-            elif not self._nodes[attr]:
-                # This is weird case for isExternalReferenceOf.
-                # Where even if it's typed as Property
-                # it's not working...
-                if attr == "isExternalReferenceOf":
-                    node_class = Property
-                    self._nodes[attr]
-
             else:
                 node_class = cast(type, self._nodes[attr])
+
             # pass the value to the class to build one
             if not isinstance(value, node_class):
+                ### if the node class doesn't allow passing an arg it SHOULD fail
                 # This solves a bug when creating devices
                 # where the number of argument of value is wrong
                 # TypeError: __init__() takes 1 positional argument but 2 were given
@@ -632,14 +603,13 @@ class Node(metaclass=NodeMetaclass):
             if isinstance(value, Node):
                 self._data_graph.add((self.node, self._attr_uriref[attr], value.node))  # type: ignore[attr-defined]
 
-            # if the value is a property, link property to the node.  The
-            # Value has a property called 'isValueOf' that is excluded.
-            # ExternalReference have 'isExternalReferenceOf'
-            # observesProperty have isObservedBy
-            if isinstance(value, Property) and (
-                not (isinstance(self, (Value, ExternalReference)))
-            ):
+            # if the value is a property, link it to the node
+            if isinstance(value, Property):
                 self.add_property(value)
+
+            # if the value is an external reference, link it to the node
+            if isinstance(value, ExternalReference):
+                self.add_external_reference(value)
 
         # if this needs some datatype decoration, turn it into a literal
         if attr in self._datatypes:
@@ -679,58 +649,13 @@ class Node(metaclass=NodeMetaclass):
 
         # link the two together
         self._data_graph.add((self.node, s223.hasProperty, prop.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self._data_graph.add((prop.node, s223.isPropertyOf, self.node))
 
         return prop
 
     def __repr__(self):
         return f"{self.__dict__}"
-
-
-class Value(Node):
-    """
-    Value node with the option to pass a value that gets turned into a
-    Literal.  The 'lang' and 'datatype' values are forwarded to rdflib.
-    """
-
-    node_type: URIRef = s223.Value
-    isValueOf: Property
-
-    hasTimestamp: Literal
-    hasSimpleValue: Literal
-    hasQuantityKind: URIRef
-    unit: URIRef
-
-    def __init__(
-        self,
-        arg: Any = None,
-        *,
-        lang: Optional[str] = None,
-        datatype: Optional[URIRef] = None,
-        **kwargs: Any,
-    ):
-        logging.debug(
-            f"Value.__init__ {arg!r} lang={lang!r} datetype={datatype!r} {kwargs}"
-        )
-        if arg is not None:
-            if "hasSimpleValue" in kwargs:
-                raise RuntimeError("initialization conflict")
-
-            if isinstance(arg, Literal):
-                pass
-            elif datatype is not None:
-                arg = Literal(arg, datatype=datatype)
-            elif lang is not None:
-                arg = Literal(arg, lang=lang)
-
-            kwargs["hasSimpleValue"] = arg
-        if "unit" in kwargs:
-            self.unit = kwargs.pop("unit")
-        if "hasQuantityKind" in kwargs:
-            self.hasQuantityKind = kwargs.pop("hasQuantityKind")
-
-        super().__init__(**kwargs)
 
 
 class ExternalReference(Node):
@@ -781,35 +706,31 @@ class Property(Node):
     node_type: URIRef = None
     hasValue: Literal
     hasExternalReference: ExternalReference
-    # isObservedBy: Device  # a Sensor in fact, but it's not defined yet
-    isValueOf: Literal
 
     # override this for a specialize subclass
-    _value_class: type = Value
     _ExternalReference_class: type = ExternalReference
-    # _observes_class: type = Sensor
 
-    def __init__(self, arg: Any = None, **kwargs: Any):
-        logging.debug(f"Property.__init__ {arg!r} {kwargs}")
+    def __init__(self, value: Any = None, **kwargs: Any):
+        logging.debug(f"Property.__init__ {value!r} {kwargs}")
+
         init_value = None
-        external_reference = None
-        observes_reference = None
-        if arg is None:
+        if value is None:
             if "hasValue" in kwargs:
                 init_value = kwargs.pop("hasValue")
         elif "hasValue" in kwargs:
             raise RuntimeError("initialization conflict")
         else:
-            init_value = arg
+            init_value = value
 
+        external_reference = None
         if "hasExternalReference" in kwargs:
-            if kwargs["hasExternalReference"]:
-                if init_value:
-                    raise RuntimeError(
-                        "initialization conflict, can't have a value and an external datasource"
-                    )
+            if init_value:
+                raise RuntimeError(
+                    "initialization conflict, can't have a value and an external datasource"
+                )
             external_reference = kwargs.pop("hasExternalReference")
 
+        observes_reference = None
         if "observesProperty" in kwargs:
             observes_reference = kwargs.pop("observesProperty")
 
@@ -822,19 +743,12 @@ class Property(Node):
 
         super().__init__(**kwargs)
 
-        # if there is an initial value, add/create and link to it
+        # if there is an initial value, link to it
         if init_value is not None:
-            if not isinstance(init_value, (Value, Literal)):
-                init_value = self._value_class(
-                    init_value,
-                    label=f"{self.label}.Value",
-                )
-
-            # link the two together
+            if not isinstance(init_value, Literal):
+                init_value = Literal(init_value)
             self.hasValue = init_value
-            if EXPLICIT_RECIPROCITY:
-                if not isinstance(init_value, Literal):
-                    init_value.isValueOf = self
+
         # same for ExternalReference
         if external_reference is not None:
             if not isinstance(external_reference, ExternalReference):
@@ -845,39 +759,44 @@ class Property(Node):
 
             # link the two together
             self.hasExternalReference = external_reference
-            if EXPLICIT_RECIPROCITY:
+            if INCLUDE_INVERSE:
                 external_reference.isExternalReferenceOf = self
 
-        # same for observesProperty
-        # if observes_reference is not None:
-        # if not isinstance(observes_reference, Device):
-        #    observes_reference = self._ExternalReference_class(observes_reference)
-        # sensor is not defined yet here... cross finger class type is good
+    def add_value(self, value: Any) -> None:
+        """Add an additional value to a property."""
+        if not isinstance(value, Literal):
+            value = Literal(value)
+
+        self._data_graph.add((self.node, s223.hasValue, value.node))
+
+    def add_external_reference(self, external_reference: ExternalReference) -> None:
+        """Add an additional external reference to a property."""
+        if not isinstance(external_reference, self._ExternalReference_class):
+            external_reference = self._ExternalReference_class(
+                external_reference,
+                label=f"{self.label}.ExternalReference",
+            )
 
         # link the two together
-        #    self.observesProperty = observes_reference
-        #    observes_reference.isObservedBy = self
-
-    def add_value(self, value: Value) -> Value:
-        """Add an additional value to a property, returns the value added."""
-        assert isinstance(value, (Value, ExternalReference))
-        if isinstance(value, Value):
-            # link the two together
-            self._data_graph.add((self.node, s223.hasValue, value.node))
-            if EXPLICIT_RECIPROCITY:
-                value.isValueOf = self
-
-        if isinstance(value, ExternalReference):
-            # link the two together
-            self._data_graph.add((self.node, s223.hasExternalReference, value.node))
-            if EXPLICIT_RECIPROCITY:
-                value.isExternalReferenceOf = self
-
-        return value
+        self._data_graph.add(
+            (self.node, s223.hasExternalReference, external_reference.node)
+        )
+        if INCLUDE_INVERSE:
+            external_reference.isExternalReferenceOf = self
 
 
 class Domain(Node):
     _data_graph: Graph = schema_graph
+
+
+Electrical = Domain(node_iri=s223.Electrical)
+Fire = Domain(node_iri=s223.Fire)
+HVAC = Domain(node_iri=s223.HVAC)
+Lighting = Domain(node_iri=s223.Lighting)
+Occupancy = Domain(node_iri=s223.Occupancy)
+Security = Domain(node_iri=s223.Security)
+Networking = Domain(node_iri=s223.Networking)
+Physical = Domain(node_iri=s223.Physical)
 
 
 class Role(Node):
@@ -1094,7 +1013,7 @@ class System(Node):
 
         if isinstance(other, (Device, System)):
             self._data_graph.add((self.node, s223.contains, other.node))
-            if EXPLICIT_RECIPROCITY:
+            if INCLUDE_INVERSE:
                 self._data_graph.add((other.node, s223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
@@ -1110,7 +1029,7 @@ class System(Node):
         logging.debug(f"__lt__ {self} {other}")
 
         if isinstance(other, System):
-            if EXPLICIT_RECIPROCITY:
+            if INCLUDE_INVERSE:
                 self._data_graph.add((self.node, s223.isContainedIn, other.node))
             self._data_graph.add((other.node, s223.contains, self.node))
         else:
@@ -1177,7 +1096,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
         # link connection to the connection point and its device
         self._data_graph.add((self.node, s223.connectsAt, connection_point.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self._data_graph.add(
                 (
                     connection_point.isConnectionPointOf.node,
@@ -1205,7 +1124,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
         # link connection to the connection point and its device
         self._data_graph.add((self.node, s223.connectsAt, connection_point.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self._data_graph.add(
                 (
                     connection_point.isConnectionPointOf.node,
@@ -1286,7 +1205,7 @@ class ConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add((thing.node, s223.hasConnectionPoint, self.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self.isConnectionPointOf = thing
 
         # this is one of the connection points of the device
@@ -1381,7 +1300,7 @@ class SystemConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add((system.node, s223.hasSystemConnectionPoint, self.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self.isSystemConnectionPointOf = system
 
         # this is one of the connection points of the system
@@ -1474,7 +1393,7 @@ class Zone(Node):
             raise TypeError("space expected")
 
         self._data_graph.add((self.node, s223.contains, other.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self._data_graph.add((other.node, s223.isContainedIn, self.node))
 
         return self
@@ -1497,7 +1416,7 @@ class ZoneConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add((zone.node, s223.hasZoneConnectionPoint, self.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self.isZoneConnectionPointOf = zone
 
         # this is one of the connection points of the zone
@@ -1545,7 +1464,7 @@ class PhysicalSpace(Node):
 
         if isinstance(other, PhysicalSpace):
             self._data_graph.add((self.node, s223.contains, other.node))
-            if EXPLICIT_RECIPROCITY:
+            if INCLUDE_INVERSE:
                 self._data_graph.add((other.node, s223.isContainedIn, self.node))
         elif isinstance(other, DomainSpace):
             self._data_graph.add((self.node, s223.encloses, other.node))
@@ -1566,20 +1485,10 @@ class PhysicalSpace(Node):
             raise TypeError("physical space expected")
 
         self._data_graph.add((other.node, s223.contains, self.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self._data_graph.add((self.node, s223.isContainedIn, other.node))
 
         return other
-
-
-Electrical = Domain(node_iri=s223.Electrical)
-Fire = Domain(node_iri=s223.Fire)
-HVAC = Domain(node_iri=s223.HVAC)
-Lighting = Domain(node_iri=s223.Lighting)
-Occupancy = Domain(node_iri=s223.Occupancy)
-Security = Domain(node_iri=s223.Security)
-Networking = Domain(node_iri=s223.Networking)
-Physical = Domain(node_iri=s223.Physical)
 
 
 def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
@@ -1834,7 +1743,7 @@ class Device(Connectable):
             raise TypeError("device or system expected")
 
         self._data_graph.add((self.node, s223.contains, other.node))
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self._data_graph.add((other.node, s223.isContainedIn, self.node))
 
         return self
@@ -1846,7 +1755,7 @@ class Device(Connectable):
         """
         if not isinstance(other, (Device, System)):
             raise TypeError("device or system expected")
-        if EXPLICIT_RECIPROCITY:
+        if INCLUDE_INVERSE:
             self._data_graph.add((self.node, s223.isContainedIn, other.node))
         self._data_graph.add((other.node, s223.contains, self.node))
 
@@ -1873,7 +1782,7 @@ class DomainSpace(Connectable):
 
         if isinstance(other, Zone):
             self._data_graph.add((other.node, s223.contains, self.node))
-            if EXPLICIT_RECIPROCITY:
+            if INCLUDE_INVERSE:
                 self._data_graph.add((self.node, s223.isContainedIn, other.node))
         elif isinstance(other, PhysicalSpace):
             self._data_graph.add((other.node, s223.encloses, self.node))

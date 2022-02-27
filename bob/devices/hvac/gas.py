@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from ...core import s223, p223, enum, Device, quantitykind, unit, Value
+from ...core import s223, p223, enum, Device, quantitykind, unit
 from ...property import QuantifiableObservableProperty
 
 from ...connections.air import (

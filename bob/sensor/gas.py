@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef
 
-from ..core import s223, p223, enum, quantitykind, unit, Value, Medium
+from ..core import s223, p223, enum, quantitykind, unit, Medium
 
 from .sensor import Sensor, QuantifiableObservableProperty, split_kwargs
 

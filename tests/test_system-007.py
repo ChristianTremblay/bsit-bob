@@ -1,6 +1,6 @@
-import sys
-from bob.core import *
+from bob import core
 from bob.core import (
+    bind_model_namespace,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     InletConnectionPoint,
@@ -8,11 +8,11 @@ from bob.core import (
     Device,
     System,
     Connection,
+    dump,
 )
-from bob import core
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")
-core.EXPLICIT_RECIPROCITY = True
+core.INCLUDE_INVERSE = True
 
 
 class A(Device):
@@ -44,8 +44,3 @@ c = Connection()
 x.cOut >> c >> y.cIn
 
 dump()
-result = turtle()
-
-
-def test_result():
-    print(result)
