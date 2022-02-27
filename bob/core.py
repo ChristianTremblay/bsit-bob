@@ -202,12 +202,20 @@ def register_medium(medium_uri: URIRef, cls: Any) -> None:
 
 
 def dump(
-    graph: Graph = data_graph, file: TextIO = sys.stdout, format: str = "turtle"
-) -> None:
+    graph: Graph = data_graph,
+    file: TextIO = sys.stdout,
+    filename: str = None,
+    format: str = "turtle",
+) -> str:
     content = graph.serialize(format=format)
     if not isinstance(content, str):
         content = content.decode("utf-8")
+
+    if filename:
+        with open(filename, "w") as ttl_file:
+            ttl_file.write(content)
     file.write(content)
+    return content
 
 
 def get_datagraph(graph: Graph = data_graph) -> Graph:
@@ -672,7 +680,7 @@ class ExternalReference(Node):
     """
 
     node_type: URIRef = s223.ExternalReference
-    isExternalReferenceOf: Property
+    # isExternalReferenceOf: Property
     hasRef: Literal
 
     def __init__(
@@ -746,7 +754,6 @@ class Property(Node):
             if not isinstance(init_value, Literal):
                 init_value = Literal(init_value)
             self.hasValue = init_value
-
         # same for ExternalReference
         if external_reference is not None:
             if not isinstance(external_reference, ExternalReference):

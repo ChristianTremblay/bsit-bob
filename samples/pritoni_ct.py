@@ -14,7 +14,6 @@ from bob.core import (
     bind_namespace,
     quantitykind,
     enum,
-    turtle,
     get_datagraph,
     bind_model_namespace,
     dump,
@@ -312,51 +311,57 @@ def test_pritoni():
     vav2["VAV2_ZN-T"].hasPhysicalLocation = corridor
 
     # Now we build lights for Kitchenette
-    kitchenette_bulb = Light(label="Bulb1_Kitch", comment="Light Bulb in kitchenette")
-    kitchenette_movement = MovementSensor(
-        label="Bulb1_Mov", comment="Movement sensor for kitchenette bulb 1"
+    kitchenette_luminaire = Light(
+        label="KitchenetteLuminaire1", comment="Luminaire in kitchenette"
     )
-    kitchenette_bulb.lightOutlet >> kitchenette_lightspace.lightInlet
+    kitchenette_movement = MovementSensor(
+        label="Bulb1_Mov", comment="Movement sensor for kitchenette luminaire 1"
+    )
+    kitchenette_luminaire.lightOutlet >> kitchenette_lightspace.lightInlet
     kitchenette_movement.hasMeasurementLocation = kitchenette_lightspace
     kitchenette_movement.hasPhysicalLocation = kitchenette
 
     # Now we build lights for Private Office
-    privateoffice_bulb = Light(
-        label="Bulb2_PrivateOffice", comment="Light Bulb in Private Office"
+    privateoffice_luminaire = Light(
+        label="PrivateOfficeLuminaire1", comment="Luminaire in Private Office"
     )
     privateoffice_movement = MovementSensor(
         label="Bulb2_Mov", comment="Movement sensor for Privtae Office bulb"
     )
-    privateoffice_bulb.lightOutlet >> privateoffice_lightspace.lightInlet
+    privateoffice_luminaire.lightOutlet >> privateoffice_lightspace.lightInlet
     privateoffice_movement.hasMeasurementLocation = privateoffice_lightspace
     privateoffice_movement.hasPhysicalLocation = private_office
 
     # Now we build lights for Corridor
-    corridor_bulb = Light(label="Bulb3_Corridor", comment="Light Bulb in Corridor")
+    corridor_luminaire = Light(
+        label="CorridorLuminaire1", comment="Luminaire in Corridor"
+    )
     corridor_movement = MovementSensor(
         label="Bulb3_Mov", comment="Movement sensor for Corridor bulb"
     )
-    corridor_bulb.lightOutlet >> corridor_lightspace.lightInlet
+    corridor_luminaire.lightOutlet >> corridor_lightspace.lightInlet
     corridor_movement.hasMeasurementLocation = corridor_lightspace
     corridor_movement.hasPhysicalLocation = corridor
 
     # Now we build lights for Bathroom
-    bathroom_bulb = Light(label="Bulb4_Corridor", comment="Light Bulb in Bathroom")
+    bathroom_luminaire = Light(
+        label="CorridorLuminaire1", comment="Luminaire in Bathroom"
+    )
     bathroom_movement = MovementSensor(
         label="Bulb4_Mov", comment="Movement sensor for Bathroom bulb"
     )
-    bathroom_bulb.lightOutlet >> bathroom_lightspace.lightInlet
+    bathroom_luminaire.lightOutlet >> bathroom_lightspace.lightInlet
     bathroom_movement.hasMeasurementLocation = bathroom_lightspace
     bathroom_movement.hasPhysicalLocation = bathroom
 
     # Now we build lights for OpenOffice East
-    openofficeEast_bulb = Light(
-        label="Bulb5_OpenOfficeE", comment="Light Bulb in OpenOffice E"
+    openofficeEast_luminaire = Light(
+        label="OpenOfficeEastLuminaire1", comment="Luminaire in OpenOffice East"
     )
     openofficeEast_movement = MovementSensor(
         label="Bulb5_Mov", comment="Movement sensor for OpenOffice East"
     )
-    openofficeEast_bulb.lightOutlet >> openofficeEast_lightspace.lightInlet
+    openofficeEast_luminaire.lightOutlet >> openofficeEast_lightspace.lightInlet
     openofficeEast_movement.hasMeasurementLocation = openofficeEast_lightspace
     openofficeEast_movement.hasPhysicalLocation = openoffice
     # Windows are good for natural light
@@ -364,13 +369,13 @@ def test_pritoni():
     window2.naturalLight >> openofficeEast_lightspace.naturalLightInlet
 
     # Now we build lights for OpenOffice West
-    openofficeWest_bulb = Light(
-        label="Bulb5_OpenOfficeW", comment="Light Bulb in OpenOffice A"
+    openofficeWest_luminaire = Light(
+        label="OpenOfficeWestLuminaire1", comment="Luminaire in OpenOffice West"
     )
     openofficeWest_movement = MovementSensor(
         label="Bulb6_Mov", comment="Movement sensor for Open Office West"
     )
-    openofficeWest_bulb.lightOutlet >> openofficeWest_lightspace.lightInlet
+    openofficeWest_luminaire.lightOutlet >> openofficeWest_lightspace.lightInlet
     openofficeWest_movement.hasMeasurementLocation = openofficeWest_lightspace
     openofficeWest_movement.hasPhysicalLocation = openoffice
 
@@ -391,9 +396,6 @@ def test_pritoni():
 
 if __name__ == "__main__":
     r = test_pritoni()
-    result = turtle()
-    with open("tests/ttl/Pritoni.ttl", "w") as file:
-        file.write(result)
+    result = dump(filename="tests/ttl/Pritoni.ttl")
     print("Check file : tests/ttl/Pritoni.ttl")
-    print(result)
     graph = get_datagraph()

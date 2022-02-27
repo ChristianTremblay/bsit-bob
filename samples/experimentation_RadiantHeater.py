@@ -1,7 +1,7 @@
 from bob.connections.air import AirConnectionPoint, AirConnection
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Roof, Floor, Office
-from bob.core import dump, turtle, get_datagraph
+from bob.core import dump, get_datagraph
 from bob.devices.hvac.coil import ElectricalRadiantHeatingCoil, ElectricalHeatingCoil
 from bob.connections.air import AirOutletConnectionPoint, AirInletConnectionPoint
 
@@ -239,14 +239,14 @@ def test_create_a_building_and_put_a_heater_4():
 
 def test_turtle_file():
     dump()
-    result = turtle()
+    result = dump()
     print(result)
 
 
 if __name__ == "__main__":
     bldg = test_create_a_building_and_put_a_heater_4()
 
-    result = turtle()
+    result = dump()
     with open("test_device-007_RadiantHeater_results.ttl", "w") as file:
         file.write(result)
     print("Check file : test_device-007_RadiantHeater_results.ttl")

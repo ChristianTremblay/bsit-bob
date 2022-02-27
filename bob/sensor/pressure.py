@@ -26,7 +26,7 @@ class DifferentialStaticPressureSetpoint(QuantifiableProperty):
 class DifferentialStaticPressureSensor(Sensor):
     node_type: URIRef = s223.DifferentialSensor
     observesProperty: DifferentialStaticPressureMeasure
-    measuresSubstance: URIRef = enum["Medium-Air"]
+    measuresSubstance: URIRef = s223["Medium-Air"]
     hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
     hasMeasurementLocationLow: Node
 

@@ -20,7 +20,7 @@ class MovementMeasure(Measurement):
 class MovementSensor(Sensor):
     node_type: URIRef = p223.MovementSensor
     observesProperty: MovementMeasure
-    measuresSubstance: URIRef = enum["Medium-Light"]
+    measuresSubstance: URIRef = s223["Medium-Light"]
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
