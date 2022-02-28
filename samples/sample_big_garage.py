@@ -1,21 +1,11 @@
 """
 Simple garage with one physical space
 Two (2) lighting spaces
-In each ligth space there is a movement detector for each set of ligth
+In each lighting space there is a movement detector for each set of lights
 """
 from pathlib import Path
 
-from bob.core import (
-    s223,
-    bind_model_namespace,
-    System,
-    SystemConnectionPoint,
-    dump,
-)
-from bob.connections.air import (
-    AirInletSystemConnectionPoint,
-    AirOutletSystemConnectionPoint,
-)
+from bob.core import bind_model_namespace, dump
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace
 from bob.space.physical import Building, Roof, Floor, Office
@@ -26,6 +16,7 @@ from bob.devices.hvac.coil import ElectricalHeatingCoil
 
 from bob.sensor.movement import MovementSensor
 from bob.sensor.temperature import AirTemperatureSensor
+from header import sample_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -74,15 +65,4 @@ movement_2.hasMeasurementLocation = lighting_space_back
 movement_1.hasPhysicalLocation = big_garage
 movement_2.hasPhysicalLocation = big_garage
 
-# SYSTEM
-fancoil = System(label="Fan coil")
-fc_airInlet = AirInletSystemConnectionPoint(fancoil, label="Fan coil air inlet")
-fc_airOutlet = AirOutletSystemConnectionPoint(fancoil, label="Fan coil air outlet")
-fc_occupancy = SystemConnectionPoint(
-    fancoil, label="Occupancy Inlet", hasDirection=s223["Direction-Inlet"]
-)
-fc_occupancy.mapsTo = movement_1
-fc_airInlet.mapsTo = fan.airInlet
-fc_airOutlet.mapsTo = heating_coil.airOutlet
-
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))

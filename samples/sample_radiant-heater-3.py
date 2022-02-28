@@ -24,6 +24,7 @@ from bob.connections.air import (
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Roof, Floor, Office
 from bob.devices.hvac.coil import ElectricalRadiantHeatingCoil, ElectricalHeatingCoil
+from header import sample_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -84,4 +85,4 @@ airFromBaseboard = AirInletConnectionPoint(
 airFromBaseboard << baseboard
 airFromSpace >> baseboard
 
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))

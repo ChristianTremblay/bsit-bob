@@ -37,6 +37,7 @@ from bob.signal import (
     AnalogIn,
 )
 from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
+from header import sample_header
 
 # from header import g36_header
 
@@ -155,4 +156,4 @@ rtu["RA-T"].hasPhysicalLocation = roof
 
 # g36_header(model_name)
 
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))

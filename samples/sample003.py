@@ -50,5 +50,4 @@ zone.supplyAir.maps_to(scp)
 # output of the coil goes to the zone
 # coil1 >> zone
 
-sample_header(model_name)
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))

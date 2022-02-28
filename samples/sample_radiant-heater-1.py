@@ -1,6 +1,3 @@
-"""
-Bidirectional idea
-"""
 from pathlib import Path
 
 from bob.core import (
@@ -16,6 +13,7 @@ from bob.connections.air import (
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Roof, Floor, Office
 from bob.devices.hvac.coil import ElectricalRadiantHeatingCoil, ElectricalHeatingCoil
+from header import sample_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -60,9 +58,14 @@ basementhvac < basement
 office1_hvac < zone1
 office2_hvac < zone1
 
-baseboard = ElectricalRadiantHeatingCoil(label="Baseboard heater")
-# AirInJoelsOfficeSpace = AirConnection(label="Air inside the office")
+baseboard = ElectricalHeatingCoil(label="Baseboard heater")
+AirInJoelsOfficeSpace = AirConnection(label="Air inside the office")
+joelsoffice_hvac.airFromSpace = AirOutletConnectionPoint
+joelsoffice_hvac.airFromBaseboard = AirInletConnectionPoint
 
-joelsoffice_hvac.indoorAir.radiantHeating << baseboard.airContact
+AirInJoelsOfficeSpace << joelsoffice_hvac.airOutlet
+AirInJoelsOfficeSpace >> joelsoffice_hvac.airInlet
+AirInJoelsOfficeSpace << baseboard
+AirInJoelsOfficeSpace >> baseboard
 
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))

@@ -44,5 +44,4 @@ p32 = Part2(label="p32")
 p31 < p32 < d3
 
 # dump the result
-sample_header(model_name)
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))

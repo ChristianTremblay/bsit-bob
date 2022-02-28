@@ -59,5 +59,4 @@ s4_icp = InletSystemConnectionPoint(s4, label="s4.icp", mapsTo=d4_cp)
 s3 >> s4
 
 # dump the result
-sample_header(model_name)
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))

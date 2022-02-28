@@ -40,5 +40,4 @@ room_101_lighting = DomainSpace(label="building.1fl.lighting")
 room_101_lighting < room_101
 
 # dump the result
-sample_header(model_name)
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))

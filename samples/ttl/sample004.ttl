@@ -1,0 +1,51 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/sample/sample004
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+@prefix ex: <urn:ex/sample004/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+<http://data.ashrae.org/standard223/1.0/data/sample004>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample004> ;
+  rdfs:label "sample004" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+ex:00001 a s223:HVACZone,
+        s223:Zone ;
+    rdfs:label "Zone" ;
+    s223:airInlet ex:00002 ;
+    s223:airOutlet ex:00003 ;
+    s223:hasDomain s223:HVAC ;
+    s223:hasZoneConnectionPoint ex:00002,
+        ex:00003 .
+ex:00002 a s223:InletZoneConnectionPoint,
+        s223:ZoneConnectionPoint ;
+    rdfs:label "Zone.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00003 a s223:OutletZoneConnectionPoint,
+        s223:ZoneConnectionPoint ;
+    rdfs:label "Zone.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00004 a p223:VAV,
+        s223:System ;
+    rdfs:label "VAV1" ;
+    p223:airInlet ex:00005 ;
+    p223:airOutlet ex:00006 ;
+    s223:hasSystemConnectionPoint ex:00005,
+        ex:00006 ;
+    rdfs:comment "A VAV Box as a system" .
+ex:00005 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "VAV1.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00006 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "VAV1.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00002 .

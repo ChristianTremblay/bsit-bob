@@ -47,13 +47,13 @@ from bob.signal import (
 )
 from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
-# from header import g36_header
+from header import sample_header
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_pritoni():
-    model_name = "pritoni"
-    __namespace__ = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
-
     vav1_config = {
         "params": {"label": "VAVBox1", "comment": "VAV Serving HVAC Zone 1"},
         "sensors": {
@@ -396,6 +396,6 @@ def test_pritoni():
 
 if __name__ == "__main__":
     r = test_pritoni()
-    result = dump(filename="tests/ttl/Pritoni.ttl")
+    result = dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
     print("Check file : tests/ttl/Pritoni.ttl")
     graph = get_datagraph()

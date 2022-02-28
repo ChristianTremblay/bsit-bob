@@ -52,6 +52,7 @@ from bob.signal import (
     AnalogOut,
     AnalogIn,
 )
+from header import sample_header
 
 # from header import g36_header
 
@@ -136,4 +137,4 @@ class RooftopUnit(System):
 
 r = RooftopUnit(node_iri=ex.rtu, label="rtu")
 # g36_header(model_name)
-dump()
+dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
