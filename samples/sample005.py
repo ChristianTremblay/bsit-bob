@@ -1,11 +1,9 @@
 from pathlib import Path
 
-from bob import bind_model_namespace, dump
-from bob.hvac import (
-    AirConnection,
-    HVACZone1,
-    VAV2,
-)
+from bob.core import bind_model_namespace, dump
+from bob.connections.air import AirConnection
+from bob.systems.archives.hvac import HVACZone1
+from bob.systems.archives.vav import VAV2
 
 # from header import sample_header
 

@@ -1,28 +1,29 @@
 from typing import Any
 
-from ....connections.water import (
+from ...core import s223, Device, System
+from ...connections.water import (
     HotWaterInletSystemConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
-
-from ....core import s223, System
-
-from ....connections.air import (
+from ...connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-
-from ....connections.electricity import (
+from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
 )
-from ....devices.hvac.coil import ElectricalHeatingCoil
-from ....devices.hvac.scr import SCR
-from ....devices.hvac.valve import HotWaterValve
+from ...connections.water import (
+    HotWaterInletConnectionPoint,
+    HotWaterOutletConnectionPoint,
+)
+from ...devices.hvac.coil import ElectricalHeatingCoil
+from ...devices.hvac.scr import SCR
+from ...devices.hvac.valve import HotWaterValve
 
-from ....signal import AnalogIn
+from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 
@@ -56,17 +57,27 @@ class ElectricalHeatingCoilWithSCR(System):
         self.scr_modulation = self.scr.modulation
 
 
-class HotWaterCoil(System):
+class HotWaterCoil(Device):
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
+    hotWaterSupply: HotWaterInletConnectionPoint
+    hotWaterReturn: HotWaterOutletConnectionPoint
+
+
+class HotWaterCoil2(System):
     """
-    This is an example of a hot water coil that contains its valve as a
-    subsystem and makes the valve position available as its own connection
-    point.
+    This is an example of a hot water coil that contains a hot water valve
+    device and makes the valve position available as its own analog output
+    signal.
     """
+
+    node_type = None
 
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
-    hotWaterInlet: HotWaterInletSystemConnectionPoint
-    hotWaterOutlet: HotWaterOutletSystemConnectionPoint
+    hotWaterSupply: HotWaterInletSystemConnectionPoint
+    hotWaterReturn: HotWaterOutletSystemConnectionPoint
+    hotWaterValvePosition: AnalogOut
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -78,9 +89,9 @@ class HotWaterCoil(System):
 
         # create a hot water valve
         self.hot_water_valve = HotWaterValve(label=self.label + ".hw_valve")
-        self.hotWaterInlet.mapsTo = self.hot_water_valve.hotWaterInlet
+        self.hotWaterSupply.mapsTo = self.hot_water_valve.hotWaterInlet
         self.hot_water_valve >> self.hot_water_coil
-        self.hotWaterOutlet.mapsTo = self.hot_water_coil.hotWaterOutlet
+        self.hotWaterReturn.mapsTo = self.hot_water_coil.hotWaterReturn
 
         # reference the valve position
-        self.hot_water_valve_pos = self.hot_water_valve.position
+        self.hotWaterValvePosition = self.hot_water_valve.position

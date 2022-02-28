@@ -1,20 +1,20 @@
 from typing import Any
 
-from ..core import s223, System
+from ...core import s223, System
 
 
-from ..connections.air import (
+from ...connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
 
-from ..connections.water import (
+from ...connections.water import (
     ChilledWaterInletSystemConnectionPoint,
     ChilledWaterOutletSystemConnectionPoint,
 )
-from ..devices.hvac.coil import ChilledWaterCoil
-from ..devices.hvac.valve import ChilledWaterValve
-from ..signal import AnalogIn
+from ...devices.hvac.coil import ChilledWaterCoil
+from ...devices.hvac.valve import ChilledWaterValve
+from ...signal import AnalogIn
 
 __namespace__ = s223
 

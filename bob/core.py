@@ -1580,11 +1580,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     else:
         from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
         if not from_types:
-            from_types = set(
-                medium for medium in from_out if len(from_out[medium.node]) == 1
-            )
-        if not from_types:
-            raise RuntimeError(f"no candidate sources from {from_thing} to {to_thing}")
+            raise RuntimeError(f"no candidate sources from {from_thing.node} to {to_thing.node}")
     logging.debug(f"    - from_types: {from_types}")
 
     to_in = defaultdict(set)
@@ -1678,7 +1674,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
         if not to_types:
             raise RuntimeError(
-                f"no candidate destinations from \n{from_thing}\n\n to\n {to_thing}"
+                f"no candidate destinations from {from_thing.node} to {to_thing.node}"
             )
     logging.debug(f"    - to_types: {to_types}")
 
