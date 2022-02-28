@@ -7,21 +7,24 @@ from bob.devices.hvac.boiler import (
 from bob.devices.hvac.coil import HotWaterCoil, ChilledWaterCoil, ElectricalHeatingCoil
 
 from pathlib import Path
+from header import ttl_test_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-boiler = HotWaterBoiler(label="HWB-1", comment="Hot Water Boiler")
-electrical_hot_water_boiler = ElectricalHotWaterBoiler(
-    label="Electrical Hot Water Boiler"
-)
-naturalgas_hot_water_boiler = NaturalGasHotWaterBoiler(
-    label="HWB-2", comment="Natural Gas Hot Water Boiler"
-)
+def test_create_more_complex_devices():
 
-hot_water_coil = HotWaterCoil(label="Hot Water Coil")
-chilled_water_coil = ChilledWaterCoil(label="Chilled Water Coil")
-electrical_heating_coil = ElectricalHeatingCoil(label="Electrical Heating Coil")
+    boiler = HotWaterBoiler(label="HWB-1", comment="Hot Water Boiler")
+    electrical_hot_water_boiler = ElectricalHotWaterBoiler(
+        label="Electrical Hot Water Boiler"
+    )
+    naturalgas_hot_water_boiler = NaturalGasHotWaterBoiler(
+        label="HWB-2", comment="Natural Gas Hot Water Boiler"
+    )
 
-dump()
+    hot_water_coil = HotWaterCoil(label="Hot Water Coil")
+    chilled_water_coil = ChilledWaterCoil(label="Chilled Water Coil")
+    electrical_heating_coil = ElectricalHeatingCoil(label="Electrical Heating Coil")
+
+    dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

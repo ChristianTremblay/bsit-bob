@@ -10,37 +10,37 @@ from bob.core import (
     dump,
 )
 from bob import core
+from pathlib import Path
+from header import ttl_test_header
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 core.INCLUDE_INVERSE = True
 
 
-class A(Device):
-    cOut: OutletConnectionPoint
+def test_systems_006():
+    class A(Device):
+        cOut: OutletConnectionPoint
 
+    class X(System):
+        cOut: OutletSystemConnectionPoint
 
-class X(System):
-    cOut: OutletSystemConnectionPoint
+    class B(Device):
+        cIn: InletConnectionPoint
 
+    class Y(System):
+        cIn: InletSystemConnectionPoint
 
-class B(Device):
-    cIn: InletConnectionPoint
+    a = A(label="a")
+    x = X(label="x")
+    x.cOut.mapsTo = a.cOut
 
+    b = B(label="b")
+    y = Y(label="y")
+    y.cIn.mapsTo = b.cIn
 
-class Y(System):
-    cIn: InletSystemConnectionPoint
+    # connection from system connection point
+    c = Connection()
+    c << x.cOut
 
-
-a = A(label="a")
-x = X(label="x")
-x.cOut.mapsTo = a.cOut
-
-b = B(label="b")
-y = Y(label="y")
-y.cIn.mapsTo = b.cIn
-
-# connection from system connection point
-c = Connection()
-c << x.cOut
-
-dump()
+    dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

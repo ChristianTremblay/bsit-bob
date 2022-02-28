@@ -5,6 +5,7 @@ Bob the SI-WG Builder
 from __future__ import annotations
 
 import os
+import io
 import sys
 from collections import defaultdict
 import logging
@@ -206,16 +207,78 @@ def dump(
     file: TextIO = sys.stdout,
     filename: str = None,
     format: str = "turtle",
+    header: str = None,
 ) -> str:
-    content = graph.serialize(format=format)
+    if not header:
+        content = graph.serialize(format=format)
+    else:
+        content = header + graph.serialize(format=format)
     if not isinstance(content, str):
         content = content.decode("utf-8")
 
+    content = clean_and_sort_turtle_file(content)
     if filename:
         with open(filename, "w") as ttl_file:
             ttl_file.write(content)
     file.write(content)
     return content
+
+
+def clean_and_sort_turtle_file(content: str) -> str:
+    """
+    This will assure the TTL file header contains no
+    duplicates, header is well formatted and
+    all triples are sorted. We also remove blank lines
+    to save some space.
+
+    This is the equivalent of the sort_turtle_file script
+    in the repo.
+
+    """
+    lines = io.StringIO(content).readlines()
+    new_lines = ""
+    chunks = []
+    while lines:
+        blank_line_index = 0
+        try:
+            blank_line_index = lines.index("\n")
+        except ValueError:
+            pass  # sort already done
+        chunks.append(lines[0 : blank_line_index + 1])
+        lines = lines[blank_line_index + 1 :]
+
+    # print out the "# baseURI:" and "# imports:"
+    new_lines += "".join(chunks[0][:-1])
+    del chunks[0]
+
+    # sort
+    chunks.sort()
+
+    # extract @prefix lines
+    prefix_chunks = []
+    prefix_indx = []
+    for i, chunk in enumerate(chunks):
+        if chunk[0].startswith("@prefix"):
+            prefix_chunks.extend(chunk)
+            prefix_indx.append(i)
+
+    # remove the lines we found
+    for i in reversed(prefix_indx):
+        del chunks[i]
+
+    # remove the blank lines
+    prefix_chunks = [chunk for chunk in prefix_chunks if chunk != "\n"]
+
+    # sort them and remove the duplicates
+    prefix_chunks.sort()
+    prefix_chunks = list(dict.fromkeys(prefix_chunks))
+    new_lines += "".join(prefix_chunks)
+
+    # print the rest
+    for chunk in chunks:
+        new_lines += "".join(chunk[:-1])
+
+    return new_lines
 
 
 def get_datagraph(graph: Graph = data_graph) -> Graph:

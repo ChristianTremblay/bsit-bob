@@ -7,21 +7,25 @@ from bob.core import (
     OutletConnectionPoint,
     dump,
 )
+from pathlib import Path
+from header import ttl_test_header
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
-d1 = Device(label="d1")
-cp1 = OutletConnectionPoint(d1, label="d1.out")
 
-d2 = Device(label="d2")
-cp2 = InletConnectionPoint(d2, label="d2.in")
+def test_wrong_direction():
+    d1 = Device(label="d1")
+    cp1 = OutletConnectionPoint(d1, label="d1.out")
 
-c = Connection()
+    d2 = Device(label="d2")
+    cp2 = InletConnectionPoint(d2, label="d2.in")
 
-with pytest.raises(TypeError):
-    c.connect_to(cp1)
+    c = Connection()
 
-with pytest.raises(TypeError):
-    c.connect_from(cp2)
+    with pytest.raises(TypeError):
+        c.connect_to(cp1)
 
-dump()
+    with pytest.raises(TypeError):
+        c.connect_from(cp2)
+    dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

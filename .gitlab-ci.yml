@@ -31,3 +31,13 @@ test_python:
     - pytest
 #    - cd tests
 #    - bash no-barf.sh
+
+test:
+  stage: test
+  script:
+    - apt-get update -qy
+    - apt-get install -y python3-dev python3-pip zip unzip git
+    - pip3 install -r tests/requirements.txt
+    - ontoenv init
+    - cd tests
+    - pytest -s -vvvv --durations=0 -n auto

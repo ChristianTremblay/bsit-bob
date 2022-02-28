@@ -162,7 +162,7 @@ def test_create_b59(node_iri=None):
 
 if __name__ == "__main__":
     r = test_create_b59(node_iri=ex.rtu)
-    result = turtle()
+    result = dump()
     with open("b-59_LP.ttl", "w") as file:
         file.write(result)
     print("Check file : b-59_LP.ttl")
