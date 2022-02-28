@@ -28,22 +28,13 @@ s.test = t
 s = Snork(test=Test())
 
 # setting a property value
-p = Property()
-v = Value()
-v.hasValue = 1
-p.hasValue = v
-
-# auto build Value, init property value
 p = Property(4)
 
 # kwargs set property value
 p = Property(hasValue=5)
 
-# datetime value
-datetime_value = Value(datetime(2021, 1, 1))
-
 # value with a timestamp
-timestamp_value = Value(hasSimpleValue=22.5, hasTimestamp=datetime(2021, 1, 1))
+# timestamp_value = Property(hasValue=22.5, hasTimestamp=datetime(2021, 1, 1))
 
 # dump the result
 sample_header(model_name)

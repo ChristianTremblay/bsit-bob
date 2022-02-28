@@ -1,17 +1,17 @@
 from typing import Any
 
-from ....core import s223, System
+from ...core import s223, System
 
-from ....connections.air import (
+from ...connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from ....signal import AnalogIn, AnalogOut
+from ...signal import AnalogIn, AnalogOut
 
-from ....devices.hvac.valve import HotWaterValve
-from ....devices.hvac.coil import HotWaterCoil
-from ....devices.hvac.airflowstation import AirFlowStation
-from ....devices.hvac.damper import Damper
+from ...devices.hvac.valve import HotWaterValve
+from ...devices.hvac.coil import HotWaterCoil
+from ...devices.hvac.airflowstation import AirFlowMonitor
+from ...devices.hvac.damper import Damper
 
 __namespace__ = s223
 
@@ -26,7 +26,7 @@ class VAV1(System):
         super().__init__(**kwargs)
 
         # create an air flow station
-        self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
+        self.air_flow_station = AirFlowMonitor(label=self.label + ".air_flow_station")
         self > self.air_flow_station
 
         # create a damper
@@ -54,7 +54,7 @@ class VAV2(System):
         super().__init__(**kwargs)
 
         # create an air flow station
-        self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
+        self.air_flow_station = AirFlowMonitor(label=self.label + ".air_flow_station")
         self > self.air_flow_station
 
         # create a damper

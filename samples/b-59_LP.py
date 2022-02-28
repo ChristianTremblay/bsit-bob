@@ -12,7 +12,6 @@ from bob.core import (
     bind_namespace,
     quantitykind,
     enum,
-    turtle,
     get_datagraph,
     bind_model_namespace,
     dump,
@@ -46,78 +45,76 @@ model_name = "B59"
 __namespace__ = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_create_b59(node_iri=None):
-    config = {
-        "params": {"node_iri": node_iri, "label": "RTU-1", "comment": "Rooftop Unit"},
-        "sensors": {
-            ("DA-T", AirTemperatureSensor): {
-                "comment": "Supply Air Temperature sensor"
-            },
-            ("RA-T", AirTemperatureSensor): {
-                "comment": "Return Air Temperature sensor"
-            },
-            ("ZN-T", AirTemperatureSensor): {"comment": "Zone Air Temperature sensor"},
-        },
-        "contains": {
-            ("SF-1", Fan): {"comment": "Supply Fan"},
-            ("RF-1", Fan): {"comment": "Return Fan"},
-            ("OAD-1", ElectricalActuatedDamper): {"comment": "Outside Air Damper"},
-            ("RAD-1", ElectricalActuatedDamper): {"comment": "Return Air Damper"},
-            ("CWC-1", ChilledWaterCoil): {"comment": "Chilled Water coil"},
-        },
-    }
-    mixedAir = AirConnection(
-        label="MIXED-AIR", comment="Where return air and outside air mix"
-    )
-    # rtu is a System
-    rtu = AirHandlingUnit(config=config)
+config = {
+    "params": {
+        # "node_iri": node_iri,
+        "label": "RTU-1",
+        "comment": "Rooftop Unit",
+    },
+    "sensors": {
+        ("DA-T", AirTemperatureSensor): {"comment": "Supply Air Temperature sensor"},
+        ("RA-T", AirTemperatureSensor): {"comment": "Return Air Temperature sensor"},
+        ("ZN-T", AirTemperatureSensor): {"comment": "Zone Air Temperature sensor"},
+    },
+    "contains": {
+        ("SF-1", Fan): {"comment": "Supply Fan"},
+        ("RF-1", Fan): {"comment": "Return Fan"},
+        ("OAD-1", ElectricalActuatedDamper): {"comment": "Outside Air Damper"},
+        ("RAD-1", ElectricalActuatedDamper): {"comment": "Return Air Damper"},
+        ("CWC-1", ChilledWaterCoil): {"comment": "Chilled Water coil"},
+    },
+}
+mixedAir = AirConnection(
+    label="MIXED-AIR", comment="Where return air and outside air mix"
+)
+# rtu is a System
+rtu = AirHandlingUnit(config=config)
 
-    # Relationships between devices
-    rtu["OAD-1"] >> mixedAir
-    rtu["RF-1"] >> mixedAir
-    mixedAir >> rtu["SF-1"]
-    rtu["SF-1"] >> rtu["CWC-1"]
+# Relationships between devices
+rtu["OAD-1"] >> mixedAir
+rtu["RF-1"] >> mixedAir
+mixedAir >> rtu["SF-1"]
+rtu["SF-1"] >> rtu["CWC-1"]
 
-    # Mapping of the system
-    rtu.outsideAirInlet.mapsTo = rtu["OAD-1"].airInlet
-    rtu.returnAirInlet.mapsTo = rtu["RF-1"].airInlet
-    rtu.supplyAirOutlet.mapsTo = rtu["CWC-1"].airOutlet
+# Mapping of the system
+rtu.outsideAirInlet.mapsTo = rtu["OAD-1"].airInlet
+rtu.returnAirInlet.mapsTo = rtu["RF-1"].airInlet
+rtu.supplyAirOutlet.mapsTo = rtu["CWC-1"].airOutlet
 
-    return_plenum = AirConnection(
-        label="Return Air Plenum", comment="Air returns from zone here"
-    )
-    return_plenum >> rtu["RF-1"].airInlet
-    supply_duct = AirConnection(
-        label="Supply Air Duct", comment="Air returns from zone here"
-    )
-    rtu["CWC-1"].airOutlet >> supply_duct
-    rtu["DA-T"].hasMeasurementLocation = supply_duct
-    rtu["RA-T"].hasMeasurementLocation = rtu["RF-1"].airOutlet
+return_plenum = AirConnection(
+    label="Return Air Plenum", comment="Air returns from zone here"
+)
+return_plenum >> rtu["RF-1"].airInlet
+supply_duct = AirConnection(
+    label="Supply Air Duct", comment="Air returns from zone here"
+)
+rtu["CWC-1"].airOutlet >> supply_duct
+rtu["DA-T"].hasMeasurementLocation = supply_duct
+rtu["RA-T"].hasMeasurementLocation = rtu["RF-1"].airOutlet
 
-    bldg = Building(label="B59 Building")
-    roof = Roof(label="Roof of building")
-    floor1 = Floor(label="One big floor which is a common space")
-    office1 = Office(label="Director Office")
-    floor1_hvacspace = HVACSpace(label="HVAC Space for floor 1")
-    rtu_zone = HVACZone(label="Common workspace zone for HVAC")
+bldg = Building(label="B59 Building")
+roof = Roof(label="Roof of building")
+floor1 = Floor(label="One big floor which is a common space")
+office1 = Office(label="Director Office")
+floor1_hvacspace = HVACSpace(label="HVAC Space for floor 1")
+rtu_zone = HVACZone(label="Common workspace zone for HVAC")
 
-    bldg > floor1 > floor1_hvacspace
-    bldg > roof
-    floor1 > office1
+bldg > floor1 > floor1_hvacspace
+bldg > roof
+floor1 > office1
 
-    supply_duct >> floor1_hvacspace.ductAirInlet
-    floor1_hvacspace.ductAirOutlet >> return_plenum
+supply_duct >> floor1_hvacspace.ductAirInlet
+floor1_hvacspace.ductAirOutlet >> return_plenum
 
-    rtu_zone > floor1_hvacspace
-    rtu_zone.airInlet.mapsTo = supply_duct
-    rtu_zone.airOutlet.mapsTo = return_plenum
+rtu_zone > floor1_hvacspace
+rtu_zone.airInlet.mapsTo = supply_duct
+rtu_zone.airOutlet.mapsTo = return_plenum
 
-    rtu.hasPhysicalLocation = roof
-    rtu["ZN-T"].hasMeasurementLocation = floor1_hvacspace.ductAirOutlet
-    rtu["ZN-T"].hasPhysicalLocation = office1
-    rtu["DA-T"].hasPhysicalLocation = floor1
-    rtu["RA-T"].hasPhysicalLocation = roof
-
+rtu.hasPhysicalLocation = roof
+rtu["ZN-T"].hasMeasurementLocation = floor1_hvacspace.ductAirOutlet
+rtu["ZN-T"].hasPhysicalLocation = office1
+rtu["DA-T"].hasPhysicalLocation = floor1
+rtu["RA-T"].hasPhysicalLocation = roof
 
 # Should a plenum be a segment or is system correct??
 # class Plenum(AirConnection):
@@ -156,15 +153,6 @@ def test_create_b59(node_iri=None):
 # p.AirOutlet.link_to(z.supplyAir) #getting no common connection types, because supply Air isn't a junction
 # p.AirOutlet >> (z.supplyAir)
 
-
 # g36_header(model_name)
-# dump()
 
-if __name__ == "__main__":
-    r = test_create_b59(node_iri=ex.rtu)
-    result = dump()
-    with open("b-59_LP.ttl", "w") as file:
-        file.write(result)
-    print("Check file : b-59_LP.ttl")
-    print(result)
-    graph = get_datagraph()
+dump()

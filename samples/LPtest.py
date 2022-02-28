@@ -2,10 +2,11 @@ from pathlib import Path
 
 from typing import Any
 
-from bob import bind_model_namespace, dump
 from bob.core import (
+    bind_model_namespace,
     DomainSpace,
     PhysicalSpace,
+    Device,
     System,
     Zone,
     Node,
@@ -14,10 +15,15 @@ from bob.core import (
     Connection,
     Segment,
     Junction,
+    dump,
 )
-from bob.hvac import (
+from bob.devices.hvac.damper import (
     Damper,
+)
+from bob.devices.hvac import (
     Fan,
+)
+from bob.connections.air import (
     AirConnection,
     AirInletConnectionPoint,
     AirInletSystemConnectionPoint,
@@ -25,10 +31,17 @@ from bob.hvac import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
     AirOutletZoneConnectionPoint,
+)
+from bob.devices.hvac.coil import (
     ChilledWaterCoil,
+)
+from bob.space.hvac import (
     HVACZone,
-    AirFlowStation,
-    Device,
+)
+from bob.devices.hvac.airflowstation import (
+    AirFlowMonitor,
+)
+from bob.devices.hvac.filter import (
     Filter,
 )
 from bob.role import (
@@ -85,7 +98,7 @@ class RooftopUnit(System):
         oa_damper = Damper(label=self.label + ".outside_air_damper")
         self.outsideAirInlet.mapsTo = oa_damper.airInlet
         # connecting damper directly to flow station, not indicating OA air
-        oa_flow_station = AirFlowStation(label=self.label + ".outside_air_flow_station")
+        oa_flow_station = AirFlowMonitor(label=self.label + ".outside_air_flow_station")
         oa_damper >> oa_flow_station >> mixed_air
 
         pre_filter = Filter(label=self.label + ".pre_filter")
