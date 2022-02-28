@@ -34,10 +34,10 @@ class AirHumiditySensor(Sensor):
     """
 
     node_type: URIRef = p223.HumiditySensor
-    hasMedium: URIRef = enum["Medium-Air"]
+    hasMedium: URIRef = s223["Medium-Air"]
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     observesProperty: HumidityMeasure
-    measuresSubstance: URIRef = enum["Medium-Air"]
+    measuresSubstance: URIRef = s223["Medium-Air"]
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)

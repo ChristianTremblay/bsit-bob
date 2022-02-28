@@ -17,7 +17,6 @@ from bob.devices.hvac.coil import ElectricalHeatingCoil
 from bob.sensor.movement import MovementSensor
 from bob.sensor.temperature import AirTemperatureSensor
 
-
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 

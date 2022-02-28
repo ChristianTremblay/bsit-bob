@@ -24,7 +24,7 @@ class ParticulateCountMeasure(QuantifiableMeasurement):
 
 class ParticulateSensor(Sensor):
     node_type: URIRef = s223.ParticulateSensor
-    hasMedium: URIRef = enum.Medium_Air
+    hasMedium: URIRef = s223["Medium-Air"]
     measuresSubstance: Medium
     observesProperty: ParticulateCountMeasure
 
@@ -46,7 +46,7 @@ class UltraFineParticulateSensor(ParticulateSensor):
     "PM 1.0 Count"
     node_type = s223.ParticulateSensor
     comment = "Ultra Fine Particulate Sensor"
-    measuresSubstance: URIRef = enum["Particulate-PM1.0"]
+    measuresSubstance: URIRef = s223["Particulate-PM1.0"]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -56,7 +56,7 @@ class FineParticulateSensor(ParticulateSensor):
     "PM 2.5 Count"
     node_type = s223.ParticulateSensor
     comment = "Fine Particulate Sensor"
-    measuresSubstance: URIRef = enum["Particulate-PM2.5"]
+    measuresSubstance: URIRef = s223["Particulate-PM2.5"]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -66,7 +66,7 @@ class CoarseParticulateSensor(ParticulateSensor):
     "PM 10 Count"
     node_type = s223.ParticulateSensor
     comment = "Coarse Particulate Sensor"
-    measuresSubstance: URIRef = enum["Particulate-PM10.0"]
+    measuresSubstance: URIRef = s223["Particulate-PM10.0"]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
