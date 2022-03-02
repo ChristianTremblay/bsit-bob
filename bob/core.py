@@ -1083,6 +1083,11 @@ class System(Node):
             self._data_graph.add((self.node, s223.contains, other.node))
             if INCLUDE_INVERSE:
                 self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        elif isinstance(other, list):
+            for each in other:
+                self._data_graph.add((self.node, s223.contains, each.node))
+                if INCLUDE_INVERSE:
+                    self._data_graph.add((each.node, s223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1100,6 +1105,11 @@ class System(Node):
             if INCLUDE_INVERSE:
                 self._data_graph.add((self.node, s223.isContainedIn, other.node))
             self._data_graph.add((other.node, s223.contains, self.node))
+        elif isinstance(other, list):
+            for each in other:
+                if INCLUDE_INVERSE:
+                    self._data_graph.add((self.node, s223.isContainedIn, each.node))
+                self._data_graph.add((each.node, s223.contains, self.node))
         else:
             raise TypeError("system expected")
 
@@ -1523,19 +1533,29 @@ class PhysicalSpace(Node):
 
     node_type: URIRef = s223.PhysicalSpace
 
-    def __gt__(self, other: Union[DomainSpace, PhysicalSpace]) -> Node:
+    def __gt__(self, other: Union[DomainSpace, PhysicalSpace, list]) -> Node:
         """self > other
 
         Build a containment heirarchy, this contains some other space.
         """
         logging.debug(f"__gt__ {self} {other}")
 
-        if isinstance(other, PhysicalSpace):
+        if isinstance(other, list):
+            for each in other:
+                if isinstance(each, PhysicalSpace):
+                    self._data_graph.add((self.node, s223.contains, each.node))
+                    if INCLUDE_INVERSE:
+                        self._data_graph.add((each.node, s223.isContainedIn, self.node))
+                elif isinstance(each, DomainSpace):
+                    self._data_graph.add((self.node, s223.encloses, each.node))
+
+        elif isinstance(other, PhysicalSpace):
             self._data_graph.add((self.node, s223.contains, other.node))
             if INCLUDE_INVERSE:
                 self._data_graph.add((other.node, s223.isContainedIn, self.node))
         elif isinstance(other, DomainSpace):
             self._data_graph.add((self.node, s223.encloses, other.node))
+
         else:
             raise TypeError("domain space or physical space expected")
 
@@ -1838,7 +1858,7 @@ class DomainSpace(Connectable):
     node_type: URIRef = s223.DomainSpace
     hasDomain: Domain
 
-    def __lt__(self, other: Union[Zone, PhysicalSpace]) -> Node:
+    def __lt__(self, other: Union[Zone, PhysicalSpace, list]) -> Node:
         """self < other
 
         Build a containment heirarchy, this is contained in a zone or enclosed
@@ -1846,7 +1866,18 @@ class DomainSpace(Connectable):
         """
         logging.debug(f"__lt__ {self} {other}")
 
-        if isinstance(other, Zone):
+        if isinstance(other, list):
+            for each in other:
+                if isinstance(each, Zone):
+                    self._data_graph.add((each.node, s223.contains, self.node))
+                    if INCLUDE_INVERSE:
+                        self._data_graph.add((self.node, s223.isContainedIn, each.node))
+                elif isinstance(each, PhysicalSpace):
+                    self._data_graph.add((each.node, s223.encloses, self.node))
+                else:
+                    raise TypeError("zone or physical space expected")
+
+        elif isinstance(other, Zone):
             self._data_graph.add((other.node, s223.contains, self.node))
             if INCLUDE_INVERSE:
                 self._data_graph.add((self.node, s223.isContainedIn, other.node))

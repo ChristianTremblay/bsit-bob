@@ -127,6 +127,11 @@ class HotWaterOutletSystemConnectionPoint(
 
 
 # === STEAM
+class SteamConnection(Connection):
+    hasMedium: URIRef = Steam.node_type
+    node_type = None
+
+
 class SteamConnectionPoint(ConnectionPoint):
     hasMedium: URIRef = Steam.node_type
     node_type = None

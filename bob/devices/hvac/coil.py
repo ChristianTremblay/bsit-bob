@@ -14,6 +14,8 @@ from ...connections.water import (
     ChilledWaterOutletConnectionPoint,
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
+    WaterInletConnectionPoint,
+    WaterOutletConnectionPoint,
 )
 
 from ...connections.electricity import (
@@ -38,6 +40,14 @@ chilledWaterCoil_template = {
 # but the valve connect to the coil
 # can this be considered "contained" in the Coil device ?
 # Should this b ea system
+
+
+class WaterCoil(Device):
+    node_type: URIRef = s223.Coil
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
+    waterInlet: WaterInletConnectionPoint
+    waterOutlet: WaterOutletConnectionPoint
 
 
 class ChilledWaterCoil(Device):
