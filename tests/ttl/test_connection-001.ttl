@@ -1,0 +1,18 @@
+@prefix ex: <urn:ex/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+
+
+ex:00001 a s223:Device ;
+    rdfs:label "d1" ;
+    s223:connectedThrough ex:00003 ;
+    s223:hasConnectionPoint ex:00002 .
+
+ex:00002 a s223:ConnectionPoint ;
+    s223:connectsThrough ex:00003 ;
+    s223:isConnectionPointOf ex:00001 .
+
+ex:00003 a s223:Connection ;
+    s223:connectsAt ex:00002 ;
+    s223:connectsTo ex:00001 .
+

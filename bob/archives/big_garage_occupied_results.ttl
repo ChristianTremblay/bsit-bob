@@ -1,0 +1,400 @@
+@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix s223_proposal: <http://data.ashrae.org/proposaltostandard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+
+[] a s223:Device,
+        s223:HeatingCoil ;
+    rdfs:label "Heating Coil" ;
+    s223:airInlet _:Na548613aba604d2fbbd6624107c963d3 ;
+    s223:airOutlet _:N297a84c13fe448f9839384b51d002999 ;
+    s223:electricalInlet _:Nda29cfc10fc842479faa95ba884f6c83 ;
+    s223:hasConnectionPoint _:N297a84c13fe448f9839384b51d002999,
+        _:Na548613aba604d2fbbd6624107c963d3,
+        _:Nda29cfc10fc842479faa95ba884f6c83 .
+
+[] a s223:AirTemperatureSensor,
+        s223:Device,
+        s223:Sensor,
+        s223:TemperatureSensor ;
+    rdfs:label "Zone Air temperature sensor" ;
+    s223:hasMeasurementLocation _:Nf1fde5ea720647d7af8d2c590ec0535e ;
+    s223:hasMedium enum:Medium-Air ;
+    s223:hasPhysicalLocation _:N5f26c1ab59c44538a47b3da686501a50 ;
+    s223:hasProperty _:Na7710020c2274f9db96c88d5189da976 ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty _:Na7710020c2274f9db96c88d5189da976 .
+
+[] a s223:AirTemperatureSensor,
+        s223:Device,
+        s223:Sensor,
+        s223:TemperatureSensor ;
+    rdfs:label "Discharge Air temperature sensor" ;
+    s223:hasMeasurementLocation _:N297a84c13fe448f9839384b51d002999 ;
+    s223:hasMedium enum:Medium-Air ;
+    s223:hasPhysicalLocation _:N5f26c1ab59c44538a47b3da686501a50 ;
+    s223:hasProperty _:Ne4ebb1a9e74b410ebecb09db02dd302a ;
+    s223:measuresSubstance enum:Medium-Air ;
+    s223:observesProperty _:Ne4ebb1a9e74b410ebecb09db02dd302a .
+
+[] a s223:System ;
+    rdfs:label "Fan coil" ;
+    s223:hasSystemConnectionPoint [ a s223:OutletSystemConnectionPoint,
+                s223:SystemConnectionPoint ;
+            rdfs:label "Fan coil air outlet" ;
+            s223:hasDirection enum:Direction-Outlet ;
+            s223:mapsTo _:N297a84c13fe448f9839384b51d002999 ;
+            enum:hasMedium enum:Medium-Air ],
+        [ a s223:InletSystemConnectionPoint,
+                s223:SystemConnectionPoint ;
+            rdfs:label "Fan coil air inlet" ;
+            s223:hasDirection enum:Direction-Inlet ;
+            s223:mapsTo _:N27c4803b52f54bb5a1faeb0df9478c94 ;
+            enum:hasMedium enum:Medium-Air ],
+        [ a s223:SystemConnectionPoint ;
+            rdfs:label "Occupancy Inlet" ;
+            s223:hasDirection enum:Direction-Inlet ;
+            s223:mapsTo [ a s223:Device,
+                        s223:MovementSensor,
+                        s223:Sensor ;
+                    rdfs:label "Movement Sensor Space #1" ;
+                    s223:hasMeasurementLocation _:N402ee62458fb45bfaddcc961c3f90ac3 ;
+                    s223:hasPhysicalLocation _:N5f26c1ab59c44538a47b3da686501a50 ;
+                    s223:hasProperty _:N7503fdc67ba84cd594fc6c455d06814c ;
+                    s223:measuresSubstance enum:Medium-Light ;
+                    s223:observesProperty _:N7503fdc67ba84cd594fc6c455d06814c ] ] .
+
+[] a s223:Device,
+        s223:Light ;
+    rdfs:label "Ballast #1, space #1" ;
+    s223:electricalInlet _:Na6f22296d0bd4cc9afb9735a45a2cb2e ;
+    s223:hasConnectionPoint _:Na6f22296d0bd4cc9afb9735a45a2cb2e,
+        _:Ndd7c69a794e34f87aadf3ede03bb0fbf ;
+    s223:lightOutlet _:Ndd7c69a794e34f87aadf3ede03bb0fbf .
+
+[] a s223:Device,
+        s223:Light ;
+    rdfs:label "Ballast #2, space #2" ;
+    s223:electricalInlet _:N34b9d294a5c94287b7ff2e81ccd064fa ;
+    s223:hasConnectionPoint _:N34b9d294a5c94287b7ff2e81ccd064fa,
+        _:N524c545d9d38425ab55c98343c0cef7e ;
+    s223:lightOutlet _:N524c545d9d38425ab55c98343c0cef7e .
+
+[] a s223:Device,
+        s223:MovementSensor,
+        s223:Sensor ;
+    rdfs:label "Movement Sensor Space #2" ;
+    s223:hasMeasurementLocation _:N2f904db312414ce89286039af9964991 ;
+    s223:hasPhysicalLocation _:N5f26c1ab59c44538a47b3da686501a50 ;
+    s223:hasProperty _:N4aca388394864817a4ec69fb6d43c86a ;
+    s223:measuresSubstance enum:Medium-Light ;
+    s223:observesProperty _:N4aca388394864817a4ec69fb6d43c86a .
+
+[] a s223:Device,
+        s223:Fan ;
+    rdfs:label "Fan" ;
+    s223:airInlet _:N27c4803b52f54bb5a1faeb0df9478c94 ;
+    s223:airOutlet _:N944e77046c30473da164d61bdc9497ae ;
+    s223:electricalInlet _:N30e9834559614222b961fc49379e3241 ;
+    s223:hasConnectionPoint _:N27c4803b52f54bb5a1faeb0df9478c94,
+        _:N30e9834559614222b961fc49379e3241,
+        _:N944e77046c30473da164d61bdc9497ae .
+
+_:N130ba0e752f94707afd66a4d411f739d a s223_proposal:PhysicSystem,
+        s223:System ;
+    rdfs:label "Indoor air of space" ;
+    s223_proposal:airTransfer _:N81117bd6f3184084ba1a81b26e797d8b ;
+    s223_proposal:doors _:Nea8b76d60a3e4089a0e4f176ff43f071 ;
+    s223_proposal:ductAirInlet _:N05e2af5afeef43ce8b5b5693e5b7cf0a ;
+    s223_proposal:ductAirOutlet _:N3b78f5ef0a0b4f7882652f010b4c6afa ;
+    s223_proposal:hasMedium enum:Medium-Air ;
+    s223_proposal:radiantCooling _:Na7271e8f18984308b6ecc76d7a166d15 ;
+    s223_proposal:radiantHeating _:Ne229be0334e04c86bd825f65523ff203 ;
+    s223_proposal:windows _:N094172efa9b24842954029e87dfcef18 ;
+    s223:hasSystemConnectionPoint _:N05e2af5afeef43ce8b5b5693e5b7cf0a,
+        _:N094172efa9b24842954029e87dfcef18,
+        _:N3b78f5ef0a0b4f7882652f010b4c6afa,
+        _:N81117bd6f3184084ba1a81b26e797d8b,
+        _:Na7271e8f18984308b6ecc76d7a166d15,
+        _:Ne229be0334e04c86bd825f65523ff203,
+        _:Nea8b76d60a3e4089a0e4f176ff43f071 .
+
+_:N3bb20f05c1ce4638b6d1ddee912ef885 a s223:PhysicalSpace ;
+    rdfs:label "Roof of building" .
+
+_:N05e2af5afeef43ce8b5b5693e5b7cf0a a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:mapsTo _:N296a429bdfb04b7db16afc2f825e1e10 ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N094172efa9b24842954029e87dfcef18 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:mapsTo _:Nfd350ed995d747c9abbeae65566fe7ad ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N2f904db312414ce89286039af9964991 a s223:DomainSpace,
+        s223:LithingSpace ;
+    rdfs:label "Light Space #2 back of the garage" ;
+    s223:hasConnectionPoint _:Ne5c2f827051a42c38d0418128b2d55d1 ;
+    s223:hasDomain s223:Lighting ;
+    s223:lightInlet _:Ne5c2f827051a42c38d0418128b2d55d1 .
+
+_:N30e9834559614222b961fc49379e3241 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Fan.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium enum:Medium-Electricity .
+
+_:N34b9d294a5c94287b7ff2e81ccd064fa a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Ballast #2, space #2.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium enum:Medium-Electricity .
+
+_:N3b78f5ef0a0b4f7882652f010b4c6afa a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirOutlet" ;
+    s223:hasDirection enum:Direction-Outlet ;
+    s223:mapsTo _:N688ef16b63e14e9283e4de2702dda43f ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N402ee62458fb45bfaddcc961c3f90ac3 a s223:DomainSpace,
+        s223:LithingSpace ;
+    rdfs:label "Light Space #1 near entry" ;
+    s223:hasConnectionPoint _:Nf0d0bb4bcbae4372bc9ef4a18349e080 ;
+    s223:hasDomain s223:Lighting ;
+    s223:lightInlet _:Nf0d0bb4bcbae4372bc9ef4a18349e080 .
+
+_:N4aca388394864817a4ec69fb6d43c86a a s223:Measure,
+        s223:Measurement,
+        s223:ObservableProperty ;
+    rdfs:label "Movement Sensor Space #2.Measure" ;
+    s223:ofSubstance enum:Medium-Light ;
+    qudt:unit unit:DEG_C .
+
+_:N7503fdc67ba84cd594fc6c455d06814c a s223:Measure,
+        s223:Measurement,
+        s223:ObservableProperty ;
+    rdfs:label "Movement Sensor Space #1.Measure" ;
+    s223:ofSubstance enum:Medium-Light ;
+    qudt:unit unit:DEG_C .
+
+_:N81117bd6f3184084ba1a81b26e797d8b a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:mapsTo _:N89932f1351d44c1ea77546b7b4732507 ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N9379a790fee0412c9ef091677d14fd94 a s223:Connection ;
+    s223:connectsAt _:N524c545d9d38425ab55c98343c0cef7e,
+        _:Ne5c2f827051a42c38d0418128b2d55d1 ;
+    s223:hasMedium enum:Medium-Light .
+
+_:Na6f22296d0bd4cc9afb9735a45a2cb2e a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Ballast #1, space #1.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium enum:Medium-Electricity .
+
+_:Na7271e8f18984308b6ecc76d7a166d15 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:mapsTo _:N25d0d2c1c66d4dcb88152cc94185d4a5 ;
+    enum:hasMedium enum:Medium-Air .
+
+_:Na7710020c2274f9db96c88d5189da976 a s223:Measure,
+        s223:ObservableProperty,
+        s223:QuantifiableMeasurement,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Zone Air temperature sensor.Measure" ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
+
+_:Nda29cfc10fc842479faa95ba884f6c83 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Heating Coil.electricalInlet" ;
+    s223:hasDirection enum:Direction-Inlet ;
+    s223:hasMedium enum:Medium-Electricity .
+
+_:Ne0ab7ccf1701499795ea331f7549470a a s223:Connection ;
+    s223:connectsAt _:N296a429bdfb04b7db16afc2f825e1e10,
+        _:N297a84c13fe448f9839384b51d002999 ;
+    s223:hasMedium enum:Medium-Air .
+
+_:Ne229be0334e04c86bd825f65523ff203 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:mapsTo _:N95c8dc329bb54c0891aae5acad2c6217 ;
+    enum:hasMedium enum:Medium-Air .
+
+_:Ne4ebb1a9e74b410ebecb09db02dd302a a s223:Measure,
+        s223:ObservableProperty,
+        s223:QuantifiableMeasurement,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Discharge Air temperature sensor.Measure" ;
+    s223:ofSubstance enum:Medium-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
+
+_:Ne7cfd849d52e482f9acec7e6e8bac958 a s223:Connection ;
+    s223:connectsAt _:N944e77046c30473da164d61bdc9497ae,
+        _:Na548613aba604d2fbbd6624107c963d3 ;
+    s223:hasMedium enum:Medium-Air .
+
+_:Nea8b76d60a3e4089a0e4f176ff43f071 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    s223:mapsTo _:Nce33399e11644d8f86f20007812e39fe ;
+    enum:hasMedium enum:Medium-Air .
+
+_:Nebcdd9692a5e45bab7508a61a1790d3f a s223:Connection ;
+    s223:connectsAt _:N27c4803b52f54bb5a1faeb0df9478c94,
+        _:N688ef16b63e14e9283e4de2702dda43f ;
+    s223:hasMedium enum:Medium-Air .
+
+_:Nebf745a691b4491ab855745fc1e357f1 a s223:Connection ;
+    s223:connectsAt _:Ndd7c69a794e34f87aadf3ede03bb0fbf,
+        _:Nf0d0bb4bcbae4372bc9ef4a18349e080 ;
+    s223:hasMedium enum:Medium-Light .
+
+_:Nf1fde5ea720647d7af8d2c590ec0535e a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "My Big Garage" ;
+    s223:airTransfer _:N89932f1351d44c1ea77546b7b4732507 ;
+    s223:doors _:Nce33399e11644d8f86f20007812e39fe ;
+    s223:ductAirInlet _:N296a429bdfb04b7db16afc2f825e1e10 ;
+    s223:ductAirOutlet _:N688ef16b63e14e9283e4de2702dda43f ;
+    s223:hasConnectionPoint _:N25d0d2c1c66d4dcb88152cc94185d4a5,
+        _:N296a429bdfb04b7db16afc2f825e1e10,
+        _:N688ef16b63e14e9283e4de2702dda43f,
+        _:N89932f1351d44c1ea77546b7b4732507,
+        _:N95c8dc329bb54c0891aae5acad2c6217,
+        _:Nce33399e11644d8f86f20007812e39fe,
+        _:Nfd350ed995d747c9abbeae65566fe7ad ;
+    s223:hasDomain s223:HVAC ;
+    s223:indoorAir _:N130ba0e752f94707afd66a4d411f739d ;
+    s223:radiantCooling _:N25d0d2c1c66d4dcb88152cc94185d4a5 ;
+    s223:radiantHeating _:N95c8dc329bb54c0891aae5acad2c6217 ;
+    s223:windows _:Nfd350ed995d747c9abbeae65566fe7ad .
+
+_:N25d0d2c1c66d4dcb88152cc94185d4a5 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "My Big Garage.radiantCooling" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N524c545d9d38425ab55c98343c0cef7e a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Ballast #2, space #2.lightOutlet" ;
+    s223:connectsThrough _:N9379a790fee0412c9ef091677d14fd94 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    enum:hasMedium enum:Medium-Light .
+
+_:N89932f1351d44c1ea77546b7b4732507 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "My Big Garage.airTransfer" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N944e77046c30473da164d61bdc9497ae a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Fan.airOutlet" ;
+    s223:connectsThrough _:Ne7cfd849d52e482f9acec7e6e8bac958 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N95c8dc329bb54c0891aae5acad2c6217 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "My Big Garage.radiantHeating" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    enum:hasMedium enum:Medium-Air .
+
+_:Na548613aba604d2fbbd6624107c963d3 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Heating Coil.airInlet" ;
+    s223:connectsThrough _:Ne7cfd849d52e482f9acec7e6e8bac958 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    enum:hasMedium enum:Medium-Air .
+
+_:Nce33399e11644d8f86f20007812e39fe a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "My Big Garage.doors" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    enum:hasMedium enum:Medium-Air .
+
+_:Ndd7c69a794e34f87aadf3ede03bb0fbf a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Ballast #1, space #1.lightOutlet" ;
+    s223:connectsThrough _:Nebf745a691b4491ab855745fc1e357f1 ;
+    s223:hasDirection enum:Direction-Outlet ;
+    enum:hasMedium enum:Medium-Light .
+
+_:Ne5c2f827051a42c38d0418128b2d55d1 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Light Space #2 back of the garage.lightInlet" ;
+    s223:connectsThrough _:N9379a790fee0412c9ef091677d14fd94 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    enum:hasMedium enum:Medium-Light .
+
+_:Nf0d0bb4bcbae4372bc9ef4a18349e080 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Light Space #1 near entry.lightInlet" ;
+    s223:connectsThrough _:Nebf745a691b4491ab855745fc1e357f1 ;
+    s223:hasDirection enum:Direction-Inlet ;
+    enum:hasMedium enum:Medium-Light .
+
+_:Nfd350ed995d747c9abbeae65566fe7ad a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "My Big Garage.windows" ;
+    s223:hasDirection enum:Direction-Bidirectional ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N27c4803b52f54bb5a1faeb0df9478c94 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Fan.airInlet" ;
+    s223:connectsThrough _:Nebcdd9692a5e45bab7508a61a1790d3f ;
+    s223:hasDirection enum:Direction-Inlet ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N296a429bdfb04b7db16afc2f825e1e10 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "My Big Garage.ductAirInlet" ;
+    s223:connectsThrough _:Ne0ab7ccf1701499795ea331f7549470a ;
+    s223:hasDirection enum:Direction-Inlet ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N5f26c1ab59c44538a47b3da686501a50 a s223:PhysicalSpace ;
+    rdfs:label "My Building" ;
+    s223:contains _:N3bb20f05c1ce4638b6d1ddee912ef885 ;
+    s223:encloses _:N2f904db312414ce89286039af9964991,
+        _:N402ee62458fb45bfaddcc961c3f90ac3,
+        _:Nf1fde5ea720647d7af8d2c590ec0535e .
+
+_:N688ef16b63e14e9283e4de2702dda43f a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "My Big Garage.ductAirOutlet" ;
+    s223:connectsThrough _:Nebcdd9692a5e45bab7508a61a1790d3f ;
+    s223:hasDirection enum:Direction-Outlet ;
+    enum:hasMedium enum:Medium-Air .
+
+_:N297a84c13fe448f9839384b51d002999 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Heating Coil.airOutlet" ;
+    s223:connectsThrough _:Ne0ab7ccf1701499795ea331f7549470a ;
+    s223:hasDirection enum:Direction-Outlet ;
+    enum:hasMedium enum:Medium-Air .
+

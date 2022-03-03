@@ -1,17 +1,13 @@
 from pathlib import Path
 
-from bob import bind_model_namespace, dump
-from bob.core import (
-    DomainSpace,
-    Zone,
-)
-from bob.hvac import (
-    Fan,
+from bob.core import DomainSpace, Zone, bind_model_namespace, dump
+from bob.connections import (
     AirInletConnectionPoint,
     AirInletZoneConnectionPoint,
     ChilledWaterConnection,
-    ChilledWaterCoil,
 )
+
+from bob.devices.hvac import Fan, ChilledWaterCoil
 
 from header import sample_header
 
@@ -52,7 +48,7 @@ zone > space
 zone.supplyAir.maps_to(scp)
 
 # output of the coil goes to the zone
-coil1 >> zone
+# coil1 >> zone
 
 sample_header(model_name)
 dump()

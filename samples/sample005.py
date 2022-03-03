@@ -1,13 +1,11 @@
 from pathlib import Path
 
-from bob import bind_model_namespace, dump
-from bob.hvac import (
-    AirConnection,
-    HVACZone1,
-    VAV2,
-)
+from bob.core import bind_model_namespace, dump
+from bob.connections.air import AirConnection
+from bob.systems.archives.hvac import HVACZone1
+from bob.systems.archives.vav import VAV2
 
-#from header import sample_header
+# from header import sample_header
 
 
 model_name = Path(__file__).stem
@@ -35,5 +33,5 @@ zone1 >> return_air
 zone2 >> return_air
 
 # dump the result
-#sample_header(model_name)
+# sample_header(model_name)
 dump()

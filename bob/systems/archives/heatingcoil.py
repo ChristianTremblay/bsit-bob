@@ -1,0 +1,97 @@
+from typing import Any
+
+from ...core import s223, Device, System
+from ...connections.water import (
+    HotWaterInletSystemConnectionPoint,
+    HotWaterOutletSystemConnectionPoint,
+)
+from ...connections.air import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
+from ...connections.electricity import (
+    ElectricalInletConnectionPoint,
+    ElectricalOutletConnectionPoint,
+)
+from ...connections.water import (
+    HotWaterInletConnectionPoint,
+    HotWaterOutletConnectionPoint,
+)
+from ...devices.hvac.coil import ElectricalHeatingCoil
+from ...devices.hvac.scr import SCR
+from ...devices.hvac.valve import HotWaterValve
+
+from ...signal import AnalogIn, AnalogOut
+
+__namespace__ = s223
+
+
+class ElectricalHeatingCoilWithSCR(System):
+    """
+    This is an example of an electrical heating coil with a SCR.
+    """
+
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
+    powerInlet: ElectricalInletConnectionPoint
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+        # create a electrical heating coil
+        self.electrical_heating_coil = ElectricalHeatingCoil(
+            label=self.label + ".elechtg_coil"
+        )
+        self.airInlet.mapsTo = self.electrical_heating_coil.airInlet
+        self.airOutlet.mapsTo = self.electrical_heating_coil.airOutlet
+
+        # create a SCR to modulate the coil
+        self.scr = SCR(label=self.label + ".elechtg_scr")
+        self.powerInlet.mapsTo = self.scr.powerInlet
+        self.scr.powerOutlet.mapsTo = self.electrical_heating_coil.powerInlet
+        self.scr >> self.electrical_heating_coil
+
+        # reference the SCR modulation command
+        self.scr_modulation = self.scr.modulation
+
+
+class HotWaterCoil(Device):
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
+    hotWaterSupply: HotWaterInletConnectionPoint
+    hotWaterReturn: HotWaterOutletConnectionPoint
+
+
+class HotWaterCoil2(System):
+    """
+    This is an example of a hot water coil that contains a hot water valve
+    device and makes the valve position available as its own analog output
+    signal.
+    """
+
+    node_type = None
+
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
+    hotWaterSupply: HotWaterInletSystemConnectionPoint
+    hotWaterReturn: HotWaterOutletSystemConnectionPoint
+    hotWaterValvePosition: AnalogOut
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+        # create a hot water coil
+        self.hot_water_coil = HotWaterCoil(label=self.label + ".hw_coil")
+        self.airInlet.mapsTo = self.hot_water_coil.airInlet
+        self.airOutlet.mapsTo = self.hot_water_coil.airOutlet
+
+        # create a hot water valve
+        self.hot_water_valve = HotWaterValve(label=self.label + ".hw_valve")
+        self.hotWaterSupply.mapsTo = self.hot_water_valve.hotWaterInlet
+        self.hot_water_valve >> self.hot_water_coil
+        self.hotWaterReturn.mapsTo = self.hot_water_coil.hotWaterReturn
+
+        # reference the valve position
+        self.hotWaterValvePosition = self.hot_water_valve.position

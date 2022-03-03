@@ -26,35 +26,30 @@ ex:00001 a s223:System,
 ex:00002 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "s1.cpIn" ;
-    s223:hasDirection s223:Inlet ;
-    s223:isSystemConnectionPointOf ex:00001 .
+    s223:hasDirection s223:Direction-Inlet .
 
 ex:00003 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "s1.cpOut" ;
-    s223:hasDirection s223:Outlet ;
-    s223:isSystemConnectionPointOf ex:00001 .
+    s223:hasDirection s223:Direction-Outlet .
 
 ex:00004 a s223:Device,
         ex:TestDevice ;
     rdfs:label "d1" ;
     s223:hasConnectionPoint ex:00005,
         ex:00006 ;
-    s223:isContainedIn ex:00001 ;
     ex:cpIn ex:00005 ;
     ex:cpOut ex:00006 .
 
 ex:00005 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "d1.cpIn" ;
-    s223:hasDirection s223:Inlet ;
-    s223:isConnectionPointOf ex:00004 .
+    s223:hasDirection s223:Direction-Inlet .
 
 ex:00006 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "d1.cpOut" ;
-    s223:hasDirection s223:Outlet ;
-    s223:isConnectionPointOf ex:00004 .
+    s223:hasDirection s223:Direction-Outlet .
 
 ex:00007 a s223:System,
         ex:TestSystem ;
@@ -68,15 +63,13 @@ ex:00007 a s223:System,
 ex:00008 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "s2.cpIn" ;
-    s223:hasDirection s223:Inlet ;
-    s223:isSystemConnectionPointOf ex:00007 ;
+    s223:hasDirection s223:Direction-Inlet ;
     s223:mapsTo ex:00011 .
 
 ex:00009 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "s2.cpOut" ;
-    s223:hasDirection s223:Outlet ;
-    s223:isSystemConnectionPointOf ex:00007 ;
+    s223:hasDirection s223:Direction-Outlet ;
     s223:mapsTo ex:00012 .
 
 ex:00010 a s223:Device,
@@ -84,19 +77,16 @@ ex:00010 a s223:Device,
     rdfs:label "d2" ;
     s223:hasConnectionPoint ex:00011,
         ex:00012 ;
-    s223:isContainedIn ex:00007 ;
     ex:cpIn ex:00011 ;
     ex:cpOut ex:00012 .
 
 ex:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "d2.cpIn" ;
-    s223:hasDirection s223:Inlet ;
-    s223:isConnectionPointOf ex:00010 .
+    s223:hasDirection s223:Direction-Inlet .
 
 ex:00012 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "d2.cpOut" ;
-    s223:hasDirection s223:Outlet ;
-    s223:isConnectionPointOf ex:00010 .
+    s223:hasDirection s223:Direction-Outlet .
 

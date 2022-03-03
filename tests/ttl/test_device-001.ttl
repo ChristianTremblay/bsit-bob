@@ -1,0 +1,22 @@
+@prefix ex: <urn:ex/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+ex:00001 a s223:Device ;
+    rdfs:label "d1" .
+
+ex:00002 a s223:Device,
+        ex:TestDevice2 ;
+    rdfs:label "d2" .
+
+ex:00003 a s223:Device,
+        ex:TestDevice3 ;
+    rdfs:label "d3" ;
+    s223:hasProperty ex:00004 ;
+    ex:prop ex:00004 .
+
+ex:00004 a ex:TestProperty ;
+    s223:hasValue 1 .
+

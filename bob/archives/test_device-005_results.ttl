@@ -1,0 +1,67 @@
+@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
+@prefix ex: <urn:ex/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+
+ex:00002 a s223:Device,
+        s223:Fan ;
+    rdfs:label "VA-1" ;
+    s223:airInlet ex:00003 ;
+    s223:airOutlet ex:00004 ;
+    s223:contains ex:00001 ;
+    s223:electricalInlet ex:00005 ;
+    s223:hasConnectionPoint ex:00003,
+        ex:00004,
+        ex:00005 ;
+    rdfs:comment "Supply Fan" .
+
+ex:00006 a s223:Device,
+        s223:Fan ;
+    rdfs:label "VA-2" ;
+    s223:airInlet ex:00007 ;
+    s223:airOutlet ex:00008 ;
+    s223:electricalInlet ex:00009 ;
+    s223:hasConnectionPoint ex:00007,
+        ex:00008,
+        ex:00009 .
+
+ex:00001 a s223:Device ;
+    rdfs:label "VA1-VFD" ;
+    rdfs:comment "VFD for VA-1" .
+
+ex:00003 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VA-1.airInlet" ;
+    s223:hasDirection s223:Inlet ;
+    enum:hasSubstance enum:Medium-Air .
+
+ex:00004 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "VA-1.airOutlet" ;
+    s223:hasDirection s223:Outlet ;
+    enum:hasSubstance enum:Medium-Air .
+
+ex:00005 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VA-1.electricalInlet" ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasSubstance enum:Medium-Electricity .
+
+ex:00007 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VA-2.airInlet" ;
+    s223:hasDirection s223:Inlet ;
+    enum:hasSubstance enum:Medium-Air .
+
+ex:00008 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "VA-2.airOutlet" ;
+    s223:hasDirection s223:Outlet ;
+    enum:hasSubstance enum:Medium-Air .
+
+ex:00009 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "VA-2.electricalInlet" ;
+    s223:hasDirection s223:Inlet ;
+    s223:hasSubstance enum:Medium-Electricity .
+

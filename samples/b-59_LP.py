@@ -2,166 +2,157 @@ from pathlib import Path
 
 from typing import Any
 
-from bob import bind_model_namespace, dump
 from bob.core import (
-    DomainSpace,
-    PhysicalSpace,
     System,
     Zone,
     Node,
     s223,
-    ConnectionPoint,
-    Connection,
     Segment,
     Junction,
-    QuantifiableObservableProperty,
     bind_namespace,
-    Substance,
+    quantitykind,
+    enum,
+    get_datagraph,
+    bind_model_namespace,
+    dump,
 )
-from bob.hvac import (
-    Damper,
-    Fan,
-    AirConnection,
-    AirInletConnectionPoint,
-    AirInletSystemConnectionPoint,
-    AirInletZoneConnectionPoint,
-    AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
-    AirOutletZoneConnectionPoint,
-    ChilledWaterCoil,
-    HVACZone1,
-    HVACZone,
-    AirFlowStation,
-    Device,
-    Filter,
-)
+
+from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.coil import ChilledWaterCoil
+from bob.devices.hvac.fan import Fan
+from bob.systems.hvac.airhandlingunit import AirHandlingUnit
+from bob.sensor.temperature import AirTemperatureSensor
+
+from bob.space.physical import Building, Floor, Roof, Office
+from bob.space.hvac import HVACSpace, HVACZone
+
+from bob.connections.air import *
+
 from bob.role import (
-    Exhaust, 
+    Exhaust,
     Supply,
-) 
-from bob.signal import(
+)
+from bob.signal import (
     AnalogOut,
     AnalogIn,
-    )
-from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD 
+)
+from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
-#from header import g36_header
+# from header import g36_header
 
-
-model_name = Path(__file__).stem
+# model_name = Path(__file__).stem
+model_name = "B59"
 __namespace__ = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
-qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
-quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
 
-Air = Substance(node_iri=s223.Air)
+config = {
+    "params": {
+        # "node_iri": node_iri,
+        "label": "RTU-1",
+        "comment": "Rooftop Unit",
+    },
+    "sensors": {
+        ("DA-T", AirTemperatureSensor): {"comment": "Supply Air Temperature sensor"},
+        ("RA-T", AirTemperatureSensor): {"comment": "Return Air Temperature sensor"},
+        ("ZN-T", AirTemperatureSensor): {"comment": "Zone Air Temperature sensor"},
+    },
+    "contains": {
+        ("SF-1", Fan): {"comment": "Supply Fan"},
+        ("RF-1", Fan): {"comment": "Return Fan"},
+        ("OAD-1", ElectricalActuatedDamper): {"comment": "Outside Air Damper"},
+        ("RAD-1", ElectricalActuatedDamper): {"comment": "Return Air Damper"},
+        ("CWC-1", ChilledWaterCoil): {"comment": "Chilled Water coil"},
+    },
+}
+mixedAir = AirConnection(
+    label="MIXED-AIR", comment="Where return air and outside air mix"
+)
+# rtu is a System
+rtu = AirHandlingUnit(config=config)
 
-class TemperatureSensor(Device):
-    node_type: URIRef = s223.sensor
-    temperature = QuantifiableObservableProperty  #Should this be an AnalogIn???
-    temperature.hasQuantityKind = quantitykind.Temperature
+# Relationships between devices
+rtu["OAD-1"] >> mixedAir
+rtu["RF-1"] >> mixedAir
+mixedAir >> rtu["SF-1"]
+rtu["SF-1"] >> rtu["CWC-1"]
 
-    hasMeasurementLocation: Connection #this is a questionable choice
+# Mapping of the system
+rtu.outsideAirInlet.mapsTo = rtu["OAD-1"].airInlet
+rtu.returnAirInlet.mapsTo = rtu["RF-1"].airInlet
+rtu.supplyAirOutlet.mapsTo = rtu["CWC-1"].airOutlet
 
-class RooftopUnit(System):
-    returnAirInlet: AirInletSystemConnectionPoint
-    outsideAirInlet: AirInletSystemConnectionPoint
-    supplyAirOutlet: AirOutletSystemConnectionPoint
-    exhaustAirOutlet: AirOutletSystemConnectionPoint
+return_plenum = AirConnection(
+    label="Return Air Plenum", comment="Air returns from zone here"
+)
+return_plenum >> rtu["RF-1"].airInlet
+supply_duct = AirConnection(
+    label="Supply Air Duct", comment="Air returns from zone here"
+)
+rtu["CWC-1"].airOutlet >> supply_duct
+rtu["DA-T"].hasMeasurementLocation = supply_duct
+rtu["RA-T"].hasMeasurementLocation = rtu["RF-1"].airOutlet
 
-    #should I put the basic command and feedback in the class here?
-    
-    #deciding not to use self, if I need ot access the RTU outside of this class it'd probably be good to have, but will I?
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        self.outsideAirInlet.mapsTo = Junction()
-        mixed_air_damper = Damper(label=self.label + ".mixed_air_damper")
-        mixed_air = AirConnection(label=self.label + ".mixed_air")
-        
-        iso_damper = Damper(label=self.label + '.iso_damper')
-        # supply_fan >> iso_damper
+bldg = Building(label="B59 Building")
+roof = Roof(label="Roof of building")
+floor1 = Floor(label="One big floor which is a common space")
+office1 = Office(label="Director Office")
+floor1_hvacspace = HVACSpace(label="HVAC Space for floor 1")
+rtu_zone = HVACZone(label="Common workspace zone for HVAC")
 
-        #self.supplyAirOutlet.mapsTo = iso_damper.airOutlet
-        j=Junction(label=self.label + ".RTU_supply_outlet")
-        j<<(iso_damper.airOutlet)
-        self.supplyAirOutlet.mapsTo = j #if I don't map it to a junction, then it doesn't connect to the plenum
+bldg > floor1 > floor1_hvacspace
+bldg > roof
+floor1 > office1
 
-        sensor = TemperatureSensor(label=self.label + '.MA_sensor')
-        sensor.hasMeasurementLocation = mixed_air#This seems weird, but I kind of like it. You're measuring the mixed air connection 
-       
-        # return_fan = Fan(label=self.label + ".return_fan")
-        # #return_fan.hasRole = Return
-        # self.returnAirInlet.mapsTo = return_fan.airInlet
-        # return_air = AirConnection(label=self.label + ".return_air")
-        # return_fan >> return_air
+supply_duct >> floor1_hvacspace.ductAirInlet
+floor1_hvacspace.ductAirOutlet >> return_plenum
 
-        # #making backdraft damper (exhaust damper) and connecting it
-        # ea_damper= Damper(label=self.label + ".exhaust_air_damper")
-        # return_air>>ea_damper
-        # self.exhaustAirOutlet.mapsTo = ea_damper.airOutlet
+rtu_zone > floor1_hvacspace
+rtu_zone.airInlet.mapsTo = supply_duct
+rtu_zone.airOutlet.mapsTo = return_plenum
 
-        # oa_damper = Damper(label=self.label + ".outside_air_damper")
-        # self.outsideAirInlet.mapsTo = oa_damper.airInlet
-        # #connecting damper directly to flow station, not indicating OA air
-        # oa_flow_station = AirFlowStation(label=self.label + ".outside_air_flow_station")
-        # oa_damper >> oa_flow_station >> mixed_air
+rtu.hasPhysicalLocation = roof
+rtu["ZN-T"].hasMeasurementLocation = floor1_hvacspace.ductAirOutlet
+rtu["ZN-T"].hasPhysicalLocation = office1
+rtu["DA-T"].hasPhysicalLocation = floor1
+rtu["RA-T"].hasPhysicalLocation = roof
 
-        # pre_filter = Filter(label=self.label + '.pre_filter')
-        # #filter has one connection, making new air to connect to bypass and coil
-        # pre_filtered_air = AirConnection(label=self.label + ".pre_filtered_air")
-        # mixed_air >> pre_filter >> pre_filtered_air
+# Should a plenum be a segment or is system correct??
+# class Plenum(AirConnection):
+#    AirInlet: AirInletSystemConnectionPoint  # would the outlet be a junction, or just connection points??
+#    AirOutlet: AirOutletSystemConnectionPoint
+#    hasMedium = Air##
 
-        # bp_damper = Damper(label=self.label + ".bypass_damper")
-        # #schematic has an iso valve but I don't think that's what chilledWaterCoil2 is talking about
-        # cwc = ChilledWaterCoil(label=self.label + ".chilled_water_coil")
-        # #both the damper and air need to go into a filter, air as a medium?
-        # chilled_air = AirConnection(label=self.label+".chilled_air")
-        # pre_filtered_air>>bp_damper>>chilled_air
-        # pre_filtered_air>>cwc>>chilled_air
-
-        # #connect via air connections or create junctions/segments: Why create junctions when I can make multiple things connect too or from an AirConnection?
-
-        # final_filter = Filter(label=self.label + '.final_filter')
-        # supply_fan = Fan(label=self.label + '.supply_fan')
-        # supply_fan.hasRole = Supply
-        # chilled_air>>final_filter>>supply_fan
-       
-#Should a plenum be a segment or is system correct?? 
-class Plenum(System):
-    AirInlet: AirInletSystemConnectionPoint #would the outlet be a junction, or just connection points??
-    AirOutlet: AirOutletSystemConnectionPoint
-    hasSubstance=Air
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        j=Junction(label=self.label+'.inlet')
-        #j.hasSubstance = Air
-        j2= Junction(label=self.label+'.outlet') 
-        #j2.hasSubstance = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
-        self.AirInlet.mapsTo = j
-        self.AirOutlet.mapsTo = j2
+#    def __init__(self, **kwargs: Any) -> None:
+#        super().__init__(**kwargs)
+#        j = Junction(label=self.label + ".inlet")
+#        # j.hasMedium = Air
+#        j2 = Junction(label=self.label + ".outlet")
+#        # j2.hasMedium = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
+#        self.AirInlet.mapsTo = j
+#        self.AirOutlet.mapsTo = j2
 
 
 # make an instance
-class HVACZone2(HVACZone):
-    node_type = None #Does this just mean that this isn't something in 223p yet? 
-    temperature_setpoint: AnalogOut
-    def __init__(self, label: str) -> None:
-        super().__init__(label=label)
-        #I need a junction to be the system inlet and outlet if I want to connect to another junction. 
-        j=Junction()
-        self.supplyAir.mapsTo = j
+# class HVACZone2(HVACZone):
+#    node_type = None  # Does this just mean that this isn't something in 223p yet?
+#    temperature_setpoint: AnalogOut###
+
+#    def __init__(self, label: str) -> None:
+#        super().__init__(label=label)
+#        # I need a junction to be the system inlet and outlet if I want to connect to another junction.
+#        j = Junction()
+#        self.supplyAir.mapsTo = j#
 
 
-r=RooftopUnit(node_iri=ex.rtu, label="rtu")
-p=Plenum(label="plenum")
-z=HVACZone2(label="zone")
+# r = RooftopUnit(node_iri=ex.rtu, label="rtu")
+# p = Plenum(label="plenum")
+# z = HVACZone2(label="zone")
 # can't seem to connect system connection points to junctions
-r.supplyAirOutlet >> p.AirInlet 
+# r.supplyAirOutlet >> p.AirInlet
 
-#p.AirOutlet.link_to(z.supplyAir) #getting no common connection types, because supply Air isn't a junction
-p.AirOutlet>>(z.supplyAir)
+# p.AirOutlet.link_to(z.supplyAir) #getting no common connection types, because supply Air isn't a junction
+# p.AirOutlet >> (z.supplyAir)
 
+# g36_header(model_name)
 
-#g36_header(model_name)
 dump()
-

@@ -1,0 +1,47 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+
+[] a s223:HVACZone,
+        s223:Zone ;
+    rdfs:label "Zone1" ;
+    s223:contains _:N3a7f06640a434ef79cb5a434de3ff1d5,
+        _:N3d333f56a292402eb5159009c7154292 ;
+    s223:hasDomain s223:HVAC .
+
+[] a s223:PhysicalSpace ;
+    rdfs:label "My Building" ;
+    s223:contains [ a s223:PhysicalSpace ;
+            rdfs:label "Floor1" ;
+            s223:contains [ a s223:PhysicalSpace ;
+                    rdfs:label "Office 3" ;
+                    s223:encloses [ a s223:DomainSpace,
+                                s223:HVACSpace ;
+                            rdfs:label "Office 3" ;
+                            s223:hasDomain s223:HVAC ] ],
+                [ a s223:PhysicalSpace ;
+                    rdfs:label "Office 1" ;
+                    s223:encloses _:N3a7f06640a434ef79cb5a434de3ff1d5 ],
+                [ a s223:PhysicalSpace ;
+                    rdfs:label "Office 2" ;
+                    s223:encloses _:N3d333f56a292402eb5159009c7154292 ] ],
+        [ a s223:PhysicalSpace ;
+            rdfs:label "Basement" ;
+            s223:contains [ a s223:PhysicalSpace ;
+                    rdfs:label "Joel's Office" ] ;
+            s223:encloses [ a s223:DomainSpace,
+                        s223:HVACSpace ;
+                    rdfs:label "Basement HVAC Space" ;
+                    s223:hasDomain s223:HVAC ] ],
+        [ a s223:PhysicalSpace ;
+            rdfs:label "Roof of building" ] .
+
+_:N3a7f06640a434ef79cb5a434de3ff1d5 a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "Office 1" ;
+    s223:hasDomain s223:HVAC .
+
+_:N3d333f56a292402eb5159009c7154292 a s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "Office 2" ;
+    s223:hasDomain s223:HVAC .
+

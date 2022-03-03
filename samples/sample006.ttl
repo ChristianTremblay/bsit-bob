@@ -19,45 +19,41 @@ ex:00001 a s223:System ;
     rdfs:label "hot_water_coil" ;
     s223:airInlet ex:00002 ;
     s223:airOutlet ex:00003 ;
-    s223:hasProperty ex:00012 ;
+    s223:hasProperty ex:00016 ;
     s223:hasSystemConnectionPoint ex:00002,
         ex:00003,
         ex:00004,
         ex:00005 ;
     s223:hotWaterReturn ex:00005 ;
     s223:hotWaterSupply ex:00004 ;
-    s223:hotWaterValvePosition ex:00012 .
+    s223:hotWaterValvePosition ex:00016 .
 
 ex:00002 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "hot_water_coil.airInlet" ;
-    s223:hasDirection s223:Inlet ;
-    s223:hasSubstance s223:Air ;
-    s223:isSystemConnectionPointOf ex:00001 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex:00007 .
 
 ex:00003 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "hot_water_coil.airOutlet" ;
-    s223:hasDirection s223:Outlet ;
-    s223:hasSubstance s223:Air ;
-    s223:isSystemConnectionPointOf ex:00001 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex:00008 .
 
 ex:00004 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "hot_water_coil.hotWaterSupply" ;
-    s223:hasDirection s223:Inlet ;
-    s223:hasSubstance s223:HotWater ;
-    s223:isSystemConnectionPointOf ex:00001 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater ;
     s223:mapsTo ex:00013 .
 
 ex:00005 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "hot_water_coil.hotWaterReturn" ;
-    s223:hasDirection s223:Outlet ;
-    s223:hasSubstance s223:HotWater ;
-    s223:isSystemConnectionPointOf ex:00001 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater ;
     s223:mapsTo ex:00010 .
 
 ex:00006 a s223:Device,
@@ -65,9 +61,6 @@ ex:00006 a s223:Device,
     rdfs:label "hot_water_coil.hw_coil" ;
     s223:airInlet ex:00007 ;
     s223:airOutlet ex:00008 ;
-    s223:connectedThrough ex:00015,
-        ex:00016,
-        ex:00017 ;
     s223:hasConnectionPoint ex:00007,
         ex:00008,
         ex:00009,
@@ -78,38 +71,33 @@ ex:00006 a s223:Device,
 ex:00007 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_coil.airInlet" ;
-    s223:connectsThrough ex:00016 ;
-    s223:hasDirection s223:Inlet ;
-    s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00006 .
+    s223:connectsThrough ex:00017 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
 
 ex:00008 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_coil.airOutlet" ;
-    s223:connectsThrough ex:00017 ;
-    s223:hasDirection s223:Outlet ;
-    s223:hasSubstance s223:Air ;
-    s223:isConnectionPointOf ex:00006 .
+    s223:connectsThrough ex:00018 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
 
 ex:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_coil.hotWaterSupply" ;
     s223:connectsThrough ex:00015 ;
-    s223:hasDirection s223:Inlet ;
-    s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00006 .
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater .
 
 ex:00010 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_coil.hotWaterReturn" ;
-    s223:hasDirection s223:Outlet ;
-    s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00006 .
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater .
 
 ex:00011 a s223:Device,
-        s223:HotWaterValve ;
+        s223:Valve ;
     rdfs:label "hot_water_coil.hw_valve" ;
-    s223:connectedThrough ex:00015 ;
     s223:hasConnectionPoint ex:00013,
         ex:00014 ;
     s223:hasProperty ex:00012 ;
@@ -117,42 +105,37 @@ ex:00011 a s223:Device,
     s223:hotWaterOutlet ex:00014 ;
     s223:position ex:00012 .
 
-ex:00012 a g36:AnalogOut ;
-    rdfs:label "hot_water_coil.hw_valve.position" ;
-    s223:isPropertyOf ex:00001,
-        ex:00011 .
+ex:00012 a g36:AnalogIn ;
+    rdfs:label "hot_water_coil.hw_valve.position" .
 
 ex:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_valve.hotWaterInlet" ;
-    s223:hasDirection s223:Inlet ;
-    s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00011 .
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater .
 
 ex:00014 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_valve.hotWaterOutlet" ;
     s223:connectsThrough ex:00015 ;
-    s223:hasDirection s223:Outlet ;
-    s223:hasSubstance s223:HotWater ;
-    s223:isConnectionPointOf ex:00011 .
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater .
 
 ex:00015 a s223:Connection ;
     s223:connectsAt ex:00009,
         ex:00014 ;
-    s223:connectsFrom ex:00011 ;
-    s223:connectsTo ex:00006 ;
-    s223:hasSubstance s223:HotWater .
+    s223:hasMedium s223:Water-HotWater .
 
-ex:00016 a s223:Connection ;
-    rdfs:label "Cold Air" ;
-    s223:connectsAt ex:00007 ;
-    s223:connectsTo ex:00006 ;
-    s223:hasSubstance s223:Air .
+ex:00016 a g36:AnalogOut ;
+    s223:hasValue "<AnalogIn hot_water_coil.hw_valve.position at urn:ex/sample006/00012>" .
 
 ex:00017 a s223:Connection ;
+    rdfs:label "Cold Air" ;
+    s223:connectsAt ex:00007 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex:00018 a s223:Connection ;
     rdfs:label "Hot Air" ;
     s223:connectsAt ex:00008 ;
-    s223:connectsFrom ex:00006 ;
-    s223:hasSubstance s223:Air .
+    s223:hasMedium s223:Medium-Air .
 

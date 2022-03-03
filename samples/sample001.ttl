@@ -19,53 +19,35 @@
 ex:00001 a s223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 1" ;
-    s223:hasProperty ex:00003 .
+    s223:hasProperty ex:00002 .
 
-ex:00002 a s223:Value ;
-    s223:hasSimpleValue 7.55e+01 ;
-    s223:hasUnits qudt:DEG_F ;
-    s223:isValueOf ex:00003 .
-
-ex:00003 a s223:QuantifiableProperty,
+ex:00002 a s223:QuantifiableProperty,
         ex:TemperatureProperty ;
     rdfs:label "temp" ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:hasValue ex:00002 ;
-    s223:isPropertyOf ex:00001 .
+    s223:hasValue 75.5 ;
+    s223:unit qudt:DEG_F .
 
-ex:00004 a s223:Device,
+ex:00003 a s223:Device,
         ex:TestDevice ;
     rdfs:label "Test Device 2" ;
-    s223:hasProperty ex:00005 .
+    s223:hasProperty ex:00004 .
 
-ex:00005 a s223:QuantifiableProperty,
+ex:00004 a s223:QuantifiableProperty,
         ex:TemperatureProperty ;
     rdfs:label "temp" ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:hasValue ex:00006 ;
-    s223:isPropertyOf ex:00004 .
+    s223:hasValue 90.5 ;
+    s223:unit qudt:DEG_F .
 
-ex:00006 a s223:Value,
-        ex:TemperatureValue ;
-    s223:hasSimpleValue 9.05e+01 ;
-    s223:hasUnits qudt:DEG_F ;
-    s223:isValueOf ex:00005 .
-
-ex:00007 a s223:Device,
+ex:00005 a s223:Device,
         ex:TestDevice2 ;
     rdfs:label "Test Device 3" ;
-    s223:hasProperty ex:00008 ;
-    ex:hasTemp ex:00008 .
+    s223:hasProperty ex:00006 ;
+    ex:hasTemp ex:00006 .
 
-ex:00008 a s223:QuantifiableProperty,
-        ex:TemperatureProperty ;
-    s223:hasQuantityKind quantitykind:Temperature ;
-    s223:hasValue ex:00009 ;
-    s223:isPropertyOf ex:00007 .
-
-ex:00009 a s223:Value,
-        ex:TemperatureValue ;
-    s223:hasSimpleValue 1.005e+02 ;
-    s223:hasUnits qudt:DEG_F ;
-    s223:isValueOf ex:00008 .
+ex:00006 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasValue 100.5 .
 
