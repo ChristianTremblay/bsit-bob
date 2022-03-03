@@ -1,4 +1,4 @@
-from bob.core import bind_model_namespace, dump, enum
+from bob.core import bind_model_namespace, dump, Air
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSensor
 from bob.sensor.humidity import AirHumiditySensor
 import pytest
@@ -20,7 +20,7 @@ with pytest.raises(ValueError):
 ats1 = TemperatureSensor(
     label="ats1",
     comment="Supply Air Temperature Sensor",
-    measuresSubstance=enum["Medium-Air"],
+    measuresSubstance=Air,
     hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
 )
 

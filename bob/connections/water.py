@@ -3,6 +3,7 @@ from ..core import s223, enum
 
 from ..core import (
     Medium,
+    Water,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -16,39 +17,42 @@ from ..signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 
-# Medium
-class Water(Medium):
-    node_type: URIRef = s223["Medium-Water"]
+DomesticWater = Medium(node_iri=s223["Water-DomesticWater"])
+DomesticHotWater = Medium(node_iri=s223["Water-DomesticHotWater"])
+ChilledWater = Medium(node_iri=s223["Water-ChilledWater"])
+HotWater = Medium(node_iri=s223["Water-HotWater"])
+CondensedWater = Medium(node_iri=s223["Water-CondensedWater"])
+GlycoledWater = Medium(node_iri=s223["Water-GlycoledWater"])
+Steam = Medium(node_iri=s223["Water-Steam"])
+
+# class DomesticWater(Water):
+#     node_type: URIRef = s223["Water-DomesticWater"]
 
 
-class DomesticWater(Water):
-    node_type: URIRef = s223["Water-DomesticWater"]
+# class DomesticHotWater(Water):
+#     node_type: URIRef = s223["Water-DomesticHotWater"]
 
 
-class DomesticHotWater(Water):
-    node_type: URIRef = s223["Water-DomesticHotWater"]
+# class ChilledWater(Water):
+#     node_type: URIRef = s223["Water-ChilledWater"]
 
 
-class ChilledWater(Water):
-    node_type: URIRef = s223["Water-ChilledWater"]
+# class HotWater(Water):
+#     node_type: URIRef = s223["Water-HotWater"]
 
 
-class HotWater(Water):
-    node_type: URIRef = s223["Water-HotWater"]
+# class CondensedWater(Water):
+#     node_type: URIRef = s223["Water-CondensedWater"]
 
 
-class CondensedWater(Water):
-    node_type: URIRef = s223["Water-CondensedWater"]
+# class GlycoledWater(Water):
+#     # glycol_proportion =
+#     node_type: URIRef = s223["Water-GlycoledWater"]
 
 
-class GlycoledWater(Water):
-    # glycol_proportion =
-    node_type: URIRef = s223["Water-GlycoledWater"]
-
-
-class Steam(Water):
-    # glycol_proportion =
-    node_type: URIRef = s223["Water-Steam"]
+# class Steam(Water):
+#     # glycol_proportion =
+#     node_type: URIRef = s223["Water-Steam"]
 
 
 # Connections
@@ -92,12 +96,12 @@ class WaterOutletSystemConnectionPoint(OutletConnectionPoint, WaterConnectionPoi
 
 # === HOT WATER
 class HotWaterConnection(Connection):
-    hasMedium: URIRef = HotWater.node_type
+    hasMedium: Medium = HotWater
     node_type = None
 
 
 class HotWaterConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = HotWater.node_type
+    hasMedium: Medium = HotWater
     node_type = None
 
 
@@ -110,7 +114,7 @@ class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoi
 
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = HotWater.node_type
+    hasMedium: Medium = HotWater
     node_type = None
 
 
@@ -127,8 +131,13 @@ class HotWaterOutletSystemConnectionPoint(
 
 
 # === STEAM
+class SteamConnection(Connection):
+    hasMedium: Medium = Steam
+    node_type = None
+
+
 class SteamConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Steam.node_type
+    hasMedium: Medium = Steam
     node_type = None
 
 
@@ -141,7 +150,7 @@ class SteamOutletConnectionPoint(OutletConnectionPoint, SteamConnectionPoint):
 
 
 class SteamSystemConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Steam.node_type
+    hasMedium: Medium = Steam
     node_type = None
 
 
@@ -157,12 +166,12 @@ class SteamOutletSystemConnectionPoint(
 
 # === CHILLED WATER
 class ChilledWaterConnection(Connection):
-    hasMedium: URIRef = ChilledWater.node_type
+    hasMedium: Medium = ChilledWater
     node_type = None
 
 
 class ChilledWaterConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = ChilledWater.node_type
+    hasMedium: Medium = ChilledWater
     node_type = None
 
 
@@ -179,7 +188,7 @@ class ChilledWaterOutletConnectionPoint(
 
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = ChilledWater.node_type
+    hasMedium: Medium = ChilledWater
     node_type = None
 
 

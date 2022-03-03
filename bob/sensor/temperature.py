@@ -1,11 +1,9 @@
 from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, s223, p223, unit, enum, Medium
+from ..core import quantitykind, s223, p223, unit, Medium, Air, Water
 
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
-
-from bob import core
 
 __namespace__ = s223
 
@@ -45,10 +43,10 @@ class TemperatureSensor(Sensor):
 
 
 class AirTemperatureSensor(TemperatureSensor):
-    hasMedium: URIRef = s223["Medium-Air"]
-    measuresSubstance: URIRef = s223["Medium-Air"]
+    hasMedium: Medium = Air
+    measuresSubstance: Medium = Air
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    hasMedium: URIRef = s223["Medium-Water"]
-    measuresSubstance: URIRef = s223["Medium-Water"]
+    hasMedium: Medium = Water
+    measuresSubstance: Medium = Water

@@ -1,4 +1,3 @@
-@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
 @prefix ex: <urn:ex/test_sensor-001/> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -19,7 +18,7 @@ ex:00002 a s223:Device,
         s223:TemperatureSensor ;
     rdfs:label "ats1" ;
     s223:hasProperty ex:00003 ;
-    s223:measuresSubstance enum:Medium-Air ;
+    s223:measuresSubstance s223:Medium-Air ;
     s223:observesProperty ex:00003 ;
     rdfs:comment "Supply Air Temperature Sensor" .
 
@@ -30,7 +29,7 @@ ex:00003 a p223:Measure,
     rdfs:label "ats1.Measure" ;
     s223:hasExternalReference ex:00004 ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:ofSubstance enum:Medium-Air ;
+    s223:ofSubstance s223:Medium-Air ;
     s223:unit unit:DEG_C .
 
 ex:00004 a s223:ExternalReference ;

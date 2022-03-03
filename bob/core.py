@@ -1501,7 +1501,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
                 continue
 
             medium = getattr(connection_point, "hasMedium", None)
-            medium = getattr(medium, "node", medium)
+            # medium = getattr(medium, "node", medium)
             # ISSUE...having a hard time with electrical things
             from_out[medium].add(connection_point)
 
@@ -1578,7 +1578,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     to_in = defaultdict(set)
     if isinstance(to_thing, ConnectionPoint):
         medium = getattr(to_thing, "hasMedium", None)
-        medium = getattr(medium, "node", medium)
+        # medium = getattr(medium, "node", medium)
         # ISSUE...having a hard time with electrical things
         to_in[medium].add(to_thing)
 
@@ -1597,7 +1597,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             # medium turned to be
             # {'node': rdflib.term.URIRef('http://data.ashrae.org/standard223/1.0/vocab/enumeration#Water-ChilledWater'), 'label': '', 'comment': ''}
             # and the intersection fails to recognize the substance
-            medium = getattr(medium, "node", medium)
+            # medium = getattr(medium, "node", medium)
             to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, (SystemConnectionPoint, ZoneConnectionPoint)):

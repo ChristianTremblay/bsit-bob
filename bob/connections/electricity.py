@@ -3,6 +3,7 @@ from ..core import s223, enum
 
 from ..core import (
     Medium,
+    Electricity,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -19,17 +20,13 @@ __namespace__ = s223
 
 
 # === GENERAL
-class Electricity(Medium):
-    node_type: URIRef = s223["Medium-Electricity"]
-
-
 class ElectricalConnection(Connection):
-    hasMedium: URIRef = Electricity.node_type
+    hasMedium: Medium = Electricity
     node_type = None
 
 
 class ElectricalConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Electricity.node_type
+    hasMedium: Medium = Electricity
     node_type = None
 
 
@@ -42,38 +39,33 @@ class ElectricalOutletConnectionPoint(OutletConnectionPoint, ElectricalConnectio
 
 
 class ElectricalSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = Electricity.node_type
+    hasMedium: Medium = Electricity
     node_type = None
 
 
 class ElectricalSystemInletConnectionPoint(
     ElectricalSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity.node_type
     node_type = None
 
 
 class ElectricalSystemOutletConnectionPoint(
     ElectricalSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity.node_type
     node_type = None
 
 
 # === 575V 60Hz
 
-
-class Electricity_575V_60Hz(Medium):
-    node_type: URIRef = s223["Electricity-575V.60Hz"]
-
+Electricity_575V_60Hz = Medium(node_iri=s223["Electricity-575V_60Hz"])
 
 class Electricity_575V_60HzConnection(Connection):
-    hasMedium: URIRef = Electricity_575V_60Hz.node_type
+    hasMedium: Medium = Electricity_575V_60Hz
     node_type = None
 
 
 class Electricity_575V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Electricity_575V_60Hz.node_type
+    hasMedium: Medium = Electricity_575V_60Hz
     node_type = None
 
 
@@ -90,21 +82,19 @@ class Electricity_575V_60HzOutletConnectionPoint(
 
 
 class Electricity_575V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = Electricity_575V_60Hz.node_type
+    hasMedium: Medium = Electricity_575V_60Hz
     node_type = None
 
 
 class Electricity_575V_60HzSystemInletConnectionPoint(
     Electricity_575V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity_575V_60Hz.node_type
     node_type = None
 
 
 class Electricity_575V_60HzSystemOutletConnectionPoint(
     Electricity_575V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity_575V_60Hz.node_type
     node_type = None
 
 
@@ -115,17 +105,16 @@ class Electricity_575V_60HzSystemOutletConnectionPoint(
 # Each phase canbe used to provide 120VAC
 
 
-class Electricity_120V_240V_60Hz(Medium):
-    node_type: URIRef = s223["Electricity-120V_240V.60Hz"]
+Electricity_120V_240V_60Hz = Medium(node_iri=s223["Electricity-120V_240V_60Hz"])
 
 
 class Electricity_120V_240V_60HzConnection(Connection):
-    hasMedium: URIRef = Electricity_120V_240V_60Hz.node_type
+    hasMedium: Medium = Electricity_120V_240V_60Hz
     node_type = None
 
 
 class Electricity_120V_240V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Electricity_120V_240V_60Hz.node_type
+    hasMedium: Medium = Electricity_120V_240V_60Hz
     node_type = None
 
 
@@ -142,38 +131,35 @@ class Electricity_120V_240V_60HzOutletConnectionPoint(
 
 
 class Electricity_120V_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = Electricity_120V_240V_60Hz.node_type
+    hasMedium: Medium = Electricity_120V_240V_60Hz
     node_type = None
 
 
 class lectricity_120V_240V_60HzSystemInletConnectionPoint(
     Electricity_120V_240V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity_120V_240V_60Hz.node_type
     node_type = None
 
 
 class lectricity_120V_240V_60HzSystemOutletConnectionPoint(
     Electricity_120V_240V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity_120V_240V_60Hz.node_type
     node_type = None
 
 
 # === 240V 60Hz
 
 
-class Electricity_240V_60Hz(Medium):
-    node_type: URIRef = s223["Electricity-240V.60Hz"]
+Electricity_240V_60Hz = Medium(node_iri=s223["Electricity-240V_60Hz"])
 
 
 class Electricity_240V_60HzConnection(Connection):
-    hasMedium: URIRef = Electricity_240V_60Hz.node_type
+    hasMedium: Medium = Electricity_240V_60Hz
     node_type = None
 
 
 class Electricity_240V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Electricity_240V_60Hz.node_type
+    hasMedium: Medium = Electricity_240V_60Hz
     node_type = None
 
 
@@ -190,38 +176,35 @@ class Electricity_240V_60HzOutletConnectionPoint(
 
 
 class Electricity_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = Electricity_240V_60Hz.node_type
+    hasMedium: Medium = Electricity_240V_60Hz
     node_type = None
 
 
-class lectricity_240V_60HzSystemInletConnectionPoint(
+class Electricity_240V_60HzSystemInletConnectionPoint(
     Electricity_240V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity_240V_60Hz.node_type
     node_type = None
 
 
-class lectricity_240V_60HzSystemOutletConnectionPoint(
+class Electricity_240V_60HzSystemOutletConnectionPoint(
     Electricity_240V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity_240V_60Hz.node_type
     node_type = None
 
 
 # === 120V 60Hz
 
 
-class Electricity_120V_60Hz(Medium):
-    node_type: URIRef = s223["Electricity-120V.60Hz"]
+Electricity_120V_60Hz = Medium(node_iri=s223["Electricity-120V_60Hz"])
 
 
 class Electricity_120V_60HzConnection(Connection):
-    hasMedium: URIRef = Electricity_120V_60Hz.node_type
+    hasMedium: Medium = Electricity_120V_60Hz
     node_type = None
 
 
 class Electricity_120V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Electricity_120V_60Hz.node_type
+    hasMedium: Medium = Electricity_120V_60Hz
     node_type = None
 
 
@@ -238,21 +221,19 @@ class Electricity_120V_60HzOutletConnectionPoint(
 
 
 class Electricity_120V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = Electricity_120V_60Hz.node_type
+    hasMedium: Medium = Electricity_120V_60Hz
     node_type = None
 
 
 class Electricity_120V_60HzSystemInletConnectionPoint(
     Electricity_120V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity_120V_60Hz.node_type
     node_type = None
 
 
 class Electricity_120V_60HzSystemOutletConnectionPoint(
     Electricity_120V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    hasMedium: URIRef = Electricity_120V_60Hz.node_type
     node_type = None
 
 
