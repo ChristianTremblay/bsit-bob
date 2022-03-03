@@ -1,7 +1,7 @@
 from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
 from rdflib import URIRef
 from typing import Any, List
-from ..core import quantitykind, s223, p223, unit, enum, Medium, Node
+from ..core import quantitykind, s223, p223, unit, enum, Medium, Air, Node
 
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
 
@@ -26,7 +26,7 @@ class DifferentialStaticPressureSetpoint(QuantifiableProperty):
 class DifferentialStaticPressureSensor(Sensor):
     node_type: URIRef = s223.DifferentialSensor
     observesProperty: DifferentialStaticPressureMeasure
-    measuresSubstance: URIRef = s223["Medium-Air"]
+    measuresSubstance: Medium = Air
     hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
     hasMeasurementLocationLow: Node
 

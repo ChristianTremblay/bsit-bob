@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef
 
-from ..core import s223, p223, enum, quantitykind, unit, Medium
+from ..core import s223, p223, enum, quantitykind, unit, Medium, Air
 
 from .sensor import Sensor, QuantifiableObservableProperty, split_kwargs
 
@@ -42,7 +42,7 @@ class GasConcentrationSetpoint(QuantifiableProperty):
 class GasConcentrationSensor(Sensor):
     node_type: URIRef = s223.ConcentrationSensor
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    hasMedium: URIRef = s223["Medium-Air"]
+    hasMedium: Medium = Air
     observesProperty: GasConcentrationMeasure
 
     def __init__(self, **kwargs: Any) -> None:

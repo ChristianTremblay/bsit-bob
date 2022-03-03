@@ -1,7 +1,4 @@
-# baseURI: http://data.ashrae.org/standard223/1.0/sample/test_sensor-002
-# imports: http://data.ashrae.org/standard223/1.0/model/all
-@prefix ex29: <urn:ex/test_system-007/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <urn:ex/test_sensor-002/> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -290,12 +287,12 @@ ex29:00370 a s223:Device,
         s223:DifferentialSensor,
         s223:Sensor ;
     rdfs:label "TPD-01" ;
-    s223:hasMeasurementLocationHigh ex29:00342 ;
-    s223:hasMeasurementLocationLow ex29:00358 ;
-    s223:hasPhysicalLocation ex29:00369 ;
-    s223:hasProperty ex29:00371 ;
+    s223:hasMeasurementLocationHigh ex:00009 ;
+    s223:hasMeasurementLocationLow ex:00025 ;
+    s223:hasPhysicalLocation ex:00036 ;
+    s223:hasProperty ex:00038 ;
     s223:measuresSubstance s223:Medium-Air ;
-    s223:observesProperty ex29:00371 ;
+    s223:observesProperty ex:00038 ;
     rdfs:comment "Static Pressure between Clean Room (+) and SAS (-)" .
 ex29:00371 a p223:Measure,
         s223:ObservableProperty,
@@ -304,7 +301,6 @@ ex29:00371 a p223:Measure,
     rdfs:label "TPD-01.Measure" ;
     s223:hasExternalReference ex29:00372 ;
     s223:hasQuantityKind quantitykind:ForcePerArea ;
-    s223:isPropertyOf ex29:00370 ;
     s223:ofSubstance s223:Medium-Air ;
     s223:unit unit:PA .
 ex29:00372 a s223:ExternalReference ;

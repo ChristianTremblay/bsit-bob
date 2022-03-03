@@ -1,7 +1,7 @@
 from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, s223, p223, unit, enum, Medium
+from ..core import quantitykind, s223, p223, unit, enum, Medium, Air, Water
 
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
 
@@ -45,12 +45,12 @@ class FlowSensor(Sensor):
 
 
 class AirFlowSensor(FlowSensor):
-    hasMedium: URIRef = s223["Medium-Air"]
-    measuresSubstance: URIRef = s223["Medium-Air"]
+    hasMedium: Medium = Air
+    measuresSubstance: URIRef = Air
     unit: URIRef = unit["FT3-PER-MIN"]
 
 
 class WaterFlowSensor(FlowSensor):
-    hasMedium: URIRef = s223["Medium-Water"]
-    measuresSubstance: URIRef = s223["Medium-Water"]
+    hasMedium: Medium = Water
+    measuresSubstance: Medium = Water
     unit: URIRef = unit["GAL_UK-PER-MIN"]

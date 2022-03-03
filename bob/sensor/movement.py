@@ -1,7 +1,7 @@
 from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, s223, p223, unit, enum, Medium
+from ..core import quantitykind, s223, p223, unit, enum, Medium, Light
 
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
 
@@ -20,7 +20,7 @@ class MovementMeasure(Measurement):
 class MovementSensor(Sensor):
     node_type: URIRef = p223.MovementSensor
     observesProperty: MovementMeasure
-    measuresSubstance: URIRef = s223["Medium-Light"]
+    measuresSubstance: Medium = Light
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)

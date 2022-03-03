@@ -8,7 +8,7 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
-from ..core import DomainSpace, HVAC, s223, Zone, enum
+from ..core import DomainSpace, HVAC, s223, Zone, enum, Medium, Air
 from ..systems.physic import IndoorAir
 
 __namespace__ = s223
@@ -16,7 +16,7 @@ __namespace__ = s223
 
 class HVACSpace(DomainSpace):
     hasDomain = HVAC
-    hasMedium = s223["Medium-Air"]
+    hasMedium: Medium = Air
     ductAirInlet: AirInletConnectionPoint
     ductAirOutlet: AirOutletConnectionPoint
     airTransfer: AirBidirectionalConnectionPoint
