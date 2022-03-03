@@ -20,8 +20,12 @@ from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.damper import Window, Damper, DamperActuator
 from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
 from bob.devices.hvac.humidifier import SteamPipe, Humidifier
+from bob.devices.hvac.valve import WaterValve
 from bob.devices.lighting.light import Light
 from bob.devices.hvac.vfd import VFD
+from bob.devices.hvac.chiller import Chiller
+from bob.devices.hvac.pump import Pump
+from bob.devices.hvac.geothermal import GeothermalWell
 from bob.devices import contains_devices_list
 
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
@@ -35,6 +39,7 @@ from bob.sensor.movement import MovementSensor
 from bob.sensor.gas import CO2Sensor
 from bob.sensor import define_sensors
 
+from bob.connections.water import WaterConnection
 
 from bob.space.physical import (
     Building,
@@ -257,6 +262,101 @@ hr1.hasMeasurementLocation = return_duct
 hr1.hasPhysicalLocation = mechroom
 tr1.hasMeasurementLocation = return_duct
 tr1.hasPhysicalLocation = mechroom
+
+
+# Geothermal water network
+well = GeothermalWell(label="GeothermalWells")
+pc1 = Chiller(label="PC-1", comment="Chiller #1")
+pc2 = Chiller(label="PC-2", comment="Chiller #2")
+p1 = Pump(
+    label="P-1",
+    comment="Pump P-1, Condensed Water loop to heat UV-1 and Radiant Floors",
+)
+p2 = Pump(
+    label="P-2",
+    comment="Pump P-2, Condensed Water loop to heat UV-1 and Radiant Floors",
+)
+p3 = Pump(label="P-3", comment="Pump P-3, Geothermal Well pumps")
+p4 = Pump(label="P-4", comment="Pump P-4, Geothermal Well pumps")
+v1A_no = WaterValve(label="V-1A_NO", comment="Butterfly Valve NO to Well of pair V-1A")
+v1A_nc = WaterValve(label="V-1A_NC", comment="Butterfly Valve NC to Coil of pair V-1A")
+v1B_no = WaterValve(label="V-1B_NO", comment="Butterfly Valve NO to Well of pair V-1B")
+v1B_nc = WaterValve(label="V-1B_NC", comment="Butterfly Valve NC to Coil of pair V-1B")
+v2 = WaterValve(label="V-2", comment="PC-1 Isolation valve")
+v3 = WaterValve(label="V-3", comment="PC-2 Isolation valve")
+v4 = WaterValve(label="V-4", comment="Loop pressure control Valve")
+
+leaving_chilledWater_pipe = WaterConnection(
+    label="CHWL_Pipe", comment="Chilled Water Leaving Pipe from both chillers"
+)
+entering_chilledWater_pipe = WaterConnection(
+    label="CHWE_Pipe", comment="Chilled Water Entering Pipe for both chillers"
+)
+
+leaving_condensedWater_pipe = WaterConnection(
+    label="CWL_Pipe", comment="Condensed Water Leaving Pipe from both chillers"
+)
+entering_condensedWater_pipe = WaterConnection(
+    label="CWE_Pipe", comment="Condensed Water Entering Pipe for both chillers"
+)
+
+p1_p2_leaving = WaterConnection(label="P1P2WL")
+radiant_floor_collector_supply = WaterConnection(label="RFC-SUPPLY")
+radiant_floor_collector_return = WaterConnection(label="RFC-RETURN")
+coil_supply_pipe = WaterConnection(
+    label="COIL-SUPPLY",
+    comment="At this point, water can be hot or cold, depending on the valve V-1A,B position",
+)
+coil_return_pipe = WaterConnection(
+    label="COIL-RETURN",
+    comment="This is the connection where UV-3 coil, and UV-1 coil returns",
+)
+
+bypass_pipe = WaterConnection(label="BYPASS")
+
+p3_p4_leaving = WaterConnection(label="P3P4WL")
+p3_p4_entering = WaterConnection(label="P3P4WE")
+
+pc1.chilledWaterLeaving >> leaving_chilledWater_pipe
+pc2.chilledWaterLeaving >> leaving_chilledWater_pipe
+leaving_chilledWater_pipe >> p1.waterInlet >> p1_p2_leaving
+leaving_chilledWater_pipe >> p2.waterInlet >> p1_p2_leaving
+
+p1_p2_leaving >> radiant_floor_collector_supply
+p1_p2_leaving >> v1B_nc.waterInlet
+v1B_nc.waterOutlet >> coil_supply_pipe
+v1B_no.waterOutlet >> coil_supply_pipe
+
+coil_supply_pipe >> coil.waterInlet
+coil.waterOutlet >> coil_return_pipe
+
+coil_return_pipe >> v1A_no.waterInlet
+coil_return_pipe >> v1A_nc.waterInlet
+
+v1A_nc.waterOutlet >> entering_condensedWater_pipe
+v1A_no.waterOutlet >> leaving_chilledWater_pipe
+radiant_floor_collector_return >> entering_condensedWater_pipe
+
+entering_condensedWater_pipe >> pc1.condensedWaterEntering
+entering_condensedWater_pipe >> pc2.condensedWaterEntering
+
+entering_chilledWater_pipe >> v2.waterInlet
+v2.waterOutlet >> pc1.chilledWaterEntering
+
+entering_chilledWater_pipe >> v3.waterInlet
+v3.waterOutlet >> pc2.chilledWaterEntering
+
+pc1.chilledWaterLeaving >> leaving_chilledWater_pipe
+pc2.chilledWaterLeaving >> leaving_chilledWater_pipe
+
+leaving_chilledWater_pipe >> well.waterInlet
+leaving_chilledWater_pipe >> v4.waterInlet
+v4.waterOutlet >> p3_p4_entering
+
+well.waterOutlet >> p3_p4_entering >> [p3.waterInlet, p4.waterInlet]
+p3.waterOutlet >> p3_p4_leaving
+p4.waterOutlet >> p3_p4_leaving
+p3_p4_leaving >> entering_chilledWater_pipe
 
 
 result = dump(

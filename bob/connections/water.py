@@ -1,5 +1,5 @@
 from rdflib import URIRef
-from ..core import s223, enum
+from ..core import s223, p223
 
 from ..core import (
     Medium,
@@ -91,12 +91,12 @@ class WaterOutletSystemConnectionPoint(OutletConnectionPoint, WaterConnectionPoi
 
 
 # === HOT WATER
-class HotWaterConnection(Connection):
+class HotWaterConnection(WaterConnection):
     hasMedium: URIRef = HotWater.node_type
     node_type = None
 
 
-class HotWaterConnectionPoint(ConnectionPoint):
+class HotWaterConnectionPoint(WaterConnectionPoint):
     hasMedium: URIRef = HotWater.node_type
     node_type = None
 
@@ -161,12 +161,12 @@ class SteamOutletSystemConnectionPoint(
 
 
 # === CHILLED WATER
-class ChilledWaterConnection(Connection):
+class ChilledWaterConnection(WaterConnection):
     hasMedium: URIRef = ChilledWater.node_type
     node_type = None
 
 
-class ChilledWaterConnectionPoint(ConnectionPoint):
+class ChilledWaterConnectionPoint(WaterConnectionPoint):
     hasMedium: URIRef = ChilledWater.node_type
     node_type = None
 
@@ -196,5 +196,45 @@ class ChilledWaterInletSystemConnectionPoint(
 
 class ChilledWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
+):
+    node_type = None
+
+
+# === CONDENSED WATER
+class CondensedWaterConnection(WaterConnection):
+    hasMedium: URIRef = CondensedWater.node_type
+    node_type = None
+
+
+class CondensedWaterConnectionPoint(WaterConnectionPoint):
+    hasMedium: URIRef = CondensedWater.node_type
+    node_type = None
+
+
+class CondensedWaterInletConnectionPoint(
+    InletConnectionPoint, CondensedWaterConnectionPoint
+):
+    node_type = None
+
+
+class CondensedWaterOutletConnectionPoint(
+    OutletConnectionPoint, CondensedWaterConnectionPoint
+):
+    node_type = None
+
+
+class CondensedWaterSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: URIRef = CondensedWater.node_type
+    node_type = None
+
+
+class CondensedWaterInletSystemConnectionPoint(
+    InletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
+):
+    node_type = None
+
+
+class CondensedWaterOutletSystemConnectionPoint(
+    OutletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
 ):
     node_type = None
