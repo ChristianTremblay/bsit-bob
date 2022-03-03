@@ -216,8 +216,14 @@ def get_datagraph(graph: Graph = data_graph) -> Graph:
 
 
 def clear(graph: Graph = data_graph) -> None:
-    """Remove all the triples from the graph."""
+    """Remove all the triples from the graph, reset the blank node counter."""
+    global _next_node
+
+    # remove all the triples
     graph.remove((None, None, None))
+
+    # reset the "blank" node counter
+    _next_node = 1
 
 
 # === NODES
