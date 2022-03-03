@@ -739,7 +739,7 @@ class ExternalReference(Node):
     """
 
     node_type: URIRef = s223.ExternalReference
-    isExternalReferenceOf: Property
+    # isExternalReferenceOf: Property
     hasRef: Literal
 
     def __init__(

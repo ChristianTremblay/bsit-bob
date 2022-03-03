@@ -46,7 +46,7 @@ class FlowSensor(Sensor):
 
 class AirFlowSensor(FlowSensor):
     hasMedium: Medium = Air
-    measuresSubstance: URIRef = Air
+    measuresSubstance: Medium = Air
     unit: URIRef = unit["FT3-PER-MIN"]
 
 
