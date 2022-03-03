@@ -125,6 +125,7 @@ zoo:00018 a s223:DomainSpace,
         zoo:00024,
         zoo:00025 ;
     s223:hasDomain s223:HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir zoo:00010 ;
     s223:radiantCooling zoo:00025 ;
     s223:radiantHeating zoo:00024 ;
@@ -241,6 +242,7 @@ zoo:00034 a s223:DomainSpace,
         zoo:00040,
         zoo:00041 ;
     s223:hasDomain s223:HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir zoo:00026 ;
     s223:radiantCooling zoo:00041 ;
     s223:radiantHeating zoo:00040 ;
@@ -625,11 +627,13 @@ zoo:00092 a s223:ConnectionPoint,
 zoo:00093 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SE-1.waterInlet" ;
+    s223:connectsThrough zoo:00239 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water .
 zoo:00094 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "SE-1.waterOutlet" ;
+    s223:connectsThrough zoo:00240 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water .
 zoo:00095 a s223:Device,
@@ -1181,3 +1185,452 @@ zoo:00174 a s223:Connection ;
     s223:connectsAt zoo:00083,
         zoo:00115 ;
     s223:hasMedium s223:Medium-Air .
+zoo:00175 a p223:GeothermalWell,
+        s223:Device ;
+    rdfs:label "GeothermalWells" ;
+    p223:waterInlet zoo:00176 ;
+    p223:waterOutlet zoo:00177 ;
+    s223:hasConnectionPoint zoo:00176,
+        zoo:00177 .
+zoo:00176 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "GeothermalWells.waterInlet" ;
+    s223:connectsThrough zoo:00234 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00177 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "GeothermalWells.waterOutlet" ;
+    s223:connectsThrough zoo:00243 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00178 a p223:Chiller,
+        s223:Device ;
+    rdfs:label "PC-1" ;
+    p223:chilledWaterEntering zoo:00180 ;
+    p223:chilledWaterLeaving zoo:00179 ;
+    p223:condensedWaterEntering zoo:00182 ;
+    p223:condensedWaterLeaving zoo:00181 ;
+    p223:powerInlet zoo:00183 ;
+    s223:hasConnectionPoint zoo:00179,
+        zoo:00180,
+        zoo:00181,
+        zoo:00182,
+        zoo:00183 ;
+    rdfs:comment "Chiller #1" .
+zoo:00179 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "PC-1.chilledWaterLeaving" ;
+    s223:connectsThrough zoo:00234 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00180 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "PC-1.chilledWaterEntering" ;
+    s223:connectsThrough zoo:00244 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00181 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "PC-1.condensedWaterLeaving" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00182 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "PC-1.condensedWaterEntering" ;
+    s223:connectsThrough zoo:00237 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00183 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "PC-1.powerInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+zoo:00184 a p223:Chiller,
+        s223:Device ;
+    rdfs:label "PC-2" ;
+    p223:chilledWaterEntering zoo:00186 ;
+    p223:chilledWaterLeaving zoo:00185 ;
+    p223:condensedWaterEntering zoo:00188 ;
+    p223:condensedWaterLeaving zoo:00187 ;
+    p223:powerInlet zoo:00189 ;
+    s223:hasConnectionPoint zoo:00185,
+        zoo:00186,
+        zoo:00187,
+        zoo:00188,
+        zoo:00189 ;
+    rdfs:comment "Chiller #2" .
+zoo:00185 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "PC-2.chilledWaterLeaving" ;
+    s223:connectsThrough zoo:00234 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00186 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "PC-2.chilledWaterEntering" ;
+    s223:connectsThrough zoo:00245 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00187 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "PC-2.condensedWaterLeaving" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00188 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "PC-2.condensedWaterEntering" ;
+    s223:connectsThrough zoo:00237 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00189 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "PC-2.powerInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+zoo:00190 a s223:Device,
+        s223:Fan ;
+    rdfs:label "P-1" ;
+    s223:electricalInlet zoo:00193 ;
+    s223:hasConnectionPoint zoo:00191,
+        zoo:00192,
+        zoo:00193 ;
+    s223:waterInlet zoo:00191 ;
+    s223:waterOutlet zoo:00192 ;
+    rdfs:comment "Pump P-1, Condensed Water loop to heat UV-1 and Radiant Floors" .
+zoo:00191 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-1.waterInlet" ;
+    s223:connectsThrough zoo:00234 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00192 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-1.waterOutlet" ;
+    s223:connectsThrough zoo:00238 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00193 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-1.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+zoo:00194 a s223:Device,
+        s223:Fan ;
+    rdfs:label "P-2" ;
+    s223:electricalInlet zoo:00197 ;
+    s223:hasConnectionPoint zoo:00195,
+        zoo:00196,
+        zoo:00197 ;
+    s223:waterInlet zoo:00195 ;
+    s223:waterOutlet zoo:00196 ;
+    rdfs:comment "Pump P-2, Condensed Water loop to heat UV-1 and Radiant Floors" .
+zoo:00195 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-2.waterInlet" ;
+    s223:connectsThrough zoo:00234 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00196 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-2.waterOutlet" ;
+    s223:connectsThrough zoo:00238 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00197 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-2.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+zoo:00198 a s223:Device,
+        s223:Fan ;
+    rdfs:label "P-3" ;
+    s223:electricalInlet zoo:00201 ;
+    s223:hasConnectionPoint zoo:00199,
+        zoo:00200,
+        zoo:00201 ;
+    s223:waterInlet zoo:00199 ;
+    s223:waterOutlet zoo:00200 ;
+    rdfs:comment "Pump P-3, Geothermal Well pumps" .
+zoo:00199 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-3.waterInlet" ;
+    s223:connectsThrough zoo:00243 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00200 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-3.waterOutlet" ;
+    s223:connectsThrough zoo:00242 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00201 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-3.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+zoo:00202 a s223:Device,
+        s223:Fan ;
+    rdfs:label "P-4" ;
+    s223:electricalInlet zoo:00205 ;
+    s223:hasConnectionPoint zoo:00203,
+        zoo:00204,
+        zoo:00205 ;
+    s223:waterInlet zoo:00203 ;
+    s223:waterOutlet zoo:00204 ;
+    rdfs:comment "Pump P-4, Geothermal Well pumps" .
+zoo:00203 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-4.waterInlet" ;
+    s223:connectsThrough zoo:00243 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00204 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "P-4.waterOutlet" ;
+    s223:connectsThrough zoo:00242 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00205 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "P-4.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+zoo:00206 a s223:Device,
+        s223:Valve ;
+    rdfs:label "V-1A_NO" ;
+    s223:hasConnectionPoint zoo:00208,
+        zoo:00209 ;
+    s223:hasProperty zoo:00207 ;
+    s223:position zoo:00207 ;
+    s223:waterInlet zoo:00208 ;
+    s223:waterOutlet zoo:00209 ;
+    rdfs:comment "Butterfly Valve NO to Well of pair V-1A" .
+zoo:00207 a g36:AnalogIn ;
+    rdfs:label "V-1A_NO.position" .
+zoo:00208 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "V-1A_NO.waterInlet" ;
+    s223:connectsThrough zoo:00240 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00209 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "V-1A_NO.waterOutlet" ;
+    s223:connectsThrough zoo:00234 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00210 a s223:Device,
+        s223:Valve ;
+    rdfs:label "V-1A_NC" ;
+    s223:hasConnectionPoint zoo:00212,
+        zoo:00213 ;
+    s223:hasProperty zoo:00211 ;
+    s223:position zoo:00211 ;
+    s223:waterInlet zoo:00212 ;
+    s223:waterOutlet zoo:00213 ;
+    rdfs:comment "Butterfly Valve NC to Coil of pair V-1A" .
+zoo:00211 a g36:AnalogIn ;
+    rdfs:label "V-1A_NC.position" .
+zoo:00212 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "V-1A_NC.waterInlet" ;
+    s223:connectsThrough zoo:00240 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00213 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "V-1A_NC.waterOutlet" ;
+    s223:connectsThrough zoo:00237 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00214 a s223:Device,
+        s223:Valve ;
+    rdfs:label "V-1B_NO" ;
+    s223:hasConnectionPoint zoo:00216,
+        zoo:00217 ;
+    s223:hasProperty zoo:00215 ;
+    s223:position zoo:00215 ;
+    s223:waterInlet zoo:00216 ;
+    s223:waterOutlet zoo:00217 ;
+    rdfs:comment "Butterfly Valve NO to Well of pair V-1B" .
+zoo:00215 a g36:AnalogIn ;
+    rdfs:label "V-1B_NO.position" .
+zoo:00216 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "V-1B_NO.waterInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00217 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "V-1B_NO.waterOutlet" ;
+    s223:connectsThrough zoo:00239 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00218 a s223:Device,
+        s223:Valve ;
+    rdfs:label "V-1B_NC" ;
+    s223:hasConnectionPoint zoo:00220,
+        zoo:00221 ;
+    s223:hasProperty zoo:00219 ;
+    s223:position zoo:00219 ;
+    s223:waterInlet zoo:00220 ;
+    s223:waterOutlet zoo:00221 ;
+    rdfs:comment "Butterfly Valve NC to Coil of pair V-1B" .
+zoo:00219 a g36:AnalogIn ;
+    rdfs:label "V-1B_NC.position" .
+zoo:00220 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "V-1B_NC.waterInlet" ;
+    s223:connectsThrough zoo:00238 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00221 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "V-1B_NC.waterOutlet" ;
+    s223:connectsThrough zoo:00239 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00222 a s223:Device,
+        s223:Valve ;
+    rdfs:label "V-2" ;
+    s223:hasConnectionPoint zoo:00224,
+        zoo:00225 ;
+    s223:hasProperty zoo:00223 ;
+    s223:position zoo:00223 ;
+    s223:waterInlet zoo:00224 ;
+    s223:waterOutlet zoo:00225 ;
+    rdfs:comment "PC-1 Isolation valve" .
+zoo:00223 a g36:AnalogIn ;
+    rdfs:label "V-2.position" .
+zoo:00224 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "V-2.waterInlet" ;
+    s223:connectsThrough zoo:00242 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00225 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "V-2.waterOutlet" ;
+    s223:connectsThrough zoo:00244 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00226 a s223:Device,
+        s223:Valve ;
+    rdfs:label "V-3" ;
+    s223:hasConnectionPoint zoo:00228,
+        zoo:00229 ;
+    s223:hasProperty zoo:00227 ;
+    s223:position zoo:00227 ;
+    s223:waterInlet zoo:00228 ;
+    s223:waterOutlet zoo:00229 ;
+    rdfs:comment "PC-2 Isolation valve" .
+zoo:00227 a g36:AnalogIn ;
+    rdfs:label "V-3.position" .
+zoo:00228 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "V-3.waterInlet" ;
+    s223:connectsThrough zoo:00242 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00229 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "V-3.waterOutlet" ;
+    s223:connectsThrough zoo:00245 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00230 a s223:Device,
+        s223:Valve ;
+    rdfs:label "V-4" ;
+    s223:hasConnectionPoint zoo:00232,
+        zoo:00233 ;
+    s223:hasProperty zoo:00231 ;
+    s223:position zoo:00231 ;
+    s223:waterInlet zoo:00232 ;
+    s223:waterOutlet zoo:00233 ;
+    rdfs:comment "Loop pressure control Valve" .
+zoo:00231 a g36:AnalogIn ;
+    rdfs:label "V-4.position" .
+zoo:00232 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "V-4.waterInlet" ;
+    s223:connectsThrough zoo:00234 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00233 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "V-4.waterOutlet" ;
+    s223:connectsThrough zoo:00243 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00234 a s223:Connection ;
+    rdfs:label "CHWL_Pipe" ;
+    s223:connectsAt zoo:00176,
+        zoo:00179,
+        zoo:00185,
+        zoo:00191,
+        zoo:00195,
+        zoo:00209,
+        zoo:00232 ;
+    s223:hasMedium s223:Medium-Water ;
+    rdfs:comment "Chilled Water Leaving Pipe from both chillers" .
+zoo:00235 a s223:Connection ;
+    rdfs:label "CHWE_Pipe" ;
+    s223:hasMedium s223:Medium-Water ;
+    rdfs:comment "Chilled Water Entering Pipe for both chillers" .
+zoo:00236 a s223:Connection ;
+    rdfs:label "CWL_Pipe" ;
+    s223:hasMedium s223:Medium-Water ;
+    rdfs:comment "Condensed Water Leaving Pipe from both chillers" .
+zoo:00237 a s223:Connection ;
+    rdfs:label "CWE_Pipe" ;
+    s223:connectsAt zoo:00182,
+        zoo:00188,
+        zoo:00213 ;
+    s223:hasMedium s223:Medium-Water ;
+    rdfs:comment "Condensed Water Entering Pipe for both chillers" .
+zoo:00238 a s223:Connection ;
+    rdfs:label "P1P2WL" ;
+    s223:connectsAt zoo:00192,
+        zoo:00196,
+        zoo:00220 ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00239 a s223:Connection ;
+    rdfs:label "COIL-SUPPLY" ;
+    s223:connectsAt zoo:00093,
+        zoo:00217,
+        zoo:00221 ;
+    s223:hasMedium s223:Medium-Water ;
+    rdfs:comment "At this point, water can be hot or cold, depending on the valve V-1A,B position" .
+zoo:00240 a s223:Connection ;
+    rdfs:label "COIL-RETURN" ;
+    s223:connectsAt zoo:00094,
+        zoo:00208,
+        zoo:00212 ;
+    s223:hasMedium s223:Medium-Water ;
+    rdfs:comment "This is the connection where UV-3 coil, and UV-1 coil returns" .
+zoo:00241 a s223:Connection ;
+    rdfs:label "BYPASS" ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00242 a s223:Connection ;
+    rdfs:label "P3P4WL" ;
+    s223:connectsAt zoo:00200,
+        zoo:00204,
+        zoo:00224,
+        zoo:00228 ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00243 a s223:Connection ;
+    rdfs:label "P3P4WE" ;
+    s223:connectsAt zoo:00177,
+        zoo:00199,
+        zoo:00203,
+        zoo:00233 ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00244 a s223:Connection ;
+    s223:connectsAt zoo:00180,
+        zoo:00225 ;
+    s223:hasMedium s223:Medium-Water .
+zoo:00245 a s223:Connection ;
+    s223:connectsAt zoo:00186,
+        zoo:00229 ;
+    s223:hasMedium s223:Medium-Water .
