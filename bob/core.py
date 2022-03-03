@@ -1578,6 +1578,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     from_out = defaultdict(set)
     if isinstance(from_thing, ConnectionPoint):
         medium = getattr(from_thing, "hasMedium", None)
+        medium = getattr(medium, "node", medium)
         from_out[medium].add(from_thing)
 
     elif isinstance(from_thing, Connection):
@@ -1670,6 +1671,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         medium = getattr(to_thing, "hasMedium", None)
         medium = getattr(medium, "node", medium)
         # ISSUE...having a hard time with electrical things
+        # maybe this was due to me, breaking Joel's toy
         to_in[medium].add(to_thing)
 
     elif isinstance(to_thing, Connection):
