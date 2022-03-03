@@ -202,20 +202,12 @@ def register_medium(medium_uri: URIRef, cls: Any) -> None:
 
 
 def dump(
-    graph: Graph = data_graph,
-    file: TextIO = sys.stdout,
-    filename: str = None,
-    format: str = "turtle",
-) -> str:
+    graph: Graph = data_graph, file: TextIO = sys.stdout, format: str = "turtle"
+) -> None:
     content = graph.serialize(format=format)
     if not isinstance(content, str):
         content = content.decode("utf-8")
-
-    if filename:
-        with open(filename, "w") as ttl_file:
-            ttl_file.write(content)
     file.write(content)
-    return content
 
 
 def get_datagraph(graph: Graph = data_graph) -> Graph:
@@ -667,9 +659,6 @@ class Node(metaclass=NodeMetaclass):
 
         return prop
 
-    def __repr__(self):
-        return f"{self.__dict__}"
-
 
 class ExternalReference(Node):
     """
@@ -680,7 +669,7 @@ class ExternalReference(Node):
     """
 
     node_type: URIRef = s223.ExternalReference
-    # isExternalReferenceOf: Property
+    isExternalReferenceOf: Property
     hasRef: Literal
 
     def __init__(
@@ -754,6 +743,7 @@ class Property(Node):
             if not isinstance(init_value, Literal):
                 init_value = Literal(init_value)
             self.hasValue = init_value
+
         # same for ExternalReference
         if external_reference is not None:
             if not isinstance(external_reference, ExternalReference):
@@ -818,29 +808,22 @@ class Medium(EnumerationKind):
     _data_graph: Graph = schema_graph
 
 
+Air = Medium(node_iri=s223["Medium-Air"])
+Water = Medium(node_iri=s223["Medium-Water"])
+Light = Medium(node_iri=s223["Medium-Light"])
+Electricity = Medium(node_iri=s223["Medium-Electricity"])
+NaturalGas = Medium(node_iri=s223["Medium-NaturalGas"])
+CompressedAir = Medium(node_iri=s223["Medium-CompressedAir"])
+
+
 class Direction(EnumerationKind):
     node_type: URIRef = s223.Direction
     _data_graph: Graph = schema_graph
 
 
-class Inlet(Direction):
-    node_type: URIRef = s223["Direction-Inlet"]
-    label = "Direction-Inlet"
-
-
-class Outlet(Direction):
-    node_type: URIRef = s223["Direction-Outlet"]
-    label = "Direction-Outlet"
-
-
-class Bidirectional(Direction):
-    node_type: URIRef = s223["Direction-Bidirectional"]
-    label = "Direction-Bidirectional"
-
-
-# Inlet = Direction(node_iri=s223.Inlet)
-# Outlet = Direction(node_iri=s223.Outlet)
-# Bidirectional = Direction(node_iri=s223.Bidirectional)
+Inlet = Direction(node_iri=s223["Direction-Inlet"])
+Outlet = Direction(node_iri=s223["Direction-Outlet"])
+Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
 
 
 class Junction(Node):
@@ -1276,15 +1259,15 @@ class ConnectionPoint(Node):
 
 
 class InletConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Inlet"]
+    hasDirection: Direction = Inlet
 
 
 class OutletConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Outlet"]
+    hasDirection: Direction = Outlet
 
 
 class BidirectionalConnectionPoint(ConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Bidirectional"]
+    hasDirection: Direction = Bidirectional
 
 
 class SystemConnectionPoint(Node):
@@ -1326,15 +1309,15 @@ class SystemConnectionPoint(Node):
 
 
 class InletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Inlet"]
+    hasDirection: Direction = Inlet
 
 
 class OutletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Outlet"]
+    hasDirection: Direction = Outlet
 
 
 class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Bidirectional"]
+    hasDirection: Direction = Bidirectional
 
 
 class Zone(Node):
@@ -1587,7 +1570,9 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     else:
         from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
         if not from_types:
-            raise RuntimeError(f"no candidate sources from {from_thing.node} to {to_thing.node}")
+            raise RuntimeError(
+                f"no candidate sources from {from_thing.node} to {to_thing.node}"
+            )
     logging.debug(f"    - from_types: {from_types}")
 
     to_in = defaultdict(set)

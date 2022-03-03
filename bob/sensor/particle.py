@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef, util
 
-from ..core import s223, enum, quantitykind, unit, Medium
+from ..core import s223, enum, quantitykind, unit, Medium, Air
 
 from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
 
@@ -24,7 +24,7 @@ class ParticulateCountMeasure(QuantifiableMeasurement):
 
 class ParticulateSensor(Sensor):
     node_type: URIRef = s223.ParticulateSensor
-    hasMedium: URIRef = s223["Medium-Air"]
+    hasMedium: Medium = Air
     measuresSubstance: Medium
     observesProperty: ParticulateCountMeasure
 

@@ -17,7 +17,7 @@ from ..connections.air import (
     AirOutletSystemConnectionPoint,
     AirBidirectionalSystemConnectionPoint,
 )
-from ..core import System, p223, s223
+from ..core import System, p223, s223, Medium, Air
 from ..property import QuantifiableObservableProperty
 
 
@@ -74,7 +74,7 @@ class IndoorAir(PhysicSystem):
     """
 
     node_type = p223.PhysicSystem
-    hasMedium: URIRef = s223["Medium-Air"]
+    hasMedium: Medium = Air
     ductAirInlet: AirInletSystemConnectionPoint
     ductAirOutlet: AirOutletSystemConnectionPoint
     airTransfer: AirBidirectionalSystemConnectionPoint

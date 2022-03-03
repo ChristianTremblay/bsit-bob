@@ -4,7 +4,7 @@ from bob.connections.light import (
     LightInletConnectionPoint,
     LightInletZoneConnectionPoint,
 )
-from ..core import DomainSpace, Lighting, p223, Zone, s223
+from ..core import DomainSpace, Lighting, p223, Zone, s223, Medium, Light
 from ..systems.physic import IndoorAir
 
 __namespace__ = p223
@@ -12,7 +12,7 @@ __namespace__ = p223
 
 class LightingSpace(DomainSpace):
     hasDomain = Lighting
-    hasMedium = s223["Medium-Light"]
+    hasMedium: Medium = Light
     lightInlet: LightInletConnectionPoint
     naturalLightInlet: LightInletConnectionPoint
     indoorAir: IndoorAir

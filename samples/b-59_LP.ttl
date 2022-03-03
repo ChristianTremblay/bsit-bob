@@ -1,4 +1,3 @@
-@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
 @prefix ex: <urn:ex/B59/> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
@@ -22,10 +21,10 @@ ex:00002 a s223:AirTemperatureSensor,
         s223:TemperatureSensor ;
     rdfs:label "DA-T" ;
     s223:hasMeasurementLocation ex:00041 ;
-    s223:hasMedium enum:Medium-Air ;
+    s223:hasMedium s223:Medium-Air ;
     s223:hasPhysicalLocation ex:00044 ;
     s223:hasProperty ex:00003 ;
-    s223:measuresSubstance enum:Medium-Air ;
+    s223:measuresSubstance s223:Medium-Air ;
     s223:observesProperty ex:00003 ;
     rdfs:comment "Supply Air Temperature sensor" .
 
@@ -35,7 +34,7 @@ ex:00003 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "DA-T.Measure" ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:ofSubstance enum:Medium-Air ;
+    s223:ofSubstance s223:Medium-Air ;
     s223:unit unit:DEG_C .
 
 ex:00004 a s223:AirTemperatureSensor,
@@ -44,10 +43,10 @@ ex:00004 a s223:AirTemperatureSensor,
         s223:TemperatureSensor ;
     rdfs:label "RA-T" ;
     s223:hasMeasurementLocation ex:00014 ;
-    s223:hasMedium enum:Medium-Air ;
+    s223:hasMedium s223:Medium-Air ;
     s223:hasPhysicalLocation ex:00043 ;
     s223:hasProperty ex:00005 ;
-    s223:measuresSubstance enum:Medium-Air ;
+    s223:measuresSubstance s223:Medium-Air ;
     s223:observesProperty ex:00005 ;
     rdfs:comment "Return Air Temperature sensor" .
 
@@ -57,7 +56,7 @@ ex:00005 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "RA-T.Measure" ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:ofSubstance enum:Medium-Air ;
+    s223:ofSubstance s223:Medium-Air ;
     s223:unit unit:DEG_C .
 
 ex:00006 a s223:AirTemperatureSensor,
@@ -66,10 +65,10 @@ ex:00006 a s223:AirTemperatureSensor,
         s223:TemperatureSensor ;
     rdfs:label "ZN-T" ;
     s223:hasMeasurementLocation ex:00056 ;
-    s223:hasMedium enum:Medium-Air ;
+    s223:hasMedium s223:Medium-Air ;
     s223:hasPhysicalLocation ex:00045 ;
     s223:hasProperty ex:00007 ;
-    s223:measuresSubstance enum:Medium-Air ;
+    s223:measuresSubstance s223:Medium-Air ;
     s223:observesProperty ex:00007 ;
     rdfs:comment "Zone Air Temperature sensor" .
 
@@ -79,7 +78,7 @@ ex:00007 a p223:Measure,
         s223:QuantifiableProperty ;
     rdfs:label "ZN-T.Measure" ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:ofSubstance enum:Medium-Air ;
+    s223:ofSubstance s223:Medium-Air ;
     s223:unit unit:DEG_C .
 
 ex:00008 a s223:Device,
@@ -437,6 +436,7 @@ ex:00054 a s223:DomainSpace,
         ex:00060,
         ex:00061 ;
     s223:hasDomain s223:HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00046 ;
     s223:radiantCooling ex:00061 ;
     s223:radiantHeating ex:00060 ;
