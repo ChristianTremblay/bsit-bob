@@ -3,8 +3,15 @@ from pathlib import Path
 from typing import Any
 
 from matplotlib.backend_bases import MouseEvent
+from bob.connections.light import LightConnection
+from bob.connections.occupancy import (
+    OccupancyInletSystemConnectionPoint,
+    OccupancyOutletZoneConnectionPoint,
+    OccupancyOutletSystemConnectionPoint,
+)
 
 from bob.core import (
+    p223,
     get_datagraph,
     bind_model_namespace,
     dump,
@@ -15,16 +22,19 @@ from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.damper import Window
-from bob.devices.lighting.light import Light
+from bob.devices.lighting.light import Luminaire
+from bob.space.occupancy import OccupancySpace
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.sensor.flow import AirFlowSensor
-from bob.sensor.movement import MovementSensor
+from bob.sensor.movement import MovementSensor, OccupancySensor
 
 from bob.space.physical import Building, Floor, Roof, Office, Room, Bathroom, Corridor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone
+
+from bob.systems.functionblock import FunctionBlock
 
 from bob.connections.air import *
 
@@ -133,20 +143,40 @@ def test_pritoni():
     corridor = Corridor(label="Corridor")
 
     # HVAC Spaces
-    openoffice_hvac = HVACSpace(label="OpenOffice.HVAC")
-    bathroom_hvac = HVACSpace(label="Bathroom.HVAC")
-    corridorNorth_hvac = HVACSpace(label="CorridorNorth.HVAC")
-    corridorSouth_hvac = HVACSpace(label="CorridorSouth.HVAC")
-    privateoffice_hvac = HVACSpace(label="PrivateOffice.HVAC")
-    kitchenette_hvac = HVACSpace(label="Kitchenette.HVAC")
+    openoffice_hvac = HVACSpace(label="HVACSpace1", comment="OpenOffice.HVAC")
+    bathroom_hvac = HVACSpace(label="HVACSpace2", comment="Bathroom.HVAC")
+    corridorNorth_hvac = HVACSpace(label="HVACSpace4", comment="CorridorNorth.HVAC")
+    corridorSouth_hvac = HVACSpace(label="HVACSpace5", comment="CorridorSouth.HVAC")
+    privateoffice_hvac = HVACSpace(label="HVACSpace3", comment="PrivateOffice.HVAC")
+    kitchenette_hvac = HVACSpace(label="HVACSpace6", comment="Kitchenette.HVAC")
 
     # Light Spaces
-    openofficeEast_lightspace = LightingSpace(label="OpenOfficeEast.Light")
-    openofficeWest_lightspace = LightingSpace(label="OpenOfficeWest.Light")
-    bathroom_lightspace = LightingSpace(label="Bathroom.Light")
-    corridor_lightspace = LightingSpace(label="Corridor.Light")
-    privateoffice_lightspace = LightingSpace(label="PrivateOffice.Light")
-    kitchenette_lightspace = LightingSpace(label="Kitchenette.Light")
+    openofficeEast_lightspace = LightingSpace(
+        label="LightingSpace1", comment="OpenOfficeEast.Light"
+    )
+    openofficeWest_lightspace = LightingSpace(
+        label="LightingSpace2", comment="OpenOfficeWest.Light"
+    )
+    bathroom_lightspace = LightingSpace(
+        label="LightingSpace3", comment="Bathroom.Light"
+    )
+    corridor_lightspace = LightingSpace(
+        label="LightingSpace5", comment="Corridor.Light"
+    )
+    privateoffice_lightspace = LightingSpace(
+        label="LightingSpace4", comment="PrivateOffice.Light"
+    )
+    kitchenette_lightspace = LightingSpace(
+        label="LightingSpace6", comment="Kitchenette.Light"
+    )
+
+    # Occupancy Spaces
+    openoffice_occ_space = OccupancySpace(
+        label="OccupancySpace1", comment="Occupancy space of Open Office"
+    )
+    kitchenette_occ_space = OccupancySpace(
+        label="OccupancySpace6", comment="Occupancy Space of kitechnette"
+    )
 
     # Relations between Physical spaces and Domain spaces
     bldg > roof
@@ -154,6 +184,7 @@ def test_pritoni():
     floor1 > openoffice > openoffice_hvac
     openoffice > openofficeEast_lightspace
     openoffice > openofficeWest_lightspace
+    openoffice > openoffice_occ_space
 
     floor1 > bathroom > bathroom_hvac
     bathroom > bathroom_lightspace
@@ -167,6 +198,7 @@ def test_pritoni():
 
     floor1 > kitchenette > kitchenette_hvac
     kitchenette > kitchenette_lightspace
+    kitchenette > kitchenette_occ_space
 
     # Comment
     """
@@ -180,6 +212,23 @@ def test_pritoni():
 
     Also, it is clear that Light Zones are in fact Ligth Spaces, as each one contains only 1 device/sensor
     It's not a group of spaces.
+
+    2022-03-03
+    Design was modified by PD,SR,MP and now there are 2 luminaires per bulb on the drawing.
+    In Open space, light spaces are turned 90deg, which is like if the windows were on right side. 
+    On sensor is occupancy the other one is daylight
+
+    Considering the goal of a day light sensor, connecting it at the light space closer to Windows
+    make sense. As it will see if luminaires are needed. The Light System will be able to use this 
+    information in the control sequence.
+
+    For open office, there is 1 occupancy sensor shared by 2 spaces. Easiest way to fix this
+    is to use an occupancy space. The lighting System will be able to use this information in the
+    control sequence.
+
+    The other occupancy sensors are alone in their space, so it is not required to create occupancy
+    spaces.
+
 
 
     """
@@ -198,6 +247,36 @@ def test_pritoni():
     )
     hvac_zone_2 > kitchenette_hvac
     hvac_zone_2 > corridorSouth_hvac
+
+    # Lighting Zones
+    lighting_zone_1 = LightingZone(
+        label="LightingZone1", comment="Contains OpenOffice Space West"
+    )
+    lighting_zone_1 > openofficeWest_lightspace
+    lighting_zone_2 = LightingZone(
+        label="LightingZone2", comment="Contains OpenOffice Space East"
+    )
+    lighting_zone_2 > openofficeEast_lightspace
+
+    lighting_zone_3 = LightingZone(
+        label="LightingZone3", comment="Contains Bathroom Light Space"
+    )
+    lighting_zone_3 > bathroom_lightspace
+
+    lighting_zone_4 = LightingZone(
+        label="LightingZone4", comment="Contains Private Office Light Space"
+    )
+    lighting_zone_4 > privateoffice_lightspace
+
+    lighting_zone_5 = LightingZone(
+        label="LightingZone5", comment="Contains Corridor Light Space"
+    )
+    lighting_zone_5 > corridor_lightspace
+
+    lighting_zone_6 = LightingZone(
+        label="LightingZone6", comment="Contains Kitchenette Light Space"
+    )
+    lighting_zone_6 > kitchenette_lightspace
 
     # Comment
     """
@@ -224,7 +303,7 @@ def test_pritoni():
         comment="There are 3 doors in this space, so I'm using a connection to model those relationships",
     )
     # My model of spaces include 1 input for doors, 1 input for Windows, etc... if there are multiple of those, use a connection.
-    kitchenette_hvac.doors >> corridorSouth_hvac
+    kitchenette_hvac.doors >> corridorSouth_hvac.doors
     corridorSouth_hvac.airTransfer >> corridorNorth_hvac.airTransfer
 
     privateoffice_hvac.doors >> corridorNorth_doors
@@ -292,73 +371,155 @@ def test_pritoni():
     vav2["VAV2_ZN-T"].hasPhysicalLocation = corridor
 
     # Now we build lights for Kitchenette
-    kitchenette_luminaire = Light(
-        label="KitchenetteLuminaire1", comment="Luminaire in kitchenette"
+    kitchenette_luminaire_11 = Luminaire(
+        label="Luminaire11", comment="Luminaire in kitchenette #11"
     )
-    kitchenette_movement = MovementSensor(
-        label="Bulb1_Mov", comment="Movement sensor for kitchenette luminaire 1"
+    kitchenette_luminaire_12 = Luminaire(
+        label="Luminaire12", comment="Luminaire in kitchenette #12"
     )
-    kitchenette_luminaire.lightOutlet >> kitchenette_lightspace.lightInlet
-    kitchenette_movement.hasMeasurementLocation = kitchenette_lightspace
+    kitchenette_movement = OccupancySensor(
+        label="OccSensor5",
+        comment="Occupancy sensor for kitchenette luminaires 11 & 12",
+    )
+    kitch_light_conn = LightConnection(
+        label="LightHub_11_12", comment="Needed to connect multiple luminaires to space"
+    )
+    kitchenette_luminaire_11.lightOutlet >> kitch_light_conn
+    kitchenette_luminaire_12.lightOutlet >> kitch_light_conn
+    kitch_light_conn >> kitchenette_lightspace.lightInlet
+
+    # There is a occupancy space for Kitchenette... go figure
+    kitchenette_movement.hasMeasurementLocation = kitchenette_occ_space
     kitchenette_movement.hasPhysicalLocation = kitchenette
 
     # Now we build lights for Private Office
-    privateoffice_luminaire = Light(
-        label="PrivateOfficeLuminaire1", comment="Luminaire in Private Office"
+    privateoffice_luminaire_7 = Luminaire(
+        label="Luminaire7",
+        comment="Luminaire #7 in Private Office",
+        hasPhysicalLocation=private_office,
+    )
+    privateoffice_luminaire_8 = Luminaire(
+        label="Luminaire8",
+        comment="Luminaire #8 in Private Office",
+        hasPhysicalLocation=private_office,
     )
     privateoffice_movement = MovementSensor(
-        label="Bulb2_Mov", comment="Movement sensor for Privtae Office bulb"
+        label="OccSensor3",
+        comment="Occupancy sensor for Privtae Office",
+        hasPhysicalLocation=private_office,
+        hasMeasurementLocation=privateoffice_lightspace,
     )
-    privateoffice_luminaire.lightOutlet >> privateoffice_lightspace.lightInlet
-    privateoffice_movement.hasMeasurementLocation = privateoffice_lightspace
-    privateoffice_movement.hasPhysicalLocation = private_office
+    privateoffice_light_conn = LightConnection(
+        label="LightHub_7_8", comment="Needed to connect multiple luminaires to space"
+    )
+
+    privateoffice_luminaire_7.lightOutlet >> privateoffice_light_conn
+    privateoffice_luminaire_8.lightOutlet >> privateoffice_light_conn
+    privateoffice_light_conn >> privateoffice_lightspace.lightInlet
+
+    # privateoffice_movement.hasMeasurementLocation = privateoffice_lightspace
+    # privateoffice_movement.hasPhysicalLocation = private_office
 
     # Now we build lights for Corridor
-    corridor_luminaire = Light(
-        label="CorridorLuminaire1", comment="Luminaire in Corridor"
+    corridor_luminaire_9 = Luminaire(
+        label="Luminaire9",
+        comment="Luminaire #9 in Corridor",
+        hasPhysicalLocation=corridor,
     )
-    corridor_movement = MovementSensor(
-        label="Bulb3_Mov", comment="Movement sensor for Corridor bulb"
+    corridor_luminaire_10 = Luminaire(
+        label="Luminaire10",
+        comment="Luminaire #10 in Corridor",
+        hasPhysicalLocation=corridor,
     )
-    corridor_luminaire.lightOutlet >> corridor_lightspace.lightInlet
+    corridor_movement = OccupancySensor(
+        label="OccSensor4", comment="Occupancy sensor for Corridor"
+    )
+    corridor_light_conn = LightConnection(
+        label="LightHub_9_10", comment="Needed to connect multiple luminaires to space"
+    )
+    corridor_luminaire_9.lightOutlet >> corridor_light_conn
+    corridor_luminaire_10.lightOutlet >> corridor_light_conn
+    corridor_light_conn >> corridor_lightspace.lightInlet
+
     corridor_movement.hasMeasurementLocation = corridor_lightspace
     corridor_movement.hasPhysicalLocation = corridor
 
     # Now we build lights for Bathroom
-    bathroom_luminaire = Light(
-        label="CorridorLuminaire1", comment="Luminaire in Bathroom"
+    bathroom_luminaire_5 = Luminaire(
+        label="Luminaire5",
+        comment="Luminaire #5 in Bathroom",
+        hasPhysicalLocation=bathroom,
     )
-    bathroom_movement = MovementSensor(
-        label="Bulb4_Mov", comment="Movement sensor for Bathroom bulb"
+    bathroom_luminaire_6 = Luminaire(
+        label="Luminaire6",
+        comment="Luminaire #6 in Bathroom",
+        hasPhysicalLocation=bathroom,
     )
-    bathroom_luminaire.lightOutlet >> bathroom_lightspace.lightInlet
+    bathroom_light_conn = LightConnection(
+        label="LightHub_5_6", comment="Needed to connect multiple luminaires to space"
+    )
+    bathroom_movement = OccupancySensor(
+        label="OccSensor2", comment="Occupancy sensor for Bathroom"
+    )
+    bathroom_luminaire_5.lightOutlet >> bathroom_light_conn
+    bathroom_luminaire_6.lightOutlet >> bathroom_light_conn
+    bathroom_light_conn >> bathroom_lightspace.lightInlet
     bathroom_movement.hasMeasurementLocation = bathroom_lightspace
     bathroom_movement.hasPhysicalLocation = bathroom
 
     # Now we build lights for OpenOffice East
-    openofficeEast_luminaire = Light(
-        label="OpenOfficeEastLuminaire1", comment="Luminaire in OpenOffice East"
+    openofficeEast_luminaire_1 = Luminaire(
+        label="Luminaire1",
+        comment="Luminaire #1 in OpenOffice East",
+        hasPhysicalLocation=openoffice,
     )
-    openofficeEast_movement = MovementSensor(
-        label="Bulb5_Mov", comment="Movement sensor for OpenOffice East"
+    openofficeEast_luminaire_2 = Luminaire(
+        label="Luminaire2",
+        comment="Luminaire #2 in OpenOffice East",
+        hasPhysicalLocation=openoffice,
     )
-    openofficeEast_luminaire.lightOutlet >> openofficeEast_lightspace.lightInlet
-    openofficeEast_movement.hasMeasurementLocation = openofficeEast_lightspace
-    openofficeEast_movement.hasPhysicalLocation = openoffice
-    # Windows are good for natural light
-    window1.naturalLight >> openofficeWest_lightspace.naturalLightInlet
-    window2.naturalLight >> openofficeEast_lightspace.naturalLightInlet
+    openofficeWest_luminaire_3 = Luminaire(
+        label="Luminaire3",
+        comment="Luminaire #3 in OpenOffice West",
+        hasPhysicalLocation=openoffice,
+    )
+    openofficeWest_luminaire_4 = Luminaire(
+        label="Luminaire4",
+        comment="Luminaire #4 in OpenOffice West",
+        hasPhysicalLocation=openoffice,
+    )
 
-    # Now we build lights for OpenOffice West
-    openofficeWest_luminaire = Light(
-        label="OpenOfficeWestLuminaire1", comment="Luminaire in OpenOffice West"
+    openofficeEast_light_conn = LightConnection(
+        label="LightHub_1_2", comment="Needed to connect multiple luminaires to space"
     )
-    openofficeWest_movement = MovementSensor(
-        label="Bulb6_Mov", comment="Movement sensor for Open Office West"
+    openofficeWest_light_conn = LightConnection(
+        label="LightHub_3_4", comment="Needed to connect multiple luminaires to space"
     )
-    openofficeWest_luminaire.lightOutlet >> openofficeWest_lightspace.lightInlet
-    openofficeWest_movement.hasMeasurementLocation = openofficeWest_lightspace
-    openofficeWest_movement.hasPhysicalLocation = openoffice
+    openofficeEast_luminaire_1.lightOutlet >> openofficeEast_light_conn
+    openofficeEast_luminaire_2.lightOutlet >> openofficeEast_light_conn
+    openofficeEast_light_conn >> openofficeEast_lightspace.lightInlet
+
+    openofficeWest_luminaire_3.lightOutlet >> openofficeWest_light_conn
+    openofficeWest_luminaire_4.lightOutlet >> openofficeWest_light_conn
+    openofficeWest_light_conn >> openofficeWest_lightspace.lightInlet
+
+    # Occupancy in OpenOffice comes from 1 sensors for both spaces
+    openofficeEast_movement = OccupancySensor(
+        label="OccSensor1", comment="Occupancy sensor for OpenOffice"
+    )
+
+    openofficeEast_movement.hasMeasurementLocation = openoffice_occ_space
+    openofficeEast_movement.hasPhysicalLocation = openoffice
+
+    # Windows are good for natural light
+    natural_ligth_conn = LightConnection(
+        label="LightHub_NaturalLight",
+        comment="2 windows contribute and light is brought to 2 light spaces",
+    )
+    window1.naturalLight >> natural_ligth_conn
+    window2.naturalLight >> natural_ligth_conn
+    natural_ligth_conn >> openofficeEast_lightspace.naturalLightInlet
+    natural_ligth_conn >> openofficeWest_lightspace.naturalLightInlet
 
     # More connections on systems and zones (mapping)
 
@@ -373,6 +534,28 @@ def test_pritoni():
     vav1.airOutlet.mapsTo = vav1["VAV1_HeatingCoil"].airOutlet
     vav2.airInlet.mapsTo = vav2["VAV2_damper"].airInlet
     vav2.airOutlet.mapsTo = vav2["VAV2_HeatingCoil"].airOutlet
+
+    # Occupancies are shared between space... let's build a function block to relate them
+    class OccupancyControl(FunctionBlock):
+        node_type = p223.OccupancyControl
+        occupancySensor: OccupancyInletSystemConnectionPoint
+        occupancyZone1: OccupancyOutletSystemConnectionPoint
+        occupancyZone2: OccupancyOutletSystemConnectionPoint
+
+    open_office_occ_control = OccupancyControl(
+        label="OpenOffice Occ Control",
+        comment="Occupancy sensor drives LightingZone1 and LightingZone2",
+    )
+    open_office_occ_control.occupancySensor.mapsTo = openofficeEast_movement
+    open_office_occ_control.occupancyZone1.mapsTo = lighting_zone_1
+    open_office_occ_control.occupancyZone2.mapsTo = lighting_zone_2
+
+    kitchenette_occ_control = OccupancyControl(
+        label="Kitchenette Occ Control",
+        comment="Deal with OccupancySpace6...probably not required but it's defined",
+    )
+    kitchenette_occ_control.occupancySensor.mapsTo = kitchenette_movement
+    kitchenette_occ_control.occupancyZone1.mapsTo = lighting_zone_6
 
 
 if __name__ == "__main__":

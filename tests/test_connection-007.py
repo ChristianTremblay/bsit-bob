@@ -60,7 +60,7 @@ def test_junction_or_connection():
     # return_plenum.link_to(_returnAir.airInlet)
     office1_hvac.ductAirOutlet >> return_plenum
     office2_hvac.ductAirOutlet >> return_plenum
-    return_plenum >> rf
+    return_plenum >> rf.airInlet
 
     # and the zone ?
     zone1.airInlet.mapsTo = supply_duct

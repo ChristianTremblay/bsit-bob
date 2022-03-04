@@ -205,13 +205,13 @@ class ChilledWaterOutletSystemConnectionPoint(
 
 
 # === CONDENSED WATER
-class CondensedWaterConnection(WaterConnection):
-    hasMedium: URIRef = CondensedWater.node_type
+class CondensedWaterConnection(Connection):
+    hasMedium: Medium = CondensedWater
     node_type = None
 
 
-class CondensedWaterConnectionPoint(WaterConnectionPoint):
-    hasMedium: URIRef = CondensedWater.node_type
+class CondensedWaterConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = CondensedWater
     node_type = None
 
 
@@ -228,7 +228,7 @@ class CondensedWaterOutletConnectionPoint(
 
 
 class CondensedWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = CondensedWater.node_type
+    hasMedium: Medium = CondensedWater
     node_type = None
 
 

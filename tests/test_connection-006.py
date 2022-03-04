@@ -28,9 +28,9 @@ def test_connect_chilled_water_coil():
     coil1 = ChilledWaterCoil(label="CW-Coil-1")
 
     # the coil gets its chilled water from the connection
-    c >> coil1
+    c >> coil1.chilledWaterInlet
 
     # there is a fan, and the air output of the fan goes into the coil
     f = Fan(label="F")
-    f >> coil1
+    f >> coil1.airInlet
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

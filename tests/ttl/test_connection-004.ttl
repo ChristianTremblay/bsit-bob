@@ -11,28 +11,28 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_connection-004> ;
   rdfs:label "test_connection-004" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00017 a s223:Device ;
+ex29:00001 a s223:Device ;
     rdfs:label "d1" ;
-    s223:connectedThrough ex29:00021 ;
-    s223:hasConnectionPoint ex29:00018 .
-ex29:00018 a s223:ConnectionPoint,
+    s223:connectedThrough ex29:00005 ;
+    s223:hasConnectionPoint ex29:00002 .
+ex29:00002 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "d1.out" ;
-    s223:connectsThrough ex29:00021 ;
+    s223:connectsThrough ex29:00005 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:isConnectionPointOf ex29:00017 .
-ex29:00019 a s223:Device ;
+    s223:isConnectionPointOf ex29:00001 .
+ex29:00003 a s223:Device ;
     rdfs:label "d2" ;
-    s223:connectedThrough ex29:00021 ;
-    s223:hasConnectionPoint ex29:00020 .
-ex29:00020 a s223:ConnectionPoint,
+    s223:connectedThrough ex29:00005 ;
+    s223:hasConnectionPoint ex29:00004 .
+ex29:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "d2.in" ;
-    s223:connectsThrough ex29:00021 ;
+    s223:connectsThrough ex29:00005 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:isConnectionPointOf ex29:00019 .
-ex29:00021 a s223:Connection ;
-    s223:connectsAt ex29:00018,
-        ex29:00020 ;
-    s223:connectsFrom ex29:00017 ;
-    s223:connectsTo ex29:00019 .
+    s223:isConnectionPointOf ex29:00003 .
+ex29:00005 a s223:Connection ;
+    s223:connectsAt ex29:00002,
+        ex29:00004 ;
+    s223:connectsFrom ex29:00001 ;
+    s223:connectsTo ex29:00003 .

@@ -33,3 +33,7 @@ class MovementSensor(Sensor):
             **_measure_kwargs,
         )
         self.observesProperty = _measure
+
+
+class OccupancySensor(MovementSensor):
+    node_type: URIRef = p223.OccupancySensor

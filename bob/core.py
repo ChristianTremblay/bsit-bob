@@ -890,6 +890,10 @@ Light = Medium(node_iri=s223["Medium-Light"])
 Electricity = Medium(node_iri=s223["Medium-Electricity"])
 NaturalGas = Medium(node_iri=s223["Medium-NaturalGas"])
 CompressedAir = Medium(node_iri=s223["Medium-CompressedAir"])
+# This one is weird...but to create an occupancy space, zone we
+# need a medium.
+# would Medium-People be better ?
+People = Medium(node_iri=s223["Medium-People"])
 
 
 class Direction(EnumerationKind):
@@ -1584,7 +1588,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     from_out = defaultdict(set)
     if isinstance(from_thing, ConnectionPoint):
         medium = getattr(from_thing, "hasMedium", None)
-        medium = getattr(medium, "node", medium)
+        # medium = getattr(medium, "node", medium)
         from_out[medium].add(from_thing)
 
     elif isinstance(from_thing, Connection):
@@ -1695,7 +1699,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             # medium turned to be
             # {'node': rdflib.term.URIRef('http://data.ashrae.org/standard223/1.0/vocab/enumeration#Water-ChilledWater'), 'label': '', 'comment': ''}
             # and the intersection fails to recognize the substance
-            # medium = getattr(medium, "node", medium)
+            medium = getattr(medium, "node", medium)
             to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, (SystemConnectionPoint, ZoneConnectionPoint)):
