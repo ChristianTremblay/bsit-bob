@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for f in b-59_LP.py LPtest.py sample*.py
+for f in b-59_LP.py LPtest.py pritoni_ct.py sample*.py
 do
     ttl=${f/[.]py/.ttl}
     echo $ttl

@@ -15,7 +15,7 @@ class LightingSpace(DomainSpace):
     hasMedium: Medium = Light
     lightInlet: LightInletConnectionPoint
     naturalLightInlet: LightInletConnectionPoint
-    indoorAir: IndoorAir
+    # indoorAir: IndoorAir -- wrong domain
 
 
 class LightingZone(Zone):

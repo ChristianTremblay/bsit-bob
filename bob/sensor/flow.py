@@ -1,7 +1,7 @@
 from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, s223, p223, unit, enum, Medium, Air, Water
+from ..core import quantitykind, s223, p223, unit, enum, Medium, Air, Water, PropertyReference
 
 from ..property import QuantifiableProperty
 
@@ -13,8 +13,8 @@ __namespace__ = p223
 class Flow(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.VolumeFlowRate
     unit: URIRef = unit["FT3-PER-MIN"]
+    measuresMedium: Medium  # set from the sensor
     # isObservedBy: Sensor
-    # measuresMedium - set by sensor
 
 
 class FlowSetpoint(QuantifiableProperty):

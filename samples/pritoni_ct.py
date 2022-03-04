@@ -2,8 +2,6 @@ from pathlib import Path
 
 from typing import Any
 
-from matplotlib.backend_bases import MouseEvent
-
 from bob.core import (
     System,
     Zone,
@@ -199,8 +197,6 @@ def test_pritoni():
 
     Also, it is clear that Light Zones are in fact Ligth Spaces, as each one contains only 1 device/sensor
     It's not a group of spaces.
-
-
     """
     # HVAC Zones
     hvac_zone_1 = HVACZone(
@@ -364,9 +360,6 @@ def test_pritoni():
     openofficeEast_luminaire.lightOutlet >> openofficeEast_lightspace.lightInlet
     openofficeEast_movement.hasMeasurementLocation = openofficeEast_lightspace
     openofficeEast_movement.hasPhysicalLocation = openoffice
-    # Windows are good for natural light
-    window1.naturalLight >> openofficeWest_lightspace.naturalLightInlet
-    window2.naturalLight >> openofficeEast_lightspace.naturalLightInlet
 
     # Now we build lights for OpenOffice West
     openofficeWest_luminaire = Light(
@@ -378,6 +371,10 @@ def test_pritoni():
     openofficeWest_luminaire.lightOutlet >> openofficeWest_lightspace.lightInlet
     openofficeWest_movement.hasMeasurementLocation = openofficeWest_lightspace
     openofficeWest_movement.hasPhysicalLocation = openoffice
+
+    # Windows are good for natural light
+    window1.naturalLight >> openofficeWest_lightspace.naturalLightInlet
+    window2.naturalLight >> openofficeEast_lightspace.naturalLightInlet
 
     # More connections on systems and zones (mapping)
 
@@ -396,6 +393,4 @@ def test_pritoni():
 
 if __name__ == "__main__":
     r = test_pritoni()
-    result = dump(filename="tests/ttl/Pritoni.ttl")
-    print("Check file : tests/ttl/Pritoni.ttl")
-    graph = get_datagraph()
+    dump()

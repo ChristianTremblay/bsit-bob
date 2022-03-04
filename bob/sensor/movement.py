@@ -1,7 +1,7 @@
 from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, p223, unit, Medium, Light
+from ..core import quantitykind, p223, unit, Medium, Light, PropertyReference
 
 from bob import core
 
@@ -22,7 +22,6 @@ class MovementSensor(Sensor):
 
         super().__init__(**_sensor_kwargs)
         _measure = Movement(
-            measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.Movement",
             **_measure_kwargs,
