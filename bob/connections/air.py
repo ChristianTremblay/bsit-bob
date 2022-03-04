@@ -9,6 +9,8 @@ from ..core import (
     OutletSystemConnectionPoint,
     BidirectionalConnectionPoint,
     Medium,
+    Air,
+    CompressedAir,
     SystemConnectionPoint,
     ZoneConnectionPoint,
     InletZoneConnectionPoint,
@@ -19,19 +21,14 @@ from ..core import s223
 
 __namespace__ = s223
 
-# === AIR
-class Air(Medium):
-    node_type: URIRef = s223["Medium-Air"]
-    label = "Medium-Air"
-
 
 class AirConnection(Connection):
-    hasMedium: URIRef = Air.node_type
+    hasMedium: Medium = Air
     node_type = None
 
 
 class AirConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Air.node_type
+    hasMedium: Medium = Air
     node_type = None
 
 
@@ -48,7 +45,7 @@ class AirBidirectionalConnectionPoint(AirConnectionPoint, BidirectionalConnectio
 
 
 class AirSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = Air.node_type
+    hasMedium: Medium = Air
     node_type = None
 
 
@@ -71,7 +68,7 @@ class AirBidirectionalSystemConnectionPoint(
 
 
 class AirZoneConnectionPoint(ZoneConnectionPoint):
-    hasMedium: URIRef = Air.node_type
+    hasMedium: Medium = Air
     node_type = None
 
 
@@ -83,18 +80,13 @@ class AirOutletZoneConnectionPoint(AirZoneConnectionPoint, OutletZoneConnectionP
     node_type = None
 
 
-# === COMPRESSED AIR
-class CompressedAir(Medium):
-    node_type: URIRef = s223["Medium-CompressedAir"]
-
-
 class CompressedAirConnection(Connection):
-    hasMedium: URIRef = CompressedAir.node_type
+    hasMedium: Medium = CompressedAir
     node_type = None
 
 
 class CompressedAirConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = CompressedAir.node_type
+    hasMedium: Medium = CompressedAir
     node_type = None
 
 
@@ -111,7 +103,7 @@ class CompressedAirOutletConnectionPoint(
 
 
 class CompressedAirSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = CompressedAir.node_type
+    hasMedium: Medium = CompressedAir
     node_type = None
 
 

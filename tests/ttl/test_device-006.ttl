@@ -14,133 +14,133 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_device-006> ;
   rdfs:label "test_device-006" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00272 a p223:ElectricalDistributionPanel,
+ex29:00275 a p223:ElectricalDistributionPanel,
         s223:Device ;
     rdfs:label "P-1" ;
-    s223:hasConnectionPoint ex29:00273,
-        ex29:00274,
-        ex29:00275 ;
+    s223:hasConnectionPoint ex29:00276,
+        ex29:00277,
+        ex29:00278 ;
     rdfs:comment "Electrical panel full of breakers. 120V-240VAC 60Hz" .
-ex29:00273 a s223:ConnectionPoint,
+ex29:00276 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "P-1.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V_240V.60Hz ;
-    s223:isConnectionPointOf ex29:00272 .
-ex29:00274 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex29:00275 .
+ex29:00277 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "P-1.electricalOutletA" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V.60Hz ;
-    s223:isConnectionPointOf ex29:00272 .
-ex29:00275 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex29:00275 .
+ex29:00278 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "P-1.electricalOutletB" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-240V.60Hz ;
-    s223:isConnectionPointOf ex29:00272 .
-ex29:00276 a s223:ObservableProperty,
+    s223:isConnectionPointOf ex29:00275 .
+ex29:00279 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 15.0 ;
-    s223:isPropertyOf ex29:00278 ;
+    s223:isPropertyOf ex29:00281 ;
     s223:unit unit:A .
-ex29:00277 a s223:ObservableProperty,
+ex29:00280 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 20.0 ;
-    s223:isPropertyOf ex29:00281 ;
+    s223:isPropertyOf ex29:00284 ;
     s223:unit unit:A .
-ex29:00278 a p223:ElectricalCircuitBreaker,
+ex29:00281 a p223:ElectricalCircuitBreaker,
         s223:Device ;
     rdfs:label "CircBreaker_120_#1" ;
-    p223:hasMaxRange ex29:00276 ;
-    s223:connectedThrough ex29:00288 ;
-    s223:hasConnectionPoint ex29:00279,
-        ex29:00280 ;
-    s223:hasProperty ex29:00276 ;
-    s223:isContainedIn ex29:00284 ;
+    p223:hasMaxRange ex29:00279 ;
+    s223:connectedThrough ex29:00291 ;
+    s223:hasConnectionPoint ex29:00282,
+        ex29:00283 ;
+    s223:hasProperty ex29:00279 ;
+    s223:isContainedIn ex29:00287 ;
     rdfs:comment "Office lights #1" .
-ex29:00279 a s223:ConnectionPoint,
+ex29:00282 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CircBreaker_120_#1.electricalInlet" ;
-    s223:connectsThrough ex29:00288 ;
+    s223:connectsThrough ex29:00291 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V.60Hz ;
-    s223:isConnectionPointOf ex29:00278 .
-ex29:00280 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex29:00281 .
+ex29:00283 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CircBreaker_120_#1.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V.60Hz ;
-    s223:isConnectionPointOf ex29:00278 .
-ex29:00281 a p223:ElectricalCircuitBreaker,
+    s223:isConnectionPointOf ex29:00281 .
+ex29:00284 a p223:ElectricalCircuitBreaker,
         s223:Device ;
     rdfs:label "CircBreaker_240_#2" ;
-    p223:hasMaxRange ex29:00277 ;
-    s223:connectedThrough ex29:00289 ;
-    s223:hasConnectionPoint ex29:00282,
-        ex29:00283 ;
-    s223:hasProperty ex29:00277 ;
-    s223:isContainedIn ex29:00284 ;
+    p223:hasMaxRange ex29:00280 ;
+    s223:connectedThrough ex29:00292 ;
+    s223:hasConnectionPoint ex29:00285,
+        ex29:00286 ;
+    s223:hasProperty ex29:00280 ;
+    s223:isContainedIn ex29:00287 ;
     rdfs:comment "Heating Room #1" .
-ex29:00282 a s223:ConnectionPoint,
+ex29:00285 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CircBreaker_240_#2.electricalInlet" ;
-    s223:connectsThrough ex29:00289 ;
+    s223:connectsThrough ex29:00292 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-240V.60Hz ;
-    s223:isConnectionPointOf ex29:00281 .
-ex29:00283 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex29:00284 .
+ex29:00286 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CircBreaker_240_#2.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-240V.60Hz ;
-    s223:isConnectionPointOf ex29:00281 .
-ex29:00284 a p223:ElectricalDistributionPanel,
+    s223:isConnectionPointOf ex29:00284 .
+ex29:00287 a p223:ElectricalDistributionPanel,
         s223:Device ;
     rdfs:label "P-1" ;
-    s223:connectedThrough ex29:00288,
-        ex29:00289 ;
-    s223:contains ex29:00278,
-        ex29:00281 ;
-    s223:hasConnectionPoint ex29:00285,
-        ex29:00286,
-        ex29:00287 ;
+    s223:connectedThrough ex29:00291,
+        ex29:00292 ;
+    s223:contains ex29:00281,
+        ex29:00284 ;
+    s223:hasConnectionPoint ex29:00288,
+        ex29:00289,
+        ex29:00290 ;
     rdfs:comment "Electrical panel full of breakers. 120V-240VAC 60Hz" .
-ex29:00285 a s223:ConnectionPoint,
+ex29:00288 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "P-1.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V_240V.60Hz ;
-    s223:isConnectionPointOf ex29:00284 .
-ex29:00286 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex29:00287 .
+ex29:00289 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "P-1.electricalOutletA" ;
-    s223:connectsThrough ex29:00288 ;
+    s223:connectsThrough ex29:00291 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V.60Hz ;
-    s223:isConnectionPointOf ex29:00284 .
-ex29:00287 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex29:00287 .
+ex29:00290 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "P-1.electricalOutletB" ;
-    s223:connectsThrough ex29:00289 ;
+    s223:connectsThrough ex29:00292 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-240V.60Hz ;
-    s223:isConnectionPointOf ex29:00284 .
-ex29:00288 a s223:Connection ;
-    s223:connectsAt ex29:00279,
-        ex29:00286 ;
-    s223:connectsFrom ex29:00284 ;
-    s223:connectsTo ex29:00278 ;
-    s223:hasMedium s223:Electricity-120V.60Hz .
-ex29:00289 a s223:Connection ;
+    s223:isConnectionPointOf ex29:00287 .
+ex29:00291 a s223:Connection ;
     s223:connectsAt ex29:00282,
-        ex29:00287 ;
-    s223:connectsFrom ex29:00284 ;
+        ex29:00289 ;
+    s223:connectsFrom ex29:00287 ;
     s223:connectsTo ex29:00281 ;
+    s223:hasMedium s223:Electricity-120V.60Hz .
+ex29:00292 a s223:Connection ;
+    s223:connectsAt ex29:00285,
+        ex29:00290 ;
+    s223:connectsFrom ex29:00287 ;
+    s223:connectsTo ex29:00284 ;
     s223:hasMedium s223:Electricity-240V.60Hz .

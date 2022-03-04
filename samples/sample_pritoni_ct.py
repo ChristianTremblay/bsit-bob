@@ -5,15 +5,6 @@ from typing import Any
 from matplotlib.backend_bases import MouseEvent
 
 from bob.core import (
-    System,
-    Zone,
-    Node,
-    s223,
-    Segment,
-    Junction,
-    bind_namespace,
-    quantitykind,
-    enum,
     get_datagraph,
     bind_model_namespace,
     dump,
@@ -36,16 +27,6 @@ from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone
 
 from bob.connections.air import *
-
-from bob.role import (
-    Exhaust,
-    Supply,
-)
-from bob.signal import (
-    AnalogOut,
-    AnalogIn,
-)
-from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
 from header import sample_header
 
@@ -396,6 +377,8 @@ def test_pritoni():
 
 if __name__ == "__main__":
     r = test_pritoni()
-    result = dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+    result = dump(
+        filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name)
+    )
     print("Check file : tests/ttl/Pritoni.ttl")
     graph = get_datagraph()

@@ -286,8 +286,14 @@ def get_datagraph(graph: Graph = data_graph) -> Graph:
 
 
 def clear(graph: Graph = data_graph) -> None:
-    """Remove all the triples from the graph."""
+    """Remove all the triples from the graph, reset the blank node counter."""
+    global _next_node
+
+    # remove all the triples
     graph.remove((None, None, None))
+
+    # reset the "blank" node counter
+    _next_node = 1
 
 
 # === NODES
@@ -1592,7 +1598,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
                 continue
 
             medium = getattr(connection_point, "hasMedium", None)
-            medium = getattr(medium, "node", medium)
+            # medium = getattr(medium, "node", medium)
             # ISSUE...having a hard time with electrical things
             from_out[medium].add(connection_point)
 
@@ -1669,7 +1675,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     to_in = defaultdict(set)
     if isinstance(to_thing, ConnectionPoint):
         medium = getattr(to_thing, "hasMedium", None)
-        medium = getattr(medium, "node", medium)
+        # medium = getattr(medium, "node", medium)
         # ISSUE...having a hard time with electrical things
         # maybe this was due to me, breaking Joel's toy
         to_in[medium].add(to_thing)
@@ -1689,7 +1695,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             # medium turned to be
             # {'node': rdflib.term.URIRef('http://data.ashrae.org/standard223/1.0/vocab/enumeration#Water-ChilledWater'), 'label': '', 'comment': ''}
             # and the intersection fails to recognize the substance
-            medium = getattr(medium, "node", medium)
+            # medium = getattr(medium, "node", medium)
             to_in[medium].add(connection_point)
 
     elif isinstance(to_thing, (SystemConnectionPoint, ZoneConnectionPoint)):
