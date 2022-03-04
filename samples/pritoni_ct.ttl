@@ -3,19 +3,23 @@
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 
 
-ex:00001 a s223:PhysicalSpace ;
+ex:00001 a s223:PhysicalSpace,
+        rec:Building ;
     rdfs:label "Pritoni Building" ;
     s223:contains ex:00002,
         ex:00003 .
 
-ex:00002 a s223:PhysicalSpace ;
+ex:00002 a s223:PhysicalSpace,
+        rec:Roof ;
     rdfs:label "Roof of building" .
 
-ex:00003 a s223:PhysicalSpace ;
+ex:00003 a s223:PhysicalSpace,
+        rec:Floor ;
     rdfs:label "Floor on which everything is" ;
     s223:contains ex:00004,
         ex:00005,
@@ -23,28 +27,33 @@ ex:00003 a s223:PhysicalSpace ;
         ex:00007,
         ex:00008 .
 
-ex:00004 a s223:PhysicalSpace ;
+ex:00004 a s223:PhysicalSpace,
+        rec:Office ;
     rdfs:label "Open Office" ;
     s223:encloses ex:00017,
         ex:00105,
         ex:00108 .
 
-ex:00005 a s223:PhysicalSpace ;
+ex:00005 a s223:PhysicalSpace,
+        rec:Bathroom ;
     rdfs:label "Bathroom" ;
     s223:encloses ex:00033,
         ex:00111 .
 
-ex:00006 a s223:PhysicalSpace ;
+ex:00006 a s223:PhysicalSpace,
+        rec:Office ;
     rdfs:label "Private Office" ;
     s223:encloses ex:00081,
         ex:00117 .
 
-ex:00007 a s223:PhysicalSpace ;
+ex:00007 a s223:PhysicalSpace,
+        rec:Room ;
     rdfs:label "Kitchenette" ;
     s223:encloses ex:00097,
         ex:00120 .
 
-ex:00008 a s223:PhysicalSpace ;
+ex:00008 a s223:PhysicalSpace,
+        rec:Corridor ;
     rdfs:label "Corridor" ;
     s223:encloses ex:00049,
         ex:00065,

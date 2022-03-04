@@ -1,67 +1,53 @@
 from rdflib import URIRef
-from ..core import DomainSpace, Physical, bind_namespace, s223, PhysicalSpace
+from ..core import Physical, bind_namespace, s223, PhysicalSpace
 
 
-bot = bind_namespace("bot", "https://w3id.org/bot#")
-
-__namespace__ = s223
+"""
+This is a hack, Real Estate Core has many namespaces, and some of the physical
+spaces defined in this module are not in REC or BOT.
+"""
+__namespace__ = bind_namespace("rec", "https://w3id.org/rec/core/")
 
 
 class Site(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
-    # align to bot.Site
-    # hasBuilding: bot.Building
+    pass
 
 
 class Building(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
-    # alignement to bot.Building
-    # Brick Alignment example here
-    # https://raw.githubusercontent.com/w3c-lbd-cg/bot/master/BRICKAlignment.ttl
+    pass
 
 
 class Roof(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass
 
 
 class Floor(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass
 
 
 class Basement(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass
 
 
 class Hall(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass
 
 
 class Corridor(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass
 
 
 class Bathroom(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass
 
 
 class Office(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass
 
 
 class Room(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass
 
 
 class MechanicalRoom(PhysicalSpace):
-    node_type: URIRef = s223.PhysicalSpace
-    hasDomain = Physical
+    pass

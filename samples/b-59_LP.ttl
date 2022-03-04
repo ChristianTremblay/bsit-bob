@@ -3,6 +3,7 @@
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 
@@ -337,20 +338,24 @@ ex:00041 a s223:Connection ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Air returns from zone here" .
 
-ex:00042 a s223:PhysicalSpace ;
+ex:00042 a s223:PhysicalSpace,
+        rec:Building ;
     rdfs:label "B59 Building" ;
     s223:contains ex:00043,
         ex:00044 .
 
-ex:00043 a s223:PhysicalSpace ;
+ex:00043 a s223:PhysicalSpace,
+        rec:Roof ;
     rdfs:label "Roof of building" .
 
-ex:00044 a s223:PhysicalSpace ;
+ex:00044 a s223:PhysicalSpace,
+        rec:Floor ;
     rdfs:label "One big floor which is a common space" ;
     s223:contains ex:00045 ;
     s223:encloses ex:00054 .
 
-ex:00045 a s223:PhysicalSpace ;
+ex:00045 a s223:PhysicalSpace,
+        rec:Office ;
     rdfs:label "Director Office" .
 
 ex:00046 a p223:PhysicSystem,
