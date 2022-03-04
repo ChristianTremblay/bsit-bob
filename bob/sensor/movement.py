@@ -1,35 +1,30 @@
-from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
+from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, s223, p223, unit, enum, Medium, Light
-
-from ..property import QuantifiableObservableProperty, QuantifiableProperty
+from ..core import quantitykind, p223, unit, Medium, Light
 
 from bob import core
 
 __namespace__ = p223
 
 
-class MovementMeasure(Measurement):
-    node_type: URIRef = p223.Measure
+class Movement(QuantifiableMeasuredProperty):
+    # ISSUE -- boolean or movement amount?
     unit: URIRef = unit.DEG_C
-    # isObservedBy: Sensor
-    ofSubstance: Medium
 
 
 class MovementSensor(Sensor):
-    node_type: URIRef = p223.MovementSensor
-    observesProperty: MovementMeasure
-    measuresSubstance: Medium = Light
+    measuresMedium: Medium = Light
+    observesProperty: PropertyReference  # Movement
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        _measure = MovementMeasure(
-            ofSubstance=self.measuresSubstance,
+        _measure = Movement(
+            measuresMedium=self.measuresMedium,
             # isObservedBy=self,
-            label=f"{self.label}.Measure",
+            label=f"{self.label}.Movement",
             **_measure_kwargs,
         )
         self.observesProperty = _measure

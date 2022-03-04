@@ -59,6 +59,7 @@ class ElectricalSystemOutletConnectionPoint(
 
 Electricity_575V_60Hz = Medium(node_iri=s223["Electricity-575V_60Hz"])
 
+
 class Electricity_575V_60HzConnection(Connection):
     hasMedium: Medium = Electricity_575V_60Hz
     node_type = None

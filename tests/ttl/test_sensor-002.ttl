@@ -285,29 +285,30 @@ ex:00035 a s223:PhysicalSpace ;
 ex:00036 a s223:PhysicalSpace ;
     rdfs:label "Mechanical room for Clean Room #1" .
 
-ex:00037 a s223:Device,
-        s223:DifferentialSensor,
+ex:00037 a p223:DifferentialStaticPressureSensor,
+        s223:Device,
         s223:Sensor ;
     rdfs:label "TPD-01" ;
-    s223:hasMeasurementLocationHigh ex:00009 ;
-    s223:hasMeasurementLocationLow ex:00025 ;
+    p223:hasMeasurementLocationHigh ex:00009 ;
+    p223:hasMeasurementLocationLow ex:00025 ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00038 ;
     s223:hasPhysicalLocation ex:00036 ;
-    s223:hasProperty ex:00038 ;
-    s223:measuresSubstance s223:Medium-Air ;
-    s223:observesProperty ex:00038 ;
     rdfs:comment "Static Pressure between Clean Room (+) and SAS (-)" .
 
-ex:00038 a p223:Measure,
+ex:00038 a p223:DifferentialStaticPressure,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "TPD-01.Measure" ;
-    s223:hasExternalReference ex:00039 ;
-    s223:hasQuantityKind quantitykind:ForcePerArea ;
-    s223:ofSubstance s223:Medium-Air ;
-    s223:unit unit:PA .
+    rdfs:label "TPD-01.DifferentialStaticPressure" ;
+    p223:hasQuantityKind quantitykind:ForcePerArea ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:PA ;
+    s223:hasExternalReference ex:00039 .
 
 ex:00039 a s223:ExternalReference ;
-    rdfs:label "TPD-01.Measure.ExternalReference" ;
+    rdfs:label "TPD-01.DifferentialStaticPressure.ExternalReference" ;
     s223:hasRef "['bacnet://570005/analog-input,10084/present-value']" .
 

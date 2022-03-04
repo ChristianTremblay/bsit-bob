@@ -20,7 +20,7 @@ with pytest.raises(ValueError):
 ats1 = TemperatureSensor(
     label="ats1",
     comment="Supply Air Temperature Sensor",
-    measuresSubstance=Air,
+    measuresMedium=Air,
     hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
 )
 

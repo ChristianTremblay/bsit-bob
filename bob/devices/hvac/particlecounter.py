@@ -43,11 +43,8 @@ particlecounter_template = {
 
 
 class ParticleCounter(Device):
-    """"""
-
-    node_type: URIRef = p223.ParticleCounter
-    # Air inlet will allow air to enter the device
-    airInletSupply: AirInletConnectionPoint
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
         if not config:
