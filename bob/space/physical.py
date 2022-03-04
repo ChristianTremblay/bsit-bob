@@ -25,23 +25,7 @@ class Floor(PhysicalSpace):
     pass
 
 
-class Basement(PhysicalSpace):
-    pass
-
-
-class Hall(PhysicalSpace):
-    pass
-
-
-class Corridor(PhysicalSpace):
-    pass
-
-
-class Bathroom(PhysicalSpace):
-    pass
-
-
-class Office(PhysicalSpace):
+class Basement(Floor):
     pass
 
 
@@ -49,5 +33,21 @@ class Room(PhysicalSpace):
     pass
 
 
-class MechanicalRoom(PhysicalSpace):
+class Hall(Room):
+    pass
+
+
+class Corridor(Room):
+    pass
+
+
+class Bathroom(Room):
+    pass
+
+
+class Office(Room):
+    pass
+
+
+class MechanicalRoom(Room):
     pass
