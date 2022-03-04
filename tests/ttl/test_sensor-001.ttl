@@ -35,7 +35,7 @@ ex:00003 a p223:MeasuredProperty,
 
 ex:00004 a s223:ExternalReference ;
     rdfs:label "ats1.Temperature.ExternalReference" ;
-    s223:hasRef "['bacnet://570005/analog-input,10084/present-value']" .
+    s223:hasRef "bacnet://570005/analog-input,10084/present-value" .
 
 ex:00005 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -60,7 +60,7 @@ ex:00006 a p223:MeasuredProperty,
 
 ex:00007 a s223:ExternalReference ;
     rdfs:label "ats2.Temperature.ExternalReference" ;
-    s223:hasRef "['bacnet://570005/analog-input,10084/present-value']" .
+    s223:hasRef "bacnet://570005/analog-input,10084/present-value" .
 
 ex:00008 a p223:AirHumiditySensor,
         s223:Device,
@@ -102,9 +102,14 @@ ex:00011 a p223:Humidity,
     p223:hasQuantityKind quantitykind:RelativeHumidity ;
     p223:measuresMedium s223:Medium-Air ;
     p223:unit unit:PERCENT_RH ;
-    s223:hasExternalReference ex:00012 .
+    s223:hasExternalReference ex:00012,
+        ex:00013 .
 
 ex:00012 a s223:ExternalReference ;
     rdfs:label "ahs2.Measure.ExternalReference" ;
-    s223:hasRef "['bacnet://570005/analog-input,10085/present-value', 'ip:172.16.3.8|foxs:|station:|slot:/Drivers/BacnetNetwork/MSTP70/PCA$2d70$2d005_SystemeUV1/points/ZN$2dH']" .
+    s223:hasRef "bacnet://570005/analog-input,10085/present-value" .
+
+ex:00013 a s223:ExternalReference ;
+    rdfs:label "ahs2.Measure.ExternalReference" ;
+    s223:hasRef "ip:172.16.3.8|foxs:|station:|slot:/Drivers/BacnetNetwork/MSTP70/PCA$2d70$2d005_SystemeUV1/points/ZN$2dH" .
 

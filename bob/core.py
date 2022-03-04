@@ -735,10 +735,6 @@ class Property(Node):
                 )
             external_reference = kwargs.pop("hasExternalReference")
 
-        observes_reference = None
-        if "observesProperty" in kwargs:
-            observes_reference = kwargs.pop("observesProperty")
-
         super().__init__(**kwargs)
 
         # if there is an initial value, link to it
@@ -747,18 +743,13 @@ class Property(Node):
                 init_value = Literal(init_value)
             self.hasValue = init_value
 
-        # same for ExternalReference
+        # same for ExternalReference, allow initializing with a list of them
         if external_reference is not None:
-            if not isinstance(external_reference, ExternalReference):
-                external_reference = self._ExternalReference_class(
-                    external_reference,
-                    label=f"{self.label}.ExternalReference",
-                )
-
-            # link the two together
-            self.hasExternalReference = external_reference
-            if INCLUDE_INVERSE:
-                external_reference.isExternalReferenceOf = self
+            if isinstance(external_reference, list):
+                for ref in external_reference:
+                    self.add_external_reference(ref)
+            else:
+                self.add_external_reference(external_reference)
 
     def add_value(self, value: Any) -> None:
         """Add an additional value to a property."""
