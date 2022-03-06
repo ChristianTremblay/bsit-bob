@@ -819,14 +819,22 @@ class Domain(EnumerationKind):
     _data_graph: Graph = schema_graph
 
 
-Electrical = Domain(node_iri=s223.Electrical)
-Fire = Domain(node_iri=s223.Fire)
-HVAC = Domain(node_iri=s223.HVAC)
-Lighting = Domain(node_iri=s223.Lighting)
-Occupancy = Domain(node_iri=s223.Occupancy)
-Security = Domain(node_iri=s223.Security)
-Networking = Domain(node_iri=s223.Networking)
-Physical = Domain(node_iri=s223.Physical)
+# vocabulary namespace
+domain = bind_namespace("domain", "http://data.ashrae.org/standard223/1.0/vocab/domain#")
+
+Electrical = Domain(node_iri=domain.Electrical)
+Fire = Domain(node_iri=domain.Fire)
+HVAC = Domain(node_iri=domain.HVAC)
+Lighting = Domain(node_iri=domain.Lighting)
+Networking = Domain(node_iri=domain.Networking)
+Security = Domain(node_iri=domain.Security)
+Physical = Domain(node_iri=domain.Physical)
+Refrigeration = Domain(node_iri=domain.Refrigeration)
+Plumbing = Domain(node_iri=domain.Plumbing)
+ConveyanceSystems = Domain(node_iri=domain.ConveyanceSystems)
+
+# proposed additional domain
+Occupancy = Domain(node_iri=domain.Occupancy)
 
 
 class Role(EnumerationKind):
