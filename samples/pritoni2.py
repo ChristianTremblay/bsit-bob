@@ -1,5 +1,6 @@
 from bob.core import (
     s223,
+    p223,
     bind_model_namespace,
     PhysicalSpace,
     DomainSpace,
@@ -30,12 +31,14 @@ class Kitchenette(Room):
 
 
 class LightingSpace(DomainSpace):
+    node_iri = p223.LightingSpace
     _namespace = s223
     hasDomain: Domain = Lighting
     hasMedium: Medium = Light
 
 
 class HVACSpace(DomainSpace):
+    node_iri = p223.HVACSpace
     _namespace = s223
     hasDomain: Domain = HVAC
     hasMedium: Medium = Air
