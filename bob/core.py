@@ -1767,6 +1767,7 @@ class DomainSpace(Connectable):
 
     node_type: URIRef = s223.DomainSpace
     hasDomain: Domain
+    hasMedium: Medium   ### required?  maybe implied by Domain?
 
     def __lt__(self, other: Union[Zone, PhysicalSpace]) -> Node:
         """self < other

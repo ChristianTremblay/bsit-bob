@@ -31,18 +31,13 @@ class Kitchenette(Room):
 
 
 class LightingSpace(DomainSpace):
-    node_iri = p223.LightingSpace
-    _namespace = s223
-    hasDomain: Domain = Lighting
-    hasMedium: Medium = Light
+    hasDomain = Lighting
+    hasMedium = Light
 
 
 class HVACSpace(DomainSpace):
-    node_iri = p223.HVACSpace
-    _namespace = s223
-    hasDomain: Domain = HVAC
-    hasMedium: Medium = Air
-
+    hasDomain = HVAC
+    hasMedium = Air
 
 open_office = Office(label="OpenOffice")
 lz1 = LightingSpace(label="LZ1")
