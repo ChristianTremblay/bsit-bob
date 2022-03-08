@@ -10,23 +10,31 @@
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-
-ex:00001 a p223:TemperatureSensor,
-        s223:Device,
-        s223:Sensor ;
-    rdfs:label "DA-T" ;
-    rdfs:comment "Supply Air Temperature Sensor" .
-
-ex:00002 a p223:TemperatureSensor,
+<http://data.ashrae.org/standard223/1.0/data/test_sensor-001>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_sensor-001> ;
+  rdfs:label "test_sensor-001" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+ex11:00001 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:hasValue 15.0 ;
+    s223:unit unit:A .
+ex11:00002 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:hasValue 20.0 ;
+    s223:unit unit:A .
+ex20:00003 a p223:TemperatureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "ats1" ;
-    p223:observesProperty ex:00003 ;
+    p223:observesProperty ex20:00004 ;
     s223:measuresMedium s223:Medium-Air ;
     rdfs:comment "Supply Air Temperature Sensor" .
-
-ex:00003 a p223:MeasuredProperty,
+ex20:00004 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         p223:Temperature,
         s223:ObservableProperty,
@@ -36,85 +44,7 @@ ex:00003 a p223:MeasuredProperty,
     p223:hasQuantityKind quantitykind:Temperature ;
     p223:measuresMedium s223:Medium-Air ;
     p223:unit unit:DEG_C ;
-    s223:hasExternalReference ex:00004 .
-
-ex:00004 a s223:ExternalReference ;
+    s223:hasExternalReference ex20:00005 .
+ex20:00005 a s223:ExternalReference ;
     rdfs:label "ats1.Temperature.ExternalReference" ;
     s223:hasRef "bacnet://570005/analog-input,10084/present-value" .
-
-ex:00005 a p223:AirTemperatureSensor,
-        p223:TemperatureSensor,
-        s223:Device,
-        s223:Sensor ;
-    rdfs:label "ats2" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex:00006 ;
-    rdfs:comment "Supply Air Temperature Sensor" .
-
-ex:00006 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        p223:Temperature,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    rdfs:label "ats2.Temperature" ;
-    p223:hasQuantityKind quantitykind:Temperature ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:DEG_C ;
-    s223:hasExternalReference ex:00007 .
-
-ex:00007 a s223:ExternalReference ;
-    rdfs:label "ats2.Temperature.ExternalReference" ;
-    s223:hasRef "bacnet://570005/analog-input,10084/present-value" .
-
-ex:00008 a p223:AirHumiditySensor,
-        s223:Device,
-        s223:Sensor ;
-    rdfs:label "ahs1" ;
-    p223:hasQuantityKind quantitykind:RelativeHumidity ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex:00009 ;
-    rdfs:comment "Zone Humidity Sensor with a value of 20" .
-
-ex:00009 a p223:Humidity,
-        p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    rdfs:label "ahs1.Measure" ;
-    p223:hasQuantityKind quantitykind:RelativeHumidity ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:PERCENT_RH ;
-    s223:hasValue 20.0 .
-
-ex:00010 a p223:AirHumiditySensor,
-        s223:Device,
-        s223:Sensor ;
-    rdfs:label "ahs2" ;
-    p223:hasQuantityKind quantitykind:RelativeHumidity ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex:00011 ;
-    rdfs:comment "Zone Humidity Sensor with a BACnet reference and a Niagara4 ORD" .
-
-ex:00011 a p223:Humidity,
-        p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    rdfs:label "ahs2.Measure" ;
-    p223:hasQuantityKind quantitykind:RelativeHumidity ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:PERCENT_RH ;
-    s223:hasExternalReference ex:00012,
-        ex:00013 .
-
-ex:00012 a s223:ExternalReference ;
-    rdfs:label "ahs2.Measure.ExternalReference" ;
-    s223:hasRef "bacnet://570005/analog-input,10085/present-value" .
-
-ex:00013 a s223:ExternalReference ;
-    rdfs:label "ahs2.Measure.ExternalReference" ;
-    s223:hasRef "ip:172.16.3.8|foxs:|station:|slot:/Drivers/BacnetNetwork/MSTP70/PCA$2d70$2d005_SystemeUV1/points/ZN$2dH" .
-
