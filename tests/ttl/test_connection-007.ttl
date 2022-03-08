@@ -1,38 +1,50 @@
-@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
+@prefix domain: <http://data.ashrae.org/standard223/1.0/vocab/domain#> .
 @prefix ex: <urn:ex/test_connection-007/> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 
 
-ex:00001 a s223:PhysicalSpace ;
+ex:00001 a s223:PhysicalSpace,
+        rec:Building ;
     rdfs:label "My Building" ;
     s223:contains ex:00002,
         ex:00003 .
 
-ex:00002 a s223:PhysicalSpace ;
+ex:00002 a s223:PhysicalSpace,
+        rec:Floor ;
     rdfs:label "Floor1" ;
     s223:contains ex:00004,
         ex:00005,
         ex:00006 .
 
-ex:00003 a s223:PhysicalSpace ;
+ex:00003 a s223:PhysicalSpace,
+        rec:Floor ;
     rdfs:label "basement" ;
     s223:contains ex:00007 .
 
-ex:00004 a s223:PhysicalSpace ;
+ex:00004 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 1" ;
     s223:encloses ex:00016 .
 
-ex:00005 a s223:PhysicalSpace ;
+ex:00005 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 2" ;
     s223:encloses ex:00032 .
 
-ex:00006 a s223:PhysicalSpace ;
+ex:00006 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 3" ;
     s223:encloses ex:00048 .
 
-ex:00007 a s223:PhysicalSpace ;
+ex:00007 a s223:PhysicalSpace,
+        rec:MechanicalRoom,
+        rec:Room ;
     rdfs:label "Mechanical Room" .
 
 ex:00008 a p223:PhysicSystem,
@@ -117,7 +129,7 @@ ex:00016 a s223:DomainSpace,
         ex:00021,
         ex:00022,
         ex:00023 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain domain:HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00008 ;
     s223:radiantCooling ex:00023 ;
@@ -250,7 +262,7 @@ ex:00032 a s223:DomainSpace,
         ex:00037,
         ex:00038,
         ex:00039 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain domain:HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00024 ;
     s223:radiantCooling ex:00039 ;
@@ -383,7 +395,7 @@ ex:00048 a s223:DomainSpace,
         ex:00053,
         ex:00054,
         ex:00055 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain domain:HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00040 ;
     s223:radiantCooling ex:00055 ;
@@ -439,7 +451,7 @@ ex:00056 a s223:HVACZone,
     s223:airOutlet ex:00058 ;
     s223:contains ex:00016,
         ex:00032 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain domain:HVAC ;
     s223:hasZoneConnectionPoint ex:00057,
         ex:00058 .
 
@@ -519,7 +531,7 @@ ex:00066 a s223:ConnectionPoint,
 
 ex:00067 a s223:Junction ;
     rdfs:label "J1" ;
-    s223:hasMedium enum:Medium-Air ;
+    s223:hasMedium s223:Medium-Air ;
     s223:lnx ex:00068,
         ex:00069,
         ex:00070 .
