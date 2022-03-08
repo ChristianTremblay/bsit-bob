@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef, util
 
-from ..core import s223, enum, quantitykind, unit, Medium, Air
+from ..core import p223, enum, quantitykind, unit, Medium, Air, Substance
 
-from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
+from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 
 from ..property import (
     ObservableProperty,
@@ -13,29 +13,32 @@ from ..property import (
     QuantifiableObservableProperty,
 )
 
-__namespace__ = s223
+__namespace__ = p223
+
+PM1_0 = Substance(node_iri=p223["Particulate-PM1.0"])
+PM2_5 = Substance(node_iri=p223["Particulate-PM2.5"])
+PM10_0 = Substance(node_iri=p223["Particulate-PM10.0"])
 
 
-class ParticulateCountMeasure(QuantifiableMeasurement):
-    node_type: URIRef = s223.Measure
+class ParticulateCount(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.NumberDensity
     unit: URIRef = unit["NUM-PER-M3"]
+    measuresMedium: Medium
+    measuresSubstance: Substance
 
 
 class ParticulateSensor(Sensor):
-    node_type: URIRef = s223.ParticulateSensor
-    hasMedium: Medium = Air
-    measuresSubstance: Medium
-    observesProperty: ParticulateCountMeasure
+    measuresMedium: Medium = Air
+    observesProperty: PropertyReference  # ParticulateCount
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        _count = ParticulateCountMeasure(
-            ofSubstance=self.measuresSubstance,
+        _count = ParticulateCount(
+            measuresSubstance=self.measuresSubstance,
             # isObservedBy=self,
-            label=f"{self.label}.Measure",
+            label=f"{self.label}.ParticulateCount",  # needs more focus
             **_measure_kwargs,
         )
 
@@ -44,9 +47,8 @@ class ParticulateSensor(Sensor):
 
 class UltraFineParticulateSensor(ParticulateSensor):
     "PM 1.0 Count"
-    node_type = s223.ParticulateSensor
     comment = "Ultra Fine Particulate Sensor"
-    measuresSubstance: URIRef = s223["Particulate-PM1.0"]
+    measuresSubstance: Substance = PM1_0
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -54,19 +56,11 @@ class UltraFineParticulateSensor(ParticulateSensor):
 
 class FineParticulateSensor(ParticulateSensor):
     "PM 2.5 Count"
-    node_type = s223.ParticulateSensor
     comment = "Fine Particulate Sensor"
-    measuresSubstance: URIRef = s223["Particulate-PM2.5"]
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    measuresSubstance: Substance = PM2_5
 
 
 class CoarseParticulateSensor(ParticulateSensor):
     "PM 10 Count"
-    node_type = s223.ParticulateSensor
     comment = "Coarse Particulate Sensor"
-    measuresSubstance: URIRef = s223["Particulate-PM10.0"]
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    measuresSubstance: Substance = PM10_0

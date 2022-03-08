@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef
 
-from ..core import s223, p223, enum, quantitykind, unit, Medium, Air
+from ..core import p223, enum, quantitykind, unit, Medium, Air
 
-from .sensor import Sensor, QuantifiableMeasurement, split_kwargs
+from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 
 from ..property import (
     ObservableProperty,
@@ -13,14 +13,13 @@ from ..property import (
     QuantifiableObservableProperty,
 )
 
-__namespace__ = s223
+__namespace__ = p223
 
 
-class HumidityMeasure(QuantifiableMeasurement):
-    node_type: URIRef = p223.Measure
+class Humidity(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     unit: URIRef = unit.PERCENT_RH
-    ofSubstance: Medium
+    measuresMedium: Medium = Air
 
 
 class HumiditySetpoint(QuantifiableProperty):
@@ -33,18 +32,15 @@ class AirHumiditySensor(Sensor):
     Air humidity sensor. Can model room sensor or duct sensor
     """
 
-    node_type: URIRef = p223.HumiditySensor
-    hasMedium: Medium = Air
+    measuresMedium: Medium = Air
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
-    observesProperty: HumidityMeasure
-    measuresSubstance: Medium = Air
+    observesProperty: PropertyReference  # Humidity
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        _measure = HumidityMeasure(
-            ofSubstance=self.measuresSubstance,
+        _measure = Humidity(
             # isObservedBy=self,
             label=f"{self.label}.Measure",
             **_measure_kwargs,

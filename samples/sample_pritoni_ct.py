@@ -1,12 +1,9 @@
 from pathlib import Path
 
 from typing import Any
-
-from matplotlib.backend_bases import MouseEvent
 from bob.connections.light import LightConnection
 from bob.connections.occupancy import (
     OccupancyInletSystemConnectionPoint,
-    OccupancyOutletZoneConnectionPoint,
     OccupancyOutletSystemConnectionPoint,
 )
 
@@ -212,25 +209,6 @@ def test_pritoni():
 
     Also, it is clear that Light Zones are in fact Ligth Spaces, as each one contains only 1 device/sensor
     It's not a group of spaces.
-
-    2022-03-03
-    Design was modified by PD,SR,MP and now there are 2 luminaires per bulb on the drawing.
-    In Open space, light spaces are turned 90deg, which is like if the windows were on right side. 
-    On sensor is occupancy the other one is daylight
-
-    Considering the goal of a day light sensor, connecting it at the light space closer to Windows
-    make sense. As it will see if luminaires are needed. The Light System will be able to use this 
-    information in the control sequence.
-
-    For open office, there is 1 occupancy sensor shared by 2 spaces. Easiest way to fix this
-    is to use an occupancy space. The lighting System will be able to use this information in the
-    control sequence.
-
-    The other occupancy sensors are alone in their space, so it is not required to create occupancy
-    spaces.
-
-
-
     """
     # HVAC Zones
     hvac_zone_1 = HVACZone(
@@ -488,6 +466,9 @@ def test_pritoni():
         comment="Luminaire #4 in OpenOffice West",
         hasPhysicalLocation=openoffice,
     )
+    openofficeEast_luminaire_1.lightOutlet >> openofficeEast_lightspace.lightInlet
+    openofficeEast_movement.hasMeasurementLocation = openofficeEast_lightspace
+    openofficeEast_movement.hasPhysicalLocation = openoffice
 
     openofficeEast_light_conn = LightConnection(
         label="LightHub_1_2", comment="Needed to connect multiple luminaires to space"
@@ -520,6 +501,10 @@ def test_pritoni():
     window2.naturalLight >> natural_ligth_conn
     natural_ligth_conn >> openofficeEast_lightspace.naturalLightInlet
     natural_ligth_conn >> openofficeWest_lightspace.naturalLightInlet
+
+    # Windows are good for natural light
+    window1.naturalLight >> openofficeWest_lightspace.naturalLightInlet
+    window2.naturalLight >> openofficeEast_lightspace.naturalLightInlet
 
     # More connections on systems and zones (mapping)
 
@@ -560,8 +545,4 @@ def test_pritoni():
 
 if __name__ == "__main__":
     r = test_pritoni()
-    result = dump(
-        filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name)
-    )
-    print("Check file : tests/ttl/Pritoni.ttl")
-    graph = get_datagraph()
+    dump()

@@ -8,7 +8,7 @@ __version__ = "0.20"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
-from . core import (
+from .core import (
     bind_namespace,
     bind_model_namespace,
     Node,

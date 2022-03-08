@@ -1,21 +1,20 @@
-from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
+from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 from rdflib import URIRef
 from typing import Any, List
-from ..core import quantitykind, s223, p223, unit, enum, Medium, Air, Node
+from ..core import quantitykind, p223, unit, enum, Medium, Air, Node, PropertyReference
 
-from ..property import QuantifiableObservableProperty, QuantifiableProperty
+from ..property import QuantifiableProperty
 
 from bob import core
 
-__namespace__ = s223
+__namespace__ = p223
 
 
-class DifferentialStaticPressureMeasure(QuantifiableMeasurement):
-    node_type: URIRef = p223.Measure
+class DifferentialStaticPressure(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.ForcePerArea
     unit: URIRef = unit.PA
+    measuresMedium: Medium  # set from the sensor
     # isObservedBy: Sensor
-    ofSubstance: Medium
 
 
 class DifferentialStaticPressureSetpoint(QuantifiableProperty):
@@ -24,9 +23,8 @@ class DifferentialStaticPressureSetpoint(QuantifiableProperty):
 
 
 class DifferentialStaticPressureSensor(Sensor):
-    node_type: URIRef = s223.DifferentialSensor
-    observesProperty: DifferentialStaticPressureMeasure
-    measuresSubstance: Medium = Air
+    measuresMedium: Medium = Air
+    observesProperty: PropertyReference  # DifferentialStaticPressure
     hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
     hasMeasurementLocationLow: Node
 
@@ -34,10 +32,10 @@ class DifferentialStaticPressureSensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        _measure = DifferentialStaticPressureMeasure(
-            ofSubstance=self.measuresSubstance,
+        _measure = DifferentialStaticPressure(
+            measuresMedium=self.measuresMedium,
             # isObservedBy=self,
-            label=f"{self.label}.Measure",
+            label=f"{self.label}.DifferentialStaticPressure",
             **_measure_kwargs,
         )
         self.observesProperty = _measure

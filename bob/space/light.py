@@ -19,8 +19,6 @@ class LightingSpace(DomainSpace):
     hasMedium: Medium = Light
     lightInlet: LightInletConnectionPoint
     naturalLightInlet: LightInletConnectionPoint
-    occupancy: OccupancyInletConnectionPoint
-    indoorAir: IndoorAir
 
 
 class LightingZone(Zone):

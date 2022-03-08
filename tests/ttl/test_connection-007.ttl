@@ -1,48 +1,54 @@
-# baseURI: http://data.ashrae.org/standard223/1.0/sample/test_connection-007
-# imports: http://data.ashrae.org/standard223/1.0/model/all
-@prefix enum: <http://data.ashrae.org/standard223/1.0/vocab/enumeration#> .
-@prefix ex29: <urn:ex/test_system-007/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix domain: <http://data.ashrae.org/standard223/1.0/vocab/domain#> .
+@prefix ex: <urn:ex/test_connection-007/> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-<http://data.ashrae.org/standard223/1.0/data/test_connection-007>
-  a owl:Ontology ;
-  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_connection-007> ;
-  rdfs:label "test_connection-007" ;
-  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00001 a s223:PhysicalSpace ;
+
+
+ex:00001 a s223:PhysicalSpace,
+        rec:Building ;
     rdfs:label "My Building" ;
-    s223:contains ex29:00002,
-        ex29:00003 .
-ex29:00002 a s223:PhysicalSpace ;
+    s223:contains ex:00002,
+        ex:00003 .
+
+ex:00002 a s223:PhysicalSpace,
+        rec:Floor ;
     rdfs:label "Floor1" ;
-    s223:contains ex29:00004,
-        ex29:00005,
-        ex29:00006 ;
-    s223:isContainedIn ex29:00001 .
-ex29:00003 a s223:PhysicalSpace ;
+    s223:contains ex:00004,
+        ex:00005,
+        ex:00006 .
+
+ex:00003 a s223:PhysicalSpace,
+        rec:Floor ;
     rdfs:label "basement" ;
-    s223:contains ex29:00007 ;
-    s223:isContainedIn ex29:00001 .
-ex29:00004 a s223:PhysicalSpace ;
+    s223:contains ex:00007 .
+
+ex:00004 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 1" ;
-    s223:encloses ex29:00016 ;
-    s223:isContainedIn ex29:00002 .
-ex29:00005 a s223:PhysicalSpace ;
+    s223:encloses ex:00016 .
+
+ex:00005 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 2" ;
-    s223:encloses ex29:00032 ;
-    s223:isContainedIn ex29:00002 .
-ex29:00006 a s223:PhysicalSpace ;
+    s223:encloses ex:00032 .
+
+ex:00006 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 3" ;
-    s223:encloses ex29:00048 ;
-    s223:isContainedIn ex29:00002 .
-ex29:00007 a s223:PhysicalSpace ;
-    rdfs:label "Mechanical Room" ;
-    s223:isContainedIn ex29:00003 .
-ex29:00008 a p223:PhysicSystem,
+    s223:encloses ex:00048 .
+
+ex:00007 a s223:PhysicalSpace,
+        rec:MechanicalRoom,
+        rec:Room ;
+    rdfs:label "Mechanical Room" .
+
+ex:00008 a p223:PhysicSystem,
         s223:System ;
     rdfs:label "Indoor air of space" ;
     p223:airTransfer ex29:00011 ;
@@ -112,19 +118,18 @@ ex29:00015 a s223:BidirectionalSystemConnectionPoint,
 ex29:00016 a s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 1" ;
-    s223:airTransfer ex29:00019 ;
-    s223:connectedThrough ex29:00071 ;
-    s223:doors ex29:00020 ;
-    s223:ductAirInlet ex29:00017 ;
-    s223:ductAirOutlet ex29:00018 ;
-    s223:hasConnectionPoint ex29:00017,
-        ex29:00018,
-        ex29:00019,
-        ex29:00020,
-        ex29:00021,
-        ex29:00022,
-        ex29:00023 ;
-    s223:hasDomain s223:HVAC ;
+    s223:airTransfer ex:00019 ;
+    s223:doors ex:00020 ;
+    s223:ductAirInlet ex:00017 ;
+    s223:ductAirOutlet ex:00018 ;
+    s223:hasConnectionPoint ex:00017,
+        ex:00018,
+        ex:00019,
+        ex:00020,
+        ex:00021,
+        ex:00022,
+        ex:00023 ;
+    s223:hasDomain domain:HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex29:00008 ;
     s223:isContainedIn ex29:00056 ;
@@ -245,19 +250,18 @@ ex29:00031 a s223:BidirectionalSystemConnectionPoint,
 ex29:00032 a s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 2" ;
-    s223:airTransfer ex29:00035 ;
-    s223:connectedThrough ex29:00071 ;
-    s223:doors ex29:00036 ;
-    s223:ductAirInlet ex29:00033 ;
-    s223:ductAirOutlet ex29:00034 ;
-    s223:hasConnectionPoint ex29:00033,
-        ex29:00034,
-        ex29:00035,
-        ex29:00036,
-        ex29:00037,
-        ex29:00038,
-        ex29:00039 ;
-    s223:hasDomain s223:HVAC ;
+    s223:airTransfer ex:00035 ;
+    s223:doors ex:00036 ;
+    s223:ductAirInlet ex:00033 ;
+    s223:ductAirOutlet ex:00034 ;
+    s223:hasConnectionPoint ex:00033,
+        ex:00034,
+        ex:00035,
+        ex:00036,
+        ex:00037,
+        ex:00038,
+        ex:00039 ;
+    s223:hasDomain domain:HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex29:00024 ;
     s223:isContainedIn ex29:00056 ;
@@ -378,18 +382,18 @@ ex29:00047 a s223:BidirectionalSystemConnectionPoint,
 ex29:00048 a s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 3" ;
-    s223:airTransfer ex29:00051 ;
-    s223:doors ex29:00052 ;
-    s223:ductAirInlet ex29:00049 ;
-    s223:ductAirOutlet ex29:00050 ;
-    s223:hasConnectionPoint ex29:00049,
-        ex29:00050,
-        ex29:00051,
-        ex29:00052,
-        ex29:00053,
-        ex29:00054,
-        ex29:00055 ;
-    s223:hasDomain s223:HVAC ;
+    s223:airTransfer ex:00051 ;
+    s223:doors ex:00052 ;
+    s223:ductAirInlet ex:00049 ;
+    s223:ductAirOutlet ex:00050 ;
+    s223:hasConnectionPoint ex:00049,
+        ex:00050,
+        ex:00051,
+        ex:00052,
+        ex:00053,
+        ex:00054,
+        ex:00055 ;
+    s223:hasDomain domain:HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex29:00040 ;
     s223:radiantCooling ex29:00055 ;
@@ -440,14 +444,15 @@ ex29:00055 a s223:BidirectionalConnectionPoint,
 ex29:00056 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "Zone1" ;
-    s223:airInlet ex29:00057 ;
-    s223:airOutlet ex29:00058 ;
-    s223:contains ex29:00016,
-        ex29:00032 ;
-    s223:hasDomain s223:HVAC ;
-    s223:hasZoneConnectionPoint ex29:00057,
-        ex29:00058 .
-ex29:00057 a s223:InletZoneConnectionPoint,
+    s223:airInlet ex:00057 ;
+    s223:airOutlet ex:00058 ;
+    s223:contains ex:00016,
+        ex:00032 ;
+    s223:hasDomain domain:HVAC ;
+    s223:hasZoneConnectionPoint ex:00057,
+        ex:00058 .
+
+ex:00057 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -522,20 +527,24 @@ ex29:00066 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex29:00063 .
 ex29:00067 a s223:Junction ;
     rdfs:label "J1" ;
-    s223:hasMedium enum:Medium-Air ;
-    s223:lnx ex29:00068,
-        ex29:00069,
-        ex29:00070 .
-ex29:00068 a s223:Segment ;
-    s223:lnx ex29:00061,
-        ex29:00067 .
-ex29:00069 a s223:Segment ;
-    s223:lnx ex29:00017,
-        ex29:00067 .
-ex29:00070 a s223:Segment ;
-    s223:lnx ex29:00033,
-        ex29:00067 .
-ex29:00071 a s223:Connection ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:lnx ex:00068,
+        ex:00069,
+        ex:00070 .
+
+ex:00068 a s223:Segment ;
+    s223:lnx ex:00061,
+        ex:00067 .
+
+ex:00069 a s223:Segment ;
+    s223:lnx ex:00017,
+        ex:00067 .
+
+ex:00070 a s223:Segment ;
+    s223:lnx ex:00033,
+        ex:00067 .
+
+ex:00071 a s223:Connection ;
     rdfs:label "RETURN-AIR" ;
     s223:connectsAt ex29:00018,
         ex29:00034,

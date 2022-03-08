@@ -37,7 +37,7 @@ exclude_predicates: Set[str] = set(os.getenv("BOB_EXCLUDE", "").split())
 if (not include_predicates) and (not exclude_predicates):
     include_predicates.add("*")
 
-# include/exlude combination error checking
+# include/exclude combination error checking
 if "*" in exclude_predicates:
     if len(exclude_predicates) != 1:
         raise RuntimeError("no")
@@ -516,10 +516,6 @@ class NodeMetaclass(type):
                         f"unable to resolve {attr_type!r} in the definition of {attr!r}"
                     )
                 if issubclass(attr_type, Property):
-                    #
-                    # todo : Here it should not be added if observesProperty
-                    # But we would lose isPropertyOf... not good
-                    #
                     _schema_graph.add(
                         (_attr_uriref[attr], RDFS.subPropertyOf, s223.hasProperty)
                     )
@@ -674,6 +670,7 @@ class Node(metaclass=NodeMetaclass):
                 # where the number of argument of value is wrong
                 # TypeError: __init__() takes 1 positional argument but 2 were given
                 try:
+                    logging.debug(f"    - construct {node_class} from: {value!r}")
                     value = node_class(value)
                 except TypeError:
                     value = node_class(node_iri=value)
@@ -685,7 +682,7 @@ class Node(metaclass=NodeMetaclass):
                 self._data_graph.add((self.node, self._attr_uriref[attr], value.node))  # type: ignore[attr-defined]
 
             # if the value is a property, link it to the node
-            if isinstance(value, Property):
+            if isinstance(value, Property) and issubclass(node_class, Property):
                 self.add_property(value)
 
             # if the value is an external reference, link it to the node
@@ -808,10 +805,6 @@ class Property(Node):
                 )
             external_reference = kwargs.pop("hasExternalReference")
 
-        observes_reference = None
-        if "observesProperty" in kwargs:
-            observes_reference = kwargs.pop("observesProperty")
-
         super().__init__(**kwargs)
 
         # if there is an initial value, link to it
@@ -820,18 +813,13 @@ class Property(Node):
                 init_value = Literal(init_value)
             self.hasValue = init_value
 
-        # same for ExternalReference
+        # same for ExternalReference, allow initializing with a list of them
         if external_reference is not None:
-            if not isinstance(external_reference, ExternalReference):
-                external_reference = self._ExternalReference_class(
-                    external_reference,
-                    label=f"{self.label}.ExternalReference",
-                )
-
-            # link the two together
-            self.hasExternalReference = external_reference
-            if INCLUDE_INVERSE:
-                external_reference.isExternalReferenceOf = self
+            if isinstance(external_reference, list):
+                for ref in external_reference:
+                    self.add_external_reference(ref)
+            else:
+                self.add_external_reference(external_reference)
 
     def add_value(self, value: Any) -> None:
         """Add an additional value to a property."""
@@ -856,22 +844,12 @@ class Property(Node):
             external_reference.isExternalReferenceOf = self
 
 
-class Domain(Node):
-    _data_graph: Graph = schema_graph
-
-
-Electrical = Domain(node_iri=s223.Electrical)
-Fire = Domain(node_iri=s223.Fire)
-HVAC = Domain(node_iri=s223.HVAC)
-Lighting = Domain(node_iri=s223.Lighting)
-Occupancy = Domain(node_iri=s223.Occupancy)
-Security = Domain(node_iri=s223.Security)
-Networking = Domain(node_iri=s223.Networking)
-Physical = Domain(node_iri=s223.Physical)
-
-
-class Role(Node):
-    _data_graph: Graph = schema_graph
+@annotation_reference
+class PropertyReference:
+    def __new__(cls, property):
+        if not isinstance(property, Property):
+            raise TypeError(f"property expected: {property}")
+        return property
 
 
 class EnumerationKind(Node):
@@ -904,6 +882,39 @@ class Direction(EnumerationKind):
 Inlet = Direction(node_iri=s223["Direction-Inlet"])
 Outlet = Direction(node_iri=s223["Direction-Outlet"])
 Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
+
+
+class Substance(EnumerationKind):
+    node_type: URIRef = s223.Substance
+    _data_graph: Graph = schema_graph
+
+
+class Domain(EnumerationKind):
+    _data_graph: Graph = schema_graph
+
+
+# vocabulary namespace
+domain = bind_namespace(
+    "domain", "http://data.ashrae.org/standard223/1.0/vocab/domain#"
+)
+
+Electrical = Domain(node_iri=domain.Electrical)
+Fire = Domain(node_iri=domain.Fire)
+HVAC = Domain(node_iri=domain.HVAC)
+Lighting = Domain(node_iri=domain.Lighting)
+Networking = Domain(node_iri=domain.Networking)
+Security = Domain(node_iri=domain.Security)
+Physical = Domain(node_iri=domain.Physical)
+Refrigeration = Domain(node_iri=domain.Refrigeration)
+Plumbing = Domain(node_iri=domain.Plumbing)
+ConveyanceSystems = Domain(node_iri=domain.ConveyanceSystems)
+
+# proposed additional domain
+Occupancy = Domain(node_iri=domain.Occupancy)
+
+
+class Role(EnumerationKind):
+    _data_graph: Graph = schema_graph
 
 
 class Junction(Node):

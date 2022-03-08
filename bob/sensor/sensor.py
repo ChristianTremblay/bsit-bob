@@ -1,17 +1,21 @@
+from __future__ import annotations
+
 from typing import List, Union
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
 from bob import core
 
-from ..core import s223, p223, enum, quantitykind, unit
+from ..core import s223, p223, quantitykind, unit
 from ..core import (
     Property,
+    PropertyReference,
     Connection,
     ConnectionPoint,
     Device,
     Segment,
     DomainSpace,
     Medium,
+    Substance,
     Node,
 )
 
@@ -58,7 +62,10 @@ def define_sensors(config):
 
 class Sensor(Device):
     """
-    A Sensor produces an ObservableProperty (which may or may not be quantifiable. For example, it might just sense an alarm state, or occupancy. But usually it will produce a number, in which case it is associated with a QuantifiableObservableProperty).
+    A Sensor provides a value for an ObservableProperty which may or may not
+    be quantifiable. For example, it might just sense an alarm state, or
+    occupancy. But usually it will produce a number, in which case it is
+    associated with a QuantifiableObservableProperty.
     """
 
     node_type: URIRef = s223.Sensor
@@ -76,9 +83,9 @@ class Sensor(Device):
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
     hasMinRange: QuantifiableProperty
-    hasMedium: Medium
-    measuresSubstance: Medium
-    observesProperty: ObservableProperty  # maxCount = 1
+    measuresMedium: Medium
+    measuresSubstance: Substance
+    observesProperty: PropertyReference  ### restrict to MeasuredProperty
 
 
 class DifferentialSensor(Sensor):
@@ -94,23 +101,12 @@ class VirtualSensor(Sensor):
     hasFunctionInput: Property
 
 
-class Measurement(ObservableProperty):
-    node_type: URIRef = p223.Measure
-    # isObservedBy: Sensor
-    ofSubstance: Medium
-    # def __init__(self, **kwargs):
-    #    if 'isObservedBy' in kwargs:
-    #        _isobservedby = kwargs.pop("isObservedBy")
-    #        self.isObservedBy = _isobservedby
-    #    super().__init__(**kwargs)
+class MeasuredProperty(ObservableProperty):
+    node_type: URIRef = p223.MeasuredProperty
+    isObservedBy: Sensor
 
 
-#
-
-
-class QuantifiableMeasurement(QuantifiableObservableProperty):
-    node_type: URIRef = p223.Measure
-    # isObservedBy: Sensor
-    ofSubstance: Medium
-    # hasQuantityKind: depends on sensor
-    # unit: depends on quantityKind
+class QuantifiableMeasuredProperty(QuantifiableObservableProperty, MeasuredProperty):
+    node_type: URIRef = p223.QuantifiableMeasuredProperty
+    # hasQuantityKind inherited from QuantifiableProperty
+    # isObservedBy inherited from MeasuredProperty

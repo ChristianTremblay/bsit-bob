@@ -44,7 +44,6 @@ def test_create_gaz_monitor():
                 ),
             },
             ("Temperature_sensor", AirTemperatureSensor): {
-                # "measuresSubstance": enum["Medium-Air"],
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,

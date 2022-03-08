@@ -2,6 +2,7 @@ from bob.core import (
     bind_model_namespace,
     enum,
     Junction,
+    Air,
     dump,
 )
 
@@ -49,18 +50,18 @@ def test_junction_or_connection():
     rf = Fan(label="Return Fan", hasPhysicalLocation=mechroom)
 
     # Here we make it a junction but it would be better to be a Simple Connection... it's for test purposes
-    supply_duct = Junction(label="J1", hasMedium=enum["Medium-Air"])
+    supply_duct = Junction(label="J1", hasMedium=Air)
     supply_duct.link_to(sf.airOutlet)
     supply_duct >> office1_hvac.ductAirInlet
     supply_duct >> office2_hvac.ductAirInlet
     return_plenum = AirConnection(
         label="RETURN-AIR", comment="Air returns from zone here"
     )
-    # return_plenum = Junction(label="J1", hasMedium=enum['Medium-Air'])
+    # return_plenum = Junction(label="J1", hasMedium=Air)
     # return_plenum.link_to(_returnAir.airInlet)
     office1_hvac.ductAirOutlet >> return_plenum
     office2_hvac.ductAirOutlet >> return_plenum
-    return_plenum >> rf.airInlet
+    return_plenum >> rf
 
     # and the zone ?
     zone1.airInlet.mapsTo = supply_duct

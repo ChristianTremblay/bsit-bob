@@ -3,9 +3,19 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef
 
-from ..core import s223, p223, enum, quantitykind, unit, Medium, Air
+from ..core import (
+    p223,
+    quantitykind,
+    unit,
+    Node,
+    PropertyReference,
+    EnumerationKind,
+    Medium,
+    Air,
+    Substance,
+)
 
-from .sensor import Sensor, QuantifiableObservableProperty, split_kwargs
+from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 
 from ..property import (
     QuantifiableProperty,
@@ -20,18 +30,17 @@ __namespace__ = p223
 # http://operadetectors.com/category/gas-monitors-1.aspx
 
 
-class GasConcentrationMeasure(QuantifiableObservableProperty):
-    """
-    Doc
-    """
+CO = Substance(node_iri=p223["Substance-CO"])
+CO2 = Substance(node_iri=p223["Substance-CO2"])
+NO2 = Substance(node_iri=p223["Substance-NO2"])
+CH4 = Substance(node_iri=p223["Substance-CH4"])
 
-    node_type: URIRef = p223.Measure
 
+class GasConcentration(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    ofSubstance: Medium
     unit: URIRef = unit.PPM
-    # measuresSubstance: URIRef
-    # isObservedBy: Sensor
+    measuresMedium: Medium = Air
+    measuresSubstance: Substance
 
 
 class GasConcentrationSetpoint(QuantifiableProperty):
@@ -40,39 +49,43 @@ class GasConcentrationSetpoint(QuantifiableProperty):
 
 
 class GasConcentrationSensor(Sensor):
-    node_type: URIRef = s223.ConcentrationSensor
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    hasMedium: Medium = Air
-    observesProperty: GasConcentrationMeasure
+    measuresMedium: Medium = Air
+    observesProperty: PropertyReference  # GasConcentration
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
         super().__init__(**_sensor_kwargs)
-        _measure = GasConcentrationMeasure(
-            ofSubstance=self.measuresSubstance,
-            # isObservedBy=self,
-            label=f"{self.label}.Measure",
+
+        if not self.measuresSubstance:
+            raise ValueError(
+                "You must provide measuresSubstance property for a gas concentration sensor either in config template or subclass defintion"
+            )
+
+        _measure = GasConcentration(
+            measuresSubstance=self.measuresSubstance,
+            isObservedBy=self,
+            label=f"{self.label}.GasConcentration",  # needs more focus
             **_measure_kwargs,
         )
-
         self.observesProperty = _measure
 
 
 class CO2Sensor(GasConcentrationSensor):
     "Carbon Dioxide concentration sensor"
-    measuresSubstance: URIRef = s223["Substance-CO2"]
+    measuresSubstance: Substance = CO2
 
 
 class COSensor(GasConcentrationSensor):
     "Carbon monoxide concentration sensor"
-    measuresSubstance: URIRef = s223["Substance-CO"]
+    measuresSubstance: Substance = CO
 
 
 class NO2Sensor(GasConcentrationSensor):
     "Diesel (NO2) concentration sensor"
-    measuresSubstance: URIRef = s223["Substance-NO2"]
+    measuresSubstance: Substance = NO2
 
 
 class CH4Sensor(GasConcentrationSensor):
     "Natural gas sensor"
-    measuresSubstance: URIRef = s223["Substance-CH4"]
+    measuresSubstance: Substance = CH4

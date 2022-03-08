@@ -1,19 +1,18 @@
-from .sensor import Sensor, Measurement, QuantifiableMeasurement, split_kwargs
+from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, s223, p223, unit, Medium, Air, Water
+from ..core import quantitykind, p223, unit, Medium, Air, Water, PropertyReference
 
-from ..property import QuantifiableObservableProperty, QuantifiableProperty
+from ..property import QuantifiableProperty
 
-__namespace__ = s223
+__namespace__ = p223
 
 
-class TemperatureMeasure(QuantifiableMeasurement):
-    node_type: URIRef = p223.Measure
+class Temperature(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.Temperature
     unit: URIRef = unit.DEG_C
+    measuresMedium: Medium  # set from the sensor
     # isObservedBy: Sensor
-    ofSubstance: Medium
 
 
 class TemperatureSetpoint(QuantifiableProperty):
@@ -22,31 +21,28 @@ class TemperatureSetpoint(QuantifiableProperty):
 
 
 class TemperatureSensor(Sensor):
-    node_type: URIRef = s223.TemperatureSensor
-    observesProperty: TemperatureMeasure
+    observesProperty: PropertyReference  # Temperature
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        if not self.measuresSubstance:
+        if not self.measuresMedium:
             raise ValueError(
-                "You must provide measuresSubstance property for a temperature sensor either in config template or subclass defintion"
+                "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        _measure = TemperatureMeasure(
-            ofSubstance=self.measuresSubstance,
+        _measure = Temperature(
+            measuresMedium=self.measuresMedium,
             # isObservedBy=self,
-            label=f"{self.label}.Measure",
+            label=f"{self.label}.Temperature",
             **_measure_kwargs,
         )
         self.observesProperty = _measure
 
 
 class AirTemperatureSensor(TemperatureSensor):
-    hasMedium: Medium = Air
-    measuresSubstance: Medium = Air
+    measuresMedium: Medium = Air
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    hasMedium: Medium = Water
-    measuresSubstance: Medium = Water
+    measuresMedium: Medium = Water
