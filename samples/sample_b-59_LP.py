@@ -74,8 +74,8 @@ rtu = AirHandlingUnit(config=config)
 # Relationships between devices
 rtu["OAD-1"] >> mixedAir
 rtu["RF-1"] >> mixedAir
-mixedAir >> rtu["SF-1"]
-rtu["SF-1"] >> rtu["CWC-1"]
+mixedAir >> rtu["SF-1"].airInlet
+rtu["SF-1"].airOutlet >> rtu["CWC-1"].airInlet
 
 # Mapping of the system
 rtu.outsideAirInlet.mapsTo = rtu["OAD-1"].airInlet
@@ -156,4 +156,4 @@ rtu["RA-T"].hasPhysicalLocation = roof
 
 # g36_header(model_name)
 
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

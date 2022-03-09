@@ -466,9 +466,7 @@ def test_pritoni():
         comment="Luminaire #4 in OpenOffice West",
         hasPhysicalLocation=openoffice,
     )
-    openofficeEast_luminaire_1.lightOutlet >> openofficeEast_lightspace.lightInlet
-    openofficeEast_movement.hasMeasurementLocation = openofficeEast_lightspace
-    openofficeEast_movement.hasPhysicalLocation = openoffice
+    # openofficeEast_luminaire_1.lightOutlet >> openofficeEast_lightspace.lightInlet
 
     openofficeEast_light_conn = LightConnection(
         label="LightHub_1_2", comment="Needed to connect multiple luminaires to space"
@@ -503,8 +501,8 @@ def test_pritoni():
     natural_ligth_conn >> openofficeWest_lightspace.naturalLightInlet
 
     # Windows are good for natural light
-    window1.naturalLight >> openofficeWest_lightspace.naturalLightInlet
-    window2.naturalLight >> openofficeEast_lightspace.naturalLightInlet
+    # window1.naturalLight >> openofficeWest_lightspace.naturalLightInlet
+    # window2.naturalLight >> openofficeEast_lightspace.naturalLightInlet
 
     # More connections on systems and zones (mapping)
 
@@ -545,4 +543,4 @@ def test_pritoni():
 
 if __name__ == "__main__":
     r = test_pritoni()
-    dump()
+    dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

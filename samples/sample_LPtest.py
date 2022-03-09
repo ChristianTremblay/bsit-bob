@@ -90,7 +90,7 @@ class RooftopUnit(System):
 
         # making backdraft damper (exhaust damper) and connecting it
         ea_damper = Damper(label=self.label + ".exhaust_air_damper")
-        return_air >> ea_damper
+        return_air >> ea_damper.airInlet
         self.exhaustAirOutlet.mapsTo = ea_damper.airOutlet
 
         mixed_air_damper = Damper(label=self.label + ".mixed_air_damper")
@@ -100,30 +100,35 @@ class RooftopUnit(System):
         self.outsideAirInlet.mapsTo = oa_damper.airInlet
         # connecting damper directly to flow station, not indicating OA air
         oa_flow_station = AirFlowMonitor(label=self.label + ".outside_air_flow_station")
-        oa_damper >> oa_flow_station >> mixed_air
+        oa_damper.airOutlet >> oa_flow_station.airInlet
+        oa_flow_station.airOutlet >> mixed_air
 
         pre_filter = Filter(label=self.label + ".pre_filter")
         # filter has one connection, making new air to connect to bypass and coil
         pre_filtered_air = AirConnection(label=self.label + ".pre_filtered_air")
-        mixed_air >> pre_filter >> pre_filtered_air
+        mixed_air >> pre_filter.airInlet
+        pre_filter.airOutlet >> pre_filtered_air
 
         bp_damper = Damper(label=self.label + ".bypass_damper")
         # schematic has an iso valve but I don't think that's what chilledWaterCoil2 is talking about
         cwc = ChilledWaterCoil(label=self.label + ".chilled_water_coil")
         # both the damper and air need to go into a filter, air as a medium?
         chilled_air = AirConnection(label=self.label + ".chilled_air")
-        pre_filtered_air >> bp_damper >> chilled_air
-        pre_filtered_air >> cwc >> chilled_air
+        pre_filtered_air >> bp_damper.airInlet
+        bp_damper.airOutlet >> chilled_air
+        pre_filtered_air >> cwc.airInlet
+        cwc.airOutlet >> chilled_air
 
         # connect via air connections or create junctions/segments in the ducts?
 
         final_filter = Filter(label=self.label + ".final_filter")
         supply_fan = Fan(label=self.label + ".supply_fan")
         supply_fan.hasRole = Supply
-        chilled_air >> final_filter >> supply_fan
+        chilled_air >> final_filter.airInlet
+        final_filter.airOutlet >> supply_fan.airInlet
 
         iso_damper = Damper(label=self.label + ".iso_damper")
-        supply_fan >> iso_damper
+        supply_fan.airOutlet >> iso_damper.airInlet
 
         self.supplyAirOutlet.mapsTo = iso_damper.airOutlet
 
@@ -137,4 +142,4 @@ class RooftopUnit(System):
 
 r = RooftopUnit(node_iri=ex.rtu, label="rtu")
 # g36_header(model_name)
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

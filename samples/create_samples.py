@@ -9,11 +9,10 @@ import subprocess
 directory = "ttl"
 
 
-if __name__ == "__main__":
-    # iterate over files in
-    # that directory
-    for filename in os.scandir(os.getcwd()):
-        if filename.name.startswith("sample"):
-            print("Making TTL")
-            print(filename.path)
-            subprocess.call(["python", filename.path])
+for filename in os.scandir(os.path.join(os.getcwd(), "samples")):
+    if filename.name == "samples":
+        continue
+    if filename.name.startswith("sample"):
+        print("Making TTL")
+        print(filename.path)
+        subprocess.call(["python", filename.path])

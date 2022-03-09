@@ -29,11 +29,11 @@ c = ChilledWaterConnection()
 coil1 = ChilledWaterCoil(label="CW-Coil-1")
 
 # the coil gets its chilled water from the connection
-c >> coil1
+c >> coil1.chilledWaterInlet
 
 # there is a fan, and the air output of the fan goes into the coil
 f = Fan(label="F")
-f >> coil1
+f >> coil1.airInlet
 
 # there is a zone
 zone = HVACZone(label="Zone-1")
@@ -50,4 +50,4 @@ zone.supplyAir.maps_to(scp)
 # output of the coil goes to the zone
 # coil1 >> zone
 
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

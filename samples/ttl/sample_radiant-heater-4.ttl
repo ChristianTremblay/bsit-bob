@@ -5,6 +5,7 @@
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 <http://data.ashrae.org/standard223/1.0/data/sample_radiant-heater-4>
@@ -12,32 +13,44 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_radiant-heater-4> ;
   rdfs:label "sample_radiant-heater-4" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex:00001 a s223:PhysicalSpace ;
+ex:00001 a s223:PhysicalSpace,
+        rec:Building ;
     rdfs:label "My Building" ;
     s223:contains ex:00002,
         ex:00003,
         ex:00004 .
-ex:00002 a s223:PhysicalSpace ;
+ex:00002 a s223:PhysicalSpace,
+        rec:Roof ;
     rdfs:label "Roof of building" .
-ex:00003 a s223:PhysicalSpace ;
+ex:00003 a s223:PhysicalSpace,
+        rec:Floor ;
     rdfs:label "Floor1" ;
     s223:contains ex:00005,
         ex:00006,
         ex:00007 .
-ex:00004 a s223:PhysicalSpace ;
+ex:00004 a s223:PhysicalSpace,
+        rec:Floor ;
     rdfs:label "Basement" ;
     s223:contains ex:00008 ;
     s223:encloses ex:00065 .
-ex:00005 a s223:PhysicalSpace ;
+ex:00005 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 1" ;
     s223:encloses ex:00017 .
-ex:00006 a s223:PhysicalSpace ;
+ex:00006 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 2" ;
     s223:encloses ex:00033 .
-ex:00007 a s223:PhysicalSpace ;
+ex:00007 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Office 3" ;
     s223:encloses ex:00049 .
-ex:00008 a s223:PhysicalSpace ;
+ex:00008 a s223:PhysicalSpace,
+        rec:Office,
+        rec:Room ;
     rdfs:label "Joel's Office" ;
     s223:encloses ex:00081 .
 ex:00009 a p223:PhysicSystem,
@@ -114,7 +127,8 @@ ex:00017 a s223:DomainSpace,
         ex:00022,
         ex:00023,
         ex:00024 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00009 ;
     s223:radiantCooling ex:00024 ;
     s223:radiantHeating ex:00023 ;
@@ -228,7 +242,8 @@ ex:00033 a s223:DomainSpace,
         ex:00038,
         ex:00039,
         ex:00040 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00025 ;
     s223:radiantCooling ex:00040 ;
     s223:radiantHeating ex:00039 ;
@@ -342,7 +357,8 @@ ex:00049 a s223:DomainSpace,
         ex:00054,
         ex:00055,
         ex:00056 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00041 ;
     s223:radiantCooling ex:00056 ;
     s223:radiantHeating ex:00055 ;
@@ -456,7 +472,8 @@ ex:00065 a s223:DomainSpace,
         ex:00070,
         ex:00071,
         ex:00072 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00057 ;
     s223:radiantCooling ex:00072 ;
     s223:radiantHeating ex:00071 ;
@@ -570,7 +587,8 @@ ex:00081 a s223:DomainSpace,
         ex:00086,
         ex:00087,
         ex:00088 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00073 ;
     s223:radiantCooling ex:00088 ;
     s223:radiantHeating ex:00087 ;
@@ -618,7 +636,7 @@ ex:00089 a s223:HVACZone,
     s223:airOutlet ex:00091 ;
     s223:contains ex:00017,
         ex:00033 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain s223:Domain-HVAC ;
     s223:hasZoneConnectionPoint ex:00090,
         ex:00091 .
 ex:00090 a s223:InletZoneConnectionPoint,

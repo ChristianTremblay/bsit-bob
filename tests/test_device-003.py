@@ -17,7 +17,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_create_particle_counter():
+def test_create_particle_counter(bob_fixture):
     particlecounter_config = {
         "sensors": {
             ("coarse_sensor", CoarseParticulateSensor): {

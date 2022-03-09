@@ -9,7 +9,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_spaceandzones():
+def test_spaceandzones(bob_fixture):
     building = Building(label="My Building")
     roof = Roof(label="Roof of building")
     floor = Floor(label="Floor1")

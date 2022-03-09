@@ -10,7 +10,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_create_sensor():
+def test_create_sensor(bob_fixture):
     with pytest.raises(ValueError):
         ats = TemperatureSensor(
             label="DA-T",

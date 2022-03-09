@@ -18,7 +18,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_junction_or_connection():
+def test_junction_or_connection(bob_fixture):
     building = Building(label="My Building")
     floor = Floor(label="Floor1")
     basement = Floor(label="basement")

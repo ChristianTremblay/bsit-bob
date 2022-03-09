@@ -18,7 +18,7 @@ from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.damper import Window
 from bob.devices.hvac.boiler import HotWaterBoiler, ElectricalHotWaterBoiler
 from bob.devices.hvac.valve import WaterValve
-from bob.devices.lighting.light import Light
+from bob.devices.lighting.light import Luminaire
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
 from bob.devices.hvac.pump import Pump

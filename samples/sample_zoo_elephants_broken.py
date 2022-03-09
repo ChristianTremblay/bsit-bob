@@ -22,7 +22,7 @@ from bob.devices.hvac.damper import Window, Damper, DamperActuator
 from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
 from bob.devices.hvac.humidifier import SteamPipe, Humidifier
 from bob.devices.hvac.valve import WaterValve
-from bob.devices.lighting.light import Light
+from bob.devices.lighting.light import Luminaire
 from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.chiller import AgnosticChiller
 from bob.devices.hvac.pump import Pump

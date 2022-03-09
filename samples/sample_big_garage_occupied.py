@@ -20,7 +20,7 @@ from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace
 from bob.space.physical import Building, Roof, Floor, Office
 
-from bob.devices.lighting.light import Light
+from bob.devices.lighting.light import Luminaire
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.coil import ElectricalHeatingCoil
 
@@ -45,8 +45,8 @@ big_garage > garage_hvac
 big_garage > lighting_space_entry
 big_garage > lighting_space_back
 
-light_1 = Light(label="Ballast #1, space #1")
-light_2 = Light(label="Ballast #2, space #2")
+light_1 = Luminaire(label="Ballast #1, space #1")
+light_2 = Luminaire(label="Ballast #2, space #2")
 
 movement_1 = MovementSensor(label="Movement Sensor Space #1")
 movement_2 = MovementSensor(label="Movement Sensor Space #2")
@@ -86,4 +86,4 @@ fc_occupancy.mapsTo = movement_1
 fc_airInlet.mapsTo = fan.airInlet
 fc_airOutlet.mapsTo = heating_coil.airOutlet
 
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

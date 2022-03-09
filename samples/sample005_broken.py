@@ -33,4 +33,4 @@ zone1 >> return_air
 zone2 >> return_air
 
 # dump the result
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

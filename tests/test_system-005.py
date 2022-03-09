@@ -18,7 +18,7 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 core.INCLUDE_INVERSE = True
 
 
-def test_systems_005():
+def test_systems_005(bob_fixture):
     class A(Device):
         cOut: OutletConnectionPoint
 

@@ -19,6 +19,11 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
+"""
+In this scenario, There are 4 connection points in the HVAC space
+but there is no relationship between those connections except that
+they are related to the space.
+"""
 building = Building(label="My Building")
 roof = Roof(label="Roof of building")
 floor = Floor(label="Floor1")
@@ -46,7 +51,7 @@ floor > office3
 basement > joelsoffice > joelsoffice_hvac
 
 # Spaces relationships
-# SPACES | PHYSICAL
+# SPACES     | PHYSICAL
 office1_hvac < office1
 office2_hvac < office2
 office3_hvac < office3
@@ -59,13 +64,19 @@ office1_hvac < zone1
 office2_hvac < zone1
 
 baseboard = ElectricalHeatingCoil(label="Baseboard heater")
-AirInJoelsOfficeSpace = AirConnection(label="Air inside the office")
-joelsoffice_hvac.airFromSpace = AirOutletConnectionPoint
-joelsoffice_hvac.airFromBaseboard = AirInletConnectionPoint
+# AirInJoelsOfficeSpace = AirConnection(label="Air inside the office")
+airFromSpace = AirOutletConnectionPoint(
+    joelsoffice_hvac,
+    label="Internal Use To be treated",
+    comment="Air that doesn't leave the room, used internally by a radiant heater for example",
+)
+airFromBaseboard = AirInletConnectionPoint(
+    joelsoffice_hvac,
+    label="Internal Use treated",
+    comment="Air that doesn't leave the room, used internally",
+)
 
-AirInJoelsOfficeSpace << joelsoffice_hvac.airOutlet
-AirInJoelsOfficeSpace >> joelsoffice_hvac.airInlet
-AirInJoelsOfficeSpace << baseboard
-AirInJoelsOfficeSpace >> baseboard
+airFromBaseboard << baseboard
+airFromSpace >> baseboard
 
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

@@ -10,7 +10,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_create_sensor_002():
+def test_create_sensor_002(bob_fixture):
     # Create a clean room with a SAS in a Building
     # Sensors are all in the mechnical room
     clean_room_hvac = HVACSpace(label="CleanRoom HVAC Space")

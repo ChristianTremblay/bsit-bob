@@ -25,4 +25,4 @@ vav = VAV(config=vav_template)
 vav.airOutlet.mapsTo = zone.airInlet
 
 # dump the result
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

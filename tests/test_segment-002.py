@@ -7,7 +7,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_sgement_002():
+def test_sgement_002(bob_fixture):
     d1 = Device(label="d1")
     cp1 = ConnectionPoint(d1)
 

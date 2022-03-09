@@ -48,4 +48,4 @@ s2.cpIn.mapsTo = d2.cpIn
 d2.cpOut.mapsTo = s2.cpOut
 
 # dump the result
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

@@ -7,7 +7,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_link_junction_to_junction():
+def test_link_junction_to_junction(bob_fixture):
     j1 = Junction()
     j2 = Junction()
     j1.link_to(j2)

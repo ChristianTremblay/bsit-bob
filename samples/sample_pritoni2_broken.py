@@ -1,3 +1,4 @@
+from pathlib import Path
 from bob.core import (
     bind_model_namespace,
     PhysicalSpace,
@@ -15,8 +16,10 @@ from bob.sensor import Sensor
 from bob.space.hvac import HVACZone
 from bob.space.physical import Room, Office, Bathroom, Corridor
 from bob.devices.hvac.fan import Fan
-from bob.systems.archives.vav import VAV1
+from bob.systems.hvac.vav import VAV1
+from header import sample_header
 
+model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", "ex:pritoni2:")
 
 
@@ -73,4 +76,4 @@ hvac_zone_2 = HVACZone(label="HVACZone2")
 vav1 = VAV1(label="VAV1")
 vav2 = VAV1(label="VAV2")
 
-dump()
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

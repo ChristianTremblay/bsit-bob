@@ -85,4 +85,4 @@ airFromBaseboard = AirInletConnectionPoint(
 airFromBaseboard << baseboard
 airFromSpace >> baseboard
 
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

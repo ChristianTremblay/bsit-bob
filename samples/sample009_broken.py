@@ -162,4 +162,4 @@ s3 = SystemIn1(label="s3")
 s1 >> s2 >> s3
 
 # dump the result
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

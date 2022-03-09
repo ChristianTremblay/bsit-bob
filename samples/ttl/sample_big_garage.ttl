@@ -6,6 +6,7 @@
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -14,13 +15,15 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_big_garage> ;
   rdfs:label "sample_big_garage" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex:00001 a s223:PhysicalSpace ;
+ex:00001 a s223:PhysicalSpace,
+        rec:Building ;
     rdfs:label "My Building" ;
     s223:contains ex:00002 ;
     s223:encloses ex:00011,
         ex:00019,
         ex:00022 .
-ex:00002 a s223:PhysicalSpace ;
+ex:00002 a s223:PhysicalSpace,
+        rec:Roof ;
     rdfs:label "Roof of building" .
 ex:00003 a p223:PhysicSystem,
         s223:System ;
@@ -96,7 +99,8 @@ ex:00011 a s223:DomainSpace,
         ex:00016,
         ex:00017,
         ex:00018 ;
-    s223:hasDomain s223:HVAC ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00003 ;
     s223:radiantCooling ex:00018 ;
     s223:radiantHeating ex:00017 ;
@@ -141,11 +145,12 @@ ex:00018 a s223:BidirectionalConnectionPoint,
 ex:00019 a p223:LightingSpace,
         s223:DomainSpace ;
     rdfs:label "Light Space #1 near entry" ;
+    p223:hasMedium s223:Medium-Light ;
     p223:lightInlet ex:00020 ;
     p223:naturalLightInlet ex:00021 ;
     s223:hasConnectionPoint ex:00020,
         ex:00021 ;
-    s223:hasDomain s223:Lighting .
+    s223:hasDomain s223:Domain-Lighting .
 ex:00020 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Light Space #1 near entry.lightInlet" ;
@@ -160,11 +165,12 @@ ex:00021 a s223:ConnectionPoint,
 ex:00022 a p223:LightingSpace,
         s223:DomainSpace ;
     rdfs:label "Light Space #2 back of the garage" ;
+    p223:hasMedium s223:Medium-Light ;
     p223:lightInlet ex:00023 ;
     p223:naturalLightInlet ex:00024 ;
     s223:hasConnectionPoint ex:00023,
         ex:00024 ;
-    s223:hasDomain s223:Lighting .
+    s223:hasDomain s223:Domain-Lighting .
 ex:00023 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Light Space #2 back of the garage.lightInlet" ;
@@ -216,29 +222,33 @@ ex:00031 a p223:MovementSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #1" ;
-    p223:measuresSubstance s223:Medium-Light ;
+    p223:measuresMedium s223:Medium-Light ;
     p223:observesProperty ex:00032 ;
     s223:hasMeasurementLocation ex:00019 ;
-    s223:hasPhysicalLocation ex:00001 ;
-    s223:hasProperty ex:00032 .
-ex:00032 a p223:Measure,
-        s223:ObservableProperty ;
-    rdfs:label "Movement Sensor Space #1.Measure" ;
-    p223:ofSubstance s223:Medium-Light ;
+    s223:hasPhysicalLocation ex:00001 .
+ex:00032 a p223:MeasuredProperty,
+        p223:Movement,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Movement Sensor Space #1.Movement" ;
     p223:unit unit:DEG_C .
 ex:00033 a p223:MovementSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #2" ;
-    p223:measuresSubstance s223:Medium-Light ;
+    p223:measuresMedium s223:Medium-Light ;
     p223:observesProperty ex:00034 ;
     s223:hasMeasurementLocation ex:00022 ;
-    s223:hasPhysicalLocation ex:00001 ;
-    s223:hasProperty ex:00034 .
-ex:00034 a p223:Measure,
-        s223:ObservableProperty ;
-    rdfs:label "Movement Sensor Space #2.Measure" ;
-    p223:ofSubstance s223:Medium-Light ;
+    s223:hasPhysicalLocation ex:00001 .
+ex:00034 a p223:MeasuredProperty,
+        p223:Movement,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Movement Sensor Space #2.Movement" ;
     p223:unit unit:DEG_C .
 ex:00035 a s223:Device,
         s223:Fan ;
@@ -304,44 +314,44 @@ ex:00045 a s223:Connection ;
     s223:connectsAt ex:00012,
         ex:00041 ;
     s223:hasMedium s223:Medium-Air .
-ex:00046 a s223:AirTemperatureSensor,
+ex:00046 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
         s223:Device,
-        s223:Sensor,
-        s223:TemperatureSensor ;
+        s223:Sensor ;
     rdfs:label "Discharge Air temperature sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00047 ;
     s223:hasMeasurementLocation ex:00041 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:hasPhysicalLocation ex:00001 ;
-    s223:hasProperty ex:00047 ;
-    s223:measuresSubstance s223:Medium-Air ;
-    s223:observesProperty ex:00047 .
-ex:00047 a p223:Measure,
+    s223:hasPhysicalLocation ex:00001 .
+ex:00047 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
         s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "Discharge Air temperature sensor.Measure" ;
-    s223:hasQuantityKind quantitykind:Temperature ;
-    s223:ofSubstance s223:Medium-Air ;
-    s223:unit unit:DEG_C .
-ex:00048 a s223:AirTemperatureSensor,
+    rdfs:label "Discharge Air temperature sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C .
+ex:00048 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
         s223:Device,
-        s223:Sensor,
-        s223:TemperatureSensor ;
+        s223:Sensor ;
     rdfs:label "Zone Air temperature sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00049 ;
     s223:hasMeasurementLocation ex:00011 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:hasPhysicalLocation ex:00001 ;
-    s223:hasProperty ex:00049 ;
-    s223:measuresSubstance s223:Medium-Air ;
-    s223:observesProperty ex:00049 .
-ex:00049 a p223:Measure,
+    s223:hasPhysicalLocation ex:00001 .
+ex:00049 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
         s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "Zone Air temperature sensor.Measure" ;
-    s223:hasQuantityKind quantitykind:Temperature ;
-    s223:ofSubstance s223:Medium-Air ;
-    s223:unit unit:DEG_C .
+    rdfs:label "Zone Air temperature sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C .
 ex:00050 a s223:Connection ;
     s223:connectsAt ex:00020,
         ex:00026 ;

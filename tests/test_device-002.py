@@ -13,7 +13,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_create_more_complex_devices():
+def test_create_more_complex_devices(bob_fixture):
 
     boiler = HotWaterBoiler(label="HWB-1", comment="Hot Water Boiler")
     electrical_hot_water_boiler = ElectricalHotWaterBoiler(

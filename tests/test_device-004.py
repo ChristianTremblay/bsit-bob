@@ -21,7 +21,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_create_gaz_monitor():
+def test_create_gaz_monitor(bob_fixture):
     _config_co2_and_temp = {
         "params": {
             "label": "CO2-2",

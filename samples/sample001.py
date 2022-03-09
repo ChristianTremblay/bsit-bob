@@ -39,4 +39,4 @@ d3 = TestDevice2(label="Test Device 3", hasTemp=(100.5))
 
 # dump the result
 
-dump(filename=f"ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

@@ -18,7 +18,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_connect_chilled_water_coil():
+def test_connect_chilled_water_coil(bob_fixture):
     # there is a chilled water connection, we don't know where the chilled
     # is coming from
     c = ChilledWaterConnection()
