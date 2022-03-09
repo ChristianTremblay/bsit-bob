@@ -1,7 +1,17 @@
 from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, s223, p223, unit, enum, Medium, Air, Water, PropertyReference
+from ..core import (
+    quantitykind,
+    s223,
+    p223,
+    unit,
+    enum,
+    Medium,
+    Air,
+    Water,
+    PropertyReference,
+)
 
 from ..property import QuantifiableProperty
 

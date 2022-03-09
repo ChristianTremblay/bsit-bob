@@ -37,5 +37,4 @@ p = Property(hasValue=5)
 # timestamp_value = Property(hasValue=22.5, hasTimestamp=datetime(2021, 1, 1))
 
 # dump the result
-sample_header(model_name)
-dump()
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

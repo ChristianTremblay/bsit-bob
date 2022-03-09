@@ -1,25 +1,30 @@
-@prefix ex: <urn:ex/> .
+# baseURI: http://data.ashrae.org/standard223/1.0/sample/test_connection-005
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+@prefix ex29: <urn:ex/test_system-007/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
-
-
-ex:00001 a s223:Device ;
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+<http://data.ashrae.org/standard223/1.0/data/test_connection-005>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_connection-005> ;
+  rdfs:label "test_connection-005" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+ex29:00001 a s223:Device ;
     rdfs:label "d1" ;
-    s223:hasConnectionPoint ex:00002 .
-
-ex:00002 a s223:ConnectionPoint,
+    s223:hasConnectionPoint ex29:00002 .
+ex29:00002 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "d1.out" ;
-    s223:hasDirection s223:Direction-Outlet .
-
-ex:00003 a s223:Device ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:isConnectionPointOf ex29:00001 .
+ex29:00003 a s223:Device ;
     rdfs:label "d2" ;
-    s223:hasConnectionPoint ex:00004 .
-
-ex:00004 a s223:ConnectionPoint,
+    s223:hasConnectionPoint ex29:00004 .
+ex29:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "d2.in" ;
-    s223:hasDirection s223:Direction-Inlet .
-
-ex:00005 a s223:Connection .
-
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:isConnectionPointOf ex29:00003 .
+ex29:00005 a s223:Connection .

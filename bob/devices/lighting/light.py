@@ -17,7 +17,7 @@ from ...sensor import Sensor, define_sensors
 __namespace__ = p223
 
 
-class Light(Device):
+class Luminaire(Device):
     node_type: URIRef = p223.Light
     lightOutlet: LightOutletConnectionPoint
     electricalInlet: ElectricalInletConnectionPoint

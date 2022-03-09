@@ -8,33 +8,34 @@ from bob.property import (
     ObservableProperty,
     QuantifiableProperty,
 )
+from pathlib import Path
+from header import ttl_test_header
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
-
-p1 = Property(1)
-
-p2 = ActuatableProperty(2)
-
-p3 = ObservableProperty("green")
-
-from bob.core import qudt
-
-p4 = QuantifiableProperty(4.5, unit=qudt.DEG_F)
-
-p6 = ObservableProperty("green", label="color")
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-class TestProperty1(Property):
-    pass
+def test_create_properties(bob_fixture):
+    p1 = Property(1)
 
+    p2 = ActuatableProperty(2)
 
-p7 = TestProperty1(7)
+    p3 = ObservableProperty("green")
 
+    from bob.core import qudt
 
-class TestProperty2(Property):
-    label = "test 2"
+    p4 = QuantifiableProperty(4.5, unit=qudt.DEG_F)
 
+    p6 = ObservableProperty("green", label="color")
 
-p8 = TestProperty2(8)
+    class TestProperty1(Property):
+        pass
 
-dump()
+    p7 = TestProperty1(7)
+
+    class TestProperty2(Property):
+        label = "test 2"
+
+    p8 = TestProperty2(8)
+
+    dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

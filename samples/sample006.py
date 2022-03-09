@@ -23,5 +23,4 @@ cold_side_air_connection >> hot_water_coil
 hot_water_coil >> hot_side_air_connection
 
 # dump the result
-sample_header(model_name)
-dump()
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

@@ -1,12 +1,17 @@
 from bob.core import bind_model_namespace, dump
 from bob.core import Segment, Device, ConnectionPoint
+from pathlib import Path
+from header import ttl_test_header
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
-d1 = Device(label="d1")
-cp1 = ConnectionPoint(d1)
 
-s1 = Segment()
-cp1.link_to(s1)
+def test_segment_003(bob_fixture):
+    d1 = Device(label="d1")
+    cp1 = ConnectionPoint(d1)
 
-dump()
+    s1 = Segment()
+    cp1.link_to(s1)
+
+    dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

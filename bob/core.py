@@ -5,6 +5,7 @@ Bob the SI-WG Builder
 from __future__ import annotations
 
 import os
+import io
 import sys
 from collections import defaultdict
 import logging
@@ -202,12 +203,81 @@ def register_medium(medium_uri: URIRef, cls: Any) -> None:
 
 
 def dump(
-    graph: Graph = data_graph, file: TextIO = sys.stdout, format: str = "turtle"
-) -> None:
-    content = graph.serialize(format=format)
+    graph: Graph = data_graph,
+    file: TextIO = sys.stdout,
+    filename: str = None,
+    format: str = "turtle",
+    header: str = None,
+) -> str:
+    if not header:
+        content = graph.serialize(format=format)
+    else:
+        content = header + graph.serialize(format=format)
     if not isinstance(content, str):
         content = content.decode("utf-8")
+
+    content = clean_and_sort_turtle_file(content)
+    if filename:
+        with open(filename, "w") as ttl_file:
+            ttl_file.write(content)
     file.write(content)
+
+
+def clean_and_sort_turtle_file(content: str) -> str:
+    """
+    This will assure the TTL file header contains no
+    duplicates, header is well formatted and
+    all triples are sorted. We also remove blank lines
+    to save some space.
+
+    This is the equivalent of the sort_turtle_file script
+    in the repo.
+
+    """
+    lines = io.StringIO(content).readlines()
+    new_lines = ""
+    chunks = []
+    while lines:
+        blank_line_index = 0
+        try:
+            blank_line_index = lines.index("\n")
+        except ValueError:
+            pass  # sort already done
+        chunks.append(lines[0 : blank_line_index + 1])
+        lines = lines[blank_line_index + 1 :]
+
+    # print out the "# baseURI:" and "# imports:"
+    new_lines += "".join(chunks[0][:-1])
+    del chunks[0]
+
+    # sort
+    chunks.sort()
+
+    # extract @prefix lines
+    prefix_chunks = []
+    prefix_indx = []
+    for i, chunk in enumerate(chunks):
+        if chunk[0].startswith("@prefix"):
+            prefix_chunks.extend(chunk)
+            prefix_indx.append(i)
+
+    # remove the lines we found
+    for i in reversed(prefix_indx):
+        del chunks[i]
+
+    # remove the blank lines
+    prefix_chunks = [chunk for chunk in prefix_chunks if chunk != "\n"]
+
+    # sort them and remove the duplicates
+    prefix_chunks.sort()
+    prefix_chunks = list(dict.fromkeys(prefix_chunks))
+    new_lines += "".join(prefix_chunks)
+
+    # print the rest
+    for chunk in chunks:
+        new_lines += "".join(chunk[:-1])
+
+    return new_lines
 
 
 def get_datagraph(graph: Graph = data_graph) -> Graph:
@@ -574,7 +644,7 @@ class Node(metaclass=NodeMetaclass):
 
         # make sure the value isn't None, no "deleting" content
         if value is None:
-            raise ValueError(f"{attr}")
+            raise ValueError(f"{attr} is None")
 
         # make sure the current value is None, no "reassigning" content
         current_value = super().__getattribute__(attr)
@@ -672,7 +742,7 @@ class ExternalReference(Node):
     """
 
     node_type: URIRef = s223.ExternalReference
-    isExternalReferenceOf: Property
+    # isExternalReferenceOf: Property
     hasRef: Literal
 
     def __init__(
@@ -798,6 +868,10 @@ Light = Medium(node_iri=s223["Medium-Light"])
 Electricity = Medium(node_iri=s223["Medium-Electricity"])
 NaturalGas = Medium(node_iri=s223["Medium-NaturalGas"])
 CompressedAir = Medium(node_iri=s223["Medium-CompressedAir"])
+# This one is weird...but to create an occupancy space, zone we
+# need a medium.
+# would Medium-People be better ?
+People = Medium(node_iri=s223["Medium-People"])
 
 
 class Direction(EnumerationKind):
@@ -1013,6 +1087,11 @@ class System(Node):
             self._data_graph.add((self.node, s223.contains, other.node))
             if INCLUDE_INVERSE:
                 self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        elif isinstance(other, list):
+            for each in other:
+                self._data_graph.add((self.node, s223.contains, each.node))
+                if INCLUDE_INVERSE:
+                    self._data_graph.add((each.node, s223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1030,6 +1109,11 @@ class System(Node):
             if INCLUDE_INVERSE:
                 self._data_graph.add((self.node, s223.isContainedIn, other.node))
             self._data_graph.add((other.node, s223.contains, self.node))
+        elif isinstance(other, list):
+            for each in other:
+                if INCLUDE_INVERSE:
+                    self._data_graph.add((self.node, s223.isContainedIn, each.node))
+                self._data_graph.add((each.node, s223.contains, self.node))
         else:
             raise TypeError("system expected")
 
@@ -1453,19 +1537,29 @@ class PhysicalSpace(Node):
 
     node_type: URIRef = s223.PhysicalSpace
 
-    def __gt__(self, other: Union[DomainSpace, PhysicalSpace]) -> Node:
+    def __gt__(self, other: Union[DomainSpace, PhysicalSpace, list]) -> Node:
         """self > other
 
         Build a containment heirarchy, this contains some other space.
         """
         logging.debug(f"__gt__ {self} {other}")
 
-        if isinstance(other, PhysicalSpace):
+        if isinstance(other, list):
+            for each in other:
+                if isinstance(each, PhysicalSpace):
+                    self._data_graph.add((self.node, s223.contains, each.node))
+                    if INCLUDE_INVERSE:
+                        self._data_graph.add((each.node, s223.isContainedIn, self.node))
+                elif isinstance(each, DomainSpace):
+                    self._data_graph.add((self.node, s223.encloses, each.node))
+
+        elif isinstance(other, PhysicalSpace):
             self._data_graph.add((self.node, s223.contains, other.node))
             if INCLUDE_INVERSE:
                 self._data_graph.add((other.node, s223.isContainedIn, self.node))
         elif isinstance(other, DomainSpace):
             self._data_graph.add((self.node, s223.encloses, other.node))
+
         else:
             raise TypeError("domain space or physical space expected")
 
@@ -1496,12 +1590,10 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     logging.info(f"connect from {from_thing} to {to_thing}")
 
     from_out = defaultdict(set)
-    if isinstance(from_thing, ConnectionPoint):
+    if isinstance(from_thing, (Connection, ConnectionPoint)):
         medium = getattr(from_thing, "hasMedium", None)
+        # medium = getattr(medium, "node", medium)
         from_out[medium].add(from_thing)
-
-    elif isinstance(from_thing, Connection):
-        pass
 
     elif isinstance(from_thing, Connectable):
         for attr, connection_point in from_thing._connection_points.items():
@@ -1574,7 +1666,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         raise NotImplementedError(f"connecting from {from_thing}")
     logging.debug(f"    - from_out: {from_out}")
 
-    from_types: Set[URIRef]
+    from_types: Set[Medium]
     if isinstance(from_thing, Connection):
         from_types = set([from_thing.hasMedium])
     else:
@@ -1586,14 +1678,12 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     logging.debug(f"    - from_types: {from_types}")
 
     to_in = defaultdict(set)
-    if isinstance(to_thing, ConnectionPoint):
+    if isinstance(to_thing, (Connection, ConnectionPoint)):
         medium = getattr(to_thing, "hasMedium", None)
         # medium = getattr(medium, "node", medium)
         # ISSUE...having a hard time with electrical things
+        # maybe this was due to me, breaking Joel's toy
         to_in[medium].add(to_thing)
-
-    elif isinstance(to_thing, Connection):
-        pass
 
     elif isinstance(to_thing, Connectable):
         for attr, connection_point in to_thing._connection_points.items():
@@ -1669,7 +1759,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
         raise NotImplementedError(f"connecting to {to_thing}")
     logging.debug(f"    - to_in: {to_in}")
 
-    to_types: Set[URIRef]
+    to_types: Set[Medium]
     if isinstance(to_thing, Connection):
         to_types = set([to_thing.hasMedium])
     else:
@@ -1769,7 +1859,7 @@ class DomainSpace(Connectable):
     hasDomain: Domain
     hasMedium: Medium   ### required?  maybe implied by Domain?
 
-    def __lt__(self, other: Union[Zone, PhysicalSpace]) -> Node:
+    def __lt__(self, other: Union[Zone, PhysicalSpace, list]) -> Node:
         """self < other
 
         Build a containment heirarchy, this is contained in a zone or enclosed
@@ -1777,7 +1867,18 @@ class DomainSpace(Connectable):
         """
         logging.debug(f"__lt__ {self} {other}")
 
-        if isinstance(other, Zone):
+        if isinstance(other, list):
+            for each in other:
+                if isinstance(each, Zone):
+                    self._data_graph.add((each.node, s223.contains, self.node))
+                    if INCLUDE_INVERSE:
+                        self._data_graph.add((self.node, s223.isContainedIn, each.node))
+                elif isinstance(each, PhysicalSpace):
+                    self._data_graph.add((each.node, s223.encloses, self.node))
+                else:
+                    raise TypeError("zone or physical space expected")
+
+        elif isinstance(other, Zone):
             self._data_graph.add((other.node, s223.contains, self.node))
             if INCLUDE_INVERSE:
                 self._data_graph.add((self.node, s223.isContainedIn, other.node))

@@ -1,5 +1,5 @@
 from rdflib import URIRef
-from ..core import s223, enum
+from ..core import s223, p223
 
 from ..core import (
     Medium,
@@ -64,12 +64,12 @@ Steam = Medium(node_iri=s223["Water-Steam"])
 
 # === WATER
 class WaterConnection(Connection):
-    hasMedium: URIRef = Water.node_type
+    hasMedium: Medium = Water
     node_type = None
 
 
 class WaterConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Water.node_type
+    hasMedium: Medium = Water
     node_type = None
 
 
@@ -82,7 +82,7 @@ class WaterOutletConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
 
 
 class WaterSystemConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Water.node_type
+    hasMedium: Medium = Water
     node_type = None
 
 
@@ -200,5 +200,45 @@ class ChilledWaterInletSystemConnectionPoint(
 
 class ChilledWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
+):
+    node_type = None
+
+
+# === CONDENSED WATER
+class CondensedWaterConnection(Connection):
+    hasMedium: Medium = CondensedWater
+    node_type = None
+
+
+class CondensedWaterConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = CondensedWater
+    node_type = None
+
+
+class CondensedWaterInletConnectionPoint(
+    InletConnectionPoint, CondensedWaterConnectionPoint
+):
+    node_type = None
+
+
+class CondensedWaterOutletConnectionPoint(
+    OutletConnectionPoint, CondensedWaterConnectionPoint
+):
+    node_type = None
+
+
+class CondensedWaterSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = CondensedWater
+    node_type = None
+
+
+class CondensedWaterInletSystemConnectionPoint(
+    InletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
+):
+    node_type = None
+
+
+class CondensedWaterOutletSystemConnectionPoint(
+    OutletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
 ):
     node_type = None

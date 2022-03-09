@@ -3,6 +3,7 @@ from ..core import s223, enum
 
 from ..core import (
     Medium,
+    NaturalGas,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -14,17 +15,13 @@ from ..signal import AnalogIn, AnalogOut
 __namespace__ = s223
 
 
-class NaturalGas(Medium):
-    node_type: URIRef = s223["Medium-NaturalGas"]
-
-
 class NaturalGasConnection(Connection):
-    hasMedium: URIRef = NaturalGas.node_type
+    hasMedium: Medium = NaturalGas
     node_type = None
 
 
 class NaturalGasConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = NaturalGas.node_type
+    hasMedium: Medium = NaturalGas
     node_type = None
 
 
@@ -37,7 +34,7 @@ class NaturalGasOutletConnectionPoint(OutletConnectionPoint, NaturalGasConnectio
 
 
 class NaturalGasSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = NaturalGas.node_type
+    hasMedium: Medium = NaturalGas
 
 
 class NaturalGasInletSystemConnectionPoint(

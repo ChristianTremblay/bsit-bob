@@ -7,6 +7,7 @@ from ...connections.air import (
     AirOutletConnectionPoint,
     AirBidirectionalConnectionPoint,
     CompressedAirConnectionPoint,
+    CompressedAirInletConnectionPoint,
 )
 from ...connections.light import LightOutletConnectionPoint
 
@@ -15,6 +16,26 @@ from ...connections.electricity import ElectricalInletConnectionPoint
 from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
+
+
+class DamperActuator(Device):
+    node_type = s223.DamperActuator
+    position = AnalogOut
+    feedback = AnalogIn
+
+
+class ElectricalDamperActuator(Device):
+    node_type = s223.DamperActuator
+    electricalInlet: ElectricalInletConnectionPoint
+    position = AnalogOut
+    feedback = AnalogIn
+
+
+class PneumaticDamperActuator(Device):
+    node_type = s223.DamperActuator
+    compressedAirInlet: CompressedAirInletConnectionPoint
+    position = AnalogOut
+    feedback = AnalogIn
 
 
 class Damper(Device):

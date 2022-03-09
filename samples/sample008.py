@@ -58,5 +58,4 @@ s2 = TestSystem(label="5-s2")
 s1 >> s2
 
 # dump the result
-sample_header(model_name)
-dump()
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

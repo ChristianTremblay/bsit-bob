@@ -22,8 +22,8 @@ __namespace__ = p223
 
 class HotWaterBoiler(Device):
     node_type = p223.Boiler
-    hotWaterSupply: HotWaterInletConnectionPoint
-    hotWaterReturn: HotWaterOutletConnectionPoint
+    hotWaterLeaving: HotWaterInletConnectionPoint
+    hotWaterEntering: HotWaterOutletConnectionPoint
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):

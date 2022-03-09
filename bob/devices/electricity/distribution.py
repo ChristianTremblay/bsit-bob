@@ -86,7 +86,8 @@ class DistributionPanel(Device):
             self > sensor
         for circuit_breaker in circuit_breakers:
             self > circuit_breaker
-            self >> circuit_breaker
+            # Need to find a way to connect the breaker to the right outlet (120V or 240V)
+            # self >> circuit_breaker
 
 
 class CircuitBreaker(Device):
