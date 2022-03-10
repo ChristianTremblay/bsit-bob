@@ -62,8 +62,8 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("zoo", f"urn:zoo/{model_name}/")
 
 # Physical spaces
-building = Building(label="B-1", comment="Pavillon des elephants")
-floor1 = Floor(label="RdC", comment="Rez-de-chaussee")
+building = Building(label="B-1", comment="Pavillon des éléphants")
+floor1 = Floor(label="RdC", comment="Rez-de-chaussée")
 mezzanine = Floor(label="mezz", comment="Mezzanine")
 mechroom = MechanicalRoom(label="MechRoom", comment="Salle mecanique")
 mechroom_chiller = MechanicalRoom(

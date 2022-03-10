@@ -24,12 +24,7 @@ def bob_fixture(request):
     params = {}
     params["samples_directory"] = os.path.join(os.getcwd(), "samples")
     params["samples_ttl_directory"] = os.path.join(os.getcwd(), "samples", "ttl")
+    params["g36_directory"] = os.path.join(os.getcwd(), "G36")
+    params["g36_ttl_directory"] = os.path.join(os.getcwd(), "G36", "ttl")
     yield params
-
-
-def create_samples():
-
-    for filename in os.scandir(os.path.join(os.getcwd(), "samples")):
-        if filename.name.startswith("sample"):
-            print(f"Making TTL for {filename.name}")
-            subprocess.call(["python", filename.path])
+    # teardown

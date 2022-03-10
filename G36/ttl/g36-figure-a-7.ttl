@@ -1,20 +1,7 @@
-# baseURI: http://data.ashrae.org/standard223/data/g36-figure-a-7
-# imports: http://data.ashrae.org/standard223/1.0/model/all
-
 @prefix exg3607: <http://data.ashrae.org/standard223/data/g36-figure-a-7#> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://data.ashrae.org/standard223/data/g36-figure-a-7>
-  a owl:Ontology ;
-  rdfs:isDefinedBy <http://data.ashrae.org/standard223/data/g36-figure-a-7> ;
-  rdfs:label "g36-figure-a-7" ;
-  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-
 exg3607:00001 a s223:System,
         exg3607:VAV ;
     rdfs:label "A-7" ;
@@ -36,28 +23,24 @@ exg3607:00001 a s223:System,
     exg3607:hotDeckAirInlet exg3607:00002 ;
     exg3607:hotDeckDamperPosition exg3607:00013 ;
     exg3607:supplyAirOutlet exg3607:00004 .
-
 exg3607:00002 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-7.hotDeckAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3607:00007 .
-
 exg3607:00003 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-7.coldDeckAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3607:00017 .
-
 exg3607:00004 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-7.supplyAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3607:00025 .
-
 exg3607:00005 a s223:Device,
         exg3607:AirFlowStation ;
     rdfs:label "A-7.hot_deck_air_flow_station" ;
@@ -67,23 +50,19 @@ exg3607:00005 a s223:Device,
     exg3607:airInlet exg3607:00007 ;
     exg3607:airOutlet exg3607:00008 ;
     exg3607:flow exg3607:00006 .
-
 exg3607:00006 a g36:AnalogIn ;
     rdfs:label "A-7.hot_deck_air_flow_station.flow" .
-
 exg3607:00007 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-7.hot_deck_air_flow_station.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3607:00008 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-7.hot_deck_air_flow_station.airOutlet" ;
     s223:connectsThrough exg3607:00014 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3607:00009 a s223:Device,
         exg3607:Damper ;
     rdfs:label "A-7.hot_deck_damper" ;
@@ -94,35 +73,29 @@ exg3607:00009 a s223:Device,
     exg3607:airInlet exg3607:00010 ;
     exg3607:airOutlet exg3607:00011 ;
     exg3607:position exg3607:00013 .
-
 exg3607:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-7.hot_deck_damper.airInlet" ;
     s223:connectsThrough exg3607:00014 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3607:00011 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-7.hot_deck_damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:lnx exg3607:00026 .
-
 exg3607:00012 a s223:Device,
         exg3607:DamperPositioner ;
     rdfs:label "A-7.hot_deck_damper.damper_positioner" ;
     s223:hasProperty exg3607:00013 ;
     exg3607:position exg3607:00013 .
-
 exg3607:00013 a g36:AnalogOut ;
     rdfs:label "A-7.hot_deck_damper.damper_positioner.position" .
-
 exg3607:00014 a s223:Connection ;
     s223:connectsAt exg3607:00008,
         exg3607:00010 ;
     s223:hasMedium s223:Medium-Air .
-
 exg3607:00015 a s223:Device,
         exg3607:AirFlowStation ;
     rdfs:label "A-7.cold_deck_air_flow_station" ;
@@ -132,23 +105,19 @@ exg3607:00015 a s223:Device,
     exg3607:airInlet exg3607:00017 ;
     exg3607:airOutlet exg3607:00018 ;
     exg3607:flow exg3607:00016 .
-
 exg3607:00016 a g36:AnalogIn ;
     rdfs:label "A-7.cold_deck_air_flow_station.flow" .
-
 exg3607:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-7.cold_deck_air_flow_station.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3607:00018 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-7.cold_deck_air_flow_station.airOutlet" ;
     s223:connectsThrough exg3607:00024 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3607:00019 a s223:Device,
         exg3607:Damper ;
     rdfs:label "A-7.cold_deck_damper" ;
@@ -159,44 +128,35 @@ exg3607:00019 a s223:Device,
     exg3607:airInlet exg3607:00020 ;
     exg3607:airOutlet exg3607:00021 ;
     exg3607:position exg3607:00023 .
-
 exg3607:00020 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-7.cold_deck_damper.airInlet" ;
     s223:connectsThrough exg3607:00024 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3607:00021 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-7.cold_deck_damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:lnx exg3607:00027 .
-
 exg3607:00022 a s223:Device,
         exg3607:DamperPositioner ;
     rdfs:label "A-7.cold_deck_damper.damper_positioner" ;
     s223:hasProperty exg3607:00023 ;
     exg3607:position exg3607:00023 .
-
 exg3607:00023 a g36:AnalogOut ;
     rdfs:label "A-7.cold_deck_damper.damper_positioner.position" .
-
 exg3607:00024 a s223:Connection ;
     s223:connectsAt exg3607:00018,
         exg3607:00020 ;
     s223:hasMedium s223:Medium-Air .
-
 exg3607:00025 a s223:Junction ;
     s223:lnx exg3607:00026,
         exg3607:00027 .
-
 exg3607:00026 a s223:Segment ;
     s223:lnx exg3607:00011,
         exg3607:00025 .
-
 exg3607:00027 a s223:Segment ;
     s223:lnx exg3607:00021,
         exg3607:00025 .
-

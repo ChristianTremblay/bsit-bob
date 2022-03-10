@@ -214,11 +214,11 @@ def dump(
     else:
         content = header + graph.serialize(format=format)
     if not isinstance(content, str):
-        content = content.decode("utf-8")
+        content = content.decode("UTF-8")
 
     content = clean_and_sort_turtle_file(content)
     if filename:
-        with open(filename, "w") as ttl_file:
+        with open(filename, "w", encoding="UTF-8") as ttl_file:
             ttl_file.write(content)
     file.write(content)
 
@@ -1857,7 +1857,7 @@ class DomainSpace(Connectable):
 
     node_type: URIRef = s223.DomainSpace
     hasDomain: Domain
-    hasMedium: Medium   ### required?  maybe implied by Domain?
+    hasMedium: Medium  ### required?  maybe implied by Domain?
 
     def __lt__(self, other: Union[Zone, PhysicalSpace, list]) -> Node:
         """self < other

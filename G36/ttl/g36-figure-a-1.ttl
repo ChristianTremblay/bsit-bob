@@ -1,20 +1,7 @@
-# baseURI: http://data.ashrae.org/standard223/data/g36-figure-a-1
-# imports: http://data.ashrae.org/standard223/1.0/model/all
-
 @prefix exg3601: <http://data.ashrae.org/standard223/data/g36-figure-a-1#> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://data.ashrae.org/standard223/data/g36-figure-a-1>
-  a owl:Ontology ;
-  rdfs:isDefinedBy <http://data.ashrae.org/standard223/data/g36-figure-a-1> ;
-  rdfs:label "g36-figure-a-1" ;
-  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-
 exg3601:00001 a s223:System,
         exg3601:VAV ;
     rdfs:label "A-1" ;
@@ -28,21 +15,18 @@ exg3601:00001 a s223:System,
     exg3601:airInlet exg3601:00002 ;
     exg3601:airOutlet exg3601:00003 ;
     exg3601:damperPosition exg3601:00012 .
-
 exg3601:00002 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3601:00006 .
-
 exg3601:00003 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3601:00010 .
-
 exg3601:00004 a s223:Device,
         exg3601:AirFlowStation ;
     rdfs:label "A-1.air_flow_station" ;
@@ -52,23 +36,19 @@ exg3601:00004 a s223:Device,
     exg3601:airInlet exg3601:00006 ;
     exg3601:airOutlet exg3601:00007 ;
     exg3601:flow exg3601:00005 .
-
 exg3601:00005 a g36:AnalogIn ;
     rdfs:label "A-1.air_flow_station.flow" .
-
 exg3601:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-1.air_flow_station.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3601:00007 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-1.air_flow_station.airOutlet" ;
     s223:connectsThrough exg3601:00013 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3601:00008 a s223:Device,
         exg3601:Damper ;
     rdfs:label "A-1.damper" ;
@@ -79,31 +59,25 @@ exg3601:00008 a s223:Device,
     exg3601:airInlet exg3601:00009 ;
     exg3601:airOutlet exg3601:00010 ;
     exg3601:position exg3601:00012 .
-
 exg3601:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-1.damper.airInlet" ;
     s223:connectsThrough exg3601:00013 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3601:00010 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-1.damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-
 exg3601:00011 a s223:Device,
         exg3601:DamperPositioner ;
     rdfs:label "A-1.damper.damper_positioner" ;
     s223:hasProperty exg3601:00012 ;
     exg3601:position exg3601:00012 .
-
 exg3601:00012 a g36:AnalogOut ;
     rdfs:label "A-1.damper.damper_positioner.position" .
-
 exg3601:00013 a s223:Connection ;
     s223:connectsAt exg3601:00007,
         exg3601:00009 ;
     s223:hasMedium s223:Medium-Air .
-

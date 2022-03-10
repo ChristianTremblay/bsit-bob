@@ -96,5 +96,4 @@ class VAV(System):
 # make one
 vav = VAV(label="A-8")
 
-g36_header(model_name)
-dump()
+dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
