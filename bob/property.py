@@ -66,6 +66,18 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
+#Setpoints are subclasses of properties currently, but should they be quantifiable actuatable subclass?
+class Setpoint(QuantifiableActuatableProperty):
+    """
+    Such as a numerical setpoint.
+    """
+    
+    node_type: URIRef = s223.Setpoint
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+
 
 class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
     """
@@ -73,6 +85,7 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
     """
 
     node_type: URIRef = s223.QuantifiableObservableProperty
+    hasSetpoint: Setpoint
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

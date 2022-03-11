@@ -1,0 +1,86 @@
+# baseURI: http://data.ashrae.org/standard223/data/device_props
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/data/device_props>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/data/device_props> ;
+  rdfs:label "device_props" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+@prefix LBNL: <http://data.ashrae.org/standard223/data/device_props#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+LBNL:00001 a s223:Device,
+        s223:Fan,
+        LBNL:DDAHU_Fan ;
+    rdfs:label "Test_Fan" ;
+    s223:airInlet LBNL:00002 ;
+    s223:airOutlet LBNL:00003 ;
+    s223:contains LBNL:00005 ;
+    s223:electricalInlet LBNL:00004 ;
+    s223:hasConnectionPoint LBNL:00002,
+        LBNL:00003,
+        LBNL:00004 .
+LBNL:00002 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Test_Fan.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+LBNL:00003 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Test_Fan.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+LBNL:00004 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Test_Fan.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+LBNL:00005 a p223:VFD,
+        s223:Device ;
+    rdfs:label "Test_Fan.fan_vfd" ;
+    p223:electricalInlet LBNL:00006 ;
+    p223:electricalOutlet LBNL:00007 ;
+    s223:hasConnectionPoint LBNL:00006,
+        LBNL:00007 ;
+    s223:hasProperty LBNL:00008,
+        LBNL:00009 .
+LBNL:00006 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Test_Fan.fan_vfd.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+LBNL:00007 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Test_Fan.fan_vfd.electricalOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Electricity .
+LBNL:00008 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        LBNL:Electric_Power ;
+    rdfs:label "Test_Fan.fan_vfd.Electric_Power" ;
+    LBNL:hasQuantityKind quantitykind:ElectricPower ;
+    LBNL:unit unit:W .
+LBNL:00009 a s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        LBNL:Percent_Rotational_Speed ;
+    rdfs:label "Test_Fan.fan_vfd.Speed" ;
+    LBNL:hasQuantityKind quantitykind:AngularFrequency ;
+    LBNL:unit unit:PERCENT .
+LBNL:00010 a s223:ActuatableProperty,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        s223:Setpoint,
+        LBNL:Speed_Setpoint ;
+    LBNL:hasQuantityKind quantitykind:ElectricPower ;
+    LBNL:unit unit:W .

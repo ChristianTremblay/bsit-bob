@@ -7,7 +7,7 @@ from __future__ import annotations
 from typing import Any
 from pathlib import Path
 
-from bob.core import bind_model_namespace, Junction, System, dump
+from bob.core import bind_model_namespace, Junction, System, dump, quantitykind, unit
 from bob.connections.air import (
     AirConnection,
     AirInletSystemConnectionPoint,
@@ -15,9 +15,14 @@ from bob.connections.air import (
 )
 from bob.devices.hvac.damper import Damper
 from bob.devices.hvac.fan import Fan
+from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.filter import Filter
 
 from bob.sensor.pressure import DifferentialStaticPressureSensor
+from bob.sensor.humidity import AirHumiditySensor
+from bob.sensor.flow import AirFlowSensor
+from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
+from bob.property import QuantifiableObservableProperty
 #not sure of the difference between differential pressure and differential static pressure in this case
 
 from bob.systems.archives.coolingcoil import ChilledWaterCoil2
@@ -26,10 +31,38 @@ from bob.systems.archives.heatingcoil import HotWaterCoil2
 from header import lbnl_header
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(
-    "exFDD", f"http://data.ashrae.org/standard223/data/{model_name}#"
+__namespace__ = ex = bind_model_namespace(
+    "ex", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 
+# add properties to config?
+# Devices DON'T have properties as default, but have a default config that you can optionally use. 
+
+# ddahu_fan_config = {
+#     "sensors": {
+#      ("Fan Speed", ): {
+#                 "comment": "Supply Air Temperature sensor"
+#             },
+# }
+
+
+# Should have library of properties
+class Percent_Rotational_Speed(QuantifiableObservableProperty):
+    hasQuantityKind: URIRef = quantitykind.AngularFrequency  # really don't know if this is right, just make it Speed?
+    unit: URIRef = unit["PERCENT"]
+
+class Electric_Power(QuantifiableObservableProperty):
+    hasQuantityKind: URIRef = quantitykind.ElectricPower
+    unit: URIRef = unit["W"] 
+
+class DDAHU_Fan(Fan):
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        properties = {'Electric_Power': Electric_Power, 'Speed': Percent_Rotational_Speed}
+        vfd = VFD(label = self.label + '.fan_vfd', properties = properties)
+        self > vfd
+
+#probably just need 1 subclass for deck
 class HotDeck(System):
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
@@ -38,16 +71,57 @@ class HotDeck(System):
 
         in_filter = Filter(label = self.label + '.filter')
         self.airInlet.mapsTo = in_filter.airInlet
-        hwc = HotWaterCoil2(label = self.label + '.hot_water_coil')
+        hwc = HotWaterCoil2(label = self.label + '.hot_water_coil') # may have to add some measurement points to this.
         hsf = Fan(label = self.label + '.hot_supply_fan')
         self.airOutlet.mapsTo = hsf.airOutlet
         in_filter >> hwc >> hsf
 
-        hsf_dp = DifferentialStaticPressureSensor(label = self.label + '.hot_supply_fan_dp_sensor')
+        hsf_dp = DifferentialStaticPressureSensor(label = self.label + '.fan_dp_sensor')
         hsf_dp.hasMeasurementLocationHigh = hsf.airOutlet
         hsf_dp.hasMeasurementLocationLow = hsf.airInlet
         #more sensors
+        dat = AirTemperatureSensor(label = self.label + '.discharge_air_temp_sensor')
+        humd = AirHumiditySensor(label = self.label + '.air_humidity_sensor')
+        cfm = AirFlowSensor(label = self.label + '.air_flow_sensor')
+        temp = AirTemperatureSensor(label = self.label + '.air_temp_sensor')
 
+        temp_sp = TemperatureSetpoint(label = self.label + '.air_temp_setpoint')
+        temp.observesProperty.hasSetpoint = temp_sp
+
+        dat.hasMeasurementLocation = hwc.airOutlet
+        humd.hasMeasurementLocation = hsf.airOutlet
+        cfm.hasMeasurementLocation = hsf.airOutlet
+        temp.hasMeasurementLocation = hsf.airOutlet
+
+class ColdDeck(System):
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+        in_filter = Filter(label = self.label + '.filter')
+        self.airInlet.mapsTo = in_filter.airInlet
+        hwc = HotWaterCoil2(label = self.label + '.cold_water_coil')
+        hsf = Fan(label = self.label + '.cold_supply_fan')
+        self.airOutlet.mapsTo = hsf.airOutlet
+        in_filter >> hwc >> hsf
+
+        hsf_dp = DifferentialStaticPressureSensor(label = self.label + '.fan_dp_sensor')
+        hsf_dp.hasMeasurementLocationHigh = hsf.airOutlet
+        hsf_dp.hasMeasurementLocationLow = hsf.airInlet
+        #more sensors
+        dat = AirTemperatureSensor(label = self.label + '.discharge_air_temp_sensor')
+        humd = AirHumiditySensor(label = self.label + '.air_humidity_sensor')
+        cfm = AirFlowSensor(label = self.label + '.air_flow_sensor')
+        temp = AirTemperatureSensor(label = self.label + '.air_temp_sensor')
+
+        temp_sp = TemperatureSetpoint(label = self.label + '.air_temp_setpoint')
+        temp.observesProperty.hasSetpoint = temp_sp
+
+        dat.hasMeasurementLocation = hwc.airOutlet
+        humd.hasMeasurementLocation = hsf.airOutlet
+        cfm.hasMeasurementLocation = hsf.airOutlet
+        temp.hasMeasurementLocation = hsf.airOutlet
 
 
 class DDAHU(System):
@@ -60,16 +134,35 @@ class DDAHU(System):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        oa_damper = Damper(label=self.label + ".min_oa_damper") 
+        oa_damper = Damper(label=self.label + ".oa_damper") 
+
+        oa_dat = AirTemperatureSensor(label = self.label + '.oa_air_temp_sensor')
+        oa_humd = AirHumiditySensor(label = self.label + '.oa_air_humidity_sensor')
+        oa_cfm = AirFlowSensor(label = self.label + '.oa_air_flow_sensor')
+        #could put function for the above sensors
+
+        oa_dat.hasMeasurementLocation = oa_damper.airInlet
+        oa_humd.hasMeasurementLocation = oa_damper.airInlet
+        oa_cfm.hasMeasurementLocation = oa_damper.airInlet
 
         self.outsideAirInlet.mapsTo = oa_damper.airInlet
         #sensors attach here
 
         mixed_air = AirConnection(label=self.label + ".mixed_air")
         oa_damper >> mixed_air
+        ma_temp = AirTemperatureSensor(label = self.label + 'ma_air_temp_sensor')
+        ma_temp.hasMeasurementLocation = mixed_air
 
         return_air_fan = Fan(label = self.label + ".return_air_fan")
         self.returnAirInlet.mapsTo = return_air_fan.airInlet
+
+        re_dat = AirTemperatureSensor(label = self.label + '.re_air_temp_sensor')
+        re_humd = AirHumiditySensor(label = self.label + '.re_air_humidity_sensor')
+        re_cfm = AirFlowSensor(label = self.label + '.re_air_flow_sensor')
+
+        re_dat.hasMeasurementLocation = return_air_fan.airInlet
+        re_humd.hasMeasurementLocation = return_air_fan.airInlet
+        re_cfm.hasMeasurementLocation = return_air_fan.airInlet
         #sensors here and about fan
 
         j1 = Junction()
@@ -85,11 +178,17 @@ class DDAHU(System):
 
         recirc_damper >> mixed_air
 
-        hot_deck = HotDeck(label = self.label + 'hot_deck')
+        hot_deck = HotDeck(label = self.label + '.hot_deck')
         mixed_air >> hot_deck.airInlet
 
-# make one
-ddahu = DDAHU(label="DDAHU")
+        cold_deck = ColdDeck(label = self.label + '.cold_deck')
+        mixed_air >> cold_deck
 
+        self.supplyColdAirOutlet.mapsTo = cold_deck.airOutlet
+        self.supplyHotAirOutlet.mapsTo = hot_deck.airOutlet
+
+ddahu = DDAHU(label="DDAHU")
+#vfd = VFD(label = 'vfd', properties = {'Electric_Power': Electric_Power})
+#vfd.properties['Electric_Power'].hasSetpoint = ep
 lbnl_header(model_name)
 dump()
