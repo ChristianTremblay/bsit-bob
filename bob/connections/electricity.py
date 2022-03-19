@@ -99,11 +99,190 @@ class Electricity_575V_60HzSystemOutletConnectionPoint(
     node_type = None
 
 
+# === 480V 60Hz
+
+Electricity_480V_60Hz = Medium(node_iri=s223["Electricity-480V_60Hz"])
+
+
+class Electricity_480V_60HzConnection(Connection):
+    hasMedium: Medium = Electricity_480V_60Hz
+    node_type = None
+
+
+class Electricity_480V_60HzConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_480V_60Hz
+    node_type = None
+
+
+class Electricity_480V_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_480V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_480V_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_480V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_480V_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_480V_60Hz
+    node_type = None
+
+
+class Electricity_480V_60HzSystemInletConnectionPoint(
+    Electricity_480V_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_480V_60HzSystemOutletConnectionPoint(
+    Electricity_480V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+# === 347V 60Hz
+# 1 phase of 575V
+
+Electricity_347V_60Hz = Medium(node_iri=s223["Electricity-347V_60Hz"])
+
+
+class Electricity_347V_60HzConnection(Connection):
+    hasMedium: Medium = Electricity_347V_60Hz
+    node_type = None
+
+
+class Electricity_347V_60HzConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_347V_60Hz
+    node_type = None
+
+
+class Electricity_347V_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_347V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_347V_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_347V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_347V_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_347V_60Hz
+    node_type = None
+
+
+class Electricity_347V_60HzSystemInletConnectionPoint(
+    Electricity_347V_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_347V_60HzSystemOutletConnectionPoint(
+    Electricity_347V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+# === 277V 60Hz
+# 1 phase of 480V (US)
+
+Electricity_277V_60Hz = Medium(node_iri=s223["Electricity-277V_60Hz"])
+
+
+class Electricity_277V_60HzConnection(Connection):
+    hasMedium: Medium = Electricity_277V_60Hz
+    node_type = None
+
+
+class Electricity_277V_60HzConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_277V_60Hz
+    node_type = None
+
+
+class Electricity_277V_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_277V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_277V_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_277V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_277V_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_277V_60Hz
+    node_type = None
+
+
+class Electricity_277V_60HzSystemInletConnectionPoint(
+    Electricity_277V_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_277V_60HzSystemOutletConnectionPoint(
+    Electricity_277V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+# === 208V 60Hz
+# 3 phase
+
+Electricity_208V_60Hz = Medium(node_iri=s223["Electricity-208V_60Hz"])
+
+
+class Electricity_208V_60HzConnection(Connection):
+    hasMedium: Medium = Electricity_208V_60Hz
+    node_type = None
+
+
+class Electricity_208V_60HzConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_208V_60Hz
+    node_type = None
+
+
+class Electricity_208V_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_208V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_208V_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_208V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_208V_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_208V_60Hz
+    node_type = None
+
+
+class Electricity_208V_60HzSystemInletConnectionPoint(
+    Electricity_208V_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_208V_60HzSystemOutletConnectionPoint(
+    Electricity_208V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
 # === 120V_240V 60Hz
 # Often the output of a transformer feeding a distribution panel
 # Includes 2 x 120VAC 60Hz line, a neutral and a ground
 # Used together, 2 x 120VAC = 240VAC
-# Each phase canbe used to provide 120VAC
+# Each phase can be used to provide 120VAC
 
 
 Electricity_120V_240V_60Hz = Medium(node_iri=s223["Electricity-120V_240V_60Hz"])
