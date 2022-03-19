@@ -177,7 +177,9 @@ rdf = bind_namespace("owl", "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 enum = bind_namespace(
     "enum", "http://data.ashrae.org/standard223/1.0/vocab/enumeration#"
 )
-
+bacnet = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
+ref = bind_namespace("ref", "https://brickschema.org/schema/Brick/ref#")
+tsdb = bind_namespace("tsdb", "https://brickschema.org/schema/Brick/ref/tsdb#")
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
@@ -709,7 +711,11 @@ class Node(metaclass=NodeMetaclass):
 
     def __rshift__(self, other: Any) -> Any:
         """Build a connection from this thing to another thing."""
-        connect(self, other)
+        if isinstance(other, list):
+            for each in other:
+                connect(self, each)
+        else:
+            connect(self, other)
         return other
 
     def __lshift__(self, other: Any) -> Any:
@@ -741,7 +747,7 @@ class ExternalReference(Node):
     For now I'm creating hasRef...
     """
 
-    node_type: URIRef = s223.ExternalReference
+    node_type: URIRef = ref.hasExternalReference
     # isExternalReferenceOf: Property
     hasRef: Literal
 
@@ -961,7 +967,11 @@ class Junction(Node):
         """
         Build a connection (actaully a segment) from this thing to another thing.
         """
-        self.connect_to(other)
+        if isinstance(other, list):
+            for each in other:
+                self.connect_to(each)
+        else:
+            self.connect_to(other)
         return other
 
     def __lshift__(self, other: Any) -> Any:
