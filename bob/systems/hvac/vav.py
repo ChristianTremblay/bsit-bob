@@ -31,6 +31,7 @@ class AirFlowStation(Device):
     device so it has air inlets and outlets.  Contained in the device should
     be an AirFlowSensor.
     """
+
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flow = AnalogIn
