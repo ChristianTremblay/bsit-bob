@@ -22,6 +22,7 @@ DomesticHotWater = Medium(node_iri=s223["Water-DomesticHotWater"])
 ChilledWater = Medium(node_iri=s223["Water-ChilledWater"])
 HotWater = Medium(node_iri=s223["Water-HotWater"])
 CondensedWater = Medium(node_iri=s223["Water-CondensedWater"])
+MixedWater = Medium(node_iri=s223["Water-MixedWater"])
 GlycoledWater = Medium(node_iri=s223["Water-GlycoledWater"])
 Steam = Medium(node_iri=s223["Water-Steam"])
 
@@ -126,6 +127,42 @@ class HotWaterInletSystemConnectionPoint(
 
 class HotWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, HotWaterSystemConnectionPoint
+):
+    node_type = None
+
+
+# === HOT WATER
+class MixedWaterConnection(Connection):
+    hasMedium: Medium = MixedWater
+    node_type = None
+
+
+class MixedWaterConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = MixedWater
+    node_type = None
+
+
+class MixedWaterInletConnectionPoint(InletConnectionPoint, MixedWaterConnectionPoint):
+    node_type = None
+
+
+class MixedWaterOutletConnectionPoint(OutletConnectionPoint, MixedWaterConnectionPoint):
+    node_type = None
+
+
+class MixedWaterSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = MixedWater
+    node_type = None
+
+
+class MixedWaterInletSystemConnectionPoint(
+    InletSystemConnectionPoint, MixedWaterSystemConnectionPoint
+):
+    node_type = None
+
+
+class MixedWaterOutletSystemConnectionPoint(
+    OutletSystemConnectionPoint, MixedWaterSystemConnectionPoint
 ):
     node_type = None
 
