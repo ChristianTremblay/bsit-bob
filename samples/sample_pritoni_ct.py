@@ -1,18 +1,15 @@
+from cProfile import label
 from pathlib import Path
 
 from typing import Any
-from bob.connections.light import LightConnection
+
+from bob.connections.light import LightVisibleConnection
 from bob.connections.occupancy import (
     OccupancyInletSystemConnectionPoint,
     OccupancyOutletSystemConnectionPoint,
 )
 
-from bob.core import (
-    p223,
-    get_datagraph,
-    bind_model_namespace,
-    dump,
-)
+from bob.core import p223, get_datagraph, bind_model_namespace, dump, quantitykind, unit
 
 from bob.devices.hvac.damper import ElectricalActuatedDamper
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
@@ -20,6 +17,20 @@ from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.damper import Window
 from bob.devices.lighting.light import Luminaire
+
+from bob.devices.electricity.distribution import (
+    DistributionPanel,
+    Transformer,
+    SinglePhaseDistributionPanel,
+    SinglePoleCircuitBreaker,
+    ThreePhasesDistributionPanel,
+    ThreePolesCircuitBreaker,
+    ThreePolesMainCircuitBreaker,
+    TwoPolesCircuitBreaker,
+    TwoPolesMainCircuitBreaker,
+)
+from bob.property import QuantifiableObservableProperty
+
 from bob.space.occupancy import OccupancySpace
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
@@ -34,11 +45,91 @@ from bob.space.light import LightingSpace, LightingZone
 from bob.systems.functionblock import FunctionBlock
 
 from bob.connections.air import *
+from bob.connections.electricity import *
 
 from header import sample_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+
+mainentry_panel_config = {
+    "params": {
+        "label": "Main Entry Panel",
+        "comment": "Main Entry Panel of Building at 575V",
+        "voltage": "575",
+    },
+    "sensors": {},
+    "contains": {
+        ("MainBreaker", ThreePolesMainCircuitBreaker): {
+            "comment": "Main breaker of panel",
+            "amps": 400,
+            "voltage": "575",
+        },
+        ("CB#1", SinglePoleCircuitBreaker): {
+            "comment": "Parking Lot Lights",
+            "amps": 15,
+            "voltage": 347,
+            "bus_bar": "A",
+        },
+        ("CB#2", ThreePolesCircuitBreaker): {
+            "comment": "Fans, AHU",
+            "amps": 40,
+            "voltage": "575",
+        },
+        ("CB#3", ThreePolesCircuitBreaker): {
+            "comment": "Feeds Transformer to get 120/240",
+            "amps": 100,
+            "voltage": "575",
+        },
+    },
+    # other properties could go there... ?
+}
+
+distribution_panel_config = {
+    "params": {
+        "label": "My Panel",
+        "comment": "Description of my panel",
+        "voltage": "120_240",
+    },
+    "sensors": {},
+    "contains": {
+        ("MainBreaker", TwoPolesMainCircuitBreaker): {
+            "comment": "Main breaker of panel",
+            "amps": 200,
+            "voltage": "120_240",
+        },
+        ("CB#1", SinglePoleCircuitBreaker): {
+            "comment": "Lights in OpenOffice",
+            "amps": 15,
+            "voltage": "120",
+            "bus_bar": "A",
+        },
+        ("CB#2", TwoPolesCircuitBreaker): {
+            "comment": "Heater",
+            "amps": 20,
+            "voltage": "240",
+        },
+        ("CB#3", SinglePoleCircuitBreaker): {
+            "comment": "Lights in Kitchenette",
+            "amps": 15,
+            "voltage": "120",
+            "bus_bar": "A",
+        },
+        ("CB#4", SinglePoleCircuitBreaker): {
+            "comment": "Lights in Corridors + bathroom",
+            "amps": 15,
+            "voltage": "120",
+            "bus_bar": "A",
+        },
+        ("CB#5", SinglePoleCircuitBreaker): {
+            "comment": "Lights in Private Office",
+            "amps": 15,
+            "voltage": "120",
+            "bus_bar": "A",
+        },
+    },
+    # other properties could go there... ?
+}
 
 
 def test_pritoni():
@@ -174,6 +265,35 @@ def test_pritoni():
     kitchenette_occ_space = OccupancySpace(
         label="OccupancySpace6", comment="Occupancy Space of kitechnette"
     )
+
+    # Electrical devices
+    main_panel = ThreePhasesDistributionPanel(config=mainentry_panel_config)
+    transformer_120_240 = Transformer(
+        label="TX-1",
+        electricalInlet=Electricity_575V_60HzInletConnectionPoint,
+        electricalOutlet=Electricity_120V_240V_60HzOutletConnectionPoint,
+    )
+
+    dist_panel = SinglePhaseDistributionPanel(config=distribution_panel_config)
+    # hq = Electricity_120V_240V_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
+    hq_600 = Electricity_575V_60HzConnection(label="Hydro-Québec", comment="600V")
+    hq_600 >> main_panel["MainBreaker"]
+    main_panel["CB#3"] >> transformer_120_240 >> dist_panel["MainBreaker"]
+    # main_panel['CB#2'] >> Fans...
+
+    # We need a truff so light breakers will be connected to multiple loads
+    dist_panel_cb1 = Electricity_120V_60HzConnection(label="DISTPANEL-CB1")
+    dist_panel_cb3 = Electricity_120V_60HzConnection(label="DISTPANEL-CB3")
+    dist_panel_cb4 = Electricity_120V_60HzConnection(label="DISTPANEL-CB4")
+    dist_panel_cb5 = Electricity_120V_60HzConnection(label="DISTPANEL-CB5")
+    dist_panel["CB#1"] >> dist_panel_cb1
+    dist_panel["CB#3"] >> dist_panel_cb3
+    dist_panel["CB#4"] >> dist_panel_cb4
+    dist_panel["CB#5"] >> dist_panel_cb5
+
+    # hq >> main_panel['MainBreaker']
+    # main_panel['CB#1'] >> transformer_120_240 >> dist_panel['MainBreaker']
+    # main_panel['CB#2'] >> AHU ???
 
     # Relations between Physical spaces and Domain spaces
     bldg > roof
@@ -350,16 +470,18 @@ def test_pritoni():
 
     # Now we build lights for Kitchenette
     kitchenette_luminaire_11 = Luminaire(
-        label="Luminaire11", comment="Luminaire in kitchenette #11"
+        label="Luminaire11",
+        comment="Luminaire in kitchenette #11",
     )
     kitchenette_luminaire_12 = Luminaire(
-        label="Luminaire12", comment="Luminaire in kitchenette #12"
+        label="Luminaire12",
+        comment="Luminaire in kitchenette #12",
     )
     kitchenette_movement = OccupancySensor(
         label="OccSensor5",
         comment="Occupancy sensor for kitchenette luminaires 11 & 12",
     )
-    kitch_light_conn = LightConnection(
+    kitch_light_conn = LightVisibleConnection(
         label="LightHub_11_12", comment="Needed to connect multiple luminaires to space"
     )
     kitchenette_luminaire_11.lightOutlet >> kitch_light_conn
@@ -387,7 +509,7 @@ def test_pritoni():
         hasPhysicalLocation=private_office,
         hasMeasurementLocation=privateoffice_lightspace,
     )
-    privateoffice_light_conn = LightConnection(
+    privateoffice_light_conn = LightVisibleConnection(
         label="LightHub_7_8", comment="Needed to connect multiple luminaires to space"
     )
 
@@ -412,7 +534,7 @@ def test_pritoni():
     corridor_movement = OccupancySensor(
         label="OccSensor4", comment="Occupancy sensor for Corridor"
     )
-    corridor_light_conn = LightConnection(
+    corridor_light_conn = LightVisibleConnection(
         label="LightHub_9_10", comment="Needed to connect multiple luminaires to space"
     )
     corridor_luminaire_9.lightOutlet >> corridor_light_conn
@@ -433,7 +555,7 @@ def test_pritoni():
         comment="Luminaire #6 in Bathroom",
         hasPhysicalLocation=bathroom,
     )
-    bathroom_light_conn = LightConnection(
+    bathroom_light_conn = LightVisibleConnection(
         label="LightHub_5_6", comment="Needed to connect multiple luminaires to space"
     )
     bathroom_movement = OccupancySensor(
@@ -468,10 +590,10 @@ def test_pritoni():
     )
     # openofficeEast_luminaire_1.lightOutlet >> openofficeEast_lightspace.lightInlet
 
-    openofficeEast_light_conn = LightConnection(
+    openofficeEast_light_conn = LightVisibleConnection(
         label="LightHub_1_2", comment="Needed to connect multiple luminaires to space"
     )
-    openofficeWest_light_conn = LightConnection(
+    openofficeWest_light_conn = LightVisibleConnection(
         label="LightHub_3_4", comment="Needed to connect multiple luminaires to space"
     )
     openofficeEast_luminaire_1.lightOutlet >> openofficeEast_light_conn
@@ -491,7 +613,7 @@ def test_pritoni():
     openofficeEast_movement.hasPhysicalLocation = openoffice
 
     # Windows are good for natural light
-    natural_ligth_conn = LightConnection(
+    natural_ligth_conn = LightVisibleConnection(
         label="LightHub_NaturalLight",
         comment="2 windows contribute and light is brought to 2 light spaces",
     )
@@ -539,6 +661,30 @@ def test_pritoni():
     )
     kitchenette_occ_control.occupancySensor.mapsTo = kitchenette_movement
     kitchenette_occ_control.occupancyZone1.mapsTo = lighting_zone_6
+
+    # Make Electrical connections
+    dist_panel_cb1 >> [
+        openofficeEast_luminaire_1,
+        openofficeEast_luminaire_2,
+        openofficeWest_luminaire_3,
+        openofficeWest_luminaire_4,
+    ]
+    dist_panel_cb3 >> [
+        kitchenette_luminaire_11,
+        kitchenette_luminaire_12,
+    ]
+
+    dist_panel_cb4 >> [
+        bathroom_luminaire_5,
+        bathroom_luminaire_6,
+        corridor_luminaire_9,
+        corridor_luminaire_10,
+    ]
+
+    dist_panel_cb5 >> [
+        privateoffice_luminaire_7,
+        privateoffice_luminaire_8,
+    ]
 
 
 if __name__ == "__main__":

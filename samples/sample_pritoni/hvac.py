@@ -1,0 +1,97 @@
+from bob.connections.air import *
+
+
+import hvac_spaces as hs
+import physical_spaces as ps
+import hvac_devices as hd
+
+# Comment
+"""
+Now looking at the plan, we miss a detail regarding air movement. How is the return air
+dealt with ?
+
+A single return in the open office ? In this case, air will be forced through doors up 
+to the open office... 
+
+Return grills in each room open on a big plenum covering the entire floor ?
+
+Most probably, the bathroom doesn't have a return grill... just an exhaust... but again,
+we miss this information.
+
+Both scenarios are possible and they will endup being modeled differently
+
+Based on what we have here, it's impossible to know exactly.
+
+Knowing that, I'll still try to connect the HVAC Spaces to get the more probably air flow
+
+"""
+corridorNorth_doors = AirConnection(
+    label="CorridorNorthDoors",
+    comment="There are 3 doors in this space, so I'm using a connection to model those relationships",
+)
+# My model of spaces include 1 input for doors, 1 input for Windows, etc... if there are multiple of those, use a connection.
+hs.kitchenette_hvac.doors >> hs.corridorSouth_hvac.doors
+hs.corridorSouth_hvac.airTransfer >> hs.corridorNorth_hvac.airTransfer
+
+hs.privateoffice_hvac.doors >> corridorNorth_doors
+hs.bathroom_hvac.doors >> corridorNorth_doors
+hs.openoffice_hvac.doors >> corridorNorth_doors
+
+outdoor = AirConnection(
+    label="Outdoor",
+    comment="This is where we exhaust air of bathroom, and windows of OpenOffice are connected here to",
+)
+
+openoffice_windows = AirConnection(
+    label="OpenOfficeWindows",
+    comment="There are 2 windows connected to the space, so I use a connection",
+)
+
+hd.window1.outdoor >> outdoor
+hd.window1.indoor >> openoffice_windows
+hd.window1.hasPhysicalLocation = ps.openoffice
+
+hd.window2.outdoor >> outdoor
+hd.window2.indoor >> openoffice_windows
+hd.window2.hasPhysicalLocation = ps.openoffice
+openoffice_windows >> hs.openoffice_hvac.windows
+
+hd.bathroom_exhaust_fan.airInlet << hs.bathroom_hvac
+hd.bathroom_exhaust_fan.airOutlet >> outdoor
+
+supplyAir = AirConnection(
+    label="SUPPLY-DUCT", comment="Supply Air Duct that feed VAV Boxes 1 & 2"
+)
+
+returnAir = AirConnection(
+    label="RETURN-DUCT", comment="Return Air Duct extracting air from open office"
+)
+
+# Relationships between devices and positioning sensors
+supplyAir >> hd.vav1["VAV1_damper"].airInlet
+hd.vav1["VAV1_damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
+hd.vav1["VAV1_HeatingCoil"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
+hd.vav1["VAV1_SA-F"].hasMeasurementLocation = hd.vav1["VAV1_damper"].airInlet
+hd.vav1["VAV1_DA-T"].hasMeasurementLocation = hd.vav1["VAV1_HeatingCoil"].airOutlet
+hd.vav1["VAV1_ZN-T"].hasMeasurementLocation = hs.openoffice_hvac
+hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
+
+supplyAir >> hd.vav2["VAV2_damper"].airInlet
+hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
+hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
+hd.vav2["VAV2_SA-F"].hasMeasurementLocation = hd.vav2["VAV2_damper"].airInlet
+hd.vav2["VAV2_DA-T"].hasMeasurementLocation = hd.vav2["VAV2_HeatingCoil"].airOutlet
+hd.vav2["VAV2_ZN-T"].hasMeasurementLocation = hs.corridorSouth_hvac
+hd.vav2["VAV2_ZN-T"].hasPhysicalLocation = ps.corridor
+
+hs.hvac_zone_1.airInlet.mapsTo = hs.privateoffice_hvac.ductAirInlet
+hs.hvac_zone_1.airOutlet.mapsTo = hs.openoffice_hvac.ductAirOutlet
+
+hs.hvac_zone_2.airInlet.mapsTo = hs.kitchenette_hvac.ductAirInlet
+hs.hvac_zone_2.airOutlet.mapsTo = hs.corridorSouth_hvac.airTransfer
+
+# Would be nice to make this when we create the system...
+hd.vav1.airInlet.mapsTo = hd.vav1["VAV1_damper"].airInlet
+hd.vav1.airOutlet.mapsTo = hd.vav1["VAV1_HeatingCoil"].airOutlet
+hd.vav2.airInlet.mapsTo = hd.vav2["VAV2_damper"].airInlet
+hd.vav2.airOutlet.mapsTo = hd.vav2["VAV2_HeatingCoil"].airOutlet

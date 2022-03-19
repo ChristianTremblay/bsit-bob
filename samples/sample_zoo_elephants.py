@@ -54,7 +54,7 @@ from bob.space.light import LightingSpace, LightingZone
 
 from bob.connections.air import *
 
-from bob.datasource.external import BACnetReference, NiagaraORDReference
+# from bob.externalreference.bacnet import BACnetReference, NiagaraORDReference
 
 from header import sample_header
 
@@ -171,7 +171,7 @@ aircomp.compressedAirOutlet >> acc_4sides_damper.compressedAirInlet
 te1 = AirTemperatureSensor(
     label="TE-1",
     comment="Outdoor air preheated by exhanger",
-    hasExternalReference=BACnetReference("bacnet://345/analog-value/1/present-value"),
+    # hasExternalReference=BACnetReference("bacnet://345/analog-value/1/present-value"),
 )
 ha1 = AirHumiditySensor(label="HA-1")
 tpd1 = DifferentialStaticPressureSensor(

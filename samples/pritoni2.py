@@ -42,6 +42,7 @@ class HVACSpace(DomainSpace):
     hasDomain = HVAC
     hasMedium = Air
 
+
 open_office = Office(label="OpenOffice")
 lz1 = LightingSpace(label="LZ1")
 lz2 = LightingSpace(label="LZ2")
