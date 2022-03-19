@@ -5,8 +5,15 @@ from rdflib import URIRef
 from ...core import s223, p223, enum, Device, quantitykind, unit
 from ...property import QuantifiableObservableProperty
 
-from ...connections.light import LightInletConnectionPoint, LightOutletConnectionPoint
-from ...connections.electricity import ElectricalInletConnectionPoint
+from ...connections.light import (
+    LightInletConnectionPoint,
+    LightOutletConnectionPoint,
+    LightVisibleOutletConnectionPoint,
+)
+from ...connections.electricity import (
+    ElectricalInletConnectionPoint,
+    Electricity_120V_60HzInletConnectionPoint,
+)
 
 
 from ...sensor.movement import (
@@ -19,5 +26,5 @@ __namespace__ = p223
 
 class Luminaire(Device):
     node_type: URIRef = p223.Light
-    lightOutlet: LightOutletConnectionPoint
-    electricalInlet: ElectricalInletConnectionPoint
+    lightOutlet: LightVisibleOutletConnectionPoint
+    electricalInlet: Electricity_120V_60HzInletConnectionPoint

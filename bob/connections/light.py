@@ -15,24 +15,21 @@ from ..core import (
     OutletZoneConnectionPoint,
     BidirectionalSystemConnectionPoint,
 )
-from ..core import s223, enum
+from ..core import s223, enum, Light
 from ..signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 
+LightVisible = Medium(node_iri=s223["Light-Visible"])
+
+
 # === Light
-class Light(Medium):
-    node_type: URIRef = s223["Medium-Light"]
-    label = "Medium-Light"
-
-
-class LightConnection(Connection):
-    hasMedium: URIRef = Light.node_type
+class LightVisibleConnection(Connection):
+    hasMedium: Medium = Light
     node_type = None
 
 
 class LightConnectionPoint(ConnectionPoint):
-    hasMedium: URIRef = Light.node_type
     node_type = None
 
 
@@ -45,7 +42,7 @@ class LightOutletConnectionPoint(LightConnectionPoint, OutletConnectionPoint):
 
 
 class LightSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: URIRef = Light.node_type
+    hasMedium: Medium = Light
     node_type = None
 
 
@@ -62,7 +59,7 @@ class LightOutletSystemConnectionPoint(
 
 
 class LightZoneConnectionPoint(ZoneConnectionPoint):
-    hasMedium: URIRef = Light.node_type
+    hasMedium: Medium = Light
     node_type = None
 
 
@@ -72,5 +69,61 @@ class LightInletZoneConnectionPoint(LightZoneConnectionPoint, InletZoneConnectio
 
 class LightOutletZoneConnectionPoint(
     LightZoneConnectionPoint, OutletZoneConnectionPoint
+):
+    node_type = None
+
+
+class LightVisibleConnection(Connection):
+    hasMedium: Medium = LightVisible
+    node_type = None
+
+
+class LightVisibleConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = LightVisible
+    node_type = None
+
+
+class LightVisibleInletConnectionPoint(
+    LightVisibleConnectionPoint, InletConnectionPoint
+):
+    node_type = None
+
+
+class LightVisibleOutletConnectionPoint(
+    LightVisibleConnectionPoint, OutletConnectionPoint
+):
+    node_type = None
+
+
+class LightVisibleSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = LightVisible
+    node_type = None
+
+
+class LightVisibleInletSystemConnectionPoint(
+    LightVisibleSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class LightVisibleOutletSystemConnectionPoint(
+    LightVisibleSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+class LightVisibleZoneConnectionPoint(ZoneConnectionPoint):
+    hasMedium: Medium = LightVisible
+    node_type = None
+
+
+class LightVisibleInletZoneConnectionPoint(
+    LightVisibleZoneConnectionPoint, InletZoneConnectionPoint
+):
+    node_type = None
+
+
+class LightVisibleOutletZoneConnectionPoint(
+    LightVisibleZoneConnectionPoint, OutletZoneConnectionPoint
 ):
     node_type = None

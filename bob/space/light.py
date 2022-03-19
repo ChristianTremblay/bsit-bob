@@ -3,6 +3,8 @@ from rdflib import URIRef
 from bob.connections.light import (
     LightInletConnectionPoint,
     LightInletZoneConnectionPoint,
+    LightVisibleInletConnectionPoint,
+    LightVisibleInletZoneConnectionPoint,
 )
 from bob.connections.occupancy import (
     OccupancyInletConnectionPoint,
@@ -17,11 +19,11 @@ __namespace__ = p223
 class LightingSpace(DomainSpace):
     hasDomain = Lighting
     hasMedium: Medium = Light
-    lightInlet: LightInletConnectionPoint
-    naturalLightInlet: LightInletConnectionPoint
+    lightInlet: LightVisibleInletConnectionPoint
+    naturalLightInlet: LightVisibleInletConnectionPoint
 
 
 class LightingZone(Zone):
     hasDomain = Lighting
-    lightInlet: LightInletZoneConnectionPoint
+    lightInlet: LightVisibleInletZoneConnectionPoint
     occupancy: OccupancyInletZoneConnectionPoint
