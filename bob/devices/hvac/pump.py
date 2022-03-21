@@ -66,7 +66,8 @@ class Pump(Device):
             else None
         )
         for k, v in _properties.items():
-            setattr(self, k, self.__annotations__[k](v))
+            if v:
+                setattr(self, k, self.__annotations__[k](v))
         for sensor in sensors:
             self > sensor
         for dev in devices:

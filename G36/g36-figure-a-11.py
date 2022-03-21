@@ -20,6 +20,7 @@ from bob.connections.water import (
     HotWaterOutletConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
+from bob.devices.hvac.fan import Fan
 
 from bob.signal import AnalogIn, AnalogOut, BinaryIn, BinaryOut
 
@@ -64,13 +65,7 @@ class VFD(Device):
     fanSpeedCommand = AnalogOut
     fanStart = BinaryOut
 
-
-class ThisFan(Device):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
-
-
-class VFDFan(ThisFan):
+class VFDFan(Fan):
     # airInlet: AirInletConnectionPoint - inherits from Fan
     # airOutlet: AirOutletConnectionPoint - inherits from Fan
     fanStatus: BinaryIn

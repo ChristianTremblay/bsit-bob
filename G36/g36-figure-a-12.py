@@ -65,12 +65,7 @@ class VFD(Device):
     fanStart = BinaryOut
 
 
-class ThisFan(Device):
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
-
-
-class VFDFan(ThisFan):
+class VFDFan(Fan):
     # airInlet: AirInletConnectionPoint - inherits from Fan
     # airOutlet: AirOutletConnectionPoint - inherits from Fan
     fanStatus: BinaryIn
