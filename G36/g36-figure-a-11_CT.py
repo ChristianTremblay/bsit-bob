@@ -78,23 +78,27 @@ hwr = HotWaterConnection(label="HWR", comment="Hot Water Return")
 rat = AirTemperatureSensor(
     label="TS1",
     comment="Return Air Temperature sensor",
-    hasExternalReference="bacnet://",
 )
 dpt1 = DifferentialStaticPressureSensor(
     label="DPT1", comment="Filter differential Pressure sensor"
 )
-dps = HighStaticPressureStat(label="DPS", comment="High Static Pressure Stat")
-dps.sensor.measure.hasExternalReference = ("bacnet://2/binary-output/1",)
-sd = SmokeDetectionSensor(label="SD", comment="Smoke Detector in discharge air")
-dat = AirTemperatureSensor(
-    label="TS2",
-    comment="Supply Air Temperature sensor",
-    hasExternalReference="bacnet://",
+dps = HighStaticPressureStat(
+    label="DPS", comment="High Static Pressure Stat"
 )
+
+
+sd = SmokeDetectionSensor(label="SD", comment="Smoke Detector in discharge air")
+dat = AirTemperatureSensor(label="TS2", comment="Supply Air Temperature sensor")
 dpt2 = DifferentialStaticPressureSensor(
     label="DPT2", comment="Duct Static Pressure sensor"
 )
 
+# BACnet Stuff
+dps.sensor.measure.hasExternalReference = "bacnet://2/binary-output/1"
+rat.measure.hasExternalReference = "bacnet://2/analog-input/1"
+dat.measure.hasExternalReference = "bacnet://2/analog-input/2"
+dpt1.measure.hasExternalReference = "bacnet://2/analog-input/3"
+dpt2.measure.hasExternalReference = "bacnet://2/analog-input/4"
 
 class HighStaticController(System):
     highPressureNO: OnOffSignalSystemInletConnectionPoint
@@ -109,7 +113,6 @@ high_static = HighStaticController(
     comment="This system is the abstraction of control relay, push buttons and pilot light that are triggered by a high static pressure reading after the fan. The push button is the manual reset.",
 )
 high_static > dps
-
 
 class VFDController(System):
     enable: OnOffSignalSystemInletConnectionPoint
