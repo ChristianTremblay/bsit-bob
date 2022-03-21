@@ -105,13 +105,13 @@ class VoltageSensor(Sensor):
             raise ValueError(
                 "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        _measure = _class(
+        self.measure = _class(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.{_class.__name__}",
             **_measure_kwargs,
         )
-        self.observesProperty = _measure
+        self.observesProperty = self.measure
 
 
 class CurrentSensor(Sensor):
@@ -125,13 +125,13 @@ class CurrentSensor(Sensor):
             raise ValueError(
                 "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        _measure = _class(
+        self.measure = _class(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.{_class.__name__}",
             **_measure_kwargs,
         )
-        self.observesProperty = _measure
+        self.observesProperty = self.measure
 
 
 def create_3phases_meter_sensors(

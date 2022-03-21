@@ -86,7 +86,6 @@ class Sensor(Device):
     measuresMedium: Medium
     measuresSubstance: Substance  # When substance measured different than medium (ex. Gas)
     observesProperty: PropertyReference  ### restrict to MeasuredProperty
-    hasExternalReference: ExternalReference
 
 
 class DifferentialSensor(Sensor):

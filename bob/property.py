@@ -2,7 +2,7 @@ import logging
 from typing import List, Union, Any
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
-from .core import logging, s223, Property, quantitykind, unit
+from .core import ExternalReference, logging, s223, Property, quantitykind, unit
 import decimal
 
 __namespace__ = s223
@@ -14,6 +14,7 @@ class ActuatableProperty(Property):
     """
 
     node_type: URIRef = s223.ActuatableProperty
+    hasExternalReference: ExternalReference
 
 
 class ObservableProperty(Property):
@@ -22,6 +23,7 @@ class ObservableProperty(Property):
     """
 
     node_type: URIRef = s223.ObservableProperty
+    hasExternalReference: ExternalReference
 
 
 class QuantifiableProperty(Property):
@@ -32,6 +34,7 @@ class QuantifiableProperty(Property):
     node_type: URIRef = s223.QuantifiableProperty
     hasQuantityKind: URIRef
     unit: URIRef
+    hasExternalReference: ExternalReference
 
     def __init__(self, value: Any = None, **kwargs: Any) -> None:
         logging.debug(f"QuantifiableProperty.__init__ {value!r} {kwargs}")
@@ -62,6 +65,7 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
     """
 
     node_type: URIRef = s223.QuantifiableActuatableProperty
+    hasExternalReference: ExternalReference
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

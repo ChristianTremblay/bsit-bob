@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef
 
-from ..core import p223, enum, quantitykind, unit, Medium, Air
+from ..core import PropertyReference, p223, enum, quantitykind, unit, Medium, Air
 
 from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 
@@ -40,10 +40,10 @@ class AirHumiditySensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        _measure = Humidity(
+        self.measure = Humidity(
             # isObservedBy=self,
             label=f"{self.label}.Measure",
             **_measure_kwargs,
         )
 
-        self.observesProperty = _measure
+        self.observesProperty = self.measure

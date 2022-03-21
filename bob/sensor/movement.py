@@ -21,12 +21,12 @@ class MovementSensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        _measure = Movement(
+        self.measure = Movement(
             # isObservedBy=self,
             label=f"{self.label}.Movement",
             **_measure_kwargs,
         )
-        self.observesProperty = _measure
+        self.observesProperty = self.measure
 
 
 class OccupancySensor(MovementSensor):
