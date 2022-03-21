@@ -19,6 +19,7 @@ from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.coil import HotWaterCoil
 from bob.devices.hvac.valve import HotWaterValve
+from bob.devices.hvac.stats import HighStaticPressureStat
 from bob.sensor.fire import SmokeDetectionSensor
 
 from bob.sensor.pressure import DifferentialStaticPressureSensor
@@ -82,11 +83,14 @@ rat = AirTemperatureSensor(
 dpt1 = DifferentialStaticPressureSensor(
     label="DPT1", comment="Filter differential Pressure sensor"
 )
-dps = DifferentialStaticPressureSensor(
-    label="DPS", comment="High Static Pressure sensor"
-)
+dps = HighStaticPressureStat(label="DPS", comment="High Static Pressure Stat")
+dps.sensor.measure.hasExternalReference = ("bacnet://2/binary-output/1",)
 sd = SmokeDetectionSensor(label="SD", comment="Smoke Detector in discharge air")
-dat = AirTemperatureSensor(label="TS2", comment="Supply Air Temperature sensor")
+dat = AirTemperatureSensor(
+    label="TS2",
+    comment="Supply Air Temperature sensor",
+    hasExternalReference="bacnet://",
+)
 dpt2 = DifferentialStaticPressureSensor(
     label="DPT2", comment="Duct Static Pressure sensor"
 )
@@ -104,6 +108,7 @@ high_static = HighStaticController(
     label="SFHIGHSTATIC",
     comment="This system is the abstraction of control relay, push buttons and pilot light that are triggered by a high static pressure reading after the fan. The push button is the manual reset.",
 )
+high_static > dps
 
 
 class VFDController(System):
@@ -134,8 +139,8 @@ rat.hasMeasurementLocation = ra
 dpt1.hasMeasurementLocationHigh = filter.airInlet
 dpt1.hasMeasurementLocationLow = filter.airOutlet
 
-dps.hasMeasurementLocationHigh = f.airOutlet
-dps.hasMeasurementLocationLow = inside
+dps.sensor.hasMeasurementLocationHigh = f.airOutlet
+dps.sensor.hasMeasurementLocationLow = inside
 sd.hasMeasurementLocation = f.airOutlet
 dat.hasMeasurementLocation = f.airOutlet
 
@@ -163,7 +168,7 @@ a11 = FIG_A_11(
     comment="This is a simple Fan Coil / Variable Volume. This system shows a fan controlled by a VFD to control static pressure in the supply air duct. The VFD will be disable on smoke detection, preventing the fan from running in case of fire. A high presure sensor will also disable the VFD and prevent the drive from running. In the latter case, a manual reset will be needed to authorize the VFD to restart. Supply air temeprature is maintained at setpoint by modulating a hot water valve (air pass through a hot water coil, before the fan). The discharge air temperature setpoint is calculated between limits to satisfied the demand created to maintain return air temeprature to setpoint.",
 )
 
-high_static.highPressureNO.mapsTo = sd.dryContactOutlet
+high_static.highPressureNO.mapsTo = dps.highStaticPressureOutput
 high_static.enableVFD.mapsTo = vfd_controller.enable
 vfd > vfd_controller
 
