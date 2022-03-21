@@ -74,7 +74,7 @@ class Fan(Device):
             else None
         )
         for k, v in _properties.items():
-            self.each = self.__annotations__[k](v)
+            setattr(self, k, self.__annotations__[k](v))
         for sensor in sensors:
             self > sensor
         for dev in devices:
