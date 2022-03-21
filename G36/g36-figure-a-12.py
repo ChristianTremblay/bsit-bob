@@ -69,6 +69,7 @@ class ThisFan(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 
+
 class VFDFan(ThisFan):
     # airInlet: AirInletConnectionPoint - inherits from Fan
     # airOutlet: AirOutletConnectionPoint - inherits from Fan

@@ -105,6 +105,7 @@ high_static = HighStaticController(
     comment="This system is the abstraction of control relay, push buttons and pilot light that are triggered by a high static pressure reading after the fan. The push button is the manual reset.",
 )
 
+
 class VFDController(System):
     enable: OnOffSignalSystemInletConnectionPoint
     run: OnOffSignalSystemInletConnectionPoint
@@ -118,7 +119,6 @@ vfd_controller = VFDController(
     label="VFDController",
     comment="This is the abstraction of the VFD Controller that interact with other systems like DDC controlers and other controllers. Each property is related to something in the device itself.",
 )
-
 
 
 # Connections
@@ -143,7 +143,6 @@ dpt2.hasMeasurementLocationHigh = sa
 dpt2.hasMeasurementLocationLow = inside
 
 # Map Systems
-
 
 
 class FIG_A_11(G36Block):
