@@ -2,9 +2,12 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 @prefix ex: <urn:ex/sample003/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 <http://data.ashrae.org/standard223/1.0/data/sample003>
   a owl:Ontology ;
@@ -28,7 +31,7 @@ ex:00002 a s223:CoolingCoil,
 ex:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
-    s223:connectsThrough ex:00011 ;
+    s223:connectsThrough ex:00015 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
 ex:00004 a s223:ConnectionPoint,
@@ -52,10 +55,8 @@ ex:00007 a s223:Device,
     rdfs:label "F" ;
     s223:airInlet ex:00008 ;
     s223:airOutlet ex:00009 ;
-    s223:electricalInlet ex:00010 ;
     s223:hasConnectionPoint ex:00008,
-        ex:00009,
-        ex:00010 .
+        ex:00009 .
 ex:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "F.airInlet" ;
@@ -64,34 +65,59 @@ ex:00008 a s223:ConnectionPoint,
 ex:00009 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "F.airOutlet" ;
-    s223:connectsThrough ex:00011 ;
+    s223:connectsThrough ex:00015 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-ex:00010 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "F.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Electricity .
-ex:00011 a s223:Connection ;
+ex:00010 a p223:Amps,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:ElectricCurrent ;
+    p223:unit unit:A .
+ex:00011 a p223:RPM,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:AngularVolocity ;
+    p223:unit unit:REV-PER-MIN .
+ex:00012 a p223:HP,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:Power ;
+    p223:unit unit:HP .
+ex:00013 a p223:ElectricPowerkW,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:Power ;
+    p223:unit unit:KiloW .
+ex:00014 a p223:PowerFactor,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:PowerFactor ;
+    p223:unit unit:UNITLESS .
+ex:00015 a s223:Connection ;
     s223:connectsAt ex:00003,
         ex:00009 ;
     s223:hasMedium s223:Medium-Air .
-ex:00012 a s223:Zone,
+ex:00016 a s223:Zone,
         ex:HVACZone ;
     rdfs:label "Zone-1" ;
-    s223:contains ex:00014 ;
-    s223:hasZoneConnectionPoint ex:00013 ;
-    ex:supplyAir ex:00013 .
-ex:00013 a s223:InletZoneConnectionPoint,
+    s223:contains ex:00018 ;
+    s223:hasZoneConnectionPoint ex:00017 ;
+    ex:supplyAir ex:00017 .
+ex:00017 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone-1.supplyAir" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00015 .
-ex:00014 a s223:DomainSpace ;
+    s223:mapsTo ex:00019 .
+ex:00018 a s223:DomainSpace ;
     rdfs:label "Space" ;
-    s223:hasConnectionPoint ex:00015 .
-ex:00015 a s223:ConnectionPoint,
+    s223:hasConnectionPoint ex:00019 .
+ex:00019 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "scp" ;
     s223:hasDirection s223:Direction-Inlet ;

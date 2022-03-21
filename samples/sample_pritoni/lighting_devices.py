@@ -45,7 +45,6 @@ privateoffice_light_conn = LightVisibleConnection(
 )
 
 
-
 # privateoffice_movement.hasMeasurementLocation = privateoffice_lightspace
 # privateoffice_movement.hasPhysicalLocation = private_office
 
@@ -66,7 +65,6 @@ corridor_movement = OccupancySensor(
 corridor_light_conn = LightVisibleConnection(
     label="LightHub_9_10", comment="Needed to connect multiple luminaires to space"
 )
-
 
 
 # Now we build lights for Bathroom
@@ -121,7 +119,6 @@ openofficeWest_light_conn = LightVisibleConnection(
 openofficeEast_movement = OccupancySensor(
     label="OccSensor1", comment="Occupancy sensor for OpenOffice"
 )
-
 
 
 # Windows are good for natural light

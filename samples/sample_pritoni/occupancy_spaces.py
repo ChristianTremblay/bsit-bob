@@ -1,5 +1,5 @@
 from bob.space.occupancy import *
-    
+
 # Occupancy Spaces
 openoffice_occ_space = OccupancySpace(
     label="OccupancySpace1", comment="Occupancy space of Open Office"

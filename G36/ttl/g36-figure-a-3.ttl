@@ -1,7 +1,10 @@
 @prefix exg3603: <http://data.ashrae.org/standard223/data/g36-figure-a-3#> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 exg3603:00001 a s223:System,
         exg3603:VAV ;
     rdfs:label "A-3" ;
@@ -42,7 +45,7 @@ exg3603:00004 a s223:OutletSystemConnectionPoint,
     rdfs:label "A-3.supplyAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo exg3603:00028 .
+    s223:mapsTo exg3603:00032 .
 exg3603:00005 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-3.hwInlet" ;
@@ -96,7 +99,7 @@ exg3603:00013 a s223:ConnectionPoint,
     rdfs:label "A-3.damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:lnx exg3603:00029 .
+    s223:lnx exg3603:00033 .
 exg3603:00014 a s223:Device,
         exg3603:DamperPositioner ;
     rdfs:label "A-3.damper.damper_positioner" ;
@@ -154,10 +157,8 @@ exg3603:00024 a s223:Device,
     rdfs:label "A-3.fan" ;
     s223:airInlet exg3603:00025 ;
     s223:airOutlet exg3603:00026 ;
-    s223:electricalInlet exg3603:00027 ;
     s223:hasConnectionPoint exg3603:00025,
-        exg3603:00026,
-        exg3603:00027 .
+        exg3603:00026 .
 exg3603:00025 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-3.fan.airInlet" ;
@@ -168,18 +169,43 @@ exg3603:00026 a s223:ConnectionPoint,
     rdfs:label "A-3.fan.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:lnx exg3603:00030 .
-exg3603:00027 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "A-3.fan.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Electricity .
-exg3603:00028 a s223:Junction ;
-    s223:lnx exg3603:00029,
-        exg3603:00030 .
-exg3603:00029 a s223:Segment ;
+    s223:lnx exg3603:00034 .
+exg3603:00027 a p223:Amps,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:ElectricCurrent ;
+    p223:unit unit:A .
+exg3603:00028 a p223:RPM,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:AngularVolocity ;
+    p223:unit unit:REV-PER-MIN .
+exg3603:00029 a p223:HP,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:Power ;
+    p223:unit unit:HP .
+exg3603:00030 a p223:ElectricPowerkW,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:Power ;
+    p223:unit unit:KiloW .
+exg3603:00031 a p223:PowerFactor,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    p223:hasQuantityKind quantitykind:PowerFactor ;
+    p223:unit unit:UNITLESS .
+exg3603:00032 a s223:Junction ;
+    s223:lnx exg3603:00033,
+        exg3603:00034 .
+exg3603:00033 a s223:Segment ;
     s223:lnx exg3603:00013,
-        exg3603:00028 .
-exg3603:00030 a s223:Segment ;
+        exg3603:00032 .
+exg3603:00034 a s223:Segment ;
     s223:lnx exg3603:00026,
-        exg3603:00028 .
+        exg3603:00032 .

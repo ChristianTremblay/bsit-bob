@@ -1,5 +1,10 @@
 from rdflib import URIRef
-from ..core import s223, enum
+from ..core import (
+    BidirectionalConnectionPoint,
+    BidirectionalSystemConnectionPoint,
+    s223,
+    enum,
+)
 
 from ..core import (
     Medium,
@@ -428,3 +433,145 @@ class Electricity_120V_60HzSystemOutletConnectionPoint(
 # Electricity-24V.DC
 # Electricity-12V.DC
 # and European
+
+
+Electricity_OnOffSignal = Medium(node_iri=s223["Electricity-OnOffSignal"])
+# This is high level and we don't know if it's using 120V or 24VAC or 5VDC...
+# It is modeling dry contact, Triac and other On-Off relationships
+
+# === GENERAL
+class OnOffSignalConnection(Connection):
+    hasMedium: Medium = Electricity_OnOffSignal
+    node_type = None
+
+
+class OnOffSignalConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_OnOffSignal
+    node_type = None
+
+
+class OnOffSignalInletConnectionPoint(InletConnectionPoint, OnOffSignalConnectionPoint):
+    node_type = None
+
+
+class OnOffSignalOutletConnectionPoint(
+    OutletConnectionPoint, OnOffSignalConnectionPoint
+):
+    node_type = None
+
+
+class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_OnOffSignal
+    node_type = None
+
+
+class OnOffSignalSystemInletConnectionPoint(
+    OnOffSignalSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class OnOffSignalSystemOutletConnectionPoint(
+    OnOffSignalSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+Electricity_ModulationSignal = Medium(node_iri=s223["Electricity-ModulationSignal"])
+# This is high level and we don't know if it's using 0-10VDC, 4-20mA, etc...
+# === Modulation signals
+class ModulationSignalConnection(Connection):
+    hasMedium: Medium = Electricity_ModulationSignal
+    node_type = None
+
+
+class ModulationSignalConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_ModulationSignal
+    node_type = None
+
+
+class ModulationSignalInletConnectionPoint(
+    InletConnectionPoint, ModulationSignalConnectionPoint
+):
+    node_type = None
+
+
+class ModulationSignalOutletConnectionPoint(
+    OutletConnectionPoint, ModulationSignalConnectionPoint
+):
+    node_type = None
+
+
+class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_ModulationSignal
+    node_type = None
+
+
+class ModulationSignalSystemInletConnectionPoint(
+    ModulationSignalSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class ModulationSignalSystemOutletConnectionPoint(
+    ModulationSignalSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+Electricity_RS485 = Medium(node_iri=s223["Electricity-RS485"])
+# === Networks
+class RS485Connection(Connection):
+    hasMedium: Medium = Electricity_RS485
+    node_type = None
+
+
+class RS485ConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_RS485
+    node_type = None
+
+
+class RS485BidirectionalConnectionPoint(
+    BidirectionalConnectionPoint, RS485ConnectionPoint
+):
+    node_type = None
+
+
+class RS485SystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_RS485
+    node_type = None
+
+
+class RS485BidirectionalSystemConnectionPoint(
+    RS485SystemConnectionPoint, BidirectionalSystemConnectionPoint
+):
+    node_type = None
+
+
+Electricity_Ethernet = Medium(node_iri=s223["Electricity-Ethernet"])
+# === Networks
+class EthernetConnection(Connection):
+    hasMedium: Medium = Electricity_Ethernet
+    node_type = None
+
+
+class EthernetConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_Ethernet
+    node_type = None
+
+
+class EthernetBidirectionalConnectionPoint(
+    BidirectionalConnectionPoint, EthernetConnectionPoint
+):
+    node_type = None
+
+
+class EthernetSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_Ethernet
+    node_type = None
+
+
+class EthernetBidirectionalSystemConnectionPoint(
+    EthernetSystemConnectionPoint, BidirectionalSystemConnectionPoint
+):
+    node_type = None

@@ -88,5 +88,3 @@ ps.kitchenette > ls.kitchenette_lightspace
 ps.kitchenette > os.kitchenette_occ_space
 
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
-
-

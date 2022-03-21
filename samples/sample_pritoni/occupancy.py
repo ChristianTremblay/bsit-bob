@@ -12,6 +12,7 @@ class OccupancyControl(FunctionBlock):
     occupancyZone1: OccupancyOutletSystemConnectionPoint
     occupancyZone2: OccupancyOutletSystemConnectionPoint
 
+
 open_office_occ_control = OccupancyControl(
     label="OpenOffice Occ Control",
     comment="Occupancy sensor drives LightingZone1 and LightingZone2",

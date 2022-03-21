@@ -1,3 +1,4 @@
+from bob.connections.electricity import OnOffSignalOutletConnectionPoint
 from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 from rdflib import URIRef
 from typing import Any, List
@@ -27,6 +28,7 @@ class DifferentialStaticPressureSensor(Sensor):
     observesProperty: PropertyReference  # DifferentialStaticPressure
     hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
     hasMeasurementLocationLow: Node
+    dryContactOutlet: OnOffSignalOutletConnectionPoint
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)

@@ -19,7 +19,7 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...signal import AnalogIn
+from ...connections.electricity import ModulationSignalInletConnectionPoint
 
 __namespace__ = s223
 
@@ -32,31 +32,31 @@ class WaterValve(Device):
     node_type: URIRef = s223.Valve
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
-    position = AnalogIn
+    position: ModulationSignalInletConnectionPoint
 
 
 class HotWaterValve(Device):
     node_type: URIRef = s223.Valve
     hotWaterInlet: HotWaterInletConnectionPoint
     hotWaterOutlet: HotWaterOutletConnectionPoint
-    position = AnalogIn
+    position: ModulationSignalInletConnectionPoint
 
 
 class ChilledWaterValve(Device):
     node_type: URIRef = s223.Valve
     chilledWaterInlet: ChilledWaterInletConnectionPoint
     chilledWaterOutlet: ChilledWaterOutletConnectionPoint
-    position = AnalogIn
+    position: ModulationSignalInletConnectionPoint
 
 
 class NaturalGasValve(Device):
     node_type: URIRef = s223.Valve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
-    position = AnalogIn
+    position: ModulationSignalInletConnectionPoint
 
 
 class PneumaticValve(Device):
     node_type: URIRef = s223.Valve
     compressedAirInlet: CompressedAirConnectionPoint
-    position = AnalogIn
+    position: ModulationSignalInletConnectionPoint

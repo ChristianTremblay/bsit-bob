@@ -30,13 +30,13 @@ exg3612:00004 a s223:InletSystemConnectionPoint,
     rdfs:label "A-12.returnAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo exg3612:00071 .
+    s223:mapsTo exg3612:00070 .
 exg3612:00005 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-12.exhaustAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo exg3612:00080 .
+    s223:mapsTo exg3612:00078 .
 exg3612:00006 a s223:System,
         exg3612:LinkedDampers ;
     rdfs:label "A-12.linked_dampers" ;
@@ -107,7 +107,7 @@ exg3612:00015 a s223:Device,
 exg3612:00016 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.linked_dampers.return_air_damper.airInlet" ;
-    s223:connectsThrough exg3612:00083 ;
+    s223:connectsThrough exg3612:00081 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
 exg3612:00017 a s223:ConnectionPoint,
@@ -189,7 +189,7 @@ exg3612:00031 a s223:InletSystemConnectionPoint,
     rdfs:label "A-12.hot_water_coil.hotWaterSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:mapsTo exg3612:00040 .
+    s223:mapsTo exg3612:00039 .
 exg3612:00032 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-12.hot_water_coil.hotWaterReturn" ;
@@ -233,31 +233,34 @@ exg3612:00037 a s223:ConnectionPoint,
 exg3612:00038 a s223:Device,
         s223:Valve ;
     rdfs:label "A-12.hot_water_coil.hw_valve" ;
-    s223:hasConnectionPoint exg3612:00040,
+    s223:hasConnectionPoint exg3612:00039,
+        exg3612:00040,
         exg3612:00041 ;
-    s223:hasProperty exg3612:00039 ;
-    s223:hotWaterInlet exg3612:00040 ;
-    s223:hotWaterOutlet exg3612:00041 ;
-    s223:position exg3612:00039 .
-exg3612:00039 a g36:AnalogIn ;
-    rdfs:label "A-12.hot_water_coil.hw_valve.position" .
-exg3612:00040 a s223:ConnectionPoint,
+    s223:hotWaterInlet exg3612:00039 ;
+    s223:hotWaterOutlet exg3612:00040 ;
+    s223:position exg3612:00041 .
+exg3612:00039 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.hot_water_coil.hw_valve.hotWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater .
-exg3612:00041 a s223:ConnectionPoint,
+exg3612:00040 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-12.hot_water_coil.hw_valve.hotWaterOutlet" ;
     s223:connectsThrough exg3612:00042 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater .
+exg3612:00041 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "A-12.hot_water_coil.hw_valve.position" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-ModulationSignal .
 exg3612:00042 a s223:Connection ;
     s223:connectsAt exg3612:00036,
-        exg3612:00041 ;
+        exg3612:00040 ;
     s223:hasMedium s223:Water-HotWater .
 exg3612:00043 a g36:AnalogOut ;
-    s223:hasValue "<AnalogIn A-12.hot_water_coil.hw_valve.position at http://data.ashrae.org/standard223/data/g36-figure-a-12#00039>" .
+    s223:hasValue "<ModulationSignalInletConnectionPoint A-12.hot_water_coil.hw_valve.position at http://data.ashrae.org/standard223/data/g36-figure-a-12#00041>" .
 exg3612:00044 a s223:Connection ;
     s223:connectsAt exg3612:00026,
         exg3612:00034 ;
@@ -290,7 +293,7 @@ exg3612:00048 a s223:InletSystemConnectionPoint,
     rdfs:label "A-12.chilled_water_coil.chilledWaterSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:mapsTo exg3612:00057 .
+    s223:mapsTo exg3612:00056 .
 exg3612:00049 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-12.chilled_water_coil.chilledWaterReturn" ;
@@ -317,7 +320,7 @@ exg3612:00051 a s223:ConnectionPoint,
 exg3612:00052 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-12.chilled_water_coil.cw_coil.airOutlet" ;
-    s223:connectsThrough exg3612:00069 ;
+    s223:connectsThrough exg3612:00068 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
 exg3612:00053 a s223:ConnectionPoint,
@@ -334,54 +337,55 @@ exg3612:00054 a s223:ConnectionPoint,
 exg3612:00055 a s223:Device,
         s223:Valve ;
     rdfs:label "A-12.chilled_water_coil.cw_valve" ;
-    s223:chilledWaterInlet exg3612:00057 ;
-    s223:chilledWaterOutlet exg3612:00058 ;
-    s223:hasConnectionPoint exg3612:00057,
+    s223:chilledWaterInlet exg3612:00056 ;
+    s223:chilledWaterOutlet exg3612:00057 ;
+    s223:hasConnectionPoint exg3612:00056,
+        exg3612:00057,
         exg3612:00058 ;
-    s223:hasProperty exg3612:00056 ;
-    s223:position exg3612:00056 .
-exg3612:00056 a g36:AnalogIn ;
-    rdfs:label "A-12.chilled_water_coil.cw_valve.position" .
-exg3612:00057 a s223:ConnectionPoint,
+    s223:position exg3612:00058 .
+exg3612:00056 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.chilled_water_coil.cw_valve.chilledWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater .
-exg3612:00058 a s223:ConnectionPoint,
+exg3612:00057 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-12.chilled_water_coil.cw_valve.chilledWaterOutlet" ;
     s223:connectsThrough exg3612:00059 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater .
+exg3612:00058 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "A-12.chilled_water_coil.cw_valve.position" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-ModulationSignal .
 exg3612:00059 a s223:Connection ;
     s223:connectsAt exg3612:00053,
-        exg3612:00058 ;
+        exg3612:00057 ;
     s223:hasMedium s223:Water-ChilledWater .
 exg3612:00060 a s223:Connection ;
     s223:connectsAt exg3612:00035,
         exg3612:00051 ;
     s223:hasMedium s223:Medium-Air .
 exg3612:00061 a s223:Device,
-        s223:Fan,
+        exg3612:ThisFan,
         exg3612:VFDFan ;
     rdfs:label "A-12.supply_fan" ;
-    s223:airInlet exg3612:00062 ;
-    s223:airOutlet exg3612:00063 ;
-    s223:contains exg3612:00065 ;
-    s223:electricalInlet exg3612:00064 ;
+    s223:contains exg3612:00064 ;
     s223:hasConnectionPoint exg3612:00062,
-        exg3612:00063,
-        exg3612:00064 ;
-    s223:hasProperty exg3612:00066,
-        exg3612:00067,
-        exg3612:00068 ;
-    exg3612:fanSpeedCommand exg3612:00067 ;
-    exg3612:fanStart exg3612:00068 ;
-    exg3612:fanStatus exg3612:00066 .
+        exg3612:00063 ;
+    s223:hasProperty exg3612:00065,
+        exg3612:00066,
+        exg3612:00067 ;
+    exg3612:airInlet exg3612:00062 ;
+    exg3612:airOutlet exg3612:00063 ;
+    exg3612:fanSpeedCommand exg3612:00066 ;
+    exg3612:fanStart exg3612:00067 ;
+    exg3612:fanStatus exg3612:00065 .
 exg3612:00062 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.supply_fan.airInlet" ;
-    s223:connectsThrough exg3612:00069 ;
+    s223:connectsThrough exg3612:00068 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
 exg3612:00063 a s223:ConnectionPoint,
@@ -389,109 +393,97 @@ exg3612:00063 a s223:ConnectionPoint,
     rdfs:label "A-12.supply_fan.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-exg3612:00064 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "A-12.supply_fan.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Electricity .
-exg3612:00065 a s223:Device,
+exg3612:00064 a s223:Device,
         exg3612:VFD ;
     rdfs:label "A-12.supply_fan.vfd" ;
-    s223:hasProperty exg3612:00066,
-        exg3612:00067,
-        exg3612:00068 ;
-    exg3612:fanSpeedCommand exg3612:00067 ;
-    exg3612:fanStart exg3612:00068 ;
-    exg3612:fanStatus exg3612:00066 .
-exg3612:00066 a g36:BinaryIn ;
+    s223:hasProperty exg3612:00065,
+        exg3612:00066,
+        exg3612:00067 ;
+    exg3612:fanSpeedCommand exg3612:00066 ;
+    exg3612:fanStart exg3612:00067 ;
+    exg3612:fanStatus exg3612:00065 .
+exg3612:00065 a g36:BinaryIn ;
     rdfs:label "A-12.supply_fan.vfd.fanStatus" .
-exg3612:00067 a g36:AnalogOut ;
+exg3612:00066 a g36:AnalogOut ;
     rdfs:label "A-12.supply_fan.vfd.fanSpeedCommand" .
-exg3612:00068 a g36:BinaryOut ;
+exg3612:00067 a g36:BinaryOut ;
     rdfs:label "A-12.supply_fan.vfd.fanStart" .
-exg3612:00069 a s223:Connection ;
+exg3612:00068 a s223:Connection ;
     s223:connectsAt exg3612:00052,
         exg3612:00062 ;
     s223:hasMedium s223:Medium-Air .
-exg3612:00070 a s223:Device,
-        s223:Fan,
+exg3612:00069 a s223:Device,
+        exg3612:ThisFan,
         exg3612:VFDFan ;
     rdfs:label "A-12.return_fan" ;
-    s223:airInlet exg3612:00071 ;
-    s223:airOutlet exg3612:00072 ;
-    s223:contains exg3612:00074 ;
-    s223:electricalInlet exg3612:00073 ;
-    s223:hasConnectionPoint exg3612:00071,
-        exg3612:00072,
-        exg3612:00073 ;
-    s223:hasProperty exg3612:00075,
-        exg3612:00076,
-        exg3612:00077 ;
-    exg3612:fanSpeedCommand exg3612:00076 ;
-    exg3612:fanStart exg3612:00077 ;
-    exg3612:fanStatus exg3612:00075 .
-exg3612:00071 a s223:ConnectionPoint,
+    s223:contains exg3612:00072 ;
+    s223:hasConnectionPoint exg3612:00070,
+        exg3612:00071 ;
+    s223:hasProperty exg3612:00073,
+        exg3612:00074,
+        exg3612:00075 ;
+    exg3612:airInlet exg3612:00070 ;
+    exg3612:airOutlet exg3612:00071 ;
+    exg3612:fanSpeedCommand exg3612:00074 ;
+    exg3612:fanStart exg3612:00075 ;
+    exg3612:fanStatus exg3612:00073 .
+exg3612:00070 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.return_fan.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-exg3612:00072 a s223:ConnectionPoint,
+exg3612:00071 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-12.return_fan.airOutlet" ;
-    s223:connectsThrough exg3612:00083 ;
+    s223:connectsThrough exg3612:00081 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-exg3612:00073 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "A-12.return_fan.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Electricity .
-exg3612:00074 a s223:Device,
+exg3612:00072 a s223:Device,
         exg3612:VFD ;
     rdfs:label "A-12.return_fan.vfd" ;
-    s223:hasProperty exg3612:00075,
-        exg3612:00076,
-        exg3612:00077 ;
-    exg3612:fanSpeedCommand exg3612:00076 ;
-    exg3612:fanStart exg3612:00077 ;
-    exg3612:fanStatus exg3612:00075 .
-exg3612:00075 a g36:BinaryIn ;
+    s223:hasProperty exg3612:00073,
+        exg3612:00074,
+        exg3612:00075 ;
+    exg3612:fanSpeedCommand exg3612:00074 ;
+    exg3612:fanStart exg3612:00075 ;
+    exg3612:fanStatus exg3612:00073 .
+exg3612:00073 a g36:BinaryIn ;
     rdfs:label "A-12.return_fan.vfd.fanStatus" .
-exg3612:00076 a g36:AnalogOut ;
+exg3612:00074 a g36:AnalogOut ;
     rdfs:label "A-12.return_fan.vfd.fanSpeedCommand" .
-exg3612:00077 a g36:BinaryOut ;
+exg3612:00075 a g36:BinaryOut ;
     rdfs:label "A-12.return_fan.vfd.fanStart" .
-exg3612:00078 a s223:Device,
+exg3612:00076 a s223:Device,
         exg3612:Damper ;
     rdfs:label "A-12.exhaust_air_damper" ;
-    s223:contains exg3612:00081 ;
-    s223:hasConnectionPoint exg3612:00079,
-        exg3612:00080 ;
-    s223:hasProperty exg3612:00082 ;
-    exg3612:airInlet exg3612:00079 ;
-    exg3612:airOutlet exg3612:00080 ;
-    exg3612:position exg3612:00082 .
-exg3612:00079 a s223:ConnectionPoint,
+    s223:contains exg3612:00079 ;
+    s223:hasConnectionPoint exg3612:00077,
+        exg3612:00078 ;
+    s223:hasProperty exg3612:00080 ;
+    exg3612:airInlet exg3612:00077 ;
+    exg3612:airOutlet exg3612:00078 ;
+    exg3612:position exg3612:00080 .
+exg3612:00077 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.exhaust_air_damper.airInlet" ;
-    s223:connectsThrough exg3612:00083 ;
+    s223:connectsThrough exg3612:00081 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-exg3612:00080 a s223:ConnectionPoint,
+exg3612:00078 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-12.exhaust_air_damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-exg3612:00081 a s223:Device,
+exg3612:00079 a s223:Device,
         exg3612:DamperPositioner ;
     rdfs:label "A-12.exhaust_air_damper.damper_positioner" ;
-    s223:hasProperty exg3612:00082 ;
-    exg3612:position exg3612:00082 .
-exg3612:00082 a g36:AnalogOut ;
+    s223:hasProperty exg3612:00080 ;
+    exg3612:position exg3612:00080 .
+exg3612:00080 a g36:AnalogOut ;
     rdfs:label "A-12.exhaust_air_damper.damper_positioner.position" .
-exg3612:00083 a s223:Connection ;
+exg3612:00081 a s223:Connection ;
     rdfs:label "A-12.return_air" ;
     s223:connectsAt exg3612:00016,
-        exg3612:00072,
-        exg3612:00079 ;
+        exg3612:00071,
+        exg3612:00077 ;
     s223:hasMedium s223:Medium-Air .

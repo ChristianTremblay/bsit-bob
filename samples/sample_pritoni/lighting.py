@@ -31,7 +31,6 @@ ld.bathroom_movement.hasMeasurementLocation = ls.bathroom_lightspace
 ld.bathroom_movement.hasPhysicalLocation = ps.bathroom
 
 
-
 ld.openofficeEast_luminaire_1.lightOutlet >> ld.openofficeEast_light_conn
 ld.openofficeEast_luminaire_2.lightOutlet >> ld.openofficeEast_light_conn
 ld.openofficeEast_light_conn >> ls.openofficeEast_lightspace.lightInlet
