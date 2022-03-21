@@ -3,12 +3,10 @@
 @prefix ex29: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
-@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
-@prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 <http://data.ashrae.org/standard223/1.0/data/test_connection-007>
   a owl:Ontology ;
@@ -126,7 +124,7 @@ ex29:00016 a s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 1" ;
     s223:airTransfer ex29:00019 ;
-    s223:connectedThrough ex29:00079 ;
+    s223:connectedThrough ex29:00069 ;
     s223:doors ex29:00020 ;
     s223:ductAirInlet ex29:00017 ;
     s223:ductAirOutlet ex29:00018 ;
@@ -150,11 +148,11 @@ ex29:00017 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00016 ;
-    s223:lnx ex29:00077 .
+    s223:lnx ex29:00067 .
 ex29:00018 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Office 1.ductAirOutlet" ;
-    s223:connectsThrough ex29:00079 ;
+    s223:connectsThrough ex29:00069 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00016 .
@@ -259,7 +257,7 @@ ex29:00032 a s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 2" ;
     s223:airTransfer ex29:00035 ;
-    s223:connectedThrough ex29:00079 ;
+    s223:connectedThrough ex29:00069 ;
     s223:doors ex29:00036 ;
     s223:ductAirInlet ex29:00033 ;
     s223:ductAirOutlet ex29:00034 ;
@@ -283,11 +281,11 @@ ex29:00033 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00032 ;
-    s223:lnx ex29:00078 .
+    s223:lnx ex29:00068 .
 ex29:00034 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Office 2.ductAirOutlet" ;
-    s223:connectsThrough ex29:00079 ;
+    s223:connectsThrough ex29:00069 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00032 .
@@ -466,14 +464,14 @@ ex29:00057 a s223:InletZoneConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isZoneConnectionPointOf ex29:00056 ;
-    s223:mapsTo ex29:00075 .
+    s223:mapsTo ex29:00065 .
 ex29:00058 a s223:OutletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isZoneConnectionPointOf ex29:00056 ;
-    s223:mapsTo ex29:00079 .
+    s223:mapsTo ex29:00069 .
 ex29:00059 a s223:Device,
         s223:Fan ;
     rdfs:label "Supply Fan" ;
@@ -494,111 +492,51 @@ ex29:00061 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00059 ;
-    s223:lnx ex29:00076 .
-ex29:00062 a p223:Amps,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:ElectricCurrent ;
-    p223:unit unit:A .
-ex29:00063 a p223:RPM,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:AngularVolocity ;
-    p223:unit unit:REV-PER-MIN .
-ex29:00064 a p223:HP,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:Power ;
-    p223:unit unit:HP .
-ex29:00065 a p223:ElectricPowerkW,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:Power ;
-    p223:unit unit:KiloW .
-ex29:00066 a p223:PowerFactor,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:PowerFactor ;
-    p223:unit unit:UNITLESS .
-ex29:00067 a s223:Device,
+    s223:lnx ex29:00066 .
+ex29:00062 a s223:Device,
         s223:Fan ;
     rdfs:label "Return Fan" ;
-    s223:airInlet ex29:00068 ;
-    s223:airOutlet ex29:00069 ;
-    s223:connectedThrough ex29:00079 ;
-    s223:hasConnectionPoint ex29:00068,
-        ex29:00069 ;
+    s223:airInlet ex29:00063 ;
+    s223:airOutlet ex29:00064 ;
+    s223:connectedThrough ex29:00069 ;
+    s223:hasConnectionPoint ex29:00063,
+        ex29:00064 ;
     s223:hasPhysicalLocation ex29:00007 .
-ex29:00068 a s223:ConnectionPoint,
+ex29:00063 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Return Fan.airInlet" ;
-    s223:connectsThrough ex29:00079 ;
+    s223:connectsThrough ex29:00069 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00067 .
-ex29:00069 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex29:00062 .
+ex29:00064 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Return Fan.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00067 .
-ex29:00070 a p223:Amps,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:ElectricCurrent ;
-    p223:unit unit:A .
-ex29:00071 a p223:RPM,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:AngularVolocity ;
-    p223:unit unit:REV-PER-MIN .
-ex29:00072 a p223:HP,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:Power ;
-    p223:unit unit:HP .
-ex29:00073 a p223:ElectricPowerkW,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:Power ;
-    p223:unit unit:KiloW .
-ex29:00074 a p223:PowerFactor,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    p223:hasQuantityKind quantitykind:PowerFactor ;
-    p223:unit unit:UNITLESS .
-ex29:00075 a s223:Junction ;
+    s223:isConnectionPointOf ex29:00062 .
+ex29:00065 a s223:Junction ;
     rdfs:label "J1" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:lnx ex29:00076,
-        ex29:00077,
-        ex29:00078 .
-ex29:00076 a s223:Segment ;
+    s223:lnx ex29:00066,
+        ex29:00067,
+        ex29:00068 .
+ex29:00066 a s223:Segment ;
     s223:lnx ex29:00061,
-        ex29:00075 .
-ex29:00077 a s223:Segment ;
+        ex29:00065 .
+ex29:00067 a s223:Segment ;
     s223:lnx ex29:00017,
-        ex29:00075 .
-ex29:00078 a s223:Segment ;
+        ex29:00065 .
+ex29:00068 a s223:Segment ;
     s223:lnx ex29:00033,
-        ex29:00075 .
-ex29:00079 a s223:Connection ;
+        ex29:00065 .
+ex29:00069 a s223:Connection ;
     rdfs:label "RETURN-AIR" ;
     s223:connectsAt ex29:00018,
         ex29:00034,
-        ex29:00068 ;
+        ex29:00063 ;
     s223:connectsFrom ex29:00016,
         ex29:00032 ;
-    s223:connectsTo ex29:00067 ;
+    s223:connectsTo ex29:00062 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Air returns from zone here" .

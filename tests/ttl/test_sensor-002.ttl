@@ -299,21 +299,13 @@ ex29:00037 a p223:DifferentialStaticPressureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TPD-01" ;
-    p223:dryContactOutlet ex29:00038 ;
     p223:hasMeasurementLocationHigh ex29:00009 ;
     p223:hasMeasurementLocationLow ex29:00025 ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex29:00039 ;
-    s223:hasConnectionPoint ex29:00038 ;
+    p223:observesProperty ex29:00038 ;
     s223:hasPhysicalLocation ex29:00036 ;
     rdfs:comment "Static Pressure between Clean Room (+) and SAS (-)" .
-ex29:00038 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "TPD-01.dryContactOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-OnOffSignal ;
-    s223:isConnectionPointOf ex29:00037 .
-ex29:00039 a p223:DifferentialStaticPressure,
+ex29:00038 a p223:DifferentialStaticPressure,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
@@ -323,7 +315,7 @@ ex29:00039 a p223:DifferentialStaticPressure,
     p223:hasQuantityKind quantitykind:ForcePerArea ;
     p223:measuresMedium s223:Medium-Air ;
     p223:unit unit:PA ;
-    s223:hasExternalReference ex29:00040 .
-ex29:00040 a ref:hasExternalReference ;
+    s223:hasExternalReference ex29:00039 .
+ex29:00039 a ref:hasExternalReference ;
     rdfs:label "TPD-01.DifferentialStaticPressure.ExternalReference" ;
     s223:hasRef "bacnet://570005/analog-input,10084/present-value" .
