@@ -55,8 +55,8 @@ class BACnetVendorId(BacnetProperty):
     node_type: URIRef = bacnet["vendor-id"]
 
 
-class BACnetObjectId(BacnetProperty):
-    node_type: URIRef = bacnet["object-identifier"]
+class BACnetObjectInstance(BacnetProperty):
+    node_type: URIRef = bacnet["object-instance"]
 
 
 class BACnetObjectOf(BacnetProperty):
@@ -91,7 +91,7 @@ class BACnetDevice(Node):
 
 class BACnetReference(ExternalReference):
     node_type: URIRef = ref.BacnetReference
-    objectId: BACnetObjectId
+    objectInstance: BACnetObjectInstance
     objectOf: BACnetObjectOf
     objectName: BacnetObjectName
     description: BACnetDescription

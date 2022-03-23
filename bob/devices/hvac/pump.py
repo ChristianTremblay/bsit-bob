@@ -1,6 +1,8 @@
 from rdflib import URIRef
 from typing import Dict
 
+from ...properties.states import OnOffStatus
+
 from ...properties.force import HP
 
 from ...properties.ratio import RPM
@@ -36,9 +38,17 @@ class Pump(Device):
     hp: HP
     kW: ElectricPowerkW
     powerFactor: PowerFactor
+    hasOnOffStatus: OnOffStatus
 
     def __init__(self, config: Dict = None, **kwargs):
-        optional_properties = ["amps", "rpm", "hp", "kW", "powerFactor"]
+        optional_properties = [
+            "amps",
+            "rpm",
+            "hp",
+            "kW",
+            "powerFactor",
+            "hasOnOffStatus",
+        ]
         _properties = {}
         if not config and not kwargs:
             raise ValueError(

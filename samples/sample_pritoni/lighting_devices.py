@@ -1,5 +1,6 @@
 from bob.devices.lighting.light import *
 from bob.connections.light import *
+from bob.externalreference.bacnet import BACnetReference
 from bob.sensor.movement import OccupancySensor
 import lighting_spaces as ls
 import physical_spaces as ps
@@ -108,6 +109,7 @@ openofficeEast_luminaire_1 = Luminaire(
     comment="Luminaire #1 in OpenOffice East",
     hasPhysicalLocation=ps.openoffice,
     brightnessRatio=0,
+    hasOnOffStatus=OnOffStatus(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
     electricalPower=13,
 )

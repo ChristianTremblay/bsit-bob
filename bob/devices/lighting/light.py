@@ -3,8 +3,9 @@ from typing import Any, Dict
 from rdflib import URIRef
 from bob.properties.electricity import ElectricPowerW
 
-from bob.properties.light import Brightness
-from bob.properties.ratio import Percent, PercentCommand
+from ...properties.light import Brightness
+from ...properties.ratio import Percent, PercentCommand
+from ...properties.states import OnOffStatus
 
 from ...devices import contains_devices_list
 
@@ -35,6 +36,7 @@ class Luminaire(Device):
     lightOutlet: LightVisibleOutletConnectionPoint
     brightness: Brightness
     brightnessRatio: PercentCommand
+    hasOnOffStatus: OnOffStatus
     electricalPower: ElectricPowerW
 
     def __init__(self, config: Dict = None, **kwargs):

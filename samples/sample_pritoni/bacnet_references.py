@@ -7,6 +7,9 @@ import hvac_devices as hd
 ld.openofficeEast_luminaire_1.brightnessRatio.hasExternalReference = BACnetReference(
     uri=URIRef("bacnet://2/analog-input,1")
 )
+ld.openofficeEast_luminaire_1.hasOnOffStatus.hasExternalReference = BACnetReference(
+    uri=URIRef("bacnet://2/binary-input,1")
+)
 
 # An HVAC BACnet device
 CGM_2_004 = BACnetDevice(
@@ -40,7 +43,7 @@ VAV_2_006 = BACnetDevice(
 )
 
 rat = BACnetReference(
-    objectId=1209,
+    objectInstance=1209,
     objectOf=CGM_2_004,
     objectName="RA-T",
     description="Return Air Temeprature",
@@ -48,7 +51,7 @@ rat = BACnetReference(
 )
 
 dat = BACnetReference(
-    objectId=1210,
+    objectInstance=1210,
     objectOf=CGM_2_004,
     objectName="DA-T",
     description="Discharge Air Temperature",
@@ -56,7 +59,7 @@ dat = BACnetReference(
 )
 
 zn1_t = BACnetReference(
-    objectId=1002,
+    objectInstance=1002,
     objectOf=VAV_2_005,
     objectName="ZN1-T",
     description="Zone 1 Temperature",
@@ -64,7 +67,7 @@ zn1_t = BACnetReference(
 )
 
 zn2_t = BACnetReference(
-    objectId=1002,
+    objectInstance=1002,
     objectOf=VAV_2_006,
     objectName="ZN2-T",
     description="Zone 2 Temperature",
