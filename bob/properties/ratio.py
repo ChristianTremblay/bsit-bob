@@ -1,12 +1,17 @@
 from rdflib import URIRef
 
-from ..property import QuantifiableObservableProperty
+from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 from ..core import quantitykind, unit, p223
 
 __namespace__ = p223
 
 
 class Percent(QuantifiableObservableProperty):
+    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
+    unit: URIRef = unit.Percent
+
+
+class PercentCommand(QuantifiableActuatableProperty):
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     unit: URIRef = unit.Percent
 

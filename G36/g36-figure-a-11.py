@@ -65,6 +65,7 @@ class VFD(Device):
     fanSpeedCommand = AnalogOut
     fanStart = BinaryOut
 
+
 class VFDFan(Fan):
     # airInlet: AirInletConnectionPoint - inherits from Fan
     # airOutlet: AirOutletConnectionPoint - inherits from Fan

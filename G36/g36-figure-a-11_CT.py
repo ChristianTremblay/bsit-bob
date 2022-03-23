@@ -20,6 +20,7 @@ from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.coil import HotWaterCoil
 from bob.devices.hvac.valve import HotWaterValve
 from bob.devices.hvac.stats import HighStaticPressureStat
+from bob.externalreference.bacnet import BACnetReference
 from bob.sensor.fire import SmokeDetectionSensor
 
 from bob.sensor.pressure import DifferentialStaticPressureSensor
@@ -82,9 +83,7 @@ rat = AirTemperatureSensor(
 dpt1 = DifferentialStaticPressureSensor(
     label="DPT1", comment="Filter differential Pressure sensor"
 )
-dps = HighStaticPressureStat(
-    label="DPS", comment="High Static Pressure Stat"
-)
+dps = HighStaticPressureStat(label="DPS", comment="High Static Pressure Stat")
 
 
 sd = SmokeDetectionSensor(label="SD", comment="Smoke Detector in discharge air")
@@ -94,11 +93,14 @@ dpt2 = DifferentialStaticPressureSensor(
 )
 
 # BACnet Stuff
-dps.sensor.measure.hasExternalReference = "bacnet://2/binary-output/1"
-rat.measure.hasExternalReference = "bacnet://2/analog-input/1"
-dat.measure.hasExternalReference = "bacnet://2/analog-input/2"
-dpt1.measure.hasExternalReference = "bacnet://2/analog-input/3"
-dpt2.measure.hasExternalReference = "bacnet://2/analog-input/4"
+dps.sensor.measure.hasExternalReference = BACnetReference(
+    uri="bacnet://2/binary-output/1"
+)
+rat.measure.hasExternalReference = BACnetReference(uri="bacnet://2/analog-input/1")
+dat.measure.hasExternalReference = BACnetReference(uri="bacnet://2/analog-input/2")
+dpt1.measure.hasExternalReference = BACnetReference(uri="bacnet://2/analog-input/3")
+dpt2.measure.hasExternalReference = BACnetReference(uri="bacnet://2/analog-input/4")
+
 
 class HighStaticController(System):
     highPressureNO: OnOffSignalSystemInletConnectionPoint
@@ -113,6 +115,7 @@ high_static = HighStaticController(
     comment="This system is the abstraction of control relay, push buttons and pilot light that are triggered by a high static pressure reading after the fan. The push button is the manual reset.",
 )
 high_static > dps
+
 
 class VFDController(System):
     enable: OnOffSignalSystemInletConnectionPoint

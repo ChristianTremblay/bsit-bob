@@ -64,6 +64,7 @@ import hvac
 import lighting
 import electricity
 import occupancy
+import bacnet_references
 
 # Relations between Physical spaces and Domain spaces
 ps.bldg > ps.roof

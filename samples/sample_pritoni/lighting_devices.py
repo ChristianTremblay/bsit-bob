@@ -9,10 +9,14 @@ import physical_spaces as ps
 kitchenette_luminaire_11 = Luminaire(
     label="Luminaire11",
     comment="Luminaire in kitchenette #11",
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=100,
 )
 kitchenette_luminaire_12 = Luminaire(
     label="Luminaire12",
     comment="Luminaire in kitchenette #12",
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=100,
 )
 kitchenette_movement = OccupancySensor(
     label="OccSensor5",
@@ -28,11 +32,15 @@ privateoffice_luminaire_7 = Luminaire(
     label="Luminaire7",
     comment="Luminaire #7 in Private Office",
     hasPhysicalLocation=ps.private_office,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=60,
 )
 privateoffice_luminaire_8 = Luminaire(
     label="Luminaire8",
     comment="Luminaire #8 in Private Office",
     hasPhysicalLocation=ps.private_office,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=60,
 )
 privateoffice_movement = MovementSensor(
     label="OccSensor3",
@@ -53,11 +61,15 @@ corridor_luminaire_9 = Luminaire(
     label="Luminaire9",
     comment="Luminaire #9 in Corridor",
     hasPhysicalLocation=ps.corridor,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=100,
 )
 corridor_luminaire_10 = Luminaire(
     label="Luminaire10",
     comment="Luminaire #10 in Corridor",
     hasPhysicalLocation=ps.corridor,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=100,
 )
 corridor_movement = OccupancySensor(
     label="OccSensor4", comment="Occupancy sensor for Corridor"
@@ -72,11 +84,15 @@ bathroom_luminaire_5 = Luminaire(
     label="Luminaire5",
     comment="Luminaire #5 in Bathroom",
     hasPhysicalLocation=ps.bathroom,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=60,
 )
 bathroom_luminaire_6 = Luminaire(
     label="Luminaire6",
     comment="Luminaire #6 in Bathroom",
     hasPhysicalLocation=ps.bathroom,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=60,
 )
 bathroom_light_conn = LightVisibleConnection(
     label="LightHub_5_6", comment="Needed to connect multiple luminaires to space"
@@ -91,21 +107,30 @@ openofficeEast_luminaire_1 = Luminaire(
     label="Luminaire1",
     comment="Luminaire #1 in OpenOffice East",
     hasPhysicalLocation=ps.openoffice,
+    brightnessRatio=0,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=13,
 )
 openofficeEast_luminaire_2 = Luminaire(
     label="Luminaire2",
     comment="Luminaire #2 in OpenOffice East",
     hasPhysicalLocation=ps.openoffice,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=13,
 )
 openofficeWest_luminaire_3 = Luminaire(
     label="Luminaire3",
     comment="Luminaire #3 in OpenOffice West",
     hasPhysicalLocation=ps.openoffice,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=13,
 )
 openofficeWest_luminaire_4 = Luminaire(
     label="Luminaire4",
     comment="Luminaire #4 in OpenOffice West",
     hasPhysicalLocation=ps.openoffice,
+    electricalInlet=Electricity_120V_60HzInletConnectionPoint,
+    electricalPower=13,
 )
 # openofficeEast_luminaire_1.lightOutlet >> openofficeEast_lightspace.lightInlet
 openofficeEast_light_conn = LightVisibleConnection(
