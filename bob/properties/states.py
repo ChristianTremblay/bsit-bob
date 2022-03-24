@@ -1,4 +1,3 @@
-from msilib.schema import Property
 from rdflib import URIRef
 
 from ..property import ActuatableProperty, ObservableProperty
