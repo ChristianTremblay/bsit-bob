@@ -1097,11 +1097,20 @@ class System(Node):
             self._data_graph.add((self.node, s223.contains, other.node))
             if INCLUDE_INVERSE:
                 self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        elif isinstance(other, Zone):
+            self._data_graph.add((self.node, s223.servesZone, other.node))
+            if INCLUDE_INVERSE:
+                self._data_graph.add((other.node, s223.isServedBy, self.node))
         elif isinstance(other, list):
             for each in other:
-                self._data_graph.add((self.node, s223.contains, each.node))
-                if INCLUDE_INVERSE:
-                    self._data_graph.add((each.node, s223.isContainedIn, self.node))
+                if isinstance(each, Zone):
+                    self._data_graph.add((self.node, s223.servesZone, each.node))
+                    if INCLUDE_INVERSE:
+                        self._data_graph.add((each.node, s223.isServedBy, self.node))
+                else:
+                    self._data_graph.add((self.node, s223.contains, each.node))
+                    if INCLUDE_INVERSE:
+                        self._data_graph.add((each.node, s223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
 
