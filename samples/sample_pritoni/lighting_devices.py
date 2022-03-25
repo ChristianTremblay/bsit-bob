@@ -64,6 +64,7 @@ corridor_luminaire_9 = Luminaire(
     hasPhysicalLocation=ps.corridor,
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
     electricalPower=100,
+    hasOnOffStatus=OnOffStatus(hasValue=1),
 )
 corridor_luminaire_10 = Luminaire(
     label="Luminaire10",
@@ -71,6 +72,7 @@ corridor_luminaire_10 = Luminaire(
     hasPhysicalLocation=ps.corridor,
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
     electricalPower=100,
+    hasOnOffStatus=OnOffStatus(hasValue=1),
 )
 corridor_movement = OccupancySensor(
     label="OccSensor4", comment="Occupancy sensor for Corridor"
@@ -87,6 +89,7 @@ bathroom_luminaire_5 = Luminaire(
     hasPhysicalLocation=ps.bathroom,
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
     electricalPower=60,
+    hasOnOffStatus=OnOffStatus(hasValue=0),
 )
 bathroom_luminaire_6 = Luminaire(
     label="Luminaire6",
