@@ -25,25 +25,17 @@ class MotorStarter(Device):
     hasOnOffCommand: OnOffCommand
 
     def __init__(self, **kwargs):
-        _electricalInlet = (
-            kwargs.pop("electricalInlet") if "electricalInlet" in kwargs else None
-        )
-        _electricalOutlet = (
-            kwargs.pop("electricalOutlet") if "electricalOutlet" in kwargs else None
-        )
+        _electricalInlet = kwargs.pop("electricalInlet", None)
+        _electricalOutlet = kwargs.pop("electricalOutlet", None)
         if not _electricalInlet or not _electricalOutlet:
-            raise ValueError("Provide electrical Inlet and Outlet")
+            raise ValueError("Provide electricalInlet and electricalOutlet")
 
         super().__init__(**kwargs)
-        self.electricalInlet = (
-            _electricalInlet(self, label=f"{self.label}.electricalInlet")
-            if _electricalInlet
-            else None
+        self.electricalInlet = _electricalInlet(
+            self, label=f"{self.label}.electricalInlet"
         )
-        self.electricalOutlet = (
-            _electricalOutlet(self, label=f"{self.label}.electricalOutlet")
-            if _electricalOutlet
-            else None
+        self.electricalOutlet = _electricalOutlet(
+            self, label=f"{self.label}.electricalOutlet"
         )
 
         self.sensor = CurrentSwitch(

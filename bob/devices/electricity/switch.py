@@ -24,11 +24,7 @@ class CurrentSwitch(Device):
 
     def __init__(self, **kwargs):
         _measuresMedium = kwargs.pop("measuresMedium")
-        _hasMeasurementLocation = (
-            kwargs.pop("hasMeasurementLocation")
-            if "hasMeasurementLocation" in kwargs
-            else None
-        )
+        _hasMeasurementLocation = kwargs.pop("hasMeasurementLocation", None)
         _label = kwargs["label"]
 
         super().__init__(**kwargs)
