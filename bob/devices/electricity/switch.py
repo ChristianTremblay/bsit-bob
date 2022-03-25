@@ -24,12 +24,13 @@ class CurrentSwitch(Device):
 
     def __init__(self, **kwargs):
         _measuresMedium = kwargs.pop("measuresMedium")
-        _label = kwargs["label"]
         _hasMeasurementLocation = (
             kwargs.pop("hasMeasurementLocation")
             if "hasMeasurementLocation" in kwargs
             else None
         )
+        _label = kwargs["label"]
+
         super().__init__(**kwargs)
         self.sensor = CurrentBinarySensor(
             label=_label + "CurrentBinarySensor",

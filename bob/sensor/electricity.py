@@ -176,7 +176,6 @@ def create_3phases_meter_sensors(
 
 
 class CurrentBinarySensor(Sensor):
-    measuresMedium: Medium = Electricity
     observesProperty: PropertyReference  # DifferentialStaticPressure
     hasMeasurementLocation: Node
 

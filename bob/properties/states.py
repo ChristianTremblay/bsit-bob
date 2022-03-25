@@ -1,7 +1,7 @@
 from rdflib import URIRef
 
 from ..property import ActuatableProperty, ObservableProperty
-from ..core import EnumerationKind, ExternalReference, quantitykind, unit, p223
+from ..core import EnumerationKind, ExternalReference, Medium, quantitykind, unit, p223
 
 __namespace__ = p223
 
@@ -13,4 +13,10 @@ __namespace__ = p223
 
 class OnOffStatus(ObservableProperty):
     node_type: URIRef = p223.OnOffStatus
+    hasExternalReference: ExternalReference
+    measuresMedium: Medium
+
+
+class OnOffCommand(ActuatableProperty):
+    node_type: URIRef = p223.OnOffCommand
     hasExternalReference: ExternalReference

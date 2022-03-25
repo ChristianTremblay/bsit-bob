@@ -1,6 +1,6 @@
 from rdflib import URIRef
 from typing import Dict
-from ...properties.states import OnOffStatus
+from ...properties.states import OnOffCommand, OnOffStatus
 
 from ...property import QuantifiableObservableProperty
 from ...connections.electricity import ElectricalInletConnectionPoint
@@ -46,6 +46,7 @@ class Fan(Device):
     kW: ElectricPowerkW
     powerFactor: PowerFactor
     hasOnOffStatus: OnOffStatus
+    hasOnOffCommand: OnOffCommand
 
     def __init__(self, config: Dict = None, **kwargs):
         optional_properties = [
