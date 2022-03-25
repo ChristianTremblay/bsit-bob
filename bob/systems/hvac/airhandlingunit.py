@@ -40,8 +40,8 @@ class AirHandlingUnit(System):
         devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
-        for sensor in sensors:
-            self > sensor
+        # for sensor in sensors:
+        #    self > sensor
         for dev in devices:
             self > dev
         self._contains = devices
