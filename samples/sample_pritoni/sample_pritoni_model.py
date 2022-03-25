@@ -64,6 +64,7 @@ import hvac
 import lighting
 import electricity
 import occupancy
+import bacnet_references
 
 # Relations between Physical spaces and Domain spaces
 ps.bldg > ps.roof
@@ -88,5 +89,3 @@ ps.kitchenette > ls.kitchenette_lightspace
 ps.kitchenette > os.kitchenette_occ_space
 
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
-
-

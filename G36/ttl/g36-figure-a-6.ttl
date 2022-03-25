@@ -8,10 +8,10 @@ exg3606:00001 a s223:System,
     s223:contains exg3606:00007,
         exg3606:00011,
         exg3606:00016,
-        exg3606:00024 ;
+        exg3606:00023 ;
     s223:hasProperty exg3606:00008,
         exg3606:00015,
-        exg3606:00030 ;
+        exg3606:00029 ;
     s223:hasSystemConnectionPoint exg3606:00002,
         exg3606:00003,
         exg3606:00004,
@@ -20,7 +20,7 @@ exg3606:00001 a s223:System,
     exg3606:damperPosition exg3606:00015 ;
     exg3606:hwInlet exg3606:00005 ;
     exg3606:hwOutlet exg3606:00006 ;
-    exg3606:hwValvePosition exg3606:00030 ;
+    exg3606:hwValvePosition exg3606:00029 ;
     exg3606:returnAirInlet exg3606:00003 ;
     exg3606:supplyAirFlow exg3606:00008 ;
     exg3606:supplyAirInlet exg3606:00002 ;
@@ -36,25 +36,25 @@ exg3606:00003 a s223:InletSystemConnectionPoint,
     rdfs:label "A-6.returnAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo exg3606:00033 .
+    s223:mapsTo exg3606:00032 .
 exg3606:00004 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-6.supplyAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo exg3606:00026 .
+    s223:mapsTo exg3606:00025 .
 exg3606:00005 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-6.hwInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:mapsTo exg3606:00027 .
+    s223:mapsTo exg3606:00026 .
 exg3606:00006 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-6.hwOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:mapsTo exg3606:00028 .
+    s223:mapsTo exg3606:00027 .
 exg3606:00007 a s223:Device,
         exg3606:AirFlowStation ;
     rdfs:label "A-6.air_flow_station" ;
@@ -96,7 +96,7 @@ exg3606:00013 a s223:ConnectionPoint,
     rdfs:label "A-6.damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:lnx exg3606:00034 .
+    s223:lnx exg3606:00033 .
 exg3606:00014 a s223:Device,
         exg3606:DamperPositioner ;
     rdfs:label "A-6.damper.damper_positioner" ;
@@ -110,99 +110,92 @@ exg3606:00016 a s223:Device,
     rdfs:label "A-6.fan" ;
     s223:airInlet exg3606:00017 ;
     s223:airOutlet exg3606:00018 ;
-    s223:contains exg3606:00020 ;
-    s223:electricalInlet exg3606:00019 ;
+    s223:contains exg3606:00019 ;
     s223:hasConnectionPoint exg3606:00017,
-        exg3606:00018,
-        exg3606:00019 .
+        exg3606:00018 .
 exg3606:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-6.fan.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:lnx exg3606:00035 .
+    s223:lnx exg3606:00034 .
 exg3606:00018 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-6.fan.airOutlet" ;
-    s223:connectsThrough exg3606:00032 ;
+    s223:connectsThrough exg3606:00031 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-exg3606:00019 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "A-6.fan.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Electricity .
-exg3606:00020 a s223:Device,
+exg3606:00019 a s223:Device,
         exg3606:ECM ;
     rdfs:label "A-6.fan.ecm" ;
-    s223:hasProperty exg3606:00021,
-        exg3606:00022,
-        exg3606:00023 ;
-    exg3606:fanSpeedCommand exg3606:00023 ;
-    exg3606:fanSpeedFeedback exg3606:00022 ;
-    exg3606:fanStart exg3606:00021 .
-exg3606:00021 a g36:BinaryOut ;
+    s223:hasProperty exg3606:00020,
+        exg3606:00021,
+        exg3606:00022 ;
+    exg3606:fanSpeedCommand exg3606:00022 ;
+    exg3606:fanSpeedFeedback exg3606:00021 ;
+    exg3606:fanStart exg3606:00020 .
+exg3606:00020 a g36:BinaryOut ;
     rdfs:label "A-6.fan.ecm.fanStart" .
-exg3606:00022 a g36:AnalogIn ;
+exg3606:00021 a g36:AnalogIn ;
     rdfs:label "A-6.fan.ecm.fanSpeedFeedback" .
-exg3606:00023 a g36:AnalogOut ;
+exg3606:00022 a g36:AnalogOut ;
     rdfs:label "A-6.fan.ecm.fanSpeedCommand" .
-exg3606:00024 a s223:Device,
+exg3606:00023 a s223:Device,
         exg3606:HotWaterCoil ;
     rdfs:label "A-6.hot_water_coil" ;
-    s223:contains exg3606:00029,
-        exg3606:00031 ;
-    s223:hasConnectionPoint exg3606:00025,
+    s223:contains exg3606:00028,
+        exg3606:00030 ;
+    s223:hasConnectionPoint exg3606:00024,
+        exg3606:00025,
         exg3606:00026,
-        exg3606:00027,
-        exg3606:00028 ;
-    s223:hasProperty exg3606:00030 ;
-    exg3606:airInlet exg3606:00025 ;
-    exg3606:airOutlet exg3606:00026 ;
-    exg3606:hwInlet exg3606:00027 ;
-    exg3606:hwOutlet exg3606:00028 ;
-    exg3606:valvePosition exg3606:00030 .
-exg3606:00025 a s223:ConnectionPoint,
+        exg3606:00027 ;
+    s223:hasProperty exg3606:00029 ;
+    exg3606:airInlet exg3606:00024 ;
+    exg3606:airOutlet exg3606:00025 ;
+    exg3606:hwInlet exg3606:00026 ;
+    exg3606:hwOutlet exg3606:00027 ;
+    exg3606:valvePosition exg3606:00029 .
+exg3606:00024 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-6.hot_water_coil.airInlet" ;
-    s223:connectsThrough exg3606:00032 ;
+    s223:connectsThrough exg3606:00031 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
-exg3606:00026 a s223:ConnectionPoint,
+exg3606:00025 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-6.hot_water_coil.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-exg3606:00027 a s223:ConnectionPoint,
+exg3606:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-6.hot_water_coil.hwInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater .
-exg3606:00028 a s223:ConnectionPoint,
+exg3606:00027 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-6.hot_water_coil.hwOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater .
-exg3606:00029 a s223:Device,
+exg3606:00028 a s223:Device,
         exg3606:ValvePositioner ;
     rdfs:label "A-6.hot_water_coil.damper_positioner" ;
-    s223:hasProperty exg3606:00030 ;
-    exg3606:position exg3606:00030 .
-exg3606:00030 a g36:AnalogOut ;
+    s223:hasProperty exg3606:00029 ;
+    exg3606:position exg3606:00029 .
+exg3606:00029 a g36:AnalogOut ;
     rdfs:label "A-6.hot_water_coil.damper_positioner.position" .
-exg3606:00031 a s223:Device,
+exg3606:00030 a s223:Device,
         exg3606:HotWaterValve ;
     rdfs:label "A-6.hot_water_coil.hot_water_valve" .
-exg3606:00032 a s223:Connection ;
+exg3606:00031 a s223:Connection ;
     s223:connectsAt exg3606:00018,
-        exg3606:00025 ;
+        exg3606:00024 ;
     s223:hasMedium s223:Medium-Air .
-exg3606:00033 a s223:Junction ;
-    s223:lnx exg3606:00034,
-        exg3606:00035 .
-exg3606:00034 a s223:Segment ;
+exg3606:00032 a s223:Junction ;
+    s223:lnx exg3606:00033,
+        exg3606:00034 .
+exg3606:00033 a s223:Segment ;
     s223:lnx exg3606:00013,
-        exg3606:00033 .
-exg3606:00035 a s223:Segment ;
+        exg3606:00032 .
+exg3606:00034 a s223:Segment ;
     s223:lnx exg3606:00017,
-        exg3606:00033 .
+        exg3606:00032 .

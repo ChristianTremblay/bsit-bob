@@ -1,3 +1,4 @@
+from ..properties.states import OnOffStatus
 from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 from rdflib import URIRef
 from typing import Any
@@ -13,7 +14,7 @@ from ..core import (
     Node,
 )
 
-from ..property import QuantifiableProperty
+from ..property import ObservableProperty, QuantifiableProperty
 
 __namespace__ = p223
 
@@ -83,6 +84,7 @@ class CurrentPhaseC(QuantifiableMeasuredProperty):
 
 class Frequency(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.Frequency
+    measuresMedium: Medium  # set from the sensor
     unit: URIRef = unit.HZ
     measuresMedium: Medium  # set from the sensor
     # isObservedBy: Sensor
@@ -90,8 +92,13 @@ class Frequency(QuantifiableMeasuredProperty):
 
 class ElectricalPower(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.ElectricalPower
+    measuresMedium: Medium  # set from the sensor
     unit: URIRef = unit.kW
     # isObservedBy: Sensor
+
+
+class CurrentSwitch(OnOffStatus):
+    measuresMedium: Medium  # set from the sensor
 
 
 class VoltageSensor(Sensor):
@@ -105,17 +112,17 @@ class VoltageSensor(Sensor):
             raise ValueError(
                 "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        _measure = _class(
+        self.measure = _class(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.{_class.__name__}",
             **_measure_kwargs,
         )
-        self.observesProperty = _measure
+        self.observesProperty = self.measure
 
 
-class CurrentSensor(Sensor):
-    observesProperty: PropertyReference  # Voltage
+class CurrentAnalogSensor(Sensor):
+    observesProperty: PropertyReference  # Current
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
@@ -125,13 +132,13 @@ class CurrentSensor(Sensor):
             raise ValueError(
                 "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        _measure = _class(
+        self.measure = _class(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.{_class.__name__}",
             **_measure_kwargs,
         )
-        self.observesProperty = _measure
+        self.observesProperty = self.measure
 
 
 def create_3phases_meter_sensors(
@@ -155,7 +162,7 @@ def create_3phases_meter_sensors(
         )
     for each in current_sensors:
         c_sensors.append(
-            CurrentSensor(
+            CurrentAnalogSensor(
                 label=f"{label}_{each.__name__}",
                 measures=each,
                 measuresMedium=measuresMedium,
@@ -166,3 +173,20 @@ def create_3phases_meter_sensors(
     sensors["current"] = c_sensors
 
     return sensors
+
+
+class CurrentBinarySensor(Sensor):
+    observesProperty: PropertyReference  # DifferentialStaticPressure
+    hasMeasurementLocation: Node
+
+    def __init__(self, **kwargs: Any) -> None:
+        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+
+        super().__init__(**_sensor_kwargs)
+        self.measure = OnOffStatus(
+            measuresMedium=self.measuresMedium,
+            # isObservedBy=self,
+            label=f"{self.label}.CurrentBinarySensor",
+            **_measure_kwargs,
+        )
+        self.observesProperty = self.measure

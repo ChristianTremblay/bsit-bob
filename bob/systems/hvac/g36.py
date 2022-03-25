@@ -1,5 +1,12 @@
 from rdflib import URIRef
 
+from bob.connections.electricity import (
+    ModulationSignalSystemInletConnectionPoint,
+    ModulationSignalSystemOutletConnectionPoint,
+    OnOffSignalSystemInletConnectionPoint,
+    OnOffSignalSystemOutletConnectionPoint,
+)
+
 from ...systems.functionblock import FunctionBlock
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
@@ -11,8 +18,10 @@ from ...connections.air import (
 from ...core import (
     ExternalReference,
     InletConnectionPoint,
+    InletSystemConnectionPoint,
     Outlet,
     OutletConnectionPoint,
+    OutletSystemConnectionPoint,
     System,
     p223,
     enum,
@@ -27,25 +36,20 @@ g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g3
 __namespace__ = g36
 
 
-class G36BlockConnectionPoint(SystemConnectionPoint):
-    pass
-    # find medium...
+class AnalogIn(ModulationSignalSystemInletConnectionPoint):
+    node_type = g36.AnalogIn
 
 
-class AnalogIn(SystemConnectionPoint, InletConnectionPoint):
-    hasExternalReference: ExternalReference
+class AnalogOut(ModulationSignalSystemOutletConnectionPoint):
+    node_type = g36.AnalogOut
 
 
-class AnalogOut(SystemConnectionPoint, OutletConnectionPoint):
-    hasExternalReference: ExternalReference
+class BinaryIn(OnOffSignalSystemInletConnectionPoint):
+    node_type = g36.BinaryIn
 
 
-class BinaryIn(SystemConnectionPoint, InletConnectionPoint):
-    hasExternalReference: ExternalReference
-
-
-class BinaryOut(SystemConnectionPoint, OutletConnectionPoint):
-    hasExternalReference: ExternalReference
+class BinaryOut(OnOffSignalSystemOutletConnectionPoint):
+    node_type = g36.BinaryOut
 
 
 class G36Block(FunctionBlock):
@@ -57,6 +61,8 @@ class G36Block(FunctionBlock):
     and those concept can be modeled using a Function block.
     Function block is then an abstraction of the sequence of
     operation suggested by G36.
+
+    Comment of this block should be the description of the sequence
 
     """
 

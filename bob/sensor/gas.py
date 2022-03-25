@@ -62,13 +62,13 @@ class GasConcentrationSensor(Sensor):
                 "You must provide measuresSubstance property for a gas concentration sensor either in config template or subclass defintion"
             )
 
-        _measure = GasConcentration(
+        self.measure = GasConcentration(
             measuresSubstance=self.measuresSubstance,
             isObservedBy=self,
             label=f"{self.label}.GasConcentration",  # needs more focus
             **_measure_kwargs,
         )
-        self.observesProperty = _measure
+        self.observesProperty = self.measure
 
 
 class CO2Sensor(GasConcentrationSensor):

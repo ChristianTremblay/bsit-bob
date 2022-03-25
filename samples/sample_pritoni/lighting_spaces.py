@@ -1,5 +1,5 @@
 from bob.space.light import *
-    
+
 # Light Spaces
 openofficeEast_lightspace = LightingSpace(
     label="LightingSpace1", comment="OpenOfficeEast.Light"
@@ -7,12 +7,8 @@ openofficeEast_lightspace = LightingSpace(
 openofficeWest_lightspace = LightingSpace(
     label="LightingSpace2", comment="OpenOfficeWest.Light"
 )
-bathroom_lightspace = LightingSpace(
-    label="LightingSpace3", comment="Bathroom.Light"
-)
-corridor_lightspace = LightingSpace(
-    label="LightingSpace5", comment="Corridor.Light"
-)
+bathroom_lightspace = LightingSpace(label="LightingSpace3", comment="Bathroom.Light")
+corridor_lightspace = LightingSpace(label="LightingSpace5", comment="Corridor.Light")
 privateoffice_lightspace = LightingSpace(
     label="LightingSpace4", comment="PrivateOffice.Light"
 )

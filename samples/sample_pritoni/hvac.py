@@ -47,17 +47,14 @@ openoffice_windows = AirConnection(
     comment="There are 2 windows connected to the space, so I use a connection",
 )
 
-hd.window1.outdoor >> outdoor
-hd.window1.indoor >> openoffice_windows
-hd.window1.hasPhysicalLocation = ps.openoffice
-
-hd.window2.outdoor >> outdoor
-hd.window2.indoor >> openoffice_windows
-hd.window2.hasPhysicalLocation = ps.openoffice
-openoffice_windows >> hs.openoffice_hvac.windows
-
-hd.bathroom_exhaust_fan.airInlet << hs.bathroom_hvac
-hd.bathroom_exhaust_fan.airOutlet >> outdoor
+mixedAir = AirConnection(
+    label="MixedAirDuct",
+    comment="Mix bettween return air and outdoor air",
+)
+returnExhaut = AirConnection(
+    label="Return / Exhaust",
+    comment="Paths for return or exhaust",
+)
 
 supplyAir = AirConnection(
     label="SUPPLY-DUCT", comment="Supply Air Duct that feed VAV Boxes 1 & 2"
@@ -67,6 +64,47 @@ returnAir = AirConnection(
     label="RETURN-DUCT", comment="Return Air Duct extracting air from open office"
 )
 
+plenum = AirConnection(
+    label="Plenum",
+    comment="Plenum. It's where Duct Static Pressure Low port is connected",
+)
+
+# AHU
+outdoor >> hd.ahu["OADPR"] >> mixedAir
+hd.ahu["MADPR"] >> mixedAir
+mixedAir >> hd.ahu["FILTER"] >> hd.ahu["HTGCOIL"] >> hd.ahu["CLGCOIL"] >> hd.ahu[
+    "SF"
+] >> supplyAir
+returnAir >> hd.ahu["RF"] >> returnExhaut >> hd.ahu["EADPR"] >> outdoor
+returnExhaut >> hd.ahu["MADPR"]
+
+# AHU Sensors
+hd.ahu["OA-T"].hasMeasurementLocation = outdoor
+hd.ahu["TPD1"].hasMeasurementLocationHigh = hd.ahu["FILTER"].airInlet
+hd.ahu["TPD1"].hasMeasurementLocationLow = hd.ahu["FILTER"].airOutlet
+hd.ahu["HC-T"].hasMeasurementLocation = hd.ahu["HTGCOIL"].airOutlet
+hd.ahu["DA-T"].hasMeasurementLocation = hd.ahu["CLGCOIL"].airOutlet
+hd.ahu["TPD2"].hasMeasurementLocationHigh = hd.ahu["SF"].airOutlet
+hd.ahu["TPD2"].hasMeasurementLocationLow = plenum
+hd.ahu["TPD3"].hasMeasurementLocationHigh = hd.ahu["RF"].airOutlet
+hd.ahu["TPD3"].hasMeasurementLocationLow = plenum
+
+# Windows
+hd.window1.outdoor >> outdoor
+hd.window1.indoor >> openoffice_windows
+hd.window1.hasPhysicalLocation = ps.openoffice
+
+hd.window2.outdoor >> outdoor
+hd.window2.indoor >> openoffice_windows
+hd.window2.hasPhysicalLocation = ps.openoffice
+openoffice_windows >> hs.openoffice_hvac.windows
+
+# Exhaust Fan
+hd.bathroom_exhaust_fan.airInlet << hs.bathroom_hvac
+hd.bathroom_exhaust_fan.airOutlet >> outdoor
+
+
+# VAV Boxes
 # Relationships between devices and positioning sensors
 supplyAir >> hd.vav1["VAV1_damper"].airInlet
 hd.vav1["VAV1_damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet

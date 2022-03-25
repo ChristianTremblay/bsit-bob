@@ -164,25 +164,28 @@ ex:00023 a s223:ConnectionPoint,
 ex:00024 a s223:Device,
         s223:Valve ;
     rdfs:label "Zone-1.VAV.hw_valve" ;
-    s223:hasConnectionPoint ex:00026,
+    s223:hasConnectionPoint ex:00025,
+        ex:00026,
         ex:00027 ;
-    s223:hasProperty ex:00025 ;
-    s223:hotWaterInlet ex:00026 ;
-    s223:hotWaterOutlet ex:00027 ;
-    s223:position ex:00025 .
-ex:00025 a g36:AnalogIn ;
-    rdfs:label "Zone-1.VAV.hw_valve.position" .
-ex:00026 a s223:ConnectionPoint,
+    s223:hotWaterInlet ex:00025 ;
+    s223:hotWaterOutlet ex:00026 ;
+    s223:position ex:00027 .
+ex:00025 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Zone-1.VAV.hw_valve.hotWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater .
-ex:00027 a s223:ConnectionPoint,
+ex:00026 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Zone-1.VAV.hw_valve.hotWaterOutlet" ;
     s223:connectsThrough ex:00030 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater .
+ex:00027 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Zone-1.VAV.hw_valve.position" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-ModulationSignal .
 ex:00028 a s223:Connection ;
     s223:connectsAt ex:00013,
         ex:00017 ;
@@ -193,10 +196,10 @@ ex:00029 a s223:Connection ;
     s223:hasMedium s223:Medium-Air .
 ex:00030 a s223:Connection ;
     s223:connectsAt ex:00022,
-        ex:00027 ;
+        ex:00026 ;
     s223:hasMedium s223:Water-HotWater .
 ex:00031 a g36:AnalogOut ;
-    s223:hasValue "<AnalogIn Zone-1.VAV.hw_valve.position at urn:ex/sample005/00025>" .
+    s223:hasValue "<ModulationSignalInletConnectionPoint Zone-1.VAV.hw_valve.position at urn:ex/sample005/00027>" .
 ex:00032 a s223:Connection ;
     s223:connectsAt ex:00005,
         ex:00021 ;
@@ -352,25 +355,28 @@ ex:00055 a s223:ConnectionPoint,
 ex:00056 a s223:Device,
         s223:Valve ;
     rdfs:label "Zone-2.VAV.hw_valve" ;
-    s223:hasConnectionPoint ex:00058,
+    s223:hasConnectionPoint ex:00057,
+        ex:00058,
         ex:00059 ;
-    s223:hasProperty ex:00057 ;
-    s223:hotWaterInlet ex:00058 ;
-    s223:hotWaterOutlet ex:00059 ;
-    s223:position ex:00057 .
-ex:00057 a g36:AnalogIn ;
-    rdfs:label "Zone-2.VAV.hw_valve.position" .
-ex:00058 a s223:ConnectionPoint,
+    s223:hotWaterInlet ex:00057 ;
+    s223:hotWaterOutlet ex:00058 ;
+    s223:position ex:00059 .
+ex:00057 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Zone-2.VAV.hw_valve.hotWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater .
-ex:00059 a s223:ConnectionPoint,
+ex:00058 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Zone-2.VAV.hw_valve.hotWaterOutlet" ;
     s223:connectsThrough ex:00062 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater .
+ex:00059 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Zone-2.VAV.hw_valve.position" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-ModulationSignal .
 ex:00060 a s223:Connection ;
     s223:connectsAt ex:00045,
         ex:00049 ;
@@ -381,10 +387,10 @@ ex:00061 a s223:Connection ;
     s223:hasMedium s223:Medium-Air .
 ex:00062 a s223:Connection ;
     s223:connectsAt ex:00054,
-        ex:00059 ;
+        ex:00058 ;
     s223:hasMedium s223:Water-HotWater .
 ex:00063 a g36:AnalogOut ;
-    s223:hasValue "<AnalogIn Zone-2.VAV.hw_valve.position at urn:ex/sample005/00057>" .
+    s223:hasValue "<ModulationSignalInletConnectionPoint Zone-2.VAV.hw_valve.position at urn:ex/sample005/00059>" .
 ex:00064 a s223:Connection ;
     s223:connectsAt ex:00037,
         ex:00053 ;

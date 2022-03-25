@@ -3,7 +3,16 @@ from __future__ import annotations
 from typing import Any
 from rdflib import URIRef, util
 
-from ..core import p223, enum, quantitykind, unit, Medium, Air, Substance
+from ..core import (
+    PropertyReference,
+    p223,
+    enum,
+    quantitykind,
+    unit,
+    Medium,
+    Air,
+    Substance,
+)
 
 from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
 
@@ -35,14 +44,14 @@ class ParticulateSensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        _count = ParticulateCount(
+        self.measure = ParticulateCount(
             measuresSubstance=self.measuresSubstance,
             # isObservedBy=self,
             label=f"{self.label}.ParticulateCount",  # needs more focus
             **_measure_kwargs,
         )
 
-        self.observesProperty = _count
+        self.observesProperty = self.measure
 
 
 class UltraFineParticulateSensor(ParticulateSensor):

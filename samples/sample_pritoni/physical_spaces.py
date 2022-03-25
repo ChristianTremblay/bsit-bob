@@ -1,5 +1,5 @@
 from bob.space.physical import *
-    
+
 # Define the building Physical Spaces
 bldg = Building(label="Pritoni Building")
 roof = Roof(label="Roof of building")

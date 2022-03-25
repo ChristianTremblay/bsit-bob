@@ -2,6 +2,7 @@ from bob.connections.electricity import *
 
 import electrical_devices as ed
 import lighting_devices as ld
+import hvac_devices as hd
 
 # Make Electrical connections
 ed.dist_panel_cb1 >> [
@@ -26,3 +27,6 @@ ed.dist_panel_cb5 >> [
     ld.privateoffice_luminaire_7,
     ld.privateoffice_luminaire_8,
 ]
+
+ed.main_panel["CB#2"] >> hd.ahu["SF-STARTER"] >> hd.ahu["SF"]
+ed.main_panel["CB#4"] >> hd.ahu["RF-VFD"] >> hd.ahu["RF"]

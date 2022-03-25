@@ -21,13 +21,18 @@ mainentry_panel_config = {
             "bus_bar": "A",
         },
         ("CB#2", ThreePolesCircuitBreaker): {
-            "comment": "Fans, AHU",
+            "comment": "Supply Fans, AHU",
             "amps": 40,
             "voltage": "575",
         },
         ("CB#3", ThreePolesCircuitBreaker): {
             "comment": "Feeds Transformer to get 120/240",
             "amps": 100,
+            "voltage": "575",
+        },
+        ("CB#4", ThreePolesCircuitBreaker): {
+            "comment": "Return Fans, AHU",
+            "amps": 40,
             "voltage": "575",
         },
     },
@@ -92,7 +97,7 @@ dist_panel = SinglePhaseDistributionPanel(config=distribution_panel_config)
 hq_600 = Electricity_575V_60HzConnection(label="Hydro-Québec", comment="600V")
 hq_600 >> main_panel["MainBreaker"]
 main_panel["CB#3"] >> transformer_120_240 >> dist_panel["MainBreaker"]
-# main_panel['CB#2'] >> Fans...
+
 
 # We need a truff so light breakers will be connected to multiple loads
 dist_panel_cb1 = Electricity_120V_60HzConnection(label="DISTPANEL-CB1")

@@ -5,7 +5,7 @@ from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
 from bob import core
 
-from ..core import s223, p223, quantitykind, unit
+from ..core import ExternalReference, s223, p223, quantitykind, unit
 from ..core import (
     Property,
     PropertyReference,
@@ -84,7 +84,7 @@ class Sensor(Device):
     hasMaxRange: QuantifiableProperty
     hasMinRange: QuantifiableProperty
     measuresMedium: Medium
-    measuresSubstance: Substance
+    measuresSubstance: Substance  # When substance measured different than medium (ex. Gas)
     observesProperty: PropertyReference  ### restrict to MeasuredProperty
 
 

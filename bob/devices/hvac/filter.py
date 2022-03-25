@@ -9,4 +9,3 @@ __namespace__ = p223
 class Filter(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    dp = AnalogOut

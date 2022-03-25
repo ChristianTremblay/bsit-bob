@@ -1,5 +1,5 @@
 from bob.space.hvac import *
-    
+
 # HVAC Spaces
 openoffice_hvac = HVACSpace(label="HVACSpace1", comment="OpenOffice.HVAC")
 bathroom_hvac = HVACSpace(label="HVACSpace2", comment="Bathroom.HVAC")

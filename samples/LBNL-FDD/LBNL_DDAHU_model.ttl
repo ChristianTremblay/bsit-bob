@@ -1,0 +1,864 @@
+# baseURI: http://data.ashrae.org/standard223/data/LBNL_DDAHU_model
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/data/LBNL_DDAHU_model>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/data/LBNL_DDAHU_model> ;
+  rdfs:label "LBNL_DDAHU_model" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+@prefix ex: <http://data.ashrae.org/standard223/data/LBNL_DDAHU_model#> .
+@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+ex:00001 a s223:System,
+        ex:DDAHU ;
+    rdfs:label "DDAHU" ;
+    s223:hasSystemConnectionPoint ex:00002,
+        ex:00003,
+        ex:00004,
+        ex:00005,
+        ex:00006 ;
+    ex:exhaustAirOutlet ex:00006 ;
+    ex:outsideAirInlet ex:00002 ;
+    ex:returnAirInlet ex:00003 ;
+    ex:supplyColdAirOutlet ex:00005 ;
+    ex:supplyHotAirOutlet ex:00004 .
+ex:00002 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.outsideAirInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00010 .
+ex:00003 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.returnAirInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00022 .
+ex:00004 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.supplyHotAirOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00047 .
+ex:00005 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.supplyColdAirOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00087 .
+ex:00006 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.exhaustAirOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00042 .
+ex:00007 a s223:Damper,
+        s223:Device ;
+    rdfs:label "DDAHU.oa_damper" ;
+    s223:airInlet ex:00010 ;
+    s223:airOutlet ex:00011 ;
+    s223:feedback ex:00009 ;
+    s223:hasConnectionPoint ex:00010,
+        ex:00011 ;
+    s223:hasProperty ex:00008,
+        ex:00009 ;
+    s223:position ex:00008 .
+ex:00008 a g36:AnalogOut ;
+    rdfs:label "DDAHU.oa_damper.position" .
+ex:00009 a g36:AnalogIn ;
+    rdfs:label "DDAHU.oa_damper.feedback" .
+ex:00010 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.oa_damper.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00011 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.oa_damper.airOutlet" ;
+    s223:connectsThrough ex:00018 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00012 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.oa_air_temp_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00013 ;
+    s223:hasMeasurementLocation ex:00010 .
+ex:00013 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.oa_air_temp_sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C .
+ex:00014 a p223:AirHumiditySensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.oa_air_humidity_sensor" ;
+    p223:hasQuantityKind quantitykind:RelativeHumidity ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00015 ;
+    s223:hasMeasurementLocation ex:00010 .
+ex:00015 a p223:Humidity,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.oa_air_humidity_sensor.Measure" ;
+    p223:hasQuantityKind quantitykind:RelativeHumidity ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:PERCENT_RH .
+ex:00016 a p223:AirFlowSensor,
+        p223:FlowSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.oa_air_flow_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00017 ;
+    p223:unit unit:FT3-PER-MIN ;
+    s223:hasMeasurementLocation ex:00010 .
+ex:00017 a p223:Flow,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.oa_air_flow_sensor.Flow" ;
+    p223:hasQuantityKind quantitykind:VolumeFlowRate ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:FT3-PER-MIN .
+ex:00018 a s223:Connection ;
+    rdfs:label "DDAHU.mixed_air" ;
+    s223:connectsAt ex:00011,
+        ex:00037,
+        ex:00050,
+        ex:00090 ;
+    s223:hasMedium s223:Medium-Air .
+ex:00019 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHUma_air_temp_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00020 ;
+    s223:hasMeasurementLocation ex:00018 .
+ex:00020 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHUma_air_temp_sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C .
+ex:00021 a s223:Device,
+        s223:Fan ;
+    rdfs:label "DDAHU.return_air_fan" ;
+    s223:airInlet ex:00022 ;
+    s223:airOutlet ex:00023 ;
+    s223:electricalInlet ex:00024 ;
+    s223:hasConnectionPoint ex:00022,
+        ex:00023,
+        ex:00024 .
+ex:00022 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.return_air_fan.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00023 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.return_air_fan.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:lnx ex:00032 .
+ex:00024 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.return_air_fan.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+ex:00025 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.re_air_temp_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00026 ;
+    s223:hasMeasurementLocation ex:00022 .
+ex:00026 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.re_air_temp_sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C .
+ex:00027 a p223:AirHumiditySensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.re_air_humidity_sensor" ;
+    p223:hasQuantityKind quantitykind:RelativeHumidity ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00028 ;
+    s223:hasMeasurementLocation ex:00022 .
+ex:00028 a p223:Humidity,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.re_air_humidity_sensor.Measure" ;
+    p223:hasQuantityKind quantitykind:RelativeHumidity ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:PERCENT_RH .
+ex:00029 a p223:AirFlowSensor,
+        p223:FlowSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.re_air_flow_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00030 ;
+    p223:unit unit:FT3-PER-MIN ;
+    s223:hasMeasurementLocation ex:00022 .
+ex:00030 a p223:Flow,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.re_air_flow_sensor.Flow" ;
+    p223:hasQuantityKind quantitykind:VolumeFlowRate ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:FT3-PER-MIN .
+ex:00031 a s223:Junction ;
+    s223:lnx ex:00032,
+        ex:00043,
+        ex:00044 .
+ex:00032 a s223:Segment ;
+    s223:lnx ex:00023,
+        ex:00031 .
+ex:00033 a s223:Damper,
+        s223:Device ;
+    rdfs:label "DDAHU.recirculated_air_damper" ;
+    s223:airInlet ex:00036 ;
+    s223:airOutlet ex:00037 ;
+    s223:feedback ex:00035 ;
+    s223:hasConnectionPoint ex:00036,
+        ex:00037 ;
+    s223:hasProperty ex:00034,
+        ex:00035 ;
+    s223:position ex:00034 .
+ex:00034 a g36:AnalogOut ;
+    rdfs:label "DDAHU.recirculated_air_damper.position" .
+ex:00035 a g36:AnalogIn ;
+    rdfs:label "DDAHU.recirculated_air_damper.feedback" .
+ex:00036 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.recirculated_air_damper.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:lnx ex:00043 .
+ex:00037 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.recirculated_air_damper.airOutlet" ;
+    s223:connectsThrough ex:00018 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00038 a s223:Damper,
+        s223:Device ;
+    rdfs:label "DDAHU.exhaust_damper" ;
+    s223:airInlet ex:00041 ;
+    s223:airOutlet ex:00042 ;
+    s223:feedback ex:00040 ;
+    s223:hasConnectionPoint ex:00041,
+        ex:00042 ;
+    s223:hasProperty ex:00039,
+        ex:00040 ;
+    s223:position ex:00039 .
+ex:00039 a g36:AnalogOut ;
+    rdfs:label "DDAHU.exhaust_damper.position" .
+ex:00040 a g36:AnalogIn ;
+    rdfs:label "DDAHU.exhaust_damper.feedback" .
+ex:00041 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.exhaust_damper.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:lnx ex:00044 .
+ex:00042 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.exhaust_damper.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00043 a s223:Segment ;
+    s223:lnx ex:00031,
+        ex:00036 .
+ex:00044 a s223:Segment ;
+    s223:lnx ex:00031,
+        ex:00041 .
+ex:00045 a s223:System,
+        ex:HotDeck ;
+    rdfs:label "DDAHU.hot_deck" ;
+    s223:hasSystemConnectionPoint ex:00046,
+        ex:00047 ;
+    ex:airInlet ex:00046 ;
+    ex:airOutlet ex:00047 .
+ex:00046 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00050 .
+ex:00047 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00070 .
+ex:00048 a p223:Filter,
+        s223:Device ;
+    rdfs:label "DDAHU.hot_deck.filter" ;
+    p223:airInlet ex:00050 ;
+    p223:airOutlet ex:00051 ;
+    p223:dp ex:00049 ;
+    s223:hasConnectionPoint ex:00050,
+        ex:00051 ;
+    s223:hasProperty ex:00049 .
+ex:00049 a g36:AnalogOut ;
+    rdfs:label "DDAHU.hot_deck.filter.dp" .
+ex:00050 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.filter.airInlet" ;
+    s223:connectsThrough ex:00018 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00051 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.filter.airOutlet" ;
+    s223:connectsThrough ex:00072 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00052 a s223:System ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil" ;
+    s223:airInlet ex:00053 ;
+    s223:airOutlet ex:00054 ;
+    s223:hasProperty ex:00067 ;
+    s223:hasSystemConnectionPoint ex:00053,
+        ex:00054,
+        ex:00055,
+        ex:00056 ;
+    s223:hotWaterReturn ex:00056 ;
+    s223:hotWaterSupply ex:00055 ;
+    s223:hotWaterValvePosition ex:00067 .
+ex:00053 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00058 .
+ex:00054 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00059 .
+ex:00055 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hotWaterSupply" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater ;
+    s223:mapsTo ex:00064 .
+ex:00056 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hotWaterReturn" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater ;
+    s223:mapsTo ex:00061 .
+ex:00057 a s223:Device,
+        s223:HotWaterCoil ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_coil" ;
+    s223:airInlet ex:00058 ;
+    s223:airOutlet ex:00059 ;
+    s223:hasConnectionPoint ex:00058,
+        ex:00059,
+        ex:00060,
+        ex:00061 ;
+    s223:hotWaterReturn ex:00061 ;
+    s223:hotWaterSupply ex:00060 .
+ex:00058 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_coil.airInlet" ;
+    s223:connectsThrough ex:00072 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00059 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_coil.airOutlet" ;
+    s223:connectsThrough ex:00073 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00060 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_coil.hotWaterSupply" ;
+    s223:connectsThrough ex:00066 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00061 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_coil.hotWaterReturn" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00062 a s223:Device,
+        s223:Valve ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_valve" ;
+    s223:hasConnectionPoint ex:00064,
+        ex:00065 ;
+    s223:hasProperty ex:00063 ;
+    s223:hotWaterInlet ex:00064 ;
+    s223:hotWaterOutlet ex:00065 ;
+    s223:position ex:00063 .
+ex:00063 a g36:AnalogIn ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_valve.position" .
+ex:00064 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_valve.hotWaterInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00065 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_water_coil.hw_valve.hotWaterOutlet" ;
+    s223:connectsThrough ex:00066 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00066 a s223:Connection ;
+    s223:connectsAt ex:00060,
+        ex:00065 ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00067 a g36:AnalogOut ;
+    s223:hasValue "<AnalogIn DDAHU.hot_deck.hot_water_coil.hw_valve.position at http://data.ashrae.org/standard223/data/LBNL_DDAHU_model#00063>" .
+ex:00068 a s223:Device,
+        s223:Fan ;
+    rdfs:label "DDAHU.hot_deck.hot_supply_fan" ;
+    s223:airInlet ex:00069 ;
+    s223:airOutlet ex:00070 ;
+    s223:electricalInlet ex:00071 ;
+    s223:hasConnectionPoint ex:00069,
+        ex:00070,
+        ex:00071 .
+ex:00069 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_supply_fan.airInlet" ;
+    s223:connectsThrough ex:00073 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00070 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_supply_fan.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00071 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.hot_deck.hot_supply_fan.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+ex:00072 a s223:Connection ;
+    s223:connectsAt ex:00051,
+        ex:00058 ;
+    s223:hasMedium s223:Medium-Air .
+ex:00073 a s223:Connection ;
+    s223:connectsAt ex:00059,
+        ex:00069 ;
+    s223:hasMedium s223:Medium-Air .
+ex:00074 a p223:DifferentialStaticPressureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.hot_deck.fan_dp_sensor" ;
+    p223:hasMeasurementLocationHigh ex:00070 ;
+    p223:hasMeasurementLocationLow ex:00069 ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00075 .
+ex:00075 a p223:DifferentialStaticPressure,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.hot_deck.fan_dp_sensor.DifferentialStaticPressure" ;
+    p223:hasQuantityKind quantitykind:ForcePerArea ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:PA .
+ex:00076 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.hot_deck.discharge_air_temp_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00077 ;
+    s223:hasMeasurementLocation ex:00054 .
+ex:00077 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.hot_deck.discharge_air_temp_sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C .
+ex:00078 a p223:AirHumiditySensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.hot_deck.air_humidity_sensor" ;
+    p223:hasQuantityKind quantitykind:RelativeHumidity ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00079 ;
+    s223:hasMeasurementLocation ex:00070 .
+ex:00079 a p223:Humidity,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.hot_deck.air_humidity_sensor.Measure" ;
+    p223:hasQuantityKind quantitykind:RelativeHumidity ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:PERCENT_RH .
+ex:00080 a p223:AirFlowSensor,
+        p223:FlowSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.hot_deck.air_flow_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00081 ;
+    p223:unit unit:FT3-PER-MIN ;
+    s223:hasMeasurementLocation ex:00070 .
+ex:00081 a p223:Flow,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.hot_deck.air_flow_sensor.Flow" ;
+    p223:hasQuantityKind quantitykind:VolumeFlowRate ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:FT3-PER-MIN .
+ex:00082 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.hot_deck.air_temp_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00083 ;
+    s223:hasMeasurementLocation ex:00070 .
+ex:00083 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.hot_deck.air_temp_sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C ;
+    s223:hasProperty ex:00084 ;
+    s223:hasSetpoint ex:00084 .
+ex:00084 a p223:TemperatureSetpoint,
+        s223:ActuatableProperty,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        s223:Setpoint ;
+    rdfs:label "DDAHU.hot_deck.air_temp_setpoint" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:unit unit:DEG_C .
+ex:00085 a s223:System,
+        ex:ColdDeck ;
+    rdfs:label "DDAHU.cold_deck" ;
+    s223:hasSystemConnectionPoint ex:00086,
+        ex:00087 ;
+    ex:airInlet ex:00086 ;
+    ex:airOutlet ex:00087 .
+ex:00086 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00090 .
+ex:00087 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00110 .
+ex:00088 a p223:Filter,
+        s223:Device ;
+    rdfs:label "DDAHU.cold_deck.filter" ;
+    p223:airInlet ex:00090 ;
+    p223:airOutlet ex:00091 ;
+    p223:dp ex:00089 ;
+    s223:hasConnectionPoint ex:00090,
+        ex:00091 ;
+    s223:hasProperty ex:00089 .
+ex:00089 a g36:AnalogOut ;
+    rdfs:label "DDAHU.cold_deck.filter.dp" .
+ex:00090 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.filter.airInlet" ;
+    s223:connectsThrough ex:00018 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00091 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.filter.airOutlet" ;
+    s223:connectsThrough ex:00112 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00092 a s223:System ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil" ;
+    s223:airInlet ex:00093 ;
+    s223:airOutlet ex:00094 ;
+    s223:hasProperty ex:00107 ;
+    s223:hasSystemConnectionPoint ex:00093,
+        ex:00094,
+        ex:00095,
+        ex:00096 ;
+    s223:hotWaterReturn ex:00096 ;
+    s223:hotWaterSupply ex:00095 ;
+    s223:hotWaterValvePosition ex:00107 .
+ex:00093 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00098 .
+ex:00094 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex:00099 .
+ex:00095 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hotWaterSupply" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater ;
+    s223:mapsTo ex:00104 .
+ex:00096 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hotWaterReturn" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater ;
+    s223:mapsTo ex:00101 .
+ex:00097 a s223:Device,
+        s223:HotWaterCoil ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_coil" ;
+    s223:airInlet ex:00098 ;
+    s223:airOutlet ex:00099 ;
+    s223:hasConnectionPoint ex:00098,
+        ex:00099,
+        ex:00100,
+        ex:00101 ;
+    s223:hotWaterReturn ex:00101 ;
+    s223:hotWaterSupply ex:00100 .
+ex:00098 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_coil.airInlet" ;
+    s223:connectsThrough ex:00112 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00099 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_coil.airOutlet" ;
+    s223:connectsThrough ex:00113 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00100 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_coil.hotWaterSupply" ;
+    s223:connectsThrough ex:00106 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00101 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_coil.hotWaterReturn" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00102 a s223:Device,
+        s223:Valve ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_valve" ;
+    s223:hasConnectionPoint ex:00104,
+        ex:00105 ;
+    s223:hasProperty ex:00103 ;
+    s223:hotWaterInlet ex:00104 ;
+    s223:hotWaterOutlet ex:00105 ;
+    s223:position ex:00103 .
+ex:00103 a g36:AnalogIn ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_valve.position" .
+ex:00104 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_valve.hotWaterInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00105 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_water_coil.hw_valve.hotWaterOutlet" ;
+    s223:connectsThrough ex:00106 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00106 a s223:Connection ;
+    s223:connectsAt ex:00100,
+        ex:00105 ;
+    s223:hasMedium s223:Water-HotWater .
+ex:00107 a g36:AnalogOut ;
+    s223:hasValue "<AnalogIn DDAHU.cold_deck.cold_water_coil.hw_valve.position at http://data.ashrae.org/standard223/data/LBNL_DDAHU_model#00103>" .
+ex:00108 a s223:Device,
+        s223:Fan ;
+    rdfs:label "DDAHU.cold_deck.cold_supply_fan" ;
+    s223:airInlet ex:00109 ;
+    s223:airOutlet ex:00110 ;
+    s223:electricalInlet ex:00111 ;
+    s223:hasConnectionPoint ex:00109,
+        ex:00110,
+        ex:00111 .
+ex:00109 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_supply_fan.airInlet" ;
+    s223:connectsThrough ex:00113 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00110 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_supply_fan.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air .
+ex:00111 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "DDAHU.cold_deck.cold_supply_fan.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Electricity .
+ex:00112 a s223:Connection ;
+    s223:connectsAt ex:00091,
+        ex:00098 ;
+    s223:hasMedium s223:Medium-Air .
+ex:00113 a s223:Connection ;
+    s223:connectsAt ex:00099,
+        ex:00109 ;
+    s223:hasMedium s223:Medium-Air .
+ex:00114 a p223:DifferentialStaticPressureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.cold_deck.fan_dp_sensor" ;
+    p223:hasMeasurementLocationHigh ex:00110 ;
+    p223:hasMeasurementLocationLow ex:00109 ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00115 .
+ex:00115 a p223:DifferentialStaticPressure,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.cold_deck.fan_dp_sensor.DifferentialStaticPressure" ;
+    p223:hasQuantityKind quantitykind:ForcePerArea ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:PA .
+ex:00116 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.cold_deck.discharge_air_temp_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00117 ;
+    s223:hasMeasurementLocation ex:00094 .
+ex:00117 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.cold_deck.discharge_air_temp_sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C .
+ex:00118 a p223:AirHumiditySensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.cold_deck.air_humidity_sensor" ;
+    p223:hasQuantityKind quantitykind:RelativeHumidity ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00119 ;
+    s223:hasMeasurementLocation ex:00110 .
+ex:00119 a p223:Humidity,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.cold_deck.air_humidity_sensor.Measure" ;
+    p223:hasQuantityKind quantitykind:RelativeHumidity ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:PERCENT_RH .
+ex:00120 a p223:AirFlowSensor,
+        p223:FlowSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.cold_deck.air_flow_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00121 ;
+    p223:unit unit:FT3-PER-MIN ;
+    s223:hasMeasurementLocation ex:00110 .
+ex:00121 a p223:Flow,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.cold_deck.air_flow_sensor.Flow" ;
+    p223:hasQuantityKind quantitykind:VolumeFlowRate ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:FT3-PER-MIN .
+ex:00122 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "DDAHU.cold_deck.air_temp_sensor" ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:observesProperty ex:00123 ;
+    s223:hasMeasurementLocation ex:00110 .
+ex:00123 a p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        p223:Temperature,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "DDAHU.cold_deck.air_temp_sensor.Temperature" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:measuresMedium s223:Medium-Air ;
+    p223:unit unit:DEG_C ;
+    s223:hasProperty ex:00124 ;
+    s223:hasSetpoint ex:00124 .
+ex:00124 a p223:TemperatureSetpoint,
+        s223:ActuatableProperty,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        s223:Setpoint ;
+    rdfs:label "DDAHU.cold_deck.air_temp_setpoint" ;
+    p223:hasQuantityKind quantitykind:Temperature ;
+    p223:unit unit:DEG_C .
