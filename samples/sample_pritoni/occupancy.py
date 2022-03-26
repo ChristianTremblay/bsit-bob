@@ -19,7 +19,7 @@ open_office_occ_control = OccupancyControl(
     label="OpenOffice Occ Control",
     comment="Occupancy sensor drives LightingZone1 and LightingZone2",
 )
-open_office_occ_control > os.openoffice_occ_zone
+open_office_occ_control >> os.openoffice_occ_zone
 open_office_occ_control.occupancySensor.mapsTo = ld.openofficeEast_movement
 open_office_occ_control.occupancyOutlet1.mapsTo = ls.lighting_zone_1
 open_office_occ_control.occupancyOutlet2.mapsTo = ls.lighting_zone_2
@@ -28,7 +28,7 @@ kitchenette_occ_control = OccupancyControl(
     label="Kitchenette Occ Control",
     comment="Deal with OccupancySpace6...probably not required but it's defined",
 )
-kitchenette_occ_control > os.kitchenette_occ_zone
+kitchenette_occ_control >> os.kitchenette_occ_zone
 kitchenette_occ_control.occupancySensor.mapsTo = ld.kitchenette_movement
 kitchenette_occ_control.occupancyOutlet1.mapsTo = ls.lighting_zone_6
 kitchenette_occ_control.hasOccupancyStatus = OnOffStatus(hasValue=0)
