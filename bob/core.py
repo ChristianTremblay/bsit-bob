@@ -713,6 +713,16 @@ class Node(metaclass=NodeMetaclass):
         connect(other, self)
         return self
 
+    def __ge__(self, other: Any) -> Any:
+        """Test multimethod"""
+        test_mm(self, other)
+        return self
+
+    def __le__(self, other: Any) -> Any:
+        """Test multimethod"""
+        test_mm(other, self)
+        return self
+
     def __repr__(self) -> str:
         label = (" " + self.label) if self.label else ""
         return f"<{self.__class__.__name__}{label} at {self.node}>"
@@ -727,6 +737,11 @@ class Node(metaclass=NodeMetaclass):
             self._data_graph.add((prop.node, s223.isPropertyOf, self.node))
 
         return prop
+
+
+@multimethod
+def test_mm(a: Node, b:Node) -> None:
+    print(f"test_mm {a} {b}")
 
 
 class ExternalReference(Node):
