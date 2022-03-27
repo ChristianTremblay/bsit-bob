@@ -731,13 +731,11 @@ class Node(metaclass=NodeMetaclass):
 
 class ExternalReference(Node):
     """
-    ExternalReference node
-    This is work in progress but we can start with something
-    generic. This will be subclassed by different specific datasources
-    For now I'm creating hasRef...
+    This will be subclassed by different specific datasources, this simplest
+    form uses hasRef as a literal, most likely a string.
     """
 
-    node_type: URIRef = ref.hasExternalReference
+    node_type: URIRef = s223.ExternalReference
     # isExternalReferenceOf: Property
     hasRef: Literal
 
