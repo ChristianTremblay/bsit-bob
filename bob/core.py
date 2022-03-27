@@ -14,13 +14,11 @@ import inspect
 from typing import Dict, Optional, Set, Any, TextIO, Tuple, TypeVar, Union, cast
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
+from .multimethods import multimethod
 
 T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
 _next_node = 1
-
-# substance identifier (s223.Air, etc) to Connection subclass
-medium_classes: Dict[URIRef, Any] = {}
 
 # logging
 log_level = os.getenv("BOB_LOG", "WARNING")
@@ -194,14 +192,6 @@ def bind_model_namespace(prefix: str, uri: str) -> Namespace:
     global model_namespace
     model_namespace = bind_namespace(prefix, uri)
     return model_namespace
-
-
-def register_medium(medium_uri: URIRef, cls: Any) -> None:
-    """
-    Register a medium aka substance so that the connection operators can line up the
-    correct types.
-    """
-    medium_classes[medium_uri] = cls
 
 
 def dump(
@@ -1099,7 +1089,7 @@ class System(Node):
                 self._data_graph.add((other.node, s223.isContainedIn, self.node))
         elif isinstance(other, list):
             for each in other:
-                if isinstance(other, (Device, System)):
+                if isinstance(each, (Device, System)):
                     self._data_graph.add((self.node, s223.contains, each.node))
                     if INCLUDE_INVERSE:
                         self._data_graph.add((each.node, s223.isContainedIn, self.node))
@@ -1165,25 +1155,12 @@ class ConnectionMetaclass(NodeMetaclass):
         attributedict: Dict[str, Any],
     ) -> MediumMetaclass:
         logging.debug(f"ConnectionMetaclass.__new__ {clsname}")
-        global medium_classes
 
         # build the class
         new_class = cast(
             ConnectionMetaclass,
             super().__new__(cls, clsname, superclasses, attributedict),
         )
-
-        # if the class has a 'medium' aka substance initialized then register this
-        # class for the medium
-        medium = new_class._inits.get("hasMedium", None)
-        logging.debug(f"    - connection medium: {medium!r}")
-
-        # make sure it's not already defined someplace else
-        if medium in medium_classes:
-            raise RuntimeError(
-                f"medium {medium} already defined: {medium_classes[medium]}"
-            )
-        medium_classes[medium] = new_class
 
         return new_class
 
