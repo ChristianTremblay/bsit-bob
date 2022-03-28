@@ -9,11 +9,14 @@ from ...connections.air import (
 )
 
 from ...connections.water import (
+    ChilledWaterConnectionPoint,
+    ChilledWaterInletConnectionPoint,
     ChilledWaterInletSystemConnectionPoint,
+    ChilledWaterOutletConnectionPoint,
     ChilledWaterOutletSystemConnectionPoint,
 )
 from ...devices.hvac.coil import ChilledWaterCoil
-from ...devices.hvac.valve import ChilledWaterValve
+from ...devices.hvac.valve import TwoWayValve
 from ...signal import AnalogIn
 
 __namespace__ = s223
@@ -40,12 +43,17 @@ class ChilledWaterCoil2(System):
         self.airOutlet.mapsTo = self.chilled_water_coil.airOutlet
 
         # create a chilled water valve
-        self.chilled_water_valve = ChilledWaterValve(label=self.label + ".cw_valve")
-        self.chilledWaterSupply.mapsTo = self.chilled_water_valve.chilledWaterInlet
+        self.chilled_water_valve = TwoWayValve(
+            label=self.label + ".cw_valve",
+            waterInlet=ChilledWaterInletConnectionPoint,
+            waterOutlet=ChilledWaterOutletConnectionPoint,
+            hasPositionFeedback=0,
+        )
+        self.chilledWaterSupply.mapsTo = self.chilled_water_valve.waterInlet
         self.chilledWaterReturn.mapsTo = self.chilled_water_coil.chilledWaterOutlet
 
         # connect the valve to the coil
         self.chilled_water_valve >> self.chilled_water_coil
 
         # reference the valve position
-        self.chilled_water_valve_pos = self.chilled_water_valve.position
+        self.chilled_water_valve_pos = self.chilled_water_valve.hasPositionFeedback

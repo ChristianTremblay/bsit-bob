@@ -18,7 +18,7 @@ from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.damper import Window, Damper, DamperActuator
 from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
 from bob.devices.hvac.humidifier import SteamPipe, Humidifier
-from bob.devices.hvac.valve import WaterValve
+from bob.devices.hvac.valve import TwoWayValve
 from bob.devices.lighting.light import Luminaire
 from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.chiller import AgnosticChiller
@@ -276,13 +276,13 @@ p2 = Pump(
 )
 p3 = Pump(label="P-3", comment="Pump P-3, Geothermal Well pumps")
 p4 = Pump(label="P-4", comment="Pump P-4, Geothermal Well pumps")
-v1A_no = WaterValve(label="V-1A_NO", comment="Butterfly Valve NO to Well of pair V-1A")
-v1A_nc = WaterValve(label="V-1A_NC", comment="Butterfly Valve NC to Coil of pair V-1A")
-v1B_no = WaterValve(label="V-1B_NO", comment="Butterfly Valve NO to Well of pair V-1B")
-v1B_nc = WaterValve(label="V-1B_NC", comment="Butterfly Valve NC to Coil of pair V-1B")
-v2 = WaterValve(label="V-2", comment="PC-1 Isolation valve")
-v3 = WaterValve(label="V-3", comment="PC-2 Isolation valve")
-v4 = WaterValve(label="V-4", comment="Loop pressure control Valve")
+v1A_no = TwoWayValve(label="V-1A_NO", comment="Butterfly Valve NO to Well of pair V-1A")
+v1A_nc = TwoWayValve(label="V-1A_NC", comment="Butterfly Valve NC to Coil of pair V-1A")
+v1B_no = TwoWayValve(label="V-1B_NO", comment="Butterfly Valve NO to Well of pair V-1B")
+v1B_nc = TwoWayValve(label="V-1B_NC", comment="Butterfly Valve NC to Coil of pair V-1B")
+v2 = TwoWayValve(label="V-2", comment="PC-1 Isolation valve")
+v3 = TwoWayValve(label="V-3", comment="PC-2 Isolation valve")
+v4 = TwoWayValve(label="V-4", comment="Loop pressure control Valve")
 
 leaving_chilledWater_pipe = WaterConnection(
     label="CHWL_Pipe", comment="Chilled Water Leaving Pipe from both chillers"

@@ -8,10 +8,14 @@ from ...connections.air import (
 )
 from ...signal import AnalogIn, AnalogOut
 
-from ...devices.hvac.valve import HotWaterValve
 from ...devices.hvac.coil import HotWaterCoil
 from ...devices.hvac.airflowstation import AirFlowMonitor
 from ...devices.hvac.damper import Damper
+from ...devices.hvac.valve import TwoWayValve
+from ...connections.water import (
+    HotWaterInletConnectionPoint,
+    HotWaterOutletConnectionPoint,
+)
 
 __namespace__ = s223
 
@@ -66,7 +70,12 @@ class VAV2(System):
         self > self.hot_water_coil
 
         # create a hot water valve
-        self.hot_water_valve = HotWaterValve(label=self.label + ".hw_valve")
+        self.hot_water_valve = TwoWayValve(
+            label=self.label + ".hw_valve",
+            waterInlet=HotWaterInletConnectionPoint,
+            waterOutlet=HotWaterOutletConnectionPoint,
+            hasPositionFeedback=0,
+        )
         self > self.hot_water_valve
 
         # link them together
@@ -81,4 +90,4 @@ class VAV2(System):
         self.airOutlet.mapsTo = self.hot_water_coil.airOutlet
         self.airFlow = self.air_flow_station.flow
         self.damperPosition = self.damper.position
-        self.hwValvePosition = self.hot_water_valve.position
+        self.hwValvePosition = self.hot_water_valve.hasPositionFeedback

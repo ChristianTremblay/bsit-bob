@@ -4,16 +4,14 @@ from ...properties.states import OnOffCommand, OnOffStatus
 
 from ...property import QuantifiableObservableProperty
 from ...connections.electricity import ElectricalInletConnectionPoint
-from ...core import ConnectionPoint, s223, Device, quantitykind, unit
+from ...core import ConnectionPoint, PropertyReference, s223, Device, quantitykind, unit
 
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...signal import AnalogIn, AnalogOut
 from ...sensor import define_sensors
 from ...devices import contains_devices_list
-from ...properties.electricity import Amps, ElectricPowerkW, PowerFactor
-from ...properties.force import HP
-from ...properties.ratio import RPM
+from ...properties import Amps, ElectricPowerkW, PowerFactor, HP, Pressure, RPM
 
 __namespace__ = s223
 
@@ -35,29 +33,29 @@ fan_template = {
 
 
 class Fan(Device):
+    """
+    A fan is composed of a blower and an electrical motor
+    """
+
     node_type: URIRef = s223.Fan
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     # electricalInlet: ElectricalInletConnectionPoint  # Dynamic ConnectionPoint should not be defined in annotation of the class
     # Properties
+    staticPressure: Pressure
     amps: Amps
     rpm: RPM
     hp: HP
     kW: ElectricPowerkW
     powerFactor: PowerFactor
-    hasOnOffStatus: OnOffStatus
-    hasOnOffCommand: OnOffCommand
+    hasOnOffStatus: PropertyReference
+    hasOnOffCommand: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
-        optional_properties = [
-            "amps",
-            "rpm",
-            "hp",
-            "kW",
-            "powerFactor",
-            "hasOnOffStatus",
-        ]
         _properties = {}
+        for k, v in self.__annotations__.items():
+            if k in kwargs:
+                _properties[k] = kwargs.pop(k)
         if not config and not kwargs:
             raise ValueError(
                 "Please provide configuration dict or kwargs, at least a label"
@@ -66,16 +64,7 @@ class Fan(Device):
         sensors = define_sensors(config)
         devices, device_kwargs = contains_devices_list(config, **kwargs)
 
-        _electricalInlet = (
-            device_kwargs.pop("electricalInlet")
-            if "electricalInlet" in device_kwargs
-            else None
-        )
-
-        for each in optional_properties:
-            _properties[each] = (
-                device_kwargs.pop(each) if each in device_kwargs else None
-            )
+        _electricalInlet = device_kwargs.pop("electricalInlet", None)
 
         super().__init__(**device_kwargs)
         self.electricalInlet = (

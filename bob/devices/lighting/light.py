@@ -40,8 +40,10 @@ class Luminaire(Device):
     electricalPower: ElectricPowerW
 
     def __init__(self, config: Dict = None, **kwargs):
-        optional_properties = ["brightness"]
         _properties = {}
+        for k, v in self.__annotations__.items():
+            if k in kwargs:
+                _properties[k] = kwargs.pop(k)
         if not config and not kwargs:
             raise ValueError(
                 "Please provide configuration dict or kwargs, at least a label"
@@ -50,16 +52,7 @@ class Luminaire(Device):
         sensors = define_sensors(config)
         devices, device_kwargs = contains_devices_list(config, **kwargs)
 
-        _electricalInlet = (
-            device_kwargs.pop("electricalInlet")
-            if "electricalInlet" in device_kwargs
-            else None
-        )
-
-        for each in optional_properties:
-            _properties[each] = (
-                device_kwargs.pop(each) if each in device_kwargs else None
-            )
+        _electricalInlet = device_kwargs.pop("electricalInlet", None)
 
         super().__init__(**device_kwargs)
         self.electricalInlet = (

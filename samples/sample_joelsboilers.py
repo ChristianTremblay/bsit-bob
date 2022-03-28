@@ -17,7 +17,7 @@ from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.damper import Window
 from bob.devices.hvac.boiler import HotWaterBoiler, ElectricalHotWaterBoiler
-from bob.devices.hvac.valve import WaterValve
+from bob.devices.hvac.valve import TwoWayValve
 from bob.devices.lighting.light import Luminaire
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
@@ -67,16 +67,16 @@ def sample_using_only_water_medium():
 
     city_water_tap = WaterConnection(label="CITY-WATER")
     dhw_supply_for_house = WaterConnection(label="HouseFaucets")
-    kitchen_faucet = WaterValve(label="KITCHENFAUCET")
+    kitchen_faucet = TwoWayValve(label="KITCHENFAUCET")
     house_drain = WaterConnection(label="HOUSE-DRAIN")
     city_drain = WaterConnection(label="CityDrain")
 
     htg_pump = Pump(label="HowWaterPump")
     house_hw_supply = WaterConnection(label="HotWaterSupply")
     house_hw_return = WaterConnection(label="HotWaterReturn")
-    joelsofficeheatingvalve = WaterValve(label="joelsofficehtgvlv")
+    joelsofficeheatingvalve = TwoWayValve(label="joelsofficehtgvlv")
     joelsofficeheatingcoil = AgnosticWaterCoil(label="JoelsOfficeCoil")
-    fillingValve = WaterValve(
+    fillingValve = TwoWayValve(
         label="FILL-VLV", comment="Fill Hot Water Loop with water"
     )
 

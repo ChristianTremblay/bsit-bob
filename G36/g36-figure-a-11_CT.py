@@ -12,13 +12,18 @@ from bob.connections.electricity import (
     RS485BidirectionalSystemConnectionPoint,
 )
 from bob.connections.light import LightVisibleOutletSystemConnectionPoint
-from bob.connections.water import HotWaterConnection, WaterConnection
+from bob.connections.water import (
+    HotWaterConnection,
+    WaterConnection,
+    HotWaterInletConnectionPoint,
+    HotWaterOutletConnectionPoint,
+)
 from bob.core import BidirectionalSystemConnectionPoint, System, bind_model_namespace
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.coil import HotWaterCoil
-from bob.devices.hvac.valve import HotWaterValve
+from bob.devices.hvac.valve import TwoWayValve
 from bob.devices.hvac.stats import HighStaticPressureStat
 from bob.externalreference.bacnet import BACnetReference
 from bob.sensor.fire import SmokeDetectionSensor
@@ -67,7 +72,12 @@ inside = AirConnection(label="INSIDE", comment="Needed to reference DPT")
 filter = Filter(label="Filter")
 hwc = HotWaterCoil(label="HC", comment="Hot Water Coil")
 
-hw_valve = HotWaterValve(label="HWValve", comment="Hot Water Valve")
+hw_valve = TwoWayValve(
+    label="HWValve",
+    comment="Hot Water Valve",
+    waterInlet=HotWaterInletConnectionPoint,
+    waterOutlet=HotWaterOutletConnectionPoint,
+)
 
 f = Fan(config=fan_template)
 vfd = VFD(config=vfd_template)

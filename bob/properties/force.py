@@ -9,3 +9,10 @@ __namespace__ = p223
 class HP(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.Power
     unit: URIRef = unit.HP
+
+
+class Pressure(QuantifiableObservableProperty):
+    hasQuantityKind: URIRef = quantitykind.Pressure
+
+    def __init__(self, unit):
+        self.unit = unit

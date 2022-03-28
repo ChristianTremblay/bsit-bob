@@ -72,5 +72,9 @@ class FlowSwitch(Device):
     A contact On Off controlled by static pressure in duct
     """
 
-    sensor: DifferentialStaticPressureSensor
     flowOutput: OnOffSignalOutletConnectionPoint
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.sensor = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
+        self > self.sensor

@@ -1,14 +1,17 @@
 from typing import Any
 
 from rdflib import URIRef
-from bob.connections.air import CompressedAirConnectionPoint
+from bob.connections.air import (
+    CompressedAirInletConnectionPoint,
+    CompressedAirOutletConnectionPoint,
+)
 
 from bob.connections.naturalgas import (
     NaturalGasInletConnectionPoint,
     NaturalGasOutletConnectionPoint,
 )
 
-from ...core import s223, Device
+from ...core import PropertyReference, s223, Device
 
 
 from ...connections.water import (
@@ -19,7 +22,11 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...connections.electricity import ModulationSignalInletConnectionPoint
+from ...connections.electricity import (
+    ModulationSignalInletConnectionPoint,
+    OnOffSignalInletConnectionPoint,
+)
+from ...properties import Gallons, Percent
 
 __namespace__ = s223
 
@@ -28,35 +35,77 @@ __namespace__ = s223
 # all classes or find a way to make it ?
 
 
-class WaterValve(Device):
+class Valve(Device):
     node_type: URIRef = s223.Valve
-    waterInlet: WaterInletConnectionPoint
-    waterOutlet: WaterOutletConnectionPoint
-    position: ModulationSignalInletConnectionPoint
+    positionInlet: ModulationSignalInletConnectionPoint
+    onOffInlet: OnOffSignalInletConnectionPoint
+    flowCoefficient: Gallons
+    hasPositionCommand: Percent
+    hasPositionFeedback: Percent
+
+    def __init__(self, **kwargs):
+        _properties = {}
+        for k, v in self.__annotations__.items():
+            if k in kwargs:
+                _properties[k] = kwargs.pop(k)
+        super().__init__(**kwargs)
+        for k, v in _properties.items():
+            if v:
+                setattr(self, k, self.__annotations__[k](v))
 
 
-class HotWaterValve(Device):
+class TwoWayValve(Valve):
     node_type: URIRef = s223.Valve
-    hotWaterInlet: HotWaterInletConnectionPoint
-    hotWaterOutlet: HotWaterOutletConnectionPoint
-    position: ModulationSignalInletConnectionPoint
+
+    def __init__(self, **kwargs):
+        _waterInlet = kwargs.pop("waterInlet", WaterInletConnectionPoint)
+        _waterOutlet = kwargs.pop("waterOutlet", WaterOutletConnectionPoint)
+        super().__init__(**kwargs)
+        self.waterInlet = _waterInlet(self)
+        self.waterOutlet = _waterOutlet(self)
 
 
-class ChilledWaterValve(Device):
+class ThreeWayValveDiverting(Valve):
+    """
+    A diverting valve has 1 inlet and 2 outlets
+    """
+
     node_type: URIRef = s223.Valve
-    chilledWaterInlet: ChilledWaterInletConnectionPoint
-    chilledWaterOutlet: ChilledWaterOutletConnectionPoint
-    position: ModulationSignalInletConnectionPoint
+
+    def __init__(self, **kwargs):
+        _waterInletAB = kwargs.pop("waterInletAB", WaterInletConnectionPoint)
+        _waterOutletA = kwargs.pop("waterOutletA", WaterOutletConnectionPoint)
+        _waterOutletB = kwargs.pop("waterOutletB", WaterOutletConnectionPoint)
+        super().__init__(**kwargs)
+        self.waterInletAB = _waterInletAB(self)
+        self.waterOutletA = _waterOutletA(self)
+        self.waterOutletB = _waterOutletB(self)
 
 
-class NaturalGasValve(Device):
+class ThreeWayValveMixing(Valve):
+    """
+    A mixing valve has 2 inlet and 1 outlet
+    """
+
+    node_type: URIRef = s223.Valve
+
+    def __init__(self, **kwargs):
+        _waterInletA = kwargs.pop("waterInletA", WaterInletConnectionPoint)
+        _waterInletB = kwargs.pop("waterInletB", WaterInletConnectionPoint)
+        _waterOutletAB = kwargs.pop("waterOutletAB", WaterOutletConnectionPoint)
+        super().__init__(**kwargs)
+        self.waterInletA = _waterInletA(self)
+        self.waterInletB = _waterInletB(self)
+        self.waterOutletAB = _waterOutletAB(self)
+
+
+class NaturalGasValve(Valve):
     node_type: URIRef = s223.Valve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
-    position: ModulationSignalInletConnectionPoint
 
 
-class PneumaticValve(Device):
+class PneumaticValve(Valve):
     node_type: URIRef = s223.Valve
-    compressedAirInlet: CompressedAirConnectionPoint
-    position: ModulationSignalInletConnectionPoint
+    compressedAirInlet: CompressedAirInletConnectionPoint
+    compressedAirOutlet: CompressedAirOutletConnectionPoint
