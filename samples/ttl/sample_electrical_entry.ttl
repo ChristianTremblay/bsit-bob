@@ -19,6 +19,11 @@ ex:00001 a p223:ElectricalCircuitBreaker,
         s223:Device ;
     rdfs:label "MainBreaker" ;
     p223:hasMaxRange ex:00002 ;
+    s223:connectedThrough ex:00021,
+        ex:00022,
+        ex:00023,
+        ex:00024,
+        ex:00046 ;
     s223:hasConnectionPoint ex:00003,
         ex:00004,
         ex:00005,
@@ -38,36 +43,42 @@ ex:00003 a s223:ConnectionPoint,
     rdfs:label "MainBreaker.electricalInlet" ;
     s223:connectsThrough ex:00046 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00001 .
 ex:00004 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletA" ;
     s223:connectsThrough ex:00021 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-347V_60Hz .
+    s223:hasMedium s223:Electricity-347V_60Hz ;
+    s223:isConnectionPointOf ex:00001 .
 ex:00005 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletB" ;
     s223:connectsThrough ex:00022 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-347V_60Hz .
+    s223:hasMedium s223:Electricity-347V_60Hz ;
+    s223:isConnectionPointOf ex:00001 .
 ex:00006 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletC" ;
     s223:connectsThrough ex:00023 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-347V_60Hz .
+    s223:hasMedium s223:Electricity-347V_60Hz ;
+    s223:isConnectionPointOf ex:00001 .
 ex:00007 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletABC" ;
     s223:connectsThrough ex:00024 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00001 .
 ex:00008 a p223:ElectricalCircuitBreaker,
         p223:SinglePoleCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#1" ;
     p223:hasMaxRange ex:00009 ;
+    s223:connectedThrough ex:00021 ;
     s223:hasConnectionPoint ex:00010,
         ex:00011 ;
     s223:hasProperty ex:00009 ;
@@ -84,17 +95,20 @@ ex:00010 a s223:ConnectionPoint,
     rdfs:label "CB#1.electricalInlet" ;
     s223:connectsThrough ex:00021 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-347V_60Hz .
+    s223:hasMedium s223:Electricity-347V_60Hz ;
+    s223:isConnectionPointOf ex:00008 .
 ex:00011 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#1.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-347V_60Hz .
+    s223:hasMedium s223:Electricity-347V_60Hz ;
+    s223:isConnectionPointOf ex:00008 .
 ex:00012 a p223:ElectricalCircuitBreaker,
         p223:ThreePolesCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#2" ;
     p223:hasMaxRange ex:00013 ;
+    s223:connectedThrough ex:00024 ;
     s223:hasConnectionPoint ex:00014,
         ex:00015 ;
     s223:hasProperty ex:00013 ;
@@ -111,17 +125,22 @@ ex:00014 a s223:ConnectionPoint,
     rdfs:label "CB#2.electricalInlet" ;
     s223:connectsThrough ex:00024 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00012 .
 ex:00015 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#2.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00012 .
 ex:00016 a p223:ElectricalCircuitBreaker,
         p223:ThreePolesCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#3" ;
     p223:hasMaxRange ex:00017 ;
+    s223:connectedThrough ex:00024,
+        ex:00047 ;
+    s223:connectedTo ex:00025 ;
     s223:hasConnectionPoint ex:00018,
         ex:00019 ;
     s223:hasProperty ex:00017 ;
@@ -138,13 +157,15 @@ ex:00018 a s223:ConnectionPoint,
     rdfs:label "CB#3.electricalInlet" ;
     s223:connectsThrough ex:00024 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00016 .
 ex:00019 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#3.electricalOutlet" ;
     s223:connectsThrough ex:00047 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00016 .
 ex:00020 a p223:ElectricalDistributionPanel,
         p223:ThreePhasesDistributionPanel,
         s223:Device ;
@@ -158,24 +179,35 @@ ex:00021 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusA" ;
     s223:connectsAt ex:00004,
         ex:00010 ;
+    s223:connectsFrom ex:00001 ;
+    s223:connectsTo ex:00008 ;
     s223:hasMedium s223:Electricity-347V_60Hz .
 ex:00022 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusB" ;
     s223:connectsAt ex:00005 ;
+    s223:connectsFrom ex:00001 ;
     s223:hasMedium s223:Electricity-347V_60Hz .
 ex:00023 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusC" ;
     s223:connectsAt ex:00006 ;
+    s223:connectsFrom ex:00001 ;
     s223:hasMedium s223:Electricity-347V_60Hz .
 ex:00024 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusABC" ;
     s223:connectsAt ex:00007,
         ex:00014,
         ex:00018 ;
+    s223:connectsFrom ex:00001 ;
+    s223:connectsTo ex:00012,
+        ex:00016 ;
     s223:hasMedium s223:Electricity-575V_60Hz .
 ex:00025 a p223:ElectricalTransformer,
         s223:Device ;
     rdfs:label "TX-1" ;
+    s223:connectedFrom ex:00016 ;
+    s223:connectedThrough ex:00047,
+        ex:00048 ;
+    s223:connectedTo ex:00028 ;
     s223:hasConnectionPoint ex:00026,
         ex:00027 .
 ex:00026 a s223:ConnectionPoint,
@@ -183,18 +215,25 @@ ex:00026 a s223:ConnectionPoint,
     rdfs:label "TX-1.electricalInlet" ;
     s223:connectsThrough ex:00047 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00025 .
 ex:00027 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "TX-1.electricalOutlet" ;
     s223:connectsThrough ex:00048 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-120V_240V_60Hz .
+    s223:hasMedium s223:Electricity-120V_240V_60Hz ;
+    s223:isConnectionPointOf ex:00025 .
 ex:00028 a p223:ElectricalCircuitBreaker,
         p223:TwoPolesMainCircuitBreaker,
         s223:Device ;
     rdfs:label "MainBreaker" ;
     p223:hasMaxRange ex:00029 ;
+    s223:connectedFrom ex:00025 ;
+    s223:connectedThrough ex:00043,
+        ex:00044,
+        ex:00045,
+        ex:00048 ;
     s223:hasConnectionPoint ex:00030,
         ex:00031,
         ex:00032,
@@ -213,30 +252,35 @@ ex:00030 a s223:ConnectionPoint,
     rdfs:label "MainBreaker.electricalInlet" ;
     s223:connectsThrough ex:00048 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-120V_240V_60Hz .
+    s223:hasMedium s223:Electricity-120V_240V_60Hz ;
+    s223:isConnectionPointOf ex:00028 .
 ex:00031 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineA_Neutral" ;
     s223:connectsThrough ex:00043 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-120V_60Hz .
+    s223:hasMedium s223:Electricity-120V_60Hz ;
+    s223:isConnectionPointOf ex:00028 .
 ex:00032 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineB_Neutral" ;
     s223:connectsThrough ex:00044 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-120V_60Hz .
+    s223:hasMedium s223:Electricity-120V_60Hz ;
+    s223:isConnectionPointOf ex:00028 .
 ex:00033 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineA_LineB" ;
     s223:connectsThrough ex:00045 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-240V_60Hz .
+    s223:hasMedium s223:Electricity-240V_60Hz ;
+    s223:isConnectionPointOf ex:00028 .
 ex:00034 a p223:ElectricalCircuitBreaker,
         p223:SinglePoleCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#1" ;
     p223:hasMaxRange ex:00035 ;
+    s223:connectedThrough ex:00043 ;
     s223:hasConnectionPoint ex:00036,
         ex:00037 ;
     s223:hasProperty ex:00035 ;
@@ -253,17 +297,20 @@ ex:00036 a s223:ConnectionPoint,
     rdfs:label "CB#1.electricalInlet" ;
     s223:connectsThrough ex:00043 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-120V_60Hz .
+    s223:hasMedium s223:Electricity-120V_60Hz ;
+    s223:isConnectionPointOf ex:00034 .
 ex:00037 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#1.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-120V_60Hz .
+    s223:hasMedium s223:Electricity-120V_60Hz ;
+    s223:isConnectionPointOf ex:00034 .
 ex:00038 a p223:ElectricalCircuitBreaker,
         p223:TwoPolesCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#2" ;
     p223:hasMaxRange ex:00039 ;
+    s223:connectedThrough ex:00045 ;
     s223:hasConnectionPoint ex:00040,
         ex:00041 ;
     s223:hasProperty ex:00039 ;
@@ -280,12 +327,14 @@ ex:00040 a s223:ConnectionPoint,
     rdfs:label "CB#2.electricalInlet" ;
     s223:connectsThrough ex:00045 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-240V_60Hz .
+    s223:hasMedium s223:Electricity-240V_60Hz ;
+    s223:isConnectionPointOf ex:00038 .
 ex:00041 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#2.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-240V_60Hz .
+    s223:hasMedium s223:Electricity-240V_60Hz ;
+    s223:isConnectionPointOf ex:00038 .
 ex:00042 a p223:ElectricalDistributionPanel,
         p223:SinglePhaseDistributionPanel,
         s223:Device ;
@@ -298,26 +347,36 @@ ex:00043 a s223:Connection ;
     rdfs:label "My Panel.electricalBusA" ;
     s223:connectsAt ex:00031,
         ex:00036 ;
+    s223:connectsFrom ex:00028 ;
+    s223:connectsTo ex:00034 ;
     s223:hasMedium s223:Electricity-120V_60Hz .
 ex:00044 a s223:Connection ;
     rdfs:label "My Panel.electricalBusB" ;
     s223:connectsAt ex:00032 ;
+    s223:connectsFrom ex:00028 ;
     s223:hasMedium s223:Electricity-120V_60Hz .
 ex:00045 a s223:Connection ;
     rdfs:label "My Panel.electricalBusAB" ;
     s223:connectsAt ex:00033,
         ex:00040 ;
+    s223:connectsFrom ex:00028 ;
+    s223:connectsTo ex:00038 ;
     s223:hasMedium s223:Electricity-240V_60Hz .
 ex:00046 a s223:Connection ;
     rdfs:label "Hydro-Québec" ;
     s223:connectsAt ex:00003 ;
+    s223:connectsTo ex:00001 ;
     s223:hasMedium s223:Electricity-575V_60Hz ;
     rdfs:comment "600V" .
 ex:00047 a s223:Connection ;
     s223:connectsAt ex:00019,
         ex:00026 ;
+    s223:connectsFrom ex:00016 ;
+    s223:connectsTo ex:00025 ;
     s223:hasMedium s223:Electricity-575V_60Hz .
 ex:00048 a s223:Connection ;
     s223:connectsAt ex:00027,
         ex:00030 ;
+    s223:connectsFrom ex:00025 ;
+    s223:connectsTo ex:00028 ;
     s223:hasMedium s223:Electricity-120V_240V_60Hz .

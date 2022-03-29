@@ -14,5 +14,6 @@ def test_connect_from(bob_fixture):
     cp1 = ConnectionPoint(d1)
 
     c = Connection()
-    c.connect_from(cp1)
+    cp1 >> c
+
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

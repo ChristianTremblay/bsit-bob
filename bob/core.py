@@ -11,7 +11,7 @@ from collections import defaultdict
 import logging
 import inspect
 
-from typing import Dict, Optional, Set, Any, TextIO, Tuple, TypeVar, Union, cast
+from typing import Any, Dict, List, Optional, Set, TextIO, Tuple, TypeVar, Union, cast
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 from .multimethods import multimethod
@@ -51,14 +51,14 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 
 # options
 MANDITORY_LABEL = True
-INCLUDE_INVERSE = False  # include inverse relations
+INCLUDE_INVERSE = bool(os.getenv("INCLUDE_INVERSE", None))  # include inverse relations
 
-# cleanup annotation references, i.e. "System" to _nodes[attr] = System
-_annotation_reference: Dict[str, type] = {}
 # globals
 data_graph = None
 schema_graph = None
 
+# cleanup annotation references, i.e. "System" to _nodes[attr] = System
+_annotation_reference: Dict[str, type] = {}
 
 def annotation_reference(cls: type) -> type:
     """
@@ -713,16 +713,6 @@ class Node(metaclass=NodeMetaclass):
         connect(other, self)
         return self
 
-    def __ge__(self, other: Any) -> Any:
-        """Test multimethod"""
-        test_mm(self, other)
-        return self
-
-    def __le__(self, other: Any) -> Any:
-        """Test multimethod"""
-        test_mm(other, self)
-        return self
-
     def __repr__(self) -> str:
         label = (" " + self.label) if self.label else ""
         return f"<{self.__class__.__name__}{label} at {self.node}>"
@@ -737,11 +727,6 @@ class Node(metaclass=NodeMetaclass):
             self._data_graph.add((prop.node, s223.isPropertyOf, self.node))
 
         return prop
-
-
-@multimethod
-def test_mm(a: Node, b:Node) -> None:
-    print(f"test_mm {a} {b}")
 
 
 class ExternalReference(Node):
@@ -1088,76 +1073,65 @@ class System(Node):
 
             setattr(self, var_name, var_element)
 
-    def __gt__(self, other: Node) -> Node:
-        """self > other
-
-        Build a subsystem heirarchy, the other system is a subsystem of
-        this system.
-        """
-        logging.debug(f"__gt__ {self} {other}")
-
-        if isinstance(other, (Device, System)):
-            self._data_graph.add((self.node, s223.contains, other.node))
-            if INCLUDE_INVERSE:
-                self._data_graph.add((other.node, s223.isContainedIn, self.node))
-        elif isinstance(other, list):
-            for each in other:
-                if isinstance(each, (Device, System)):
-                    self._data_graph.add((self.node, s223.contains, each.node))
-                    if INCLUDE_INVERSE:
-                        self._data_graph.add((each.node, s223.isContainedIn, self.node))
-        else:
-            raise TypeError("system or device expected")
-
+    def __gt__(self, other: Node) -> Any:
+        """contains multimethod"""
+        contains_mm(self, other)
         return self
 
-    def __rshift__(self, other: Node) -> Node:
-        """self >> other
+    def __lt__(self, other: Node) -> Any:
+        """contains multimethod"""
+        contains_mm(other, self)
+        return self
 
-        Build a subsystem servesDomain relationship creator
-        """
-        logging.debug(f"__rshift__ {self} {other}")
 
-        if isinstance(other, Zone):
-            self._data_graph.add((self.node, s223.servesZone, other.node))
-            if INCLUDE_INVERSE:
-                self._data_graph.add((other.node, s223.isServedBy, self.node))
-        elif isinstance(other, (Node, System)):
-            connect(self, other)
-        elif isinstance(other, list):
-            for each in other:
-                if isinstance(each, Zone):
-                    self._data_graph.add((self.node, s223.servesZone, each.node))
-                    if INCLUDE_INVERSE:
-                        self._data_graph.add((each.node, s223.isServedBy, self.node))
-                else:
-                    connect(self, each)
-        else:
-            raise TypeError("Zone, System or list of zones/systems expected")
+    def __ge__(self, other: Any) -> Any:
+        """connect multimethod"""
+        connect_mm(self, other)
+        return self
 
-        return other
+    def __le__(self, other: Any) -> Any:
+        """connect multimethod"""
+        connect_mm(other, self)
+        return self
 
-    def __lt__(self, other: Node) -> Node:
-        """self < other
 
-        Build a subsystem heirarchy, this is a subsystem of some other
-        system.
-        """
-        logging.debug(f"__lt__ {self} {other}")
+@multimethod
+def contains_mm(system: System, device: Device) -> None:
+    logging.info(f"system {system} contains device {device}")
 
-        if isinstance(other, System):
-            if INCLUDE_INVERSE:
-                self._data_graph.add((self.node, s223.isContainedIn, other.node))
-            self._data_graph.add((other.node, s223.contains, self.node))
-        elif isinstance(other, list):
-            for each in other:
-                if INCLUDE_INVERSE:
-                    self._data_graph.add((self.node, s223.isContainedIn, each.node))
-                self._data_graph.add((each.node, s223.contains, self.node))
-        else:
-            raise TypeError("system expected")
+    system._data_graph.add((system.node, s223.contains, device.node))
+    if INCLUDE_INVERSE:
+        system._data_graph.add((device.node, s223.isContainedIn, system.node))
 
-        return other
+
+@multimethod
+def contains_mm(system: System, subsystem: System) -> None:
+    logging.info(f"system {system} contains subsystem {subsystem}")
+
+    system._data_graph.add((system.node, s223.contains, subsystem.node))
+    if INCLUDE_INVERSE:
+        system._data_graph.add((subsystem.node, s223.isContainedIn, system.node))
+
+
+@multimethod
+def contains_mm(system: System, thing_list: List[Node]) -> None:
+    logging.info(f"system {system} contains list of things {thing_list}")
+
+    ###TODO: the signature should be thing_list: List[Union[Device,System]]
+
+    for thing in thing_list:
+        if not isinstance(thing, (Device, System)):
+            raise TypeError(f"device or system expected: {thing}")
+        contains_mm(system, thing)
+
+
+@multimethod
+def connect_mm(system: System, zone: Zone) -> None:
+    logging.info(f"system {system} serves zone {zone}")
+
+    system._data_graph.add((system.node, s223.servesZone, zone.node))
+    if INCLUDE_INVERSE:
+        system._data_graph.add((zone.node, s223.isServedBy, system.node))
 
 
 class ConnectionMetaclass(NodeMetaclass):
@@ -1189,65 +1163,15 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-    def connect_to(self, connection_point: ConnectionPoint) -> None:
-        """
-        Connects from this connection to a connection point.
-        """
-        if not isinstance(connection_point, ConnectionPoint):
-            raise TypeError("ConnectionPoint expected")
-        if isinstance(connection_point, OutletConnectionPoint):
-            raise TypeError("connection point direction")
-        if connection_point.connectsThrough:
-            raise RuntimeError("connection point already connected")
+    def __ge__(self, other: Any) -> Any:
+        """connect multimethod"""
+        connect_mm(self, other)
+        return self
 
-        # property based link
-        connection_point.connectsThrough = self
-
-        # link connection to the connection point and its device
-        self._data_graph.add((self.node, s223.connectsAt, connection_point.node))
-        if INCLUDE_INVERSE:
-            self._data_graph.add(
-                (
-                    connection_point.isConnectionPointOf.node,
-                    s223.connectedThrough,
-                    self.node,
-                )
-            )
-            self._data_graph.add(
-                (self.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
-            )
-
-    def connect_from(self, connection_point: ConnectionPoint) -> None:
-        """
-        Connects from a connection point to this connection.
-        """
-        if not isinstance(connection_point, ConnectionPoint):
-            raise TypeError("ConnectionPoint expected")
-        if isinstance(connection_point, InletConnectionPoint):
-            raise TypeError("connection point direction")
-        if connection_point.connectsThrough:
-            raise RuntimeError("connection point already connected")
-
-        # property based link
-        connection_point.connectsThrough = self
-
-        # link connection to the connection point and its device
-        self._data_graph.add((self.node, s223.connectsAt, connection_point.node))
-        if INCLUDE_INVERSE:
-            self._data_graph.add(
-                (
-                    connection_point.isConnectionPointOf.node,
-                    s223.connectedThrough,
-                    self.node,
-                )
-            )
-            self._data_graph.add(
-                (
-                    self.node,
-                    s223.connectsFrom,
-                    connection_point.isConnectionPointOf.node,
-                )
-            )
+    def __le__(self, other: Any) -> Any:
+        """connect multimethod"""
+        connect_mm(other, self)
+        return self
 
 
 class Connectable(Node):
@@ -1300,6 +1224,85 @@ class Connectable(Node):
 
             setattr(self, var_name, var_element)
 
+    def __ge__(self, other: Any) -> Any:
+        """connect multimethod"""
+        connect_mm(self, other)
+        return self
+
+    def __le__(self, other: Any) -> Any:
+        """connect multimethod"""
+        connect_mm(other, self)
+        return self
+
+
+@multimethod
+def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
+    logging.info(f"connect from {from_thing} to {to_thing}")
+
+    print(f"from_thing._connection_points: {from_thing._connection_points}")
+
+    # build a dict of outlet connection points that are not already connected
+    # organize them by medium
+    from_out = defaultdict(set)
+    for attr, connection_point in from_thing._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if not isinstance(connection_point, OutletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        from_out[medium].add(connection_point)
+
+    print(f"from_out: {from_out}")
+
+    # filter them to a set where there is only one for that medium so it
+    # would be unambiguous to use it
+    from_types: Set[Medium]
+    from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
+    if not from_types:
+        raise RuntimeError(
+            f"no candidate sources from {from_thing.node} to {to_thing.node}"
+        )
+    logging.debug(f"    - from_types: {from_types}")
+
+    # build a dict of inlet connection points that are not already connected
+    # organize them by medium
+    to_in = defaultdict(set)
+    for attr, connection_point in to_thing._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if not isinstance(connection_point, InletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        to_in[medium].add(connection_point)
+
+    # filter them to a set where there is only one for that medium so it
+    # would be unambiguous to use it
+    to_types: Set[Medium]
+    to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
+    if not to_types:
+        raise RuntimeError(
+            f"no candidate destinations from {from_thing.node} to {to_thing.node}"
+        )
+    logging.debug(f"    - to_types: {to_types}")
+
+    # find the common medium
+    common_types = from_types.intersection(to_types)
+    if not common_types:
+        raise RuntimeError("no common connection types")
+    if len(common_types) > 1:
+        raise RuntimeError("too many common connection types")
+    medium = common_types.pop()
+    logging.debug(f"    - medium: {medium}")
+
+    # get the two connection points
+    from_connection_point = from_out[medium].pop()
+    to_connection_point = to_in[medium].pop()
+
+    # continue creating the connection
+    connect_mm(from_connection_point, to_connection_point)
+
 
 class ConnectionPoint(Node):
     node_type: URIRef = s223.ConnectionPoint
@@ -1314,8 +1317,7 @@ class ConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add((thing.node, s223.hasConnectionPoint, self.node))
-        if INCLUDE_INVERSE:
-            self.isConnectionPointOf = thing
+        self.isConnectionPointOf = thing
 
         # this is one of the connection points of the device
         thing._connection_points[str(self.node)] = self
@@ -1338,45 +1340,104 @@ class ConnectionPoint(Node):
         # link the segment back
         segment.link_to(self)
 
-    def connect_to(self, other: Union[Connection, ConnectionPoint]) -> None:
-        """
-        Connects to a connection or a connection point.
-        """
-        if self.connectsThrough:
-            raise RuntimeError("connection point already connected")
+    def __ge__(self, other: Any) -> Any:
+        """connect multimethod"""
+        connect_mm(self, other)
+        return self
 
-        if isinstance(other, Connection):
-            connection = other
-        elif isinstance(other, ConnectionPoint):
-            connection = Connection()
-            if self.hasMedium:
-                connection.hasMedium = self.hasMedium
-            connection.connect_to(other)
-        else:
-            raise TypeError("connection or connection point expected")
+    def __le__(self, other: Any) -> Any:
+        """connect multimethod"""
+        connect_mm(other, self)
+        return self
 
-        # link connection back from this connection point
-        connection.connect_from(self)
 
-    def connect_from(self, other: Union[Connection, ConnectionPoint]) -> None:
-        """
-        Connects from a connection or a connection point.
-        """
-        if self.connectsThrough:
-            raise RuntimeError("connection point already connected")
+@multimethod
+def connect_mm(from_thing: ConnectionPoint, to_thing: ConnectionPoint) -> None:
+    logging.info(f"connect from {from_thing} to {to_thing}")
 
-        if isinstance(other, Connection):
-            connection = other
-        elif isinstance(other, ConnectionPoint):
-            connection = Connection()
-            if self.hasMedium:
-                connection.hasMedium = self.hasMedium
-            connection.connect_from(other)
-        else:
-            raise TypeError("connection or connection point expected")
+    if from_thing.connectsThrough:
+        raise RuntimeError("connection point already connected")
+    if to_thing.connectsThrough:
+        raise RuntimeError("connection point already connected")
 
-        # link connection to this connection point
-        connection.connect_to(self)
+    from_medium = getattr(from_thing, "hasMedium", None)
+    logging.info(f"    - from_medium: {from_medium}")
+    to_medium = getattr(to_thing, "hasMedium", None)
+    logging.info(f"    - to_medium: {to_medium}")
+
+    if from_medium is not to_medium:
+        raise RuntimeError("no common connection type")
+
+    # link the two things together
+    from_thing._data_graph.add((from_thing.isConnectionPointOf.node, s223.connectedTo, to_thing.isConnectionPointOf.node))
+    from_thing._data_graph.add((to_thing.isConnectionPointOf.node, s223.connectedFrom, from_thing.isConnectionPointOf.node))
+
+    # create a connection between the two
+    connection = Connection()
+    if from_medium:
+        connection.hasMedium = from_medium
+
+    # set the relationships
+    connect_mm(from_thing, connection)
+    connect_mm(connection, to_thing)
+
+
+@multimethod
+def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> None:
+    """
+    Connects from a connection point to a connection.
+    """
+    if isinstance(connection_point, InletConnectionPoint):
+        raise TypeError("connection point direction")
+    if connection_point.connectsThrough:
+        raise RuntimeError("connection point already connected")
+
+    # property based link
+    connection_point.connectsThrough = connection
+
+    # link connection to the connection point and its device
+    connection_point._data_graph.add((connection.node, s223.connectsAt, connection_point.node))
+    connection_point._data_graph.add(
+        (
+            connection_point.isConnectionPointOf.node,
+            s223.connectedThrough,
+            connection.node,
+        )
+    )
+    connection_point._data_graph.add(
+        (
+            connection.node,
+            s223.connectsFrom,
+            connection_point.isConnectionPointOf.node,
+        )
+    )
+
+
+@multimethod
+def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:
+    """
+    Connects from this connection to a connection point.
+    """
+    if isinstance(connection_point, OutletConnectionPoint):
+        raise TypeError("connection point direction")
+    if connection_point.connectsThrough:
+        raise RuntimeError("connection point already connected")
+
+    # property based link
+    connection_point.connectsThrough = connection
+
+    # link connection to the connection point and its device
+    connection._data_graph.add((connection.node, s223.connectsAt, connection_point.node))
+    connection._data_graph.add(
+        (
+            connection_point.isConnectionPointOf.node,
+            s223.connectedThrough,
+            connection.node,
+        )
+    )
+    connection._data_graph.add(
+        (connection.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
+    )
 
 
 class InletConnectionPoint(ConnectionPoint):
@@ -1490,22 +1551,24 @@ class Zone(Node):
 
             setattr(self, var_name, var_element)
 
-    def __gt__(self, other: DomainSpace) -> Node:
-        """self > other
-
-        Build a containment heirarchy, the other domain space is contained in
-        this zone.
-        """
-        logging.debug(f"__gt__ {self} {other}")
-
-        if not isinstance(other, DomainSpace):
-            raise TypeError("space expected")
-
-        self._data_graph.add((self.node, s223.contains, other.node))
-        if INCLUDE_INVERSE:
-            self._data_graph.add((other.node, s223.isContainedIn, self.node))
-
+    def __gt__(self, other: Node) -> Any:
+        """contains multimethod"""
+        contains_mm(self, other)
         return self
+
+    def __lt__(self, other: Node) -> Any:
+        """contains multimethod"""
+        contains_mm(other, self)
+        return self
+
+
+@multimethod
+def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
+    logging.info(f"zone {zone} contains domain space {domain_space}")
+
+    zone._data_graph.add((zone.node, s223.contains, domain_space.node))
+    if INCLUDE_INVERSE:
+        zone._data_graph.add((domain_space.node, s223.isContainedIn, zone.node))
 
 
 class ZoneConnectionPoint(Node):
@@ -1533,7 +1596,7 @@ class ZoneConnectionPoint(Node):
 
     def maps_to(self, other: Union[Junction, ConnectionPoint]) -> None:
         """
-        Maps this connection point to a space connection point.
+        Maps this connection point to a domain space connection point.
         """
         logging.debug(f"ZoneConnectionPoint.maps_to {other}")
         if self.mapsTo:
@@ -1811,12 +1874,14 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             raise RuntimeError("connection to connection")
         to_connection_point = to_in[medium].pop()
 
-        from_thing.connect_to(to_connection_point)
+        # from_thing.connect_to(to_connection_point)
+        connect_mm(from_thing, to_connection_point)
 
     elif isinstance(to_thing, Connection):
         from_connection_point = from_out[medium].pop()
 
-        to_thing.connect_from(from_connection_point)
+        # to_thing.connect_from(from_connection_point)
+        connect_mm(from_connection_point, to_thing)
 
     else:
         # get the medium and the two connection points
@@ -1833,7 +1898,8 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             segment.link_to(from_connection_point)
             segment.link_to(to_connection_point)
         else:
-            from_connection_point.connect_to(to_connection_point)
+            # from_connection_point.connect_to(to_connection_point)
+            connect_mm(from_connection_point, to_connection_point)
 
 
 class Device(Connectable):

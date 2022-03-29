@@ -13,16 +13,22 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 ex:00001 a s223:Device ;
     rdfs:label "d1" ;
+    s223:connectedThrough ex:00009 ;
+    s223:connectedTo ex:00002 ;
     s223:hasConnectionPoint ex:00003 .
 ex:00002 a s223:Device ;
     rdfs:label "d2" ;
+    s223:connectedFrom ex:00001 ;
+    s223:connectedThrough ex:00009 ;
     s223:hasConnectionPoint ex:00004 .
 ex:00003 a s223:ConnectionPoint ;
     rdfs:label "d1.cp" ;
-    s223:connectsThrough ex:00009 .
+    s223:connectsThrough ex:00009 ;
+    s223:isConnectionPointOf ex:00001 .
 ex:00004 a s223:ConnectionPoint ;
     rdfs:label "d2.cp" ;
-    s223:connectsThrough ex:00009 .
+    s223:connectsThrough ex:00009 ;
+    s223:isConnectionPointOf ex:00002 .
 ex:00005 a s223:System ;
     rdfs:label "s1" ;
     s223:hasSystemConnectionPoint ex:00007 .
@@ -37,23 +43,31 @@ ex:00008 a s223:SystemConnectionPoint ;
     s223:mapsTo ex:00004 .
 ex:00009 a s223:Connection ;
     s223:connectsAt ex:00003,
-        ex:00004 .
+        ex:00004 ;
+    s223:connectsFrom ex:00001 ;
+    s223:connectsTo ex:00002 .
 ex:00010 a s223:Device ;
     rdfs:label "d3" ;
+    s223:connectedThrough ex:00018 ;
+    s223:connectedTo ex:00011 ;
     s223:hasConnectionPoint ex:00012 .
 ex:00011 a s223:Device ;
     rdfs:label "d4" ;
+    s223:connectedFrom ex:00010 ;
+    s223:connectedThrough ex:00018 ;
     s223:hasConnectionPoint ex:00013 .
 ex:00012 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "d3.cp" ;
     s223:connectsThrough ex:00018 ;
-    s223:hasDirection s223:Direction-Outlet .
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:isConnectionPointOf ex:00010 .
 ex:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "d4.cp" ;
     s223:connectsThrough ex:00018 ;
-    s223:hasDirection s223:Direction-Inlet .
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:isConnectionPointOf ex:00011 .
 ex:00014 a s223:System ;
     rdfs:label "s3" ;
     s223:hasSystemConnectionPoint ex:00016 .
@@ -72,4 +86,6 @@ ex:00017 a s223:InletSystemConnectionPoint,
     s223:mapsTo ex:00013 .
 ex:00018 a s223:Connection ;
     s223:connectsAt ex:00012,
-        ex:00013 .
+        ex:00013 ;
+    s223:connectsFrom ex:00010 ;
+    s223:connectsTo ex:00011 .

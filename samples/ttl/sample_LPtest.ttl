@@ -42,29 +42,35 @@ ex:00005 a s223:Device,
     rdfs:label "rtu.return_fan" ;
     s223:airInlet ex:00006 ;
     s223:airOutlet ex:00007 ;
+    s223:connectedThrough ex:00008 ;
     s223:hasConnectionPoint ex:00006,
         ex:00007 .
 ex:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.return_fan.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00005 .
 ex:00007 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.return_fan.airOutlet" ;
     s223:connectsThrough ex:00008 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00005 .
 ex:00008 a s223:Connection ;
     rdfs:label "rtu.return_air" ;
     s223:connectsAt ex:00007,
         ex:00012 ;
+    s223:connectsFrom ex:00005 ;
+    s223:connectsTo ex:00009 ;
     s223:hasMedium s223:Medium-Air .
 ex:00009 a s223:Damper,
         s223:Device ;
     rdfs:label "rtu.exhaust_air_damper" ;
     s223:airInlet ex:00012 ;
     s223:airOutlet ex:00013 ;
+    s223:connectedThrough ex:00008 ;
     s223:feedback ex:00011 ;
     s223:hasConnectionPoint ex:00012,
         ex:00013 ;
@@ -80,12 +86,14 @@ ex:00012 a s223:ConnectionPoint,
     rdfs:label "rtu.exhaust_air_damper.airInlet" ;
     s223:connectsThrough ex:00008 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00009 .
 ex:00013 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.exhaust_air_damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00009 .
 ex:00014 a s223:Damper,
         s223:Device ;
     rdfs:label "rtu.mixed_air_damper" ;
@@ -105,22 +113,28 @@ ex:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.mixed_air_damper.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00014 .
 ex:00018 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.mixed_air_damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00014 .
 ex:00019 a s223:Connection ;
     rdfs:label "rtu.mixed_air" ;
     s223:connectsAt ex:00028,
         ex:00031 ;
+    s223:connectsFrom ex:00025 ;
+    s223:connectsTo ex:00030 ;
     s223:hasMedium s223:Medium-Air .
 ex:00020 a s223:Damper,
         s223:Device ;
     rdfs:label "rtu.outside_air_damper" ;
     s223:airInlet ex:00023 ;
     s223:airOutlet ex:00024 ;
+    s223:connectedThrough ex:00029 ;
+    s223:connectedTo ex:00025 ;
     s223:feedback ex:00022 ;
     s223:hasConnectionPoint ex:00023,
         ex:00024 ;
@@ -135,19 +149,24 @@ ex:00023 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.outside_air_damper.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00020 .
 ex:00024 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.outside_air_damper.airOutlet" ;
     s223:connectsThrough ex:00029 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00020 .
 ex:00025 a p223:AirFlowMonitor,
         s223:Device ;
     rdfs:label "rtu.outside_air_flow_station" ;
     p223:airInlet ex:00027 ;
     p223:airOutlet ex:00028 ;
     p223:flow ex:00026 ;
+    s223:connectedFrom ex:00020 ;
+    s223:connectedThrough ex:00019,
+        ex:00029 ;
     s223:hasConnectionPoint ex:00027,
         ex:00028 ;
     s223:hasProperty ex:00026 .
@@ -158,22 +177,28 @@ ex:00027 a s223:ConnectionPoint,
     rdfs:label "rtu.outside_air_flow_station.airInlet" ;
     s223:connectsThrough ex:00029 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00025 .
 ex:00028 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.outside_air_flow_station.airOutlet" ;
     s223:connectsThrough ex:00019 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00025 .
 ex:00029 a s223:Connection ;
     s223:connectsAt ex:00024,
         ex:00027 ;
+    s223:connectsFrom ex:00020 ;
+    s223:connectsTo ex:00025 ;
     s223:hasMedium s223:Medium-Air .
 ex:00030 a p223:Filter,
         s223:Device ;
     rdfs:label "rtu.pre_filter" ;
     p223:airInlet ex:00031 ;
     p223:airOutlet ex:00032 ;
+    s223:connectedThrough ex:00019,
+        ex:00033 ;
     s223:hasConnectionPoint ex:00031,
         ex:00032 .
 ex:00031 a s223:ConnectionPoint,
@@ -181,24 +206,31 @@ ex:00031 a s223:ConnectionPoint,
     rdfs:label "rtu.pre_filter.airInlet" ;
     s223:connectsThrough ex:00019 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00030 .
 ex:00032 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.pre_filter.airOutlet" ;
     s223:connectsThrough ex:00033 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00030 .
 ex:00033 a s223:Connection ;
     rdfs:label "rtu.pre_filtered_air" ;
     s223:connectsAt ex:00032,
         ex:00037,
         ex:00040 ;
+    s223:connectsFrom ex:00030 ;
+    s223:connectsTo ex:00034,
+        ex:00039 ;
     s223:hasMedium s223:Medium-Air .
 ex:00034 a s223:Damper,
         s223:Device ;
     rdfs:label "rtu.bypass_damper" ;
     s223:airInlet ex:00037 ;
     s223:airOutlet ex:00038 ;
+    s223:connectedThrough ex:00033,
+        ex:00044 ;
     s223:feedback ex:00036 ;
     s223:hasConnectionPoint ex:00037,
         ex:00038 ;
@@ -214,13 +246,15 @@ ex:00037 a s223:ConnectionPoint,
     rdfs:label "rtu.bypass_damper.airInlet" ;
     s223:connectsThrough ex:00033 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00034 .
 ex:00038 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.bypass_damper.airOutlet" ;
     s223:connectsThrough ex:00044 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00034 .
 ex:00039 a s223:CoolingCoil,
         s223:Device ;
     rdfs:label "rtu.chilled_water_coil" ;
@@ -228,6 +262,8 @@ ex:00039 a s223:CoolingCoil,
     s223:airOutlet ex:00041 ;
     s223:chilledWaterInlet ex:00042 ;
     s223:chilledWaterOutlet ex:00043 ;
+    s223:connectedThrough ex:00033,
+        ex:00044 ;
     s223:hasConnectionPoint ex:00040,
         ex:00041,
         ex:00042,
@@ -237,34 +273,44 @@ ex:00040 a s223:ConnectionPoint,
     rdfs:label "rtu.chilled_water_coil.airInlet" ;
     s223:connectsThrough ex:00033 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00039 .
 ex:00041 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.chilled_water_coil.airOutlet" ;
     s223:connectsThrough ex:00044 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00039 .
 ex:00042 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.chilled_water_coil.chilledWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Water-ChilledWater .
+    s223:hasMedium s223:Water-ChilledWater ;
+    s223:isConnectionPointOf ex:00039 .
 ex:00043 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.chilled_water_coil.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Water-ChilledWater .
+    s223:hasMedium s223:Water-ChilledWater ;
+    s223:isConnectionPointOf ex:00039 .
 ex:00044 a s223:Connection ;
     rdfs:label "rtu.chilled_air" ;
     s223:connectsAt ex:00038,
         ex:00041,
         ex:00046 ;
+    s223:connectsFrom ex:00034,
+        ex:00039 ;
+    s223:connectsTo ex:00045 ;
     s223:hasMedium s223:Medium-Air .
 ex:00045 a p223:Filter,
         s223:Device ;
     rdfs:label "rtu.final_filter" ;
     p223:airInlet ex:00046 ;
     p223:airOutlet ex:00047 ;
+    s223:connectedThrough ex:00044,
+        ex:00051 ;
+    s223:connectedTo ex:00048 ;
     s223:hasConnectionPoint ex:00046,
         ex:00047 .
 ex:00046 a s223:ConnectionPoint,
@@ -272,18 +318,24 @@ ex:00046 a s223:ConnectionPoint,
     rdfs:label "rtu.final_filter.airInlet" ;
     s223:connectsThrough ex:00044 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00045 .
 ex:00047 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.final_filter.airOutlet" ;
     s223:connectsThrough ex:00051 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00045 .
 ex:00048 a s223:Device,
         s223:Fan ;
     rdfs:label "rtu.supply_fan" ;
     s223:airInlet ex:00049 ;
     s223:airOutlet ex:00050 ;
+    s223:connectedFrom ex:00045 ;
+    s223:connectedThrough ex:00051,
+        ex:00057 ;
+    s223:connectedTo ex:00052 ;
     s223:hasConnectionPoint ex:00049,
         ex:00050 ;
     s223:hasRole s223:Supply .
@@ -292,22 +344,28 @@ ex:00049 a s223:ConnectionPoint,
     rdfs:label "rtu.supply_fan.airInlet" ;
     s223:connectsThrough ex:00051 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00048 .
 ex:00050 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.supply_fan.airOutlet" ;
     s223:connectsThrough ex:00057 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00048 .
 ex:00051 a s223:Connection ;
     s223:connectsAt ex:00047,
         ex:00049 ;
+    s223:connectsFrom ex:00045 ;
+    s223:connectsTo ex:00048 ;
     s223:hasMedium s223:Medium-Air .
 ex:00052 a s223:Damper,
         s223:Device ;
     rdfs:label "rtu.iso_damper" ;
     s223:airInlet ex:00055 ;
     s223:airOutlet ex:00056 ;
+    s223:connectedFrom ex:00048 ;
+    s223:connectedThrough ex:00057 ;
     s223:feedback ex:00054 ;
     s223:hasConnectionPoint ex:00055,
         ex:00056 ;
@@ -323,15 +381,19 @@ ex:00055 a s223:ConnectionPoint,
     rdfs:label "rtu.iso_damper.airInlet" ;
     s223:connectsThrough ex:00057 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00052 .
 ex:00056 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "rtu.iso_damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00052 .
 ex:00057 a s223:Connection ;
     s223:connectsAt ex:00050,
         ex:00055 ;
+    s223:connectsFrom ex:00048 ;
+    s223:connectsTo ex:00052 ;
     s223:hasMedium s223:Medium-Air .
 ex:00058 a s223:Segment ;
     s223:lnx ex:00061 .
@@ -349,6 +411,7 @@ ex:00061 a s223:ConnectionPoint,
     rdfs:label "rtu.MA_sensor.connection" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00059 ;
     s223:lnx ex:00058 .
 ex:rtu a s223:System,
         ex:RooftopUnit ;
