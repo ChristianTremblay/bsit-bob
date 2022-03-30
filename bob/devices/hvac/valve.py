@@ -50,7 +50,7 @@ class Valve(Device):
                 _properties[k] = kwargs.pop(k)
         super().__init__(**kwargs)
         for k, v in _properties.items():
-            if v:
+            if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
 
 

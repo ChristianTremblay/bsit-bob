@@ -2,6 +2,7 @@ from bob.devices.lighting.light import *
 from bob.connections.light import *
 from bob.externalreference.bacnet import BACnetReference
 from bob.sensor.movement import OccupancySensor
+from bob.properties.light import RelativeLuminousFlux
 import lighting_spaces as ls
 import physical_spaces as ps
 
@@ -146,7 +147,7 @@ openofficeWest_light_conn = LightVisibleConnection(
 )
 
 # Occupancy in OpenOffice comes from 1 sensors for both spaces
-openofficeEast_movement = OccupancySensor(
+openoffice_movement = OccupancySensor(
     label="OccSensor1", comment="Occupancy sensor for OpenOffice"
 )
 

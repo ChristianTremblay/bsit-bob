@@ -53,7 +53,6 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 import physical_spaces as ps
 import hvac_spaces as hs
-import occupancy_spaces as os
 import lighting_spaces as ls
 
 import hvac_devices as hd
@@ -72,7 +71,6 @@ ps.bldg > ps.floor1
 ps.floor1 > ps.openoffice > hs.openoffice_hvac
 ps.openoffice > ls.openofficeEast_lightspace
 ps.openoffice > ls.openofficeWest_lightspace
-ps.openoffice > os.openoffice_occ_space
 
 ps.floor1 > ps.bathroom > hs.bathroom_hvac
 ps.bathroom > ls.bathroom_lightspace
@@ -86,6 +84,5 @@ ps.private_office > ls.privateoffice_lightspace
 
 ps.floor1 > ps.kitchenette > hs.kitchenette_hvac
 ps.kitchenette > ls.kitchenette_lightspace
-ps.kitchenette > os.kitchenette_occ_space
 
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

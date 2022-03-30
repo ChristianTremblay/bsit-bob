@@ -49,7 +49,7 @@ openoffice_windows = AirConnection(
 
 mixedAir = AirConnection(
     label="MixedAirDuct",
-    comment="Mix bettween return air and outdoor air",
+    comment="Mix between return air and outdoor air",
 )
 returnExhaut = AirConnection(
     label="Return / Exhaust",

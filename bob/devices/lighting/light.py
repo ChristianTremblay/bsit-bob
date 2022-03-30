@@ -3,7 +3,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 from bob.properties.electricity import ElectricPowerW
 
-from ...properties.light import Brightness
+from ...properties.light import Brightness, RelativeLuminousFlux
 from ...properties.ratio import Percent, PercentCommand
 from ...properties.states import OnOffStatus
 
@@ -34,7 +34,7 @@ __namespace__ = p223
 class Luminaire(Device):
     node_type: URIRef = p223.Luminaire
     lightOutlet: LightVisibleOutletConnectionPoint
-    brightness: Brightness
+    brightness: RelativeLuminousFlux
     brightnessRatio: PercentCommand
     hasOnOffStatus: OnOffStatus
     electricalPower: ElectricPowerW
@@ -61,7 +61,7 @@ class Luminaire(Device):
             else None
         )
         for k, v in _properties.items():
-            if v:
+            if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
         for sensor in sensors:
             self > sensor

@@ -73,7 +73,7 @@ class Fan(Device):
             else None
         )
         for k, v in _properties.items():
-            if v:
+            if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
         for sensor in sensors:
             self > sensor

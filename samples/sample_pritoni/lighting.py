@@ -1,7 +1,6 @@
 import lighting_devices as ld
 import lighting_spaces as ls
 import physical_spaces as ps
-import occupancy_spaces as os
 
 import hvac_devices as hd
 
@@ -10,7 +9,7 @@ ld.kitchenette_luminaire_12.lightOutlet >> ld.kitch_light_conn
 ld.kitch_light_conn >> ls.kitchenette_lightspace.lightInlet
 
 # There is a occupancy space for Kitchenette... go figure
-ld.kitchenette_movement.hasMeasurementLocation = os.kitchenette_occ_space
+ld.kitchenette_movement.hasMeasurementLocation = ls.kitchenette_lightspace
 ld.kitchenette_movement.hasPhysicalLocation = ps.kitchenette
 
 ld.privateoffice_luminaire_7.lightOutlet >> ld.privateoffice_light_conn
@@ -39,8 +38,8 @@ ld.openofficeWest_luminaire_3.lightOutlet >> ld.openofficeWest_light_conn
 ld.openofficeWest_luminaire_4.lightOutlet >> ld.openofficeWest_light_conn
 ld.openofficeWest_light_conn >> ls.openofficeWest_lightspace.lightInlet
 
-ld.openofficeEast_movement.hasMeasurementLocation = os.openoffice_occ_space
-ld.openofficeEast_movement.hasPhysicalLocation = ps.openoffice
+ld.openoffice_movement.hasMeasurementLocation = ls.openofficeWest_lightspace
+ld.openoffice_movement.hasPhysicalLocation = ps.openoffice
 
 hd.window1.naturalLight >> ld.natural_ligth_conn
 hd.window2.naturalLight >> ld.natural_ligth_conn

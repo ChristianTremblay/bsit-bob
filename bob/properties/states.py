@@ -1,7 +1,15 @@
-from rdflib import URIRef
+from rdflib import Graph, URIRef
 
 from ..property import ActuatableProperty, ObservableProperty
-from ..core import EnumerationKind, ExternalReference, Medium, quantitykind, unit, p223
+from ..core import (
+    EnumerationKind,
+    ExternalReference,
+    Medium,
+    SchemaGraph,
+    quantitykind,
+    unit,
+    p223,
+)
 
 __namespace__ = p223
 
@@ -20,3 +28,16 @@ class OnOffStatus(ObservableProperty):
 class OnOffCommand(ActuatableProperty):
     node_type: URIRef = p223.OnOffCommand
     hasExternalReference: ExternalReference
+
+
+Occupancy = EnumerationKind(node_iri=p223["EnumerationKind-Occupancy"])
+
+
+class Schedule(ObservableProperty):
+    node_type: URIRef = p223.Schedule
+    hasExternalReference: ExternalReference
+
+
+class OccupancyStatus(ObservableProperty):
+    node_type: URIRef = p223.OccupancyStatus
+    hasEnumerationKind: EnumerationKind = Occupancy
