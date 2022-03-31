@@ -54,11 +54,13 @@ class ThreePhasesElectricalMeter(Device):
         self.voltage_sensors = _sensors["voltage"]
         self.current_sensors = _sensors["current"]
 
+    def finalize(self):
         for each in self.voltage_sensors:
             self > each
 
         for each in self.current_sensors:
             self > each
+        return self
 
     def set_hasMeasurementLocation(self, node: Node = None):
         self.voltage_hasMeasurementLocation(node)

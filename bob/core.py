@@ -2197,7 +2197,6 @@ def contains_mm(system: System, device: Device) -> None:
 def contains_mm(parent_device: Device, child_device: Device) -> None:
     """Device > Device"""
     logging.info(f"device {parent_device} contains device {child_device}")
-
     parent_device._data_graph.add(
         (parent_device.node, s223.contains, child_device.node)
     )

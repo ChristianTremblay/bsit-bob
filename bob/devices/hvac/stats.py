@@ -77,4 +77,7 @@ class FlowSwitch(Device):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.sensor = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
+
+    def finalize(self):
         self > self.sensor
+        return self

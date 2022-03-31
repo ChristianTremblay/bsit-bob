@@ -1,11 +1,19 @@
 from __future__ import annotations
 
-from typing import List, Union
+from typing import List, Union, Any
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
 
-from bob import core
+from ..multimethods import multimethod
 
-from ..core import ExternalReference, s223, p223, quantitykind, unit
+from ..core import (
+    ExternalReference,
+    s223,
+    p223,
+    quantitykind,
+    unit,
+    logging,
+    INCLUDE_INVERSE,
+)
 from ..core import (
     Property,
     PropertyReference,
@@ -35,11 +43,15 @@ def split_kwargs(given_kwargs):
     # the observesProperty
     _prop = ["hasExternalReference", "hasValue"]
     measure_kwargs = {}
+    sensor_kwargs = {}
     _given_kwargs = given_kwargs.copy()  # need a copy
     for k, v in _given_kwargs.items():
         if k in _prop:
-            measure_kwargs[k] = given_kwargs.pop(k)
-    sensor_kwargs = given_kwargs
+            if v is not None:
+                measure_kwargs[k] = given_kwargs.pop(k)
+        else:
+            if v is not None:
+                sensor_kwargs[k] = given_kwargs.pop(k)
     return (sensor_kwargs, measure_kwargs)
 
 
@@ -86,6 +98,29 @@ class Sensor(Device):
     measuresMedium: Medium
     measuresSubstance: Substance  # When substance measured different than medium (ex. Gas)
     observesProperty: PropertyReference  ### restrict to MeasuredProperty
+
+    def __gt__(self, other: Node) -> Any:
+        """contains multimethod"""
+        contains_mm(self, other)
+        return self
+
+    def __lt__(self, other: Node) -> Any:
+        """contains multimethod"""
+        contains_mm(other, self)
+        return self
+
+
+@multimethod
+def contains_mm(parent_device: Device, child_device: Sensor) -> None:
+    """Device > Device"""
+    logging.info(f"device {parent_device} contains device {child_device}")
+    parent_device._data_graph.add(
+        (parent_device.node, s223.contains, child_device.node)
+    )
+    if INCLUDE_INVERSE:
+        parent_device._data_graph.add(
+            (child_device.node, s223.isContainedIn, parent_device.node)
+        )
 
 
 class DifferentialSensor(Sensor):

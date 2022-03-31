@@ -17,7 +17,7 @@ CGM_2_004 = BACnetDevice(
     comment="AHU Controller",
     deviceId=5204,
     deviceName="CGM-2-004",
-    networkNumer=2,
+    networkNumber=2,
     address=4,
     vendorId=5,
 )
@@ -27,7 +27,7 @@ VAV_2_005 = BACnetDevice(
     comment="VAV for Zone 1",
     deviceId=5205,
     deviceName="CVM-2-005",
-    networkNumer=2,
+    networkNumber=2,
     address=5,
     vendorId=5,
 )
@@ -37,7 +37,7 @@ VAV_2_006 = BACnetDevice(
     comment="VAV for Zone 2",
     deviceId=5206,
     deviceName="CVM-2-006",
-    networkNumer=2,
+    networkNumber=2,
     address=6,
     vendorId=5,
 )

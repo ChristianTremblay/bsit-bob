@@ -44,16 +44,18 @@ class OccupancyControl(FunctionBlock):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        sensors = define_sensors(config)
-        devices, device_kwargs = contains_devices_list(config, **kwargs)
+        self.sensors = define_sensors(config)
+        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
-        # for sensor in sensors:
-        #    self > sensor
-        for dev in devices:
+        self._contains = self.devices
+        self._contains.extend(self.sensors)
+
+    def finalize(self):
+        for sensor in self.sensors:
+            self > sensor
+        for dev in self.devices:
             self > dev
-        self._contains = devices
-        self._contains.extend(sensors)
 
     def __getitem__(self, name: str) -> Any:
         for each in self._contains:

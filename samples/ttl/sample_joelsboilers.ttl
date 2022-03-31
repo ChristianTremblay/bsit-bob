@@ -16,7 +16,7 @@ ex:00001 a p223:AgnosticBoiler,
         s223:Device ;
     rdfs:label "DHW-BOILER" ;
     s223:connectedThrough ex:00013,
-        ex:00037 ;
+        ex:00040 ;
     s223:connectedTo ex:00007 ;
     s223:hasConnectionPoint ex:00002,
         ex:00003 ;
@@ -40,9 +40,9 @@ ex:00004 a p223:AgnosticBoiler,
         s223:Device ;
     rdfs:label "HTGLOOP-BOILER" ;
     s223:connectedFrom ex:00010 ;
-    s223:connectedThrough ex:00038,
-        ex:00039 ;
-    s223:connectedTo ex:00021 ;
+    s223:connectedThrough ex:00041,
+        ex:00042 ;
+    s223:connectedTo ex:00022 ;
     s223:hasConnectionPoint ex:00005,
         ex:00006 ;
     ex:waterInlet ex:00005 ;
@@ -66,7 +66,7 @@ ex:00007 a p223:HotWaterTank,
     rdfs:label "DHW-TANK" ;
     s223:connectedFrom ex:00001 ;
     s223:connectedThrough ex:00014,
-        ex:00037 ;
+        ex:00040 ;
     s223:hasConnectionPoint ex:00008,
         ex:00009 ;
     ex:waterInlet ex:00008 ;
@@ -88,8 +88,8 @@ ex:00009 a s223:ConnectionPoint,
 ex:00010 a p223:HotWaterTank,
         s223:Device ;
     rdfs:label "HTG-TANK" ;
-    s223:connectedThrough ex:00025,
-        ex:00038 ;
+    s223:connectedThrough ex:00026,
+        ex:00041 ;
     s223:connectedTo ex:00004 ;
     s223:hasConnectionPoint ex:00011,
         ex:00012 ;
@@ -112,14 +112,14 @@ ex:00012 a s223:ConnectionPoint,
 ex:00013 a s223:Connection ;
     rdfs:label "CITY-WATER" ;
     s223:connectsAt ex:00002,
-        ex:00034 ;
+        ex:00038 ;
     s223:connectsTo ex:00001,
-        ex:00033 ;
+        ex:00035 ;
     s223:hasMedium s223:Medium-Water .
 ex:00014 a s223:Connection ;
     rdfs:label "HouseFaucets" ;
     s223:connectsAt ex:00009,
-        ex:00016 ;
+        ex:00018 ;
     s223:connectsFrom ex:00007 ;
     s223:connectsTo ex:00015 ;
     s223:hasMedium s223:Medium-Water .
@@ -127,7 +127,7 @@ ex:00015 a s223:Device,
         s223:Valve ;
     rdfs:label "KITCHENFAUCET" ;
     s223:connectedThrough ex:00014,
-        ex:00020 ;
+        ex:00021 ;
     s223:hasConnectionPoint ex:00016,
         ex:00017,
         ex:00018,
@@ -138,179 +138,171 @@ ex:00016 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "KITCHENFAUCET.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-ModulationSignal .
+    s223:hasMedium s223:Electricity-ModulationSignal ;
+    s223:isConnectionPointOf ex:00015 .
 ex:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "KITCHENFAUCET.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-OnOffSignal .
+    s223:hasMedium s223:Electricity-OnOffSignal ;
+    s223:isConnectionPointOf ex:00015 .
 ex:00018 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough ex:00014 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00015 .
-ex:00017 a s223:ConnectionPoint,
+ex:00019 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     s223:connectsThrough ex:00021 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00015 .
-ex:00018 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "KITCHENFAUCET.position" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-ModulationSignal ;
-    s223:isConnectionPointOf ex:00015 .
-ex:00019 a s223:Connection ;
-    rdfs:label "HOUSE-DRAIN" ;
-    s223:hasMedium s223:Medium-Water .
 ex:00020 a s223:Connection ;
-    rdfs:label "CityDrain" ;
-    s223:connectsAt ex:00017 ;
-    s223:connectsFrom ex:00015 ;
+    rdfs:label "HOUSE-DRAIN" ;
     s223:hasMedium s223:Medium-Water .
 ex:00021 a s223:Connection ;
     rdfs:label "CityDrain" ;
     s223:connectsAt ex:00019 ;
+    s223:connectsFrom ex:00015 ;
     s223:hasMedium s223:Medium-Water .
 ex:00022 a s223:Device,
         s223:Fan ;
     rdfs:label "HowWaterPump" ;
     s223:connectedFrom ex:00004 ;
-    s223:connectedThrough ex:00024,
-        ex:00039 ;
-    s223:hasConnectionPoint ex:00022,
-        ex:00023 ;
-    s223:waterInlet ex:00022 ;
-    s223:waterOutlet ex:00023 .
-ex:00022 a s223:ConnectionPoint,
+    s223:connectedThrough ex:00025,
+        ex:00042 ;
+    s223:hasConnectionPoint ex:00023,
+        ex:00024 ;
+    s223:waterInlet ex:00023 ;
+    s223:waterOutlet ex:00024 .
+ex:00023 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "HowWaterPump.waterInlet" ;
     s223:connectsThrough ex:00042 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex:00021 .
-ex:00023 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex:00022 .
+ex:00024 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "HowWaterPump.waterOutlet" ;
-    s223:connectsThrough ex:00024 ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex:00021 .
-ex:00024 a s223:Connection ;
-    rdfs:label "HotWaterSupply" ;
-    s223:connectsAt ex:00023,
-        ex:00027 ;
-    s223:connectsFrom ex:00021 ;
-    s223:connectsTo ex:00026 ;
-    s223:hasMedium s223:Medium-Water .
-ex:00025 a s223:Connection ;
-    rdfs:label "HotWaterReturn" ;
-    s223:connectsAt ex:00011,
-        ex:00032,
-        ex:00035 ;
-    s223:connectsFrom ex:00030,
-        ex:00033 ;
-    s223:connectsTo ex:00010 ;
-    s223:hasMedium s223:Medium-Water .
-ex:00026 a s223:Device,
-        s223:Valve ;
-    rdfs:label "joelsofficehtgvlv" ;
-    s223:connectedThrough ex:00024,
-        ex:00040 ;
-    s223:connectedTo ex:00030 ;
-    s223:hasConnectionPoint ex:00027,
-        ex:00028,
-        ex:00029 ;
-    s223:position ex:00029 ;
-    s223:waterInlet ex:00027 ;
-    s223:waterOutlet ex:00028 .
-ex:00027 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "joelsofficehtgvlv.waterInlet" ;
-    s223:connectsThrough ex:00024 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex:00026 .
-ex:00028 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "joelsofficehtgvlv.waterOutlet" ;
-    s223:connectsThrough ex:00040 ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex:00026 .
-ex:00029 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "joelsofficehtgvlv.position" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-ModulationSignal ;
-    s223:isConnectionPointOf ex:00026 .
-ex:00030 a p223:AgnosticCoil,
-        s223:Device ;
-    rdfs:label "JoelsOfficeCoil" ;
-    s223:connectedFrom ex:00026 ;
-    s223:connectedThrough ex:00025,
-        ex:00040 ;
-    s223:hasConnectionPoint ex:00031,
-        ex:00032 ;
-    ex:waterInlet ex:00031 ;
-    ex:waterOutlet ex:00032 .
-ex:00031 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "JoelsOfficeCoil.waterInlet" ;
-    s223:connectsThrough ex:00040 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex:00030 .
-ex:00032 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "JoelsOfficeCoil.waterOutlet" ;
     s223:connectsThrough ex:00025 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex:00030 .
-ex:00033 a s223:Device,
+    s223:isConnectionPointOf ex:00022 .
+ex:00025 a s223:Connection ;
+    rdfs:label "HotWaterSupply" ;
+    s223:connectsAt ex:00024,
+        ex:00030 ;
+    s223:connectsFrom ex:00022 ;
+    s223:connectsTo ex:00027 ;
+    s223:hasMedium s223:Medium-Water .
+ex:00026 a s223:Connection ;
+    rdfs:label "HotWaterReturn" ;
+    s223:connectsAt ex:00011,
+        ex:00034,
+        ex:00039 ;
+    s223:connectsFrom ex:00032,
+        ex:00035 ;
+    s223:connectsTo ex:00010 ;
+    s223:hasMedium s223:Medium-Water .
+ex:00027 a s223:Device,
+        s223:Valve ;
+    rdfs:label "joelsofficehtgvlv" ;
+    s223:connectedThrough ex:00025,
+        ex:00043 ;
+    s223:connectedTo ex:00032 ;
+    s223:hasConnectionPoint ex:00028,
+        ex:00029,
+        ex:00030,
+        ex:00031 ;
+    s223:onOffInlet ex:00029 ;
+    s223:positionInlet ex:00028 .
+ex:00028 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "joelsofficehtgvlv.positionInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-ModulationSignal ;
+    s223:isConnectionPointOf ex:00027 .
+ex:00029 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "joelsofficehtgvlv.onOffInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-OnOffSignal ;
+    s223:isConnectionPointOf ex:00027 .
+ex:00030 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    s223:connectsThrough ex:00025 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water ;
+    s223:isConnectionPointOf ex:00027 .
+ex:00031 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    s223:connectsThrough ex:00043 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water ;
+    s223:isConnectionPointOf ex:00027 .
+ex:00032 a p223:AgnosticCoil,
+        s223:Device ;
+    rdfs:label "JoelsOfficeCoil" ;
+    s223:connectedFrom ex:00027 ;
+    s223:connectedThrough ex:00026,
+        ex:00043 ;
+    s223:hasConnectionPoint ex:00033,
+        ex:00034 ;
+    ex:waterInlet ex:00033 ;
+    ex:waterOutlet ex:00034 .
+ex:00033 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "JoelsOfficeCoil.waterInlet" ;
+    s223:connectsThrough ex:00043 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Water ;
+    s223:isConnectionPointOf ex:00032 .
+ex:00034 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "JoelsOfficeCoil.waterOutlet" ;
+    s223:connectsThrough ex:00026 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Water ;
+    s223:isConnectionPointOf ex:00032 .
+ex:00035 a s223:Device,
         s223:Valve ;
     rdfs:label "FILL-VLV" ;
     s223:connectedThrough ex:00013,
-        ex:00025 ;
-    s223:hasConnectionPoint ex:00034,
-        ex:00035,
-        ex:00036 ;
-    s223:position ex:00036 ;
-    s223:waterInlet ex:00034 ;
-    s223:waterOutlet ex:00035 ;
+        ex:00026 ;
+    s223:hasConnectionPoint ex:00036,
+        ex:00037,
+        ex:00038,
+        ex:00039 ;
+    s223:onOffInlet ex:00037 ;
+    s223:positionInlet ex:00036 ;
     rdfs:comment "Fill Hot Water Loop with water" .
 ex:00036 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "FILL-VLV.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-ModulationSignal .
+    s223:hasMedium s223:Electricity-ModulationSignal ;
+    s223:isConnectionPointOf ex:00035 .
 ex:00037 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "FILL-VLV.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-OnOffSignal .
+    s223:hasMedium s223:Electricity-OnOffSignal ;
+    s223:isConnectionPointOf ex:00035 .
 ex:00038 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough ex:00013 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex:00033 .
-ex:00035 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex:00035 .
+ex:00039 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     s223:connectsThrough ex:00026 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex:00033 .
-ex:00036 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "FILL-VLV.position" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-ModulationSignal ;
-    s223:isConnectionPointOf ex:00033 .
-ex:00037 a s223:Connection ;
+    s223:isConnectionPointOf ex:00035 .
+ex:00040 a s223:Connection ;
     s223:connectsAt ex:00003,
         ex:00008 ;
     s223:connectsFrom ex:00001 ;
@@ -324,15 +316,15 @@ ex:00041 a s223:Connection ;
     s223:hasMedium s223:Medium-Water .
 ex:00042 a s223:Connection ;
     s223:connectsAt ex:00006,
-        ex:00022 ;
+        ex:00023 ;
     s223:connectsFrom ex:00004 ;
-    s223:connectsTo ex:00021 ;
+    s223:connectsTo ex:00022 ;
     s223:hasMedium s223:Medium-Water .
-ex:00040 a s223:Connection ;
-    s223:connectsAt ex:00028,
-        ex:00031 ;
-    s223:connectsFrom ex:00026 ;
-    s223:connectsTo ex:00030 ;
+ex:00043 a s223:Connection ;
+    s223:connectsAt ex:00031,
+        ex:00033 ;
+    s223:connectsFrom ex:00027 ;
+    s223:connectsTo ex:00032 ;
     s223:hasMedium s223:Medium-Water .
 ex:00044 a s223:System ;
     rdfs:label "DHW" ;

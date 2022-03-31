@@ -34,4 +34,6 @@ class CurrentSwitch(Device):
             hasMeasurementLocation=_hasMeasurementLocation,
         )
 
+    def finalize(self):
         self > self.sensor
+        return self

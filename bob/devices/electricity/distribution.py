@@ -76,10 +76,10 @@ class DistributionPanel(Device):
         super().__init__(**kwargs)
 
     def __getitem__(self, name: str) -> Any:
-        for each in self._breakers:
+        for each in self.circuit_breakers:
             if each.label == name:
                 return each
-        for each in self._sensors:
+        for each in self.sensors:
             if each.label == name:
                 return each
 
@@ -108,8 +108,8 @@ class SinglePhaseDistributionPanel(DistributionPanel):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        sensors = define_sensors(config)
-        circuit_breakers, device_kwargs = contains_devices_list(config, **kwargs)
+        self.sensors = define_sensors(config)
+        self.circuit_breakers, device_kwargs = contains_devices_list(config, **kwargs)
         voltage = str(device_kwargs.pop("voltage"))
         _classes = self._cross_ref[voltage]
         _electricalBusA, _electricalBusB, _electricalBusAB = _classes
@@ -119,12 +119,11 @@ class SinglePhaseDistributionPanel(DistributionPanel):
         self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
-        self._breakers = circuit_breakers
-        self._sensors = sensors
 
-        for sensor in sensors:
+    def finalize(self):
+        for sensor in self.sensors:
             self > sensor
-        for circuit_breaker in circuit_breakers:
+        for circuit_breaker in self.circuit_breakers:
             self > circuit_breaker
             if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
                 circuit_breaker.electricalOutletA >> self.electricalBusA
@@ -137,6 +136,8 @@ class SinglePhaseDistributionPanel(DistributionPanel):
                     self.electricalBusA >> circuit_breaker
                 else:
                     self.electricalBusB >> circuit_breaker
+
+        return self
 
 
 class ThreePhasesDistributionPanel(DistributionPanel):
@@ -168,8 +169,8 @@ class ThreePhasesDistributionPanel(DistributionPanel):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        sensors = define_sensors(config)
-        circuit_breakers, device_kwargs = contains_devices_list(config, **kwargs)
+        self.sensors = define_sensors(config)
+        self.circuit_breakers, device_kwargs = contains_devices_list(config, **kwargs)
         try:
             voltage = str(device_kwargs.pop("voltage"))
             _classes = self._cross_ref[voltage]
@@ -190,11 +191,11 @@ class ThreePhasesDistributionPanel(DistributionPanel):
         self.electricalBusABC = _electricalBusABC(
             label=f"{self.label}.electricalBusABC"
         )
-        self._breakers = circuit_breakers
-        self._sensors = sensors
-        for sensor in sensors:
+
+    def finalize(self):
+        for sensor in self.sensors:
             self > sensor
-        for circuit_breaker in circuit_breakers:
+        for circuit_breaker in self.circuit_breakers:
 
             self > circuit_breaker
 
@@ -212,6 +213,7 @@ class ThreePhasesDistributionPanel(DistributionPanel):
                     self.electricalBusB >> circuit_breaker
                 else:
                     self.electricalBusC >> circuit_breaker
+        return self
 
 
 class CircuitBreaker(Device):

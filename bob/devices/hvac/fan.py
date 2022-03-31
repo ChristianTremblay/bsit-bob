@@ -61,8 +61,8 @@ class Fan(Device):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        sensors = define_sensors(config)
-        devices, device_kwargs = contains_devices_list(config, **kwargs)
+        self.sensors = define_sensors(config)
+        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         _electricalInlet = device_kwargs.pop("electricalInlet", None)
 
@@ -75,7 +75,10 @@ class Fan(Device):
         for k, v in _properties.items():
             if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
-        for sensor in sensors:
+
+    def finalize(self):
+        for sensor in self.sensors:
             self > sensor
-        for dev in devices:
+        for dev in self.devices:
             self > dev
+        return self

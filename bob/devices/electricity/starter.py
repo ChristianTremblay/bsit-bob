@@ -43,4 +43,8 @@ class MotorStarter(Device):
             measuresMedium=self.electricalInlet.hasMedium,
             hasMeasurementLocation=self.electricalOutlet,
         )
+
+    def finalize(self):
+        self.sensor.finalize()
         self > self.sensor
+        return self

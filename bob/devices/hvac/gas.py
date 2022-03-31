@@ -73,18 +73,17 @@ class GasMonitor(Device):
         if not config:
             raise ValueError("Please provide configuration dict")
 
-        sensors = define_sensors(config)
+        self.sensors = define_sensors(config)
         if "params" in config.keys():
             kwargs = {**config["params"], **kwargs}
 
         super().__init__(**kwargs)
-        for sensor in sensors:
+
+    def finalize(self):
+        for sensor in self.sensors:
             self > sensor
 
-        self._contains = []
-        self._contains.extend(sensors)
-
     def __getitem__(self, name: str) -> Any:
-        for each in self._contains:
+        for each in self.sensors:
             if each.label == name:
                 return each
