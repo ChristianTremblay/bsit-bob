@@ -28,12 +28,8 @@ class CurrentSwitch(Device):
         _label = kwargs["label"]
 
         super().__init__(**kwargs)
-        self.sensor = CurrentBinarySensor(
+        self.sensors = CurrentBinarySensor(
             label=_label + "CurrentBinarySensor",
             measuresMedium=_measuresMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
-
-    def finalize(self):
-        self > self.sensor
-        return self

@@ -13,7 +13,7 @@ from ...connections.air import (
 )
 from ...signal import AnalogIn, AnalogOut
 from ...sensor import define_sensors
-from ...devices import contains_devices_list
+from ...devices import composite, contains_devices_list
 from ...devices.hvac.damper import Damper
 
 __namespace__ = p223
@@ -37,6 +37,7 @@ class AirFlowStation(Device):
     flow = AnalogIn
 
 
+@composite
 class VAV(System):
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
@@ -47,21 +48,10 @@ class VAV(System):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        sensors = define_sensors(config)
-        devices, device_kwargs = contains_devices_list(config, **kwargs)
+        self.sensors = define_sensors(config)
+        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
-        for sensor in sensors:
-            self > sensor
-        for dev in devices:
-            self > dev
-        self._contains = devices
-        self._contains.extend(sensors)
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self._contains:
-            if each.label == name:
-                return each
 
 
 class VAV1(System):

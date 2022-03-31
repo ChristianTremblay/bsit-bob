@@ -10,7 +10,7 @@ from ...core import ConnectionPoint, PropertyReference, s223, Device, quantityki
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...signal import AnalogIn, AnalogOut
 from ...sensor import define_sensors
-from ...devices import contains_devices_list
+from ...devices import composite, contains_devices_list
 from ...properties import Amps, ElectricPowerkW, PowerFactor, HP, Pressure, RPM
 
 __namespace__ = s223
@@ -32,6 +32,7 @@ fan_template = {
 """
 
 
+@composite
 class Fan(Device):
     """
     A fan is composed of a blower and an electrical motor
@@ -75,10 +76,3 @@ class Fan(Device):
         for k, v in _properties.items():
             if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
-
-    def finalize(self):
-        for sensor in self.sensors:
-            self > sensor
-        for dev in self.devices:
-            self > dev
-        return self

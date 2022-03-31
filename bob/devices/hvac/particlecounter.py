@@ -3,7 +3,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...core import s223, p223, enum, Device
-
+from ...devices import composite
 
 from ...connections.air import (
     AirInletConnectionPoint,
@@ -42,6 +42,7 @@ particlecounter_template = {
 """
 
 
+@composite
 class ParticleCounter(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
@@ -55,7 +56,3 @@ class ParticleCounter(Device):
             kwargs = {**config["params"], **kwargs}
 
         super().__init__(**kwargs)
-
-    def finalize(self):
-        for sensor in self.sensors:
-            self > sensor

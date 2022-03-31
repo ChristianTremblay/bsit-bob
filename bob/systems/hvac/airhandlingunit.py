@@ -3,7 +3,7 @@ from rdflib import URIRef
 from typing import Any, Dict
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
 from ...core import p223, Device, System
-
+from ...devices import composite
 
 from ...connections.air import (
     AirOutletConnectionPoint,
@@ -23,6 +23,7 @@ ahu_template = {
 }
 
 
+@composite
 class AirHandlingUnit(System):
     outsideAirInlet: AirInletSystemConnectionPoint
     returnAirInlet: AirInletSystemConnectionPoint
@@ -40,21 +41,9 @@ class AirHandlingUnit(System):
         self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
-        self._contains = self.devices
-        self._contains.extend(self.sensors)
-
-    def finalize(self):
-        for sensor in self.sensors:
-            self > sensor
-        for dev in self.devices:
-            self > dev
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self._contains:
-            if each.label == name:
-                return each
 
 
+@composite
 class FanCoil(System):
     returnAirInlet: AirInletSystemConnectionPoint
     supplyAirOutlet: AirOutletSystemConnectionPoint
@@ -71,16 +60,3 @@ class FanCoil(System):
         self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
-        self._contains = self.devices
-        self._contains.extend(self.sensors)
-
-    def finalize(self):
-        for sensor in self.sensors:
-            self > sensor
-        for dev in self.devices:
-            self > dev
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self._contains:
-            if each.label == name:
-                return each

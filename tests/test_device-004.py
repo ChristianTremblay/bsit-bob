@@ -63,6 +63,10 @@ def test_create_gaz_monitor(bob_fixture):
     }
 
     dual_no2_co_configuration_example = {
+        "params": {
+            "label": "GM-1",
+            "comment": "Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot",
+        },
         "sensors": {
             ("CO_sensor", COSensor): {
                 "hasExternalReference": "bacnet://",
@@ -94,16 +98,18 @@ def test_create_gaz_monitor(bob_fixture):
                     label="NO2_sensor.MaxRange",
                 ),
             },
-        }
+        },
     }
 
     dualgasmonitor = GasMonitor(
-        label="GM-1",
-        comment="Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot",
         config=dual_no2_co_configuration_example,
     )
 
     co2monitor_config = {
+        "params": {
+            "label": "CO2-1",
+            "comment": "CO2 Monitor",
+        },
         "sensors": {
             ("CO2_sensor", CO2Sensor): {
                 "hasExternalReference": "bacnet://",
@@ -120,12 +126,10 @@ def test_create_gaz_monitor(bob_fixture):
                     label="CO2_sensor.MaxRange",
                 ),
             },
-        }
+        },
     }
 
     co2monitor = GasMonitor(
-        label="CO2-1",
-        comment="CO2 Monitor",
         config=co2monitor_config,
     )
 

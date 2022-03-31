@@ -7,7 +7,7 @@ from ...properties.light import Brightness, RelativeLuminousFlux
 from ...properties.ratio import Percent, PercentCommand
 from ...properties.states import OnOffStatus
 
-from ...devices import contains_devices_list
+from ...devices import composite, contains_devices_list
 
 from ...core import s223, p223, enum, Device, quantitykind, unit
 from ...property import QuantifiableObservableProperty
@@ -31,6 +31,7 @@ from ...sensor import Sensor, define_sensors
 __namespace__ = p223
 
 
+@composite
 class Luminaire(Device):
     node_type: URIRef = p223.Luminaire
     lightOutlet: LightVisibleOutletConnectionPoint
@@ -63,11 +64,3 @@ class Luminaire(Device):
         for k, v in _properties.items():
             if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
-
-    def finalize(self):
-        for sensor in self.sensors:
-            self > sensor
-        for dev in self.devices:
-            self > dev
-
-        return self

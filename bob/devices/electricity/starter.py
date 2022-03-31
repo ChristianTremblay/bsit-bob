@@ -10,6 +10,7 @@ from typing import Any
 __namespace__ = s223
 
 
+@composite
 class MotorStarter(Device):
     """
     Motor starter
@@ -38,13 +39,8 @@ class MotorStarter(Device):
             self, label=f"{self.label}.electricalOutlet"
         )
 
-        self.sensor = CurrentSwitch(
+        self.sensors = CurrentSwitch(
             label=f"{self.label}.sensor",
             measuresMedium=self.electricalInlet.hasMedium,
             hasMeasurementLocation=self.electricalOutlet,
         )
-
-    def finalize(self):
-        self.sensor.finalize()
-        self > self.sensor
-        return self

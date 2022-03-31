@@ -8,7 +8,7 @@ from ...connections.electricity import (
 )
 from ...signal import AnalogIn, AnalogOut
 from ...sensor import define_sensors
-from ...devices import contains_devices_list
+from ...devices import composite, contains_devices_list
 from ...properties import (
     Amps,
     ElectricPowerkW,
@@ -37,6 +37,7 @@ vfd_template = {
 """
 
 
+@composite
 class VFD(Device):
     node_type: URIRef = s223.VariableFrequencyDrive
     # electricalInlet: Must be provided in config
@@ -79,11 +80,3 @@ class VFD(Device):
         for k, v in _properties.items():
             if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
-
-    def finalize(self):
-        for sensor in self.sensors:
-            self > sensor
-        for dev in self.devices:
-            self > dev
-
-        return self

@@ -4,7 +4,7 @@ from rdflib import URIRef
 
 from ...core import s223, p223, enum, Device, quantitykind, unit
 from ...property import QuantifiableObservableProperty
-
+from ...devices import composite, contains_devices_list
 from ...connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
@@ -55,6 +55,7 @@ gasmonitor_template = {
 """
 
 
+@composite
 class GasMonitor(Device):
     """
     This allow the creation of a gas monitor that
@@ -70,20 +71,20 @@ class GasMonitor(Device):
     airInletSupply: AirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
-        if not config:
-            raise ValueError("Please provide configuration dict")
+        _properties = {}
+        for k, v in self.__annotations__.items():
+            if k in kwargs:
+                _properties[k] = kwargs.pop(k)
+        if not config and not kwargs:
+            raise ValueError(
+                "Please provide configuration dict or kwargs, at least a label"
+            )
 
         self.sensors = define_sensors(config)
-        if "params" in config.keys():
-            kwargs = {**config["params"], **kwargs}
+        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
-        super().__init__(**kwargs)
+        super().__init__(**device_kwargs)
 
-    def finalize(self):
-        for sensor in self.sensors:
-            self > sensor
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self.sensors:
-            if each.label == name:
-                return each
+        for k, v in _properties.items():
+            if v is not None:
+                setattr(self, k, self.__annotations__[k](v))
