@@ -121,9 +121,7 @@ class SinglePhaseDistributionPanel(DistributionPanel):
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
 
     def finalize(self):
-        self._contains = []
-        self._contains.extend(self.sensors)
-        self._contains.extend(self.circuit_breakers)
+        self.devices = self.circuit_breakers
         for sensor in self.sensors:
             self > sensor
         for circuit_breaker in self.circuit_breakers:
@@ -196,9 +194,7 @@ class ThreePhasesDistributionPanel(DistributionPanel):
         )
 
     def finalize(self):
-        self._contains = []
-        self._contains.extend(self.sensors)
-        self._contains.extend(self.circuit_breakers)
+        self.devices = self.circuit_breakers
         for sensor in self.sensors:
             self > sensor
         for circuit_breaker in self.circuit_breakers:

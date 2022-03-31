@@ -4,7 +4,7 @@ from ...connections.electricity import *
 from ...sensor.electricity import CurrentBinarySensor, create_3phases_meter_sensors
 
 from ...core import Device, Node, s223, p223
-
+from ...devices import composite
 from typing import Any
 
 __namespace__ = s223

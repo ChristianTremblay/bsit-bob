@@ -2,12 +2,13 @@ from ...connections.electricity import *
 from ...sensor.electricity import create_3phases_meter_sensors
 
 from ...core import Device, Node, s223, p223
-
+from ...devices import composite
 from typing import Any
 
 __namespace__ = s223
 
 
+@composite
 class ThreePhasesElectricalMeter(Device):
     """
     This is an attemp to model a complete Electrical meter
