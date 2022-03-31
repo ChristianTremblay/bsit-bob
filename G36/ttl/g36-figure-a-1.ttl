@@ -30,6 +30,8 @@ exg3601:00003 a s223:OutletSystemConnectionPoint,
 exg3601:00004 a s223:Device,
         exg3601:AirFlowStation ;
     rdfs:label "A-1.air_flow_station" ;
+    s223:connectedThrough exg3601:00013 ;
+    s223:connectedTo exg3601:00008 ;
     s223:hasConnectionPoint exg3601:00006,
         exg3601:00007 ;
     s223:hasProperty exg3601:00005 ;
@@ -42,16 +44,20 @@ exg3601:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-1.air_flow_station.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3601:00004 .
 exg3601:00007 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-1.air_flow_station.airOutlet" ;
     s223:connectsThrough exg3601:00013 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3601:00004 .
 exg3601:00008 a s223:Device,
         exg3601:Damper ;
     rdfs:label "A-1.damper" ;
+    s223:connectedFrom exg3601:00004 ;
+    s223:connectedThrough exg3601:00013 ;
     s223:contains exg3601:00011 ;
     s223:hasConnectionPoint exg3601:00009,
         exg3601:00010 ;
@@ -64,12 +70,14 @@ exg3601:00009 a s223:ConnectionPoint,
     rdfs:label "A-1.damper.airInlet" ;
     s223:connectsThrough exg3601:00013 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3601:00008 .
 exg3601:00010 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "A-1.damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3601:00008 .
 exg3601:00011 a s223:Device,
         exg3601:DamperPositioner ;
     rdfs:label "A-1.damper.damper_positioner" ;
@@ -80,4 +88,6 @@ exg3601:00012 a g36:AnalogOut ;
 exg3601:00013 a s223:Connection ;
     s223:connectsAt exg3601:00007,
         exg3601:00009 ;
+    s223:connectsFrom exg3601:00004 ;
+    s223:connectsTo exg3601:00008 ;
     s223:hasMedium s223:Medium-Air .

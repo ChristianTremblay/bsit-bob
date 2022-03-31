@@ -15,7 +15,7 @@ from ..core import (
 __namespace__ = p223
 
 
-class BacnetProperty(Node):
+class BACnetProperty(Node):
     node_type: URIRef = bacnet.Property
     hasValue: Literal
 
@@ -35,65 +35,65 @@ class BacnetProperty(Node):
             self.hasValue = init_value
 
 
-class BACnetDeviceId(BacnetProperty):
+class BACnetDeviceId(BACnetProperty):
     node_type: URIRef = bacnet["device-identifier"]
 
 
-class BacnetDeviceName(BacnetProperty):
+class BACnetDeviceName(BACnetProperty):
     node_type: URIRef = bacnet["device-name"]
 
 
-class BacnetNetworkNumber(BacnetProperty):
+class BACnetNetworkNumber(BACnetProperty):
     node_type: URIRef = bacnet["network-number"]
 
 
-class BACnetAdress(BacnetProperty):
+class BACnetAddress(BACnetProperty):
     node_type: URIRef = bacnet["address"]
 
 
-class BACnetVendorId(BacnetProperty):
+class BACnetVendorId(BACnetProperty):
     node_type: URIRef = bacnet["vendor-id"]
 
 
-class BACnetObjectInstance(BacnetProperty):
+class BACnetObjectInstance(BACnetProperty):
     node_type: URIRef = bacnet["object-instance"]
 
 
-class BACnetObjectOf(BacnetProperty):
+class BACnetObjectOf(BACnetProperty):
     node_type: URIRef = bacnet["BACnetDevice"]
 
 
-class BacnetObjectName(BacnetProperty):
+class BACnetObjectName(BACnetProperty):
     node_type: URIRef = bacnet["object-name"]
 
 
-class BACnetDescription(BacnetProperty):
+class BACnetDescription(BACnetProperty):
     node_type: URIRef = bacnet["description"]
 
 
-class BACnetObjectType(BacnetProperty):
+class BACnetObjectType(BACnetProperty):
     node_type: URIRef = bacnet["object-type"]
 
 
-class BACnetURI(BacnetProperty):
+class BACnetURI(BACnetProperty):
     node_type: URIRef = bacnet["BACnetURI"]
 
 
 class BACnetDevice(Node):
     node_type: URIRef = bacnet.BACnetDevice
     deviceId: BACnetDeviceId
-    deviceName: BacnetDeviceName
-    networkNumer: BACnetDescription
-    address: BACnetAdress
+    deviceName: BACnetDeviceName
+    networkNumber: BACnetNetworkNumber
+    address: BACnetAddress
     vendorId: BACnetVendorId
     uri: BACnetURI
 
 
 class BACnetReference(ExternalReference):
-    node_type: URIRef = ref.BacnetReference
+    node_type: URIRef = ref.BACnetReference
     objectInstance: BACnetObjectInstance
     objectOf: BACnetObjectOf
-    objectName: BacnetObjectName
+    objectName: BACnetObjectName
     description: BACnetDescription
     objectType: BACnetObjectType
     uri: BACnetURI

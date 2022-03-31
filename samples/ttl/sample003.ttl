@@ -13,6 +13,7 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 ex:00001 a s223:Connection ;
     s223:connectsAt ex:00005 ;
+    s223:connectsTo ex:00002 ;
     s223:hasMedium s223:Water-ChilledWater .
 ex:00002 a s223:CoolingCoil,
         s223:Device ;
@@ -21,6 +22,9 @@ ex:00002 a s223:CoolingCoil,
     s223:airOutlet ex:00004 ;
     s223:chilledWaterInlet ex:00005 ;
     s223:chilledWaterOutlet ex:00006 ;
+    s223:connectedFrom ex:00007 ;
+    s223:connectedThrough ex:00001,
+        ex:00010 ;
     s223:hasConnectionPoint ex:00003,
         ex:00004,
         ex:00005,
@@ -30,44 +34,54 @@ ex:00003 a s223:ConnectionPoint,
     rdfs:label "CW-Coil-1.airInlet" ;
     s223:connectsThrough ex:00010 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00002 .
 ex:00004 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CW-Coil-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00002 .
 ex:00005 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterInlet" ;
     s223:connectsThrough ex:00001 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Water-ChilledWater .
+    s223:hasMedium s223:Water-ChilledWater ;
+    s223:isConnectionPointOf ex:00002 .
 ex:00006 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Water-ChilledWater .
+    s223:hasMedium s223:Water-ChilledWater ;
+    s223:isConnectionPointOf ex:00002 .
 ex:00007 a s223:Device,
         s223:Fan ;
     rdfs:label "F" ;
     s223:airInlet ex:00008 ;
     s223:airOutlet ex:00009 ;
+    s223:connectedThrough ex:00010 ;
+    s223:connectedTo ex:00002 ;
     s223:hasConnectionPoint ex:00008,
         ex:00009 .
 ex:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "F.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00007 .
 ex:00009 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "F.airOutlet" ;
     s223:connectsThrough ex:00010 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00007 .
 ex:00010 a s223:Connection ;
     s223:connectsAt ex:00003,
         ex:00009 ;
+    s223:connectsFrom ex:00007 ;
+    s223:connectsTo ex:00002 ;
     s223:hasMedium s223:Medium-Air .
 ex:00011 a s223:Zone,
         ex:HVACZone ;
@@ -88,4 +102,5 @@ ex:00014 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "scp" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00013 .

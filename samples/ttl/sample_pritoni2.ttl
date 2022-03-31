@@ -62,12 +62,14 @@ ex:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Bathroom.ExhaustFan.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00008 .
 ex:00010 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Bathroom.ExhaustFan.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00008 .
 ex:00011 a s223:PhysicalSpace,
         rec:Corridor,
         rec:Room ;
@@ -181,6 +183,8 @@ ex:00029 a p223:AirFlowStation,
     p223:airInlet ex:00031 ;
     p223:airOutlet ex:00032 ;
     p223:flow ex:00030 ;
+    s223:connectedThrough ex:00038 ;
+    s223:connectedTo ex:00033 ;
     s223:hasConnectionPoint ex:00031,
         ex:00032 ;
     s223:hasProperty ex:00030 .
@@ -190,18 +194,22 @@ ex:00031 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "VAV1.air_flow_station.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00029 .
 ex:00032 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "VAV1.air_flow_station.airOutlet" ;
     s223:connectsThrough ex:00038 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00029 .
 ex:00033 a s223:Damper,
         s223:Device ;
     rdfs:label "VAV1.damper" ;
     s223:airInlet ex:00036 ;
     s223:airOutlet ex:00037 ;
+    s223:connectedFrom ex:00029 ;
+    s223:connectedThrough ex:00038 ;
     s223:feedback ex:00035 ;
     s223:hasConnectionPoint ex:00036,
         ex:00037 ;
@@ -217,15 +225,19 @@ ex:00036 a s223:ConnectionPoint,
     rdfs:label "VAV1.damper.airInlet" ;
     s223:connectsThrough ex:00038 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00033 .
 ex:00037 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "VAV1.damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00033 .
 ex:00038 a s223:Connection ;
     s223:connectsAt ex:00032,
         ex:00036 ;
+    s223:connectsFrom ex:00029 ;
+    s223:connectsTo ex:00033 ;
     s223:hasMedium s223:Medium-Air .
 ex:00039 a p223:VAV1,
         s223:System ;
@@ -258,6 +270,8 @@ ex:00042 a p223:AirFlowStation,
     p223:airInlet ex:00044 ;
     p223:airOutlet ex:00045 ;
     p223:flow ex:00043 ;
+    s223:connectedThrough ex:00051 ;
+    s223:connectedTo ex:00046 ;
     s223:hasConnectionPoint ex:00044,
         ex:00045 ;
     s223:hasProperty ex:00043 .
@@ -267,18 +281,22 @@ ex:00044 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "VAV2.air_flow_station.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00042 .
 ex:00045 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "VAV2.air_flow_station.airOutlet" ;
     s223:connectsThrough ex:00051 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00042 .
 ex:00046 a s223:Damper,
         s223:Device ;
     rdfs:label "VAV2.damper" ;
     s223:airInlet ex:00049 ;
     s223:airOutlet ex:00050 ;
+    s223:connectedFrom ex:00042 ;
+    s223:connectedThrough ex:00051 ;
     s223:feedback ex:00048 ;
     s223:hasConnectionPoint ex:00049,
         ex:00050 ;
@@ -294,13 +312,17 @@ ex:00049 a s223:ConnectionPoint,
     rdfs:label "VAV2.damper.airInlet" ;
     s223:connectsThrough ex:00051 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00046 .
 ex:00050 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "VAV2.damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00046 .
 ex:00051 a s223:Connection ;
     s223:connectsAt ex:00045,
         ex:00049 ;
+    s223:connectsFrom ex:00042 ;
+    s223:connectsTo ex:00046 ;
     s223:hasMedium s223:Medium-Air .

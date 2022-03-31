@@ -95,7 +95,7 @@ def sample_using_only_water_medium():
     fillingValve.waterOutlet >> house_hw_return
 
     DHWSystem = System(label="DHW", comment="DHW loop in my house")
-    DHWSystem > [DHWBoiler, dhw_hot_water_tank, dhw_supply_for_house]
+    DHWSystem > [DHWBoiler, dhw_hot_water_tank] ###TODO: dhw_supply_for_house must be a device or system
 
 
 if __name__ == "__main__":

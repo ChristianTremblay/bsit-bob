@@ -7,7 +7,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -111,7 +110,7 @@ ex29:00010 a p223:GasConcentration,
     p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00011 ;
     s223:isObservedBy ex29:00009 .
-ex29:00011 a ref:hasExternalReference ;
+ex29:00011 a s223:ExternalReference ;
     rdfs:label "CO_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
 ex29:00012 a p223:GasConcentrationSensor,
@@ -141,7 +140,7 @@ ex29:00013 a p223:GasConcentration,
     p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00014 ;
     s223:isObservedBy ex29:00012 .
-ex29:00014 a ref:hasExternalReference ;
+ex29:00014 a s223:ExternalReference ;
     rdfs:label "NO2_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
 ex29:00015 a p223:GasMonitor,
@@ -201,7 +200,7 @@ ex29:00020 a p223:GasConcentration,
     p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00021 ;
     s223:isObservedBy ex29:00019 .
-ex29:00021 a ref:hasExternalReference ;
+ex29:00021 a s223:ExternalReference ;
     rdfs:label "CO2_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
 ex29:00022 a p223:GasMonitor,
@@ -244,7 +243,7 @@ ex29:00025 a p223:GasConcentration,
     p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00026 ;
     s223:isObservedBy ex29:00024 .
-ex29:00026 a ref:hasExternalReference ;
+ex29:00026 a s223:ExternalReference ;
     rdfs:label "CO2_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
 ex29:00027 a p223:AirTemperatureSensor,
@@ -271,7 +270,7 @@ ex29:00028 a p223:MeasuredProperty,
     p223:measuresMedium s223:Medium-Air ;
     p223:unit unit:DEG_C ;
     s223:hasExternalReference ex29:00029 .
-ex29:00029 a ref:hasExternalReference ;
+ex29:00029 a s223:ExternalReference ;
     rdfs:label "Temperature_sensor.Temperature.ExternalReference" ;
     s223:hasRef "bacnet://" .
 ex29:00030 a p223:GasMonitor,
@@ -316,7 +315,7 @@ ex29:00033 a p223:GasConcentration,
     p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00034 ;
     s223:isObservedBy ex29:00032 .
-ex29:00034 a ref:hasExternalReference ;
+ex29:00034 a s223:ExternalReference ;
     rdfs:label "CO2_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
 ex29:00035 a p223:AirTemperatureSensor,
@@ -344,7 +343,7 @@ ex29:00036 a p223:MeasuredProperty,
     p223:measuresMedium s223:Medium-Air ;
     p223:unit unit:DEG_C ;
     s223:hasExternalReference ex29:00037 .
-ex29:00037 a ref:hasExternalReference ;
+ex29:00037 a s223:ExternalReference ;
     rdfs:label "Temperature_sensor.Temperature.ExternalReference" ;
     s223:hasRef "bacnet://" .
 ex29:00038 a p223:GasMonitor,
@@ -493,6 +492,7 @@ ex29:00056 a s223:DomainSpace,
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex29:00048 ;
     s223:isContainedIn ex29:00112 ;
+    s223:isEnclosedIn ex29:00044 ;
     s223:radiantCooling ex29:00063 ;
     s223:radiantHeating ex29:00062 ;
     s223:windows ex29:00061 .
@@ -623,6 +623,7 @@ ex29:00072 a s223:DomainSpace,
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex29:00064 ;
     s223:isContainedIn ex29:00112 ;
+    s223:isEnclosedIn ex29:00045 ;
     s223:radiantCooling ex29:00079 ;
     s223:radiantHeating ex29:00078 ;
     s223:windows ex29:00077 .
@@ -752,6 +753,7 @@ ex29:00088 a s223:DomainSpace,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex29:00080 ;
+    s223:isEnclosedIn ex29:00046 ;
     s223:radiantCooling ex29:00095 ;
     s223:radiantHeating ex29:00094 ;
     s223:windows ex29:00093 .
@@ -881,6 +883,7 @@ ex29:00104 a s223:DomainSpace,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex29:00096 ;
+    s223:isEnclosedIn ex29:00043 ;
     s223:radiantCooling ex29:00111 ;
     s223:radiantHeating ex29:00110 ;
     s223:windows ex29:00109 .

@@ -24,8 +24,9 @@ def test_wrong_direction(bob_fixture):
     c = Connection()
 
     with pytest.raises(TypeError):
-        c.connect_to(cp1)
+        c >> cp1
 
     with pytest.raises(TypeError):
-        c.connect_from(cp2)
+        cp2 >> c
+
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
