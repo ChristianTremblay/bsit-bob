@@ -17,7 +17,7 @@ from rdflib import URIRef
 
 from ...properties.states import OccupancyStatus, Schedule
 from ..functionblock import FunctionBlock
-from ...devices import contains_devices_list
+from ...devices import composite, contains_devices_list
 from ...sensor import define_sensors
 
 from typing import Any, Dict
@@ -32,6 +32,7 @@ occupancy_template = {
 }
 
 
+@composite
 class OccupancyControl(FunctionBlock):
     hasOccupancyStatus: OccupancyStatus
     hasSchedule: Schedule
@@ -48,16 +49,3 @@ class OccupancyControl(FunctionBlock):
         self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
-        self._contains = self.devices
-        self._contains.extend(self.sensors)
-
-    def finalize(self):
-        for sensor in self.sensors:
-            self > sensor
-        for dev in self.devices:
-            self > dev
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self._contains:
-            if each.label == name:
-                return each

@@ -36,16 +36,19 @@ def composite(cls):
         """
         try:
             if self.sensors is not None:
-                for sensor in self.sensors:
-                    self > sensor
+                if isinstance(self.sensors, list):
+                    for sensor in self.sensors:
+                        self > sensor
+                else:
+                    self > self.sensors
         except AttributeError:
-            pass
+            print("OUPS")
         try:
             if self.devices is not None:
                 for dev in self.devices:
                     self > dev
         except AttributeError:
-            pass
+            print("FLUTE")
         return self
 
     @property
@@ -74,5 +77,5 @@ def composite(cls):
     if not hasattr(cls, "__getitem__"):
         setattr(cls, "__getitem__", __getitem__)
     setattr(cls, "sensor", sensor)
-    cls = cls.finalize(cls)
+    # cls = cls.finalize(cls)
     return cls

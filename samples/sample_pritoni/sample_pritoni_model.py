@@ -18,7 +18,6 @@ from bob.devices.hvac.damper import Window
 from bob.devices.lighting.light import Luminaire
 
 from bob.devices.electricity.distribution import (
-    DistributionPanel,
     Transformer,
     SinglePhaseDistributionPanel,
     SinglePoleCircuitBreaker,

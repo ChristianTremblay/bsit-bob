@@ -35,7 +35,7 @@ from ...connections.electricity import (
 )
 from typing import Dict, Any
 from ...sensor import define_sensors
-from .. import contains_devices_list
+from .. import composite, contains_devices_list
 
 __namespace__ = p223
 
@@ -66,25 +66,9 @@ class Transformer(Device):
         )
 
 
-class DistributionPanel(Device):
+@composite
+class SinglePhaseDistributionPanel(Device):
     node_type = p223.ElectricalDistributionPanel
-    manufacturer: str
-    modelNumber: str
-    hasNumberOfCircuits: QuantifiableObservableProperty
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self.circuit_breakers:
-            if each.label == name:
-                return each
-        for each in self.sensors:
-            if each.label == name:
-                return each
-
-
-class SinglePhaseDistributionPanel(DistributionPanel):
     manufacturer: str
     modelNumber: str
     hasNumberOfCircuits: QuantifiableObservableProperty
@@ -107,41 +91,46 @@ class SinglePhaseDistributionPanel(DistributionPanel):
             raise ValueError(
                 "Please provide configuration dict or kwargs, at least a label"
             )
-
         self.sensors = define_sensors(config)
-        self.circuit_breakers, device_kwargs = contains_devices_list(config, **kwargs)
+        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
         voltage = str(device_kwargs.pop("voltage"))
         _classes = self._cross_ref[voltage]
         _electricalBusA, _electricalBusB, _electricalBusAB = _classes
 
         super().__init__(**device_kwargs)
-
         self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
 
     def finalize(self):
-        self.devices = self.circuit_breakers
-        for sensor in self.sensors:
-            self > sensor
-        for circuit_breaker in self.circuit_breakers:
-            self > circuit_breaker
-            if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
-                circuit_breaker.electricalOutletA >> self.electricalBusA
-                circuit_breaker.electricalOutletB >> self.electricalBusB
-                circuit_breaker.electricalOutlet >> self.electricalBusAB
-            elif isinstance(circuit_breaker, TwoPolesCircuitBreaker):
-                self.electricalBusAB >> circuit_breaker
-            elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
-                if circuit_breaker._bus_bar in ["A", "odd"]:
-                    self.electricalBusA >> circuit_breaker
-                else:
-                    self.electricalBusB >> circuit_breaker
-
+        try:
+            if self.sensors is not None:
+                for sensor in self.sensors:
+                    self > sensor
+        except AttributeError:
+            pass
+        try:
+            for circuit_breaker in self.devices:
+                self > circuit_breaker
+                if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
+                    circuit_breaker.electricalOutletA >> self.electricalBusA
+                    circuit_breaker.electricalOutletB >> self.electricalBusB
+                    circuit_breaker.electricalOutlet >> self.electricalBusAB
+                elif isinstance(circuit_breaker, TwoPolesCircuitBreaker):
+                    self.electricalBusAB >> circuit_breaker
+                elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
+                    if circuit_breaker._bus_bar in ["A", "odd"]:
+                        self.electricalBusA >> circuit_breaker
+                    else:
+                        self.electricalBusB >> circuit_breaker
+        except AttributeError:
+            pass
         return self
 
 
-class ThreePhasesDistributionPanel(DistributionPanel):
+@composite
+class ThreePhasesDistributionPanel(Device):
+    node_type = p223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
     hasNumberOfCircuits: QuantifiableObservableProperty
@@ -150,16 +139,40 @@ class ThreePhasesDistributionPanel(DistributionPanel):
     _cross_ref = {
         #'208': (Electricity_208V_60HzInletConnectionPoint, Electricity_120V_60HzOutletConnectionPoint, Electricity_120V_60HzOutletConnectionPoint, Electricity_208V_60HzOutletConnectionPoint),
         "575": (
-            Electricity_347V_60HzConnection,
-            Electricity_347V_60HzConnection,
-            Electricity_347V_60HzConnection,
-            Electricity_575V_60HzConnection,
+            (
+                Electricity_347V_60HzConnection,
+                Electricity_347V_60HzOutletConnectionPoint,
+            ),
+            (
+                Electricity_347V_60HzConnection,
+                Electricity_347V_60HzOutletConnectionPoint,
+            ),
+            (
+                Electricity_347V_60HzConnection,
+                Electricity_347V_60HzOutletConnectionPoint,
+            ),
+            (
+                Electricity_575V_60HzConnection,
+                Electricity_347V_60HzOutletConnectionPoint,
+            ),
         ),
         "600": (
-            Electricity_347V_60HzConnection,
-            Electricity_347V_60HzConnection,
-            Electricity_347V_60HzConnection,
-            Electricity_575V_60HzConnection,
+            (
+                Electricity_347V_60HzConnection,
+                Electricity_347V_60HzOutletConnectionPoint,
+            ),
+            (
+                Electricity_347V_60HzConnection,
+                Electricity_347V_60HzOutletConnectionPoint,
+            ),
+            (
+                Electricity_347V_60HzConnection,
+                Electricity_347V_60HzOutletConnectionPoint,
+            ),
+            (
+                Electricity_575V_60HzConnection,
+                Electricity_347V_60HzOutletConnectionPoint,
+            ),
         ),
     }
 
@@ -171,7 +184,7 @@ class ThreePhasesDistributionPanel(DistributionPanel):
             )
 
         self.sensors = define_sensors(config)
-        self.circuit_breakers, device_kwargs = contains_devices_list(config, **kwargs)
+        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
         try:
             voltage = str(device_kwargs.pop("voltage"))
             _classes = self._cross_ref[voltage]
@@ -186,35 +199,42 @@ class ThreePhasesDistributionPanel(DistributionPanel):
 
         super().__init__(**device_kwargs)
 
-        self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
-        self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
-        self.electricalBusC = _electricalBusC(label=f"{self.label}.electricalBusC")
-        self.electricalBusABC = _electricalBusABC(
+        self.electricalBusA = _electricalBusA[0](label=f"{self.label}.electricalBusA")
+        self.electricalBusB = _electricalBusB[0](label=f"{self.label}.electricalBusB")
+        self.electricalBusC = _electricalBusC[0](label=f"{self.label}.electricalBusC")
+        self.electricalBusABC = _electricalBusABC[0](
             label=f"{self.label}.electricalBusABC"
         )
 
     def finalize(self):
-        self.devices = self.circuit_breakers
-        for sensor in self.sensors:
-            self > sensor
-        for circuit_breaker in self.circuit_breakers:
+        try:
+            if self.sensors is not None:
+                for sensor in self.sensors:
+                    self > sensor
+        except AttributeError:
+            pass
+        try:
+            if self.devices is not None:
+                for circuit_breaker in self.devices:
 
-            self > circuit_breaker
+                    self > circuit_breaker
 
-            if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
-                circuit_breaker.electricalOutletA >> self.electricalBusA
-                circuit_breaker.electricalOutletB >> self.electricalBusB
-                circuit_breaker.electricalOutletC >> self.electricalBusC
-                circuit_breaker.electricalOutlet >> self.electricalBusABC
-            elif isinstance(circuit_breaker, ThreePolesCircuitBreaker):
-                self.electricalBusABC >> circuit_breaker
-            elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
-                if circuit_breaker._bus_bar == "A":
-                    self.electricalBusA >> circuit_breaker
-                elif circuit_breaker._bus_bar == "B":
-                    self.electricalBusB >> circuit_breaker
-                else:
-                    self.electricalBusC >> circuit_breaker
+                    if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
+                        circuit_breaker.electricalOutletA >> self.electricalBusA
+                        circuit_breaker.electricalOutletB >> self.electricalBusB
+                        circuit_breaker.electricalOutletC >> self.electricalBusC
+                        circuit_breaker.electricalOutlet >> self.electricalBusABC
+                    elif isinstance(circuit_breaker, ThreePolesCircuitBreaker):
+                        self.electricalBusABC >> circuit_breaker
+                    elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
+                        if circuit_breaker._bus_bar == "A":
+                            self.electricalBusA >> circuit_breaker
+                        elif circuit_breaker._bus_bar == "B":
+                            self.electricalBusB >> circuit_breaker
+                        else:
+                            self.electricalBusC >> circuit_breaker
+        except AttributeError:
+            pass
         return self
 
 
