@@ -40,18 +40,20 @@ class AirHandlingUnit(System):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        sensors = define_sensors(config)
-        logging.debug("    - sensors: %r", sensors)
+        self.sensors = define_sensors(config)
+        logging.debug("    - sensors: %r", self.sensors)
 
-        devices, device_kwargs = contains_devices_list(config, **kwargs)
-        logging.debug("    - devices: %r", devices)
+        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
+        logging.debug("    - devices: %r", self.devices)
 
         super().__init__(**device_kwargs)
+        self.finalize()
 
-        for sensor in sensors:
-            self > sensor
-        for dev in devices:
-            self > dev
+
+#        for sensor in sensors:
+#            self > sensor
+#        for dev in devices:
+#            self > dev
 
 
 @composite
@@ -71,8 +73,10 @@ class FanCoil(System):
         self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
+        self.finalize()
 
-        for sensor in self.sensors:
-            self > sensor
-        for dev in self.devices:
-            self > dev
+
+#        for sensor in self.sensors:
+#            self > sensor
+#        for dev in self.devices:
+#            self > dev

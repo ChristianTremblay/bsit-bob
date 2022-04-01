@@ -64,3 +64,5 @@ class Luminaire(Device):
         for k, v in _properties.items():
             if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
+
+        self.finalize()

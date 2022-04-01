@@ -53,6 +53,7 @@ class ThreePhaseElectricalMeter(Device):
         )
         self.voltage_sensors = _sensors["voltage"]
         self.current_sensors = _sensors["current"]
+        self.finalize()
 
     def finalize(self):
         for each in self.voltage_sensors:

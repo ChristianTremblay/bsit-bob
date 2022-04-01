@@ -34,3 +34,4 @@ class CurrentSwitch(Device):
             measuresMedium=_measuresMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
+        self.finalize()

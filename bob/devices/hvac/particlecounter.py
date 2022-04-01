@@ -56,3 +56,4 @@ class ParticleCounter(Device):
             kwargs = {**config["params"], **kwargs}
 
         super().__init__(**kwargs)
+        self.finalize()

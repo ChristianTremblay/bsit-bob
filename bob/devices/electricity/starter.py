@@ -44,3 +44,4 @@ class MotorStarter(Device):
             measuresMedium=self.electricalInlet.hasMedium,
             hasMeasurementLocation=self.electricalOutlet,
         )
+        self.finalize()

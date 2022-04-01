@@ -74,8 +74,8 @@ def composite(cls):
 
     if not hasattr(cls, "finalize"):
         setattr(cls, "finalize", finalize)
-    if not hasattr(cls, "__getitem__"):
-        setattr(cls, "__getitem__", __getitem__)
+    # if not hasattr(cls, "__getitem__"):
+    #    setattr(cls, "__getitem__", __getitem__)
     setattr(cls, "sensor", sensor)
     # cls = cls.finalize(cls)
     return cls

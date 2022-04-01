@@ -101,6 +101,7 @@ class SinglePhaseDistributionPanel(Device):
         self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
+        self.finalize()
 
     def finalize(self):
         try:
@@ -203,6 +204,7 @@ class ThreePhaseDistributionPanel(Device):
         self.electricalBusABC = _electricalBusABC[0](
             label=f"{self.label}.electricalBusABC"
         )
+        self.finalize()
 
     def finalize(self):
         try:
