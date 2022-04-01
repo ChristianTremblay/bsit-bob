@@ -1,3 +1,5 @@
+import logging
+
 from attr import set_run_validators
 from rdflib import URIRef
 from typing import Any, Dict
@@ -31,26 +33,24 @@ class AirHandlingUnit(System):
     electricalInlet: Electricity_575V_60HzSystemInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
+        logging.debug(f"AirHandlingUnit.__init__ {config} {kwargs}")
         if not config and not kwargs:
             raise ValueError(
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
         sensors = define_sensors(config)
+        logging.debug("    - sensors: %r", sensors)
+
         devices, device_kwargs = contains_devices_list(config, **kwargs)
+        logging.debug("    - devices: %r", devices)
 
         super().__init__(**device_kwargs)
-        # for sensor in sensors:
-        #    self > sensor
+
+        for sensor in sensors:
+            self > sensor
         for dev in devices:
             self > dev
-        self._contains = devices
-        self._contains.extend(sensors)
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self._contains:
-            if each.label == name:
-                return each
 
 
 class FanCoil(System):
@@ -69,14 +69,8 @@ class FanCoil(System):
         devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
+
         for sensor in sensors:
             self > sensor
         for dev in devices:
             self > dev
-        self._contains = devices
-        self._contains.extend(sensors)
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self._contains:
-            if each.label == name:
-                return each

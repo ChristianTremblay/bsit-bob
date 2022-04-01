@@ -1,11 +1,11 @@
-from asyncio import subprocess
-import pytest
+import sys
 import os
-import subprocess
-from bob.core import clear
 import logging
 
-LOGGER = logging.getLogger(__name__)
+import pytest
+from bob.core import clear
+
+_log = logging.getLogger(__name__)
 
 
 @pytest.fixture(autouse=True)
@@ -20,7 +20,8 @@ def run_before_and_after_tests(tmpdir):
 
 @pytest.fixture(scope="session")
 def bob_fixture(request):
-    print("\nDoing setup")
+    _log.debug("bob_fixture")
+
     params = {}
     params["samples_directory"] = os.path.join(os.getcwd(), "samples")
     params["samples_ttl_directory"] = os.path.join(os.getcwd(), "samples", "ttl")

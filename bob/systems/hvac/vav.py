@@ -55,13 +55,6 @@ class VAV(System):
             self > sensor
         for dev in devices:
             self > dev
-        self._contains = devices
-        self._contains.extend(sensors)
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self._contains:
-            if each.label == name:
-                return each
 
 
 class VAV1(System):

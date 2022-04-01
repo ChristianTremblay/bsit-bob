@@ -863,17 +863,16 @@ class Container:
         self._contents = {}
 
     def __getitem__(self, label: str) -> Node:
+        logging.debug(f"Container.__getitem__ {label}")
         return self._contents[label]
 
-    def __len__(self):
-        return len(self._contents)
-
-    def __iter__(self):
-        for item in self._contents.values():
-            yield item
+    # def __len__(self):
+    #     Do not define this function or `a < b < c` will break.
 
     def __gt__(self, other: Node) -> Node:
         """This node contains some other node."""
+        logging.debug(f"Container.__gt__ {self} > {other}")
+
         if hasattr(other, "label"):
             if other.label in self._contents:
                 raise ValueError(f"label already used: {self._contents[other.label]}")
@@ -884,6 +883,8 @@ class Container:
 
     def __lt__(self, other: Container) -> Node:
         """This node is contained in some other node."""
+        logging.debug(f"Container.__lt__ {self} < {other}")
+
         if hasattr(self, "label"):
             if self.label in other._contents:
                 raise ValueError(f"label already used: {other._contents[self.label]}")
