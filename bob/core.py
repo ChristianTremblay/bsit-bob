@@ -715,7 +715,9 @@ class Node(metaclass=NodeMetaclass):
         return self
 
     def __repr__(self) -> str:
-        label = (" " + self.label) if self.label else ""
+        label = getattr(self, "label", "")
+        if label:
+            label = " " + label
         return f"<{self.__class__.__name__}{label} at {self.node}>"
 
     def add_property(self, prop: Property) -> Property:
@@ -845,6 +847,50 @@ class PropertyReference:
         if not isinstance(property, Property):
             raise TypeError(f"property expected: {property}")
         return property
+
+
+class Container:
+    """
+    This class implements the Container Abstract Base Class.
+    """
+
+    _contents: Dict[str, Node]
+
+    def __init__(self, *args, **kwargs) -> None:
+        logging.info(f"Container.__init__ {args} {kwargs}")
+
+        super().__init__(*args, **kwargs)
+        self._contents = {}
+
+    def __getitem__(self, label: str) -> Node:
+        return self._contents[label]
+
+    def __len__(self):
+        return len(self._contents)
+
+    def __iter__(self):
+        for item in self._contents.values():
+            yield item
+
+    def __gt__(self, other: Node) -> Node:
+        """This node contains some other node."""
+        if hasattr(other, "label"):
+            if other.label in self._contents:
+                raise ValueError(f"label already used: {self._contents[other.label]}")
+            self._contents[other.label] = other
+
+        contains_mm(self, other)
+        return self
+
+    def __lt__(self, other: Container) -> Node:
+        """This node is contained in some other node."""
+        if hasattr(self, "label"):
+            if self.label in other._contents:
+                raise ValueError(f"label already used: {other._contents[self.label]}")
+            other._contents[self.label] = self
+
+        contains_mm(other, self)
+        return self
 
 
 class EnumerationKind(Node):
@@ -1018,7 +1064,7 @@ class Segment(Node):
         )
 
 
-class System(Node):
+class System(Container, Node):
     """
     System
     """
@@ -1073,16 +1119,6 @@ class System(Node):
             logging.debug(f"    - connection point {var_name}: {var_element}")
 
             setattr(self, var_name, var_element)
-
-    def __gt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(self, other)
-        return self
-
-    def __lt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(other, self)
-        return self
 
     def __ge__(self, other: Any) -> Any:
         """connect multimethod"""
@@ -1629,7 +1665,7 @@ class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
     hasDirection: Direction = Bidirectional
 
 
-class Zone(Node):
+class Zone(Container, Node):
     """
     A collection of spaces.
     """
@@ -1677,16 +1713,6 @@ class Zone(Node):
             logging.debug(f"    - connection point {var_name}: {var_element}")
 
             setattr(self, var_name, var_element)
-
-    def __gt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(self, other)
-        return self
-
-    def __lt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(other, self)
-        return self
 
 
 @multimethod
@@ -1874,22 +1900,12 @@ class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
     hasDirection: URIRef = s223["Direction-Bidirectional"]
 
 
-class PhysicalSpace(Node):
+class PhysicalSpace(Container, Node):
     """
     A part of the physical world whose 3D spatial extent is bounded.
     """
 
     node_type: URIRef = s223.PhysicalSpace
-
-    def __gt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(self, other)
-        return self
-
-    def __lt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(other, self)
-        return self
 
 
 @multimethod
@@ -2161,7 +2177,7 @@ def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
             connect_mm(from_connection_point, to_connection_point)
 
 
-class Device(Connectable):
+class Device(Container, Connectable):
     """
     A Device is normally a physical entity that one might buy from a vendor - a tangible object designed to accomplish a specific task.
     """
@@ -2171,16 +2187,6 @@ class Device(Connectable):
     # hasPropertyShape: Any
     hasRole: Role
     hasPhysicalLocation: PhysicalSpace
-
-    def __gt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(self, other)
-        return self
-
-    def __lt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(other, self)
-        return self
 
 
 @multimethod
@@ -2197,7 +2203,6 @@ def contains_mm(system: System, device: Device) -> None:
 def contains_mm(parent_device: Device, child_device: Device) -> None:
     """Device > Device"""
     logging.info(f"device {parent_device} contains device {child_device}")
-
     parent_device._data_graph.add(
         (parent_device.node, s223.contains, child_device.node)
     )
@@ -2217,16 +2222,6 @@ class DomainSpace(Connectable):
     node_type: URIRef = s223.DomainSpace
     hasDomain: Domain
     hasMedium: Medium  ### required?  maybe implied by Domain?
-
-    def __gt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(self, other)
-        return self
-
-    def __lt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(other, self)
-        return self
 
 
 @multimethod
