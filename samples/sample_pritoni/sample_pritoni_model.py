@@ -21,7 +21,7 @@ from bob.devices.electricity.distribution import (
     Transformer,
     SinglePhaseDistributionPanel,
     SinglePoleCircuitBreaker,
-    ThreePhasesDistributionPanel,
+    ThreePhaseDistributionPanel,
     ThreePolesCircuitBreaker,
     ThreePolesMainCircuitBreaker,
     TwoPolesCircuitBreaker,

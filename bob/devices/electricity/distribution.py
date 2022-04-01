@@ -128,9 +128,7 @@ class SinglePhaseDistributionPanel(Device):
         return self
 
 
-@composite
-class ThreePhasesDistributionPanel(Device):
-    node_type = p223.ElectricalDistributionPanel
+class ThreePhaseDistributionPanel(Device):
     manufacturer: str
     modelNumber: str
     hasNumberOfCircuits: QuantifiableObservableProperty

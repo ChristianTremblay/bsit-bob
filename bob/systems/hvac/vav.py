@@ -52,6 +52,10 @@ class VAV(System):
         self.devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
+        for sensor in self.sensors:
+            self > sensor
+        for dev in self.devices:
+            self > dev
 
 
 class VAV1(System):
