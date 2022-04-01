@@ -29,9 +29,9 @@ class CurrentSwitch(Device):
         _label = kwargs["label"]
 
         super().__init__(**kwargs)
-        self.sensors = CurrentBinarySensor(
+        sensors = CurrentBinarySensor(
             label=_label + "CurrentBinarySensor",
             measuresMedium=_measuresMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
-        self.finalize()
+        self.compose(sensors, None)

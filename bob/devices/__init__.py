@@ -21,7 +21,7 @@ def contains_devices_list(config, **kwargs):
 
 
 def composite(cls):
-    def finalize(self):
+    def compose(self, sensors=None, devices=None):
         """
         multimethod needs the class to be instanciated before
         being able to add relationships. Finalize wil lbe called
@@ -35,47 +35,25 @@ def composite(cls):
         exists in a class.
         """
         try:
-            if self.sensors is not None:
-                if isinstance(self.sensors, list):
-                    for sensor in self.sensors:
+            if sensors is not None:
+                if isinstance(sensors, list):
+                    for sensor in sensors:
                         self > sensor
                 else:
-                    self > self.sensors
+                    self > sensors
         except AttributeError:
-            print("OUPS")
+            pass
         try:
-            if self.devices is not None:
-                for dev in self.devices:
-                    self > dev
+            if devices is not None:
+                if isinstance(sensors, list):
+                    for dev in devices:
+                        self > dev
+                else:
+                    self > devices
         except AttributeError:
-            print("FLUTE")
+            pass
         return self
 
-    @property
-    def sensor(self):
-        """
-        Some device have by definition only one sensor (like stats)
-        It makes no sense to call for plural sensors so make sensor
-        a valid choice
-        """
-        return self.sensors
-
-    def __getitem__(self, name: str) -> Any:
-        """
-        Will allow the device['label'] syntax to be used
-        """
-        for each in self.sensors:
-            if each.label == name:
-                return each
-        for each in self.devices:
-            if each.label == name:
-                return each
-        raise KeyError(f"{name} not found")
-
-    if not hasattr(cls, "finalize"):
-        setattr(cls, "finalize", finalize)
-    # if not hasattr(cls, "__getitem__"):
-    #    setattr(cls, "__getitem__", __getitem__)
-    setattr(cls, "sensor", sensor)
-    # cls = cls.finalize(cls)
+    if not hasattr(cls, "compose"):
+        setattr(cls, "compose", compose)
     return cls

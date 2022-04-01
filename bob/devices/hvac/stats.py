@@ -65,8 +65,9 @@ class HighStaticPressureStat(Device):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.sensors = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
-        self.finalize()
+        sensors = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
+
+        self.compose(sensors, None)
 
 
 @composite

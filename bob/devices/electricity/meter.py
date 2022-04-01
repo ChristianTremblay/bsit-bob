@@ -51,15 +51,15 @@ class ThreePhaseElectricalMeter(Device):
             measuresMedium=_measuresMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
-        self.voltage_sensors = _sensors["voltage"]
-        self.current_sensors = _sensors["current"]
-        self.finalize()
+        voltage_sensors = _sensors["voltage"]
+        current_sensors = _sensors["current"]
+        self.compose(voltage_sensors, current_sensors)
 
-    def finalize(self):
-        for each in self.voltage_sensors:
+    def compose(self, voltage_sensors, current_sensors):
+        for each in voltage_sensors:
             self > each
 
-        for each in self.current_sensors:
+        for each in current_sensors:
             self > each
         return self
 
@@ -74,8 +74,3 @@ class ThreePhaseElectricalMeter(Device):
     def current_hasMeasurementLocation(self, node: Node = None):
         for each in self.voltage_sensors:
             each.hasMeasurementLocation = node
-
-    def __getitem__(self, name: str) -> Any:
-        for each in self._sensors:
-            if each.label == name:
-                return each

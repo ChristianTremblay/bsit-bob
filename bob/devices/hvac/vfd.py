@@ -61,7 +61,7 @@ class VFD(Device):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        self.sensors = define_sensors(config)
+        sensors = define_sensors(config)
         self.devices, device_kwargs = contains_devices_list(config, **kwargs)
         _electricalInlet = device_kwargs.pop("electricalInlet", None)
         _electricalOutlet = device_kwargs.pop("electricalOutlet", None)
@@ -80,4 +80,4 @@ class VFD(Device):
         for k, v in _properties.items():
             if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
-        self.finalize()
+        self.compose(sensors, None)

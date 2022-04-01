@@ -133,7 +133,7 @@ dpt2 = DifferentialStaticPressureSensor(
 )
 
 # BACnet Stuff
-dps.sensor.measure.hasExternalReference = BACnetReference(
+dps["DPS.sensor"].measure.hasExternalReference = BACnetReference(
     uri="bacnet://2/binary-output/1"
 )
 rat.measure.hasExternalReference = BACnetReference(uri="bacnet://2/analog-input/1")
@@ -170,8 +170,8 @@ rat.hasMeasurementLocation = ra
 dpt1.hasMeasurementLocationHigh = filter.airInlet
 dpt1.hasMeasurementLocationLow = filter.airOutlet
 
-dps.sensor.hasMeasurementLocationHigh = f.airOutlet
-dps.sensor.hasMeasurementLocationLow = inside
+dps["DPS.sensor"].hasMeasurementLocationHigh = f.airOutlet
+dps["DPS.sensor"].hasMeasurementLocationLow = inside
 sd.hasMeasurementLocation = f.airOutlet
 dat.hasMeasurementLocation = f.airOutlet
 

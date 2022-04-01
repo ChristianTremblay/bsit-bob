@@ -39,9 +39,9 @@ class MotorStarter(Device):
             self, label=f"{self.label}.electricalOutlet"
         )
 
-        self.sensors = CurrentSwitch(
+        sensors = CurrentSwitch(
             label=f"{self.label}.sensor",
             measuresMedium=self.electricalInlet.hasMedium,
             hasMeasurementLocation=self.electricalOutlet,
         )
-        self.finalize()
+        self.compose(sensors, None)

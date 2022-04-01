@@ -80,9 +80,9 @@ class GasMonitor(Device):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        self.sensors = define_sensors(config)
+        sensors = define_sensors(config)
         if "params" in config:
             kwargs = {**config["params"], **kwargs}
 
         super().__init__(**kwargs)
-        self.finalize()
+        self.compose(sensors, None)

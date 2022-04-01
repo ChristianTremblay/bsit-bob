@@ -45,7 +45,8 @@ class OccupancyControl(FunctionBlock):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        self.sensors = define_sensors(config)
-        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
+        sensors = define_sensors(config)
+        devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         super().__init__(**device_kwargs)
+        self.compose(sensors, devices)

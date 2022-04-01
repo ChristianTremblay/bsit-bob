@@ -50,8 +50,8 @@ class Luminaire(Device):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        self.sensors = define_sensors(config)
-        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
+        sensors = define_sensors(config)
+        devices, device_kwargs = contains_devices_list(config, **kwargs)
 
         _electricalInlet = device_kwargs.pop("electricalInlet", None)
 
@@ -65,4 +65,4 @@ class Luminaire(Device):
             if v is not None:
                 setattr(self, k, self.__annotations__[k](v))
 
-        self.finalize()
+        self.compose(sensors, devices)

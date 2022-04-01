@@ -91,8 +91,8 @@ class SinglePhaseDistributionPanel(Device):
             raise ValueError(
                 "Please provide configuration dict or kwargs, at least a label"
             )
-        self.sensors = define_sensors(config)
-        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
+        sensors = define_sensors(config)
+        devices, device_kwargs = contains_devices_list(config, **kwargs)
         voltage = str(device_kwargs.pop("voltage"))
         _classes = self._cross_ref[voltage]
         _electricalBusA, _electricalBusB, _electricalBusAB = _classes
@@ -101,17 +101,17 @@ class SinglePhaseDistributionPanel(Device):
         self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
-        self.finalize()
+        self.compose(sensors, devices)
 
-    def finalize(self):
+    def compose(self, sensors, devices):
         try:
-            if self.sensors is not None:
-                for sensor in self.sensors:
+            if sensors is not None:
+                for sensor in sensors:
                     self > sensor
         except AttributeError:
             pass
         try:
-            for circuit_breaker in self.devices:
+            for circuit_breaker in devices:
                 self > circuit_breaker
                 if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
                     circuit_breaker.electricalOutletA >> self.electricalBusA
@@ -136,42 +136,23 @@ class ThreePhaseDistributionPanel(Device):
 
     # Bus Bar
     _cross_ref = {
-        #'208': (Electricity_208V_60HzInletConnectionPoint, Electricity_120V_60HzOutletConnectionPoint, Electricity_120V_60HzOutletConnectionPoint, Electricity_208V_60HzOutletConnectionPoint),
+        "208": (
+            Electricity_208V_60HzInletConnectionPoint,
+            Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_208V_60HzOutletConnectionPoint,
+        ),
         "575": (
-            (
-                Electricity_347V_60HzConnection,
-                Electricity_347V_60HzOutletConnectionPoint,
-            ),
-            (
-                Electricity_347V_60HzConnection,
-                Electricity_347V_60HzOutletConnectionPoint,
-            ),
-            (
-                Electricity_347V_60HzConnection,
-                Electricity_347V_60HzOutletConnectionPoint,
-            ),
-            (
-                Electricity_575V_60HzConnection,
-                Electricity_347V_60HzOutletConnectionPoint,
-            ),
+            (Electricity_347V_60HzConnection),
+            (Electricity_347V_60HzConnection),
+            (Electricity_347V_60HzConnection),
+            (Electricity_575V_60HzConnection),
         ),
         "600": (
-            (
-                Electricity_347V_60HzConnection,
-                Electricity_347V_60HzOutletConnectionPoint,
-            ),
-            (
-                Electricity_347V_60HzConnection,
-                Electricity_347V_60HzOutletConnectionPoint,
-            ),
-            (
-                Electricity_347V_60HzConnection,
-                Electricity_347V_60HzOutletConnectionPoint,
-            ),
-            (
-                Electricity_575V_60HzConnection,
-                Electricity_347V_60HzOutletConnectionPoint,
-            ),
+            (Electricity_347V_60HzConnection),
+            (Electricity_347V_60HzConnection),
+            (Electricity_347V_60HzConnection),
+            (Electricity_575V_60HzConnection),
         ),
     }
 
@@ -182,8 +163,8 @@ class ThreePhaseDistributionPanel(Device):
                 "Please provide configuration dict or kwargs, at least a label"
             )
 
-        self.sensors = define_sensors(config)
-        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
+        sensors = define_sensors(config)
+        devices, device_kwargs = contains_devices_list(config, **kwargs)
         try:
             voltage = str(device_kwargs.pop("voltage"))
             _classes = self._cross_ref[voltage]
@@ -198,24 +179,24 @@ class ThreePhaseDistributionPanel(Device):
 
         super().__init__(**device_kwargs)
 
-        self.electricalBusA = _electricalBusA[0](label=f"{self.label}.electricalBusA")
-        self.electricalBusB = _electricalBusB[0](label=f"{self.label}.electricalBusB")
-        self.electricalBusC = _electricalBusC[0](label=f"{self.label}.electricalBusC")
-        self.electricalBusABC = _electricalBusABC[0](
+        self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
+        self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
+        self.electricalBusC = _electricalBusC(label=f"{self.label}.electricalBusC")
+        self.electricalBusABC = _electricalBusABC(
             label=f"{self.label}.electricalBusABC"
         )
-        self.finalize()
+        self.compose(sensors, devices)
 
-    def finalize(self):
+    def compose(self, sensors, devices):
         try:
-            if self.sensors is not None:
-                for sensor in self.sensors:
+            if sensors is not None:
+                for sensor in sensors:
                     self > sensor
         except AttributeError:
             pass
         try:
-            if self.devices is not None:
-                for circuit_breaker in self.devices:
+            if devices is not None:
+                for circuit_breaker in devices:
 
                     self > circuit_breaker
 

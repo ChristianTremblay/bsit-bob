@@ -51,9 +51,9 @@ class ParticleCounter(Device):
         if not config:
             raise ValueError("Please provide configuration dict")
 
-        self.sensors = define_sensors(config)
+        sensors = define_sensors(config)
         if "params" in config.keys():
             kwargs = {**config["params"], **kwargs}
 
         super().__init__(**kwargs)
-        self.finalize()
+        self.compose(sensors, None)
