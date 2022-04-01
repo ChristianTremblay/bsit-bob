@@ -141,7 +141,7 @@ class CurrentAnalogSensor(Sensor):
         self.observesProperty = self.measure
 
 
-def create_3phases_meter_sensors(
+def create_3phase_meter_sensors(
     label: str = None,
     measuresMedium: Medium = None,
     hasMeasurementLocation: Node = None,

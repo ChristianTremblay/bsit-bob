@@ -23,7 +23,7 @@ from bob.devices.electricity.distribution import (
     Transformer,
     SinglePhaseDistributionPanel,
     SinglePoleCircuitBreaker,
-    ThreePhasesDistributionPanel,
+    ThreePhaseDistributionPanel,
     ThreePolesCircuitBreaker,
     ThreePolesMainCircuitBreaker,
     TwoPolesCircuitBreaker,
@@ -119,7 +119,7 @@ distribution_panel_config = {
 def test_electrical_entry():
     # Electrical devices
 
-    main_panel = ThreePhasesDistributionPanel(config=mainentry_panel_config)
+    main_panel = ThreePhaseDistributionPanel(config=mainentry_panel_config)
     transformer_120_240 = Transformer(
         label="TX-1",
         electricalInlet=Electricity_575V_60HzInletConnectionPoint,

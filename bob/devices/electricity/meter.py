@@ -1,5 +1,5 @@
 from ...connections.electricity import *
-from ...sensor.electricity import create_3phases_meter_sensors
+from ...sensor.electricity import create_3phase_meter_sensors
 
 from ...core import Device, Node, s223, p223
 
@@ -8,7 +8,7 @@ from typing import Any
 __namespace__ = s223
 
 
-class ThreePhasesElectricalMeter(Device):
+class ThreePhaseElectricalMeter(Device):
     """
     This is an attemp to model a complete Electrical meter
     starting with all the voltages and current sensors.
@@ -21,13 +21,13 @@ class ThreePhasesElectricalMeter(Device):
 
     ex. :
 
-        meter = ThreePhasesElectricalMeter(label="Meter#1", measuresMedium=Electricity_575V_60Hz)
+        meter = ThreePhaseElectricalMeter(label="Meter#1", measuresMedium=Electricity_575V_60Hz)
         meter["Meter#1_VoltageAB"]
 
     #optional : you can set hasMeasurementLocation intially:
 
         a = Electricity_575V_60HzConnection(label="A")
-        meter = ThreePhasesElectricalMeter(label="Meter#1", measuresMedium=Electricity_575V_60Hz, hasMeasurementLocation=a)
+        meter = ThreePhaseElectricalMeter(label="Meter#1", measuresMedium=Electricity_575V_60Hz, hasMeasurementLocation=a)
 
     # or later:
 
@@ -46,7 +46,7 @@ class ThreePhasesElectricalMeter(Device):
             else None
         )
         super().__init__(**kwargs)
-        _sensors = create_3phases_meter_sensors(
+        _sensors = create_3phase_meter_sensors(
             label=_label,
             measuresMedium=_measuresMedium,
             hasMeasurementLocation=_hasMeasurementLocation,

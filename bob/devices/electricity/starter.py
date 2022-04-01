@@ -1,7 +1,7 @@
 from bob.devices.electricity.switch import CurrentSwitch
 from bob.properties.states import OnOffCommand, OnOffStatus
 from ...connections.electricity import *
-from ...sensor.electricity import CurrentBinarySensor, create_3phases_meter_sensors
+from ...sensor.electricity import CurrentBinarySensor
 
 from ...core import Device, Node, s223, p223
 

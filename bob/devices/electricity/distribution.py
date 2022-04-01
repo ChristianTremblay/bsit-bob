@@ -139,7 +139,7 @@ class SinglePhaseDistributionPanel(DistributionPanel):
                     self.electricalBusB >> circuit_breaker
 
 
-class ThreePhasesDistributionPanel(DistributionPanel):
+class ThreePhaseDistributionPanel(DistributionPanel):
     manufacturer: str
     modelNumber: str
     hasNumberOfCircuits: QuantifiableObservableProperty
