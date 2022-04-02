@@ -844,6 +844,19 @@ class Property(Node):
         if INCLUDE_INVERSE:
             external_reference.isExternalReferenceOf = self
 
+    def __matmul__(self, other: Node) -> Node:
+        """
+        This is a property of some other thing, `self @ other`, or the value
+        of this property can be obtained via some other external reference,
+        `self @ ExternalReference(...)`, and can be changed together like
+        `self @ other @ ExternalReference(...)`
+        """
+        if isinstance(other, ExternalReference):
+            self.add_external_reference(other)
+        else:
+            other.add_property(self)
+        return self
+
 
 @annotation_reference
 class PropertyReference:
