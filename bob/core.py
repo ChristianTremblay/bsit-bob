@@ -14,7 +14,7 @@ import inspect
 from typing import Any, Dict, List, Optional, Set, TextIO, Tuple, TypeVar, Union, cast
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
-from .multimethods import multimethod
+from .multimethods import multimethod, new_class
 
 T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
@@ -538,6 +538,10 @@ class NodeMetaclass(type):
                     )
         # save the reference
         _annotation_reference[metaclass.__name__] = metaclass
+
+        # let the multimethods know this is a new class, the typemap might have
+        # to be reconstructed
+        new_class(metaclass)
 
         return metaclass
 
@@ -1339,6 +1343,16 @@ class ConnectionPoint(Node):
     isConnectionPointOf: Connectable
 
     def __init__(self, thing: Connectable, **kwargs: Any) -> None:
+        # strict version:
+        # if self.__class__ is ConnectionPoint:
+        #     raise RuntimeError("ConnectionPoint is an abstract base class")
+
+        # implicit bidirectional version:
+        if ("hasDirection" not in kwargs) and (
+            getattr(self, "hasDirection", None) is None
+        ):
+            kwargs["hasDirection"] = Bidirectional
+
         super().__init__(**kwargs)
 
         self._data_graph.add((thing.node, s223.hasConnectionPoint, self.node))

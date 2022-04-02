@@ -7,10 +7,12 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union, get_origin
-
 import itertools
 import inspect
+import logging
+from collections import Counter
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union, get_origin
+
 
 __all__ = ["multimethod"]
 
@@ -19,29 +21,22 @@ __all__ = ["multimethod"]
 _multi_registry: Dict[str, _MultiMethod] = {}
 
 
-def all_subclasses(cls: type) -> List[type]:
-    """Returns a list of *all* subclasses of cls, recursively."""
-    if not hasattr(cls, "__subclasses__"):
-        return []
-
-    subclasses: List[type] = cls.__subclasses__()
-    for subcls in cls.__subclasses__():
-        subclasses.extend(all_subclasses(subcls))
-    return subclasses
-
-
 class _MultiMethod:
     """Maps tuples of argument types to function to call for these types."""
 
     name: str
     argc: int
+    types: Set[type]
     typemap: Dict[Tuple[type, ...], Callable[..., Any]]
     funcs: List[Callable[..., Any]]
+    invocations: Counter
 
     def __init__(self, name: str) -> None:
         self.name = name
+        self.types = set()
         self.typemap = {}
         self.funcs = []
+        self.invocations = Counter()
         self.argc = -1
 
     def __call__(self, *args: Any) -> Any:
@@ -72,19 +67,28 @@ class _MultiMethod:
 
                     types[i] = List[next(iter(top_mro))]  # type: ignore[index,misc]
 
-        method = self.typemap.get(tuple(types), None)
+        types_tuple = tuple(types)
+        method = self.typemap.get(types_tuple, None)
         if not method:
             raise TypeError("no match %r: %s" % (self.name, types))
+
+        # found a match, count it
+        self.invocations[(types_tuple, method)] += 1
 
         return method(*args)
 
     def register_function(self, func: Callable[..., Any]) -> None:
-        # if the typemap is populated you cannot add more patterns (which
-        # is testable here) and you cannot subclass existing classes (which
-        # would mean setting every class used to "final")
-        if self.typemap:
-            raise RuntimeError("type map already populated")
+        logging.debug("(%s)register_function: %r", self.name, func)
 
+        if self.typemap:
+            logging.warning("forcing repopulatation: %r", self)
+
+            # clear out the existing map for now
+            self.types = set()
+            self.typemap = {}
+
+        # get the function signature to make sure the same number of parameters
+        # is used every time.
         func_sig = inspect.signature(func)
         argc = len(func_sig.parameters)
         if self.argc < 0:
@@ -96,6 +100,12 @@ class _MultiMethod:
         self.funcs.append(func)
 
     def populate_typemap(self):
+        logging.debug("(%s)populate_typemap", self.name)
+
+        # clear out the existing map
+        self.types = set()
+        self.typemap = {}
+
         # map each function in the order it was registered
         for func in self.funcs:
             types_with_subclasses = []
@@ -147,12 +157,66 @@ class _MultiMethod:
                 # more specific dispatches can override earlier-defined generic
                 # dispatches.
                 self.typemap[type_tuple] = func
+                self.types.update(type_tuple)
+
+        # if there are any existing invocations, see if they might change
+        for types_tuple, method in self.invocations:
+            logging.debug("    - make sure %s still calls %r", types_tuple, method)
+
+            if types_tuple not in self.typemap:
+                raise RuntimeError("%s previous calls no longer mapped: %s", self.name, types_tuple)
+            if self.typemap[types_tuple] is not method:
+                raise RuntimeError("%s previous calls new method: %s", self.name, types_tuple)
 
 
 def multimethod(func: Callable[..., Any]) -> _MultiMethod:
+    """Function Decorator"""
+    logging.debug("multimethod %r" , func)
+
     name = func.__name__
     mm = _multi_registry.get(name)
     if mm is None:
         mm = _multi_registry[name] = _MultiMethod(name)
     mm.register_function(func)
     return mm
+
+
+def all_subclasses(cls: type) -> List[type]:
+    """Returns a list of *all* subclasses of cls, recursively."""
+    if not hasattr(cls, "__subclasses__"):
+        return []
+
+    subclasses: List[type] = cls.__subclasses__()
+    for subcls in cls.__subclasses__():
+        subclasses.extend(all_subclasses(subcls))
+    return subclasses
+
+
+def new_class(cls: type) -> None:
+    logging.debug("new_class %r" , cls.__name__)
+
+    # check to see if the new type is a subclass of an existing type
+    for fn_name, mm in _multi_registry.items():
+        ding = False
+        for mm_type in mm.types:
+            if inspect.isclass(mm_type):
+                if issubclass(cls, mm_type):
+                    logging.debug("    - %s ding: %r is a subclass of %r", fn_name, cls, mm_type)
+                    ding = True
+                    break
+                continue
+
+            mm_origin = get_origin(mm_type)
+            if mm_origin is list:
+                mm_subtype = mm_type.__args__[0]  # type: ignore[attr-defined]
+                if issubclass(cls, mm_subtype):
+                    logging.debug("    - %s ding: %r is a subclass of %r", fn_name, cls, mm_subtype)
+                    ding = True
+                    break
+                continue
+
+        if ding:
+            # clear out the existing map for now
+            mm.types = set()
+            mm.typemap = {}
+
