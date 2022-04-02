@@ -31,6 +31,8 @@ ahu_template = {
         ("DA-T", AirTemperatureSensor): {
             "comment": "Discharge Air temperature after cooling coil"
         },
+    },
+    "properties": {
         ("TPD2", DifferentialStaticPressure): {
             "comment": "Supply Duct Static Pressure"
         },
@@ -38,7 +40,7 @@ ahu_template = {
             "comment": "Return Duct Static Pressure"
         },
     },
-    "contains": {
+    "devices": {
         ("RF", Fan): {
             "comment": "Return Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
