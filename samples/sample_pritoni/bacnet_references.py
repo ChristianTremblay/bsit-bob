@@ -3,13 +3,6 @@ from bob.externalreference.bacnet import BACnetDevice, BACnetReference
 import lighting_devices as ld
 import hvac_devices as hd
 
-# A bulb with only one object
-ld.openofficeEast_luminaire_1.brightnessRatio.hasExternalReference = BACnetReference(
-    uri=URIRef("bacnet://2/analog-input,1")
-)
-ld.openofficeEast_luminaire_1.hasOnOffStatus.hasExternalReference = BACnetReference(
-    uri=URIRef("bacnet://2/binary-input,1")
-)
 
 # An HVAC BACnet device
 CGM_2_004 = BACnetDevice(
@@ -74,5 +67,12 @@ zn2_t = BACnetReference(
     objectType="analog-input",
 )
 
-hd.vav1["VAV1_ZN-T"].measure.hasExternalReference = zn1_t
-hd.vav2["VAV2_ZN-T"].measure.hasExternalReference = zn2_t
+hd.vav1["VAV1_ZN-T"].measure @ zn1_t
+hd.vav2["VAV2_ZN-T"].measure @ zn2_t
+# A bulb with only one object
+ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference(
+    uri=URIRef("bacnet://2/analog-input,1")
+)
+ld.openofficeEast_luminaire_1.hasOnOffStatus @ BACnetReference(
+    uri=URIRef("bacnet://2/binary-input,1")
+)
