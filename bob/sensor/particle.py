@@ -44,14 +44,12 @@ class ParticulateSensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        self.measure = ParticulateCount(
+        self.observesProperty = ParticulateCount(
             measuresSubstance=self.measuresSubstance,
             # isObservedBy=self,
             label=f"{self.label}.ParticulateCount",  # needs more focus
             **_measure_kwargs,
         )
-
-        self.observesProperty = self.measure
 
 
 class UltraFineParticulateSensor(ParticulateSensor):

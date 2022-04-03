@@ -40,10 +40,8 @@ class AirHumiditySensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        self.measure = Humidity(
+        self.observesProperty = Humidity(
             # isObservedBy=self,
             label=f"{self.label}.Measure",
             **_measure_kwargs,
         )
-
-        self.observesProperty = self.measure

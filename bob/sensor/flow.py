@@ -44,13 +44,12 @@ class FlowSensor(Sensor):
             raise ValueError(
                 "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        self.measure = Flow(
+        self.observesProperty = Flow(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.Flow",
             **_measure_kwargs,
         )
-        self.observesProperty = self.measure
 
 
 class AirFlowSensor(FlowSensor):

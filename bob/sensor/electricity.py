@@ -112,13 +112,12 @@ class VoltageSensor(Sensor):
             raise ValueError(
                 "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        self.measure = _class(
+        self.observesProperty = _class(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.{_class.__name__}",
             **_measure_kwargs,
         )
-        self.observesProperty = self.measure
 
 
 class CurrentAnalogSensor(Sensor):
@@ -132,13 +131,12 @@ class CurrentAnalogSensor(Sensor):
             raise ValueError(
                 "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        self.measure = _class(
+        self.observesProperty = _class(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.{_class.__name__}",
             **_measure_kwargs,
         )
-        self.observesProperty = self.measure
 
 
 def create_3phase_meter_sensors(
@@ -176,17 +174,16 @@ def create_3phase_meter_sensors(
 
 
 class CurrentBinarySensor(Sensor):
-    observesProperty: PropertyReference  # DifferentialStaticPressure
+    observesProperty: PropertyReference  #
     hasMeasurementLocation: Node
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        self.measure = OnOffStatus(
+        self.observesProperty = OnOffStatus(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.CurrentBinarySensor",
             **_measure_kwargs,
         )
-        self.observesProperty = self.measure

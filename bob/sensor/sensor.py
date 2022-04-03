@@ -78,6 +78,8 @@ class Sensor(Device):
     be quantifiable. For example, it might just sense an alarm state, or
     occupancy. But usually it will produce a number, in which case it is
     associated with a QuantifiableObservableProperty.
+
+    A sensor can have only one measurement (observesProperty)
     """
 
     node_type: URIRef = s223.Sensor
@@ -109,6 +111,11 @@ class Sensor(Device):
         contains_mm(other, self)
         return self
 
+    def __matmul__(self, other: Node) -> Any:
+        """contains multimethod"""
+        contains_mm(self, other)
+        return self
+
 
 @multimethod
 def contains_mm(parent_device: Device, child_device: Sensor) -> None:
@@ -120,6 +127,27 @@ def contains_mm(parent_device: Device, child_device: Sensor) -> None:
     if INCLUDE_INVERSE:
         parent_device._data_graph.add(
             (child_device.node, s223.isContainedIn, parent_device.node)
+        )
+
+
+@multimethod
+def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
+    """Device > Device"""
+    logging.info(f"device {parent_device} contains device {child_device}")
+    parent_device._data_graph.add(
+        (
+            parent_device.observesProperty.node,
+            s223.hasExternalReference,
+            child_device.node,
+        )
+    )
+    if INCLUDE_INVERSE:
+        parent_device._data_graph.add(
+            (
+                child_device.node,
+                s223.isExternalReferenceOf,
+                parent_device.observesProperty.node,
+            )
         )
 
 

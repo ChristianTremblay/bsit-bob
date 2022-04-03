@@ -31,13 +31,12 @@ class TemperatureSensor(Sensor):
             raise ValueError(
                 "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
             )
-        self.measure = Temperature(
+        self.observesProperty = Temperature(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.Temperature",
             **_measure_kwargs,
         )
-        self.observesProperty = self.measure
 
 
 class AirTemperatureSensor(TemperatureSensor):

@@ -43,10 +43,9 @@ class DifferentialStaticPressureSensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        self.measure = DifferentialStaticPressure(
+        self.observesProperty = DifferentialStaticPressure(
             measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.DifferentialStaticPressure",
             **_measure_kwargs,
         )
-        self.observesProperty = self.measure

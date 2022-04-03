@@ -35,9 +35,8 @@ class SmokeDetectionSensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
         super().__init__(**_sensor_kwargs)
 
-        self.measure = SmokePresence(
+        self.observesProperty = SmokePresence(
             isObservedBy=self,
             label=f"{self.label}.SmokeDetection",  # needs more focus
             **_measure_kwargs,
         )
-        self.observesProperty = self.measure
