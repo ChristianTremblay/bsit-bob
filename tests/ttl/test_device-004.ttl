@@ -4,6 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
@@ -22,7 +23,7 @@ ex29:00001 a s223:ObservableProperty,
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
     s223:isPropertyOf ex29:00007 ;
-    s223:unit unit:PPM .
+    qudt:unit unit:PPM .
 ex29:00002 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -30,7 +31,7 @@ ex29:00002 a s223:ObservableProperty,
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 2000.0 ;
     s223:isPropertyOf ex29:00007 ;
-    s223:unit unit:PPM .
+    qudt:unit unit:PPM .
 ex29:00003 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -38,7 +39,7 @@ ex29:00003 a s223:ObservableProperty,
     s223:hasQuantityKind quantitykind:Temperature ;
     s223:hasValue 0.0 ;
     s223:isPropertyOf ex29:00010 ;
-    s223:unit unit:DEG_C .
+    qudt:unit unit:DEG_C .
 ex29:00004 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -46,7 +47,7 @@ ex29:00004 a s223:ObservableProperty,
     s223:hasQuantityKind quantitykind:Temperature ;
     s223:hasValue 50.0 ;
     s223:isPropertyOf ex29:00010 ;
-    s223:unit unit:DEG_C .
+    qudt:unit unit:DEG_C .
 ex29:00005 a p223:GasMonitor,
         s223:Device ;
     rdfs:label "CO2-2" ;
@@ -68,15 +69,15 @@ ex29:00007 a p223:CO2Sensor,
         s223:Sensor ;
     rdfs:label "CO2_sensor" ;
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:measuresSubstance p223:Substance-CO2 ;
-    p223:observesProperty ex29:00008 ;
     s223:hasMaxRange ex29:00002 ;
     s223:hasMeasurementLocation ex29:00046 ;
     s223:hasMinRange ex29:00001 ;
     s223:hasProperty ex29:00001,
         ex29:00002 ;
-    s223:isContainedIn ex29:00005 .
+    s223:isContainedIn ex29:00005 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:measuresSubstance p223:Substance-CO2 ;
+    s223:observesProperty ex29:00008 .
 ex29:00008 a p223:GasConcentration,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -84,12 +85,12 @@ ex29:00008 a p223:GasConcentration,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "CO2_sensor.GasConcentration" ;
-    p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     p223:measuresMedium s223:Medium-Air ;
     p223:measuresSubstance p223:Substance-CO2 ;
-    p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00009 ;
-    s223:isObservedBy ex29:00007 .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:isObservedBy ex29:00007 ;
+    qudt:unit unit:PPM .
 ex29:00009 a s223:ExternalReference ;
     rdfs:label "CO2_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
@@ -98,14 +99,14 @@ ex29:00010 a p223:AirTemperatureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Temperature_sensor" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex29:00011 ;
     s223:hasMaxRange ex29:00004 ;
     s223:hasMeasurementLocation ex29:00046 ;
     s223:hasMinRange ex29:00003 ;
     s223:hasProperty ex29:00003,
         ex29:00004 ;
     s223:isContainedIn ex29:00005 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty ex29:00011 ;
     rdfs:comment "Internal temperature sensor of device" .
 ex29:00011 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -114,10 +115,10 @@ ex29:00011 a p223:MeasuredProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Temperature_sensor.Temperature" ;
-    p223:hasQuantityKind quantitykind:Temperature ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:DEG_C ;
-    s223:hasExternalReference ex29:00012 .
+    s223:hasExternalReference ex29:00012 ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex29:00012 a s223:ExternalReference ;
     rdfs:label "Temperature_sensor.Temperature.ExternalReference" ;
     s223:hasRef "bacnet://" .
@@ -128,7 +129,7 @@ ex29:00013 a s223:ObservableProperty,
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
     s223:isPropertyOf ex29:00019 ;
-    s223:unit unit:PPM .
+    qudt:unit unit:PPM .
 ex29:00014 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -136,7 +137,7 @@ ex29:00014 a s223:ObservableProperty,
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 100.0 ;
     s223:isPropertyOf ex29:00019 ;
-    s223:unit unit:PPM .
+    qudt:unit unit:PPM .
 ex29:00015 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -144,7 +145,7 @@ ex29:00015 a s223:ObservableProperty,
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
     s223:isPropertyOf ex29:00022 ;
-    s223:unit unit:PPM .
+    qudt:unit unit:PPM .
 ex29:00016 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -152,7 +153,7 @@ ex29:00016 a s223:ObservableProperty,
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 250.0 ;
     s223:isPropertyOf ex29:00022 ;
-    s223:unit unit:PPM .
+    qudt:unit unit:PPM .
 ex29:00017 a p223:GasMonitor,
         s223:Device ;
     rdfs:label "GM-1" ;
@@ -173,14 +174,14 @@ ex29:00019 a p223:COSensor,
         s223:Sensor ;
     rdfs:label "CO_sensor" ;
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:measuresSubstance p223:Substance-CO ;
-    p223:observesProperty ex29:00020 ;
     s223:hasMaxRange ex29:00014 ;
     s223:hasMinRange ex29:00013 ;
     s223:hasProperty ex29:00013,
         ex29:00014 ;
-    s223:isContainedIn ex29:00017 .
+    s223:isContainedIn ex29:00017 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:measuresSubstance p223:Substance-CO ;
+    s223:observesProperty ex29:00020 .
 ex29:00020 a p223:GasConcentration,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -188,12 +189,12 @@ ex29:00020 a p223:GasConcentration,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "CO_sensor.GasConcentration" ;
-    p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     p223:measuresMedium s223:Medium-Air ;
     p223:measuresSubstance p223:Substance-CO ;
-    p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00021 ;
-    s223:isObservedBy ex29:00019 .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:isObservedBy ex29:00019 ;
+    qudt:unit unit:PPM .
 ex29:00021 a s223:ExternalReference ;
     rdfs:label "CO_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
@@ -203,14 +204,14 @@ ex29:00022 a p223:GasConcentrationSensor,
         s223:Sensor ;
     rdfs:label "NO2_sensor" ;
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:measuresSubstance p223:Substance-NO2 ;
-    p223:observesProperty ex29:00023 ;
     s223:hasMaxRange ex29:00016 ;
     s223:hasMinRange ex29:00015 ;
     s223:hasProperty ex29:00015,
         ex29:00016 ;
-    s223:isContainedIn ex29:00017 .
+    s223:isContainedIn ex29:00017 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:measuresSubstance p223:Substance-NO2 ;
+    s223:observesProperty ex29:00023 .
 ex29:00023 a p223:GasConcentration,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -218,12 +219,12 @@ ex29:00023 a p223:GasConcentration,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "NO2_sensor.GasConcentration" ;
-    p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     p223:measuresMedium s223:Medium-Air ;
     p223:measuresSubstance p223:Substance-NO2 ;
-    p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00024 ;
-    s223:isObservedBy ex29:00022 .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:isObservedBy ex29:00022 ;
+    qudt:unit unit:PPM .
 ex29:00024 a s223:ExternalReference ;
     rdfs:label "NO2_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
@@ -235,7 +236,7 @@ ex29:00025 a s223:ObservableProperty,
     s223:hasValue 0.0 ;
     s223:isPropertyOf ex29:00029,
         ex29:00034 ;
-    s223:unit unit:PPM .
+    qudt:unit unit:PPM .
 ex29:00026 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -244,7 +245,7 @@ ex29:00026 a s223:ObservableProperty,
     s223:hasValue 2000.0 ;
     s223:isPropertyOf ex29:00029,
         ex29:00034 ;
-    s223:unit unit:PPM .
+    qudt:unit unit:PPM .
 ex29:00027 a p223:GasMonitor,
         s223:Device ;
     rdfs:label "CO2-1" ;
@@ -264,14 +265,14 @@ ex29:00029 a p223:CO2Sensor,
         s223:Sensor ;
     rdfs:label "CO2_sensor" ;
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:measuresSubstance p223:Substance-CO2 ;
-    p223:observesProperty ex29:00030 ;
     s223:hasMaxRange ex29:00026 ;
     s223:hasMinRange ex29:00025 ;
     s223:hasProperty ex29:00025,
         ex29:00026 ;
-    s223:isContainedIn ex29:00027 .
+    s223:isContainedIn ex29:00027 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:measuresSubstance p223:Substance-CO2 ;
+    s223:observesProperty ex29:00030 .
 ex29:00030 a p223:GasConcentration,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -279,12 +280,12 @@ ex29:00030 a p223:GasConcentration,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "CO2_sensor.GasConcentration" ;
-    p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     p223:measuresMedium s223:Medium-Air ;
     p223:measuresSubstance p223:Substance-CO2 ;
-    p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00031 ;
-    s223:isObservedBy ex29:00029 .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:isObservedBy ex29:00029 ;
+    qudt:unit unit:PPM .
 ex29:00031 a s223:ExternalReference ;
     rdfs:label "CO2_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
@@ -307,14 +308,14 @@ ex29:00034 a p223:CO2Sensor,
         s223:Sensor ;
     rdfs:label "CO2_sensor" ;
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:measuresSubstance p223:Substance-CO2 ;
-    p223:observesProperty ex29:00035 ;
     s223:hasMaxRange ex29:00026 ;
     s223:hasMinRange ex29:00025 ;
     s223:hasProperty ex29:00025,
         ex29:00026 ;
-    s223:isContainedIn ex29:00032 .
+    s223:isContainedIn ex29:00032 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:measuresSubstance p223:Substance-CO2 ;
+    s223:observesProperty ex29:00035 .
 ex29:00035 a p223:GasConcentration,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -322,12 +323,12 @@ ex29:00035 a p223:GasConcentration,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "CO2_sensor.GasConcentration" ;
-    p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     p223:measuresMedium s223:Medium-Air ;
     p223:measuresSubstance p223:Substance-CO2 ;
-    p223:unit unit:PPM ;
     s223:hasExternalReference ex29:00036 ;
-    s223:isObservedBy ex29:00034 .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:isObservedBy ex29:00034 ;
+    qudt:unit unit:PPM .
 ex29:00036 a s223:ExternalReference ;
     rdfs:label "CO2_sensor.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .

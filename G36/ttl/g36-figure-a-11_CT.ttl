@@ -3,6 +3,7 @@
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -205,9 +206,9 @@ exg3611:00026 a p223:AirTemperatureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TS1" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty exg3611:00027 ;
     s223:hasMeasurementLocation exg3611:00001 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty exg3611:00027 ;
     rdfs:comment "Return Air Temperature sensor" .
 exg3611:00027 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -216,18 +217,18 @@ exg3611:00027 a p223:MeasuredProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TS1.Temperature" ;
-    p223:hasQuantityKind quantitykind:Temperature ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:DEG_C ;
-    s223:hasExternalReference exg3611:00044 .
+    s223:hasExternalReference exg3611:00044 ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 exg3611:00028 a p223:DifferentialStaticPressureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "DPT1" ;
     p223:hasMeasurementLocationHigh exg3611:00005 ;
     p223:hasMeasurementLocationLow exg3611:00006 ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty exg3611:00029 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty exg3611:00029 ;
     rdfs:comment "Filter differential Pressure sensor" .
 exg3611:00029 a p223:DifferentialStaticPressure,
         p223:MeasuredProperty,
@@ -236,10 +237,10 @@ exg3611:00029 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "DPT1.DifferentialStaticPressure" ;
-    p223:hasQuantityKind quantitykind:ForcePerArea ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:PA ;
-    s223:hasExternalReference exg3611:00050 .
+    s223:hasExternalReference exg3611:00050 ;
+    s223:hasQuantityKind quantitykind:ForcePerArea ;
+    qudt:unit unit:PA .
 exg3611:00030 a p223:HighStaticPressureStat,
         s223:Device ;
     rdfs:label "DPS" ;
@@ -259,8 +260,8 @@ exg3611:00032 a p223:DifferentialStaticPressureSensor,
     rdfs:label "DPS.sensor" ;
     p223:hasMeasurementLocationHigh exg3611:00019 ;
     p223:hasMeasurementLocationLow exg3611:00003 ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty exg3611:00033 .
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty exg3611:00033 .
 exg3611:00033 a p223:DifferentialStaticPressure,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -268,19 +269,19 @@ exg3611:00033 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "DPS.sensor.DifferentialStaticPressure" ;
-    p223:hasQuantityKind quantitykind:ForcePerArea ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:PA ;
-    s223:hasExternalReference exg3611:00041 .
+    s223:hasExternalReference exg3611:00041 ;
+    s223:hasQuantityKind quantitykind:ForcePerArea ;
+    qudt:unit unit:PA .
 exg3611:00034 a p223:SmokeDetectionSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "SD" ;
     p223:dryContactOutlet exg3611:00035 ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty exg3611:00036 ;
     s223:hasConnectionPoint exg3611:00035 ;
     s223:hasMeasurementLocation exg3611:00019 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty exg3611:00036 ;
     rdfs:comment "Smoke Detector in discharge air" .
 exg3611:00035 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -302,9 +303,9 @@ exg3611:00037 a p223:AirTemperatureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TS2" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty exg3611:00038 ;
     s223:hasMeasurementLocation exg3611:00019 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty exg3611:00038 ;
     rdfs:comment "Supply Air Temperature sensor" .
 exg3611:00038 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -313,18 +314,18 @@ exg3611:00038 a p223:MeasuredProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TS2.Temperature" ;
-    p223:hasQuantityKind quantitykind:Temperature ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:DEG_C ;
-    s223:hasExternalReference exg3611:00047 .
+    s223:hasExternalReference exg3611:00047 ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 exg3611:00039 a p223:DifferentialStaticPressureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "DPT2" ;
     p223:hasMeasurementLocationHigh exg3611:00002 ;
     p223:hasMeasurementLocationLow exg3611:00003 ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty exg3611:00040 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty exg3611:00040 ;
     rdfs:comment "Duct Static Pressure sensor" .
 exg3611:00040 a p223:DifferentialStaticPressure,
         p223:MeasuredProperty,
@@ -333,10 +334,10 @@ exg3611:00040 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "DPT2.DifferentialStaticPressure" ;
-    p223:hasQuantityKind quantitykind:ForcePerArea ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:PA ;
-    s223:hasExternalReference exg3611:00053 .
+    s223:hasExternalReference exg3611:00053 ;
+    s223:hasQuantityKind quantitykind:ForcePerArea ;
+    qudt:unit unit:PA .
 exg3611:00041 a s223:ExternalReference,
         ref:BACnetReference ;
     p223:objectInstance exg3611:00042 ;

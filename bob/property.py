@@ -2,7 +2,7 @@ import logging
 from typing import List, Union, Any
 
 from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
-from .core import ExternalReference, logging, s223, Property, quantitykind, unit
+from .core import ExternalReference, logging, s223, Property, qudt, quantitykind, unit
 import decimal
 
 __namespace__ = s223
@@ -30,6 +30,7 @@ class QuantifiableProperty(Property):
     """
     A property to be expressed as a quantity, it has units.
     """
+    _attr_uriref = {"unit": qudt["unit"]}
 
     node_type: URIRef = s223.QuantifiableProperty
     hasQuantityKind: URIRef

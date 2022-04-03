@@ -5,6 +5,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
@@ -44,10 +45,10 @@ ex:00002 a p223:AirTemperatureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "DA-T" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex:00003 ;
     s223:hasMeasurementLocation ex:00041 ;
     s223:hasPhysicalLocation ex:00044 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty ex:00003 ;
     rdfs:comment "Supply Air Temperature sensor" .
 ex:00003 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -56,18 +57,18 @@ ex:00003 a p223:MeasuredProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "DA-T.Temperature" ;
-    p223:hasQuantityKind quantitykind:Temperature ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:DEG_C .
+    s223:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex:00004 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "RA-T" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex:00005 ;
     s223:hasMeasurementLocation ex:00014 ;
     s223:hasPhysicalLocation ex:00043 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty ex:00005 ;
     rdfs:comment "Return Air Temperature sensor" .
 ex:00005 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -76,18 +77,18 @@ ex:00005 a p223:MeasuredProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "RA-T.Temperature" ;
-    p223:hasQuantityKind quantitykind:Temperature ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:DEG_C .
+    s223:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex:00006 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "ZN-T" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex:00007 ;
     s223:hasMeasurementLocation ex:00056 ;
     s223:hasPhysicalLocation ex:00045 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty ex:00007 ;
     rdfs:comment "Zone Air Temperature sensor" .
 ex:00007 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
@@ -96,9 +97,9 @@ ex:00007 a p223:MeasuredProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "ZN-T.Temperature" ;
-    p223:hasQuantityKind quantitykind:Temperature ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:DEG_C .
+    s223:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex:00008 a s223:Device,
         s223:Fan ;
     rdfs:label "SF-1" ;

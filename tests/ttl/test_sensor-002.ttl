@@ -4,6 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
@@ -302,9 +303,9 @@ ex29:00037 a p223:DifferentialStaticPressureSensor,
     rdfs:label "TPD-01" ;
     p223:hasMeasurementLocationHigh ex29:00009 ;
     p223:hasMeasurementLocationLow ex29:00025 ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:observesProperty ex29:00038 ;
     s223:hasPhysicalLocation ex29:00036 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty ex29:00038 ;
     rdfs:comment "Static Pressure between Clean Room (+) and SAS (-)" .
 ex29:00038 a p223:DifferentialStaticPressure,
         p223:MeasuredProperty,
@@ -313,10 +314,10 @@ ex29:00038 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD-01.DifferentialStaticPressure" ;
-    p223:hasQuantityKind quantitykind:ForcePerArea ;
     p223:measuresMedium s223:Medium-Air ;
-    p223:unit unit:PA ;
-    s223:hasExternalReference ex29:00039 .
+    s223:hasExternalReference ex29:00039 ;
+    s223:hasQuantityKind quantitykind:ForcePerArea ;
+    qudt:unit unit:PA .
 ex29:00039 a s223:ExternalReference ;
     rdfs:label "TPD-01.DifferentialStaticPressure.ExternalReference" ;
     s223:hasRef "bacnet://570005/analog-input,10084/present-value" .

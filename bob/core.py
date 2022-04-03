@@ -331,6 +331,10 @@ class NodeMetaclass(type):
         logging.debug(f"    -     _datatypes: {_datatypes!r}")
         logging.debug(f"    -     _inits: {_inits!r}")
 
+        # update uri references defined in this new class
+        _attr_uriref.update(attributedict.get("_attr_uriref", {}))  # type: ignore[attr-defined]
+        logging.debug(f"    -     _attr_uriref: {_attr_uriref!r}")
+
         # pick up the attributes defined by annotations
         annotations = attributedict.get("__annotations__", {})
         global _annotation_reference
@@ -467,8 +471,11 @@ class NodeMetaclass(type):
         # set the URIRef for the attrs defined in this class based on the
         # namespace that was just discovered _after_ the class is created
         for attr in attr_names:
-            logging.debug(f"    - attribute uri {attr!r} = {_namespace[attr]!r}")
-            _attr_uriref[attr] = _namespace[attr]
+            if attr in _attr_uriref:
+                logging.debug(f"    - attribute uri {attr!r} = already {_attr_uriref[attr]!r}")
+            else:
+                logging.debug(f"    - attribute uri {attr!r} = {_namespace[attr]!r}")
+                _attr_uriref[attr] = _namespace[attr]
         metaclass._attr_uriref = _attr_uriref  # type: ignore[attr-defined]
 
         # make sure it has a type
