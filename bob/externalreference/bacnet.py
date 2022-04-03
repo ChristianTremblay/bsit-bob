@@ -1,3 +1,6 @@
+import re
+import logging
+
 from rdflib import URIRef, Literal
 from typing import Any
 from ..core import (
@@ -14,6 +17,7 @@ from ..core import (
 
 __namespace__ = p223
 
+url_pattern = re.compile("^bacnet:[/][/]([0-9]+)[/]([A-Za-z0-9-]+),([1-9][0-9]*)$")
 
 class BACnetProperty(Node):
     node_type: URIRef = bacnet.Property
@@ -97,3 +101,22 @@ class BACnetReference(ExternalReference):
     description: BACnetDescription
     objectType: BACnetObjectType
     uri: BACnetURI
+
+    def __init__(self, arg: str = "", **kwargs) -> None:
+        logging.debug("__init__ %r %r", arg, kwargs)
+
+        if arg:
+            url_match = url_pattern.match(arg)
+            if not url_match:
+                raise ValueError("not a BACnet URL")
+            device, object_type, object_instance = url_match.groups()
+
+            if "objectType" in kwargs:
+                raise ValueError("initialization conflict: objectType")
+            kwargs["objectType"] = object_type
+
+            if "objectInstance" in kwargs:
+                raise ValueError("initialization conflict: objectInstance")
+            kwargs["objectInstance"] = int(object_instance)
+
+        super().__init__(**kwargs)

@@ -784,7 +784,7 @@ class Property(Node):
     hasExternalReference: ExternalReference
 
     # override this for a specialize subclass
-    _ExternalReference_class: type = ExternalReference
+    _external_reference_class: type = ExternalReference
 
     def __init__(self, value: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {value!r} {kwargs}")
@@ -831,8 +831,8 @@ class Property(Node):
 
     def add_external_reference(self, external_reference: ExternalReference) -> None:
         """Add an additional external reference to a property."""
-        if not isinstance(external_reference, self._ExternalReference_class):
-            external_reference = self._ExternalReference_class(
+        if not isinstance(external_reference, self._external_reference_class):
+            external_reference = self._external_reference_class(
                 external_reference,
                 label=f"{self.label}.ExternalReference",
             )
@@ -848,9 +848,6 @@ class Property(Node):
         """
         This property is at some external reference.
         """
-        if isinstance(external_reference, str):
-            external_reference = ExternalReference(external_reference)
-
         self.add_external_reference(external_reference)
         return self
 

@@ -133,11 +133,11 @@ dpt2 = DifferentialStaticPressureSensor(
 )
 
 # BACnet Stuff
-dps["DPS.sensor"] @ BACnetReference(uri="bacnet://2/binary-output/1")
-rat @ BACnetReference(uri="bacnet://2/analog-input/1")
-dat @ BACnetReference(uri="bacnet://2/analog-input/2")
-dpt1 @ BACnetReference(uri="bacnet://2/analog-input/3")
-dpt2 @ BACnetReference(uri="bacnet://2/analog-input/4")
+dps["DPS.sensor"] @ BACnetReference("bacnet://2/binary-output,1")
+rat @ BACnetReference("bacnet://2/analog-input,1")
+dat @ BACnetReference("bacnet://2/analog-input,2")
+dpt1 @ BACnetReference("bacnet://2/analog-input,3")
+dpt2 @ BACnetReference("bacnet://2/analog-input,4")
 
 
 high_static = HighStaticController(
