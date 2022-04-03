@@ -1,7 +1,14 @@
+from pathlib import Path
+
 from rdflib import URIRef
+
+from bob.core import bind_model_namespace, dump
 from bob.externalreference.bacnet import BACnetDevice, BACnetReference
 import lighting_devices as ld
 import hvac_devices as hd
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 # An HVAC BACnet device
@@ -67,8 +74,8 @@ zn2_t = BACnetReference(
     objectType="analog-input",
 )
 
-hd.vav1["VAV1_ZN-T"].measure @ zn1_t
-hd.vav2["VAV2_ZN-T"].measure @ zn2_t
+hd.vav1["VAV1_ZN-T"].observesProperty @ zn1_t
+hd.vav2["VAV2_ZN-T"].observesProperty @ zn2_t
 # A bulb with only one object
 ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference(
     uri=URIRef("bacnet://2/analog-input,1")
@@ -76,3 +83,6 @@ ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference(
 ld.openofficeEast_luminaire_1.hasOnOffStatus @ BACnetReference(
     uri=URIRef("bacnet://2/binary-input,1")
 )
+
+if __name__ == "__main__":
+    dump()

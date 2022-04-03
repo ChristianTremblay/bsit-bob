@@ -2,13 +2,14 @@ from pathlib import Path
 
 from typing import Any
 
+from bob.core import bind_model_namespace, dump
 from bob.connections.light import LightVisibleConnection
 from bob.connections.occupancy import (
     OccupancyInletSystemConnectionPoint,
     OccupancyOutletSystemConnectionPoint,
 )
 
-from bob.core import p223, get_datagraph, bind_model_namespace, dump, quantitykind, unit
+from bob.core import p223, quantitykind, unit
 
 from bob.devices.hvac.damper import ElectricalActuatedDamper
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
@@ -48,7 +49,7 @@ from bob.connections.electricity import *
 from header import sample_header
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 import physical_spaces as ps
 import hvac_spaces as hs

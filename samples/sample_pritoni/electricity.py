@@ -1,8 +1,15 @@
+from pathlib import Path
+
 from bob.connections.electricity import *
 
+from bob.core import bind_model_namespace, dump
 import electrical_devices as ed
 import lighting_devices as ld
 import hvac_devices as hd
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+
 
 # Make Electrical connections
 ed.dist_panel_cb1 >> [
@@ -30,3 +37,6 @@ ed.dist_panel_cb5 >> [
 
 ed.main_panel["CB#2"] >> hd.ahu["SF-STARTER"] >> hd.ahu["SF"]
 ed.main_panel["CB#4"] >> hd.ahu["RF-VFD"] >> hd.ahu["RF"]
+
+if __name__ == "__main__":
+    dump()

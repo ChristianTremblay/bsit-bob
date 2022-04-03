@@ -1,3 +1,6 @@
+from pathlib import Path
+
+from bob.core import bind_model_namespace, dump
 from bob.properties.states import OnOffStatus
 from bob.systems.occupancy.occupancy import OccupancyControl
 from bob.connections.occupancy import *
@@ -5,6 +8,10 @@ from bob.core import Node, PropertyReference, p223
 from bob.properties.states import OccupancyStatus
 import lighting_spaces as ls
 import lighting_devices as ld
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+
 
 # Occupancies are shared between space... let's build a function block to relate them
 
@@ -46,3 +53,6 @@ corridor_occ_control = OccupancyControl(
 # corridor_occ_control > ld.corridor_movement
 corridor_occ_control.servesZone = ls.lighting_zone_5
 corridor_occ_control.hasOccupancyStatus = OccupancyStatus(hasValue=1)
+
+if __name__ == "__main__":
+    dump()

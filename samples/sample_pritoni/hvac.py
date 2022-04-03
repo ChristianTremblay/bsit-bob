@@ -1,9 +1,15 @@
-from bob.connections.air import *
+from pathlib import Path
 
+from bob.core import bind_model_namespace, dump
+from bob.connections.air import *
 
 import hvac_spaces as hs
 import physical_spaces as ps
 import hvac_devices as hd
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+
 
 # Comment
 """
@@ -133,3 +139,6 @@ hd.vav1.airInlet.mapsTo = hd.vav1["VAV1_damper"].airInlet
 hd.vav1.airOutlet.mapsTo = hd.vav1["VAV1_HeatingCoil"].airOutlet
 hd.vav2.airInlet.mapsTo = hd.vav2["VAV2_damper"].airInlet
 hd.vav2.airOutlet.mapsTo = hd.vav2["VAV2_HeatingCoil"].airOutlet
+
+if __name__ == "__main__":
+    dump()

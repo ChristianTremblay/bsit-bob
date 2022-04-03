@@ -1,8 +1,15 @@
+from pathlib import Path
+
+from bob.core import bind_model_namespace, dump
+
 import lighting_devices as ld
 import lighting_spaces as ls
 import physical_spaces as ps
-
 import hvac_devices as hd
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+
 
 ld.kitchenette_luminaire_11.lightOutlet >> ld.kitch_light_conn
 ld.kitchenette_luminaire_12.lightOutlet >> ld.kitch_light_conn
@@ -45,3 +52,6 @@ hd.window1.naturalLight >> ld.natural_ligth_conn
 hd.window2.naturalLight >> ld.natural_ligth_conn
 ld.natural_ligth_conn >> ls.openofficeEast_lightspace.naturalLightInlet
 ld.natural_ligth_conn >> ls.openofficeWest_lightspace.naturalLightInlet
+
+if __name__ == "__main__":
+    dump()

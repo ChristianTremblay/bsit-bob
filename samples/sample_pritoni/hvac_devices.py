@@ -1,3 +1,6 @@
+from pathlib import Path
+
+from bob.core import bind_model_namespace, dump
 from bob.connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
@@ -15,8 +18,11 @@ from bob.sensor.temperature import AirTemperatureSensor
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
 
-
 import hvac_spaces as hs
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+
 
 ahu_template = {
     "params": {"label": "AHU", "comment": "AHU delivering air to 2 VAV boxes"},
@@ -119,3 +125,6 @@ vav1 = VAV(config=vav1_config)
 vav1.servesZone = hs.hvac_zone_1
 vav2 = VAV(config=vav2_config)
 vav2.servesZone = hs.hvac_zone_2
+
+if __name__ == "__main__":
+    dump()

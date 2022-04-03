@@ -1,10 +1,16 @@
+from pathlib import Path
+
+from bob.core import bind_model_namespace, dump
 from bob.devices.lighting.light import *
 from bob.connections.light import *
 from bob.externalreference.bacnet import BACnetReference
-from bob.sensor.movement import OccupancySensor
+from bob.sensor.movement import OccupancySensor, MovementSensor
 from bob.properties.light import RelativeLuminousFlux
 import lighting_spaces as ls
 import physical_spaces as ps
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 # Now we build lights for Kitchenette
@@ -157,3 +163,6 @@ natural_ligth_conn = LightVisibleConnection(
     label="LightHub_NaturalLight",
     comment="2 windows contribute and light is brought to 2 light spaces",
 )
+
+if __name__ == "__main__":
+    dump()

@@ -1,4 +1,11 @@
-from bob.space.light import *
+from pathlib import Path
+
+from bob.core import bind_model_namespace, dump
+from bob.space.light import LightingSpace, LightingZone
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+
 
 # Light Spaces
 openofficeEast_lightspace = LightingSpace(
@@ -45,3 +52,6 @@ lighting_zone_6 = LightingZone(
     label="LightingZone6", comment="Contains Kitchenette Light Space"
 )
 lighting_zone_6 > kitchenette_lightspace
+
+if __name__ == "__main__":
+    dump()

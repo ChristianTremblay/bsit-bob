@@ -53,10 +53,11 @@ class Fan(Device):
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
-        _electricalInlet = kwargs.pop("electricalInlet")
+        _electricalInlet = kwargs.pop("electricalInlet", None)
 
         super().__init__(config, **kwargs)
 
-        self.electricalInlet = _electricalInlet(
-            self, label=f"{self.label}.electricalInlet"
-        )
+        if _electricalInlet:
+            self.electricalInlet = _electricalInlet(
+                self, label=f"{self.label}.electricalInlet"
+            )

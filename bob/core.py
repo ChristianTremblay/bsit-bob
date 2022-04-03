@@ -7,7 +7,7 @@ from __future__ import annotations
 import os
 import io
 import sys
-from collections import defaultdict
+from collections import defaultdict, Counter
 import logging
 import inspect
 
@@ -18,7 +18,7 @@ from .multimethods import multimethod, new_class
 
 T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
-_next_node = 1
+_next_node = Counter()
 
 # logging
 log_level = os.getenv("BOB_LOG", "WARNING")
@@ -286,7 +286,7 @@ def clear(graph: Graph = data_graph) -> None:
     graph.remove((None, None, None))
 
     # reset the "blank" node counter
-    _next_node = 1
+    _next_node = Counter()
 
 
 # === NODES
@@ -589,8 +589,8 @@ class Node(metaclass=NodeMetaclass):
                 raise TypeError(f"URIRef expected: {node_iri}")
             self.node = node_iri
         elif model_namespace:
-            self.node = model_namespace[f"{_next_node:05d}"]
-            _next_node += 1
+            _next_node[model_namespace] += 1
+            self.node = model_namespace[f"{_next_node[model_namespace]:05d}"]
         else:
             self.node = BNode()
 

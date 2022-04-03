@@ -1,4 +1,10 @@
+from pathlib import Path
+
+from bob.core import bind_model_namespace, dump
 from bob.space.hvac import *
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 # HVAC Spaces
 openoffice_hvac = HVACSpace(label="HVACSpace1", comment="OpenOffice.HVAC")
@@ -23,3 +29,6 @@ hvac_zone_2 = HVACZone(
 )
 hvac_zone_2 > kitchenette_hvac
 hvac_zone_2 > corridorSouth_hvac
+
+if __name__ == "__main__":
+    dump()

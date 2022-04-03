@@ -1,5 +1,12 @@
+from pathlib import Path
+
+from bob.core import bind_model_namespace, dump
 from bob.devices.electricity.distribution import *
 from bob.connections.electricity import *
+
+model_name = Path(__file__).stem
+__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+
 
 mainentry_panel_config = {
     "params": {
@@ -108,3 +115,6 @@ dist_panel["CB#1"] >> dist_panel_cb1
 dist_panel["CB#3"] >> dist_panel_cb3
 dist_panel["CB#4"] >> dist_panel_cb4
 dist_panel["CB#5"] >> dist_panel_cb5
+
+if __name__ == "__main__":
+    dump()
