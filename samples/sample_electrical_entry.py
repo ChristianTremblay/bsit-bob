@@ -60,7 +60,7 @@ mainentry_panel_config = {
         "voltage": "575",
     },
     "sensors": {},
-    "contains": {
+    "devices": {
         ("MainBreaker", ThreePolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 400,
@@ -93,7 +93,7 @@ distribution_panel_config = {
         "voltage": "120_240",
     },
     "sensors": {},
-    "contains": {
+    "devices": {
         ("MainBreaker", TwoPolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,

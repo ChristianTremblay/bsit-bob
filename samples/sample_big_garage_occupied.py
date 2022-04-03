@@ -23,6 +23,7 @@ from bob.space.physical import Building, Roof, Floor, Office
 from bob.devices.lighting.light import Luminaire
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.coil import ElectricalHeatingCoil
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.sensor.movement import MovementSensor
 from bob.sensor.temperature import AirTemperatureSensor
@@ -52,7 +53,7 @@ movement_1 = MovementSensor(label="Movement Sensor Space #1")
 movement_2 = MovementSensor(label="Movement Sensor Space #2")
 
 # HVAC
-fan = Fan(label="Fan")
+fan = Fan(label="Fan", electricalInlet=ElectricalInletConnectionPoint)
 heating_coil = ElectricalHeatingCoil(label="Heating Coil")
 
 garage_hvac.ductAirOutlet >> fan.airInlet

@@ -22,7 +22,7 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_gas_monitor(bob_fixture):
-    _config_co2_and_temp = {
+    _co2_and_temp = {
         "params": {
             "label": "CO2-2",
             "comment": "CO2 Monitor with temperature reading",
@@ -62,7 +62,9 @@ def test_create_gas_monitor(bob_fixture):
         },
     }
 
-    dual_no2_co_configuration_example = {
+    co2_and_temp_monitor = GasMonitor(_co2_and_temp)
+
+    _dual_no2_co = {
         "params": {
             "label": "GM-1",
             "comment": "Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot",
@@ -101,11 +103,9 @@ def test_create_gas_monitor(bob_fixture):
         },
     }
 
-    dualgasmonitor = GasMonitor(
-        config=dual_no2_co_configuration_example,
-    )
+    dual_no2_co_monitor = GasMonitor(_dual_no2_co)
 
-    co2monitor_config = {
+    _co2 = {
         "params": {
             "label": "CO2-1",
             "comment": "CO2 Monitor",
@@ -129,62 +129,16 @@ def test_create_gas_monitor(bob_fixture):
         },
     }
 
-    co2monitor = GasMonitor(
-        config=co2monitor_config,
-    )
+    co2_monitor_1 = GasMonitor(_co2)
 
-    co2monitor = GasMonitor(
-        config=_config_co2_and_temp,
-    )
+    co2_monitor_2 = GasMonitor(_co2, label="CO2-4")
 
-    _config = copy(_config_co2_and_temp)
-    _config["params"]["label"] = "CO2-4"
-    co2monitor = GasMonitor(
-        label="CO2-4",
-        comment="CO2 Monitor in basement",
-        config=_config,
-    )
-
-    building = Building(label="My Building")
-    roof = Roof(label="Roof of building")
-    floor = Floor(label="Floor1")
+    # someplace in the basement
     basement = Floor(label="Basement")
-    office1 = Office(label="Office 1")
-    office2 = Office(label="Office 2")
-    office3 = Office(label="Office 3")
-    joelsoffice = Office(label="Joel's Office")
+    basement_hvac = HVACSpace(label="Basement HVAC Space")
 
-    office1_hvac = HVACSpace(label="Office 1")
-    office2_hvac = HVACSpace(label="Office 2")
-    office3_hvac = HVACSpace(label="Office 3")
-    basementhvac = HVACSpace(label="Basement HVAC Space")
-
-    zone1 = HVACZone(label="Zone1")
-
-    # Physical relationships
-    building > roof
-    building > floor
-    building > basement > basementhvac
-    basement > joelsoffice
-    floor > office1
-    floor > office2
-    floor > office3
-
-    # Spaces relationships
-    # SPACES     | PHYSICAL
-    office1_hvac < office1
-    office2_hvac < office2
-    office3_hvac < office3
-
-    # basementhvac < basement
-
-    # Zones (group of spaces)
-    # Here, Zone1 contains office1 and office2
-    office1_hvac < zone1
-    office2_hvac < zone1
-
-    co2monitor.hasPhysicalLocation = basement
-    co2monitor["CO2_sensor"].hasMeasurementLocation = basementhvac
-    co2monitor["Temperature_sensor"].hasMeasurementLocation = basementhvac
+    co2_and_temp_monitor.hasPhysicalLocation = basement
+    co2_and_temp_monitor["CO2_sensor"].hasMeasurementLocation = basement_hvac
+    co2_and_temp_monitor["Temperature_sensor"].hasMeasurementLocation = basement_hvac
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

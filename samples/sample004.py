@@ -17,7 +17,7 @@ zone = HVACZone(label="Zone")
 vav_template = {
     "params": {"label": "VAV1", "comment": "A VAV Box as a system"},
     "sensors": {},
-    "contains": {},
+    "devices": {},
 }
 vav = VAV(config=vav_template)
 

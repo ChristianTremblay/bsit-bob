@@ -3,7 +3,6 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...core import s223, p223, enum, Device
-from ...devices import composite
 
 from ...connections.air import (
     AirInletConnectionPoint,
@@ -17,7 +16,7 @@ from ...sensor.particle import (
     FineParticulateSensor,
     UltraFineParticulateSensor,
 )
-from ...sensor import Sensor, define_sensors
+from ...sensor import Sensor
 
 __namespace__ = p223
 
@@ -42,18 +41,9 @@ particlecounter_template = {
 """
 
 
-@composite
 class ParticleCounter(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 
-    def __init__(self, config: Dict = None, **kwargs):
-        if not config:
-            raise ValueError("Please provide configuration dict")
-
-        sensors = define_sensors(config)
-        if "params" in config.keys():
-            kwargs = {**config["params"], **kwargs}
-
-        super().__init__(**kwargs)
-        self.compose(sensors, None)
+    def __init__(self, config, **kwargs):
+        super().__init__(config, **kwargs)

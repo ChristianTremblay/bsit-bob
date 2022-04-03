@@ -49,7 +49,7 @@ fan_template = {
         "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
     },
     "sensors": {},
-    "contains": {},
+    "devices": {},
 }
 
 vfd_template = {
@@ -60,7 +60,7 @@ vfd_template = {
         "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
     },
     "sensors": {},
-    "contains": {},
+    "devices": {},
 }
 
 

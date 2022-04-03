@@ -1,10 +1,10 @@
+import logging
 from typing import Any, Dict
 
 from rdflib import URIRef
 
 from ...core import s223, p223, enum, Device, quantitykind, unit
 from ...property import QuantifiableObservableProperty
-from ...devices import composite, contains_devices_list
 from ...connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
@@ -19,7 +19,7 @@ from ...sensor.gas import (
     CH4Sensor,
     GasConcentrationSensor,
 )
-from ...sensor import Sensor, define_sensors
+from ...sensor import Sensor
 
 __namespace__ = p223
 
@@ -55,7 +55,6 @@ gasmonitor_template = {
 """
 
 
-@composite
 class GasMonitor(Device):
     """
     This allow the creation of a gas monitor that
@@ -70,19 +69,8 @@ class GasMonitor(Device):
     node_type: URIRef = p223.GasMonitor
     airInletSupply: AirInletConnectionPoint
 
-    def __init__(self, config: Dict = None, **kwargs):
-        _properties = {}
-        for k, v in self.__annotations__.items():
-            if k in kwargs:
-                _properties[k] = kwargs.pop(k)
-        if not config and not kwargs:
-            raise ValueError(
-                "Please provide configuration dict or kwargs, at least a label"
-            )
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        logging.debug("__init__ %r %r", config, kwargs)
 
-        sensors = define_sensors(config)
-        if "params" in config:
-            kwargs = {**config["params"], **kwargs}
-
-        super().__init__(**kwargs)
-        self.compose(sensors, None)
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)

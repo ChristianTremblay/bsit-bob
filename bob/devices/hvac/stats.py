@@ -1,7 +1,6 @@
 from ...sensor.pressure import DifferentialStaticPressureSensor
 from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from ...sensor.humidity import AirHumiditySensor
-from ...devices import composite
 
 from ...connections.electricity import (
     ModulationSignalOutletConnectionPoint,
@@ -58,19 +57,18 @@ class NetworkRoomSensor(Device):
 
 
 # Pressure
-@composite
 class HighStaticPressureStat(Device):
     resetInput: Property  # mechanical switch button?
     highStaticPressureOutput: OnOffSignalOutletConnectionPoint
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        sensors = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
 
-        self.compose(sensors, None)
+        sensor = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
+        self._sensors = [sensor]
+        self > sensor
 
 
-@composite
 class FlowSwitch(Device):
     """
     A contact On Off controlled by static pressure in duct
@@ -80,5 +78,7 @@ class FlowSwitch(Device):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.sensors = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
-        self.finalize()
+
+        sensor = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
+        self._sensors = [sensor]
+        self > sensor

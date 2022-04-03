@@ -8,14 +8,16 @@ from typing import Any
 from pathlib import Path
 
 from bob.core import bind_model_namespace, Junction, System, dump
+
+from bob.devices.hvac.damper import Damper
+from bob.devices.hvac.fan import Fan
+from bob.devices.hvac.filter import Filter
 from bob.connections.air import (
     AirConnection,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.devices.hvac.damper import Damper
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.systems.archives.coolingcoil import ChilledWaterCoil2
 from bob.systems.archives.heatingcoil import HotWaterCoil2
@@ -59,7 +61,10 @@ class AHU(System):
         chilled_water_coil = ChilledWaterCoil2(label=self.label + ".chilled_water_coil")
         hot_water_coil >> chilled_water_coil
 
-        supply_fan = Fan(label=self.label + ".supply_fan")
+        supply_fan = Fan(
+            label=self.label + ".supply_fan",
+            electricalInlet=ElectricalInletConnectionPoint,
+        )
         chilled_water_coil >> supply_fan
 
         # suuply air outlet goes to a segment with a temperature sensor then to
@@ -68,7 +73,10 @@ class AHU(System):
         junction >> supply_fan.airOutlet
         self.supplyAirOutlet.mapsTo = junction
 
-        relief_fan = Fan(label=self.label + ".relief_fan")
+        relief_fan = Fan(
+            label=self.label + ".relief_fan",
+            electricalInlet=ElectricalInletConnectionPoint,
+        )
         return_air_damper = Damper(label=self.label + ".return_air_damper")
 
         # return air inlet goes to a segment with a temperature sensor then to

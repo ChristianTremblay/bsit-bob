@@ -12,8 +12,6 @@ from ...connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from ...signal import AnalogIn, AnalogOut
-from ...sensor import define_sensors
-from ...devices import composite, contains_devices_list
 from ...devices.hvac.damper import Damper
 
 __namespace__ = p223
@@ -21,7 +19,7 @@ __namespace__ = p223
 vav_template = {
     "params": {"label": "Name", "comment": "Description"},
     "sensors": {},
-    "contains": {("sub_device1_label", Device): {"comment": "SubDev comment"}},
+    "devices": {("sub_device1_label", Device): {"comment": "SubDev comment"}},
 }
 
 
@@ -37,22 +35,13 @@ class AirFlowStation(Device):
     flow = AnalogIn
 
 
-@composite
 class VAV(System):
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
 
-    def __init__(self, config: Dict = None, **kwargs):
-        if not config and not kwargs:
-            raise ValueError(
-                "Please provide configuration dict or kwargs, at least a label"
-            )
-
-        sensors = define_sensors(config)
-        devices, device_kwargs = contains_devices_list(config, **kwargs)
-
-        super().__init__(**device_kwargs)
-        self.compose(sensors, devices)
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
 
 class VAV1(System):
@@ -61,8 +50,9 @@ class VAV1(System):
     airFlow: AnalogIn
     damperPosition: AnalogOut
 
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
         # create an air flow station
         self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")

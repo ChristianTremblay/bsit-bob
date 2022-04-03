@@ -1,14 +1,13 @@
-from re import S, sub
-from rdflib import URIRef, Literal
+from rdflib import Literal
+from typing import Dict
 
 from bob.property import QuantifiableObservableProperty
-from ...core import s223, p223, enum, Device, quantitykind, unit, Medium
+from ...core import p223, Device, quantitykind, unit
 from ...connections.electricity import (
     Electricity,
     ElectricalConnection,
-    ElectricalSystemConnectionPoint,
-    ElectricalConnection,
     ElectricalConnectionPoint,
+    ElectricalSystemConnectionPoint,
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
     Electricity_120V_240V_60HzConnection,
@@ -33,31 +32,21 @@ from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from typing import Dict, Any
-from ...sensor import define_sensors
-from .. import composite, contains_devices_list
 
 __namespace__ = p223
-
-
-# class Main(ElectricalConnectionPoint):
-##    """
-#    Source of the building
-###    """
-#    hasMedium: Medium
 
 
 class Transformer(Device):
     node_type = p223.ElectricalTransformer
     hasPower: Literal
 
-    def __init__(self, **kwargs):
-        try:
-            _electricalInlet = kwargs.pop("electricalInlet")
-            _electricalOutlet = kwargs.pop("electricalOutlet")
-        except KeyError:
-            raise ValueError("You must provide electricalInlet and electricalOutlet")
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        _electricalInlet = kwargs.pop("electricalInlet")
+        _electricalOutlet = kwargs.pop("electricalOutlet")
+
+        super().__init__(config, **kwargs)
+
         self.electricalInlet = _electricalInlet(
             self, label=f"{self.label}.electricalInlet"
         )
@@ -66,12 +55,12 @@ class Transformer(Device):
         )
 
 
-@composite
 class SinglePhaseDistributionPanel(Device):
     node_type = p223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
     hasNumberOfCircuits: QuantifiableObservableProperty
+
     # Bus Bar
     _cross_ref = {
         "120_240": (
@@ -86,47 +75,33 @@ class SinglePhaseDistributionPanel(Device):
         ),
     }
 
-    def __init__(self, config: Dict = None, **kwargs):
-        if not config and not kwargs:
-            raise ValueError(
-                "Please provide configuration dict or kwargs, at least a label"
-            )
-        sensors = define_sensors(config)
-        devices, device_kwargs = contains_devices_list(config, **kwargs)
-        voltage = str(device_kwargs.pop("voltage"))
-        _classes = self._cross_ref[voltage]
-        _electricalBusA, _electricalBusB, _electricalBusAB = _classes
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
+        voltage = kwargs.pop("voltage")
 
-        super().__init__(**device_kwargs)
+        # look up the connection point classes
+        _electricalBusA, _electricalBusB, _electricalBusAB = self._cross_ref[
+            str(voltage)
+        ]
+
+        super().__init__(config, **kwargs)
+
         self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
-        self.compose(sensors, devices)
 
-    def compose(self, sensors, devices):
-        try:
-            if sensors is not None:
-                for sensor in sensors:
-                    self > sensor
-        except AttributeError:
-            pass
-        try:
-            for circuit_breaker in devices:
-                self > circuit_breaker
-                if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
-                    circuit_breaker.electricalOutletA >> self.electricalBusA
-                    circuit_breaker.electricalOutletB >> self.electricalBusB
-                    circuit_breaker.electricalOutlet >> self.electricalBusAB
-                elif isinstance(circuit_breaker, TwoPolesCircuitBreaker):
-                    self.electricalBusAB >> circuit_breaker
-                elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
-                    if circuit_breaker._bus_bar in ["A", "odd"]:
-                        self.electricalBusA >> circuit_breaker
-                    else:
-                        self.electricalBusB >> circuit_breaker
-        except AttributeError:
-            pass
-        return self
+        for circuit_breaker in getattr(self, "_devices", []):
+            if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
+                circuit_breaker.electricalOutletA >> self.electricalBusA
+                circuit_breaker.electricalOutletB >> self.electricalBusB
+                circuit_breaker.electricalOutlet >> self.electricalBusAB
+            elif isinstance(circuit_breaker, TwoPolesCircuitBreaker):
+                self.electricalBusAB >> circuit_breaker
+            elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
+                if circuit_breaker._bus_bar in ("A", "odd"):
+                    self.electricalBusA >> circuit_breaker
+                else:
+                    self.electricalBusB >> circuit_breaker
 
 
 class ThreePhaseDistributionPanel(Device):
@@ -156,28 +131,19 @@ class ThreePhaseDistributionPanel(Device):
         ),
     }
 
-    def __init__(self, config: Dict = None, **kwargs):
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
+        voltage = kwargs.pop("voltage")
 
-        if not config and not kwargs:
-            raise ValueError(
-                "Please provide configuration dict or kwargs, at least a label"
-            )
+        # look up the connection point classes
+        (
+            _electricalBusA,
+            _electricalBusB,
+            _electricalBusC,
+            _electricalBusABC,
+        ) = self._cross_ref[str(voltage)]
 
-        sensors = define_sensors(config)
-        devices, device_kwargs = contains_devices_list(config, **kwargs)
-        try:
-            voltage = str(device_kwargs.pop("voltage"))
-            _classes = self._cross_ref[voltage]
-            (
-                _electricalBusA,
-                _electricalBusB,
-                _electricalBusC,
-                _electricalBusABC,
-            ) = _classes
-        except KeyError:
-            raise ValueError("You must provide electricalInlet and electricalOutlet")
-
-        super().__init__(**device_kwargs)
+        super().__init__(config, **kwargs)
 
         self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
@@ -185,38 +151,22 @@ class ThreePhaseDistributionPanel(Device):
         self.electricalBusABC = _electricalBusABC(
             label=f"{self.label}.electricalBusABC"
         )
-        self.compose(sensors, devices)
 
-    def compose(self, sensors, devices):
-        try:
-            if sensors is not None:
-                for sensor in sensors:
-                    self > sensor
-        except AttributeError:
-            pass
-        try:
-            if devices is not None:
-                for circuit_breaker in devices:
-
-                    self > circuit_breaker
-
-                    if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
-                        circuit_breaker.electricalOutletA >> self.electricalBusA
-                        circuit_breaker.electricalOutletB >> self.electricalBusB
-                        circuit_breaker.electricalOutletC >> self.electricalBusC
-                        circuit_breaker.electricalOutlet >> self.electricalBusABC
-                    elif isinstance(circuit_breaker, ThreePolesCircuitBreaker):
-                        self.electricalBusABC >> circuit_breaker
-                    elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
-                        if circuit_breaker._bus_bar == "A":
-                            self.electricalBusA >> circuit_breaker
-                        elif circuit_breaker._bus_bar == "B":
-                            self.electricalBusB >> circuit_breaker
-                        else:
-                            self.electricalBusC >> circuit_breaker
-        except AttributeError:
-            pass
-        return self
+        for circuit_breaker in getattr(self, "_devices", []):
+            if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
+                circuit_breaker.electricalOutletA >> self.electricalBusA
+                circuit_breaker.electricalOutletB >> self.electricalBusB
+                circuit_breaker.electricalOutletC >> self.electricalBusC
+                circuit_breaker.electricalOutlet >> self.electricalBusABC
+            elif isinstance(circuit_breaker, ThreePolesCircuitBreaker):
+                self.electricalBusABC >> circuit_breaker
+            elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
+                if circuit_breaker._bus_bar == "A":
+                    self.electricalBusA >> circuit_breaker
+                elif circuit_breaker._bus_bar == "B":
+                    self.electricalBusB >> circuit_breaker
+                else:
+                    self.electricalBusC >> circuit_breaker
 
 
 class CircuitBreaker(Device):
@@ -225,14 +175,17 @@ class CircuitBreaker(Device):
     # electricalOutlet: ElectricalOutletConnectionPoint
     hasMaxRange: QuantifiableObservableProperty
 
-    def __init__(self, **kwargs):
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
         amps = kwargs.pop("amps")
-        super().__init__(**kwargs)
+
+        super().__init__(config, **kwargs)
+
         self.hasMaxRange = QuantifiableObservableProperty(
             amps,
+            label="Current rating of breaker",
             hasQuantityKind=quantitykind.ElectricCurrent,
             unit=unit.A,
-            label="Current rating of breaker",
         )
 
 
@@ -258,15 +211,15 @@ class SinglePoleCircuitBreaker(CircuitBreaker):
         ),
     }
 
-    def __init__(self, **kwargs):
-        voltage = str(kwargs.pop("voltage"))
-        _classes = self._cross_ref[voltage]
-        self._bus_bar = str(kwargs.pop("bus_bar"))
-        try:
-            _electricalInlet, _electricalOutlet = _classes
-        except KeyError:
-            raise ValueError("You must provide electricalInlet and electricalOutlet")
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        voltage = kwargs.pop("voltage")
+        self._bus_bar = kwargs.pop("bus_bar")
+
+        # look up the inlet and outlet classes
+        _electricalInlet, _electricalOutlet = self._cross_ref[str(voltage)]
+
+        super().__init__(config, **kwargs)
 
         self.electricalInlet = _electricalInlet(
             self, label=f"{self.label}.electricalInlet"
@@ -293,14 +246,14 @@ class TwoPolesCircuitBreaker(CircuitBreaker):
         ),
     }
 
-    def __init__(self, **kwargs):
-        voltage = str(kwargs.pop("voltage"))
-        _classes = self._cross_ref[voltage]
-        try:
-            (_electricalInlet, _electricalOutlet) = _classes
-        except KeyError:
-            raise ValueError("You must provide electricalInlet and electricalOutlet")
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        voltage = kwargs.pop("voltage")
+
+        # look up the connection point classes
+        _electricalInlet, _electricalOutlet = self._cross_ref[str(voltage)]
+
+        super().__init__(config, **kwargs)
 
         self.electricalInlet = _electricalInlet(
             self, label=f"{self.label}.electricalInlet"
@@ -334,18 +287,18 @@ class TwoPolesMainCircuitBreaker(CircuitBreaker):
         ),
     }
 
-    def __init__(self, **kwargs):
-        voltage = str(kwargs.pop("voltage"))
-        _classes = self._cross_ref[voltage]
-        try:
-            (
-                _electricalInlet,
-                _electricalOutletA,
-                _electricalOutletB,
-                _electricalOutlet,
-            ) = _classes
-        except KeyError:
-            raise ValueError("You must provide electricalInlet and electricalOutlet")
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        voltage = kwargs.pop("voltage")
+
+        # look up the connection point classes
+        (
+            _electricalInlet,
+            _electricalOutletA,
+            _electricalOutletB,
+            _electricalOutlet,
+        ) = self._cross_ref[str(voltage)]
+
         super().__init__(**kwargs)
 
         self.electricalInlet = _electricalInlet(
@@ -391,14 +344,14 @@ class ThreePolesCircuitBreaker(CircuitBreaker):
         ),
     }
 
-    def __init__(self, **kwargs):
-        voltage = str(kwargs.pop("voltage"))
-        _classes = self._cross_ref[voltage]
-        try:
-            _electricalInlet, _electricalOutlet = _classes
-        except KeyError:
-            raise ValueError("You must provide electricalInlet and electricalOutlet")
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        voltage = kwargs.pop("voltage")
+
+        # look up the connection point classes
+        _electricalInlet, _electricalOutlet = self._cross_ref[str(voltage)]
+
+        super().__init__(config, **kwargs)
 
         self.electricalInlet = _electricalInlet(
             self, label=f"{self.label}.electricalInlet"
@@ -453,20 +406,20 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
         ),
     }
 
-    def __init__(self, **kwargs):
-        voltage = str(kwargs.pop("voltage"))
-        _classes = self._cross_ref[voltage]
-        try:
-            (
-                _electricalInlet,
-                _electricalOutletA,
-                _electricalOutletB,
-                _electricalOutletC,
-                _electricalOutlet,
-            ) = _classes
-        except KeyError:
-            raise ValueError("You must provide electricalInlet and electricalOutlet")
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        voltage = kwargs.pop("voltage")
+
+        # look up the connection point classes
+        (
+            _electricalInlet,
+            _electricalOutletA,
+            _electricalOutletB,
+            _electricalOutletC,
+            _electricalOutlet,
+        ) = self._cross_ref[str(voltage)]
+
+        super().__init__(config, **kwargs)
 
         self.electricalInlet = _electricalInlet(
             self, label=f"{self.label}.electricalInlet"
@@ -480,7 +433,6 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
         self.electricalOutletC = _electricalOutletC(
             self, label=f"{self.label}.electricalOutletC"
         )
-
         self.electricalOutlet = _electricalOutlet(
             self, label=f"{self.label}.electricalOutletABC"
         )
@@ -494,7 +446,7 @@ SinglePhasePanel_config = {
         "voltage": 120_240,
     },
     "sensors": {},
-    "contains": {
+    "devices": {
         ("MainBreaker", TwoPolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,
@@ -523,7 +475,7 @@ ThreePhasePanel_config = {
         "voltage": 575,
     },
     "sensors": {},
-    "contains": {
+    "devices": {
         ("MainBreaker", ThreePolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,

@@ -24,7 +24,8 @@ from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.chiller import AgnosticChiller
 from bob.devices.hvac.pump import Pump
 from bob.devices.hvac.geothermal import GeothermalWell
-from bob.devices import contains_devices_list
+
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
@@ -35,7 +36,6 @@ from bob.sensor.pressure import DifferentialStaticPressureSensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.movement import MovementSensor
 from bob.sensor.gas import CO2Sensor
-from bob.sensor import define_sensors
 
 from bob.connections.water import WaterConnection
 
@@ -138,7 +138,9 @@ coil = WaterCoil(
     label="SE-1",
     comment="This coil acts as a cooling coil in summer, heating coil in winter",
 )
-sf = Fan(label="UV-1", comment="Supply Fan")
+sf = Fan(
+    label="UV-1", comment="Supply Fan", electricalInlet=ElectricalInletConnectionPoint
+)
 supply_duct = AirConnection(
     label="SupplyDuct",
     comment="This is where 3 duct are connected going to Girafes, Elephants and UV-3 (Manège)",
@@ -151,10 +153,22 @@ av2 = Damper(label="AV-2", comment="Damper going to Girafe")
 av4 = Damper(label="AV-4", comment="Damper going to Éléphants")
 av1 = Damper(label="AV-1", comment="Damper Coming from Girafe (return)")
 av3 = Damper(label="AV-3", comment="Damper coming from Éléphants (return)")
-rf = Fan(label="VR-1", comment="Return Fan")
+rf = Fan(
+    label="VR-1", comment="Return Fan", electricalInlet=ElectricalInletConnectionPoint
+)
 
-vfd_sf = VFD(label="VFD-1", comment="VFD for Supply Fan")
-vfd_rf = VFD(label="VFD-2", comment="VFD for return fan")
+vfd_sf = VFD(
+    label="VFD-1",
+    comment="VFD for Supply Fan",
+    electricalInlet=ElectricalInletConnectionPoint,
+    electricalOutlet=ElectricalInletConnectionPoint,
+)
+vfd_rf = VFD(
+    label="VFD-2",
+    comment="VFD for return fan",
+    electricalInlet=ElectricalInletConnectionPoint,
+    electricalOutlet=ElectricalInletConnectionPoint,
+)
 
 hum = Humidifier(label="HUM-1", comment="Humidifier")
 hum_pipe = SteamPipe(

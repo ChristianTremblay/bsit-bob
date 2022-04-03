@@ -62,7 +62,7 @@ fan_template = {
         "powerFactor": 1.4,
     },
     "sensors": {},
-    "contains": {},
+    "devices": {},
 }
 
 vfd_template = {
@@ -75,7 +75,7 @@ vfd_template = {
         "hp": 10,
     },
     "sensors": {},
-    "contains": {},
+    "devices": {},
 }
 
 DDAHU_Fan = Fan(config=fan_template)

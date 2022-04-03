@@ -10,6 +10,7 @@ from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, MechanicalRoom, Office
 from bob.devices.hvac.fan import Fan
 from bob.connections.air import AirConnection
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from pathlib import Path
 from header import ttl_test_header
@@ -46,8 +47,16 @@ def test_junction_or_connection(bob_fixture):
     office1_hvac < zone1
     office2_hvac < zone1
 
-    sf = Fan(label="Supply Fan", hasPhysicalLocation=mechroom)
-    rf = Fan(label="Return Fan", hasPhysicalLocation=mechroom)
+    sf = Fan(
+        label="Supply Fan",
+        electricalInlet=ElectricalInletConnectionPoint,
+        hasPhysicalLocation=mechroom,
+    )
+    rf = Fan(
+        label="Return Fan",
+        electricalInlet=ElectricalInletConnectionPoint,
+        hasPhysicalLocation=mechroom,
+    )
 
     # Here we make it a junction but it would be better to be a Simple Connection... it's for test purposes
     supply_duct = Junction(label="J1", hasMedium=Air)

@@ -146,10 +146,8 @@ def create_3phase_meter_sensors(
 ):
     voltage_sensors = [VoltageAB, VoltageAC, VoltageBC, VoltageAN, VoltageBN, VoltageCN]
     current_sensors = [CurrentPhaseA, CurrentPhaseB, CurrentPhaseC]
-    v_sensors = []
-    c_sensors = []
 
-    sensors = {}
+    v_sensors = []
     for each in voltage_sensors:
         v_sensors.append(
             VoltageSensor(
@@ -158,6 +156,8 @@ def create_3phase_meter_sensors(
                 measuresMedium=measuresMedium,
             )
         )
+
+    c_sensors = []
     for each in current_sensors:
         c_sensors.append(
             CurrentAnalogSensor(
@@ -167,14 +167,11 @@ def create_3phase_meter_sensors(
             )
         )
 
-    sensors["voltage"] = v_sensors
-    sensors["current"] = c_sensors
-
-    return sensors
+    return (v_sensors, c_sensors)
 
 
 class CurrentBinarySensor(Sensor):
-    observesProperty: PropertyReference  #
+    observesProperty: PropertyReference  # DifferentialStaticPressure
     hasMeasurementLocation: Node
 
     def __init__(self, **kwargs: Any) -> None:

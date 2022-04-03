@@ -24,6 +24,9 @@ from bob.core import (
 from bob.devices.hvac.damper import ElectricalActuatedDamper
 from bob.devices.hvac.coil import ChilledWaterCoil
 from bob.devices.hvac.fan import Fan
+
+from bob.connections.electricity import ElectricalInletConnectionPoint
+
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.sensor.temperature import AirTemperatureSensor
 
@@ -61,19 +64,27 @@ config = {
         ("RA-T", AirTemperatureSensor): {"comment": "Return Air Temperature sensor"},
         ("ZN-T", AirTemperatureSensor): {"comment": "Zone Air Temperature sensor"},
     },
-    "contains": {
-        ("SF-1", Fan): {"comment": "Supply Fan"},
-        ("RF-1", Fan): {"comment": "Return Fan"},
+    "devices": {
+        ("SF-1", Fan): {
+            "comment": "Supply Fan",
+            "electricalInlet": ElectricalInletConnectionPoint,
+        },
+        ("RF-1", Fan): {
+            "comment": "Return Fan",
+            "electricalInlet": ElectricalInletConnectionPoint,
+        },
         ("OAD-1", ElectricalActuatedDamper): {"comment": "Outside Air Damper"},
         ("RAD-1", ElectricalActuatedDamper): {"comment": "Return Air Damper"},
         ("CWC-1", ChilledWaterCoil): {"comment": "Chilled Water coil"},
     },
 }
+
+# rtu is a System
+rtu = AirHandlingUnit(config=config)
+
 mixedAir = AirConnection(
     label="MIXED-AIR", comment="Where return air and outside air mix"
 )
-# rtu is a System
-rtu = AirHandlingUnit(config=config)
 
 # Relationships between devices
 rtu["OAD-1"] >> mixedAir

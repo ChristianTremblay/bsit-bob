@@ -16,6 +16,7 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.devices.hvac.fan import Fan
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.systems.archives.coolingcoil import ChilledWaterCoil2
 from bob.systems.archives.heatingcoil import HotWaterCoil2
@@ -70,8 +71,11 @@ class AHU(System):
     returnAirInlet: AirInletSystemConnectionPoint
     exhaustAirOutlet: AirOutletSystemConnectionPoint
 
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
+        _electricalInlet = kwargs.pop("electricalInlet")
+
+        super().__init__(config, **kwargs)
 
         min_oa_damper = Damper(label=self.label + ".min_oa_damper")
         economizer_oa_damper = Damper(label=self.label + ".economizer_oa_damper")
@@ -98,11 +102,15 @@ class AHU(System):
         chilled_water_coil = ChilledWaterCoil2(label=self.label + ".chilled_water_coil")
         hot_water_coil >> chilled_water_coil
 
-        supply_fan = Fan(label=self.label + ".supply_fan")
+        supply_fan = Fan(
+            label=self.label + ".supply_fan", electricalInlet=_electricalInlet
+        )
         chilled_water_coil >> supply_fan
         self.supplyAirOutlet.mapsTo = supply_fan.airOutlet
 
-        return_fan = Fan(label=self.label + ".return_fan")
+        return_fan = Fan(
+            label=self.label + ".return_fan", electricalInlet=_electricalInlet
+        )
         self.returnAirInlet.mapsTo = return_fan.airInlet
 
         # return air goes to two dampers
@@ -120,6 +128,6 @@ class AHU(System):
 
 
 # make one
-ahu = AHU(label="A-9")
+ahu = AHU(label="A-9", electricalInlet=ElectricalInletConnectionPoint)
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

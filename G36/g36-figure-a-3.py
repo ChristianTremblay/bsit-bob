@@ -8,19 +8,20 @@ from typing import Any
 from pathlib import Path
 
 from bob.core import bind_model_namespace, Junction, Device, System, dump
+from bob.devices.hvac.fan import Fan
 from bob.connections.air import (
     AirInletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterInletSystemConnectionPoint,
     HotWaterOutletConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
-from bob.devices.hvac.fan import Fan
 from bob.signal import AnalogIn, AnalogOut
 
 from header import g36_header
@@ -122,7 +123,9 @@ class VAV(System):
         self.returnAirInlet.mapsTo = self.hot_water_coil.airInlet
 
         # create a fan
-        self.fan = Fan(label=self.label + ".fan")
+        self.fan = Fan(
+            label=self.label + ".fan", electricalInlet=ElectricalInletConnectionPoint
+        )
         self > self.fan
 
         # merge the outlets together

@@ -8,19 +8,20 @@ from typing import Any
 from pathlib import Path
 
 from bob.core import bind_model_namespace, Junction, Device, System, dump
+from bob.devices.hvac.fan import Fan
 from bob.connections.air import (
     AirInletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterInletSystemConnectionPoint,
     HotWaterOutletConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
-from bob.devices.hvac.fan import Fan
 from bob.signal import AnalogIn, AnalogOut, BinaryOut
 
 from header import g36_header
@@ -126,7 +127,9 @@ class VAV(System):
         self.damperPosition = self.damper.position
 
         # create a fan with an ECM part
-        self.fan = ECMFan(label=self.label + ".fan")
+        self.fan = ECMFan(
+            label=self.label + ".fan", electricalInlet=ElectricalInletConnectionPoint
+        )
         self.fan_ecm = ECM(label=self.label + ".fan.ecm")
         self > self.fan > self.fan_ecm
 

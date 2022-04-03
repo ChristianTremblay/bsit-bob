@@ -7,8 +7,6 @@ from ...connections.electricity import (
     ElectricalOutletConnectionPoint,
 )
 from ...signal import AnalogIn, AnalogOut
-from ...sensor import define_sensors
-from ...devices import composite, contains_devices_list
 from ...properties import (
     Amps,
     ElectricPowerkW,
@@ -32,12 +30,11 @@ vfd_template = {
         "hp": 10,
     },
     "sensors": {},
-    "contains": {},
+    "devices": {},
 }
 """
 
 
-@composite
 class VFD(Device):
     node_type: URIRef = s223.VariableFrequencyDrive
     # electricalInlet: Must be provided in config
@@ -51,33 +48,16 @@ class VFD(Device):
     drive_running: OnOffStatus
     alarmStatus: OnOffStatus
 
-    def __init__(self, config: Dict = None, **kwargs):
-        _properties = {}
-        for k, v in self.__annotations__.items():
-            if k in kwargs:
-                _properties[k] = kwargs.pop(k)
-        if not config and not kwargs:
-            raise ValueError(
-                "Please provide configuration dict or kwargs, at least a label"
-            )
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        _electricalInlet = kwargs.pop("electricalInlet")
+        _electricalOutlet = kwargs.pop("electricalOutlet")
 
-        sensors = define_sensors(config)
-        self.devices, device_kwargs = contains_devices_list(config, **kwargs)
-        _electricalInlet = device_kwargs.pop("electricalInlet", None)
-        _electricalOutlet = device_kwargs.pop("electricalOutlet", None)
+        super().__init__(config, **kwargs)
 
-        super().__init__(**device_kwargs)
-        self.electricalInlet = (
-            _electricalInlet(self, label=f"{self.label}.electricalInlet")
-            if _electricalInlet
-            else None
+        self.electricalInlet = _electricalInlet(
+            self, label=f"{self.label}.electricalInlet"
         )
-        self.electricalOutlet = (
-            _electricalOutlet(self, label=f"{self.label}.electricalOutlet")
-            if _electricalOutlet
-            else None
+        self.electricalOutlet = _electricalOutlet(
+            self, label=f"{self.label}.electricalOutlet"
         )
-        for k, v in _properties.items():
-            if v is not None:
-                setattr(self, k, self.__annotations__[k](v))
-        self.compose(sensors, None)

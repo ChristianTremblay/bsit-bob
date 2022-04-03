@@ -6,6 +6,7 @@ from bob.connections import (
     AirInletZoneConnectionPoint,
     ChilledWaterConnection,
 )
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.devices.hvac import Fan, ChilledWaterCoil
 
@@ -32,7 +33,7 @@ coil1 = ChilledWaterCoil(label="CW-Coil-1")
 c >> coil1.chilledWaterInlet
 
 # there is a fan, and the air output of the fan goes into the coil
-f = Fan(label="F")
+f = Fan(label="F", electricalInlet=ElectricalInletConnectionPoint)
 f >> coil1.airInlet
 
 # there is a zone

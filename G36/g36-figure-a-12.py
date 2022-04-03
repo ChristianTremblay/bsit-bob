@@ -8,6 +8,7 @@ from typing import Any
 from pathlib import Path
 
 from bob.core import bind_model_namespace, Junction, Device, System, Air, dump
+from bob.devices.hvac.fan import Fan
 from bob.connections.air import (
     AirConnection,
     AirInletConnectionPoint,
@@ -15,7 +16,7 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.devices.hvac.fan import Fan
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.systems.archives.coolingcoil import ChilledWaterCoil2
 from bob.systems.archives.heatingcoil import HotWaterCoil2
@@ -137,12 +138,18 @@ class AHU(System):
         self.hot_water_coil.airOutlet >> self.chilled_water_coil.airInlet
 
         # create a supply fan
-        self.supply_fan = VFDFan(label=self.label + ".supply_fan")
+        self.supply_fan = VFDFan(
+            label=self.label + ".supply_fan",
+            electricalInlet=ElectricalInletConnectionPoint,
+        )
         self.chilled_water_coil.airOutlet >> self.supply_fan.airInlet
         self.supplyAirOutlet.mapsTo = self.supply_fan.airOutlet
 
         # create a return fan
-        self.return_fan = VFDFan(label=self.label + ".return_fan")
+        self.return_fan = VFDFan(
+            label=self.label + ".return_fan",
+            electricalInlet=ElectricalInletConnectionPoint,
+        )
         self.returnAirInlet.mapsTo = self.return_fan.airInlet
 
         # create an exhaust air damper

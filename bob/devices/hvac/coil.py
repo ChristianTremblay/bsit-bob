@@ -32,7 +32,7 @@ __namespace__ = s223
 chilledWaterCoil_template = {
     "params": {"label": "Name", "comment": "Description"},
     "sensors": {},
-    "contains": {("valve", Device): {"comment": "SubDev comment"}},
+    "devices": {("valve", Device): {"comment": "SubDev comment"}},
 }
 """
 # SEMANTIC QUESTION

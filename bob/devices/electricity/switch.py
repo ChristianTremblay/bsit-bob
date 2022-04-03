@@ -1,15 +1,14 @@
+from typing import Dict
+
 from bob.properties.states import OnOffStatus
 from ...connections.electricity import *
 from ...sensor.electricity import CurrentBinarySensor
 
 from ...core import Device, Node, s223, p223
-from ...devices import composite
-from typing import Any
 
 __namespace__ = s223
 
 
-@composite
 class CurrentSwitch(Device):
     """
     Current detection device that gives a OnOff status by the action
@@ -23,15 +22,19 @@ class CurrentSwitch(Device):
     hasStatusOutlet: OnOffSignalOutletConnectionPoint
     hasOnOffStatus: OnOffStatus
 
-    def __init__(self, **kwargs):
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
         _measuresMedium = kwargs.pop("measuresMedium")
         _hasMeasurementLocation = kwargs.pop("hasMeasurementLocation", None)
+
         _label = kwargs["label"]
 
-        super().__init__(**kwargs)
-        sensors = CurrentBinarySensor(
+        super().__init__(config, **kwargs)
+
+        sensor = CurrentBinarySensor(
             label=_label + "CurrentBinarySensor",
             measuresMedium=_measuresMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
-        self.compose(sensors, None)
+        self._sensors = [sensor]
+        self > sensor

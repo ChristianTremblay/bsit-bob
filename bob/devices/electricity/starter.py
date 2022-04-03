@@ -1,16 +1,15 @@
+from typing import Dict
+
 from bob.devices.electricity.switch import CurrentSwitch
 from bob.properties.states import OnOffCommand, OnOffStatus
 from ...connections.electricity import *
 from ...sensor.electricity import CurrentBinarySensor
 
 from ...core import Device, Node, s223, p223
-from ...devices import composite
-from typing import Any
 
 __namespace__ = s223
 
 
-@composite
 class MotorStarter(Device):
     """
     Motor starter
@@ -25,13 +24,13 @@ class MotorStarter(Device):
     hasOnOffStatus: OnOffStatus
     hasOnOffCommand: OnOffCommand
 
-    def __init__(self, **kwargs):
-        _electricalInlet = kwargs.pop("electricalInlet", None)
-        _electricalOutlet = kwargs.pop("electricalOutlet", None)
-        if not _electricalInlet or not _electricalOutlet:
-            raise ValueError("Provide electricalInlet and electricalOutlet")
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        _electricalInlet = kwargs.pop("electricalInlet")
+        _electricalOutlet = kwargs.pop("electricalOutlet")
 
-        super().__init__(**kwargs)
+        super().__init__(config, **kwargs)
+
         self.electricalInlet = _electricalInlet(
             self, label=f"{self.label}.electricalInlet"
         )
@@ -39,9 +38,10 @@ class MotorStarter(Device):
             self, label=f"{self.label}.electricalOutlet"
         )
 
-        sensors = CurrentSwitch(
+        sensor = CurrentSwitch(
             label=f"{self.label}.sensor",
             measuresMedium=self.electricalInlet.hasMedium,
             hasMeasurementLocation=self.electricalOutlet,
         )
-        self.compose(sensors, None)
+        self._sensors = [sensor]
+        self > sensor

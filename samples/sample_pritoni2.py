@@ -16,6 +16,7 @@ from bob.sensor import Sensor
 from bob.space.hvac import HVACZone
 from bob.space.physical import Room, Office, Bathroom, Corridor
 from bob.devices.hvac.fan import Fan
+from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.systems.hvac.vav import VAV1
 from header import sample_header
 
@@ -53,7 +54,9 @@ bathroom = Bathroom(label="Bathroom")
 lz3 = LightingSpace(label="LZ3")
 bathroom_hvac = HVACSpace(label="Bathroom.HVAC")
 bathroom > lz3
-bathroom_exhaust_fan = Fan(label="Bathroom.ExhaustFan")
+bathroom_exhaust_fan = Fan(
+    label="Bathroom.ExhaustFan", electricalInlet=ElectricalInletConnectionPoint
+)
 
 corridor = Corridor(label="Corridor")
 lz4 = LightingSpace(label="LZ4")

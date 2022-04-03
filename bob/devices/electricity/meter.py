@@ -1,9 +1,8 @@
-from ...connections.electricity import *
-from ...sensor.electricity import create_3phase_meter_sensors
+from typing import Dict
 
 from ...core import Device, Node, s223, p223
-from ...devices import composite
-from typing import Any
+from ...connections.electricity import *
+from ...sensor.electricity import create_3phase_meter_sensors
 
 __namespace__ = s223
 
@@ -31,46 +30,40 @@ class ThreePhaseElectricalMeter(Device):
 
     # or later:
 
-        meter.set_hasMeasurementLocation(a)
+        meter.set_measurement_location(a)
 
     """
 
     node_type = s223.ElectricMeter
 
-    def __init__(self, **kwargs):
-        _measuresMedium = kwargs.pop("measuresMedium")
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
         _label = kwargs["label"]
-        _hasMeasurementLocation = (
-            kwargs.pop("hasMeasurementLocation")
-            if "hasMeasurementLocation" in kwargs
-            else None
-        )
+        _measuresMedium = kwargs.pop("measuresMedium")
+        _hasMeasurementLocation = kwargs.pop("hasMeasurementLocation", None)
+
         super().__init__(**kwargs)
-        _sensors = create_3phase_meter_sensors(
+
+        self.voltage_sensors, self.current_sensors = create_3phase_meter_sensors(
             label=_label,
             measuresMedium=_measuresMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
-        voltage_sensors = _sensors["voltage"]
-        current_sensors = _sensors["current"]
-        self.compose(voltage_sensors, current_sensors)
 
-    def compose(self, voltage_sensors, current_sensors):
-        for each in voltage_sensors:
+        for each in self.voltage_sensors:
             self > each
 
-        for each in current_sensors:
+        for each in self.current_sensors:
             self > each
-        return self
 
-    def set_hasMeasurementLocation(self, node: Node = None):
-        self.voltage_hasMeasurementLocation(node)
-        self.current_hasMeasurementLocation(node)
+    def set_measurement_location(self, node: Node = None):
+        self.set_voltage_measurement_location(node)
+        self.set_current_measurement_location(node)
 
-    def voltage_hasMeasurementLocation(self, node: Node = None):
+    def set_voltage_measurement_location(self, node: Node = None):
         for each in self.voltage_sensors:
             each.hasMeasurementLocation = node
 
-    def current_hasMeasurementLocation(self, node: Node = None):
-        for each in self.voltage_sensors:
+    def set_current_measurement_location(self, node: Node = None):
+        for each in self.current_sensors:
             each.hasMeasurementLocation = node

@@ -79,7 +79,7 @@ vav1_config = {
             "comment": "Zone Air Temperature Sensor, which is a thermostats..."
         },
     },
-    "contains": {
+    "devices": {
         ("VAV1_damper", ElectricalActuatedDamper): {"comment": "VAV Box 1 Air Damper"},
         ("VAV1_HeatingCoil", HotWaterCoil): {"comment": "VAV Box 1 Hot Water Coil"},
     },
@@ -96,7 +96,7 @@ vav2_config = {
             "comment": "Zone Air Temperature Sensor, which is a thermostats..."
         },
     },
-    "contains": {
+    "devices": {
         ("VAV2_damper", ElectricalActuatedDamper): {"comment": "VAV Box 2 Air Damper"},
         ("VAV2_HeatingCoil", HotWaterCoil): {"comment": "VAV Box 2 Hot Water Coil"},
     },

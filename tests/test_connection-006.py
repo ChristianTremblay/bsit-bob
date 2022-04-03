@@ -7,6 +7,7 @@ from bob.core import (
 from bob.connections import (
     ChilledWaterConnection,
 )
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.devices.hvac import Fan, ChilledWaterCoil
 from pathlib import Path
@@ -31,6 +32,6 @@ def test_connect_chilled_water_coil(bob_fixture):
     c >> coil1.chilledWaterInlet
 
     # there is a fan, and the air output of the fan goes into the coil
-    f = Fan(label="F")
+    f = Fan(label="F", electricalInlet=ElectricalInletConnectionPoint)
     f >> coil1.airInlet
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

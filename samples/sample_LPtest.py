@@ -23,6 +23,9 @@ from bob.devices.hvac.damper import (
 from bob.devices.hvac import (
     Fan,
 )
+from bob.devices.hvac.coil import (
+    ChilledWaterCoil,
+)
 from bob.connections.air import (
     AirConnection,
     AirInletConnectionPoint,
@@ -32,9 +35,8 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
-from bob.devices.hvac.coil import (
-    ChilledWaterCoil,
-)
+from bob.connections.electricity import ElectricalInletConnectionPoint
+
 from bob.space.hvac import (
     HVACZone,
 )
@@ -82,7 +84,10 @@ class RooftopUnit(System):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        return_fan = Fan(label=self.label + ".return_fan")
+        return_fan = Fan(
+            label=self.label + ".return_fan",
+            electricalInlet=ElectricalInletConnectionPoint,
+        )
         # return_fan.hasRole = Return
         self.returnAirInlet.mapsTo = return_fan.airInlet
         return_air = AirConnection(label=self.label + ".return_air")
@@ -122,7 +127,10 @@ class RooftopUnit(System):
         # connect via air connections or create junctions/segments in the ducts?
 
         final_filter = Filter(label=self.label + ".final_filter")
-        supply_fan = Fan(label=self.label + ".supply_fan")
+        supply_fan = Fan(
+            label=self.label + ".supply_fan",
+            electricalInlet=ElectricalInletConnectionPoint,
+        )
         supply_fan.hasRole = Supply
         chilled_air >> final_filter.airInlet
         final_filter.airOutlet >> supply_fan.airInlet

@@ -844,6 +844,16 @@ class Property(Node):
         if INCLUDE_INVERSE:
             external_reference.isExternalReferenceOf = self
 
+    def __matmul__(self, external_reference: ExternalReference) -> Node:
+        """
+        This property is at some external reference.
+        """
+        if isinstance(external_reference, str):
+            external_reference = ExternalReference(external_reference)
+
+        self.add_external_reference(external_reference)
+        return self
+
 
 @annotation_reference
 class PropertyReference:
@@ -1081,9 +1091,38 @@ class System(Container, Node):
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
 
-    def __init__(self, **kwargs: Any) -> None:
-        logging.debug(f"System.__init__ {kwargs}")
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
+        logging.debug(f"System.__init__ {config} {args} {kwargs}")
+
+        # if there are "params" in the configuation, use those as defaults for
+        # kwargs and allow them to be overriden be additional kwargs
+        # if config and "params" in config:
+        #     kwargs = {**config["params"], **kwargs}
+
+        super().__init__(*args, **kwargs)
+
+        if config:
+            for group_name, group_items in config.items():
+                if group_name == "params":
+                    continue
+
+                things = []
+                for (thing_name, thing_class), thing_kwargs in group_items.items():
+                    if thing_name in self._contents:
+                        raise ValueError(
+                            f"label already used: {self._contents[thing_name]}"
+                        )
+                    thing = thing_class(label=thing_name, **thing_kwargs)
+
+                    if isinstance(thing, (Device, System)):
+                        self > thing
+                    if isinstance(thing, Property):
+                        thing @ self
+                        self._contents[thing_name] = thing
+
+                    things.append(thing)
+
+                setattr(self, "_" + group_name, things)
 
         if MANDITORY_LABEL:
             if "label" not in kwargs:
@@ -2202,6 +2241,39 @@ class Device(Container, Connectable):
     # hasPropertyShape: Any
     hasRole: Role
     hasPhysicalLocation: PhysicalSpace
+
+    def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
+        logging.debug(f"Device.__init__ {config} {args} {kwargs}")
+
+        # if there are "params" in the configuation, use those as defaults for
+        # kwargs and allow them to be overriden be additional kwargs
+        # if config and "params" in config:
+        #     kwargs = {**config["params"], **kwargs}
+
+        super().__init__(*args, **kwargs)
+
+        if config:
+            for group_name, group_items in config.items():
+                if group_name == "params":
+                    continue
+
+                things = []
+                for (thing_name, thing_class), thing_kwargs in group_items.items():
+                    if thing_name in self._contents:
+                        raise ValueError(
+                            f"label already used: {self._contents[thing_name]}"
+                        )
+                    thing = thing_class(label=thing_name, **thing_kwargs)
+
+                    if isinstance(thing, (Device, System)):
+                        self > thing
+                    if isinstance(thing, Property):
+                        thing @ self
+                        self._contents[thing_name] = thing
+
+                    things.append(thing)
+
+                setattr(self, "_" + group_name, things)
 
 
 @multimethod

@@ -21,6 +21,7 @@ from bob.connections.water import (
     HotWaterOutletSystemConnectionPoint,
 )
 from bob.devices.hvac.fan import Fan
+from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.signal import AnalogIn, AnalogOut, BinaryIn, BinaryOut
 
@@ -125,8 +126,11 @@ class VAV(System):
     hwOutlet: HotWaterOutletSystemConnectionPoint
     hwValvePosition: AnalogOut
 
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
+        _electricalInlet = kwargs.pop("electricalInlet")
+
+        super().__init__(config, **kwargs)
 
         # create an air filter
         self.air_filter = AirFilter(label=self.label + ".air_filter")
@@ -144,7 +148,7 @@ class VAV(System):
         self.air_filter.airOutlet >> self.hot_water_coil.airInlet
 
         # create a fan with a variable frequency drive
-        self.fan = VFDFan(label=self.label + ".fan")
+        self.fan = VFDFan(label=self.label + ".fan", electricalInlet=_electricalInlet)
         self > self.fan
 
         # link the air pieces together
@@ -153,6 +157,6 @@ class VAV(System):
 
 
 # make one
-vav = VAV(label="A-11")
+vav = VAV(label="A-11", electricalInlet=ElectricalInletConnectionPoint)
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
