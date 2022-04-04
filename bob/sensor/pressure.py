@@ -10,6 +10,7 @@ from ..core import (
     enum,
     Medium,
     Air,
+    Water,
     Node,
     PropertyReference,
 )
@@ -23,14 +24,14 @@ __namespace__ = p223
 
 class DifferentialStaticPressure(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.ForcePerArea
-    unit: URIRef = unit.PA
+    unit: URIRef
     measuresMedium: Medium  # set from the sensor
     # isObservedBy: Sensor
 
 
 class DifferentialStaticPressureSetpoint(QuantifiableProperty):
     hasQuantityKind: URIRef = quantitykind.ForcePerArea
-    unit: URIRef = unit.PA
+    unit: URIRef
 
 
 class DifferentialStaticPressureSensor(Sensor):
@@ -44,8 +45,17 @@ class DifferentialStaticPressureSensor(Sensor):
 
         super().__init__(**_sensor_kwargs)
         self.observesProperty = DifferentialStaticPressure(
-            measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.DifferentialStaticPressure",
             **_measure_kwargs,
         )
+
+
+class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
+    def __init__(self, **kwargs):
+        super().__init__(measuresMedium=Air, unit=unit.PA, **kwargs)
+
+
+class WaterDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
+    def __init__(self, **kwargs):
+        super().__init__(measuresMedium=Water, unit=unit.PSI, **kwargs)

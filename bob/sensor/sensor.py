@@ -41,7 +41,13 @@ def split_kwargs(given_kwargs):
     # specific properties given to a sensor for creation
     # but that must be applied to the measure AKA
     # the observesProperty
-    _prop = ["hasExternalReference", "hasValue"]
+    _prop = [
+        "hasExternalReference",
+        "hasValue",
+        "unit",
+        "hasQuantityKind",
+        "measuresMedium",
+    ]
     measure_kwargs = {}
     sensor_kwargs = {}
     _given_kwargs = given_kwargs.copy()  # need a copy

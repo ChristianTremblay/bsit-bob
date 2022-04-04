@@ -10,14 +10,14 @@ __namespace__ = p223
 
 class Temperature(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.Temperature
-    unit: URIRef = unit.DEG_C
+    unit: URIRef
     measuresMedium: Medium  # set from the sensor
     # isObservedBy: Sensor
 
 
 class TemperatureSetpoint(Setpoint):
     hasQuantityKind: URIRef = quantitykind.Temperature
-    unit: URIRef = unit.DEG_C
+    unit: URIRef
 
 
 class TemperatureSensor(Sensor):
@@ -25,14 +25,16 @@ class TemperatureSensor(Sensor):
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
-
-        super().__init__(**_sensor_kwargs)
-        if not self.measuresMedium:
+        if "unit" not in _measure_kwargs:
             raise ValueError(
-                "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
+                "You must provide units when defining a temperature sensor"
             )
+        if "measuresMedium" not in _measure_kwargs:
+            raise ValueError(
+                "You must provide measuresMedium when defining a temperature sensor"
+            )
+        super().__init__(**_sensor_kwargs)
         self.observesProperty = Temperature(
-            measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.Temperature",
             **_measure_kwargs,
@@ -40,8 +42,10 @@ class TemperatureSensor(Sensor):
 
 
 class AirTemperatureSensor(TemperatureSensor):
-    measuresMedium: Medium = Air
+    def __init__(self, **kwargs):
+        super().__init__(measuresMedium=Air, unit=unit.DEG_C, **kwargs)
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    measuresMedium: Medium = Water
+    def __init__(self, **kwargs):
+        super().__init__(measuresMedium=Water, unit=unit.DEG_C, **kwargs)

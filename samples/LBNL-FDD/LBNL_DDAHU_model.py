@@ -22,7 +22,7 @@ from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.filter import Filter
 
-from bob.sensor.pressure import DifferentialStaticPressureSensor
+from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
@@ -100,7 +100,9 @@ class HotDeck(System):
         self.airOutlet.mapsTo = hsf.airOutlet
         in_filter >> hwc >> hsf
 
-        hsf_dp = DifferentialStaticPressureSensor(label=self.label + ".fan_dp_sensor")
+        hsf_dp = AirDifferentialStaticPressureSensor(
+            label=self.label + ".fan_dp_sensor"
+        )
         hsf_dp.hasMeasurementLocationHigh = hsf.airOutlet
         hsf_dp.hasMeasurementLocationLow = hsf.airInlet
         # more sensors
@@ -132,7 +134,9 @@ class ColdDeck(System):
         self.airOutlet.mapsTo = hsf.airOutlet
         in_filter >> hwc >> hsf
 
-        hsf_dp = DifferentialStaticPressureSensor(label=self.label + ".fan_dp_sensor")
+        hsf_dp = AirDifferentialStaticPressureSensor(
+            label=self.label + ".fan_dp_sensor"
+        )
         hsf_dp.hasMeasurementLocationHigh = hsf.airOutlet
         hsf_dp.hasMeasurementLocationLow = hsf.airInlet
         # more sensors

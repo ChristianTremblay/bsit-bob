@@ -1,4 +1,4 @@
-from ...sensor.pressure import DifferentialStaticPressureSensor
+from ...sensor.pressure import AirDifferentialStaticPressureSensor
 from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from ...sensor.humidity import AirHumiditySensor
 
@@ -64,7 +64,7 @@ class HighStaticPressureStat(Device):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        sensor = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
+        sensor = AirDifferentialStaticPressureSensor(label=f"{self.label}.sensor")
         self._sensors = [sensor]
         self > sensor
 
@@ -79,6 +79,6 @@ class FlowSwitch(Device):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        sensor = DifferentialStaticPressureSensor(label=f"{self.label}.sensor")
+        sensor = AirDifferentialStaticPressureSensor(label=f"{self.label}.sensor")
         self._sensors = [sensor]
         self > sensor

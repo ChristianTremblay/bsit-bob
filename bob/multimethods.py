@@ -164,14 +164,18 @@ class _MultiMethod:
             logging.debug("    - make sure %s still calls %r", types_tuple, method)
 
             if types_tuple not in self.typemap:
-                raise RuntimeError("%s previous calls no longer mapped: %s", self.name, types_tuple)
+                raise RuntimeError(
+                    "%s previous calls no longer mapped: %s", self.name, types_tuple
+                )
             if self.typemap[types_tuple] is not method:
-                raise RuntimeError("%s previous calls new method: %s", self.name, types_tuple)
+                raise RuntimeError(
+                    "%s previous calls new method: %s", self.name, types_tuple
+                )
 
 
 def multimethod(func: Callable[..., Any]) -> _MultiMethod:
     """Function Decorator"""
-    logging.debug("multimethod %r" , func)
+    logging.debug("multimethod %r", func)
 
     name = func.__name__
     mm = _multi_registry.get(name)
@@ -193,7 +197,7 @@ def all_subclasses(cls: type) -> List[type]:
 
 
 def new_class(cls: type) -> None:
-    logging.debug("new_class %r" , cls.__name__)
+    logging.debug("new_class %r", cls.__name__)
 
     # check to see if the new type is a subclass of an existing type
     for fn_name, mm in _multi_registry.items():
@@ -201,7 +205,9 @@ def new_class(cls: type) -> None:
         for mm_type in mm.types:
             if inspect.isclass(mm_type):
                 if issubclass(cls, mm_type):
-                    logging.debug("    - %s ding: %r is a subclass of %r", fn_name, cls, mm_type)
+                    logging.debug(
+                        "    - %s ding: %r is a subclass of %r", fn_name, cls, mm_type
+                    )
                     ding = True
                     break
                 continue
@@ -210,7 +216,12 @@ def new_class(cls: type) -> None:
             if mm_origin is list:
                 mm_subtype = mm_type.__args__[0]  # type: ignore[attr-defined]
                 if issubclass(cls, mm_subtype):
-                    logging.debug("    - %s ding: %r is a subclass of %r", fn_name, cls, mm_subtype)
+                    logging.debug(
+                        "    - %s ding: %r is a subclass of %r",
+                        fn_name,
+                        cls,
+                        mm_subtype,
+                    )
                     ding = True
                     break
                 continue
@@ -219,4 +230,3 @@ def new_class(cls: type) -> None:
             # clear out the existing map for now
             mm.types = set()
             mm.typemap = {}
-

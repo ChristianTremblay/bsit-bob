@@ -32,7 +32,7 @@ from bob.systems.hvac.vav import VAV
 
 from bob.sensor.temperature import AirTemperatureSensor, WaterTemperatureSensor
 from bob.sensor.humidity import AirHumiditySensor
-from bob.sensor.pressure import DifferentialStaticPressureSensor
+from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.movement import MovementSensor
 from bob.sensor.gas import CO2Sensor
@@ -188,7 +188,7 @@ te1 = AirTemperatureSensor(
     # hasExternalReference=BACnetReference("bacnet://345/analog-value/1/present-value"),
 )
 ha1 = AirHumiditySensor(label="HA-1")
-tpd1 = DifferentialStaticPressureSensor(
+tpd1 = AirDifferentialStaticPressureSensor(
     label="TPD-1", comment="Filters differential pressure"
 )
 taec1 = WaterTemperatureSensor(label="TAEC-1", comment="Water temperature feeding coil")
@@ -196,7 +196,7 @@ tbl1 = Device(label="TBL-1", comment="Freeze Thermostat")
 ta1 = AirTemperatureSensor(label="TA-1", comment="Discharge Air Temperature Sensor")
 fs1 = Device(label="FS-1", comment="Air flow switch for humidifier")
 hlh1 = Device(label="HLH-1", comment="Humidity High Level Stat")
-tpd2 = DifferentialStaticPressureSensor(
+tpd2 = AirDifferentialStaticPressureSensor(
     label="TPD-2", comment="Static Discharge Air Pressure Sensor"
 )
 co2_1 = CO2Sensor(label="CO2-1", comment="Return Air CO2 Sensor (Elephants)")

@@ -22,14 +22,14 @@ __namespace__ = s223
 
 class Flow(QuantifiableMeasuredProperty):
     hasQuantityKind: URIRef = quantitykind.VolumeFlowRate
-    unit: URIRef = unit["FT3-PER-MIN"]
+    unit: URIRef
     measuresMedium: Medium  # set from the sensor
     # isObservedBy: Sensor
 
 
 class FlowSetpoint(QuantifiableProperty):
     hasQuantityKind: URIRef = quantitykind.VolumeFlowRate
-    unit: URIRef = unit["FT3-PER-MIN"]  # match units of Flow?
+    unit: URIRef
 
 
 class FlowSensor(Sensor):
@@ -40,12 +40,7 @@ class FlowSensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        if not self.measuresMedium:
-            raise ValueError(
-                "You must provide measuresMedium property for a temperature sensor either in config template or subclass defintion"
-            )
         self.observesProperty = Flow(
-            measuresMedium=self.measuresMedium,
             # isObservedBy=self,
             label=f"{self.label}.Flow",
             **_measure_kwargs,
@@ -53,10 +48,14 @@ class FlowSensor(Sensor):
 
 
 class AirFlowSensor(FlowSensor):
-    measuresMedium: Medium = Air
-    unit: URIRef = unit["FT3-PER-MIN"]
+    node_type: URIRef = p223.AirFlowSensor
+
+    def __init__(self, **kwargs):
+        super().__init__(measuresMedium=Air, unit=unit["FT3-PER-MIN"], **kwargs)
 
 
 class WaterFlowSensor(FlowSensor):
-    measuresMedium: Medium = Water
-    unit: URIRef = unit["GAL_UK-PER-MIN"]
+    node_type: URIRef = p223.WaterFlowSensor
+
+    def __init__(self, **kwargs):
+        super().__init__(measuresMedium=Water, unit=unit["GAL_UK-PER-MIN"], **kwargs)

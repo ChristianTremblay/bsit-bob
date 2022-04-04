@@ -472,7 +472,9 @@ class NodeMetaclass(type):
         # namespace that was just discovered _after_ the class is created
         for attr in attr_names:
             if attr in _attr_uriref:
-                logging.debug(f"    - attribute uri {attr!r} = already {_attr_uriref[attr]!r}")
+                logging.debug(
+                    f"    - attribute uri {attr!r} = already {_attr_uriref[attr]!r}"
+                )
             else:
                 logging.debug(f"    - attribute uri {attr!r} = {_namespace[attr]!r}")
                 _attr_uriref[attr] = _namespace[attr]

@@ -28,7 +28,7 @@ from bob.devices.hvac.stats import HighStaticPressureStat
 from bob.externalreference.bacnet import BACnetReference
 from bob.sensor.fire import SmokeDetectionSensor
 
-from bob.sensor.pressure import DifferentialStaticPressureSensor
+from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor
 
 from bob.systems.hvac.g36 import G36Block, AnalogIn, AnalogOut, BinaryIn, BinaryOut
@@ -120,7 +120,7 @@ rat = AirTemperatureSensor(
     label="TS1",
     comment="Return Air Temperature sensor",
 )
-dpt1 = DifferentialStaticPressureSensor(
+dpt1 = AirDifferentialStaticPressureSensor(
     label="DPT1", comment="Filter differential Pressure sensor"
 )
 dps = HighStaticPressureStat(label="DPS", comment="High Static Pressure Stat")
@@ -128,7 +128,7 @@ dps = HighStaticPressureStat(label="DPS", comment="High Static Pressure Stat")
 
 sd = SmokeDetectionSensor(label="SD", comment="Smoke Detector in discharge air")
 dat = AirTemperatureSensor(label="TS2", comment="Supply Air Temperature sensor")
-dpt2 = DifferentialStaticPressureSensor(
+dpt2 = AirDifferentialStaticPressureSensor(
     label="DPT2", comment="Duct Static Pressure sensor"
 )
 

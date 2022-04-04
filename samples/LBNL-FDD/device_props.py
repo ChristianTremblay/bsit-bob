@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 from pathlib import Path
+from rdflib import URIRef
 
 from bob.core import bind_model_namespace, Junction, System, dump, quantitykind, unit
 from bob.connections.air import (
@@ -14,7 +15,7 @@ from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.filter import Filter
 
-from bob.sensor.pressure import DifferentialStaticPressureSensor
+from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint

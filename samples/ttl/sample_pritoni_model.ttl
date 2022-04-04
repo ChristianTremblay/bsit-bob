@@ -921,6 +921,8 @@ hvac_devices:00001 a p223:AirHandlingUnit,
         hvac_devices:00004,
         hvac_devices:00006,
         hvac_devices:00008,
+        hvac_devices:00010,
+        hvac_devices:00012,
         hvac_devices:00014,
         hvac_devices:00018,
         hvac_devices:00022,
@@ -943,7 +945,6 @@ hvac_devices:00002 a p223:AirTemperatureSensor,
         s223:Sensor ;
     rdfs:label "OA-T" ;
     s223:hasMeasurementLocation hvac:00004 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00003 ;
     rdfs:comment "Oudoor air temperature" .
 hvac_devices:00003 a p223:MeasuredProperty,
@@ -956,7 +957,8 @@ hvac_devices:00003 a p223:MeasuredProperty,
     p223:measuresMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-hvac_devices:00004 a p223:DifferentialStaticPressureSensor,
+hvac_devices:00004 a p223:AirDifferentialStaticPressureSensor,
+        p223:DifferentialStaticPressureSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TPD1" ;
@@ -981,7 +983,6 @@ hvac_devices:00006 a p223:AirTemperatureSensor,
         s223:Sensor ;
     rdfs:label "HC-T" ;
     s223:hasMeasurementLocation hvac_devices:00041 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00007 ;
     rdfs:comment "Air temperature after heating coil" .
 hvac_devices:00007 a p223:MeasuredProperty,
@@ -1000,7 +1001,6 @@ hvac_devices:00008 a p223:AirTemperatureSensor,
         s223:Sensor ;
     rdfs:label "DA-T" ;
     s223:hasMeasurementLocation hvac_devices:00036 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00009 ;
     rdfs:comment "Discharge Air temperature after cooling coil" .
 hvac_devices:00009 a p223:MeasuredProperty,
@@ -1013,34 +1013,46 @@ hvac_devices:00009 a p223:MeasuredProperty,
     p223:measuresMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-hvac_devices:00010 a p223:DifferentialStaticPressure,
-        p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        s223:ObservableProperty,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+hvac_devices:00010 a p223:AirDifferentialStaticPressureSensor,
+        p223:DifferentialStaticPressureSensor,
+        s223:Device,
+        s223:Sensor ;
     rdfs:label "TPD2" ;
-    s223:hasExternalReference hvac_devices:00011 ;
-    qudt:quantityKind quantitykind:ForcePerArea ;
-    qudt:unit unit:PA ;
+    p223:hasMeasurementLocationHigh hvac_devices:00020 ;
+    p223:hasMeasurementLocationLow hvac:00010 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty hvac_devices:00011 ;
     rdfs:comment "Supply Duct Static Pressure" .
-hvac_devices:00011 a s223:ExternalReference ;
-    rdfs:label "TPD2.ExternalReference" ;
-    s223:hasRef "<AirHandlingUnit AHU at urn:ex/hvac_devices/00001>" .
-hvac_devices:00012 a p223:DifferentialStaticPressure,
+hvac_devices:00011 a p223:DifferentialStaticPressure,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "TPD3" ;
-    s223:hasExternalReference hvac_devices:00013 ;
+    rdfs:label "TPD2.DifferentialStaticPressure" ;
+    p223:measuresMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:ForcePerArea ;
-    qudt:unit unit:PA ;
+    qudt:unit unit:PA .
+hvac_devices:00012 a p223:AirDifferentialStaticPressureSensor,
+        p223:DifferentialStaticPressureSensor,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "TPD3" ;
+    p223:hasMeasurementLocationHigh hvac_devices:00016 ;
+    p223:hasMeasurementLocationLow hvac:00010 ;
+    s223:measuresMedium s223:Medium-Air ;
+    s223:observesProperty hvac_devices:00013 ;
     rdfs:comment "Return Duct Static Pressure" .
-hvac_devices:00013 a s223:ExternalReference ;
-    rdfs:label "TPD3.ExternalReference" ;
-    s223:hasRef "<AirHandlingUnit AHU at urn:ex/hvac_devices/00001>" .
+hvac_devices:00013 a p223:DifferentialStaticPressure,
+        p223:MeasuredProperty,
+        p223:QuantifiableMeasuredProperty,
+        s223:ObservableProperty,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "TPD3.DifferentialStaticPressure" ;
+    p223:measuresMedium s223:Medium-Air ;
+    qudt:quantityKind quantitykind:ForcePerArea ;
+    qudt:unit unit:PA .
 hvac_devices:00014 a s223:Device,
         s223:Fan ;
     rdfs:label "RF" ;
@@ -1168,7 +1180,6 @@ hvac_devices:00029 a p223:CurrentBinarySensor,
         s223:Sensor ;
     rdfs:label "SF-STARTER.sensorCurrentBinarySensor" ;
     s223:hasMeasurementLocation hvac_devices:00026 ;
-    s223:measuresMedium s223:Electricity-575V_60Hz ;
     s223:observesProperty hvac_devices:00030 .
 hvac_devices:00030 a p223:OnOffStatus,
         s223:ObservableProperty ;
@@ -1566,19 +1577,17 @@ hvac_devices:00082 a p223:AirFlowSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "VAV1_SA-F" ;
-    p223:unit unit:FT3-PER-MIN ;
     s223:hasMeasurementLocation hvac_devices:00091 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00083 ;
     rdfs:comment "Air flow used to control damper" .
-hvac_devices:00083 a p223:Flow,
-        p223:MeasuredProperty,
+hvac_devices:00083 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
+        s223:Flow,
         s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "VAV1_SA-F.Flow" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:measuresMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:FT3-PER-MIN .
 hvac_devices:00084 a p223:AirTemperatureSensor,
@@ -1587,7 +1596,6 @@ hvac_devices:00084 a p223:AirTemperatureSensor,
         s223:Sensor ;
     rdfs:label "VAV1_DA-T" ;
     s223:hasMeasurementLocation hvac_devices:00096 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00085 ;
     rdfs:comment "Air supplied to zone by VAV 1, AKA discharge air temperature" .
 hvac_devices:00085 a p223:MeasuredProperty,
@@ -1607,7 +1615,6 @@ hvac_devices:00086 a p223:AirTemperatureSensor,
     rdfs:label "VAV1_ZN-T" ;
     s223:hasMeasurementLocation hvac_spaces:00009 ;
     s223:hasPhysicalLocation physical_spaces:00004 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00087 ;
     rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
 hvac_devices:00087 a p223:MeasuredProperty,
@@ -1735,19 +1742,17 @@ hvac_devices:00102 a p223:AirFlowSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "VAV2_SA-F" ;
-    p223:unit unit:FT3-PER-MIN ;
     s223:hasMeasurementLocation hvac_devices:00111 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00103 ;
     rdfs:comment "Air flow used to control damper" .
-hvac_devices:00103 a p223:Flow,
-        p223:MeasuredProperty,
+hvac_devices:00103 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
+        s223:Flow,
         s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "VAV2_SA-F.Flow" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:measuresMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:FT3-PER-MIN .
 hvac_devices:00104 a p223:AirTemperatureSensor,
@@ -1756,7 +1761,6 @@ hvac_devices:00104 a p223:AirTemperatureSensor,
         s223:Sensor ;
     rdfs:label "VAV2_DA-T" ;
     s223:hasMeasurementLocation hvac_devices:00116 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00105 ;
     rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
 hvac_devices:00105 a p223:MeasuredProperty,
@@ -1776,7 +1780,6 @@ hvac_devices:00106 a p223:AirTemperatureSensor,
     rdfs:label "VAV2_ZN-T" ;
     s223:hasMeasurementLocation hvac_spaces:00057 ;
     s223:hasPhysicalLocation physical_spaces:00008 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty hvac_devices:00107 ;
     rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
 hvac_devices:00107 a p223:MeasuredProperty,

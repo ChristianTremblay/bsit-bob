@@ -10,7 +10,7 @@ from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.damper import ElectricalActuatedDamper, Window
 from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.stats import DifferentialStaticPressureSensor
+from bob.devices.hvac.stats import AirDifferentialStaticPressureSensor
 from bob.devices.electricity.starter import MotorStarter
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
@@ -28,7 +28,7 @@ ahu_template = {
     "params": {"label": "AHU", "comment": "AHU delivering air to 2 VAV boxes"},
     "sensors": {
         ("OA-T", AirTemperatureSensor): {"comment": "Oudoor air temperature"},
-        ("TPD1", DifferentialStaticPressureSensor): {
+        ("TPD1", AirDifferentialStaticPressureSensor): {
             "comment": "Filter Differential Pressure Sensor"
         },
         ("HC-T", AirTemperatureSensor): {
@@ -37,12 +37,10 @@ ahu_template = {
         ("DA-T", AirTemperatureSensor): {
             "comment": "Discharge Air temperature after cooling coil"
         },
-    },
-    "properties": {
-        ("TPD2", DifferentialStaticPressure): {
+        ("TPD2", AirDifferentialStaticPressureSensor): {
             "comment": "Supply Duct Static Pressure"
         },
-        ("TPD3", DifferentialStaticPressure): {
+        ("TPD3", AirDifferentialStaticPressureSensor): {
             "comment": "Return Duct Static Pressure"
         },
     },

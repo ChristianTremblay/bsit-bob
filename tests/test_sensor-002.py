@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from bob.core import bind_model_namespace, dump
-from bob.sensor.pressure import DifferentialStaticPressureSensor
+from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.space.hvac import HVACSpace
 from bob.space.physical import Building, Room, MechanicalRoom
 from header import ttl_test_header
@@ -24,7 +24,7 @@ def test_create_sensor_002(bob_fixture):
     building > sas > SAS_hvac
     building > mechroom
 
-    tpd01 = DifferentialStaticPressureSensor(
+    tpd01 = AirDifferentialStaticPressureSensor(
         label="TPD-01",
         comment="Static Pressure between Clean Room (+) and SAS (-)",
         hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],

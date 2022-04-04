@@ -19,6 +19,7 @@ __namespace__ = p223
 
 url_pattern = re.compile("^bacnet:[/][/]([0-9]+)[/]([A-Za-z0-9-]+),([1-9][0-9]*)$")
 
+
 class BACnetProperty(Node):
     node_type: URIRef = bacnet.Property
     hasValue: Literal
