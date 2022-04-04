@@ -202,13 +202,13 @@ ex:00024 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex:00022 .
-ex:00025 a p223:Luminaire,
-        s223:Device ;
+ex:00025 a s223:Device,
+        s223:Luminaire ;
     rdfs:label "Ballast #1, space #1" ;
-    p223:lightOutlet ex:00026 ;
     s223:connectedThrough ex:00048 ;
     s223:connectedTo ex:00019 ;
-    s223:hasConnectionPoint ex:00026 .
+    s223:hasConnectionPoint ex:00026 ;
+    s223:lightOutlet ex:00026 .
 ex:00026 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Ballast #1, space #1.lightOutlet" ;
@@ -216,13 +216,13 @@ ex:00026 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex:00025 .
-ex:00027 a p223:Luminaire,
-        s223:Device ;
+ex:00027 a s223:Device,
+        s223:Luminaire ;
     rdfs:label "Ballast #2, space #2" ;
-    p223:lightOutlet ex:00028 ;
     s223:connectedThrough ex:00049 ;
     s223:connectedTo ex:00022 ;
-    s223:hasConnectionPoint ex:00028 .
+    s223:hasConnectionPoint ex:00028 ;
+    s223:lightOutlet ex:00028 .
 ex:00028 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Ballast #2, space #2.lightOutlet" ;
@@ -360,7 +360,7 @@ ex:00045 a p223:MeasuredProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Discharge Air temperature sensor.Temperature" ;
     p223:measuresMedium s223:Medium-Air ;
-    s223:hasQuantityKind quantitykind:Temperature ;
+    qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 ex:00046 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -379,7 +379,7 @@ ex:00047 a p223:MeasuredProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Zone Air temperature sensor.Temperature" ;
     p223:measuresMedium s223:Medium-Air ;
-    s223:hasQuantityKind quantitykind:Temperature ;
+    qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 ex:00048 a s223:Connection ;
     s223:connectsAt ex:00020,
