@@ -17,7 +17,7 @@ from ..property import QuantifiableProperty
 
 from bob import core
 
-__namespace__ = p223
+__namespace__ = s223
 
 
 class Flow(QuantifiableMeasuredProperty):
