@@ -31,7 +31,7 @@ class QuantifiableProperty(Property):
     A property to be expressed as a quantity, it has units.
     """
 
-    _attr_uriref = {"unit": qudt["unit"], "quantityKind": qudt["quantityKind"]}
+    _attr_uriref = {"unit": qudt["unit"], "hasQuantityKind": qudt["quantityKind"]}
 
     node_type: URIRef = s223.QuantifiableProperty
     hasQuantityKind: URIRef
