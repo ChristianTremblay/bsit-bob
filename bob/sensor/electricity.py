@@ -5,7 +5,7 @@ from typing import Any
 from ..core import (
     Electricity,
     quantitykind,
-    p223,
+    s223,
     unit,
     Medium,
     Air,
@@ -16,7 +16,7 @@ from ..core import (
 
 from ..property import ObservableProperty, QuantifiableProperty
 
-__namespace__ = p223
+__namespace__ = s223
 
 
 class VoltageAN(QuantifiableMeasuredProperty):
@@ -161,7 +161,7 @@ def create_3phase_meter_sensors(
 
 
 class CurrentBinarySensor(Sensor):
-    observesProperty: PropertyReference  # AirDifferentialStaticPressure
+    observesProperty: PropertyReference  # Electrical Current
     hasMeasurementLocation: Node
 
     def __init__(self, **kwargs: Any) -> None:
