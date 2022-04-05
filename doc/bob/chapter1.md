@@ -86,7 +86,7 @@ class NewClass(ExistingClass):
     airOutlet: AirOutletConnectionPoint
 ```
 
-Here we define a new class that will inherit from the `ExistingClass` class. This means that this new device will get all the properties and method of a Device. It will also being created with an identifier `s223:NewClass` given by `node_type` property. 
+Here we define a new class that will inherit from the `ExistingClass` class. This means that this new device will get all the properties and method of a `ExistingClass`. It will also being created with an identifier `s223:NewClass` given by `node_type` property. 
 
 > node type
 > 
