@@ -4,13 +4,16 @@ This package allows the creation of TTL files conforming to s223 Standard using 
 
 ## Installation
 ### Clone the repo
-First clone the repo found here : https://bas-im.emcs.cornell.edu/223/si-builder.git
+First clone the repo found here : 
+```bash
+git clone https://bas-im.emcs.cornell.edu/223/si-builder.git
+```
 
 ### install
 Once the repo is on your machine, install it.
 
 For example
-```
+```bash
 pip install . #inside the repo
 ```
 
@@ -20,7 +23,7 @@ You can also use virtual environments...
 ### First import
 If everything went well, you should be able to import bob in the repl.
 
-```
+```Python
 # ipython
 import bob
 ```
@@ -39,23 +42,22 @@ The way bob is made, it will support using imports of other files to build the m
 For example, here is an example of a folder containing different files with different goals. 
 The model is built by executing the code on the file named `sample_pritoni_model.py`
 
-```
+
 # sample Pritoni
-# __init__.py
-# bacnet_reference.py
-# electrical_devices.py
-# electricity.poy
-# header.py
-# hvac_devices.py
-# hvac_spaces.py
-# hvac.py
-# lighting_devices.py
-# lighting_spaces.py
-# lighting.py
-# occupancy.py
-# physical_space.py
-# sample_pritoni_model.py
-```
+    - __init__.py
+    - bacnet_reference.py
+    - electrical_devices.py
+    - electricity.poy
+    - header.py
+    - hvac_devices.py
+    - hvac_spaces.py
+    - hvac.py
+    - lighting_devices.py
+    - lighting_spaces.py
+    - lighting.py
+    - occupancy.py
+    - physical_space.py
+    - sample_pritoni_model.py
 
 This is not the only way to do it, the idea is that we strongly suggest you organize your files to reduce complexity.
 
@@ -76,7 +78,8 @@ Bob makes usage of type annotation to create classes. This way, it is possible t
 with the right type.
 
 For example, 
-```
+
+```Python
 class NewClass(ExistingClass):
     node_type: URIRef = s223.NewClass
     airInlet: AirInletConnectionPoint
@@ -92,7 +95,7 @@ Here we define a new class that will inherit from the `ExistingClass` class. Thi
 #### Defining a prefix
 One way of deining a prefix for your model is by defining a special variable called `__namespace__`. 
 
-```
+```Python
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 ```
 
@@ -109,7 +112,7 @@ we need to deal with inheritance first, then we add supplemental stuff.
 
 Like this : 
 
-```
+```Python
 class NewClass(ExistingClass):
     node_type: URIRef = s223.NewClass
     airInlet: AirInletConnectionPoint
@@ -127,7 +130,7 @@ Then after that, we add our new property using any logic required from the value
 
 For example : 
 
-```
+```Python
 a_new_class = NewClass(label='NewClass_120V', comment='Super nice shiny new class', electricalInlet='120V')
 ```
 
