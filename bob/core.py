@@ -715,16 +715,12 @@ class Node(metaclass=NodeMetaclass):
 
     def __rshift__(self, other: Any) -> Any:
         """Build a connection from this thing to another thing."""
-        if isinstance(other, list):
-            for each in other:
-                connect(self, each)
-        else:
-            connect(self, other)
+        connect_mm(self, other)
         return other
 
     def __lshift__(self, other: Any) -> Any:
         """Build a connection to this thing from another thing."""
-        connect(other, self)
+        connect_mm(other, self)
         return self
 
     def __repr__(self) -> str:
@@ -1019,23 +1015,45 @@ class Junction(Node):
         segment.link_to(other)
         segment.link_to(self)
 
-    def __rshift__(self, other: Any) -> Any:
-        """
-        Build a connection (actaully a segment) from this thing to another thing.
-        """
-        if isinstance(other, list):
-            for each in other:
-                self.connect_to(each)
-        else:
-            self.connect_to(other)
-        return other
 
-    def __lshift__(self, other: Any) -> Any:
-        """
-        Build a connection (actually a segment) to this thing from another thing.
-        """
-        self.connect_to(other)
-        return self
+@multimethod
+def connect_mm(from_junction: Junction, to_junction: Junction) -> None:
+    """Junction >> Junction"""
+    logging.info(f"connect from {from_junction} to {to_junction}")
+
+    from_junction.link_to(to_junction)
+
+
+@multimethod
+def connect_mm(junction: Junction, segment: Segment) -> None:
+    """Junction >> Segment"""
+    logging.info(f"connect from {junction} to {segment}")
+
+    junction.connect_to(segment)
+
+
+@multimethod
+def connect_mm(segment: Segment, junction: Junction) -> None:
+    """Segment >> Junction"""
+    logging.info(f"connect from {junction} to {segment}")
+
+    junction.connect_to(segment)
+
+
+@multimethod
+def connect_mm(junction: Junction, connection_point: ConnectionPoint) -> None:
+    """Junction >> ConnectionPoint"""
+    logging.info(f"connect from {junction} to {connection_point}")
+
+    junction.connect_to(connection_point)
+
+
+@multimethod
+def connect_mm(connection_point: ConnectionPoint, junction: Junction) -> None:
+    """ConnectionPoint >> Junction"""
+    logging.info(f"connect from {junction} to {connection_point}")
+
+    junction.connect_to(connection_point)
 
 
 class Segment(Node):
@@ -1170,16 +1188,6 @@ class System(Container, Node):
 
             setattr(self, var_name, var_element)
 
-    def __ge__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(self, other)
-        return self
-
-    def __le__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(other, self)
-        return self
-
 
 @multimethod
 def contains_mm(system: System, device: Device) -> None:
@@ -1240,16 +1248,6 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-    def __ge__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(self, other)
-        return self
-
-    def __le__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(other, self)
-        return self
-
 
 class Connectable(Node):
     """
@@ -1300,16 +1298,6 @@ class Connectable(Node):
             logging.debug(f"    - connection point {var_name}: {var_element}")
 
             setattr(self, var_name, var_element)
-
-    def __ge__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(self, other)
-        return self
-
-    def __le__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(other, self)
-        return self
 
 
 @multimethod
@@ -1424,69 +1412,82 @@ class ConnectionPoint(Node):
         # link the segment back
         segment.link_to(self)
 
-    def __ge__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(self, other)
-        return self
-
-    def __le__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(other, self)
-        return self
-
 
 @multimethod
-def connect_mm(from_thing: ConnectionPoint, to_thing: ConnectionPoint) -> None:
-    logging.info(f"connect from {from_thing} to {to_thing}")
+def connect_mm(
+    from_connection_point: ConnectionPoint, to_connection_point: ConnectionPoint
+) -> None:
+    """ConnectionPoint >> ConnectionPoint"""
+    logging.info(f"(6) connect from {from_connection_point} to {to_connection_point}")
 
-    if from_thing.connectsThrough:
-        raise RuntimeError("connection point already connected")
-    if to_thing.connectsThrough:
-        raise RuntimeError("connection point already connected")
+    if isinstance(from_connection_point, InletConnectionPoint):
+        raise TypeError(f"connection point direction: {from_connection_point}")
+    if from_connection_point.connectsThrough:
+        raise RuntimeError("outlet connection point already connected")
 
-    from_medium = getattr(from_thing, "hasMedium", None)
+    if isinstance(to_connection_point, OutletConnectionPoint):
+        raise TypeError("connection point direction: {to_connection_point}")
+    if to_connection_point.connectsThrough:
+        raise RuntimeError("inlet connection point already connected")
+
+    from_medium = getattr(from_connection_point, "hasMedium", None)
     logging.info(f"    - from_medium: {from_medium}")
-    to_medium = getattr(to_thing, "hasMedium", None)
+    to_medium = getattr(to_connection_point, "hasMedium", None)
     logging.info(f"    - to_medium: {to_medium}")
 
-    if from_medium is not to_medium:
-        raise RuntimeError("no common connection type")
-
-    # link the two things together
-    from_thing._data_graph.add(
-        (
-            from_thing.isConnectionPointOf.node,
-            s223.connectedTo,
-            to_thing.isConnectionPointOf.node,
-        )
-    )
-    from_thing._data_graph.add(
-        (
-            to_thing.isConnectionPointOf.node,
-            s223.connectedFrom,
-            from_thing.isConnectionPointOf.node,
-        )
-    )
+    if from_medium and to_medium and (from_medium != to_medium):
+        raise RuntimeError(f"mismatched medium: {from_medium} != {to_medium}")
 
     # create a connection between the two
     connection = Connection()
     if from_medium:
         connection.hasMedium = from_medium
 
+    # link the two things together
+    from_connection_point._data_graph.add(
+        (
+            from_connection_point.isConnectionPointOf.node,
+            s223.connectedTo,
+            to_connection_point.isConnectionPointOf.node,
+        )
+    )
+    from_connection_point._data_graph.add(
+        (
+            to_connection_point.isConnectionPointOf.node,
+            s223.connectedFrom,
+            from_connection_point.isConnectionPointOf.node,
+        )
+    )
+
     # set the relationships
-    connect_mm(from_thing, connection)
-    connect_mm(connection, to_thing)
+    connect_mm(from_connection_point, connection)
+    connect_mm(connection, to_connection_point)
 
 
 @multimethod
 def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> None:
-    """
-    Connects from a connection point to a connection.
-    """
+    """ConnectionPoint >> Connection"""
+    logging.info(f"(4) connect from {connection_point} to {connection}")
+
     if isinstance(connection_point, InletConnectionPoint):
         raise TypeError("connection point direction")
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
+
+    # check medium
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - connection_medium: {connection_medium}")
+    connection_point_medium = getattr(connection_point, "hasMedium", None)
+    logging.info(f"    - connection_point_medium: {connection_point_medium}")
+
+    if (
+        connection_medium
+        and connection_point_medium
+        and (connection_medium != connection_point_medium)
+    ):
+        raise RuntimeError(
+            f"mismatched medium: {connection_medium} != {connection_point_medium}"
+        )
 
     # property based link
     connection_point.connectsThrough = connection
@@ -1513,22 +1514,34 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
 
 @multimethod
 def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:
-    """
-    Connects from this connection to a connection point.
-    """
+    """Connection >> ConnectionPoint"""
+    logging.info(f"(5) connect from {connection} to {connection_point}")
+
     if isinstance(connection_point, OutletConnectionPoint):
         raise TypeError("connection point direction")
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
 
+    # check medium
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - connection_medium: {connection_medium}")
+    connection_point_medium = getattr(connection_point, "hasMedium", None)
+    logging.info(f"    - connection_point_medium: {connection_point_medium}")
+
+    if (
+        connection_medium
+        and connection_point_medium
+        and (connection_medium != connection_point_medium)
+    ):
+        raise RuntimeError(
+            f"mismatched medium: {connection_medium} != {connection_point_medium}"
+        )
+
     # property based link
     connection_point.connectsThrough = connection
 
     # link connection to the connection point and its device
-    connection._data_graph.add(
-        (connection.node, s223.connectsAt, connection_point.node)
-    )
-    connection._data_graph.add(
+    connection_point._data_graph.add(
         (
             connection_point.isConnectionPointOf.node,
             s223.connectedThrough,
@@ -1536,8 +1549,539 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
         )
     )
     connection._data_graph.add(
+        (connection.node, s223.connectsAt, connection_point.node)
+    )
+    connection._data_graph.add(
         (connection.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
     )
+
+
+@multimethod
+def connect_mm(device: Device, system_connection_point: SystemConnectionPoint) -> None:
+    """Device >> SystemConnectionPoint"""
+    logging.info(f"connect from {device} to {system_connection_point}")
+
+    to_connection_point = system_connection_point.mapsTo
+    if not to_connection_point:
+        raise RuntimeError(
+            f"unmapped system connection point {system_connection_point}"
+        )
+
+    connect_mm(device, to_connection_point)
+
+
+@multimethod
+def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
+    """Device >> ConnectionPoint"""
+    logging.info(f"(3) connect from {device} to {connection_point}")
+
+    if connection_point.connectsThrough:
+        raise RuntimeError("connection point already connected")
+    to_medium = getattr(connection_point, "hasMedium", None)
+    logging.info(f"    - to_medium: {to_medium}")
+
+    # build a dict of outlet connection points that are not already connected
+    # that have the same medium
+    from_out = set()
+    for attr, cp in device._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if not isinstance(cp, OutletConnectionPoint):
+            continue
+
+        medium = getattr(cp, "hasMedium", None)
+        if medium == to_medium:
+            from_out.add(cp)
+    logging.info(f"    - from_out: {from_out}")
+
+    if not from_out:
+        raise RuntimeError(
+            f"no candidate sources from {from_thing.node} to {to_thing.node}"
+        )
+    if len(from_out) > 1:
+        raise RuntimeError("too many connection points")
+    from_thing = from_out.pop()
+    logging.info(f"    - from_thing: {from_thing}")
+
+    # link the two things together
+    from_thing._data_graph.add(
+        (
+            from_thing.isConnectionPointOf.node,
+            s223.connectedTo,
+            connection_point.isConnectionPointOf.node,
+        )
+    )
+    from_thing._data_graph.add(
+        (
+            connection_point.isConnectionPointOf.node,
+            s223.connectedFrom,
+            from_thing.isConnectionPointOf.node,
+        )
+    )
+
+    # set the relationships
+    connect_mm(from_thing, connection_point)
+
+
+@multimethod
+def connect_mm(device: Device, connection: Connection) -> None:
+    """Device >> Connection"""
+    logging.info(f"connect from {device} to {connection}")
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - to_medium: {connection_medium}")
+
+    # build a dict of outlet connection points that are not already connected
+    # that have the same medium
+    from_out = set()
+    for attr, connection_point in device._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if not isinstance(connection_point, OutletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        if medium == connection_medium:
+            from_out.add(connection_point)
+
+    if not from_out:
+        raise RuntimeError(
+            f"no candidate sources from {from_thing.node} to {to_thing.node}"
+        )
+    if len(from_out) > 1:
+        raise RuntimeError("too many connection points")
+    from_thing = from_out.pop()
+
+    # set the relationships
+    connect_mm(from_thing, connection)
+
+
+@multimethod
+def connect_mm(connection: Connection, device: Device) -> None:
+    """Connection >> Device"""
+    logging.info(f"(99) connect from {connection} to {device}")
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - to_medium: {connection_medium}")
+
+    # build a dict of outlet connection points that are not already connected
+    # that have the same medium
+    to_in = set()
+    for attr, connection_point in device._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if isinstance(connection_point, OutletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        if medium == connection_medium:
+            to_in.add(connection_point)
+    logging.info(f"    - to_in: %r", to_in)
+
+    if not to_in:
+        raise RuntimeError(f"no candidate destinations from {connection} to {device}")
+    if len(to_in) > 1:
+        raise RuntimeError("too many connection points")
+    to_thing = to_in.pop()
+    logging.info(f"    - to_thing: %r", to_thing)
+
+    # set the relationships
+    connect_mm(connection, to_thing)
+
+
+@multimethod
+def connect_mm(connection: Connection, devices: List[Device]) -> None:
+    """Connection >> [Device]"""
+    logging.info(f"connect from {connection} to {devices}")
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - to_medium: {connection_medium}")
+
+    for device in devices:
+        # build a dict of inlet connection points that are not already connected
+        # that have the same medium
+        to_in = set()
+        for attr, connection_point in device._connection_points.items():
+            if connection_point.connectsThrough:
+                continue
+            if isinstance(connection_point, OutletConnectionPoint):
+                continue
+
+            medium = getattr(connection_point, "hasMedium", None)
+            if medium == connection_medium:
+                to_in.add(connection_point)
+        logging.info(f"    - to_in: %r", to_in)
+
+        if not to_in:
+            raise RuntimeError(
+                f"no candidate destinations from {connection} to {device}"
+            )
+        if len(to_in) > 1:
+            raise RuntimeError("too many connection points")
+        to_thing = to_in.pop()
+        logging.info(f"    - to_thing: %r", to_thing)
+
+        # set the relationships
+        connect_mm(connection, to_thing)
+
+
+@multimethod
+def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
+    """ConnectionPoint >> Device"""
+    logging.info(f"connect from {connection_point} to {device}")
+    connection_point_medium = getattr(connection_point, "hasMedium", None)
+    logging.info(f"    - to_medium: {connection_point_medium}")
+
+    # build a dict of outlet connection points that are not already connected
+    # that have the same medium
+    to_in = set()
+    for attr, cp in device._connection_points.items():
+        if cp.connectsThrough:
+            continue
+        if isinstance(cp, OutletConnectionPoint):
+            continue
+
+        medium = getattr(cp, "hasMedium", None)
+        if medium == connection_point_medium:
+            to_in.add(cp)
+    logging.info(f"    - to_in: %r", to_in)
+
+    if not to_in:
+        raise RuntimeError(f"no candidate destinations from {connection} to {device}")
+    if len(to_in) > 1:
+        raise RuntimeError("too many connection points")
+    to_thing = to_in.pop()
+    logging.info(f"    - to_thing: %r", to_thing)
+
+    # set the relationships
+    connect_mm(connection_point, to_thing)
+
+
+@multimethod
+def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:
+    """Connection >> ConnectionPoint"""
+    logging.info(f"(1) connect from {connection} to {connection_point}")
+
+    if isinstance(connection_point, OutletConnectionPoint):
+        raise TypeError("connection point direction")
+    if connection_point.connectsThrough:
+        raise RuntimeError("connection point already connected")
+
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - connection_medium: {connection_medium}")
+    connection_point_medium = getattr(connection_point, "hasMedium", None)
+    logging.info(f"    - connection_point_medium: {connection_point_medium}")
+
+    if (
+        connection_medium
+        and connection_point_medium
+        and (connection_medium != connection_point_medium)
+    ):
+        raise RuntimeError(
+            f"mismatched medium: {connection_medium} != {connection_point_medium}"
+        )
+
+    # property based links
+    connection_point.isConnectionPointOf.connectsThrough = connection
+    connection_point._data_graph.add(
+        (
+            connection_point.isConnectionPointOf.node,
+            s223.connectedThrough,
+            connection.node,
+        )
+    )
+
+    # link connection to the connection point and its device
+    connection._data_graph.add(
+        (connection.node, s223.connectsAt, connection_point.node)
+    )
+    connection._data_graph.add(
+        (connection.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
+    )
+
+
+@multimethod
+def connect_mm(connection: Connection, system: System) -> None:
+    """Connection >> Device"""
+    logging.info(f"connect from {connection} to {system}")
+
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - connection_medium: {connection_medium}")
+
+    # build a dict of mapped inlet connection points that are not
+    # already connected, organized by medium
+    to_in = set()
+    for attr, system_connection_point in system._system_connection_points.items():
+        if isinstance(system_connection_point, OutletSystemConnectionPoint):
+            continue
+        connection_point = system_connection_point.mapsTo
+        if not connection_point:
+            continue
+        if connection_point.connectsThrough:
+            continue
+        if isinstance(connection_point, OutletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        if medium and connection_medium and (medium != connection_medium):
+            continue
+        to_in.add(connection_point)
+
+    if not to_in:
+        raise RuntimeError(f"no candidate destinations from {connection} to {system}")
+    if len(to_in) > 1:
+        raise RuntimeError("too many connection points")
+    to_thing = to_in.pop()
+    logging.info(f"    - to_thing: %r", to_thing)
+
+    # set the relationships
+    connect_mm(connection, to_thing)
+
+
+@multimethod
+def connect_mm(system: System, connection: Connection) -> None:
+    """System >> Connection"""
+    logging.info(f"connect from {system} to {connection}")
+
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - connection_medium: {connection_medium}")
+
+    # build a dict of mapped outlet connection points that are not
+    # already connected, organized by medium
+    from_out = set()
+    for attr, system_connection_point in system._system_connection_points.items():
+        if isinstance(system_connection_point, InletSystemConnectionPoint):
+            continue
+        connection_point = system_connection_point.mapsTo
+        if not connection_point:
+            continue
+        if connection_point.connectsThrough:
+            continue
+        if isinstance(connection_point, InletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        if medium and connection_medium and (medium != connection_medium):
+            continue
+        from_out.add(connection_point)
+
+    if not from_out:
+        raise RuntimeError(f"no candidate destinations from {system} to {connection}")
+    if len(from_out) > 1:
+        raise RuntimeError("too many connection points")
+    from_thing = from_out.pop()
+    logging.info(f"    - from_thing: %r", from_thing)
+
+    # set the relationships
+    connect_mm(from_thing, connection)
+
+
+@multimethod
+def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> None:
+    """ConnectionPoint >> Connection"""
+    logging.info(f"(2) connect from {connection_point} to {connection}")
+
+    if isinstance(connection_point, InletConnectionPoint):
+        raise TypeError("connection point direction")
+    if connection_point.connectsThrough:
+        raise RuntimeError("connection point already connected")
+
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - connection_medium: {connection_medium}")
+    connection_point_medium = getattr(connection_point, "hasMedium", None)
+    logging.info(f"    - connection_point_medium: {connection_point_medium}")
+
+    if (
+        connection_medium
+        and connection_point_medium
+        and (connection_medium != connection_point_medium)
+    ):
+        raise RuntimeError(
+            f"mismatched medium: {connection_medium} != {connection_point_medium}"
+        )
+
+    # property based links
+    connection_point.isConnectionPointOf.connectsThrough = connection
+    connection_point._data_graph.add(
+        (
+            connection_point.isConnectionPointOf.node,
+            s223.connectedThrough,
+            connection.node,
+        )
+    )
+
+    # link connection to the connection point and its device
+    connection._data_graph.add(
+        (connection.node, s223.connectsAt, connection_point.node)
+    )
+    connection._data_graph.add(
+        (connection.node, s223.connectsFrom, connection_point.isConnectionPointOf.node)
+    )
+
+
+@multimethod
+def connect_mm(
+    connection_point: ConnectionPoint, system_connection_point: SystemConnectionPoint
+) -> None:
+    """ConnectionPoint >> SystemConnectionPoint"""
+    logging.info(f"connect from {connection_point} to {system_connection_point}")
+
+    if isinstance(connection_point, InletConnectionPoint):
+        raise TypeError("connection point direction")
+    if connection_point.connectsThrough:
+        raise RuntimeError("connection point already connected")
+
+    to_connection_point = system_connection_point.mapsTo
+    if not to_connection_point:
+        raise RuntimeError(
+            f"unmapped system connection point {system_connection_point}"
+        )
+    if to_connection_point.connectsThrough:
+        raise RuntimeError("system connection point already connected")
+
+    # continue the process
+    connect_mm(connection_point, to_connection_point)
+
+
+@multimethod
+def connect_mm(device: Device, system: System) -> None:
+    """Device >> System"""
+    logging.info(f"connect from {device} to {system}")
+
+    # build a dict of outlet connection points that are not already connected
+    # that have the same medium
+    from_out = defaultdict(set)
+    for attr, connection_point in device._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if not isinstance(connection_point, OutletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        from_out[medium].add(connection_point)
+
+    # filter them to a set where there is only one for that medium so it
+    # would be unambiguous to use it
+    from_types: Set[Medium]
+    from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
+    if not from_types:
+        raise RuntimeError(f"no candidate sources from {device.node} to {system.node}")
+    logging.debug(f"    - from_types: {from_types}")
+
+    # build a dict of mapped inlet connection points that are not
+    # already connected, organized by medium
+    to_in = defaultdict(set)
+    for attr, system_connection_point in system._system_connection_points.items():
+        if not isinstance(system_connection_point, InletSystemConnectionPoint):
+            continue
+        connection_point = system_connection_point.mapsTo
+        if not connection_point:
+            continue
+        if connection_point.connectsThrough:
+            continue
+        if not isinstance(connection_point, InletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        to_in[medium].add(connection_point)
+
+    # filter them to a set where there is only one for that medium so it
+    # would be unambiguous to use it
+    to_types: Set[Medium]
+    to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
+    if not to_types:
+        raise RuntimeError(
+            f"no candidate destinations from {from_system.node} to {to_system.node}"
+        )
+    logging.debug(f"    - to_types: {to_types}")
+
+    # find the common medium
+    common_types = from_types.intersection(to_types)
+    if not common_types:
+        raise RuntimeError("no common connection types")
+    if len(common_types) > 1:
+        raise RuntimeError("too many common connection types")
+    medium = common_types.pop()
+    logging.debug(f"    - medium: {medium}")
+
+    # get the two connection points
+    from_connection_point = from_out[medium].pop()
+    to_connection_point = to_in[medium].pop()
+
+    # continue creating the connection
+    connect_mm(from_connection_point, to_connection_point)
+
+
+@multimethod
+def connect_mm(system: System, device: Device) -> None:
+    """System >> Device"""
+    logging.info(f"connect from {system} to {device}")
+
+    # build a dict of mapped outlet connection points that are not
+    # already connected, organized by medium
+    from_out = defaultdict(set)
+    for attr, system_connection_point in system._system_connection_points.items():
+        logging.debug(
+            f"    - attr, system_connection_point: {attr} {system_connection_point}"
+        )
+        if not isinstance(system_connection_point, OutletSystemConnectionPoint):
+            logging.debug(f"        - not a system outlet")
+            continue
+        connection_point = system_connection_point.mapsTo
+        if not connection_point:
+            logging.debug(f"        - not mapped")
+            continue
+        if connection_point.connectsThrough:
+            logging.debug(f"        - already connected")
+            continue
+        if not isinstance(connection_point, OutletConnectionPoint):
+            logging.debug(f"        - not an outlet")
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        from_out[medium].add(connection_point)
+    logging.debug(f"    - from_out: {from_out}")
+
+    # filter them to a set where there is only one for that medium so it
+    # would be unambiguous to use it
+    from_types: Set[Medium]
+    from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
+    if not from_types:
+        raise RuntimeError(f"no candidate sources from {system} to {device}")
+    logging.debug(f"    - from_types: {from_types}")
+
+    # build a dict of outlet connection points that are not already connected
+    # that have the same medium
+    to_in = defaultdict(set)
+    for attr, connection_point in device._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if not isinstance(connection_point, InletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        to_in[medium].add(connection_point)
+
+    # filter them to a set where there is only one for that medium so it
+    # would be unambiguous to use it
+    to_types: Set[Medium]
+    to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
+    if not to_types:
+        raise RuntimeError(f"no candidate destinations from {system} to {device}")
+    logging.debug(f"    - from_types: {from_types}")
+
+    # find the common medium
+    common_types = from_types.intersection(to_types)
+    if not common_types:
+        raise RuntimeError("no common connection types")
+    if len(common_types) > 1:
+        raise RuntimeError("too many common connection types")
+    medium = common_types.pop()
+    logging.debug(f"    - medium: {medium}")
+
+    # get the two connection points
+    from_connection_point = from_out[medium].pop()
+    to_connection_point = to_in[medium].pop()
+
+    # continue creating the connection
+    connect_mm(from_connection_point, to_connection_point)
 
 
 class InletConnectionPoint(ConnectionPoint):
@@ -1589,16 +2133,6 @@ class SystemConnectionPoint(Node):
 
         self.mapsTo = other
 
-    def __ge__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(self, other)
-        return self
-
-    def __le__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(other, self)
-        return self
-
 
 @multimethod
 def connect_mm(from_system: System, to_system: System) -> None:
@@ -1609,18 +2143,19 @@ def connect_mm(from_system: System, to_system: System) -> None:
     # already connected, organized by medium
     from_out = defaultdict(set)
     for attr, system_connection_point in from_system._system_connection_points.items():
-        if not isinstance(system_connection_point, OutletSystemConnectionPoint):
+        if isinstance(system_connection_point, InletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
         if not connection_point:
             continue
         if connection_point.connectsThrough:
             continue
-        if not isinstance(connection_point, OutletConnectionPoint):
+        if isinstance(connection_point, InletConnectionPoint):
             continue
 
         medium = getattr(connection_point, "hasMedium", None)
         from_out[medium].add(connection_point)
+    logging.debug(f"    - from_out: {from_out}")
 
     # filter them to a set where there is only one for that medium so it
     # would be unambiguous to use it
@@ -1636,18 +2171,19 @@ def connect_mm(from_system: System, to_system: System) -> None:
     # already connected, organized by medium
     to_in = defaultdict(set)
     for attr, system_connection_point in to_system._system_connection_points.items():
-        if not isinstance(system_connection_point, InletSystemConnectionPoint):
+        if isinstance(system_connection_point, OutletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
         if not connection_point:
             continue
         if connection_point.connectsThrough:
             continue
-        if not isinstance(connection_point, InletConnectionPoint):
+        if isinstance(connection_point, OutletConnectionPoint):
             continue
 
         medium = getattr(connection_point, "hasMedium", None)
         to_in[medium].add(connection_point)
+    logging.debug(f"    - to_in: {to_in}")
 
     # filter them to a set where there is only one for that medium so it
     # would be unambiguous to use it
@@ -1681,7 +2217,14 @@ def connect_mm(
     system_connection_point: SystemConnectionPoint, connection: Connection
 ) -> None:
     """SystemConnectionPoint >> Connection"""
-    raise NotImplementedError("SystemConnectionPoint >> Connection")
+    from_connection_point = system_connection_point.mapsTo
+    if not from_connection_point:
+        raise RuntimeError(
+            f"unmapped system connection point {system_connection_point}"
+        )
+
+    # continue the process
+    connect_mm(from_connection_point, connection)
 
 
 @multimethod
@@ -1689,7 +2232,29 @@ def connect_mm(
     connection: Connection, system_connection_point: SystemConnectionPoint
 ) -> None:
     """Connection >> SystemConnectionPoint"""
-    raise NotImplementedError("Connection >> SystemConnectionPoint")
+    to_connection_point = system_connection_point.mapsTo
+    if not to_connection_point:
+        raise RuntimeError(
+            f"unmapped system connection point {system_connection_point}"
+        )
+
+    # continue the process
+    connect_mm(connection, to_connection_point)
+
+
+@multimethod
+def connect_mm(
+    system_connection_point: SystemConnectionPoint, connection_point: ConnectionPoint
+) -> None:
+    """SystemConnectionPoint >> ConnectionPoint"""
+    from_connection_point = system_connection_point.mapsTo
+    if not from_connection_point:
+        raise RuntimeError(
+            f"unmapped system connection point {from_system_connection_point}"
+        )
+
+    # continue the process
+    connect_mm(from_connection_point, connection_point)
 
 
 @multimethod
@@ -1784,14 +2349,14 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # already connected, organized by medium
     from_out = defaultdict(set)
     for attr, system_connection_point in from_system._system_connection_points.items():
-        if not isinstance(system_connection_point, OutletSystemConnectionPoint):
+        if isinstance(system_connection_point, InletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
         if not connection_point:
             continue
         if connection_point.connectsThrough:
             continue
-        if not isinstance(connection_point, OutletConnectionPoint):
+        if isinstance(connection_point, InletConnectionPoint):
             continue
 
         medium = getattr(connection_point, "hasMedium", None)
@@ -1810,15 +2375,15 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     to_in = defaultdict(set)
-    for attr, system_connection_point in to_zone._system_connection_points.items():
-        if not isinstance(system_connection_point, InletSystemConnectionPoint):
+    for attr, system_connection_point in to_zone._zone_connection_points.items():
+        if isinstance(system_connection_point, OutletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
         if not connection_point:
             continue
         if connection_point.connectsThrough:
             continue
-        if not isinstance(connection_point, InletConnectionPoint):
+        if isinstance(connection_point, OutletConnectionPoint):
             continue
 
         medium = getattr(connection_point, "hasMedium", None)
@@ -1853,6 +2418,43 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     from_system._data_graph.add((from_system.node, s223.servesZone, to_zone.node))
     if INCLUDE_INVERSE:
         from_system._data_graph.add((to_zone.node, s223.isServedBy, from_system.node))
+
+
+@multimethod
+def connect_mm(zone: Zone, connection: Connection) -> None:
+    """Zone >> Connection"""
+    logging.info(f"connect from {zone} to {connection}")
+
+    connection_medium = getattr(connection, "hasMedium", None)
+    logging.info(f"    - connection_medium: {connection_medium}")
+
+    # build a dict of mapped outlet connection points that are not
+    # already connected, organized by medium
+    from_out = set()
+    for attr, zone_connection_point in zone._zone_connection_points.items():
+        if isinstance(zone_connection_point, InletSystemConnectionPoint):
+            continue
+        connection_point = zone_connection_point.mapsTo
+        if not connection_point:
+            continue
+        if connection_point.connectsThrough:
+            continue
+        if isinstance(connection_point, InletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        if medium and connection_medium and (medium != connection_medium):
+            continue
+        from_out.add(connection_point)
+
+    if len(from_out) > 1:
+        raise RuntimeError("too many source connection points")
+
+    # get the two connection points
+    connection_point = from_out.pop()
+
+    # continue the connection
+    connect_mm(connection_point, connection)
 
 
 @multimethod
@@ -1899,16 +2501,6 @@ class ZoneConnectionPoint(Node):
             raise TypeError("ConnectionPoint expected")
 
         self.mapsTo = other
-
-    def __ge__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(self, other)
-        return self
-
-    def __le__(self, other: Any) -> Any:
-        """connect multimethod"""
-        connect_mm(other, self)
-        return self
 
 
 @multimethod
@@ -1996,6 +2588,7 @@ def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> Non
 
 @multimethod
 def contains_mm(physical_space: PhysicalSpace, thing_list: List[Node]) -> None:
+    """PhysicalSpace >> List[Union[PhysicalSpace,DomainSpace]]"""
     logging.info(
         f"physical space {physical_space} contains list of things {thing_list}"
     )
@@ -2008,7 +2601,7 @@ def contains_mm(physical_space: PhysicalSpace, thing_list: List[Node]) -> None:
         contains_mm(physical_space, thing)
 
 
-def connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
+def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) -> None:
     """
     Find an unambiguous way to connect to things together.
     """
@@ -2334,3 +2927,39 @@ def contains_mm(zone: Zone, domain_spaces: List[DomainSpace]) -> None:
 
     for domain_space in domain_spaces:
         contains_mm(zone, domain_space)
+
+
+@multimethod
+def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> None:
+    """DomainSpace >> ConnectionPoint"""
+    logging.info(f"connect from {domain_space} to {connection_point}")
+
+    if connection_point.connectsThrough:
+        raise RuntimeError("connection point already connected")
+    to_medium = getattr(connection_point, "hasMedium", None)
+    logging.info(f"    - to_medium: {to_medium}")
+
+    # build a dict of outlet connection points that are not already connected
+    # that have the same medium
+    from_out = set()
+    for attr, cp in domain_space._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if isinstance(cp, InletConnectionPoint):
+            continue
+
+        medium = getattr(cp, "hasMedium", None)
+        if medium == to_medium:
+            from_out.add(cp)
+    logging.info(f"    - from_out: {from_out}")
+
+    if not from_out:
+        raise RuntimeError(
+            f"no candidate sources from {from_thing.node} to {to_thing.node}"
+        )
+    if len(from_out) > 1:
+        raise RuntimeError("too many connection points")
+    from_thing = from_out.pop()
+    logging.info(f"    - from_thing: {from_thing}")
+
+    connect_mm(from_thing, connection_point)

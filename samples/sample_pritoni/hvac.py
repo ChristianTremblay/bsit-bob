@@ -106,7 +106,7 @@ hd.window2.hasPhysicalLocation = ps.openoffice
 openoffice_windows >> hs.openoffice_hvac.windows
 
 # Exhaust Fan
-hd.bathroom_exhaust_fan.airInlet << hs.bathroom_hvac
+hd.bathroom_exhaust_fan.airInlet << hs.bathroom_hvac.ductAirOutlet
 hd.bathroom_exhaust_fan.airOutlet >> outdoor
 
 

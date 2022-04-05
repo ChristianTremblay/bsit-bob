@@ -8,6 +8,6 @@ from multiprocessing import connection
 from typing import Dict, Any, Union, TypeVar
 from rdflib import URIRef
 
-__version__ = "0.36"
+__version__ = "0.37"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
