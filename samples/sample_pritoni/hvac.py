@@ -81,7 +81,9 @@ hd.ahu["MADPR"] >> mixedAir
 mixedAir >> hd.ahu["FILTER"] >> hd.ahu["HTGCOIL"] >> hd.ahu["CLGCOIL"] >> hd.ahu[
     "SF"
 ] >> supplyAir
-returnAir >> hd.ahu["RF"] >> returnExhaut >> hd.ahu["EADPR"] >> outdoor
+hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"] >> returnExhaut >> hd.ahu[
+    "EADPR"
+] >> outdoor
 returnExhaut >> hd.ahu["MADPR"]
 
 # AHU Sensors
