@@ -38,7 +38,7 @@ corridorNorth_doors = AirConnection(
 # My model of spaces include 1 input for doors, 1 input for Windows, etc... if there are multiple of those, use a connection.
 hs.kitchenette_hvac.doors >> hs.corridorSouth_hvac.doors
 hs.corridorSouth_hvac.airTransfer >> hs.corridorNorth_hvac.airTransfer
-
+hs.corridorNorth_hvac.doors >> corridorNorth_doors
 hs.privateoffice_hvac.doors >> corridorNorth_doors
 hs.bathroom_hvac.doors >> corridorNorth_doors
 hs.openoffice_hvac.doors >> corridorNorth_doors
