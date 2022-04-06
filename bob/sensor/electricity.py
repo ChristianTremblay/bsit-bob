@@ -1,20 +1,21 @@
-from ..properties.states import OnOffStatus
-from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
-from rdflib import URIRef
 from typing import Any
+
+from rdflib import URIRef
+
 from ..core import (
+    Air,
     Electricity,
+    Medium,
+    Node,
+    PropertyReference,
+    Water,
     quantitykind,
     s223,
     unit,
-    Medium,
-    Air,
-    Water,
-    PropertyReference,
-    Node,
 )
-
+from ..properties.states import OnOffStatus
 from ..property import ObservableProperty, QuantifiableProperty
+from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
 
 __namespace__ = s223
 

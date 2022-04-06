@@ -4,25 +4,23 @@ Figure A-10
 
 from __future__ import annotations
 
-from typing import Any
 from pathlib import Path
+from typing import Any
 
-from bob.core import bind_model_namespace, Junction, System, dump
+from header import g36_header
 
-from bob.devices.hvac.damper import Damper
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
 from bob.connections.air import (
     AirConnection,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-
+from bob.core import Junction, System, bind_model_namespace, dump
+from bob.devices.hvac.damper import Damper
+from bob.devices.hvac.fan import Fan
+from bob.devices.hvac.filter import Filter
 from bob.systems.archives.coolingcoil import ChilledWaterCoil2
 from bob.systems.archives.heatingcoil import HotWaterCoil2
-
-from header import g36_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(

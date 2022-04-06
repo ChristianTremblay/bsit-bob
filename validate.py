@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import glob
+import logging
 import os
 import sys
-import logging
-import glob
 
-from rdflib import Graph, Namespace, OWL, RDF, RDFS, SH
 from pyshacl.validate import Validator
+from rdflib import OWL, RDF, RDFS, SH, Graph, Namespace
 
 logging.basicConfig(level=logging.WARNING)
 

@@ -1,17 +1,19 @@
-from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
-from rdflib import URIRef
 from typing import Any
-from ..core import (
-    ExternalReference,
-    quantitykind,
-    p223,
-    unit,
-    Medium,
-    Light,
-    PropertyReference,
-)
+
+from rdflib import URIRef
 
 from bob import core
+
+from ..core import (
+    ExternalReference,
+    Light,
+    Medium,
+    PropertyReference,
+    p223,
+    quantitykind,
+    unit,
+)
+from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
 
 __namespace__ = p223
 

@@ -1,13 +1,14 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, dump
-from bob.devices.lighting.light import *
-from bob.connections.light import *
-from bob.externalreference.bacnet import BACnetReference
-from bob.sensor.movement import OccupancySensor, MovementSensor
-from bob.properties.light import RelativeLuminousFlux
 import lighting_spaces as ls
 import physical_spaces as ps
+
+from bob.connections.light import *
+from bob.core import bind_model_namespace, dump
+from bob.devices.lighting.light import *
+from bob.externalreference.bacnet import BACnetReference
+from bob.properties.light import RelativeLuminousFlux
+from bob.sensor.movement import MovementSensor, OccupancySensor
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

@@ -10,7 +10,8 @@ from bob.connections.occupancy import (
     OccupancyInletConnectionPoint,
     OccupancyInletZoneConnectionPoint,
 )
-from ..core import DomainSpace, Lighting, p223, Zone, s223, Medium, Light
+
+from ..core import DomainSpace, Light, Lighting, Medium, Zone, p223, s223
 from ..systems.physic import IndoorAir
 
 __namespace__ = p223

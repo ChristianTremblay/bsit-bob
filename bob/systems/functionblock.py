@@ -1,9 +1,10 @@
 from rdflib import URIRef
+
 from ..connections.air import (
     AirBidirectionalConnectionPoint,
     AirInletConnectionPoint,
-    AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
 from ..core import (
@@ -11,11 +12,11 @@ from ..core import (
     InletConnectionPoint,
     Outlet,
     OutletConnectionPoint,
-    System,
-    p223,
-    enum,
     Property,
+    System,
     SystemConnectionPoint,
+    enum,
+    p223,
 )
 from ..property import ObservableProperty, QuantifiableObservableProperty
 

@@ -1,9 +1,19 @@
-import logging
-from typing import List, Union, Any
-
-from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
-from .core import ExternalReference, logging, s223, Property, qudt, quantitykind, unit
 import decimal
+import logging
+from typing import Any, List, Union
+
+from rdflib import (
+    RDF,
+    RDFS,
+    XSD,
+    BNode,
+    Graph,
+    Literal,  # type: ignore
+    Namespace,
+    URIRef,
+)
+
+from .core import ExternalReference, Property, logging, quantitykind, qudt, s223, unit
 
 __namespace__ = s223
 

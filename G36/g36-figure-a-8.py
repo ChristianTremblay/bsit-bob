@@ -4,10 +4,11 @@ Figure A-8
 
 from __future__ import annotations
 
-from typing import Any
 from pathlib import Path
+from typing import Any
 
-from bob.core import bind_model_namespace, Device, System, dump
+from header import g36_header
+
 from bob.connections.air import (
     AirConnection,
     AirInletConnectionPoint,
@@ -15,9 +16,8 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+from bob.core import Device, System, bind_model_namespace, dump
 from bob.signal import AnalogIn, AnalogOut
-
-from header import g36_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(

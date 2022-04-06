@@ -4,16 +4,16 @@ Bob the SI-WG Builder
 
 from __future__ import annotations
 
-import os
-import io
-import sys
-from collections import defaultdict, Counter
-import logging
 import inspect
-
+import io
+import logging
+import os
+import sys
+from collections import Counter, defaultdict
 from typing import Any, Dict, List, Optional, Set, TextIO, Tuple, TypeVar, Union, cast
 
-from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
+from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
+
 from .multimethods import multimethod, new_class
 
 T = TypeVar("T")
@@ -1598,9 +1598,7 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
     logging.info(f"    - from_out: {from_out}")
 
     if not from_out:
-        raise RuntimeError(
-            f"no candidate sources from {device} to {connection_point}"
-        )
+        raise RuntimeError(f"no candidate sources from {device} to {connection_point}")
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
     from_thing = from_out.pop()
@@ -1647,9 +1645,7 @@ def connect_mm(device: Device, connection: Connection) -> None:
             from_out.add(connection_point)
 
     if not from_out:
-        raise RuntimeError(
-            f"no candidate sources from {device} to {connection}"
-        )
+        raise RuntimeError(f"no candidate sources from {device} to {connection}")
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
     from_thing = from_out.pop()
@@ -1992,9 +1988,7 @@ def connect_mm(device: Device, system: System) -> None:
     to_types: Set[Medium]
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
-        raise RuntimeError(
-            f"no candidate destinations from {device} to {system}"
-        )
+        raise RuntimeError(f"no candidate destinations from {device} to {system}")
     logging.debug(f"    - to_types: {to_types}")
 
     # find the common medium
@@ -2167,9 +2161,7 @@ def connect_mm(from_system: System, to_system: System) -> None:
     from_types: Set[Medium]
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
-        raise RuntimeError(
-            f"no candidate sources from {from_system} to {to_system}"
-        )
+        raise RuntimeError(f"no candidate sources from {from_system} to {to_system}")
     logging.debug(f"    - from_types: {from_types}")
 
     # build a dict of mapped outlet connection points that are not
@@ -2274,7 +2266,9 @@ def connect_mm(
     to_system_connection_point: SystemConnectionPoint,
 ) -> None:
     """SystemConnectionPoint >> SystemConnectionPoint"""
-    logging.info(f"connect from {system_connection_point} to {to_system_connection_point}")
+    logging.info(
+        f"connect from {system_connection_point} to {to_system_connection_point}"
+    )
 
     from_connection_point = from_system_connection_point.mapsTo
     if not from_connection_point:
@@ -2380,9 +2374,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     from_types: Set[Medium]
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
-        raise RuntimeError(
-            f"no candidate sources from {from_system} to {to_zone}"
-        )
+        raise RuntimeError(f"no candidate sources from {from_system} to {to_zone}")
     logging.debug(f"    - from_types: {from_types}")
 
     # build a dict of mapped outlet connection points that are not
@@ -2407,9 +2399,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     to_types: Set[Medium]
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
-        raise RuntimeError(
-            f"no candidate destinations from {from_system} to {to_zone}"
-        )
+        raise RuntimeError(f"no candidate destinations from {from_system} to {to_zone}")
     logging.debug(f"    - to_types: {to_types}")
 
     # find the common medium
@@ -2539,7 +2529,9 @@ def connect_mm(
     to_zone_connection_point: ZoneConnectionPoint,
 ) -> None:
     """ZoneConnectionPoint >> ZoneConnectionPoint"""
-    logging.info(f"connect from {from_zone_connection_point} to {to_zone_connection_point}")
+    logging.info(
+        f"connect from {from_zone_connection_point} to {to_zone_connection_point}"
+    )
 
     from_connection_point = from_zone_connection_point.mapsTo
     if not from_connection_point:
@@ -2605,9 +2597,7 @@ def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> Non
 @multimethod
 def contains_mm(physical_space: PhysicalSpace, thing_list: List[Node]) -> None:
     """PhysicalSpace >> List[Union[PhysicalSpace,DomainSpace]]"""
-    logging.info(
-        f"physical space {physical_space} contains/encloses list {thing_list}"
-    )
+    logging.info(f"physical space {physical_space} contains/encloses list {thing_list}")
 
     ###TODO: the signature should be thing_list: List[Union[PhysicalSpace,DomainSpace]]
 

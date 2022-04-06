@@ -11,20 +11,18 @@ This one, I try to model the space with
 """
 from pathlib import Path
 
-from bob.core import (
-    bind_model_namespace,
-    dump,
-)
+from header import sample_header
+
 from bob.connections.air import (
     AirConnection,
     AirConnectionPoint,
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
 )
+from bob.core import bind_model_namespace, dump
+from bob.devices.hvac.coil import ElectricalHeatingCoil, ElectricalRadiantHeatingCoil
 from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.physical import Building, Roof, Floor, Office
-from bob.devices.hvac.coil import ElectricalRadiantHeatingCoil, ElectricalHeatingCoil
-from header import sample_header
+from bob.space.physical import Building, Floor, Office, Roof
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

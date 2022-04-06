@@ -1,10 +1,9 @@
 from pathlib import Path
 
-from bob.core import qudt, quantitykind, bind_model_namespace, Device, dump, unit
-from bob.property import QuantifiableObservableProperty
-from bob.property import QuantifiableProperty
-
 from header import sample_header
+
+from bob.core import Device, bind_model_namespace, dump, quantitykind, qudt, unit
+from bob.property import QuantifiableObservableProperty, QuantifiableProperty
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

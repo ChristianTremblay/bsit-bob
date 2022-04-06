@@ -1,7 +1,8 @@
-from bob.core import bind_model_namespace, dump
-from bob.core import Junction
 from pathlib import Path
+
 from header import ttl_test_header
+
+from bob.core import Junction, bind_model_namespace, dump
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

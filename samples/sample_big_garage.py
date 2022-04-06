@@ -5,20 +5,18 @@ In each lighting space there is a movement detector for each set of lights
 """
 from pathlib import Path
 
-from bob.core import bind_model_namespace, dump
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.light import LightingSpace
-from bob.space.physical import Building, Roof, Floor, Office
-
-from bob.devices.lighting.light import Luminaire
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.coil import ElectricalHeatingCoil
+from header import sample_header
 
 from bob.connections.electricity import ElectricalInletConnectionPoint
-
+from bob.core import bind_model_namespace, dump
+from bob.devices.hvac.coil import ElectricalHeatingCoil
+from bob.devices.hvac.fan import Fan
+from bob.devices.lighting.light import Luminaire
 from bob.sensor.movement import MovementSensor
 from bob.sensor.temperature import AirTemperatureSensor
-from header import sample_header
+from bob.space.hvac import HVACSpace, HVACZone
+from bob.space.light import LightingSpace
+from bob.space.physical import Building, Floor, Office, Roof
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

@@ -1,4 +1,4 @@
-from rdflib import URIRef, Literal
+from rdflib import Literal, URIRef
 
 from ..core import ExternalReference, p223
 

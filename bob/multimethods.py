@@ -7,12 +7,11 @@
 
 from __future__ import annotations
 
-import itertools
 import inspect
+import itertools
 import logging
 from collections import Counter
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union, get_origin
-
 
 __all__ = ["multimethod"]
 

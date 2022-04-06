@@ -1,19 +1,11 @@
 from pathlib import Path
 
-from bob.core import (
-    bind_model_namespace,
-    dump,
-)
-from bob.connections import (
-    ChilledWaterConnection,
-)
-from bob.connections.electricity import ElectricalInletConnectionPoint
-
-from bob.devices.hvac import Fan, ChilledWaterCoil
-from pathlib import Path
-
 from header import ttl_test_header
 
+from bob.connections import ChilledWaterConnection
+from bob.connections.electricity import ElectricalInletConnectionPoint
+from bob.core import bind_model_namespace, dump
+from bob.devices.hvac import ChilledWaterCoil, Fan
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

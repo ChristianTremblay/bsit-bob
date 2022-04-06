@@ -1,8 +1,9 @@
-from bob.core import bind_model_namespace, dump
-from bob.core import Device, ConnectionPoint, Connection
-from bob import core
 from pathlib import Path
+
 from header import ttl_test_header
+
+from bob import core
+from bob.core import Connection, ConnectionPoint, Device, bind_model_namespace, dump
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

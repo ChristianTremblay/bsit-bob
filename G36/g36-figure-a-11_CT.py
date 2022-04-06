@@ -1,41 +1,46 @@
 from pathlib import Path
+
+from header import g36_header
+
 from bob.connections.air import AirConnection
 from bob.connections.electricity import (
-    OnOffSignalSystemInletConnectionPoint,
-    OnOffSignalSystemOutletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
     EthernetBidirectionalConnectionPoint,
     EthernetBidirectionalSystemConnectionPoint,
     ModulationSignalInletConnectionPoint,
     ModulationSignalSystemConnectionPoint,
+    OnOffSignalSystemInletConnectionPoint,
+    OnOffSignalSystemOutletConnectionPoint,
     RS485BidirectionalSystemConnectionPoint,
 )
 from bob.connections.light import LightVisibleOutletSystemConnectionPoint
 from bob.connections.water import (
     HotWaterConnection,
-    WaterConnection,
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
+    WaterConnection,
 )
-from bob.core import BidirectionalSystemConnectionPoint, System, bind_model_namespace
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.vfd import VFD
-from bob.devices.hvac.filter import Filter
+from bob.core import (
+    BidirectionalSystemConnectionPoint,
+    System,
+    bind_model_namespace,
+    clear,
+    connect_mm,
+    contains_mm,
+    dump,
+)
 from bob.devices.hvac.coil import HotWaterCoil
-from bob.devices.hvac.valve import TwoWayValve
+from bob.devices.hvac.fan import Fan
+from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.stats import HighStaticPressureStat
+from bob.devices.hvac.valve import TwoWayValve
+from bob.devices.hvac.vfd import VFD
 from bob.externalreference.bacnet import BACnetReference
 from bob.sensor.fire import SmokeDetectionSensor
-
 from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor
-
-from bob.systems.hvac.g36 import G36Block, AnalogIn, AnalogOut, BinaryIn, BinaryOut
-
-from bob.core import clear, dump, contains_mm, connect_mm
-
-from header import g36_header
+from bob.systems.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(

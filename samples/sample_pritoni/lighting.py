@@ -1,11 +1,11 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, dump
-
+import hvac_devices as hd
 import lighting_devices as ld
 import lighting_spaces as ls
 import physical_spaces as ps
-import hvac_devices as hd
+
+from bob.core import bind_model_namespace, dump
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

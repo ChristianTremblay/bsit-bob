@@ -9,11 +9,10 @@ and prompt for SPARQL queries.
 
 import argparse
 import sys
-from rdflib import Graph, Namespace, URIRef, RDF, RDFS, OWL
+
 import owlrl
-
 import pyparsing
-
+from rdflib import OWL, RDF, RDFS, Graph, Namespace, URIRef
 
 # build a parser for the command line arguments
 parser = argparse.ArgumentParser(

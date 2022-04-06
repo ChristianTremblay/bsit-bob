@@ -1,14 +1,16 @@
 from typing import Any
 
-from ...core import s223, Device
-
+from rdflib import URIRef
 
 from ...connections.air import (
+    AirBidirectionalConnectionPoint,
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
-    AirBidirectionalConnectionPoint,
 )
-
+from ...connections.electricity import (
+    ElectricalInletConnectionPoint,
+    ElectricalOutletConnectionPoint,
+)
 from ...connections.water import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
@@ -17,13 +19,7 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-
-from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    ElectricalOutletConnectionPoint,
-)
-
-from rdflib import URIRef
+from ...core import Device, s223
 from ...signal import AnalogIn
 
 __namespace__ = s223

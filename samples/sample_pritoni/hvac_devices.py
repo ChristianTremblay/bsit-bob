@@ -1,24 +1,24 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, dump
+import hvac_spaces as hs
+
 from bob.connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
+from bob.core import bind_model_namespace, dump
+from bob.devices.electricity.starter import MotorStarter
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.damper import ElectricalActuatedDamper, Window
-from bob.devices.hvac.vfd import VFD
+from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.stats import AirDifferentialStaticPressureSensor
-from bob.devices.electricity.starter import MotorStarter
+from bob.devices.hvac.vfd import VFD
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
-
-import hvac_spaces as hs
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

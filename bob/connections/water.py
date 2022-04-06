@@ -1,18 +1,18 @@
 from rdflib import URIRef
-from ..core import s223, p223
 
 from ..core import (
-    Medium,
-    Water,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
-    OutletConnectionPoint,
-    SystemConnectionPoint,
     InletSystemConnectionPoint,
+    Medium,
+    OutletConnectionPoint,
     OutletSystemConnectionPoint,
+    SystemConnectionPoint,
+    Water,
+    p223,
+    s223,
 )
-
 from ..signal import AnalogIn, AnalogOut
 
 __namespace__ = s223

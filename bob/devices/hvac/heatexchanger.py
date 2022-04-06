@@ -1,33 +1,27 @@
 from typing import Any
 
-from ...core import s223, Device, p223
-
+from rdflib import URIRef
 
 from ...connections.air import (
+    AirBidirectionalConnectionPoint,
     AirConnection,
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
-    AirBidirectionalConnectionPoint,
     CompressedAirInletConnectionPoint,
-    AirConnection,
 )
-
+from ...connections.electricity import (
+    ElectricalInletConnectionPoint,
+    ElectricalOutletConnectionPoint,
+)
 from ...connections.water import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
 )
-
-from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    ElectricalOutletConnectionPoint,
-)
-
-from .damper import PneumaticDamper
-
-from rdflib import URIRef
+from ...core import Device, p223, s223
 from ...signal import AnalogIn
+from .damper import PneumaticDamper
 
 __namespace__ = s223
 

@@ -1,13 +1,14 @@
+from pathlib import Path
+
+from header import ttl_test_header
+
 from bob.core import bind_model_namespace, dump
 from bob.devices.hvac.boiler import (
-    HotWaterBoiler,
     ElectricalHotWaterBoiler,
+    HotWaterBoiler,
     NaturalGasHotWaterBoiler,
 )
-from bob.devices.hvac.coil import HotWaterCoil, ChilledWaterCoil, ElectricalHeatingCoil
-
-from pathlib import Path
-from header import ttl_test_header
+from bob.devices.hvac.coil import ChilledWaterCoil, ElectricalHeatingCoil, HotWaterCoil
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

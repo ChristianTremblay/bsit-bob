@@ -1,21 +1,22 @@
-from rdflib import URIRef
 from typing import Dict
-from ...core import ConnectionPoint, s223, p223, Device, Property
+
+from rdflib import URIRef
 
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
 )
-from ...signal import AnalogIn, AnalogOut
+from ...core import ConnectionPoint, Device, Property, p223, s223
 from ...properties import (
-    Amps,
-    ElectricPowerkW,
-    PowerFactor,
-    OnOffStatus,
     HP,
     RPM,
+    Amps,
+    ElectricPowerkW,
+    OnOffStatus,
     Percent,
+    PowerFactor,
 )
+from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = p223
 

@@ -1,6 +1,4 @@
-from ...sensor.pressure import AirDifferentialStaticPressureSensor
-from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
-from ...sensor.humidity import AirHumiditySensor
+from bob.core import Device, Property, p223, s223
 
 from ...connections.electricity import (
     ModulationSignalOutletConnectionPoint,
@@ -8,8 +6,9 @@ from ...connections.electricity import (
     OnOffSignalOutletConnectionPoint,
     RS485BidirectionalConnectionPoint,
 )
-
-from bob.core import s223, p223, Device, Property
+from ...sensor.humidity import AirHumiditySensor
+from ...sensor.pressure import AirDifferentialStaticPressureSensor
+from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 
 __namespace__ = p223
 

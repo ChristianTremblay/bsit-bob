@@ -1,4 +1,4 @@
-from .core import bind_namespace, Property
+from .core import Property, bind_namespace
 
 __namespace__ = bind_namespace(
     "g36", "http://data.ashrae.org/standard223/1.0/extension/g36#"

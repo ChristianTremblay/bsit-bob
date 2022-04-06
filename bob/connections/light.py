@@ -1,21 +1,23 @@
 from rdflib import URIRef
 
 from ..core import (
+    BidirectionalConnectionPoint,
+    BidirectionalSystemConnectionPoint,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
     InletSystemConnectionPoint,
+    InletZoneConnectionPoint,
+    Light,
+    Medium,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
-    BidirectionalConnectionPoint,
-    Medium,
+    OutletZoneConnectionPoint,
     SystemConnectionPoint,
     ZoneConnectionPoint,
-    InletZoneConnectionPoint,
-    OutletZoneConnectionPoint,
-    BidirectionalSystemConnectionPoint,
+    enum,
+    s223,
 )
-from ..core import s223, enum, Light
 from ..signal import AnalogIn, AnalogOut
 
 __namespace__ = s223

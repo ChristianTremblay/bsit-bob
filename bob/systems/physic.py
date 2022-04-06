@@ -9,17 +9,17 @@ are physically distinct and mechanically separable from other portions of the sy
 """
 
 from rdflib import URIRef
+
 from ..connections.air import (
     AirBidirectionalConnectionPoint,
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-    AirInletSystemConnectionPoint,
-    AirOutletSystemConnectionPoint,
     AirBidirectionalSystemConnectionPoint,
+    AirInletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
+    AirOutletSystemConnectionPoint,
 )
-from ..core import System, p223, s223, Medium, Air
+from ..core import Air, Medium, System, p223, s223
 from ..property import QuantifiableObservableProperty
-
 
 __namespace__ = p223
 

@@ -1,13 +1,12 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, dump
-from bob.properties.states import OnOffStatus
-from bob.systems.occupancy.occupancy import OccupancyControl
-from bob.connections.occupancy import *
-from bob.core import Node, PropertyReference, p223
-from bob.properties.states import OccupancyStatus
-import lighting_spaces as ls
 import lighting_devices as ld
+import lighting_spaces as ls
+
+from bob.connections.occupancy import *
+from bob.core import Node, PropertyReference, bind_model_namespace, dump, p223
+from bob.properties.states import OccupancyStatus, OnOffStatus
+from bob.systems.occupancy.occupancy import OccupancyControl
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

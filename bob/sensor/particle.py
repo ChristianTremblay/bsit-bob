@@ -1,26 +1,25 @@
 from __future__ import annotations
 
 from typing import Any
+
 from rdflib import URIRef, util
 
 from ..core import (
+    Air,
+    Medium,
     PropertyReference,
-    p223,
+    Substance,
     enum,
+    p223,
     quantitykind,
     unit,
-    Medium,
-    Air,
-    Substance,
 )
-
-from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
-
 from ..property import (
     ObservableProperty,
-    QuantifiableProperty,
     QuantifiableObservableProperty,
+    QuantifiableProperty,
 )
+from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
 
 __namespace__ = p223
 

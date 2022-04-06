@@ -4,36 +4,35 @@ Dual Duct AHU
 
 from __future__ import annotations
 
-from typing import Any
 from pathlib import Path
-from bob.connections.electricity import (
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
-)
+from typing import Any
 
-from bob.core import bind_model_namespace, Junction, System, dump, quantitykind, unit
+from header import lbnl_header
+
 from bob.connections.air import (
     AirConnection,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+from bob.connections.electricity import (
+    Electricity_575V_60HzInletConnectionPoint,
+    Electricity_575V_60HzOutletConnectionPoint,
+)
+from bob.core import Junction, System, bind_model_namespace, dump, quantitykind, unit
 from bob.devices.hvac.damper import Damper
 from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.vfd import VFD
 from bob.devices.hvac.filter import Filter
-
-from bob.sensor.pressure import AirDifferentialStaticPressureSensor
-from bob.sensor.humidity import AirHumiditySensor
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
+from bob.devices.hvac.vfd import VFD
 from bob.property import QuantifiableObservableProperty
-
-# not sure of the difference between differential pressure and differential static pressure in this case
-
+from bob.sensor.flow import AirFlowSensor
+from bob.sensor.humidity import AirHumiditySensor
+from bob.sensor.pressure import AirDifferentialStaticPressureSensor
+from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.systems.archives.coolingcoil import ChilledWaterCoil2
 from bob.systems.archives.heatingcoil import HotWaterCoil2
 
-from header import lbnl_header
+# not sure of the difference between differential pressure and differential static pressure in this case
+
 
 model_name = Path(__file__).stem
 __namespace__ = ex = bind_model_namespace(

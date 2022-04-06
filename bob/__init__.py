@@ -5,7 +5,8 @@
 #
 
 from multiprocessing import connection
-from typing import Dict, Any, Union, TypeVar
+from typing import Any, Dict, TypeVar, Union
+
 from rdflib import URIRef
 
 __version__ = "0.37"
