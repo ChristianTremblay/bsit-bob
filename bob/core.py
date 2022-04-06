@@ -2267,7 +2267,7 @@ def connect_mm(
 ) -> None:
     """SystemConnectionPoint >> SystemConnectionPoint"""
     logging.info(
-        f"connect from {system_connection_point} to {to_system_connection_point}"
+        f"connect from {from_system_connection_point} to {to_system_connection_point}"
     )
 
     from_connection_point = from_system_connection_point.mapsTo
