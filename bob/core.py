@@ -1596,7 +1596,7 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
 
     if not from_out:
         raise RuntimeError(
-            f"no candidate sources from {from_thing.node} to {to_thing.node}"
+            f"no candidate sources from {from_thing.node} to {connection_point.node}"
         )
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
@@ -1645,7 +1645,7 @@ def connect_mm(device: Device, connection: Connection) -> None:
 
     if not from_out:
         raise RuntimeError(
-            f"no candidate sources from {from_thing.node} to {to_thing.node}"
+            f"no candidate sources from {from_thing.node} to {connection.node}"
         )
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
@@ -1744,7 +1744,9 @@ def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
     logging.info(f"    - to_in: %r", to_in)
 
     if not to_in:
-        raise RuntimeError(f"no candidate destinations from {connection} to {device}")
+        raise RuntimeError(
+            f"no candidate destinations from {connection_point} to {device}"
+        )
     if len(to_in) > 1:
         raise RuntimeError("too many connection points")
     to_thing = to_in.pop()
@@ -1988,7 +1990,7 @@ def connect_mm(device: Device, system: System) -> None:
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
         raise RuntimeError(
-            f"no candidate destinations from {from_system.node} to {to_system.node}"
+            f"no candidate destinations from {device.node} to {system.node}"
         )
     logging.debug(f"    - to_types: {to_types}")
 
@@ -2250,7 +2252,7 @@ def connect_mm(
     from_connection_point = system_connection_point.mapsTo
     if not from_connection_point:
         raise RuntimeError(
-            f"unmapped system connection point {from_system_connection_point}"
+            f"unmapped system connection point {system_connection_point}"
         )
 
     # continue the process
@@ -2955,7 +2957,7 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
 
     if not from_out:
         raise RuntimeError(
-            f"no candidate sources from {from_thing.node} to {to_thing.node}"
+            f"no candidate sources from {domain_space.node} to {connection_point.node}"
         )
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
