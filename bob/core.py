@@ -1035,7 +1035,7 @@ def connect_mm(junction: Junction, segment: Segment) -> None:
 @multimethod
 def connect_mm(segment: Segment, junction: Junction) -> None:
     """Segment >> Junction"""
-    logging.info(f"connect from {junction} to {segment}")
+    logging.info(f"connect from {segment} to {junction}")
 
     junction.connect_to(segment)
 
@@ -1051,7 +1051,7 @@ def connect_mm(junction: Junction, connection_point: ConnectionPoint) -> None:
 @multimethod
 def connect_mm(connection_point: ConnectionPoint, junction: Junction) -> None:
     """ConnectionPoint >> Junction"""
-    logging.info(f"connect from {junction} to {connection_point}")
+    logging.info(f"connect from {connection_point} to {junction}")
 
     junction.connect_to(connection_point)
 
@@ -1191,6 +1191,7 @@ class System(Container, Node):
 
 @multimethod
 def contains_mm(system: System, device: Device) -> None:
+    """System > Device"""
     logging.info(f"system {system} contains device {device}")
 
     system._data_graph.add((system.node, s223.contains, device.node))
@@ -1200,6 +1201,7 @@ def contains_mm(system: System, device: Device) -> None:
 
 @multimethod
 def contains_mm(system: System, subsystem: System) -> None:
+    """System > System"""
     logging.info(f"system {system} contains subsystem {subsystem}")
 
     system._data_graph.add((system.node, s223.contains, subsystem.node))
@@ -1209,6 +1211,7 @@ def contains_mm(system: System, subsystem: System) -> None:
 
 @multimethod
 def contains_mm(system: System, thing_list: List[Node]) -> None:
+    """System > List[Union[Device,System]]"""
     logging.info(f"system {system} contains list of things {thing_list}")
 
     ###TODO: the signature should be thing_list: List[Union[Device,System]]
@@ -1596,7 +1599,7 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
 
     if not from_out:
         raise RuntimeError(
-            f"no candidate sources from {from_thing.node} to {connection_point.node}"
+            f"no candidate sources from {device} to {connection_point}"
         )
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
@@ -1645,7 +1648,7 @@ def connect_mm(device: Device, connection: Connection) -> None:
 
     if not from_out:
         raise RuntimeError(
-            f"no candidate sources from {from_thing.node} to {connection.node}"
+            f"no candidate sources from {device} to {connection}"
         )
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
@@ -1801,7 +1804,7 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
 
 @multimethod
 def connect_mm(connection: Connection, system: System) -> None:
-    """Connection >> Device"""
+    """Connection >> System"""
     logging.info(f"connect from {connection} to {system}")
 
     connection_medium = getattr(connection, "hasMedium", None)
@@ -1964,7 +1967,7 @@ def connect_mm(device: Device, system: System) -> None:
     from_types: Set[Medium]
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
-        raise RuntimeError(f"no candidate sources from {device.node} to {system.node}")
+        raise RuntimeError(f"no candidate sources from {device} to {system}")
     logging.debug(f"    - from_types: {from_types}")
 
     # build a dict of mapped inlet connection points that are not
@@ -1990,7 +1993,7 @@ def connect_mm(device: Device, system: System) -> None:
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
         raise RuntimeError(
-            f"no candidate destinations from {device.node} to {system.node}"
+            f"no candidate destinations from {device} to {system}"
         )
     logging.debug(f"    - to_types: {to_types}")
 
@@ -2165,7 +2168,7 @@ def connect_mm(from_system: System, to_system: System) -> None:
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
         raise RuntimeError(
-            f"no candidate sources from {from_system.node} to {to_system.node}"
+            f"no candidate sources from {from_system} to {to_system}"
         )
     logging.debug(f"    - from_types: {from_types}")
 
@@ -2193,7 +2196,7 @@ def connect_mm(from_system: System, to_system: System) -> None:
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
         raise RuntimeError(
-            f"no candidate destinations from {from_system.node} to {to_system.node}"
+            f"no candidate destinations from {from_system} to {to_system}"
         )
     logging.debug(f"    - to_types: {to_types}")
 
@@ -2219,6 +2222,8 @@ def connect_mm(
     system_connection_point: SystemConnectionPoint, connection: Connection
 ) -> None:
     """SystemConnectionPoint >> Connection"""
+    logging.info(f"connect from {system_connection_point} to {connection}")
+
     from_connection_point = system_connection_point.mapsTo
     if not from_connection_point:
         raise RuntimeError(
@@ -2234,6 +2239,8 @@ def connect_mm(
     connection: Connection, system_connection_point: SystemConnectionPoint
 ) -> None:
     """Connection >> SystemConnectionPoint"""
+    logging.info(f"connect from {connection} to {system_connection_point}")
+
     to_connection_point = system_connection_point.mapsTo
     if not to_connection_point:
         raise RuntimeError(
@@ -2249,6 +2256,8 @@ def connect_mm(
     system_connection_point: SystemConnectionPoint, connection_point: ConnectionPoint
 ) -> None:
     """SystemConnectionPoint >> ConnectionPoint"""
+    logging.info(f"connect from {system_connection_point} to {connection_point}")
+
     from_connection_point = system_connection_point.mapsTo
     if not from_connection_point:
         raise RuntimeError(
@@ -2265,6 +2274,8 @@ def connect_mm(
     to_system_connection_point: SystemConnectionPoint,
 ) -> None:
     """SystemConnectionPoint >> SystemConnectionPoint"""
+    logging.info(f"connect from {system_connection_point} to {to_system_connection_point}")
+
     from_connection_point = from_system_connection_point.mapsTo
     if not from_connection_point:
         raise RuntimeError(
@@ -2370,7 +2381,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
         raise RuntimeError(
-            f"no candidate sources from {from_system.node} to {to_zone.node}"
+            f"no candidate sources from {from_system} to {to_zone}"
         )
     logging.debug(f"    - from_types: {from_types}")
 
@@ -2397,7 +2408,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
         raise RuntimeError(
-            f"no candidate destinations from {from_system.node} to {to_zone.node}"
+            f"no candidate destinations from {from_system} to {to_zone}"
         )
     logging.debug(f"    - to_types: {to_types}")
 
@@ -2461,6 +2472,7 @@ def connect_mm(zone: Zone, connection: Connection) -> None:
 
 @multimethod
 def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
+    """Zone > DomainSpace"""
     logging.info(f"zone {zone} contains domain space {domain_space}")
 
     zone._data_graph.add((zone.node, s223.contains, domain_space.node))
@@ -2527,6 +2539,8 @@ def connect_mm(
     to_zone_connection_point: ZoneConnectionPoint,
 ) -> None:
     """ZoneConnectionPoint >> ZoneConnectionPoint"""
+    logging.info(f"connect from {from_zone_connection_point} to {to_zone_connection_point}")
+
     from_connection_point = from_zone_connection_point.mapsTo
     if not from_connection_point:
         raise RuntimeError(
@@ -2592,7 +2606,7 @@ def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> Non
 def contains_mm(physical_space: PhysicalSpace, thing_list: List[Node]) -> None:
     """PhysicalSpace >> List[Union[PhysicalSpace,DomainSpace]]"""
     logging.info(
-        f"physical space {physical_space} contains list of things {thing_list}"
+        f"physical space {physical_space} contains/encloses list {thing_list}"
     )
 
     ###TODO: the signature should be thing_list: List[Union[PhysicalSpace,DomainSpace]]
@@ -2891,6 +2905,7 @@ def contains_mm(system: System, device: Device) -> None:
 def contains_mm(parent_device: Device, child_device: Device) -> None:
     """Device > Device"""
     logging.info(f"device {parent_device} contains device {child_device}")
+
     parent_device._data_graph.add(
         (parent_device.node, s223.contains, child_device.node)
     )
