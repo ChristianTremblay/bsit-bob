@@ -13,47 +13,55 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_connection-007> ;
   rdfs:label "test_connection-007" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00001 a s223:PhysicalSpace,
+ex29:00001 a s223:Container,
+        s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "My Building" ;
     s223:contains ex29:00002,
         ex29:00003 .
-ex29:00002 a s223:PhysicalSpace,
+ex29:00002 a s223:Container,
+        s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Floor1" ;
     s223:contains ex29:00004,
         ex29:00005,
         ex29:00006 ;
     s223:isContainedIn ex29:00001 .
-ex29:00003 a s223:PhysicalSpace,
+ex29:00003 a s223:Container,
+        s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "basement" ;
     s223:contains ex29:00007 ;
     s223:isContainedIn ex29:00001 .
-ex29:00004 a s223:PhysicalSpace,
+ex29:00004 a s223:Container,
+        s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 1" ;
     s223:encloses ex29:00016 ;
     s223:isContainedIn ex29:00002 .
-ex29:00005 a s223:PhysicalSpace,
+ex29:00005 a s223:Container,
+        s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 2" ;
     s223:encloses ex29:00032 ;
     s223:isContainedIn ex29:00002 .
-ex29:00006 a s223:PhysicalSpace,
+ex29:00006 a s223:Container,
+        s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 3" ;
     s223:encloses ex29:00048 ;
     s223:isContainedIn ex29:00002 .
-ex29:00007 a s223:PhysicalSpace,
+ex29:00007 a s223:Container,
+        s223:PhysicalSpace,
         rec:MechanicalRoom,
         rec:Room ;
     rdfs:label "Mechanical Room" ;
     s223:isContainedIn ex29:00003 .
 ex29:00008 a p223:PhysicSystem,
+        s223:Container,
         s223:System ;
     rdfs:label "Indoor air of space" ;
     p223:airTransfer ex29:00011 ;
@@ -120,7 +128,8 @@ ex29:00015 a s223:BidirectionalSystemConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isSystemConnectionPointOf ex29:00008 ;
     s223:mapsTo ex29:00023 .
-ex29:00016 a s223:DomainSpace,
+ex29:00016 a s223:Connectable,
+        s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 1" ;
     s223:airTransfer ex29:00019 ;
@@ -187,6 +196,7 @@ ex29:00023 a s223:BidirectionalConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00016 .
 ex29:00024 a p223:PhysicSystem,
+        s223:Container,
         s223:System ;
     rdfs:label "Indoor air of space" ;
     p223:airTransfer ex29:00027 ;
@@ -253,7 +263,8 @@ ex29:00031 a s223:BidirectionalSystemConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isSystemConnectionPointOf ex29:00024 ;
     s223:mapsTo ex29:00039 .
-ex29:00032 a s223:DomainSpace,
+ex29:00032 a s223:Connectable,
+        s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 2" ;
     s223:airTransfer ex29:00035 ;
@@ -320,6 +331,7 @@ ex29:00039 a s223:BidirectionalConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00032 .
 ex29:00040 a p223:PhysicSystem,
+        s223:Container,
         s223:System ;
     rdfs:label "Indoor air of space" ;
     p223:airTransfer ex29:00043 ;
@@ -386,7 +398,8 @@ ex29:00047 a s223:BidirectionalSystemConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isSystemConnectionPointOf ex29:00040 ;
     s223:mapsTo ex29:00055 .
-ex29:00048 a s223:DomainSpace,
+ex29:00048 a s223:Connectable,
+        s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 3" ;
     s223:airTransfer ex29:00051 ;
@@ -449,7 +462,8 @@ ex29:00055 a s223:BidirectionalConnectionPoint,
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00048 .
-ex29:00056 a s223:HVACZone,
+ex29:00056 a s223:Container,
+        s223:HVACZone,
         s223:Zone ;
     rdfs:label "Zone1" ;
     s223:airInlet ex29:00057 ;
@@ -473,7 +487,9 @@ ex29:00058 a s223:OutletZoneConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isZoneConnectionPointOf ex29:00056 ;
     s223:mapsTo ex29:00071 .
-ex29:00059 a s223:Device,
+ex29:00059 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "Supply Fan" ;
     s223:airInlet ex29:00060 ;
@@ -501,7 +517,9 @@ ex29:00062 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex29:00059 .
-ex29:00063 a s223:Device,
+ex29:00063 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "Return Fan" ;
     s223:airInlet ex29:00064 ;

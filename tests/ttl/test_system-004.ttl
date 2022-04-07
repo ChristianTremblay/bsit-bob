@@ -12,7 +12,9 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_system-004> ;
   rdfs:label "test_system-004" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00001 a s223:Device,
+ex29:00001 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         ex26:A ;
     rdfs:label "a" ;
     s223:connectedThrough ex29:00009 ;
@@ -24,7 +26,8 @@ ex29:00002 a s223:ConnectionPoint,
     rdfs:label "a.cOut" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:isConnectionPointOf ex29:00001 .
-ex29:00003 a s223:System,
+ex29:00003 a s223:Container,
+        s223:System,
         ex26:X ;
     rdfs:label "x" ;
     s223:hasSystemConnectionPoint ex29:00004 ;
@@ -35,7 +38,9 @@ ex29:00004 a s223:OutletSystemConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:isSystemConnectionPointOf ex29:00003 ;
     s223:mapsTo ex29:00002 .
-ex29:00005 a s223:Device,
+ex29:00005 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         ex26:B ;
     rdfs:label "b" ;
     s223:connectedFrom ex29:00001 ;
@@ -47,7 +52,8 @@ ex29:00006 a s223:ConnectionPoint,
     rdfs:label "b.cIn" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:isConnectionPointOf ex29:00005 .
-ex29:00007 a s223:System,
+ex29:00007 a s223:Container,
+        s223:System,
         ex26:Y ;
     rdfs:label "y" ;
     s223:hasSystemConnectionPoint ex29:00008 ;

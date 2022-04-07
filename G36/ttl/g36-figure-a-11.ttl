@@ -2,7 +2,8 @@
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
-exg3611:00001 a s223:System,
+exg3611:00001 a s223:Container,
+        s223:System,
         exg3611:VAV ;
     rdfs:label "A-11" ;
     s223:contains exg3611:00010,
@@ -43,7 +44,9 @@ exg3611:00005 a s223:OutletSystemConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:mapsTo exg3611:00014 .
-exg3611:00006 a s223:Device,
+exg3611:00006 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3611:AirFilter ;
     rdfs:label "A-11.air_filter" ;
     s223:connectedThrough exg3611:00018 ;
@@ -54,7 +57,8 @@ exg3611:00006 a s223:Device,
     exg3611:airInlet exg3611:00008 ;
     exg3611:airOutlet exg3611:00009 ;
     exg3611:dp exg3611:00007 .
-exg3611:00007 a g36:AnalogIn ;
+exg3611:00007 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "A-11.air_filter.dp" .
 exg3611:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -68,7 +72,9 @@ exg3611:00009 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3611:00006 .
-exg3611:00010 a s223:Device,
+exg3611:00010 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3611:HotWaterCoil ;
     rdfs:label "A-11.hot_water_coil" ;
     s223:connectedFrom exg3611:00006 ;
@@ -111,14 +117,19 @@ exg3611:00014 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3611:00010 .
-exg3611:00015 a s223:Device,
+exg3611:00015 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3611:ValvePositioner ;
     rdfs:label "A-11.hot_water_coil.damper_positioner" ;
     s223:hasProperty exg3611:00016 ;
     exg3611:position exg3611:00016 .
-exg3611:00016 a g36:AnalogOut ;
+exg3611:00016 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "A-11.hot_water_coil.damper_positioner.position" .
-exg3611:00017 a s223:Device,
+exg3611:00017 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3611:HotWaterValve ;
     rdfs:label "A-11.hot_water_coil.hot_water_valve" .
 exg3611:00018 a s223:Connection ;
@@ -127,7 +138,9 @@ exg3611:00018 a s223:Connection ;
     s223:connectsFrom exg3611:00006 ;
     s223:connectsTo exg3611:00010 ;
     s223:hasMedium s223:Medium-Air .
-exg3611:00019 a s223:Device,
+exg3611:00019 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan,
         exg3611:VFDFan ;
     rdfs:label "A-11.fan" ;
@@ -163,7 +176,9 @@ exg3611:00022 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf exg3611:00019 .
-exg3611:00023 a s223:Device,
+exg3611:00023 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3611:VFD ;
     rdfs:label "A-11.fan.vfd" ;
     s223:hasProperty exg3611:00024,
@@ -172,11 +187,14 @@ exg3611:00023 a s223:Device,
     exg3611:fanSpeedCommand exg3611:00025 ;
     exg3611:fanStart exg3611:00026 ;
     exg3611:fanStatus exg3611:00024 .
-exg3611:00024 a g36:BinaryIn ;
+exg3611:00024 a s223:Property,
+        g36:BinaryIn ;
     rdfs:label "A-11.fan.vfd.fanStatus" .
-exg3611:00025 a g36:AnalogOut ;
+exg3611:00025 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "A-11.fan.vfd.fanSpeedCommand" .
-exg3611:00026 a g36:BinaryOut ;
+exg3611:00026 a s223:Property,
+        g36:BinaryOut ;
     rdfs:label "A-11.fan.vfd.fanStart" .
 exg3611:00027 a s223:Connection ;
     s223:connectsAt exg3611:00012,

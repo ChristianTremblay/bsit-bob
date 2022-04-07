@@ -15,7 +15,9 @@ ex:00001 a s223:Connection ;
     s223:connectsAt ex:00005 ;
     s223:connectsTo ex:00002 ;
     s223:hasMedium s223:Water-ChilledWater .
-ex:00002 a s223:CoolingCoil,
+ex:00002 a s223:Connectable,
+        s223:Container,
+        s223:CoolingCoil,
         s223:Device ;
     rdfs:label "CW-Coil-1" ;
     s223:airInlet ex:00003 ;
@@ -53,7 +55,9 @@ ex:00006 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex:00002 .
-ex:00007 a s223:Device,
+ex:00007 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "F" ;
     s223:airInlet ex:00008 ;
@@ -87,7 +91,8 @@ ex:00011 a s223:Connection ;
     s223:connectsFrom ex:00007 ;
     s223:connectsTo ex:00002 ;
     s223:hasMedium s223:Medium-Air .
-ex:00012 a s223:Zone,
+ex:00012 a s223:Container,
+        s223:Zone,
         ex:HVACZone ;
     rdfs:label "Zone-1" ;
     s223:contains ex:00014 ;
@@ -99,7 +104,8 @@ ex:00013 a s223:InletZoneConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex:00015 .
-ex:00014 a s223:DomainSpace ;
+ex:00014 a s223:Connectable,
+        s223:DomainSpace ;
     rdfs:label "Space" ;
     s223:hasConnectionPoint ex:00015 .
 ex:00015 a s223:ConnectionPoint,

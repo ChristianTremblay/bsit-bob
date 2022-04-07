@@ -17,13 +17,15 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_zoo_elephants> ;
   rdfs:label "sample_zoo_elephants" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-zoo:00001 a s223:PhysicalSpace,
+zoo:00001 a s223:Container,
+        s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "B-1" ;
     s223:contains zoo:00002,
         zoo:00003 ;
     rdfs:comment "Pavillon des éléphants" .
-zoo:00002 a s223:PhysicalSpace,
+zoo:00002 a s223:Container,
+        s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "RdC" ;
     s223:contains zoo:00005,
@@ -32,39 +34,47 @@ zoo:00002 a s223:PhysicalSpace,
         zoo:00008,
         zoo:00009 ;
     rdfs:comment "Rez-de-chaussée" .
-zoo:00003 a s223:PhysicalSpace,
+zoo:00003 a s223:Container,
+        s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "mezz" ;
     s223:contains zoo:00004 ;
     rdfs:comment "Mezzanine" .
-zoo:00004 a s223:PhysicalSpace,
+zoo:00004 a s223:Container,
+        s223:PhysicalSpace,
         rec:MechanicalRoom,
         rec:Room ;
     rdfs:label "MechRoom" ;
     rdfs:comment "Salle mecanique" .
-zoo:00005 a s223:PhysicalSpace,
+zoo:00005 a s223:Container,
+        s223:PhysicalSpace,
         rec:MechanicalRoom,
         rec:Room ;
     rdfs:label "MechRoom" ;
     rdfs:comment "Salle mecanique des refroidisseurs" .
-zoo:00006 a s223:PhysicalSpace,
+zoo:00006 a s223:Container,
+        s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office" ;
     rdfs:comment "Bureau des gardiens" .
-zoo:00007 a s223:PhysicalSpace,
+zoo:00007 a s223:Container,
+        s223:PhysicalSpace,
         rec:Room ;
     rdfs:label "Entrepot" ;
     rdfs:comment "Entrepot a foin" .
-zoo:00008 a s223:PhysicalSpace,
+zoo:00008 a s223:Container,
+        s223:PhysicalSpace,
         rec:Room ;
     rdfs:label "Box1" ;
     rdfs:comment "Enclos" .
-zoo:00009 a s223:PhysicalSpace,
+zoo:00009 a s223:Container,
+        s223:PhysicalSpace,
         rec:Room ;
     rdfs:label "Box2" ;
     rdfs:comment "Enclos des girafes" .
 zoo:00010 a p223:PhysicSystem,
+        s223:Container,
         s223:System ;
     rdfs:label "Indoor air of space" ;
     p223:airTransfer zoo:00013 ;
@@ -124,7 +134,8 @@ zoo:00017 a s223:BidirectionalSystemConnectionPoint,
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo zoo:00025 .
-zoo:00018 a s223:DomainSpace,
+zoo:00018 a s223:Connectable,
+        s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "enclos_elephants_hvac" ;
     s223:airTransfer zoo:00021 ;
@@ -191,6 +202,7 @@ zoo:00025 a s223:BidirectionalConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00018 .
 zoo:00026 a p223:PhysicSystem,
+        s223:Container,
         s223:System ;
     rdfs:label "Indoor air of space" ;
     p223:airTransfer zoo:00029 ;
@@ -250,7 +262,8 @@ zoo:00033 a s223:BidirectionalSystemConnectionPoint,
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo zoo:00041 .
-zoo:00034 a s223:DomainSpace,
+zoo:00034 a s223:Connectable,
+        s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "enclos_girafe_hvac" ;
     s223:airTransfer zoo:00037 ;
@@ -323,7 +336,8 @@ zoo:00042 a s223:Connection ;
     s223:connectsTo zoo:00049,
         zoo:00052 ;
     s223:hasMedium s223:Medium-Air .
-zoo:00043 a s223:System ;
+zoo:00043 a s223:Container,
+        s223:System ;
     rdfs:label "ECHANGEUR" ;
     s223:contains zoo:00049,
         zoo:00052,
@@ -363,7 +377,9 @@ zoo:00048 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-CompressedAir .
-zoo:00049 a s223:Device,
+zoo:00049 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:HeatExchanger ;
     rdfs:label "Acc1" ;
     s223:connectedThrough zoo:00042,
@@ -385,7 +401,9 @@ zoo:00051 a s223:BidirectionalConnectionPoint,
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00049 .
-zoo:00052 a s223:Device,
+zoo:00052 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:HeatExchanger ;
     rdfs:label "Acc2" ;
     s223:connectedThrough zoo:00042,
@@ -407,7 +425,9 @@ zoo:00054 a s223:BidirectionalConnectionPoint,
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00052 .
-zoo:00055 a s223:Damper,
+zoo:00055 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "ACC1_DPR-A" ;
     s223:airInlet zoo:00058 ;
@@ -421,9 +441,11 @@ zoo:00055 a s223:Damper,
         zoo:00057 ;
     s223:position zoo:00056 ;
     rdfs:comment "Accumulator #1 Damper A" .
-zoo:00056 a g36:AnalogOut ;
+zoo:00056 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "ACC1_DPR-A.position" .
-zoo:00057 a g36:AnalogIn ;
+zoo:00057 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "ACC1_DPR-A.feedback" .
 zoo:00058 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -437,7 +459,9 @@ zoo:00059 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00055 .
-zoo:00060 a s223:Damper,
+zoo:00060 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "ACC1_DPR-B" ;
     s223:airInlet zoo:00063 ;
@@ -451,9 +475,11 @@ zoo:00060 a s223:Damper,
         zoo:00062 ;
     s223:position zoo:00061 ;
     rdfs:comment "Accumulator #1 Damper B" .
-zoo:00061 a g36:AnalogOut ;
+zoo:00061 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "ACC1_DPR-B.position" .
-zoo:00062 a g36:AnalogIn ;
+zoo:00062 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "ACC1_DPR-B.feedback" .
 zoo:00063 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -467,7 +493,9 @@ zoo:00064 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00060 .
-zoo:00065 a s223:Damper,
+zoo:00065 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "ACC1_DPR-C" ;
     s223:airInlet zoo:00068 ;
@@ -481,9 +509,11 @@ zoo:00065 a s223:Damper,
         zoo:00067 ;
     s223:position zoo:00066 ;
     rdfs:comment "Accumulator #1 Damper C" .
-zoo:00066 a g36:AnalogOut ;
+zoo:00066 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "ACC1_DPR-C.position" .
-zoo:00067 a g36:AnalogIn ;
+zoo:00067 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "ACC1_DPR-C.feedback" .
 zoo:00068 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -497,7 +527,9 @@ zoo:00069 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00065 .
-zoo:00070 a s223:Damper,
+zoo:00070 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "ACC1_DPR-D" ;
     s223:airInlet zoo:00073 ;
@@ -511,9 +543,11 @@ zoo:00070 a s223:Damper,
         zoo:00072 ;
     s223:position zoo:00071 ;
     rdfs:comment "Accumulator #1 Damper D" .
-zoo:00071 a g36:AnalogOut ;
+zoo:00071 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "ACC1_DPR-D.position" .
-zoo:00072 a g36:AnalogIn ;
+zoo:00072 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "ACC1_DPR-D.feedback" .
 zoo:00073 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -527,7 +561,9 @@ zoo:00074 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00070 .
-zoo:00075 a s223:Damper,
+zoo:00075 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "ACC2_DPR-A" ;
     s223:airInlet zoo:00078 ;
@@ -541,9 +577,11 @@ zoo:00075 a s223:Damper,
         zoo:00077 ;
     s223:position zoo:00076 ;
     rdfs:comment "Accumulator #2 Damper A" .
-zoo:00076 a g36:AnalogOut ;
+zoo:00076 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "ACC2_DPR-A.position" .
-zoo:00077 a g36:AnalogIn ;
+zoo:00077 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "ACC2_DPR-A.feedback" .
 zoo:00078 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -557,7 +595,9 @@ zoo:00079 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00075 .
-zoo:00080 a s223:Damper,
+zoo:00080 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "ACC2_DPR-B" ;
     s223:airInlet zoo:00083 ;
@@ -571,9 +611,11 @@ zoo:00080 a s223:Damper,
         zoo:00082 ;
     s223:position zoo:00081 ;
     rdfs:comment "Accumulator #2 Damper B" .
-zoo:00081 a g36:AnalogOut ;
+zoo:00081 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "ACC2_DPR-B.position" .
-zoo:00082 a g36:AnalogIn ;
+zoo:00082 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "ACC2_DPR-B.feedback" .
 zoo:00083 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -587,7 +629,9 @@ zoo:00084 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00080 .
-zoo:00085 a s223:Damper,
+zoo:00085 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "ACC2_DPR-C" ;
     s223:airInlet zoo:00088 ;
@@ -601,9 +645,11 @@ zoo:00085 a s223:Damper,
         zoo:00087 ;
     s223:position zoo:00086 ;
     rdfs:comment "Accumulator #2 Damper C" .
-zoo:00086 a g36:AnalogOut ;
+zoo:00086 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "ACC2_DPR-C.position" .
-zoo:00087 a g36:AnalogIn ;
+zoo:00087 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "ACC2_DPR-C.feedback" .
 zoo:00088 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -617,7 +663,9 @@ zoo:00089 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00085 .
-zoo:00090 a s223:Damper,
+zoo:00090 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "ACC2_DPR-D" ;
     s223:airInlet zoo:00093 ;
@@ -631,9 +679,11 @@ zoo:00090 a s223:Damper,
         zoo:00092 ;
     s223:position zoo:00091 ;
     rdfs:comment "Accumulator #2 Damper D" .
-zoo:00091 a g36:AnalogOut ;
+zoo:00091 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "ACC2_DPR-D.position" .
-zoo:00092 a g36:AnalogIn ;
+zoo:00092 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "ACC2_DPR-D.feedback" .
 zoo:00093 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -648,6 +698,8 @@ zoo:00094 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00090 .
 zoo:00095 a p223:FourSideDuctForHeatExchanger,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "Accumulator 4 sides duct" ;
     s223:accumulator1Connection zoo:00096 ;
@@ -689,7 +741,9 @@ zoo:00099 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00095 .
-zoo:00100 a s223:DamperActuator,
+zoo:00100 a s223:Connectable,
+        s223:Container,
+        s223:DamperActuator,
         s223:Device ;
     rdfs:label "Accumulator 4 sides damper" ;
     s223:compressedAirInlet zoo:00103 ;
@@ -701,9 +755,11 @@ zoo:00100 a s223:DamperActuator,
         zoo:00102 ;
     s223:position zoo:00101 ;
     rdfs:comment "This damper switch the side of the airflow going in accumulator 1 & 2" .
-zoo:00101 a g36:AnalogOut ;
+zoo:00101 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "Accumulator 4 sides damper.position" .
-zoo:00102 a g36:AnalogIn ;
+zoo:00102 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "Accumulator 4 sides damper.feedback" .
 zoo:00103 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -712,6 +768,8 @@ zoo:00103 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-CompressedAir ;
     s223:isConnectionPointOf zoo:00100 .
 zoo:00104 a p223:Filter,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "FLT" ;
     p223:airInlet zoo:00105 ;
@@ -735,6 +793,8 @@ zoo:00106 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00104 .
 zoo:00107 a s223:Coil,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "SE-1" ;
     s223:airInlet zoo:00108 ;
@@ -776,7 +836,9 @@ zoo:00111 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00107 .
-zoo:00112 a s223:Device,
+zoo:00112 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "UV-1" ;
     s223:airInlet zoo:00113 ;
@@ -827,7 +889,9 @@ zoo:00117 a s223:Connection ;
     s223:connectsTo zoo:00138 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "This is where 2 ducts are connected coming from Girafes and Elephants" .
-zoo:00118 a s223:Damper,
+zoo:00118 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "AV-2" ;
     s223:airInlet zoo:00121 ;
@@ -842,9 +906,11 @@ zoo:00118 a s223:Damper,
         zoo:00120 ;
     s223:position zoo:00119 ;
     rdfs:comment "Damper going to Girafe" .
-zoo:00119 a g36:AnalogOut ;
+zoo:00119 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "AV-2.position" .
-zoo:00120 a g36:AnalogIn ;
+zoo:00120 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "AV-2.feedback" .
 zoo:00121 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -858,7 +924,9 @@ zoo:00122 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00118 .
-zoo:00123 a s223:Damper,
+zoo:00123 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "AV-4" ;
     s223:airInlet zoo:00126 ;
@@ -873,9 +941,11 @@ zoo:00123 a s223:Damper,
         zoo:00125 ;
     s223:position zoo:00124 ;
     rdfs:comment "Damper going to Éléphants" .
-zoo:00124 a g36:AnalogOut ;
+zoo:00124 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "AV-4.position" .
-zoo:00125 a g36:AnalogIn ;
+zoo:00125 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "AV-4.feedback" .
 zoo:00126 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -889,7 +959,9 @@ zoo:00127 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00123 .
-zoo:00128 a s223:Damper,
+zoo:00128 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "AV-1" ;
     s223:airInlet zoo:00131 ;
@@ -904,9 +976,11 @@ zoo:00128 a s223:Damper,
         zoo:00130 ;
     s223:position zoo:00129 ;
     rdfs:comment "Damper Coming from Girafe (return)" .
-zoo:00129 a g36:AnalogOut ;
+zoo:00129 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "AV-1.position" .
-zoo:00130 a g36:AnalogIn ;
+zoo:00130 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "AV-1.feedback" .
 zoo:00131 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -920,7 +994,9 @@ zoo:00132 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00128 .
-zoo:00133 a s223:Damper,
+zoo:00133 a s223:Connectable,
+        s223:Container,
+        s223:Damper,
         s223:Device ;
     rdfs:label "AV-3" ;
     s223:airInlet zoo:00136 ;
@@ -935,9 +1011,11 @@ zoo:00133 a s223:Damper,
         zoo:00135 ;
     s223:position zoo:00134 ;
     rdfs:comment "Damper coming from Éléphants (return)" .
-zoo:00134 a g36:AnalogOut ;
+zoo:00134 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "AV-3.position" .
-zoo:00135 a g36:AnalogIn ;
+zoo:00135 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "AV-3.feedback" .
 zoo:00136 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -951,7 +1029,9 @@ zoo:00137 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00133 .
-zoo:00138 a s223:Device,
+zoo:00138 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "VR-1" ;
     s223:airInlet zoo:00139 ;
@@ -981,7 +1061,9 @@ zoo:00141 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf zoo:00138 .
-zoo:00142 a s223:Device,
+zoo:00142 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "VFD-1" ;
     s223:hasConnectionPoint zoo:00143,
@@ -999,7 +1081,9 @@ zoo:00144 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf zoo:00142 .
-zoo:00145 a s223:Device,
+zoo:00145 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "VFD-2" ;
     s223:hasConnectionPoint zoo:00146,
@@ -1018,6 +1102,8 @@ zoo:00147 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf zoo:00145 .
 zoo:00148 a p223:Humidifier,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "HUM-1" ;
     p223:steamOutlet zoo:00149 ;
@@ -1038,6 +1124,8 @@ zoo:00150 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00148 .
 zoo:00151 a p223:SteamPipe,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "HUM-1_Buse" ;
     p223:airInlet zoo:00152 ;
@@ -1069,6 +1157,8 @@ zoo:00154 a s223:ConnectionPoint,
     s223:hasMedium s223:Water-Steam ;
     s223:isConnectionPointOf zoo:00151 .
 zoo:00155 a p223:AirCompressor,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "ACOMP-1" ;
     p223:compressedAirOutlet zoo:00156 ;
@@ -1098,6 +1188,8 @@ zoo:00158 a s223:Connection ;
     s223:hasMedium s223:Medium-CompressedAir .
 zoo:00159 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TE-1" ;
@@ -1109,6 +1201,7 @@ zoo:00160 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         p223:Temperature,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TE-1.Temperature" ;
@@ -1116,6 +1209,8 @@ zoo:00160 a p223:MeasuredProperty,
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 zoo:00161 a p223:AirHumiditySensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "HA-1" ;
@@ -1128,6 +1223,7 @@ zoo:00162 a p223:Humidity,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "HA-1.Measure" ;
@@ -1136,6 +1232,8 @@ zoo:00162 a p223:Humidity,
     qudt:unit unit:PERCENT_RH .
 zoo:00163 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TPD-1" ;
@@ -1149,6 +1247,7 @@ zoo:00164 a p223:DifferentialStaticPressure,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD-1.DifferentialStaticPressure" ;
@@ -1157,6 +1256,8 @@ zoo:00164 a p223:DifferentialStaticPressure,
     qudt:unit unit:PA .
 zoo:00165 a p223:TemperatureSensor,
         p223:WaterTemperatureSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TAEC-1" ;
@@ -1166,17 +1267,22 @@ zoo:00166 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         p223:Temperature,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TAEC-1.Temperature" ;
     p223:measuresMedium s223:Medium-Water ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-zoo:00167 a s223:Device ;
+zoo:00167 a s223:Connectable,
+        s223:Container,
+        s223:Device ;
     rdfs:label "TBL-1" ;
     rdfs:comment "Freeze Thermostat" .
 zoo:00168 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TA-1" ;
@@ -1188,20 +1294,27 @@ zoo:00169 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         p223:Temperature,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TA-1.Temperature" ;
     p223:measuresMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-zoo:00170 a s223:Device ;
+zoo:00170 a s223:Connectable,
+        s223:Container,
+        s223:Device ;
     rdfs:label "FS-1" ;
     rdfs:comment "Air flow switch for humidifier" .
-zoo:00171 a s223:Device ;
+zoo:00171 a s223:Connectable,
+        s223:Container,
+        s223:Device ;
     rdfs:label "HLH-1" ;
     rdfs:comment "Humidity High Level Stat" .
 zoo:00172 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TPD-2" ;
@@ -1215,6 +1328,7 @@ zoo:00173 a p223:DifferentialStaticPressure,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD-2.DifferentialStaticPressure" ;
@@ -1223,6 +1337,8 @@ zoo:00173 a p223:DifferentialStaticPressure,
     qudt:unit unit:PA .
 zoo:00174 a p223:CO2Sensor,
         p223:GasConcentrationSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "CO2-1" ;
@@ -1237,6 +1353,7 @@ zoo:00175 a p223:GasConcentration,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "CO2-1.GasConcentration" ;
@@ -1247,6 +1364,8 @@ zoo:00175 a p223:GasConcentration,
     qudt:unit unit:PPM .
 zoo:00176 a p223:CO2Sensor,
         p223:GasConcentrationSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "CO2-2" ;
@@ -1261,6 +1380,7 @@ zoo:00177 a p223:GasConcentration,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "CO2-2.GasConcentration" ;
@@ -1270,6 +1390,8 @@ zoo:00177 a p223:GasConcentration,
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PPM .
 zoo:00178 a p223:AirHumiditySensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "HR-1" ;
@@ -1283,6 +1405,7 @@ zoo:00179 a p223:Humidity,
         p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "HR-1.Measure" ;
@@ -1291,6 +1414,8 @@ zoo:00179 a p223:Humidity,
     qudt:unit unit:PERCENT_RH .
 zoo:00180 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TR-1" ;
@@ -1302,6 +1427,7 @@ zoo:00181 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         p223:Temperature,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TR-1.Temperature" ;
@@ -1419,6 +1545,8 @@ zoo:00194 a s223:Connection ;
     s223:connectsTo zoo:00095 ;
     s223:hasMedium s223:Medium-Air .
 zoo:00195 a p223:GeothermalWell,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "GeothermalWells" ;
     p223:waterInlet zoo:00196 ;
@@ -1440,6 +1568,8 @@ zoo:00197 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00195 .
 zoo:00198 a p223:Chiller,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "PC-1" ;
     p223:chilledWaterEntering zoo:00200 ;
@@ -1488,6 +1618,8 @@ zoo:00203 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf zoo:00198 .
 zoo:00204 a p223:Chiller,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "PC-2" ;
     p223:chilledWaterEntering zoo:00206 ;
@@ -1535,7 +1667,9 @@ zoo:00209 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf zoo:00204 .
-zoo:00210 a s223:Device,
+zoo:00210 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "P-1" ;
     s223:connectedThrough zoo:00257,
@@ -1557,7 +1691,9 @@ zoo:00212 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00210 .
-zoo:00213 a s223:Device,
+zoo:00213 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "P-2" ;
     s223:connectedThrough zoo:00257,
@@ -1579,7 +1715,9 @@ zoo:00215 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00213 .
-zoo:00216 a s223:Device,
+zoo:00216 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "P-3" ;
     s223:connectedThrough zoo:00265,
@@ -1601,7 +1739,9 @@ zoo:00218 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00216 .
-zoo:00219 a s223:Device,
+zoo:00219 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "P-4" ;
     s223:connectedThrough zoo:00265,
@@ -1623,7 +1763,9 @@ zoo:00221 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00219 .
-zoo:00222 a s223:Device,
+zoo:00222 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "V-1A_NO" ;
     s223:connectedThrough zoo:00257,
@@ -1657,7 +1799,9 @@ zoo:00226 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00222 .
-zoo:00227 a s223:Device,
+zoo:00227 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "V-1A_NC" ;
     s223:connectedThrough zoo:00260,
@@ -1691,7 +1835,9 @@ zoo:00231 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00227 .
-zoo:00232 a s223:Device,
+zoo:00232 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "V-1B_NO" ;
     s223:connectedThrough zoo:00262 ;
@@ -1724,7 +1870,9 @@ zoo:00236 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00232 .
-zoo:00237 a s223:Device,
+zoo:00237 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "V-1B_NC" ;
     s223:connectedThrough zoo:00261,
@@ -1758,7 +1906,9 @@ zoo:00241 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00237 .
-zoo:00242 a s223:Device,
+zoo:00242 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "V-2" ;
     s223:connectedThrough zoo:00265,
@@ -1793,7 +1943,9 @@ zoo:00246 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00242 .
-zoo:00247 a s223:Device,
+zoo:00247 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "V-3" ;
     s223:connectedThrough zoo:00265,
@@ -1828,7 +1980,9 @@ zoo:00251 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf zoo:00247 .
-zoo:00252 a s223:Device,
+zoo:00252 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "V-4" ;
     s223:connectedThrough zoo:00257,

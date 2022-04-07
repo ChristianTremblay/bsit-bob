@@ -2,7 +2,8 @@
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
-exg3601:00001 a s223:System,
+exg3601:00001 a s223:Container,
+        s223:System,
         exg3601:VAV ;
     rdfs:label "A-1" ;
     s223:contains exg3601:00004,
@@ -27,7 +28,9 @@ exg3601:00003 a s223:OutletSystemConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3601:00010 .
-exg3601:00004 a s223:Device,
+exg3601:00004 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3601:AirFlowStation ;
     rdfs:label "A-1.air_flow_station" ;
     s223:connectedThrough exg3601:00013 ;
@@ -38,7 +41,8 @@ exg3601:00004 a s223:Device,
     exg3601:airInlet exg3601:00006 ;
     exg3601:airOutlet exg3601:00007 ;
     exg3601:flow exg3601:00005 .
-exg3601:00005 a g36:AnalogIn ;
+exg3601:00005 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "A-1.air_flow_station.flow" .
 exg3601:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -52,7 +56,9 @@ exg3601:00007 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00004 .
-exg3601:00008 a s223:Device,
+exg3601:00008 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3601:Damper ;
     rdfs:label "A-1.damper" ;
     s223:connectedFrom exg3601:00004 ;
@@ -76,12 +82,15 @@ exg3601:00010 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00008 .
-exg3601:00011 a s223:Device,
+exg3601:00011 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3601:DamperPositioner ;
     rdfs:label "A-1.damper.damper_positioner" ;
     s223:hasProperty exg3601:00012 ;
     exg3601:position exg3601:00012 .
-exg3601:00012 a g36:AnalogOut ;
+exg3601:00012 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "A-1.damper.damper_positioner.position" .
 exg3601:00013 a s223:Connection ;
     s223:connectsAt exg3601:00007,

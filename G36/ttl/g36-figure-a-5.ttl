@@ -2,7 +2,8 @@
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
-exg3605:00001 a s223:System,
+exg3605:00001 a s223:Container,
+        s223:System,
         exg3605:VAV ;
     rdfs:label "A-5" ;
     s223:contains exg3605:00007,
@@ -55,7 +56,9 @@ exg3605:00006 a s223:OutletSystemConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:mapsTo exg3605:00024 .
-exg3605:00007 a s223:Device,
+exg3605:00007 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3605:AirFlowStation ;
     rdfs:label "A-5.air_flow_station" ;
     s223:hasConnectionPoint exg3605:00009,
@@ -64,7 +67,8 @@ exg3605:00007 a s223:Device,
     exg3605:airInlet exg3605:00009 ;
     exg3605:airOutlet exg3605:00010 ;
     exg3605:flow exg3605:00008 .
-exg3605:00008 a g36:AnalogIn ;
+exg3605:00008 a s223:Property,
+        g36:AnalogIn ;
     rdfs:label "A-5.air_flow_station.flow" .
 exg3605:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -78,7 +82,9 @@ exg3605:00010 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3605:00007 .
-exg3605:00011 a s223:Device,
+exg3605:00011 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3605:Damper ;
     rdfs:label "A-5.damper" ;
     s223:contains exg3605:00014 ;
@@ -101,14 +107,19 @@ exg3605:00013 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3605:00011 ;
     s223:lnx exg3605:00030 .
-exg3605:00014 a s223:Device,
+exg3605:00014 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3605:DamperPositioner ;
     rdfs:label "A-5.damper.damper_positioner" ;
     s223:hasProperty exg3605:00015 ;
     exg3605:position exg3605:00015 .
-exg3605:00015 a g36:AnalogOut ;
+exg3605:00015 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "A-5.damper.damper_positioner.position" .
-exg3605:00016 a s223:Device,
+exg3605:00016 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "A-5.fan" ;
     s223:airInlet exg3605:00017 ;
@@ -137,7 +148,9 @@ exg3605:00019 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf exg3605:00016 .
-exg3605:00020 a s223:Device,
+exg3605:00020 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3605:HotWaterCoil ;
     rdfs:label "A-5.hot_water_coil" ;
     s223:connectedFrom exg3605:00016 ;
@@ -178,14 +191,19 @@ exg3605:00024 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3605:00020 .
-exg3605:00025 a s223:Device,
+exg3605:00025 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3605:ValvePositioner ;
     rdfs:label "A-5.hot_water_coil.damper_positioner" ;
     s223:hasProperty exg3605:00026 ;
     exg3605:position exg3605:00026 .
-exg3605:00026 a g36:AnalogOut ;
+exg3605:00026 a s223:Property,
+        g36:AnalogOut ;
     rdfs:label "A-5.hot_water_coil.damper_positioner.position" .
-exg3605:00027 a s223:Device,
+exg3605:00027 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         exg3605:HotWaterValve ;
     rdfs:label "A-5.hot_water_coil.hot_water_valve" .
 exg3605:00028 a s223:Connection ;

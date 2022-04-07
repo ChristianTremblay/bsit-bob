@@ -16,17 +16,20 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_big_garage_occupied> ;
   rdfs:label "sample_big_garage_occupied" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex:00001 a s223:PhysicalSpace,
+ex:00001 a s223:Container,
+        s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "My Building" ;
     s223:contains ex:00002 ;
     s223:encloses ex:00011,
         ex:00019,
         ex:00022 .
-ex:00002 a s223:PhysicalSpace,
+ex:00002 a s223:Container,
+        s223:PhysicalSpace,
         rec:Roof ;
     rdfs:label "Roof of building" .
 ex:00003 a p223:PhysicSystem,
+        s223:Container,
         s223:System ;
     rdfs:label "Indoor air of space" ;
     p223:airTransfer ex:00006 ;
@@ -86,7 +89,8 @@ ex:00010 a s223:BidirectionalSystemConnectionPoint,
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex:00018 .
-ex:00011 a s223:DomainSpace,
+ex:00011 a s223:Connectable,
+        s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "My Big Garage" ;
     s223:airTransfer ex:00014 ;
@@ -153,6 +157,7 @@ ex:00018 a s223:BidirectionalConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00011 .
 ex:00019 a p223:LightingSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Light Space #1 near entry" ;
     p223:lightInlet ex:00020 ;
@@ -176,6 +181,7 @@ ex:00021 a s223:ConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex:00019 .
 ex:00022 a p223:LightingSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Light Space #2 back of the garage" ;
     p223:lightInlet ex:00023 ;
@@ -198,7 +204,9 @@ ex:00024 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex:00022 .
-ex:00025 a s223:Device,
+ex:00025 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Luminaire ;
     rdfs:label "Ballast #1, space #1" ;
     s223:connectedThrough ex:00048 ;
@@ -211,7 +219,9 @@ ex:00026 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex:00025 .
-ex:00027 a s223:Device,
+ex:00027 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Luminaire ;
     rdfs:label "Ballast #2, space #2" ;
     s223:connectedThrough ex:00049 ;
@@ -225,6 +235,8 @@ ex:00028 a s223:ConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex:00027 .
 ex:00029 a p223:MovementSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #1" ;
@@ -236,10 +248,13 @@ ex:00030 a p223:MeasuredProperty,
         p223:Movement,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Movement Sensor Space #1.Movement" .
 ex:00031 a p223:MovementSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #2" ;
@@ -251,10 +266,13 @@ ex:00032 a p223:MeasuredProperty,
         p223:Movement,
         p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Movement Sensor Space #2.Movement" .
-ex:00033 a s223:Device,
+ex:00033 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "Fan" ;
     s223:airInlet ex:00034 ;
@@ -284,7 +302,9 @@ ex:00036 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex:00033 .
-ex:00037 a s223:Device,
+ex:00037 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:HeatingCoil ;
     rdfs:label "Heating Coil" ;
     s223:airInlet ex:00038 ;
@@ -335,6 +355,8 @@ ex:00043 a s223:Connection ;
     s223:hasMedium s223:Medium-Air .
 ex:00044 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Discharge Air temperature sensor" ;
@@ -345,6 +367,7 @@ ex:00045 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         p223:Temperature,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Discharge Air temperature sensor.Temperature" ;
@@ -353,6 +376,8 @@ ex:00045 a p223:MeasuredProperty,
     qudt:unit unit:DEG_C .
 ex:00046 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
+        s223:Connectable,
+        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Zone Air temperature sensor" ;
@@ -363,6 +388,7 @@ ex:00047 a p223:MeasuredProperty,
         p223:QuantifiableMeasuredProperty,
         p223:Temperature,
         s223:ObservableProperty,
+        s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Zone Air temperature sensor.Temperature" ;
@@ -381,7 +407,8 @@ ex:00049 a s223:Connection ;
     s223:connectsFrom ex:00027 ;
     s223:connectsTo ex:00022 ;
     s223:hasMedium s223:Light-Visible .
-ex:00050 a s223:System ;
+ex:00050 a s223:Container,
+        s223:System ;
     rdfs:label "Fan coil" ;
     s223:hasSystemConnectionPoint ex:00051,
         ex:00052,

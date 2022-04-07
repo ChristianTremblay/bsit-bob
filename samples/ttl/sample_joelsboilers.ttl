@@ -13,6 +13,8 @@
   rdfs:label "sample_joelsboilers" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 ex:00001 a p223:AgnosticBoiler,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "DHW-BOILER" ;
     s223:connectedThrough ex:00013,
@@ -35,6 +37,8 @@ ex:00003 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00001 .
 ex:00004 a p223:AgnosticBoiler,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "HTGLOOP-BOILER" ;
     s223:connectedFrom ex:00010 ;
@@ -58,6 +62,8 @@ ex:00006 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00004 .
 ex:00007 a p223:HotWaterTank,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "DHW-TANK" ;
     s223:connectedFrom ex:00001 ;
@@ -80,6 +86,8 @@ ex:00009 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00007 .
 ex:00010 a p223:HotWaterTank,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "HTG-TANK" ;
     s223:connectedThrough ex:00026,
@@ -115,7 +123,9 @@ ex:00014 a s223:Connection ;
     s223:connectsFrom ex:00007 ;
     s223:connectsTo ex:00015 ;
     s223:hasMedium s223:Medium-Water .
-ex:00015 a s223:Device,
+ex:00015 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "KITCHENFAUCET" ;
     s223:connectedThrough ex:00014,
@@ -156,7 +166,9 @@ ex:00021 a s223:Connection ;
     s223:connectsAt ex:00019 ;
     s223:connectsFrom ex:00015 ;
     s223:hasMedium s223:Medium-Water .
-ex:00022 a s223:Device,
+ex:00022 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Fan ;
     rdfs:label "HowWaterPump" ;
     s223:connectedFrom ex:00004 ;
@@ -194,7 +206,9 @@ ex:00026 a s223:Connection ;
         ex:00035 ;
     s223:connectsTo ex:00010 ;
     s223:hasMedium s223:Medium-Water .
-ex:00027 a s223:Device,
+ex:00027 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "joelsofficehtgvlv" ;
     s223:connectedThrough ex:00025,
@@ -229,6 +243,8 @@ ex:00031 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00027 .
 ex:00032 a p223:AgnosticCoil,
+        s223:Connectable,
+        s223:Container,
         s223:Device ;
     rdfs:label "JoelsOfficeCoil" ;
     s223:connectedFrom ex:00027 ;
@@ -250,7 +266,9 @@ ex:00034 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00032 .
-ex:00035 a s223:Device,
+ex:00035 a s223:Connectable,
+        s223:Container,
+        s223:Device,
         s223:Valve ;
     rdfs:label "FILL-VLV" ;
     s223:connectedThrough ex:00013,
@@ -308,7 +326,8 @@ ex:00043 a s223:Connection ;
     s223:connectsFrom ex:00027 ;
     s223:connectsTo ex:00032 ;
     s223:hasMedium s223:Medium-Water .
-ex:00044 a s223:System ;
+ex:00044 a s223:Container,
+        s223:System ;
     rdfs:label "DHW" ;
     s223:contains ex:00001,
         ex:00007 ;

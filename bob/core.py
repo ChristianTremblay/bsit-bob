@@ -20,12 +20,26 @@ T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
 _next_node = Counter()
 
+# environment
+try:
+    _dotenv_import_error = False
+    _env_file = os.path.join(os.getcwd(), ".env")
+    if os.path.isfile(_env_file):
+        from dotenv import load_dotenv as _load_dotenv
+
+        _load_dotenv(_env_file)
+except ImportError:
+    _dotenv_import_error = True
+
 # logging
 log_level = os.getenv("BOB_LOG", "WARNING")
 numeric_level = getattr(logging, log_level.upper(), None)
 if not isinstance(numeric_level, int):
     raise ValueError("Invalid log level: %s" % log_level)
 logging.basicConfig(level=numeric_level)
+
+if _dotenv_import_error:
+    logging.warning("install python-dotenv to use your .env file")
 
 # include/exclude predicates
 include_predicates: Set[str] = set(os.getenv("BOB_INCLUDE", "").split())
@@ -786,7 +800,7 @@ class Property(Node):
     an abstract base class.
     """
 
-    node_type: URIRef = None
+    # node_type: URIRef = None
     hasValue: Literal
     hasExternalReference: ExternalReference
 
@@ -867,7 +881,7 @@ class PropertyReference:
         return property
 
 
-class Container:
+class Container(Node):
     """
     This class implements the Container Abstract Base Class.
     """
@@ -876,6 +890,8 @@ class Container:
 
     def __init__(self, *args, **kwargs) -> None:
         logging.info(f"Container.__init__ {args} {kwargs}")
+        if self.__class__ is Connectable:
+            raise RuntimeError("Container is an abstract base class")
 
         super().__init__(*args, **kwargs)
         self._contents = {}
@@ -1259,7 +1275,7 @@ class Connectable(Node):
     A type of thing that can have connection points.
     """
 
-    node_type: URIRef = None
+    # node_type: URIRef = None
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
