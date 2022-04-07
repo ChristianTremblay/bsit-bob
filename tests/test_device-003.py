@@ -1,17 +1,14 @@
-from bob.core import (
-    bind_model_namespace,
-    dump,
-)
+from pathlib import Path
 
+from header import ttl_test_header
+
+from bob.core import bind_model_namespace, dump
 from bob.devices.hvac.particlecounter import ParticleCounter
 from bob.sensor.particle import (
     CoarseParticulateSensor,
     FineParticulateSensor,
     UltraFineParticulateSensor,
 )
-
-from pathlib import Path
-from header import ttl_test_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

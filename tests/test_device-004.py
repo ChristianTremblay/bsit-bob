@@ -1,21 +1,15 @@
 from copy import copy
+from pathlib import Path
 
-from bob.core import (
-    bind_model_namespace,
-    dump,
-    quantitykind,
-    unit,
-)
+from header import ttl_test_header
 
+from bob.core import bind_model_namespace, dump, quantitykind, unit
 from bob.devices.hvac.gas import GasMonitor
 from bob.property import QuantifiableObservableProperty
-from bob.sensor.gas import CO2Sensor, NO2Sensor, COSensor
+from bob.sensor.gas import CO2Sensor, COSensor, NO2Sensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.physical import Building, Roof, Floor, Office
-
-from pathlib import Path
-from header import ttl_test_header
+from bob.space.physical import Building, Floor, Office, Roof
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

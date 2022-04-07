@@ -1,11 +1,11 @@
 from pathlib import Path
 
+import hvac_devices as hd
+import lighting_devices as ld
 from rdflib import URIRef
 
 from bob.core import bind_model_namespace, dump
 from bob.externalreference.bacnet import BACnetDevice, BACnetReference
-import lighting_devices as ld
-import hvac_devices as hd
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

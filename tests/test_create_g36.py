@@ -1,6 +1,7 @@
-import pytest
 import os
 import subprocess
+
+import pytest
 
 
 def test_create_g36(bob_fixture):

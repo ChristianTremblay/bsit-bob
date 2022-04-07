@@ -1,52 +1,43 @@
 from cProfile import label
 from pathlib import Path
-
 from typing import Any
 
+from header import sample_header
+
+from bob.connections.air import *
+from bob.connections.electricity import *
 from bob.connections.light import LightVisibleConnection
 from bob.connections.occupancy import (
     OccupancyInletSystemConnectionPoint,
     OccupancyOutletSystemConnectionPoint,
 )
-
-from bob.core import p223, get_datagraph, bind_model_namespace, dump, quantitykind, unit
-
-from bob.devices.hvac.damper import ElectricalActuatedDamper
-from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.damper import Window
-from bob.devices.lighting.light import Luminaire
-
+from bob.core import bind_model_namespace, dump, get_datagraph, p223, quantitykind, unit
 from bob.devices.electricity.distribution import (
-    Transformer,
     SinglePhaseDistributionPanel,
     SinglePoleCircuitBreaker,
     ThreePhaseDistributionPanel,
     ThreePolesCircuitBreaker,
     ThreePolesMainCircuitBreaker,
+    Transformer,
     TwoPolesCircuitBreaker,
     TwoPolesMainCircuitBreaker,
 )
+from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.devices.hvac.damper import ElectricalActuatedDamper, Window
+from bob.devices.hvac.fan import Fan
+from bob.devices.hvac.filter import Filter
+from bob.devices.lighting.light import Luminaire
 from bob.property import QuantifiableObservableProperty
-
-from bob.space.occupancy import OccupancySpace
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
-from bob.systems.hvac.vav import VAV
-from bob.sensor.temperature import AirTemperatureSensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.movement import MovementSensor, OccupancySensor
-
-from bob.space.physical import Building, Floor, Roof, Office, Room, Bathroom, Corridor
+from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone
-
+from bob.space.occupancy import OccupancySpace
+from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
 from bob.systems.functionblock import FunctionBlock
-
-from bob.connections.air import *
-from bob.connections.electricity import *
-
-from header import sample_header
+from bob.systems.hvac.airhandlingunit import AirHandlingUnit
+from bob.systems.hvac.vav import VAV
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

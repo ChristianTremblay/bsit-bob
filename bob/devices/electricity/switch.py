@@ -1,10 +1,10 @@
 from typing import Dict
 
 from bob.properties.states import OnOffStatus
-from ...connections.electricity import *
-from ...sensor.electricity import CurrentBinarySensor
 
-from ...core import Device, Node, s223, p223
+from ...connections.electricity import *
+from ...core import Device, Node, p223, s223
+from ...sensor.electricity import CurrentBinarySensor
 
 __namespace__ = s223
 

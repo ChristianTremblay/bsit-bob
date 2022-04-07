@@ -1,25 +1,24 @@
+from header import sample_header
+
 from bob.core import (
-    s223,
-    p223,
-    bind_model_namespace,
-    PhysicalSpace,
-    DomainSpace,
-    Domain,
     HVAC,
+    Air,
+    Domain,
+    DomainSpace,
+    Light,
     Lighting,
     Medium,
-    Air,
-    Light,
+    PhysicalSpace,
+    bind_model_namespace,
     dump,
+    p223,
+    s223,
 )
-from bob.sensor import Sensor
-
-from bob.space.hvac import HVACZone
-from bob.space.physical import Room, Office, Bathroom, Corridor
 from bob.devices.hvac.fan import Fan
+from bob.sensor import Sensor
+from bob.space.hvac import HVACZone
+from bob.space.physical import Bathroom, Corridor, Office, Room
 from bob.systems.archives.vav import VAV1
-
-from header import sample_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

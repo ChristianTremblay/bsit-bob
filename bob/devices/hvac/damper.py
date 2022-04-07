@@ -1,21 +1,18 @@
 from rdflib import URIRef
-from ...core import s223, p223
-from ...core import Device
 
 from ...connections.air import (
+    AirBidirectionalConnectionPoint,
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
-    AirBidirectionalConnectionPoint,
     CompressedAirConnectionPoint,
     CompressedAirInletConnectionPoint,
 )
+from ...connections.electricity import ElectricalInletConnectionPoint
 from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-
-from ...connections.electricity import ElectricalInletConnectionPoint
-
+from ...core import Device, p223, s223
 from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = s223

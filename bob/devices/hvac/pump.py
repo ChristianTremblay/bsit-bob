@@ -1,12 +1,11 @@
-from rdflib import URIRef
 from typing import Dict
 
-from ...properties import Amps, ElectricPowerkW, PowerFactor, RPM, HP, OnOffStatus
+from rdflib import URIRef
+
 from ...connections.electricity import ElectricalInletConnectionPoint
-from ...core import PropertyReference, s223, Device
-
-
 from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
+from ...core import Device, PropertyReference, s223
+from ...properties import HP, RPM, Amps, ElectricPowerkW, OnOffStatus, PowerFactor
 
 __namespace__ = s223
 

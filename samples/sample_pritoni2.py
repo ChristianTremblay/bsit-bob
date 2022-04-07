@@ -1,24 +1,25 @@
 from pathlib import Path
+
+from header import sample_header
+
+from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import (
-    bind_model_namespace,
-    PhysicalSpace,
-    DomainSpace,
-    Domain,
     HVAC,
+    Air,
+    Domain,
+    DomainSpace,
+    Light,
     Lighting,
     Medium,
-    Air,
-    Light,
+    PhysicalSpace,
+    bind_model_namespace,
     dump,
 )
-from bob.sensor import Sensor
-
-from bob.space.hvac import HVACZone
-from bob.space.physical import Room, Office, Bathroom, Corridor
 from bob.devices.hvac.fan import Fan
-from bob.connections.electricity import ElectricalInletConnectionPoint
+from bob.sensor import Sensor
+from bob.space.hvac import HVACZone
+from bob.space.physical import Bathroom, Corridor, Office, Room
 from bob.systems.hvac.vav import VAV1
-from header import sample_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", "ex:pritoni2:")

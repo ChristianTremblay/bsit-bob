@@ -1,14 +1,15 @@
 from rdflib import URIRef
-from ..core import s223, enum
 
 from ..core import (
-    Medium,
-    NaturalGas,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
+    Medium,
+    NaturalGas,
     OutletConnectionPoint,
     SystemConnectionPoint,
+    enum,
+    s223,
 )
 from ..signal import AnalogIn, AnalogOut
 

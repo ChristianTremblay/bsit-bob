@@ -1,20 +1,13 @@
 from typing import Any
 
-from ...connections.naturalgas import NaturalGasInletConnectionPoint
-
+from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import ElectricalInletConnectionPoint
-
-from ...core import s223, p223, Device
-
-
-from ...connections.air import (
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-)
+from ...connections.naturalgas import NaturalGasInletConnectionPoint
 from ...connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
 )
+from ...core import Device, p223, s223
 from ...signal import AnalogIn
 
 __namespace__ = p223

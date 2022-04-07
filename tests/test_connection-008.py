@@ -1,18 +1,19 @@
-from bob.core import bind_model_namespace, Device, enum, Junction, Air, dump, p223
+from pathlib import Path
+
+from header import ttl_test_header
 from rdflib import URIRef
 
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.physical import Building, Floor, MechanicalRoom, Office
-from bob.devices.hvac.fan import Fan
+from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.light import (
     Light,
-    LightVisibleConnection,
     LightVisible,
+    LightVisibleConnection,
     LightVisibleOutletConnectionPoint,
 )
-from bob.connections.electricity import ElectricalInletConnectionPoint
-from pathlib import Path
-from header import ttl_test_header
+from bob.core import Air, Device, Junction, bind_model_namespace, dump, enum, p223
+from bob.devices.hvac.fan import Fan
+from bob.space.hvac import HVACSpace, HVACZone
+from bob.space.physical import Building, Floor, MechanicalRoom, Office
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

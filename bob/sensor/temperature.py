@@ -1,9 +1,10 @@
-from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
-from rdflib import URIRef
 from typing import Any
-from ..core import quantitykind, p223, unit, Medium, Air, Water, PropertyReference
 
+from rdflib import URIRef
+
+from ..core import Air, Medium, PropertyReference, Water, p223, quantitykind, unit
 from ..property import QuantifiableProperty, Setpoint
+from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
 
 __namespace__ = p223
 

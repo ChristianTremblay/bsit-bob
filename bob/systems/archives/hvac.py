@@ -1,10 +1,10 @@
-from ...core import s223, DomainSpace, Zone
 from ...connections.air import (
     AirInletConnectionPoint,
-    AirOutletConnectionPoint,
     AirInletZoneConnectionPoint,
+    AirOutletConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
+from ...core import DomainSpace, Zone, s223
 
 __namespace__ = s223
 

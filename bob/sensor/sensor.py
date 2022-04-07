@@ -1,38 +1,34 @@
 from __future__ import annotations
 
-from typing import List, Union, Any
-from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
+from typing import Any, List, Union
 
-from ..multimethods import multimethod
+from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 
 from ..core import (
-    ExternalReference,
-    s223,
-    p223,
-    quantitykind,
-    unit,
-    logging,
     INCLUDE_INVERSE,
-)
-from ..core import (
-    Property,
-    PropertyReference,
     Connection,
     ConnectionPoint,
     Device,
-    Segment,
     DomainSpace,
+    ExternalReference,
     Medium,
-    Substance,
     Node,
+    Property,
+    PropertyReference,
+    Segment,
+    Substance,
+    logging,
+    p223,
+    quantitykind,
+    s223,
+    unit,
 )
-
+from ..multimethods import multimethod
 from ..property import (
     ObservableProperty,
-    QuantifiableProperty,
     QuantifiableObservableProperty,
+    QuantifiableProperty,
 )
-
 
 __namespace__ = s223
 

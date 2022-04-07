@@ -1,15 +1,15 @@
 from rdflib import Graph, URIRef
 
-from ..property import ActuatableProperty, ObservableProperty
 from ..core import (
     EnumerationKind,
     ExternalReference,
     Medium,
     SchemaGraph,
+    p223,
     quantitykind,
     unit,
-    p223,
 )
+from ..property import ActuatableProperty, ObservableProperty
 
 __namespace__ = p223
 

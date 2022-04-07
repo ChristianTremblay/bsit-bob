@@ -1,14 +1,9 @@
 from typing import Any
 
-from ...core import s223, Device, System
-from ...connections.water import (
-    HotWaterInletSystemConnectionPoint,
-    HotWaterOutletSystemConnectionPoint,
-)
 from ...connections.air import (
     AirInletConnectionPoint,
-    AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
 from ...connections.electricity import (
@@ -17,12 +12,14 @@ from ...connections.electricity import (
 )
 from ...connections.water import (
     HotWaterInletConnectionPoint,
+    HotWaterInletSystemConnectionPoint,
     HotWaterOutletConnectionPoint,
+    HotWaterOutletSystemConnectionPoint,
 )
+from ...core import Device, System, s223
 from ...devices.hvac.coil import ElectricalHeatingCoil
 from ...devices.hvac.scr import SCR
 from ...devices.hvac.valve import TwoWayValve
-
 from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = s223

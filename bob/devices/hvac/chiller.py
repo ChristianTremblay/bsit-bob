@@ -1,31 +1,23 @@
 from typing import Any
 
-from ...connections.naturalgas import NaturalGasInletConnectionPoint
-
+from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ModulationSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
 )
-
-from ...core import s223, p223, Device
-
-
-from ...connections.air import (
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-)
+from ...connections.naturalgas import NaturalGasInletConnectionPoint
 from ...connections.water import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
     CondensedWaterInletConnectionPoint,
     CondensedWaterOutletConnectionPoint,
-    WaterOutletConnectionPoint,
     WaterInletConnectionPoint,
+    WaterOutletConnectionPoint,
 )
+from ...core import Device, p223, s223
+from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
 from ...signal import AnalogIn
-
-from ...properties import OnOffStatus, OnOffCommand, Percent, Temperature
 
 __namespace__ = p223
 

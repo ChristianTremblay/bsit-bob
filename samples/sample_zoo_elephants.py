@@ -1,62 +1,53 @@
 from pathlib import Path
-
 from typing import Any, Dict
 
-from bob.core import (
-    Device,
-    System,
-    Junction,
-    get_datagraph,
-    bind_model_namespace,
-    dump,
-)
-from bob.devices.hvac.compressor import AirCompressor
-from bob.devices.hvac.damper import PneumaticDamperActuator
+from header import sample_header
+
+from bob.connections.air import *
+from bob.connections.electricity import ElectricalInletConnectionPoint
+from bob.connections.water import WaterConnection
+from bob.core import Device, Junction, System, bind_model_namespace, dump, get_datagraph
+from bob.devices.hvac.chiller import AgnosticChiller
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
+from bob.devices.hvac.compressor import AirCompressor
+from bob.devices.hvac.damper import (
+    Damper,
+    DamperActuator,
+    PneumaticDamperActuator,
+    Window,
+)
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.damper import Window, Damper, DamperActuator
-from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
-from bob.devices.hvac.humidifier import SteamPipe, Humidifier
-from bob.devices.hvac.valve import TwoWayValve
-from bob.devices.lighting.light import Luminaire
-from bob.devices.hvac.vfd import VFD
-from bob.devices.hvac.chiller import AgnosticChiller
-from bob.devices.hvac.pump import Pump
 from bob.devices.hvac.geothermal import GeothermalWell
-
-from bob.connections.electricity import ElectricalInletConnectionPoint
-
+from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
+from bob.devices.hvac.humidifier import Humidifier, SteamPipe
+from bob.devices.hvac.pump import Pump
+from bob.devices.hvac.valve import TwoWayValve
+from bob.devices.hvac.vfd import VFD
+from bob.devices.lighting.light import Luminaire
+from bob.sensor.flow import AirFlowSensor
+from bob.sensor.gas import CO2Sensor
+from bob.sensor.humidity import AirHumiditySensor
+from bob.sensor.movement import MovementSensor
+from bob.sensor.pressure import AirDifferentialStaticPressureSensor
+from bob.sensor.temperature import AirTemperatureSensor, WaterTemperatureSensor
+from bob.space.hvac import HVACSpace, HVACZone
+from bob.space.light import LightingSpace, LightingZone
+from bob.space.physical import (
+    Bathroom,
+    Building,
+    Corridor,
+    Floor,
+    MechanicalRoom,
+    Office,
+    Roof,
+    Room,
+)
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
 
-from bob.sensor.temperature import AirTemperatureSensor, WaterTemperatureSensor
-from bob.sensor.humidity import AirHumiditySensor
-from bob.sensor.pressure import AirDifferentialStaticPressureSensor
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.movement import MovementSensor
-from bob.sensor.gas import CO2Sensor
-
-from bob.connections.water import WaterConnection
-
-from bob.space.physical import (
-    Building,
-    Floor,
-    MechanicalRoom,
-    Roof,
-    Office,
-    Room,
-    Bathroom,
-    Corridor,
-)
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.light import LightingSpace, LightingZone
-
-from bob.connections.air import *
-
 # from bob.externalreference.bacnet import BACnetReference, NiagaraORDReference
 
-from header import sample_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("zoo", f"urn:zoo/{model_name}/")

@@ -3,15 +3,13 @@ from typing import Dict
 
 from rdflib import URIRef
 
+from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from ...connections.electricity import ElectricalInletConnectionPoint
+from ...core import ConnectionPoint, Device, PropertyReference, quantitykind, s223, unit
+from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus
 from ...property import QuantifiableObservableProperty
-from ...connections.electricity import ElectricalInletConnectionPoint
-from ...core import ConnectionPoint, PropertyReference, s223, Device, quantitykind, unit
-
-
-from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...signal import AnalogIn, AnalogOut
-from ...properties import Amps, ElectricPowerkW, PowerFactor, HP, Pressure, RPM
 
 __namespace__ = s223
 

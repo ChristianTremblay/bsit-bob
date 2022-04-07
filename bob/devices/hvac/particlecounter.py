@@ -2,21 +2,15 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from ...core import s223, p223, enum, Device
-
-from ...connections.air import (
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-)
-
-from ...signal import AnalogIn
-
+from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from ...core import Device, enum, p223, s223
+from ...sensor import Sensor
 from ...sensor.particle import (
     CoarseParticulateSensor,
     FineParticulateSensor,
     UltraFineParticulateSensor,
 )
-from ...sensor import Sensor
+from ...signal import AnalogIn
 
 __namespace__ = p223
 

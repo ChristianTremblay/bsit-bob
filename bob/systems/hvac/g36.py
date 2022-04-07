@@ -7,12 +7,11 @@ from bob.connections.electricity import (
     OnOffSignalSystemOutletConnectionPoint,
 )
 
-from ...systems.functionblock import FunctionBlock
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
     AirInletConnectionPoint,
-    AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
 from ...core import (
@@ -22,14 +21,15 @@ from ...core import (
     Outlet,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
-    System,
-    p223,
-    enum,
     Property,
+    System,
     SystemConnectionPoint,
     bind_namespace,
+    enum,
+    p223,
 )
 from ...property import ObservableProperty, QuantifiableObservableProperty
+from ...systems.functionblock import FunctionBlock
 
 g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
 

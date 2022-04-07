@@ -1,19 +1,20 @@
-from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
-from rdflib import URIRef
 from typing import Any
-from ..core import (
-    Substance,
-    quantitykind,
-    p223,
-    unit,
-    Medium,
-    Air,
-    Water,
-    PropertyReference,
-)
 
-from ..property import QuantifiableProperty, Setpoint
+from rdflib import URIRef
+
 from ..connections.electricity import OnOffSignalOutletConnectionPoint
+from ..core import (
+    Air,
+    Medium,
+    PropertyReference,
+    Substance,
+    Water,
+    p223,
+    quantitykind,
+    unit,
+)
+from ..property import QuantifiableProperty, Setpoint
+from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
 
 __namespace__ = p223
 

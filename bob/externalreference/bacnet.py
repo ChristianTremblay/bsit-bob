@@ -1,17 +1,18 @@
-import re
 import logging
-
-from rdflib import URIRef, Literal
+import re
 from typing import Any
+
+from rdflib import Literal, URIRef
+
 from ..core import (
     Device,
+    EnumerationKind,
     ExternalReference,
+    Graph,
     Node,
+    bacnet,
     p223,
     ref,
-    bacnet,
-    EnumerationKind,
-    Graph,
     schema_graph,
 )
 

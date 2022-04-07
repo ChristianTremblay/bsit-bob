@@ -1,7 +1,7 @@
 from typing import Dict
 
-from ...core import Device, Node, s223, p223
 from ...connections.electricity import *
+from ...core import Device, Node, p223, s223
 from ...sensor.electricity import create_3phase_meter_sensors
 
 __namespace__ = s223

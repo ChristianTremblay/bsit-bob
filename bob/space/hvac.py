@@ -8,7 +8,8 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
-from ..core import DomainSpace, HVAC, s223, Zone, enum, Medium, Air
+
+from ..core import HVAC, Air, DomainSpace, Medium, Zone, enum, s223
 from ..systems.physic import IndoorAir
 
 __namespace__ = s223

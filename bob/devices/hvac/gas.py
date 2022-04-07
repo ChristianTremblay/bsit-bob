@@ -3,23 +3,18 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from ...core import s223, p223, enum, Device, quantitykind, unit
+from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from ...core import Device, enum, p223, quantitykind, s223, unit
 from ...property import QuantifiableObservableProperty
-from ...connections.air import (
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-)
-
-from ...signal import AnalogIn
-
-from ...sensor.gas import (
-    COSensor,
-    CO2Sensor,
-    NO2Sensor,
-    CH4Sensor,
-    GasConcentrationSensor,
-)
 from ...sensor import Sensor
+from ...sensor.gas import (
+    CH4Sensor,
+    CO2Sensor,
+    COSensor,
+    GasConcentrationSensor,
+    NO2Sensor,
+)
+from ...signal import AnalogIn
 
 __namespace__ = p223
 

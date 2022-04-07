@@ -1,8 +1,9 @@
-import sys
-import os
 import logging
+import os
+import sys
 
 import pytest
+
 from bob.core import clear
 
 _log = logging.getLogger(__name__)
