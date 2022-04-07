@@ -1,23 +1,24 @@
-from bob.connections.electricity import OnOffSignalOutletConnectionPoint
-from .sensor import Sensor, QuantifiableMeasuredProperty, split_kwargs
-from rdflib import URIRef
 from typing import Any, List
-from ..core import (
-    ExternalReference,
-    quantitykind,
-    p223,
-    unit,
-    enum,
-    Medium,
-    Air,
-    Water,
-    Node,
-    PropertyReference,
-)
 
-from ..property import QuantifiableProperty
+from rdflib import URIRef
 
 from bob import core
+from bob.connections.electricity import OnOffSignalOutletConnectionPoint
+
+from ..core import (
+    Air,
+    ExternalReference,
+    Medium,
+    Node,
+    PropertyReference,
+    Water,
+    enum,
+    p223,
+    quantitykind,
+    unit,
+)
+from ..property import QuantifiableProperty
+from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
 
 __namespace__ = p223
 

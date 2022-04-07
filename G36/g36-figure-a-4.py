@@ -4,27 +4,27 @@ Figure A-4
 
 from __future__ import annotations
 
-from typing import Any
 from pathlib import Path
+from typing import Any
 
-from bob.core import bind_model_namespace, Junction, Device, System, dump
-from bob.devices.hvac.fan import Fan
+from header import g36_header
+
 from bob.connections.air import (
     AirInletConnectionPoint,
     AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterInletSystemConnectionPoint,
     HotWaterOutletConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
-from bob.connections.electricity import ElectricalInletConnectionPoint
+from bob.core import Device, Junction, System, bind_model_namespace, dump
+from bob.devices.hvac.fan import Fan
 from bob.signal import AnalogIn, AnalogOut, BinaryOut
-
-from header import g36_header
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(

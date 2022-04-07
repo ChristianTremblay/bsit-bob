@@ -1,7 +1,7 @@
 from rdflib import URIRef
 
+from ..core import p223, quantitykind, unit
 from ..property import QuantifiableObservableProperty
-from ..core import quantitykind, unit, p223
 
 __namespace__ = p223
 

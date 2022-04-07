@@ -6,10 +6,9 @@ Test Module Template
 --------------------
 """
 
-import unittest
 import logging
-
-from typing import Callable, Any
+import unittest
+from typing import Any, Callable
 
 LOGGER = logging.getLogger(__name__)
 

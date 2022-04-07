@@ -828,7 +828,9 @@ hvac:00008 a s223:Connection ;
     rdfs:comment "Supply Air Duct that feed VAV Boxes 1 & 2" .
 hvac:00009 a s223:Connection ;
     rdfs:label "RETURN-DUCT" ;
-    s223:connectsAt hvac_devices:00015 ;
+    s223:connectsAt hvac_devices:00015,
+        hvac_spaces:00011 ;
+    s223:connectsFrom hvac_spaces:00009 ;
     s223:connectsTo hvac_devices:00014 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Return Air Duct extracting air from open office" .
@@ -1890,7 +1892,8 @@ hvac_spaces:00009 a s223:DomainSpace,
     rdfs:label "HVACSpace1" ;
     s223:airTransfer hvac_spaces:00012 ;
     s223:connectedThrough hvac:00001,
-        hvac:00005 ;
+        hvac:00005,
+        hvac:00009 ;
     s223:doors hvac_spaces:00013 ;
     s223:ductAirInlet hvac_spaces:00010 ;
     s223:ductAirOutlet hvac_spaces:00011 ;

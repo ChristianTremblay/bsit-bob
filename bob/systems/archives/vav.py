@@ -1,21 +1,19 @@
 from typing import Any
 
-from ...core import s223, System
-
 from ...connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from ...signal import AnalogIn, AnalogOut
-
-from ...devices.hvac.coil import HotWaterCoil
-from ...devices.hvac.airflowstation import AirFlowMonitor
-from ...devices.hvac.damper import Damper
-from ...devices.hvac.valve import TwoWayValve
 from ...connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
 )
+from ...core import System, s223
+from ...devices.hvac.airflowstation import AirFlowMonitor
+from ...devices.hvac.coil import HotWaterCoil
+from ...devices.hvac.damper import Damper
+from ...devices.hvac.valve import TwoWayValve
+from ...signal import AnalogIn, AnalogOut
 
 __namespace__ = s223
 

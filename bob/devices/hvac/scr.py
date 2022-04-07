@@ -1,14 +1,10 @@
 from typing import Any
 
-from ...core import s223, p223
-from ...core import Device
-
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
 )
-
-
+from ...core import Device, p223, s223
 from ...signal import AnalogIn
 
 __namespace__ = p223

@@ -1,15 +1,13 @@
 from ...core import Device
-
-from .fan import Fan
-from .gas import GasMonitor, GasConcentrationSensor
-from .particlecounter import (
-    ParticleCounter,
-    FineParticulateSensor,
-    UltraFineParticulateSensor,
-    CoarseParticulateSensor,
-)
-
 from .coil import ChilledWaterCoil, ElectricalHeatingCoil, HotWaterCoil
+from .fan import Fan
+from .gas import GasConcentrationSensor, GasMonitor
+from .particlecounter import (
+    CoarseParticulateSensor,
+    FineParticulateSensor,
+    ParticleCounter,
+    UltraFineParticulateSensor,
+)
 
 # TODO : Include everything here as it's created.
 

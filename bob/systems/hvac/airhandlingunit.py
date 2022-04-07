@@ -1,16 +1,16 @@
 import logging
+from typing import Any, Dict
 
 from attr import set_run_validators
 from rdflib import URIRef
-from typing import Any, Dict
-from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
-from ...core import p223, Device, System
 
 from ...connections.air import (
-    AirOutletConnectionPoint,
     AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
+from ...core import Device, System, p223
 
 __namespace__ = p223
 

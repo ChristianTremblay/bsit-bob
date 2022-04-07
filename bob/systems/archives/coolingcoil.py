@@ -1,13 +1,9 @@
 from typing import Any
 
-from ...core import s223, System
-
-
 from ...connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-
 from ...connections.water import (
     ChilledWaterConnectionPoint,
     ChilledWaterInletConnectionPoint,
@@ -15,6 +11,7 @@ from ...connections.water import (
     ChilledWaterOutletConnectionPoint,
     ChilledWaterOutletSystemConnectionPoint,
 )
+from ...core import System, s223
 from ...devices.hvac.coil import ChilledWaterCoil
 from ...devices.hvac.valve import TwoWayValve
 from ...signal import AnalogIn

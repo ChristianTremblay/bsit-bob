@@ -1,34 +1,7 @@
 from pathlib import Path
-
 from typing import Any
 
-from bob.core import (
-    p223,
-    Device,
-    System,
-    get_datagraph,
-    bind_model_namespace,
-    dump,
-)
-
-from bob.devices.hvac.damper import ElectricalActuatedDamper
-from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.damper import Window
-from bob.devices.hvac.boiler import HotWaterBoiler, ElectricalHotWaterBoiler
-from bob.devices.hvac.valve import TwoWayValve
-from bob.devices.lighting.light import Luminaire
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
-from bob.systems.hvac.vav import VAV
-from bob.devices.hvac.pump import Pump
-from bob.sensor.temperature import AirTemperatureSensor
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.movement import MovementSensor
-
-from bob.space.physical import Building, Floor, Roof, Office, Room, Bathroom, Corridor
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.light import LightingSpace, LightingZone
+from header import sample_header
 
 from bob.connections.air import *
 from bob.connections.water import (
@@ -36,8 +9,23 @@ from bob.connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-
-from header import sample_header
+from bob.core import Device, System, bind_model_namespace, dump, get_datagraph, p223
+from bob.devices.hvac.boiler import ElectricalHotWaterBoiler, HotWaterBoiler
+from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.devices.hvac.damper import ElectricalActuatedDamper, Window
+from bob.devices.hvac.fan import Fan
+from bob.devices.hvac.filter import Filter
+from bob.devices.hvac.pump import Pump
+from bob.devices.hvac.valve import TwoWayValve
+from bob.devices.lighting.light import Luminaire
+from bob.sensor.flow import AirFlowSensor
+from bob.sensor.movement import MovementSensor
+from bob.sensor.temperature import AirTemperatureSensor
+from bob.space.hvac import HVACSpace, HVACZone
+from bob.space.light import LightingSpace, LightingZone
+from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
+from bob.systems.hvac.airhandlingunit import AirHandlingUnit
+from bob.systems.hvac.vav import VAV
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

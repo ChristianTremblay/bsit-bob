@@ -1,5 +1,6 @@
 from rdflib import URIRef
-from .core import s223, Role
+
+from .core import Role, s223
 
 __namespace__ = s223
 

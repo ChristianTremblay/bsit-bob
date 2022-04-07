@@ -1,7 +1,7 @@
 from rdflib import URIRef
 
+from ..core import p223, quantitykind, unit
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
-from ..core import quantitykind, unit, p223
 from .ratio import Percent
 
 __namespace__ = p223

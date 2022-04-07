@@ -4,24 +4,14 @@ from rdflib import URIRef
 
 from bob.connections.naturalgas import NaturalGasInletConnectionPoint
 
-from ...core import s223, p223, Device
-
-
-from ...connections.air import (
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-)
-
+from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from ...connections.electricity import ElectricalInletConnectionPoint
 from ...connections.water import (
+    SteamInletConnectionPoint,
     SteamOutletConnectionPoint,
     WaterInletConnectionPoint,
-    SteamInletConnectionPoint,
 )
-
-from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-)
-
+from ...core import Device, p223, s223
 from ...signal import AnalogOut
 
 __namespace__ = p223

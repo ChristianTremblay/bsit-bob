@@ -1,23 +1,23 @@
 from rdflib import URIRef
 
 from ..core import (
+    Air,
+    BidirectionalConnectionPoint,
+    BidirectionalSystemConnectionPoint,
+    CompressedAir,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
     InletSystemConnectionPoint,
+    InletZoneConnectionPoint,
+    Medium,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
-    BidirectionalConnectionPoint,
-    Medium,
-    Air,
-    CompressedAir,
+    OutletZoneConnectionPoint,
     SystemConnectionPoint,
     ZoneConnectionPoint,
-    InletZoneConnectionPoint,
-    OutletZoneConnectionPoint,
-    BidirectionalSystemConnectionPoint,
+    s223,
 )
-from ..core import s223
 
 __namespace__ = s223
 

@@ -1,31 +1,29 @@
 from typing import Any
 
 from rdflib import URIRef
+
 from bob.connections.air import (
     CompressedAirInletConnectionPoint,
     CompressedAirOutletConnectionPoint,
 )
-
 from bob.connections.naturalgas import (
     NaturalGasInletConnectionPoint,
     NaturalGasOutletConnectionPoint,
 )
 
-from ...core import PropertyReference, s223, Device
-
-
-from ...connections.water import (
-    HotWaterInletConnectionPoint,
-    HotWaterOutletConnectionPoint,
-    ChilledWaterInletConnectionPoint,
-    ChilledWaterOutletConnectionPoint,
-    WaterInletConnectionPoint,
-    WaterOutletConnectionPoint,
-)
 from ...connections.electricity import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalInletConnectionPoint,
 )
+from ...connections.water import (
+    ChilledWaterInletConnectionPoint,
+    ChilledWaterOutletConnectionPoint,
+    HotWaterInletConnectionPoint,
+    HotWaterOutletConnectionPoint,
+    WaterInletConnectionPoint,
+    WaterOutletConnectionPoint,
+)
+from ...core import Device, PropertyReference, s223
 from ...properties import Gallons, Percent
 
 __namespace__ = s223

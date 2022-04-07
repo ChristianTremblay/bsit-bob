@@ -4,10 +4,10 @@
 
 
 import os
-import sys
 import re
+import sys
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 # load in the project metadata
 init_py = open(os.path.join("bob", "__init__.py")).read()

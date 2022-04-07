@@ -1,20 +1,19 @@
 from pathlib import Path
 
-from bob.core import (
-    bind_model_namespace,
-    Device,
-    ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    System,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
-    dump,
-)
-
 from header import sample_header
 
+from bob.core import (
+    ConnectionPoint,
+    Device,
+    InletConnectionPoint,
+    InletSystemConnectionPoint,
+    OutletConnectionPoint,
+    OutletSystemConnectionPoint,
+    System,
+    SystemConnectionPoint,
+    bind_model_namespace,
+    dump,
+)
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

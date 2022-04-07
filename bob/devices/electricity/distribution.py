@@ -1,25 +1,26 @@
-from rdflib import Literal
 from typing import Dict
 
+from rdflib import Literal
+
 from bob.property import QuantifiableObservableProperty
-from ...core import p223, Device, quantitykind, unit
+
 from ...connections.electricity import (
-    Electricity,
     ElectricalConnection,
     ElectricalConnectionPoint,
-    ElectricalSystemConnectionPoint,
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
-    Electricity_120V_240V_60HzConnection,
-    Electricity_120V_240V_60HzInletConnectionPoint,
+    ElectricalSystemConnectionPoint,
+    Electricity,
     Electricity_120V_60HzConnection,
     Electricity_120V_60HzInletConnectionPoint,
     Electricity_120V_60HzOutletConnectionPoint,
+    Electricity_120V_240V_60HzConnection,
+    Electricity_120V_240V_60HzInletConnectionPoint,
     Electricity_208V_60HzInletConnectionPoint,
     Electricity_208V_60HzOutletConnectionPoint,
     Electricity_240V_60HzConnection,
-    Electricity_240V_60HzOutletConnectionPoint,
     Electricity_240V_60HzInletConnectionPoint,
+    Electricity_240V_60HzOutletConnectionPoint,
     Electricity_277V_60HzInletConnectionPoint,
     Electricity_277V_60HzOutletConnectionPoint,
     Electricity_347V_60HzConnection,
@@ -32,6 +33,7 @@ from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
+from ...core import Device, p223, quantitykind, unit
 
 __namespace__ = p223
 

@@ -1,8 +1,8 @@
 from pathlib import Path
 
+from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
 from bob.devices.electricity.distribution import *
-from bob.connections.electricity import *
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

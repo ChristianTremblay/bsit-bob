@@ -4,7 +4,8 @@ from bob.connections.occupancy import (
     OccupancyInletConnectionPoint,
     OccupancyInletZoneConnectionPoint,
 )
-from ..core import DomainSpace, Occupancy, p223, Zone, s223, Medium, People
+
+from ..core import DomainSpace, Medium, Occupancy, People, Zone, p223, s223
 from ..systems.physic import IndoorAir
 
 __namespace__ = p223

@@ -1,11 +1,11 @@
 from pathlib import Path
 
-from bob.connections.electricity import *
-
-from bob.core import bind_model_namespace, dump
 import electrical_devices as ed
-import lighting_devices as ld
 import hvac_devices as hd
+import lighting_devices as ld
+
+from bob.connections.electricity import *
+from bob.core import bind_model_namespace, dump
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

@@ -1,15 +1,15 @@
 from bob.core import (
-    bind_model_namespace,
-    Junction,
     Connection,
     Device,
     InletConnectionPoint,
-    OutletConnectionPoint,
-    System,
     InletSystemConnectionPoint,
+    Junction,
+    OutletConnectionPoint,
     OutletSystemConnectionPoint,
-    dump,
+    System,
+    bind_model_namespace,
     clear,
+    dump,
 )
 
 __namespace__ = bind_model_namespace("ex", "urn:ex/")

@@ -3,48 +3,36 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 from pathlib import Path
-
 from typing import Any
 
-from bob.core import (
-    System,
-    Zone,
-    Node,
-    s223,
-    Segment,
-    Junction,
-    bind_namespace,
-    quantitykind,
-    enum,
-    get_datagraph,
-    bind_model_namespace,
-    dump,
-)
-
-from bob.devices.hvac.damper import ElectricalActuatedDamper
-from bob.devices.hvac.coil import ChilledWaterCoil
-from bob.devices.hvac.fan import Fan
-
-from bob.connections.electricity import ElectricalInletConnectionPoint
-
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
-from bob.sensor.temperature import AirTemperatureSensor
-
-from bob.space.physical import Building, Floor, Roof, Office
-from bob.space.hvac import HVACSpace, HVACZone
+from header import sample_header
+from rdflib import RDF, RDFS, XSD, BNode, Literal, Namespace, URIRef
 
 from bob.connections.air import *
-
-from bob.role import (
-    Exhaust,
-    Supply,
+from bob.connections.electricity import ElectricalInletConnectionPoint
+from bob.core import (
+    Junction,
+    Node,
+    Segment,
+    System,
+    Zone,
+    bind_model_namespace,
+    bind_namespace,
+    dump,
+    enum,
+    get_datagraph,
+    quantitykind,
+    s223,
 )
-from bob.signal import (
-    AnalogOut,
-    AnalogIn,
-)
-from rdflib import Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD
-from header import sample_header
+from bob.devices.hvac.coil import ChilledWaterCoil
+from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.fan import Fan
+from bob.role import Exhaust, Supply
+from bob.sensor.temperature import AirTemperatureSensor
+from bob.signal import AnalogIn, AnalogOut
+from bob.space.hvac import HVACSpace, HVACZone
+from bob.space.physical import Building, Floor, Office, Roof
+from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 
 # from header import g36_header
 

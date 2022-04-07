@@ -1,31 +1,8 @@
 from pathlib import Path
-
 from typing import Any
 
-from bob.core import (
-    bind_model_namespace,
-    DomainSpace,
-    PhysicalSpace,
-    Device,
-    System,
-    Zone,
-    Node,
-    s223,
-    ConnectionPoint,
-    Connection,
-    Segment,
-    Junction,
-    dump,
-)
-from bob.devices.hvac.damper import (
-    Damper,
-)
-from bob.devices.hvac import (
-    Fan,
-)
-from bob.devices.hvac.coil import (
-    ChilledWaterCoil,
-)
+from header import sample_header
+
 from bob.connections.air import (
     AirConnection,
     AirInletConnectionPoint,
@@ -36,25 +13,29 @@ from bob.connections.air import (
     AirOutletZoneConnectionPoint,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-
-from bob.space.hvac import (
-    HVACZone,
+from bob.core import (
+    Connection,
+    ConnectionPoint,
+    Device,
+    DomainSpace,
+    Junction,
+    Node,
+    PhysicalSpace,
+    Segment,
+    System,
+    Zone,
+    bind_model_namespace,
+    dump,
+    s223,
 )
-from bob.devices.hvac.airflowstation import (
-    AirFlowMonitor,
-)
-from bob.devices.hvac.filter import (
-    Filter,
-)
-from bob.role import (
-    Exhaust,
-    Supply,
-)
-from bob.signal import (
-    AnalogOut,
-    AnalogIn,
-)
-from header import sample_header
+from bob.devices.hvac import Fan
+from bob.devices.hvac.airflowstation import AirFlowMonitor
+from bob.devices.hvac.coil import ChilledWaterCoil
+from bob.devices.hvac.damper import Damper
+from bob.devices.hvac.filter import Filter
+from bob.role import Exhaust, Supply
+from bob.signal import AnalogIn, AnalogOut
+from bob.space.hvac import HVACZone
 
 # from header import g36_header
 

@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-
 
+import glob
+import logging
 import os
 import sys
-import logging
-import glob
 
-from rdflib import Graph, Namespace, OWL, RDF, RDFS, SH
 from pyshacl.validate import Validator
+from rdflib import OWL, RDF, RDFS, SH, Graph, Namespace
+
+try:
+    if os.path.isfile("{}/.env".format(os.getcwd())):
+        from dotenv import load_dotenv
+
+        load_dotenv(os.path.join(os.getcwd(), ".env"))
+except ImportError:
+    print("You need to pip install python-dotenv to use your .env file")
 
 logging.basicConfig(level=logging.WARNING)
 
@@ -17,7 +25,6 @@ logging.basicConfig(level=logging.WARNING)
 S223_DIRECTORY = os.getenv("S223_DIRECTORY")
 if not S223_DIRECTORY:
     raise RuntimeError("S223_DIRECTORY unset")
-
 data_graph = Graph()
 data_graph.parse(sys.argv[1], format="turtle")
 
