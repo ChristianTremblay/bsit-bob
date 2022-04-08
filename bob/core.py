@@ -2527,7 +2527,7 @@ class ZoneConnectionPoint(Node):
 
 @multimethod
 def connect_mm(
-    system_connection_point: ZoneConnectionPoint, connection: Connection
+    zone_connection_point: ZoneConnectionPoint, connection: Connection
 ) -> None:
     """ZoneConnectionPoint >> Connection"""
     raise NotImplementedError("ZoneConnectionPoint >> Connection")
@@ -2535,7 +2535,7 @@ def connect_mm(
 
 @multimethod
 def connect_mm(
-    connection: Connection, system_connection_point: ZoneConnectionPoint
+    connection: Connection, zone_connection_point: ZoneConnectionPoint
 ) -> None:
     """Connection >> ZoneConnectionPoint"""
     raise NotImplementedError("Connection >> ZoneConnectionPoint")
@@ -2561,6 +2561,48 @@ def connect_mm(
     if not to_connection_point:
         raise RuntimeError(
             f"unmapped system connection point {to_zone_connection_point}"
+        )
+
+    connect_mm(from_connection_point, to_connection_point)
+
+
+@multimethod
+def connect_mm(
+    system_connection_point: SystemConnectionPoint,
+    zone_connection_point: ZoneConnectionPoint,
+) -> None:
+    """SystemConnectionPoint >> ZoneConnectionPoint"""
+    logging.info(f"connect from {system_connection_point} to {zone_connection_point}")
+
+    from_connection_point = system_connection_point.mapsTo
+    if not from_connection_point:
+        raise RuntimeError(
+            f"unmapped system connection point {system_connection_point}"
+        )
+
+    to_connection_point = zone_connection_point.mapsTo
+    if not to_connection_point:
+        raise RuntimeError(f"unmapped zone connection point {zone_connection_point}")
+
+    connect_mm(from_connection_point, to_connection_point)
+
+
+@multimethod
+def connect_mm(
+    zone_connection_point: ZoneConnectionPoint,
+    system_connection_point: SystemConnectionPoint,
+) -> None:
+    """ZoneConnectionPoint >> SystemConnectionPoint"""
+    logging.info(f"connect from {system_connection_point} to {zone_connection_point}")
+
+    from_connection_point = zone_connection_point.mapsTo
+    if not from_connection_point:
+        raise RuntimeError(f"unmapped zone connection point {zone_connection_point}")
+
+    to_connection_point = system_connection_point.mapsTo
+    if not to_connection_point:
+        raise RuntimeError(
+            f"unmapped system connection point {system_connection_point}"
         )
 
     connect_mm(from_connection_point, to_connection_point)

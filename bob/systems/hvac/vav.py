@@ -43,6 +43,14 @@ class VAV(System):
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
 
+        # create a damper
+        self.damper = Damper(label=self.label + ".damper")
+        self > self.damper
+
+        # reference the connections
+        self.airInlet.mapsTo = self.damper.airInlet
+        self.airOutlet.mapsTo = self.damper.airOutlet
+
 
 class VAV1(System):
     airInlet: AirInletSystemConnectionPoint

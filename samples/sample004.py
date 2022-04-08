@@ -3,7 +3,7 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import bind_model_namespace, dump
-from bob.space.hvac import HVACZone
+from bob.space.hvac import HVACSpace, HVACZone
 from bob.systems.hvac.vav import VAV
 
 model_name = Path(__file__).stem
@@ -12,6 +12,14 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 # there is a zone that contains a space
 zone = HVACZone(label="Zone")
+
+# create a space
+domain_space = HVACSpace(label="Domain_Space")
+zone > domain_space
+
+# reference the connections
+zone.airInlet.mapsTo = domain_space.ductAirInlet
+zone.airOutlet.mapsTo = domain_space.ductAirOutlet
 
 # there is a VAV box
 vav_template = {
@@ -22,7 +30,7 @@ vav_template = {
 vav = VAV(config=vav_template)
 
 # connect the output of the VAV box to the input of the Zone
-vav.airOutlet.mapsTo = zone.airInlet
+vav.airOutlet >> zone.airInlet
 
 # dump the result
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
