@@ -73,10 +73,12 @@ movement_2.hasPhysicalLocation = big_garage
 fancoil = System(label="Fan coil")
 fc_airInlet = AirInletSystemConnectionPoint(fancoil, label="Fan coil air inlet")
 fc_airOutlet = AirOutletSystemConnectionPoint(fancoil, label="Fan coil air outlet")
-fc_occupancy = SystemConnectionPoint(
-    fancoil, label="Occupancy Inlet", hasDirection=s223["Direction-Inlet"]
-)
-fc_occupancy.mapsTo = movement_1
+###TODO:  the occupancy status of the fan coil should be the movement property
+#         movement_1.observesProperty
+# fc_occupancy = SystemConnectionPoint(
+#     fancoil, label="Occupancy Inlet", hasDirection=s223["Direction-Inlet"]
+# )
+# fc_occupancy.mapsTo = movement_1
 fc_airInlet.mapsTo = fan.airInlet
 fc_airOutlet.mapsTo = heating_coil.airOutlet
 

@@ -1,5 +1,7 @@
-select ?scp ?thing ?cls where {
+select ?scp ?scplabel ?thing ?thinglabel ?cls where {
     ?scp a s223:SystemConnectionPoint ; s223:mapsTo ?thing .
+    optional { ?scp rdfs:label ?scplabel } .
+    optional { ?thing rdfs:label ?thinglabel } .
     ?thing a ?cls .
     filter not exists { ?thing a s223:ConnectionPoint }
     }
