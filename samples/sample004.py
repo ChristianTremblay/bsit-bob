@@ -3,6 +3,7 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import bind_model_namespace, dump
+from bob.devices.hvac.damper import Damper
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.systems.hvac.vav import VAV
 
@@ -28,6 +29,15 @@ vav_template = {
     "devices": {},
 }
 vav = VAV(config=vav_template)
+
+# create a damper
+damper = Damper(label="VAV1.damper")
+vav > damper
+
+# reference the connections
+vav.airInlet.mapsTo = damper.airInlet
+vav.airOutlet.mapsTo = damper.airOutlet
+
 
 # connect the output of the VAV box to the input of the Zone
 vav.airOutlet >> zone.airInlet

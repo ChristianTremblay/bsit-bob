@@ -13,28 +13,31 @@ class TemperatureProperty(QuantifiableProperty):
     hasQuantityKind = quantitykind.Temperature
 
 
-class TestDevice(Device):
+class SampleDevice(Device):
     pass
 
 
-class TestDevice2(Device):
+class SampleDevice2(Device):
     hasTemp: QuantifiableObservableProperty
 
 
 # test device has attribute, hasTemp which is of type temperature property.
 
 # individual pieces
-d1 = TestDevice(label="Test Device 1")
+d1 = SampleDevice(label="Test Device 1")
 temp = TemperatureProperty(75.5, unit=unit.DEG_F, label="temp")
 
 d1.add_property(temp)
 
 # auto build value
-d2 = TestDevice(label="Test Device 2")
+d2 = SampleDevice(label="Test Device 2")
 d2.add_property(TemperatureProperty(90.5, unit=unit.DEG_F, label="temp"))
 
 # named property, kwarg value
-d3 = TestDevice2(label="Test Device 3", hasTemp=(100.5))
+d3 = SampleDevice2(label="Test Device 3", hasTemp=100.5)
+
+# needs a unit to validate
+d3.hasTemp.unit=unit.DEG_F
 
 # dump the result
 

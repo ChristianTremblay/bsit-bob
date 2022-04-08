@@ -73,4 +73,4 @@ ps.private_office > ls.privateoffice_lightspace
 ps.floor1 > ps.kitchenette > hs.kitchenette_hvac
 ps.kitchenette > ls.kitchenette_lightspace
 
-dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"{model_name}.ttl", header=sample_header(model_name))
