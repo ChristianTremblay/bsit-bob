@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import argparse
 import glob
 import logging
 import os
+import owlrl
 import sys
 
 from pyshacl.validate import Validator
@@ -21,14 +23,92 @@ try:
 except ImportError:
     logging.warning("install python-dotenv to use your .env file")
 
+# build a parser for the command line arguments
+parser = argparse.ArgumentParser(
+    description=__doc__,
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+)
+
+# turtle files to load into the data graph
+parser.add_argument(
+    "ttl",
+    type=str,
+    nargs="+",
+    help="turtle files to load",
+)
+
+# option to load an additional ontology graph that is merged with the data
+# graph before validation rules are run
+parser.add_argument(
+    "--ontology",
+    type=str,
+    help="load an ontology graph",
+)
+
+# add an option to run RDFS semantics
+parser.add_argument(
+    "--rdfs",
+    action="store_true",
+    help="run RDFS semantics",
+)
+
+# add an option to run OWLRL semantics
+parser.add_argument(
+    "--owlrl",
+    action="store_true",
+    help="run OWLRL semantics",
+)
+
+# add an option to run both RDFS and OWLRL semantics
+parser.add_argument(
+    "--both",
+    action="store_true",
+    help="run both RDFS and OWLRL semantics",
+)
+
+# add an option to run both RDFS and OWLRL semantics
+parser.add_argument(
+    "--clean",
+    action="store_true",
+    help="clean out useless statements",
+)
+
+# sample additional option to store the expanded graph
+parser.add_argument(
+    "--expanded",
+    type=str,
+    help="load/store the expanded graph",
+)
+
+# sample additional option to store the post-validate graph
+parser.add_argument(
+    "--inference",
+    type=str,
+    help="store the inference graph",
+)
+
+# sample additional option to store the post-validate graph
+parser.add_argument(
+    "--report",
+    type=str,
+    help="store the report graph",
+)
+
+# information about the loaded/interpreted graph
+parser.add_argument(
+    "--info",
+    "-i",
+    action="store_true",
+    help="print prefixes in interactive mode",
+)
+
+# parse the command line arguments
+args = parser.parse_args()
+
 # get standard directory
 S223_DIRECTORY = os.getenv("S223_DIRECTORY")
 if not S223_DIRECTORY:
     raise RuntimeError("S223_DIRECTORY unset")
-
-# load the data graph
-data_graph = Graph()
-data_graph.parse(sys.argv[1], format="turtle")
 
 # load the shapes graph
 shacl_graph = Graph()
@@ -44,18 +124,75 @@ for fname in glob.glob(os.path.join(S223_DIRECTORY, "vocab", "*.ttl")):
     logging.debug(fname)
     shacl_graph.load(fname, format="turtle")
 
+# load the data graph(s)
+data_graph = Graph()
+for fname in args.ttl:
+    data_graph.parse(fname, format="turtle")
+    if args.info and sys.stdin.isatty():
+        print(f"data triples: {len(data_graph)}")
+
+# load an optional ontology graph
+ontology_graph = Graph()
+if args.ontology:
+    ontology_graph.parse(fname, format="turtle")
+    if args.info and sys.stdin.isatty():
+        print(f"ontology triples: {len(ontology_graph)}")
+
+# expand the graph
+if args.rdfs or args.owlrl or args.both:
+    if (args.rdfs and args.owlrl) or args.both:
+        inferencer = owlrl.DeductiveClosure(owlrl.RDFS_OWLRL_Semantics)
+    elif args.rdfs and not args.owlrl:
+        inferencer = owlrl.DeductiveClosure(owlrl.RDFS_Semantics)
+    elif not args.rdfs and args.owlrl:
+        inferencer = owlrl.DeductiveClosure(owlrl.OWLRL_Semantics)
+    inferencer.expand(data_graph)
+    if args.info and sys.stdin.isatty():
+        print(f"data triples after inferencer: {len(data_graph)}")
+
+# clean out most of the useless triples
+if args.clean:
+    for (s, p, o) in data_graph.triples((None, RDF.type, RDFS.Resource)):
+        data_graph.remove((s, p, o))
+    for (s, p, o) in data_graph.triples((None, RDF.type, RDFS.Datatype)):
+        data_graph.remove((s, p, o))
+    for (s, p, o) in data_graph.triples((None, RDF.type, OWL.Thing)):
+        data_graph.remove((s, p, o))
+    for (s, p, o) in data_graph.triples((OWL.Nothing, None, None)):
+        data_graph.remove((s, p, o))
+    for (s, p, o) in data_graph.triples((OWL.Thing, None, None)):
+        data_graph.remove((s, p, o))
+    for (s, p, o) in data_graph.triples((None, OWL.sameAs, None)):
+        if s == o:
+            data_graph.remove((s, p, o))
+    if args.info and sys.stdin.isatty():
+        print(f"data triples after cleaning: {len(data_graph)}")
+
+# save the expanded graph for debugging
+if args.expanded:
+    with open(args.expanded, "wb") as f:
+        data_graph.serialize(f, format="turtle")
+
+# print out the prefixes
+if args.info and sys.stdin.isatty():
+    print("prefixes:")
+    for prefix, uriref in data_graph.namespaces():
+        print(f"    {prefix}: {uriref}")
+    print("")
+
 # create a validator and run it
 v = Validator(
     data_graph,
     shacl_graph=shacl_graph,
-    ont_graph=Graph(),
-    options={"inference": "rdfs", "iterate_rules": True, "advanced": True},
+    ont_graph=ontology_graph,
+    options={"iterate_rules": True, "advanced": True},
 )
 conforms, report_graph, report_text = v.run()
 
-if 0:
-    print("----- report_graph -----")
-    print(report_graph.serialize(format="turtle"))
+# option to save the report graph
+if args.report:
+    with open(args.report, "wb") as f:
+        report_graph.serialize(f, format="turtle")
 
 if 0:
     print("----- report_text -----")
@@ -92,12 +229,11 @@ for focusNode, resultMessage, resultSeverity in results:
     color = color_map[resultSeverity]
     print(f"\x1b[{color}m    {resultMessage}\x1b[0m")
 
-if 0:
-    # uncomment this section to show what was added as a result of running
-    # the inferencing
+# option to save the inference graph
+if args.inference:
     expanded_graph = v.target_graph
     if data_graph is expanded_graph:
-        print("----- data_graph is expanded_graph -----")
+        logging.info("data_graph is expanded_graph")
     else:
         xor_graph = data_graph ^ expanded_graph
 
@@ -112,5 +248,5 @@ if 0:
             if s_ == o_:
                 xor_graph.remove((s_, p_, o_))
 
-        print("----- data_graph ^ expanded_graph -----")
-        print(xor_graph.serialize(format="turtle"))
+        with open(args.inference, "wb") as f:
+            xor_graph.serialize(f, format="turtle")
