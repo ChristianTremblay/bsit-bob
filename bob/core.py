@@ -886,6 +886,7 @@ class Container(Node):
     This class implements the Container Abstract Base Class.
     """
 
+    node_type: URIRef = None
     _contents: Dict[str, Node]
 
     def __init__(self, *args, **kwargs) -> None:
@@ -1388,7 +1389,8 @@ def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
 
 
 class ConnectionPoint(Node):
-    node_type: URIRef = s223.ConnectionPoint
+    # node_type: URIRef = s223.ConnectionPoint
+    node_type: URIRef = None
     hasMedium: Medium
     hasDirection: Direction
 
@@ -1398,8 +1400,8 @@ class ConnectionPoint(Node):
 
     def __init__(self, thing: Connectable, **kwargs: Any) -> None:
         # strict version:
-        # if self.__class__ is ConnectionPoint:
-        #     raise RuntimeError("ConnectionPoint is an abstract base class")
+        if self.__class__ is ConnectionPoint:
+            raise RuntimeError("ConnectionPoint is an abstract base class")
 
         # implicit bidirectional version:
         if ("hasDirection" not in kwargs) and (

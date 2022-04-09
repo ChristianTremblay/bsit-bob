@@ -2,8 +2,13 @@ from pathlib import Path
 
 from header import sample_header
 
+from bob.connections.air import (
+    AirInletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
 from bob.core import (
-    ConnectionPoint,
     Device,
     InletConnectionPoint,
     InletSystemConnectionPoint,
@@ -24,16 +29,16 @@ d1 = Device(label="d1")
 d2 = Device(label="d2")
 
 # create some connection points on the fly
-d1_cp = ConnectionPoint(d1, label="d1.cp")
-d2_cp = ConnectionPoint(d2, label="d2.cp")
+d1_cp = AirOutletConnectionPoint(d1, label="d1.cp")
+d2_cp = AirInletConnectionPoint(d2, label="d2.cp")
 
 # make a couple systems
 s1 = System(label="s1")
 s2 = System(label="s2")
 
 # create some bi-directional connection points on the fly
-s1_cp = SystemConnectionPoint(s1, label="s1.cp", mapsTo=d1_cp)
-s2_cp = SystemConnectionPoint(s2, label="s2.cp", mapsTo=d2_cp)
+s1_cp = AirOutletSystemConnectionPoint(s1, label="s1.cp", mapsTo=d1_cp)
+s2_cp = AirInletSystemConnectionPoint(s2, label="s2.cp", mapsTo=d2_cp)
 
 # connect the connection points together (directional connection)
 s1_cp >> s2_cp

@@ -14,8 +14,7 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_pritoni2> ;
   rdfs:label "sample_pritoni2" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex:00001 a s223:Container,
-        s223:PhysicalSpace,
+ex:00001 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "OpenOffice" ;
@@ -40,8 +39,7 @@ ex:00004 a ex:HVACSpace,
     rdfs:label "OpenOffice.HVAC" ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air .
-ex:00005 a s223:Container,
-        s223:PhysicalSpace,
+ex:00005 a s223:PhysicalSpace,
         rec:Bathroom,
         rec:Room ;
     rdfs:label "Bathroom" ;
@@ -59,7 +57,6 @@ ex:00007 a ex:HVACSpace,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air .
 ex:00008 a s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Fan ;
     rdfs:label "Bathroom.ExhaustFan" ;
@@ -68,26 +65,22 @@ ex:00008 a s223:Connectable,
     s223:hasConnectionPoint ex:00009,
         ex:00010,
         ex:00011 .
-ex:00009 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00009 a s223:InletConnectionPoint ;
     rdfs:label "Bathroom.ExhaustFan.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00008 .
-ex:00010 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00010 a s223:OutletConnectionPoint ;
     rdfs:label "Bathroom.ExhaustFan.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00008 .
-ex:00011 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00011 a s223:InletConnectionPoint ;
     rdfs:label "Bathroom.ExhaustFan.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex:00008 .
-ex:00012 a s223:Container,
-        s223:PhysicalSpace,
+ex:00012 a s223:PhysicalSpace,
         rec:Corridor,
         rec:Room ;
     rdfs:label "Corridor" ;
@@ -105,7 +98,6 @@ ex:00014 a ex:HVACSpace,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air .
 ex:00015 a ex:PrivateOffice,
-        s223:Container,
         s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
@@ -124,7 +116,6 @@ ex:00017 a ex:HVACSpace,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air .
 ex:00018 a ex:Kitchenette,
-        s223:Container,
         s223:PhysicalSpace,
         rec:Room ;
     rdfs:label "Kitchenette" ;
@@ -141,8 +132,7 @@ ex:00020 a ex:HVACSpace,
     rdfs:label "Kitchenette.HVAC" ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air .
-ex:00021 a s223:Container,
-        s223:HVACZone,
+ex:00021 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone1" ;
     s223:airInlet ex:00022 ;
@@ -160,8 +150,7 @@ ex:00023 a s223:OutletZoneConnectionPoint,
     rdfs:label "HVACZone1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-ex:00024 a s223:Container,
-        s223:HVACZone,
+ex:00024 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone2" ;
     s223:airInlet ex:00025 ;
@@ -180,7 +169,6 @@ ex:00026 a s223:OutletZoneConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
 ex:00027 a p223:VAV1,
-        s223:Container,
         s223:System ;
     rdfs:label "VAV1" ;
     p223:airFlow ex:00031 ;
@@ -207,7 +195,6 @@ ex:00029 a s223:OutletSystemConnectionPoint,
     s223:mapsTo ex:00038 .
 ex:00030 a p223:AirFlowStation,
         s223:Connectable,
-        s223:Container,
         s223:Device ;
     rdfs:label "VAV1.air_flow_station" ;
     p223:airInlet ex:00032 ;
@@ -221,20 +208,17 @@ ex:00030 a p223:AirFlowStation,
 ex:00031 a s223:Property,
         g36:AnalogIn ;
     rdfs:label "VAV1.air_flow_station.flow" .
-ex:00032 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00032 a s223:InletConnectionPoint ;
     rdfs:label "VAV1.air_flow_station.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00030 .
-ex:00033 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00033 a s223:OutletConnectionPoint ;
     rdfs:label "VAV1.air_flow_station.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00030 .
 ex:00034 a s223:Connectable,
-        s223:Container,
         s223:Damper,
         s223:Device ;
     rdfs:label "VAV1.damper" ;
@@ -254,14 +238,12 @@ ex:00035 a s223:Property,
 ex:00036 a s223:Property,
         g36:AnalogIn ;
     rdfs:label "VAV1.damper.feedback" .
-ex:00037 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00037 a s223:InletConnectionPoint ;
     rdfs:label "VAV1.damper.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00034 .
-ex:00038 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00038 a s223:OutletConnectionPoint ;
     rdfs:label "VAV1.damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
@@ -273,7 +255,6 @@ ex:00039 a s223:Connection ;
     s223:connectsTo ex:00034 ;
     s223:hasMedium s223:Medium-Air .
 ex:00040 a p223:VAV1,
-        s223:Container,
         s223:System ;
     rdfs:label "VAV2" ;
     p223:airFlow ex:00044 ;
@@ -300,7 +281,6 @@ ex:00042 a s223:OutletSystemConnectionPoint,
     s223:mapsTo ex:00051 .
 ex:00043 a p223:AirFlowStation,
         s223:Connectable,
-        s223:Container,
         s223:Device ;
     rdfs:label "VAV2.air_flow_station" ;
     p223:airInlet ex:00045 ;
@@ -314,20 +294,17 @@ ex:00043 a p223:AirFlowStation,
 ex:00044 a s223:Property,
         g36:AnalogIn ;
     rdfs:label "VAV2.air_flow_station.flow" .
-ex:00045 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00045 a s223:InletConnectionPoint ;
     rdfs:label "VAV2.air_flow_station.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00043 .
-ex:00046 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00046 a s223:OutletConnectionPoint ;
     rdfs:label "VAV2.air_flow_station.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00043 .
 ex:00047 a s223:Connectable,
-        s223:Container,
         s223:Damper,
         s223:Device ;
     rdfs:label "VAV2.damper" ;
@@ -347,14 +324,12 @@ ex:00048 a s223:Property,
 ex:00049 a s223:Property,
         g36:AnalogIn ;
     rdfs:label "VAV2.damper.feedback" .
-ex:00050 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00050 a s223:InletConnectionPoint ;
     rdfs:label "VAV2.damper.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00047 .
-ex:00051 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00051 a s223:OutletConnectionPoint ;
     rdfs:label "VAV2.damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;

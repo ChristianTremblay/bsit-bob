@@ -2,7 +2,7 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import ConnectionPoint, Device, Junction, bind_model_namespace, dump
+from bob.core import InletConnectionPoint, Device, Junction, bind_model_namespace, dump
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -10,7 +10,7 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 def test_segment_004(bob_fixture):
     d1 = Device(label="d1")
-    cp1 = ConnectionPoint(d1)
+    cp1 = InletConnectionPoint(d1)
 
     j1 = Junction()
     cp1.link_to(j1)
