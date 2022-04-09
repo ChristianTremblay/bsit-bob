@@ -18,7 +18,6 @@
   rdfs:label "B59" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 ex:00001 a p223:AirHandlingUnit,
-        s223:Container,
         s223:System ;
     rdfs:label "RTU-1" ;
     p223:electricalInlet ex:00037 ;
@@ -44,7 +43,6 @@ ex:00001 a p223:AirHandlingUnit,
 ex:00002 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "DA-T" ;
@@ -66,7 +64,6 @@ ex:00003 a p223:MeasuredProperty,
 ex:00004 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "RA-T" ;
@@ -88,7 +85,6 @@ ex:00005 a p223:MeasuredProperty,
 ex:00006 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "ZN-T" ;
@@ -108,7 +104,6 @@ ex:00007 a p223:MeasuredProperty,
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 ex:00008 a s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Fan ;
     rdfs:label "SF-1" ;
@@ -121,26 +116,22 @@ ex:00008 a s223:Connectable,
         ex:00010,
         ex:00011 ;
     rdfs:comment "Supply Fan" .
-ex:00009 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00009 a s223:InletConnectionPoint ;
     rdfs:label "SF-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00008 .
-ex:00010 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00010 a s223:OutletConnectionPoint ;
     rdfs:label "SF-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00008 .
-ex:00011 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00011 a s223:InletConnectionPoint ;
     rdfs:label "SF-1.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex:00008 .
 ex:00012 a s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Fan ;
     rdfs:label "RF-1" ;
@@ -152,26 +143,22 @@ ex:00012 a s223:Connectable,
         ex:00014,
         ex:00015 ;
     rdfs:comment "Return Fan" .
-ex:00013 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00013 a s223:InletConnectionPoint ;
     rdfs:label "RF-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00012 .
-ex:00014 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00014 a s223:OutletConnectionPoint ;
     rdfs:label "RF-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00012 .
-ex:00015 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00015 a s223:InletConnectionPoint ;
     rdfs:label "RF-1.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex:00012 .
 ex:00016 a s223:Connectable,
-        s223:Container,
         s223:Damper,
         s223:Device ;
     rdfs:label "OAD-1" ;
@@ -193,26 +180,22 @@ ex:00017 a s223:Property,
 ex:00018 a s223:Property,
         g36:AnalogIn ;
     rdfs:label "OAD-1.feedback" .
-ex:00019 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00019 a s223:InletConnectionPoint ;
     rdfs:label "OAD-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00016 .
-ex:00020 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00020 a s223:OutletConnectionPoint ;
     rdfs:label "OAD-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00016 .
-ex:00021 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00021 a s223:InletConnectionPoint ;
     rdfs:label "OAD-1.powerInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex:00016 .
 ex:00022 a s223:Connectable,
-        s223:Container,
         s223:Damper,
         s223:Device ;
     rdfs:label "RAD-1" ;
@@ -233,26 +216,22 @@ ex:00023 a s223:Property,
 ex:00024 a s223:Property,
         g36:AnalogIn ;
     rdfs:label "RAD-1.feedback" .
-ex:00025 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00025 a s223:InletConnectionPoint ;
     rdfs:label "RAD-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00022 .
-ex:00026 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00026 a s223:OutletConnectionPoint ;
     rdfs:label "RAD-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00022 .
-ex:00027 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00027 a s223:InletConnectionPoint ;
     rdfs:label "RAD-1.powerInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex:00022 .
 ex:00028 a s223:Connectable,
-        s223:Container,
         s223:CoolingCoil,
         s223:Device ;
     rdfs:label "CWC-1" ;
@@ -268,26 +247,22 @@ ex:00028 a s223:Connectable,
         ex:00031,
         ex:00032 ;
     rdfs:comment "Chilled Water coil" .
-ex:00029 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00029 a s223:InletConnectionPoint ;
     rdfs:label "CWC-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00028 .
-ex:00030 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00030 a s223:OutletConnectionPoint ;
     rdfs:label "CWC-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00028 .
-ex:00031 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00031 a s223:InletConnectionPoint ;
     rdfs:label "CWC-1.chilledWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex:00028 .
-ex:00032 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00032 a s223:OutletConnectionPoint ;
     rdfs:label "CWC-1.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
@@ -352,29 +327,24 @@ ex:00041 a s223:Connection ;
     s223:connectsTo ex:00054 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Air returns from zone here" .
-ex:00042 a s223:Container,
-        s223:PhysicalSpace,
+ex:00042 a s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "B59 Building" ;
     s223:contains ex:00043,
         ex:00044 .
-ex:00043 a s223:Container,
-        s223:PhysicalSpace,
+ex:00043 a s223:PhysicalSpace,
         rec:Roof ;
     rdfs:label "Roof of building" .
-ex:00044 a s223:Container,
-        s223:PhysicalSpace,
+ex:00044 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "One big floor which is a common space" ;
     s223:contains ex:00045 ;
     s223:encloses ex:00054 .
-ex:00045 a s223:Container,
-        s223:PhysicalSpace,
+ex:00045 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Director Office" .
 ex:00046 a p223:PhysicSystem,
-        s223:Container,
         s223:System ;
     rdfs:label "Indoor air of space" ;
     p223:airTransfer ex:00049 ;
@@ -457,50 +427,42 @@ ex:00054 a s223:Connectable,
     s223:radiantCooling ex:00061 ;
     s223:radiantHeating ex:00060 ;
     s223:windows ex:00059 .
-ex:00055 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00055 a s223:InletConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00054 .
-ex:00056 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00056 a s223:OutletConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00054 .
-ex:00057 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+ex:00057 a s223:BidirectionalConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00054 .
-ex:00058 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+ex:00058 a s223:BidirectionalConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00054 .
-ex:00059 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+ex:00059 a s223:BidirectionalConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00054 .
-ex:00060 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+ex:00060 a s223:BidirectionalConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00054 .
-ex:00061 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+ex:00061 a s223:BidirectionalConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00054 .
-ex:00062 a s223:Container,
-        s223:HVACZone,
+ex:00062 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "Common workspace zone for HVAC" ;
     s223:airInlet ex:00063 ;

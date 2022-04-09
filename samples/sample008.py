@@ -3,10 +3,11 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import (
-    ConnectionPoint,
     Device,
+    InletConnectionPoint,
+    InletSystemConnectionPoint,
+    OutletSystemConnectionPoint,
     System,
-    SystemConnectionPoint,
     bind_model_namespace,
     dump,
 )
@@ -16,17 +17,18 @@ __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TestDevice(Device):
-    cp: ConnectionPoint
+    cp: InletConnectionPoint
 
 
 class TestSystem(System):
-    cp: SystemConnectionPoint
+    cpI: InletSystemConnectionPoint
+    cpO: OutletSystemConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
         device = TestDevice(label=kwargs["label"] + "-d")
-        self.cp.mapsTo = device.cp
+        self.cpI.mapsTo = device.cp
 
 
 # two independant systems
@@ -49,12 +51,12 @@ s1 > s2
 s1 = TestSystem(label="4-s1")
 s2 = TestSystem(label="4-s2")
 
-s1.cp >> s2.cp
+# s1 >> s2
 
-# s1 is connected to s2
+# s2 is connected to s1
 s1 = TestSystem(label="5-s1")
 s2 = TestSystem(label="5-s2")
-s1 >> s2
+# s2 >> s1
 
 # dump the result
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

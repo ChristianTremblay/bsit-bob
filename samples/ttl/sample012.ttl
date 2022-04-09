@@ -11,8 +11,7 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample012> ;
   rdfs:label "sample012" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex:00001 a s223:Container,
-        s223:System,
+ex:00001 a s223:System,
         ex:TestSystem ;
     rdfs:label "s1" ;
     s223:contains ex:00004 ;
@@ -29,7 +28,6 @@ ex:00003 a s223:OutletSystemConnectionPoint,
     rdfs:label "s1.cpOut" ;
     s223:hasDirection s223:Direction-Outlet .
 ex:00004 a s223:Connectable,
-        s223:Container,
         s223:Device,
         ex:TestDevice ;
     rdfs:label "d1" ;
@@ -37,18 +35,15 @@ ex:00004 a s223:Connectable,
         ex:00006 ;
     ex:cpIn ex:00005 ;
     ex:cpOut ex:00006 .
-ex:00005 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00005 a s223:InletConnectionPoint ;
     rdfs:label "d1.cpIn" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:isConnectionPointOf ex:00004 .
-ex:00006 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00006 a s223:OutletConnectionPoint ;
     rdfs:label "d1.cpOut" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:isConnectionPointOf ex:00004 .
-ex:00007 a s223:Container,
-        s223:System,
+ex:00007 a s223:System,
         ex:TestSystem ;
     rdfs:label "s2" ;
     s223:contains ex:00010 ;
@@ -67,7 +62,6 @@ ex:00009 a s223:OutletSystemConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:mapsTo ex:00012 .
 ex:00010 a s223:Connectable,
-        s223:Container,
         s223:Device,
         ex:TestDevice ;
     rdfs:label "d2" ;
@@ -75,13 +69,11 @@ ex:00010 a s223:Connectable,
         ex:00012 ;
     ex:cpIn ex:00011 ;
     ex:cpOut ex:00012 .
-ex:00011 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex:00011 a s223:InletConnectionPoint ;
     rdfs:label "d2.cpIn" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:isConnectionPointOf ex:00010 .
-ex:00012 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex:00012 a s223:OutletConnectionPoint ;
     rdfs:label "d2.cpOut" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:isConnectionPointOf ex:00010 .

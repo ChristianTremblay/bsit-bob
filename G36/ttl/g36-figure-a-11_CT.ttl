@@ -27,7 +27,6 @@ exg3611:00003 a s223:Connection ;
     rdfs:comment "Needed to reference DPT" .
 exg3611:00004 a p223:Filter,
         s223:Connectable,
-        s223:Container,
         s223:Device ;
     rdfs:label "Filter" ;
     p223:airInlet exg3611:00005 ;
@@ -37,20 +36,17 @@ exg3611:00004 a p223:Filter,
     s223:connectedTo exg3611:00007 ;
     s223:hasConnectionPoint exg3611:00005,
         exg3611:00006 .
-exg3611:00005 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00005 a s223:InletConnectionPoint ;
     rdfs:label "Filter.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3611:00004 .
-exg3611:00006 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+exg3611:00006 a s223:OutletConnectionPoint ;
     rdfs:label "Filter.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3611:00004 .
 exg3611:00007 a s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:HeatingCoil ;
     rdfs:label "HC" ;
@@ -70,32 +66,27 @@ exg3611:00007 a s223:Connectable,
     s223:hotWaterInlet exg3611:00010 ;
     s223:hotWaterOutlet exg3611:00011 ;
     rdfs:comment "Hot Water Coil" .
-exg3611:00008 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00008 a s223:InletConnectionPoint ;
     rdfs:label "HC.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3611:00007 .
-exg3611:00009 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+exg3611:00009 a s223:OutletConnectionPoint ;
     rdfs:label "HC.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3611:00007 .
-exg3611:00010 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00010 a s223:InletConnectionPoint ;
     rdfs:label "HC.hotWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3611:00007 .
-exg3611:00011 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+exg3611:00011 a s223:OutletConnectionPoint ;
     rdfs:label "HC.hotWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3611:00007 .
 exg3611:00012 a s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Valve ;
     rdfs:label "HWValve" ;
@@ -109,30 +100,25 @@ exg3611:00012 a s223:Connectable,
     s223:onOffInlet exg3611:00014 ;
     s223:positionInlet exg3611:00013 ;
     rdfs:comment "Hot Water Valve" .
-exg3611:00013 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00013 a s223:InletConnectionPoint ;
     rdfs:label "HWValve.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3611:00012 .
-exg3611:00014 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00014 a s223:InletConnectionPoint ;
     rdfs:label "HWValve.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3611:00012 .
-exg3611:00015 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00015 a s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3611:00012 .
-exg3611:00016 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+exg3611:00016 a s223:OutletConnectionPoint ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3611:00012 .
 exg3611:00017 a s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Fan ;
     rdfs:label "Fan" ;
@@ -147,26 +133,22 @@ exg3611:00017 a s223:Connectable,
         exg3611:00019,
         exg3611:00020 ;
     rdfs:comment "Fan driven by VFD" .
-exg3611:00018 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00018 a s223:InletConnectionPoint ;
     rdfs:label "Fan.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3611:00017 .
-exg3611:00019 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+exg3611:00019 a s223:OutletConnectionPoint ;
     rdfs:label "Fan.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3611:00017 .
-exg3611:00020 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00020 a s223:InletConnectionPoint ;
     rdfs:label "Fan.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf exg3611:00017 .
 exg3611:00021 a s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "VFD" ;
@@ -175,14 +157,12 @@ exg3611:00021 a s223:Connectable,
     s223:hasConnectionPoint exg3611:00022,
         exg3611:00023 ;
     rdfs:comment "VFD for Fan" .
-exg3611:00022 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+exg3611:00022 a s223:InletConnectionPoint ;
     rdfs:label "VFD.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf exg3611:00021 .
-exg3611:00023 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+exg3611:00023 a s223:OutletConnectionPoint ;
     rdfs:label "VFD.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V_60Hz ;
@@ -202,7 +182,6 @@ exg3611:00025 a s223:Connection ;
 exg3611:00026 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TS1" ;
@@ -224,7 +203,6 @@ exg3611:00027 a p223:MeasuredProperty,
 exg3611:00028 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "DPT1" ;
@@ -247,15 +225,13 @@ exg3611:00029 a p223:DifferentialStaticPressure,
     qudt:unit unit:PA .
 exg3611:00030 a p223:HighStaticPressureStat,
         s223:Connectable,
-        s223:Container,
         s223:Device ;
     rdfs:label "DPS" ;
     p223:highStaticPressureOutput exg3611:00031 ;
     s223:contains exg3611:00032 ;
     s223:hasConnectionPoint exg3611:00031 ;
     rdfs:comment "High Static Pressure Stat" .
-exg3611:00031 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+exg3611:00031 a s223:OutletConnectionPoint ;
     rdfs:label "DPS.highStaticPressureOutput" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-OnOffSignal ;
@@ -263,7 +239,6 @@ exg3611:00031 a s223:ConnectionPoint,
 exg3611:00032 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "DPS.sensor" ;
@@ -285,7 +260,6 @@ exg3611:00033 a p223:DifferentialStaticPressure,
     qudt:unit unit:PA .
 exg3611:00034 a p223:SmokeDetectionSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "SD" ;
@@ -295,8 +269,7 @@ exg3611:00034 a p223:SmokeDetectionSensor,
     s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty exg3611:00036 ;
     rdfs:comment "Smoke Detector in discharge air" .
-exg3611:00035 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+exg3611:00035 a s223:OutletConnectionPoint ;
     rdfs:label "SD.dryContactOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-OnOffSignal ;
@@ -314,7 +287,6 @@ exg3611:00036 a p223:MeasuredProperty,
 exg3611:00037 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TS2" ;
@@ -336,7 +308,6 @@ exg3611:00038 a p223:MeasuredProperty,
 exg3611:00039 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
         s223:Connectable,
-        s223:Container,
         s223:Device,
         s223:Sensor ;
     rdfs:label "DPT2" ;
@@ -407,8 +378,7 @@ exg3611:00054 a bacnet:Property,
 exg3611:00055 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "analog-input" .
-exg3611:00056 a s223:Container,
-        s223:System,
+exg3611:00056 a s223:System,
         exg3611:HighStaticController ;
     rdfs:label "SFHIGHSTATIC" ;
     s223:contains exg3611:00030 ;
@@ -450,8 +420,7 @@ exg3611:00061 a s223:InletSystemConnectionPoint,
     rdfs:label "SFHIGHSTATIC.resetInput" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-OnOffSignal .
-exg3611:00062 a s223:Container,
-        s223:System,
+exg3611:00062 a s223:System,
         exg3611:VFDController ;
     rdfs:label "VFDController" ;
     s223:hasSystemConnectionPoint exg3611:00063,
@@ -519,7 +488,6 @@ exg3611:00072 a s223:Connection ;
     s223:connectsTo exg3611:00012 ;
     s223:hasMedium s223:Water-HotWater .
 exg3611:00073 a p223:FunctionBlock,
-        s223:Container,
         s223:System,
         g36:FunctionBlock,
         exg3611:FIG_A_11 ;
