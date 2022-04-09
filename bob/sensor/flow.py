@@ -15,20 +15,14 @@ from ..core import (
     s223,
     unit,
 )
-from ..property import QuantifiableProperty
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from ..properties import Flow
+from ..property import QuantifiableProperty, Setpoint
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = s223
 
 
-class Flow(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.VolumeFlowRate
-    unit: URIRef
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class FlowSetpoint(QuantifiableProperty):
+class FlowSetpoint(Setpoint):
     hasQuantityKind: URIRef = quantitykind.VolumeFlowRate
     unit: URIRef
 

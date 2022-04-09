@@ -16,7 +16,7 @@ from bob.devices.hvac.stats import AirDifferentialStaticPressureSensor
 from bob.devices.hvac.vfd import VFD
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
-from bob.sensor.temperature import AirTemperatureSensor
+from bob.sensor.temperature import AirTemperatureSensor, Temperature
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
 
@@ -80,7 +80,7 @@ vav1_config = {
             "comment": "Air supplied to zone by VAV 1, AKA discharge air temperature"
         },
         ("VAV1_ZN-T", AirTemperatureSensor): {
-            "comment": "Zone Air Temperature Sensor, which is a thermostats..."
+            "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },
     "devices": {
@@ -97,7 +97,7 @@ vav2_config = {
             "comment": "Air supplied to zone by VAV 2, AKA discharge air temperature"
         },
         ("VAV2_ZN-T", AirTemperatureSensor): {
-            "comment": "Zone Air Temperature Sensor, which is a thermostats..."
+            "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },
     "devices": {

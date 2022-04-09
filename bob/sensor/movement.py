@@ -13,13 +13,10 @@ from ..core import (
     quantitykind,
     unit,
 )
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from ..properties import Movement
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = p223
-
-
-class Movement(QuantifiableMeasuredProperty):
-    hasExternalReference: ExternalReference
 
 
 class MovementSensor(Sensor):

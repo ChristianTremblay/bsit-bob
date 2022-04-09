@@ -1,6 +1,6 @@
 from rdflib import URIRef
 
-from ..core import p223, quantitykind, unit
+from ..core import Air, Medium, Substance, p223, quantitykind, unit
 from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 
 __namespace__ = p223
@@ -19,3 +19,16 @@ class PercentCommand(QuantifiableActuatableProperty):
 class RPM(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.AngularVolocity
     unit: URIRef = unit["REV-PER-MIN"]
+
+
+class RelativeHumidity(QuantifiableObservableProperty):
+    hasQuantityKind: URIRef = quantitykind.RelativeHumidity
+    unit: URIRef = unit.PERCENT_RH
+    measuresMedium: Medium = Air
+
+
+class GasConcentration(QuantifiableObservableProperty):
+    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
+    unit: URIRef = unit.PPM
+    measuresMedium: Medium = Air
+    measuresSubstance: Substance

@@ -4,9 +4,9 @@ import argparse
 import glob
 import logging
 import os
-import owlrl
 import sys
 
+import owlrl
 from pyshacl.validate import Validator
 from rdflib import OWL, RDF, RDFS, SH, Graph, Namespace
 

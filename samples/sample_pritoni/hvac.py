@@ -5,7 +5,8 @@ import hvac_spaces as hs
 import physical_spaces as ps
 
 from bob.connections.air import *
-from bob.core import bind_model_namespace, dump
+from bob.core import bind_model_namespace, dump, unit
+from bob.sensor.temperature import Temperature
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
@@ -121,6 +122,7 @@ hd.vav1["VAV1_SA-F"].hasMeasurementLocation = hd.vav1["VAV1_damper"].airInlet
 hd.vav1["VAV1_DA-T"].hasMeasurementLocation = hd.vav1["VAV1_HeatingCoil"].airOutlet
 hd.vav1["VAV1_ZN-T"].hasMeasurementLocation = hs.openoffice_hvac
 hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
+# hd.vav1["VAV1_ZN-T"].observesProperty.hasValue = Temperature(20, unit=unit.DEG_C)
 
 supplyAir >> hd.vav2["VAV2_damper"].airInlet
 hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
@@ -129,6 +131,7 @@ hd.vav2["VAV2_SA-F"].hasMeasurementLocation = hd.vav2["VAV2_damper"].airInlet
 hd.vav2["VAV2_DA-T"].hasMeasurementLocation = hd.vav2["VAV2_HeatingCoil"].airOutlet
 hd.vav2["VAV2_ZN-T"].hasMeasurementLocation = hs.corridorSouth_hvac
 hd.vav2["VAV2_ZN-T"].hasPhysicalLocation = ps.corridor
+# hd.vav2["VAV2_ZN-T"].observesProperty.hasValue = Temperature(22.3, unit=unit.DEG_C)
 
 hs.hvac_zone_1.airInlet.mapsTo = hs.privateoffice_hvac.ductAirInlet
 hs.hvac_zone_1.airOutlet.mapsTo = hs.openoffice_hvac.ductAirOutlet

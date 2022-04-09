@@ -166,12 +166,12 @@ class VirtualSensor(Sensor):
     hasFunctionInput: Property
 
 
-class MeasuredProperty(ObservableProperty):
-    node_type: URIRef = p223.MeasuredProperty
-    isObservedBy: Sensor
+# class MeasuredProperty(ObservableProperty):
+#    node_type: URIRef = None
+#    isObservedBy: Sensor
 
 
-class QuantifiableMeasuredProperty(QuantifiableObservableProperty, MeasuredProperty):
-    node_type: URIRef = p223.QuantifiableMeasuredProperty
-    # hasQuantityKind inherited from QuantifiableProperty
-    # isObservedBy inherited from MeasuredProperty
+# class QuantifiableMeasuredProperty(QuantifiableObservableProperty, MeasuredProperty):
+#    node_type: URIRef = None
+# hasQuantityKind inherited from QuantifiableProperty
+# isObservedBy inherited from MeasuredProperty

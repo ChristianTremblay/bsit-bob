@@ -13,89 +13,11 @@ from ..core import (
     s223,
     unit,
 )
-from ..properties.states import OnOffStatus
+from ..properties import Amps, OnOffStatus, Volts
 from ..property import ObservableProperty, QuantifiableProperty
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = s223
-
-
-class VoltageAN(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.Voltage
-    unit: URIRef = unit.V
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class VoltageBN(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.Voltage
-    unit: URIRef = unit.V
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class VoltageCN(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.Voltage
-    unit: URIRef = unit.V
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class VoltageAB(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.Voltage
-    unit: URIRef = unit.V
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class VoltageBC(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.Voltage
-    unit: URIRef = unit.V
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class VoltageAC(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.Voltage
-    unit: URIRef = unit.V
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class CurrentPhaseA(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.ElectricCurrent
-    unit: URIRef = unit.A
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class CurrentPhaseB(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.ElectricCurrent
-    unit: URIRef = unit.A
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class CurrentPhaseC(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.ElectricCurrent
-    unit: URIRef = unit.A
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class Frequency(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.Frequency
-    measuresMedium: Medium  # set from the sensor
-    unit: URIRef = unit.HZ
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class ElectricalPower(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.ElectricalPower
-    measuresMedium: Medium  # set from the sensor
-    unit: URIRef = unit.kW
-    # isObservedBy: Sensor
 
 
 class CurrentSwitch(OnOffStatus):
@@ -135,15 +57,22 @@ def create_3phase_meter_sensors(
     measuresMedium: Medium = None,
     hasMeasurementLocation: Node = None,
 ):
-    voltage_sensors = [VoltageAB, VoltageAC, VoltageBC, VoltageAN, VoltageBN, VoltageCN]
-    current_sensors = [CurrentPhaseA, CurrentPhaseB, CurrentPhaseC]
+    voltage_sensors = [
+        "VoltageAB",
+        "VoltageAC",
+        "VoltageBC",
+        "VoltageAN",
+        "VoltageBN",
+        "VoltageCN",
+    ]
+    current_sensors = ["CurrentPhaseA", "CurrentPhaseB", "CurrentPhaseC"]
 
     v_sensors = []
     for each in voltage_sensors:
         v_sensors.append(
             VoltageSensor(
-                label=f"{label}_{each.__name__}",
-                measures=each,
+                label=f"{label}_{each}",
+                measures=Volts(label=each),
                 measuresMedium=measuresMedium,
             )
         )
@@ -152,8 +81,8 @@ def create_3phase_meter_sensors(
     for each in current_sensors:
         c_sensors.append(
             CurrentAnalogSensor(
-                label=f"{label}_{each.__name__}",
-                measures=each,
+                label=f"{label}_{each}",
+                measures=Amps(label=each),
                 measuresMedium=measuresMedium,
             )
         )

@@ -3,17 +3,11 @@ from typing import Any
 from rdflib import URIRef
 
 from ..core import Air, Medium, PropertyReference, Water, p223, quantitykind, unit
+from ..properties import Temperature
 from ..property import QuantifiableProperty, Setpoint
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = p223
-
-
-class Temperature(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.Temperature
-    unit: URIRef
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
 
 
 class TemperatureSetpoint(Setpoint):
@@ -36,7 +30,6 @@ class TemperatureSensor(Sensor):
             )
         super().__init__(**_sensor_kwargs)
         self.observesProperty = Temperature(
-            # isObservedBy=self,
             label=f"{self.label}.Temperature",
             **_measure_kwargs,
         )

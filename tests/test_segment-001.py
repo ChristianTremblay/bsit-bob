@@ -3,8 +3,8 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob.core import (
-    InletConnectionPoint,
     Device,
+    InletConnectionPoint,
     Junction,
     Segment,
     bind_model_namespace,
