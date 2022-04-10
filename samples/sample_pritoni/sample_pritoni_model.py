@@ -41,17 +41,17 @@ from bob.systems.hvac.vav import VAV
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
-import bacnet_references
-import electrical_devices as ed
-import electricity
-import hvac
-import hvac_devices as hd
-import hvac_spaces as hs
-import lighting
-import lighting_devices as ld
-import lighting_spaces as ls
-import occupancy
-import physical_spaces as ps
+import physical_spaces as ps  # isort: skip
+import hvac_devices as hd  # isort: skip
+import hvac_spaces as hs  # isort: skip
+import hvac  # isort: skip
+import lighting_spaces as ls  # isort: skip
+import lighting_devices as ld  # isort: skip
+import lighting  # isort: skip
+import occupancy  # isort: skip
+import electrical_devices as ed  # isort: skip
+import electricity  # isort: skip
+import bacnet_references  # isort: skip
 
 # Relations between Physical spaces and Domain spaces
 ps.bldg > ps.roof
@@ -73,4 +73,4 @@ ps.private_office > ls.privateoffice_lightspace
 ps.floor1 > ps.kitchenette > hs.kitchenette_hvac
 ps.kitchenette > ls.kitchenette_lightspace
 
-dump(filename=f"{model_name}.ttl", header=sample_header(model_name))
+dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

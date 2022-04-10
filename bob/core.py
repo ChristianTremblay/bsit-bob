@@ -844,11 +844,13 @@ class Property(Node):
                 self.add_external_reference(external_reference)
 
     def add_value(self, value: Any) -> None:
-        """Add an additional value to a property."""
+        """hasValue is like label and no relationship required
+        Add an additional value to a property."""
         if not isinstance(value, Literal):
             value = Literal(value)
 
-        self._data_graph.add((self.node, s223.hasValue, value.node))
+        self.hasValue = value
+        # self._data_graph.add((self.node, s223.hasValue, value.node))
 
     def add_external_reference(self, external_reference: ExternalReference) -> None:
         """Add an additional external reference to a property."""
