@@ -2,9 +2,9 @@
 Run a SPARL query on all of the samples.
 """
 
+import glob
 import os
 import sys
-import glob
 from pathlib import Path
 
 from rdflib import Graph, Namespace

@@ -15,8 +15,9 @@ from ..core import (
     quantitykind,
     unit,
 )
-from ..property import QuantifiableProperty
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from ..properties import GasConcentration
+from ..property import QuantifiableProperty, Setpoint
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = p223
 
@@ -33,14 +34,7 @@ NO2 = Substance(node_iri=p223["Substance-NO2"])
 CH4 = Substance(node_iri=p223["Substance-CH4"])
 
 
-class GasConcentration(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    unit: URIRef = unit.PPM
-    measuresMedium: Medium = Air
-    measuresSubstance: Substance
-
-
-class GasConcentrationSetpoint(QuantifiableProperty):
+class GasConcentrationSetpoint(Setpoint):
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     unit: URIRef = unit.PPM
 

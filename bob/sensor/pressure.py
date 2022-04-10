@@ -17,20 +17,14 @@ from ..core import (
     quantitykind,
     unit,
 )
-from ..property import QuantifiableProperty
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from ..properties import DifferentialStaticPressure
+from ..property import QuantifiableProperty, Setpoint
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = p223
 
 
-class DifferentialStaticPressure(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.ForcePerArea
-    unit: URIRef
-    measuresMedium: Medium  # set from the sensor
-    # isObservedBy: Sensor
-
-
-class DifferentialStaticPressureSetpoint(QuantifiableProperty):
+class DifferentialStaticPressureSetpoint(Setpoint):
     hasQuantityKind: URIRef = quantitykind.ForcePerArea
     unit: URIRef
 

@@ -5,23 +5,19 @@ from typing import Any
 from rdflib import URIRef
 
 from ..core import Air, Medium, PropertyReference, enum, p223, quantitykind, unit
+from ..properties import RelativeHumidity
 from ..property import (
     ObservableProperty,
     QuantifiableObservableProperty,
     QuantifiableProperty,
+    Setpoint,
 )
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = p223
 
 
-class Humidity(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.RelativeHumidity
-    unit: URIRef = unit.PERCENT_RH
-    measuresMedium: Medium = Air
-
-
-class HumiditySetpoint(QuantifiableProperty):
+class HumiditySetpoint(Setpoint):
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     unit: URIRef = unit.PERCENT_RH
 
@@ -39,7 +35,7 @@ class AirHumiditySensor(Sensor):
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
-        self.observesProperty = Humidity(
+        self.observesProperty = RelativeHumidity(
             # isObservedBy=self,
             label=f"{self.label}.Measure",
             **_measure_kwargs,

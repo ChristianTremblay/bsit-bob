@@ -2,18 +2,20 @@ import decimal
 import logging
 from typing import Any, List, Union
 
-from rdflib import (
-    RDF,
-    RDFS,
-    XSD,
-    BNode,
-    Graph,
-    Literal,  # type: ignore
-    Namespace,
-    URIRef,
-)
+from rdflib import Literal  # type: ignore
+from rdflib import RDF, RDFS, XSD, BNode, Graph, Namespace, URIRef
 
-from .core import ExternalReference, Property, logging, quantitykind, qudt, s223, unit
+from .core import (
+    EnumerationKind,
+    ExternalReference,
+    Node,
+    Property,
+    logging,
+    quantitykind,
+    qudt,
+    s223,
+    unit,
+)
 
 __namespace__ = s223
 
@@ -34,6 +36,7 @@ class ObservableProperty(Property):
 
     node_type: URIRef = s223.ObservableProperty
     hasExternalReference: ExternalReference
+    isObservedBy: Node
 
 
 class QuantifiableProperty(Property):
@@ -88,14 +91,22 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
 # are observable
 # There could be 2 subclasses of setpoint ?
 class Setpoint(QuantifiableProperty):
-    """
-    Such as a numerical setpoint.
-    """
-
     node_type: URIRef = s223.Setpoint
+    hasApsect: EnumerationKind
+    hasDeadband: Literal
+    hasValue: Literal
+    hasQuantityKind: URIRef
+    unit: URIRef
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(self, **kwargs):
+        _properties = {}
+        for k, v in self.__annotations__.items():
+            if k in kwargs:
+                _properties[k] = kwargs.pop(k)
+        super().__init__(**kwargs)
+        for k, v in _properties.items():
+            if v is not None:
+                setattr(self, k, self.__annotations__[k](v))
 
 
 class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):

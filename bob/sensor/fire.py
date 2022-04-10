@@ -13,18 +13,11 @@ from ..core import (
     quantitykind,
     unit,
 )
+from ..properties import SmokePresence
 from ..property import QuantifiableProperty, Setpoint
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = p223
-
-Smoke = Substance(node_iri=p223["Substance-Smoke"])
-
-
-class SmokePresence(QuantifiableMeasuredProperty):
-    measuresMedium: Medium  # set from the sensor
-    measuresSubstance: Substance = Smoke
-    # isObservedBy: Sensor
 
 
 class SmokeDetectionSensor(Sensor):

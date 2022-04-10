@@ -5,6 +5,7 @@ from ..core import (
     ExternalReference,
     Medium,
     SchemaGraph,
+    Substance,
     p223,
     quantitykind,
     unit,
@@ -41,3 +42,16 @@ class Schedule(ObservableProperty):
 class OccupancyStatus(ObservableProperty):
     node_type: URIRef = p223.OccupancyStatus
     hasEnumerationKind: EnumerationKind = Occupancy
+
+
+class Movement(ObservableProperty):
+    hasExternalReference: ExternalReference
+
+
+Smoke = Substance(node_iri=p223["Substance-Smoke"])
+
+
+class SmokePresence(ObservableProperty):
+    measuresMedium: Medium  # set from the sensor
+    measuresSubstance: Substance = Smoke
+    # isObservedBy: Sensor

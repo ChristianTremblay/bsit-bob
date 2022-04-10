@@ -2,7 +2,7 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import InletConnectionPoint, Device, Junction, bind_model_namespace, dump
+from bob.core import Device, InletConnectionPoint, Junction, bind_model_namespace, dump
 
 model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")

@@ -14,25 +14,20 @@ from ..core import (
     quantitykind,
     unit,
 )
+from ..properties import ParticulateCount
 from ..property import (
     ObservableProperty,
     QuantifiableObservableProperty,
     QuantifiableProperty,
+    Setpoint,
 )
-from .sensor import QuantifiableMeasuredProperty, Sensor, split_kwargs
+from .sensor import Sensor, split_kwargs
 
 __namespace__ = p223
 
 PM1_0 = Substance(node_iri=p223["Particulate-PM1.0"])
 PM2_5 = Substance(node_iri=p223["Particulate-PM2.5"])
 PM10_0 = Substance(node_iri=p223["Particulate-PM10.0"])
-
-
-class ParticulateCount(QuantifiableMeasuredProperty):
-    hasQuantityKind: URIRef = quantitykind.NumberDensity
-    unit: URIRef = unit["NUM-PER-M3"]
-    measuresMedium: Medium
-    measuresSubstance: Substance
 
 
 class ParticulateSensor(Sensor):
