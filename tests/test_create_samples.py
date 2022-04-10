@@ -14,3 +14,10 @@ def test_create_samples(bob_fixture):
             print("Making TTL")
             print(filename.path)
             assert not subprocess.call(["python", filename.path])
+
+
+def test_build_pritoni_samples(bob_fixture):
+    samples_folder = os.path.join(bob_fixture["samples_directory"], "sample_pritoni")
+    samples_ttl_folder = bob_fixture["samples_ttl_directory"]
+    filename = os.path.join(samples_folder, "sample_pritoni_model.py")
+    assert not subprocess.call(["python", filename])

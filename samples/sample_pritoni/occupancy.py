@@ -21,7 +21,7 @@ open_office_occ_control = OccupancyControl(
 # open_office_occ_control > ld.openoffice_movement
 open_office_occ_control.servesZone = ls.lighting_zone_1
 # open_office_occ_control.servesZone = ls.lighting_zone_2
-open_office_occ_control.hasOccupancyStatus = OccupancyStatus(hasValue=1)
+open_office_occ_control.hasOccupancyStatus = OccupancyStatus(hasValue=0)
 
 kitchenette_occ_control = OccupancyControl(
     label="Kitchenette Occ Control",

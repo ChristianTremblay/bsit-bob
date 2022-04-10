@@ -52,6 +52,7 @@ import occupancy  # isort: skip
 import electrical_devices as ed  # isort: skip
 import electricity  # isort: skip
 import bacnet_references  # isort: skip
+import fake_values  # isort: skip
 
 # Relations between Physical spaces and Domain spaces
 ps.bldg > ps.roof
