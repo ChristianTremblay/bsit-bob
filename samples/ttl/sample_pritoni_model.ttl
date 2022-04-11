@@ -4,6 +4,7 @@
 @prefix bacnet_references: <urn:ex/bacnet_references/> .
 @prefix electrical_devices: <urn:ex/electrical_devices/> .
 @prefix electricity: <urn:ex/electricity/> .
+@prefix functions: <urn:ex/functions/> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix hvac: <urn:ex/hvac/> .
 @prefix hvac_devices: <urn:ex/hvac_devices/> .
@@ -788,6 +789,21 @@ electricity:00004 a s223:Connection ;
     s223:connectsFrom hvac_devices:00031 ;
     s223:connectsTo hvac_devices:00014 ;
     s223:hasMedium s223:Electricity-575V_60Hz .
+functions:00001 a s223:FunctionBlock,
+        functions:AVG_Temp ;
+    rdfs:label "FB-1" ;
+    s223:hasProperty functions:00002 ;
+    s223:producesOutput functions:00002 ;
+    s223:usesInput hvac_devices:00009 ;
+    rdfs:comment "Compute DA-T Avg" ;
+    functions:avg_tmp functions:00002 .
+functions:00002 a p223:Temperature,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasValue 0.0 ;
+    qudt:quantityKind quantitykind:Temperature .
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;
     s223:connectsAt hvac_spaces:00013,

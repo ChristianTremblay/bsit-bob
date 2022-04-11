@@ -51,6 +51,7 @@ import lighting  # isort: skip
 import occupancy  # isort: skip
 import electrical_devices as ed  # isort: skip
 import electricity  # isort: skip
+import functions  # isort: skip
 import bacnet_references  # isort: skip
 import fake_values  # isort: skip
 
