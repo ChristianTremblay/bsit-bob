@@ -33,9 +33,7 @@ from bob.sensor.movement import MovementSensor, OccupancySensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone
-from bob.space.occupancy import OccupancySpace
 from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
-from bob.systems.functionblock import FunctionBlock
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
 

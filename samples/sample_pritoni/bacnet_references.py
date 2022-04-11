@@ -100,6 +100,14 @@ rf_vfd_cmd = BACnetReference(
     objectType="binary-output",
 )
 
+pritoni_schedule = BACnetReference(
+    objectInstance=1,
+    objectOf=CGM_2_004,
+    objectName="OCC-SCHEDULE",
+    description="Building Occupancy Schedule",
+    objectType="schedule",
+)
+
 hd.vav1["VAV1_ZN-T"].observesProperty @ zn1_t
 hd.vav2["VAV2_ZN-T"].observesProperty @ zn2_t
 
@@ -115,6 +123,12 @@ ld.openofficeEast_luminaire_1.hasOnOffStatus @ BACnetReference(
 )
 
 fn.f.avg_tmp @ dat_avg
+
+fn.bathroom_occ_control.hasSchedule @ pritoni_schedule
+fn.corridor_occ_control.hasSchedule @ pritoni_schedule
+fn.kitchenette_occ_control.hasSchedule @ pritoni_schedule
+fn.open_office_occ_control.hasSchedule @ pritoni_schedule
+fn.private_office_occ_control.hasSchedule @ pritoni_schedule
 
 if __name__ == "__main__":
     dump()

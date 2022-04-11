@@ -8,6 +8,7 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
+from bob.properties.states import OccupancyStatus
 
 from ..core import HVAC, Air, DomainSpace, Medium, Zone, enum, s223
 from ..systems.physic import IndoorAir
@@ -26,6 +27,7 @@ class HVACSpace(DomainSpace):
     radiantHeating: AirBidirectionalConnectionPoint
     radiantCooling: AirBidirectionalConnectionPoint
     indoorAir: IndoorAir
+    occupancy: OccupancyStatus
 
     def __init__(self, **kwargs):
         if "indoorAir" in kwargs:
@@ -47,3 +49,4 @@ class HVACZone(Zone):
     hasDomain = HVAC
     airInlet: AirInletZoneConnectionPoint
     airOutlet: AirOutletZoneConnectionPoint
+    occupancy: OccupancyStatus

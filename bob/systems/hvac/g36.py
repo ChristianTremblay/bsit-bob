@@ -16,6 +16,7 @@ from ...connections.air import (
 )
 from ...core import (
     ExternalReference,
+    FunctionBlock,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     Outlet,
@@ -29,7 +30,6 @@ from ...core import (
     p223,
 )
 from ...property import ObservableProperty, QuantifiableObservableProperty
-from ...systems.functionblock import FunctionBlock
 
 g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
 

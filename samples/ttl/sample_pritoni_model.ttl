@@ -11,7 +11,6 @@
 @prefix hvac_spaces: <urn:ex/hvac_spaces/> .
 @prefix lighting_devices: <urn:ex/lighting_devices/> .
 @prefix lighting_spaces: <urn:ex/lighting_spaces/> .
-@prefix occupancy: <urn:ex/occupancy/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix physical_spaces: <urn:ex/physical_spaces/> .
@@ -254,14 +253,36 @@ bacnet_references:00060 a bacnet:Property,
     p223:hasValue "binary-output" .
 bacnet_references:00061 a s223:ExternalReference,
         ref:BACnetReference ;
-    p223:uri bacnet_references:00062 .
-bacnet_references:00062 a bacnet:BACnetURI,
+    p223:description bacnet_references:00065 ;
+    p223:objectInstance bacnet_references:00062 ;
+    p223:objectName bacnet_references:00064 ;
+    p223:objectOf bacnet_references:00063 ;
+    p223:objectType bacnet_references:00066 .
+bacnet_references:00062 a bacnet:Property,
+        bacnet:object-instance ;
+    p223:hasValue 1 .
+bacnet_references:00063 a bacnet:BACnetDevice,
+        bacnet:Property ;
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+bacnet_references:00064 a bacnet:Property,
+        bacnet:object-name ;
+    p223:hasValue "OCC-SCHEDULE" .
+bacnet_references:00065 a bacnet:Property,
+        bacnet:description ;
+    p223:hasValue "Building Occupancy Schedule" .
+bacnet_references:00066 a bacnet:Property,
+        bacnet:object-type ;
+    p223:hasValue "schedule" .
+bacnet_references:00067 a s223:ExternalReference,
+        ref:BACnetReference ;
+    p223:uri bacnet_references:00068 .
+bacnet_references:00068 a bacnet:BACnetURI,
         bacnet:Property ;
     p223:hasValue "bacnet://2/analog-input,1" .
-bacnet_references:00063 a s223:ExternalReference,
+bacnet_references:00069 a s223:ExternalReference,
         ref:BACnetReference ;
-    p223:uri bacnet_references:00064 .
-bacnet_references:00064 a bacnet:BACnetURI,
+    p223:uri bacnet_references:00070 .
+bacnet_references:00070 a bacnet:BACnetURI,
         bacnet:Property ;
     p223:hasValue "bacnet://2/binary-input,1" .
 electrical_devices:00001 a p223:ThreePhaseDistributionPanel,
@@ -828,6 +849,106 @@ functions:00002 a p223:Temperature,
     s223:hasValue 0.0 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+functions:00003 a p223:Schedule,
+        s223:ObservableProperty,
+        s223:Property ;
+    s223:hasExternalReference bacnet_references:00061 .
+functions:00004 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
+    s223:hasValue 1 .
+functions:00005 a p223:OccupancyControl,
+        s223:FunctionBlock ;
+    rdfs:label "OpenOffice Occ Control" ;
+    p223:hasOccupancyStatus functions:00004 ;
+    p223:hasSchedule functions:00003 ;
+    s223:hasProperty functions:00003,
+        functions:00004 ;
+    s223:producesOutput lighting_spaces:00019 ;
+    s223:usesInput functions:00003,
+        lighting_devices:00069 ;
+    rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
+functions:00006 a p223:Schedule,
+        s223:ObservableProperty,
+        s223:Property ;
+    s223:hasExternalReference bacnet_references:00061 .
+functions:00007 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
+    s223:hasValue 1 .
+functions:00008 a p223:OccupancyControl,
+        s223:FunctionBlock ;
+    rdfs:label "Kitchenette Occ Control" ;
+    p223:hasOccupancyStatus functions:00007 ;
+    p223:hasSchedule functions:00006 ;
+    s223:hasProperty functions:00006,
+        functions:00007 ;
+    s223:producesOutput lighting_spaces:00034 ;
+    s223:usesInput functions:00006,
+        lighting_devices:00010 ;
+    rdfs:comment "Deal with OccupancySpace6...probably not required but it's defined" .
+functions:00009 a p223:Schedule,
+        s223:ObservableProperty,
+        s223:Property ;
+    s223:hasExternalReference bacnet_references:00061 .
+functions:00010 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
+    s223:hasValue 0 .
+functions:00011 a p223:OccupancyControl,
+        s223:FunctionBlock ;
+    rdfs:label "Private Office Occ Control" ;
+    p223:hasOccupancyStatus functions:00010 ;
+    p223:hasSchedule functions:00009 ;
+    s223:hasProperty functions:00009,
+        functions:00010 ;
+    s223:producesOutput lighting_spaces:00028 ;
+    s223:usesInput functions:00009,
+        lighting_devices:00021 ;
+    rdfs:comment "Deal with OccupancySpace3...probably not required but it's defined" .
+functions:00012 a p223:Schedule,
+        s223:ObservableProperty,
+        s223:Property ;
+    s223:hasExternalReference bacnet_references:00061 .
+functions:00013 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
+    s223:hasValue 0 .
+functions:00014 a p223:OccupancyControl,
+        s223:FunctionBlock ;
+    rdfs:label "Bathroom Occ Control" ;
+    p223:hasOccupancyStatus functions:00013 ;
+    p223:hasSchedule functions:00012 ;
+    s223:hasProperty functions:00012,
+        functions:00013 ;
+    s223:producesOutput lighting_spaces:00025 ;
+    s223:usesInput functions:00012,
+        lighting_devices:00047 ;
+    rdfs:comment "Light space O2" .
+functions:00015 a p223:Schedule,
+        s223:ObservableProperty,
+        s223:Property ;
+    s223:hasExternalReference bacnet_references:00061 .
+functions:00016 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
+    s223:hasValue 0 .
+functions:00017 a p223:OccupancyControl,
+        s223:FunctionBlock ;
+    rdfs:label "Corridor Occ Control" ;
+    p223:hasOccupancyStatus functions:00016 ;
+    p223:hasSchedule functions:00015 ;
+    s223:hasProperty functions:00015,
+        functions:00016 ;
+    s223:producesOutput lighting_spaces:00031 ;
+    s223:usesInput functions:00015,
+        lighting_devices:00034 ;
+    rdfs:comment "Corridor Light space, O5" .
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;
     s223:connectsAt hvac_spaces:00013,
@@ -3037,7 +3158,7 @@ lighting_devices:00047 a p223:Movement,
 lighting_devices:00048 a p223:OnOffStatus,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasExternalReference bacnet_references:00063 .
+    s223:hasExternalReference bacnet_references:00069 .
 lighting_devices:00049 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3060,7 +3181,7 @@ lighting_devices:00050 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    s223:hasExternalReference bacnet_references:00061 ;
+    s223:hasExternalReference bacnet_references:00067 ;
     s223:hasValue 0.0 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
@@ -3356,251 +3477,120 @@ lighting_spaces:00018 a s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf lighting_spaces:00016 .
-lighting_spaces:00019 a p223:LightingZone,
+lighting_spaces:00019 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy .
+lighting_spaces:00020 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone1" ;
-    p223:lightInlet lighting_spaces:00020 ;
-    p223:occupancy lighting_spaces:00021 ;
+    p223:lightInlet lighting_spaces:00021 ;
+    p223:occupancy lighting_spaces:00019 ;
     s223:contains lighting_spaces:00004 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00020,
-        lighting_spaces:00021 ;
+    s223:hasProperty lighting_spaces:00019 ;
+    s223:hasZoneConnectionPoint lighting_spaces:00021 ;
     rdfs:comment "Contains OpenOffice Space West" .
-lighting_spaces:00020 a s223:InletZoneConnectionPoint,
+lighting_spaces:00021 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "LightingZone1.lightInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible .
-lighting_spaces:00021 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone1.occupancy" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-People .
-lighting_spaces:00022 a p223:LightingZone,
+lighting_spaces:00022 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy .
+lighting_spaces:00023 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone2" ;
-    p223:lightInlet lighting_spaces:00023 ;
-    p223:occupancy lighting_spaces:00024 ;
+    p223:lightInlet lighting_spaces:00024 ;
+    p223:occupancy lighting_spaces:00022 ;
     s223:contains lighting_spaces:00001 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00023,
-        lighting_spaces:00024 ;
+    s223:hasProperty lighting_spaces:00022 ;
+    s223:hasZoneConnectionPoint lighting_spaces:00024 ;
     rdfs:comment "Contains OpenOffice Space East" .
-lighting_spaces:00023 a s223:InletZoneConnectionPoint,
+lighting_spaces:00024 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "LightingZone2.lightInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible .
-lighting_spaces:00024 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone2.occupancy" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-People .
-lighting_spaces:00025 a p223:LightingZone,
+lighting_spaces:00025 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy .
+lighting_spaces:00026 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone3" ;
-    p223:lightInlet lighting_spaces:00026 ;
-    p223:occupancy lighting_spaces:00027 ;
+    p223:lightInlet lighting_spaces:00027 ;
+    p223:occupancy lighting_spaces:00025 ;
     s223:contains lighting_spaces:00007 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00026,
-        lighting_spaces:00027 ;
+    s223:hasProperty lighting_spaces:00025 ;
+    s223:hasZoneConnectionPoint lighting_spaces:00027 ;
     rdfs:comment "Contains Bathroom Light Space" .
-lighting_spaces:00026 a s223:InletZoneConnectionPoint,
+lighting_spaces:00027 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "LightingZone3.lightInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible .
-lighting_spaces:00027 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone3.occupancy" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-People .
-lighting_spaces:00028 a p223:LightingZone,
+lighting_spaces:00028 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy .
+lighting_spaces:00029 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone4" ;
-    p223:lightInlet lighting_spaces:00029 ;
-    p223:occupancy lighting_spaces:00030 ;
+    p223:lightInlet lighting_spaces:00030 ;
+    p223:occupancy lighting_spaces:00028 ;
     s223:contains lighting_spaces:00013 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00029,
-        lighting_spaces:00030 ;
+    s223:hasProperty lighting_spaces:00028 ;
+    s223:hasZoneConnectionPoint lighting_spaces:00030 ;
     rdfs:comment "Contains Private Office Light Space" .
-lighting_spaces:00029 a s223:InletZoneConnectionPoint,
+lighting_spaces:00030 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "LightingZone4.lightInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible .
-lighting_spaces:00030 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone4.occupancy" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-People .
-lighting_spaces:00031 a p223:LightingZone,
+lighting_spaces:00031 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy .
+lighting_spaces:00032 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone5" ;
-    p223:lightInlet lighting_spaces:00032 ;
-    p223:occupancy lighting_spaces:00033 ;
+    p223:lightInlet lighting_spaces:00033 ;
+    p223:occupancy lighting_spaces:00031 ;
     s223:contains lighting_spaces:00010 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00032,
-        lighting_spaces:00033 ;
+    s223:hasProperty lighting_spaces:00031 ;
+    s223:hasZoneConnectionPoint lighting_spaces:00033 ;
     rdfs:comment "Contains Corridor Light Space" .
-lighting_spaces:00032 a s223:InletZoneConnectionPoint,
+lighting_spaces:00033 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "LightingZone5.lightInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible .
-lighting_spaces:00033 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone5.occupancy" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-People .
-lighting_spaces:00034 a p223:LightingZone,
+lighting_spaces:00034 a p223:OccupancyStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    p223:hasEnumerationKind p223:EnumerationKind-Occupancy .
+lighting_spaces:00035 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone6" ;
-    p223:lightInlet lighting_spaces:00035 ;
-    p223:occupancy lighting_spaces:00036 ;
+    p223:lightInlet lighting_spaces:00036 ;
+    p223:occupancy lighting_spaces:00034 ;
     s223:contains lighting_spaces:00016 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00035,
-        lighting_spaces:00036 ;
+    s223:hasProperty lighting_spaces:00034 ;
+    s223:hasZoneConnectionPoint lighting_spaces:00036 ;
     rdfs:comment "Contains Kitchenette Light Space" .
-lighting_spaces:00035 a s223:InletZoneConnectionPoint,
+lighting_spaces:00036 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "LightingZone6.lightInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible .
-lighting_spaces:00036 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone6.occupancy" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-People .
-occupancy:00001 a p223:FunctionBlock,
-        p223:OccupancyControl,
-        s223:System ;
-    rdfs:label "OpenOffice Occ Control" ;
-    p223:hasOccupancyStatus occupancy:00004 ;
-    p223:occupancyInlet occupancy:00002 ;
-    p223:occupancyOutlet occupancy:00003 ;
-    s223:hasProperty occupancy:00004 ;
-    s223:hasSystemConnectionPoint occupancy:00002,
-        occupancy:00003 ;
-    s223:servesZone lighting_spaces:00019 ;
-    rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
-occupancy:00002 a s223:InletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "OpenOffice Occ Control.occupancyInlet" ;
-    s223:hasDirection s223:Direction-Inlet .
-occupancy:00003 a s223:OutletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "OpenOffice Occ Control.occupancyOutlet" ;
-    s223:hasDirection s223:Direction-Outlet .
-occupancy:00004 a p223:OccupancyStatus,
-        s223:ObservableProperty,
-        s223:Property ;
-    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 1 .
-occupancy:00005 a p223:FunctionBlock,
-        p223:OccupancyControl,
-        s223:System ;
-    rdfs:label "Kitchenette Occ Control" ;
-    p223:hasOccupancyStatus occupancy:00008 ;
-    p223:occupancyInlet occupancy:00006 ;
-    p223:occupancyOutlet occupancy:00007 ;
-    s223:hasProperty occupancy:00008 ;
-    s223:hasSystemConnectionPoint occupancy:00006,
-        occupancy:00007 ;
-    s223:servesZone lighting_spaces:00034 ;
-    rdfs:comment "Deal with OccupancySpace6...probably not required but it's defined" .
-occupancy:00006 a s223:InletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Kitchenette Occ Control.occupancyInlet" ;
-    s223:hasDirection s223:Direction-Inlet .
-occupancy:00007 a s223:OutletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Kitchenette Occ Control.occupancyOutlet" ;
-    s223:hasDirection s223:Direction-Outlet .
-occupancy:00008 a p223:OccupancyStatus,
-        s223:ObservableProperty,
-        s223:Property ;
-    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 1 .
-occupancy:00009 a p223:FunctionBlock,
-        p223:OccupancyControl,
-        s223:System ;
-    rdfs:label "Private Office Occ Control" ;
-    p223:hasOccupancyStatus occupancy:00012 ;
-    p223:occupancyInlet occupancy:00010 ;
-    p223:occupancyOutlet occupancy:00011 ;
-    s223:hasProperty occupancy:00012 ;
-    s223:hasSystemConnectionPoint occupancy:00010,
-        occupancy:00011 ;
-    s223:servesZone lighting_spaces:00028 ;
-    rdfs:comment "Deal with OccupancySpace3...probably not required but it's defined" .
-occupancy:00010 a s223:InletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Private Office Occ Control.occupancyInlet" ;
-    s223:hasDirection s223:Direction-Inlet .
-occupancy:00011 a s223:OutletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Private Office Occ Control.occupancyOutlet" ;
-    s223:hasDirection s223:Direction-Outlet .
-occupancy:00012 a p223:OccupancyStatus,
-        s223:ObservableProperty,
-        s223:Property ;
-    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 0 .
-occupancy:00013 a p223:FunctionBlock,
-        p223:OccupancyControl,
-        s223:System ;
-    rdfs:label "Bathroom Occ Control" ;
-    p223:hasOccupancyStatus occupancy:00016 ;
-    p223:occupancyInlet occupancy:00014 ;
-    p223:occupancyOutlet occupancy:00015 ;
-    s223:hasProperty occupancy:00016 ;
-    s223:hasSystemConnectionPoint occupancy:00014,
-        occupancy:00015 ;
-    s223:servesZone lighting_spaces:00025 ;
-    rdfs:comment "Light space O2" .
-occupancy:00014 a s223:InletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Bathroom Occ Control.occupancyInlet" ;
-    s223:hasDirection s223:Direction-Inlet .
-occupancy:00015 a s223:OutletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Bathroom Occ Control.occupancyOutlet" ;
-    s223:hasDirection s223:Direction-Outlet .
-occupancy:00016 a p223:OccupancyStatus,
-        s223:ObservableProperty,
-        s223:Property ;
-    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 0 .
-occupancy:00017 a p223:FunctionBlock,
-        p223:OccupancyControl,
-        s223:System ;
-    rdfs:label "Corridor Occ Control" ;
-    p223:hasOccupancyStatus occupancy:00020 ;
-    p223:occupancyInlet occupancy:00018 ;
-    p223:occupancyOutlet occupancy:00019 ;
-    s223:hasProperty occupancy:00020 ;
-    s223:hasSystemConnectionPoint occupancy:00018,
-        occupancy:00019 ;
-    s223:servesZone lighting_spaces:00031 ;
-    rdfs:comment "Corridor Light space, O5" .
-occupancy:00018 a s223:InletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Corridor Occ Control.occupancyInlet" ;
-    s223:hasDirection s223:Direction-Inlet .
-occupancy:00019 a s223:OutletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Corridor Occ Control.occupancyOutlet" ;
-    s223:hasDirection s223:Direction-Outlet .
-occupancy:00020 a p223:OccupancyStatus,
-        s223:ObservableProperty,
-        s223:Property ;
-    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 0 .
 physical_spaces:00001 a s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "Pritoni Building" ;
