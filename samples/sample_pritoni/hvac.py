@@ -131,7 +131,6 @@ hd.vav1["VAV1_ZN-T"].hasMeasurementLocation = hs.openoffice_hvac
 hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
 
 
-
 supplyAir >> hd.vav2["VAV2_damper"].airInlet
 hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
 hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet

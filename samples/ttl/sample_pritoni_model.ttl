@@ -129,19 +129,19 @@ bacnet_references:00025 a s223:ExternalReference,
     p223:objectType bacnet_references:00030 .
 bacnet_references:00026 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 1210 .
+    p223:hasValue 321 .
 bacnet_references:00027 a bacnet:BACnetDevice,
         bacnet:Property ;
     p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
 bacnet_references:00028 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "DA-T" .
+    p223:hasValue "DAT-AVG" .
 bacnet_references:00029 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Discharge Air Temperature" .
+    p223:hasValue "Discharge Air Temp Average" .
 bacnet_references:00030 a bacnet:Property,
         bacnet:object-type ;
-    p223:hasValue "analog-input" .
+    p223:hasValue "analog-value" .
 bacnet_references:00031 a s223:ExternalReference,
         ref:BACnetReference ;
     p223:description bacnet_references:00035 ;
@@ -151,16 +151,16 @@ bacnet_references:00031 a s223:ExternalReference,
     p223:objectType bacnet_references:00036 .
 bacnet_references:00032 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 1002 .
+    p223:hasValue 1210 .
 bacnet_references:00033 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CVM-2-005 at urn:ex/bacnet_references/00007>" .
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
 bacnet_references:00034 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "ZN1-T" .
+    p223:hasValue "DA-T" .
 bacnet_references:00035 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Zone 1 Temperature" .
+    p223:hasValue "Discharge Air Temperature" .
 bacnet_references:00036 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "analog-input" .
@@ -176,13 +176,13 @@ bacnet_references:00038 a bacnet:Property,
     p223:hasValue 1002 .
 bacnet_references:00039 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CVM-2-006 at urn:ex/bacnet_references/00013>" .
+    p223:hasValue "<BACnetDevice CVM-2-005 at urn:ex/bacnet_references/00007>" .
 bacnet_references:00040 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "ZN2-T" .
+    p223:hasValue "ZN1-T" .
 bacnet_references:00041 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Zone 2 Temperature" .
+    p223:hasValue "Zone 1 Temperature" .
 bacnet_references:00042 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "analog-input" .
@@ -195,19 +195,19 @@ bacnet_references:00043 a s223:ExternalReference,
     p223:objectType bacnet_references:00048 .
 bacnet_references:00044 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 5021 .
+    p223:hasValue 1002 .
 bacnet_references:00045 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+    p223:hasValue "<BACnetDevice CVM-2-006 at urn:ex/bacnet_references/00013>" .
 bacnet_references:00046 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "RF-S" .
+    p223:hasValue "ZN2-T" .
 bacnet_references:00047 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Return Fan Status from VFD drive running" .
+    p223:hasValue "Zone 2 Temperature" .
 bacnet_references:00048 a bacnet:Property,
         bacnet:object-type ;
-    p223:hasValue "binary-input" .
+    p223:hasValue "analog-input" .
 bacnet_references:00049 a s223:ExternalReference,
         ref:BACnetReference ;
     p223:description bacnet_references:00053 ;
@@ -217,29 +217,51 @@ bacnet_references:00049 a s223:ExternalReference,
     p223:objectType bacnet_references:00054 .
 bacnet_references:00050 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 12345 .
+    p223:hasValue 5021 .
 bacnet_references:00051 a bacnet:BACnetDevice,
         bacnet:Property ;
     p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
 bacnet_references:00052 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "RF-C" .
+    p223:hasValue "RF-S" .
 bacnet_references:00053 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Return Fan Command from VFD run command" .
+    p223:hasValue "Return Fan Status from VFD drive running" .
 bacnet_references:00054 a bacnet:Property,
         bacnet:object-type ;
-    p223:hasValue "binary-output" .
+    p223:hasValue "binary-input" .
 bacnet_references:00055 a s223:ExternalReference,
         ref:BACnetReference ;
-    p223:uri bacnet_references:00056 .
-bacnet_references:00056 a bacnet:BACnetURI,
+    p223:description bacnet_references:00059 ;
+    p223:objectInstance bacnet_references:00056 ;
+    p223:objectName bacnet_references:00058 ;
+    p223:objectOf bacnet_references:00057 ;
+    p223:objectType bacnet_references:00060 .
+bacnet_references:00056 a bacnet:Property,
+        bacnet:object-instance ;
+    p223:hasValue 12345 .
+bacnet_references:00057 a bacnet:BACnetDevice,
+        bacnet:Property ;
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+bacnet_references:00058 a bacnet:Property,
+        bacnet:object-name ;
+    p223:hasValue "RF-C" .
+bacnet_references:00059 a bacnet:Property,
+        bacnet:description ;
+    p223:hasValue "Return Fan Command from VFD run command" .
+bacnet_references:00060 a bacnet:Property,
+        bacnet:object-type ;
+    p223:hasValue "binary-output" .
+bacnet_references:00061 a s223:ExternalReference,
+        ref:BACnetReference ;
+    p223:uri bacnet_references:00062 .
+bacnet_references:00062 a bacnet:BACnetURI,
         bacnet:Property ;
     p223:hasValue "bacnet://2/analog-input,1" .
-bacnet_references:00057 a s223:ExternalReference,
+bacnet_references:00063 a s223:ExternalReference,
         ref:BACnetReference ;
-    p223:uri bacnet_references:00058 .
-bacnet_references:00058 a bacnet:BACnetURI,
+    p223:uri bacnet_references:00064 .
+bacnet_references:00064 a bacnet:BACnetURI,
         bacnet:Property ;
     p223:hasValue "bacnet://2/binary-input,1" .
 electrical_devices:00001 a p223:ThreePhaseDistributionPanel,
@@ -802,8 +824,10 @@ functions:00002 a p223:Temperature,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasExternalReference bacnet_references:00025 ;
     s223:hasValue 0.0 ;
-    qudt:quantityKind quantitykind:Temperature .
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;
     s223:connectsAt hvac_spaces:00013,
@@ -916,12 +940,12 @@ hvac:00014 a p223:OnOffStatus,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "VFD DriveRunning" ;
-    s223:hasExternalReference bacnet_references:00043 .
+    s223:hasExternalReference bacnet_references:00049 .
 hvac:00015 a p223:OnOffCommand,
         s223:ActuatableProperty,
         s223:Property ;
     rdfs:label "Run Command" ;
-    s223:hasExternalReference bacnet_references:00049 .
+    s223:hasExternalReference bacnet_references:00055 .
 hvac:00016 a s223:Connection ;
     s223:connectsAt hvac_devices:00071,
         hvac_spaces:00027 ;
@@ -1626,7 +1650,7 @@ hvac_devices:00087 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "VAV1_ZN-T.Temperature" ;
     p223:measuresMedium s223:Medium-Air ;
-    s223:hasExternalReference bacnet_references:00031 ;
+    s223:hasExternalReference bacnet_references:00037 ;
     s223:hasValue 2.03e+01 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
@@ -1785,7 +1809,7 @@ hvac_devices:00107 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "VAV2_ZN-T.Temperature" ;
     p223:measuresMedium s223:Medium-Air ;
-    s223:hasExternalReference bacnet_references:00037 ;
+    s223:hasExternalReference bacnet_references:00043 ;
     s223:hasValue 2.22e+01 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
@@ -3013,7 +3037,7 @@ lighting_devices:00047 a p223:Movement,
 lighting_devices:00048 a p223:OnOffStatus,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasExternalReference bacnet_references:00057 .
+    s223:hasExternalReference bacnet_references:00063 .
 lighting_devices:00049 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3036,7 +3060,7 @@ lighting_devices:00050 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    s223:hasExternalReference bacnet_references:00055 ;
+    s223:hasExternalReference bacnet_references:00061 ;
     s223:hasValue 0.0 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .

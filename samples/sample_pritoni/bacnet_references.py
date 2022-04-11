@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import hvac_devices as hd
+import functions as fn
 import lighting_devices as ld
 from rdflib import URIRef
 
@@ -49,6 +50,15 @@ rat = BACnetReference(
     description="Return Air Temeprature",
     objectType="analog-input",
 )
+
+dat_avg = BACnetReference(
+    objectInstance=321,
+    objectOf=CGM_2_004,
+    objectName="DAT-AVG",
+    description="Discharge Air Temp Average",
+    objectType="analog-value",
+)
+
 
 dat = BACnetReference(
     objectInstance=1210,
@@ -103,6 +113,8 @@ ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference(
 ld.openofficeEast_luminaire_1.hasOnOffStatus @ BACnetReference(
     uri=URIRef("bacnet://2/binary-input,1")
 )
+
+fn.f.avg_tmp @ dat_avg
 
 if __name__ == "__main__":
     dump()
