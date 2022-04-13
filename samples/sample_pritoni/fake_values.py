@@ -21,6 +21,41 @@ fn.private_office_occ_control.hasOccupancyStatus.hasValue = 0
 fn.bathroom_occ_control.hasOccupancyStatus.hasValue = 0
 fn.corridor_occ_control.hasOccupancyStatus.hasValue = 0
 
+ld.openofficeEast_luminaire_1.hasOnOffStatus.hasValue = 1
+ld.openofficeEast_luminaire_1.hasOnOffCommand.hasValue = 1
+
+ld.openofficeEast_luminaire_2.hasOnOffStatus.hasValue = 1
+ld.openofficeEast_luminaire_2.hasOnOffCommand.hasValue = 1
+
+ld.openofficeWest_luminaire_3.hasOnOffStatus.hasValue = 1
+ld.openofficeWest_luminaire_3.hasOnOffCommand.hasValue = 1
+
+ld.openofficeWest_luminaire_4.hasOnOffStatus.hasValue = 1
+ld.openofficeWest_luminaire_4.hasOnOffCommand.hasValue = 1
+
+ld.bathroom_luminaire_5.hasOnOffStatus.hasValue = 0
+ld.bathroom_luminaire_5.hasOnOffCommand.hasValue = 1
+
+ld.bathroom_luminaire_6.hasOnOffStatus.hasValue = 0
+ld.bathroom_luminaire_6.hasOnOffCommand.hasValue = 0
+
+ld.privateoffice_luminaire_8.hasOnOffStatus.hasValue = 0
+ld.privateoffice_luminaire_8.hasOnOffCommand.hasValue = 0
+
+ld.privateoffice_luminaire_8.hasOnOffStatus.hasValue = 0
+ld.privateoffice_luminaire_8.hasOnOffCommand.hasValue = 0
+
+ld.corridor_luminaire_9.hasOnOffStatus.hasValue = 0
+ld.corridor_luminaire_9.hasOnOffCommand.hasValue = 0
+
+ld.corridor_luminaire_10.hasOnOffStatus.hasValue = 1
+ld.corridor_luminaire_10.hasOnOffCommand.hasValue = 1
+
+ld.kitchenette_luminaire_11.hasOnOffStatus.hasValue = 1
+ld.kitchenette_luminaire_11.hasOnOffCommand.hasValue = 1
+
+ld.kitchenette_luminaire_12.hasOnOffStatus.hasValue = 1
+ld.kitchenette_luminaire_12.hasOnOffCommand.hasValue = 1
 
 if __name__ == "__main__":
     dump()

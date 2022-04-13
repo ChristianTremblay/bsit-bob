@@ -12,7 +12,7 @@ from ...connections.light import LightVisibleOutletConnectionPoint
 from ...core import Device, s223
 from ...properties.light import RelativeLuminousFlux
 from ...properties.ratio import PercentCommand
-from ...properties.states import OnOffStatus
+from ...properties.states import OnOffCommand, OnOffStatus
 
 __namespace__ = s223
 
@@ -23,6 +23,7 @@ class Luminaire(Device):
     brightness: RelativeLuminousFlux
     brightnessRatio: PercentCommand
     hasOnOffStatus: OnOffStatus
+    hasOnOffCommand: OnOffCommand
     electricalPower: ElectricPowerW
 
     def __init__(self, config: Dict = {}, **kwargs):
