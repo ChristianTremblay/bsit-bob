@@ -129,7 +129,6 @@ hd.vav1["VAV1_SA-F"].hasMeasurementLocation = hd.vav1["VAV1_damper"].airInlet
 hd.vav1["VAV1_DA-T"].hasMeasurementLocation = hd.vav1["VAV1_HeatingCoil"].airOutlet
 hd.vav1["VAV1_ZN-T"].hasMeasurementLocation = hs.openoffice_hvac
 hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
-hd.vav1["VAV1_ZN-T"].observesProperty.hasValue = 20.3
 
 
 supplyAir >> hd.vav2["VAV2_damper"].airInlet
@@ -139,7 +138,7 @@ hd.vav2["VAV2_SA-F"].hasMeasurementLocation = hd.vav2["VAV2_damper"].airInlet
 hd.vav2["VAV2_DA-T"].hasMeasurementLocation = hd.vav2["VAV2_HeatingCoil"].airOutlet
 hd.vav2["VAV2_ZN-T"].hasMeasurementLocation = hs.corridorSouth_hvac
 hd.vav2["VAV2_ZN-T"].hasPhysicalLocation = ps.corridor
-hd.vav2["VAV2_ZN-T"].observesProperty.add_value(22.2)
+
 
 hs.hvac_zone_1.airInlet.mapsTo = hs.privateoffice_hvac.ductAirInlet
 hs.hvac_zone_1.airOutlet.mapsTo = hs.openoffice_hvac.ductAirOutlet

@@ -192,15 +192,15 @@ high_static.enableVFD.mapsTo = vfd_controller.enable
 
 # vfd > vfd_controller  ###TODO: devices cannot contain systems
 
-a11.return_air_temp.mapsTo = rat
-a11.supply_air_temp.mapsTo = dat
-a11.sf_high_static_reset.mapsTo = high_static.resetInput
-a11.filter_dp.mapsTo = dpt1
-a11.hw_valve.mapsTo = hw_valve
-a11.sf_status.mapsTo = vfd_controller.status
-a11.sf_start.mapsTo = vfd_controller.run
-a11.sf_speed.mapsTo = vfd_controller.speed
-a11.duct_static_press.mapsTo = dpt2
-a11.network.mapsTo = vfd_controller.mstp
+a11.return_air_temp.uses_input(rat.observesProperty)
+a11.supply_air_temp.uses_input(dat.observesProperty)
+a11.sf_high_static_reset.uses_input(high_static.resetInput)
+a11.filter_dp.uses_input(dpt1.observesProperty)
+a11.hw_valve.uses_input(hw_valve.observesProperty)
+a11.sf_status.uses_input(vfd_controller.status)
+a11.sf_start.uses_input(vfd_controller.run)
+a11.sf_speed.uses_input(vfd_controller.speed)
+a11.duct_static_press.uses_input(dpt2.observesProperty)
+a11.network.uses_input(vfd_controller.mstp)
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

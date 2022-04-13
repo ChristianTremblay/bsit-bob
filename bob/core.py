@@ -586,6 +586,9 @@ class Node(metaclass=NodeMetaclass):
     _datatypes: Dict[str, Literal]
     _inits: Dict[str, Any]
 
+    # attributes that can be changed
+    _volatile: Tuple[str, ...] = ()
+
     node: URIRef
     node_type: Optional[URIRef] = None
     label: str
@@ -670,8 +673,10 @@ class Node(metaclass=NodeMetaclass):
 
         # make sure the current value is None, no "reassigning" content
         current_value = super().__getattribute__(attr)
-        if current_value is not None and attr != "hasValue":
-            raise RuntimeError(f"attribute {attr} already has a value")
+        if current_value is not None:
+            volatile_attrs = super().__getattribute__("_volatile")
+            if attr not in volatile_attrs:
+                raise RuntimeError(f"attribute {attr} already has a value")
 
         # if this is a node, double check the type
         if attr in self._nodes:
@@ -810,6 +815,9 @@ class Property(Node):
     # override this for a specialize subclass
     _external_reference_class: type = ExternalReference
 
+    # override this for other volatile attributes
+    _volatile = ("hasValue", )
+
     def __init__(self, value: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {value!r} {kwargs}")
 
@@ -845,15 +853,6 @@ class Property(Node):
                     self.add_external_reference(ref)
             else:
                 self.add_external_reference(external_reference)
-
-    def add_value(self, value: Any) -> None:
-        """hasValue is like label and no relationship required
-        Add an additional value to a property."""
-        if not isinstance(value, Literal):
-            value = Literal(value)
-
-        self.hasValue = value
-        # self._data_graph.add((self.node, s223.hasValue, value.node))
 
     def add_external_reference(self, external_reference: ExternalReference) -> None:
         """Add an additional external reference to a property."""
@@ -1244,6 +1243,72 @@ def contains_mm(system: System, thing_list: List[Node]) -> None:
         if not isinstance(thing, (Device, System)):
             raise TypeError(f"device or system expected: {thing}")
         contains_mm(system, thing)
+
+
+class FunctionBlock(Node):
+    """
+    Function block
+    In 223, function block are black boxes representing a sequence or
+    an algorithm. Fucntion blocks use inputs and produce outputs that can
+    be related in the 223 model.
+
+    The way the control is made inside this black box is CDL domain s231
+
+    The Python program Wendy can be used to describe different functions
+    and link them together to create the logic inside the s223:FunctionBlock
+
+    In this model though, it's only a way to make a bridge between 223 and 231.
+    It allows the modeler to define that there is a function doing "something" here
+    using different properties of the 223 model.
+
+    Function blocks in 223 are describes in the rdfs:comment of the block
+
+    No connections between Function blocks are allowed in 223. Connecting function blocks
+    together is 231.
+
+    No connection points are available for s223:FunctionBlock
+    inputs and outputs of s223:FunctionBlocks are properties of system and devices.
+
+    """
+
+    node_type: URIRef = s223.FunctionBlock
+    hasDomain: Domain
+    hasCDLRepresentation: URIRef
+
+    def __init__(self, *args, **kwargs: Any) -> None:
+        logging.debug(f"FunctionBlock.__init__ {args} {kwargs}")
+
+        super().__init__(*args, **kwargs)
+
+        if MANDITORY_LABEL:
+            if "label" not in kwargs:
+                raise RuntimeError("no label")
+            if "comment" not in kwargs:
+                raise RuntimeError("no comment")
+            if not kwargs["label"]:
+                raise RuntimeError("empty label")
+
+    def uses_input(self, prop: Property) -> Property:
+        assert isinstance(prop, Property)
+        self._data_graph.add((self.node, s223.usesInput, prop.node))  # type: ignore[attr-defined]
+        if INCLUDE_INVERSE:
+            self._data_graph.add((prop.node, s223.isUsedAsInputBy, self.node))
+
+        return prop
+
+    def produces_output(self, prop: Property) -> Property:
+        assert isinstance(prop, Property)
+        self._data_graph.add((self.node, s223.producesOutput, prop.node))  # type: ignore[attr-defined]
+        if INCLUDE_INVERSE:
+            self._data_graph.add((prop.node, s223.isProducedBy, self.node))
+
+        return prop
+
+    def __repr__(self) -> str:
+        label = getattr(self, "label", "")
+        if label:
+            label = " " + label
+        return f"<{self.__class__.__name__}{label} at {self.node}>"
 
 
 class ConnectionMetaclass(NodeMetaclass):
