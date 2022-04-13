@@ -586,6 +586,9 @@ class Node(metaclass=NodeMetaclass):
     _datatypes: Dict[str, Literal]
     _inits: Dict[str, Any]
 
+    # attributes that can be changed
+    _volatile: Tuple[str, ...] = ()
+
     node: URIRef
     node_type: Optional[URIRef] = None
     label: str
@@ -670,8 +673,10 @@ class Node(metaclass=NodeMetaclass):
 
         # make sure the current value is None, no "reassigning" content
         current_value = super().__getattribute__(attr)
-        if current_value is not None and attr != "hasValue":
-            raise RuntimeError(f"attribute {attr} already has a value")
+        if current_value is not None:
+            volatile_attrs = super().__getattribute__("_volatile")
+            if attr not in volatile_attrs:
+                raise RuntimeError(f"attribute {attr} already has a value")
 
         # if this is a node, double check the type
         if attr in self._nodes:
@@ -810,6 +815,9 @@ class Property(Node):
     # override this for a specialize subclass
     _external_reference_class: type = ExternalReference
 
+    # override this for other volatile attributes
+    _volatile = ("hasValue", )
+
     def __init__(self, value: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {value!r} {kwargs}")
 
@@ -845,15 +853,6 @@ class Property(Node):
                     self.add_external_reference(ref)
             else:
                 self.add_external_reference(external_reference)
-
-    def add_value(self, value: Any) -> None:
-        """hasValue is like label and no relationship required
-        Add an additional value to a property."""
-        if not isinstance(value, Literal):
-            value = Literal(value)
-
-        self.hasValue = value
-        # self._data_graph.add((self.node, s223.hasValue, value.node))
 
     def add_external_reference(self, external_reference: ExternalReference) -> None:
         """Add an additional external reference to a property."""
@@ -895,7 +894,7 @@ class Container(Node):
     _contents: Dict[str, Node]
 
     def __init__(self, *args, **kwargs) -> None:
-        logging.info(f"Container.__init__ {args} {kwargs}")
+        logging.debug(f"Container.__init__ {args} {kwargs}")
         if self.__class__ is Connectable:
             raise RuntimeError("Container is an abstract base class")
 
@@ -1246,6 +1245,72 @@ def contains_mm(system: System, thing_list: List[Node]) -> None:
         contains_mm(system, thing)
 
 
+class FunctionBlock(Node):
+    """
+    Function block
+    In 223, function block are black boxes representing a sequence or
+    an algorithm. Fucntion blocks use inputs and produce outputs that can
+    be related in the 223 model.
+
+    The way the control is made inside this black box is CDL domain s231
+
+    The Python program Wendy can be used to describe different functions
+    and link them together to create the logic inside the s223:FunctionBlock
+
+    In this model though, it's only a way to make a bridge between 223 and 231.
+    It allows the modeler to define that there is a function doing "something" here
+    using different properties of the 223 model.
+
+    Function blocks in 223 are describes in the rdfs:comment of the block
+
+    No connections between Function blocks are allowed in 223. Connecting function blocks
+    together is 231.
+
+    No connection points are available for s223:FunctionBlock
+    inputs and outputs of s223:FunctionBlocks are properties of system and devices.
+
+    """
+
+    node_type: URIRef = s223.FunctionBlock
+    hasDomain: Domain
+    hasCDLRepresentation: URIRef
+
+    def __init__(self, *args, **kwargs: Any) -> None:
+        logging.debug(f"FunctionBlock.__init__ {args} {kwargs}")
+
+        super().__init__(*args, **kwargs)
+
+        if MANDITORY_LABEL:
+            if "label" not in kwargs:
+                raise RuntimeError("no label")
+            if "comment" not in kwargs:
+                raise RuntimeError("no comment")
+            if not kwargs["label"]:
+                raise RuntimeError("empty label")
+
+    def uses_input(self, prop: Property) -> Property:
+        assert isinstance(prop, Property)
+        self._data_graph.add((self.node, s223.usesInput, prop.node))  # type: ignore[attr-defined]
+        if INCLUDE_INVERSE:
+            self._data_graph.add((prop.node, s223.isUsedAsInputBy, self.node))
+
+        return prop
+
+    def produces_output(self, prop: Property) -> Property:
+        assert isinstance(prop, Property)
+        self._data_graph.add((self.node, s223.producesOutput, prop.node))  # type: ignore[attr-defined]
+        if INCLUDE_INVERSE:
+            self._data_graph.add((prop.node, s223.isProducedBy, self.node))
+
+        return prop
+
+    def __repr__(self) -> str:
+        label = getattr(self, "label", "")
+        if label:
+            label = " " + label
+        return f"<{self.__class__.__name__}{label} at {self.node}>"
+
+
 class ConnectionMetaclass(NodeMetaclass):
     def __new__(
         cls: Any,
@@ -1404,15 +1469,9 @@ class ConnectionPoint(Node):
     isConnectionPointOf: Connectable
 
     def __init__(self, thing: Connectable, **kwargs: Any) -> None:
-        # strict version:
+        # abstract base class
         if self.__class__ is ConnectionPoint:
             raise RuntimeError("ConnectionPoint is an abstract base class")
-
-        # implicit bidirectional version:
-        if ("hasDirection" not in kwargs) and (
-            getattr(self, "hasDirection", None) is None
-        ):
-            kwargs["hasDirection"] = Bidirectional
 
         super().__init__(**kwargs)
 
@@ -1446,7 +1505,7 @@ def connect_mm(
     from_connection_point: ConnectionPoint, to_connection_point: ConnectionPoint
 ) -> None:
     """ConnectionPoint >> ConnectionPoint"""
-    logging.info(f"(6) connect from {from_connection_point} to {to_connection_point}")
+    logging.info(f"connect from {from_connection_point} to {to_connection_point}")
 
     if isinstance(from_connection_point, InletConnectionPoint):
         raise TypeError(f"connection point direction: {from_connection_point}")
@@ -1459,9 +1518,9 @@ def connect_mm(
         raise RuntimeError("inlet connection point already connected")
 
     from_medium = getattr(from_connection_point, "hasMedium", None)
-    logging.info(f"    - from_medium: {from_medium}")
+    logging.debug("    - from_medium: %r", from_medium)
     to_medium = getattr(to_connection_point, "hasMedium", None)
-    logging.info(f"    - to_medium: {to_medium}")
+    logging.debug("    - to_medium: %r", to_medium)
 
     if from_medium and to_medium and (from_medium != to_medium):
         raise RuntimeError(f"mismatched medium: {from_medium} != {to_medium}")
@@ -1495,7 +1554,7 @@ def connect_mm(
 @multimethod
 def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> None:
     """ConnectionPoint >> Connection"""
-    logging.info(f"(4) connect from {connection_point} to {connection}")
+    logging.info(f"connect from {connection_point} to {connection}")
 
     if isinstance(connection_point, InletConnectionPoint):
         raise TypeError("connection point direction")
@@ -1504,9 +1563,9 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
 
     # check medium
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - connection_medium: {connection_medium}")
+    logging.debug(f"    - connection_medium: {connection_medium}")
     connection_point_medium = getattr(connection_point, "hasMedium", None)
-    logging.info(f"    - connection_point_medium: {connection_point_medium}")
+    logging.debug(f"    - connection_point_medium: {connection_point_medium}")
 
     if (
         connection_medium
@@ -1543,7 +1602,7 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
 @multimethod
 def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:
     """Connection >> ConnectionPoint"""
-    logging.info(f"(5) connect from {connection} to {connection_point}")
+    logging.info(f"connect from {connection} to {connection_point}")
 
     if isinstance(connection_point, OutletConnectionPoint):
         raise TypeError("connection point direction")
@@ -1552,9 +1611,9 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
 
     # check medium
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - connection_medium: {connection_medium}")
+    logging.debug(f"    - connection_medium: {connection_medium}")
     connection_point_medium = getattr(connection_point, "hasMedium", None)
-    logging.info(f"    - connection_point_medium: {connection_point_medium}")
+    logging.debug(f"    - connection_point_medium: {connection_point_medium}")
 
     if (
         connection_medium
@@ -1587,7 +1646,7 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
 @multimethod
 def connect_mm(device: Device, system_connection_point: SystemConnectionPoint) -> None:
     """Device >> SystemConnectionPoint"""
-    logging.info(f"connect from {device} to {system_connection_point}")
+    logging.debug(f"connect from {device} to {system_connection_point}")
 
     to_connection_point = system_connection_point.mapsTo
     if not to_connection_point:
@@ -1601,12 +1660,12 @@ def connect_mm(device: Device, system_connection_point: SystemConnectionPoint) -
 @multimethod
 def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
     """Device >> ConnectionPoint"""
-    logging.info(f"(3) connect from {device} to {connection_point}")
+    logging.info(f"connect from {device} to {connection_point}")
 
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
     to_medium = getattr(connection_point, "hasMedium", None)
-    logging.info(f"    - to_medium: {to_medium}")
+    logging.debug(f"    - to_medium: {to_medium}")
 
     # build a dict of outlet connection points that are not already connected
     # that have the same medium
@@ -1620,14 +1679,14 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
         medium = getattr(cp, "hasMedium", None)
         if medium == to_medium:
             from_out.add(cp)
-    logging.info(f"    - from_out: {from_out}")
+    logging.debug(f"    - from_out: {from_out}")
 
     if not from_out:
         raise RuntimeError(f"no candidate sources from {device} to {connection_point}")
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
     from_thing = from_out.pop()
-    logging.info(f"    - from_thing: {from_thing}")
+    logging.debug(f"    - from_thing: {from_thing}")
 
     # link the two things together
     from_thing._data_graph.add(
@@ -1654,7 +1713,7 @@ def connect_mm(device: Device, connection: Connection) -> None:
     """Device >> Connection"""
     logging.info(f"connect from {device} to {connection}")
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - to_medium: {connection_medium}")
+    logging.debug(f"    - to_medium: {connection_medium}")
 
     # build a dict of outlet connection points that are not already connected
     # that have the same medium
@@ -1682,9 +1741,9 @@ def connect_mm(device: Device, connection: Connection) -> None:
 @multimethod
 def connect_mm(connection: Connection, device: Device) -> None:
     """Connection >> Device"""
-    logging.info(f"(99) connect from {connection} to {device}")
+    logging.info(f"connect from {connection} to {device}")
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - to_medium: {connection_medium}")
+    logging.debug(f"    - to_medium: {connection_medium}")
 
     # build a dict of outlet connection points that are not already connected
     # that have the same medium
@@ -1698,14 +1757,14 @@ def connect_mm(connection: Connection, device: Device) -> None:
         medium = getattr(connection_point, "hasMedium", None)
         if medium == connection_medium:
             to_in.add(connection_point)
-    logging.info(f"    - to_in: %r", to_in)
+    logging.debug("    - to_in: %r", to_in)
 
     if not to_in:
         raise RuntimeError(f"no candidate destinations from {connection} to {device}")
     if len(to_in) > 1:
         raise RuntimeError("too many connection points")
     to_thing = to_in.pop()
-    logging.info(f"    - to_thing: %r", to_thing)
+    logging.debug("    - to_thing: %r", to_thing)
 
     # set the relationships
     connect_mm(connection, to_thing)
@@ -1716,7 +1775,7 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
     """Connection >> [Device]"""
     logging.info(f"connect from {connection} to {devices}")
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - to_medium: {connection_medium}")
+    logging.debug("    - connection_medium: %r", connection_medium)
 
     for device in devices:
         # build a dict of inlet connection points that are not already connected
@@ -1731,7 +1790,7 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
             medium = getattr(connection_point, "hasMedium", None)
             if medium == connection_medium:
                 to_in.add(connection_point)
-        logging.info(f"    - to_in: %r", to_in)
+        logging.debug("    - to_in: %r", to_in)
 
         if not to_in:
             raise RuntimeError(
@@ -1740,7 +1799,7 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
         if len(to_in) > 1:
             raise RuntimeError("too many connection points")
         to_thing = to_in.pop()
-        logging.info(f"    - to_thing: %r", to_thing)
+        logging.debug("    - to_thing: %r", to_thing)
 
         # set the relationships
         connect_mm(connection, to_thing)
@@ -1751,7 +1810,7 @@ def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
     """ConnectionPoint >> Device"""
     logging.info(f"connect from {connection_point} to {device}")
     connection_point_medium = getattr(connection_point, "hasMedium", None)
-    logging.info(f"    - to_medium: {connection_point_medium}")
+    logging.debug("    - connection_point_medium: %r", connection_point_medium)
 
     # build a dict of outlet connection points that are not already connected
     # that have the same medium
@@ -1765,7 +1824,7 @@ def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
         medium = getattr(cp, "hasMedium", None)
         if medium == connection_point_medium:
             to_in.add(cp)
-    logging.info(f"    - to_in: %r", to_in)
+    logging.debug("    - to_in: %r", to_in)
 
     if not to_in:
         raise RuntimeError(
@@ -1774,7 +1833,7 @@ def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
     if len(to_in) > 1:
         raise RuntimeError("too many connection points")
     to_thing = to_in.pop()
-    logging.info(f"    - to_thing: %r", to_thing)
+    logging.debug("    - to_thing: %r", to_thing)
 
     # set the relationships
     connect_mm(connection_point, to_thing)
@@ -1783,7 +1842,7 @@ def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
 @multimethod
 def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:
     """Connection >> ConnectionPoint"""
-    logging.info(f"(1) connect from {connection} to {connection_point}")
+    logging.info(f"connect from {connection} to {connection_point}")
 
     if isinstance(connection_point, OutletConnectionPoint):
         raise TypeError("connection point direction")
@@ -1791,9 +1850,9 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
         raise RuntimeError("connection point already connected")
 
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - connection_medium: {connection_medium}")
+    logging.debug("    - connection_medium: %r", connection_medium)
     connection_point_medium = getattr(connection_point, "hasMedium", None)
-    logging.info(f"    - connection_point_medium: {connection_point_medium}")
+    logging.debug("    - connection_point_medium: %r", connection_point_medium)
 
     if (
         connection_medium
@@ -1829,7 +1888,7 @@ def connect_mm(connection: Connection, system: System) -> None:
     logging.info(f"connect from {connection} to {system}")
 
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - connection_medium: {connection_medium}")
+    logging.debug(f"    - connection_medium: {connection_medium}")
 
     # build a dict of mapped inlet connection points that are not
     # already connected, organized by medium
@@ -1855,7 +1914,7 @@ def connect_mm(connection: Connection, system: System) -> None:
     if len(to_in) > 1:
         raise RuntimeError("too many connection points")
     to_thing = to_in.pop()
-    logging.info(f"    - to_thing: %r", to_thing)
+    logging.debug("    - to_thing: %r", to_thing)
 
     # set the relationships
     connect_mm(connection, to_thing)
@@ -1867,7 +1926,7 @@ def connect_mm(system: System, connection: Connection) -> None:
     logging.info(f"connect from {system} to {connection}")
 
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - connection_medium: {connection_medium}")
+    logging.debug("    - connection_medium: %r", connection_medium)
 
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
@@ -1893,7 +1952,7 @@ def connect_mm(system: System, connection: Connection) -> None:
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
     from_thing = from_out.pop()
-    logging.info(f"    - from_thing: %r", from_thing)
+    logging.debug("    - from_thing: %r", from_thing)
 
     # set the relationships
     connect_mm(from_thing, connection)
@@ -1902,7 +1961,7 @@ def connect_mm(system: System, connection: Connection) -> None:
 @multimethod
 def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> None:
     """ConnectionPoint >> Connection"""
-    logging.info(f"(2) connect from {connection_point} to {connection}")
+    logging.info(f"connect from {connection_point} to {connection}")
 
     if isinstance(connection_point, InletConnectionPoint):
         raise TypeError("connection point direction")
@@ -1910,9 +1969,9 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         raise RuntimeError("connection point already connected")
 
     connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - connection_medium: {connection_medium}")
+    logging.debug("    - connection_medium: %r", connection_medium)
     connection_point_medium = getattr(connection_point, "hasMedium", None)
-    logging.info(f"    - connection_point_medium: {connection_point_medium}")
+    logging.debug("    - connection_point_medium: %r", connection_point_medium)
 
     if (
         connection_medium
@@ -2046,22 +2105,22 @@ def connect_mm(system: System, device: Device) -> None:
             f"    - attr, system_connection_point: {attr} {system_connection_point}"
         )
         if not isinstance(system_connection_point, OutletSystemConnectionPoint):
-            logging.debug(f"        - not a system outlet")
+            logging.debug("        - not a system outlet")
             continue
         connection_point = system_connection_point.mapsTo
         if not connection_point:
-            logging.debug(f"        - not mapped")
+            logging.debug("        - not mapped")
             continue
         if connection_point.connectsThrough:
-            logging.debug(f"        - already connected")
+            logging.debug("        - already connected")
             continue
         if not isinstance(connection_point, OutletConnectionPoint):
-            logging.debug(f"        - not an outlet")
+            logging.debug("        - not an outlet")
             continue
 
         medium = getattr(connection_point, "hasMedium", None)
         from_out[medium].add(connection_point)
-    logging.debug(f"    - from_out: {from_out}")
+    logging.debug("    - from_out: %r", from_out)
 
     # filter them to a set where there is only one for that medium so it
     # would be unambiguous to use it
@@ -2069,7 +2128,7 @@ def connect_mm(system: System, device: Device) -> None:
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
         raise RuntimeError(f"no candidate sources from {system} to {device}")
-    logging.debug(f"    - from_types: {from_types}")
+    logging.debug("    - from_types: %r", from_types)
 
     # build a dict of outlet connection points that are not already connected
     # that have the same medium
@@ -2135,6 +2194,10 @@ class SystemConnectionPoint(Node):
 
     def __init__(self, system: System, **kwargs: Any) -> None:
         logging.debug(f"SystemConnectionPoint.__init__ {system} {kwargs}")
+        # abstract base class
+        if self.__class__ is ConnectionPoint:
+            raise RuntimeError("SystemConnectionPoint is an abstract base class")
+
         super().__init__(**kwargs)
 
         self._data_graph.add((system.node, s223.hasSystemConnectionPoint, self.node))
@@ -2509,6 +2572,10 @@ class ZoneConnectionPoint(Node):
 
     def __init__(self, zone: Zone, **kwargs: Any) -> None:
         logging.debug(f"ZoneConnectionPoint.__init__ {zone} {kwargs}")
+        # abstract base class
+        if self.__class__ is ZoneConnectionPoint:
+            raise RuntimeError("ZoneConnectionPoint is an abstract base class")
+
         super().__init__(**kwargs)
 
         self._data_graph.add((zone.node, s223.hasZoneConnectionPoint, self.node))
@@ -3011,7 +3078,7 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
     to_medium = getattr(connection_point, "hasMedium", None)
-    logging.info(f"    - to_medium: {to_medium}")
+    logging.debug(f"    - to_medium: {to_medium}")
 
     # build a dict of outlet connection points that are not already connected
     # that have the same medium
@@ -3025,7 +3092,7 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
         medium = getattr(cp, "hasMedium", None)
         if medium == to_medium:
             from_out.add(cp)
-    logging.info(f"    - from_out: {from_out}")
+    logging.debug(f"    - from_out: {from_out}")
 
     if not from_out:
         raise RuntimeError(
@@ -3034,6 +3101,6 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
     from_thing = from_out.pop()
-    logging.info(f"    - from_thing: {from_thing}")
+    logging.debug(f"    - from_thing: {from_thing}")
 
     connect_mm(from_thing, connection_point)

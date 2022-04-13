@@ -127,9 +127,12 @@ for fname in glob.glob(os.path.join(S223_DIRECTORY, "vocab", "*.ttl")):
 # load the data graph(s)
 data_graph = Graph()
 for fname in args.ttl:
-    data_graph.parse(fname, format="turtle")
-    if args.info and sys.stdin.isatty():
-        print(f"data triples: {len(data_graph)}")
+    if fname == "-":
+        data_graph.parse(sys.stdin, format="turtle")
+    else:
+        data_graph.parse(fname, format="turtle")
+        if args.info and sys.stdin.isatty():
+            print(f"data triples: {len(data_graph)}")
 
 # load an optional ontology graph
 ontology_graph = Graph()

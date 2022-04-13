@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import hvac_spaces as hs
+import physical_spaces as ps
 
 from bob.connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
@@ -109,7 +110,9 @@ vav2_config = {
 ahu = AirHandlingUnit(config=ahu_template)
 
 
-bathroom_exhaust_fan = Fan(label="ExhaustFan", comment="Bathroom exhaust fan")
+bathroom_exhaust_fan = Fan(
+    label="ExhaustFan", comment="Bathroom exhaust fan", hasPhysicalLocation=ps.bathroom
+)
 window1 = Window(
     label="Window_West",
     comment="First Window in OpenOffice, covering West portion of room",
@@ -119,9 +122,9 @@ window2 = Window(
     comment="Second Window in OpenOffice, covering East portion of room",
 )
 
-vav1 = VAV(config=vav1_config)
+vav1 = VAV(config=vav1_config, hasPhysicalLocation=ps.private_office)
 vav1.servesZone = hs.hvac_zone_1
-vav2 = VAV(config=vav2_config)
+vav2 = VAV(config=vav2_config, hasPhysicalLocation=ps.kitchenette)
 vav2.servesZone = hs.hvac_zone_2
 
 
