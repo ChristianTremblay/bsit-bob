@@ -187,14 +187,58 @@ bacnet_references:00042 a bacnet:Property,
     p223:hasValue "analog-input" .
 bacnet_references:00043 a s223:ExternalReference,
         ref:BACnetReference ;
-    p223:uri bacnet_references:00044 .
-bacnet_references:00044 a bacnet:BACnetURI,
+    p223:description bacnet_references:00047 ;
+    p223:objectInstance bacnet_references:00044 ;
+    p223:objectName bacnet_references:00046 ;
+    p223:objectOf bacnet_references:00045 ;
+    p223:objectType bacnet_references:00048 .
+bacnet_references:00044 a bacnet:Property,
+        bacnet:object-instance ;
+    p223:hasValue 5021 .
+bacnet_references:00045 a bacnet:BACnetDevice,
+        bacnet:Property ;
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+bacnet_references:00046 a bacnet:Property,
+        bacnet:object-name ;
+    p223:hasValue "RF-S" .
+bacnet_references:00047 a bacnet:Property,
+        bacnet:description ;
+    p223:hasValue "Return Fan Status from VFD drive running" .
+bacnet_references:00048 a bacnet:Property,
+        bacnet:object-type ;
+    p223:hasValue "binary-input" .
+bacnet_references:00049 a s223:ExternalReference,
+        ref:BACnetReference ;
+    p223:description bacnet_references:00053 ;
+    p223:objectInstance bacnet_references:00050 ;
+    p223:objectName bacnet_references:00052 ;
+    p223:objectOf bacnet_references:00051 ;
+    p223:objectType bacnet_references:00054 .
+bacnet_references:00050 a bacnet:Property,
+        bacnet:object-instance ;
+    p223:hasValue 12345 .
+bacnet_references:00051 a bacnet:BACnetDevice,
+        bacnet:Property ;
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+bacnet_references:00052 a bacnet:Property,
+        bacnet:object-name ;
+    p223:hasValue "RF-C" .
+bacnet_references:00053 a bacnet:Property,
+        bacnet:description ;
+    p223:hasValue "Return Fan Command from VFD run command" .
+bacnet_references:00054 a bacnet:Property,
+        bacnet:object-type ;
+    p223:hasValue "binary-output" .
+bacnet_references:00055 a s223:ExternalReference,
+        ref:BACnetReference ;
+    p223:uri bacnet_references:00056 .
+bacnet_references:00056 a bacnet:BACnetURI,
         bacnet:Property ;
     p223:hasValue "bacnet://2/analog-input,1" .
-bacnet_references:00045 a s223:ExternalReference,
+bacnet_references:00057 a s223:ExternalReference,
         ref:BACnetReference ;
-    p223:uri bacnet_references:00046 .
-bacnet_references:00046 a bacnet:BACnetURI,
+    p223:uri bacnet_references:00058 .
+bacnet_references:00058 a bacnet:BACnetURI,
         bacnet:Property ;
     p223:hasValue "bacnet://2/binary-input,1" .
 electrical_devices:00001 a p223:ThreePhaseDistributionPanel,
@@ -852,31 +896,41 @@ hvac:00013 a s223:Connection ;
     s223:connectsFrom hvac_devices:00034 ;
     s223:connectsTo hvac_devices:00018 ;
     s223:hasMedium s223:Medium-Air .
-hvac:00014 a s223:Connection ;
+hvac:00014 a p223:OnOffStatus,
+        s223:ObservableProperty,
+        s223:Property ;
+    rdfs:label "VFD DriveRunning" ;
+    s223:hasExternalReference bacnet_references:00043 .
+hvac:00015 a p223:OnOffCommand,
+        s223:ActuatableProperty,
+        s223:Property ;
+    rdfs:label "Run Command" ;
+    s223:hasExternalReference bacnet_references:00049 .
+hvac:00016 a s223:Connection ;
     s223:connectsAt hvac_devices:00071,
         hvac_spaces:00027 ;
     s223:connectsFrom hvac_spaces:00025 ;
     s223:connectsTo hvac_devices:00070 ;
     s223:hasMedium s223:Medium-Air .
-hvac:00015 a s223:Connection ;
+hvac:00017 a s223:Connection ;
     s223:connectsAt hvac_devices:00092,
         hvac_devices:00095 ;
     s223:connectsFrom hvac_devices:00088 ;
     s223:connectsTo hvac_devices:00094 ;
     s223:hasMedium s223:Medium-Air .
-hvac:00016 a s223:Connection ;
+hvac:00018 a s223:Connection ;
     s223:connectsAt hvac_devices:00096,
         hvac_spaces:00074 ;
     s223:connectsFrom hvac_devices:00094 ;
     s223:connectsTo hvac_spaces:00073 ;
     s223:hasMedium s223:Medium-Air .
-hvac:00017 a s223:Connection ;
+hvac:00019 a s223:Connection ;
     s223:connectsAt hvac_devices:00112,
         hvac_devices:00115 ;
     s223:connectsFrom hvac_devices:00108 ;
     s223:connectsTo hvac_devices:00114 ;
     s223:hasMedium s223:Medium-Air .
-hvac:00018 a s223:Connection ;
+hvac:00020 a s223:Connection ;
     s223:connectsAt hvac_devices:00116,
         hvac_spaces:00090 ;
     s223:connectsFrom hvac_devices:00114 ;
@@ -921,9 +975,7 @@ hvac_devices:00002 a p223:AirTemperatureSensor,
     s223:hasMeasurementLocation hvac:00004 ;
     s223:observesProperty hvac_devices:00003 ;
     rdfs:comment "Oudoor air temperature" .
-hvac_devices:00003 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        p223:Temperature,
+hvac_devices:00003 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -944,8 +996,6 @@ hvac_devices:00004 a p223:AirDifferentialStaticPressureSensor,
     s223:observesProperty hvac_devices:00005 ;
     rdfs:comment "Filter Differential Pressure Sensor" .
 hvac_devices:00005 a p223:DifferentialStaticPressure,
-        p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -963,9 +1013,7 @@ hvac_devices:00006 a p223:AirTemperatureSensor,
     s223:hasMeasurementLocation hvac_devices:00041 ;
     s223:observesProperty hvac_devices:00007 ;
     rdfs:comment "Air temperature after heating coil" .
-hvac_devices:00007 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        p223:Temperature,
+hvac_devices:00007 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -983,9 +1031,7 @@ hvac_devices:00008 a p223:AirTemperatureSensor,
     s223:hasMeasurementLocation hvac_devices:00036 ;
     s223:observesProperty hvac_devices:00009 ;
     rdfs:comment "Discharge Air temperature after cooling coil" .
-hvac_devices:00009 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        p223:Temperature,
+hvac_devices:00009 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1006,8 +1052,6 @@ hvac_devices:00010 a p223:AirDifferentialStaticPressureSensor,
     s223:observesProperty hvac_devices:00011 ;
     rdfs:comment "Supply Duct Static Pressure" .
 hvac_devices:00011 a p223:DifferentialStaticPressure,
-        p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1028,8 +1072,6 @@ hvac_devices:00012 a p223:AirDifferentialStaticPressureSensor,
     s223:observesProperty hvac_devices:00013 ;
     rdfs:comment "Return Duct Static Pressure" .
 hvac_devices:00013 a p223:DifferentialStaticPressure,
-        p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1051,6 +1093,8 @@ hvac_devices:00014 a s223:Connectable,
     s223:hasConnectionPoint hvac_devices:00015,
         hvac_devices:00016,
         hvac_devices:00017 ;
+    s223:hasOnOffCommand hvac:00015 ;
+    s223:hasOnOffStatus hvac:00014 ;
     rdfs:comment "Return Air Fan" .
 hvac_devices:00015 a s223:InletConnectionPoint ;
     rdfs:label "RF.airInlet" ;
@@ -1161,12 +1205,16 @@ hvac_devices:00031 a s223:Connectable,
         s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "RF-VFD" ;
+    p223:drive_running hvac:00014 ;
+    p223:run_command hvac:00015 ;
     s223:connectedFrom electrical_devices:00021 ;
     s223:connectedThrough electricity:00003,
         electricity:00004 ;
     s223:connectedTo hvac_devices:00014 ;
     s223:hasConnectionPoint hvac_devices:00032,
         hvac_devices:00033 ;
+    s223:hasProperty hvac:00014,
+        hvac:00015 ;
     rdfs:comment "VFD for return Fan" .
 hvac_devices:00032 a s223:InletConnectionPoint ;
     rdfs:label "RF-VFD.electricalInlet" ;
@@ -1421,7 +1469,7 @@ hvac_devices:00070 a s223:Connectable,
     s223:airOutlet hvac_devices:00072 ;
     s223:connectedFrom hvac_spaces:00025 ;
     s223:connectedThrough hvac:00004,
-        hvac:00014 ;
+        hvac:00016 ;
     s223:hasConnectionPoint hvac_devices:00071,
         hvac_devices:00072 ;
     rdfs:comment "Bathroom exhaust fan" .
@@ -1518,9 +1566,7 @@ hvac_devices:00082 a p223:AirFlowSensor,
     s223:hasMeasurementLocation hvac_devices:00091 ;
     s223:observesProperty hvac_devices:00083 ;
     rdfs:comment "Air flow used to control damper" .
-hvac_devices:00083 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        s223:Flow,
+hvac_devices:00083 a s223:Flow,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1538,9 +1584,7 @@ hvac_devices:00084 a p223:AirTemperatureSensor,
     s223:hasMeasurementLocation hvac_devices:00096 ;
     s223:observesProperty hvac_devices:00085 ;
     rdfs:comment "Air supplied to zone by VAV 1, AKA discharge air temperature" .
-hvac_devices:00085 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        p223:Temperature,
+hvac_devices:00085 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1559,9 +1603,7 @@ hvac_devices:00086 a p223:AirTemperatureSensor,
     s223:hasPhysicalLocation physical_spaces:00004 ;
     s223:observesProperty hvac_devices:00087 ;
     rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
-hvac_devices:00087 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        p223:Temperature,
+hvac_devices:00087 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1569,6 +1611,7 @@ hvac_devices:00087 a p223:MeasuredProperty,
     rdfs:label "VAV1_ZN-T.Temperature" ;
     p223:measuresMedium s223:Medium-Air ;
     s223:hasExternalReference bacnet_references:00031 ;
+    s223:hasValue 2.03e+01 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00088 a s223:Connectable,
@@ -1578,7 +1621,7 @@ hvac_devices:00088 a s223:Connectable,
     s223:airInlet hvac_devices:00091 ;
     s223:airOutlet hvac_devices:00092 ;
     s223:connectedThrough hvac:00008,
-        hvac:00015 ;
+        hvac:00017 ;
     s223:connectedTo hvac_devices:00094 ;
     s223:feedback hvac_devices:00090 ;
     s223:hasConnectionPoint hvac_devices:00091,
@@ -1617,8 +1660,8 @@ hvac_devices:00094 a s223:Connectable,
     s223:airInlet hvac_devices:00095 ;
     s223:airOutlet hvac_devices:00096 ;
     s223:connectedFrom hvac_devices:00088 ;
-    s223:connectedThrough hvac:00015,
-        hvac:00016 ;
+    s223:connectedThrough hvac:00017,
+        hvac:00018 ;
     s223:connectedTo hvac_spaces:00073 ;
     s223:hasConnectionPoint hvac_devices:00095,
         hvac_devices:00096,
@@ -1682,9 +1725,7 @@ hvac_devices:00102 a p223:AirFlowSensor,
     s223:hasMeasurementLocation hvac_devices:00111 ;
     s223:observesProperty hvac_devices:00103 ;
     rdfs:comment "Air flow used to control damper" .
-hvac_devices:00103 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        s223:Flow,
+hvac_devices:00103 a s223:Flow,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1702,9 +1743,7 @@ hvac_devices:00104 a p223:AirTemperatureSensor,
     s223:hasMeasurementLocation hvac_devices:00116 ;
     s223:observesProperty hvac_devices:00105 ;
     rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
-hvac_devices:00105 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        p223:Temperature,
+hvac_devices:00105 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1723,9 +1762,7 @@ hvac_devices:00106 a p223:AirTemperatureSensor,
     s223:hasPhysicalLocation physical_spaces:00008 ;
     s223:observesProperty hvac_devices:00107 ;
     rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
-hvac_devices:00107 a p223:MeasuredProperty,
-        p223:QuantifiableMeasuredProperty,
-        p223:Temperature,
+hvac_devices:00107 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1733,6 +1770,7 @@ hvac_devices:00107 a p223:MeasuredProperty,
     rdfs:label "VAV2_ZN-T.Temperature" ;
     p223:measuresMedium s223:Medium-Air ;
     s223:hasExternalReference bacnet_references:00037 ;
+    s223:hasValue 2.22e+01 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00108 a s223:Connectable,
@@ -1742,7 +1780,7 @@ hvac_devices:00108 a s223:Connectable,
     s223:airInlet hvac_devices:00111 ;
     s223:airOutlet hvac_devices:00112 ;
     s223:connectedThrough hvac:00008,
-        hvac:00017 ;
+        hvac:00019 ;
     s223:connectedTo hvac_devices:00114 ;
     s223:feedback hvac_devices:00110 ;
     s223:hasConnectionPoint hvac_devices:00111,
@@ -1781,8 +1819,8 @@ hvac_devices:00114 a s223:Connectable,
     s223:airInlet hvac_devices:00115 ;
     s223:airOutlet hvac_devices:00116 ;
     s223:connectedFrom hvac_devices:00108 ;
-    s223:connectedThrough hvac:00017,
-        hvac:00018 ;
+    s223:connectedThrough hvac:00019,
+        hvac:00020 ;
     s223:connectedTo hvac_spaces:00089 ;
     s223:hasConnectionPoint hvac_devices:00115,
         hvac_devices:00116,
@@ -2009,7 +2047,7 @@ hvac_spaces:00025 a s223:Connectable,
     rdfs:label "HVACSpace2" ;
     s223:airTransfer hvac_spaces:00028 ;
     s223:connectedThrough hvac:00001,
-        hvac:00014 ;
+        hvac:00016 ;
     s223:connectedTo hvac_devices:00070 ;
     s223:doors hvac_spaces:00029 ;
     s223:ductAirInlet hvac_spaces:00026 ;
@@ -2371,7 +2409,7 @@ hvac_spaces:00073 a s223:Connectable,
     s223:airTransfer hvac_spaces:00076 ;
     s223:connectedFrom hvac_devices:00094 ;
     s223:connectedThrough hvac:00001,
-        hvac:00016 ;
+        hvac:00018 ;
     s223:doors hvac_spaces:00077 ;
     s223:ductAirInlet hvac_spaces:00074 ;
     s223:ductAirOutlet hvac_spaces:00075 ;
@@ -2491,7 +2529,7 @@ hvac_spaces:00089 a s223:Connectable,
     s223:airTransfer hvac_spaces:00092 ;
     s223:connectedFrom hvac_devices:00114 ;
     s223:connectedThrough hvac:00002,
-        hvac:00018 ;
+        hvac:00020 ;
     s223:connectedTo hvac_spaces:00057 ;
     s223:doors hvac_spaces:00093 ;
     s223:ductAirInlet hvac_spaces:00090 ;
@@ -2664,13 +2702,9 @@ lighting_devices:00009 a p223:MovementSensor,
     s223:measuresMedium s223:Medium-Light ;
     s223:observesProperty lighting_devices:00010 ;
     rdfs:comment "Occupancy sensor for kitchenette luminaires 11 & 12" .
-lighting_devices:00010 a p223:MeasuredProperty,
-        p223:Movement,
-        p223:QuantifiableMeasuredProperty,
+lighting_devices:00010 a p223:Movement,
         s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:Property ;
     rdfs:label "OccSensor5.Movement" .
 lighting_devices:00011 a s223:Connection ;
     rdfs:label "LightHub_11_12" ;
@@ -2754,13 +2788,9 @@ lighting_devices:00020 a p223:MovementSensor,
     s223:measuresMedium s223:Medium-Light ;
     s223:observesProperty lighting_devices:00021 ;
     rdfs:comment "Occupancy sensor for Privtae Office" .
-lighting_devices:00021 a p223:MeasuredProperty,
-        p223:Movement,
-        p223:QuantifiableMeasuredProperty,
+lighting_devices:00021 a p223:Movement,
         s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:Property ;
     rdfs:label "OccSensor3.Movement" .
 lighting_devices:00022 a s223:Connection ;
     rdfs:label "LightHub_7_8" ;
@@ -2857,13 +2887,9 @@ lighting_devices:00033 a p223:MovementSensor,
     s223:measuresMedium s223:Medium-Light ;
     s223:observesProperty lighting_devices:00034 ;
     rdfs:comment "Occupancy sensor for Corridor" .
-lighting_devices:00034 a p223:MeasuredProperty,
-        p223:Movement,
-        p223:QuantifiableMeasuredProperty,
+lighting_devices:00034 a p223:Movement,
         s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:Property ;
     rdfs:label "OccSensor4.Movement" .
 lighting_devices:00035 a s223:Connection ;
     rdfs:label "LightHub_9_10" ;
@@ -2964,18 +2990,14 @@ lighting_devices:00046 a p223:MovementSensor,
     s223:measuresMedium s223:Medium-Light ;
     s223:observesProperty lighting_devices:00047 ;
     rdfs:comment "Occupancy sensor for Bathroom" .
-lighting_devices:00047 a p223:MeasuredProperty,
-        p223:Movement,
-        p223:QuantifiableMeasuredProperty,
+lighting_devices:00047 a p223:Movement,
         s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:Property ;
     rdfs:label "OccSensor2.Movement" .
 lighting_devices:00048 a p223:OnOffStatus,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasExternalReference bacnet_references:00045 .
+    s223:hasExternalReference bacnet_references:00057 .
 lighting_devices:00049 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -2998,7 +3020,7 @@ lighting_devices:00050 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    s223:hasExternalReference bacnet_references:00043 ;
+    s223:hasExternalReference bacnet_references:00055 ;
     s223:hasValue 0.0 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
@@ -3144,13 +3166,9 @@ lighting_devices:00068 a p223:MovementSensor,
     s223:measuresMedium s223:Medium-Light ;
     s223:observesProperty lighting_devices:00069 ;
     rdfs:comment "Occupancy sensor for OpenOffice" .
-lighting_devices:00069 a p223:MeasuredProperty,
-        p223:Movement,
-        p223:QuantifiableMeasuredProperty,
+lighting_devices:00069 a p223:Movement,
         s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:Property ;
     rdfs:label "OccSensor1.Movement" .
 lighting_devices:00070 a s223:Connection ;
     rdfs:label "LightHub_NaturalLight" ;
@@ -3467,7 +3485,7 @@ occupancy:00008 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 0 .
+    s223:hasValue 1 .
 occupancy:00009 a p223:FunctionBlock,
         p223:OccupancyControl,
         s223:System ;
@@ -3492,7 +3510,7 @@ occupancy:00012 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 1 .
+    s223:hasValue 0 .
 occupancy:00013 a p223:FunctionBlock,
         p223:OccupancyControl,
         s223:System ;
@@ -3517,7 +3535,7 @@ occupancy:00016 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 1 .
+    s223:hasValue 0 .
 occupancy:00017 a p223:FunctionBlock,
         p223:OccupancyControl,
         s223:System ;
@@ -3542,7 +3560,7 @@ occupancy:00020 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasValue 1 .
+    s223:hasValue 0 .
 physical_spaces:00001 a s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "Pritoni Building" ;

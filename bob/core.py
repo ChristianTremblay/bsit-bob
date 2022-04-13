@@ -670,7 +670,7 @@ class Node(metaclass=NodeMetaclass):
 
         # make sure the current value is None, no "reassigning" content
         current_value = super().__getattribute__(attr)
-        if current_value is not None:
+        if current_value is not None and attr != "hasValue":
             raise RuntimeError(f"attribute {attr} already has a value")
 
         # if this is a node, double check the type
@@ -699,7 +699,10 @@ class Node(metaclass=NodeMetaclass):
 
             # add the link(s)
             if isinstance(value, (URIRef, Literal)):
-                self._data_graph.add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+                if attr == "hasValue":
+                    self._data_graph.set((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+                else:
+                    self._data_graph.add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
             if isinstance(value, Node):
                 self._data_graph.add((self.node, self._attr_uriref[attr], value.node))  # type: ignore[attr-defined]
 
@@ -844,11 +847,13 @@ class Property(Node):
                 self.add_external_reference(external_reference)
 
     def add_value(self, value: Any) -> None:
-        """Add an additional value to a property."""
+        """hasValue is like label and no relationship required
+        Add an additional value to a property."""
         if not isinstance(value, Literal):
             value = Literal(value)
 
-        self._data_graph.add((self.node, s223.hasValue, value.node))
+        self.hasValue = value
+        # self._data_graph.add((self.node, s223.hasValue, value.node))
 
     def add_external_reference(self, external_reference: ExternalReference) -> None:
         """Add an additional external reference to a property."""

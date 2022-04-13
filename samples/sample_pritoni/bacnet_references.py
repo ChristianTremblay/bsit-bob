@@ -74,8 +74,28 @@ zn2_t = BACnetReference(
     objectType="analog-input",
 )
 
+rf_vfd_status = BACnetReference(
+    objectInstance=5021,
+    objectOf=CGM_2_004,
+    objectName="RF-S",
+    description="Return Fan Status from VFD drive running",
+    objectType="binary-input",
+)
+
+rf_vfd_cmd = BACnetReference(
+    objectInstance=12345,
+    objectOf=CGM_2_004,
+    objectName="RF-C",
+    description="Return Fan Command from VFD run command",
+    objectType="binary-output",
+)
+
 hd.vav1["VAV1_ZN-T"].observesProperty @ zn1_t
 hd.vav2["VAV2_ZN-T"].observesProperty @ zn2_t
+
+hd.ahu["RF-VFD"].drive_running @ rf_vfd_status
+hd.ahu["RF-VFD"].run_command @ rf_vfd_cmd
+
 # A bulb with only one object
 ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference(
     uri=URIRef("bacnet://2/analog-input,1")

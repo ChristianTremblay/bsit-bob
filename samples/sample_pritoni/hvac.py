@@ -6,6 +6,7 @@ import physical_spaces as ps
 
 from bob.connections.air import *
 from bob.core import bind_model_namespace, dump, unit
+from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.temperature import Temperature
 
 model_name = Path(__file__).stem
@@ -98,6 +99,12 @@ hd.ahu["TPD2"].hasMeasurementLocationLow = plenum
 hd.ahu["TPD3"].hasMeasurementLocationHigh = hd.ahu["RF"].airOutlet
 hd.ahu["TPD3"].hasMeasurementLocationLow = plenum
 
+hd.ahu["RF-VFD"].drive_running = OnOffStatus(label="VFD DriveRunning")
+hd.ahu["RF-VFD"].run_command = OnOffCommand(label="Run Command")
+hd.ahu["RF"].hasOnOffStatus = hd.ahu["RF-VFD"].drive_running
+hd.ahu["RF"].hasOnOffCommand = hd.ahu["RF-VFD"].run_command
+
+
 # Windows
 hd.window1.outdoor >> outdoor
 hd.window1.indoor >> openoffice_windows
@@ -122,7 +129,8 @@ hd.vav1["VAV1_SA-F"].hasMeasurementLocation = hd.vav1["VAV1_damper"].airInlet
 hd.vav1["VAV1_DA-T"].hasMeasurementLocation = hd.vav1["VAV1_HeatingCoil"].airOutlet
 hd.vav1["VAV1_ZN-T"].hasMeasurementLocation = hs.openoffice_hvac
 hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
-# hd.vav1["VAV1_ZN-T"].observesProperty.hasValue = Temperature(20, unit=unit.DEG_C)
+hd.vav1["VAV1_ZN-T"].observesProperty.hasValue = 20.3
+
 
 supplyAir >> hd.vav2["VAV2_damper"].airInlet
 hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
@@ -131,7 +139,7 @@ hd.vav2["VAV2_SA-F"].hasMeasurementLocation = hd.vav2["VAV2_damper"].airInlet
 hd.vav2["VAV2_DA-T"].hasMeasurementLocation = hd.vav2["VAV2_HeatingCoil"].airOutlet
 hd.vav2["VAV2_ZN-T"].hasMeasurementLocation = hs.corridorSouth_hvac
 hd.vav2["VAV2_ZN-T"].hasPhysicalLocation = ps.corridor
-# hd.vav2["VAV2_ZN-T"].observesProperty.hasValue = Temperature(22.3, unit=unit.DEG_C)
+hd.vav2["VAV2_ZN-T"].observesProperty.add_value(22.2)
 
 hs.hvac_zone_1.airInlet.mapsTo = hs.privateoffice_hvac.ductAirInlet
 hs.hvac_zone_1.airOutlet.mapsTo = hs.openoffice_hvac.ductAirOutlet

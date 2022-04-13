@@ -2,6 +2,8 @@ from typing import Dict
 
 from rdflib import URIRef
 
+from bob.properties.states import OnOffCommand
+
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
@@ -47,7 +49,8 @@ class VFD(Device):
     rpm: RPM
     # motor_temp: ?
     drive_running: OnOffStatus
-    alarmStatus: OnOffStatus
+    run_command: OnOffCommand
+    alarm_status: OnOffStatus
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
