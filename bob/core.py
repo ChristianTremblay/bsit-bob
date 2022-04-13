@@ -586,6 +586,9 @@ class Node(metaclass=NodeMetaclass):
     _datatypes: Dict[str, Literal]
     _inits: Dict[str, Any]
 
+    # attributes that can be changed
+    _volatile: Tuple[str, ...] = ()
+
     node: URIRef
     node_type: Optional[URIRef] = None
     label: str
@@ -670,8 +673,10 @@ class Node(metaclass=NodeMetaclass):
 
         # make sure the current value is None, no "reassigning" content
         current_value = super().__getattribute__(attr)
-        if current_value is not None and attr != "hasValue":
-            raise RuntimeError(f"attribute {attr} already has a value")
+        if current_value is not None:
+            volatile_attrs = super().__getattribute__("_volatile")
+            if attr not in volatile_attrs:
+                raise RuntimeError(f"attribute {attr} already has a value")
 
         # if this is a node, double check the type
         if attr in self._nodes:
@@ -810,6 +815,9 @@ class Property(Node):
     # override this for a specialize subclass
     _external_reference_class: type = ExternalReference
 
+    # override this for other volatile attributes
+    _volatile = ("hasValue", )
+
     def __init__(self, value: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {value!r} {kwargs}")
 
@@ -845,15 +853,6 @@ class Property(Node):
                     self.add_external_reference(ref)
             else:
                 self.add_external_reference(external_reference)
-
-    def add_value(self, value: Any) -> None:
-        """hasValue is like label and no relationship required
-        Add an additional value to a property."""
-        if not isinstance(value, Literal):
-            value = Literal(value)
-
-        self.hasValue = value
-        # self._data_graph.add((self.node, s223.hasValue, value.node))
 
     def add_external_reference(self, external_reference: ExternalReference) -> None:
         """Add an additional external reference to a property."""

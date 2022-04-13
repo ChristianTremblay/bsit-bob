@@ -12,7 +12,7 @@ model_name = Path(__file__).stem
 __namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 hd.vav1["VAV1_ZN-T"].observesProperty.hasValue = 20.3
-hd.vav2["VAV2_ZN-T"].observesProperty.add_value(22.2)
+hd.vav2["VAV2_ZN-T"].observesProperty.hasValue = 22.2
 
 
 fn.open_office_occ_control.hasOccupancyStatus.hasValue = 1

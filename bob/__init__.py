@@ -9,6 +9,6 @@ from typing import Any, Dict, TypeVar, Union
 
 from rdflib import URIRef
 
-__version__ = "0.38"
+__version__ = "0.39"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
