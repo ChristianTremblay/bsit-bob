@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 @prefix bacnet: <http://data.ashrae.org/bacnet/2020#> .
 @prefix bacnet_references: <urn:ex/bacnet_references/> .
+@prefix cdl: <http://data.ashrae.org/cdl#> .
 @prefix electrical_devices: <urn:ex/electrical_devices/> .
 @prefix electricity: <urn:ex/electricity/> .
 @prefix functions: <urn:ex/functions/> .
@@ -835,9 +836,9 @@ electricity:00004 a s223:Connection ;
 functions:00001 a s223:FunctionBlock,
         functions:AVG_Temp ;
     rdfs:label "FB-1" ;
+    cdl:input functions:00003 ;
+    cdl:output functions:00004 ;
     s223:hasProperty functions:00002 ;
-    s223:producesOutput functions:00002 ;
-    s223:usesInput hvac_devices:00009 ;
     rdfs:comment "Compute DA-T Avg" ;
     functions:avg_tmp functions:00002 .
 functions:00002 a p223:Temperature,
@@ -849,112 +850,204 @@ functions:00002 a p223:Temperature,
     s223:hasValue 0.0 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-functions:00003 a p223:Schedule,
+functions:00003 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "FB-1.input" ;
+    cdl:usesInput hvac_devices:00009 .
+functions:00004 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "FB-1.output" ;
+    cdl:producesOutput functions:00002 .
+functions:00005 a p223:Schedule,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasExternalReference bacnet_references:00061 .
-functions:00004 a p223:OccupancyStatus,
+functions:00006 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
     s223:hasValue 1 .
-functions:00005 a p223:OccupancyControl,
+functions:00007 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "OpenOffice Occ Control" ;
-    p223:hasOccupancyStatus functions:00004 ;
-    p223:hasSchedule functions:00003 ;
-    s223:hasProperty functions:00003,
-        functions:00004 ;
-    s223:producesOutput hvac_spaces:00001,
-        lighting_spaces:00019,
-        lighting_spaces:00022 ;
-    s223:usesInput functions:00003,
-        lighting_devices:00089 ;
+    cdl:input functions:00011,
+        functions:00012 ;
+    cdl:output functions:00008,
+        functions:00009,
+        functions:00010 ;
+    p223:hasOccupancyStatus functions:00006 ;
+    p223:hasSchedule functions:00005 ;
+    s223:hasProperty functions:00005,
+        functions:00006 ;
     rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
-functions:00006 a p223:Schedule,
+functions:00008 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "OpenOffice Occ Control.output" ;
+    cdl:producesOutput lighting_spaces:00019 .
+functions:00009 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "OpenOffice Occ Control.output" ;
+    cdl:producesOutput lighting_spaces:00022 .
+functions:00010 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "OpenOffice Occ Control.output" ;
+    cdl:producesOutput hvac_spaces:00001 .
+functions:00011 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "OpenOffice Occ Control.input" ;
+    cdl:usesInput functions:00005 .
+functions:00012 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "OpenOffice Occ Control.input" ;
+    cdl:usesInput lighting_devices:00089 .
+functions:00013 a p223:Schedule,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasExternalReference bacnet_references:00061 .
-functions:00007 a p223:OccupancyStatus,
+functions:00014 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
     s223:hasValue 1 .
-functions:00008 a p223:OccupancyControl,
+functions:00015 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Kitchenette Occ Control" ;
-    p223:hasOccupancyStatus functions:00007 ;
-    p223:hasSchedule functions:00006 ;
-    s223:hasProperty functions:00006,
-        functions:00007 ;
-    s223:producesOutput hvac_spaces:00107,
-        lighting_spaces:00034 ;
-    s223:usesInput functions:00006,
-        lighting_devices:00014 ;
+    cdl:input functions:00018,
+        functions:00019 ;
+    cdl:output functions:00016,
+        functions:00017 ;
+    p223:hasOccupancyStatus functions:00014 ;
+    p223:hasSchedule functions:00013 ;
+    s223:hasProperty functions:00013,
+        functions:00014 ;
     rdfs:comment "Deal with OccupancySpace6...probably not required but it's defined" .
-functions:00009 a p223:Schedule,
+functions:00016 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "Kitchenette Occ Control.output" ;
+    cdl:producesOutput lighting_spaces:00034 .
+functions:00017 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "Kitchenette Occ Control.output" ;
+    cdl:producesOutput hvac_spaces:00107 .
+functions:00018 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "Kitchenette Occ Control.input" ;
+    cdl:usesInput functions:00013 .
+functions:00019 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "Kitchenette Occ Control.input" ;
+    cdl:usesInput lighting_devices:00014 .
+functions:00020 a p223:Schedule,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasExternalReference bacnet_references:00061 .
-functions:00010 a p223:OccupancyStatus,
+functions:00021 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
     s223:hasValue 0 .
-functions:00011 a p223:OccupancyControl,
+functions:00022 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Private Office Occ Control" ;
-    p223:hasOccupancyStatus functions:00010 ;
-    p223:hasSchedule functions:00009 ;
-    s223:hasProperty functions:00009,
-        functions:00010 ;
-    s223:producesOutput hvac_spaces:00069,
-        lighting_spaces:00028 ;
-    s223:usesInput functions:00009,
-        lighting_devices:00029 ;
+    cdl:input functions:00025,
+        functions:00026 ;
+    cdl:output functions:00023,
+        functions:00024 ;
+    p223:hasOccupancyStatus functions:00021 ;
+    p223:hasSchedule functions:00020 ;
+    s223:hasProperty functions:00020,
+        functions:00021 ;
     rdfs:comment "Deal with OccupancySpace3...probably not required but it's defined" .
-functions:00012 a p223:Schedule,
+functions:00023 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "Private Office Occ Control.output" ;
+    cdl:producesOutput lighting_spaces:00028 .
+functions:00024 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "Private Office Occ Control.output" ;
+    cdl:producesOutput hvac_spaces:00069 .
+functions:00025 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "Private Office Occ Control.input" ;
+    cdl:usesInput functions:00020 .
+functions:00026 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "Private Office Occ Control.input" ;
+    cdl:usesInput lighting_devices:00029 .
+functions:00027 a p223:Schedule,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasExternalReference bacnet_references:00061 .
-functions:00013 a p223:OccupancyStatus,
+functions:00028 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
     s223:hasValue 0 .
-functions:00014 a p223:OccupancyControl,
+functions:00029 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Bathroom Occ Control" ;
-    p223:hasOccupancyStatus functions:00013 ;
-    p223:hasSchedule functions:00012 ;
-    s223:hasProperty functions:00012,
-        functions:00013 ;
-    s223:producesOutput hvac_spaces:00018,
-        lighting_spaces:00025 ;
-    s223:usesInput functions:00012,
-        lighting_devices:00060 ;
+    cdl:input functions:00032,
+        functions:00033 ;
+    cdl:output functions:00030,
+        functions:00031 ;
+    p223:hasOccupancyStatus functions:00028 ;
+    p223:hasSchedule functions:00027 ;
+    s223:hasProperty functions:00027,
+        functions:00028 ;
     rdfs:comment "Light space O2" .
-functions:00015 a p223:Schedule,
+functions:00030 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "Bathroom Occ Control.output" ;
+    cdl:producesOutput lighting_spaces:00025 .
+functions:00031 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "Bathroom Occ Control.output" ;
+    cdl:producesOutput hvac_spaces:00018 .
+functions:00032 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "Bathroom Occ Control.input" ;
+    cdl:usesInput functions:00027 .
+functions:00033 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "Bathroom Occ Control.input" ;
+    cdl:usesInput lighting_devices:00060 .
+functions:00034 a p223:Schedule,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasExternalReference bacnet_references:00061 .
-functions:00016 a p223:OccupancyStatus,
+functions:00035 a p223:OccupancyStatus,
         s223:ObservableProperty,
         s223:Property ;
     p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
     s223:hasValue 0 .
-functions:00017 a p223:OccupancyControl,
+functions:00036 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Corridor Occ Control" ;
-    p223:hasOccupancyStatus functions:00016 ;
-    p223:hasSchedule functions:00015 ;
-    s223:hasProperty functions:00015,
-        functions:00016 ;
-    s223:producesOutput hvac_spaces:00035,
-        lighting_spaces:00031 ;
-    s223:usesInput functions:00015,
-        lighting_devices:00044 ;
+    cdl:input functions:00039,
+        functions:00040 ;
+    cdl:output functions:00037,
+        functions:00038 ;
+    p223:hasOccupancyStatus functions:00035 ;
+    p223:hasSchedule functions:00034 ;
+    s223:hasProperty functions:00034,
+        functions:00035 ;
     rdfs:comment "Corridor Light space, O5" .
+functions:00037 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "Corridor Occ Control.output" ;
+    cdl:producesOutput lighting_spaces:00031 .
+functions:00038 a s223:Connector,
+        s223:OutputConnector ;
+    rdfs:label "Corridor Occ Control.output" ;
+    cdl:producesOutput hvac_spaces:00035 .
+functions:00039 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "Corridor Occ Control.input" ;
+    cdl:usesInput functions:00034 .
+functions:00040 a s223:Connector,
+        s223:InputConnector ;
+    rdfs:label "Corridor Occ Control.input" ;
+    cdl:usesInput lighting_devices:00044 .
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;
     s223:connectsAt hvac_spaces:00014,

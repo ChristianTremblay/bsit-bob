@@ -5,7 +5,8 @@ import hvac_spaces as hs
 import lighting_devices as ld
 import lighting_spaces as ls
 
-from bob.core import FunctionBlock, bind_model_namespace, unit
+from bob.core import bind_model_namespace, unit
+from bob.functions import FunctionBlock
 from bob.functions.occupancy import OccupancyControl
 from bob.properties import Temperature
 from bob.properties.states import OccupancyStatus, Schedule

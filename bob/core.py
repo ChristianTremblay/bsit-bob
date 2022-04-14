@@ -816,7 +816,7 @@ class Property(Node):
     _external_reference_class: type = ExternalReference
 
     # override this for other volatile attributes
-    _volatile = ("hasValue", )
+    _volatile = ("hasValue",)
 
     def __init__(self, value: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {value!r} {kwargs}")
@@ -1243,72 +1243,6 @@ def contains_mm(system: System, thing_list: List[Node]) -> None:
         if not isinstance(thing, (Device, System)):
             raise TypeError(f"device or system expected: {thing}")
         contains_mm(system, thing)
-
-
-class FunctionBlock(Node):
-    """
-    Function block
-    In 223, function block are black boxes representing a sequence or
-    an algorithm. Fucntion blocks use inputs and produce outputs that can
-    be related in the 223 model.
-
-    The way the control is made inside this black box is CDL domain s231
-
-    The Python program Wendy can be used to describe different functions
-    and link them together to create the logic inside the s223:FunctionBlock
-
-    In this model though, it's only a way to make a bridge between 223 and 231.
-    It allows the modeler to define that there is a function doing "something" here
-    using different properties of the 223 model.
-
-    Function blocks in 223 are describes in the rdfs:comment of the block
-
-    No connections between Function blocks are allowed in 223. Connecting function blocks
-    together is 231.
-
-    No connection points are available for s223:FunctionBlock
-    inputs and outputs of s223:FunctionBlocks are properties of system and devices.
-
-    """
-
-    node_type: URIRef = s223.FunctionBlock
-    hasDomain: Domain
-    hasCDLRepresentation: URIRef
-
-    def __init__(self, *args, **kwargs: Any) -> None:
-        logging.debug(f"FunctionBlock.__init__ {args} {kwargs}")
-
-        super().__init__(*args, **kwargs)
-
-        if MANDITORY_LABEL:
-            if "label" not in kwargs:
-                raise RuntimeError("no label")
-            if "comment" not in kwargs:
-                raise RuntimeError("no comment")
-            if not kwargs["label"]:
-                raise RuntimeError("empty label")
-
-    def uses_input(self, prop: Property) -> Property:
-        assert isinstance(prop, Property)
-        self._data_graph.add((self.node, s223.usesInput, prop.node))  # type: ignore[attr-defined]
-        if INCLUDE_INVERSE:
-            self._data_graph.add((prop.node, s223.isUsedAsInputBy, self.node))
-
-        return prop
-
-    def produces_output(self, prop: Property) -> Property:
-        assert isinstance(prop, Property)
-        self._data_graph.add((self.node, s223.producesOutput, prop.node))  # type: ignore[attr-defined]
-        if INCLUDE_INVERSE:
-            self._data_graph.add((prop.node, s223.isProducedBy, self.node))
-
-        return prop
-
-    def __repr__(self) -> str:
-        label = getattr(self, "label", "")
-        if label:
-            label = " " + label
-        return f"<{self.__class__.__name__}{label} at {self.node}>"
 
 
 class ConnectionMetaclass(NodeMetaclass):
