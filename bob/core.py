@@ -1134,7 +1134,8 @@ class System(Container, Node):
     node_type: URIRef = s223.System
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
-    servesZone: Zone
+
+    _serves_zones: Dict[str, Zone]
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
 
@@ -1147,7 +1148,6 @@ class System(Container, Node):
         #     kwargs = {**config["params"], **kwargs}
 
         super().__init__(*args, **kwargs)
-
         if config:
             for group_name, group_items in config.items():
                 if group_name == "params":
@@ -1210,6 +1210,19 @@ class System(Container, Node):
             logging.debug(f"    - connection point {var_name}: {var_element}")
 
             setattr(self, var_name, var_element)
+
+    def add_serves(self, other: Zone) -> Node:
+        if isinstance(other, Zone):
+            try: 
+                self._serves_zones
+            except: 
+                self._serves_zones = {}
+                
+            self._data_graph.add((self.node, s223.serves, other.node))
+            self._serves_zones[other.label] = other
+        else:
+            raise TypeError("zone expected")
+        return other
 
 
 @multimethod
