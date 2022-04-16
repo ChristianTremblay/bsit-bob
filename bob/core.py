@@ -816,7 +816,7 @@ class Property(Node):
     _external_reference_class: type = ExternalReference
 
     # override this for other volatile attributes
-    _volatile = ("hasValue", )
+    _volatile = ("hasValue",)
 
     def __init__(self, value: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {value!r} {kwargs}")
@@ -1414,9 +1414,7 @@ def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
     from_types: Set[Medium]
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
-        raise RuntimeError(
-            f"no candidate sources from {from_thing} to {to_thing}"
-        )
+        raise RuntimeError(f"no candidate sources from {from_thing} to {to_thing}")
     logging.debug(f"    - from_types: {from_types}")
 
     # build a dict of inlet connection points that are not already connected
@@ -1436,9 +1434,7 @@ def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
     to_types: Set[Medium]
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
-        raise RuntimeError(
-            f"no candidate destinations from {from_thing} to {to_thing}"
-        )
+        raise RuntimeError(f"no candidate destinations from {from_thing} to {to_thing}")
     logging.debug(f"    - to_types: {to_types}")
 
     # find the common medium
@@ -1480,9 +1476,7 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
     from_types: Set[Medium]
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
-        raise RuntimeError(
-            f"no candidate sources from {from_thing}"
-        )
+        raise RuntimeError(f"no candidate sources from {from_thing}")
     logging.debug(f"    - from_types: {from_types}")
 
     to_types_list: List[Set[Medium]] = []
@@ -1505,9 +1499,7 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
         to_types: Set[Medium]
         to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
         if not to_types:
-            raise RuntimeError(
-                f"no candidate destinations to {to_thing}"
-            )
+            raise RuntimeError(f"no candidate destinations to {to_thing}")
         logging.debug(f"    - to_types: {to_types}")
         to_types_list.append(to_types)
 
@@ -1524,7 +1516,7 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
     from_connection_point = from_out[medium].pop()
 
     # create a connection
-    connection = Connection(hasMedium = medium)
+    connection = Connection(hasMedium=medium)
 
     # connect the from thing
     connect_mm(from_connection_point, connection)
@@ -2820,9 +2812,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
     else:
         from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
         if not from_types:
-            raise RuntimeError(
-                f"no candidate sources from {from_thing} to {to_thing}"
-            )
+            raise RuntimeError(f"no candidate sources from {from_thing} to {to_thing}")
     logging.debug(f"    - from_types: {from_types}")
 
     to_in = defaultdict(set)
