@@ -816,7 +816,7 @@ class Property(Node):
     _external_reference_class: type = ExternalReference
 
     # override this for other volatile attributes
-    _volatile = ("hasValue", )
+    _volatile = ("hasValue",)
 
     def __init__(self, value: Any = None, **kwargs: Any):
         logging.debug(f"Property.__init__ {value!r} {kwargs}")
@@ -1211,18 +1211,11 @@ class System(Container, Node):
 
             setattr(self, var_name, var_element)
 
-    def add_serves(self, other: Zone) -> Node:
-        if isinstance(other, Zone):
-            try: 
-                self._serves_zones
-            except: 
-                self._serves_zones = {}
-                
-            self._data_graph.add((self.node, s223.serves, other.node))
-            self._serves_zones[other.label] = other
-        else:
-            raise TypeError("zone expected")
-        return other
+        # zone references
+        self._serves_zones = {}
+
+    def serves_zone(self, other: Zone) -> None:
+        connect_mm(self, other)
 
 
 @multimethod
@@ -2452,6 +2445,19 @@ class Zone(Container, Node):
 def connect_mm(from_system: System, to_zone: Zone) -> None:
     """System >> Zone"""
     logging.info(f"connect from {from_system} to {to_zone}")
+
+    # stash this in the system
+    from_system._serves_zones[to_zone.label] = to_zone
+
+    from_system._data_graph.add((from_system.node, s223.servesZone, to_zone.node))
+    if INCLUDE_INVERSE:
+        from_system._data_graph.add((to_zone.node, s223.isServedBy, from_system.node))
+
+    return
+
+    #
+    #   skipped for now...
+    #
 
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
