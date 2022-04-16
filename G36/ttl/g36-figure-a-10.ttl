@@ -69,6 +69,7 @@ exg3610:00009 a s223:InletConnectionPoint ;
     s223:lnx exg3610:00017 .
 exg3610:00010 a s223:OutletConnectionPoint ;
     rdfs:label "A-10.min_oa_damper.airOutlet" ;
+    s223:connectsThrough exg3610:00019 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00006 .
@@ -99,6 +100,7 @@ exg3610:00014 a s223:InletConnectionPoint ;
     s223:lnx exg3610:00018 .
 exg3610:00015 a s223:OutletConnectionPoint ;
     rdfs:label "A-10.economizer_oa_damper.airOutlet" ;
+    s223:connectsThrough exg3610:00019 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00011 .
@@ -135,11 +137,13 @@ exg3610:00020 a p223:Filter,
         exg3610:00022 .
 exg3610:00021 a s223:InletConnectionPoint ;
     rdfs:label "A-10.mixed_air_filter.airInlet" ;
+    s223:connectsThrough exg3610:00019 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00020 .
 exg3610:00022 a s223:OutletConnectionPoint ;
     rdfs:label "A-10.mixed_air_filter.airOutlet" ;
+    s223:connectsThrough exg3610:00041 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00020 .
@@ -199,16 +203,19 @@ exg3610:00028 a s223:Connectable,
     s223:hotWaterSupply exg3610:00031 .
 exg3610:00029 a s223:InletConnectionPoint ;
     rdfs:label "A-10.hot_water_coil.hw_coil.airInlet" ;
+    s223:connectsThrough exg3610:00041 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00028 .
 exg3610:00030 a s223:OutletConnectionPoint ;
     rdfs:label "A-10.hot_water_coil.hw_coil.airOutlet" ;
+    s223:connectsThrough exg3610:00059 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00028 .
 exg3610:00031 a s223:InletConnectionPoint ;
     rdfs:label "A-10.hot_water_coil.hw_coil.hotWaterSupply" ;
+    s223:connectsThrough exg3610:00039 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00028 .
@@ -254,6 +261,7 @@ exg3610:00037 a s223:InletConnectionPoint ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00033 .
 exg3610:00038 a s223:OutletConnectionPoint ;
+    s223:connectsThrough exg3610:00039 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00033 .
@@ -327,16 +335,19 @@ exg3610:00047 a s223:Connectable,
         exg3610:00051 .
 exg3610:00048 a s223:InletConnectionPoint ;
     rdfs:label "A-10.chilled_water_coil.cw_coil.airInlet" ;
+    s223:connectsThrough exg3610:00059 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00047 .
 exg3610:00049 a s223:OutletConnectionPoint ;
     rdfs:label "A-10.chilled_water_coil.cw_coil.airOutlet" ;
+    s223:connectsThrough exg3610:00064 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00047 .
 exg3610:00050 a s223:InletConnectionPoint ;
     rdfs:label "A-10.chilled_water_coil.cw_coil.chilledWaterInlet" ;
+    s223:connectsThrough exg3610:00058 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00047 .
@@ -382,6 +393,7 @@ exg3610:00056 a s223:InletConnectionPoint ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00052 .
 exg3610:00057 a s223:OutletConnectionPoint ;
+    s223:connectsThrough exg3610:00058 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00052 .
@@ -410,6 +422,7 @@ exg3610:00060 a s223:Connectable,
         exg3610:00063 .
 exg3610:00061 a s223:InletConnectionPoint ;
     rdfs:label "A-10.supply_fan.airInlet" ;
+    s223:connectsThrough exg3610:00064 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00060 .
@@ -454,6 +467,7 @@ exg3610:00068 a s223:InletConnectionPoint ;
     s223:lnx exg3610:00079 .
 exg3610:00069 a s223:OutletConnectionPoint ;
     rdfs:label "A-10.relief_fan.airOutlet" ;
+    s223:connectsThrough exg3610:00086 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00067 .
@@ -489,6 +503,7 @@ exg3610:00074 a s223:InletConnectionPoint ;
     s223:lnx exg3610:00080 .
 exg3610:00075 a s223:OutletConnectionPoint ;
     rdfs:label "A-10.return_air_damper.airOutlet" ;
+    s223:connectsThrough exg3610:00019 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00071 .
@@ -529,6 +544,7 @@ exg3610:00083 a s223:Property,
     rdfs:label "A-10.relief_air_damper.feedback" .
 exg3610:00084 a s223:InletConnectionPoint ;
     rdfs:label "A-10.relief_air_damper.airInlet" ;
+    s223:connectsThrough exg3610:00086 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00081 .
