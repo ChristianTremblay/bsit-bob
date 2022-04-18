@@ -1134,7 +1134,8 @@ class System(Container, Node):
     node_type: URIRef = s223.System
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
-    servesZone: Zone
+
+    _serves_zones: Dict[str, Zone]
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
 
@@ -1147,7 +1148,6 @@ class System(Container, Node):
         #     kwargs = {**config["params"], **kwargs}
 
         super().__init__(*args, **kwargs)
-
         if config:
             for group_name, group_items in config.items():
                 if group_name == "params":
@@ -1210,6 +1210,12 @@ class System(Container, Node):
             logging.debug(f"    - connection point {var_name}: {var_element}")
 
             setattr(self, var_name, var_element)
+
+        # zone references
+        self._serves_zones = {}
+
+    def serves_zone(self, other: Zone) -> None:
+        connect_mm(self, other)
 
 
 @multimethod
@@ -2421,6 +2427,19 @@ class Zone(Container, Node):
 def connect_mm(from_system: System, to_zone: Zone) -> None:
     """System >> Zone"""
     logging.info(f"connect from {from_system} to {to_zone}")
+
+    # stash this in the system
+    from_system._serves_zones[to_zone.label] = to_zone
+
+    from_system._data_graph.add((from_system.node, s223.servesZone, to_zone.node))
+    if INCLUDE_INVERSE:
+        from_system._data_graph.add((to_zone.node, s223.isServedBy, from_system.node))
+
+    return
+
+    #
+    #   skipped for now...
+    #
 
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
