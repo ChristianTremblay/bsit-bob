@@ -35,7 +35,7 @@ from ...connections.electricity import (
 )
 from ...core import Device, p223, quantitykind, unit
 
-__namespace__ = p223
+_namespace = p223
 
 
 class Transformer(Device):

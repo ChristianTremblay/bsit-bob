@@ -15,7 +15,7 @@ from bob.properties.states import OccupancyStatus
 from ..core import DomainSpace, Light, Lighting, Medium, Zone, p223, s223
 from ..systems.physic import IndoorAir
 
-__namespace__ = p223
+_namespace = p223
 
 
 class LightingSpace(DomainSpace):

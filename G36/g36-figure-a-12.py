@@ -24,7 +24,7 @@ from bob.systems.archives.coolingcoil import ChilledWaterCoil2
 from bob.systems.archives.heatingcoil import HotWaterCoil2
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(
+_namespace = bind_model_namespace(
     "exg3612", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 

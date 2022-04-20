@@ -7,7 +7,7 @@ from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_spaceandzones(bob_fixture):

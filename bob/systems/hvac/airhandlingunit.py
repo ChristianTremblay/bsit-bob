@@ -12,7 +12,7 @@ from ...connections.air import (
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
 from ...core import Device, System, p223
 
-__namespace__ = p223
+_namespace = p223
 
 ahu_template = {
     "params": {"label": "Name", "comment": "Description"},

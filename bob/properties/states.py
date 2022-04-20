@@ -12,7 +12,7 @@ from ..core import (
 )
 from ..property import ActuatableProperty, ObservableProperty
 
-__namespace__ = p223
+_namespace = p223
 
 
 # On Off Status is telemetry so the value depends on hasExternalReference

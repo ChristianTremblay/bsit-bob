@@ -7,7 +7,7 @@ from ...connections.electricity import *
 from ...core import Device, Node, p223, s223
 from ...sensor.electricity import CurrentBinarySensor
 
-__namespace__ = s223
+_namespace = s223
 
 
 class MotorStarter(Device):

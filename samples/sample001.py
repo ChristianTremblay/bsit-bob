@@ -6,7 +6,7 @@ from bob.core import Device, bind_model_namespace, dump, quantitykind, qudt, uni
 from bob.property import QuantifiableObservableProperty, QuantifiableProperty
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TemperatureProperty(QuantifiableProperty):

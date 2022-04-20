@@ -7,7 +7,7 @@ from bob.core import Device, bind_model_namespace, dump
 from bob.devices.hvac import Fan
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_fan(bob_fixture):

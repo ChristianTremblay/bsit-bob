@@ -19,7 +19,7 @@ from ..properties import GasConcentration
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-__namespace__ = p223
+_namespace = p223
 
 # TODO :
 # try to create an exmaple for the sensors found here

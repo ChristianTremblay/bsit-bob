@@ -3,7 +3,7 @@ from rdflib import URIRef
 from ..core import p223, quantitykind, unit
 from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 
-__namespace__ = p223
+_namespace = p223
 
 
 class Gallons(QuantifiableObservableProperty):

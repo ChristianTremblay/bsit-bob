@@ -26,7 +26,7 @@ from ...connections.water import (
 from ...core import Device, PropertyReference, s223
 from ...properties import Gallons, Percent
 
-__namespace__ = s223
+_namespace = s223
 
 # ISSUE
 # Technically, valve are manual, electrical, pneumatic... should we define

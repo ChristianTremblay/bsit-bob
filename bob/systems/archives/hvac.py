@@ -6,7 +6,7 @@ from ...connections.air import (
 )
 from ...core import Domain, DomainSpace, HVAC, Zone, s223
 
-__namespace__ = s223
+_namespace = s223
 
 
 class HVACZone(Zone):

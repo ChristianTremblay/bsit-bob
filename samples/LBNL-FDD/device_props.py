@@ -28,7 +28,7 @@ from bob.systems.archives.heatingcoil import HotWaterCoil2
 
 
 model_name = Path(__file__).stem
-__namespace__ = ex = bind_model_namespace(
+_namespace = ex = bind_model_namespace(
     "LBNL", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 

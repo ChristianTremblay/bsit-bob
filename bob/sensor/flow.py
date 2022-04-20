@@ -19,7 +19,7 @@ from ..properties import Flow
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-__namespace__ = s223
+_namespace = s223
 
 
 class FlowSetpoint(Setpoint):

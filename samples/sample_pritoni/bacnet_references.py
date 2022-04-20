@@ -9,7 +9,7 @@ from bob.core import bind_model_namespace, dump
 from bob.externalreference.bacnet import BACnetDevice, BACnetReference
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 # An HVAC BACnet device

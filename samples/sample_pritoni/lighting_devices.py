@@ -12,7 +12,7 @@ from bob.properties.states import OnOffCommand
 from bob.sensor.movement import MovementSensor, OccupancySensor
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 # Now we build lights for Kitchenette
