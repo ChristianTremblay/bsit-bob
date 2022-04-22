@@ -1,1 +1,4 @@
-select ?node where { ?node a s223:Device }
+select ?node ?label where {
+    ?node a s223:Device .
+    optional { ?node rdfs:label ?label } .
+    }
