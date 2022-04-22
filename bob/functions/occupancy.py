@@ -1,4 +1,5 @@
-from ..core import FunctionBlock, PropertyReference, p223
+from ..core import PropertyReference, p223
+from ..functions import FunctionBlock
 from ..properties import OccupancyStatus, Schedule
 
 _namespace = p223

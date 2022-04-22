@@ -16,7 +16,6 @@ from ...connections.air import (
 )
 from ...core import (
     ExternalReference,
-    FunctionBlock,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     Outlet,
@@ -29,6 +28,13 @@ from ...core import (
     enum,
     p223,
 )
+from ...functions import (
+    AnalogInput,
+    AnalogOutput,
+    BinaryInput,
+    BinaryOutput,
+    FunctionBlock,
+)
 from ...property import ObservableProperty, QuantifiableObservableProperty
 
 g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
@@ -36,34 +42,33 @@ g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g3
 _namespace = g36
 
 
-class AnalogIn(ModulationSignalSystemInletConnectionPoint):
+class AnalogIn(AnalogInput):
     node_type = g36.AnalogIn
 
 
-class AnalogOut(ModulationSignalSystemOutletConnectionPoint):
+class AnalogOut(AnalogOutput):
     node_type = g36.AnalogOut
 
 
-class BinaryIn(OnOffSignalSystemInletConnectionPoint):
+class BinaryIn(BinaryInput):
     node_type = g36.BinaryIn
 
 
-class BinaryOut(OnOffSignalSystemOutletConnectionPoint):
+class BinaryOut(BinaryOutput):
     node_type = g36.BinaryOut
 
 
 class G36Block(FunctionBlock):
     """
     This function is a subclass of a Function Block kept
-    in the namespace of G36
+    in the namespace of G36.
 
     In Guideline 36, models present the notion of AI, AO, BI, BO
     and those concept can be modeled using a Function block.
     Function block is then an abstraction of the sequence of
     operation suggested by G36.
 
-    Comment of this block should be the description of the sequence
-
+    Comment of this block is the description of the sequence.
     """
 
     node_type = g36.FunctionBlock
