@@ -15,7 +15,7 @@ from ...devices.hvac.damper import Damper
 from ...devices.hvac.valve import TwoWayValve
 from ...signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+_namespace = s223
 
 
 class VAV1(System):

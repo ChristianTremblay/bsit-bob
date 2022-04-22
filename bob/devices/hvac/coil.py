@@ -22,7 +22,7 @@ from ...connections.water import (
 from ...core import Device, s223
 from ...signal import AnalogIn
 
-__namespace__ = s223
+_namespace = s223
 
 """
 chilledWaterCoil_template = {

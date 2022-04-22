@@ -8,7 +8,7 @@ from ...connections.electricity import (
 from ...core import Device, p223, s223
 from ...signal import AnalogIn, AnalogOut
 
-__namespace__ = p223
+_namespace = p223
 
 
 class AirCompressor(Device):

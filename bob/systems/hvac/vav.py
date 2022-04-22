@@ -14,7 +14,7 @@ from ...core import Device, System, p223
 from ...devices.hvac.damper import Damper
 from ...signal import AnalogIn, AnalogOut
 
-__namespace__ = p223
+_namespace = p223
 
 vav_template = {
     "params": {"label": "Name", "comment": "Description"},

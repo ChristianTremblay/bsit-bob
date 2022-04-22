@@ -32,6 +32,7 @@ ex:00002 a s223:Connectable,
         ex:00006 .
 ex:00003 a s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
+    s223:connectsThrough ex:00011 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00002 .
@@ -42,6 +43,7 @@ ex:00004 a s223:OutletConnectionPoint ;
     s223:isConnectionPointOf ex:00002 .
 ex:00005 a s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterInlet" ;
+    s223:connectsThrough ex:00001 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex:00002 .
@@ -68,6 +70,7 @@ ex:00008 a s223:InletConnectionPoint ;
     s223:isConnectionPointOf ex:00007 .
 ex:00009 a s223:OutletConnectionPoint ;
     rdfs:label "F.airOutlet" ;
+    s223:connectsThrough ex:00011 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00007 .
@@ -86,6 +89,7 @@ ex:00012 a s223:Zone,
         ex:HVACZone ;
     rdfs:label "Zone-1" ;
     s223:contains ex:00014 ;
+    s223:hasDomain s223:Domain-HVAC ;
     s223:hasZoneConnectionPoint ex:00013 ;
     ex:supplyAir ex:00013 .
 ex:00013 a s223:InletZoneConnectionPoint,

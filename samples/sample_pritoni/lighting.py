@@ -8,7 +8,7 @@ import physical_spaces as ps
 from bob.core import bind_model_namespace, dump
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 ld.kitchenette_luminaire_11.lightOutlet >> ld.kitch_light_conn

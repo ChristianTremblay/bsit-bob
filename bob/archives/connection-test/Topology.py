@@ -12,7 +12,7 @@ from bob.core import (
     dump,
 )
 
-__namespace__ = bind_model_namespace("ex", "urn:ex/")
+_namespace = bind_model_namespace("ex", "urn:ex/")
 
 
 class DeviceIn(Device):

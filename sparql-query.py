@@ -4,7 +4,7 @@
 SPARQL Query
 
 Load in a collection of Turtle files, optionally run an inference engine,
-and prompt for SPARQL queries.
+and prompt for a SPARQL query or read one from stdin.
 """
 
 import argparse
@@ -12,7 +12,7 @@ import sys
 
 import owlrl
 import pyparsing
-from rdflib import OWL, RDF, RDFS, Graph, Namespace, URIRef
+from rdflib import Graph, URIRef, RDF, RDFS, OWL
 
 # build a parser for the command line arguments
 parser = argparse.ArgumentParser(
@@ -20,7 +20,7 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
 )
 
-# sample additional option to load/store from/to the expanded graph
+# turtle files to load
 parser.add_argument(
     "ttl",
     type=str,
@@ -120,37 +120,42 @@ if args.info and sys.stdin.isatty():
         print(f"    {prefix}: {uriref}")
     print("")
 
-# loop for queries
-query = ""
-while True:
-    if sys.stdin.isatty():
+# loop for interactive queries
+if sys.stdin.isatty():
+    query = ""
+    while True:
         if not query:
             print(">>> ", end="", flush=True)
         else:
             print("... ", end="", flush=True)
 
-    line = sys.stdin.readline()
-    if not line:
-        break
-    query += " " + line[:-1]
+        line = sys.stdin.readline()
+        if not line:
+            break
+        query += " " + line[:-1]
+else:
+    query = " ".join(sys.stdin.read().split())
 
-    if not query.endswith("}"):
-        continue
+query = " ".join(query.split())
 
-    try:
-        query_results = g.query(query)
+try:
+    query_results = g.query(query)
 
-        for result in query_results:
-            str_result = []
-            for item in result:
-                if isinstance(item, URIRef):
-                    str_result.append(item.n3(g.namespace_manager))
-                else:
-                    str_result.append(item)
-            print(", ".join(str_result))
+    for result in query_results:
+        str_result = []
+        for item in result:
+            if isinstance(item, URIRef):
+                str_result.append(item.n3(g.namespace_manager))
+            elif item is None:
+                str_result.append("")
+            else:
+                str_result.append(item)
+        print(", ".join(str_result))
 
-    except pyparsing.ParseException as parsing_error:
-        args_query, args_offset, args_error = parsing_error.args
-        print(" " * (args_offset + 4) + "^ " + args_error)
+except pyparsing.ParseException as parsing_error:
+    args_query, args_offset, args_error = parsing_error.args
+    sys.stderr.write(query + "\n")
+    sys.stderr.write(" " * args_offset + "^ " + args_error + "\n")
+    sys.exit(1)
 
-    query = ""
+sys.exit(0)

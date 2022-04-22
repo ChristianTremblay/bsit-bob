@@ -20,7 +20,7 @@ from ..core import (
 )
 from ..signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+_namespace = s223
 
 LightVisible = Medium(node_iri=s223["Light-Visible"])
 

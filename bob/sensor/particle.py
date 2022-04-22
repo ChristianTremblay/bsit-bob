@@ -23,7 +23,7 @@ from ..property import (
 )
 from .sensor import Sensor, split_kwargs
 
-__namespace__ = p223
+_namespace = p223
 
 PM1_0 = Substance(node_iri=p223["Particulate-PM1.0"])
 PM2_5 = Substance(node_iri=p223["Particulate-PM2.5"])

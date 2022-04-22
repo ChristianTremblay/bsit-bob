@@ -5,7 +5,7 @@ from bob.core import bind_model_namespace, dump
 from bob.devices.electricity.distribution import *
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 mainentry_panel_config = {

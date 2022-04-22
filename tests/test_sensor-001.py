@@ -8,7 +8,7 @@ from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSensor
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_sensor(bob_fixture):

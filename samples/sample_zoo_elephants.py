@@ -50,7 +50,7 @@ from bob.systems.hvac.vav import VAV
 
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("zoo", f"urn:zoo/{model_name}/")
+_namespace = bind_model_namespace("zoo", f"urn:zoo/{model_name}/")
 
 # Physical spaces
 building = Building(label="B-1", comment="Pavillon des éléphants")

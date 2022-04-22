@@ -14,7 +14,7 @@ from ..property import (
 )
 from .sensor import Sensor, split_kwargs
 
-__namespace__ = p223
+_namespace = p223
 
 
 class HumiditySetpoint(Setpoint):

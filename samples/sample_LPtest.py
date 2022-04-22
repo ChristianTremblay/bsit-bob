@@ -41,7 +41,7 @@ from bob.space.hvac import HVACZone
 
 
 model_name = Path(__file__).stem
-__namespace__ = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TemperatureSensor(Device):

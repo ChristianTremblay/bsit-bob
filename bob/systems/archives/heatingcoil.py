@@ -22,7 +22,7 @@ from ...devices.hvac.scr import SCR
 from ...devices.hvac.valve import TwoWayValve
 from ...signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+_namespace = s223
 
 
 class ElectricalHeatingCoilWithSCR(System):

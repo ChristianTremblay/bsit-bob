@@ -17,7 +17,7 @@ from ..properties import Amps, OnOffStatus, Volts
 from ..property import ObservableProperty, QuantifiableProperty
 from .sensor import Sensor, split_kwargs
 
-__namespace__ = s223
+_namespace = s223
 
 
 class CurrentSwitch(OnOffStatus):

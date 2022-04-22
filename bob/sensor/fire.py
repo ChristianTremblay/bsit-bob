@@ -17,7 +17,7 @@ from ..properties import SmokePresence
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-__namespace__ = p223
+_namespace = p223
 
 
 class SmokeDetectionSensor(Sensor):

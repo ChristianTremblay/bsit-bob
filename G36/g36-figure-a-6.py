@@ -27,7 +27,7 @@ from bob.devices.hvac.fan import Fan
 from bob.signal import AnalogIn, AnalogOut, BinaryOut
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(
+_namespace = bind_model_namespace(
     "exg3606", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 

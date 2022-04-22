@@ -110,20 +110,6 @@ S223_DIRECTORY = os.getenv("S223_DIRECTORY")
 if not S223_DIRECTORY:
     raise RuntimeError("S223_DIRECTORY unset")
 
-# load the shapes graph
-shacl_graph = Graph()
-for fname in glob.glob(os.path.join(S223_DIRECTORY, "models", "*.ttl")):
-    logging.debug(fname)
-    shacl_graph.load(fname, format="turtle")
-
-for fname in glob.glob(os.path.join(S223_DIRECTORY, "validation", "*.ttl")):
-    logging.debug(fname)
-    shacl_graph.load(fname, format="turtle")
-
-for fname in glob.glob(os.path.join(S223_DIRECTORY, "vocab", "*.ttl")):
-    logging.debug(fname)
-    shacl_graph.load(fname, format="turtle")
-
 # load the data graph(s)
 data_graph = Graph()
 for fname in args.ttl:
@@ -134,8 +120,22 @@ for fname in args.ttl:
         if args.info and sys.stdin.isatty():
             print(f"data triples: {len(data_graph)}")
 
-# load an optional ontology graph
+# load the shapes graphs
+shacl_graph = Graph()
+for fname in glob.glob(os.path.join(S223_DIRECTORY, "models", "*.ttl")):
+    logging.debug(fname)
+    shacl_graph.load(fname, format="turtle")
+
+for fname in glob.glob(os.path.join(S223_DIRECTORY, "validation", "*.ttl")):
+    logging.debug(fname)
+    shacl_graph.load(fname, format="turtle")
+
+# load the vocabulary into the ontology graph
 ontology_graph = Graph()
+for fname in glob.glob(os.path.join(S223_DIRECTORY, "vocab", "*.ttl")):
+    logging.debug(fname)
+    ontology_graph.load(fname, format="turtle")
+
 if args.ontology:
     ontology_graph.parse(fname, format="turtle")
     if args.info and sys.stdin.isatty():

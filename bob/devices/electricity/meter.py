@@ -4,7 +4,7 @@ from ...connections.electricity import *
 from ...core import Device, Node, p223, s223
 from ...sensor.electricity import create_3phase_meter_sensors
 
-__namespace__ = s223
+_namespace = s223
 
 
 class ThreePhaseElectricalMeter(Device):

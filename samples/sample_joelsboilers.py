@@ -28,7 +28,7 @@ from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def sample_using_only_water_medium():

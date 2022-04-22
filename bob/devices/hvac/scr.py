@@ -7,7 +7,7 @@ from ...connections.electricity import (
 from ...core import Device, p223, s223
 from ...signal import AnalogIn
 
-__namespace__ = p223
+_namespace = p223
 
 # SCR
 class SCR(Device):

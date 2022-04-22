@@ -22,7 +22,7 @@ from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 from bob.systems.hvac.vav import VAV
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 ahu_template = {
@@ -123,9 +123,9 @@ window2 = Window(
 )
 
 vav1 = VAV(config=vav1_config, hasPhysicalLocation=ps.private_office)
-vav1.servesZone = hs.hvac_zone_1
+vav1.serves_zone(hs.hvac_zone_1)
 vav2 = VAV(config=vav2_config, hasPhysicalLocation=ps.kitchenette)
-vav2.servesZone = hs.hvac_zone_2
+vav2.serves_zone(hs.hvac_zone_2)
 
 
 if __name__ == "__main__":

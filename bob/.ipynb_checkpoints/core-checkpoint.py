@@ -129,13 +129,13 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 
 
 # the namespace for a node is defined in the node as the _namespace attribute
-# or in the __namespace__ special global for the module of the class, or the
+# or in the _namespace special global for the module of the class, or the
 # parent module, or it is inherited from a superclass that is defined in the
 # same module
 s223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
 
 # everything in this module belongs in the standard
-__namespace__ = s223
+_namespace = s223
 
 # common namespaces
 qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
@@ -301,7 +301,7 @@ class NodeMetaclass(type):
             assert cls_module
             logging.debug(f"    - cls_module: {cls_module} {cls_module.__name__}")
 
-            _namespace = getattr(cls_module, "__namespace__", None)
+            _namespace = getattr(cls_module, "_namespace", None)
             if _namespace:
                 logging.debug(f"    - module {cls_module} namespace: {_namespace}")
             else:
@@ -310,7 +310,7 @@ class NodeMetaclass(type):
                     ".".join(cls_module.__name__.split(".")[:-1]) or "__main__"
                 ]
                 logging.debug(f"    - parent_module: {parent_module}")
-                _namespace = getattr(parent_module, "__namespace__", None)
+                _namespace = getattr(parent_module, "_namespace", None)
                 if _namespace:
                     logging.debug(
                         f"    - parent module {parent_module} namespace: {_namespace}"

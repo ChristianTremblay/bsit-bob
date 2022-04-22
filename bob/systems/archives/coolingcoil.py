@@ -16,7 +16,7 @@ from ...devices.hvac.coil import ChilledWaterCoil
 from ...devices.hvac.valve import TwoWayValve
 from ...signal import AnalogIn
 
-__namespace__ = s223
+_namespace = s223
 
 
 class ChilledWaterCoil2(System):

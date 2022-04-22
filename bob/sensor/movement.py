@@ -16,7 +16,7 @@ from ..core import (
 from ..properties import Movement
 from .sensor import Sensor, split_kwargs
 
-__namespace__ = p223
+_namespace = p223
 
 
 class MovementSensor(Sensor):

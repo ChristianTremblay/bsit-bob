@@ -2,7 +2,7 @@ from ..core import PropertyReference, p223
 from ..functions import FunctionBlock
 from ..properties import OccupancyStatus, Schedule
 
-__namespace__ = p223
+_namespace = p223
 
 
 class OccupancyControl(FunctionBlock):

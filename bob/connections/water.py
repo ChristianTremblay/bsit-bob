@@ -15,7 +15,7 @@ from ..core import (
 )
 from ..signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+_namespace = s223
 
 DomesticWater = Medium(node_iri=s223["Water-DomesticWater"])
 DomesticHotWater = Medium(node_iri=s223["Water-DomesticHotWater"])

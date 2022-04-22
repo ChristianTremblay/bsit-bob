@@ -9,7 +9,7 @@ from bob.systems.archives.hvac import HVACZone1
 from bob.systems.archives.vav import VAV2
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 # make a sample

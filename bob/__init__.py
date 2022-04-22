@@ -4,6 +4,6 @@
 #   Project Metadata
 #
 
-__version__ = "0.40"
+__version__ = "0.42"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"

@@ -13,7 +13,7 @@ from bob.properties.states import OccupancyStatus
 from ..core import HVAC, Air, DomainSpace, Medium, Zone, enum, s223
 from ..systems.physic import IndoorAir
 
-__namespace__ = s223
+_namespace = s223
 
 
 class HVACSpace(DomainSpace):

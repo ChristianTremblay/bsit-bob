@@ -39,7 +39,7 @@ from ...property import ObservableProperty, QuantifiableObservableProperty
 
 g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
 
-__namespace__ = g36
+_namespace = g36
 
 
 class AnalogIn(AnalogInput):

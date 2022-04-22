@@ -17,7 +17,7 @@ from .core import (
     unit,
 )
 
-__namespace__ = s223
+_namespace = s223
 
 
 class ActuatableProperty(Property):

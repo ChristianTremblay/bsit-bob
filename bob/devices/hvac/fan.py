@@ -11,7 +11,7 @@ from ...properties.states import OnOffCommand, OnOffStatus
 from ...property import QuantifiableObservableProperty
 from ...signal import AnalogIn, AnalogOut
 
-__namespace__ = s223
+_namespace = s223
 
 """
 fan_template = {
