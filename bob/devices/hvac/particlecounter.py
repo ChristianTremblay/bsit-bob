@@ -12,7 +12,7 @@ from ...sensor.particle import (
 )
 from ...signal import AnalogIn
 
-__namespace__ = p223
+_namespace = p223
 
 
 """

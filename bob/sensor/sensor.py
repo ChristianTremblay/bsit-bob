@@ -30,7 +30,7 @@ from ..property import (
     QuantifiableProperty,
 )
 
-__namespace__ = s223
+_namespace = s223
 
 
 def split_kwargs(given_kwargs):

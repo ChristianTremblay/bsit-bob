@@ -3,7 +3,7 @@ from rdflib import XSD, Literal, URIRef
 from ..core import EnumerationKind, Node, s223
 from ..property import QuantifiableProperty
 
-__namespace__ = s223
+_namespace = s223
 
 
 class Setpoint(QuantifiableProperty):

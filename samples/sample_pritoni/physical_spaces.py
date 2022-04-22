@@ -4,7 +4,7 @@ from bob.core import bind_model_namespace, dump
 from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 # Define the building Physical Spaces

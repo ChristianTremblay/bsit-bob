@@ -16,7 +16,7 @@ from ..core import (
     schema_graph,
 )
 
-__namespace__ = p223
+_namespace = p223
 
 url_pattern = re.compile("^bacnet:[/][/]([0-9]+)[/]([A-Za-z0-9-]+),([1-9][0-9]*)$")
 

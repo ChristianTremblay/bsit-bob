@@ -7,7 +7,7 @@ from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectio
 from ...core import Device, PropertyReference, s223
 from ...properties import HP, RPM, Amps, ElectricPowerkW, OnOffStatus, PowerFactor
 
-__namespace__ = s223
+_namespace = s223
 
 """
 fan_template = {

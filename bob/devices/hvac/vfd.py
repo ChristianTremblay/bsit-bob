@@ -20,7 +20,7 @@ from ...properties import (
 )
 from ...signal import AnalogIn, AnalogOut
 
-__namespace__ = p223
+_namespace = p223
 
 """
 vfd_template = {

@@ -23,7 +23,7 @@ from ...core import Device, p223, s223
 from ...signal import AnalogIn
 from .damper import PneumaticDamper
 
-__namespace__ = s223
+_namespace = s223
 
 """
 chilledWaterCoil_template = {

@@ -25,7 +25,7 @@ from bob.core import Device, System, bind_model_namespace, dump
 from bob.signal import AnalogIn, AnalogOut
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(
+_namespace = bind_model_namespace(
     "exg3602", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 

@@ -16,7 +16,7 @@ from ...sensor.gas import (
 )
 from ...signal import AnalogIn
 
-__namespace__ = p223
+_namespace = p223
 
 """
 gasmonitor_template = {

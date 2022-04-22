@@ -43,7 +43,7 @@ from bob.sensor.temperature import AirTemperatureSensor
 from bob.systems.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace(
+_namespace = bind_model_namespace(
     "exg3611", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 

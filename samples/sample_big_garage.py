@@ -19,7 +19,7 @@ from bob.space.light import LightingSpace
 from bob.space.physical import Building, Floor, Office, Roof
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 big_garage = Building(label="My Building")

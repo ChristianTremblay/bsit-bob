@@ -19,7 +19,7 @@ from ...core import Device, p223, s223
 from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
 from ...signal import AnalogIn
 
-__namespace__ = p223
+_namespace = p223
 
 
 class Chiller(Device):

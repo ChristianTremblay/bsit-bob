@@ -2,7 +2,7 @@ from rdflib import Literal, URIRef
 
 from ..core import ExternalReference, p223
 
-__namespace__ = p223
+_namespace = p223
 
 
 class BACnetReference(ExternalReference):

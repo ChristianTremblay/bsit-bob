@@ -22,7 +22,7 @@ from bob.space.physical import Bathroom, Corridor, Office, Room
 from bob.systems.hvac.vav import VAV1
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", "ex:pritoni2:")
+_namespace = bind_model_namespace("ex", "ex:pritoni2:")
 
 
 class PrivateOffice(Office):

@@ -38,7 +38,7 @@ from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 
 # model_name = Path(__file__).stem
 model_name = "B59"
-__namespace__ = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 config = {

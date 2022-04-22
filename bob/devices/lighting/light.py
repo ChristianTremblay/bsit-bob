@@ -14,7 +14,7 @@ from ...properties.light import RelativeLuminousFlux
 from ...properties.ratio import PercentCommand
 from ...properties.states import OnOffCommand, OnOffStatus
 
-__namespace__ = s223
+_namespace = s223
 
 
 class Luminaire(Device):

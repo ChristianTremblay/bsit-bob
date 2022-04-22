@@ -8,7 +8,7 @@ from bob.space.hvac import HVACSpace, HVACZone
 from bob.systems.hvac.vav import VAV
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 # there is a zone that contains a space

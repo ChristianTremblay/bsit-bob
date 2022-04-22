@@ -4,7 +4,7 @@ from ..core import p223, quantitykind, unit
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
 from .ratio import Percent
 
-__namespace__ = p223
+_namespace = p223
 
 
 class Brightness(QuantifiableObservableProperty):

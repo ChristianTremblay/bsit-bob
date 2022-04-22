@@ -8,7 +8,7 @@ from bob.core import bind_model_namespace, dump
 from bob.devices.hvac import ChilledWaterCoil, Fan
 
 model_name = Path(__file__).stem
-__namespace__ = bind_model_namespace("ex", f"urn:ex/{model_name}/")
+_namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_connect_chilled_water_coil(bob_fixture):

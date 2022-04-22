@@ -2,7 +2,7 @@ from rdflib import URIRef
 
 from .core import Role, s223
 
-__namespace__ = s223
+_namespace = s223
 
 
 Exhaust = Role(node_iri=s223.Exhaust)

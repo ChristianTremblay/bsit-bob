@@ -21,7 +21,7 @@ from ..connections.air import (
 from ..core import Air, Medium, System, p223, s223
 from ..property import QuantifiableObservableProperty
 
-__namespace__ = p223
+_namespace = p223
 
 
 class PhysicSystem(System):

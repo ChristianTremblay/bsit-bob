@@ -10,7 +10,7 @@ from ...sensor.humidity import AirHumiditySensor
 from ...sensor.pressure import AirDifferentialStaticPressureSensor
 from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 
-__namespace__ = p223
+_namespace = p223
 
 
 class MechanicalOnOffThermostat(Device):

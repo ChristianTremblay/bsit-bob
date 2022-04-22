@@ -19,7 +19,7 @@ from ..core import (
     s223,
 )
 
-__namespace__ = s223
+_namespace = s223
 
 
 class AirConnection(Connection):
