@@ -22,10 +22,7 @@ from ..core import (
 )
 from ..multimethods import multimethod
 
-__namespace__ = s223
-
-# some predicates bleeding over
-cdl = bind_namespace("cdl", "http://data.ashrae.org/cdl#")
+_namespace = s223
 
 
 #
@@ -62,7 +59,7 @@ class InputConnector(Connector):
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block.node, cdl.input, self.node))
+        data_graph.add((function_block.node, s223.input, self.node))
 
 
 class OutputConnector(Connector):
@@ -71,7 +68,7 @@ class OutputConnector(Connector):
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block.node, cdl.output, self.node))
+        data_graph.add((function_block.node, s223.output, self.node))
 
 
 @multimethod
@@ -81,7 +78,7 @@ def connect_mm(
     """OutputConnector >> InputConnector"""
     logging.info(f"connect from {output_connector} to {input_connector}")
 
-    data_graph.add((output_connector.node, cdl.connect, input_connector.node))
+    data_graph.add((output_connector.node, s223.connect, input_connector.node))
 
 
 @multimethod
@@ -89,7 +86,7 @@ def connect_mm(prop: Property, input_connector: InputConnector) -> None:
     """Property >> InputConnector"""
     logging.info(f"connect from {prop} to {input_connector}")
 
-    data_graph.add((input_connector.node, cdl.usesInput, prop.node))
+    data_graph.add((input_connector.node, s223.usesInput, prop.node))
     if INCLUDE_INVERSE:
         data_graph.add((prop.node, s223.isUsedAsInputBy, input_connector.node))
 
@@ -99,7 +96,7 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
     """OutputConnector >> Property"""
     logging.info(f"connect from {output_connector} to {prop}")
 
-    data_graph.add((output_connector.node, cdl.producesOutput, prop.node))
+    data_graph.add((output_connector.node, s223.producesOutput, prop.node))
     if INCLUDE_INVERSE:
         data_graph.add((prop.node, s223.isProducedBy, output_connector.node))
 
