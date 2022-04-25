@@ -30,27 +30,27 @@ class DifferentialStaticPressureSetpoint(Setpoint):
 
 
 class DifferentialStaticPressureSensor(Sensor):
-    measuresMedium: Medium = Air
     observesProperty: PropertyReference  # DifferentialStaticPressure
     hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
     hasMeasurementLocationLow: Node
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
+
         self.observesProperty = DifferentialStaticPressure(
             # isObservedBy=self,
             label=f"{self.label}.DifferentialStaticPressure",
-            **_measure_kwargs,
+            **_property_kwargs,
         )
 
 
 class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
     def __init__(self, **kwargs):
-        super().__init__(measuresMedium=Air, unit=unit.PA, **kwargs)
+        super().__init__(ofMedium=Air, unit=unit.PA, **kwargs)
 
 
 class WaterDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
     def __init__(self, **kwargs):
-        super().__init__(measuresMedium=Water, unit=unit.PSI, **kwargs)
+        super().__init__(ofMedium=Water, unit=unit.PSI, **kwargs)

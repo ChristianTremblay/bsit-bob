@@ -41,41 +41,48 @@ class GasConcentrationSetpoint(Setpoint):
 
 class GasConcentrationSensor(Sensor):
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    measuresMedium: Medium = Air
     observesProperty: PropertyReference  # GasConcentration
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
-        super().__init__(**_sensor_kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
-        if not self.measuresSubstance:
+        if "ofSubstance" not in _property_kwargs:
             raise ValueError(
-                "You must provide measuresSubstance property for a gas concentration sensor either in config template or subclass defintion"
+                "You must provide ofSubstance when defining a gas concentration sensor"
             )
 
+        super().__init__(**_sensor_kwargs)
+
         self.observesProperty = GasConcentration(
-            measuresSubstance=self.measuresSubstance,
-            isObservedBy=self,
+            # isObservedBy=self,
             label=f"{self.label}.GasConcentration",  # needs more focus
-            **_measure_kwargs,
+            **_property_kwargs,
         )
 
 
 class CO2Sensor(GasConcentrationSensor):
     "Carbon Dioxide concentration sensor"
-    measuresSubstance: Substance = CO2
+    # measuresSubstance: Substance = CO2
+    def __init__(self, **kwargs):
+        super().__init__(ofSubstance=CO2, **kwargs)
 
 
 class COSensor(GasConcentrationSensor):
     "Carbon monoxide concentration sensor"
-    measuresSubstance: Substance = CO
+    # measuresSubstance: Substance = CO
+    def __init__(self, **kwargs):
+        super().__init__(ofSubstance=CO, **kwargs)
 
 
 class NO2Sensor(GasConcentrationSensor):
     "Diesel (NO2) concentration sensor"
-    measuresSubstance: Substance = NO2
+    # measuresSubstance: Substance = NO2
+    def __init__(self, **kwargs):
+        super().__init__(ofSubstance=NO2, **kwargs)
 
 
 class CH4Sensor(GasConcentrationSensor):
     "Natural gas sensor"
-    measuresSubstance: Substance = CH4
+    # measuresSubstance: Substance = CH4
+    def __init__(self, **kwargs):
+        super().__init__(ofSubstance=CH4, **kwargs)

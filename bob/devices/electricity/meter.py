@@ -20,13 +20,13 @@ class ThreePhaseElectricalMeter(Device):
 
     ex. :
 
-        meter = ThreePhaseElectricalMeter(label="Meter#1", measuresMedium=Electricity_575V_60Hz)
+        meter = ThreePhaseElectricalMeter(label="Meter#1", ofMedium=Electricity_575V_60Hz)
         meter["Meter#1_VoltageAB"]
 
-    #optional : you can set hasMeasurementLocation intially:
+    # optional : you can set hasMeasurementLocation intially:
 
         a = Electricity_575V_60HzConnection(label="A")
-        meter = ThreePhaseElectricalMeter(label="Meter#1", measuresMedium=Electricity_575V_60Hz, hasMeasurementLocation=a)
+        meter = ThreePhaseElectricalMeter(label="Meter#1", ofMedium=Electricity_575V_60Hz, hasMeasurementLocation=a)
 
     # or later:
 
@@ -39,14 +39,14 @@ class ThreePhaseElectricalMeter(Device):
     def __init__(self, config: Dict = {}, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         _label = kwargs["label"]
-        _measuresMedium = kwargs.pop("measuresMedium")
+        _ofMedium = kwargs.pop("ofMedium")
         _hasMeasurementLocation = kwargs.pop("hasMeasurementLocation", None)
 
         super().__init__(**kwargs)
 
         self.voltage_sensors, self.current_sensors = create_3phase_meter_sensors(
             label=_label,
-            measuresMedium=_measuresMedium,
+            ofMedium=_ofMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
 

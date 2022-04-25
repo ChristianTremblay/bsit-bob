@@ -24,11 +24,11 @@ class RPM(QuantifiableObservableProperty):
 class RelativeHumidity(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     unit: URIRef = unit.PERCENT_RH
-    measuresMedium: Medium = Air
+    ofMedium: Medium = Air
 
 
 class GasConcentration(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     unit: URIRef = unit.PPM
-    measuresMedium: Medium = Air
-    measuresSubstance: Substance
+    ofMedium: Medium = Air
+    ofSubstance: Substance

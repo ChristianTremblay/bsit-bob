@@ -810,6 +810,8 @@ class Property(Node):
 
     # node_type: URIRef = None
     hasValue: Literal
+    ofMedium: Medium
+    ofSubstance: Substance
     hasExternalReference: ExternalReference
 
     # override this for a specialize subclass

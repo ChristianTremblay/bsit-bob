@@ -24,7 +24,7 @@ class CurrentSwitch(Device):
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
-        _measuresMedium = kwargs.pop("measuresMedium")
+        _ofMedium = kwargs.pop("ofMedium")
         _hasMeasurementLocation = kwargs.pop("hasMeasurementLocation", None)
 
         _label = kwargs["label"]
@@ -33,7 +33,7 @@ class CurrentSwitch(Device):
 
         sensor = CurrentBinarySensor(
             label=_label + "CurrentBinarySensor",
-            measuresMedium=_measuresMedium,
+            ofMedium=_ofMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
         self._sensors = [sensor]

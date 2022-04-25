@@ -23,4 +23,4 @@ class Pressure(QuantifiableObservableProperty):
 class DifferentialStaticPressure(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.ForcePerArea
     unit: URIRef
-    measuresMedium: Medium  # set from the sensor
+    ofMedium: Medium  # set from the sensor

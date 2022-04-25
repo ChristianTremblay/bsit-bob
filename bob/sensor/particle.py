@@ -31,37 +31,39 @@ PM10_0 = Substance(node_iri=p223["Particulate-PM10.0"])
 
 
 class ParticulateSensor(Sensor):
-    measuresMedium: Medium = Air
     observesProperty: PropertyReference  # ParticulateCount
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
+
         self.observesProperty = ParticulateCount(
-            measuresSubstance=self.measuresSubstance,
-            # isObservedBy=self,
             label=f"{self.label}.ParticulateCount",  # needs more focus
-            **_measure_kwargs,
+            ofMedium=Air,
+            **_property_kwargs,
         )
 
 
 class UltraFineParticulateSensor(ParticulateSensor):
     "PM 1.0 Count"
     comment = "Ultra Fine Particulate Sensor"
-    measuresSubstance: Substance = PM1_0
-
+    # measuresSubstance: Substance = PM1_0
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(ofSubstance=PM1_0, **kwargs)
 
 
 class FineParticulateSensor(ParticulateSensor):
     "PM 2.5 Count"
     comment = "Fine Particulate Sensor"
-    measuresSubstance: Substance = PM2_5
+    # measuresSubstance: Substance = PM2_5
+    def __init__(self, **kwargs):
+        super().__init__(ofSubstance=PM2_5, **kwargs)
 
 
 class CoarseParticulateSensor(ParticulateSensor):
     "PM 10 Count"
     comment = "Coarse Particulate Sensor"
-    measuresSubstance: Substance = PM10_0
+    # measuresSubstance: Substance = PM10_0
+    def __init__(self, **kwargs):
+        super().__init__(ofSubstance=PM10_0, **kwargs)

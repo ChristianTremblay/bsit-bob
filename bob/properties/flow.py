@@ -9,5 +9,5 @@ _namespace = s223
 class Flow(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.VolumeFlowRate
     unit: URIRef
-    measuresMedium: Medium  # set from the sensor
+    ofMedium: Medium  # set from the sensor
     # isObservedBy: Sensor

@@ -24,19 +24,21 @@ class HumiditySetpoint(Setpoint):
 
 class AirHumiditySensor(Sensor):
     """
-    Air humidity sensor. Can model room sensor or duct sensor
+    Air humidity sensor. Can model room sensor or duct sensor.
     """
 
-    measuresMedium: Medium = Air
+    # measuresMedium: Medium = Air
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     observesProperty: PropertyReference  # Humidity
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
+
         self.observesProperty = RelativeHumidity(
             # isObservedBy=self,
             label=f"{self.label}.Measure",
-            **_measure_kwargs,
+            # ofMedium=Air,  -- RelativeHumidity already knows this
+            **_property_kwargs,
         )

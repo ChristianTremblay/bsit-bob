@@ -32,13 +32,14 @@ class FlowSensor(Sensor):
     observesProperty: PropertyReference  # Flow
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
+
         self.observesProperty = Flow(
             # isObservedBy=self,
             label=f"{self.label}.Flow",
-            **_measure_kwargs,
+            **_property_kwargs,
         )
 
 
@@ -46,11 +47,11 @@ class AirFlowSensor(FlowSensor):
     node_type: URIRef = p223.AirFlowSensor
 
     def __init__(self, **kwargs):
-        super().__init__(measuresMedium=Air, unit=unit["FT3-PER-MIN"], **kwargs)
+        super().__init__(ofMedium=Air, unit=unit["FT3-PER-MIN"], **kwargs)
 
 
 class WaterFlowSensor(FlowSensor):
     node_type: URIRef = p223.WaterFlowSensor
 
     def __init__(self, **kwargs):
-        super().__init__(measuresMedium=Water, unit=unit["GAL_UK-PER-MIN"], **kwargs)
+        super().__init__(ofMedium=Water, unit=unit["GAL_UK-PER-MIN"], **kwargs)
