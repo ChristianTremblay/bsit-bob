@@ -23,13 +23,15 @@ ex:00001 a p223:AgnosticBoiler,
         ex:00003 ;
     ex:waterInlet ex:00002 ;
     ex:waterOutlet ex:00003 .
-ex:00002 a s223:InletConnectionPoint ;
+ex:00002 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "DHW-BOILER.waterInlet" ;
     s223:connectsThrough ex:00013 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00001 .
-ex:00003 a s223:OutletConnectionPoint ;
+ex:00003 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "DHW-BOILER.waterOutlet" ;
     s223:connectsThrough ex:00040 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -47,13 +49,15 @@ ex:00004 a p223:AgnosticBoiler,
         ex:00006 ;
     ex:waterInlet ex:00005 ;
     ex:waterOutlet ex:00006 .
-ex:00005 a s223:InletConnectionPoint ;
+ex:00005 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "HTGLOOP-BOILER.waterInlet" ;
     s223:connectsThrough ex:00041 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00004 .
-ex:00006 a s223:OutletConnectionPoint ;
+ex:00006 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "HTGLOOP-BOILER.waterOutlet" ;
     s223:connectsThrough ex:00042 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -70,13 +74,15 @@ ex:00007 a p223:HotWaterTank,
         ex:00009 ;
     ex:waterInlet ex:00008 ;
     ex:waterOutlet ex:00009 .
-ex:00008 a s223:InletConnectionPoint ;
+ex:00008 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "DHW-TANK.waterInlet" ;
     s223:connectsThrough ex:00040 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00007 .
-ex:00009 a s223:OutletConnectionPoint ;
+ex:00009 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "DHW-TANK.waterOutlet" ;
     s223:connectsThrough ex:00014 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -93,13 +99,15 @@ ex:00010 a p223:HotWaterTank,
         ex:00012 ;
     ex:waterInlet ex:00011 ;
     ex:waterOutlet ex:00012 .
-ex:00011 a s223:InletConnectionPoint ;
+ex:00011 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "HTG-TANK.waterInlet" ;
     s223:connectsThrough ex:00026 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00010 .
-ex:00012 a s223:OutletConnectionPoint ;
+ex:00012 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "HTG-TANK.waterOutlet" ;
     s223:connectsThrough ex:00041 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -131,22 +139,26 @@ ex:00015 a s223:Connectable,
         ex:00019 ;
     s223:onOffInlet ex:00017 ;
     s223:positionInlet ex:00016 .
-ex:00016 a s223:InletConnectionPoint ;
+ex:00016 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "KITCHENFAUCET.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex:00015 .
-ex:00017 a s223:InletConnectionPoint ;
+ex:00017 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "KITCHENFAUCET.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex:00015 .
-ex:00018 a s223:InletConnectionPoint ;
+ex:00018 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     s223:connectsThrough ex:00014 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00015 .
-ex:00019 a s223:OutletConnectionPoint ;
+ex:00019 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     s223:connectsThrough ex:00021 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
@@ -170,13 +182,15 @@ ex:00022 a s223:Connectable,
         ex:00024 ;
     s223:waterInlet ex:00023 ;
     s223:waterOutlet ex:00024 .
-ex:00023 a s223:InletConnectionPoint ;
+ex:00023 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "HowWaterPump.waterInlet" ;
     s223:connectsThrough ex:00042 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00022 .
-ex:00024 a s223:OutletConnectionPoint ;
+ex:00024 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "HowWaterPump.waterOutlet" ;
     s223:connectsThrough ex:00025 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -211,22 +225,26 @@ ex:00027 a s223:Connectable,
         ex:00031 ;
     s223:onOffInlet ex:00029 ;
     s223:positionInlet ex:00028 .
-ex:00028 a s223:InletConnectionPoint ;
+ex:00028 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "joelsofficehtgvlv.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex:00027 .
-ex:00029 a s223:InletConnectionPoint ;
+ex:00029 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "joelsofficehtgvlv.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex:00027 .
-ex:00030 a s223:InletConnectionPoint ;
+ex:00030 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     s223:connectsThrough ex:00025 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00027 .
-ex:00031 a s223:OutletConnectionPoint ;
+ex:00031 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     s223:connectsThrough ex:00043 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
@@ -242,13 +260,15 @@ ex:00032 a p223:AgnosticCoil,
         ex:00034 ;
     ex:waterInlet ex:00033 ;
     ex:waterOutlet ex:00034 .
-ex:00033 a s223:InletConnectionPoint ;
+ex:00033 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "JoelsOfficeCoil.waterInlet" ;
     s223:connectsThrough ex:00043 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00032 .
-ex:00034 a s223:OutletConnectionPoint ;
+ex:00034 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "JoelsOfficeCoil.waterOutlet" ;
     s223:connectsThrough ex:00026 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -267,22 +287,26 @@ ex:00035 a s223:Connectable,
     s223:onOffInlet ex:00037 ;
     s223:positionInlet ex:00036 ;
     rdfs:comment "Fill Hot Water Loop with water" .
-ex:00036 a s223:InletConnectionPoint ;
+ex:00036 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "FILL-VLV.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex:00035 .
-ex:00037 a s223:InletConnectionPoint ;
+ex:00037 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "FILL-VLV.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex:00035 .
-ex:00038 a s223:InletConnectionPoint ;
+ex:00038 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     s223:connectsThrough ex:00013 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00035 .
-ex:00039 a s223:OutletConnectionPoint ;
+ex:00039 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     s223:connectsThrough ex:00026 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;

@@ -1469,8 +1469,7 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
 
 
 class ConnectionPoint(Node):
-    # node_type: URIRef = s223.ConnectionPoint
-    node_type: URIRef = None
+    node_type: URIRef = s223.ConnectionPoint
     hasMedium: Medium
     hasDirection: Direction
 

@@ -62,7 +62,8 @@ ex29:00005 a p223:GasMonitor,
     s223:hasConnectionPoint ex29:00006 ;
     s223:hasPhysicalLocation ex29:00037 ;
     rdfs:comment "CO2 Monitor with temperature reading" .
-ex29:00006 a s223:InletConnectionPoint ;
+ex29:00006 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "CO2-2.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
@@ -167,7 +168,8 @@ ex29:00017 a p223:GasMonitor,
         ex29:00022 ;
     s223:hasConnectionPoint ex29:00018 ;
     rdfs:comment "Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot" .
-ex29:00018 a s223:InletConnectionPoint ;
+ex29:00018 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "GM-1.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
@@ -254,7 +256,8 @@ ex29:00027 a p223:GasMonitor,
     s223:contains ex29:00029 ;
     s223:hasConnectionPoint ex29:00028 ;
     rdfs:comment "CO2 Monitor" .
-ex29:00028 a s223:InletConnectionPoint ;
+ex29:00028 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "CO2-1.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
@@ -294,7 +297,8 @@ ex29:00032 a p223:GasMonitor,
     s223:contains ex29:00034 ;
     s223:hasConnectionPoint ex29:00033 ;
     rdfs:comment "CO2 Monitor" .
-ex29:00033 a s223:InletConnectionPoint ;
+ex29:00033 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "CO2-4.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
@@ -417,37 +421,44 @@ ex29:00046 a s223:Connectable,
     s223:radiantCooling ex29:00053 ;
     s223:radiantHeating ex29:00052 ;
     s223:windows ex29:00051 .
-ex29:00047 a s223:InletConnectionPoint ;
+ex29:00047 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "Basement HVAC Space.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00046 .
-ex29:00048 a s223:OutletConnectionPoint ;
+ex29:00048 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "Basement HVAC Space.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00046 .
-ex29:00049 a s223:BidirectionalConnectionPoint ;
+ex29:00049 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00046 .
-ex29:00050 a s223:BidirectionalConnectionPoint ;
+ex29:00050 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00046 .
-ex29:00051 a s223:BidirectionalConnectionPoint ;
+ex29:00051 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00046 .
-ex29:00052 a s223:BidirectionalConnectionPoint ;
+ex29:00052 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex29:00046 .
-ex29:00053 a s223:BidirectionalConnectionPoint ;
+ex29:00053 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;

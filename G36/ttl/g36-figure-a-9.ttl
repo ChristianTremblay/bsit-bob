@@ -55,13 +55,15 @@ exg3609:00006 a s223:Connectable,
     exg3609:airInlet exg3609:00007 ;
     exg3609:airOutlet exg3609:00008 ;
     exg3609:position exg3609:00010 .
-exg3609:00007 a s223:InletConnectionPoint ;
+exg3609:00007 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.min_oa_damper.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00006 ;
     s223:lnx exg3609:00017 .
-exg3609:00008 a s223:OutletConnectionPoint ;
+exg3609:00008 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.min_oa_damper.airOutlet" ;
     s223:connectsThrough exg3609:00023 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -88,13 +90,15 @@ exg3609:00011 a s223:Connectable,
     exg3609:airInlet exg3609:00012 ;
     exg3609:airOutlet exg3609:00013 ;
     exg3609:position exg3609:00015 .
-exg3609:00012 a s223:InletConnectionPoint ;
+exg3609:00012 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.economizer_oa_damper.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00011 ;
     s223:lnx exg3609:00018 .
-exg3609:00013 a s223:OutletConnectionPoint ;
+exg3609:00013 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.economizer_oa_damper.airOutlet" ;
     s223:connectsThrough exg3609:00024 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -134,13 +138,15 @@ exg3609:00019 a s223:Connectable,
 exg3609:00020 a s223:Property,
         g36:AnalogIn ;
     rdfs:label "A-9.outside_air_afms.flow" .
-exg3609:00021 a s223:InletConnectionPoint ;
+exg3609:00021 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.outside_air_afms.airInlet" ;
     s223:connectsThrough exg3609:00023 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00019 .
-exg3609:00022 a s223:OutletConnectionPoint ;
+exg3609:00022 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.outside_air_afms.airOutlet" ;
     s223:connectsThrough exg3609:00024 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -179,13 +185,15 @@ exg3609:00025 a s223:Connectable,
 exg3609:00026 a s223:Property,
         g36:AnalogIn ;
     rdfs:label "A-9.mixed_air_filter.dp" .
-exg3609:00027 a s223:InletConnectionPoint ;
+exg3609:00027 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.mixed_air_filter.airInlet" ;
     s223:connectsThrough exg3609:00024 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00025 .
-exg3609:00028 a s223:OutletConnectionPoint ;
+exg3609:00028 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.mixed_air_filter.airOutlet" ;
     s223:connectsThrough exg3609:00047 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -245,25 +253,29 @@ exg3609:00034 a s223:Connectable,
         exg3609:00038 ;
     s223:hotWaterReturn exg3609:00038 ;
     s223:hotWaterSupply exg3609:00037 .
-exg3609:00035 a s223:InletConnectionPoint ;
+exg3609:00035 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.hot_water_coil.hw_coil.airInlet" ;
     s223:connectsThrough exg3609:00047 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00034 .
-exg3609:00036 a s223:OutletConnectionPoint ;
+exg3609:00036 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.hot_water_coil.hw_coil.airOutlet" ;
     s223:connectsThrough exg3609:00065 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00034 .
-exg3609:00037 a s223:InletConnectionPoint ;
+exg3609:00037 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.hot_water_coil.hw_coil.hotWaterSupply" ;
     s223:connectsThrough exg3609:00045 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3609:00034 .
-exg3609:00038 a s223:OutletConnectionPoint ;
+exg3609:00038 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.hot_water_coil.hw_coil.hotWaterReturn" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
@@ -290,21 +302,25 @@ exg3609:00040 a p223:Percent,
     s223:hasValue 0.0 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
-exg3609:00041 a s223:InletConnectionPoint ;
+exg3609:00041 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.hot_water_coil.hw_valve.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3609:00039 .
-exg3609:00042 a s223:InletConnectionPoint ;
+exg3609:00042 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.hot_water_coil.hw_valve.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3609:00039 .
-exg3609:00043 a s223:InletConnectionPoint ;
+exg3609:00043 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3609:00039 .
-exg3609:00044 a s223:OutletConnectionPoint ;
+exg3609:00044 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     s223:connectsThrough exg3609:00045 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
@@ -377,25 +393,29 @@ exg3609:00053 a s223:Connectable,
         exg3609:00055,
         exg3609:00056,
         exg3609:00057 .
-exg3609:00054 a s223:InletConnectionPoint ;
+exg3609:00054 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.chilled_water_coil.cw_coil.airInlet" ;
     s223:connectsThrough exg3609:00065 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00053 .
-exg3609:00055 a s223:OutletConnectionPoint ;
+exg3609:00055 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.chilled_water_coil.cw_coil.airOutlet" ;
     s223:connectsThrough exg3609:00070 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00053 .
-exg3609:00056 a s223:InletConnectionPoint ;
+exg3609:00056 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.chilled_water_coil.cw_coil.chilledWaterInlet" ;
     s223:connectsThrough exg3609:00064 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3609:00053 .
-exg3609:00057 a s223:OutletConnectionPoint ;
+exg3609:00057 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.chilled_water_coil.cw_coil.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
@@ -422,21 +442,25 @@ exg3609:00059 a p223:Percent,
     s223:hasValue 0.0 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
-exg3609:00060 a s223:InletConnectionPoint ;
+exg3609:00060 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.chilled_water_coil.cw_valve.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3609:00058 .
-exg3609:00061 a s223:InletConnectionPoint ;
+exg3609:00061 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.chilled_water_coil.cw_valve.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3609:00058 .
-exg3609:00062 a s223:InletConnectionPoint ;
+exg3609:00062 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3609:00058 .
-exg3609:00063 a s223:OutletConnectionPoint ;
+exg3609:00063 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     s223:connectsThrough exg3609:00064 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
@@ -464,18 +488,21 @@ exg3609:00066 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00067,
         exg3609:00068,
         exg3609:00069 .
-exg3609:00067 a s223:InletConnectionPoint ;
+exg3609:00067 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.supply_fan.airInlet" ;
     s223:connectsThrough exg3609:00070 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00066 .
-exg3609:00068 a s223:OutletConnectionPoint ;
+exg3609:00068 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.supply_fan.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00066 .
-exg3609:00069 a s223:InletConnectionPoint ;
+exg3609:00069 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.supply_fan.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
@@ -495,17 +522,20 @@ exg3609:00071 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00072,
         exg3609:00073,
         exg3609:00074 .
-exg3609:00072 a s223:InletConnectionPoint ;
+exg3609:00072 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.return_fan.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00071 .
-exg3609:00073 a s223:OutletConnectionPoint ;
+exg3609:00073 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.return_fan.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00071 .
-exg3609:00074 a s223:InletConnectionPoint ;
+exg3609:00074 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.return_fan.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
@@ -529,13 +559,15 @@ exg3609:00076 a s223:Connectable,
     exg3609:airInlet exg3609:00077 ;
     exg3609:airOutlet exg3609:00078 ;
     exg3609:position exg3609:00080 .
-exg3609:00077 a s223:InletConnectionPoint ;
+exg3609:00077 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.exhaust_air_damper.airInlet" ;
     s223:connectsThrough exg3609:00075 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00076 .
-exg3609:00078 a s223:OutletConnectionPoint ;
+exg3609:00078 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.exhaust_air_damper.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
@@ -562,13 +594,15 @@ exg3609:00081 a s223:Connectable,
     exg3609:airInlet exg3609:00082 ;
     exg3609:airOutlet exg3609:00083 ;
     exg3609:position exg3609:00085 .
-exg3609:00082 a s223:InletConnectionPoint ;
+exg3609:00082 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "A-9.return_air_damper.airInlet" ;
     s223:connectsThrough exg3609:00075 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3609:00081 .
-exg3609:00083 a s223:OutletConnectionPoint ;
+exg3609:00083 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "A-9.return_air_damper.airOutlet" ;
     s223:connectsThrough exg3609:00024 ;
     s223:hasDirection s223:Direction-Outlet ;
