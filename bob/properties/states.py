@@ -23,7 +23,6 @@ _namespace = p223
 class OnOffStatus(ObservableProperty):
     node_type: URIRef = p223.OnOffStatus
     hasExternalReference: ExternalReference
-    measuresMedium: Medium
 
 
 class OnOffCommand(ActuatableProperty):
@@ -52,6 +51,6 @@ Smoke = Substance(node_iri=p223["Substance-Smoke"])
 
 
 class SmokePresence(ObservableProperty):
-    measuresMedium: Medium  # set from the sensor
-    measuresSubstance: Substance = Smoke
+    ofMedium: Medium  # set from the sensor
+    ofSubstance: Substance = Smoke
     # isObservedBy: Sensor

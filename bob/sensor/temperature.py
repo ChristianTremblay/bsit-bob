@@ -19,27 +19,31 @@ class TemperatureSensor(Sensor):
     observesProperty: PropertyReference  # Temperature
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
-        if "unit" not in _measure_kwargs:
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
+
+        if "unit" not in _property_kwargs:
             raise ValueError(
                 "You must provide units when defining a temperature sensor"
             )
-        if "measuresMedium" not in _measure_kwargs:
+        if "ofMedium" not in _property_kwargs:
             raise ValueError(
-                "You must provide measuresMedium when defining a temperature sensor"
+                "You must provide ofMedium when defining a temperature sensor"
             )
+
         super().__init__(**_sensor_kwargs)
+
         self.observesProperty = Temperature(
+            # isObservedBy=self,
             label=f"{self.label}.Temperature",
-            **_measure_kwargs,
+            **_property_kwargs,
         )
 
 
 class AirTemperatureSensor(TemperatureSensor):
     def __init__(self, **kwargs):
-        super().__init__(measuresMedium=Air, unit=unit.DEG_C, **kwargs)
+        super().__init__(ofMedium=Air, unit=unit.DEG_C, **kwargs)
 
 
 class WaterTemperatureSensor(TemperatureSensor):
     def __init__(self, **kwargs):
-        super().__init__(measuresMedium=Water, unit=unit.DEG_C, **kwargs)
+        super().__init__(ofMedium=Water, unit=unit.DEG_C, **kwargs)

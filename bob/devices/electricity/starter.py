@@ -40,7 +40,7 @@ class MotorStarter(Device):
 
         sensor = CurrentSwitch(
             label=f"{self.label}.sensor",
-            measuresMedium=self.electricalInlet.hasMedium,
+            ofMedium=self.electricalInlet.hasMedium,
             hasMeasurementLocation=self.electricalOutlet,
         )
         self._sensors = [sensor]

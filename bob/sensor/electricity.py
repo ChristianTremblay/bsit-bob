@@ -21,20 +21,20 @@ _namespace = s223
 
 
 class CurrentSwitch(OnOffStatus):
-    measuresMedium: Medium  # set from the sensor
+    ofMedium: Medium  # set from the sensor
 
 
 class VoltageSensor(Sensor):
     observesProperty: PropertyReference  # Voltage
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
         _class = _sensor_kwargs.pop("measures")
         super().__init__(**_sensor_kwargs)
         self.observesProperty = _class(
             # isObservedBy=self,
             label=f"{self.label}.{_class.__name__}",
-            **_measure_kwargs,
+            **_property_kwargs,
         )
 
 
@@ -42,19 +42,19 @@ class CurrentAnalogSensor(Sensor):
     observesProperty: PropertyReference  # Current
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
         _class = _sensor_kwargs.pop("measures")
         super().__init__(**_sensor_kwargs)
         self.observesProperty = _class(
             # isObservedBy=self,
             label=f"{self.label}.{_class.__name__}",
-            **_measure_kwargs,
+            **_property_kwargs,
         )
 
 
 def create_3phase_meter_sensors(
     label: str = None,
-    measuresMedium: Medium = None,
+    ofMedium: Medium = None,
     hasMeasurementLocation: Node = None,
 ):
     voltage_sensors = [
@@ -73,7 +73,7 @@ def create_3phase_meter_sensors(
             VoltageSensor(
                 label=f"{label}_{each}",
                 measures=Volts(label=each),
-                measuresMedium=measuresMedium,
+                ofMedium=ofMedium,
             )
         )
 
@@ -83,7 +83,7 @@ def create_3phase_meter_sensors(
             CurrentAnalogSensor(
                 label=f"{label}_{each}",
                 measures=Amps(label=each),
-                measuresMedium=measuresMedium,
+                ofMedium=ofMedium,
             )
         )
 
@@ -95,11 +95,12 @@ class CurrentBinarySensor(Sensor):
     hasMeasurementLocation: Node
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
+
         self.observesProperty = OnOffStatus(
             # isObservedBy=self,
             label=f"{self.label}.CurrentBinarySensor",
-            **_measure_kwargs,
+            **_property_kwargs,
         )

@@ -9,5 +9,5 @@ _namespace = s223
 class ParticulateCount(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.NumberDensity
     unit: URIRef = unit["NUM-PER-M3"]
-    measuresMedium: Medium
-    measuresSubstance: Substance
+    ofMedium: Medium
+    ofSubstance: Substance

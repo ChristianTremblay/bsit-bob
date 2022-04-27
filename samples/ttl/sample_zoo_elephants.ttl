@@ -1145,7 +1145,7 @@ zoo:00160 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TE-1.Temperature" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:ofMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 zoo:00161 a p223:AirHumiditySensor,
@@ -1156,7 +1156,6 @@ zoo:00161 a p223:AirHumiditySensor,
     p223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:hasMeasurementLocation zoo:00098 ;
     s223:hasPhysicalLocation zoo:00004 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty zoo:00162 .
 zoo:00162 a p223:RelativeHumidity,
         s223:ObservableProperty,
@@ -1164,7 +1163,7 @@ zoo:00162 a p223:RelativeHumidity,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "HA-1.Measure" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:ofMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:RelativeHumidity ;
     qudt:unit unit:PERCENT_RH .
 zoo:00163 a p223:AirDifferentialStaticPressureSensor,
@@ -1176,7 +1175,6 @@ zoo:00163 a p223:AirDifferentialStaticPressureSensor,
     p223:hasMeasurementLocationHigh zoo:00105 ;
     p223:hasMeasurementLocationLow zoo:00106 ;
     s223:hasPhysicalLocation zoo:00004 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty zoo:00164 ;
     rdfs:comment "Filters differential pressure" .
 zoo:00164 a p223:DifferentialStaticPressure,
@@ -1185,7 +1183,7 @@ zoo:00164 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD-1.DifferentialStaticPressure" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:ofMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
 zoo:00165 a p223:TemperatureSensor,
@@ -1202,7 +1200,7 @@ zoo:00166 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TAEC-1.Temperature" ;
-    p223:measuresMedium s223:Medium-Water ;
+    s223:ofMedium s223:Medium-Water ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 zoo:00167 a s223:Connectable,
@@ -1225,7 +1223,7 @@ zoo:00169 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TA-1.Temperature" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:ofMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 zoo:00170 a s223:Connectable,
@@ -1245,7 +1243,6 @@ zoo:00172 a p223:AirDifferentialStaticPressureSensor,
     p223:hasMeasurementLocationHigh zoo:00116 ;
     p223:hasMeasurementLocationLow zoo:00018 ;
     s223:hasPhysicalLocation zoo:00004 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty zoo:00173 ;
     rdfs:comment "Static Discharge Air Pressure Sensor" .
 zoo:00173 a p223:DifferentialStaticPressure,
@@ -1254,7 +1251,7 @@ zoo:00173 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD-2.DifferentialStaticPressure" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:ofMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
 zoo:00174 a p223:CO2Sensor,
@@ -1266,8 +1263,6 @@ zoo:00174 a p223:CO2Sensor,
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasMeasurementLocation zoo:00036 ;
     s223:hasPhysicalLocation zoo:00008 ;
-    s223:measuresMedium s223:Medium-Air ;
-    s223:measuresSubstance p223:Substance-CO2 ;
     s223:observesProperty zoo:00175 ;
     rdfs:comment "Return Air CO2 Sensor (Elephants)" .
 zoo:00175 a p223:GasConcentration,
@@ -1276,9 +1271,8 @@ zoo:00175 a p223:GasConcentration,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "CO2-1.GasConcentration" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:measuresSubstance p223:Substance-CO2 ;
-    s223:isObservedBy zoo:00174 ;
+    s223:ofMedium s223:Medium-Air ;
+    s223:ofSubstance p223:Substance-CO2 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PPM .
 zoo:00176 a p223:CO2Sensor,
@@ -1290,8 +1284,6 @@ zoo:00176 a p223:CO2Sensor,
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasMeasurementLocation zoo:00020 ;
     s223:hasPhysicalLocation zoo:00008 ;
-    s223:measuresMedium s223:Medium-Air ;
-    s223:measuresSubstance p223:Substance-CO2 ;
     s223:observesProperty zoo:00177 ;
     rdfs:comment "Return Air CO2 Sensor (Girafes)" .
 zoo:00177 a p223:GasConcentration,
@@ -1300,9 +1292,8 @@ zoo:00177 a p223:GasConcentration,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "CO2-2.GasConcentration" ;
-    p223:measuresMedium s223:Medium-Air ;
-    p223:measuresSubstance p223:Substance-CO2 ;
-    s223:isObservedBy zoo:00176 ;
+    s223:ofMedium s223:Medium-Air ;
+    s223:ofSubstance p223:Substance-CO2 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PPM .
 zoo:00178 a p223:AirHumiditySensor,
@@ -1313,7 +1304,6 @@ zoo:00178 a p223:AirHumiditySensor,
     p223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:hasMeasurementLocation zoo:00117 ;
     s223:hasPhysicalLocation zoo:00004 ;
-    s223:measuresMedium s223:Medium-Air ;
     s223:observesProperty zoo:00179 ;
     rdfs:comment "Return Air Humidity Sensor" .
 zoo:00179 a p223:RelativeHumidity,
@@ -1322,7 +1312,7 @@ zoo:00179 a p223:RelativeHumidity,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "HR-1.Measure" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:ofMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:RelativeHumidity ;
     qudt:unit unit:PERCENT_RH .
 zoo:00180 a p223:AirTemperatureSensor,
@@ -1341,7 +1331,7 @@ zoo:00181 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TR-1.Temperature" ;
-    p223:measuresMedium s223:Medium-Air ;
+    s223:ofMedium s223:Medium-Air ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 zoo:00182 a s223:Connection ;

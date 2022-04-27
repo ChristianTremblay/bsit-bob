@@ -35,26 +35,28 @@ _namespace = s223
 
 def split_kwargs(given_kwargs):
     # specific properties given to a sensor for creation
-    # but that must be applied to the measure AKA
-    # the observesProperty
-    _prop = [
+    # but that must be applied to the observed property, see
+    # sorted(QuantifiableObservableProperty._attr_uriref.keys())
+    property_attrs = [
         "hasExternalReference",
-        "hasValue",
-        "unit",
         "hasQuantityKind",
-        "measuresMedium",
+        "hasSetpoint",
+        "hasValue",
+        "ofMedium",
+        "ofSubstance",
+        "unit",
     ]
-    measure_kwargs = {}
+    property_kwargs = {}
     sensor_kwargs = {}
-    _given_kwargs = given_kwargs.copy()  # need a copy
-    for k, v in _given_kwargs.items():
-        if k in _prop:
-            if v is not None:
-                measure_kwargs[k] = given_kwargs.pop(k)
+    for k, v in given_kwargs.items():
+        if v is None:
+            continue
+        if k in property_attrs:
+            property_kwargs[k] = v
         else:
-            if v is not None:
-                sensor_kwargs[k] = given_kwargs.pop(k)
-    return (sensor_kwargs, measure_kwargs)
+            sensor_kwargs[k] = v
+
+    return (sensor_kwargs, property_kwargs)
 
 
 def define_sensors(config):
@@ -99,8 +101,8 @@ class Sensor(Device):
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
     hasMinRange: QuantifiableProperty
-    measuresMedium: Medium
-    measuresSubstance: Substance  # When substance measured different than medium (ex. Gas)
+    # measuresMedium: Medium
+    # measuresSubstance: Substance  # When substance measured different than medium (ex. Gas)
     observesProperty: PropertyReference  ### restrict to MeasuredProperty
 
     def __gt__(self, other: Node) -> Any:

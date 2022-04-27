@@ -20,17 +20,19 @@ _namespace = p223
 
 
 class MovementSensor(Sensor):
-    measuresMedium: Medium = Light
+    # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Movement
 
     def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
+
         self.observesProperty = Movement(
             # isObservedBy=self,
             label=f"{self.label}.Movement",
-            **_measure_kwargs,
+            ofMedium=Light,
+            **_property_kwargs,
         )
 
 
