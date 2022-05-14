@@ -2,11 +2,11 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.properties.states import OnOffCommand
-
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
+    Electricity_575V_60HzInletConnectionPoint,
+    Electricity_575V_60HzOutletConnectionPoint,
 )
 from ...core import ConnectionPoint, Device, Property, p223, s223
 from ...properties import (
@@ -14,54 +14,40 @@ from ...properties import (
     RPM,
     Amps,
     ElectricPowerkW,
+    NormalAlarmStatus,
+    OnOffCommand,
     OnOffStatus,
     Percent,
+    PercentCommand,
     PowerFactor,
+    Temperature,
 )
-from ...signal import AnalogIn, AnalogOut
 
 _namespace = p223
 
-"""
 vfd_template = {
-    "params": {
-        "label": "MyVFD", 
-        "comment": "A VFD for a Big Fan",
+    "cp": {
         "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
         "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
-        "amps": 10,
-        "hp": 10,
     },
-    "sensors": {},
-    "devices": {},
+    "properties": {
+        ("amps", Amps): {},
+        ("hp", HP): {},
+        ("kW", ElectricPowerkW): {},
+        ("speed_reference", PercentCommand): {},
+        ("rpm", RPM): {},
+        ("motor_temp", Temperature): {},
+        ("drive_running", OnOffStatus): {},
+        ("run_command", OnOffCommand): {},
+        ("alarm_status", NormalAlarmStatus): {},
+    },
 }
-"""
 
 
 class VFD(Device):
     node_type: URIRef = s223.VariableFrequencyDrive
-    # electricalInlet: Must be provided in config
-    # electricalOutlet: Must be provided in config
-    amps: Amps
-    hp: HP
-    kW: ElectricPowerkW
-    speed_reference: Percent
-    rpm: RPM
-    # motor_temp: ?
-    drive_running: OnOffStatus
-    run_command: OnOffCommand
-    alarm_status: OnOffStatus
 
-    def __init__(self, config: Dict = {}, **kwargs):
+    def __init__(self, config: Dict = vfd_template, **kwargs):
+        config["properties"] = config.get("properties", vfd_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
-        _electricalInlet = kwargs.pop("electricalInlet")
-        _electricalOutlet = kwargs.pop("electricalOutlet")
-
         super().__init__(config, **kwargs)
-
-        self.electricalInlet = _electricalInlet(
-            self, label=f"{self.label}.electricalInlet"
-        )
-        self.electricalOutlet = _electricalOutlet(
-            self, label=f"{self.label}.electricalOutlet"
-        )

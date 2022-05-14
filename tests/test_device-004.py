@@ -38,6 +38,7 @@ def test_create_gas_monitor(bob_fixture):
                 ),
             },
             ("Temperature_sensor", AirTemperatureSensor): {
+                "unit": unit.DEG_C,
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
@@ -54,6 +55,7 @@ def test_create_gas_monitor(bob_fixture):
                 "comment": "Internal temperature sensor of device",
             },
         },
+        "properties": {},
     }
 
     co2_and_temp_monitor = GasMonitor(_co2_and_temp)
@@ -95,6 +97,7 @@ def test_create_gas_monitor(bob_fixture):
                 ),
             },
         },
+        "properties": {},
     }
 
     dual_no2_co_monitor = GasMonitor(_dual_no2_co)
@@ -121,6 +124,7 @@ def test_create_gas_monitor(bob_fixture):
                 ),
             },
         },
+        "properties": {},
     }
 
     co2_monitor_1 = GasMonitor(_co2)

@@ -16,6 +16,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 def test_create_particle_counter(bob_fixture):
     particlecounter_config = {
+        "properties": {},
         "sensors": {
             ("coarse_sensor", CoarseParticulateSensor): {
                 "hasExternalReference": "bacnet://1/analog-value,1/present-value",
@@ -26,7 +27,7 @@ def test_create_particle_counter(bob_fixture):
             ("ultrafine_sensor", UltraFineParticulateSensor): {
                 "hasExternalReference": "bacnet://1/analog-input,3/present-value",
             },
-        }
+        },
     }
 
     pm = ParticleCounter(

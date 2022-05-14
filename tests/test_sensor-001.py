@@ -31,6 +31,7 @@ def test_create_sensor(bob_fixture):
         label="ats2",
         comment="Supply Air Temperature Sensor",
         hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
+        unit=unit.DEG_C,
     )
 
     ahs1 = AirHumiditySensor(

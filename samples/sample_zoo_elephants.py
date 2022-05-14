@@ -6,23 +6,27 @@ from header import sample_header
 from bob.connections.air import *
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.water import WaterConnection
-from bob.core import Device, Junction, System, bind_model_namespace, dump, get_datagraph
+from bob.core import (
+    Device,
+    Junction,
+    System,
+    bind_model_namespace,
+    dump,
+    get_datagraph,
+    unit,
+)
+from bob.devices.architectural import Window
 from bob.devices.hvac.chiller import AgnosticChiller
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
 from bob.devices.hvac.compressor import AirCompressor
-from bob.devices.hvac.damper import (
-    Damper,
-    DamperActuator,
-    PneumaticDamperActuator,
-    Window,
-)
+from bob.devices.hvac.damper import Damper, PneumaticActuatedDamper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.geothermal import GeothermalWell
 from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
 from bob.devices.hvac.humidifier import Humidifier, SteamPipe
 from bob.devices.hvac.pump import Pump
-from bob.devices.hvac.valve import TwoWayValve
+from bob.devices.hvac.valve import TwoWayActuatedValve, TwoWayValve
 from bob.devices.hvac.vfd import VFD
 from bob.devices.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
@@ -103,7 +107,7 @@ acc_4sides_duct = Accumulator4SidesDuct(
     label="Accumulator 4 sides duct",
     comment="It contains a Air Connection to connect 4 sides and a pneumatic damper",
 )
-acc_4sides_damper = PneumaticDamperActuator(
+acc_4sides_damper = PneumaticActuatedDamper(
     label="Accumulator 4 sides damper",
     comment="This damper switch the side of the airflow going in accumulator 1 & 2",
 )
@@ -169,31 +173,42 @@ hum_pipe = SteamPipe(
 # hum.steamOutlet >> hum_pipe.steamInlet
 
 aircomp = AirCompressor(label="ACOMP-1", comment="Air Compressor")
-aircomp.compressedAirOutlet >> acc_4sides_damper.compressedAirInlet
+aircomp.compressedAirOutlet >> acc_4sides_damper["actuator"].compressedAirInlet
 
 
 # Sensors
 te1 = AirTemperatureSensor(
     label="TE-1",
     comment="Outdoor air preheated by exhanger",
+    unit=unit.DEG_C,
     # hasExternalReference=BACnetReference("bacnet://345/analog-value/1/present-value"),
 )
 ha1 = AirHumiditySensor(label="HA-1")
 tpd1 = AirDifferentialStaticPressureSensor(
-    label="TPD-1", comment="Filters differential pressure"
+    label="TPD-1", comment="Filters differential pressure", unit=unit.PA
 )
-taec1 = WaterTemperatureSensor(label="TAEC-1", comment="Water temperature feeding coil")
+taec1 = WaterTemperatureSensor(
+    label="TAEC-1", comment="Water temperature feeding coil", unit=unit.DEG_C
+)
 tbl1 = Device(label="TBL-1", comment="Freeze Thermostat")
-ta1 = AirTemperatureSensor(label="TA-1", comment="Discharge Air Temperature Sensor")
+ta1 = AirTemperatureSensor(
+    label="TA-1",
+    comment="Discharge Air Temperature Sensor",
+    unit=unit.DEG_C,
+)
 fs1 = Device(label="FS-1", comment="Air flow switch for humidifier")
 hlh1 = Device(label="HLH-1", comment="Humidity High Level Stat")
 tpd2 = AirDifferentialStaticPressureSensor(
-    label="TPD-2", comment="Static Discharge Air Pressure Sensor"
+    label="TPD-2", comment="Static Discharge Air Pressure Sensor", unit=unit.PA
 )
 co2_1 = CO2Sensor(label="CO2-1", comment="Return Air CO2 Sensor (Elephants)")
 co2_2 = CO2Sensor(label="CO2-2", comment="Return Air CO2 Sensor (Girafes)")
 hr1 = AirHumiditySensor(label="HR-1", comment="Return Air Humidity Sensor")
-tr1 = AirTemperatureSensor(label="TR-1", comment="Return Air Temperature Sensor")
+tr1 = AirTemperatureSensor(
+    label="TR-1",
+    comment="Return Air Temperature Sensor",
+    unit=unit.DEG_C,
+)
 
 # Connections
 outdoor >> accumulator1.outdoorSide
@@ -281,13 +296,21 @@ p2 = Pump(
 )
 p3 = Pump(label="P-3", comment="Pump P-3, Geothermal Well pumps")
 p4 = Pump(label="P-4", comment="Pump P-4, Geothermal Well pumps")
-v1A_no = TwoWayValve(label="V-1A_NO", comment="Butterfly Valve NO to Well of pair V-1A")
-v1A_nc = TwoWayValve(label="V-1A_NC", comment="Butterfly Valve NC to Coil of pair V-1A")
-v1B_no = TwoWayValve(label="V-1B_NO", comment="Butterfly Valve NO to Well of pair V-1B")
-v1B_nc = TwoWayValve(label="V-1B_NC", comment="Butterfly Valve NC to Coil of pair V-1B")
-v2 = TwoWayValve(label="V-2", comment="PC-1 Isolation valve")
-v3 = TwoWayValve(label="V-3", comment="PC-2 Isolation valve")
-v4 = TwoWayValve(label="V-4", comment="Loop pressure control Valve")
+v1A_no = TwoWayActuatedValve(
+    label="V-1A_NO", comment="Butterfly Valve NO to Well of pair V-1A"
+)
+v1A_nc = TwoWayActuatedValve(
+    label="V-1A_NC", comment="Butterfly Valve NC to Coil of pair V-1A"
+)
+v1B_no = TwoWayActuatedValve(
+    label="V-1B_NO", comment="Butterfly Valve NO to Well of pair V-1B"
+)
+v1B_nc = TwoWayActuatedValve(
+    label="V-1B_NC", comment="Butterfly Valve NC to Coil of pair V-1B"
+)
+v2 = TwoWayActuatedValve(label="V-2", comment="PC-1 Isolation valve")
+v3 = TwoWayActuatedValve(label="V-3", comment="PC-2 Isolation valve")
+v4 = TwoWayActuatedValve(label="V-4", comment="Loop pressure control Valve")
 
 leaving_chilledWater_pipe = WaterConnection(
     label="CHWL_Pipe", comment="Chilled Water Leaving Pipe from both chillers"

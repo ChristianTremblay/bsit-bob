@@ -7,16 +7,16 @@ This is a facade for ASHRAE 231 Controls Description Language
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict
+from typing import Any, AnyStr, Dict
 
 from rdflib import URIRef  # type: ignore
 
 from ..core import (
-    bind_namespace,
-    data_graph,
     INCLUDE_INVERSE,
     Node,
     Property,
+    bind_namespace,
+    data_graph,
     resolve_reference,
     s223,
 )
@@ -148,6 +148,8 @@ class FunctionBlock(Node):
     In 223, function blocks are black boxes representing a sequence or
     an algorithm. Function blocks use inputs and produce outputs that can
     be related to observable and actuatable properties in the 223 model.
+
+    Connections from or to a function block are made from/to properties only
     """
 
     node_type: URIRef = s223.FunctionBlock
@@ -232,12 +234,22 @@ class FunctionBlock(Node):
 
             setattr(self, var_name, var_element)
 
-    def uses_input(self, prop: Property) -> None:
-        connector = InputConnector(self, label=f"{self.label}.input")
+    def uses_input(
+        self,
+        prop: Property,
+        klass: InputConnector = InputConnector,
+        label: AnyStr = "input",
+    ) -> None:
+        connector = klass(self, label=f"{self.label}.{label}")
         prop >> connector
 
-    def produces_output(self, prop: Property) -> None:
-        connector = OutputConnector(self, label=f"{self.label}.output")
+    def produces_output(
+        self,
+        prop: Property,
+        klass: OutputConnector = OutputConnector,
+        label: AnyStr = "output",
+    ) -> None:
+        connector = klass(self, label=f"{self.label}.{label}")
         connector >> prop
 
 

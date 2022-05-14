@@ -25,6 +25,12 @@ class OnOffStatus(ObservableProperty):
     hasExternalReference: ExternalReference
 
 
+class NormalAlarmStatus(ObservableProperty):
+    node_type: URIRef = p223.NormalAlarmStatus
+    hasExternalReference: ExternalReference
+    measuresMedium: Medium
+
+
 class OnOffCommand(ActuatableProperty):
     node_type: URIRef = p223.OnOffCommand
     hasExternalReference: ExternalReference

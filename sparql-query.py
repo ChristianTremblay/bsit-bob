@@ -12,7 +12,7 @@ import sys
 
 import owlrl
 import pyparsing
-from rdflib import Graph, URIRef, RDF, RDFS, OWL
+from rdflib import OWL, RDF, RDFS, Graph, URIRef
 
 # build a parser for the command line arguments
 parser = argparse.ArgumentParser(

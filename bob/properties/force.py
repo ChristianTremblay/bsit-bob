@@ -13,11 +13,13 @@ class HP(QuantifiableObservableProperty):
     unit: URIRef = unit.HP
 
 
+class Nm(QuantifiableObservableProperty):
+    hasQuantityKind: URIRef = quantitykind.Torque
+    unit: URIRef = unit["N-M"]
+
+
 class Pressure(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.Pressure
-
-    def __init__(self, unit):
-        self.unit = unit
 
 
 class DifferentialStaticPressure(QuantifiableObservableProperty):

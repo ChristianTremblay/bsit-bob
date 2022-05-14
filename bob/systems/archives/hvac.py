@@ -4,7 +4,7 @@ from ...connections.air import (
     AirOutletConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
-from ...core import Domain, DomainSpace, HVAC, Zone, s223
+from ...core import HVAC, Domain, DomainSpace, Zone, s223
 
 _namespace = s223
 

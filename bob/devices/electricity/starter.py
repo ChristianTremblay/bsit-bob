@@ -19,10 +19,10 @@ class MotorStarter(Device):
     """
 
     node_type = s223.MotorStarter
-    hasStatusOutlet: OnOffSignalOutletConnectionPoint
-    hasCommandInlet: OnOffSignalInletConnectionPoint
-    hasOnOffStatus: OnOffStatus
-    hasOnOffCommand: OnOffCommand
+    outputSignal: OnOffSignalOutletConnectionPoint
+    inputSignal: OnOffSignalInletConnectionPoint
+    onOffStatus: OnOffStatus
+    onOffCommand: OnOffCommand
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
@@ -43,5 +43,6 @@ class MotorStarter(Device):
             ofMedium=self.electricalInlet.hasMedium,
             hasMeasurementLocation=self.electricalOutlet,
         )
+        self.onOffStatus = sensor.onOffStatus
         self._sensors = [sensor]
         self > sensor

@@ -1,5 +1,7 @@
 from typing import Any
 
+from bob.properties import Percent
+
 from ...connections.air import (
     AirInletConnectionPoint,
     AirInletSystemConnectionPoint,
@@ -20,7 +22,6 @@ from ...core import Device, System, s223
 from ...devices.hvac.coil import ElectricalHeatingCoil
 from ...devices.hvac.scr import SCR
 from ...devices.hvac.valve import TwoWayValve
-from ...signal import AnalogIn, AnalogOut
 
 _namespace = s223
 
@@ -68,13 +69,11 @@ class HotWaterCoil2(System):
     signal.
     """
 
-    node_type = None
-
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
     hotWaterSupply: HotWaterInletSystemConnectionPoint
     hotWaterReturn: HotWaterOutletSystemConnectionPoint
-    hotWaterValvePosition: AnalogOut
+    hotWaterValvePosition: Percent
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -87,13 +86,13 @@ class HotWaterCoil2(System):
         # create a hot water valve
         self.hot_water_valve = TwoWayValve(
             label=self.label + ".hw_valve",
-            waterInlet=HotWaterInletConnectionPoint,
-            waterOutlet=HotWaterOutletConnectionPoint,
-            hasPositionFeedback=0,
+            # waterInlet=HotWaterInletConnectionPoint,
+            # waterOutlet=HotWaterOutletConnectionPoint,
+            # feedback=0,
         )
         self.hotWaterSupply.mapsTo = self.hot_water_valve.waterInlet
         self.hot_water_valve >> self.hot_water_coil
         self.hotWaterReturn.mapsTo = self.hot_water_coil.hotWaterReturn
 
         # reference the valve position
-        self.hotWaterValvePosition = self.hot_water_valve.hasPositionFeedback
+        # self.hotWaterValvePosition = self.hot_water_valve.feedback

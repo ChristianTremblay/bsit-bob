@@ -1,94 +1,170 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_connection-006
 # imports: http://data.ashrae.org/standard223/1.0/model/all
-@prefix ex29: <urn:ex/test_system-007/> .
+@prefix ex30: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 <http://data.ashrae.org/standard223/1.0/data/test_connection-006>
   a owl:Ontology ;
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_connection-006> ;
   rdfs:label "test_connection-006" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00001 a s223:Connection ;
-    s223:connectsAt ex29:00005 ;
-    s223:connectsTo ex29:00002 ;
+ex30:00001 a s223:Connection ;
+    s223:connectsAt ex30:00005 ;
+    s223:connectsTo ex30:00002 ;
     s223:hasMedium s223:Water-ChilledWater .
-ex29:00002 a s223:Connectable,
+ex30:00002 a s223:Coil,
+        s223:Connectable,
         s223:CoolingCoil,
         s223:Device ;
     rdfs:label "CW-Coil-1" ;
-    s223:airInlet ex29:00003 ;
-    s223:airOutlet ex29:00004 ;
-    s223:chilledWaterInlet ex29:00005 ;
-    s223:chilledWaterOutlet ex29:00006 ;
-    s223:connectedFrom ex29:00007 ;
-    s223:connectedThrough ex29:00001,
-        ex29:00011 ;
-    s223:hasConnectionPoint ex29:00003,
-        ex29:00004,
-        ex29:00005,
-        ex29:00006 .
-ex29:00003 a s223:ConnectionPoint,
+    s223:airInlet ex30:00003 ;
+    s223:airOutlet ex30:00004 ;
+    s223:chilledWaterInlet ex30:00005 ;
+    s223:chilledWaterOutlet ex30:00006 ;
+    s223:connectedFrom ex30:00007 ;
+    s223:connectedThrough ex30:00001,
+        ex30:00023 ;
+    s223:hasConnectionPoint ex30:00003,
+        ex30:00004,
+        ex30:00005,
+        ex30:00006 .
+ex30:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
-    s223:connectsThrough ex29:00011 ;
+    s223:connectsThrough ex30:00023 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00002 .
-ex29:00004 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex30:00002 .
+ex30:00004 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CW-Coil-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00002 .
-ex29:00005 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex30:00002 .
+ex30:00005 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterInlet" ;
-    s223:connectsThrough ex29:00001 ;
+    s223:connectsThrough ex30:00001 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:isConnectionPointOf ex29:00002 .
-ex29:00006 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex30:00002 .
+ex30:00006 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:isConnectionPointOf ex29:00002 .
-ex29:00007 a s223:Connectable,
+    s223:isConnectionPointOf ex30:00002 .
+ex30:00007 a s223:Connectable,
         s223:Device,
         s223:Fan ;
     rdfs:label "F" ;
-    s223:airInlet ex29:00008 ;
-    s223:airOutlet ex29:00009 ;
-    s223:connectedThrough ex29:00011 ;
-    s223:connectedTo ex29:00002 ;
-    s223:hasConnectionPoint ex29:00008,
-        ex29:00009,
-        ex29:00010 .
-ex29:00008 a s223:ConnectionPoint,
+    s223:airInlet ex30:00008 ;
+    s223:airOutlet ex30:00009 ;
+    s223:connectedThrough ex30:00023 ;
+    s223:connectedTo ex30:00002 ;
+    s223:hasConnectionPoint ex30:00008,
+        ex30:00009,
+        ex30:00010 .
+ex30:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "F.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00007 .
-ex29:00009 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex30:00007 .
+ex30:00009 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "F.airOutlet" ;
-    s223:connectsThrough ex29:00011 ;
+    s223:connectsThrough ex30:00023 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00007 .
-ex29:00010 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex30:00007 .
+ex30:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "F.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf ex29:00007 .
-ex29:00011 a s223:Connection ;
-    s223:connectsAt ex29:00003,
-        ex29:00009 ;
-    s223:connectsFrom ex29:00007 ;
-    s223:connectsTo ex29:00002 ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex30:00007 .
+ex30:00011 a p223:Pressure,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "staticPressure" ;
+    s223:hasExternalReference ex30:00012 ;
+    qudt:quantityKind quantitykind:Pressure ;
+    qudt:unit unit:PA .
+ex30:00012 a s223:ExternalReference ;
+    rdfs:label "staticPressure.ExternalReference" ;
+    s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
+ex30:00013 a p223:Amps,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "amps" ;
+    s223:hasExternalReference ex30:00014 ;
+    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:unit unit:A .
+ex30:00014 a s223:ExternalReference ;
+    rdfs:label "amps.ExternalReference" ;
+    s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
+ex30:00015 a p223:RPM,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "rpm" ;
+    s223:hasExternalReference ex30:00016 ;
+    qudt:quantityKind quantitykind:AngularVolocity ;
+    qudt:unit unit:REV-PER-MIN .
+ex30:00016 a s223:ExternalReference ;
+    rdfs:label "rpm.ExternalReference" ;
+    s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
+ex30:00017 a p223:HP,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "hp" ;
+    s223:hasExternalReference ex30:00018 ;
+    qudt:quantityKind quantitykind:Power ;
+    qudt:unit unit:HP .
+ex30:00018 a s223:ExternalReference ;
+    rdfs:label "hp.ExternalReference" ;
+    s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
+ex30:00019 a p223:ElectricPowerkW,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "kW" ;
+    s223:hasExternalReference ex30:00020 ;
+    qudt:quantityKind quantitykind:Power ;
+    qudt:unit unit:KiloW .
+ex30:00020 a s223:ExternalReference ;
+    rdfs:label "kW.ExternalReference" ;
+    s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
+ex30:00021 a p223:PowerFactor,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "powerFactor" ;
+    s223:hasExternalReference ex30:00022 ;
+    qudt:quantityKind quantitykind:PowerFactor ;
+    qudt:unit unit:UNITLESS .
+ex30:00022 a s223:ExternalReference ;
+    rdfs:label "powerFactor.ExternalReference" ;
+    s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
+ex30:00023 a s223:Connection ;
+    s223:connectsAt ex30:00003,
+        ex30:00009 ;
+    s223:connectsFrom ex30:00007 ;
+    s223:connectsTo ex30:00002 ;
     s223:hasMedium s223:Medium-Air .

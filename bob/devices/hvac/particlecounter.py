@@ -2,6 +2,8 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
+from bob.properties.states import NormalAlarmStatus
+
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...core import Device, enum, p223, s223
 from ...sensor import Sensor
@@ -10,13 +12,12 @@ from ...sensor.particle import (
     FineParticulateSensor,
     UltraFineParticulateSensor,
 )
-from ...signal import AnalogIn
 
 _namespace = p223
 
 
-"""
 particlecounter_template = {
+    "properties": {"alarmStatus": NormalAlarmStatus},
     "sensors": {
         ("label_of_sensor_1", CoarseParticulateSensor): {
             "hasExternalReference": "bacnet://",
@@ -30,14 +31,17 @@ particlecounter_template = {
             "hasExternalReference": "bacnet://",
             "comment": "Ultra Fine Particles 1.0um or less",
         },
-    }
+    },
 }
-"""
 
 
 class ParticleCounter(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 
-    def __init__(self, config, **kwargs):
+    def __init__(self, config: Dict = particlecounter_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", particlecounter_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)

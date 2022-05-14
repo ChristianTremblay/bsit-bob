@@ -4,22 +4,28 @@ from header import sample_header
 
 from bob.connections.air import AirConnection
 from bob.core import bind_model_namespace, dump
-from bob.systems.archives.hvac import HVACZone1
-from bob.systems.archives.vav import VAV2
+from bob.space.hvac import HVACSpace, HVACZone
+from bob.systems.hvac.vav import VAV_Simple
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 # create Zone-1 and its VAV connected together
-zone1 = HVACZone1(label="Zone-1")
-vav1 = VAV2(label="Zone-1.VAV")
-vav1 >> zone1
+zone1 = HVACZone(label="Zone-1")
+
+hvacspace1 = HVACSpace(label="Space-1")
+hvacspace2 = HVACSpace(label="Space-2")
+
+zone1 > [hvacspace1, hvacspace2]
+
+vav1 = VAV_Simple(label="Zone-1.VAV")
+vav1.serves = zone1
+vav1["DPR"].airOutlet >> hvacspace1.ductAirInlet
 
 # create Zone-2 and its VAV connected together
-zone2 = HVACZone1(label="Zone-2")
-vav2 = VAV2(label="Zone-2.VAV")
-vav2 >> zone2
+vav2 = VAV_Simple(label="Zone-2.VAV")
+vav2.serves = zone1
 
 # common supply connection shared
 supply_air = AirConnection(label="SupplyAir")
@@ -28,8 +34,8 @@ supply_air >> vav2
 
 # similar for return air
 return_air = AirConnection(label="ReturnAir")
-zone1 >> return_air
-zone2 >> return_air
+hvacspace1.ductAirOutlet >> return_air
+hvacspace2.ductAirOutlet >> return_air
 
 # dump the result
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

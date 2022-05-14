@@ -1,9 +1,13 @@
-from bob.core import Device, Property, p223, s223
+from typing import Dict
+
+from bob.core import Device, Property, p223, s223, unit
+from bob.properties.states import OnOffStatus
 
 from ...connections.electricity import (
     ModulationSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
+    OnOffSignalSystemConnectionPoint,
     RS485BidirectionalConnectionPoint,
 )
 from ...sensor.humidity import AirHumiditySensor
@@ -11,6 +15,20 @@ from ...sensor.pressure import AirDifferentialStaticPressureSensor
 from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 
 _namespace = p223
+
+MechanicalOnOffThermostat_template = {
+    "cp": {
+        "mstp": RS485BidirectionalConnectionPoint,
+        "heatingOutput": OnOffSignalOutletConnectionPoint,
+        "coolingOutput": OnOffSignalOutletConnectionPoint,
+        "fanOutput": OnOffSignalOutletConnectionPoint,
+    },
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "sensors": {
+        ("temperature_sensor", AirTemperatureSensor): {},
+        ("humidity_sensor", AirHumiditySensor): {},
+    },
+}
 
 
 class MechanicalOnOffThermostat(Device):
@@ -20,11 +38,27 @@ class MechanicalOnOffThermostat(Device):
     and the temperature read by the sensor inside the thermostat
     """
 
-    sensor: AirTemperatureSensor
-    heatingOutput: OnOffSignalOutletConnectionPoint
-    coolingOutput: OnOffSignalOutletConnectionPoint
-    fanOutput: OnOffSignalOutletConnectionPoint
-    setpoint: TemperatureSetpoint
+    def __init__(self, config: Dict = MechanicalOnOffThermostat_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", MechanicalOnOffThermostat_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
+
+MechanicalModulatingThermostat_template = {
+    "cp": {
+        "mstp": RS485BidirectionalConnectionPoint,
+        "heatingOutput": ModulationSignalOutletConnectionPoint,
+        "coolingOutput": ModulationSignalOutletConnectionPoint,
+        "fanOutput": OnOffSignalOutletConnectionPoint,
+    },
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "sensors": {
+        ("temperature_sensor", AirTemperatureSensor): {},
+        ("humidity_sensor", AirHumiditySensor): {},
+    },
+}
 
 
 class MechanicalModulatingThermostat(Device):
@@ -35,37 +69,98 @@ class MechanicalModulatingThermostat(Device):
     and the temperature read by the sensor inside the thermostat
     """
 
-    sensor: AirTemperatureSensor
-    heatingOutput: ModulationSignalOutletConnectionPoint
-    coolingOutput: ModulationSignalOutletConnectionPoint
-    fanOutput: OnOffSignalOutletConnectionPoint
-    setpoint: TemperatureSetpoint
+    def __init__(
+        self, config: Dict = MechanicalModulatingThermostat_template, **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties", MechanicalModulatingThermostat_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
+
+NetworkThermostat_template = {
+    "cp": {
+        "mstp": RS485BidirectionalConnectionPoint,
+        "heatingOutput": OnOffSignalOutletConnectionPoint,
+        "coolingOutput": OnOffSignalOutletConnectionPoint,
+    },
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "sensors": {
+        ("temperature_sensor", AirTemperatureSensor): {"unit": unit.DEG_C},
+        ("humidity_sensor", AirHumiditySensor): {},
+    },
+}
 
 
 class NetworkThermostat(Device):
-    sensor: AirTemperatureSensor
-    heatingOnOffOutput: OnOffSignalOutletConnectionPoint
-    setpoint: TemperatureSetpoint
-    mstp: RS485BidirectionalConnectionPoint
+    """
+    A network thermostat has the ability to control loads
+    direclty from outputs.
+    ex. TEC3000
+    """
+
+    def __init__(self, config: Dict = NetworkThermostat_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", NetworkThermostat_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
+
+NetworkRoomSensor_template = {
+    "cp": {"mstp": RS485BidirectionalConnectionPoint},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "sensors": {
+        ("temperature_sensor", AirTemperatureSensor): {"unit": unit.DEG_C},
+        ("humidity_sensor", AirHumiditySensor): {},
+    },
+}
 
 
 class NetworkRoomSensor(Device):
-    sensor: AirTemperatureSensor
-    setpoint: TemperatureSetpoint
-    mstp: RS485BidirectionalConnectionPoint
+    """
+    A network Room Sensor tells information on the room and accept setpoints
+    Will communicate thoses information by network.
+    But no outputs to activate loads.
+    """
 
+    def __init__(self, config: Dict = NetworkRoomSensor_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", NetworkRoomSensor_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
+
+HighStaticPressureStat_template = {
+    "cp": {
+        "resetInput": OnOffSignalInletConnectionPoint,
+        "signalOutput": OnOffSignalOutletConnectionPoint,
+    },
+    "properties": {("onOffStatus", OnOffStatus): {}},
+    "sensors": {
+        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": unit.PA}
+    },
+}
 
 # Pressure
 class HighStaticPressureStat(Device):
-    resetInput: Property  # mechanical switch button?
-    highStaticPressureOutput: OnOffSignalOutletConnectionPoint
+    def __init__(self, config: Dict = HighStaticPressureStat_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", HighStaticPressureStat_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
 
-        sensor = AirDifferentialStaticPressureSensor(label=f"{self.label}.sensor")
-        self._sensors = [sensor]
-        self > sensor
+flowswitch_template = {
+    "cp": {"signalOutput": OnOffSignalOutletConnectionPoint},
+    "properties": {("onOffStatus", OnOffStatus): {}},
+    "sensors": {
+        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": unit.PA}
+    },
+}
 
 
 class FlowSwitch(Device):
@@ -73,11 +168,9 @@ class FlowSwitch(Device):
     A contact On Off controlled by static pressure in duct
     """
 
-    flowOutput: OnOffSignalOutletConnectionPoint
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        sensor = AirDifferentialStaticPressureSensor(label=f"{self.label}.sensor")
-        self._sensors = [sensor]
-        self > sensor
+    def __init__(self, config: Dict = flowswitch_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", flowswitch_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)

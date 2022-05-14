@@ -41,9 +41,9 @@ class TemperatureSensor(Sensor):
 
 class AirTemperatureSensor(TemperatureSensor):
     def __init__(self, **kwargs):
-        super().__init__(ofMedium=Air, unit=unit.DEG_C, **kwargs)
+        super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterTemperatureSensor(TemperatureSensor):
     def __init__(self, **kwargs):
-        super().__init__(ofMedium=Water, unit=unit.DEG_C, **kwargs)
+        super().__init__(ofMedium=Water, **kwargs)

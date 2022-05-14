@@ -17,7 +17,6 @@ from ..core import (
     enum,
     s223,
 )
-from ..signal import AnalogIn, AnalogOut
 
 _namespace = s223
 
@@ -416,6 +415,51 @@ class Electricity_120V_60HzSystemInletConnectionPoint(
 
 class Electricity_120V_60HzSystemOutletConnectionPoint(
     Electricity_120V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    node_type = None
+
+
+# === 24V 60Hz
+
+
+Electricity_24V_60Hz = Medium(node_iri=s223["Electricity-24V_60Hz"])
+
+
+class Electricity_24V_60HzConnection(Connection):
+    hasMedium: Medium = Electricity_24V_60Hz
+    node_type = None
+
+
+class Electricity_24V_60HzConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Electricity_24V_60Hz
+    node_type = None
+
+
+class Electricity_24V_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_24V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_24V_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_24V_60HzConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_24V_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Electricity_24V_60Hz
+    node_type = None
+
+
+class Electricity_24V_60HzSystemInletConnectionPoint(
+    Electricity_24V_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    node_type = None
+
+
+class Electricity_24V_60HzSystemOutletConnectionPoint(
+    Electricity_24V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
     node_type = None
 

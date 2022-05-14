@@ -62,5 +62,4 @@ office2_hvac < zone1
 baseboard = ElectricalRadiantHeatingCoil(label="Baseboard heater")
 # AirInJoelsOfficeSpace = AirConnection(label="Air inside the office")
 
-joelsoffice_hvac.indoorAir.radiantHeating << baseboard.airContact
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

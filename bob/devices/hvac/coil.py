@@ -1,6 +1,8 @@
-from typing import Any
+from typing import Any, Dict
 
 from rdflib import URIRef
+
+from bob.properties.electricity import Amps, ElectricPowerkW
 
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
@@ -10,6 +12,8 @@ from ...connections.air import (
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
+    Electricity_240V_60HzInletConnectionPoint,
+    Electricity_575V_60HzInletConnectionPoint,
 )
 from ...connections.water import (
     ChilledWaterInletConnectionPoint,
@@ -19,59 +23,101 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, s223
-from ...signal import AnalogIn
+from ...core import Device, PropertyReference, s223
 
 _namespace = s223
 
-"""
-chilledWaterCoil_template = {
-    "params": {"label": "Name", "comment": "Description"},
-    "sensors": {},
-    "devices": {("valve", Device): {"comment": "SubDev comment"}},
+coil_template = {
+    "cp": {},
+    "properties": {},
 }
-"""
-# SEMANTIC QUESTION
-# here, that could be a good way to define the coil and its valve...
-# but the valve connect to the coil
-# can this be considered "contained" in the Coil device ?
-# Should this b ea system
 
 
-class WaterCoil(Device):
+class Coil(Device):
     node_type: URIRef = s223.Coil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
+    # Those could come from a valve, SCR, Triac, etc...
+    modulation: PropertyReference
+    onOffCommand: PropertyReference
+
+    def __init__(self, config: Dict = coil_template, **kwargs):
+        config["properties"] = config.get("properties", coil_template["properties"])
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
+
+class WaterCoil(Coil):
+    node_type: URIRef = s223.Coil
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
 
+    def __init__(self, config: Dict = coil_template, **kwargs):
+        config["properties"] = config.get("properties", coil_template["properties"])
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
-class ChilledWaterCoil(Device):
+
+class ChilledWaterCoil(Coil):
     node_type: URIRef = s223.CoolingCoil
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
     chilledWaterInlet: ChilledWaterInletConnectionPoint
     chilledWaterOutlet: ChilledWaterOutletConnectionPoint
 
+    def __init__(self, config: Dict = coil_template, **kwargs):
+        config["properties"] = config.get("properties", coil_template["properties"])
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
-class HotWaterCoil(Device):
+
+class HotWaterCoil(Coil):
     node_type: URIRef = s223.HeatingCoil
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
     hotWaterInlet: HotWaterInletConnectionPoint
     hotWaterOutlet: HotWaterOutletConnectionPoint
 
+    def __init__(self, config: Dict = coil_template, **kwargs):
+        config["properties"] = config.get("properties", coil_template["properties"])
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
 
 # Electrical Coil
-class ElectricalHeatingCoil(Device):
-    node_type: URIRef = s223.HeatingCoil
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
-    electricalInlet: ElectricalInletConnectionPoint  # can come from a SCR or a contactor...(maybe more than 1 contactor that would give x% of power)
+electricalheating_template = {
+    "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
+    "properties": {
+        ("amps", Amps): {},
+        ("kW", ElectricPowerkW): {},
+    },
+}
 
+
+class ElectricalHeatingCoil(Coil):
+    node_type: URIRef = s223.HeatingCoil
+
+    def __init__(self, config: Dict = electricalheating_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", electricalheating_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
+
+# Electrical Coil
+electricalradiant_template = {
+    "cp": {"electricalInlet": Electricity_240V_60HzInletConnectionPoint},
+    "properties": {
+        ("amps", Amps): {},
+        ("kW", ElectricPowerkW): {},
+    },
+}
 
 # Baseboard, radiant panel, heating floor
 class ElectricalRadiantHeatingCoil(Device):
     node_type: URIRef = s223.HeatingCoil
     airContact: AirBidirectionalConnectionPoint
-    electricalInlet: ElectricalInletConnectionPoint  # can come from a SCR or a contactor...(maybe more than 1 contactor that would give x% of power)
+
+    def __init__(self, config: Dict = electricalradiant_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", electricalradiant_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)

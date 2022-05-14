@@ -1,5 +1,8 @@
 from typing import Any
 
+from bob.properties.flow import Flow
+from bob.properties.ratio import Percent, PercentCommand
+
 from ...connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
@@ -13,7 +16,6 @@ from ...devices.hvac.airflowstation import AirFlowMonitor
 from ...devices.hvac.coil import HotWaterCoil
 from ...devices.hvac.damper import Damper
 from ...devices.hvac.valve import TwoWayValve
-from ...signal import AnalogIn, AnalogOut
 
 _namespace = s223
 
@@ -21,8 +23,8 @@ _namespace = s223
 class VAV1(System):
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
-    airFlow: AnalogIn
-    damperPosition: AnalogOut
+    airFlow: Flow
+    damperPosition: Percent
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -48,9 +50,9 @@ class VAV1(System):
 class VAV2(System):
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
-    airFlow: AnalogIn
-    damperPosition: AnalogOut
-    hwValvePosition: AnalogOut
+    airFlow: Flow
+    damperPosition: PercentCommand
+    hwValvePosition: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)

@@ -24,6 +24,6 @@ def test_connect_chilled_water_coil(bob_fixture):
     c >> coil1.chilledWaterInlet
 
     # there is a fan, and the air output of the fan goes into the coil
-    f = Fan(label="F", electricalInlet=ElectricalInletConnectionPoint)
+    f = Fan(label="F")
     f >> coil1.airInlet
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

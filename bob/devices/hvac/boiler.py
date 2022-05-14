@@ -6,27 +6,28 @@ from ...connections.naturalgas import NaturalGasInletConnectionPoint
 from ...connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
+    WaterOutletConnectionPoint,
 )
 from ...core import Device, p223, s223
-from ...signal import AnalogIn
 
-_namespace = p223
+_namespace = s223
 
 
 class HotWaterBoiler(Device):
-    node_type = p223.Boiler
+    node_type = s223.Boiler
     hotWaterLeaving: HotWaterInletConnectionPoint
     hotWaterEntering: HotWaterOutletConnectionPoint
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):
-    node_type = p223.Boiler
+    node_type = s223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
 
 
 class NaturalGasHotWaterBoiler(HotWaterBoiler):
-    node_type = p223.Boiler
+    node_type = s223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
     naturalGasInlet: NaturalGasInletConnectionPoint
     combustionAirInlet: AirInletConnectionPoint
     combustionAirOutlet: AirOutletConnectionPoint
+    condensedWaterOutlet: WaterOutletConnectionPoint
