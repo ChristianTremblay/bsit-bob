@@ -3,6 +3,7 @@ from typing import Any
 from rdflib import URIRef
 
 from bob import core
+from bob.properties.states import OnOffStatus
 
 from ..core import (
     ExternalReference,
@@ -38,3 +39,18 @@ class MovementSensor(Sensor):
 
 class OccupancySensor(MovementSensor):
     node_type: URIRef = p223.OccupancySensor
+
+
+class IntrusionSensor(Sensor):
+    # measuresMedium: Medium = Light
+    observesProperty: PropertyReference  # Intrusion...good for Windows and doors
+
+    def __init__(self, **kwargs: Any) -> None:
+        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+
+        super().__init__(**_sensor_kwargs)
+        self.observesProperty = OnOffStatus(
+            # isObservedBy=self,
+            label=f"{self.label}.Intrusion",
+            **_measure_kwargs,
+        )

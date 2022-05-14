@@ -20,7 +20,6 @@ from ...connections.water import (
     WaterOutletConnectionPoint,
 )
 from ...core import Device, enum, p223
-from ...signal import AnalogIn
 
 _namespace = p223
 

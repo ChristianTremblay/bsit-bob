@@ -11,3 +11,4 @@ class Flow(QuantifiableObservableProperty):
     unit: URIRef
     ofMedium: Medium  # set from the sensor
     # isObservedBy: Sensor
+    measuresMedium: Medium  # set from the sensor

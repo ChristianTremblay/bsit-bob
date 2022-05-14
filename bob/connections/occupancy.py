@@ -18,7 +18,6 @@ from ..core import (
     enum,
     s223,
 )
-from ..signal import AnalogIn, AnalogOut
 
 _namespace = s223
 

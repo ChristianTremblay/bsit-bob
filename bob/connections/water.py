@@ -13,7 +13,6 @@ from ..core import (
     p223,
     s223,
 )
-from ..signal import AnalogIn, AnalogOut
 
 _namespace = s223
 

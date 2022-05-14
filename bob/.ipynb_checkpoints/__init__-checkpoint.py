@@ -8,40 +8,35 @@ __version__ = "0.20"
 __author__ = "Joel Bender"
 __email__ = "jjb5@cornell.edu"
 
+from . import domain, hvac, role, signal
 from .core import (
-    bind_namespace,
-    bind_model_namespace,
-    Node,
-    Substance,
-    Connection,
-    Device,
-    ConnectionPoint,
-    InletConnectionPoint,
-    OutletConnectionPoint,
-    System,
-    SystemConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
-    DomainSpace,
-    PhysicalSpace,
-    Zone,
-    ZoneConnectionPoint,
-    InletZoneConnectionPoint,
-    OutletZoneConnectionPoint,
-    Enclosure,
-    Property,
     ActuatableProperty,
+    Connection,
+    ConnectionPoint,
+    Device,
+    DomainSpace,
+    Enclosure,
+    InletConnectionPoint,
+    InletSystemConnectionPoint,
+    InletZoneConnectionPoint,
+    Node,
     ObservableProperty,
-    QuantifiableProperty,
+    OutletConnectionPoint,
+    OutletSystemConnectionPoint,
+    OutletZoneConnectionPoint,
+    PhysicalSpace,
+    Property,
     QuantifiableActuatableProperty,
     QuantifiableObservableProperty,
+    QuantifiableProperty,
+    Substance,
+    System,
+    SystemConnectionPoint,
     Value,
-    dump,
+    Zone,
+    ZoneConnectionPoint,
+    bind_model_namespace,
+    bind_namespace,
     clear,
+    dump,
 )
-
-from . import domain
-from . import role
-from . import signal
-
-from . import hvac

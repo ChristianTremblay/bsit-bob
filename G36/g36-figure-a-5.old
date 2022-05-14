@@ -1,5 +1,5 @@
 """
-Figure A-4
+Figure A-5
 """
 
 from __future__ import annotations
@@ -24,28 +24,29 @@ from bob.connections.water import (
 )
 from bob.core import Device, Junction, System, bind_model_namespace, dump
 from bob.devices.hvac.fan import Fan
-from bob.signal import AnalogIn, AnalogOut, BinaryOut
+from bob.properties import Flow
+from bob.properties.ratio import PercentCommand
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
-    "exg3604", f"http://data.ashrae.org/standard223/data/{model_name}#"
+    "exg3605", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 
 
 class AirFlowStation(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    flow = AnalogIn
+    flow = Flow
 
 
 class DamperPositioner(Device):
-    position = AnalogOut
+    position = PercentCommand
 
 
 class Damper(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position: AnalogOut
+    position: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -61,23 +62,11 @@ class Damper(Device):
 
 
 class ValvePositioner(Device):
-    position = AnalogOut
+    position = PercentCommand
 
 
 class HotWaterValve(Device):
     pass
-
-
-class ECMFan(Fan):
-    # airInlet: AirInletConnectionPoint
-    # airOutlet: AirOutletConnectionPoint
-    pass
-
-
-class ECM(Device):
-    fanStart = BinaryOut
-    fanSpeedFeedback = AnalogIn
-    fanSpeedCommand = AnalogOut
 
 
 class HotWaterCoil(Device):
@@ -85,7 +74,7 @@ class HotWaterCoil(Device):
     airOutlet: AirOutletConnectionPoint
     hwInlet: HotWaterInletConnectionPoint
     hwOutlet: HotWaterOutletConnectionPoint
-    valvePosition: AnalogOut
+    valvePosition: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -106,11 +95,11 @@ class VAV(System):
     supplyAirInlet: AirInletSystemConnectionPoint
     returnAirInlet: AirInletSystemConnectionPoint
     supplyAirOutlet: AirOutletSystemConnectionPoint
-    supplyAirFlow: AnalogIn
-    damperPosition: AnalogOut
+    supplyAirFlow: Flow
+    damperPosition: PercentCommand
     hwInlet: HotWaterInletSystemConnectionPoint
     hwOutlet: HotWaterOutletSystemConnectionPoint
-    hwValvePosition: AnalogOut
+    hwValvePosition: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -126,29 +115,31 @@ class VAV(System):
         self > self.damper
         self.damperPosition = self.damper.position
 
+        # create a fan
+        self.fan = Fan(
+            label=self.label + ".fan", electricalInlet=ElectricalInletConnectionPoint
+        )
+        self > self.fan
+
         # create a hot water coil
         self.hot_water_coil = HotWaterCoil(label=self.label + ".hot_water_coil")
         self > self.hot_water_coil
         self.hwInlet.mapsTo = self.hot_water_coil.hwInlet
         self.hwOutlet.mapsTo = self.hot_water_coil.hwOutlet
         self.hwValvePosition = self.hot_water_coil.valvePosition
-        self.returnAirInlet.mapsTo = self.hot_water_coil.airInlet
 
-        # create a fan with an ECM part
-        self.fan = ECMFan(
-            label=self.label + ".fan", electricalInlet=ElectricalInletConnectionPoint
-        )
-        self.fan_ecm = ECM(label=self.label + ".fan.ecm")
-        self > self.fan > self.fan_ecm
+        # fan output goes to the hot water coil
+        self.fan >> self.hot_water_coil
+        self.supplyAirOutlet.mapsTo = self.hot_water_coil.airOutlet
 
-        # merge the outlets together
+        # merge the inlets together
         junction = Junction()
         junction.link_to(self.damper.airOutlet)
-        junction.link_to(self.fan.airOutlet)
-        self.supplyAirOutlet.mapsTo = junction
+        junction.link_to(self.fan.airInlet)
+        self.returnAirInlet.mapsTo = junction
 
 
 # make one
-vav = VAV(label="A-4")
+vav = VAV(label="A-5")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

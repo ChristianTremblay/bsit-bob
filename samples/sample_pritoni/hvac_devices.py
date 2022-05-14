@@ -7,10 +7,11 @@ from bob.connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from bob.core import bind_model_namespace, dump
+from bob.core import bind_model_namespace, dump, unit
+from bob.devices.architectural import Window
 from bob.devices.electricity.starter import MotorStarter
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper, Window
+from bob.devices.hvac.damper import ElectricalActuatedDamper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.stats import AirDifferentialStaticPressureSensor
@@ -28,21 +29,29 @@ _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 ahu_template = {
     "params": {"label": "AHU", "comment": "AHU delivering air to 2 VAV boxes"},
     "sensors": {
-        ("OA-T", AirTemperatureSensor): {"comment": "Oudoor air temperature"},
+        ("OA-T", AirTemperatureSensor): {
+            "unit": unit.DEG_C,
+            "comment": "Oudoor air temperature",
+        },
         ("TPD1", AirDifferentialStaticPressureSensor): {
-            "comment": "Filter Differential Pressure Sensor"
+            "unit": unit.PA,
+            "comment": "Filter Differential Pressure Sensor",
         },
         ("HC-T", AirTemperatureSensor): {
-            "comment": "Air temperature after heating coil"
+            "unit": unit.DEG_C,
+            "comment": "Air temperature after heating coil",
         },
         ("DA-T", AirTemperatureSensor): {
-            "comment": "Discharge Air temperature after cooling coil"
+            "unit": unit.DEG_C,
+            "comment": "Discharge Air temperature after cooling coil",
         },
         ("TPD2", AirDifferentialStaticPressureSensor): {
-            "comment": "Supply Duct Static Pressure"
+            "unit": unit.PA,
+            "comment": "Supply Duct Static Pressure",
         },
         ("TPD3", AirDifferentialStaticPressureSensor): {
-            "comment": "Return Duct Static Pressure"
+            "unit": unit.PA,
+            "comment": "Return Duct Static Pressure",
         },
     },
     "devices": {
@@ -76,11 +85,16 @@ ahu_template = {
 vav1_config = {
     "params": {"label": "VAVBox1", "comment": "VAV Serving HVAC Zone 1"},
     "sensors": {
-        ("VAV1_SA-F", AirFlowSensor): {"comment": "Air flow used to control damper"},
+        ("VAV1_SA-F", AirFlowSensor): {
+            "unit": unit["L-PER-SEC"],
+            "comment": "Air flow used to control damper",
+        },
         ("VAV1_DA-T", AirTemperatureSensor): {
-            "comment": "Air supplied to zone by VAV 1, AKA discharge air temperature"
+            "unit": unit.DEG_C,
+            "comment": "Air supplied to zone by VAV 1, AKA discharge air temperature",
         },
         ("VAV1_ZN-T", AirTemperatureSensor): {
+            "unit": unit.DEG_C,
             "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },
@@ -93,11 +107,16 @@ vav1_config = {
 vav2_config = {
     "params": {"label": "VAVBox2", "comment": "VAV Serving HVAC Zone 2"},
     "sensors": {
-        ("VAV2_SA-F", AirFlowSensor): {"comment": "Air flow used to control damper"},
+        ("VAV2_SA-F", AirFlowSensor): {
+            "unit": unit["L-PER-SEC"],
+            "comment": "Air flow used to control damper",
+        },
         ("VAV2_DA-T", AirTemperatureSensor): {
-            "comment": "Air supplied to zone by VAV 2, AKA discharge air temperature"
+            "unit": unit.DEG_C,
+            "comment": "Air supplied to zone by VAV 2, AKA discharge air temperature",
         },
         ("VAV2_ZN-T", AirTemperatureSensor): {
+            "unit": unit.DEG_C,
             "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },

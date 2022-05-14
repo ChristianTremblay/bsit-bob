@@ -23,13 +23,13 @@ from bob.core import (
     get_datagraph,
     quantitykind,
     s223,
+    unit,
 )
 from bob.devices.hvac.coil import ChilledWaterCoil
 from bob.devices.hvac.damper import ElectricalActuatedDamper
 from bob.devices.hvac.fan import Fan
 from bob.role import Exhaust, Supply
 from bob.sensor.temperature import AirTemperatureSensor
-from bob.signal import AnalogIn, AnalogOut
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
 from bob.systems.hvac.airhandlingunit import AirHandlingUnit
@@ -48,9 +48,18 @@ config = {
         "comment": "Rooftop Unit",
     },
     "sensors": {
-        ("DA-T", AirTemperatureSensor): {"comment": "Supply Air Temperature sensor"},
-        ("RA-T", AirTemperatureSensor): {"comment": "Return Air Temperature sensor"},
-        ("ZN-T", AirTemperatureSensor): {"comment": "Zone Air Temperature sensor"},
+        ("DA-T", AirTemperatureSensor): {
+            "comment": "Supply Air Temperature sensor",
+            "unit": unit.DEG_C,
+        },
+        ("RA-T", AirTemperatureSensor): {
+            "comment": "Return Air Temperature sensor",
+            "unit": unit.DEG_C,
+        },
+        ("ZN-T", AirTemperatureSensor): {
+            "comment": "Zone Air Temperature sensor",
+            "unit": unit.DEG_C,
+        },
     },
     "devices": {
         ("SF-1", Fan): {

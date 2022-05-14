@@ -1,10 +1,8 @@
 from pathlib import Path
 
-
-from bob.hvac import HVACZone1, VAV1
-
 from header import sample_header
 
+from bob.hvac import VAV1, HVACZone1
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

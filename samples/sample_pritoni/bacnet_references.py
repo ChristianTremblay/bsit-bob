@@ -1,7 +1,7 @@
 from pathlib import Path
 
-import hvac_devices as hd
 import functions as fn
+import hvac_devices as hd
 import lighting_devices as ld
 from rdflib import URIRef
 
@@ -118,7 +118,7 @@ hd.ahu["RF-VFD"].run_command @ rf_vfd_cmd
 ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference(
     uri=URIRef("bacnet://2/analog-input,1")
 )
-ld.openofficeEast_luminaire_1.hasOnOffStatus @ BACnetReference(
+ld.openofficeEast_luminaire_1.onOffStatus @ BACnetReference(
     uri=URIRef("bacnet://2/binary-input,1")
 )
 

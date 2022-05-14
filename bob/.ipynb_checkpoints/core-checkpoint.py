@@ -4,25 +4,23 @@ Bob the SI-WG Builder
 
 from __future__ import annotations
 
+import inspect
+import logging
 import os
 import sys
-import inspect
 from collections import defaultdict
-import logging
+from typing import Any, Dict, Optional, Set, TextIO, Tuple, TypeVar, Union, cast
 
-from typing import (
-    Dict,
-    Optional,
-    Set,
-    Any,
-    TextIO,
-    Tuple,
-    TypeVar,
-    Union,
-    cast,
+from rdflib import (
+    RDF,
+    RDFS,
+    XSD,
+    BNode,
+    Graph,
+    Literal,  # type: ignore
+    Namespace,
+    URIRef,
 )
-
-from rdflib import Graph, Namespace, URIRef, BNode, Literal, RDF, RDFS, XSD  # type: ignore
 
 # logging
 log_level = os.getenv("BOB_LOG", "WARNING")

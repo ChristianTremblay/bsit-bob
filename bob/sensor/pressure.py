@@ -48,9 +48,9 @@ class DifferentialStaticPressureSensor(Sensor):
 
 class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
     def __init__(self, **kwargs):
-        super().__init__(ofMedium=Air, unit=unit.PA, **kwargs)
+        super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
     def __init__(self, **kwargs):
-        super().__init__(ofMedium=Water, unit=unit.PSI, **kwargs)
+        super().__init__(ofMedium=Water, **kwargs)

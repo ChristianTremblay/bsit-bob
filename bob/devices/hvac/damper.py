@@ -1,3 +1,5 @@
+from typing import Dict
+
 from rdflib import URIRef
 
 from ...connections.air import (
@@ -7,43 +9,30 @@ from ...connections.air import (
     CompressedAirConnectionPoint,
     CompressedAirInletConnectionPoint,
 )
-from ...connections.electricity import ElectricalInletConnectionPoint
+from ...connections.electricity import (
+    ElectricalInletConnectionPoint,
+    Electricity_24V_60HzInletConnectionPoint,
+    Electricity_120V_60HzInletConnectionPoint,
+)
 from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import Device, p223, s223
-from ...signal import AnalogIn, AnalogOut
+from ...core import Device, PropertyReference, p223, s223
+from ...properties import Nm, Percent, PercentCommand
+from .actuator import ElectricalActuator, PneumaticActuator
 
 _namespace = s223
 
-
-class DamperActuator(Device):
-    node_type = s223.DamperActuator
-    position = AnalogOut
-    feedback = AnalogIn
-
-
-class ElectricalDamperActuator(Device):
-    node_type = s223.DamperActuator
-    electricalInlet: ElectricalInletConnectionPoint
-    position = AnalogOut
-    feedback = AnalogIn
-
-
-class PneumaticDamperActuator(Device):
-    node_type = s223.DamperActuator
-    compressedAirInlet: CompressedAirInletConnectionPoint
-    position = AnalogOut
-    feedback = AnalogIn
+# DAMPERS
 
 
 class Damper(Device):
     node_type = s223.Damper
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position = AnalogOut
-    feedback = AnalogIn
+    position: PropertyReference
+    feedback: PropertyReference
 
 
 class GravityDamper(Damper):
@@ -54,22 +43,42 @@ class FireDamper(Damper):
     node_type = s223.Damper
 
 
-class ActuatedDamper(Damper):
-    node_type = s223.Damper
+# DAMPER + ACTUATORS
+
+
+ElectricalActuatedDamper_template = {
+    "devices": {("actuator", ElectricalActuator): {}},
+    "properties": {},
+}
 
 
 class ElectricalActuatedDamper(Damper):
+    node_type: URIRef = s223.Damper
+
+    def __init__(self, config: Dict = ElectricalActuatedDamper_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", ElectricalActuatedDamper_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.position = self["actuator"]["position"]
+        self.torque = self["actuator"]["torque"]
+
+
+PneumaticActuatedDamper_template = {
+    "devices": {("actuator", PneumaticActuator): {}},
+    "properties": {},
+}
+
+
+class PneumaticActuatedDamper(Damper):
     node_type = s223.Damper
-    powerInlet: ElectricalInletConnectionPoint
 
-
-class PneumaticDamper(Damper):
-    node_type = s223.Damper
-    compressedAirInlet: CompressedAirConnectionPoint
-
-
-class Window(Device):
-    node_type = p223.Window
-    indoor: AirBidirectionalConnectionPoint
-    outdoor: AirBidirectionalConnectionPoint
-    naturalLight: LightVisibleOutletConnectionPoint
+    def __init__(self, config: Dict = PneumaticActuatedDamper_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", PneumaticActuatedDamper_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.position = self["actuator"]["position"]
+        self.torque = self["actuator"]["torque"]

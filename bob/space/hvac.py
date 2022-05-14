@@ -8,7 +8,15 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
-from bob.properties.states import OccupancyStatus
+from bob.properties import (
+    Air_Change_Per_Hour,
+    GasConcentration,
+    OccupancyStatus,
+    RelativeHumidity,
+    Temperature,
+    temperature,
+)
+from bob.property import Setpoint
 
 from ..core import HVAC, Air, DomainSpace, Medium, Zone, enum, s223
 from ..systems.physic import IndoorAir
@@ -19,6 +27,7 @@ _namespace = s223
 class HVACSpace(DomainSpace):
     hasDomain = HVAC
     hasMedium: Medium = Air
+    # Connection points
     ductAirInlet: AirInletConnectionPoint
     ductAirOutlet: AirOutletConnectionPoint
     airTransfer: AirBidirectionalConnectionPoint
@@ -26,27 +35,29 @@ class HVACSpace(DomainSpace):
     windows: AirBidirectionalConnectionPoint
     radiantHeating: AirBidirectionalConnectionPoint
     radiantCooling: AirBidirectionalConnectionPoint
-    indoorAir: IndoorAir
-    occupancy: OccupancyStatus
 
-    def __init__(self, **kwargs):
-        if "indoorAir" in kwargs:
-            ia = kwargs.pop("indoorAir")
-        else:
-            ia = IndoorAir(label="Indoor air of space")
-        super().__init__(**kwargs)
-        self.indoorAir = ia
-        self.indoorAir.ductAirInlet.mapsTo = self.ductAirInlet
-        self.indoorAir.ductAirOutlet.mapsTo = self.ductAirOutlet
-        self.indoorAir.airTransfer.mapsTo = self.airTransfer
-        self.indoorAir.doors.mapsTo = self.doors
-        self.indoorAir.windows.mapsTo = self.windows
-        self.indoorAir.radiantHeating.mapsTo = self.radiantHeating
-        self.indoorAir.radiantCooling.mapsTo = self.radiantCooling
+    # Function Block
+    # indoorAir: IndoorAir
+
+    # Properties
+    occupancy: OccupancyStatus
+    temperature: Temperature
+    humidity: RelativeHumidity
+    co2: GasConcentration
+    co: GasConcentration
+    no2: GasConcentration
+    air_change_per_hour: Air_Change_Per_Hour
 
 
 class HVACZone(Zone):
     hasDomain = HVAC
+
+    # Connection points
     airInlet: AirInletZoneConnectionPoint
     airOutlet: AirOutletZoneConnectionPoint
+
+    # Properties
     occupancy: OccupancyStatus
+    temperature: Temperature
+    temperature_setpoint: Setpoint
+    co2: GasConcentration

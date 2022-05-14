@@ -8,7 +8,7 @@ from bob.connections import (
     ChilledWaterConnection,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import Domain, DomainSpace, HVAC, Zone, bind_model_namespace, dump
+from bob.core import HVAC, Domain, DomainSpace, Zone, bind_model_namespace, dump
 from bob.devices.hvac import ChilledWaterCoil, Fan
 
 model_name = Path(__file__).stem
