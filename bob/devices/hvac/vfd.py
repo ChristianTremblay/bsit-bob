@@ -23,7 +23,7 @@ from ...properties import (
     Temperature,
 )
 
-_namespace = p223
+_namespace = s223
 
 vfd_template = {
     "cp": {
