@@ -1,6 +1,8 @@
 from typing import Dict
 
-from bob.core import Device, Property, p223, s223, unit
+from rdflib import URIRef
+
+from bob.core import Device, Property, PropertyReference, p223, s223, unit
 from bob.properties.states import OnOffStatus
 
 from ...connections.electricity import (
@@ -14,7 +16,32 @@ from ...sensor.humidity import AirHumiditySensor
 from ...sensor.pressure import AirDifferentialStaticPressureSensor
 from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 
-_namespace = p223
+_namespace = s223
+
+
+class Thermostat(Device):
+    node_type: URIRef = s223.Thermostat
+    temperature: PropertyReference
+    setpoint: PropertyReference
+    differential: PropertyReference
+    onOffCommand: PropertyReference
+
+
+class Pressurestat(Device):
+    node_type: URIRef = s223.Pressurestat
+    pressure: PropertyReference
+    setpoint: PropertyReference
+    differential: PropertyReference
+    onOffCommand: PropertyReference
+
+
+class Humidistat(Device):
+    node_type: URIRef = s223.Humidistat
+    humidity: PropertyReference
+    setpoint: PropertyReference
+    differential: PropertyReference
+    onOffCommand: PropertyReference
+
 
 MechanicalOnOffThermostat_template = {
     "cp": {
@@ -31,7 +58,7 @@ MechanicalOnOffThermostat_template = {
 }
 
 
-class MechanicalOnOffThermostat(Device):
+class MechanicalOnOffThermostat(Thermostat):
     """
     A mechanical thermostat have no network connection
     Outputs are turned on and off depending on the setpoint
@@ -61,7 +88,7 @@ MechanicalModulatingThermostat_template = {
 }
 
 
-class MechanicalModulatingThermostat(Device):
+class MechanicalModulatingThermostat(Thermostat):
     """
     A mechanical thermostat have no network connection
     This model is modulating so all output are modulation signals
@@ -93,7 +120,7 @@ NetworkThermostat_template = {
 }
 
 
-class NetworkThermostat(Device):
+class NetworkThermostat(Thermostat):
     """
     A network thermostat has the ability to control loads
     direclty from outputs.
@@ -125,6 +152,8 @@ class NetworkRoomSensor(Device):
     But no outputs to activate loads.
     """
 
+    node_type: URIRef = s223.NetworkRoomSensor
+
     def __init__(self, config: Dict = NetworkRoomSensor_template, **kwargs):
         config["properties"] = config.get(
             "properties", NetworkRoomSensor_template["properties"]
@@ -145,7 +174,7 @@ HighStaticPressureStat_template = {
 }
 
 # Pressure
-class HighStaticPressureStat(Device):
+class HighStaticPressureStat(Pressurestat):
     def __init__(self, config: Dict = HighStaticPressureStat_template, **kwargs):
         config["properties"] = config.get(
             "properties", HighStaticPressureStat_template["properties"]
@@ -167,6 +196,8 @@ class FlowSwitch(Device):
     """
     A contact On Off controlled by static pressure in duct
     """
+
+    node_type: URIRef = s223.Flowswitch
 
     def __init__(self, config: Dict = flowswitch_template, **kwargs):
         config["properties"] = config.get(
