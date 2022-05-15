@@ -145,6 +145,7 @@ class TwoWayActuatedValve(TwoWayValve):
         super().__init__(config, **kwargs)
         self.position = self["actuator"]["position"]
         self.torque = self["actuator"]["torque"]
+        self["actuator"].actuates = self
 
 
 class ThreeWayMixingActuatedValve(ThreeWayValveMixing):
@@ -163,6 +164,7 @@ class ThreeWayMixingActuatedValve(ThreeWayValveMixing):
         super().__init__(config, **kwargs)
         self.position = self["actuator"]["position"]
         self.torque = self["actuator"]["torque"]
+        self["actuator"].actuates = self
 
 
 class ThreeWayDivertingActuatedValve(ThreeWayValveDiverting):
@@ -181,3 +183,4 @@ class ThreeWayDivertingActuatedValve(ThreeWayValveDiverting):
         super().__init__(config, **kwargs)
         self.position = self["actuator"]["position"]
         self.torque = self["actuator"]["torque"]
+        self["actuator"].actuates = self

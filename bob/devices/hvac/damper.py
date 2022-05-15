@@ -63,6 +63,7 @@ class ElectricalActuatedDamper(Damper):
         super().__init__(config, **kwargs)
         self.position = self["actuator"]["position"]
         self.torque = self["actuator"]["torque"]
+        self["actuator"].actuates = self
 
 
 PneumaticActuatedDamper_template = {
@@ -82,3 +83,4 @@ class PneumaticActuatedDamper(Damper):
         super().__init__(config, **kwargs)
         self.position = self["actuator"]["position"]
         self.torque = self["actuator"]["torque"]
+        self["actuator"].actuates = self
