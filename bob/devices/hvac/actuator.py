@@ -27,9 +27,10 @@ _namespace = s223
 # ACTUATORS
 
 
-class DamperActuator(Device):
-    node_type = s223.DamperActuator
+class Actuator(Device):
+    node_type = s223.Actuator
     position: PercentCommand
+    actuates: Device
     feedback: Percent
     torque: Nm
 
@@ -44,8 +45,8 @@ ElectricalActuator_template = {
 }
 
 
-class ElectricalActuator(DamperActuator):
-    node_type = s223.DamperActuator
+class ElectricalActuator(Actuator):
+    node_type = s223.Actuator
 
     def __init__(self, config: Dict = ElectricalActuator_template, **kwargs):
         config["properties"] = config.get(
@@ -65,8 +66,8 @@ PneumaticActuator_template = {
 }
 
 
-class PneumaticActuator(DamperActuator):
-    node_type = s223.DamperActuator
+class PneumaticActuator(Actuator):
+    node_type = s223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = PneumaticActuator_template, **kwargs):
