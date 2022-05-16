@@ -768,10 +768,11 @@ class Node(metaclass=NodeMetaclass):
 class ExternalReference(Node):
     """
     This will be subclassed by different specific datasources, this simplest
-    form uses hasRef as a literal, most likely a string.
+    form uses hasRef as a literal, most likely a string.  Note that this is
+    currently from the "ref" schema.
     """
 
-    node_type: URIRef = s223.ExternalReference
+    node_type: URIRef = ref.ExternalReference
     # isExternalReferenceOf: Property
     hasRef: Literal
 
