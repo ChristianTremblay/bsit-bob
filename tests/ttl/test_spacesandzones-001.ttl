@@ -1,6 +1,6 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_spacesandzones-001
 # imports: http://data.ashrae.org/standard223/1.0/model/all
-@prefix ex30: <urn:ex/test_system-007/> .
+@prefix ex33: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -12,325 +12,325 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_spacesandzones-001> ;
   rdfs:label "test_spacesandzones-001" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex30:00001 a s223:PhysicalSpace,
+ex33:00001 a s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "My Building" ;
-    s223:contains ex30:00002,
-        ex30:00003,
-        ex30:00004 .
-ex30:00002 a s223:PhysicalSpace,
+    s223:contains ex33:00002,
+        ex33:00003,
+        ex33:00004 .
+ex33:00002 a s223:PhysicalSpace,
         rec:Roof ;
     rdfs:label "Roof of building" ;
-    s223:isContainedIn ex30:00001 .
-ex30:00003 a s223:PhysicalSpace,
+    s223:isContainedIn ex33:00001 .
+ex33:00003 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Floor1" ;
-    s223:contains ex30:00005,
-        ex30:00006,
-        ex30:00007 ;
-    s223:isContainedIn ex30:00001 .
-ex30:00004 a s223:PhysicalSpace,
+    s223:contains ex33:00005,
+        ex33:00006,
+        ex33:00007 ;
+    s223:isContainedIn ex33:00001 .
+ex33:00004 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Basement" ;
-    s223:contains ex30:00008 ;
-    s223:encloses ex30:00033 ;
-    s223:isContainedIn ex30:00001 .
-ex30:00005 a s223:PhysicalSpace,
+    s223:contains ex33:00008 ;
+    s223:encloses ex33:00033 ;
+    s223:isContainedIn ex33:00001 .
+ex33:00005 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 1" ;
-    s223:encloses ex30:00009 ;
-    s223:isContainedIn ex30:00003 .
-ex30:00006 a s223:PhysicalSpace,
+    s223:encloses ex33:00009 ;
+    s223:isContainedIn ex33:00003 .
+ex33:00006 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 2" ;
-    s223:encloses ex30:00017 ;
-    s223:isContainedIn ex30:00003 .
-ex30:00007 a s223:PhysicalSpace,
+    s223:encloses ex33:00017 ;
+    s223:isContainedIn ex33:00003 .
+ex33:00007 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 3" ;
-    s223:encloses ex30:00025 ;
-    s223:isContainedIn ex30:00003 .
-ex30:00008 a s223:PhysicalSpace,
+    s223:encloses ex33:00025 ;
+    s223:isContainedIn ex33:00003 .
+ex33:00008 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Joel's Office" ;
-    s223:isContainedIn ex30:00004 .
-ex30:00009 a s223:Connectable,
+    s223:isContainedIn ex33:00004 .
+ex33:00009 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 1" ;
-    s223:airTransfer ex30:00012 ;
-    s223:doors ex30:00013 ;
-    s223:ductAirInlet ex30:00010 ;
-    s223:ductAirOutlet ex30:00011 ;
-    s223:hasConnectionPoint ex30:00010,
-        ex30:00011,
-        ex30:00012,
-        ex30:00013,
-        ex30:00014,
-        ex30:00015,
-        ex30:00016 ;
+    s223:airTransfer ex33:00012 ;
+    s223:doors ex33:00013 ;
+    s223:ductAirInlet ex33:00010 ;
+    s223:ductAirOutlet ex33:00011 ;
+    s223:hasConnectionPoint ex33:00010,
+        ex33:00011,
+        ex33:00012,
+        ex33:00013,
+        ex33:00014,
+        ex33:00015,
+        ex33:00016 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isContainedIn ex30:00041 ;
-    s223:isEnclosedIn ex30:00005 ;
-    s223:radiantCooling ex30:00016 ;
-    s223:radiantHeating ex30:00015 ;
-    s223:windows ex30:00014 .
-ex30:00010 a s223:ConnectionPoint,
+    s223:isContainedIn ex33:00041 ;
+    s223:isEnclosedIn ex33:00005 ;
+    s223:radiantCooling ex33:00016 ;
+    s223:radiantHeating ex33:00015 ;
+    s223:windows ex33:00014 .
+ex33:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Office 1.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00009 .
-ex30:00011 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex33:00009 .
+ex33:00011 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Office 1.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00009 .
-ex30:00012 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00009 .
+ex33:00012 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 1.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00009 .
-ex30:00013 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00009 .
+ex33:00013 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 1.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00009 .
-ex30:00014 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00009 .
+ex33:00014 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 1.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00009 .
-ex30:00015 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00009 .
+ex33:00015 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 1.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00009 .
-ex30:00016 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00009 .
+ex33:00016 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 1.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00009 .
-ex30:00017 a s223:Connectable,
+    s223:isConnectionPointOf ex33:00009 .
+ex33:00017 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 2" ;
-    s223:airTransfer ex30:00020 ;
-    s223:doors ex30:00021 ;
-    s223:ductAirInlet ex30:00018 ;
-    s223:ductAirOutlet ex30:00019 ;
-    s223:hasConnectionPoint ex30:00018,
-        ex30:00019,
-        ex30:00020,
-        ex30:00021,
-        ex30:00022,
-        ex30:00023,
-        ex30:00024 ;
+    s223:airTransfer ex33:00020 ;
+    s223:doors ex33:00021 ;
+    s223:ductAirInlet ex33:00018 ;
+    s223:ductAirOutlet ex33:00019 ;
+    s223:hasConnectionPoint ex33:00018,
+        ex33:00019,
+        ex33:00020,
+        ex33:00021,
+        ex33:00022,
+        ex33:00023,
+        ex33:00024 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isContainedIn ex30:00041 ;
-    s223:isEnclosedIn ex30:00006 ;
-    s223:radiantCooling ex30:00024 ;
-    s223:radiantHeating ex30:00023 ;
-    s223:windows ex30:00022 .
-ex30:00018 a s223:ConnectionPoint,
+    s223:isContainedIn ex33:00041 ;
+    s223:isEnclosedIn ex33:00006 ;
+    s223:radiantCooling ex33:00024 ;
+    s223:radiantHeating ex33:00023 ;
+    s223:windows ex33:00022 .
+ex33:00018 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Office 2.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00017 .
-ex30:00019 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex33:00017 .
+ex33:00019 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Office 2.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00017 .
-ex30:00020 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00017 .
+ex33:00020 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 2.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00017 .
-ex30:00021 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00017 .
+ex33:00021 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 2.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00017 .
-ex30:00022 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00017 .
+ex33:00022 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 2.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00017 .
-ex30:00023 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00017 .
+ex33:00023 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 2.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00017 .
-ex30:00024 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00017 .
+ex33:00024 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 2.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00017 .
-ex30:00025 a s223:Connectable,
+    s223:isConnectionPointOf ex33:00017 .
+ex33:00025 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Office 3" ;
-    s223:airTransfer ex30:00028 ;
-    s223:doors ex30:00029 ;
-    s223:ductAirInlet ex30:00026 ;
-    s223:ductAirOutlet ex30:00027 ;
-    s223:hasConnectionPoint ex30:00026,
-        ex30:00027,
-        ex30:00028,
-        ex30:00029,
-        ex30:00030,
-        ex30:00031,
-        ex30:00032 ;
+    s223:airTransfer ex33:00028 ;
+    s223:doors ex33:00029 ;
+    s223:ductAirInlet ex33:00026 ;
+    s223:ductAirOutlet ex33:00027 ;
+    s223:hasConnectionPoint ex33:00026,
+        ex33:00027,
+        ex33:00028,
+        ex33:00029,
+        ex33:00030,
+        ex33:00031,
+        ex33:00032 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isEnclosedIn ex30:00007 ;
-    s223:radiantCooling ex30:00032 ;
-    s223:radiantHeating ex30:00031 ;
-    s223:windows ex30:00030 .
-ex30:00026 a s223:ConnectionPoint,
+    s223:isEnclosedIn ex33:00007 ;
+    s223:radiantCooling ex33:00032 ;
+    s223:radiantHeating ex33:00031 ;
+    s223:windows ex33:00030 .
+ex33:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Office 3.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00025 .
-ex30:00027 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex33:00025 .
+ex33:00027 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Office 3.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00025 .
-ex30:00028 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00025 .
+ex33:00028 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 3.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00025 .
-ex30:00029 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00025 .
+ex33:00029 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 3.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00025 .
-ex30:00030 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00025 .
+ex33:00030 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 3.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00025 .
-ex30:00031 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00025 .
+ex33:00031 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 3.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00025 .
-ex30:00032 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00025 .
+ex33:00032 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Office 3.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00025 .
-ex30:00033 a s223:Connectable,
+    s223:isConnectionPointOf ex33:00025 .
+ex33:00033 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "Basement HVAC Space" ;
-    s223:airTransfer ex30:00036 ;
-    s223:doors ex30:00037 ;
-    s223:ductAirInlet ex30:00034 ;
-    s223:ductAirOutlet ex30:00035 ;
-    s223:hasConnectionPoint ex30:00034,
-        ex30:00035,
-        ex30:00036,
-        ex30:00037,
-        ex30:00038,
-        ex30:00039,
-        ex30:00040 ;
+    s223:airTransfer ex33:00036 ;
+    s223:doors ex33:00037 ;
+    s223:ductAirInlet ex33:00034 ;
+    s223:ductAirOutlet ex33:00035 ;
+    s223:hasConnectionPoint ex33:00034,
+        ex33:00035,
+        ex33:00036,
+        ex33:00037,
+        ex33:00038,
+        ex33:00039,
+        ex33:00040 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isEnclosedIn ex30:00004 ;
-    s223:radiantCooling ex30:00040 ;
-    s223:radiantHeating ex30:00039 ;
-    s223:windows ex30:00038 .
-ex30:00034 a s223:ConnectionPoint,
+    s223:isEnclosedIn ex33:00004 ;
+    s223:radiantCooling ex33:00040 ;
+    s223:radiantHeating ex33:00039 ;
+    s223:windows ex33:00038 .
+ex33:00034 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Basement HVAC Space.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00033 .
-ex30:00035 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex33:00033 .
+ex33:00035 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Basement HVAC Space.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00033 .
-ex30:00036 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00033 .
+ex33:00036 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00033 .
-ex30:00037 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00033 .
+ex33:00037 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00033 .
-ex30:00038 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00033 .
+ex33:00038 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00033 .
-ex30:00039 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00033 .
+ex33:00039 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00033 .
-ex30:00040 a s223:BidirectionalConnectionPoint,
+    s223:isConnectionPointOf ex33:00033 .
+ex33:00040 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Basement HVAC Space.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00033 .
-ex30:00041 a s223:HVACZone,
+    s223:isConnectionPointOf ex33:00033 .
+ex33:00041 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "Zone1" ;
-    s223:airInlet ex30:00042 ;
-    s223:airOutlet ex30:00043 ;
-    s223:contains ex30:00009,
-        ex30:00017 ;
+    s223:airInlet ex33:00042 ;
+    s223:airOutlet ex33:00043 ;
+    s223:contains ex33:00009,
+        ex33:00017 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasZoneConnectionPoint ex30:00042,
-        ex30:00043 .
-ex30:00042 a s223:InletZoneConnectionPoint,
+    s223:hasZoneConnectionPoint ex33:00042,
+        ex33:00043 .
+ex33:00042 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isZoneConnectionPointOf ex30:00041 .
-ex30:00043 a s223:OutletZoneConnectionPoint,
+    s223:isZoneConnectionPointOf ex33:00041 .
+ex33:00043 a s223:OutletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isZoneConnectionPointOf ex30:00041 .
+    s223:isZoneConnectionPointOf ex33:00041 .

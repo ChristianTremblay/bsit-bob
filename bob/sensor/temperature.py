@@ -17,6 +17,8 @@ class TemperatureSetpoint(Setpoint):
 
 class TemperatureSensor(Sensor):
     observesProperty: PropertyReference  # Temperature
+    hasMinRange: PropertyReference
+    hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
