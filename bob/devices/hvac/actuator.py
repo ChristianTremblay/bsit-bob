@@ -35,12 +35,22 @@ class Actuator(Device):
     feedback: Percent
     torque: Nm
 
+    def __init__(self, config: Dict = {}, **kwargs):
+        config["properties"] = config.get("properties", {})
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
 
 class ProportionalActuator(Actuator):
     node_type = s223.Actuator
     command: PercentCommand
     actuatesProperty: Property
     feedback: Percent
+
+    def __init__(self, config: Dict = {}, **kwargs):
+        config["properties"] = config.get("properties", {})
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
 
 class OnOffActuator(Actuator):
@@ -49,6 +59,11 @@ class OnOffActuator(Actuator):
     actuatesProperty: Property
     feedbackOpen: OnOffStatus
     feedbackClose: OnOffStatus
+
+    def __init__(self, config: Dict = {}, **kwargs):
+        config["properties"] = config.get("properties", {})
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
 
 ElectricalProportionalActuator_template = {
