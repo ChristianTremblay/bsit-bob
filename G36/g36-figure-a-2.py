@@ -43,13 +43,13 @@ from bob.core import (
 )
 from bob.devices.architectural import Window
 from bob.devices.electricity.starter import MotorStarter
-from bob.devices.hvac.actuator import ElectricalActuator
+from bob.devices.hvac.actuator import ElectricalProportionalActuator
 from bob.devices.hvac.coil import HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.gas import GasMonitor
 from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.devices.hvac.valve import TwoWayActuatedValve
+from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
 from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
 from bob.functions.occupancy import OccupancyControl
 from bob.properties import Flow, PercentCommand, Temperature, temperature
@@ -106,7 +106,7 @@ valve2w_template = {
         "onOffInlet": OnOffSignalInletConnectionPoint,
     },
     "properties": {("flowCoefficient", Gallons): {}},
-    "devices": {("actuator", ElectricalActuator): {}},
+    "devices": {("actuator", ElectricalProportionalActuator): {}},
 }
 
 vav_system_template = {
@@ -133,7 +133,7 @@ vav_system_template = {
     },
     "devices": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
-        ("DPR", ElectricalActuatedDamper): {
+        ("DPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with electrical actuator"
         },
         ("ZN-CO2", GasMonitor): {
@@ -141,7 +141,7 @@ vav_system_template = {
             "comment": "CO2 of space",
         },
         ("HTG-COIL", HotWaterCoil): {"comment": "Hot Water Coil"},
-        ("HTG-VLV", TwoWayActuatedValve): {"config": valve2w_template},
+        ("HTG-VLV", TwoWayActuatedProportionalValve): {"config": valve2w_template},
     },
 }
 
@@ -165,8 +165,8 @@ class VAV_FIGA2(System):
             "temperature_sensor"
         ].observesProperty
         self.supplyAirTemperature = self["DA-T"].observesProperty
-        self.damperPosition = self["DPR"]["actuator"].position
-        self.valvePosition = self["HTG-VLV"]["actuator"].position
+        self.damperPosition = self["DPR"]["actuator"].command
+        self.valvePosition = self["HTG-VLV"]["actuator"].command
 
         self["SA-F"].hasMeasurementLocation = self["DPR"].airInlet
         self["DA-T"].hasMeasurementLocation = self["HTG-COIL"].airOutlet

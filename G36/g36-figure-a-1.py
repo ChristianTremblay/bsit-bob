@@ -28,7 +28,7 @@ from bob.core import (
     unit,
 )
 from bob.devices.architectural import Window
-from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.gas import GasMonitor
 from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
@@ -97,7 +97,7 @@ vav_system_template = {
     },
     "devices": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
-        ("DPR", ElectricalActuatedDamper): {
+        ("DPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with electrical actuator"
         },
         ("ZN-CO2", GasMonitor): {
@@ -127,7 +127,7 @@ class VAV_FIGA1(System):
         self["zoneTemperature"].mapsTo = self["ZONE-THERMOSTAT"][
             "temperature_sensor"
         ].observesProperty
-        self["damperPosition"].mapsTo = self["DPR"]["actuator"].position
+        self["damperPosition"].mapsTo = self["DPR"].position
 
         self["SA-F"].hasMeasurementLocation = self["DPR"].airInlet
         self["DA-T"].hasMeasurementLocation = self["DPR"].airOutlet
