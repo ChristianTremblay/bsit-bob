@@ -396,12 +396,14 @@ exg3601:00055 a s223:Connectable,
     rdfs:label "DPR" ;
     s223:airInlet exg3601:00056 ;
     s223:airOutlet exg3601:00057 ;
+    s223:command exg3601:00060 ;
     s223:connectedThrough exg3601:00003,
         exg3601:00005 ;
     s223:contains exg3601:00058 ;
+    s223:feedback exg3601:00062 ;
     s223:hasConnectionPoint exg3601:00056,
         exg3601:00057 ;
-    s223:position exg3601:00060 ;
+    s223:position exg3601:00062 ;
     rdfs:comment "VAV Box Damper with electrical actuator" .
 exg3601:00056 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -421,8 +423,9 @@ exg3601:00058 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates exg3601:00055 ;
-    s223:hasConnectionPoint exg3601:00059 .
+    s223:actuatesProperty exg3601:00062 ;
+    s223:hasConnectionPoint exg3601:00059 ;
+    s223:hasProperty exg3601:00062 .
 exg3601:00059 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -433,13 +436,13 @@ exg3601:00060 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference exg3601:00061 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
 exg3601:00061 a ref:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
 exg3601:00062 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -451,7 +454,7 @@ exg3601:00062 a p223:Percent,
     qudt:unit unit:Percent .
 exg3601:00063 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
 exg3601:00064 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -463,7 +466,7 @@ exg3601:00064 a p223:Nm,
     qudt:unit unit:N-M .
 exg3601:00065 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
 exg3601:00066 a p223:GasMonitor,
         s223:Connectable,
         s223:Device ;
@@ -555,15 +558,17 @@ exg3601:00076 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "HTG-VLV" ;
+    s223:command exg3601:00085 ;
     s223:connectedFrom exg3601:00071 ;
     s223:connectedThrough exg3601:00007,
         exg3601:00121 ;
     s223:contains exg3601:00083 ;
+    s223:feedback exg3601:00087 ;
     s223:hasConnectionPoint exg3601:00077,
         exg3601:00078,
         exg3601:00079,
         exg3601:00080 ;
-    s223:position exg3601:00085 .
+    s223:position exg3601:00087 .
 exg3601:00077 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough exg3601:00121 ;
@@ -597,13 +602,14 @@ exg3601:00081 a p223:Gallons,
     qudt:unit unit:GAL_US .
 exg3601:00082 a ref:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
-    s223:hasRef "<TwoWayActuatedValve HTG-VLV at http://data.ashrae.org/standard223/data/g36-figure-a-3#00076>" .
+    s223:hasRef "<TwoWayActuatedProportionalValve HTG-VLV at http://data.ashrae.org/standard223/data/g36-figure-a-3#00076>" .
 exg3601:00083 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates exg3601:00076 ;
-    s223:hasConnectionPoint exg3601:00084 .
+    s223:actuatesProperty exg3601:00087 ;
+    s223:hasConnectionPoint exg3601:00084 ;
+    s223:hasProperty exg3601:00087 .
 exg3601:00084 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -614,13 +620,13 @@ exg3601:00085 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference exg3601:00086 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
 exg3601:00086 a ref:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
 exg3601:00087 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -632,7 +638,7 @@ exg3601:00087 a p223:Percent,
     qudt:unit unit:Percent .
 exg3601:00088 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
 exg3601:00089 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -644,7 +650,7 @@ exg3601:00089 a p223:Nm,
     qudt:unit unit:N-M .
 exg3601:00090 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
 exg3601:00091 a s223:Connectable,
         s223:Device,
         s223:Fan ;

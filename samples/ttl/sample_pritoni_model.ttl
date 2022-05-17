@@ -1915,12 +1915,14 @@ hvac_devices:00089 a s223:Connectable,
     rdfs:label "OADPR" ;
     s223:airInlet hvac_devices:00090 ;
     s223:airOutlet hvac_devices:00091 ;
+    s223:command hvac_devices:00094 ;
     s223:connectedThrough hvac:00004,
         hvac:00006 ;
     s223:contains hvac_devices:00092 ;
+    s223:feedback hvac_devices:00096 ;
     s223:hasConnectionPoint hvac_devices:00090,
         hvac_devices:00091 ;
-    s223:position hvac_devices:00094 ;
+    s223:position hvac_devices:00096 ;
     rdfs:comment "Outdoor air damper" .
 hvac_devices:00090 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1940,8 +1942,9 @@ hvac_devices:00092 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00089 ;
-    s223:hasConnectionPoint hvac_devices:00093 .
+    s223:actuatesProperty hvac_devices:00096 ;
+    s223:hasConnectionPoint hvac_devices:00093 ;
+    s223:hasProperty hvac_devices:00096 .
 hvac_devices:00093 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -1952,13 +1955,13 @@ hvac_devices:00094 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00095 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
 hvac_devices:00095 a ref:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00092>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00096 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -1970,7 +1973,7 @@ hvac_devices:00096 a p223:Percent,
     qudt:unit unit:Percent .
 hvac_devices:00097 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00092>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00098 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -1982,19 +1985,21 @@ hvac_devices:00098 a p223:Nm,
     qudt:unit unit:N-M .
 hvac_devices:00099 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00092>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00100 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "MADPR" ;
     s223:airInlet hvac_devices:00101 ;
     s223:airOutlet hvac_devices:00102 ;
+    s223:command hvac_devices:00105 ;
     s223:connectedThrough hvac:00006,
         hvac:00007 ;
     s223:contains hvac_devices:00103 ;
+    s223:feedback hvac_devices:00107 ;
     s223:hasConnectionPoint hvac_devices:00101,
         hvac_devices:00102 ;
-    s223:position hvac_devices:00105 ;
+    s223:position hvac_devices:00107 ;
     rdfs:comment "Mixed Air Damper" .
 hvac_devices:00101 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2014,8 +2019,9 @@ hvac_devices:00103 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00100 ;
-    s223:hasConnectionPoint hvac_devices:00104 .
+    s223:actuatesProperty hvac_devices:00107 ;
+    s223:hasConnectionPoint hvac_devices:00104 ;
+    s223:hasProperty hvac_devices:00107 .
 hvac_devices:00104 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -2026,13 +2032,13 @@ hvac_devices:00105 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00106 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
 hvac_devices:00106 a ref:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00103>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00107 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -2044,7 +2050,7 @@ hvac_devices:00107 a p223:Percent,
     qudt:unit unit:Percent .
 hvac_devices:00108 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00103>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00109 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -2056,19 +2062,21 @@ hvac_devices:00109 a p223:Nm,
     qudt:unit unit:N-M .
 hvac_devices:00110 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00103>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00111 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "EADPR" ;
     s223:airInlet hvac_devices:00112 ;
     s223:airOutlet hvac_devices:00113 ;
+    s223:command hvac_devices:00116 ;
     s223:connectedThrough hvac:00004,
         hvac:00007 ;
     s223:contains hvac_devices:00114 ;
+    s223:feedback hvac_devices:00118 ;
     s223:hasConnectionPoint hvac_devices:00112,
         hvac_devices:00113 ;
-    s223:position hvac_devices:00116 ;
+    s223:position hvac_devices:00118 ;
     rdfs:comment "Exhaust Air Damper" .
 hvac_devices:00112 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2088,8 +2096,9 @@ hvac_devices:00114 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00111 ;
-    s223:hasConnectionPoint hvac_devices:00115 .
+    s223:actuatesProperty hvac_devices:00118 ;
+    s223:hasConnectionPoint hvac_devices:00115 ;
+    s223:hasProperty hvac_devices:00118 .
 hvac_devices:00115 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -2100,13 +2109,13 @@ hvac_devices:00116 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00117 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
 hvac_devices:00117 a ref:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00114>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00118 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -2118,7 +2127,7 @@ hvac_devices:00118 a p223:Percent,
     qudt:unit unit:Percent .
 hvac_devices:00119 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00114>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00120 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -2130,7 +2139,7 @@ hvac_devices:00120 a p223:Nm,
     qudt:unit unit:N-M .
 hvac_devices:00121 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00114>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00122 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "AHU.outsideAirInlet" ;
@@ -2411,13 +2420,15 @@ hvac_devices:00158 a s223:Connectable,
     rdfs:label "VAV1_damper" ;
     s223:airInlet hvac_devices:00159 ;
     s223:airOutlet hvac_devices:00160 ;
+    s223:command hvac_devices:00163 ;
     s223:connectedThrough hvac:00008,
         hvac:00017 ;
     s223:connectedTo hvac_devices:00169 ;
     s223:contains hvac_devices:00161 ;
+    s223:feedback hvac_devices:00165 ;
     s223:hasConnectionPoint hvac_devices:00159,
         hvac_devices:00160 ;
-    s223:position hvac_devices:00163 ;
+    s223:position hvac_devices:00165 ;
     rdfs:comment "VAV Box 1 Air Damper" .
 hvac_devices:00159 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2437,8 +2448,9 @@ hvac_devices:00161 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00158 ;
-    s223:hasConnectionPoint hvac_devices:00162 .
+    s223:actuatesProperty hvac_devices:00165 ;
+    s223:hasConnectionPoint hvac_devices:00162 ;
+    s223:hasProperty hvac_devices:00165 .
 hvac_devices:00162 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -2449,13 +2461,13 @@ hvac_devices:00163 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00164 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
 hvac_devices:00164 a ref:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00161>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00165 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -2467,7 +2479,7 @@ hvac_devices:00165 a p223:Percent,
     qudt:unit unit:Percent .
 hvac_devices:00166 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00161>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00167 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -2479,7 +2491,7 @@ hvac_devices:00167 a p223:Nm,
     qudt:unit unit:N-M .
 hvac_devices:00168 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00161>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00169 a s223:Coil,
         s223:Connectable,
         s223:Device,
@@ -2614,13 +2626,15 @@ hvac_devices:00183 a s223:Connectable,
     rdfs:label "VAV2_damper" ;
     s223:airInlet hvac_devices:00184 ;
     s223:airOutlet hvac_devices:00185 ;
+    s223:command hvac_devices:00188 ;
     s223:connectedThrough hvac:00008,
         hvac:00019 ;
     s223:connectedTo hvac_devices:00194 ;
     s223:contains hvac_devices:00186 ;
+    s223:feedback hvac_devices:00190 ;
     s223:hasConnectionPoint hvac_devices:00184,
         hvac_devices:00185 ;
-    s223:position hvac_devices:00188 ;
+    s223:position hvac_devices:00190 ;
     rdfs:comment "VAV Box 2 Air Damper" .
 hvac_devices:00184 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2640,8 +2654,9 @@ hvac_devices:00186 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00183 ;
-    s223:hasConnectionPoint hvac_devices:00187 .
+    s223:actuatesProperty hvac_devices:00190 ;
+    s223:hasConnectionPoint hvac_devices:00187 ;
+    s223:hasProperty hvac_devices:00190 .
 hvac_devices:00187 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -2652,13 +2667,13 @@ hvac_devices:00188 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00189 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
 hvac_devices:00189 a ref:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00186>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00190 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -2670,7 +2685,7 @@ hvac_devices:00190 a p223:Percent,
     qudt:unit unit:Percent .
 hvac_devices:00191 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00186>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00192 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -2682,7 +2697,7 @@ hvac_devices:00192 a p223:Nm,
     qudt:unit unit:N-M .
 hvac_devices:00193 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00186>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00194 a s223:Coil,
         s223:Connectable,
         s223:Device,
