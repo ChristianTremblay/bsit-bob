@@ -26,7 +26,7 @@ from bob.core import (
     unit,
 )
 from bob.devices.hvac.coil import ChilledWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.fan import Fan
 from bob.role import Exhaust, Supply
 from bob.sensor.temperature import AirTemperatureSensor
@@ -70,8 +70,12 @@ config = {
             "comment": "Return Fan",
             "electricalInlet": ElectricalInletConnectionPoint,
         },
-        ("OAD-1", ElectricalActuatedDamper): {"comment": "Outside Air Damper"},
-        ("RAD-1", ElectricalActuatedDamper): {"comment": "Return Air Damper"},
+        ("OAD-1", ElectricalActuatedProportionalDamper): {
+            "comment": "Outside Air Damper"
+        },
+        ("RAD-1", ElectricalActuatedProportionalDamper): {
+            "comment": "Return Air Damper"
+        },
         ("CWC-1", ChilledWaterCoil): {"comment": "Chilled Water coil"},
     },
 }

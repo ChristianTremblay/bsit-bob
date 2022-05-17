@@ -9,7 +9,7 @@ from bob.connections.light import LightVisibleConnection
 from bob.core import bind_model_namespace, dump, p223, quantitykind, unit
 from bob.devices.architectural import Window
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.lighting.light import Luminaire

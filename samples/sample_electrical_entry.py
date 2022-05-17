@@ -24,7 +24,7 @@ from bob.devices.electricity.distribution import (
     TwoPolesMainCircuitBreaker,
 )
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.lighting.light import Luminaire
