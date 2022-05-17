@@ -25,25 +25,25 @@ gasmonitor_template = {
     "sensors": {
         ("label_of_sensor_1", COSensor): {
             "hasExternalReference": "bacnet://",
-#             "properties": {
-#                 ("hasMinRange", QuantifiableObservableProperty): {
-#                     "hasQuantityKind": quantitykind.DimensionlessRatio,
-#                     "unit": unit.PPM,
-#                 },
-#                 ("hasMaxRange", QuantifiableObservableProperty): {
-#                     "hasQuantityKind": quantitykind.DimensionlessRatio,
-#                     "unit": unit.PPM,
-#                 },
-#             },
+            #             "properties": {
+            #                 ("hasMinRange", QuantifiableObservableProperty): {
+            #                     "hasQuantityKind": quantitykind.DimensionlessRatio,
+            #                     "unit": unit.PPM,
+            #                 },
+            #                 ("hasMaxRange", QuantifiableObservableProperty): {
+            #                     "hasQuantityKind": quantitykind.DimensionlessRatio,
+            #                     "unit": unit.PPM,
+            #                 },
+            #             },
         },
         ("label_of_sensor_2", NO2Sensor): {
             "hasExternalReference": "bacnet://",
-#             "hasMinRange": QuantifiableObservableProperty(
-#                 0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
-#             ),
-#             "hasMaxRange": QuantifiableObservableProperty(
-#                 100, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
-#             ),
+            #             "hasMinRange": QuantifiableObservableProperty(
+            #                 0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+            #             ),
+            #             "hasMaxRange": QuantifiableObservableProperty(
+            #                 100, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+            #             ),
         },
     },
     "properties": {},
