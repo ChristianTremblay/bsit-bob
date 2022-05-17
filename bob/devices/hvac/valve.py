@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, Union
 
 from rdflib import URIRef
 
@@ -11,6 +11,7 @@ from bob.connections.naturalgas import (
     NaturalGasOutletConnectionPoint,
 )
 from bob.properties.ratio import PercentCommand
+from bob.properties.states import OnOffCommand, OnOffStatus, OpenCloseStatus
 
 from ...connections.electricity import (
     ModulationSignalInletConnectionPoint,
@@ -24,9 +25,9 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, PropertyReference, s223
+from ...core import Device, Node, PropertyReference, s223
 from ...properties import Gallons, Percent
-from .actuator import ElectricalActuator
+from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
 _namespace = s223
 
@@ -71,8 +72,14 @@ valve_3w_mixing_template = {
 
 class Valve(Device):
     node_type: URIRef = s223.Valve
-    position: PropertyReference
+    position: PropertyReference  # Union[Percent,OnOffStatus,OpenCloseStatus]
+    command: PropertyReference
     feedback: PropertyReference
+
+    def __init__(self, config: Dict = {}, **kwargs):
+        super().__init__(config, **kwargs)
+        # TODO find a way to do that
+        # self.position = self.feedback if self.feedback else self.command
 
 
 class TwoWayValve(Valve):
@@ -126,61 +133,150 @@ class PneumaticValve(TwoWayValve):
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 
 
-ActuatedValve_template = {
-    "devices": {("actuator", ElectricalActuator): {}},
+ActuatedProportionalValve_template = {
+    "devices": {("actuator", ElectricalProportionalActuator): {}},
+    "properties": {},
+}
+
+ActuatedOnOffValve_template = {
+    "devices": {("actuator", ElectricalOnOffActuator): {}},
     "properties": {},
 }
 
 
-class TwoWayActuatedValve(TwoWayValve):
-    node_type: URIRef = s223.Valve
-
-    def __init__(
-        self, config: Dict = {**ActuatedValve_template, **valve2w_template}, **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties", {**ActuatedValve_template, **valve2w_template}["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
-        self.position = self["actuator"]["position"]
-        self.torque = self["actuator"]["torque"]
-        self["actuator"].actuates = self
-
-
-class ThreeWayMixingActuatedValve(ThreeWayValveMixing):
+class TwoWayActuatedProportionalValve(TwoWayValve):
     node_type: URIRef = s223.Valve
 
     def __init__(
         self,
-        config: Dict = {**ActuatedValve_template, **valve_3w_mixing_template},
+        config: Dict = {**ActuatedProportionalValve_template, **valve2w_template},
         **kwargs
     ):
         config["properties"] = config.get(
             "properties",
-            {**ActuatedValve_template, **valve_3w_mixing_template}["properties"],
+            {**ActuatedProportionalValve_template, **valve2w_template}["properties"],
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.position = self["actuator"]["position"]
-        self.torque = self["actuator"]["torque"]
-        self["actuator"].actuates = self
+        self.command = self["actuator"]["command"]
+        self.feedback = self["actuator"]["feedback"]
+        self.position = self.feedback if self.feedback else self.command
+        self["actuator"].actuatesProperty = self.position
 
 
-class ThreeWayDivertingActuatedValve(ThreeWayValveDiverting):
+class TwoWayActuatedOnOffValve(TwoWayValve):
     node_type: URIRef = s223.Valve
 
     def __init__(
         self,
-        config: Dict = {**ActuatedValve_template, **valve_3w_diverting_template},
+        config: Dict = {**ActuatedOnOffValve_template, **valve2w_template},
         **kwargs
     ):
         config["properties"] = config.get(
             "properties",
-            {**ActuatedValve_template, **valve_3w_diverting_template}["properties"],
+            {**ActuatedOnOffValve_template, **valve2w_template}["properties"],
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.position = self["actuator"]["position"]
-        self.torque = self["actuator"]["torque"]
-        self["actuator"].actuates = self
+        self.feedbackOpen = self["actuator"]["feedbackOpen"]
+        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.position = (
+            self.command
+        )  # feedbackOpen and close can't be used here... at least not for now or we'll end up with 3 states, [open, close, moving]
+        self["actuator"].actuatesProperty = self.position
+
+
+class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
+    node_type: URIRef = s223.Valve
+
+    def __init__(
+        self,
+        config: Dict = {
+            **ActuatedProportionalValve_template,
+            **valve_3w_mixing_template,
+        },
+        **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties",
+            {**ActuatedProportionalValve_template, **valve_3w_mixing_template}[
+                "properties"
+            ],
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.command = self["actuator"]["command"]
+        self.feedback = self["actuator"]["feedback"]
+        self.position = self.feedback if self.feedback else self.command
+        self["actuator"].actuatesProperty = self.position
+
+
+class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
+    node_type: URIRef = s223.Valve
+
+    def __init__(
+        self,
+        config: Dict = {**ActuatedOnOffValve_template, **valve_3w_mixing_template},
+        **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties",
+            {**ActuatedOnOffValve_template, **valve_3w_mixing_template}["properties"],
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.feedbackOpen = self["actuator"]["feedbackOpen"]
+        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.position = (
+            self.command
+        )  # feedbackOpen and close can't be used here... at least not for now or we'll end up with 3 states, [open, close, moving]
+        self["actuator"].actuatesProperty = self.position
+
+
+class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
+    node_type: URIRef = s223.Valve
+
+    def __init__(
+        self,
+        config: Dict = {
+            **ActuatedProportionalValve_template,
+            **valve_3w_diverting_template,
+        },
+        **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties",
+            {**ActuatedProportionalValve_template, **valve_3w_diverting_template}[
+                "properties"
+            ],
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.command = self["actuator"]["command"]
+        self.feedback = self["actuator"]["feedback"]
+        self.position = self.feedback if self.feedback else self.command
+        self["actuator"].actuatesProperty = self.position
+
+
+class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
+    node_type: URIRef = s223.Valve
+
+    def __init__(
+        self,
+        config: Dict = {**ActuatedOnOffValve_template, **valve_3w_diverting_template},
+        **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties",
+            {**ActuatedOnOffValve_template, **valve_3w_diverting_template}[
+                "properties"
+            ],
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.feedbackOpen = self["actuator"]["feedbackOpen"]
+        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.position = (
+            self.command
+        )  # feedbackOpen and close can't be used here... at least not for now or we'll end up with 3 states, [open, close, moving]
+        self["actuator"].actuatesProperty = self.position

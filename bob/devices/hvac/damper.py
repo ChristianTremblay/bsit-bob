@@ -1,6 +1,8 @@
-from typing import Dict
+from typing import Dict, Union
 
 from rdflib import URIRef
+
+from bob.properties.states import OnOffStatus, OpenCloseStatus
 
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
@@ -18,9 +20,9 @@ from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import Device, PropertyReference, p223, s223
+from ...core import Device, Node, PropertyReference, p223, s223
 from ...properties import Nm, Percent, PercentCommand
-from .actuator import ElectricalActuator, PneumaticActuator
+from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator, PneumaticOnOffActuator, PneumaticProportionalActuator
 
 _namespace = s223
 
@@ -31,9 +33,9 @@ class Damper(Device):
     node_type = s223.Damper
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position: PropertyReference
+    position: PropertyReference  # Union[Percent,OnOffStatus,OpenCloseStatus]
+    command: PropertyReference
     feedback: PropertyReference
-
 
 class GravityDamper(Damper):
     node_type = s223.Damper
@@ -46,41 +48,80 @@ class FireDamper(Damper):
 # DAMPER + ACTUATORS
 
 
-ElectricalActuatedDamper_template = {
-    "devices": {("actuator", ElectricalActuator): {}},
+ElectricalActuatedProportionalDamper_template = {
+    "devices": {("actuator", ElectricalProportionalActuator): {}},
+    "properties": {},
+}
+
+ElectricalActuatedOnOffDamper_template = {
+    "devices": {("actuator", ElectricalOnOffActuator): {}},
     "properties": {},
 }
 
 
-class ElectricalActuatedDamper(Damper):
+class ElectricalActuatedProportionalDamper(Damper):
     node_type: URIRef = s223.Damper
 
-    def __init__(self, config: Dict = ElectricalActuatedDamper_template, **kwargs):
+    def __init__(self, config: Dict = ElectricalActuatedProportionalDamper_template, **kwargs):
         config["properties"] = config.get(
-            "properties", ElectricalActuatedDamper_template["properties"]
+            "properties", ElectricalActuatedProportionalDamper_template["properties"]
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.position = self["actuator"]["position"]
-        self.torque = self["actuator"]["torque"]
-        self["actuator"].actuates = self
+        self.command = self["actuator"]["command"]
+        self.feedback = self["actuator"]["feedback"]
+        self.position = self.feedback if self.feedback else self.command
+        self["actuator"].actuatesProperty = self.position
 
+class ElectricalActuatedOnOffDamper(Damper):
+    node_type: URIRef = s223.Damper
 
-PneumaticActuatedDamper_template = {
-    "devices": {("actuator", PneumaticActuator): {}},
+    def __init__(self, config: Dict = ElectricalActuatedOnOffDamper_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", ElectricalActuatedOnOffDamper_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.command = self["actuator"]["command"]
+        self.feedbackOpen = self["actuator"]["feedbackOpen"]
+        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.position = self.command # feedbackOpen and close can't be used here... at least not for now or we'll end up with 3 states, [open, close, moving]
+        self["actuator"].actuatesProperty = self.position
+
+PneumaticActuatedProportionalDamper_template = {
+    "devices": {("actuator", PneumaticProportionalActuator): {}},
+    "properties": {},
+}
+PneumaticActuatedOnOffDamper_template = {
+    "devices": {("actuator", PneumaticOnOffActuator): {}},
     "properties": {},
 }
 
-
-class PneumaticActuatedDamper(Damper):
+class PneumaticActuatedProportionalDamper(Damper):
     node_type = s223.Damper
 
-    def __init__(self, config: Dict = PneumaticActuatedDamper_template, **kwargs):
+    def __init__(self, config: Dict = PneumaticActuatedProportionalDamper_template, **kwargs):
         config["properties"] = config.get(
-            "properties", PneumaticActuatedDamper_template["properties"]
+            "properties", PneumaticActuatedProportionalDamper_template["properties"]
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.position = self["actuator"]["position"]
-        self.torque = self["actuator"]["torque"]
-        self["actuator"].actuates = self
+        self.command = self["actuator"]["command"]
+        self.feedback = self["actuator"]["feedback"]
+        self.position = self.feedback if self.feedback else self.command
+        self["actuator"].actuatesProperty = self.position
+
+class PneumaticActuatedOnOffDamper(Damper):
+    node_type = s223.Damper
+
+    def __init__(self, config: Dict = PneumaticActuatedOnOffDamper_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", PneumaticActuatedOnOffDamper_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.command = self["actuator"]["command"]
+        self.feedbackOpen = self["actuator"]["feedbackOpen"]
+        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.position = self.command # feedbackOpen and close can't be used here... at least not for now or we'll end up with 3 states, [open, close, moving]
+        self["actuator"].actuatesProperty = self.position
