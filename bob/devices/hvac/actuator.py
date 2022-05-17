@@ -35,11 +35,13 @@ class Actuator(Device):
     feedback: Percent
     torque: Nm
 
+
 class ProportionalActuator(Actuator):
     node_type = s223.Actuator
     command: PercentCommand
     actuatesProperty: Property
     feedback: Percent
+
 
 class OnOffActuator(Actuator):
     node_type = s223.Actuator
@@ -47,6 +49,7 @@ class OnOffActuator(Actuator):
     actuatesProperty: Property
     feedbackOpen: OnOffStatus
     feedbackClose: OnOffStatus
+
 
 ElectricalProportionalActuator_template = {
     "cp": {"electricalInlet": Electricity_24V_60HzInletConnectionPoint},
@@ -72,12 +75,15 @@ ElectricalOnOffActuator_template = {
 class ElectricalProportionalActuator(ProportionalActuator):
     node_type = s223.Actuator
 
-    def __init__(self, config: Dict = ElectricalProportionalActuator_template, **kwargs):
+    def __init__(
+        self, config: Dict = ElectricalProportionalActuator_template, **kwargs
+    ):
         config["properties"] = config.get(
             "properties", ElectricalProportionalActuator_template["properties"]
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+
 
 class ElectricalOnOffActuator(OnOffActuator):
     node_type = s223.Actuator
@@ -88,6 +94,7 @@ class ElectricalOnOffActuator(OnOffActuator):
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+
 
 PneumaticProportionalActuator_template = {
     "cp": {},
@@ -108,6 +115,7 @@ PneumaticOnOffActuator_template = {
     },
 }
 
+
 class PneumaticProportionalActuator(ProportionalActuator):
     node_type = s223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
@@ -118,6 +126,7 @@ class PneumaticProportionalActuator(ProportionalActuator):
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+
 
 class PneumaticOnOffActuator(OnOffActuator):
     node_type = s223.Actuator
