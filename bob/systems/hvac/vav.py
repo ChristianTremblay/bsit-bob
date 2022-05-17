@@ -15,9 +15,9 @@ from ...connections.air import (
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
 from ...core import Device, PropertyReference, System, p223, unit
 from ...devices.hvac.coil import HotWaterCoil
-from ...devices.hvac.damper import Damper, ElectricalActuatedDamper
+from ...devices.hvac.damper import Damper, ElectricalActuatedProportionalDamper
 from ...devices.hvac.fan import Fan
-from ...devices.hvac.valve import TwoWayActuatedValve
+from ...devices.hvac.valve import TwoWayActuatedProportionalValve
 from ...sensor.flow import AirFlowSensor
 
 _namespace = p223
@@ -35,7 +35,9 @@ vav_system_template = {
             "comment": "Temperature of space",
         },
     },
-    "devices": {("DPR", ElectricalActuatedDamper): {"comment": "VAV Box Damper"}},
+    "devices": {
+        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"}
+    },
 }
 
 vav_dual_template = {
@@ -52,9 +54,9 @@ vav_dual_template = {
         },
     },
     "devices": {
-        ("DPR", ElectricalActuatedDamper): {"comment": "VAV Box Damper"},
+        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Hot Water Coil"},
-        ("HTGVLV", TwoWayActuatedValve): {"comment": "VAV Box Damper"},
+        ("HTGVLV", TwoWayActuatedProportionalValve): {"comment": "VAV Box Damper"},
         ("FAN", Fan): {"comment": "Fan"},
     },
 }
@@ -73,7 +75,7 @@ vav_withreheat_template = {
         },
     },
     "devices": {
-        ("DPR", ElectricalActuatedDamper): {"comment": "VAV Box Damper"},
+        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
         ("HWC", HotWaterCoil): {"comment": "VAV Hot Water Coil"},
     },
 }
