@@ -11,8 +11,8 @@ from bob.externalreference.bacnet import BACnetDevice, BACnetReference
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
-hd.vav1["VAV1_ZN-T"].observesProperty.hasValue = 20.3
-hd.vav2["VAV2_ZN-T"].observesProperty.hasValue = 22.2
+hd.vav1["VAV1_ZN-T"].observesProperty.set_value(20.3)
+hd.vav2["VAV2_ZN-T"].observesProperty.set_value(22.2)
 
 
 fn.open_office_occ_control.hasOccupancyStatus.hasValue = 1
