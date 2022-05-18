@@ -59,7 +59,7 @@ class ElectricalSystemOutletConnectionPoint(
 
 # === 575V 60Hz
 
-Electricity_575V_60Hz = Medium(node_iri=s223["Electricity-575V_60Hz"])
+Electricity_575V_60Hz = Medium(node_iri=s223["Electricity-575V-60Hz"])
 
 
 class Electricity_575V_60HzConnection(Connection):
@@ -103,7 +103,7 @@ class Electricity_575V_60HzSystemOutletConnectionPoint(
 
 # === 480V 60Hz
 
-Electricity_480V_60Hz = Medium(node_iri=s223["Electricity-480V_60Hz"])
+Electricity_480V_60Hz = Medium(node_iri=s223["Electricity-480V-60Hz"])
 
 
 class Electricity_480V_60HzConnection(Connection):
@@ -148,7 +148,7 @@ class Electricity_480V_60HzSystemOutletConnectionPoint(
 # === 347V 60Hz
 # 1 phase of 575V
 
-Electricity_347V_60Hz = Medium(node_iri=s223["Electricity-347V_60Hz"])
+Electricity_347V_60Hz = Medium(node_iri=s223["Electricity-347V-60Hz"])
 
 
 class Electricity_347V_60HzConnection(Connection):
@@ -193,7 +193,7 @@ class Electricity_347V_60HzSystemOutletConnectionPoint(
 # === 277V 60Hz
 # 1 phase of 480V (US)
 
-Electricity_277V_60Hz = Medium(node_iri=s223["Electricity-277V_60Hz"])
+Electricity_277V_60Hz = Medium(node_iri=s223["Electricity-277V-60Hz"])
 
 
 class Electricity_277V_60HzConnection(Connection):
@@ -238,7 +238,7 @@ class Electricity_277V_60HzSystemOutletConnectionPoint(
 # === 208V 60Hz
 # 3 phase
 
-Electricity_208V_60Hz = Medium(node_iri=s223["Electricity-208V_60Hz"])
+Electricity_208V_60Hz = Medium(node_iri=s223["Electricity-208V-60Hz"])
 
 
 class Electricity_208V_60HzConnection(Connection):
@@ -287,7 +287,7 @@ class Electricity_208V_60HzSystemOutletConnectionPoint(
 # Each phase can be used to provide 120VAC
 
 
-Electricity_120V_240V_60Hz = Medium(node_iri=s223["Electricity-120V_240V_60Hz"])
+Electricity_120V_240V_60Hz = Medium(node_iri=s223["Electricity-120V-240V-60Hz"])
 
 
 class Electricity_120V_240V_60HzConnection(Connection):
@@ -332,7 +332,7 @@ class lectricity_120V_240V_60HzSystemOutletConnectionPoint(
 # === 240V 60Hz
 
 
-Electricity_240V_60Hz = Medium(node_iri=s223["Electricity-240V_60Hz"])
+Electricity_240V_60Hz = Medium(node_iri=s223["Electricity-240V-60Hz"])
 
 
 class Electricity_240V_60HzConnection(Connection):
@@ -377,7 +377,7 @@ class Electricity_240V_60HzSystemOutletConnectionPoint(
 # === 120V 60Hz
 
 
-Electricity_120V_60Hz = Medium(node_iri=s223["Electricity-120V_60Hz"])
+Electricity_120V_60Hz = Medium(node_iri=s223["Electricity-120V-60Hz"])
 
 
 class Electricity_120V_60HzConnection(Connection):
@@ -422,7 +422,7 @@ class Electricity_120V_60HzSystemOutletConnectionPoint(
 # === 24V 60Hz
 
 
-Electricity_24V_60Hz = Medium(node_iri=s223["Electricity-24V_60Hz"])
+Electricity_24V_60Hz = Medium(node_iri=s223["Electricity-24V-60Hz"])
 
 
 class Electricity_24V_60HzConnection(Connection):
