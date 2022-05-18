@@ -72,6 +72,9 @@ class QuantifiableProperty(Property):
                 raise TypeError(f"decimal expected: {init_value}")
 
         super().__init__(init_value, **kwargs)
+    
+    def set_value(self, value):
+        self.hasValue = Literal(value, datatype=XSD.decimal)
 
 
 class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
