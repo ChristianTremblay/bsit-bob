@@ -8,12 +8,12 @@ _namespace = p223
 
 class Percent(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    unit: URIRef = unit.Percent
+    unit: URIRef = unit.PERCENT
 
 
 class PercentCommand(QuantifiableActuatableProperty):
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    unit: URIRef = unit.Percent
+    unit: URIRef = unit.PERCENT
 
 
 class RPM(QuantifiableObservableProperty):
