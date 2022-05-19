@@ -4,8 +4,11 @@ from ..core import (
     EnumerationKind,
     ExternalReference,
     Medium,
+    OnOffEnum,
+    OccupancyEnum,
     SchemaGraph,
     Substance,
+    YesNoEnum,
     p223,
     quantitykind,
     unit,
@@ -18,6 +21,7 @@ from ..property import (
     EnumeratedObservableProperty,
     ObservableProperty,
 )
+from ..enum import Smoke
 
 _namespace = p223
 
@@ -30,34 +34,34 @@ _namespace = p223
 class OnOffStatus(EnumeratedObservableProperty):
     node_type: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
+    hasEnumerationKind: OnOffEnum
 
 
 class OnOffCommand(EnumeratedActuatableProperty):
     node_type: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
-
-
-Occupancy = EnumerationKind(node_iri=p223["EnumerationKind-Occupancy"])
+    hasEnumerationKind: OnOffEnum
 
 
 class Schedule(EnumerableProperty):
     node_type: URIRef = s223.EnumerableProperty
     hasExternalReference: ExternalReference
+    hasEnumerationKind: OccupancyEnum
 
 
 class OccupancyStatus(EnumeratedObservableProperty):
     node_type: URIRef = s223.EnumeratedObservableProperty
-    hasEnumerationKind: EnumerationKind = Occupancy
+    hasEnumerationKind: OccupancyEnum
 
 
-class Movement(ObservableProperty):
+class Movement(EnumeratedObservableProperty):
+    node_type: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
+    hasEnumerationKind: OnOffEnum
 
 
-Smoke = Substance(node_iri=p223["Substance-Smoke"])
-
-
-class SmokePresence(ObservableProperty):
+class SmokePresence(EnumeratedObservableProperty):
     ofMedium: Medium  # set from the sensor
     ofSubstance: Substance = Smoke
     # isObservedBy: Sensor
+    hasEnumerationKind: YesNoEnum
