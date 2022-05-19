@@ -9,8 +9,15 @@ from ..core import (
     p223,
     quantitykind,
     unit,
+    s223,
 )
-from ..property import ActuatableProperty, ObservableProperty
+from ..property import (
+    ActuatableProperty,
+    EnumerableProperty,
+    EnumeratedActuatableProperty,
+    EnumeratedObservableProperty,
+    ObservableProperty,
+)
 
 _namespace = p223
 
@@ -20,26 +27,26 @@ _namespace = p223
 # which is not what we want. We want to know where to find this real time status.
 
 
-class OnOffStatus(ObservableProperty):
-    node_type: URIRef = p223.OnOffStatus
+class OnOffStatus(EnumeratedObservableProperty):
+    node_type: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
 
 
-class OnOffCommand(ActuatableProperty):
-    node_type: URIRef = p223.OnOffCommand
+class OnOffCommand(EnumeratedActuatableProperty):
+    node_type: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
 
 
 Occupancy = EnumerationKind(node_iri=p223["EnumerationKind-Occupancy"])
 
 
-class Schedule(ObservableProperty):
-    node_type: URIRef = p223.Schedule
+class Schedule(EnumerableProperty):
+    node_type: URIRef = s223.EnumerableProperty
     hasExternalReference: ExternalReference
 
 
-class OccupancyStatus(ObservableProperty):
-    node_type: URIRef = p223.OccupancyStatus
+class OccupancyStatus(EnumeratedObservableProperty):
+    node_type: URIRef = s223.EnumeratedObservableProperty
     hasEnumerationKind: EnumerationKind = Occupancy
 
 
