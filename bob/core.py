@@ -985,6 +985,16 @@ class PositionStatusEnum(EnumerationKind):
     _data_graph: Graph = schema_graph
 
 
+class OccupancyEnum(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-Occupancy"]
+    _data_graph: Graph = schema_graph
+
+
+class YesNoEnum(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-YesNo"]
+    _data_graph: Graph = schema_graph
+
+
 Air = Medium(node_iri=s223["Medium-Air"])
 Water = Medium(node_iri=s223["Medium-Water"])
 Light = Medium(node_iri=s223["Medium-Light"])
