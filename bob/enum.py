@@ -1,6 +1,6 @@
-from rdflib import URIRef
+from rdflib import Graph, URIRef
 
-from .core import Role, s223
+from .core import Role, s223, OnOffEnum, PositionStatusEnum
 
 _namespace = s223
 
@@ -10,6 +10,29 @@ Primary = Role(node_iri=s223.Primary)
 Secondary = Role(node_iri=s223.Secondary)
 Supply = Role(node_iri=s223.Supply)
 Return = Role(node_iri=s223.Return)
+
+"""
+class Direction(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-Direction"]
+    _data_graph: Graph = schema_graph
+
+
+Inlet = Direction(node_iri=s223["Direction-Inlet"])
+Outlet = Direction(node_iri=s223["Direction-Outlet"])
+Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
+"""
+
+
+OnOff_On = OnOffEnum(nore_iri=s223["OnOff-On"])
+OnOff_Off = OnOffEnum(nore_iri=s223["OnOff-Off"])
+OnOff_Unknown = OnOffEnum(nore_iri=s223["OnOff-Unknown"])
+
+
+PositionStatus_Closed = PositionStatusEnum(nore_iri=s223["PositionStatus-Closed"])
+PositionStatus_Open = PositionStatusEnum(nore_iri=s223["PositionStatus-Open"])
+PositionStatus_Moving = PositionStatusEnum(nore_iri=s223["PositionStatus-Moving"])
+PositionStatus_Unknown = PositionStatusEnum(nore_iri=s223["PositionStatus-Unknown"])
+
 
 """
 s223:EnumerationKind-Direction

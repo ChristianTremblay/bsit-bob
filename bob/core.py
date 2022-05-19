@@ -939,6 +939,7 @@ class Container(Node):
 #   Enumerations
 #
 
+
 class EnumerationKind(Node):
     node_type: URIRef = s223.EnumerationKind
     _data_graph: Graph = schema_graph
@@ -952,6 +953,7 @@ class Direction(EnumerationKind):
 Inlet = Direction(node_iri=s223["Direction-Inlet"])
 Outlet = Direction(node_iri=s223["Direction-Outlet"])
 Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
+
 
 class Medium(EnumerationKind):
     node_type: URIRef = s223["EnumerationKind-Medium"]
@@ -970,6 +972,16 @@ class Domain(EnumerationKind):
 
 class Role(EnumerationKind):
     node_type: URIRef = s223["EnumerationKind-Role"]
+    _data_graph: Graph = schema_graph
+
+
+class OnOffEnum(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-OnOff"]
+    _data_graph: Graph = schema_graph
+
+
+class PositionStatusEnum(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-PositionStatus"]
     _data_graph: Graph = schema_graph
 
 
