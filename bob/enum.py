@@ -1,6 +1,14 @@
 from rdflib import Graph, URIRef
 
-from .core import Role, s223, OnOffEnum, PositionStatusEnum
+from .core import (
+    OccupancyEnum,
+    Role,
+    Substance,
+    YesNoEnum,
+    s223,
+    OnOffEnum,
+    PositionStatusEnum,
+)
 
 _namespace = s223
 
@@ -10,6 +18,8 @@ Primary = Role(node_iri=s223.Primary)
 Secondary = Role(node_iri=s223.Secondary)
 Supply = Role(node_iri=s223.Supply)
 Return = Role(node_iri=s223.Return)
+
+Smoke = Substance(node_iri=s223["Substance-Smoke"])
 
 """
 class Direction(EnumerationKind):
@@ -23,16 +33,24 @@ Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
 """
 
 
-OnOff_On = OnOffEnum(nore_iri=s223["OnOff-On"])
-OnOff_Off = OnOffEnum(nore_iri=s223["OnOff-Off"])
-OnOff_Unknown = OnOffEnum(nore_iri=s223["OnOff-Unknown"])
+OnOff_On = OnOffEnum(node_iri=s223["OnOff-On"])
+OnOff_Off = OnOffEnum(node_iri=s223["OnOff-Off"])
+OnOff_Unknown = OnOffEnum(node_iri=s223["OnOff-Unknown"])
 
+#
+PositionStatus_Close = PositionStatusEnum(node_iri=s223["PositionStatus-Closed"])
+PositionStatus_Open = PositionStatusEnum(node_iri=s223["PositionStatus-Open"])
+PositionStatus_Moving = PositionStatusEnum(node_iri=s223["PositionStatus-Moving"])
+PositionStatus_Unknown = PositionStatusEnum(node_iri=s223["PositionStatus-Unknown"])
 
-PositionStatus_Closed = PositionStatusEnum(nore_iri=s223["PositionStatus-Closed"])
-PositionStatus_Open = PositionStatusEnum(nore_iri=s223["PositionStatus-Open"])
-PositionStatus_Moving = PositionStatusEnum(nore_iri=s223["PositionStatus-Moving"])
-PositionStatus_Unknown = PositionStatusEnum(nore_iri=s223["PositionStatus-Unknown"])
+OccupancyStatus_Unknown = OccupancyEnum(node_iri=s223["OccupancyStatus-Unknown"])
+OccupancyStatus_Occupied = OccupancyEnum(node_iri=s223["OccupancyStatus-Occupied"])
+OccupancyStatus_Unoccupied = OccupancyEnum(node_iri=s223["OccupancyStatus-Unoccupied"])
+OccupancyStatus_Standby = OccupancyEnum(node_iri=s223["OccupancyStatus-Standby"])
+OccupancyStatus_Bypass = OccupancyEnum(node_iri=s223["OccupancyStatus-Bypass"])
 
+Yes = YesNoEnum(node_iri=s223["YesNo-Yes"])
+No = YesNoEnum(node_iri=s223["YesNo-No"])
 
 """
 s223:EnumerationKind-Direction
