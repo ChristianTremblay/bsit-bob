@@ -936,13 +936,63 @@ class Container(Node):
         return self
 
 
+#
+#   Enumerations
+#
+
+
 class EnumerationKind(Node):
     node_type: URIRef = s223.EnumerationKind
     _data_graph: Graph = schema_graph
 
 
+class Direction(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-Direction"]
+    _data_graph: Graph = schema_graph
+
+
+Inlet = Direction(node_iri=s223["Direction-Inlet"])
+Outlet = Direction(node_iri=s223["Direction-Outlet"])
+Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
+
+
 class Medium(EnumerationKind):
-    node_type: URIRef = s223.Medium
+    node_type: URIRef = s223["EnumerationKind-Medium"]
+    _data_graph: Graph = schema_graph
+
+
+class Substance(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-Substance"]
+    _data_graph: Graph = schema_graph
+
+
+class Domain(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-Domain"]
+    _data_graph: Graph = schema_graph
+
+
+class Role(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-Role"]
+    _data_graph: Graph = schema_graph
+
+
+class OnOffEnum(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-OnOff"]
+    _data_graph: Graph = schema_graph
+
+
+class PositionStatusEnum(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-PositionStatus"]
+    _data_graph: Graph = schema_graph
+
+
+class OccupancyEnum(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-Occupancy"]
+    _data_graph: Graph = schema_graph
+
+
+class YesNoEnum(EnumerationKind):
+    node_type: URIRef = s223["EnumerationKind-YesNo"]
     _data_graph: Graph = schema_graph
 
 
@@ -952,29 +1002,11 @@ Light = Medium(node_iri=s223["Medium-Light"])
 Electricity = Medium(node_iri=s223["Medium-Electricity"])
 NaturalGas = Medium(node_iri=s223["Medium-NaturalGas"])
 CompressedAir = Medium(node_iri=s223["Medium-CompressedAir"])
+
 # This one is weird...but to create an occupancy space, zone we
 # need a medium.
 # would Medium-People be better ?
 People = Medium(node_iri=s223["Medium-People"])
-
-
-class Direction(EnumerationKind):
-    node_type: URIRef = s223.Direction
-    _data_graph: Graph = schema_graph
-
-
-Inlet = Direction(node_iri=s223["Direction-Inlet"])
-Outlet = Direction(node_iri=s223["Direction-Outlet"])
-Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
-
-
-class Substance(EnumerationKind):
-    node_type: URIRef = s223.Substance
-    _data_graph: Graph = schema_graph
-
-
-class Domain(EnumerationKind):
-    _data_graph: Graph = schema_graph
 
 
 Electrical = Domain(node_iri=s223["Domain-Electrical"])
@@ -988,10 +1020,6 @@ Refrigeration = Domain(node_iri=s223["Domain-Refrigeration"])
 Plumbing = Domain(node_iri=s223["Domain-Plumbing"])
 ConveyanceSystems = Domain(node_iri=s223["Domain-ConveyanceSystems"])
 Occupancy = Domain(node_iri=p223["Domain-Occupancy"])
-
-
-class Role(EnumerationKind):
-    _data_graph: Graph = schema_graph
 
 
 class Junction(Node):

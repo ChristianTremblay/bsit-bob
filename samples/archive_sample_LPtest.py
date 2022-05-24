@@ -34,8 +34,8 @@ from bob.devices.hvac.airflowstation import AirFlowMonitor
 from bob.devices.hvac.coil import ChilledWaterCoil
 from bob.devices.hvac.damper import Damper
 from bob.devices.hvac.filter import Filter
-from bob.properties.temperature import Temperature
-from bob.role import Exhaust, Supply
+from bob.enum import Exhaust, Supply
+from bob.signal import AnalogIn, AnalogOut
 from bob.space.hvac import HVACZone
 
 # from header import g36_header
