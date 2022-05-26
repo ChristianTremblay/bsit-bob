@@ -99,12 +99,6 @@ parser.add_argument(
     nargs='+',
     help="runs SPARQL rules in file",
 )
-#store results from sparql rules separate from graph
-parser.add_argument(
-    "--print_rule",
-    action="store_true",
-    help="print just the constructed graph from sparql_rules",
-)
 
 # sample additional option to store the post-validate graph
 parser.add_argument(
@@ -160,35 +154,14 @@ if args.ontology:
     if args.info and sys.stdin.isatty():
         print(f"ontology triples: {len(ontology_graph)}")
 
-#if args.sparql_rule | args.s223_sparql_rule:
-sparql_graph = Graph()
 if args.s223_sparql_rule:
     for fname in glob.glob(os.path.join(S223_DIRECTORY, "inference", "*.ttl")):
         logging.debug(fname)
-        sparql_graph.load(fname, format="turtle")
+        shacl_graph.load(fname, format="turtle")
 if args.sparql_rule:
     for fname in args.sparql_rule:
-        sparql_graph.parse(fname, format="turtle")
-        if args.info and sys.stdin.isatty():
-            print(f"data triples: {len(data_graph)}")
-
-query = """
-     SELECT ?o 
-     WHERE {
-         ?s a sh:SPARQLRule ;
-             sh:construct ?o .
-     }
-     """
-
-rules = sparql_graph.query(query)
-construct_graph = Graph()
-for rule in rules:
-    construct_graph = construct_graph + data_graph.query(rule[0]).graph
-
-data_graph = data_graph + construct_graph
-
-if args.print_rule:
-    construct_graph.print()
+        shacl_graph.parse(fname, format = 'turtle')
+        print(shacl_graph.print())
 
 # expand the graph
 if args.rdfs or args.owlrl or args.both:
