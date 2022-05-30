@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from header import sample_header
 
 from bob.core import (

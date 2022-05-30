@@ -11,6 +11,7 @@ exg3601:00001 a s223:System,
         exg3601:00012 ;
     s223:hasSystemConnectionPoint exg3601:00002,
         exg3601:00003 ;
+    s223:node_type exg3601:VAV ;
     exg3601:airFlow exg3601:00005 ;
     exg3601:airInlet exg3601:00002 ;
     exg3601:airOutlet exg3601:00003 ;
@@ -36,12 +37,12 @@ exg3601:00004 a s223:Connectable,
     s223:hasConnectionPoint exg3601:00006,
         exg3601:00007 ;
     s223:hasProperty exg3601:00005 ;
+    s223:node_type exg3601:AirFlowStation ;
     exg3601:airInlet exg3601:00006 ;
     exg3601:airOutlet exg3601:00007 ;
     exg3601:flow exg3601:00005 .
 exg3601:00005 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "A-1.air_flow_station.flow" .
+        g36:AnalogIn .
 exg3601:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-1.air_flow_station.airInlet" ;
@@ -65,6 +66,7 @@ exg3601:00008 a s223:Connectable,
     s223:hasConnectionPoint exg3601:00009,
         exg3601:00010 ;
     s223:hasProperty exg3601:00012 ;
+    s223:node_type exg3601:Damper ;
     exg3601:airInlet exg3601:00009 ;
     exg3601:airOutlet exg3601:00010 ;
     exg3601:position exg3601:00012 .
@@ -86,13 +88,14 @@ exg3601:00011 a s223:Connectable,
         exg3601:DamperPositioner ;
     rdfs:label "A-1.damper.damper_positioner" ;
     s223:hasProperty exg3601:00012 ;
+    s223:node_type exg3601:DamperPositioner ;
     exg3601:position exg3601:00012 .
 exg3601:00012 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "A-1.damper.damper_positioner.position" .
+        g36:AnalogOut .
 exg3601:00013 a s223:Connection ;
     s223:connectsAt exg3601:00007,
         exg3601:00009 ;
     s223:connectsFrom exg3601:00004 ;
     s223:connectsTo exg3601:00008 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .

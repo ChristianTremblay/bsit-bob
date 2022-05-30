@@ -21,7 +21,8 @@ ex:00001 a s223:HVACZone,
     s223:contains ex:00012 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasZoneConnectionPoint ex:00002,
-        ex:00003 .
+        ex:00003 ;
+    s223:node_type s223:HVACZone .
 ex:00002 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone.airInlet" ;
@@ -51,7 +52,8 @@ ex:00004 a p223:PhysicSystem,
         ex:00008,
         ex:00009,
         ex:00010,
-        ex:00011 .
+        ex:00011 ;
+    s223:node_type p223:PhysicSystem .
 ex:00005 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Indoor air of space.ductAirInlet" ;
@@ -114,6 +116,7 @@ ex:00012 a s223:Connectable,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00004 ;
+    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00019 ;
     s223:radiantHeating ex:00018 ;
     s223:windows ex:00017 .
@@ -168,6 +171,7 @@ ex:00020 a p223:VAV,
     s223:contains ex:00023 ;
     s223:hasSystemConnectionPoint ex:00021,
         ex:00022 ;
+    s223:node_type p223:VAV ;
     rdfs:comment "A VAV Box as a system" .
 ex:00021 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
@@ -194,13 +198,12 @@ ex:00023 a s223:Connectable,
         ex:00027 ;
     s223:hasProperty ex:00024,
         ex:00025 ;
+    s223:node_type s223:Damper ;
     s223:position ex:00024 .
 ex:00024 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "VAV1.damper.position" .
+        g36:AnalogOut .
 ex:00025 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "VAV1.damper.feedback" .
+        g36:AnalogIn .
 ex:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "VAV1.damper.airInlet" ;
@@ -219,4 +222,5 @@ ex:00028 a s223:Connection ;
         ex:00027 ;
     s223:connectsFrom ex:00023 ;
     s223:connectsTo ex:00012 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .

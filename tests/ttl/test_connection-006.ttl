@@ -1,6 +1,6 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_connection-006
 # imports: http://data.ashrae.org/standard223/1.0/model/all
-@prefix ex29: <urn:ex/test_system-007/> .
+@prefix ex32: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -11,84 +11,87 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_connection-006> ;
   rdfs:label "test_connection-006" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00001 a s223:Connection ;
-    s223:connectsAt ex29:00005 ;
-    s223:connectsTo ex29:00002 ;
+ex32:00001 a s223:Connection ;
+    s223:connectsAt ex32:00005 ;
+    s223:connectsTo ex32:00002 ;
     s223:hasMedium s223:Water-ChilledWater .
-ex29:00002 a s223:Connectable,
+ex32:00002 a s223:Connectable,
         s223:CoolingCoil,
         s223:Device ;
     rdfs:label "CW-Coil-1" ;
-    s223:airInlet ex29:00003 ;
-    s223:airOutlet ex29:00004 ;
-    s223:chilledWaterInlet ex29:00005 ;
-    s223:chilledWaterOutlet ex29:00006 ;
-    s223:connectedFrom ex29:00007 ;
-    s223:connectedThrough ex29:00001,
-        ex29:00011 ;
-    s223:hasConnectionPoint ex29:00003,
-        ex29:00004,
-        ex29:00005,
-        ex29:00006 .
-ex29:00003 a s223:ConnectionPoint,
+    s223:airInlet ex32:00003 ;
+    s223:airOutlet ex32:00004 ;
+    s223:chilledWaterInlet ex32:00005 ;
+    s223:chilledWaterOutlet ex32:00006 ;
+    s223:connectedFrom ex32:00007 ;
+    s223:connectedThrough ex32:00001,
+        ex32:00011 ;
+    s223:hasConnectionPoint ex32:00003,
+        ex32:00004,
+        ex32:00005,
+        ex32:00006 ;
+    s223:node_type s223:CoolingCoil .
+ex32:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
-    s223:connectsThrough ex29:00011 ;
+    s223:connectsThrough ex32:00011 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00002 .
-ex29:00004 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex32:00002 .
+ex32:00004 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CW-Coil-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00002 .
-ex29:00005 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex32:00002 .
+ex32:00005 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterInlet" ;
-    s223:connectsThrough ex29:00001 ;
+    s223:connectsThrough ex32:00001 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:isConnectionPointOf ex29:00002 .
-ex29:00006 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex32:00002 .
+ex32:00006 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:isConnectionPointOf ex29:00002 .
-ex29:00007 a s223:Connectable,
+    s223:isConnectionPointOf ex32:00002 .
+ex32:00007 a s223:Connectable,
         s223:Device,
         s223:Fan ;
     rdfs:label "F" ;
-    s223:airInlet ex29:00008 ;
-    s223:airOutlet ex29:00009 ;
-    s223:connectedThrough ex29:00011 ;
-    s223:connectedTo ex29:00002 ;
-    s223:hasConnectionPoint ex29:00008,
-        ex29:00009,
-        ex29:00010 .
-ex29:00008 a s223:ConnectionPoint,
+    s223:airInlet ex32:00008 ;
+    s223:airOutlet ex32:00009 ;
+    s223:connectedThrough ex32:00011 ;
+    s223:connectedTo ex32:00002 ;
+    s223:hasConnectionPoint ex32:00008,
+        ex32:00009,
+        ex32:00010 ;
+    s223:node_type s223:Fan .
+ex32:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "F.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00007 .
-ex29:00009 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex32:00007 .
+ex32:00009 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "F.airOutlet" ;
-    s223:connectsThrough ex29:00011 ;
+    s223:connectsThrough ex32:00011 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00007 .
-ex29:00010 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex32:00007 .
+ex32:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "F.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf ex29:00007 .
-ex29:00011 a s223:Connection ;
-    s223:connectsAt ex29:00003,
-        ex29:00009 ;
-    s223:connectsFrom ex29:00007 ;
-    s223:connectsTo ex29:00002 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:isConnectionPointOf ex32:00007 .
+ex32:00011 a s223:Connection ;
+    s223:connectsAt ex32:00003,
+        ex32:00009 ;
+    s223:connectsFrom ex32:00007 ;
+    s223:connectsTo ex32:00002 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .

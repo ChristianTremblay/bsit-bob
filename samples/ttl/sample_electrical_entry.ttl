@@ -4,7 +4,6 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -23,6 +22,7 @@ ex:00001 a p223:ThreePhaseDistributionPanel,
         ex:00009,
         ex:00013,
         ex:00017 ;
+    s223:node_type p223:ThreePhaseDistributionPanel ;
     rdfs:comment "Main Entry Panel of Building at 575V" .
 ex:00002 a p223:ElectricalCircuitBreaker,
         p223:ThreePolesMainCircuitBreaker,
@@ -41,15 +41,17 @@ ex:00002 a p223:ElectricalCircuitBreaker,
         ex:00007,
         ex:00008 ;
     s223:hasProperty ex:00003 ;
+    s223:node_type p223:ThreePolesMainCircuitBreaker ;
     rdfs:comment "Main breaker of panel" .
 ex:00003 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 400.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
 ex:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
@@ -95,15 +97,17 @@ ex:00009 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint ex:00011,
         ex:00012 ;
     s223:hasProperty ex:00010 ;
+    s223:node_type p223:SinglePoleCircuitBreaker ;
     rdfs:comment "Lights" .
 ex:00010 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 15.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
 ex:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
@@ -127,15 +131,17 @@ ex:00013 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint ex:00015,
         ex:00016 ;
     s223:hasProperty ex:00014 ;
+    s223:node_type p223:ThreePolesCircuitBreaker ;
     rdfs:comment "Fans, AHU" .
 ex:00014 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 40.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
 ex:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
@@ -161,15 +167,17 @@ ex:00017 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint ex:00019,
         ex:00020 ;
     s223:hasProperty ex:00018 ;
+    s223:node_type p223:ThreePolesCircuitBreaker ;
     rdfs:comment "Feeds Transformer to get 120/240" .
 ex:00018 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 100.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
 ex:00019 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#3.electricalInlet" ;
@@ -219,7 +227,8 @@ ex:00025 a p223:ElectricalTransformer,
         ex:00048 ;
     s223:connectedTo ex:00029 ;
     s223:hasConnectionPoint ex:00026,
-        ex:00027 .
+        ex:00027 ;
+    s223:node_type p223:ElectricalTransformer .
 ex:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "TX-1.electricalInlet" ;
@@ -241,6 +250,7 @@ ex:00028 a p223:ElectricalDistributionPanel,
     s223:contains ex:00029,
         ex:00035,
         ex:00039 ;
+    s223:node_type p223:ElectricalDistributionPanel ;
     rdfs:comment "Description of my panel" .
 ex:00029 a p223:ElectricalCircuitBreaker,
         p223:TwoPolesMainCircuitBreaker,
@@ -258,15 +268,17 @@ ex:00029 a p223:ElectricalCircuitBreaker,
         ex:00033,
         ex:00034 ;
     s223:hasProperty ex:00030 ;
+    s223:node_type p223:TwoPolesMainCircuitBreaker ;
     rdfs:comment "Main breaker of panel" .
 ex:00030 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 200.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
 ex:00031 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
@@ -305,15 +317,17 @@ ex:00035 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint ex:00037,
         ex:00038 ;
     s223:hasProperty ex:00036 ;
+    s223:node_type p223:SinglePoleCircuitBreaker ;
     rdfs:comment "Lights" .
 ex:00036 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 15.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
 ex:00037 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
@@ -337,15 +351,17 @@ ex:00039 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint ex:00041,
         ex:00042 ;
     s223:hasProperty ex:00040 ;
+    s223:node_type p223:TwoPolesCircuitBreaker ;
     rdfs:comment "Heater" .
 ex:00040 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 20.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
 ex:00041 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
@@ -389,10 +405,12 @@ ex:00047 a s223:Connection ;
         ex:00026 ;
     s223:connectsFrom ex:00017 ;
     s223:connectsTo ex:00025 ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:node_type s223:Connection .
 ex:00048 a s223:Connection ;
     s223:connectsAt ex:00027,
         ex:00031 ;
     s223:connectsFrom ex:00025 ;
     s223:connectsTo ex:00029 ;
-    s223:hasMedium s223:Electricity-120V_240V_60Hz .
+    s223:hasMedium s223:Electricity-120V_240V_60Hz ;
+    s223:node_type s223:Connection .

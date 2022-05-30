@@ -28,10 +28,10 @@ _namespace = p223
 # http://operadetectors.com/category/gas-monitors-1.aspx
 
 
-CO = Substance(node_iri=p223["Substance-CO"])
-CO2 = Substance(node_iri=p223["Substance-CO2"])
-NO2 = Substance(node_iri=p223["Substance-NO2"])
-CH4 = Substance(node_iri=p223["Substance-CH4"])
+CO = Substance("CO")
+CO2 = Substance("CO2")
+NO2 = Substance("NO2")
+CH4 = Substance("CH4")
 
 
 class GasConcentrationSetpoint(Setpoint):

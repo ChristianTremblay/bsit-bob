@@ -1,6 +1,6 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_segment-002
 # imports: http://data.ashrae.org/standard223/1.0/model/all
-@prefix ex29: <urn:ex/test_system-007/> .
+@prefix ex32: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -11,17 +11,21 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_segment-002> ;
   rdfs:label "test_segment-002" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00001 a s223:Connectable,
+ex32:00001 a s223:Connectable,
         s223:Device ;
     rdfs:label "d1" ;
-    s223:hasConnectionPoint ex29:00002 .
-ex29:00002 a s223:ConnectionPoint,
+    s223:hasConnectionPoint ex32:00002 ;
+    s223:node_type s223:Device .
+ex32:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:isConnectionPointOf ex29:00001 ;
-    s223:lnx ex29:00004 .
-ex29:00003 a s223:Junction ;
-    s223:lnx ex29:00004 .
-ex29:00004 a s223:Segment ;
-    s223:lnx ex29:00002,
-        ex29:00003 .
+    s223:isConnectionPointOf ex32:00001 ;
+    s223:lnx ex32:00004 ;
+    s223:node_type s223:InletConnectionPoint .
+ex32:00003 a s223:Junction ;
+    s223:lnx ex32:00004 ;
+    s223:node_type s223:Junction .
+ex32:00004 a s223:Segment ;
+    s223:lnx ex32:00002,
+        ex32:00003 ;
+    s223:node_type s223:Segment .

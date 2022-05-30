@@ -10,6 +10,7 @@ from bob.connections import (
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import Domain, DomainSpace, HVAC, Zone, bind_model_namespace, dump
 from bob.devices.hvac import ChilledWaterCoil, Fan
+from bob.space.hvac import HVACSpace
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -39,7 +40,7 @@ f >> coil1.airInlet
 zone = HVACZone(label="Zone-1")
 
 # there is a space that is the destination of the air
-space = DomainSpace(label="Space")
+space = HVACSpace(label="Space")
 scp = AirInletConnectionPoint(space, label="scp")
 
 # the zone contains the space, and the air input into the zone is

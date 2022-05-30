@@ -13,44 +13,37 @@ from .core import (
 _namespace = s223
 
 
-Exhaust = Role(node_iri=s223.Exhaust)
-Primary = Role(node_iri=s223.Primary)
-Secondary = Role(node_iri=s223.Secondary)
-Supply = Role(node_iri=s223.Supply)
-Return = Role(node_iri=s223.Return)
-
-Smoke = Substance(node_iri=s223["Substance-Smoke"])
-
-"""
-class Direction(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-Direction"]
-    _data_graph: Graph = schema_graph
-
-
-Inlet = Direction(node_iri=s223["Direction-Inlet"])
-Outlet = Direction(node_iri=s223["Direction-Outlet"])
-Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
-"""
-
-
-OnOff_On = OnOffEnum(node_iri=s223["OnOff-On"])
-OnOff_Off = OnOffEnum(node_iri=s223["OnOff-Off"])
-OnOff_Unknown = OnOffEnum(node_iri=s223["OnOff-Unknown"])
+#
+Exhaust = Role("Exhaust")
+Primary = Role("Primary")
+Secondary = Role("Secondary")
+Supply = Role("Supply")
+Return = Role("Return")
 
 #
-PositionStatus_Close = PositionStatusEnum(node_iri=s223["PositionStatus-Closed"])
-PositionStatus_Open = PositionStatusEnum(node_iri=s223["PositionStatus-Open"])
-PositionStatus_Moving = PositionStatusEnum(node_iri=s223["PositionStatus-Moving"])
-PositionStatus_Unknown = PositionStatusEnum(node_iri=s223["PositionStatus-Unknown"])
+Smoke = Substance("Smoke")
 
-OccupancyStatus_Unknown = OccupancyEnum(node_iri=s223["OccupancyStatus-Unknown"])
-OccupancyStatus_Occupied = OccupancyEnum(node_iri=s223["OccupancyStatus-Occupied"])
-OccupancyStatus_Unoccupied = OccupancyEnum(node_iri=s223["OccupancyStatus-Unoccupied"])
-OccupancyStatus_Standby = OccupancyEnum(node_iri=s223["OccupancyStatus-Standby"])
-OccupancyStatus_Bypass = OccupancyEnum(node_iri=s223["OccupancyStatus-Bypass"])
+#
+OnOff_On = OnOffEnum("On")
+OnOff_Off = OnOffEnum("Off")
+OnOff_Unknown = OnOffEnum("Unknown")
 
-Yes = YesNoEnum(node_iri=s223["YesNo-Yes"])
-No = YesNoEnum(node_iri=s223["YesNo-No"])
+#
+PositionStatus_Close = PositionStatusEnum("Closed")
+PositionStatus_Open = PositionStatusEnum("Open")
+PositionStatus_Moving = PositionStatusEnum("Moving")
+PositionStatus_Unknown = PositionStatusEnum("Unknown")
+
+#
+OccupancyStatus_Unknown = OccupancyEnum("Unknown")
+OccupancyStatus_Occupied = OccupancyEnum("Occupied")
+OccupancyStatus_Unoccupied = OccupancyEnum("Unoccupied")
+OccupancyStatus_Standby = OccupancyEnum("Standby")
+OccupancyStatus_Bypass = OccupancyEnum("Bypass")
+
+#
+Yes = YesNoEnum("Yes")
+No = YesNoEnum("No")
 
 """
 s223:EnumerationKind-Direction

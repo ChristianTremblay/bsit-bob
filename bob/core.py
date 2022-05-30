@@ -10,11 +10,23 @@ import logging
 import os
 import sys
 from collections import Counter, defaultdict
-from typing import Any, Dict, List, Optional, Set, TextIO, Tuple, TypeVar, Union, cast
+from typing import (
+    Any,
+    Dict,
+    List,
+    Optional,
+    Set,
+    TextIO,
+    Tuple,
+    TypeVar,
+    Union,
+    cast,
+    get_origin,
+)
 
 from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 
-from .multimethods import multimethod, new_class
+from .multimethods import multimethod, new_class, all_subclasses
 
 T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
@@ -72,41 +84,6 @@ INCLUDE_INVERSE = bool(
 # globals
 data_graph = None
 schema_graph = None
-
-# cleanup annotation references, i.e. "System" to _nodes[attr] = System
-_annotation_reference: Dict[str, type] = {}
-
-
-def annotation_reference(cls: type) -> type:
-    """
-    Class decorator that maps the class name to the class because annotations
-    are just strings.
-    """
-    global _annotation_reference
-
-    cls_name = cls.__name__
-    if cls_name in _annotation_reference:
-        raise RuntimeError(
-            f"{cls_name} already references {_annotation_reference[cls_name]}"
-        )
-
-    _annotation_reference[cls_name] = cls
-    return cls
-
-
-def resolve_reference(cls_name: str) -> Optional[type]:
-    """Return the class that this name resolves to, or None."""
-    return _annotation_reference.get(cls_name, None)
-
-
-# pre-load annotation references
-annotation_reference(URIRef)
-annotation_reference(BNode)
-annotation_reference(Literal)
-annotation_reference(bool)
-annotation_reference(int)
-annotation_reference(float)
-annotation_reference(str)
 
 
 class DataGraph(Graph):
@@ -305,7 +282,6 @@ def clear(graph: Graph = data_graph) -> None:
     _next_node = Counter()
 
 
-# === NODES
 class NodeMetaclass(type):
     def __new__(
         cls: Any,
@@ -318,116 +294,12 @@ class NodeMetaclass(type):
         # start with empty maps
         _nodes: NodeMap = {}
         _datatypes: Dict[str, Literal] = {}
-        _inits: Dict[str, Any] = {}
-
-        attr_names: Set[str] = set()
         _attr_uriref: Dict[str, URIRef] = {}
 
-        _data_graph: Graph
-        _schema_graph: Graph
-
-        # include the maps this class is inheriting
-        for supercls in reversed(superclasses):
-            logging.debug(f"    - supercls: {supercls!r}")
-            if hasattr(supercls, "_data_graph"):
-                _data_graph = supercls._data_graph  # type: ignore[attr-defined]
-            if hasattr(supercls, "_schema_graph"):
-                _schema_graph = supercls._schema_graph  # type: ignore[attr-defined]
-
-            if hasattr(supercls, "_nodes"):
-                _nodes.update(supercls._nodes)  # type: ignore[attr-defined]
-            if hasattr(supercls, "_datatypes"):
-                _datatypes.update(supercls._datatypes)  # type: ignore[attr-defined]
-            if hasattr(supercls, "_inits"):
-                _inits.update(supercls._inits)  # type: ignore[attr-defined]
-            if hasattr(supercls, "_attr_uriref"):
-                _attr_uriref.update(supercls._attr_uriref)  # type: ignore[attr-defined]
-        logging.debug("    - from super classes:")
-        logging.debug(f"    -     _nodes: {_nodes!r}")
-        logging.debug(f"    -     _datatypes: {_datatypes!r}")
-        logging.debug(f"    -     _inits: {_inits!r}")
-
-        # update uri references defined in this new class
-        _attr_uriref.update(attributedict.get("_attr_uriref", {}))  # type: ignore[attr-defined]
-        logging.debug(f"    -     _attr_uriref: {_attr_uriref!r}")
-
-        # pick up the attributes defined by annotations
-        annotations = attributedict.get("__annotations__", {})
-        global _annotation_reference
-        for attr, attr_type in annotations.items():
-            logging.debug(f"    - annotate {attr!r}: {attr_type!r}")
-
-            if attr.startswith("_"):
-                continue
-            if attr in (
-                "node",
-                "node_type",
-                "label",
-                "comment",
-            ):
-                continue
-
-            if isinstance(attr_type, URIRef):
-                if attr_type.startswith(XSD):
-                    _datatypes[attr] = attr_type
-                else:
-                    raise ValueError(f"datatype URI expected for {attr}: {attr_type}")
-            elif inspect.isclass(attr_type):
-                _nodes[attr] = attr_type
-                attr_names.add(attr)
-            elif isinstance(attr_type, str):
-                if attr_type in _annotation_reference:
-                    attr_type = _annotation_reference[attr_type]
-                else:
-                    _annotation_reference[attr_type] = None  # type: ignore[assignment]
-                _nodes[attr] = attr_type
-                attr_names.add(attr)
-            else:
-                raise ValueError(f"unknown annotation for {attr}: {attr_type}")
-        logging.debug(f"    - _nodes: {_nodes!r}")
-        logging.debug(f"    - _datatypes: {_datatypes!r}")
-
-        # look for initializers like hasUnit = QUDT.DEG_F
-        for attr, value in attributedict.items():
-            if attr.startswith("_"):
-                continue
-            logging.debug(f"    - initialize {attr!r} = {value!r}")
-
-            if attr in _nodes:
-                if value is None:
-                    continue
-                if not isinstance(value, cast(type, _nodes[attr])):
-                    raise TypeError(f"initializing {attr}: {_nodes[attr]} expected")
-
-            elif attr in _datatypes:
-                if isinstance(value, Literal):
-                    if value.datatype != _datatypes[attr]:
-                        raise TypeError(
-                            f"initializing {attr}: literal {_datatypes[attr]} expected"
-                        )
-                elif isinstance(value, str):
-                    value = Literal(value, datatype=_datatypes[attr])
-                else:
-                    value = Literal(value)
-                    if value.datatype != _datatypes[attr]:
-                        raise TypeError(
-                            f"initializing {attr}: literal {_datatypes[attr]} expected"
-                        )
-
-            elif inspect.isclass(value) and issubclass(value, Node):
-                _nodes[attr] = value
-                attr_names.add(attr)
-
-            else:
-                continue
-
-            _inits[attr] = value
-        logging.debug(f"    - _inits: {_inits!r}")
-
         # add these special attributes to the class before building it
+        attributedict["_resolved"] = False
         attributedict["_nodes"] = _nodes
         attributedict["_datatypes"] = _datatypes
-        attributedict["_inits"] = _inits
         attributedict["_attr_uriref"] = _attr_uriref
 
         # build the class
@@ -437,132 +309,6 @@ class NodeMetaclass(type):
                 cls, clsname, superclasses, attributedict
             ),
         )
-
-        # find the namespace in the class definition
-        _namespace = None
-        if "_namespace" in attributedict:
-            _namespace = attributedict["_namespace"]
-            logging.debug(f"    - class namespace: {_namespace}")
-        else:
-            # check the module
-            cls_module = inspect.getmodule(metaclass)
-            assert cls_module
-            logging.debug(f"    - cls_module: {cls_module} {cls_module.__name__}")
-
-            _namespace = getattr(cls_module, "_namespace", None)
-            if _namespace:
-                logging.debug(f"    - module {cls_module} namespace: {_namespace}")
-            else:
-                # check the parent module
-                parent_module = sys.modules[
-                    ".".join(cls_module.__name__.split(".")[:-1]) or "__main__"
-                ]
-                logging.debug(f"    - parent_module: {parent_module}")
-                _namespace = getattr(parent_module, "_namespace", None)
-                if _namespace:
-                    logging.debug(
-                        f"    - parent module {parent_module} namespace: {_namespace}"
-                    )
-                else:
-                    # check the superclasses that are in the same module
-                    for supercls in superclasses:
-                        supercls_module = inspect.getmodule(supercls)
-                        logging.debug(
-                            f"    - supercls {supercls} module: {supercls_module}"
-                        )
-                        if supercls_module is not cls_module:
-                            continue
-
-                        _namespace = getattr(supercls, "_namespace", None)
-                        if _namespace:
-                            logging.debug(
-                                f"    - supercls {supercls} namespace: {_namespace}"
-                            )
-                            break
-
-        if _namespace is None:
-            raise AttributeError(f"namespace not found: {clsname}")
-        metaclass._namespace = _namespace  # type: ignore[attr-defined]
-
-        # set the URIRef for the attrs defined in this class based on the
-        # namespace that was just discovered _after_ the class is created
-        for attr in attr_names:
-            if attr in _attr_uriref:
-                logging.debug(
-                    f"    - attribute uri {attr!r} = already {_attr_uriref[attr]!r}"
-                )
-            else:
-                logging.debug(f"    - attribute uri {attr!r} = {_namespace[attr]!r}")
-                _attr_uriref[attr] = _namespace[attr]
-        metaclass._attr_uriref = _attr_uriref  # type: ignore[attr-defined]
-
-        # make sure it has a type
-        if "node_type" not in attributedict:
-            metaclass.node_type = _namespace[clsname]  # type: ignore[attr-defined]
-
-        # this is a class, and a subclass of the super classes
-        if metaclass.node_type is not None:
-            _schema_graph.add((metaclass.node_type, RDF.type, RDFS.Class))
-            for supercls in superclasses:
-                if issubclass(supercls, Node):
-                    node_type = getattr(supercls, "node_type", None)
-                    if node_type is not None:
-                        _schema_graph.add(
-                            (metaclass.node_type, RDFS.subClassOf, supercls.node_type)
-                        )
-
-        # test to see if these special types resolve yet
-        special_types_resolved = all(
-            _annotation_reference.get(cname, None)
-            for cname in (
-                "Property",
-                "ConnectionPoint",
-                "SystemConnectionPoint",
-                "ZoneConnectionPoint",
-            )
-        )
-
-        # attributes are properties
-        for attr in attr_names:
-            _schema_graph.add((_attr_uriref[attr], RDF.type, RDF.Property))
-
-            # special types get automatic sub-properties
-            if special_types_resolved and (attr in _nodes):
-                attr_type = _nodes[attr]
-                if isinstance(attr_type, str):
-                    raise RuntimeError(
-                        f"unable to resolve {attr_type!r} in the definition of {attr!r}"
-                    )
-                if issubclass(attr_type, Property):
-                    _schema_graph.add(
-                        (_attr_uriref[attr], RDFS.subPropertyOf, s223.hasProperty)
-                    )
-                if issubclass(attr_type, ConnectionPoint):
-                    _schema_graph.add(
-                        (
-                            _attr_uriref[attr],
-                            RDFS.subPropertyOf,
-                            s223.hasConnectionPoint,
-                        )
-                    )
-                if issubclass(attr_type, SystemConnectionPoint):
-                    _schema_graph.add(
-                        (
-                            _attr_uriref[attr],
-                            RDFS.subPropertyOf,
-                            s223.hasSystemConnectionPoint,
-                        )
-                    )
-                if issubclass(attr_type, ZoneConnectionPoint):
-                    _schema_graph.add(
-                        (
-                            _attr_uriref[attr],
-                            RDFS.subPropertyOf,
-                            s223.hasZoneConnectionPoint,
-                        )
-                    )
-        # save the reference
-        _annotation_reference[metaclass.__name__] = metaclass
 
         # let the multimethods know this is a new class, the typemap might have
         # to be reconstructed
@@ -581,10 +327,11 @@ class Node(metaclass=NodeMetaclass):
     _data_graph: Graph = data_graph
     _schema_graph: Graph = schema_graph
 
-    # assigned by NodeMetaclass
+    # resolved annotations into nodes and datatypes
+    _resolved: bool
     _nodes: NodeMap
     _datatypes: Dict[str, Literal]
-    _inits: Dict[str, Any]
+    _attr_uriref: Dict[str, URIRef] = {}
 
     # attributes that can be changed
     _volatile: Tuple[str, ...] = ()
@@ -605,21 +352,27 @@ class Node(metaclass=NodeMetaclass):
         logging.debug(f"Node.__init__ label={label!r} {kwargs}")
         global _next_node, model_namespace
 
+        if not self._resolved:
+            self._resolve_annotations()
+        logging.debug(f"    - continue Node.__init__")
+
         if node_iri is not None:
             if not isinstance(node_iri, URIRef):
                 raise TypeError(f"URIRef expected: {node_iri}")
-            self.node = node_iri
+            super().__setattr__("node", node_iri)
         elif model_namespace:
             _next_node[model_namespace] += 1
-            self.node = model_namespace[f"{_next_node[model_namespace]:05d}"]
+            super().__setattr__(
+                "node", model_namespace[f"{_next_node[model_namespace]:05d}"]
+            )
         else:
-            self.node = BNode()
+            super().__setattr__("node", BNode())
 
-        self.label = label or getattr(self, "label", "")
+        super().__setattr__("label", label or getattr(self, "label", ""))
         if self.label:
             self._data_graph.add((self.node, RDFS.label, Literal(self.label)))
 
-        self.comment = comment or getattr(self, "comment", "")
+        super().__setattr__("comment", comment or getattr(self, "comment", ""))
         if self.comment:
             self._data_graph.add((self.node, RDFS.comment, Literal(self.comment)))
 
@@ -627,34 +380,234 @@ class Node(metaclass=NodeMetaclass):
             if self.node_type is not None:
                 self._data_graph.add((self.node, RDF.type, self.node_type))
 
+        # pull out the kwargs that are nodes and datatypes
+        inits = {}
+        for k, v in kwargs.items():
+            if k in self._nodes or k in self._datatypes:
+                inits[k] = v
+
+        # pull out the init values in classes that aren't already found
         for supercls in self.__class__.__mro__:
             if issubclass(supercls, Node):
-                node_type = getattr(supercls, "node_type", None)
+                node_type = vars(supercls).get("node_type")
                 if node_type is not None:
                     self._data_graph.add((self.node, RDF.type, node_type))
 
-        logging.debug(f"    - _nodes: {self._nodes}")
-        for attr, attr_type in self._nodes.items():
-            super().__setattr__(attr, None)
-            if attr in kwargs:
+            for k, v in supercls.__dict__.items():
+                if k.startswith("_") or (k in inits):
+                    continue
+                if (k in self._datatypes) or (k in self._nodes):
+                    inits[k] = v
+                if inspect.isclass(v) and issubclass(v, Node):
+                    logging.debug(f"    - ding {k!r} = {v!r}")
 
-                setattr(self, attr, kwargs.pop(attr))
-
-        logging.debug(f"    - _inits: {self._inits}")
-        for attr, value in self._inits.items():
-            if attr in kwargs:
-                setattr(self, attr, kwargs.pop(attr))
-            elif inspect.isclass(value):
-                setattr(self, attr, value(label=self.label + "." + attr))
+        # set the values
+        for attr, attr_value in inits.items():
+            logging.debug(f"    - init {attr}: {attr_value}")
+            if attr_value is None:
+                super().__setattr__(attr, None)
             else:
-                setattr(self, attr, value)
+                setattr(self, attr, attr_value)
 
-        logging.debug(f"    - other: {kwargs}")
-        for attr, value in kwargs.items():
-            if attr in self._datatypes:
-                setattr(self, attr, value)
+        # clear the nodes with no values
+        for attr in self._nodes:
+            if attr not in inits:
+                super().__setattr__(attr, None)
+
+        # unknown args
+        unknown_kwargs = [attr for attr in kwargs if attr not in inits]
+        if unknown_kwargs:
+            raise RuntimeError(
+                f"unexpected keyword arguments: {', '.join(unknown_kwargs)}"
+            )
+
+    @classmethod
+    def _resolve_annotations(cls) -> None:
+        """
+        .
+        """
+        logging.debug(f"Node._resolve_annotations {cls}")
+        if cls is Node:
+            logging.debug(f"    - nothing to resolve here")
+            cls._resolved = True
+            return
+
+        # include the maps this class is inheriting
+        for supercls in reversed(cls.__mro__[1:]):
+            logging.debug(f"    - supercls: {supercls}")
+            if supercls is cls:
+                break
+
+            if not hasattr(supercls, "_resolved"):
+                continue
+            if not supercls._resolved:
+                supercls._resolve_annotations()
+
+            if hasattr(supercls, "_nodes"):
+                cls._nodes.update(supercls._nodes)  # type: ignore[attr-defined]
+            if hasattr(supercls, "_datatypes"):
+                cls._datatypes.update(supercls._datatypes)  # type: ignore[attr-defined]
+            if hasattr(supercls, "_attr_uriref"):
+                cls._attr_uriref.update(supercls._attr_uriref)  # type: ignore[attr-defined]
+        logging.debug("    - from super classes:")
+        logging.debug(f"    -     _nodes: {cls._nodes!r}")
+        logging.debug(f"    -     _datatypes: {cls._datatypes!r}")
+        logging.debug(f"    -     _attr_uriref: {cls._attr_uriref!r}")
+
+        # find the namespace in the class definition
+        _namespace = vars(cls).get("_namespace")
+        if _namespace:
+            logging.debug(f"    - class namespace: {_namespace}")
+        else:
+            # check the module
+            cls_module = inspect.getmodule(cls)
+            logging.debug(f"    - cls_module: {cls_module} {cls_module.__name__}")
+
+            _namespace = vars(cls_module).get("_namespace")
+            if _namespace:
+                logging.debug(f"    - module {cls_module} namespace: {_namespace}")
             else:
-                raise TypeError(f"unexpected keyword argument: {attr}")
+                # check the parent module
+                parent_module = sys.modules[
+                    ".".join(cls_module.__name__.split(".")[:-1]) or "__main__"
+                ]
+                logging.debug(f"    - parent_module: {parent_module}")
+                _namespace = vars(parent_module).get("_namespace")
+                if _namespace:
+                    logging.debug(
+                        f"    - parent module {parent_module} namespace: {_namespace}"
+                    )
+                else:
+                    # check the superclasses that are in the same module
+                    for supercls in cls.__mro__:
+                        supercls_module = inspect.getmodule(supercls)
+                        logging.debug(
+                            f"    - supercls {supercls} module: {supercls_module}"
+                        )
+                        if supercls_module is not cls_module:
+                            continue
+
+                        _namespace = vars(supercls).get("_namespace")
+                        if _namespace:
+                            logging.debug(
+                                f"    - supercls {supercls} namespace: {_namespace}"
+                            )
+                            break
+        if _namespace is None:
+            raise AttributeError(f"namespace not found: {cls}")
+        cls._namespace = _namespace  # type: ignore[attr-defined]
+
+        attr_annotations = vars(cls).get("__annotations__", {})
+        for attr, attr_annotation in attr_annotations.items():
+            if attr.startswith("_"):
+                continue
+            logging.debug(f"    - attr: {attr!r}")
+            logging.debug(f"        - attr_annotation: {attr_annotation!r}")
+
+            if isinstance(attr_annotation, str):
+                # eval the string in the context of the globals in its module
+                try:
+                    cls_module = inspect.getmodule(cls)
+                    logging.debug(f"        - {cls_module=}")
+                    attr_type = eval(attr_annotation, vars(cls_module))
+                except NameError:
+                    raise RuntimeError(
+                        f"class {cls}, attribute {attr}: unable to resolve {attr_annotation}"
+                    )
+            else:
+                attr_type = attr_annotation
+            logging.debug(f"        - attr_type: {attr_type!r}")
+
+            attr_origin = get_origin(attr_type)
+            logging.debug(f"        - attr_origin: {attr_origin!r}")
+
+            attr_uriref = cls._attr_uriref.get(attr, _namespace[attr])
+            logging.debug(f"        - attr_uriref: {attr_uriref!r}")
+
+            if isinstance(attr_type, URIRef):
+                if not attr_type.startswith(XSD):
+                    raise ValueError(f"datatype URI expected for {attr}: {attr_type}")
+
+                cls._datatypes[attr] = attr_type
+                cls._attr_uriref[attr] = attr_uriref
+                cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
+
+            elif attr_origin in (Any, Dict, Set, Union):
+                logging.debug(f"    - inspection not supported")
+
+            elif inspect.isclass(attr_type):
+                cls._nodes[attr] = attr_type
+                cls._attr_uriref[attr] = attr_uriref
+                cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
+
+                if issubclass(attr_type, Property):
+                    cls._schema_graph.add(
+                        (attr_uriref, RDFS.subPropertyOf, s223.hasProperty)
+                    )
+                elif issubclass(attr_type, ConnectionPoint):
+                    cls._schema_graph.add(
+                        (
+                            attr_uriref,
+                            RDFS.subPropertyOf,
+                            s223.hasConnectionPoint,
+                        )
+                    )
+                elif issubclass(attr_type, SystemConnectionPoint):
+                    cls._schema_graph.add(
+                        (
+                            attr_uriref,
+                            RDFS.subPropertyOf,
+                            s223.hasSystemConnectionPoint,
+                        )
+                    )
+                elif issubclass(attr_type, ZoneConnectionPoint):
+                    cls._schema_graph.add(
+                        (
+                            attr_uriref,
+                            RDFS.subPropertyOf,
+                            s223.hasZoneConnectionPoint,
+                        )
+                    )
+
+            elif isinstance(attr_type, EnumerationKind):
+                cls._nodes[attr] = attr_type
+                cls._attr_uriref[attr] = attr_uriref
+                cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
+
+            else:
+                raise ValueError(f"unknown annotation for {attr}: {attr_type}")
+
+        for attr, attr_value in vars(cls).items():
+            if attr.startswith("_"):
+                continue
+            if attr in attr_annotations:
+                continue
+            if inspect.isclass(attr_value) and issubclass(attr_value, Node):
+                logging.debug(
+                    f"    - future init {attr!r} to instance of {attr_value!r}"
+                )
+                attr_uriref = cls._attr_uriref.get(attr, _namespace[attr])
+
+                cls._nodes[attr] = attr_value
+                cls._attr_uriref[attr] = attr_uriref
+
+        # make sure it has a type
+        if "node_type" not in vars(cls):
+            cls.node_type = _namespace[cls.__name__]  # type: ignore[attr-defined]
+
+        # this is a class, and a subclass of the super classes
+        if cls.node_type is not None:
+            cls._schema_graph.add((cls.node_type, RDF.type, RDFS.Class))
+            for supercls in cls.__mro__[1:]:
+                if issubclass(supercls, Node):
+                    node_type = vars(supercls).get("node_type")
+                    if node_type is not None:
+                        cls._schema_graph.add(
+                            (cls.node_type, RDFS.subClassOf, supercls.node_type)
+                        )
+
+        cls._resolved = True
+        logging.debug(f"    - resolved {cls}")
 
     def __setattr__(self, attr: str, value: Any) -> None:
         """
@@ -672,35 +625,44 @@ class Node(metaclass=NodeMetaclass):
             raise ValueError(f"{attr} is None")
 
         # make sure the current value is None, no "reassigning" content
-        current_value = super().__getattribute__(attr)
+        current_value = vars(self).get(attr)
         if current_value is not None:
-            volatile_attrs = super().__getattribute__("_volatile")
-            if attr not in volatile_attrs:
-                raise RuntimeError(f"attribute {attr} already has a value")
+            if attr not in getattr(self, "_volatile", {}):
+                raise RuntimeError(
+                    f"attribute {attr} already has a value: {current_value}"
+                )
 
         # if this is a node, double check the type
         if attr in self._nodes:
-            if isinstance(self._nodes[attr], str):
-                node_class = _annotation_reference.get(self._nodes[attr], None)  # type: ignore[arg-type]
-                if not node_class:
-                    raise NotImplementedError(
-                        f"class {self._nodes[attr]!r} for attribute {attr!r} not found"
+            attr_type = self._nodes[attr]
+
+            # if the type reference is still a string, find the real type
+            if isinstance(attr_type, str):
+                raise RuntimeError(f"{attr_type!r} still a string for {attr!r}")
+
+            # enumerations are both types and instances
+            if isinstance(value, EnumerationKind):
+                if not isinstance(attr_type, EnumerationKind):
+                    raise TypeError(f"attribute {attr} not an enumeration kind")
+
+                if value not in attr_type._children:
+                    raise TypeError(
+                        f"value {value} for attribute {attr} not a {attr_type}"
                     )
-                self._nodes[attr] = node_class
-            else:
-                node_class = cast(type, self._nodes[attr])
+
+            # special case assigning type means creating an instance
+            elif value is attr_type:
+                logging.debug(f"    - construct new {attr_type}")
+                value = attr_type()
 
             # pass the value to the class to build one
-            if not isinstance(value, node_class):
-                ### if the node class doesn't allow passing an arg it SHOULD fail
-                # This solves a bug when creating devices
-                # where the number of argument of value is wrong
-                # TypeError: __init__() takes 1 positional argument but 2 were given
+            elif not isinstance(value, attr_type):
                 try:
-                    logging.debug(f"    - construct {node_class} from: {value!r}")
-                    value = node_class(value)
+                    logging.debug(f"    - construct {attr_type} from: {value!r}")
+                    value = attr_type(value)
                 except TypeError:
-                    value = node_class(node_iri=value)
+                    logging.debug(f"    - why is this trapped?")
+                    value = attr_type(node_iri=value)
 
             # add the link(s)
             if isinstance(value, (URIRef, Literal)):
@@ -712,7 +674,7 @@ class Node(metaclass=NodeMetaclass):
                 self._data_graph.add((self.node, self._attr_uriref[attr], value.node))  # type: ignore[attr-defined]
 
             # if the value is a property, link it to the node
-            if isinstance(value, Property) and issubclass(node_class, Property):
+            if isinstance(value, Property) and issubclass(attr_type, Property):
                 self.add_property(value)
 
             # if the value is an external reference, link it to the node
@@ -879,7 +841,6 @@ class Property(Node):
         return self
 
 
-@annotation_reference
 class PropertyReference:
     def __new__(cls, property):
         if not isinstance(property, Property):
@@ -941,84 +902,40 @@ class Container(Node):
 
 
 class EnumerationKind(Node):
-    node_type: URIRef = s223.EnumerationKind
-    _data_graph: Graph = schema_graph
+    node_type: URIRef = _namespace["EnumerationKind"]
+    _data_graph = schema_graph
 
+    def __init__(self, name, *args, **kwargs) -> None:
+        logging.debug("EnumerationKind.__init__ %r", name)
 
-class Direction(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-Direction"]
-    _data_graph: Graph = schema_graph
+        if "node_iri" not in kwargs:
+            kwargs["node_iri"] = _namespace["EnumerationKind" + "-" + name]
 
+        super().__init__(**kwargs)
 
-Inlet = Direction(node_iri=s223["Direction-Inlet"])
-Outlet = Direction(node_iri=s223["Direction-Outlet"])
-Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
+        schema_graph.add((self.node, RDF.type, RDFS.Class))
+        schema_graph.add((self.node, RDF.type, self.node))
 
+        schema_graph.add((self.node, RDFS.subClassOf, _namespace["EnumerationKind"]))
 
-class Medium(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-Medium"]
-    _data_graph: Graph = schema_graph
+        self._name = name
+        self._parent = None
+        self._children = set([self])
 
+    def __call__(self, name) -> EnumerationKind:
+        logging.debug(f"EnumerationKind.__init__({self}) %r", name)
 
-class Substance(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-Substance"]
-    _data_graph: Graph = schema_graph
+        new_child = EnumerationKind(name, node_iri=_namespace[self._name + "-" + name])
 
+        new_child._parent = self
 
-class Domain(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-Domain"]
-    _data_graph: Graph = schema_graph
+        pnode = self
+        while pnode:
+            pnode._children.add(new_child)
+            schema_graph.add((new_child.node, RDFS.subClassOf, pnode.node))
+            pnode = pnode._parent
 
-
-class Role(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-Role"]
-    _data_graph: Graph = schema_graph
-
-
-class OnOffEnum(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-OnOff"]
-    _data_graph: Graph = schema_graph
-
-
-class PositionStatusEnum(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-PositionStatus"]
-    _data_graph: Graph = schema_graph
-
-
-class OccupancyEnum(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-Occupancy"]
-    _data_graph: Graph = schema_graph
-
-
-class YesNoEnum(EnumerationKind):
-    node_type: URIRef = s223["EnumerationKind-YesNo"]
-    _data_graph: Graph = schema_graph
-
-
-Air = Medium(node_iri=s223["Medium-Air"])
-Water = Medium(node_iri=s223["Medium-Water"])
-Light = Medium(node_iri=s223["Medium-Light"])
-Electricity = Medium(node_iri=s223["Medium-Electricity"])
-NaturalGas = Medium(node_iri=s223["Medium-NaturalGas"])
-CompressedAir = Medium(node_iri=s223["Medium-CompressedAir"])
-
-# This one is weird...but to create an occupancy space, zone we
-# need a medium.
-# would Medium-People be better ?
-People = Medium(node_iri=s223["Medium-People"])
-
-
-Electrical = Domain(node_iri=s223["Domain-Electrical"])
-Fire = Domain(node_iri=s223["Domain-Fire"])
-HVAC = Domain(node_iri=s223["Domain-HVAC"])
-Lighting = Domain(node_iri=s223["Domain-Lighting"])
-Networking = Domain(node_iri=s223["Domain-Networking"])
-Security = Domain(node_iri=s223["Domain-Security"])
-Physical = Domain(node_iri=s223["Domain-Physical"])
-Refrigeration = Domain(node_iri=s223["Domain-Refrigeration"])
-Plumbing = Domain(node_iri=s223["Domain-Plumbing"])
-ConveyanceSystems = Domain(node_iri=s223["Domain-ConveyanceSystems"])
-Occupancy = Domain(node_iri=p223["Domain-Occupancy"])
+        return new_child
 
 
 class Junction(Node):
@@ -1207,39 +1124,20 @@ class System(Container, Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-
         # instantiate and associate all of the system connection points
         self._system_connection_points = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
-                continue
-
-            if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_reference:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = _annotation_reference.get(var_annotation)
-
-            if issubclass(var_annotation, ConnectionPoint):
-                raise TypeError(
-                    f"connection point {var_name}: must be a system connection point"
+        for attr_name, attr_type in self._nodes.items():
+            if inspect.isclass(attr_type) and issubclass(
+                attr_type, SystemConnectionPoint
+            ):
+                # build an instance of this connection point
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
+                self._system_connection_points[attr_name] = attr_element
+                logging.debug(
+                    f"    - system connection point {attr_name}: {attr_element}"
                 )
-            if not issubclass(var_annotation, SystemConnectionPoint):
-                continue
-            logging.debug(f"    var_annotation: {var_annotation}")
 
-            # build an instance of this connection point
-            var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._system_connection_points[var_name] = var_element
-            logging.debug(f"    - connection point {var_name}: {var_element}")
-
-            setattr(self, var_name, var_element)
+                setattr(self, attr_name, attr_element)
 
         # zone references
         self._serves_zones = {}
@@ -1331,35 +1229,16 @@ class Connectable(Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-        logging.debug(f"    - merged_annotations: {merged_annotations}")
-
         # instantiate and associate all of the connection points
         self._connection_points = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
-                continue
+        for attr_name, attr_type in self._nodes.items():
+            if inspect.isclass(attr_type) and issubclass(attr_type, ConnectionPoint):
+                # build an instance of this connection point
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
+                self._connection_points[attr_name] = attr_element
+                logging.debug(f"    - connection point {attr_name}: {attr_element}")
 
-            if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_reference:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = _annotation_reference.get(var_annotation)
-
-            if not issubclass(var_annotation, ConnectionPoint):
-                continue
-
-            # build an instance of this connection point
-            var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._connection_points[var_name] = var_element
-            logging.debug(f"    - connection point {var_name}: {var_element}")
-
-            setattr(self, var_name, var_element)
+                setattr(self, attr_name, attr_element)
 
 
 @multimethod
@@ -2118,18 +1997,6 @@ def connect_mm(system: System, device: Device) -> None:
     connect_mm(from_connection_point, to_connection_point)
 
 
-class InletConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Inlet
-
-
-class OutletConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Outlet
-
-
-class BidirectionalConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Bidirectional
-
-
 class SystemConnectionPoint(Node):
     """
     System Connection Point
@@ -2324,18 +2191,6 @@ def connect_mm(
     connect_mm(from_connection_point, to_connection_point)
 
 
-class InletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Inlet
-
-
-class OutletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Outlet
-
-
-class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Bidirectional
-
-
 class Zone(Container, Node):
     """
     A collection of spaces.
@@ -2355,35 +2210,18 @@ class Zone(Container, Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-        logging.debug(f"    - merged_annotations: {merged_annotations}")
-
-        # instantiate and associate all of the connection points
+        # instantiate and associate all of the zone connection points
         self._zone_connection_points = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
-                continue
+        for attr_name, attr_type in self._nodes.items():
+            if inspect.isclass(attr_type) and issubclass(
+                attr_type, ZoneConnectionPoint
+            ):
+                # build an instance of this connection point
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
+                self._zone_connection_points[attr_name] = attr_element
+                logging.debug(f"    - connection point {attr_name}: {attr_element}")
 
-            if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_reference:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = _annotation_reference.get(var_annotation)
-
-            if not issubclass(var_annotation, ZoneConnectionPoint):
-                continue
-
-            # build an instance of this connection point
-            var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._zone_connection_points[var_name] = var_element
-            logging.debug(f"    - connection point {var_name}: {var_element}")
-
-            setattr(self, var_name, var_element)
+                setattr(self, attr_name, attr_element)
 
 
 @multimethod
@@ -2644,18 +2482,6 @@ def connect_mm(
         )
 
     connect_mm(from_connection_point, to_connection_point)
-
-
-class InletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Inlet"]
-
-
-class OutletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Outlet"]
-
-
-class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Bidirectional"]
 
 
 class PhysicalSpace(Container, Node):
@@ -3066,3 +2892,100 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
     logging.debug(f"    - from_thing: {from_thing}")
 
     connect_mm(from_thing, connection_point)
+
+
+#
+#   Direction EnumerationKind Instances
+#
+
+Direction = EnumerationKind("Direction")
+logging.debug("Direction: %r", Direction)
+
+Inlet = Direction("Inlet")
+Outlet = Direction("Outlet")
+Bidirectional = Direction("Bidirectional")
+
+#
+#   Direction Specific Connection Points
+#
+
+
+class InletConnectionPoint(ConnectionPoint):
+    hasDirection: Direction = Inlet
+
+
+class OutletConnectionPoint(ConnectionPoint):
+    hasDirection: Direction = Outlet
+
+
+class BidirectionalConnectionPoint(ConnectionPoint):
+    hasDirection: Direction = Bidirectional
+
+
+#
+#   Direction Specific System Connection Points
+#
+
+
+class InletSystemConnectionPoint(SystemConnectionPoint):
+    hasDirection: Direction = Inlet
+
+
+class OutletSystemConnectionPoint(SystemConnectionPoint):
+    hasDirection: Direction = Outlet
+
+
+class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
+    hasDirection: Direction = Bidirectional
+
+
+#
+#   Direction Specific Zone Connection Points
+#
+
+
+class InletZoneConnectionPoint(ZoneConnectionPoint):
+    hasDirection: Direction = Inlet
+
+
+class OutletZoneConnectionPoint(ZoneConnectionPoint):
+    hasDirection: Direction = Outlet
+
+
+class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
+    hasDirection: Direction = Bidirectional
+
+
+#
+#   EnumerationKind Instances
+#
+
+Medium = EnumerationKind("Medium")
+Air = Medium("Air")
+Water = Medium("Water")
+ChilledWater = Water("ChilledWater")
+PotableWater = Water("PotableWater")
+Light = Medium("Light")
+Electricity = Medium("Electricity")
+NaturalGas = Medium("NaturalGas")
+CompressedAir = Medium("CompressedAir")
+
+Substance = EnumerationKind("Substance")
+
+Role = EnumerationKind("Role")
+
+OnOffEnum = EnumerationKind("OnOffEnum")
+PositionStatusEnum = EnumerationKind("PositionStatusEnum")
+YesNoEnum = EnumerationKind("YesNoEnum")
+
+# This one is weird...but to create an occupancy space, zone we
+# need a medium.
+Domain = EnumerationKind("Domain")
+HVAC = Domain("HVAC")
+Lighting = Domain("Lighting")
+Occupancy = Domain("Occupancy")
+Physical = Domain("Physical")
+
+OccupancyEnum = EnumerationKind("OccupancyEnum")
+
+People = Medium("People")
