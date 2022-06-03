@@ -422,7 +422,7 @@ class Electricity_120V_60HzSystemOutletConnectionPoint(
 # === 24V 60Hz
 
 
-Electricity_24V_60Hz = Medium(node_iri=s223["Electricity-24V-60Hz"])
+Electricity_24V_60Hz = Electricity("24V_60Hz")
 
 
 class Electricity_24V_60HzConnection(Connection):
