@@ -1,6 +1,10 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_connection-008
 # imports: http://data.ashrae.org/standard223/1.0/model/all
+<<<<<<< HEAD
 @prefix ex30: <urn:ex/test_system-007/> .
+=======
+@prefix ex32: <urn:ex/test_system-007/> .
+>>>>>>> origin/21-rename-enumerationkinds
 @prefix ex7: <urn:ex/test_connection-008/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
@@ -13,6 +17,7 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_connection-008> ;
   rdfs:label "test_connection-008" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+<<<<<<< HEAD
 ex30:00001 a s223:Connection ;
     rdfs:label "Sun" ;
     s223:connectsAt ex30:00003 ;
@@ -35,8 +40,37 @@ ex30:00003 a s223:ConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex30:00002 .
 ex30:00004 a s223:ConnectionPoint,
+=======
+ex32:00001 a s223:Connection ;
+    rdfs:label "Sun" ;
+    s223:connectsAt ex32:00003 ;
+    s223:connectsFrom ex32:00002 ;
+    s223:hasMedium s223:Light-Visible .
+ex32:00002 a p223:Light,
+        s223:Connectable,
+        s223:Device ;
+    rdfs:label "WL" ;
+    s223:connectedThrough ex32:00001 ;
+    s223:hasConnectionPoint ex32:00003,
+        ex32:00004 ;
+    s223:node_type p223:Light ;
+    ex7:electricalInlet ex32:00004 ;
+    ex7:lightOutlet ex32:00003 .
+ex32:00003 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "WL.lightOutlet" ;
+    s223:connectsThrough ex32:00001 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Light-Visible ;
+    s223:isConnectionPointOf ex32:00002 .
+ex32:00004 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "WL.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00002 .
+=======
+    s223:isConnectionPointOf ex32:00002 .
+>>>>>>> origin/21-rename-enumerationkinds

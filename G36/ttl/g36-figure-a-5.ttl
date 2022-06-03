@@ -49,6 +49,7 @@ exg3605:00001 a s223:System,
         exg3605:00004,
         exg3605:00005,
         exg3605:00006 ;
+    s223:node_type exg3605:VAV ;
     exg3605:damperPosition exg3605:00015 ;
     exg3605:hwInlet exg3605:00005 ;
     exg3605:hwOutlet exg3605:00006 ;
@@ -94,12 +95,12 @@ exg3605:00007 a s223:Connectable,
     s223:hasConnectionPoint exg3605:00009,
         exg3605:00010 ;
     s223:hasProperty exg3605:00008 ;
+    s223:node_type exg3605:AirFlowStation ;
     exg3605:airInlet exg3605:00009 ;
     exg3605:airOutlet exg3605:00010 ;
     exg3605:flow exg3605:00008 .
 exg3605:00008 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "A-5.air_flow_station.flow" .
+        g36:AnalogIn .
 exg3605:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-5.air_flow_station.airInlet" ;
@@ -120,6 +121,7 @@ exg3605:00011 a s223:Connectable,
     s223:hasConnectionPoint exg3605:00012,
         exg3605:00013 ;
     s223:hasProperty exg3605:00015 ;
+    s223:node_type exg3605:Damper ;
     exg3605:airInlet exg3605:00012 ;
     exg3605:airOutlet exg3605:00013 ;
     exg3605:position exg3605:00015 .
@@ -141,7 +143,9 @@ exg3605:00014 a s223:Connectable,
         exg3605:DamperPositioner ;
     rdfs:label "A-5.damper.damper_positioner" ;
     s223:hasProperty exg3605:00015 ;
+    s223:node_type exg3605:DamperPositioner ;
     exg3605:position exg3605:00015 .
+<<<<<<< HEAD
 exg3605:00015 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -150,6 +154,10 @@ exg3605:00015 a p223:PercentCommand,
     rdfs:label "A-5.damper.damper_positioner.position" ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
+=======
+exg3605:00015 a s223:Property,
+        g36:AnalogOut .
+>>>>>>> origin/21-rename-enumerationkinds
 exg3605:00016 a s223:Connectable,
         s223:Device,
         s223:Fan ;
@@ -158,7 +166,8 @@ exg3605:00016 a s223:Connectable,
     s223:connectedTo exg3605:00032 ;
     s223:hasConnectionPoint exg3605:00017,
         exg3605:00018,
-        exg3605:00019 .
+        exg3605:00019 ;
+    s223:node_type s223:Fan .
 exg3605:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-5.fan.airInlet" ;
@@ -274,6 +283,7 @@ exg3605:00032 a s223:Connectable,
         exg3605:00023,
         exg3605:00024 ;
     s223:hasProperty exg3605:00026 ;
+    s223:node_type exg3605:HotWaterCoil ;
     exg3605:airInlet exg3605:00021 ;
     exg3605:airOutlet exg3605:00022 ;
     exg3605:hwInlet exg3605:00023 ;
@@ -308,6 +318,7 @@ exg3605:00037 a s223:Connectable,
         s223:Device,
         exg3605:ValvePositioner ;
     rdfs:label "A-5.hot_water_coil.damper_positioner" ;
+<<<<<<< HEAD
     s223:hasProperty exg3605:00038 ;
     exg3605:position exg3605:00038 .
 exg3605:00038 a p223:PercentCommand,
@@ -337,3 +348,34 @@ exg3605:00042 a s223:Segment ;
 exg3605:00043 a s223:Segment ;
     s223:lnx exg3605:00018,
         exg3605:00041 .
+=======
+    s223:hasProperty exg3605:00026 ;
+    s223:node_type exg3605:ValvePositioner ;
+    exg3605:position exg3605:00026 .
+exg3605:00026 a s223:Property,
+        g36:AnalogOut .
+exg3605:00027 a s223:Connectable,
+        s223:Device,
+        exg3605:HotWaterValve ;
+    rdfs:label "A-5.hot_water_coil.hot_water_valve" ;
+    s223:node_type exg3605:HotWaterValve .
+exg3605:00028 a s223:Connection ;
+    s223:connectsAt exg3605:00018,
+        exg3605:00021 ;
+    s223:connectsFrom exg3605:00016 ;
+    s223:connectsTo exg3605:00020 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+exg3605:00029 a s223:Junction ;
+    s223:lnx exg3605:00030,
+        exg3605:00031 ;
+    s223:node_type s223:Junction .
+exg3605:00030 a s223:Segment ;
+    s223:lnx exg3605:00013,
+        exg3605:00029 ;
+    s223:node_type s223:Segment .
+exg3605:00031 a s223:Segment ;
+    s223:lnx exg3605:00017,
+        exg3605:00029 ;
+    s223:node_type s223:Segment .
+>>>>>>> origin/21-rename-enumerationkinds

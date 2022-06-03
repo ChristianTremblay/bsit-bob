@@ -1,6 +1,10 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_device-005
 # imports: http://data.ashrae.org/standard223/1.0/model/all
+<<<<<<< HEAD
 @prefix ex30: <urn:ex/test_system-007/> .
+=======
+@prefix ex32: <urn:ex/test_system-007/> .
+>>>>>>> origin/21-rename-enumerationkinds
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -16,6 +20,7 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_device-005> ;
   rdfs:label "test_device-005" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+<<<<<<< HEAD
 ex30:00001 a s223:Connectable,
         s223:Device,
         s223:Fan ;
@@ -28,16 +33,37 @@ ex30:00001 a s223:Connectable,
         ex30:00017 ;
     rdfs:comment "Supply Fan" .
 ex30:00002 a s223:ConnectionPoint,
+=======
+ex32:00001 a s223:Connectable,
+        s223:Device,
+        s223:Fan ;
+    rdfs:label "VA-1" ;
+    s223:airInlet ex32:00002 ;
+    s223:airOutlet ex32:00003 ;
+    s223:contains ex32:00004 ;
+    s223:hasConnectionPoint ex32:00002,
+        ex32:00003,
+        ex32:00005 ;
+    s223:node_type s223:Fan ;
+    rdfs:comment "Supply Fan" .
+ex32:00002 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "VA-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00001 .
 ex30:00003 a s223:ConnectionPoint,
+=======
+    s223:isConnectionPointOf ex32:00001 .
+ex32:00003 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "VA-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00001 .
 ex30:00004 a s223:Connectable,
         s223:Device ;
@@ -117,9 +143,20 @@ ex30:00016 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan VA-1 at urn:ex/test_system-007/00001>" .
 ex30:00017 a s223:ConnectionPoint,
+=======
+    s223:isConnectionPointOf ex32:00001 .
+ex32:00004 a s223:Connectable,
+        s223:Device ;
+    rdfs:label "VA1-VFD" ;
+    s223:isContainedIn ex32:00001 ;
+    s223:node_type s223:Device ;
+    rdfs:comment "VFD for VA-1" .
+ex32:00005 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00001 .
 ex30:00018 a s223:Connectable,
         s223:Device,
@@ -131,21 +168,46 @@ ex30:00018 a s223:Connectable,
         ex30:00020,
         ex30:00021 .
 ex30:00019 a s223:ConnectionPoint,
+=======
+    s223:isConnectionPointOf ex32:00001 .
+ex32:00006 a s223:Connectable,
+        s223:Device,
+        s223:Fan ;
+    rdfs:label "VA-2" ;
+    s223:airInlet ex32:00007 ;
+    s223:airOutlet ex32:00008 ;
+    s223:hasConnectionPoint ex32:00007,
+        ex32:00008,
+        ex32:00009 ;
+    s223:node_type s223:Fan .
+ex32:00007 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "VA-2.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00018 .
 ex30:00020 a s223:ConnectionPoint,
+=======
+    s223:isConnectionPointOf ex32:00006 .
+ex32:00008 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "VA-2.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00018 .
 ex30:00021 a s223:ConnectionPoint,
+=======
+    s223:isConnectionPointOf ex32:00006 .
+ex32:00009 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00018 .
 ex30:00022 a p223:Pressure,
         s223:ObservableProperty,
@@ -219,3 +281,6 @@ ex30:00032 a p223:PowerFactor,
 ex30:00033 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan VA-2 at urn:ex/test_system-007/00018>" .
+=======
+    s223:isConnectionPointOf ex32:00006 .
+>>>>>>> origin/21-rename-enumerationkinds

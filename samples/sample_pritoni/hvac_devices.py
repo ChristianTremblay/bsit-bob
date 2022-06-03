@@ -151,9 +151,9 @@ window2 = Window(
     comment="Second Window in OpenOffice, covering East portion of room",
 )
 
-vav1 = VAV(config=vav1_config, hasPhysicalLocation=ps.private_office)
+vav1 = VAV(config=vav1_config)  ###TODO hasPhysicalLocation=ps.private_office
 vav1.serves_zone(hs.hvac_zone_1)
-vav2 = VAV(config=vav2_config, hasPhysicalLocation=ps.kitchenette)
+vav2 = VAV(config=vav2_config)  ### TODO hasPhysicalLocation=ps.kitchenette
 vav2.serves_zone(hs.hvac_zone_2)
 
 

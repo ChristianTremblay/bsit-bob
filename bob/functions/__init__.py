@@ -6,8 +6,10 @@ This is a facade for ASHRAE 231 Controls Description Language
 
 from __future__ import annotations
 
+import inspect
 import logging
-from typing import Any, AnyStr, Dict
+
+from typing import Any, Dict
 
 from rdflib import URIRef  # type: ignore
 
@@ -15,9 +17,6 @@ from ..core import (
     INCLUDE_INVERSE,
     Node,
     Property,
-    bind_namespace,
-    data_graph,
-    resolve_reference,
     s223,
 )
 from ..multimethods import multimethod
@@ -159,29 +158,12 @@ class FunctionBlock(Node):
     def __init__(self, **kwargs: Any) -> None:
         logging.debug(f"FunctionBlock.__init__ {kwargs}")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-        logging.debug(f"    - merged_annotations: {merged_annotations}")
-
         # pull out the parameters and constants
         parameter_inits: Dict[str, Any] = {}
-        for kw_name, kw_value in kwargs.items():
-            if kw_name in merged_annotations:
-                var_annotation = merged_annotations[kw_name]
-                if isinstance(var_annotation, str):
-                    annotation_resolved = resolve_reference(var_annotation)
-                    if not annotation_resolved:
-                        logging.debug(
-                            f"resolving {var_annotation!r} for attribute {kw_name!r}, class not found"
-                        )
-                        continue
-                    var_annotation = annotation_resolved
-                if issubclass(var_annotation, Parameter):
-                    parameter_inits[kw_name] = kw_value
-        for parm_name in parameter_inits:
-            del kwargs[parm_name]
+        for attr_name, attr_type in self._nodes.items():
+            if inspect.isclass(attr_type) and issubclass(attr_type, Parameter):
+                if attr_name in kwargs:
+                    parameter_inits[attr_name] = kwargs.pop(attr_name)
         logging.debug(f"    - parameter_inits: {parameter_inits}")
         logging.debug(f"    - remaining kwargs: {kwargs}")
 
@@ -191,48 +173,28 @@ class FunctionBlock(Node):
         # instantiate and associate all of the connectors and parameters
         self._connectors = {}
         self._parameters = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
+        for attr_name, attr_type in self._nodes.items():
+            if not inspect.isclass(attr_type):
                 continue
-            var_label = self.label + "." + var_name
 
-            if isinstance(var_annotation, str):
-                annotation_resolved = resolve_reference(var_annotation)
-                if not annotation_resolved:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = annotation_resolved
+            if issubclass(attr_type, Connector):
+                # build an instance of this connector
+                attr_element = attr_type(label=self.label + "." + attr_name)
+                self._connectors[attr_name] = attr_element
+                logging.debug(f"    - connector {attr_name}: {attr_element}")
 
-            if issubclass(var_annotation, Connector):
-                if var_name in self._connectors:
-                    raise RuntimeError("existing connector")
-                if var_name in self._parameters:
-                    raise RuntimeError("existing parameter")
+            elif issubclass(attr_type, Parameter):
+                # build an instance of this parameter
+                attr_element = attr_type(label=self.label + "." + attr_name)
+                self._parameters[attr_name] = attr_element
+                logging.debug(f"    - parameter {attr_name}: {attr_element}")
 
-                var_element = var_annotation(self, label=var_label)
-                logging.debug(f"    - connector {var_name}: {var_element}")
-
-                self._connectors[var_name] = var_element
-
-            elif issubclass(var_annotation, Parameter):
-                if var_name in self._connectors:
-                    raise RuntimeError("existing connector")
-                if var_name in self._parameters:
-                    raise RuntimeError("existing parameter")
-
-                # maybe a value was provided
-                var_value = parameter_inits.pop(var_name, None)
-                var_element = var_annotation(self, value=var_value, label=var_label)
-                logging.debug(f"    - parameter {var_name}: {var_element}")
-
-                self._parameters[var_name] = var_element
-
+                if attr_name in parameter_inits:
+                    logging.debug(f"        - init: {parameter_inits[attr_name]}")
             else:
                 continue
 
-            setattr(self, var_name, var_element)
+            setattr(self, attr_name, attr_element)
 
     def uses_input(
         self,

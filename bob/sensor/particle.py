@@ -25,9 +25,9 @@ from .sensor import Sensor, split_kwargs
 
 _namespace = p223
 
-PM1_0 = Substance(node_iri=p223["Particulate-PM1.0"])
-PM2_5 = Substance(node_iri=p223["Particulate-PM2.5"])
-PM10_0 = Substance(node_iri=p223["Particulate-PM10.0"])
+PM1_0 = Substance("PM1.0")
+PM2_5 = Substance("PM2.5")
+PM10_0 = Substance("PM10.0")
 
 
 class ParticulateSensor(Sensor):

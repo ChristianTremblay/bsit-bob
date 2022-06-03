@@ -3,7 +3,6 @@
 @prefix ex: <urn:ex/sample001/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -18,35 +17,51 @@ ex:00001 a s223:Connectable,
         s223:Device,
         ex:SampleDevice ;
     rdfs:label "Test Device 1" ;
-    s223:hasProperty ex:00002 .
+    s223:hasProperty ex:00002 ;
+    s223:node_type ex:SampleDevice .
 ex:00002 a s223:Property,
         s223:QuantifiableProperty,
         ex:TemperatureProperty ;
     rdfs:label "temp" ;
+    s223:hasQuantityKind quantitykind:Temperature ;
     s223:hasValue 75.5 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_F .
+=======
+    s223:node_type ex:TemperatureProperty ;
+    s223:unit unit:DEG_F .
+>>>>>>> origin/21-rename-enumerationkinds
 ex:00003 a s223:Connectable,
         s223:Device,
         ex:SampleDevice ;
     rdfs:label "Test Device 2" ;
-    s223:hasProperty ex:00004 .
+    s223:hasProperty ex:00004 ;
+    s223:node_type ex:SampleDevice .
 ex:00004 a s223:Property,
         s223:QuantifiableProperty,
         ex:TemperatureProperty ;
     rdfs:label "temp" ;
+    s223:hasQuantityKind quantitykind:Temperature ;
     s223:hasValue 90.5 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_F .
+=======
+    s223:node_type ex:TemperatureProperty ;
+    s223:unit unit:DEG_F .
+>>>>>>> origin/21-rename-enumerationkinds
 ex:00005 a s223:Connectable,
         s223:Device,
         ex:SampleDevice2 ;
     rdfs:label "Test Device 3" ;
     s223:hasProperty ex:00006 ;
+    s223:node_type ex:SampleDevice2 ;
     ex:hasTemp ex:00006 .
 ex:00006 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 100.5 ;
-    qudt:unit unit:DEG_F .
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:DEG_F .

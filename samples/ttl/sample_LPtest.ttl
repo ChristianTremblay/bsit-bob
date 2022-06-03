@@ -46,7 +46,8 @@ ex:00005 a s223:Connectable,
     s223:connectedThrough ex:00009 ;
     s223:hasConnectionPoint ex:00006,
         ex:00007,
-        ex:00008 .
+        ex:00008 ;
+    s223:node_type s223:Fan .
 ex:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.return_fan.airInlet" ;
@@ -85,13 +86,12 @@ ex:00010 a s223:Connectable,
         ex:00014 ;
     s223:hasProperty ex:00011,
         ex:00012 ;
+    s223:node_type s223:Damper ;
     s223:position ex:00011 .
 ex:00011 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "rtu.exhaust_air_damper.position" .
+        g36:AnalogOut .
 ex:00012 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "rtu.exhaust_air_damper.feedback" .
+        g36:AnalogIn .
 ex:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.exhaust_air_damper.airInlet" ;
@@ -116,13 +116,12 @@ ex:00015 a s223:Connectable,
         ex:00019 ;
     s223:hasProperty ex:00016,
         ex:00017 ;
+    s223:node_type s223:Damper ;
     s223:position ex:00016 .
 ex:00016 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "rtu.mixed_air_damper.position" .
+        g36:AnalogOut .
 ex:00017 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "rtu.mixed_air_damper.feedback" .
+        g36:AnalogIn .
 ex:00018 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.mixed_air_damper.airInlet" ;
@@ -155,13 +154,12 @@ ex:00021 a s223:Connectable,
         ex:00025 ;
     s223:hasProperty ex:00022,
         ex:00023 ;
+    s223:node_type s223:Damper ;
     s223:position ex:00022 .
 ex:00022 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "rtu.outside_air_damper.position" .
+        g36:AnalogOut .
 ex:00023 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "rtu.outside_air_damper.feedback" .
+        g36:AnalogIn .
 ex:00024 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.outside_air_damper.airInlet" ;
@@ -187,10 +185,10 @@ ex:00026 a p223:AirFlowMonitor,
         ex:00030 ;
     s223:hasConnectionPoint ex:00028,
         ex:00029 ;
-    s223:hasProperty ex:00027 .
+    s223:hasProperty ex:00027 ;
+    s223:node_type p223:AirFlowMonitor .
 ex:00027 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "rtu.outside_air_flow_station.flow" .
+        g36:AnalogIn .
 ex:00028 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.outside_air_flow_station.airInlet" ;
@@ -210,7 +208,8 @@ ex:00030 a s223:Connection ;
         ex:00028 ;
     s223:connectsFrom ex:00021 ;
     s223:connectsTo ex:00026 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 ex:00031 a p223:Filter,
         s223:Connectable,
         s223:Device ;
@@ -220,7 +219,8 @@ ex:00031 a p223:Filter,
     s223:connectedThrough ex:00020,
         ex:00034 ;
     s223:hasConnectionPoint ex:00032,
-        ex:00033 .
+        ex:00033 ;
+    s223:node_type p223:Filter .
 ex:00032 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.pre_filter.airInlet" ;
@@ -257,13 +257,12 @@ ex:00035 a s223:Connectable,
         ex:00039 ;
     s223:hasProperty ex:00036,
         ex:00037 ;
+    s223:node_type s223:Damper ;
     s223:position ex:00036 .
 ex:00036 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "rtu.bypass_damper.position" .
+        g36:AnalogOut .
 ex:00037 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "rtu.bypass_damper.feedback" .
+        g36:AnalogIn .
 ex:00038 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.bypass_damper.airInlet" ;
@@ -291,7 +290,8 @@ ex:00040 a s223:Connectable,
     s223:hasConnectionPoint ex:00041,
         ex:00042,
         ex:00043,
-        ex:00044 .
+        ex:00044 ;
+    s223:node_type s223:CoolingCoil .
 ex:00041 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.chilled_water_coil.airInlet" ;
@@ -337,7 +337,8 @@ ex:00046 a p223:Filter,
         ex:00053 ;
     s223:connectedTo ex:00049 ;
     s223:hasConnectionPoint ex:00047,
-        ex:00048 .
+        ex:00048 ;
+    s223:node_type p223:Filter .
 ex:00047 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.final_filter.airInlet" ;
@@ -365,7 +366,8 @@ ex:00049 a s223:Connectable,
     s223:hasConnectionPoint ex:00050,
         ex:00051,
         ex:00052 ;
-    s223:hasRole s223:Supply .
+    s223:hasRole s223:Role-Supply ;
+    s223:node_type s223:Fan .
 ex:00050 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.supply_fan.airInlet" ;
@@ -391,7 +393,8 @@ ex:00053 a s223:Connection ;
         ex:00050 ;
     s223:connectsFrom ex:00046 ;
     s223:connectsTo ex:00049 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 ex:00054 a s223:Connectable,
         s223:Damper,
         s223:Device ;
@@ -405,13 +408,12 @@ ex:00054 a s223:Connectable,
         ex:00058 ;
     s223:hasProperty ex:00055,
         ex:00056 ;
+    s223:node_type s223:Damper ;
     s223:position ex:00055 .
 ex:00055 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "rtu.iso_damper.position" .
+        g36:AnalogOut .
 ex:00056 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "rtu.iso_damper.feedback" .
+        g36:AnalogIn .
 ex:00057 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.iso_damper.airInlet" ;
@@ -430,20 +432,22 @@ ex:00059 a s223:Connection ;
         ex:00057 ;
     s223:connectsFrom ex:00049 ;
     s223:connectsTo ex:00054 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 ex:00060 a s223:Segment ;
-    s223:lnx ex:00063 .
+    s223:lnx ex:00063 ;
+    s223:node_type s223:Segment .
 ex:00061 a s223:Connectable,
         s223:Device,
         ex:TemperatureSensor ;
     rdfs:label "rtu.MA_sensor" ;
     s223:hasConnectionPoint ex:00063 ;
     s223:hasProperty ex:00062 ;
+    s223:node_type ex:TemperatureSensor ;
     ex:connection ex:00063 ;
     ex:temperature ex:00062 .
 ex:00062 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "rtu.MA_sensor.temperature" .
+        g36:AnalogIn .
 ex:00063 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "rtu.MA_sensor.connection" ;
@@ -458,6 +462,7 @@ ex:rtu a s223:System,
         ex:00002,
         ex:00003,
         ex:00004 ;
+    s223:node_type ex:RooftopUnit ;
     ex:exhaustAirOutlet ex:00004 ;
     ex:outsideAirInlet ex:00002 ;
     ex:returnAirInlet ex:00001 ;

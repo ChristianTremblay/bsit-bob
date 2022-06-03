@@ -59,7 +59,7 @@ class ElectricalSystemOutletConnectionPoint(
 
 # === 575V 60Hz
 
-Electricity_575V_60Hz = Medium(node_iri=s223["Electricity-575V-60Hz"])
+Electricity_575V_60Hz = Electricity("575V_60Hz")
 
 
 class Electricity_575V_60HzConnection(Connection):
@@ -103,7 +103,7 @@ class Electricity_575V_60HzSystemOutletConnectionPoint(
 
 # === 480V 60Hz
 
-Electricity_480V_60Hz = Medium(node_iri=s223["Electricity-480V-60Hz"])
+Electricity_480V_60Hz = Electricity("480V_60Hz")
 
 
 class Electricity_480V_60HzConnection(Connection):
@@ -148,7 +148,7 @@ class Electricity_480V_60HzSystemOutletConnectionPoint(
 # === 347V 60Hz
 # 1 phase of 575V
 
-Electricity_347V_60Hz = Medium(node_iri=s223["Electricity-347V-60Hz"])
+Electricity_347V_60Hz = Electricity("347V_60Hz")
 
 
 class Electricity_347V_60HzConnection(Connection):
@@ -193,7 +193,7 @@ class Electricity_347V_60HzSystemOutletConnectionPoint(
 # === 277V 60Hz
 # 1 phase of 480V (US)
 
-Electricity_277V_60Hz = Medium(node_iri=s223["Electricity-277V-60Hz"])
+Electricity_277V_60Hz = Electricity("277V_60Hz")
 
 
 class Electricity_277V_60HzConnection(Connection):
@@ -238,7 +238,7 @@ class Electricity_277V_60HzSystemOutletConnectionPoint(
 # === 208V 60Hz
 # 3 phase
 
-Electricity_208V_60Hz = Medium(node_iri=s223["Electricity-208V-60Hz"])
+Electricity_208V_60Hz = Electricity("208V_60Hz")
 
 
 class Electricity_208V_60HzConnection(Connection):
@@ -287,7 +287,7 @@ class Electricity_208V_60HzSystemOutletConnectionPoint(
 # Each phase can be used to provide 120VAC
 
 
-Electricity_120V_240V_60Hz = Medium(node_iri=s223["Electricity-120V-240V-60Hz"])
+Electricity_120V_240V_60Hz = Electricity("120V_240V_60Hz")
 
 
 class Electricity_120V_240V_60HzConnection(Connection):
@@ -332,7 +332,7 @@ class lectricity_120V_240V_60HzSystemOutletConnectionPoint(
 # === 240V 60Hz
 
 
-Electricity_240V_60Hz = Medium(node_iri=s223["Electricity-240V-60Hz"])
+Electricity_240V_60Hz = Electricity("240V_60Hz")
 
 
 class Electricity_240V_60HzConnection(Connection):
@@ -377,7 +377,7 @@ class Electricity_240V_60HzSystemOutletConnectionPoint(
 # === 120V 60Hz
 
 
-Electricity_120V_60Hz = Medium(node_iri=s223["Electricity-120V-60Hz"])
+Electricity_120V_60Hz = Electricity("120V_60Hz")
 
 
 class Electricity_120V_60HzConnection(Connection):
@@ -477,7 +477,7 @@ class Electricity_24V_60HzSystemOutletConnectionPoint(
 # and European
 
 
-Electricity_OnOffSignal = Medium(node_iri=s223["Electricity-OnOffSignal"])
+Electricity_OnOffSignal = Electricity("OnOffSignal")
 # This is high level and we don't know if it's using 120V or 24VAC or 5VDC...
 # It is modeling dry contact, Triac and other On-Off relationships
 
@@ -519,7 +519,7 @@ class OnOffSignalSystemOutletConnectionPoint(
     node_type = None
 
 
-Electricity_ModulationSignal = Medium(node_iri=s223["Electricity-ModulationSignal"])
+Electricity_ModulationSignal = Electricity("ModulationSignal")
 # This is high level and we don't know if it's using 0-10VDC, 4-20mA, etc...
 # === Modulation signals
 class ModulationSignalConnection(Connection):
@@ -561,7 +561,7 @@ class ModulationSignalSystemOutletConnectionPoint(
     node_type = None
 
 
-Electricity_RS485 = Medium(node_iri=s223["Electricity-RS485"])
+Electricity_RS485 = Electricity("RS485")
 # === Networks
 class RS485Connection(Connection):
     hasMedium: Medium = Electricity_RS485
@@ -590,7 +590,7 @@ class RS485BidirectionalSystemConnectionPoint(
     node_type = None
 
 
-Electricity_Ethernet = Medium(node_iri=s223["Electricity-Ethernet"])
+Electricity_Ethernet = Electricity("Ethernet")
 # === Networks
 class EthernetConnection(Connection):
     hasMedium: Medium = Electricity_Ethernet

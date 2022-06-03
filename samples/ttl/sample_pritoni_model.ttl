@@ -14,7 +14,6 @@
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix physical_spaces: <urn:ex/physical_spaces/> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
@@ -33,244 +32,358 @@ bacnet_references:00001 a bacnet:BACnetDevice ;
     p223:deviceId bacnet_references:00002 ;
     p223:deviceName bacnet_references:00003 ;
     p223:networkNumber bacnet_references:00004 ;
+    p223:node_type bacnet:BACnetDevice ;
     p223:vendorId bacnet_references:00006 ;
     rdfs:comment "AHU Controller" .
 bacnet_references:00002 a bacnet:Property,
         bacnet:device-identifier ;
-    p223:hasValue 5204 .
+    p223:hasValue 5204 ;
+    p223:node_type bacnet:device-identifier .
 bacnet_references:00003 a bacnet:Property,
         bacnet:device-name ;
-    p223:hasValue "CGM-2-004" .
+    p223:hasValue "CGM-2-004" ;
+    p223:node_type bacnet:device-name .
 bacnet_references:00004 a bacnet:Property,
         bacnet:network-number ;
-    p223:hasValue 2 .
+    p223:hasValue 2 ;
+    p223:node_type bacnet:network-number .
 bacnet_references:00005 a bacnet:Property,
         bacnet:address ;
-    p223:hasValue 4 .
+    p223:hasValue 4 ;
+    p223:node_type bacnet:address .
 bacnet_references:00006 a bacnet:Property,
         bacnet:vendor-id ;
-    p223:hasValue 5 .
+    p223:hasValue 5 ;
+    p223:node_type bacnet:vendor-id .
 bacnet_references:00007 a bacnet:BACnetDevice ;
     rdfs:label "CVM-2-005" ;
     p223:address bacnet_references:00011 ;
     p223:deviceId bacnet_references:00008 ;
     p223:deviceName bacnet_references:00009 ;
     p223:networkNumber bacnet_references:00010 ;
+    p223:node_type bacnet:BACnetDevice ;
     p223:vendorId bacnet_references:00012 ;
     rdfs:comment "VAV for Zone 1" .
 bacnet_references:00008 a bacnet:Property,
         bacnet:device-identifier ;
-    p223:hasValue 5205 .
+    p223:hasValue 5205 ;
+    p223:node_type bacnet:device-identifier .
 bacnet_references:00009 a bacnet:Property,
         bacnet:device-name ;
-    p223:hasValue "CVM-2-005" .
+    p223:hasValue "CVM-2-005" ;
+    p223:node_type bacnet:device-name .
 bacnet_references:00010 a bacnet:Property,
         bacnet:network-number ;
-    p223:hasValue 2 .
+    p223:hasValue 2 ;
+    p223:node_type bacnet:network-number .
 bacnet_references:00011 a bacnet:Property,
         bacnet:address ;
-    p223:hasValue 5 .
+    p223:hasValue 5 ;
+    p223:node_type bacnet:address .
 bacnet_references:00012 a bacnet:Property,
         bacnet:vendor-id ;
-    p223:hasValue 5 .
+    p223:hasValue 5 ;
+    p223:node_type bacnet:vendor-id .
 bacnet_references:00013 a bacnet:BACnetDevice ;
     rdfs:label "CVM-2-006" ;
     p223:address bacnet_references:00017 ;
     p223:deviceId bacnet_references:00014 ;
     p223:deviceName bacnet_references:00015 ;
     p223:networkNumber bacnet_references:00016 ;
+    p223:node_type bacnet:BACnetDevice ;
     p223:vendorId bacnet_references:00018 ;
     rdfs:comment "VAV for Zone 2" .
 bacnet_references:00014 a bacnet:Property,
         bacnet:device-identifier ;
-    p223:hasValue 5206 .
+    p223:hasValue 5206 ;
+    p223:node_type bacnet:device-identifier .
 bacnet_references:00015 a bacnet:Property,
         bacnet:device-name ;
-    p223:hasValue "CVM-2-006" .
+    p223:hasValue "CVM-2-006" ;
+    p223:node_type bacnet:device-name .
 bacnet_references:00016 a bacnet:Property,
         bacnet:network-number ;
-    p223:hasValue 2 .
+    p223:hasValue 2 ;
+    p223:node_type bacnet:network-number .
 bacnet_references:00017 a bacnet:Property,
         bacnet:address ;
-    p223:hasValue 6 .
+    p223:hasValue 6 ;
+    p223:node_type bacnet:address .
 bacnet_references:00018 a bacnet:Property,
         bacnet:vendor-id ;
+<<<<<<< HEAD
     p223:hasValue 5 .
 bacnet_references:00019 a ref:BACnetReference,
         ref:ExternalReference ;
+=======
+    p223:hasValue 5 ;
+    p223:node_type bacnet:vendor-id .
+bacnet_references:00019 a s223:ExternalReference,
+        ref:BACnetReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     p223:description bacnet_references:00023 ;
     p223:objectInstance bacnet_references:00020 ;
     p223:objectName bacnet_references:00022 ;
     p223:objectOf bacnet_references:00021 ;
-    p223:objectType bacnet_references:00024 .
+    p223:objectType bacnet_references:00024 ;
+    s223:node_type ref:BACnetReference .
 bacnet_references:00020 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 1209 .
+    p223:hasValue 1209 ;
+    p223:node_type bacnet:object-instance .
 bacnet_references:00021 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" ;
+    p223:node_type bacnet:BACnetDevice .
 bacnet_references:00022 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "RA-T" .
+    p223:hasValue "RA-T" ;
+    p223:node_type bacnet:object-name .
 bacnet_references:00023 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Return Air Temeprature" .
+    p223:hasValue "Return Air Temeprature" ;
+    p223:node_type bacnet:description .
 bacnet_references:00024 a bacnet:Property,
         bacnet:object-type ;
+<<<<<<< HEAD
     p223:hasValue "analog-input" .
 bacnet_references:00025 a ref:BACnetReference,
         ref:ExternalReference ;
+=======
+    p223:hasValue "analog-input" ;
+    p223:node_type bacnet:object-type .
+bacnet_references:00025 a s223:ExternalReference,
+        ref:BACnetReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     p223:description bacnet_references:00029 ;
     p223:objectInstance bacnet_references:00026 ;
     p223:objectName bacnet_references:00028 ;
     p223:objectOf bacnet_references:00027 ;
-    p223:objectType bacnet_references:00030 .
+    p223:objectType bacnet_references:00030 ;
+    s223:node_type ref:BACnetReference .
 bacnet_references:00026 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 321 .
+    p223:hasValue 321 ;
+    p223:node_type bacnet:object-instance .
 bacnet_references:00027 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" ;
+    p223:node_type bacnet:BACnetDevice .
 bacnet_references:00028 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "DAT-AVG" .
+    p223:hasValue "DAT-AVG" ;
+    p223:node_type bacnet:object-name .
 bacnet_references:00029 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Discharge Air Temp Average" .
+    p223:hasValue "Discharge Air Temp Average" ;
+    p223:node_type bacnet:description .
 bacnet_references:00030 a bacnet:Property,
         bacnet:object-type ;
+<<<<<<< HEAD
     p223:hasValue "analog-value" .
 bacnet_references:00031 a ref:BACnetReference,
         ref:ExternalReference ;
+=======
+    p223:hasValue "analog-value" ;
+    p223:node_type bacnet:object-type .
+bacnet_references:00031 a s223:ExternalReference,
+        ref:BACnetReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     p223:description bacnet_references:00035 ;
     p223:objectInstance bacnet_references:00032 ;
     p223:objectName bacnet_references:00034 ;
     p223:objectOf bacnet_references:00033 ;
-    p223:objectType bacnet_references:00036 .
+    p223:objectType bacnet_references:00036 ;
+    s223:node_type ref:BACnetReference .
 bacnet_references:00032 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 1210 .
+    p223:hasValue 1210 ;
+    p223:node_type bacnet:object-instance .
 bacnet_references:00033 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" ;
+    p223:node_type bacnet:BACnetDevice .
 bacnet_references:00034 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "DA-T" .
+    p223:hasValue "DA-T" ;
+    p223:node_type bacnet:object-name .
 bacnet_references:00035 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Discharge Air Temperature" .
+    p223:hasValue "Discharge Air Temperature" ;
+    p223:node_type bacnet:description .
 bacnet_references:00036 a bacnet:Property,
         bacnet:object-type ;
+<<<<<<< HEAD
     p223:hasValue "analog-input" .
 bacnet_references:00037 a ref:BACnetReference,
         ref:ExternalReference ;
+=======
+    p223:hasValue "analog-input" ;
+    p223:node_type bacnet:object-type .
+bacnet_references:00037 a s223:ExternalReference,
+        ref:BACnetReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     p223:description bacnet_references:00041 ;
     p223:objectInstance bacnet_references:00038 ;
     p223:objectName bacnet_references:00040 ;
     p223:objectOf bacnet_references:00039 ;
-    p223:objectType bacnet_references:00042 .
+    p223:objectType bacnet_references:00042 ;
+    s223:node_type ref:BACnetReference .
 bacnet_references:00038 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 1002 .
+    p223:hasValue 1002 ;
+    p223:node_type bacnet:object-instance .
 bacnet_references:00039 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CVM-2-005 at urn:ex/bacnet_references/00007>" .
+    p223:hasValue "<BACnetDevice CVM-2-005 at urn:ex/bacnet_references/00007>" ;
+    p223:node_type bacnet:BACnetDevice .
 bacnet_references:00040 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "ZN1-T" .
+    p223:hasValue "ZN1-T" ;
+    p223:node_type bacnet:object-name .
 bacnet_references:00041 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Zone 1 Temperature" .
+    p223:hasValue "Zone 1 Temperature" ;
+    p223:node_type bacnet:description .
 bacnet_references:00042 a bacnet:Property,
         bacnet:object-type ;
+<<<<<<< HEAD
     p223:hasValue "analog-input" .
 bacnet_references:00043 a ref:BACnetReference,
         ref:ExternalReference ;
+=======
+    p223:hasValue "analog-input" ;
+    p223:node_type bacnet:object-type .
+bacnet_references:00043 a s223:ExternalReference,
+        ref:BACnetReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     p223:description bacnet_references:00047 ;
     p223:objectInstance bacnet_references:00044 ;
     p223:objectName bacnet_references:00046 ;
     p223:objectOf bacnet_references:00045 ;
-    p223:objectType bacnet_references:00048 .
+    p223:objectType bacnet_references:00048 ;
+    s223:node_type ref:BACnetReference .
 bacnet_references:00044 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 1002 .
+    p223:hasValue 1002 ;
+    p223:node_type bacnet:object-instance .
 bacnet_references:00045 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CVM-2-006 at urn:ex/bacnet_references/00013>" .
+    p223:hasValue "<BACnetDevice CVM-2-006 at urn:ex/bacnet_references/00013>" ;
+    p223:node_type bacnet:BACnetDevice .
 bacnet_references:00046 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "ZN2-T" .
+    p223:hasValue "ZN2-T" ;
+    p223:node_type bacnet:object-name .
 bacnet_references:00047 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Zone 2 Temperature" .
+    p223:hasValue "Zone 2 Temperature" ;
+    p223:node_type bacnet:description .
 bacnet_references:00048 a bacnet:Property,
         bacnet:object-type ;
+<<<<<<< HEAD
     p223:hasValue "analog-input" .
 bacnet_references:00049 a ref:BACnetReference,
         ref:ExternalReference ;
+=======
+    p223:hasValue "analog-input" ;
+    p223:node_type bacnet:object-type .
+bacnet_references:00049 a s223:ExternalReference,
+        ref:BACnetReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     p223:description bacnet_references:00053 ;
     p223:objectInstance bacnet_references:00050 ;
     p223:objectName bacnet_references:00052 ;
     p223:objectOf bacnet_references:00051 ;
-    p223:objectType bacnet_references:00054 .
+    p223:objectType bacnet_references:00054 ;
+    s223:node_type ref:BACnetReference .
 bacnet_references:00050 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 5021 .
+    p223:hasValue 5021 ;
+    p223:node_type bacnet:object-instance .
 bacnet_references:00051 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" ;
+    p223:node_type bacnet:BACnetDevice .
 bacnet_references:00052 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "RF-S" .
+    p223:hasValue "RF-S" ;
+    p223:node_type bacnet:object-name .
 bacnet_references:00053 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Return Fan Status from VFD drive running" .
+    p223:hasValue "Return Fan Status from VFD drive running" ;
+    p223:node_type bacnet:description .
 bacnet_references:00054 a bacnet:Property,
         bacnet:object-type ;
+<<<<<<< HEAD
     p223:hasValue "binary-input" .
 bacnet_references:00055 a ref:BACnetReference,
         ref:ExternalReference ;
+=======
+    p223:hasValue "binary-input" ;
+    p223:node_type bacnet:object-type .
+bacnet_references:00055 a s223:ExternalReference,
+        ref:BACnetReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     p223:description bacnet_references:00059 ;
     p223:objectInstance bacnet_references:00056 ;
     p223:objectName bacnet_references:00058 ;
     p223:objectOf bacnet_references:00057 ;
-    p223:objectType bacnet_references:00060 .
+    p223:objectType bacnet_references:00060 ;
+    s223:node_type ref:BACnetReference .
 bacnet_references:00056 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 12345 .
+    p223:hasValue 12345 ;
+    p223:node_type bacnet:object-instance .
 bacnet_references:00057 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" ;
+    p223:node_type bacnet:BACnetDevice .
 bacnet_references:00058 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "RF-C" .
+    p223:hasValue "RF-C" ;
+    p223:node_type bacnet:object-name .
 bacnet_references:00059 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Return Fan Command from VFD run command" .
+    p223:hasValue "Return Fan Command from VFD run command" ;
+    p223:node_type bacnet:description .
 bacnet_references:00060 a bacnet:Property,
         bacnet:object-type ;
+<<<<<<< HEAD
     p223:hasValue "binary-output" .
 bacnet_references:00061 a ref:BACnetReference,
         ref:ExternalReference ;
+=======
+    p223:hasValue "binary-output" ;
+    p223:node_type bacnet:object-type .
+bacnet_references:00061 a s223:ExternalReference,
+        ref:BACnetReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     p223:description bacnet_references:00065 ;
     p223:objectInstance bacnet_references:00062 ;
     p223:objectName bacnet_references:00064 ;
     p223:objectOf bacnet_references:00063 ;
-    p223:objectType bacnet_references:00066 .
+    p223:objectType bacnet_references:00066 ;
+    s223:node_type ref:BACnetReference .
 bacnet_references:00062 a bacnet:Property,
         bacnet:object-instance ;
-    p223:hasValue 1 .
+    p223:hasValue 1 ;
+    p223:node_type bacnet:object-instance .
 bacnet_references:00063 a bacnet:BACnetDevice,
         bacnet:Property ;
-    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" .
+    p223:hasValue "<BACnetDevice CGM-2-004 at urn:ex/bacnet_references/00001>" ;
+    p223:node_type bacnet:BACnetDevice .
 bacnet_references:00064 a bacnet:Property,
         bacnet:object-name ;
-    p223:hasValue "OCC-SCHEDULE" .
+    p223:hasValue "OCC-SCHEDULE" ;
+    p223:node_type bacnet:object-name .
 bacnet_references:00065 a bacnet:Property,
         bacnet:description ;
-    p223:hasValue "Building Occupancy Schedule" .
+    p223:hasValue "Building Occupancy Schedule" ;
+    p223:node_type bacnet:description .
 bacnet_references:00066 a bacnet:Property,
         bacnet:object-type ;
+<<<<<<< HEAD
     p223:hasValue "schedule" .
 bacnet_references:00067 a ref:BACnetReference,
         ref:ExternalReference ;
@@ -281,9 +394,26 @@ bacnet_references:00068 a bacnet:BACnetURI,
 bacnet_references:00069 a ref:BACnetReference,
         ref:ExternalReference ;
     p223:uri bacnet_references:00070 .
+=======
+    p223:hasValue "schedule" ;
+    p223:node_type bacnet:object-type .
+bacnet_references:00067 a s223:ExternalReference,
+        ref:BACnetReference ;
+    p223:uri bacnet_references:00068 ;
+    s223:node_type ref:BACnetReference .
+bacnet_references:00068 a bacnet:BACnetURI,
+        bacnet:Property ;
+    p223:hasValue "bacnet://2/analog-input,1" ;
+    p223:node_type bacnet:BACnetURI .
+bacnet_references:00069 a s223:ExternalReference,
+        ref:BACnetReference ;
+    p223:uri bacnet_references:00070 ;
+    s223:node_type ref:BACnetReference .
+>>>>>>> origin/21-rename-enumerationkinds
 bacnet_references:00070 a bacnet:BACnetURI,
         bacnet:Property ;
-    p223:hasValue "bacnet://2/binary-input,1" .
+    p223:hasValue "bacnet://2/binary-input,1" ;
+    p223:node_type bacnet:BACnetURI .
 electrical_devices:00001 a p223:ThreePhaseDistributionPanel,
         s223:Connectable,
         s223:Device ;
@@ -293,6 +423,7 @@ electrical_devices:00001 a p223:ThreePhaseDistributionPanel,
         electrical_devices:00013,
         electrical_devices:00017,
         electrical_devices:00021 ;
+    s223:node_type p223:ThreePhaseDistributionPanel ;
     rdfs:comment "Main Entry Panel of Building at 575V" .
 electrical_devices:00002 a p223:ElectricalCircuitBreaker,
         p223:ThreePolesMainCircuitBreaker,
@@ -311,15 +442,22 @@ electrical_devices:00002 a p223:ElectricalCircuitBreaker,
         electrical_devices:00007,
         electrical_devices:00008 ;
     s223:hasProperty electrical_devices:00003 ;
+    s223:node_type p223:ThreePolesMainCircuitBreaker ;
     rdfs:comment "Main breaker of panel" .
 electrical_devices:00003 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 400.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
@@ -365,15 +503,22 @@ electrical_devices:00009 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00011,
         electrical_devices:00012 ;
     s223:hasProperty electrical_devices:00010 ;
+    s223:node_type p223:SinglePoleCircuitBreaker ;
     rdfs:comment "Parking Lot Lights" .
 electrical_devices:00010 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 15.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
@@ -399,15 +544,22 @@ electrical_devices:00013 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00015,
         electrical_devices:00016 ;
     s223:hasProperty electrical_devices:00014 ;
+    s223:node_type p223:ThreePolesCircuitBreaker ;
     rdfs:comment "Supply Fans, AHU" .
 electrical_devices:00014 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 40.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
@@ -434,15 +586,22 @@ electrical_devices:00017 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00019,
         electrical_devices:00020 ;
     s223:hasProperty electrical_devices:00018 ;
+    s223:node_type p223:ThreePolesCircuitBreaker ;
     rdfs:comment "Feeds Transformer to get 120/240" .
 electrical_devices:00018 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 100.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00019 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#3.electricalInlet" ;
@@ -469,15 +628,22 @@ electrical_devices:00021 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00023,
         electrical_devices:00024 ;
     s223:hasProperty electrical_devices:00022 ;
+    s223:node_type p223:ThreePolesCircuitBreaker ;
     rdfs:comment "Return Fans, AHU" .
 electrical_devices:00022 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 40.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00023 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#4.electricalInlet" ;
@@ -529,7 +695,8 @@ electrical_devices:00029 a p223:ElectricalTransformer,
         electrical_devices:00064 ;
     s223:connectedTo electrical_devices:00033 ;
     s223:hasConnectionPoint electrical_devices:00030,
-        electrical_devices:00031 .
+        electrical_devices:00031 ;
+    s223:node_type p223:ElectricalTransformer .
 electrical_devices:00030 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "TX-1.electricalInlet" ;
@@ -554,6 +721,7 @@ electrical_devices:00032 a p223:ElectricalDistributionPanel,
         electrical_devices:00047,
         electrical_devices:00051,
         electrical_devices:00055 ;
+    s223:node_type p223:ElectricalDistributionPanel ;
     rdfs:comment "Description of my panel" .
 electrical_devices:00033 a p223:ElectricalCircuitBreaker,
         p223:TwoPolesMainCircuitBreaker,
@@ -571,15 +739,22 @@ electrical_devices:00033 a p223:ElectricalCircuitBreaker,
         electrical_devices:00037,
         electrical_devices:00038 ;
     s223:hasProperty electrical_devices:00034 ;
+    s223:node_type p223:TwoPolesMainCircuitBreaker ;
     rdfs:comment "Main breaker of panel" .
 electrical_devices:00034 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 200.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00035 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
@@ -619,15 +794,22 @@ electrical_devices:00039 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00041,
         electrical_devices:00042 ;
     s223:hasProperty electrical_devices:00040 ;
+    s223:node_type p223:SinglePoleCircuitBreaker ;
     rdfs:comment "Lights in OpenOffice" .
 electrical_devices:00040 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 15.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00041 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
@@ -652,15 +834,22 @@ electrical_devices:00043 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00045,
         electrical_devices:00046 ;
     s223:hasProperty electrical_devices:00044 ;
+    s223:node_type p223:TwoPolesCircuitBreaker ;
     rdfs:comment "Heater" .
 electrical_devices:00044 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 20.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00045 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
@@ -685,15 +874,22 @@ electrical_devices:00047 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00049,
         electrical_devices:00050 ;
     s223:hasProperty electrical_devices:00048 ;
+    s223:node_type p223:SinglePoleCircuitBreaker ;
     rdfs:comment "Lights in Kitchenette" .
 electrical_devices:00048 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 15.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00049 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#3.electricalInlet" ;
@@ -719,15 +915,22 @@ electrical_devices:00051 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00053,
         electrical_devices:00054 ;
     s223:hasProperty electrical_devices:00052 ;
+    s223:node_type p223:SinglePoleCircuitBreaker ;
     rdfs:comment "Lights in Corridors + bathroom" .
 electrical_devices:00052 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 15.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00053 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#4.electricalInlet" ;
@@ -753,15 +956,22 @@ electrical_devices:00055 a p223:ElectricalCircuitBreaker,
     s223:hasConnectionPoint electrical_devices:00057,
         electrical_devices:00058 ;
     s223:hasProperty electrical_devices:00056 ;
+    s223:node_type p223:SinglePoleCircuitBreaker ;
     rdfs:comment "Lights in Private Office" .
 electrical_devices:00056 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:hasValue 15.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+=======
+    s223:node_type s223:QuantifiableObservableProperty ;
+    s223:unit unit:A .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00057 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#5.electricalInlet" ;
@@ -812,13 +1022,23 @@ electrical_devices:00063 a s223:Connection ;
         electrical_devices:00030 ;
     s223:connectsFrom electrical_devices:00017 ;
     s223:connectsTo electrical_devices:00029 ;
+<<<<<<< HEAD
     s223:hasMedium s223:Electricity-575V-60Hz .
+=======
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:node_type s223:Connection .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00064 a s223:Connection ;
     s223:connectsAt electrical_devices:00031,
         electrical_devices:00035 ;
     s223:connectsFrom electrical_devices:00029 ;
     s223:connectsTo electrical_devices:00033 ;
+<<<<<<< HEAD
     s223:hasMedium s223:Electricity-120V-240V-60Hz .
+=======
+    s223:hasMedium s223:Electricity-120V_240V_60Hz ;
+    s223:node_type s223:Connection .
+>>>>>>> origin/21-rename-enumerationkinds
 electrical_devices:00065 a s223:Connection ;
     rdfs:label "DISTPANEL-CB1" ;
     s223:connectsAt electrical_devices:00042,
@@ -867,6 +1087,7 @@ electricity:00001 a s223:Connection ;
     s223:connectsAt electrical_devices:00016,
         hvac_devices:00049 ;
     s223:connectsFrom electrical_devices:00013 ;
+<<<<<<< HEAD
     s223:connectsTo hvac_devices:00046 ;
     s223:hasMedium s223:Electricity-575V-60Hz .
 electricity:00002 a s223:Connection ;
@@ -875,23 +1096,47 @@ electricity:00002 a s223:Connection ;
     s223:connectsFrom hvac_devices:00046 ;
     s223:connectsTo hvac_devices:00030 ;
     s223:hasMedium s223:Electricity-575V-60Hz .
+=======
+    s223:connectsTo hvac_devices:00022 ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:node_type s223:Connection .
+electricity:00002 a s223:Connection ;
+    s223:connectsAt hvac_devices:00021,
+        hvac_devices:00026 ;
+    s223:connectsFrom hvac_devices:00022 ;
+    s223:connectsTo hvac_devices:00018 ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:node_type s223:Connection .
+>>>>>>> origin/21-rename-enumerationkinds
 electricity:00003 a s223:Connection ;
     s223:connectsAt electrical_devices:00024,
         hvac_devices:00056 ;
     s223:connectsFrom electrical_devices:00021 ;
+<<<<<<< HEAD
     s223:connectsTo hvac_devices:00055 ;
     s223:hasMedium s223:Electricity-575V-60Hz .
+=======
+    s223:connectsTo hvac_devices:00031 ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:node_type s223:Connection .
+>>>>>>> origin/21-rename-enumerationkinds
 electricity:00004 a s223:Connection ;
     s223:connectsAt hvac_devices:00017,
         hvac_devices:00057 ;
     s223:connectsFrom hvac_devices:00055 ;
     s223:connectsTo hvac_devices:00014 ;
+<<<<<<< HEAD
     s223:hasMedium s223:Electricity-575V-60Hz .
+=======
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:node_type s223:Connection .
+>>>>>>> origin/21-rename-enumerationkinds
 functions:00001 a s223:FunctionBlock,
         functions:AVG_Temp ;
     rdfs:label "FB-1" ;
     s223:hasProperty functions:00002 ;
     s223:input functions:00003 ;
+    s223:node_type functions:AVG_Temp ;
     s223:output functions:00004 ;
     rdfs:comment "Compute DA-T Avg" ;
     functions:avg_tmp functions:00002 .
@@ -901,25 +1146,35 @@ functions:00002 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasExternalReference bacnet_references:00025 ;
+    s223:hasQuantityKind quantitykind:Temperature ;
     s223:hasValue 0.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+=======
+    s223:node_type p223:Temperature ;
+    s223:unit unit:DEG_C .
+>>>>>>> origin/21-rename-enumerationkinds
 functions:00003 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "FB-1.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput hvac_devices:00009 .
 functions:00004 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "FB-1.output" ;
+    s223:node_type s223:OutputConnector ;
     s223:producesOutput functions:00002 .
 functions:00005 a s223:EnumerableProperty,
         s223:Property ;
-    s223:hasExternalReference bacnet_references:00061 .
+    s223:hasExternalReference bacnet_references:00061 ;
+    s223:node_type s223:EnumerableProperty .
 functions:00006 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 functions:00007 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "OpenOffice Occ Control" ;
@@ -929,6 +1184,7 @@ functions:00007 a p223:OccupancyControl,
         functions:00006 ;
     s223:input functions:00011,
         functions:00012 ;
+    s223:node_type p223:OccupancyControl ;
     s223:output functions:00008,
         functions:00009,
         functions:00010 ;
@@ -936,31 +1192,38 @@ functions:00007 a p223:OccupancyControl,
 functions:00008 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "OpenOffice Occ Control.output" ;
+    s223:node_type s223:OutputConnector ;
     s223:producesOutput lighting_spaces:00019 .
 functions:00009 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "OpenOffice Occ Control.output" ;
+    s223:node_type s223:OutputConnector ;
     s223:producesOutput lighting_spaces:00022 .
 functions:00010 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "OpenOffice Occ Control.output" ;
+    s223:node_type s223:OutputConnector ;
     s223:producesOutput hvac_spaces:00001 .
 functions:00011 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "OpenOffice Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput functions:00005 .
 functions:00012 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "OpenOffice Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput lighting_devices:00089 .
 functions:00013 a s223:EnumerableProperty,
         s223:Property ;
-    s223:hasExternalReference bacnet_references:00061 .
+    s223:hasExternalReference bacnet_references:00061 ;
+    s223:node_type s223:EnumerableProperty .
 functions:00014 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 functions:00015 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Kitchenette Occ Control" ;
@@ -970,33 +1233,44 @@ functions:00015 a p223:OccupancyControl,
         functions:00014 ;
     s223:input functions:00018,
         functions:00019 ;
+    s223:node_type p223:OccupancyControl ;
     s223:output functions:00016,
         functions:00017 ;
     rdfs:comment "Deal with OccupancySpace6...probably not required but it's defined" .
 functions:00016 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "Kitchenette Occ Control.output" ;
+    s223:node_type s223:OutputConnector ;
     s223:producesOutput lighting_spaces:00034 .
 functions:00017 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "Kitchenette Occ Control.output" ;
+<<<<<<< HEAD
     s223:producesOutput hvac_spaces:00059 .
+=======
+    s223:node_type s223:OutputConnector ;
+    s223:producesOutput hvac_spaces:00107 .
+>>>>>>> origin/21-rename-enumerationkinds
 functions:00018 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "Kitchenette Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput functions:00013 .
 functions:00019 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "Kitchenette Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput lighting_devices:00014 .
 functions:00020 a s223:EnumerableProperty,
         s223:Property ;
-    s223:hasExternalReference bacnet_references:00061 .
+    s223:hasExternalReference bacnet_references:00061 ;
+    s223:node_type s223:EnumerableProperty .
 functions:00021 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 functions:00022 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Private Office Occ Control" ;
@@ -1006,33 +1280,44 @@ functions:00022 a p223:OccupancyControl,
         functions:00021 ;
     s223:input functions:00025,
         functions:00026 ;
+    s223:node_type p223:OccupancyControl ;
     s223:output functions:00023,
         functions:00024 ;
     rdfs:comment "Deal with OccupancySpace3...probably not required but it's defined" .
 functions:00023 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "Private Office Occ Control.output" ;
+    s223:node_type s223:OutputConnector ;
     s223:producesOutput lighting_spaces:00028 .
 functions:00024 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "Private Office Occ Control.output" ;
+<<<<<<< HEAD
     s223:producesOutput hvac_spaces:00037 .
+=======
+    s223:node_type s223:OutputConnector ;
+    s223:producesOutput hvac_spaces:00069 .
+>>>>>>> origin/21-rename-enumerationkinds
 functions:00025 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "Private Office Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput functions:00020 .
 functions:00026 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "Private Office Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput lighting_devices:00029 .
 functions:00027 a s223:EnumerableProperty,
         s223:Property ;
-    s223:hasExternalReference bacnet_references:00061 .
+    s223:hasExternalReference bacnet_references:00061 ;
+    s223:node_type s223:EnumerableProperty .
 functions:00028 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 functions:00029 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Bathroom Occ Control" ;
@@ -1042,33 +1327,44 @@ functions:00029 a p223:OccupancyControl,
         functions:00028 ;
     s223:input functions:00032,
         functions:00033 ;
+    s223:node_type p223:OccupancyControl ;
     s223:output functions:00030,
         functions:00031 ;
     rdfs:comment "Light space O2" .
 functions:00030 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "Bathroom Occ Control.output" ;
+    s223:node_type s223:OutputConnector ;
     s223:producesOutput lighting_spaces:00025 .
 functions:00031 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "Bathroom Occ Control.output" ;
+<<<<<<< HEAD
     s223:producesOutput hvac_spaces:00010 .
+=======
+    s223:node_type s223:OutputConnector ;
+    s223:producesOutput hvac_spaces:00018 .
+>>>>>>> origin/21-rename-enumerationkinds
 functions:00032 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "Bathroom Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput functions:00027 .
 functions:00033 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "Bathroom Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput lighting_devices:00060 .
 functions:00034 a s223:EnumerableProperty,
         s223:Property ;
-    s223:hasExternalReference bacnet_references:00061 .
+    s223:hasExternalReference bacnet_references:00061 ;
+    s223:node_type s223:EnumerableProperty .
 functions:00035 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 functions:00036 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Corridor Occ Control" ;
@@ -1078,24 +1374,33 @@ functions:00036 a p223:OccupancyControl,
         functions:00035 ;
     s223:input functions:00039,
         functions:00040 ;
+    s223:node_type p223:OccupancyControl ;
     s223:output functions:00037,
         functions:00038 ;
     rdfs:comment "Corridor Light space, O5" .
 functions:00037 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "Corridor Occ Control.output" ;
+    s223:node_type s223:OutputConnector ;
     s223:producesOutput lighting_spaces:00031 .
 functions:00038 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "Corridor Occ Control.output" ;
+<<<<<<< HEAD
     s223:producesOutput hvac_spaces:00019 .
+=======
+    s223:node_type s223:OutputConnector ;
+    s223:producesOutput hvac_spaces:00035 .
+>>>>>>> origin/21-rename-enumerationkinds
 functions:00039 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "Corridor Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput functions:00034 .
 functions:00040 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "Corridor Occ Control.input" ;
+    s223:node_type s223:InputConnector ;
     s223:usesInput lighting_devices:00044 .
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;
@@ -1110,6 +1415,7 @@ hvac:00001 a s223:Connection ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "There are 3 doors in this space, so I'm using a connection to model those relationships" .
 hvac:00002 a s223:Connection ;
+<<<<<<< HEAD
     s223:connectsAt hvac_spaces:00033,
         hvac_spaces:00051 ;
     s223:connectsFrom hvac_spaces:00047 ;
@@ -1121,6 +1427,21 @@ hvac:00003 a s223:Connection ;
     s223:connectsFrom hvac_spaces:00029 ;
     s223:connectsTo hvac_spaces:00020 ;
     s223:hasMedium s223:Medium-Air .
+=======
+    s223:connectsAt hvac_spaces:00065,
+        hvac_spaces:00099 ;
+    s223:connectsFrom hvac_spaces:00095 ;
+    s223:connectsTo hvac_spaces:00061 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+hvac:00003 a s223:Connection ;
+    s223:connectsAt hvac_spaces:00047,
+        hvac_spaces:00064 ;
+    s223:connectsFrom hvac_spaces:00061 ;
+    s223:connectsTo hvac_spaces:00044 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac:00004 a s223:Connection ;
     rdfs:label "Outdoor" ;
     s223:connectsAt hvac_devices:00090,
@@ -1188,6 +1509,7 @@ hvac:00010 a s223:Connection ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Plenum. It's where Duct Static Pressure Low port is connected" .
 hvac:00011 a s223:Connection ;
+<<<<<<< HEAD
     s223:connectsAt hvac_devices:00082,
         hvac_devices:00088 ;
     s223:connectsFrom hvac_devices:00086 ;
@@ -1205,19 +1527,44 @@ hvac:00013 a s223:Connection ;
     s223:connectsFrom hvac_devices:00076 ;
     s223:connectsTo hvac_devices:00030 ;
     s223:hasMedium s223:Medium-Air .
+=======
+    s223:connectsAt hvac_devices:00040,
+        hvac_devices:00046 ;
+    s223:connectsFrom hvac_devices:00044 ;
+    s223:connectsTo hvac_devices:00039 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+hvac:00012 a s223:Connection ;
+    s223:connectsAt hvac_devices:00035,
+        hvac_devices:00041 ;
+    s223:connectsFrom hvac_devices:00039 ;
+    s223:connectsTo hvac_devices:00034 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+hvac:00013 a s223:Connection ;
+    s223:connectsAt hvac_devices:00019,
+        hvac_devices:00036 ;
+    s223:connectsFrom hvac_devices:00034 ;
+    s223:connectsTo hvac_devices:00018 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac:00014 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "VFD DriveRunning" ;
-    s223:hasExternalReference bacnet_references:00049 .
+    s223:hasExternalReference bacnet_references:00049 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac:00015 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "Run Command" ;
-    s223:hasExternalReference bacnet_references:00055 .
+    s223:hasExternalReference bacnet_references:00055 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 hvac:00016 a s223:Connection ;
+<<<<<<< HEAD
     s223:connectsAt hvac_devices:00128,
         hvac_spaces:00013 ;
     s223:connectsFrom hvac_spaces:00011 ;
@@ -1247,6 +1594,42 @@ hvac:00020 a s223:Connection ;
     s223:connectsFrom hvac_devices:00194 ;
     s223:connectsTo hvac_spaces:00047 ;
     s223:hasMedium s223:Medium-Air .
+=======
+    s223:connectsAt hvac_devices:00071,
+        hvac_spaces:00029 ;
+    s223:connectsFrom hvac_spaces:00027 ;
+    s223:connectsTo hvac_devices:00070 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+hvac:00017 a s223:Connection ;
+    s223:connectsAt hvac_devices:00092,
+        hvac_devices:00095 ;
+    s223:connectsFrom hvac_devices:00088 ;
+    s223:connectsTo hvac_devices:00094 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+hvac:00018 a s223:Connection ;
+    s223:connectsAt hvac_devices:00096,
+        hvac_spaces:00079 ;
+    s223:connectsFrom hvac_devices:00094 ;
+    s223:connectsTo hvac_spaces:00078 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+hvac:00019 a s223:Connection ;
+    s223:connectsAt hvac_devices:00112,
+        hvac_devices:00115 ;
+    s223:connectsFrom hvac_devices:00108 ;
+    s223:connectsTo hvac_devices:00114 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+hvac:00020 a s223:Connection ;
+    s223:connectsAt hvac_devices:00116,
+        hvac_spaces:00096 ;
+    s223:connectsFrom hvac_devices:00114 ;
+    s223:connectsTo hvac_spaces:00095 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac_devices:00001 a p223:AirHandlingUnit,
         s223:System ;
     rdfs:label "AHU" ;
@@ -1262,6 +1645,7 @@ hvac_devices:00001 a p223:AirHandlingUnit,
         hvac_devices:00010,
         hvac_devices:00012,
         hvac_devices:00014,
+<<<<<<< HEAD
         hvac_devices:00030,
         hvac_devices:00046,
         hvac_devices:00055,
@@ -1276,6 +1660,23 @@ hvac_devices:00001 a p223:AirHandlingUnit,
         hvac_devices:00124,
         hvac_devices:00125,
         hvac_devices:00126 ;
+=======
+        hvac_devices:00018,
+        hvac_devices:00022,
+        hvac_devices:00031,
+        hvac_devices:00034,
+        hvac_devices:00039,
+        hvac_devices:00044,
+        hvac_devices:00047,
+        hvac_devices:00053,
+        hvac_devices:00059 ;
+    s223:hasSystemConnectionPoint hvac_devices:00065,
+        hvac_devices:00066,
+        hvac_devices:00067,
+        hvac_devices:00068,
+        hvac_devices:00069 ;
+    s223:node_type p223:AirHandlingUnit ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "AHU delivering air to 2 VAV boxes" .
 hvac_devices:00002 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -1284,6 +1685,7 @@ hvac_devices:00002 a p223:AirTemperatureSensor,
         s223:Sensor ;
     rdfs:label "OA-T" ;
     s223:hasMeasurementLocation hvac:00004 ;
+    s223:node_type p223:AirTemperatureSensor ;
     s223:observesProperty hvac_devices:00003 ;
     rdfs:comment "Oudoor air temperature" .
 hvac_devices:00003 a p223:Temperature,
@@ -1292,17 +1694,29 @@ hvac_devices:00003 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "OA-T.Temperature" ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+=======
+    s223:unit unit:DEG_C .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac_devices:00004 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TPD1" ;
+<<<<<<< HEAD
     p223:hasMeasurementLocationHigh hvac_devices:00087 ;
     p223:hasMeasurementLocationLow hvac_devices:00088 ;
+=======
+    p223:hasMeasurementLocationHigh hvac_devices:00045 ;
+    p223:hasMeasurementLocationLow hvac_devices:00046 ;
+    s223:node_type p223:AirDifferentialStaticPressureSensor ;
+>>>>>>> origin/21-rename-enumerationkinds
     s223:observesProperty hvac_devices:00005 ;
     rdfs:comment "Filter Differential Pressure Sensor" .
 hvac_devices:00005 a p223:DifferentialStaticPressure,
@@ -1311,16 +1725,27 @@ hvac_devices:00005 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD1.DifferentialStaticPressure" ;
+    s223:hasQuantityKind quantitykind:ForcePerArea ;
+    s223:node_type p223:DifferentialStaticPressure ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
+=======
+    s223:unit unit:PA .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac_devices:00006 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "HC-T" ;
+<<<<<<< HEAD
     s223:hasMeasurementLocation hvac_devices:00083 ;
+=======
+    s223:hasMeasurementLocation hvac_devices:00041 ;
+    s223:node_type p223:AirTemperatureSensor ;
+>>>>>>> origin/21-rename-enumerationkinds
     s223:observesProperty hvac_devices:00007 ;
     rdfs:comment "Air temperature after heating coil" .
 hvac_devices:00007 a p223:Temperature,
@@ -1329,16 +1754,27 @@ hvac_devices:00007 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "HC-T.Temperature" ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+=======
+    s223:unit unit:DEG_C .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac_devices:00008 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "DA-T" ;
+<<<<<<< HEAD
     s223:hasMeasurementLocation hvac_devices:00078 ;
+=======
+    s223:hasMeasurementLocation hvac_devices:00036 ;
+    s223:node_type p223:AirTemperatureSensor ;
+>>>>>>> origin/21-rename-enumerationkinds
     s223:observesProperty hvac_devices:00009 ;
     rdfs:comment "Discharge Air temperature after cooling coil" .
 hvac_devices:00009 a p223:Temperature,
@@ -1347,9 +1783,15 @@ hvac_devices:00009 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "DA-T.Temperature" ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+=======
+    s223:unit unit:DEG_C .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac_devices:00010 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
         s223:Connectable,
@@ -1358,6 +1800,7 @@ hvac_devices:00010 a p223:AirDifferentialStaticPressureSensor,
     rdfs:label "TPD2" ;
     p223:hasMeasurementLocationHigh hvac_devices:00032 ;
     p223:hasMeasurementLocationLow hvac:00010 ;
+    s223:node_type p223:AirDifferentialStaticPressureSensor ;
     s223:observesProperty hvac_devices:00011 ;
     rdfs:comment "Supply Duct Static Pressure" .
 hvac_devices:00011 a p223:DifferentialStaticPressure,
@@ -1366,9 +1809,15 @@ hvac_devices:00011 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD2.DifferentialStaticPressure" ;
+    s223:hasQuantityKind quantitykind:ForcePerArea ;
+    s223:node_type p223:DifferentialStaticPressure ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
+=======
+    s223:unit unit:PA .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac_devices:00012 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
         s223:Connectable,
@@ -1377,6 +1826,7 @@ hvac_devices:00012 a p223:AirDifferentialStaticPressureSensor,
     rdfs:label "TPD3" ;
     p223:hasMeasurementLocationHigh hvac_devices:00016 ;
     p223:hasMeasurementLocationLow hvac:00010 ;
+    s223:node_type p223:AirDifferentialStaticPressureSensor ;
     s223:observesProperty hvac_devices:00013 ;
     rdfs:comment "Return Duct Static Pressure" .
 hvac_devices:00013 a p223:DifferentialStaticPressure,
@@ -1385,9 +1835,15 @@ hvac_devices:00013 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD3.DifferentialStaticPressure" ;
+    s223:hasQuantityKind quantitykind:ForcePerArea ;
+    s223:node_type p223:DifferentialStaticPressure ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
+=======
+    s223:unit unit:PA .
+>>>>>>> origin/21-rename-enumerationkinds
 hvac_devices:00014 a s223:Connectable,
         s223:Device,
         s223:Fan ;
@@ -1401,8 +1857,14 @@ hvac_devices:00014 a s223:Connectable,
     s223:hasConnectionPoint hvac_devices:00015,
         hvac_devices:00016,
         hvac_devices:00017 ;
+<<<<<<< HEAD
     s223:onOffCommand hvac:00015 ;
     s223:onOffStatus hvac:00014 ;
+=======
+    s223:hasOnOffCommand hvac:00015 ;
+    s223:hasOnOffStatus hvac:00014 ;
+    s223:node_type s223:Fan ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Return Air Fan" .
 hvac_devices:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1507,9 +1969,16 @@ hvac_devices:00030 a s223:Connectable,
     s223:connectedThrough electricity:00002,
         hvac:00008,
         hvac:00013 ;
+<<<<<<< HEAD
     s223:hasConnectionPoint hvac_devices:00031,
         hvac_devices:00032,
         hvac_devices:00033 ;
+=======
+    s223:hasConnectionPoint hvac_devices:00019,
+        hvac_devices:00020,
+        hvac_devices:00021 ;
+    s223:node_type s223:Fan ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Supply Air Fan" .
 hvac_devices:00031 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1610,6 +2079,7 @@ hvac_devices:00046 a s223:Connectable,
     s223:connectedFrom electrical_devices:00013 ;
     s223:connectedThrough electricity:00001,
         electricity:00002 ;
+<<<<<<< HEAD
     s223:connectedTo hvac_devices:00030 ;
     s223:contains hvac_devices:00051 ;
     s223:hasConnectionPoint hvac_devices:00047,
@@ -1620,6 +2090,17 @@ hvac_devices:00046 a s223:Connectable,
     s223:inputSignal hvac_devices:00048 ;
     s223:onOffStatus hvac_devices:00054 ;
     s223:outputSignal hvac_devices:00047 ;
+=======
+    s223:connectedTo hvac_devices:00018 ;
+    s223:contains hvac_devices:00027 ;
+    s223:hasCommandInlet hvac_devices:00024 ;
+    s223:hasConnectionPoint hvac_devices:00023,
+        hvac_devices:00024,
+        hvac_devices:00025,
+        hvac_devices:00026 ;
+    s223:hasStatusOutlet hvac_devices:00023 ;
+    s223:node_type s223:MotorStarter ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Supply Air Fan Starter" .
 hvac_devices:00047 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -1651,12 +2132,20 @@ hvac_devices:00051 a s223:Connectable,
         s223:CurrentSwitch,
         s223:Device ;
     rdfs:label "SF-STARTER.sensor" ;
+<<<<<<< HEAD
     s223:contains hvac_devices:00053 ;
     s223:hasConnectionPoint hvac_devices:00052 ;
     s223:hasProperty hvac_devices:00054 ;
     s223:onOffStatus hvac_devices:00054 ;
     s223:outputSignal hvac_devices:00052 .
 hvac_devices:00052 a s223:ConnectionPoint,
+=======
+    s223:contains hvac_devices:00029 ;
+    s223:hasConnectionPoint hvac_devices:00028 ;
+    s223:hasStatusOutlet hvac_devices:00028 ;
+    s223:node_type s223:CurrentSwitch .
+hvac_devices:00028 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "SF-STARTER.sensor.outputSignal" ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -1668,14 +2157,21 @@ hvac_devices:00053 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "SF-STARTER.sensorCurrentBinarySensor" ;
     s223:hasMeasurementLocation hvac_devices:00026 ;
+    s223:node_type s223:CurrentBinarySensor ;
     s223:observesProperty hvac_devices:00030 .
 hvac_devices:00030 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "SF-STARTER.sensorCurrentBinarySensor.CurrentBinarySensor" ;
+<<<<<<< HEAD
     s223:ofMedium s223:Electricity-575V-60Hz .
 hvac_devices:00055 a s223:Connectable,
+=======
+    s223:node_type s223:EnumeratedObservableProperty ;
+    s223:ofMedium s223:Electricity-575V_60Hz .
+hvac_devices:00031 a s223:Connectable,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "RF-VFD" ;
@@ -1683,8 +2179,16 @@ hvac_devices:00055 a s223:Connectable,
     s223:connectedThrough electricity:00003,
         electricity:00004 ;
     s223:connectedTo hvac_devices:00014 ;
+<<<<<<< HEAD
     s223:hasConnectionPoint hvac_devices:00056,
         hvac_devices:00057 ;
+=======
+    s223:hasConnectionPoint hvac_devices:00032,
+        hvac_devices:00033 ;
+    s223:hasProperty hvac:00014,
+        hvac:00015 ;
+    s223:node_type s223:VariableFrequencyDrive ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "VFD for return Fan" .
 hvac_devices:00056 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1805,11 +2309,20 @@ hvac_devices:00076 a s223:Coil,
     s223:connectedFrom hvac_devices:00081 ;
     s223:connectedThrough hvac:00012,
         hvac:00013 ;
+<<<<<<< HEAD
     s223:connectedTo hvac_devices:00030 ;
     s223:hasConnectionPoint hvac_devices:00077,
         hvac_devices:00078,
         hvac_devices:00079,
         hvac_devices:00080 ;
+=======
+    s223:connectedTo hvac_devices:00018 ;
+    s223:hasConnectionPoint hvac_devices:00035,
+        hvac_devices:00036,
+        hvac_devices:00037,
+        hvac_devices:00038 ;
+    s223:node_type s223:CoolingCoil ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Cooling Coil" .
 hvac_devices:00077 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1847,6 +2360,7 @@ hvac_devices:00081 a s223:Coil,
     s223:connectedFrom hvac_devices:00086 ;
     s223:connectedThrough hvac:00011,
         hvac:00012 ;
+<<<<<<< HEAD
     s223:connectedTo hvac_devices:00076 ;
     s223:hasConnectionPoint hvac_devices:00082,
         hvac_devices:00083,
@@ -1854,6 +2368,16 @@ hvac_devices:00081 a s223:Coil,
         hvac_devices:00085 ;
     s223:hotWaterInlet hvac_devices:00084 ;
     s223:hotWaterOutlet hvac_devices:00085 ;
+=======
+    s223:connectedTo hvac_devices:00034 ;
+    s223:hasConnectionPoint hvac_devices:00040,
+        hvac_devices:00041,
+        hvac_devices:00042,
+        hvac_devices:00043 ;
+    s223:hotWaterInlet hvac_devices:00042 ;
+    s223:hotWaterOutlet hvac_devices:00043 ;
+    s223:node_type s223:HeatingCoil ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Heating coil" .
 hvac_devices:00082 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1889,9 +2413,16 @@ hvac_devices:00086 a p223:Filter,
     p223:airOutlet hvac_devices:00088 ;
     s223:connectedThrough hvac:00006,
         hvac:00011 ;
+<<<<<<< HEAD
     s223:connectedTo hvac_devices:00081 ;
     s223:hasConnectionPoint hvac_devices:00087,
         hvac_devices:00088 ;
+=======
+    s223:connectedTo hvac_devices:00039 ;
+    s223:hasConnectionPoint hvac_devices:00045,
+        hvac_devices:00046 ;
+    s223:node_type p223:Filter ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Filter" .
 hvac_devices:00087 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1916,6 +2447,7 @@ hvac_devices:00089 a s223:Connectable,
     s223:command hvac_devices:00094 ;
     s223:connectedThrough hvac:00004,
         hvac:00006 ;
+<<<<<<< HEAD
     s223:contains hvac_devices:00092 ;
     s223:feedback hvac_devices:00096 ;
     s223:hasConnectionPoint hvac_devices:00090,
@@ -1923,6 +2455,23 @@ hvac_devices:00089 a s223:Connectable,
     s223:position hvac_devices:00096 ;
     rdfs:comment "Outdoor air damper" .
 hvac_devices:00090 a s223:ConnectionPoint,
+=======
+    s223:feedback hvac_devices:00049 ;
+    s223:hasConnectionPoint hvac_devices:00050,
+        hvac_devices:00051,
+        hvac_devices:00052 ;
+    s223:hasProperty hvac_devices:00048,
+        hvac_devices:00049 ;
+    s223:node_type s223:Damper ;
+    s223:position hvac_devices:00048 ;
+    s223:powerInlet hvac_devices:00052 ;
+    rdfs:comment "Outdoor air damper" .
+hvac_devices:00048 a s223:Property,
+        g36:AnalogOut .
+hvac_devices:00049 a s223:Property,
+        g36:AnalogIn .
+hvac_devices:00050 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "OADPR.airInlet" ;
     s223:connectsThrough hvac:00004 ;
@@ -1993,6 +2542,7 @@ hvac_devices:00100 a s223:Connectable,
     s223:command hvac_devices:00105 ;
     s223:connectedThrough hvac:00006,
         hvac:00007 ;
+<<<<<<< HEAD
     s223:contains hvac_devices:00103 ;
     s223:feedback hvac_devices:00107 ;
     s223:hasConnectionPoint hvac_devices:00101,
@@ -2000,6 +2550,23 @@ hvac_devices:00100 a s223:Connectable,
     s223:position hvac_devices:00107 ;
     rdfs:comment "Mixed Air Damper" .
 hvac_devices:00101 a s223:ConnectionPoint,
+=======
+    s223:feedback hvac_devices:00055 ;
+    s223:hasConnectionPoint hvac_devices:00056,
+        hvac_devices:00057,
+        hvac_devices:00058 ;
+    s223:hasProperty hvac_devices:00054,
+        hvac_devices:00055 ;
+    s223:node_type s223:Damper ;
+    s223:position hvac_devices:00054 ;
+    s223:powerInlet hvac_devices:00058 ;
+    rdfs:comment "Mixed Air Damper" .
+hvac_devices:00054 a s223:Property,
+        g36:AnalogOut .
+hvac_devices:00055 a s223:Property,
+        g36:AnalogIn .
+hvac_devices:00056 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "MADPR.airInlet" ;
     s223:connectsThrough hvac:00007 ;
@@ -2070,6 +2637,7 @@ hvac_devices:00111 a s223:Connectable,
     s223:command hvac_devices:00116 ;
     s223:connectedThrough hvac:00004,
         hvac:00007 ;
+<<<<<<< HEAD
     s223:contains hvac_devices:00114 ;
     s223:feedback hvac_devices:00118 ;
     s223:hasConnectionPoint hvac_devices:00112,
@@ -2077,6 +2645,23 @@ hvac_devices:00111 a s223:Connectable,
     s223:position hvac_devices:00118 ;
     rdfs:comment "Exhaust Air Damper" .
 hvac_devices:00112 a s223:ConnectionPoint,
+=======
+    s223:feedback hvac_devices:00061 ;
+    s223:hasConnectionPoint hvac_devices:00062,
+        hvac_devices:00063,
+        hvac_devices:00064 ;
+    s223:hasProperty hvac_devices:00060,
+        hvac_devices:00061 ;
+    s223:node_type s223:Damper ;
+    s223:position hvac_devices:00060 ;
+    s223:powerInlet hvac_devices:00064 ;
+    rdfs:comment "Exhaust Air Damper" .
+hvac_devices:00060 a s223:Property,
+        g36:AnalogOut .
+hvac_devices:00061 a s223:Property,
+        g36:AnalogIn .
+hvac_devices:00062 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "EADPR.airInlet" ;
     s223:connectsThrough hvac:00007 ;
@@ -2176,6 +2761,7 @@ hvac_devices:00127 a s223:Connectable,
         hvac_devices:00129,
         hvac_devices:00130 ;
     s223:hasPhysicalLocation physical_spaces:00005 ;
+    s223:node_type s223:Fan ;
     rdfs:comment "Bathroom exhaust fan" .
 hvac_devices:00128 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2279,9 +2865,16 @@ hvac_devices:00143 a s223:Connectable,
         hvac_devices:00145,
         hvac_devices:00146 ;
     s223:hasPhysicalLocation physical_spaces:00004 ;
+<<<<<<< HEAD
     s223:indoor hvac_devices:00144 ;
     s223:naturalLight hvac_devices:00146 ;
     s223:outdoor hvac_devices:00145 ;
+=======
+    s223:indoor hvac_devices:00074 ;
+    s223:naturalLight hvac_devices:00076 ;
+    s223:node_type p223:Window ;
+    s223:outdoor hvac_devices:00075 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "First Window in OpenOffice, covering West portion of room" .
 hvac_devices:00144 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
@@ -2315,9 +2908,16 @@ hvac_devices:00147 a s223:Connectable,
         hvac_devices:00149,
         hvac_devices:00150 ;
     s223:hasPhysicalLocation physical_spaces:00004 ;
+<<<<<<< HEAD
     s223:indoor hvac_devices:00148 ;
     s223:naturalLight hvac_devices:00150 ;
     s223:outdoor hvac_devices:00149 ;
+=======
+    s223:indoor hvac_devices:00078 ;
+    s223:naturalLight hvac_devices:00080 ;
+    s223:node_type p223:Window ;
+    s223:outdoor hvac_devices:00079 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Second Window in OpenOffice, covering East portion of room" .
 hvac_devices:00148 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
@@ -2343,6 +2943,7 @@ hvac_devices:00150 a s223:ConnectionPoint,
 hvac_devices:00151 a p223:VAV,
         s223:System ;
     rdfs:label "VAVBox1" ;
+<<<<<<< HEAD
     p223:airInlet hvac_devices:00174 ;
     p223:airOutlet hvac_devices:00175 ;
     s223:contains hvac_devices:00152,
@@ -2354,6 +2955,19 @@ hvac_devices:00151 a p223:VAV,
     s223:hasSystemConnectionPoint hvac_devices:00174,
         hvac_devices:00175 ;
     s223:servesZone hvac_spaces:00056 ;
+=======
+    p223:airInlet hvac_devices:00099 ;
+    p223:airOutlet hvac_devices:00100 ;
+    s223:contains hvac_devices:00082,
+        hvac_devices:00084,
+        hvac_devices:00086,
+        hvac_devices:00088,
+        hvac_devices:00094 ;
+    s223:hasSystemConnectionPoint hvac_devices:00099,
+        hvac_devices:00100 ;
+    s223:node_type p223:VAV ;
+    s223:servesZone hvac_spaces:00104 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "VAV Serving HVAC Zone 1" .
 hvac_devices:00152 a p223:AirFlowSensor,
         p223:FlowSensor,
@@ -2361,8 +2975,14 @@ hvac_devices:00152 a p223:AirFlowSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "VAV1_SA-F" ;
+<<<<<<< HEAD
     s223:hasMeasurementLocation hvac_devices:00159 ;
     s223:observesProperty hvac_devices:00153 ;
+=======
+    s223:hasMeasurementLocation hvac_devices:00091 ;
+    s223:node_type p223:AirFlowSensor ;
+    s223:observesProperty hvac_devices:00083 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Air flow used to control damper" .
 hvac_devices:00153 a s223:Flow,
         s223:ObservableProperty,
@@ -2370,17 +2990,30 @@ hvac_devices:00153 a s223:Flow,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "VAV1_SA-F.Flow" ;
+    s223:hasQuantityKind quantitykind:VolumeFlowRate ;
+    s223:node_type s223:Flow ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:L-PER-SEC .
 hvac_devices:00154 a p223:AirTemperatureSensor,
+=======
+    s223:unit unit:FT3-PER-MIN .
+hvac_devices:00084 a p223:AirTemperatureSensor,
+>>>>>>> origin/21-rename-enumerationkinds
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "VAV1_DA-T" ;
+<<<<<<< HEAD
     s223:hasMeasurementLocation hvac_devices:00171 ;
     s223:observesProperty hvac_devices:00155 ;
+=======
+    s223:hasMeasurementLocation hvac_devices:00096 ;
+    s223:node_type p223:AirTemperatureSensor ;
+    s223:observesProperty hvac_devices:00085 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Air supplied to zone by VAV 1, AKA discharge air temperature" .
 hvac_devices:00155 a p223:Temperature,
         s223:ObservableProperty,
@@ -2388,10 +3021,17 @@ hvac_devices:00155 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "VAV1_DA-T.Temperature" ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00156 a p223:AirTemperatureSensor,
+=======
+    s223:unit unit:DEG_C .
+hvac_devices:00086 a p223:AirTemperatureSensor,
+>>>>>>> origin/21-rename-enumerationkinds
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
@@ -2399,7 +3039,12 @@ hvac_devices:00156 a p223:AirTemperatureSensor,
     rdfs:label "VAV1_ZN-T" ;
     s223:hasMeasurementLocation hvac_spaces:00002 ;
     s223:hasPhysicalLocation physical_spaces:00004 ;
+<<<<<<< HEAD
     s223:observesProperty hvac_devices:00157 ;
+=======
+    s223:node_type p223:AirTemperatureSensor ;
+    s223:observesProperty hvac_devices:00087 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
 hvac_devices:00157 a p223:Temperature,
         s223:ObservableProperty,
@@ -2408,11 +3053,20 @@ hvac_devices:00157 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "VAV1_ZN-T.Temperature" ;
     s223:hasExternalReference bacnet_references:00037 ;
+<<<<<<< HEAD
     s223:hasValue 20.3 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00158 a s223:Connectable,
+=======
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:hasValue 2.03e+01 ;
+    s223:node_type p223:Temperature ;
+    s223:ofMedium s223:Medium-Air ;
+    s223:unit unit:DEG_C .
+hvac_devices:00088 a s223:Connectable,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:Damper,
         s223:Device ;
     rdfs:label "VAV1_damper" ;
@@ -2421,6 +3075,7 @@ hvac_devices:00158 a s223:Connectable,
     s223:command hvac_devices:00163 ;
     s223:connectedThrough hvac:00008,
         hvac:00017 ;
+<<<<<<< HEAD
     s223:connectedTo hvac_devices:00169 ;
     s223:contains hvac_devices:00161 ;
     s223:feedback hvac_devices:00165 ;
@@ -2429,6 +3084,24 @@ hvac_devices:00158 a s223:Connectable,
     s223:position hvac_devices:00165 ;
     rdfs:comment "VAV Box 1 Air Damper" .
 hvac_devices:00159 a s223:ConnectionPoint,
+=======
+    s223:connectedTo hvac_devices:00094 ;
+    s223:feedback hvac_devices:00090 ;
+    s223:hasConnectionPoint hvac_devices:00091,
+        hvac_devices:00092,
+        hvac_devices:00093 ;
+    s223:hasProperty hvac_devices:00089,
+        hvac_devices:00090 ;
+    s223:node_type s223:Damper ;
+    s223:position hvac_devices:00089 ;
+    s223:powerInlet hvac_devices:00093 ;
+    rdfs:comment "VAV Box 1 Air Damper" .
+hvac_devices:00089 a s223:Property,
+        g36:AnalogOut .
+hvac_devices:00090 a s223:Property,
+        g36:AnalogIn .
+hvac_devices:00091 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "VAV1_damper.airInlet" ;
     s223:connectsThrough hvac:00008 ;
@@ -2500,6 +3173,7 @@ hvac_devices:00169 a s223:Coil,
     s223:connectedFrom hvac_devices:00158 ;
     s223:connectedThrough hvac:00017,
         hvac:00018 ;
+<<<<<<< HEAD
     s223:connectedTo hvac_spaces:00038 ;
     s223:hasConnectionPoint hvac_devices:00170,
         hvac_devices:00171,
@@ -2507,6 +3181,16 @@ hvac_devices:00169 a s223:Coil,
         hvac_devices:00173 ;
     s223:hotWaterInlet hvac_devices:00172 ;
     s223:hotWaterOutlet hvac_devices:00173 ;
+=======
+    s223:connectedTo hvac_spaces:00078 ;
+    s223:hasConnectionPoint hvac_devices:00095,
+        hvac_devices:00096,
+        hvac_devices:00097,
+        hvac_devices:00098 ;
+    s223:hotWaterInlet hvac_devices:00097 ;
+    s223:hotWaterOutlet hvac_devices:00098 ;
+    s223:node_type s223:HeatingCoil ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "VAV Box 1 Hot Water Coil" .
 hvac_devices:00170 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2549,6 +3233,7 @@ hvac_devices:00175 a s223:OutletSystemConnectionPoint,
 hvac_devices:00176 a p223:VAV,
         s223:System ;
     rdfs:label "VAVBox2" ;
+<<<<<<< HEAD
     p223:airInlet hvac_devices:00199 ;
     p223:airOutlet hvac_devices:00200 ;
     s223:contains hvac_devices:00177,
@@ -2560,6 +3245,19 @@ hvac_devices:00176 a p223:VAV,
     s223:hasSystemConnectionPoint hvac_devices:00199,
         hvac_devices:00200 ;
     s223:servesZone hvac_spaces:00060 ;
+=======
+    p223:airInlet hvac_devices:00119 ;
+    p223:airOutlet hvac_devices:00120 ;
+    s223:contains hvac_devices:00102,
+        hvac_devices:00104,
+        hvac_devices:00106,
+        hvac_devices:00108,
+        hvac_devices:00114 ;
+    s223:hasSystemConnectionPoint hvac_devices:00119,
+        hvac_devices:00120 ;
+    s223:node_type p223:VAV ;
+    s223:servesZone hvac_spaces:00108 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "VAV Serving HVAC Zone 2" .
 hvac_devices:00177 a p223:AirFlowSensor,
         p223:FlowSensor,
@@ -2567,8 +3265,14 @@ hvac_devices:00177 a p223:AirFlowSensor,
         s223:Device,
         s223:Sensor ;
     rdfs:label "VAV2_SA-F" ;
+<<<<<<< HEAD
     s223:hasMeasurementLocation hvac_devices:00184 ;
     s223:observesProperty hvac_devices:00178 ;
+=======
+    s223:hasMeasurementLocation hvac_devices:00111 ;
+    s223:node_type p223:AirFlowSensor ;
+    s223:observesProperty hvac_devices:00103 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Air flow used to control damper" .
 hvac_devices:00178 a s223:Flow,
         s223:ObservableProperty,
@@ -2576,17 +3280,30 @@ hvac_devices:00178 a s223:Flow,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "VAV2_SA-F.Flow" ;
+    s223:hasQuantityKind quantitykind:VolumeFlowRate ;
+    s223:node_type s223:Flow ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:L-PER-SEC .
 hvac_devices:00179 a p223:AirTemperatureSensor,
+=======
+    s223:unit unit:FT3-PER-MIN .
+hvac_devices:00104 a p223:AirTemperatureSensor,
+>>>>>>> origin/21-rename-enumerationkinds
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "VAV2_DA-T" ;
+<<<<<<< HEAD
     s223:hasMeasurementLocation hvac_devices:00196 ;
     s223:observesProperty hvac_devices:00180 ;
+=======
+    s223:hasMeasurementLocation hvac_devices:00116 ;
+    s223:node_type p223:AirTemperatureSensor ;
+    s223:observesProperty hvac_devices:00105 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
 hvac_devices:00180 a p223:Temperature,
         s223:ObservableProperty,
@@ -2594,10 +3311,17 @@ hvac_devices:00180 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "VAV2_DA-T.Temperature" ;
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00181 a p223:AirTemperatureSensor,
+=======
+    s223:unit unit:DEG_C .
+hvac_devices:00106 a p223:AirTemperatureSensor,
+>>>>>>> origin/21-rename-enumerationkinds
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
@@ -2605,7 +3329,12 @@ hvac_devices:00181 a p223:AirTemperatureSensor,
     rdfs:label "VAV2_ZN-T" ;
     s223:hasMeasurementLocation hvac_spaces:00029 ;
     s223:hasPhysicalLocation physical_spaces:00008 ;
+<<<<<<< HEAD
     s223:observesProperty hvac_devices:00182 ;
+=======
+    s223:node_type p223:AirTemperatureSensor ;
+    s223:observesProperty hvac_devices:00107 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
 hvac_devices:00182 a p223:Temperature,
         s223:ObservableProperty,
@@ -2614,11 +3343,20 @@ hvac_devices:00182 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "VAV2_ZN-T.Temperature" ;
     s223:hasExternalReference bacnet_references:00043 ;
+<<<<<<< HEAD
     s223:hasValue 22.2 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00183 a s223:Connectable,
+=======
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:hasValue 2.22e+01 ;
+    s223:node_type p223:Temperature ;
+    s223:ofMedium s223:Medium-Air ;
+    s223:unit unit:DEG_C .
+hvac_devices:00108 a s223:Connectable,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:Damper,
         s223:Device ;
     rdfs:label "VAV2_damper" ;
@@ -2627,6 +3365,7 @@ hvac_devices:00183 a s223:Connectable,
     s223:command hvac_devices:00188 ;
     s223:connectedThrough hvac:00008,
         hvac:00019 ;
+<<<<<<< HEAD
     s223:connectedTo hvac_devices:00194 ;
     s223:contains hvac_devices:00186 ;
     s223:feedback hvac_devices:00190 ;
@@ -2635,6 +3374,24 @@ hvac_devices:00183 a s223:Connectable,
     s223:position hvac_devices:00190 ;
     rdfs:comment "VAV Box 2 Air Damper" .
 hvac_devices:00184 a s223:ConnectionPoint,
+=======
+    s223:connectedTo hvac_devices:00114 ;
+    s223:feedback hvac_devices:00110 ;
+    s223:hasConnectionPoint hvac_devices:00111,
+        hvac_devices:00112,
+        hvac_devices:00113 ;
+    s223:hasProperty hvac_devices:00109,
+        hvac_devices:00110 ;
+    s223:node_type s223:Damper ;
+    s223:position hvac_devices:00109 ;
+    s223:powerInlet hvac_devices:00113 ;
+    rdfs:comment "VAV Box 2 Air Damper" .
+hvac_devices:00109 a s223:Property,
+        g36:AnalogOut .
+hvac_devices:00110 a s223:Property,
+        g36:AnalogIn .
+hvac_devices:00111 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "VAV2_damper.airInlet" ;
     s223:connectsThrough hvac:00008 ;
@@ -2706,6 +3463,7 @@ hvac_devices:00194 a s223:Coil,
     s223:connectedFrom hvac_devices:00183 ;
     s223:connectedThrough hvac:00019,
         hvac:00020 ;
+<<<<<<< HEAD
     s223:connectedTo hvac_spaces:00047 ;
     s223:hasConnectionPoint hvac_devices:00195,
         hvac_devices:00196,
@@ -2713,6 +3471,16 @@ hvac_devices:00194 a s223:Coil,
         hvac_devices:00198 ;
     s223:hotWaterInlet hvac_devices:00197 ;
     s223:hotWaterOutlet hvac_devices:00198 ;
+=======
+    s223:connectedTo hvac_spaces:00095 ;
+    s223:hasConnectionPoint hvac_devices:00115,
+        hvac_devices:00116,
+        hvac_devices:00117,
+        hvac_devices:00118 ;
+    s223:hotWaterInlet hvac_devices:00117 ;
+    s223:hotWaterOutlet hvac_devices:00118 ;
+    s223:node_type s223:HeatingCoil ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "VAV Box 2 Hot Water Coil" .
 hvac_devices:00195 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2755,7 +3523,8 @@ hvac_devices:00200 a s223:OutletSystemConnectionPoint,
 hvac_spaces:00001 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac_spaces:00002 a p223:PhysicSystem,
         s223:System ;
     rdfs:label "Indoor air of space" ;
@@ -2774,9 +3543,78 @@ hvac_spaces:00002 a p223:PhysicSystem,
         hvac_spaces:00007,
         hvac_spaces:00008,
         hvac_spaces:00009 ;
+<<<<<<< HEAD
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:hasProperty hvac_spaces:00001 ;
+=======
+    s223:node_type p223:PhysicSystem .
+hvac_spaces:00003 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo hvac_spaces:00011 .
+hvac_spaces:00004 a s223:OutletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.ductAirOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo hvac_spaces:00012 .
+hvac_spaces:00005 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.airTransfer" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo hvac_spaces:00013 .
+hvac_spaces:00006 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.doors" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo hvac_spaces:00014 .
+hvac_spaces:00007 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.windows" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo hvac_spaces:00015 .
+hvac_spaces:00008 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantHeating" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo hvac_spaces:00016 .
+hvac_spaces:00009 a s223:BidirectionalSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "Indoor air of space.radiantCooling" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo hvac_spaces:00017 .
+hvac_spaces:00010 a s223:Connectable,
+        s223:DomainSpace,
+        s223:HVACSpace ;
+    rdfs:label "HVACSpace1" ;
+    s223:airTransfer hvac_spaces:00013 ;
+    s223:connectedThrough hvac:00001,
+        hvac:00005,
+        hvac:00009 ;
+    s223:doors hvac_spaces:00014 ;
+    s223:ductAirInlet hvac_spaces:00011 ;
+    s223:ductAirOutlet hvac_spaces:00012 ;
+    s223:hasConnectionPoint hvac_spaces:00011,
+        hvac_spaces:00012,
+        hvac_spaces:00013,
+        hvac_spaces:00014,
+        hvac_spaces:00015,
+        hvac_spaces:00016,
+        hvac_spaces:00017 ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:hasProperty hvac_spaces:00001 ;
+    s223:indoorAir hvac_spaces:00002 ;
+    s223:node_type s223:HVACSpace ;
+>>>>>>> origin/21-rename-enumerationkinds
     s223:occupancy hvac_spaces:00001 ;
     s223:radiantCooling hvac_spaces:00009 ;
     s223:radiantHeating hvac_spaces:00008 ;
@@ -2830,7 +3668,8 @@ hvac_spaces:00009 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00018 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac_spaces:00019 a p223:PhysicSystem,
         s223:System ;
     rdfs:label "Indoor air of space" ;
@@ -2848,7 +3687,8 @@ hvac_spaces:00019 a p223:PhysicSystem,
         hvac_spaces:00023,
         hvac_spaces:00024,
         hvac_spaces:00025,
-        hvac_spaces:00026 .
+        hvac_spaces:00026 ;
+    s223:node_type p223:PhysicSystem .
 hvac_spaces:00020 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Indoor air of space.ductAirInlet" ;
@@ -2911,11 +3751,21 @@ hvac_spaces:00027 a s223:Connectable,
         hvac_spaces:00018 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:hasProperty hvac_spaces:00010 ;
     s223:occupancy hvac_spaces:00010 ;
     s223:radiantCooling hvac_spaces:00018 ;
     s223:radiantHeating hvac_spaces:00017 ;
     s223:windows hvac_spaces:00016 ;
+=======
+    s223:hasProperty hvac_spaces:00018 ;
+    s223:indoorAir hvac_spaces:00019 ;
+    s223:node_type s223:HVACSpace ;
+    s223:occupancy hvac_spaces:00018 ;
+    s223:radiantCooling hvac_spaces:00034 ;
+    s223:radiantHeating hvac_spaces:00033 ;
+    s223:windows hvac_spaces:00032 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Bathroom.HVAC" .
 hvac_spaces:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2964,7 +3814,8 @@ hvac_spaces:00018 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00035 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac_spaces:00036 a p223:PhysicSystem,
         s223:System ;
     rdfs:label "Indoor air of space" ;
@@ -2982,7 +3833,8 @@ hvac_spaces:00036 a p223:PhysicSystem,
         hvac_spaces:00040,
         hvac_spaces:00041,
         hvac_spaces:00042,
-        hvac_spaces:00043 .
+        hvac_spaces:00043 ;
+    s223:node_type p223:PhysicSystem .
 hvac_spaces:00037 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Indoor air of space.ductAirInlet" ;
@@ -3045,11 +3897,21 @@ hvac_spaces:00044 a s223:Connectable,
         hvac_spaces:00027 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:hasProperty hvac_spaces:00019 ;
     s223:occupancy hvac_spaces:00019 ;
     s223:radiantCooling hvac_spaces:00027 ;
     s223:radiantHeating hvac_spaces:00026 ;
     s223:windows hvac_spaces:00025 ;
+=======
+    s223:hasProperty hvac_spaces:00035 ;
+    s223:indoorAir hvac_spaces:00036 ;
+    s223:node_type s223:HVACSpace ;
+    s223:occupancy hvac_spaces:00035 ;
+    s223:radiantCooling hvac_spaces:00051 ;
+    s223:radiantHeating hvac_spaces:00050 ;
+    s223:windows hvac_spaces:00049 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "CorridorNorth.HVAC" .
 hvac_spaces:00021 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -3098,7 +3960,8 @@ hvac_spaces:00027 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00052 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac_spaces:00053 a p223:PhysicSystem,
         s223:System ;
     rdfs:label "Indoor air of space" ;
@@ -3116,7 +3979,8 @@ hvac_spaces:00053 a p223:PhysicSystem,
         hvac_spaces:00057,
         hvac_spaces:00058,
         hvac_spaces:00059,
-        hvac_spaces:00060 .
+        hvac_spaces:00060 ;
+    s223:node_type p223:PhysicSystem .
 hvac_spaces:00054 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Indoor air of space.ductAirInlet" ;
@@ -3180,11 +4044,21 @@ hvac_spaces:00061 a s223:Connectable,
         hvac_spaces:00036 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:hasProperty hvac_spaces:00028 ;
     s223:occupancy hvac_spaces:00028 ;
     s223:radiantCooling hvac_spaces:00036 ;
     s223:radiantHeating hvac_spaces:00035 ;
     s223:windows hvac_spaces:00034 ;
+=======
+    s223:hasProperty hvac_spaces:00052 ;
+    s223:indoorAir hvac_spaces:00053 ;
+    s223:node_type s223:HVACSpace ;
+    s223:occupancy hvac_spaces:00052 ;
+    s223:radiantCooling hvac_spaces:00068 ;
+    s223:radiantHeating hvac_spaces:00067 ;
+    s223:windows hvac_spaces:00066 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "CorridorSouth.HVAC" .
 hvac_spaces:00030 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -3233,7 +4107,8 @@ hvac_spaces:00036 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00069 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac_spaces:00070 a p223:PhysicSystem,
         s223:System ;
     rdfs:label "Indoor air of space" ;
@@ -3251,7 +4126,8 @@ hvac_spaces:00070 a p223:PhysicSystem,
         hvac_spaces:00074,
         hvac_spaces:00075,
         hvac_spaces:00076,
-        hvac_spaces:00077 .
+        hvac_spaces:00077 ;
+    s223:node_type p223:PhysicSystem .
 hvac_spaces:00071 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Indoor air of space.ductAirInlet" ;
@@ -3314,11 +4190,21 @@ hvac_spaces:00078 a s223:Connectable,
         hvac_spaces:00045 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:hasProperty hvac_spaces:00037 ;
     s223:occupancy hvac_spaces:00037 ;
     s223:radiantCooling hvac_spaces:00045 ;
     s223:radiantHeating hvac_spaces:00044 ;
     s223:windows hvac_spaces:00043 ;
+=======
+    s223:hasProperty hvac_spaces:00069 ;
+    s223:indoorAir hvac_spaces:00070 ;
+    s223:node_type s223:HVACSpace ;
+    s223:occupancy hvac_spaces:00069 ;
+    s223:radiantCooling hvac_spaces:00085 ;
+    s223:radiantHeating hvac_spaces:00084 ;
+    s223:windows hvac_spaces:00083 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "PrivateOffice.HVAC" .
 hvac_spaces:00039 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -3367,7 +4253,8 @@ hvac_spaces:00045 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00086 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac_spaces:00087 a p223:PhysicSystem,
         s223:System ;
     rdfs:label "Indoor air of space" ;
@@ -3385,7 +4272,8 @@ hvac_spaces:00087 a p223:PhysicSystem,
         hvac_spaces:00091,
         hvac_spaces:00092,
         hvac_spaces:00093,
-        hvac_spaces:00094 .
+        hvac_spaces:00094 ;
+    s223:node_type p223:PhysicSystem .
 hvac_spaces:00088 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Indoor air of space.ductAirInlet" ;
@@ -3449,11 +4337,21 @@ hvac_spaces:00095 a s223:Connectable,
         hvac_spaces:00054 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:hasProperty hvac_spaces:00046 ;
     s223:occupancy hvac_spaces:00046 ;
     s223:radiantCooling hvac_spaces:00054 ;
     s223:radiantHeating hvac_spaces:00053 ;
     s223:windows hvac_spaces:00052 ;
+=======
+    s223:hasProperty hvac_spaces:00086 ;
+    s223:indoorAir hvac_spaces:00087 ;
+    s223:node_type s223:HVACSpace ;
+    s223:occupancy hvac_spaces:00086 ;
+    s223:radiantCooling hvac_spaces:00102 ;
+    s223:radiantHeating hvac_spaces:00101 ;
+    s223:windows hvac_spaces:00100 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Kitchenette.HVAC" .
 hvac_spaces:00048 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -3502,7 +4400,8 @@ hvac_spaces:00054 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00103 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac_spaces:00104 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone1" ;
@@ -3513,10 +4412,18 @@ hvac_spaces:00104 a s223:HVACZone,
         hvac_spaces:00020,
         hvac_spaces:00038 ;
     s223:hasDomain s223:Domain-HVAC ;
+<<<<<<< HEAD
     s223:hasProperty hvac_spaces:00055 ;
     s223:hasZoneConnectionPoint hvac_spaces:00057,
         hvac_spaces:00058 ;
     s223:occupancy hvac_spaces:00055 ;
+=======
+    s223:hasProperty hvac_spaces:00103 ;
+    s223:hasZoneConnectionPoint hvac_spaces:00105,
+        hvac_spaces:00106 ;
+    s223:node_type s223:HVACZone ;
+    s223:occupancy hvac_spaces:00103 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "HVAC Zone 1 contains open office, bathroom, private office and corridor north" .
 hvac_spaces:00057 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -3533,7 +4440,8 @@ hvac_spaces:00058 a s223:OutletZoneConnectionPoint,
 hvac_spaces:00107 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 hvac_spaces:00108 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone2" ;
@@ -3542,10 +4450,18 @@ hvac_spaces:00108 a s223:HVACZone,
     s223:contains hvac_spaces:00029,
         hvac_spaces:00047 ;
     s223:hasDomain s223:Domain-HVAC ;
+<<<<<<< HEAD
     s223:hasProperty hvac_spaces:00059 ;
     s223:hasZoneConnectionPoint hvac_spaces:00061,
         hvac_spaces:00062 ;
     s223:occupancy hvac_spaces:00059 ;
+=======
+    s223:hasProperty hvac_spaces:00107 ;
+    s223:hasZoneConnectionPoint hvac_spaces:00109,
+        hvac_spaces:00110 ;
+    s223:node_type s223:HVACZone ;
+    s223:occupancy hvac_spaces:00107 ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "HVAC Zone 2 contains Kitchenette and Corridor South" .
 hvac_spaces:00061 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -3563,12 +4479,14 @@ lighting_devices:00001 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00002 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00003 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3583,17 +4501,27 @@ lighting_devices:00003 a s223:Connectable,
         lighting_devices:00002,
         lighting_devices:00004 ;
     s223:lightOutlet lighting_devices:00005 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00002 ;
     s223:onOffStatus lighting_devices:00001 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire in kitchenette #11" .
 lighting_devices:00004 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 100.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00005 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire11.lightOutlet" ;
@@ -3612,12 +4540,14 @@ lighting_devices:00007 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00008 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00009 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3632,17 +4562,27 @@ lighting_devices:00009 a s223:Connectable,
         lighting_devices:00008,
         lighting_devices:00010 ;
     s223:lightOutlet lighting_devices:00011 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00008 ;
     s223:onOffStatus lighting_devices:00007 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire in kitchenette #12" .
 lighting_devices:00010 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 100.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00011 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire12.lightOutlet" ;
@@ -3665,6 +4605,7 @@ lighting_devices:00013 a p223:MovementSensor,
     rdfs:label "OccSensor4" ;
     s223:hasMeasurementLocation lighting_spaces:00016 ;
     s223:hasPhysicalLocation physical_spaces:00007 ;
+    s223:node_type p223:OccupancySensor ;
     s223:observesProperty lighting_devices:00014 ;
     rdfs:comment "Occupancy sensor for kitchenette luminaires 11 & 12" .
 lighting_devices:00014 a s223:EnumerableProperty,
@@ -3672,6 +4613,7 @@ lighting_devices:00014 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor4.Movement" ;
+    s223:node_type s223:EnumeratedObservableProperty ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00015 a s223:Connection ;
     rdfs:label "LightHub_11_12" ;
@@ -3686,11 +4628,13 @@ lighting_devices:00015 a s223:Connection ;
 lighting_devices:00016 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00017 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00018 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3705,17 +4649,27 @@ lighting_devices:00018 a s223:Connectable,
         lighting_devices:00017,
         lighting_devices:00019 ;
     s223:lightOutlet lighting_devices:00020 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00017 ;
     s223:onOffStatus lighting_devices:00016 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #7 in Private Office" .
 lighting_devices:00019 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 60.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00020 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire7.lightOutlet" ;
@@ -3734,12 +4688,14 @@ lighting_devices:00022 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00023 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00024 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3754,17 +4710,27 @@ lighting_devices:00024 a s223:Connectable,
         lighting_devices:00023,
         lighting_devices:00025 ;
     s223:lightOutlet lighting_devices:00026 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00023 ;
     s223:onOffStatus lighting_devices:00022 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #8 in Private Office" .
 lighting_devices:00025 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 60.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00026 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire8.lightOutlet" ;
@@ -3786,6 +4752,7 @@ lighting_devices:00028 a p223:MovementSensor,
     rdfs:label "OccSensor3" ;
     s223:hasMeasurementLocation lighting_spaces:00013 ;
     s223:hasPhysicalLocation physical_spaces:00006 ;
+    s223:node_type p223:MovementSensor ;
     s223:observesProperty lighting_devices:00029 ;
     rdfs:comment "Occupancy sensor for Privtae Office" .
 lighting_devices:00029 a s223:EnumerableProperty,
@@ -3793,6 +4760,7 @@ lighting_devices:00029 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor3.Movement" ;
+    s223:node_type s223:EnumeratedObservableProperty ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00030 a s223:Connection ;
     rdfs:label "LightHub_7_8" ;
@@ -3808,12 +4776,14 @@ lighting_devices:00031 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00032 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00033 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3828,17 +4798,27 @@ lighting_devices:00033 a s223:Connectable,
         lighting_devices:00032,
         lighting_devices:00034 ;
     s223:lightOutlet lighting_devices:00035 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00032 ;
     s223:onOffStatus lighting_devices:00031 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #9 in Corridor" .
 lighting_devices:00034 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 100.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00035 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire9.lightOutlet" ;
@@ -3857,12 +4837,14 @@ lighting_devices:00037 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00038 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00039 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3877,17 +4859,27 @@ lighting_devices:00039 a s223:Connectable,
         lighting_devices:00038,
         lighting_devices:00040 ;
     s223:lightOutlet lighting_devices:00041 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00038 ;
     s223:onOffStatus lighting_devices:00037 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #10 in Corridor" .
 lighting_devices:00040 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 100.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00041 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire10.lightOutlet" ;
@@ -3910,6 +4902,7 @@ lighting_devices:00043 a p223:MovementSensor,
     rdfs:label "OccSensor5" ;
     s223:hasMeasurementLocation lighting_spaces:00010 ;
     s223:hasPhysicalLocation physical_spaces:00008 ;
+    s223:node_type p223:OccupancySensor ;
     s223:observesProperty lighting_devices:00044 ;
     rdfs:comment "Occupancy sensor for Corridor" .
 lighting_devices:00044 a s223:EnumerableProperty,
@@ -3917,6 +4910,7 @@ lighting_devices:00044 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor5.Movement" ;
+    s223:node_type s223:EnumeratedObservableProperty ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00045 a s223:Connection ;
     rdfs:label "LightHub_9_10" ;
@@ -3932,12 +4926,14 @@ lighting_devices:00046 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00047 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00048 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3952,17 +4948,27 @@ lighting_devices:00048 a s223:Connectable,
         lighting_devices:00047,
         lighting_devices:00049 ;
     s223:lightOutlet lighting_devices:00050 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00047 ;
     s223:onOffStatus lighting_devices:00046 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #5 in Bathroom" .
 lighting_devices:00049 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 60.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00050 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire5.lightOutlet" ;
@@ -3981,12 +4987,14 @@ lighting_devices:00052 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00053 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 0 .
+    s223:hasValue 0 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00054 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -4001,17 +5009,27 @@ lighting_devices:00054 a s223:Connectable,
         lighting_devices:00053,
         lighting_devices:00055 ;
     s223:lightOutlet lighting_devices:00056 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00053 ;
     s223:onOffStatus lighting_devices:00052 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #6 in Bathroom" .
 lighting_devices:00055 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 60.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00056 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire6.lightOutlet" ;
@@ -4044,6 +5062,7 @@ lighting_devices:00059 a p223:MovementSensor,
     rdfs:label "OccSensor2" ;
     s223:hasMeasurementLocation lighting_spaces:00007 ;
     s223:hasPhysicalLocation physical_spaces:00005 ;
+    s223:node_type p223:OccupancySensor ;
     s223:observesProperty lighting_devices:00060 ;
     rdfs:comment "Occupancy sensor for Bathroom" .
 lighting_devices:00060 a s223:EnumerableProperty,
@@ -4051,18 +5070,21 @@ lighting_devices:00060 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor2.Movement" ;
+    s223:node_type s223:EnumeratedObservableProperty ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00061 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasExternalReference bacnet_references:00069 ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00062 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00063 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -4079,8 +5101,12 @@ lighting_devices:00063 a s223:Connectable,
         lighting_devices:00064,
         lighting_devices:00065 ;
     s223:lightOutlet lighting_devices:00066 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00062 ;
     s223:onOffStatus lighting_devices:00061 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #1 in OpenOffice East" .
 lighting_devices:00064 a p223:PercentCommand,
         s223:ActuatableProperty,
@@ -4088,17 +5114,29 @@ lighting_devices:00064 a p223:PercentCommand,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
     s223:hasExternalReference bacnet_references:00067 ;
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+=======
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:Percent .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00065 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 13.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00066 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire1.lightOutlet" ;
@@ -4117,12 +5155,14 @@ lighting_devices:00068 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00069 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00070 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -4137,17 +5177,27 @@ lighting_devices:00070 a s223:Connectable,
         lighting_devices:00069,
         lighting_devices:00071 ;
     s223:lightOutlet lighting_devices:00072 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00069 ;
     s223:onOffStatus lighting_devices:00068 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #2 in OpenOffice East" .
 lighting_devices:00071 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 13.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00072 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire2.lightOutlet" ;
@@ -4166,12 +5216,14 @@ lighting_devices:00074 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00075 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00076 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -4186,17 +5238,27 @@ lighting_devices:00076 a s223:Connectable,
         lighting_devices:00075,
         lighting_devices:00077 ;
     s223:lightOutlet lighting_devices:00078 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00075 ;
     s223:onOffStatus lighting_devices:00074 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #3 in OpenOffice West" .
 lighting_devices:00077 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 13.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00078 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire3.lightOutlet" ;
@@ -4215,12 +5277,14 @@ lighting_devices:00080 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_devices:00081 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasValue 1 .
+    s223:hasValue 1 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 lighting_devices:00082 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -4235,17 +5299,27 @@ lighting_devices:00082 a s223:Connectable,
         lighting_devices:00081,
         lighting_devices:00083 ;
     s223:lightOutlet lighting_devices:00084 ;
+<<<<<<< HEAD
     s223:onOffCommand lighting_devices:00081 ;
     s223:onOffStatus lighting_devices:00080 ;
+=======
+    s223:node_type s223:Luminaire ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Luminaire #4 in OpenOffice West" .
 lighting_devices:00083 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:Power ;
     s223:hasValue 13.0 ;
+<<<<<<< HEAD
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
+=======
+    s223:node_type p223:ElectricPowerW ;
+    s223:unit unit:W .
+>>>>>>> origin/21-rename-enumerationkinds
 lighting_devices:00084 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire4.lightOutlet" ;
@@ -4288,6 +5362,7 @@ lighting_devices:00088 a p223:MovementSensor,
     rdfs:label "OccSensor1" ;
     s223:hasMeasurementLocation lighting_spaces:00004 ;
     s223:hasPhysicalLocation physical_spaces:00004 ;
+    s223:node_type p223:OccupancySensor ;
     s223:observesProperty lighting_devices:00089 ;
     rdfs:comment "Occupancy sensor for OpenOffice" .
 lighting_devices:00089 a s223:EnumerableProperty,
@@ -4295,6 +5370,7 @@ lighting_devices:00089 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor1.Movement" ;
+    s223:node_type s223:EnumeratedObservableProperty ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00090 a s223:Connection ;
     rdfs:label "LightHub_NaturalLight" ;
@@ -4320,6 +5396,7 @@ lighting_spaces:00001 a p223:LightingSpace,
         lighting_spaces:00003 ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasMedium s223:Medium-Light ;
+    s223:node_type p223:LightingSpace ;
     rdfs:comment "OpenOfficeEast.Light" .
 lighting_spaces:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -4347,6 +5424,7 @@ lighting_spaces:00004 a p223:LightingSpace,
         lighting_spaces:00006 ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasMedium s223:Medium-Light ;
+    s223:node_type p223:LightingSpace ;
     rdfs:comment "OpenOfficeWest.Light" .
 lighting_spaces:00005 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -4373,6 +5451,7 @@ lighting_spaces:00007 a p223:LightingSpace,
         lighting_spaces:00009 ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasMedium s223:Medium-Light ;
+    s223:node_type p223:LightingSpace ;
     rdfs:comment "Bathroom.Light" .
 lighting_spaces:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -4398,6 +5477,7 @@ lighting_spaces:00010 a p223:LightingSpace,
         lighting_spaces:00012 ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasMedium s223:Medium-Light ;
+    s223:node_type p223:LightingSpace ;
     rdfs:comment "Corridor.Light" .
 lighting_spaces:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -4423,6 +5503,7 @@ lighting_spaces:00013 a p223:LightingSpace,
         lighting_spaces:00015 ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasMedium s223:Medium-Light ;
+    s223:node_type p223:LightingSpace ;
     rdfs:comment "PrivateOffice.Light" .
 lighting_spaces:00014 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -4448,6 +5529,7 @@ lighting_spaces:00016 a p223:LightingSpace,
         lighting_spaces:00018 ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasMedium s223:Medium-Light ;
+    s223:node_type p223:LightingSpace ;
     rdfs:comment "Kitchenette.Light" .
 lighting_spaces:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -4465,7 +5547,8 @@ lighting_spaces:00018 a s223:ConnectionPoint,
 lighting_spaces:00019 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_spaces:00020 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone1" ;
@@ -4475,6 +5558,7 @@ lighting_spaces:00020 a p223:LightingZone,
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasProperty lighting_spaces:00019 ;
     s223:hasZoneConnectionPoint lighting_spaces:00021 ;
+    s223:node_type p223:LightingZone ;
     rdfs:comment "Contains OpenOffice Space West" .
 lighting_spaces:00021 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -4484,7 +5568,8 @@ lighting_spaces:00021 a s223:InletZoneConnectionPoint,
 lighting_spaces:00022 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_spaces:00023 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone2" ;
@@ -4494,6 +5579,7 @@ lighting_spaces:00023 a p223:LightingZone,
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasProperty lighting_spaces:00022 ;
     s223:hasZoneConnectionPoint lighting_spaces:00024 ;
+    s223:node_type p223:LightingZone ;
     rdfs:comment "Contains OpenOffice Space East" .
 lighting_spaces:00024 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -4503,7 +5589,8 @@ lighting_spaces:00024 a s223:InletZoneConnectionPoint,
 lighting_spaces:00025 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_spaces:00026 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone3" ;
@@ -4513,6 +5600,7 @@ lighting_spaces:00026 a p223:LightingZone,
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasProperty lighting_spaces:00025 ;
     s223:hasZoneConnectionPoint lighting_spaces:00027 ;
+    s223:node_type p223:LightingZone ;
     rdfs:comment "Contains Bathroom Light Space" .
 lighting_spaces:00027 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -4522,7 +5610,8 @@ lighting_spaces:00027 a s223:InletZoneConnectionPoint,
 lighting_spaces:00028 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_spaces:00029 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone4" ;
@@ -4532,6 +5621,7 @@ lighting_spaces:00029 a p223:LightingZone,
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasProperty lighting_spaces:00028 ;
     s223:hasZoneConnectionPoint lighting_spaces:00030 ;
+    s223:node_type p223:LightingZone ;
     rdfs:comment "Contains Private Office Light Space" .
 lighting_spaces:00030 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -4541,7 +5631,8 @@ lighting_spaces:00030 a s223:InletZoneConnectionPoint,
 lighting_spaces:00031 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_spaces:00032 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone5" ;
@@ -4551,6 +5642,7 @@ lighting_spaces:00032 a p223:LightingZone,
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasProperty lighting_spaces:00031 ;
     s223:hasZoneConnectionPoint lighting_spaces:00033 ;
+    s223:node_type p223:LightingZone ;
     rdfs:comment "Contains Corridor Light Space" .
 lighting_spaces:00033 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -4560,7 +5652,8 @@ lighting_spaces:00033 a s223:InletZoneConnectionPoint,
 lighting_spaces:00034 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:node_type s223:EnumeratedObservableProperty .
 lighting_spaces:00035 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone6" ;
@@ -4570,6 +5663,7 @@ lighting_spaces:00035 a p223:LightingZone,
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasProperty lighting_spaces:00034 ;
     s223:hasZoneConnectionPoint lighting_spaces:00036 ;
+    s223:node_type p223:LightingZone ;
     rdfs:comment "Contains Kitchenette Light Space" .
 lighting_spaces:00036 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -4580,10 +5674,12 @@ physical_spaces:00001 a s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "Pritoni Building" ;
     s223:contains physical_spaces:00002,
-        physical_spaces:00003 .
+        physical_spaces:00003 ;
+    s223:node_type rec:Building .
 physical_spaces:00002 a s223:PhysicalSpace,
         rec:Roof ;
-    rdfs:label "Roof of building" .
+    rdfs:label "Roof of building" ;
+    s223:node_type rec:Roof .
 physical_spaces:00003 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Floor on which everything is" ;
@@ -4591,24 +5687,33 @@ physical_spaces:00003 a s223:PhysicalSpace,
         physical_spaces:00005,
         physical_spaces:00006,
         physical_spaces:00007,
-        physical_spaces:00008 .
+        physical_spaces:00008 ;
+    s223:node_type rec:Floor .
 physical_spaces:00004 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Open Office" ;
     s223:encloses hvac_spaces:00002,
         lighting_spaces:00001,
-        lighting_spaces:00004 .
+        lighting_spaces:00004 ;
+    s223:node_type rec:Office .
 physical_spaces:00005 a s223:PhysicalSpace,
         rec:Bathroom,
         rec:Room ;
     rdfs:label "Bathroom" ;
+<<<<<<< HEAD
     s223:encloses hvac_spaces:00011,
         lighting_spaces:00007 .
+=======
+    s223:encloses hvac_spaces:00027,
+        lighting_spaces:00007 ;
+    s223:node_type rec:Bathroom .
+>>>>>>> origin/21-rename-enumerationkinds
 physical_spaces:00006 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Private Office" ;
+<<<<<<< HEAD
     s223:encloses hvac_spaces:00038,
         lighting_spaces:00013 .
 physical_spaces:00007 a s223:PhysicalSpace,
@@ -4616,10 +5721,28 @@ physical_spaces:00007 a s223:PhysicalSpace,
     rdfs:label "Kitchenette" ;
     s223:encloses hvac_spaces:00047,
         lighting_spaces:00016 .
+=======
+    s223:encloses hvac_spaces:00078,
+        lighting_spaces:00013 ;
+    s223:node_type rec:Office .
+physical_spaces:00007 a s223:PhysicalSpace,
+        rec:Room ;
+    rdfs:label "Kitchenette" ;
+    s223:encloses hvac_spaces:00095,
+        lighting_spaces:00016 ;
+    s223:node_type rec:Room .
+>>>>>>> origin/21-rename-enumerationkinds
 physical_spaces:00008 a s223:PhysicalSpace,
         rec:Corridor,
         rec:Room ;
     rdfs:label "Corridor" ;
+<<<<<<< HEAD
     s223:encloses hvac_spaces:00020,
         hvac_spaces:00029,
         lighting_spaces:00010 .
+=======
+    s223:encloses hvac_spaces:00044,
+        hvac_spaces:00061,
+        lighting_spaces:00010 ;
+    s223:node_type rec:Corridor .
+>>>>>>> origin/21-rename-enumerationkinds

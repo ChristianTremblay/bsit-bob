@@ -1,10 +1,13 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_device-003
 # imports: http://data.ashrae.org/standard223/1.0/model/all
+<<<<<<< HEAD
 @prefix ex30: <urn:ex/test_system-007/> .
+=======
+@prefix ex32: <urn:ex/test_system-007/> .
+>>>>>>> origin/21-rename-enumerationkinds
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ref: <https://brickschema.org/schema/Brick/ref#> .
@@ -16,6 +19,7 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_device-003> ;
   rdfs:label "test_device-003" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+<<<<<<< HEAD
 ex30:00001 a p223:ParticleCounter,
         s223:Connectable,
         s223:Device ;
@@ -29,32 +33,67 @@ ex30:00001 a p223:ParticleCounter,
         ex30:00003 ;
     rdfs:comment "Particulate Measurement Station AKA particle counter" .
 ex30:00002 a s223:ConnectionPoint,
+=======
+ex32:00001 a p223:ParticleCounter,
+        s223:Connectable,
+        s223:Device ;
+    rdfs:label "PM-1" ;
+    p223:airInlet ex32:00002 ;
+    p223:airOutlet ex32:00003 ;
+    s223:contains ex32:00004,
+        ex32:00007,
+        ex32:00010 ;
+    s223:hasConnectionPoint ex32:00002,
+        ex32:00003 ;
+    s223:node_type p223:ParticleCounter ;
+    rdfs:comment "Particulate Measurement Station AKA particle counter" .
+ex32:00002 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "PM-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00001 .
 ex30:00003 a s223:ConnectionPoint,
+=======
+    s223:isConnectionPointOf ex32:00001 .
+ex32:00003 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "PM-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
+<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00001 .
 ex30:00004 a p223:CoarseParticulateSensor,
+=======
+    s223:isConnectionPointOf ex32:00001 .
+ex32:00004 a p223:CoarseParticulateSensor,
+>>>>>>> origin/21-rename-enumerationkinds
         p223:ParticulateSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "coarse_sensor" ;
+<<<<<<< HEAD
     s223:isContainedIn ex30:00001 ;
     s223:observesProperty ex30:00005 ;
     rdfs:comment "Coarse Particulate Sensor" .
 ex30:00005 a s223:ObservableProperty,
+=======
+    s223:isContainedIn ex32:00001 ;
+    s223:node_type p223:CoarseParticulateSensor ;
+    s223:observesProperty ex32:00005 ;
+    rdfs:comment "Coarse Particulate Sensor" .
+ex32:00005 a s223:ObservableProperty,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:ParticulateCount,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "coarse_sensor.ParticulateCount" ;
+<<<<<<< HEAD
     s223:hasExternalReference ex30:00006 ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance p223:Particulate-PM10.0 ;
@@ -64,20 +103,42 @@ ex30:00006 a ref:ExternalReference ;
     rdfs:label "coarse_sensor.ParticulateCount.ExternalReference" ;
     s223:hasRef "bacnet://1/analog-value,1/present-value" .
 ex30:00007 a p223:FineParticulateSensor,
+=======
+    s223:hasExternalReference ex32:00006 ;
+    s223:hasQuantityKind quantitykind:NumberDensity ;
+    s223:node_type s223:ParticulateCount ;
+    s223:ofMedium s223:Medium-Air ;
+    s223:ofSubstance s223:Substance-PM10.0 ;
+    s223:unit unit:NUM-PER-M3 .
+ex32:00006 a s223:ExternalReference ;
+    rdfs:label "coarse_sensor.ParticulateCount.ExternalReference" ;
+    s223:hasRef "bacnet://1/analog-value,1/present-value" ;
+    s223:node_type s223:ExternalReference .
+ex32:00007 a p223:FineParticulateSensor,
+>>>>>>> origin/21-rename-enumerationkinds
         p223:ParticulateSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "fine_sensor" ;
+<<<<<<< HEAD
     s223:isContainedIn ex30:00001 ;
     s223:observesProperty ex30:00008 ;
     rdfs:comment "Fine Particulate Sensor" .
 ex30:00008 a s223:ObservableProperty,
+=======
+    s223:isContainedIn ex32:00001 ;
+    s223:node_type p223:FineParticulateSensor ;
+    s223:observesProperty ex32:00008 ;
+    rdfs:comment "Fine Particulate Sensor" .
+ex32:00008 a s223:ObservableProperty,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:ParticulateCount,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "fine_sensor.ParticulateCount" ;
+<<<<<<< HEAD
     s223:hasExternalReference ex30:00009 ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance p223:Particulate-PM2.5 ;
@@ -87,25 +148,57 @@ ex30:00009 a ref:ExternalReference ;
     rdfs:label "fine_sensor.ParticulateCount.ExternalReference" ;
     s223:hasRef "bacnet://1/analog-input,2/present-value" .
 ex30:00010 a p223:ParticulateSensor,
+=======
+    s223:hasExternalReference ex32:00009 ;
+    s223:hasQuantityKind quantitykind:NumberDensity ;
+    s223:node_type s223:ParticulateCount ;
+    s223:ofMedium s223:Medium-Air ;
+    s223:ofSubstance s223:Substance-PM2.5 ;
+    s223:unit unit:NUM-PER-M3 .
+ex32:00009 a s223:ExternalReference ;
+    rdfs:label "fine_sensor.ParticulateCount.ExternalReference" ;
+    s223:hasRef "bacnet://1/analog-input,2/present-value" ;
+    s223:node_type s223:ExternalReference .
+ex32:00010 a p223:ParticulateSensor,
+>>>>>>> origin/21-rename-enumerationkinds
         p223:UltraFineParticulateSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "ultrafine_sensor" ;
+<<<<<<< HEAD
     s223:isContainedIn ex30:00001 ;
     s223:observesProperty ex30:00011 ;
     rdfs:comment "Ultra Fine Particulate Sensor" .
 ex30:00011 a s223:ObservableProperty,
+=======
+    s223:isContainedIn ex32:00001 ;
+    s223:node_type p223:UltraFineParticulateSensor ;
+    s223:observesProperty ex32:00011 ;
+    rdfs:comment "Ultra Fine Particulate Sensor" .
+ex32:00011 a s223:ObservableProperty,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:ParticulateCount,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "ultrafine_sensor.ParticulateCount" ;
+<<<<<<< HEAD
     s223:hasExternalReference ex30:00012 ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance p223:Particulate-PM1.0 ;
     qudt:hasQuantityKind quantitykind:NumberDensity ;
     qudt:unit unit:NUM-PER-M3 .
 ex30:00012 a ref:ExternalReference ;
+=======
+    s223:hasExternalReference ex32:00012 ;
+    s223:hasQuantityKind quantitykind:NumberDensity ;
+    s223:node_type s223:ParticulateCount ;
+    s223:ofMedium s223:Medium-Air ;
+    s223:ofSubstance s223:Substance-PM1.0 ;
+    s223:unit unit:NUM-PER-M3 .
+ex32:00012 a s223:ExternalReference ;
+>>>>>>> origin/21-rename-enumerationkinds
     rdfs:label "ultrafine_sensor.ParticulateCount.ExternalReference" ;
-    s223:hasRef "bacnet://1/analog-input,3/present-value" .
+    s223:hasRef "bacnet://1/analog-input,3/present-value" ;
+    s223:node_type s223:ExternalReference .

@@ -16,14 +16,14 @@ from ..core import (
 
 _namespace = s223
 
-DomesticWater = Medium(node_iri=s223["Water-DomesticWater"])
-DomesticHotWater = Medium(node_iri=s223["Water-DomesticHotWater"])
-ChilledWater = Medium(node_iri=s223["Water-ChilledWater"])
-HotWater = Medium(node_iri=s223["Water-HotWater"])
-CondensedWater = Medium(node_iri=s223["Water-CondensedWater"])
-MixedWater = Medium(node_iri=s223["Water-MixedWater"])
-GlycoledWater = Medium(node_iri=s223["Water-GlycoledWater"])
-Steam = Medium(node_iri=s223["Water-Steam"])
+DomesticWater = Water("DomesticWater")
+DomesticHotWater = Water("DomesticHotWater")
+ChilledWater = Water("ChilledWater")
+HotWater = Water("HotWater")
+CondensedWater = Water("CondensedWater")
+MixedWater = Water("MixedWater")
+GlycoledWater = Water("GlycoledWater")
+Steam = Water("Steam")
 
 # class DomesticWater(Water):
 #     node_type: URIRef = s223["Water-DomesticWater"]

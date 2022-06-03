@@ -6,6 +6,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+<<<<<<< HEAD
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 exg3601:00001 a s223:ObservableProperty,
@@ -90,6 +91,35 @@ exg3601:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "space.ductAirInlet" ;
     s223:connectsThrough exg3601:00005 ;
+=======
+exg3603:00001 a s223:System,
+        exg3603:VAV ;
+    rdfs:label "A-3" ;
+    s223:contains exg3603:00007,
+        exg3603:00011,
+        exg3603:00016,
+        exg3603:00024 ;
+    s223:hasProperty exg3603:00008,
+        exg3603:00015,
+        exg3603:00022 ;
+    s223:hasSystemConnectionPoint exg3603:00002,
+        exg3603:00003,
+        exg3603:00004,
+        exg3603:00005,
+        exg3603:00006 ;
+    s223:node_type exg3603:VAV ;
+    exg3603:damperPosition exg3603:00015 ;
+    exg3603:hwInlet exg3603:00005 ;
+    exg3603:hwOutlet exg3603:00006 ;
+    exg3603:hwValvePosition exg3603:00022 ;
+    exg3603:returnAirInlet exg3603:00003 ;
+    exg3603:supplyAirFlow exg3603:00008 ;
+    exg3603:supplyAirInlet exg3603:00002 ;
+    exg3603:supplyAirOutlet exg3603:00004 .
+exg3603:00002 a s223:InletSystemConnectionPoint,
+        s223:SystemConnectionPoint ;
+    rdfs:label "A-3.supplyAirInlet" ;
+>>>>>>> origin/21-rename-enumerationkinds
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00008 .
@@ -556,6 +586,7 @@ exg3601:00075 a s223:ConnectionPoint,
     s223:isConnectionPointOf exg3601:00071 .
 exg3601:00076 a s223:Connectable,
         s223:Device,
+<<<<<<< HEAD
         s223:Valve ;
     rdfs:label "HTG-VLV" ;
     s223:command exg3601:00085 ;
@@ -572,6 +603,97 @@ exg3601:00076 a s223:Connectable,
 exg3601:00077 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough exg3601:00121 ;
+=======
+        exg3603:AirFlowStation ;
+    rdfs:label "A-3.air_flow_station" ;
+    s223:hasConnectionPoint exg3603:00009,
+        exg3603:00010 ;
+    s223:hasProperty exg3603:00008 ;
+    s223:node_type exg3603:AirFlowStation ;
+    exg3603:airInlet exg3603:00009 ;
+    exg3603:airOutlet exg3603:00010 ;
+    exg3603:flow exg3603:00008 .
+exg3603:00008 a s223:Property,
+        g36:AnalogIn .
+exg3603:00009 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "A-3.air_flow_station.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3603:00007 .
+exg3603:00010 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "A-3.air_flow_station.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3603:00007 .
+exg3603:00011 a s223:Connectable,
+        s223:Device,
+        exg3603:Damper ;
+    rdfs:label "A-3.damper" ;
+    s223:contains exg3603:00014 ;
+    s223:hasConnectionPoint exg3603:00012,
+        exg3603:00013 ;
+    s223:hasProperty exg3603:00015 ;
+    s223:node_type exg3603:Damper ;
+    exg3603:airInlet exg3603:00012 ;
+    exg3603:airOutlet exg3603:00013 ;
+    exg3603:position exg3603:00015 .
+exg3603:00012 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "A-3.damper.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3603:00011 .
+exg3603:00013 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "A-3.damper.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3603:00011 ;
+    s223:lnx exg3603:00029 .
+exg3603:00014 a s223:Connectable,
+        s223:Device,
+        exg3603:DamperPositioner ;
+    rdfs:label "A-3.damper.damper_positioner" ;
+    s223:hasProperty exg3603:00015 ;
+    s223:node_type exg3603:DamperPositioner ;
+    exg3603:position exg3603:00015 .
+exg3603:00015 a s223:Property,
+        g36:AnalogOut .
+exg3603:00016 a s223:Connectable,
+        s223:Device,
+        exg3603:HotWaterCoil ;
+    rdfs:label "A-3.hot_water_coil" ;
+    s223:contains exg3603:00021,
+        exg3603:00023 ;
+    s223:hasConnectionPoint exg3603:00017,
+        exg3603:00018,
+        exg3603:00019,
+        exg3603:00020 ;
+    s223:hasProperty exg3603:00022 ;
+    s223:node_type exg3603:HotWaterCoil ;
+    exg3603:airInlet exg3603:00017 ;
+    exg3603:airOutlet exg3603:00018 ;
+    exg3603:hwInlet exg3603:00019 ;
+    exg3603:hwOutlet exg3603:00020 ;
+    exg3603:valvePosition exg3603:00022 .
+exg3603:00017 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "A-3.hot_water_coil.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3603:00016 .
+exg3603:00018 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "A-3.hot_water_coil.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf exg3603:00016 .
+exg3603:00019 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "A-3.hot_water_coil.hwInlet" ;
+>>>>>>> origin/21-rename-enumerationkinds
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3601:00076 .
@@ -580,6 +702,7 @@ exg3601:00078 a s223:ConnectionPoint,
     s223:connectsThrough exg3601:00007 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
+<<<<<<< HEAD
     s223:isConnectionPointOf exg3601:00076 .
 exg3601:00079 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -666,6 +789,34 @@ exg3601:00091 a s223:Connectable,
         exg3601:00093,
         exg3601:00094 .
 exg3601:00092 a s223:ConnectionPoint,
+=======
+    s223:isConnectionPointOf exg3603:00016 .
+exg3603:00021 a s223:Connectable,
+        s223:Device,
+        exg3603:ValvePositioner ;
+    rdfs:label "A-3.hot_water_coil.damper_positioner" ;
+    s223:hasProperty exg3603:00022 ;
+    s223:node_type exg3603:ValvePositioner ;
+    exg3603:position exg3603:00022 .
+exg3603:00022 a s223:Property,
+        g36:AnalogOut .
+exg3603:00023 a s223:Connectable,
+        s223:Device,
+        exg3603:HotWaterValve ;
+    rdfs:label "A-3.hot_water_coil.hot_water_valve" ;
+    s223:node_type exg3603:HotWaterValve .
+exg3603:00024 a s223:Connectable,
+        s223:Device,
+        s223:Fan ;
+    rdfs:label "A-3.fan" ;
+    s223:airInlet exg3603:00025 ;
+    s223:airOutlet exg3603:00026 ;
+    s223:hasConnectionPoint exg3603:00025,
+        exg3603:00026,
+        exg3603:00027 ;
+    s223:node_type s223:Fan .
+exg3603:00025 a s223:ConnectionPoint,
+>>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "FAN.airInlet" ;
     s223:connectsThrough exg3601:00119 ;
@@ -683,6 +834,7 @@ exg3601:00094 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough exg3601:00120 ;
     s223:hasDirection s223:Direction-Inlet ;
+<<<<<<< HEAD
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf exg3601:00091 .
 exg3601:00095 a p223:Pressure,
@@ -1026,3 +1178,19 @@ exg3601:00148 a s223:Connector,
         g36:BinaryOut ;
     rdfs:label "G36_FIG_A_3.fanCommand" ;
     s223:producesOutput exg3601:00045 .
+=======
+    s223:hasMedium s223:Medium-Electricity ;
+    s223:isConnectionPointOf exg3603:00024 .
+exg3603:00028 a s223:Junction ;
+    s223:lnx exg3603:00029,
+        exg3603:00030 ;
+    s223:node_type s223:Junction .
+exg3603:00029 a s223:Segment ;
+    s223:lnx exg3603:00013,
+        exg3603:00028 ;
+    s223:node_type s223:Segment .
+exg3603:00030 a s223:Segment ;
+    s223:lnx exg3603:00026,
+        exg3603:00028 ;
+    s223:node_type s223:Segment .
+>>>>>>> origin/21-rename-enumerationkinds

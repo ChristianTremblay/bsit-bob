@@ -17,6 +17,7 @@ exg3608:00001 a s223:System,
     s223:hasSystemConnectionPoint exg3608:00002,
         exg3608:00003,
         exg3608:00004 ;
+    s223:node_type exg3608:VAV ;
     exg3608:coldDeckAirInlet exg3608:00003 ;
     exg3608:coldDeckDamperPosition exg3608:00014 ;
     exg3608:hotDeckAirInlet exg3608:00002 ;
@@ -50,6 +51,7 @@ exg3608:00005 a s223:Connectable,
     s223:hasConnectionPoint exg3608:00006,
         exg3608:00007 ;
     s223:hasProperty exg3608:00009 ;
+    s223:node_type exg3608:Damper ;
     exg3608:airInlet exg3608:00006 ;
     exg3608:airOutlet exg3608:00007 ;
     exg3608:position exg3608:00009 .
@@ -71,7 +73,9 @@ exg3608:00008 a s223:Connectable,
         exg3608:DamperPositioner ;
     rdfs:label "A-8.hot_deck_damper.damper_positioner" ;
     s223:hasProperty exg3608:00009 ;
+    s223:node_type exg3608:DamperPositioner ;
     exg3608:position exg3608:00009 .
+<<<<<<< HEAD
 exg3608:00009 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -80,6 +84,10 @@ exg3608:00009 a p223:PercentCommand,
     rdfs:label "A-8.hot_deck_damper.damper_positioner.position" ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
+=======
+exg3608:00009 a s223:Property,
+        g36:AnalogOut .
+>>>>>>> origin/21-rename-enumerationkinds
 exg3608:00010 a s223:Connectable,
         s223:Device,
         exg3608:Damper ;
@@ -89,6 +97,7 @@ exg3608:00010 a s223:Connectable,
     s223:hasConnectionPoint exg3608:00011,
         exg3608:00012 ;
     s223:hasProperty exg3608:00014 ;
+    s223:node_type exg3608:Damper ;
     exg3608:airInlet exg3608:00011 ;
     exg3608:airOutlet exg3608:00012 ;
     exg3608:position exg3608:00014 .
@@ -110,7 +119,9 @@ exg3608:00013 a s223:Connectable,
         exg3608:DamperPositioner ;
     rdfs:label "A-8.cold_deck_damper.damper_positioner" ;
     s223:hasProperty exg3608:00014 ;
+    s223:node_type exg3608:DamperPositioner ;
     exg3608:position exg3608:00014 .
+<<<<<<< HEAD
 exg3608:00014 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -119,6 +130,10 @@ exg3608:00014 a p223:PercentCommand,
     rdfs:label "A-8.cold_deck_damper.damper_positioner.position" ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
+=======
+exg3608:00014 a s223:Property,
+        g36:AnalogOut .
+>>>>>>> origin/21-rename-enumerationkinds
 exg3608:00015 a s223:Connectable,
         s223:Device,
         exg3608:AirFlowStation ;
@@ -127,12 +142,12 @@ exg3608:00015 a s223:Connectable,
     s223:hasConnectionPoint exg3608:00017,
         exg3608:00018 ;
     s223:hasProperty exg3608:00016 ;
+    s223:node_type exg3608:AirFlowStation ;
     exg3608:airInlet exg3608:00017 ;
     exg3608:airOutlet exg3608:00018 ;
     exg3608:flow exg3608:00016 .
 exg3608:00016 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "A-8.air_flow_station.flow" .
+        g36:AnalogIn .
 exg3608:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-8.air_flow_station.airInlet" ;
