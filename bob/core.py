@@ -26,7 +26,7 @@ from typing import (
 
 from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 
-from .multimethods import multimethod, new_class, all_subclasses
+from .multimethods import all_subclasses, multimethod, new_class
 
 T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
@@ -499,7 +499,7 @@ class Node(metaclass=NodeMetaclass):
 
         attr_annotations = vars(cls).get("__annotations__", {})
         for attr, attr_annotation in attr_annotations.items():
-            if attr.startswith("_"):
+            if attr.startswith("_") or attr == "node_type":
                 continue
             logging.debug(f"    - attr: {attr!r}")
             logging.debug(f"        - attr_annotation: {attr_annotation!r}")

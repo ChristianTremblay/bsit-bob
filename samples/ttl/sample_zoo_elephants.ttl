@@ -91,9 +91,9 @@ zoo:00010 a s223:Connectable,
         zoo:00015,
         zoo:00016,
         zoo:00017 ;
-<<<<<<< HEAD
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:HVACSpace ;
     s223:radiantCooling zoo:00017 ;
     s223:radiantHeating zoo:00016 ;
     s223:windows zoo:00015 .
@@ -101,12 +101,6 @@ zoo:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "enclos_elephants_hvac.ductAirInlet" ;
     s223:connectsThrough zoo:00222 ;
-=======
-    s223:node_type p223:PhysicSystem .
-zoo:00011 a s223:InletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.ductAirInlet" ;
->>>>>>> origin/21-rename-enumerationkinds
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf zoo:00010 .
@@ -168,11 +162,7 @@ zoo:00018 a s223:Connectable,
         zoo:00025 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
-=======
-    s223:indoorAir zoo:00010 ;
     s223:node_type s223:HVACSpace ;
->>>>>>> origin/21-rename-enumerationkinds
     s223:radiantCooling zoo:00025 ;
     s223:radiantHeating zoo:00024 ;
     s223:windows zoo:00023 .
@@ -216,140 +206,6 @@ zoo:00024 a s223:BidirectionalConnectionPoint,
     s223:isConnectionPointOf zoo:00018 .
 zoo:00025 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
-<<<<<<< HEAD
-=======
-    rdfs:label "enclos_elephants_hvac.radiantCooling" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00018 .
-zoo:00026 a p223:PhysicSystem,
-        s223:System ;
-    rdfs:label "Indoor air of space" ;
-    p223:airTransfer zoo:00029 ;
-    p223:doors zoo:00030 ;
-    p223:ductAirInlet zoo:00027 ;
-    p223:ductAirOutlet zoo:00028 ;
-    p223:hasMedium s223:Medium-Air ;
-    p223:radiantCooling zoo:00033 ;
-    p223:radiantHeating zoo:00032 ;
-    p223:windows zoo:00031 ;
-    s223:hasSystemConnectionPoint zoo:00027,
-        zoo:00028,
-        zoo:00029,
-        zoo:00030,
-        zoo:00031,
-        zoo:00032,
-        zoo:00033 ;
-    s223:node_type p223:PhysicSystem .
-zoo:00027 a s223:InletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.ductAirInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo zoo:00035 .
-zoo:00028 a s223:OutletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.ductAirOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo zoo:00036 .
-zoo:00029 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.airTransfer" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo zoo:00037 .
-zoo:00030 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.doors" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo zoo:00038 .
-zoo:00031 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.windows" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo zoo:00039 .
-zoo:00032 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.radiantHeating" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo zoo:00040 .
-zoo:00033 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.radiantCooling" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo zoo:00041 .
-zoo:00034 a s223:Connectable,
-        s223:DomainSpace,
-        s223:HVACSpace ;
-    rdfs:label "enclos_girafe_hvac" ;
-    s223:airTransfer zoo:00037 ;
-    s223:connectedFrom zoo:00118 ;
-    s223:connectedThrough zoo:00190,
-        zoo:00192 ;
-    s223:connectedTo zoo:00128 ;
-    s223:doors zoo:00038 ;
-    s223:ductAirInlet zoo:00035 ;
-    s223:ductAirOutlet zoo:00036 ;
-    s223:hasConnectionPoint zoo:00035,
-        zoo:00036,
-        zoo:00037,
-        zoo:00038,
-        zoo:00039,
-        zoo:00040,
-        zoo:00041 ;
-    s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:indoorAir zoo:00026 ;
-    s223:node_type s223:HVACSpace ;
-    s223:radiantCooling zoo:00041 ;
-    s223:radiantHeating zoo:00040 ;
-    s223:windows zoo:00039 .
-zoo:00035 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "enclos_girafe_hvac.ductAirInlet" ;
-    s223:connectsThrough zoo:00190 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00034 .
-zoo:00036 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "enclos_girafe_hvac.ductAirOutlet" ;
-    s223:connectsThrough zoo:00192 ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00034 .
-zoo:00037 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
-    rdfs:label "enclos_girafe_hvac.airTransfer" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00034 .
-zoo:00038 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
-    rdfs:label "enclos_girafe_hvac.doors" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00034 .
-zoo:00039 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
-    rdfs:label "enclos_girafe_hvac.windows" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00034 .
-zoo:00040 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
-    rdfs:label "enclos_girafe_hvac.radiantHeating" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00034 .
-zoo:00041 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:label "enclos_girafe_hvac.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
@@ -368,7 +224,6 @@ zoo:00027 a s223:System ;
         zoo:00039,
         zoo:00042,
         zoo:00045,
-<<<<<<< HEAD
         zoo:00048,
         zoo:00051,
         zoo:00054,
@@ -381,12 +236,7 @@ zoo:00027 a s223:System ;
         zoo:00030,
         zoo:00031,
         zoo:00032 ;
-=======
-        zoo:00046,
-        zoo:00047,
-        zoo:00048 ;
     s223:node_type s223:System ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "The complete heat Exchanger by Trane" .
 zoo:00028 a s223:BidirectionalSystemConnectionPoint,
         s223:SystemConnectionPoint ;
@@ -412,22 +262,13 @@ zoo:00033 a s223:Connectable,
         s223:Device,
         s223:HeatExchanger ;
     rdfs:label "Acc1" ;
-<<<<<<< HEAD
     s223:connectedThrough zoo:00026,
         zoo:00213 ;
     s223:hasConnectionPoint zoo:00034,
         zoo:00035 ;
     s223:indoorSide zoo:00035 ;
-    s223:outdoorSide zoo:00034 ;
-=======
-    s223:connectedThrough zoo:00042,
-        zoo:00182 ;
-    s223:hasConnectionPoint zoo:00050,
-        zoo:00051 ;
-    s223:indoorSide zoo:00051 ;
     s223:node_type s223:HeatExchanger ;
-    s223:outdoorSide zoo:00050 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:outdoorSide zoo:00034 ;
     rdfs:comment "Accumulator #1" .
 zoo:00034 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
@@ -447,22 +288,13 @@ zoo:00036 a s223:Connectable,
         s223:Device,
         s223:HeatExchanger ;
     rdfs:label "Acc2" ;
-<<<<<<< HEAD
     s223:connectedThrough zoo:00026,
         zoo:00214 ;
     s223:hasConnectionPoint zoo:00037,
         zoo:00038 ;
     s223:indoorSide zoo:00038 ;
-    s223:outdoorSide zoo:00037 ;
-=======
-    s223:connectedThrough zoo:00042,
-        zoo:00183 ;
-    s223:hasConnectionPoint zoo:00053,
-        zoo:00054 ;
-    s223:indoorSide zoo:00054 ;
     s223:node_type s223:HeatExchanger ;
-    s223:outdoorSide zoo:00053 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:outdoorSide zoo:00037 ;
     rdfs:comment "Accumulator #2" .
 zoo:00037 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
@@ -482,34 +314,15 @@ zoo:00039 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "ACC1_DPR-A" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00040 ;
     s223:airOutlet zoo:00041 ;
     s223:connectedThrough zoo:00213,
         zoo:00215 ;
     s223:hasConnectionPoint zoo:00040,
         zoo:00041 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Accumulator #1 Damper A" .
 zoo:00040 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00058 ;
-    s223:airOutlet zoo:00059 ;
-    s223:connectedThrough zoo:00182,
-        zoo:00184 ;
-    s223:feedback zoo:00057 ;
-    s223:hasConnectionPoint zoo:00058,
-        zoo:00059 ;
-    s223:hasProperty zoo:00056,
-        zoo:00057 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00056 ;
-    rdfs:comment "Accumulator #1 Damper A" .
-zoo:00056 a s223:Property,
-        g36:AnalogOut .
-zoo:00057 a s223:Property,
-        g36:AnalogIn .
-zoo:00058 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "ACC1_DPR-A.airInlet" ;
     s223:connectsThrough zoo:00213 ;
@@ -527,34 +340,15 @@ zoo:00042 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "ACC1_DPR-B" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00043 ;
     s223:airOutlet zoo:00044 ;
     s223:connectedThrough zoo:00213,
         zoo:00215 ;
     s223:hasConnectionPoint zoo:00043,
         zoo:00044 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Accumulator #1 Damper B" .
 zoo:00043 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00063 ;
-    s223:airOutlet zoo:00064 ;
-    s223:connectedThrough zoo:00182,
-        zoo:00184 ;
-    s223:feedback zoo:00062 ;
-    s223:hasConnectionPoint zoo:00063,
-        zoo:00064 ;
-    s223:hasProperty zoo:00061,
-        zoo:00062 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00061 ;
-    rdfs:comment "Accumulator #1 Damper B" .
-zoo:00061 a s223:Property,
-        g36:AnalogOut .
-zoo:00062 a s223:Property,
-        g36:AnalogIn .
-zoo:00063 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "ACC1_DPR-B.airInlet" ;
     s223:connectsThrough zoo:00213 ;
@@ -572,34 +366,15 @@ zoo:00045 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "ACC1_DPR-C" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00046 ;
     s223:airOutlet zoo:00047 ;
     s223:connectedThrough zoo:00213,
         zoo:00215 ;
     s223:hasConnectionPoint zoo:00046,
         zoo:00047 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Accumulator #1 Damper C" .
 zoo:00046 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00068 ;
-    s223:airOutlet zoo:00069 ;
-    s223:connectedThrough zoo:00182,
-        zoo:00184 ;
-    s223:feedback zoo:00067 ;
-    s223:hasConnectionPoint zoo:00068,
-        zoo:00069 ;
-    s223:hasProperty zoo:00066,
-        zoo:00067 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00066 ;
-    rdfs:comment "Accumulator #1 Damper C" .
-zoo:00066 a s223:Property,
-        g36:AnalogOut .
-zoo:00067 a s223:Property,
-        g36:AnalogIn .
-zoo:00068 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "ACC1_DPR-C.airInlet" ;
     s223:connectsThrough zoo:00213 ;
@@ -617,34 +392,15 @@ zoo:00048 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "ACC1_DPR-D" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00049 ;
     s223:airOutlet zoo:00050 ;
     s223:connectedThrough zoo:00213,
         zoo:00215 ;
     s223:hasConnectionPoint zoo:00049,
         zoo:00050 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Accumulator #1 Damper D" .
 zoo:00049 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00073 ;
-    s223:airOutlet zoo:00074 ;
-    s223:connectedThrough zoo:00182,
-        zoo:00184 ;
-    s223:feedback zoo:00072 ;
-    s223:hasConnectionPoint zoo:00073,
-        zoo:00074 ;
-    s223:hasProperty zoo:00071,
-        zoo:00072 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00071 ;
-    rdfs:comment "Accumulator #1 Damper D" .
-zoo:00071 a s223:Property,
-        g36:AnalogOut .
-zoo:00072 a s223:Property,
-        g36:AnalogIn .
-zoo:00073 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "ACC1_DPR-D.airInlet" ;
     s223:connectsThrough zoo:00213 ;
@@ -662,34 +418,15 @@ zoo:00051 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "ACC2_DPR-A" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00052 ;
     s223:airOutlet zoo:00053 ;
     s223:connectedThrough zoo:00214,
         zoo:00216 ;
     s223:hasConnectionPoint zoo:00052,
         zoo:00053 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Accumulator #2 Damper A" .
 zoo:00052 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00078 ;
-    s223:airOutlet zoo:00079 ;
-    s223:connectedThrough zoo:00183,
-        zoo:00185 ;
-    s223:feedback zoo:00077 ;
-    s223:hasConnectionPoint zoo:00078,
-        zoo:00079 ;
-    s223:hasProperty zoo:00076,
-        zoo:00077 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00076 ;
-    rdfs:comment "Accumulator #2 Damper A" .
-zoo:00076 a s223:Property,
-        g36:AnalogOut .
-zoo:00077 a s223:Property,
-        g36:AnalogIn .
-zoo:00078 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "ACC2_DPR-A.airInlet" ;
     s223:connectsThrough zoo:00214 ;
@@ -707,34 +444,15 @@ zoo:00054 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "ACC2_DPR-B" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00055 ;
     s223:airOutlet zoo:00056 ;
     s223:connectedThrough zoo:00214,
         zoo:00216 ;
     s223:hasConnectionPoint zoo:00055,
         zoo:00056 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Accumulator #2 Damper B" .
 zoo:00055 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00083 ;
-    s223:airOutlet zoo:00084 ;
-    s223:connectedThrough zoo:00183,
-        zoo:00185 ;
-    s223:feedback zoo:00082 ;
-    s223:hasConnectionPoint zoo:00083,
-        zoo:00084 ;
-    s223:hasProperty zoo:00081,
-        zoo:00082 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00081 ;
-    rdfs:comment "Accumulator #2 Damper B" .
-zoo:00081 a s223:Property,
-        g36:AnalogOut .
-zoo:00082 a s223:Property,
-        g36:AnalogIn .
-zoo:00083 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "ACC2_DPR-B.airInlet" ;
     s223:connectsThrough zoo:00214 ;
@@ -752,34 +470,15 @@ zoo:00057 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "ACC2_DPR-C" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00058 ;
     s223:airOutlet zoo:00059 ;
     s223:connectedThrough zoo:00214,
         zoo:00216 ;
     s223:hasConnectionPoint zoo:00058,
         zoo:00059 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Accumulator #2 Damper C" .
 zoo:00058 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00088 ;
-    s223:airOutlet zoo:00089 ;
-    s223:connectedThrough zoo:00183,
-        zoo:00185 ;
-    s223:feedback zoo:00087 ;
-    s223:hasConnectionPoint zoo:00088,
-        zoo:00089 ;
-    s223:hasProperty zoo:00086,
-        zoo:00087 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00086 ;
-    rdfs:comment "Accumulator #2 Damper C" .
-zoo:00086 a s223:Property,
-        g36:AnalogOut .
-zoo:00087 a s223:Property,
-        g36:AnalogIn .
-zoo:00088 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "ACC2_DPR-C.airInlet" ;
     s223:connectsThrough zoo:00214 ;
@@ -797,34 +496,15 @@ zoo:00060 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "ACC2_DPR-D" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00061 ;
     s223:airOutlet zoo:00062 ;
     s223:connectedThrough zoo:00214,
         zoo:00216 ;
     s223:hasConnectionPoint zoo:00061,
         zoo:00062 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Accumulator #2 Damper D" .
 zoo:00061 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00093 ;
-    s223:airOutlet zoo:00094 ;
-    s223:connectedThrough zoo:00183,
-        zoo:00185 ;
-    s223:feedback zoo:00092 ;
-    s223:hasConnectionPoint zoo:00093,
-        zoo:00094 ;
-    s223:hasProperty zoo:00091,
-        zoo:00092 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00091 ;
-    rdfs:comment "Accumulator #2 Damper D" .
-zoo:00091 a s223:Property,
-        g36:AnalogOut .
-zoo:00092 a s223:Property,
-        g36:AnalogIn .
-zoo:00093 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "ACC2_DPR-D.airInlet" ;
     s223:connectsThrough zoo:00214 ;
@@ -842,7 +522,6 @@ zoo:00063 a p223:FourSideDuctForHeatExchanger,
         s223:Connectable,
         s223:Device ;
     rdfs:label "Accumulator 4 sides duct" ;
-<<<<<<< HEAD
     s223:accumulator1Connection zoo:00064 ;
     s223:accumulator2Connection zoo:00065 ;
     s223:connectedFrom zoo:00119 ;
@@ -855,25 +534,9 @@ zoo:00063 a p223:FourSideDuctForHeatExchanger,
         zoo:00065,
         zoo:00066,
         zoo:00067 ;
+    s223:node_type p223:FourSideDuctForHeatExchanger ;
     s223:returnDuctInlet zoo:00067 ;
     s223:supplyDuctOutlet zoo:00066 ;
-=======
-    s223:accumulator1Connection zoo:00096 ;
-    s223:accumulator2Connection zoo:00097 ;
-    s223:connectedFrom zoo:00138 ;
-    s223:connectedThrough zoo:00184,
-        zoo:00185,
-        zoo:00186,
-        zoo:00194 ;
-    s223:connectedTo zoo:00104 ;
-    s223:hasConnectionPoint zoo:00096,
-        zoo:00097,
-        zoo:00098,
-        zoo:00099 ;
-    s223:node_type p223:FourSideDuctForHeatExchanger ;
-    s223:returnDuctInlet zoo:00099 ;
-    s223:supplyDuctOutlet zoo:00098 ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "It contains a Air Connection to connect 4 sides and a pneumatic damper" .
 zoo:00064 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
@@ -907,33 +570,16 @@ zoo:00068 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "Accumulator 4 sides damper" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00069 ;
     s223:airOutlet zoo:00070 ;
     s223:command zoo:00073 ;
     s223:contains zoo:00071 ;
     s223:hasConnectionPoint zoo:00069,
         zoo:00070 ;
+    s223:node_type s223:Damper ;
     s223:position zoo:00073 ;
     rdfs:comment "This damper switch the side of the airflow going in accumulator 1 & 2" .
 zoo:00069 a s223:ConnectionPoint,
-=======
-    s223:compressedAirInlet zoo:00103 ;
-    s223:connectedFrom zoo:00155 ;
-    s223:connectedThrough zoo:00158 ;
-    s223:feedback zoo:00102 ;
-    s223:hasConnectionPoint zoo:00103 ;
-    s223:hasProperty zoo:00101,
-        zoo:00102 ;
-    s223:node_type s223:DamperActuator ;
-    s223:position zoo:00101 ;
-    rdfs:comment "This damper switch the side of the airflow going in accumulator 1 & 2" .
-zoo:00101 a s223:Property,
-        g36:AnalogOut .
-zoo:00102 a s223:Property,
-        g36:AnalogIn .
-zoo:00103 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "Accumulator 4 sides damper.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -954,7 +600,8 @@ zoo:00071 a s223:Actuator,
     s223:connectedFrom zoo:00184 ;
     s223:connectedThrough zoo:00189 ;
     s223:hasConnectionPoint zoo:00072 ;
-    s223:hasProperty zoo:00073 .
+    s223:hasProperty zoo:00073 ;
+    s223:node_type s223:Actuator .
 zoo:00072 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.compressedAirInlet" ;
@@ -969,27 +616,35 @@ zoo:00073 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference zoo:00074 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00074 a ref:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
-    s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" .
-zoo:00075 a p223:OnOffStatus,
+    s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" ;
+    s223:node_type ref:ExternalReference .
+zoo:00075 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "feedbackOpen" ;
-    s223:hasExternalReference zoo:00076 .
+    s223:hasExternalReference zoo:00076 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 zoo:00076 a ref:ExternalReference ;
     rdfs:label "feedbackOpen.ExternalReference" ;
-    s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" .
-zoo:00077 a p223:OnOffStatus,
+    s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" ;
+    s223:node_type ref:ExternalReference .
+zoo:00077 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "feedbackClose" ;
-    s223:hasExternalReference zoo:00078 .
+    s223:hasExternalReference zoo:00078 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 zoo:00078 a ref:ExternalReference ;
     rdfs:label "feedbackClose.ExternalReference" ;
-    s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" .
+    s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00079 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -997,16 +652,17 @@ zoo:00079 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference zoo:00080 ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    s223:hasQuantityKind quantitykind:Torque ;
+    s223:node_type p223:Nm ;
+    s223:unit unit:N-M .
 zoo:00080 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" .
+    s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00081 a p223:Filter,
         s223:Connectable,
         s223:Device ;
     rdfs:label "FLT" ;
-<<<<<<< HEAD
     p223:airInlet zoo:00082 ;
     p223:airOutlet zoo:00083 ;
     s223:connectedFrom zoo:00063 ;
@@ -1014,20 +670,9 @@ zoo:00081 a p223:Filter,
         zoo:00218 ;
     s223:connectedTo zoo:00084 ;
     s223:hasConnectionPoint zoo:00082,
-        zoo:00083 .
-zoo:00082 a s223:ConnectionPoint,
-=======
-    p223:airInlet zoo:00105 ;
-    p223:airOutlet zoo:00106 ;
-    s223:connectedFrom zoo:00095 ;
-    s223:connectedThrough zoo:00186,
-        zoo:00187 ;
-    s223:connectedTo zoo:00107 ;
-    s223:hasConnectionPoint zoo:00105,
-        zoo:00106 ;
+        zoo:00083 ;
     s223:node_type p223:Filter .
-zoo:00105 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00082 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "FLT.airInlet" ;
     s223:connectsThrough zoo:00217 ;
@@ -1045,7 +690,6 @@ zoo:00084 a s223:Coil,
         s223:Connectable,
         s223:Device ;
     rdfs:label "SE-1" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00085 ;
     s223:airOutlet zoo:00086 ;
     s223:connectedFrom zoo:00081 ;
@@ -1058,25 +702,9 @@ zoo:00084 a s223:Coil,
         zoo:00086,
         zoo:00087,
         zoo:00088 ;
+    s223:node_type s223:Coil ;
     s223:waterInlet zoo:00087 ;
     s223:waterOutlet zoo:00088 ;
-=======
-    s223:airInlet zoo:00108 ;
-    s223:airOutlet zoo:00109 ;
-    s223:connectedFrom zoo:00104 ;
-    s223:connectedThrough zoo:00187,
-        zoo:00188,
-        zoo:00262,
-        zoo:00263 ;
-    s223:connectedTo zoo:00112 ;
-    s223:hasConnectionPoint zoo:00108,
-        zoo:00109,
-        zoo:00110,
-        zoo:00111 ;
-    s223:node_type s223:Coil ;
-    s223:waterInlet zoo:00110 ;
-    s223:waterOutlet zoo:00111 ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "This coil acts as a cooling coil in summer, heating coil in winter" .
 zoo:00085 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1119,6 +747,7 @@ zoo:00089 a s223:Connectable,
     s223:hasConnectionPoint zoo:00090,
         zoo:00091,
         zoo:00092 ;
+    s223:node_type s223:Fan ;
     rdfs:comment "Supply Fan" .
 zoo:00090 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1146,11 +775,13 @@ zoo:00093 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
     s223:hasExternalReference zoo:00094 ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PA .
+    s223:hasQuantityKind quantitykind:Pressure ;
+    s223:node_type p223:Pressure ;
+    s223:unit unit:PA .
 zoo:00094 a ref:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
-    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" .
+    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00095 a p223:Amps,
         s223:ObservableProperty,
         s223:Property,
@@ -1158,11 +789,13 @@ zoo:00095 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference zoo:00096 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 zoo:00096 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" .
+    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00097 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -1170,11 +803,13 @@ zoo:00097 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference zoo:00098 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 zoo:00098 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" .
+    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00099 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -1182,11 +817,13 @@ zoo:00099 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference zoo:00100 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 zoo:00100 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" .
+    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00101 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -1194,11 +831,13 @@ zoo:00101 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00102 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00102 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" .
+    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00103 a p223:PowerFactor,
         s223:ObservableProperty,
         s223:Property,
@@ -1206,11 +845,13 @@ zoo:00103 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference zoo:00104 ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    s223:hasQuantityKind quantitykind:PowerFactor ;
+    s223:node_type p223:PowerFactor ;
+    s223:unit unit:UNITLESS .
 zoo:00104 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" .
+    s223:hasRef "<Fan UV-1 at urn:zoo/sample_zoo_elephants/00089>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00105 a s223:Connection ;
     rdfs:label "SupplyDuct" ;
     s223:connectsAt zoo:00108,
@@ -1242,6 +883,7 @@ zoo:00107 a s223:Connectable,
     s223:connectedTo zoo:00018 ;
     s223:hasConnectionPoint zoo:00108,
         zoo:00109 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Damper going to Girafe" .
 zoo:00108 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1252,113 +894,6 @@ zoo:00108 a s223:ConnectionPoint,
     s223:isConnectionPointOf zoo:00107 .
 zoo:00109 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-<<<<<<< HEAD
-=======
-    rdfs:label "SE-1.airOutlet" ;
-    s223:connectsThrough zoo:00188 ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00107 .
-zoo:00110 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "SE-1.waterInlet" ;
-    s223:connectsThrough zoo:00262 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf zoo:00107 .
-zoo:00111 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "SE-1.waterOutlet" ;
-    s223:connectsThrough zoo:00263 ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf zoo:00107 .
-zoo:00112 a s223:Connectable,
-        s223:Device,
-        s223:Fan ;
-    rdfs:label "UV-1" ;
-    s223:airInlet zoo:00113 ;
-    s223:airOutlet zoo:00114 ;
-    s223:connectedFrom zoo:00107 ;
-    s223:connectedThrough zoo:00188,
-        zoo:00189 ;
-    s223:connectedTo zoo:00151 ;
-    s223:hasConnectionPoint zoo:00113,
-        zoo:00114,
-        zoo:00115 ;
-    s223:node_type s223:Fan ;
-    rdfs:comment "Supply Fan" .
-zoo:00113 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "UV-1.airInlet" ;
-    s223:connectsThrough zoo:00188 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00112 .
-zoo:00114 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "UV-1.airOutlet" ;
-    s223:connectsThrough zoo:00189 ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00112 .
-zoo:00115 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "UV-1.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf zoo:00112 .
-zoo:00116 a s223:Connection ;
-    rdfs:label "SupplyDuct" ;
-    s223:connectsAt zoo:00121,
-        zoo:00126,
-        zoo:00153 ;
-    s223:connectsFrom zoo:00151 ;
-    s223:connectsTo zoo:00118,
-        zoo:00123 ;
-    s223:hasMedium s223:Medium-Air ;
-    rdfs:comment "This is where 3 duct are connected going to Girafes, Elephants and UV-3 (Manège)" .
-zoo:00117 a s223:Connection ;
-    rdfs:label "ReturnDuct" ;
-    s223:connectsAt zoo:00132,
-        zoo:00137,
-        zoo:00139 ;
-    s223:connectsFrom zoo:00128,
-        zoo:00133 ;
-    s223:connectsTo zoo:00138 ;
-    s223:hasMedium s223:Medium-Air ;
-    rdfs:comment "This is where 2 ducts are connected coming from Girafes and Elephants" .
-zoo:00118 a s223:Connectable,
-        s223:Damper,
-        s223:Device ;
-    rdfs:label "AV-2" ;
-    s223:airInlet zoo:00121 ;
-    s223:airOutlet zoo:00122 ;
-    s223:connectedThrough zoo:00116,
-        zoo:00190 ;
-    s223:connectedTo zoo:00034 ;
-    s223:feedback zoo:00120 ;
-    s223:hasConnectionPoint zoo:00121,
-        zoo:00122 ;
-    s223:hasProperty zoo:00119,
-        zoo:00120 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00119 ;
-    rdfs:comment "Damper going to Girafe" .
-zoo:00119 a s223:Property,
-        g36:AnalogOut .
-zoo:00120 a s223:Property,
-        g36:AnalogIn .
-zoo:00121 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "AV-2.airInlet" ;
-    s223:connectsThrough zoo:00116 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf zoo:00118 .
-zoo:00122 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:label "AV-2.airOutlet" ;
     s223:connectsThrough zoo:00221 ;
     s223:hasDirection s223:Direction-Outlet ;
@@ -1368,7 +903,6 @@ zoo:00110 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "AV-4" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00111 ;
     s223:airOutlet zoo:00112 ;
     s223:connectedThrough zoo:00105,
@@ -1376,28 +910,9 @@ zoo:00110 a s223:Connectable,
     s223:connectedTo zoo:00010 ;
     s223:hasConnectionPoint zoo:00111,
         zoo:00112 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Damper going to Éléphants" .
 zoo:00111 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00126 ;
-    s223:airOutlet zoo:00127 ;
-    s223:connectedThrough zoo:00116,
-        zoo:00191 ;
-    s223:connectedTo zoo:00018 ;
-    s223:feedback zoo:00125 ;
-    s223:hasConnectionPoint zoo:00126,
-        zoo:00127 ;
-    s223:hasProperty zoo:00124,
-        zoo:00125 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00124 ;
-    rdfs:comment "Damper going to Éléphants" .
-zoo:00124 a s223:Property,
-        g36:AnalogOut .
-zoo:00125 a s223:Property,
-        g36:AnalogIn .
-zoo:00126 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "AV-4.airInlet" ;
     s223:connectsThrough zoo:00105 ;
@@ -1415,7 +930,6 @@ zoo:00113 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "AV-1" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00114 ;
     s223:airOutlet zoo:00115 ;
     s223:connectedFrom zoo:00018 ;
@@ -1423,28 +937,9 @@ zoo:00113 a s223:Connectable,
         zoo:00223 ;
     s223:hasConnectionPoint zoo:00114,
         zoo:00115 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Damper Coming from Girafe (return)" .
 zoo:00114 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00131 ;
-    s223:airOutlet zoo:00132 ;
-    s223:connectedFrom zoo:00034 ;
-    s223:connectedThrough zoo:00117,
-        zoo:00192 ;
-    s223:feedback zoo:00130 ;
-    s223:hasConnectionPoint zoo:00131,
-        zoo:00132 ;
-    s223:hasProperty zoo:00129,
-        zoo:00130 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00129 ;
-    rdfs:comment "Damper Coming from Girafe (return)" .
-zoo:00129 a s223:Property,
-        g36:AnalogOut .
-zoo:00130 a s223:Property,
-        g36:AnalogIn .
-zoo:00131 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "AV-1.airInlet" ;
     s223:connectsThrough zoo:00223 ;
@@ -1462,7 +957,6 @@ zoo:00116 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "AV-3" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00117 ;
     s223:airOutlet zoo:00118 ;
     s223:connectedFrom zoo:00010 ;
@@ -1470,28 +964,9 @@ zoo:00116 a s223:Connectable,
         zoo:00224 ;
     s223:hasConnectionPoint zoo:00117,
         zoo:00118 ;
+    s223:node_type s223:Damper ;
     rdfs:comment "Damper coming from Éléphants (return)" .
 zoo:00117 a s223:ConnectionPoint,
-=======
-    s223:airInlet zoo:00136 ;
-    s223:airOutlet zoo:00137 ;
-    s223:connectedFrom zoo:00018 ;
-    s223:connectedThrough zoo:00117,
-        zoo:00193 ;
-    s223:feedback zoo:00135 ;
-    s223:hasConnectionPoint zoo:00136,
-        zoo:00137 ;
-    s223:hasProperty zoo:00134,
-        zoo:00135 ;
-    s223:node_type s223:Damper ;
-    s223:position zoo:00134 ;
-    rdfs:comment "Damper coming from Éléphants (return)" .
-zoo:00134 a s223:Property,
-        g36:AnalogOut .
-zoo:00135 a s223:Property,
-        g36:AnalogIn .
-zoo:00136 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "AV-3.airInlet" ;
     s223:connectsThrough zoo:00224 ;
@@ -1509,7 +984,6 @@ zoo:00119 a s223:Connectable,
         s223:Device,
         s223:Fan ;
     rdfs:label "VR-1" ;
-<<<<<<< HEAD
     s223:airInlet zoo:00120 ;
     s223:airOutlet zoo:00121 ;
     s223:connectedThrough zoo:00106,
@@ -1518,17 +992,7 @@ zoo:00119 a s223:Connectable,
     s223:hasConnectionPoint zoo:00120,
         zoo:00121,
         zoo:00122 ;
-=======
-    s223:airInlet zoo:00139 ;
-    s223:airOutlet zoo:00140 ;
-    s223:connectedThrough zoo:00117,
-        zoo:00194 ;
-    s223:connectedTo zoo:00095 ;
-    s223:hasConnectionPoint zoo:00139,
-        zoo:00140,
-        zoo:00141 ;
     s223:node_type s223:Fan ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Return Fan" .
 zoo:00120 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1556,11 +1020,13 @@ zoo:00123 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
     s223:hasExternalReference zoo:00124 ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PA .
+    s223:hasQuantityKind quantitykind:Pressure ;
+    s223:node_type p223:Pressure ;
+    s223:unit unit:PA .
 zoo:00124 a ref:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
-    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" .
+    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00125 a p223:Amps,
         s223:ObservableProperty,
         s223:Property,
@@ -1568,11 +1034,13 @@ zoo:00125 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference zoo:00126 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 zoo:00126 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" .
+    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00127 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -1580,11 +1048,13 @@ zoo:00127 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference zoo:00128 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 zoo:00128 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" .
+    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00129 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -1592,11 +1062,13 @@ zoo:00129 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference zoo:00130 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 zoo:00130 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" .
+    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00131 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -1604,11 +1076,13 @@ zoo:00131 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00132 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00132 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" .
+    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00133 a p223:PowerFactor,
         s223:ObservableProperty,
         s223:Property,
@@ -1616,23 +1090,20 @@ zoo:00133 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference zoo:00134 ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    s223:hasQuantityKind quantitykind:PowerFactor ;
+    s223:node_type p223:PowerFactor ;
+    s223:unit unit:UNITLESS .
 zoo:00134 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" .
+    s223:hasRef "<Fan VR-1 at urn:zoo/sample_zoo_elephants/00119>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00135 a s223:Connectable,
         s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "VFD-1" ;
-<<<<<<< HEAD
     s223:hasConnectionPoint zoo:00136,
         zoo:00137 ;
-=======
-    s223:hasConnectionPoint zoo:00143,
-        zoo:00144 ;
     s223:node_type s223:VariableFrequencyDrive ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "VFD for Supply Fan" .
 zoo:00136 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1651,11 +1122,13 @@ zoo:00138 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference zoo:00139 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 zoo:00139 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00140 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -1663,11 +1136,13 @@ zoo:00140 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference zoo:00141 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 zoo:00141 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00142 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -1675,11 +1150,13 @@ zoo:00142 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00143 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00143 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00144 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -1687,11 +1164,13 @@ zoo:00144 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "speed_reference" ;
     s223:hasExternalReference zoo:00145 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00145 a ref:ExternalReference ;
     rdfs:label "speed_reference.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00146 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -1699,11 +1178,13 @@ zoo:00146 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference zoo:00147 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 zoo:00147 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00148 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
@@ -1711,46 +1192,52 @@ zoo:00148 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "motor_temp" ;
     s223:hasExternalReference zoo:00149 ;
-    qudt:hasQuantityKind quantitykind:Temperature .
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:node_type p223:Temperature .
 zoo:00149 a ref:ExternalReference ;
     rdfs:label "motor_temp.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
-zoo:00150 a p223:OnOffStatus,
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
+zoo:00150 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
-    s223:hasExternalReference zoo:00151 .
+    s223:hasExternalReference zoo:00151 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 zoo:00151 a ref:ExternalReference ;
     rdfs:label "drive_running.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
-zoo:00152 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
+zoo:00152 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
-    s223:hasExternalReference zoo:00153 .
+    s223:hasExternalReference zoo:00153 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 zoo:00153 a ref:ExternalReference ;
     rdfs:label "run_command.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
-zoo:00154 a p223:NormalAlarmStatus,
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
+zoo:00154 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
-    s223:hasExternalReference zoo:00155 .
+    s223:hasExternalReference zoo:00155 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 zoo:00155 a ref:ExternalReference ;
     rdfs:label "alarm_status.ExternalReference" ;
-    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" .
+    s223:hasRef "<VFD VFD-1 at urn:zoo/sample_zoo_elephants/00135>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00156 a s223:Connectable,
         s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "VFD-2" ;
-<<<<<<< HEAD
     s223:hasConnectionPoint zoo:00157,
         zoo:00158 ;
-=======
-    s223:hasConnectionPoint zoo:00146,
-        zoo:00147 ;
     s223:node_type s223:VariableFrequencyDrive ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "VFD for return fan" .
 zoo:00157 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1769,11 +1256,13 @@ zoo:00159 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference zoo:00160 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 zoo:00160 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00161 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -1781,11 +1270,13 @@ zoo:00161 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference zoo:00162 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 zoo:00162 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00163 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -1793,11 +1284,13 @@ zoo:00163 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00164 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00164 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00165 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -1805,11 +1298,13 @@ zoo:00165 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "speed_reference" ;
     s223:hasExternalReference zoo:00166 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00166 a ref:ExternalReference ;
     rdfs:label "speed_reference.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00167 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -1817,11 +1312,13 @@ zoo:00167 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference zoo:00168 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 zoo:00168 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00169 a p223:Temperature,
         s223:ObservableProperty,
         s223:Property,
@@ -1829,50 +1326,54 @@ zoo:00169 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "motor_temp" ;
     s223:hasExternalReference zoo:00170 ;
-    qudt:hasQuantityKind quantitykind:Temperature .
+    s223:hasQuantityKind quantitykind:Temperature ;
+    s223:node_type p223:Temperature .
 zoo:00170 a ref:ExternalReference ;
     rdfs:label "motor_temp.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
-zoo:00171 a p223:OnOffStatus,
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
+zoo:00171 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
-    s223:hasExternalReference zoo:00172 .
+    s223:hasExternalReference zoo:00172 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 zoo:00172 a ref:ExternalReference ;
     rdfs:label "drive_running.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
-zoo:00173 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
+zoo:00173 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
-    s223:hasExternalReference zoo:00174 .
+    s223:hasExternalReference zoo:00174 ;
+    s223:node_type s223:EnumeratedActuatableProperty .
 zoo:00174 a ref:ExternalReference ;
     rdfs:label "run_command.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
-zoo:00175 a p223:NormalAlarmStatus,
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
+zoo:00175 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
-    s223:hasExternalReference zoo:00176 .
+    s223:hasExternalReference zoo:00176 ;
+    s223:node_type s223:EnumeratedObservableProperty .
 zoo:00176 a ref:ExternalReference ;
     rdfs:label "alarm_status.ExternalReference" ;
-    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" .
+    s223:hasRef "<VFD VFD-2 at urn:zoo/sample_zoo_elephants/00156>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00177 a p223:Humidifier,
         s223:Connectable,
         s223:Device ;
     rdfs:label "HUM-1" ;
-<<<<<<< HEAD
     p223:steamOutlet zoo:00178 ;
     p223:waterInlet zoo:00179 ;
     s223:hasConnectionPoint zoo:00178,
         zoo:00179 ;
-=======
-    p223:steamOutlet zoo:00149 ;
-    p223:waterInlet zoo:00150 ;
-    s223:hasConnectionPoint zoo:00149,
-        zoo:00150 ;
     s223:node_type p223:Humidifier ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Humidifier" .
 zoo:00178 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -1890,7 +1391,6 @@ zoo:00180 a p223:SteamPipe,
         s223:Connectable,
         s223:Device ;
     rdfs:label "HUM-1_Buse" ;
-<<<<<<< HEAD
     p223:airInlet zoo:00181 ;
     p223:airOutlet zoo:00182 ;
     p223:steamInlet zoo:00183 ;
@@ -1900,18 +1400,7 @@ zoo:00180 a p223:SteamPipe,
     s223:hasConnectionPoint zoo:00181,
         zoo:00182,
         zoo:00183 ;
-=======
-    p223:airInlet zoo:00152 ;
-    p223:airOutlet zoo:00153 ;
-    p223:steamInlet zoo:00154 ;
-    s223:connectedFrom zoo:00112 ;
-    s223:connectedThrough zoo:00116,
-        zoo:00189 ;
-    s223:hasConnectionPoint zoo:00152,
-        zoo:00153,
-        zoo:00154 ;
     s223:node_type p223:SteamPipe ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "The pipe connected in the duct to provide humidity in air" .
 zoo:00181 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1937,21 +1426,12 @@ zoo:00184 a p223:AirCompressor,
         s223:Connectable,
         s223:Device ;
     rdfs:label "ACOMP-1" ;
-<<<<<<< HEAD
     p223:compressedAirOutlet zoo:00185 ;
     s223:connectedThrough zoo:00189 ;
     s223:connectedTo zoo:00071 ;
     s223:hasConnectionPoint zoo:00185,
         zoo:00186 ;
-=======
-    p223:compressedAirOutlet zoo:00156 ;
-    p223:electricalInlet zoo:00157 ;
-    s223:connectedThrough zoo:00158 ;
-    s223:connectedTo zoo:00100 ;
-    s223:hasConnectionPoint zoo:00156,
-        zoo:00157 ;
     s223:node_type p223:AirCompressor ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Air Compressor" .
 zoo:00185 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -1963,8 +1443,7 @@ zoo:00185 a s223:ConnectionPoint,
 zoo:00186 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-<<<<<<< HEAD
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf zoo:00184 .
 zoo:00187 a p223:ElectricPowerkW,
         s223:ObservableProperty,
@@ -1973,30 +1452,21 @@ zoo:00187 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00188 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00188 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<AirCompressor ACOMP-1 at urn:zoo/sample_zoo_elephants/00184>" .
+    s223:hasRef "<AirCompressor ACOMP-1 at urn:zoo/sample_zoo_elephants/00184>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00189 a s223:Connection ;
     s223:connectsAt zoo:00072,
         zoo:00185 ;
     s223:connectsFrom zoo:00184 ;
     s223:connectsTo zoo:00071 ;
-    s223:hasMedium s223:Medium-CompressedAir .
-zoo:00190 a p223:AirTemperatureSensor,
-=======
-    s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf zoo:00155 .
-zoo:00158 a s223:Connection ;
-    s223:connectsAt zoo:00103,
-        zoo:00156 ;
-    s223:connectsFrom zoo:00155 ;
-    s223:connectsTo zoo:00100 ;
     s223:hasMedium s223:Medium-CompressedAir ;
     s223:node_type s223:Connection .
-zoo:00159 a p223:AirTemperatureSensor,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00190 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
@@ -2004,12 +1474,8 @@ zoo:00159 a p223:AirTemperatureSensor,
     rdfs:label "TE-1" ;
     s223:hasMeasurementLocation zoo:00066 ;
     s223:hasPhysicalLocation zoo:00004 ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00191 ;
-=======
     s223:node_type p223:AirTemperatureSensor ;
-    s223:observesProperty zoo:00160 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00191 ;
     rdfs:comment "Outdoor air preheated by exhanger" .
 zoo:00191 a p223:Temperature,
         s223:ObservableProperty,
@@ -2020,14 +1486,8 @@ zoo:00191 a p223:Temperature,
     s223:hasQuantityKind quantitykind:Temperature ;
     s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
-zoo:00192 a p223:AirHumiditySensor,
-=======
     s223:unit unit:DEG_C .
-zoo:00161 a p223:AirHumiditySensor,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00192 a p223:AirHumiditySensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
@@ -2035,14 +1495,9 @@ zoo:00161 a p223:AirHumiditySensor,
     p223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:hasMeasurementLocation zoo:00066 ;
     s223:hasPhysicalLocation zoo:00004 ;
-<<<<<<< HEAD
+    s223:node_type p223:AirHumiditySensor ;
     s223:observesProperty zoo:00193 .
 zoo:00193 a p223:RelativeHumidity,
-=======
-    s223:node_type p223:AirHumiditySensor ;
-    s223:observesProperty zoo:00162 .
-zoo:00162 a p223:RelativeHumidity,
->>>>>>> origin/21-rename-enumerationkinds
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -2051,14 +1506,8 @@ zoo:00162 a p223:RelativeHumidity,
     s223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:node_type p223:RelativeHumidity ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:RelativeHumidity ;
-    qudt:unit unit:PERCENT_RH .
-zoo:00194 a p223:AirDifferentialStaticPressureSensor,
-=======
     s223:unit unit:PERCENT_RH .
-zoo:00163 a p223:AirDifferentialStaticPressureSensor,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00194 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
         s223:Connectable,
         s223:Device,
@@ -2067,12 +1516,8 @@ zoo:00163 a p223:AirDifferentialStaticPressureSensor,
     p223:hasMeasurementLocationHigh zoo:00082 ;
     p223:hasMeasurementLocationLow zoo:00083 ;
     s223:hasPhysicalLocation zoo:00004 ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00195 ;
-=======
     s223:node_type p223:AirDifferentialStaticPressureSensor ;
-    s223:observesProperty zoo:00164 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00195 ;
     rdfs:comment "Filters differential pressure" .
 zoo:00195 a p223:DifferentialStaticPressure,
         s223:ObservableProperty,
@@ -2083,25 +1528,15 @@ zoo:00195 a p223:DifferentialStaticPressure,
     s223:hasQuantityKind quantitykind:ForcePerArea ;
     s223:node_type p223:DifferentialStaticPressure ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:ForcePerArea ;
-    qudt:unit unit:PA .
-zoo:00196 a p223:TemperatureSensor,
-=======
     s223:unit unit:PA .
-zoo:00165 a p223:TemperatureSensor,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00196 a p223:TemperatureSensor,
         p223:WaterTemperatureSensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "TAEC-1" ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00197 ;
-=======
     s223:node_type p223:WaterTemperatureSensor ;
-    s223:observesProperty zoo:00166 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00197 ;
     rdfs:comment "Water temperature feeding coil" .
 zoo:00197 a p223:Temperature,
         s223:ObservableProperty,
@@ -2112,14 +1547,8 @@ zoo:00197 a p223:Temperature,
     s223:hasQuantityKind quantitykind:Temperature ;
     s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Water ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
-zoo:00198 a s223:Connectable,
-=======
     s223:unit unit:DEG_C .
-zoo:00167 a s223:Connectable,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00198 a s223:Connectable,
         s223:Device ;
     rdfs:label "TBL-1" ;
     s223:node_type s223:Device ;
@@ -2132,12 +1561,8 @@ zoo:00199 a p223:AirTemperatureSensor,
     rdfs:label "TA-1" ;
     s223:hasMeasurementLocation zoo:00105 ;
     s223:hasPhysicalLocation zoo:00004 ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00200 ;
-=======
     s223:node_type p223:AirTemperatureSensor ;
-    s223:observesProperty zoo:00169 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00200 ;
     rdfs:comment "Discharge Air Temperature Sensor" .
 zoo:00200 a p223:Temperature,
         s223:ObservableProperty,
@@ -2148,14 +1573,8 @@ zoo:00200 a p223:Temperature,
     s223:hasQuantityKind quantitykind:Temperature ;
     s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
-zoo:00201 a s223:Connectable,
-=======
     s223:unit unit:DEG_C .
-zoo:00170 a s223:Connectable,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00201 a s223:Connectable,
         s223:Device ;
     rdfs:label "FS-1" ;
     s223:node_type s223:Device ;
@@ -2174,12 +1593,8 @@ zoo:00203 a p223:AirDifferentialStaticPressureSensor,
     p223:hasMeasurementLocationHigh zoo:00105 ;
     p223:hasMeasurementLocationLow zoo:00010 ;
     s223:hasPhysicalLocation zoo:00004 ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00204 ;
-=======
     s223:node_type p223:AirDifferentialStaticPressureSensor ;
-    s223:observesProperty zoo:00173 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00204 ;
     rdfs:comment "Static Discharge Air Pressure Sensor" .
 zoo:00204 a p223:DifferentialStaticPressure,
         s223:ObservableProperty,
@@ -2190,14 +1605,8 @@ zoo:00204 a p223:DifferentialStaticPressure,
     s223:hasQuantityKind quantitykind:ForcePerArea ;
     s223:node_type p223:DifferentialStaticPressure ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:ForcePerArea ;
-    qudt:unit unit:PA .
-zoo:00205 a p223:CO2Sensor,
-=======
     s223:unit unit:PA .
-zoo:00174 a p223:CO2Sensor,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00205 a p223:CO2Sensor,
         p223:GasConcentrationSensor,
         s223:Connectable,
         s223:Device,
@@ -2206,12 +1615,8 @@ zoo:00174 a p223:CO2Sensor,
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasMeasurementLocation zoo:00020 ;
     s223:hasPhysicalLocation zoo:00008 ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00206 ;
-=======
     s223:node_type p223:CO2Sensor ;
-    s223:observesProperty zoo:00175 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00206 ;
     rdfs:comment "Return Air CO2 Sensor (Elephants)" .
 zoo:00206 a p223:GasConcentration,
         s223:ObservableProperty,
@@ -2222,16 +1627,9 @@ zoo:00206 a p223:GasConcentration,
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:node_type p223:GasConcentration ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    s223:ofSubstance p223:Substance-CO2 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PPM .
-zoo:00207 a p223:CO2Sensor,
-=======
     s223:ofSubstance s223:Substance-CO2 ;
     s223:unit unit:PPM .
-zoo:00176 a p223:CO2Sensor,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00207 a p223:CO2Sensor,
         p223:GasConcentrationSensor,
         s223:Connectable,
         s223:Device,
@@ -2240,12 +1638,8 @@ zoo:00176 a p223:CO2Sensor,
     p223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasMeasurementLocation zoo:00012 ;
     s223:hasPhysicalLocation zoo:00008 ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00208 ;
-=======
     s223:node_type p223:CO2Sensor ;
-    s223:observesProperty zoo:00177 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00208 ;
     rdfs:comment "Return Air CO2 Sensor (Girafes)" .
 zoo:00208 a p223:GasConcentration,
         s223:ObservableProperty,
@@ -2256,16 +1650,9 @@ zoo:00208 a p223:GasConcentration,
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:node_type p223:GasConcentration ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    s223:ofSubstance p223:Substance-CO2 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PPM .
-zoo:00209 a p223:AirHumiditySensor,
-=======
     s223:ofSubstance s223:Substance-CO2 ;
     s223:unit unit:PPM .
-zoo:00178 a p223:AirHumiditySensor,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00209 a p223:AirHumiditySensor,
         s223:Connectable,
         s223:Device,
         s223:Sensor ;
@@ -2273,12 +1660,8 @@ zoo:00178 a p223:AirHumiditySensor,
     p223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:hasMeasurementLocation zoo:00106 ;
     s223:hasPhysicalLocation zoo:00004 ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00210 ;
-=======
     s223:node_type p223:AirHumiditySensor ;
-    s223:observesProperty zoo:00179 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00210 ;
     rdfs:comment "Return Air Humidity Sensor" .
 zoo:00210 a p223:RelativeHumidity,
         s223:ObservableProperty,
@@ -2289,14 +1672,8 @@ zoo:00210 a p223:RelativeHumidity,
     s223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:node_type p223:RelativeHumidity ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:RelativeHumidity ;
-    qudt:unit unit:PERCENT_RH .
-zoo:00211 a p223:AirTemperatureSensor,
-=======
     s223:unit unit:PERCENT_RH .
-zoo:00180 a p223:AirTemperatureSensor,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00211 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
@@ -2304,12 +1681,8 @@ zoo:00180 a p223:AirTemperatureSensor,
     rdfs:label "TR-1" ;
     s223:hasMeasurementLocation zoo:00106 ;
     s223:hasPhysicalLocation zoo:00004 ;
-<<<<<<< HEAD
-    s223:observesProperty zoo:00212 ;
-=======
     s223:node_type p223:AirTemperatureSensor ;
-    s223:observesProperty zoo:00181 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:observesProperty zoo:00212 ;
     rdfs:comment "Return Air Temperature Sensor" .
 zoo:00212 a p223:Temperature,
         s223:ObservableProperty,
@@ -2320,14 +1693,8 @@ zoo:00212 a p223:Temperature,
     s223:hasQuantityKind quantitykind:Temperature ;
     s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
-zoo:00213 a s223:Connection ;
-=======
     s223:unit unit:DEG_C .
-zoo:00182 a s223:Connection ;
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00213 a s223:Connection ;
     rdfs:label "AfterAcc1" ;
     s223:connectsAt zoo:00035,
         zoo:00040,
@@ -2383,113 +1750,69 @@ zoo:00216 a s223:Connection ;
     s223:connectsTo zoo:00063 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "4 dampers are feeding the 4 sided duct of the exchanger" .
-<<<<<<< HEAD
 zoo:00217 a s223:Connection ;
     s223:connectsAt zoo:00066,
         zoo:00082 ;
     s223:connectsFrom zoo:00063 ;
     s223:connectsTo zoo:00081 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00218 a s223:Connection ;
     s223:connectsAt zoo:00083,
         zoo:00085 ;
     s223:connectsFrom zoo:00081 ;
     s223:connectsTo zoo:00084 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00219 a s223:Connection ;
     s223:connectsAt zoo:00086,
         zoo:00090 ;
     s223:connectsFrom zoo:00084 ;
     s223:connectsTo zoo:00089 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00220 a s223:Connection ;
     s223:connectsAt zoo:00091,
         zoo:00181 ;
     s223:connectsFrom zoo:00089 ;
     s223:connectsTo zoo:00180 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00221 a s223:Connection ;
-=======
-zoo:00186 a s223:Connection ;
-    s223:connectsAt zoo:00098,
-        zoo:00105 ;
-    s223:connectsFrom zoo:00095 ;
-    s223:connectsTo zoo:00104 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00187 a s223:Connection ;
-    s223:connectsAt zoo:00106,
-        zoo:00108 ;
-    s223:connectsFrom zoo:00104 ;
-    s223:connectsTo zoo:00107 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00188 a s223:Connection ;
-    s223:connectsAt zoo:00109,
-        zoo:00113 ;
-    s223:connectsFrom zoo:00107 ;
-    s223:connectsTo zoo:00112 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00189 a s223:Connection ;
-    s223:connectsAt zoo:00114,
-        zoo:00152 ;
-    s223:connectsFrom zoo:00112 ;
-    s223:connectsTo zoo:00151 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00190 a s223:Connection ;
-    s223:connectsAt zoo:00035,
-        zoo:00122 ;
-    s223:connectsFrom zoo:00118 ;
-    s223:connectsTo zoo:00034 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00191 a s223:Connection ;
->>>>>>> origin/21-rename-enumerationkinds
     s223:connectsAt zoo:00019,
         zoo:00109 ;
     s223:connectsFrom zoo:00107 ;
     s223:connectsTo zoo:00018 ;
-<<<<<<< HEAD
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00222 a s223:Connection ;
     s223:connectsAt zoo:00011,
         zoo:00112 ;
     s223:connectsFrom zoo:00110 ;
     s223:connectsTo zoo:00010 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00223 a s223:Connection ;
-=======
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00192 a s223:Connection ;
-    s223:connectsAt zoo:00036,
-        zoo:00131 ;
-    s223:connectsFrom zoo:00034 ;
-    s223:connectsTo zoo:00128 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00193 a s223:Connection ;
->>>>>>> origin/21-rename-enumerationkinds
     s223:connectsAt zoo:00020,
         zoo:00114 ;
     s223:connectsFrom zoo:00018 ;
-<<<<<<< HEAD
     s223:connectsTo zoo:00113 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00224 a s223:Connection ;
     s223:connectsAt zoo:00012,
         zoo:00117 ;
     s223:connectsFrom zoo:00010 ;
     s223:connectsTo zoo:00116 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00225 a s223:Connection ;
     s223:connectsAt zoo:00067,
         zoo:00121 ;
     s223:connectsFrom zoo:00119 ;
     s223:connectsTo zoo:00063 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 zoo:00226 a p223:GeothermalWell,
         s223:Connectable,
         s223:Device ;
@@ -2499,32 +1822,9 @@ zoo:00226 a p223:GeothermalWell,
     s223:connectedThrough zoo:00420,
         zoo:00429 ;
     s223:hasConnectionPoint zoo:00227,
-        zoo:00228 .
-zoo:00227 a s223:ConnectionPoint,
-=======
-    s223:connectsTo zoo:00133 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00194 a s223:Connection ;
-    s223:connectsAt zoo:00099,
-        zoo:00140 ;
-    s223:connectsFrom zoo:00138 ;
-    s223:connectsTo zoo:00095 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-zoo:00195 a p223:GeothermalWell,
-        s223:Connectable,
-        s223:Device ;
-    rdfs:label "GeothermalWells" ;
-    p223:waterInlet zoo:00196 ;
-    p223:waterOutlet zoo:00197 ;
-    s223:connectedThrough zoo:00257,
-        zoo:00266 ;
-    s223:hasConnectionPoint zoo:00196,
-        zoo:00197 ;
+        zoo:00228 ;
     s223:node_type p223:GeothermalWell .
-zoo:00196 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+zoo:00227 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "GeothermalWells.waterInlet" ;
     s223:connectsThrough zoo:00420 ;
@@ -2542,7 +1842,6 @@ zoo:00229 a p223:Chiller,
         s223:Connectable,
         s223:Device ;
     rdfs:label "PC-1" ;
-<<<<<<< HEAD
     s223:alarmOutlet zoo:00235 ;
     s223:capacityLimitInlet zoo:00236 ;
     s223:chilledWaterEntering zoo:00231 ;
@@ -2561,24 +1860,8 @@ zoo:00229 a p223:Chiller,
         zoo:00235,
         zoo:00236,
         zoo:00237 ;
-    s223:setpointResetInlet zoo:00234 ;
-=======
-    p223:chilledWaterEntering zoo:00200 ;
-    p223:chilledWaterLeaving zoo:00199 ;
-    p223:condensedWaterEntering zoo:00202 ;
-    p223:condensedWaterLeaving zoo:00201 ;
-    p223:powerInlet zoo:00203 ;
-    s223:connectedFrom zoo:00242 ;
-    s223:connectedThrough zoo:00257,
-        zoo:00260,
-        zoo:00267 ;
-    s223:hasConnectionPoint zoo:00199,
-        zoo:00200,
-        zoo:00201,
-        zoo:00202,
-        zoo:00203 ;
     s223:node_type p223:Chiller ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:setpointResetInlet zoo:00234 ;
     rdfs:comment "Chiller #1" .
 zoo:00230 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -2628,7 +1911,7 @@ zoo:00236 a s223:ConnectionPoint,
 zoo:00237 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf zoo:00229 .
 zoo:00238 a p223:ElectricPowerkW,
         s223:ObservableProperty,
@@ -2637,16 +1920,17 @@ zoo:00238 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00239 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00239 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<AgnosticChiller PC-1 at urn:zoo/sample_zoo_elephants/00229>" .
+    s223:hasRef "<AgnosticChiller PC-1 at urn:zoo/sample_zoo_elephants/00229>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00240 a p223:Chiller,
         s223:Connectable,
         s223:Device ;
     rdfs:label "PC-2" ;
-<<<<<<< HEAD
     s223:alarmOutlet zoo:00246 ;
     s223:capacityLimitInlet zoo:00247 ;
     s223:chilledWaterEntering zoo:00242 ;
@@ -2665,24 +1949,8 @@ zoo:00240 a p223:Chiller,
         zoo:00246,
         zoo:00247,
         zoo:00248 ;
-    s223:setpointResetInlet zoo:00245 ;
-=======
-    p223:chilledWaterEntering zoo:00206 ;
-    p223:chilledWaterLeaving zoo:00205 ;
-    p223:condensedWaterEntering zoo:00208 ;
-    p223:condensedWaterLeaving zoo:00207 ;
-    p223:powerInlet zoo:00209 ;
-    s223:connectedFrom zoo:00247 ;
-    s223:connectedThrough zoo:00257,
-        zoo:00260,
-        zoo:00268 ;
-    s223:hasConnectionPoint zoo:00205,
-        zoo:00206,
-        zoo:00207,
-        zoo:00208,
-        zoo:00209 ;
     s223:node_type p223:Chiller ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:setpointResetInlet zoo:00245 ;
     rdfs:comment "Chiller #2" .
 zoo:00241 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -2732,7 +2000,7 @@ zoo:00247 a s223:ConnectionPoint,
 zoo:00248 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf zoo:00240 .
 zoo:00249 a p223:ElectricPowerkW,
         s223:ObservableProperty,
@@ -2741,32 +2009,25 @@ zoo:00249 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00250 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00250 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<AgnosticChiller PC-2 at urn:zoo/sample_zoo_elephants/00240>" .
+    s223:hasRef "<AgnosticChiller PC-2 at urn:zoo/sample_zoo_elephants/00240>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00251 a s223:Connectable,
         s223:Device,
         s223:Pump ;
     rdfs:label "P-1" ;
-<<<<<<< HEAD
     s223:connectedThrough zoo:00420,
         zoo:00424 ;
     s223:hasConnectionPoint zoo:00252,
         zoo:00253,
         zoo:00254 ;
+    s223:node_type s223:Pump ;
     s223:waterInlet zoo:00252 ;
     s223:waterOutlet zoo:00253 ;
-=======
-    s223:connectedThrough zoo:00257,
-        zoo:00261 ;
-    s223:hasConnectionPoint zoo:00211,
-        zoo:00212 ;
-    s223:node_type s223:Fan ;
-    s223:waterInlet zoo:00211 ;
-    s223:waterOutlet zoo:00212 ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Pump P-1, Condensed Water loop to heat UV-1 and Radiant Floors" .
 zoo:00252 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2785,7 +2046,7 @@ zoo:00253 a s223:ConnectionPoint,
 zoo:00254 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf zoo:00251 .
 zoo:00255 a p223:Pressure,
         s223:ObservableProperty,
@@ -2794,11 +2055,13 @@ zoo:00255 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "head_pressure" ;
     s223:hasExternalReference zoo:00256 ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PSI .
+    s223:hasQuantityKind quantitykind:Pressure ;
+    s223:node_type p223:Pressure ;
+    s223:unit unit:PSI .
 zoo:00256 a ref:ExternalReference ;
     rdfs:label "head_pressure.ExternalReference" ;
-    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" .
+    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00257 a p223:Amps,
         s223:ObservableProperty,
         s223:Property,
@@ -2806,11 +2069,13 @@ zoo:00257 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference zoo:00258 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 zoo:00258 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" .
+    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00259 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -2818,11 +2083,13 @@ zoo:00259 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference zoo:00260 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 zoo:00260 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" .
+    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00261 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -2830,11 +2097,13 @@ zoo:00261 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference zoo:00262 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 zoo:00262 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" .
+    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00263 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -2842,11 +2111,13 @@ zoo:00263 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00264 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00264 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" .
+    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00265 a p223:PowerFactor,
         s223:ObservableProperty,
         s223:Property,
@@ -2854,32 +2125,25 @@ zoo:00265 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference zoo:00266 ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    s223:hasQuantityKind quantitykind:PowerFactor ;
+    s223:node_type p223:PowerFactor ;
+    s223:unit unit:UNITLESS .
 zoo:00266 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" .
+    s223:hasRef "<Pump P-1 at urn:zoo/sample_zoo_elephants/00251>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00267 a s223:Connectable,
         s223:Device,
         s223:Pump ;
     rdfs:label "P-2" ;
-<<<<<<< HEAD
     s223:connectedThrough zoo:00420,
         zoo:00424 ;
     s223:hasConnectionPoint zoo:00268,
         zoo:00269,
         zoo:00270 ;
+    s223:node_type s223:Pump ;
     s223:waterInlet zoo:00268 ;
     s223:waterOutlet zoo:00269 ;
-=======
-    s223:connectedThrough zoo:00257,
-        zoo:00261 ;
-    s223:hasConnectionPoint zoo:00214,
-        zoo:00215 ;
-    s223:node_type s223:Fan ;
-    s223:waterInlet zoo:00214 ;
-    s223:waterOutlet zoo:00215 ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Pump P-2, Condensed Water loop to heat UV-1 and Radiant Floors" .
 zoo:00268 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2898,7 +2162,7 @@ zoo:00269 a s223:ConnectionPoint,
 zoo:00270 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf zoo:00267 .
 zoo:00271 a p223:Pressure,
         s223:ObservableProperty,
@@ -2907,11 +2171,13 @@ zoo:00271 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "head_pressure" ;
     s223:hasExternalReference zoo:00272 ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PSI .
+    s223:hasQuantityKind quantitykind:Pressure ;
+    s223:node_type p223:Pressure ;
+    s223:unit unit:PSI .
 zoo:00272 a ref:ExternalReference ;
     rdfs:label "head_pressure.ExternalReference" ;
-    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" .
+    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00273 a p223:Amps,
         s223:ObservableProperty,
         s223:Property,
@@ -2919,11 +2185,13 @@ zoo:00273 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference zoo:00274 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 zoo:00274 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" .
+    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00275 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -2931,11 +2199,13 @@ zoo:00275 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference zoo:00276 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 zoo:00276 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" .
+    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00277 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -2943,11 +2213,13 @@ zoo:00277 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference zoo:00278 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 zoo:00278 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" .
+    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00279 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -2955,11 +2227,13 @@ zoo:00279 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00280 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00280 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" .
+    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00281 a p223:PowerFactor,
         s223:ObservableProperty,
         s223:Property,
@@ -2967,32 +2241,25 @@ zoo:00281 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference zoo:00282 ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    s223:hasQuantityKind quantitykind:PowerFactor ;
+    s223:node_type p223:PowerFactor ;
+    s223:unit unit:UNITLESS .
 zoo:00282 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" .
+    s223:hasRef "<Pump P-2 at urn:zoo/sample_zoo_elephants/00267>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00283 a s223:Connectable,
         s223:Device,
         s223:Pump ;
     rdfs:label "P-3" ;
-<<<<<<< HEAD
     s223:connectedThrough zoo:00428,
         zoo:00429 ;
     s223:hasConnectionPoint zoo:00284,
         zoo:00285,
         zoo:00286 ;
+    s223:node_type s223:Pump ;
     s223:waterInlet zoo:00284 ;
     s223:waterOutlet zoo:00285 ;
-=======
-    s223:connectedThrough zoo:00265,
-        zoo:00266 ;
-    s223:hasConnectionPoint zoo:00217,
-        zoo:00218 ;
-    s223:node_type s223:Fan ;
-    s223:waterInlet zoo:00217 ;
-    s223:waterOutlet zoo:00218 ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Pump P-3, Geothermal Well pumps" .
 zoo:00284 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -3011,7 +2278,7 @@ zoo:00285 a s223:ConnectionPoint,
 zoo:00286 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf zoo:00283 .
 zoo:00287 a p223:Pressure,
         s223:ObservableProperty,
@@ -3020,11 +2287,13 @@ zoo:00287 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "head_pressure" ;
     s223:hasExternalReference zoo:00288 ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PSI .
+    s223:hasQuantityKind quantitykind:Pressure ;
+    s223:node_type p223:Pressure ;
+    s223:unit unit:PSI .
 zoo:00288 a ref:ExternalReference ;
     rdfs:label "head_pressure.ExternalReference" ;
-    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" .
+    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00289 a p223:Amps,
         s223:ObservableProperty,
         s223:Property,
@@ -3032,11 +2301,13 @@ zoo:00289 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference zoo:00290 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 zoo:00290 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" .
+    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00291 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -3044,11 +2315,13 @@ zoo:00291 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference zoo:00292 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 zoo:00292 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" .
+    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00293 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -3056,11 +2329,13 @@ zoo:00293 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference zoo:00294 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 zoo:00294 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" .
+    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00295 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -3068,11 +2343,13 @@ zoo:00295 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00296 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00296 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" .
+    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00297 a p223:PowerFactor,
         s223:ObservableProperty,
         s223:Property,
@@ -3080,32 +2357,25 @@ zoo:00297 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference zoo:00298 ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    s223:hasQuantityKind quantitykind:PowerFactor ;
+    s223:node_type p223:PowerFactor ;
+    s223:unit unit:UNITLESS .
 zoo:00298 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" .
+    s223:hasRef "<Pump P-3 at urn:zoo/sample_zoo_elephants/00283>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00299 a s223:Connectable,
         s223:Device,
         s223:Pump ;
     rdfs:label "P-4" ;
-<<<<<<< HEAD
     s223:connectedThrough zoo:00428,
         zoo:00429 ;
     s223:hasConnectionPoint zoo:00300,
         zoo:00301,
         zoo:00302 ;
+    s223:node_type s223:Pump ;
     s223:waterInlet zoo:00300 ;
     s223:waterOutlet zoo:00301 ;
-=======
-    s223:connectedThrough zoo:00265,
-        zoo:00266 ;
-    s223:hasConnectionPoint zoo:00220,
-        zoo:00221 ;
-    s223:node_type s223:Fan ;
-    s223:waterInlet zoo:00220 ;
-    s223:waterOutlet zoo:00221 ;
->>>>>>> origin/21-rename-enumerationkinds
     rdfs:comment "Pump P-4, Geothermal Well pumps" .
 zoo:00300 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -3124,7 +2394,7 @@ zoo:00301 a s223:ConnectionPoint,
 zoo:00302 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf zoo:00299 .
 zoo:00303 a p223:Pressure,
         s223:ObservableProperty,
@@ -3133,11 +2403,13 @@ zoo:00303 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "head_pressure" ;
     s223:hasExternalReference zoo:00304 ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PSI .
+    s223:hasQuantityKind quantitykind:Pressure ;
+    s223:node_type p223:Pressure ;
+    s223:unit unit:PSI .
 zoo:00304 a ref:ExternalReference ;
     rdfs:label "head_pressure.ExternalReference" ;
-    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" .
+    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00305 a p223:Amps,
         s223:ObservableProperty,
         s223:Property,
@@ -3145,11 +2417,13 @@ zoo:00305 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference zoo:00306 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 zoo:00306 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" .
+    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00307 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -3157,11 +2431,13 @@ zoo:00307 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference zoo:00308 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 zoo:00308 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" .
+    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00309 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -3169,11 +2445,13 @@ zoo:00309 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference zoo:00310 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 zoo:00310 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" .
+    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00311 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -3181,11 +2459,13 @@ zoo:00311 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference zoo:00312 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 zoo:00312 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" .
+    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00313 a p223:PowerFactor,
         s223:ObservableProperty,
         s223:Property,
@@ -3193,16 +2473,17 @@ zoo:00313 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference zoo:00314 ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    s223:hasQuantityKind quantitykind:PowerFactor ;
+    s223:node_type p223:PowerFactor ;
+    s223:unit unit:UNITLESS .
 zoo:00314 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" .
+    s223:hasRef "<Pump P-4 at urn:zoo/sample_zoo_elephants/00299>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00315 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "V-1A_NO" ;
-<<<<<<< HEAD
     s223:command zoo:00318 ;
     s223:connectedThrough zoo:00420,
         zoo:00426 ;
@@ -3212,18 +2493,8 @@ zoo:00315 a s223:Connectable,
         zoo:00327,
         zoo:00328,
         zoo:00329 ;
-    s223:position zoo:00320 ;
-=======
-    s223:connectedThrough zoo:00257,
-        zoo:00263 ;
-    s223:hasConnectionPoint zoo:00223,
-        zoo:00224,
-        zoo:00225,
-        zoo:00226 ;
     s223:node_type s223:Valve ;
-    s223:onOffInlet zoo:00224 ;
-    s223:positionInlet zoo:00223 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:position zoo:00320 ;
     rdfs:comment "Butterfly Valve NO to Well of pair V-1A" .
 zoo:00316 a s223:Actuator,
         s223:Connectable,
@@ -3231,11 +2502,12 @@ zoo:00316 a s223:Actuator,
     rdfs:label "actuator" ;
     s223:actuatesProperty zoo:00320 ;
     s223:hasConnectionPoint zoo:00317 ;
-    s223:hasProperty zoo:00320 .
+    s223:hasProperty zoo:00320 ;
+    s223:node_type s223:Actuator .
 zoo:00317 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-24V-60Hz ;
+    s223:hasMedium s223:Electricity-24V_60Hz ;
     s223:isConnectionPointOf zoo:00316 .
 zoo:00318 a p223:PercentCommand,
         s223:ActuatableProperty,
@@ -3244,11 +2516,13 @@ zoo:00318 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference zoo:00319 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00319 a ref:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00316>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00316>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00320 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -3256,11 +2530,13 @@ zoo:00320 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference zoo:00321 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:Percent ;
+    s223:unit unit:PERCENT .
 zoo:00321 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00316>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00316>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00322 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -3268,11 +2544,13 @@ zoo:00322 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference zoo:00323 ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    s223:hasQuantityKind quantitykind:Torque ;
+    s223:node_type p223:Nm ;
+    s223:unit unit:N-M .
 zoo:00323 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00316>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00316>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00324 a p223:Gallons,
         s223:ObservableProperty,
         s223:Property,
@@ -3280,11 +2558,13 @@ zoo:00324 a p223:Gallons,
         s223:QuantifiableProperty ;
     rdfs:label "flowCoefficient" ;
     s223:hasExternalReference zoo:00325 ;
-    qudt:hasQuantityKind quantitykind:LiquidVolume ;
-    qudt:unit unit:GAL_US .
+    s223:hasQuantityKind quantitykind:LiquidVolume ;
+    s223:node_type p223:Gallons ;
+    s223:unit unit:GAL_US .
 zoo:00325 a ref:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
-    s223:hasRef "<TwoWayActuatedProportionalValve V-1A_NO at urn:zoo/sample_zoo_elephants/00315>" .
+    s223:hasRef "<TwoWayActuatedProportionalValve V-1A_NO at urn:zoo/sample_zoo_elephants/00315>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00326 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough zoo:00426 ;
@@ -3311,7 +2591,6 @@ zoo:00330 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "V-1A_NC" ;
-<<<<<<< HEAD
     s223:command zoo:00333 ;
     s223:connectedThrough zoo:00423,
         zoo:00426 ;
@@ -3321,18 +2600,8 @@ zoo:00330 a s223:Connectable,
         zoo:00342,
         zoo:00343,
         zoo:00344 ;
-    s223:position zoo:00335 ;
-=======
-    s223:connectedThrough zoo:00260,
-        zoo:00263 ;
-    s223:hasConnectionPoint zoo:00228,
-        zoo:00229,
-        zoo:00230,
-        zoo:00231 ;
     s223:node_type s223:Valve ;
-    s223:onOffInlet zoo:00229 ;
-    s223:positionInlet zoo:00228 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:position zoo:00335 ;
     rdfs:comment "Butterfly Valve NC to Coil of pair V-1A" .
 zoo:00331 a s223:Actuator,
         s223:Connectable,
@@ -3340,11 +2609,12 @@ zoo:00331 a s223:Actuator,
     rdfs:label "actuator" ;
     s223:actuatesProperty zoo:00335 ;
     s223:hasConnectionPoint zoo:00332 ;
-    s223:hasProperty zoo:00335 .
+    s223:hasProperty zoo:00335 ;
+    s223:node_type s223:Actuator .
 zoo:00332 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-24V-60Hz ;
+    s223:hasMedium s223:Electricity-24V_60Hz ;
     s223:isConnectionPointOf zoo:00331 .
 zoo:00333 a p223:PercentCommand,
         s223:ActuatableProperty,
@@ -3353,11 +2623,13 @@ zoo:00333 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference zoo:00334 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00334 a ref:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00331>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00331>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00335 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -3365,11 +2637,13 @@ zoo:00335 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference zoo:00336 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:Percent ;
+    s223:unit unit:PERCENT .
 zoo:00336 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00331>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00331>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00337 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -3377,11 +2651,13 @@ zoo:00337 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference zoo:00338 ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    s223:hasQuantityKind quantitykind:Torque ;
+    s223:node_type p223:Nm ;
+    s223:unit unit:N-M .
 zoo:00338 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00331>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00331>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00339 a p223:Gallons,
         s223:ObservableProperty,
         s223:Property,
@@ -3389,11 +2665,13 @@ zoo:00339 a p223:Gallons,
         s223:QuantifiableProperty ;
     rdfs:label "flowCoefficient" ;
     s223:hasExternalReference zoo:00340 ;
-    qudt:hasQuantityKind quantitykind:LiquidVolume ;
-    qudt:unit unit:GAL_US .
+    s223:hasQuantityKind quantitykind:LiquidVolume ;
+    s223:node_type p223:Gallons ;
+    s223:unit unit:GAL_US .
 zoo:00340 a ref:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
-    s223:hasRef "<TwoWayActuatedProportionalValve V-1A_NC at urn:zoo/sample_zoo_elephants/00330>" .
+    s223:hasRef "<TwoWayActuatedProportionalValve V-1A_NC at urn:zoo/sample_zoo_elephants/00330>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00341 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough zoo:00426 ;
@@ -3420,7 +2698,6 @@ zoo:00345 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "V-1B_NO" ;
-<<<<<<< HEAD
     s223:command zoo:00348 ;
     s223:connectedThrough zoo:00425 ;
     s223:contains zoo:00346 ;
@@ -3429,17 +2706,8 @@ zoo:00345 a s223:Connectable,
         zoo:00357,
         zoo:00358,
         zoo:00359 ;
-    s223:position zoo:00350 ;
-=======
-    s223:connectedThrough zoo:00262 ;
-    s223:hasConnectionPoint zoo:00233,
-        zoo:00234,
-        zoo:00235,
-        zoo:00236 ;
     s223:node_type s223:Valve ;
-    s223:onOffInlet zoo:00234 ;
-    s223:positionInlet zoo:00233 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:position zoo:00350 ;
     rdfs:comment "Butterfly Valve NO to Well of pair V-1B" .
 zoo:00346 a s223:Actuator,
         s223:Connectable,
@@ -3447,11 +2715,12 @@ zoo:00346 a s223:Actuator,
     rdfs:label "actuator" ;
     s223:actuatesProperty zoo:00350 ;
     s223:hasConnectionPoint zoo:00347 ;
-    s223:hasProperty zoo:00350 .
+    s223:hasProperty zoo:00350 ;
+    s223:node_type s223:Actuator .
 zoo:00347 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-24V-60Hz ;
+    s223:hasMedium s223:Electricity-24V_60Hz ;
     s223:isConnectionPointOf zoo:00346 .
 zoo:00348 a p223:PercentCommand,
         s223:ActuatableProperty,
@@ -3460,11 +2729,13 @@ zoo:00348 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference zoo:00349 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00349 a ref:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00346>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00346>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00350 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -3472,11 +2743,13 @@ zoo:00350 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference zoo:00351 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:Percent ;
+    s223:unit unit:PERCENT .
 zoo:00351 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00346>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00346>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00352 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -3484,11 +2757,13 @@ zoo:00352 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference zoo:00353 ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    s223:hasQuantityKind quantitykind:Torque ;
+    s223:node_type p223:Nm ;
+    s223:unit unit:N-M .
 zoo:00353 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00346>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00346>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00354 a p223:Gallons,
         s223:ObservableProperty,
         s223:Property,
@@ -3496,11 +2771,13 @@ zoo:00354 a p223:Gallons,
         s223:QuantifiableProperty ;
     rdfs:label "flowCoefficient" ;
     s223:hasExternalReference zoo:00355 ;
-    qudt:hasQuantityKind quantitykind:LiquidVolume ;
-    qudt:unit unit:GAL_US .
+    s223:hasQuantityKind quantitykind:LiquidVolume ;
+    s223:node_type p223:Gallons ;
+    s223:unit unit:GAL_US .
 zoo:00355 a ref:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
-    s223:hasRef "<TwoWayActuatedProportionalValve V-1B_NO at urn:zoo/sample_zoo_elephants/00345>" .
+    s223:hasRef "<TwoWayActuatedProportionalValve V-1B_NO at urn:zoo/sample_zoo_elephants/00345>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00356 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
@@ -3526,7 +2803,6 @@ zoo:00360 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "V-1B_NC" ;
-<<<<<<< HEAD
     s223:command zoo:00363 ;
     s223:connectedThrough zoo:00424,
         zoo:00425 ;
@@ -3536,18 +2812,8 @@ zoo:00360 a s223:Connectable,
         zoo:00372,
         zoo:00373,
         zoo:00374 ;
-    s223:position zoo:00365 ;
-=======
-    s223:connectedThrough zoo:00261,
-        zoo:00262 ;
-    s223:hasConnectionPoint zoo:00238,
-        zoo:00239,
-        zoo:00240,
-        zoo:00241 ;
     s223:node_type s223:Valve ;
-    s223:onOffInlet zoo:00239 ;
-    s223:positionInlet zoo:00238 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:position zoo:00365 ;
     rdfs:comment "Butterfly Valve NC to Coil of pair V-1B" .
 zoo:00361 a s223:Actuator,
         s223:Connectable,
@@ -3555,11 +2821,12 @@ zoo:00361 a s223:Actuator,
     rdfs:label "actuator" ;
     s223:actuatesProperty zoo:00365 ;
     s223:hasConnectionPoint zoo:00362 ;
-    s223:hasProperty zoo:00365 .
+    s223:hasProperty zoo:00365 ;
+    s223:node_type s223:Actuator .
 zoo:00362 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-24V-60Hz ;
+    s223:hasMedium s223:Electricity-24V_60Hz ;
     s223:isConnectionPointOf zoo:00361 .
 zoo:00363 a p223:PercentCommand,
         s223:ActuatableProperty,
@@ -3568,11 +2835,13 @@ zoo:00363 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference zoo:00364 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00364 a ref:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00361>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00361>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00365 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -3580,11 +2849,13 @@ zoo:00365 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference zoo:00366 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:Percent ;
+    s223:unit unit:PERCENT .
 zoo:00366 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00361>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00361>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00367 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -3592,11 +2863,13 @@ zoo:00367 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference zoo:00368 ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    s223:hasQuantityKind quantitykind:Torque ;
+    s223:node_type p223:Nm ;
+    s223:unit unit:N-M .
 zoo:00368 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00361>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00361>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00369 a p223:Gallons,
         s223:ObservableProperty,
         s223:Property,
@@ -3604,11 +2877,13 @@ zoo:00369 a p223:Gallons,
         s223:QuantifiableProperty ;
     rdfs:label "flowCoefficient" ;
     s223:hasExternalReference zoo:00370 ;
-    qudt:hasQuantityKind quantitykind:LiquidVolume ;
-    qudt:unit unit:GAL_US .
+    s223:hasQuantityKind quantitykind:LiquidVolume ;
+    s223:node_type p223:Gallons ;
+    s223:unit unit:GAL_US .
 zoo:00370 a ref:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
-    s223:hasRef "<TwoWayActuatedProportionalValve V-1B_NC at urn:zoo/sample_zoo_elephants/00360>" .
+    s223:hasRef "<TwoWayActuatedProportionalValve V-1B_NC at urn:zoo/sample_zoo_elephants/00360>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00371 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough zoo:00424 ;
@@ -3635,7 +2910,6 @@ zoo:00375 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "V-2" ;
-<<<<<<< HEAD
     s223:command zoo:00378 ;
     s223:connectedThrough zoo:00428,
         zoo:00430 ;
@@ -3646,19 +2920,8 @@ zoo:00375 a s223:Connectable,
         zoo:00387,
         zoo:00388,
         zoo:00389 ;
-    s223:position zoo:00380 ;
-=======
-    s223:connectedThrough zoo:00265,
-        zoo:00267 ;
-    s223:connectedTo zoo:00198 ;
-    s223:hasConnectionPoint zoo:00243,
-        zoo:00244,
-        zoo:00245,
-        zoo:00246 ;
     s223:node_type s223:Valve ;
-    s223:onOffInlet zoo:00244 ;
-    s223:positionInlet zoo:00243 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:position zoo:00380 ;
     rdfs:comment "PC-1 Isolation valve" .
 zoo:00376 a s223:Actuator,
         s223:Connectable,
@@ -3666,11 +2929,12 @@ zoo:00376 a s223:Actuator,
     rdfs:label "actuator" ;
     s223:actuatesProperty zoo:00380 ;
     s223:hasConnectionPoint zoo:00377 ;
-    s223:hasProperty zoo:00380 .
+    s223:hasProperty zoo:00380 ;
+    s223:node_type s223:Actuator .
 zoo:00377 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-24V-60Hz ;
+    s223:hasMedium s223:Electricity-24V_60Hz ;
     s223:isConnectionPointOf zoo:00376 .
 zoo:00378 a p223:PercentCommand,
         s223:ActuatableProperty,
@@ -3679,11 +2943,13 @@ zoo:00378 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference zoo:00379 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00379 a ref:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00376>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00376>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00380 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -3691,11 +2957,13 @@ zoo:00380 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference zoo:00381 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:Percent ;
+    s223:unit unit:PERCENT .
 zoo:00381 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00376>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00376>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00382 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -3703,11 +2971,13 @@ zoo:00382 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference zoo:00383 ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    s223:hasQuantityKind quantitykind:Torque ;
+    s223:node_type p223:Nm ;
+    s223:unit unit:N-M .
 zoo:00383 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00376>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00376>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00384 a p223:Gallons,
         s223:ObservableProperty,
         s223:Property,
@@ -3715,11 +2985,13 @@ zoo:00384 a p223:Gallons,
         s223:QuantifiableProperty ;
     rdfs:label "flowCoefficient" ;
     s223:hasExternalReference zoo:00385 ;
-    qudt:hasQuantityKind quantitykind:LiquidVolume ;
-    qudt:unit unit:GAL_US .
+    s223:hasQuantityKind quantitykind:LiquidVolume ;
+    s223:node_type p223:Gallons ;
+    s223:unit unit:GAL_US .
 zoo:00385 a ref:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
-    s223:hasRef "<TwoWayActuatedProportionalValve V-2 at urn:zoo/sample_zoo_elephants/00375>" .
+    s223:hasRef "<TwoWayActuatedProportionalValve V-2 at urn:zoo/sample_zoo_elephants/00375>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00386 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough zoo:00428 ;
@@ -3746,7 +3018,6 @@ zoo:00390 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "V-3" ;
-<<<<<<< HEAD
     s223:command zoo:00393 ;
     s223:connectedThrough zoo:00428,
         zoo:00431 ;
@@ -3757,19 +3028,8 @@ zoo:00390 a s223:Connectable,
         zoo:00402,
         zoo:00403,
         zoo:00404 ;
-    s223:position zoo:00395 ;
-=======
-    s223:connectedThrough zoo:00265,
-        zoo:00268 ;
-    s223:connectedTo zoo:00204 ;
-    s223:hasConnectionPoint zoo:00248,
-        zoo:00249,
-        zoo:00250,
-        zoo:00251 ;
     s223:node_type s223:Valve ;
-    s223:onOffInlet zoo:00249 ;
-    s223:positionInlet zoo:00248 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:position zoo:00395 ;
     rdfs:comment "PC-2 Isolation valve" .
 zoo:00391 a s223:Actuator,
         s223:Connectable,
@@ -3777,11 +3037,12 @@ zoo:00391 a s223:Actuator,
     rdfs:label "actuator" ;
     s223:actuatesProperty zoo:00395 ;
     s223:hasConnectionPoint zoo:00392 ;
-    s223:hasProperty zoo:00395 .
+    s223:hasProperty zoo:00395 ;
+    s223:node_type s223:Actuator .
 zoo:00392 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-24V-60Hz ;
+    s223:hasMedium s223:Electricity-24V_60Hz ;
     s223:isConnectionPointOf zoo:00391 .
 zoo:00393 a p223:PercentCommand,
         s223:ActuatableProperty,
@@ -3790,11 +3051,13 @@ zoo:00393 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference zoo:00394 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00394 a ref:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00391>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00391>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00395 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -3802,11 +3065,13 @@ zoo:00395 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference zoo:00396 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:Percent ;
+    s223:unit unit:PERCENT .
 zoo:00396 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00391>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00391>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00397 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -3814,11 +3079,13 @@ zoo:00397 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference zoo:00398 ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    s223:hasQuantityKind quantitykind:Torque ;
+    s223:node_type p223:Nm ;
+    s223:unit unit:N-M .
 zoo:00398 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00391>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00391>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00399 a p223:Gallons,
         s223:ObservableProperty,
         s223:Property,
@@ -3826,11 +3093,13 @@ zoo:00399 a p223:Gallons,
         s223:QuantifiableProperty ;
     rdfs:label "flowCoefficient" ;
     s223:hasExternalReference zoo:00400 ;
-    qudt:hasQuantityKind quantitykind:LiquidVolume ;
-    qudt:unit unit:GAL_US .
+    s223:hasQuantityKind quantitykind:LiquidVolume ;
+    s223:node_type p223:Gallons ;
+    s223:unit unit:GAL_US .
 zoo:00400 a ref:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
-    s223:hasRef "<TwoWayActuatedProportionalValve V-3 at urn:zoo/sample_zoo_elephants/00390>" .
+    s223:hasRef "<TwoWayActuatedProportionalValve V-3 at urn:zoo/sample_zoo_elephants/00390>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00401 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough zoo:00428 ;
@@ -3857,7 +3126,6 @@ zoo:00405 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "V-4" ;
-<<<<<<< HEAD
     s223:command zoo:00408 ;
     s223:connectedThrough zoo:00420,
         zoo:00429 ;
@@ -3867,18 +3135,8 @@ zoo:00405 a s223:Connectable,
         zoo:00417,
         zoo:00418,
         zoo:00419 ;
-    s223:position zoo:00410 ;
-=======
-    s223:connectedThrough zoo:00257,
-        zoo:00266 ;
-    s223:hasConnectionPoint zoo:00253,
-        zoo:00254,
-        zoo:00255,
-        zoo:00256 ;
     s223:node_type s223:Valve ;
-    s223:onOffInlet zoo:00254 ;
-    s223:positionInlet zoo:00253 ;
->>>>>>> origin/21-rename-enumerationkinds
+    s223:position zoo:00410 ;
     rdfs:comment "Loop pressure control Valve" .
 zoo:00406 a s223:Actuator,
         s223:Connectable,
@@ -3886,11 +3144,12 @@ zoo:00406 a s223:Actuator,
     rdfs:label "actuator" ;
     s223:actuatesProperty zoo:00410 ;
     s223:hasConnectionPoint zoo:00407 ;
-    s223:hasProperty zoo:00410 .
+    s223:hasProperty zoo:00410 ;
+    s223:node_type s223:Actuator .
 zoo:00407 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-24V-60Hz ;
+    s223:hasMedium s223:Electricity-24V_60Hz ;
     s223:isConnectionPointOf zoo:00406 .
 zoo:00408 a p223:PercentCommand,
         s223:ActuatableProperty,
@@ -3899,11 +3158,13 @@ zoo:00408 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference zoo:00409 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:PercentCommand ;
+    s223:unit unit:PERCENT .
 zoo:00409 a ref:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00406>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00406>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00410 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -3911,11 +3172,13 @@ zoo:00410 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference zoo:00411 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
+    s223:node_type p223:Percent ;
+    s223:unit unit:PERCENT .
 zoo:00411 a ref:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00406>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00406>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00412 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -3923,11 +3186,13 @@ zoo:00412 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference zoo:00413 ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    s223:hasQuantityKind quantitykind:Torque ;
+    s223:node_type p223:Nm ;
+    s223:unit unit:N-M .
 zoo:00413 a ref:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00406>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:zoo/sample_zoo_elephants/00406>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00414 a p223:Gallons,
         s223:ObservableProperty,
         s223:Property,
@@ -3935,11 +3200,13 @@ zoo:00414 a p223:Gallons,
         s223:QuantifiableProperty ;
     rdfs:label "flowCoefficient" ;
     s223:hasExternalReference zoo:00415 ;
-    qudt:hasQuantityKind quantitykind:LiquidVolume ;
-    qudt:unit unit:GAL_US .
+    s223:hasQuantityKind quantitykind:LiquidVolume ;
+    s223:node_type p223:Gallons ;
+    s223:unit unit:GAL_US .
 zoo:00415 a ref:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
-    s223:hasRef "<TwoWayActuatedProportionalValve V-4 at urn:zoo/sample_zoo_elephants/00405>" .
+    s223:hasRef "<TwoWayActuatedProportionalValve V-4 at urn:zoo/sample_zoo_elephants/00405>" ;
+    s223:node_type ref:ExternalReference .
 zoo:00416 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:connectsThrough zoo:00420 ;
@@ -4052,32 +3319,17 @@ zoo:00429 a s223:Connection ;
     s223:connectsTo zoo:00283,
         zoo:00299 ;
     s223:hasMedium s223:Medium-Water .
-<<<<<<< HEAD
 zoo:00430 a s223:Connection ;
     s223:connectsAt zoo:00231,
         zoo:00387 ;
     s223:connectsFrom zoo:00375 ;
     s223:connectsTo zoo:00229 ;
-    s223:hasMedium s223:Medium-Water .
+    s223:hasMedium s223:Medium-Water ;
+    s223:node_type s223:Connection .
 zoo:00431 a s223:Connection ;
     s223:connectsAt zoo:00242,
         zoo:00402 ;
     s223:connectsFrom zoo:00390 ;
     s223:connectsTo zoo:00240 ;
-    s223:hasMedium s223:Medium-Water .
-=======
-zoo:00267 a s223:Connection ;
-    s223:connectsAt zoo:00200,
-        zoo:00246 ;
-    s223:connectsFrom zoo:00242 ;
-    s223:connectsTo zoo:00198 ;
     s223:hasMedium s223:Medium-Water ;
     s223:node_type s223:Connection .
-zoo:00268 a s223:Connection ;
-    s223:connectsAt zoo:00206,
-        zoo:00251 ;
-    s223:connectsFrom zoo:00247 ;
-    s223:connectsTo zoo:00204 ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:node_type s223:Connection .
->>>>>>> origin/21-rename-enumerationkinds

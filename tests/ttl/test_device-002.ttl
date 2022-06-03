@@ -1,14 +1,9 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_device-002
 # imports: http://data.ashrae.org/standard223/1.0/model/all
-<<<<<<< HEAD
 @prefix ex30: <urn:ex/test_system-007/> .
-=======
-@prefix ex32: <urn:ex/test_system-007/> .
->>>>>>> origin/21-rename-enumerationkinds
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ref: <https://brickschema.org/schema/Brick/ref#> .
@@ -20,7 +15,6 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_device-002> ;
   rdfs:label "test_device-002" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-<<<<<<< HEAD
 ex30:00001 a s223:Boiler,
         s223:Connectable,
         s223:Device ;
@@ -29,37 +23,19 @@ ex30:00001 a s223:Boiler,
         ex30:00003 ;
     s223:hotWaterEntering ex30:00003 ;
     s223:hotWaterLeaving ex30:00002 ;
+    s223:node_type s223:Boiler ;
     rdfs:comment "Hot Water Boiler" .
 ex30:00002 a s223:ConnectionPoint,
-=======
-ex32:00001 a p223:Boiler,
-        s223:Connectable,
-        s223:Device ;
-    rdfs:label "HWB-1" ;
-    p223:hotWaterEntering ex32:00003 ;
-    p223:hotWaterLeaving ex32:00002 ;
-    s223:hasConnectionPoint ex32:00002,
-        ex32:00003 ;
-    s223:node_type p223:Boiler ;
-    rdfs:comment "Hot Water Boiler" .
-ex32:00002 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "HWB-1.hotWaterLeaving" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00001 .
 ex30:00003 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00001 .
-ex32:00003 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "HWB-1.hotWaterEntering" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00001 .
 ex30:00004 a s223:Boiler,
         s223:Connectable,
@@ -70,50 +46,25 @@ ex30:00004 a s223:Boiler,
         ex30:00006,
         ex30:00007 ;
     s223:hotWaterEntering ex30:00006 ;
-    s223:hotWaterLeaving ex30:00005 .
+    s223:hotWaterLeaving ex30:00005 ;
+    s223:node_type s223:Boiler .
 ex30:00005 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00001 .
-ex32:00004 a p223:Boiler,
-        s223:Connectable,
-        s223:Device ;
-    rdfs:label "Electrical Hot Water Boiler" ;
-    p223:electricalInlet ex32:00007 ;
-    p223:hotWaterEntering ex32:00006 ;
-    p223:hotWaterLeaving ex32:00005 ;
-    s223:hasConnectionPoint ex32:00005,
-        ex32:00006,
-        ex32:00007 ;
-    s223:node_type p223:Boiler .
-ex32:00005 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.hotWaterLeaving" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00004 .
 ex30:00006 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00004 .
-ex32:00006 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.hotWaterEntering" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00004 .
 ex30:00007 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00004 .
-ex32:00007 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00004 .
 ex30:00008 a s223:Boiler,
         s223:Connectable,
@@ -133,90 +84,43 @@ ex30:00008 a s223:Boiler,
     s223:hotWaterEntering ex30:00010 ;
     s223:hotWaterLeaving ex30:00009 ;
     s223:naturalGasInlet ex30:00012 ;
+    s223:node_type s223:Boiler ;
     rdfs:comment "Natural Gas Hot Water Boiler" .
 ex30:00009 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00004 .
-ex32:00008 a p223:Boiler,
-        s223:Connectable,
-        s223:Device ;
-    rdfs:label "HWB-2" ;
-    p223:combustionAirInlet ex32:00013 ;
-    p223:combustionAirOutlet ex32:00014 ;
-    p223:electricalInlet ex32:00011 ;
-    p223:hotWaterEntering ex32:00010 ;
-    p223:hotWaterLeaving ex32:00009 ;
-    p223:naturalGasInlet ex32:00012 ;
-    s223:hasConnectionPoint ex32:00009,
-        ex32:00010,
-        ex32:00011,
-        ex32:00012,
-        ex32:00013,
-        ex32:00014 ;
-    s223:node_type p223:Boiler ;
-    rdfs:comment "Natural Gas Hot Water Boiler" .
-ex32:00009 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "HWB-2.hotWaterLeaving" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00008 .
 ex30:00010 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00008 .
-ex32:00010 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "HWB-2.hotWaterEntering" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00008 .
 ex30:00011 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00008 .
-ex32:00011 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "HWB-2.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00008 .
 ex30:00012 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00008 .
-ex32:00012 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "HWB-2.naturalGasInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-NaturalGas ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00008 .
 ex30:00013 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00008 .
-ex32:00013 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "HWB-2.combustionAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00008 .
 ex30:00014 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00008 .
-ex32:00014 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "HWB-2.combustionAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00008 .
 ex30:00015 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -236,63 +140,31 @@ ex30:00016 a s223:Coil,
         ex30:00019,
         ex30:00020 ;
     s223:hotWaterInlet ex30:00019 ;
-    s223:hotWaterOutlet ex30:00020 .
-ex30:00017 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00008 .
-ex32:00015 a s223:Connectable,
-        s223:Device,
-        s223:HeatingCoil ;
-    rdfs:label "Hot Water Coil" ;
-    s223:airInlet ex32:00016 ;
-    s223:airOutlet ex32:00017 ;
-    s223:hasConnectionPoint ex32:00016,
-        ex32:00017,
-        ex32:00018,
-        ex32:00019 ;
-    s223:hotWaterInlet ex32:00018 ;
-    s223:hotWaterOutlet ex32:00019 ;
+    s223:hotWaterOutlet ex30:00020 ;
     s223:node_type s223:HeatingCoil .
-ex32:00016 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex30:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Hot Water Coil.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00016 .
 ex30:00018 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00015 .
-ex32:00017 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "Hot Water Coil.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00016 .
 ex30:00019 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00015 .
-ex32:00018 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "Hot Water Coil.hotWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00016 .
 ex30:00020 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00015 .
-ex32:00019 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "Hot Water Coil.hotWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00016 .
 ex30:00021 a s223:Coil,
         s223:Connectable,
@@ -306,63 +178,31 @@ ex30:00021 a s223:Coil,
     s223:hasConnectionPoint ex30:00022,
         ex30:00023,
         ex30:00024,
-        ex30:00025 .
-ex30:00022 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00015 .
-ex32:00020 a s223:Connectable,
-        s223:CoolingCoil,
-        s223:Device ;
-    rdfs:label "Chilled Water Coil" ;
-    s223:airInlet ex32:00021 ;
-    s223:airOutlet ex32:00022 ;
-    s223:chilledWaterInlet ex32:00023 ;
-    s223:chilledWaterOutlet ex32:00024 ;
-    s223:hasConnectionPoint ex32:00021,
-        ex32:00022,
-        ex32:00023,
-        ex32:00024 ;
+        ex30:00025 ;
     s223:node_type s223:CoolingCoil .
-ex32:00021 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex30:00022 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Chilled Water Coil.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00021 .
 ex30:00023 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00020 .
-ex32:00022 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "Chilled Water Coil.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00021 .
 ex30:00024 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00020 .
-ex32:00023 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "Chilled Water Coil.chilledWaterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00021 .
 ex30:00025 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00020 .
-ex32:00024 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "Chilled Water Coil.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00021 .
 ex30:00026 a s223:Coil,
         s223:Connectable,
@@ -373,49 +213,24 @@ ex30:00026 a s223:Coil,
     s223:airOutlet ex30:00028 ;
     s223:hasConnectionPoint ex30:00027,
         ex30:00028,
-        ex30:00029 .
-ex30:00027 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00020 .
-ex32:00025 a s223:Connectable,
-        s223:Device,
-        s223:HeatingCoil ;
-    rdfs:label "Electrical Heating Coil" ;
-    s223:airInlet ex32:00026 ;
-    s223:airOutlet ex32:00027 ;
-    s223:electricalInlet ex32:00028 ;
-    s223:hasConnectionPoint ex32:00026,
-        ex32:00027,
-        ex32:00028 ;
+        ex30:00029 ;
     s223:node_type s223:HeatingCoil .
-ex32:00026 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex30:00027 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00026 .
 ex30:00028 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00025 .
-ex32:00027 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:OutletConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-<<<<<<< HEAD
     s223:isConnectionPointOf ex30:00026 .
 ex30:00029 a s223:ConnectionPoint,
-=======
-    s223:isConnectionPointOf ex32:00025 .
-ex32:00028 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-<<<<<<< HEAD
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf ex30:00026 .
 ex30:00030 a p223:Amps,
         s223:ObservableProperty,
@@ -424,11 +239,13 @@ ex30:00030 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference ex30:00031 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 ex30:00031 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<ElectricalHeatingCoil Electrical Heating Coil at urn:ex/test_system-007/00026>" .
+    s223:hasRef "<ElectricalHeatingCoil Electrical Heating Coil at urn:ex/test_system-007/00026>" ;
+    s223:node_type ref:ExternalReference .
 ex30:00032 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -436,12 +253,10 @@ ex30:00032 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference ex30:00033 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 ex30:00033 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<ElectricalHeatingCoil Electrical Heating Coil at urn:ex/test_system-007/00026>" .
-=======
-    s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf ex32:00025 .
->>>>>>> origin/21-rename-enumerationkinds
+    s223:hasRef "<ElectricalHeatingCoil Electrical Heating Coil at urn:ex/test_system-007/00026>" ;
+    s223:node_type ref:ExternalReference .

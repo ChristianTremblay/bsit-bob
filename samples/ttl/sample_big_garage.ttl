@@ -20,13 +20,14 @@ ex:00001 a s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "My Building" ;
     s223:contains ex:00002 ;
-<<<<<<< HEAD
     s223:encloses ex:00003,
         ex:00011,
-        ex:00014 .
+        ex:00014 ;
+    s223:node_type rec:Building .
 ex:00002 a s223:PhysicalSpace,
         rec:Roof ;
-    rdfs:label "Roof of building" .
+    rdfs:label "Roof of building" ;
+    s223:node_type rec:Roof .
 ex:00003 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -40,113 +41,19 @@ ex:00003 a s223:Connectable,
     s223:ductAirInlet ex:00004 ;
     s223:ductAirOutlet ex:00005 ;
     s223:hasConnectionPoint ex:00004,
-=======
-    s223:encloses ex:00011,
-        ex:00019,
-        ex:00022 ;
-    s223:node_type rec:Building .
-ex:00002 a s223:PhysicalSpace,
-        rec:Roof ;
-    rdfs:label "Roof of building" ;
-    s223:node_type rec:Roof .
-ex:00003 a p223:PhysicSystem,
-        s223:System ;
-    rdfs:label "Indoor air of space" ;
-    p223:airTransfer ex:00006 ;
-    p223:doors ex:00007 ;
-    p223:ductAirInlet ex:00004 ;
-    p223:ductAirOutlet ex:00005 ;
-    p223:hasMedium s223:Medium-Air ;
-    p223:radiantCooling ex:00010 ;
-    p223:radiantHeating ex:00009 ;
-    p223:windows ex:00008 ;
-    s223:hasSystemConnectionPoint ex:00004,
->>>>>>> origin/21-rename-enumerationkinds
         ex:00005,
         ex:00006,
         ex:00007,
         ex:00008,
         ex:00009,
         ex:00010 ;
-<<<<<<< HEAD
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00010 ;
     s223:radiantHeating ex:00009 ;
     s223:windows ex:00008 .
 ex:00004 a s223:ConnectionPoint,
-=======
-    s223:node_type p223:PhysicSystem .
-ex:00004 a s223:InletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.ductAirInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00012 .
-ex:00005 a s223:OutletSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.ductAirOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00013 .
-ex:00006 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.airTransfer" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00014 .
-ex:00007 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.doors" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00015 .
-ex:00008 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.windows" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00016 .
-ex:00009 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.radiantHeating" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00017 .
-ex:00010 a s223:BidirectionalSystemConnectionPoint,
-        s223:SystemConnectionPoint ;
-    rdfs:label "Indoor air of space.radiantCooling" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00018 .
-ex:00011 a s223:Connectable,
-        s223:DomainSpace,
-        s223:HVACSpace ;
-    rdfs:label "My Big Garage" ;
-    s223:airTransfer ex:00014 ;
-    s223:connectedFrom ex:00037 ;
-    s223:connectedThrough ex:00041,
-        ex:00043 ;
-    s223:connectedTo ex:00033 ;
-    s223:doors ex:00015 ;
-    s223:ductAirInlet ex:00012 ;
-    s223:ductAirOutlet ex:00013 ;
-    s223:hasConnectionPoint ex:00012,
-        ex:00013,
-        ex:00014,
-        ex:00015,
-        ex:00016,
-        ex:00017,
-        ex:00018 ;
-    s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:indoorAir ex:00003 ;
-    s223:node_type s223:HVACSpace ;
-    s223:radiantCooling ex:00018 ;
-    s223:radiantHeating ex:00017 ;
-    s223:windows ex:00016 .
-ex:00012 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
         s223:InletConnectionPoint ;
     rdfs:label "My Big Garage.ductAirInlet" ;
     s223:connectsThrough ex:00051 ;
@@ -201,14 +108,9 @@ ex:00011 a p223:LightingSpace,
     s223:hasConnectionPoint ex:00012,
         ex:00013 ;
     s223:hasDomain s223:Domain-Lighting ;
-<<<<<<< HEAD
-    s223:hasMedium s223:Medium-Light .
-ex:00012 a s223:ConnectionPoint,
-=======
     s223:hasMedium s223:Medium-Light ;
     s223:node_type p223:LightingSpace .
-ex:00020 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Light Space #1 near entry.lightInlet" ;
     s223:connectsThrough ex:00056 ;
@@ -232,14 +134,9 @@ ex:00014 a p223:LightingSpace,
     s223:hasConnectionPoint ex:00015,
         ex:00016 ;
     s223:hasDomain s223:Domain-Lighting ;
-<<<<<<< HEAD
-    s223:hasMedium s223:Medium-Light .
-ex:00015 a s223:ConnectionPoint,
-=======
     s223:hasMedium s223:Medium-Light ;
     s223:node_type p223:LightingSpace .
-ex:00023 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Light Space #2 back of the garage.lightInlet" ;
     s223:connectsThrough ex:00057 ;
@@ -256,20 +153,12 @@ ex:00017 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Ballast #1, space #1" ;
-<<<<<<< HEAD
     s223:connectedThrough ex:00056 ;
     s223:connectedTo ex:00011 ;
     s223:hasConnectionPoint ex:00018 ;
-    s223:lightOutlet ex:00018 .
-ex:00018 a s223:ConnectionPoint,
-=======
-    s223:connectedThrough ex:00048 ;
-    s223:connectedTo ex:00019 ;
-    s223:hasConnectionPoint ex:00026 ;
-    s223:lightOutlet ex:00026 ;
+    s223:lightOutlet ex:00018 ;
     s223:node_type s223:Luminaire .
-ex:00026 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex:00018 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Ballast #1, space #1.lightOutlet" ;
     s223:connectsThrough ex:00056 ;
@@ -280,20 +169,12 @@ ex:00019 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Ballast #2, space #2" ;
-<<<<<<< HEAD
     s223:connectedThrough ex:00057 ;
     s223:connectedTo ex:00014 ;
     s223:hasConnectionPoint ex:00020 ;
-    s223:lightOutlet ex:00020 .
-ex:00020 a s223:ConnectionPoint,
-=======
-    s223:connectedThrough ex:00049 ;
-    s223:connectedTo ex:00022 ;
-    s223:hasConnectionPoint ex:00028 ;
-    s223:lightOutlet ex:00028 ;
+    s223:lightOutlet ex:00020 ;
     s223:node_type s223:Luminaire .
-ex:00028 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex:00020 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Ballast #2, space #2.lightOutlet" ;
     s223:connectsThrough ex:00057 ;
@@ -308,8 +189,8 @@ ex:00021 a p223:MovementSensor,
     s223:hasMeasurementLocation ex:00011 ;
     s223:hasPhysicalLocation ex:00001 ;
     s223:node_type p223:MovementSensor ;
-    s223:observesProperty ex:00030 .
-ex:00030 a s223:EnumerableProperty,
+    s223:observesProperty ex:00022 .
+ex:00022 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
@@ -324,8 +205,8 @@ ex:00023 a p223:MovementSensor,
     s223:hasMeasurementLocation ex:00014 ;
     s223:hasPhysicalLocation ex:00001 ;
     s223:node_type p223:MovementSensor ;
-    s223:observesProperty ex:00032 .
-ex:00032 a s223:EnumerableProperty,
+    s223:observesProperty ex:00024 .
+ex:00024 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
@@ -336,7 +217,6 @@ ex:00025 a s223:Connectable,
         s223:Device,
         s223:Fan ;
     rdfs:label "Fan" ;
-<<<<<<< HEAD
     s223:airInlet ex:00026 ;
     s223:airOutlet ex:00027 ;
     s223:connectedFrom ex:00003 ;
@@ -345,21 +225,9 @@ ex:00025 a s223:Connectable,
     s223:connectedTo ex:00041 ;
     s223:hasConnectionPoint ex:00026,
         ex:00027,
-        ex:00028 .
-ex:00026 a s223:ConnectionPoint,
-=======
-    s223:airInlet ex:00034 ;
-    s223:airOutlet ex:00035 ;
-    s223:connectedFrom ex:00011 ;
-    s223:connectedThrough ex:00041,
-        ex:00042 ;
-    s223:connectedTo ex:00037 ;
-    s223:hasConnectionPoint ex:00034,
-        ex:00035,
-        ex:00036 ;
+        ex:00028 ;
     s223:node_type s223:Fan .
-ex:00034 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Fan.airInlet" ;
     s223:connectsThrough ex:00049 ;
@@ -385,11 +253,13 @@ ex:00029 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
     s223:hasExternalReference ex:00030 ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PA .
+    s223:hasQuantityKind quantitykind:Pressure ;
+    s223:node_type p223:Pressure ;
+    s223:unit unit:PA .
 ex:00030 a ref:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
-    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" .
+    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" ;
+    s223:node_type ref:ExternalReference .
 ex:00031 a p223:Amps,
         s223:ObservableProperty,
         s223:Property,
@@ -397,11 +267,13 @@ ex:00031 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference ex:00032 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 ex:00032 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" .
+    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" ;
+    s223:node_type ref:ExternalReference .
 ex:00033 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
@@ -409,11 +281,13 @@ ex:00033 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference ex:00034 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
-    qudt:unit unit:REV-PER-MIN .
+    s223:hasQuantityKind quantitykind:AngularVolocity ;
+    s223:node_type p223:RPM ;
+    s223:unit unit:REV-PER-MIN .
 ex:00034 a ref:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" .
+    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" ;
+    s223:node_type ref:ExternalReference .
 ex:00035 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
@@ -421,11 +295,13 @@ ex:00035 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference ex:00036 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:HP ;
+    s223:unit unit:HP .
 ex:00036 a ref:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" .
+    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" ;
+    s223:node_type ref:ExternalReference .
 ex:00037 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -433,11 +309,13 @@ ex:00037 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference ex:00038 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 ex:00038 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" .
+    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" ;
+    s223:node_type ref:ExternalReference .
 ex:00039 a p223:PowerFactor,
         s223:ObservableProperty,
         s223:Property,
@@ -445,17 +323,18 @@ ex:00039 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference ex:00040 ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    s223:hasQuantityKind quantitykind:PowerFactor ;
+    s223:node_type p223:PowerFactor ;
+    s223:unit unit:UNITLESS .
 ex:00040 a ref:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" .
+    s223:hasRef "<Fan Fan at urn:ex/sample_big_garage/00025>" ;
+    s223:node_type ref:ExternalReference .
 ex:00041 a s223:Coil,
         s223:Connectable,
         s223:Device,
         s223:HeatingCoil ;
     rdfs:label "Heating Coil" ;
-<<<<<<< HEAD
     s223:airInlet ex:00042 ;
     s223:airOutlet ex:00043 ;
     s223:connectedFrom ex:00025 ;
@@ -464,22 +343,9 @@ ex:00041 a s223:Coil,
     s223:connectedTo ex:00003 ;
     s223:hasConnectionPoint ex:00042,
         ex:00043,
-        ex:00044 .
-ex:00042 a s223:ConnectionPoint,
-=======
-    s223:airInlet ex:00038 ;
-    s223:airOutlet ex:00039 ;
-    s223:connectedFrom ex:00033 ;
-    s223:connectedThrough ex:00042,
-        ex:00043 ;
-    s223:connectedTo ex:00011 ;
-    s223:electricalInlet ex:00040 ;
-    s223:hasConnectionPoint ex:00038,
-        ex:00039,
-        ex:00040 ;
+        ex:00044 ;
     s223:node_type s223:HeatingCoil .
-ex:00038 a s223:ConnectionPoint,
->>>>>>> origin/21-rename-enumerationkinds
+ex:00042 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Heating Coil.airInlet" ;
     s223:connectsThrough ex:00050 ;
@@ -496,8 +362,7 @@ ex:00043 a s223:ConnectionPoint,
 ex:00044 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-<<<<<<< HEAD
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
     s223:isConnectionPointOf ex:00041 .
 ex:00045 a p223:Amps,
         s223:ObservableProperty,
@@ -506,11 +371,13 @@ ex:00045 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference ex:00046 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    s223:hasQuantityKind quantitykind:ElectricCurrent ;
+    s223:node_type p223:Amps ;
+    s223:unit unit:A .
 ex:00046 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<ElectricalHeatingCoil Heating Coil at urn:ex/sample_big_garage/00041>" .
+    s223:hasRef "<ElectricalHeatingCoil Heating Coil at urn:ex/sample_big_garage/00041>" ;
+    s223:node_type ref:ExternalReference .
 ex:00047 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -518,56 +385,35 @@ ex:00047 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference ex:00048 ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:KiloW .
+    s223:hasQuantityKind quantitykind:Power ;
+    s223:node_type p223:ElectricPowerkW ;
+    s223:unit unit:KiloW .
 ex:00048 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<ElectricalHeatingCoil Heating Coil at urn:ex/sample_big_garage/00041>" .
+    s223:hasRef "<ElectricalHeatingCoil Heating Coil at urn:ex/sample_big_garage/00041>" ;
+    s223:node_type ref:ExternalReference .
 ex:00049 a s223:Connection ;
     s223:connectsAt ex:00005,
         ex:00026 ;
     s223:connectsFrom ex:00003 ;
     s223:connectsTo ex:00025 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 ex:00050 a s223:Connection ;
     s223:connectsAt ex:00027,
         ex:00042 ;
     s223:connectsFrom ex:00025 ;
     s223:connectsTo ex:00041 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 ex:00051 a s223:Connection ;
     s223:connectsAt ex:00004,
         ex:00043 ;
     s223:connectsFrom ex:00041 ;
     s223:connectsTo ex:00003 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium s223:Medium-Air ;
+    s223:node_type s223:Connection .
 ex:00052 a p223:AirTemperatureSensor,
-=======
-    s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf ex:00037 .
-ex:00041 a s223:Connection ;
-    s223:connectsAt ex:00013,
-        ex:00034 ;
-    s223:connectsFrom ex:00011 ;
-    s223:connectsTo ex:00033 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-ex:00042 a s223:Connection ;
-    s223:connectsAt ex:00035,
-        ex:00038 ;
-    s223:connectsFrom ex:00033 ;
-    s223:connectsTo ex:00037 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-ex:00043 a s223:Connection ;
-    s223:connectsAt ex:00012,
-        ex:00039 ;
-    s223:connectsFrom ex:00037 ;
-    s223:connectsTo ex:00011 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
-ex:00044 a p223:AirTemperatureSensor,
->>>>>>> origin/21-rename-enumerationkinds
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
@@ -575,14 +421,9 @@ ex:00044 a p223:AirTemperatureSensor,
     rdfs:label "Discharge Air temperature sensor" ;
     s223:hasMeasurementLocation ex:00043 ;
     s223:hasPhysicalLocation ex:00001 ;
-<<<<<<< HEAD
+    s223:node_type p223:AirTemperatureSensor ;
     s223:observesProperty ex:00053 .
 ex:00053 a p223:Temperature,
-=======
-    s223:node_type p223:AirTemperatureSensor ;
-    s223:observesProperty ex:00045 .
-ex:00045 a p223:Temperature,
->>>>>>> origin/21-rename-enumerationkinds
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -591,14 +432,8 @@ ex:00045 a p223:Temperature,
     s223:hasQuantityKind quantitykind:Temperature ;
     s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
-ex:00054 a p223:AirTemperatureSensor,
-=======
     s223:unit unit:DEG_C .
-ex:00046 a p223:AirTemperatureSensor,
->>>>>>> origin/21-rename-enumerationkinds
+ex:00054 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
         s223:Device,
@@ -606,14 +441,9 @@ ex:00046 a p223:AirTemperatureSensor,
     rdfs:label "Zone Air temperature sensor" ;
     s223:hasMeasurementLocation ex:00003 ;
     s223:hasPhysicalLocation ex:00001 ;
-<<<<<<< HEAD
+    s223:node_type p223:AirTemperatureSensor ;
     s223:observesProperty ex:00055 .
 ex:00055 a p223:Temperature,
-=======
-    s223:node_type p223:AirTemperatureSensor ;
-    s223:observesProperty ex:00047 .
-ex:00047 a p223:Temperature,
->>>>>>> origin/21-rename-enumerationkinds
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -622,35 +452,18 @@ ex:00047 a p223:Temperature,
     s223:hasQuantityKind quantitykind:Temperature ;
     s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-<<<<<<< HEAD
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
+    s223:unit unit:DEG_C .
 ex:00056 a s223:Connection ;
     s223:connectsAt ex:00012,
         ex:00018 ;
     s223:connectsFrom ex:00017 ;
     s223:connectsTo ex:00011 ;
-    s223:hasMedium s223:Light-Visible .
+    s223:hasMedium s223:Light-Visible ;
+    s223:node_type s223:Connection .
 ex:00057 a s223:Connection ;
     s223:connectsAt ex:00015,
         ex:00020 ;
     s223:connectsFrom ex:00019 ;
     s223:connectsTo ex:00014 ;
-    s223:hasMedium s223:Light-Visible .
-=======
-    s223:unit unit:DEG_C .
-ex:00048 a s223:Connection ;
-    s223:connectsAt ex:00020,
-        ex:00026 ;
-    s223:connectsFrom ex:00025 ;
-    s223:connectsTo ex:00019 ;
     s223:hasMedium s223:Light-Visible ;
     s223:node_type s223:Connection .
-ex:00049 a s223:Connection ;
-    s223:connectsAt ex:00023,
-        ex:00028 ;
-    s223:connectsFrom ex:00027 ;
-    s223:connectsTo ex:00022 ;
-    s223:hasMedium s223:Light-Visible ;
-    s223:node_type s223:Connection .
->>>>>>> origin/21-rename-enumerationkinds
