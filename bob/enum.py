@@ -8,6 +8,8 @@ from .core import (
     s223,
     OnOffEnum,
     PositionStatusEnum,
+    NormalAlarmEnum,
+    OpenCloseEnum,
 )
 
 _namespace = s223
@@ -44,6 +46,14 @@ OccupancyStatus_Bypass = OccupancyEnum("Bypass")
 #
 Yes = YesNoEnum("Yes")
 No = YesNoEnum("No")
+
+#
+Normal = NormalAlarmEnum("Normal")
+Alarm = NormalAlarmEnum("Alarm")
+
+#
+Open = OpenCloseEnum("Open")
+Close = OpenCloseEnum("Close")
 
 """
 s223:EnumerationKind-Direction

@@ -3001,6 +3001,8 @@ Role = EnumerationKind("Role")
 OnOffEnum = EnumerationKind("OnOffEnum")
 PositionStatusEnum = EnumerationKind("PositionStatusEnum")
 YesNoEnum = EnumerationKind("YesNoEnum")
+NormalAlarmEnum = EnumerationKind("NormalAlarmEnum")
+OpenCloseEnum = EnumerationKind("OpenCloseEnum")
 
 # This one is weird...but to create an occupancy space, zone we
 # need a medium.
