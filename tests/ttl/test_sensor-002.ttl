@@ -33,7 +33,6 @@ ex30:00001 a s223:Connectable,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:isEnclosedIn ex30:00018 ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex30:00008 ;
     s223:radiantHeating ex30:00007 ;
     s223:windows ex30:00006 .
@@ -97,7 +96,6 @@ ex30:00009 a s223:Connectable,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:isEnclosedIn ex30:00019 ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex30:00016 ;
     s223:radiantHeating ex30:00015 ;
     s223:windows ex30:00014 .
@@ -148,26 +146,22 @@ ex30:00017 a s223:PhysicalSpace,
     rdfs:label "Clients's place" ;
     s223:contains ex30:00018,
         ex30:00019,
-        ex30:00020 ;
-    s223:node_type rec:Building .
+        ex30:00020 .
 ex30:00018 a s223:PhysicalSpace,
         rec:Room ;
     rdfs:label "Clean Room #1" ;
     s223:encloses ex30:00001 ;
-    s223:isContainedIn ex30:00017 ;
-    s223:node_type rec:Room .
+    s223:isContainedIn ex30:00017 .
 ex30:00019 a s223:PhysicalSpace,
         rec:Room ;
     rdfs:label "SAS leading to Clean Room #1" ;
     s223:encloses ex30:00009 ;
-    s223:isContainedIn ex30:00017 ;
-    s223:node_type rec:Room .
+    s223:isContainedIn ex30:00017 .
 ex30:00020 a s223:PhysicalSpace,
         rec:MechanicalRoom,
         rec:Room ;
     rdfs:label "Mechanical room for Clean Room #1" ;
-    s223:isContainedIn ex30:00017 ;
-    s223:node_type rec:MechanicalRoom .
+    s223:isContainedIn ex30:00017 .
 ex30:00021 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
         s223:Connectable,
@@ -177,7 +171,6 @@ ex30:00021 a p223:AirDifferentialStaticPressureSensor,
     p223:hasMeasurementLocationHigh ex30:00001 ;
     p223:hasMeasurementLocationLow ex30:00009 ;
     s223:hasPhysicalLocation ex30:00020 ;
-    s223:node_type p223:AirDifferentialStaticPressureSensor ;
     s223:observesProperty ex30:00022 ;
     rdfs:comment "Static Pressure between Clean Room (+) and SAS (-)" .
 ex30:00022 a p223:DifferentialStaticPressure,
@@ -188,9 +181,7 @@ ex30:00022 a p223:DifferentialStaticPressure,
     rdfs:label "TPD-01.DifferentialStaticPressure" ;
     s223:hasExternalReference ex30:00023 ;
     s223:hasQuantityKind quantitykind:ForcePerArea ;
-    s223:node_type p223:DifferentialStaticPressure ;
     s223:ofMedium s223:Medium-Air .
 ex30:00023 a ref:ExternalReference ;
     rdfs:label "TPD-01.DifferentialStaticPressure.ExternalReference" ;
-    s223:hasRef "bacnet://570005/analog-input,10084/present-value" ;
-    s223:node_type ref:ExternalReference .
+    s223:hasRef "bacnet://570005/analog-input,10084/present-value" .

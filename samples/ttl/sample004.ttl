@@ -20,8 +20,7 @@ ex:00001 a s223:HVACZone,
     s223:contains ex:00004 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasZoneConnectionPoint ex:00002,
-        ex:00003 ;
-    s223:node_type s223:HVACZone .
+        ex:00003 .
 ex:00002 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone.airInlet" ;
@@ -53,7 +52,6 @@ ex:00004 a s223:Connectable,
         ex:00011 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00011 ;
     s223:radiantHeating ex:00010 ;
     s223:windows ex:00009 .
@@ -108,7 +106,6 @@ ex:00012 a p223:VAV,
     s223:contains ex:00015 ;
     s223:hasSystemConnectionPoint ex:00013,
         ex:00014 ;
-    s223:node_type p223:VAV ;
     rdfs:comment "A VAV Box as a system" .
 ex:00013 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
@@ -131,8 +128,7 @@ ex:00015 a s223:Connectable,
     s223:connectedThrough ex:00018 ;
     s223:connectedTo ex:00004 ;
     s223:hasConnectionPoint ex:00016,
-        ex:00017 ;
-    s223:node_type s223:Damper .
+        ex:00017 .
 ex:00016 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "VAV1.damper.airInlet" ;
@@ -151,5 +147,4 @@ ex:00018 a s223:Connection ;
         ex:00017 ;
     s223:connectsFrom ex:00015 ;
     s223:connectsTo ex:00004 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:hasMedium s223:Medium-Air .

@@ -17,55 +17,47 @@ ex30:00001 a s223:PhysicalSpace,
     rdfs:label "My Building" ;
     s223:contains ex30:00002,
         ex30:00003,
-        ex30:00004 ;
-    s223:node_type rec:Building .
+        ex30:00004 .
 ex30:00002 a s223:PhysicalSpace,
         rec:Roof ;
     rdfs:label "Roof of building" ;
-    s223:isContainedIn ex30:00001 ;
-    s223:node_type rec:Roof .
+    s223:isContainedIn ex30:00001 .
 ex30:00003 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Floor1" ;
     s223:contains ex30:00005,
         ex30:00006,
         ex30:00007 ;
-    s223:isContainedIn ex30:00001 ;
-    s223:node_type rec:Floor .
+    s223:isContainedIn ex30:00001 .
 ex30:00004 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Basement" ;
     s223:contains ex30:00008 ;
     s223:encloses ex30:00033 ;
-    s223:isContainedIn ex30:00001 ;
-    s223:node_type rec:Floor .
+    s223:isContainedIn ex30:00001 .
 ex30:00005 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 1" ;
     s223:encloses ex30:00009 ;
-    s223:isContainedIn ex30:00003 ;
-    s223:node_type rec:Office .
+    s223:isContainedIn ex30:00003 .
 ex30:00006 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 2" ;
     s223:encloses ex30:00017 ;
-    s223:isContainedIn ex30:00003 ;
-    s223:node_type rec:Office .
+    s223:isContainedIn ex30:00003 .
 ex30:00007 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 3" ;
     s223:encloses ex30:00025 ;
-    s223:isContainedIn ex30:00003 ;
-    s223:node_type rec:Office .
+    s223:isContainedIn ex30:00003 .
 ex30:00008 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Joel's Office" ;
-    s223:isContainedIn ex30:00004 ;
-    s223:node_type rec:Office .
+    s223:isContainedIn ex30:00004 .
 ex30:00009 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -85,7 +77,6 @@ ex30:00009 a s223:Connectable,
     s223:hasMedium s223:Medium-Air ;
     s223:isContainedIn ex30:00041 ;
     s223:isEnclosedIn ex30:00005 ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex30:00016 ;
     s223:radiantHeating ex30:00015 ;
     s223:windows ex30:00014 .
@@ -150,7 +141,6 @@ ex30:00017 a s223:Connectable,
     s223:hasMedium s223:Medium-Air ;
     s223:isContainedIn ex30:00041 ;
     s223:isEnclosedIn ex30:00006 ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex30:00024 ;
     s223:radiantHeating ex30:00023 ;
     s223:windows ex30:00022 .
@@ -214,7 +204,6 @@ ex30:00025 a s223:Connectable,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:isEnclosedIn ex30:00007 ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex30:00032 ;
     s223:radiantHeating ex30:00031 ;
     s223:windows ex30:00030 .
@@ -278,7 +267,6 @@ ex30:00033 a s223:Connectable,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:isEnclosedIn ex30:00004 ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex30:00040 ;
     s223:radiantHeating ex30:00039 ;
     s223:windows ex30:00038 .
@@ -333,8 +321,7 @@ ex30:00041 a s223:HVACZone,
         ex30:00017 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasZoneConnectionPoint ex30:00042,
-        ex30:00043 ;
-    s223:node_type s223:HVACZone .
+        ex30:00043 .
 ex30:00042 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone1.airInlet" ;

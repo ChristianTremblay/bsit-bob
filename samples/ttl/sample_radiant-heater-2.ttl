@@ -21,49 +21,41 @@ ex:00001 a s223:PhysicalSpace,
     rdfs:label "My Building" ;
     s223:contains ex:00002,
         ex:00003,
-        ex:00004 ;
-    s223:node_type rec:Building .
+        ex:00004 .
 ex:00002 a s223:PhysicalSpace,
         rec:Roof ;
-    rdfs:label "Roof of building" ;
-    s223:node_type rec:Roof .
+    rdfs:label "Roof of building" .
 ex:00003 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Floor1" ;
     s223:contains ex:00005,
         ex:00006,
-        ex:00007 ;
-    s223:node_type rec:Floor .
+        ex:00007 .
 ex:00004 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Basement" ;
     s223:contains ex:00008 ;
-    s223:encloses ex:00033 ;
-    s223:node_type rec:Floor .
+    s223:encloses ex:00033 .
 ex:00005 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 1" ;
-    s223:encloses ex:00009 ;
-    s223:node_type rec:Office .
+    s223:encloses ex:00009 .
 ex:00006 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 2" ;
-    s223:encloses ex:00017 ;
-    s223:node_type rec:Office .
+    s223:encloses ex:00017 .
 ex:00007 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 3" ;
-    s223:encloses ex:00025 ;
-    s223:node_type rec:Office .
+    s223:encloses ex:00025 .
 ex:00008 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Joel's Office" ;
-    s223:encloses ex:00041 ;
-    s223:node_type rec:Office .
+    s223:encloses ex:00041 .
 ex:00009 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -81,7 +73,6 @@ ex:00009 a s223:Connectable,
         ex:00016 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00016 ;
     s223:radiantHeating ex:00015 ;
     s223:windows ex:00014 .
@@ -144,7 +135,6 @@ ex:00017 a s223:Connectable,
         ex:00024 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00024 ;
     s223:radiantHeating ex:00023 ;
     s223:windows ex:00022 .
@@ -207,7 +197,6 @@ ex:00025 a s223:Connectable,
         ex:00032 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00032 ;
     s223:radiantHeating ex:00031 ;
     s223:windows ex:00030 .
@@ -270,7 +259,6 @@ ex:00033 a s223:Connectable,
         ex:00040 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00040 ;
     s223:radiantHeating ex:00039 ;
     s223:windows ex:00038 .
@@ -339,7 +327,6 @@ ex:00041 a s223:Connectable,
         ex:00061 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00048 ;
     s223:radiantHeating ex:00047 ;
     s223:windows ex:00046 .
@@ -394,8 +381,7 @@ ex:00049 a s223:HVACZone,
         ex:00017 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasZoneConnectionPoint ex:00050,
-        ex:00051 ;
-    s223:node_type s223:HVACZone .
+        ex:00051 .
 ex:00050 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Zone1.airInlet" ;
@@ -419,8 +405,7 @@ ex:00052 a s223:Coil,
     s223:connectedTo ex:00041 ;
     s223:hasConnectionPoint ex:00053,
         ex:00054,
-        ex:00055 ;
-    s223:node_type s223:HeatingCoil .
+        ex:00055 .
 ex:00053 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Baseboard heater.airInlet" ;
@@ -448,12 +433,10 @@ ex:00056 a p223:Amps,
     rdfs:label "amps" ;
     s223:hasExternalReference ex:00057 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
-    s223:node_type p223:Amps ;
     s223:unit unit:A .
 ex:00057 a ref:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<ElectricalHeatingCoil Baseboard heater at urn:ex/sample_radiant-heater-2/00052>" ;
-    s223:node_type ref:ExternalReference .
+    s223:hasRef "<ElectricalHeatingCoil Baseboard heater at urn:ex/sample_radiant-heater-2/00052>" .
 ex:00058 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
@@ -462,12 +445,10 @@ ex:00058 a p223:ElectricPowerkW,
     rdfs:label "kW" ;
     s223:hasExternalReference ex:00059 ;
     s223:hasQuantityKind quantitykind:Power ;
-    s223:node_type p223:ElectricPowerkW ;
     s223:unit unit:KiloW .
 ex:00059 a ref:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<ElectricalHeatingCoil Baseboard heater at urn:ex/sample_radiant-heater-2/00052>" ;
-    s223:node_type ref:ExternalReference .
+    s223:hasRef "<ElectricalHeatingCoil Baseboard heater at urn:ex/sample_radiant-heater-2/00052>" .
 ex:00060 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Internal Use To be treated" ;
@@ -489,12 +470,10 @@ ex:00062 a s223:Connection ;
         ex:00061 ;
     s223:connectsFrom ex:00052 ;
     s223:connectsTo ex:00041 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:hasMedium s223:Medium-Air .
 ex:00063 a s223:Connection ;
     s223:connectsAt ex:00053,
         ex:00060 ;
     s223:connectsFrom ex:00041 ;
     s223:connectsTo ex:00052 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:hasMedium s223:Medium-Air .
