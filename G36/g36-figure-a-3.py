@@ -50,6 +50,7 @@ from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.gas import GasMonitor
 from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
+from bob.functions import FunctionBlock
 from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
 from bob.functions.occupancy import OccupancyControl
 from bob.properties import Flow, PercentCommand, Temperature, temperature
@@ -244,19 +245,19 @@ occupancy.produces_output(occupancy.hasOccupancyStatus)
 occupancy.produces_output(hvac_space.occupancy)
 
 
-class G36_FigA3(G36Sequence):
-    zoneSetpointAdj: AnalogIn
-    LocalOverride: BinaryIn
-    zoneTemp: AnalogIn
-    zoneCO2: AnalogIn
-    zonewindowSwitch: BinaryIn
-    zoneOccupancySensor: BinaryIn
-
-
 # TODO : Complete
 sequence = "Lorem ipsum of sequence"
 
-g36fig_a_3 = G36_FigA3(label="G36_FIG_A_3", comment=sequence)
+# g36fig_a_3 = G36_FigA3(label="G36_FIG_A_3", comment=sequence)
+# g36fig_a_2 = G36_FigA2(label="G36_FIG_A_2", comment=sequence)
+g36fig_a_3 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
+# zoneSetpointAdj = AnalogIn(label='Zone Setpoint Adjust', function_block=g36fig_a_3)
+# LocalOverride = BinaryIn(label='Local Override', function_block=g36fig_a_3)
+# zoneTemp = AnalogIn(label='Zone Temp', function_block=g36fig_a_3)
+# zoneCO2 = AnalogIn(label='Zone CO2', function_block=g36fig_a_3)
+# zonewindowSwitch = BinaryIn(label='Zone Window Switch', function_block=g36fig_a_3)
+# zoneOccupancySensor = BinaryIn(label='Zone Occupancy Sensor', function_block=g36fig_a_3)
+
 g36fig_a_3.uses_input(vav.airFlow, AnalogIn, "supplyAirFlow")
 g36fig_a_3.uses_input(
     hvac_zone.temperature_setpoint, AnalogIn, "zoneTemperatureSetpoint"
