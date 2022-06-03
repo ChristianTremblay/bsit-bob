@@ -123,6 +123,7 @@ hd.bathroom_exhaust_fan.airOutlet >> outdoor
 # VAV Boxes
 # Relationships between devices and positioning sensors
 supplyAir >> hd.vav1["VAV1_damper"].airInlet
+hd.vav1.hasPhysicalLocation = ps.private_office
 hd.vav1["VAV1_damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
 hd.vav1["VAV1_HeatingCoil"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
 hd.vav1["VAV1_SA-F"].hasMeasurementLocation = hd.vav1["VAV1_damper"].airInlet
@@ -132,6 +133,7 @@ hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
 
 
 supplyAir >> hd.vav2["VAV2_damper"].airInlet
+hd.vav2.hasPhysicalLocation = ps.kitchenette
 hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
 hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
 hd.vav2["VAV2_SA-F"].hasMeasurementLocation = hd.vav2["VAV2_damper"].airInlet
