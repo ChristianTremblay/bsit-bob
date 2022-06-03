@@ -9,7 +9,7 @@ from __future__ import annotations
 import inspect
 import logging
 
-from typing import Any, Dict
+from typing import Any, Dict, AnyStr
 
 from rdflib import URIRef  # type: ignore
 
@@ -18,6 +18,7 @@ from ..core import (
     Node,
     Property,
     s223,
+    data_graph,
 )
 from ..multimethods import multimethod
 
