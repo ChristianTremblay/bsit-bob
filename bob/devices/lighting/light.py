@@ -18,7 +18,7 @@ _namespace = s223
 
 
 class Luminaire(Device):
-    node_type: URIRef = s223.Luminaire
+    _class_iri: URIRef = s223.Luminaire
     lightOutlet: LightVisibleOutletConnectionPoint
     brightness: RelativeLuminousFlux
     brightnessRatio: PercentCommand

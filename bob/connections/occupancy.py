@@ -25,51 +25,51 @@ _namespace = s223
 
 class OccupancyConnection(Connection):
     hasMedium: Medium = People
-    node_type = None
+    _class_iri = None
 
 
 class OccupancyConnectionPoint(ConnectionPoint):
     hasMedium: Medium = People
-    node_type = None
+    _class_iri = None
 
 
 class OccupancyInletConnectionPoint(OccupancyConnectionPoint, InletConnectionPoint):
-    node_type = None
+    _class_iri = None
 
 
 class OccupancyOutletConnectionPoint(OccupancyConnectionPoint, OutletConnectionPoint):
-    node_type = None
+    _class_iri = None
 
 
 class OccupancySystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = People
-    node_type = None
+    _class_iri = None
 
 
 class OccupancyInletSystemConnectionPoint(
     OccupancySystemConnectionPoint, InletSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri = None
 
 
 class OccupancyOutletSystemConnectionPoint(
     OccupancySystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri = None
 
 
 class OccupancyZoneConnectionPoint(ZoneConnectionPoint):
     hasMedium: Medium = People
-    node_type = None
+    _class_iri = None
 
 
 class OccupancyInletZoneConnectionPoint(
     OccupancyZoneConnectionPoint, InletZoneConnectionPoint
 ):
-    node_type = None
+    _class_iri = None
 
 
 class OccupancyOutletZoneConnectionPoint(
     OccupancyZoneConnectionPoint, OutletZoneConnectionPoint
 ):
-    node_type = None
+    _class_iri = None

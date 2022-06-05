@@ -18,7 +18,7 @@ class CurrentSwitch(Device):
 
     """
 
-    node_type = s223.CurrentSwitch
+    _class_iri = s223.CurrentSwitch
     hasStatusOutlet: OnOffSignalOutletConnectionPoint
     hasOnOffStatus: OnOffStatus
 

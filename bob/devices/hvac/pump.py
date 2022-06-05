@@ -19,7 +19,7 @@ fan_template = {
 
 
 class Pump(Device):
-    node_type: URIRef = s223.Fan
+    _class_iri: URIRef = s223.Fan
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
     # electricalInlet: ElectricalInletConnectionPoint  # can come from a VFD

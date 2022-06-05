@@ -12,6 +12,6 @@ _namespace = p223
 
 
 class AirCompressor(Device):
-    node_type: URIRef = p223.AirCompressor
+    _class_iri: URIRef = p223.AirCompressor
     compressedAirOutlet: CompressedAirOutletConnectionPoint
     electricalInlet: ElectricalInletConnectionPoint

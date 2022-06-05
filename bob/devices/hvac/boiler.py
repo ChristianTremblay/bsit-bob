@@ -14,18 +14,18 @@ _namespace = p223
 
 
 class HotWaterBoiler(Device):
-    node_type = p223.Boiler
+    _class_iri = p223.Boiler
     hotWaterLeaving: HotWaterInletConnectionPoint
     hotWaterEntering: HotWaterOutletConnectionPoint
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):
-    node_type = p223.Boiler
+    _class_iri = p223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
 
 
 class NaturalGasHotWaterBoiler(HotWaterBoiler):
-    node_type = p223.Boiler
+    _class_iri = p223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
     naturalGasInlet: NaturalGasInletConnectionPoint
     combustionAirInlet: AirInletConnectionPoint

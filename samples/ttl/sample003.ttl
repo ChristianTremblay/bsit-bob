@@ -30,8 +30,7 @@ ex:00002 a s223:Connectable,
     s223:hasConnectionPoint ex:00003,
         ex:00004,
         ex:00005,
-        ex:00006 ;
-    s223:node_type s223:CoolingCoil .
+        ex:00006 .
 ex:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
@@ -68,8 +67,7 @@ ex:00007 a s223:Connectable,
     s223:connectedTo ex:00002 ;
     s223:hasConnectionPoint ex:00008,
         ex:00009,
-        ex:00010 ;
-    s223:node_type s223:Fan .
+        ex:00010 .
 ex:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "F.airInlet" ;
@@ -93,16 +91,13 @@ ex:00011 a s223:Connection ;
     s223:connectsAt ex:00003,
         ex:00009 ;
     s223:connectsFrom ex:00007 ;
-    s223:connectsTo ex:00002 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:connectsTo ex:00002 .
 ex:00012 a s223:Zone,
         ex:HVACZone ;
     rdfs:label "Zone-1" ;
     s223:contains ex:00022 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasZoneConnectionPoint ex:00013 ;
-    s223:node_type ex:HVACZone ;
     ex:supplyAir ex:00013 .
 ex:00013 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
@@ -127,8 +122,7 @@ ex:00014 a p223:PhysicSystem,
         ex:00018,
         ex:00019,
         ex:00020,
-        ex:00021 ;
-    s223:node_type p223:PhysicSystem .
+        ex:00021 .
 ex:00015 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Indoor air of space.ductAirInlet" ;
@@ -190,7 +184,6 @@ ex:00022 a s223:Connectable,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00014 ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00029 ;
     s223:radiantHeating ex:00028 ;
     s223:windows ex:00027 .

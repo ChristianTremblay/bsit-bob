@@ -23,7 +23,7 @@ _namespace = p223
 
 
 class Chiller(Device):
-    node_type = p223.Chiller
+    _class_iri = p223.Chiller
     # refrigerant
     # manufacturer
     waterResetInlet: ModulationSignalInletConnectionPoint
@@ -55,7 +55,7 @@ class Chiller(Device):
 
 
 class AgnosticChiller(Device):
-    node_type = p223.Chiller
+    _class_iri = p223.Chiller
     chilledWaterLeaving: WaterOutletConnectionPoint
     chilledWaterEntering: WaterInletConnectionPoint
     condensedWaterLeaving: WaterOutletConnectionPoint

@@ -18,20 +18,20 @@ _namespace = s223
 
 class NaturalGasConnection(Connection):
     hasMedium: Medium = NaturalGas
-    node_type = None
+    _class_iri = None
 
 
 class NaturalGasConnectionPoint(ConnectionPoint):
     hasMedium: Medium = NaturalGas
-    node_type = None
+    _class_iri = None
 
 
 class NaturalGasInletConnectionPoint(InletConnectionPoint, NaturalGasConnectionPoint):
-    node_type = None
+    _class_iri = None
 
 
 class NaturalGasOutletConnectionPoint(OutletConnectionPoint, NaturalGasConnectionPoint):
-    node_type = None
+    _class_iri = None
 
 
 class NaturalGasSystemConnectionPoint(SystemConnectionPoint):
@@ -41,10 +41,10 @@ class NaturalGasSystemConnectionPoint(SystemConnectionPoint):
 class NaturalGasInletSystemConnectionPoint(
     InletConnectionPoint, NaturalGasSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri = None
 
 
 class NaturalGasOutletSystemConnectionPoint(
     OutletConnectionPoint, NaturalGasSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri = None

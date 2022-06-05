@@ -38,7 +38,6 @@ ex:00001 a p223:AirHandlingUnit,
         ex:00035,
         ex:00036,
         ex:00037 ;
-    s223:node_type p223:AirHandlingUnit ;
     rdfs:comment "Rooftop Unit" .
 ex:00002 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -48,7 +47,6 @@ ex:00002 a p223:AirTemperatureSensor,
     rdfs:label "DA-T" ;
     s223:hasMeasurementLocation ex:00041 ;
     s223:hasPhysicalLocation ex:00044 ;
-    s223:node_type p223:AirTemperatureSensor ;
     s223:observesProperty ex:00003 ;
     rdfs:comment "Supply Air Temperature sensor" .
 ex:00003 a p223:Temperature,
@@ -58,7 +56,6 @@ ex:00003 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "DA-T.Temperature" ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
     s223:unit unit:DEG_C .
 ex:00004 a p223:AirTemperatureSensor,
@@ -69,7 +66,6 @@ ex:00004 a p223:AirTemperatureSensor,
     rdfs:label "RA-T" ;
     s223:hasMeasurementLocation ex:00014 ;
     s223:hasPhysicalLocation ex:00043 ;
-    s223:node_type p223:AirTemperatureSensor ;
     s223:observesProperty ex:00005 ;
     rdfs:comment "Return Air Temperature sensor" .
 ex:00005 a p223:Temperature,
@@ -79,7 +75,6 @@ ex:00005 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "RA-T.Temperature" ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
     s223:unit unit:DEG_C .
 ex:00006 a p223:AirTemperatureSensor,
@@ -90,7 +85,6 @@ ex:00006 a p223:AirTemperatureSensor,
     rdfs:label "ZN-T" ;
     s223:hasMeasurementLocation ex:00056 ;
     s223:hasPhysicalLocation ex:00045 ;
-    s223:node_type p223:AirTemperatureSensor ;
     s223:observesProperty ex:00007 ;
     rdfs:comment "Zone Air Temperature sensor" .
 ex:00007 a p223:Temperature,
@@ -100,7 +94,6 @@ ex:00007 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "ZN-T.Temperature" ;
     s223:hasQuantityKind quantitykind:Temperature ;
-    s223:node_type p223:Temperature ;
     s223:ofMedium s223:Medium-Air ;
     s223:unit unit:DEG_C .
 ex:00008 a s223:Connectable,
@@ -115,7 +108,6 @@ ex:00008 a s223:Connectable,
     s223:hasConnectionPoint ex:00009,
         ex:00010,
         ex:00011 ;
-    s223:node_type s223:Fan ;
     rdfs:comment "Supply Fan" .
 ex:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -148,7 +140,6 @@ ex:00012 a s223:Connectable,
     s223:hasConnectionPoint ex:00013,
         ex:00014,
         ex:00015 ;
-    s223:node_type s223:Fan ;
     rdfs:comment "Return Fan" .
 ex:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -183,7 +174,6 @@ ex:00016 a s223:Connectable,
         ex:00021 ;
     s223:hasProperty ex:00017,
         ex:00018 ;
-    s223:node_type s223:Damper ;
     s223:position ex:00017 ;
     s223:powerInlet ex:00021 ;
     rdfs:comment "Outside Air Damper" .
@@ -222,7 +212,6 @@ ex:00022 a s223:Connectable,
         ex:00027 ;
     s223:hasProperty ex:00023,
         ex:00024 ;
-    s223:node_type s223:Damper ;
     s223:position ex:00023 ;
     s223:powerInlet ex:00027 ;
     rdfs:comment "Return Air Damper" .
@@ -263,7 +252,6 @@ ex:00028 a s223:Connectable,
         ex:00030,
         ex:00031,
         ex:00032 ;
-    s223:node_type s223:CoolingCoil ;
     rdfs:comment "Chilled Water coil" .
 ex:00029 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -333,9 +321,7 @@ ex:00039 a s223:Connection ;
     s223:connectsAt ex:00010,
         ex:00029 ;
     s223:connectsFrom ex:00008 ;
-    s223:connectsTo ex:00028 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:connectsTo ex:00028 .
 ex:00040 a s223:Connection ;
     rdfs:label "Return Air Plenum" ;
     s223:connectsAt ex:00013,
@@ -356,23 +342,19 @@ ex:00042 a s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "B59 Building" ;
     s223:contains ex:00043,
-        ex:00044 ;
-    s223:node_type rec:Building .
+        ex:00044 .
 ex:00043 a s223:PhysicalSpace,
         rec:Roof ;
-    rdfs:label "Roof of building" ;
-    s223:node_type rec:Roof .
+    rdfs:label "Roof of building" .
 ex:00044 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "One big floor which is a common space" ;
     s223:contains ex:00045 ;
-    s223:encloses ex:00054 ;
-    s223:node_type rec:Floor .
+    s223:encloses ex:00054 .
 ex:00045 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
-    rdfs:label "Director Office" ;
-    s223:node_type rec:Office .
+    rdfs:label "Director Office" .
 ex:00046 a p223:PhysicSystem,
         s223:System ;
     rdfs:label "Indoor air of space" ;
@@ -390,8 +372,7 @@ ex:00046 a p223:PhysicSystem,
         ex:00050,
         ex:00051,
         ex:00052,
-        ex:00053 ;
-    s223:node_type p223:PhysicSystem .
+        ex:00053 .
 ex:00047 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "Indoor air of space.ductAirInlet" ;
@@ -454,7 +435,6 @@ ex:00054 a s223:Connectable,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:indoorAir ex:00046 ;
-    s223:node_type s223:HVACSpace ;
     s223:radiantCooling ex:00061 ;
     s223:radiantHeating ex:00060 ;
     s223:windows ex:00059 .
@@ -510,8 +490,7 @@ ex:00062 a s223:HVACZone,
     s223:contains ex:00054 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasZoneConnectionPoint ex:00063,
-        ex:00064 ;
-    s223:node_type s223:HVACZone .
+        ex:00064 .
 ex:00063 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "Common workspace zone for HVAC.airInlet" ;

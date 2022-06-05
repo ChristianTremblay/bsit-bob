@@ -39,7 +39,7 @@ vfd_template = {
 
 
 class VFD(Device):
-    node_type: URIRef = s223.VariableFrequencyDrive
+    _class_iri: URIRef = s223.VariableFrequencyDrive
     # electricalInlet: Must be provided in config
     # electricalOutlet: Must be provided in config
     amps: Amps

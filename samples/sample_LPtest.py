@@ -129,6 +129,6 @@ class RooftopUnit(System):
 
 # make an instance
 
-r = RooftopUnit(node_iri=ex.rtu, label="rtu")
+r = RooftopUnit(_node_iri=ex.rtu, label="rtu")
 # g36_header(model_name)
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

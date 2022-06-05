@@ -43,19 +43,19 @@ _namespace = g36
 
 
 class AnalogIn(AnalogInput):
-    node_type = g36.AnalogIn
+    _class_iri = g36.AnalogIn
 
 
 class AnalogOut(AnalogOutput):
-    node_type = g36.AnalogOut
+    _class_iri = g36.AnalogOut
 
 
 class BinaryIn(BinaryInput):
-    node_type = g36.BinaryIn
+    _class_iri = g36.BinaryIn
 
 
 class BinaryOut(BinaryOutput):
-    node_type = g36.BinaryOut
+    _class_iri = g36.BinaryOut
 
 
 class G36Block(FunctionBlock):
@@ -71,4 +71,4 @@ class G36Block(FunctionBlock):
     Comment of this block is the description of the sequence.
     """
 
-    node_type = g36.FunctionBlock
+    _class_iri = g36.FunctionBlock

@@ -34,7 +34,7 @@ _namespace = s223
 
 
 class Valve(Device):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
     positionInlet: ModulationSignalInletConnectionPoint
     onOffInlet: OnOffSignalInletConnectionPoint
     flowCoefficient: Gallons
@@ -53,7 +53,7 @@ class Valve(Device):
 
 
 class TwoWayValve(Valve):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(self, **kwargs):
         _waterInlet = kwargs.pop("waterInlet", WaterInletConnectionPoint)
@@ -68,7 +68,7 @@ class ThreeWayValveDiverting(Valve):
     A diverting valve has 1 inlet and 2 outlets
     """
 
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(self, **kwargs):
         _waterInletAB = kwargs.pop("waterInletAB", WaterInletConnectionPoint)
@@ -85,7 +85,7 @@ class ThreeWayValveMixing(Valve):
     A mixing valve has 2 inlet and 1 outlet
     """
 
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(self, **kwargs):
         _waterInletA = kwargs.pop("waterInletA", WaterInletConnectionPoint)
@@ -98,12 +98,12 @@ class ThreeWayValveMixing(Valve):
 
 
 class NaturalGasValve(Valve):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
 
 
 class PneumaticValve(Valve):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint

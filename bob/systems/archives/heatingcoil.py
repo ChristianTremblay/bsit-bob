@@ -68,7 +68,7 @@ class HotWaterCoil2(System):
     signal.
     """
 
-    node_type = None
+    _class_iri = None
 
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint

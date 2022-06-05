@@ -220,7 +220,7 @@ qs = """
     """
 
 # pretty colors
-color_map = {SH.Violation: 33, SH.Info: 34}
+color_map = {SH.Violation: 33, SH.Info: 34, SH.Warning: 35}
 
 # query
 results = sorted(report_graph.query(qs, initNs=namespace_map))

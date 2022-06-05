@@ -32,7 +32,7 @@ _namespace = s223
 
 
 class Connector(Node):
-    node_type: URIRef = s223.Connector
+    _class_iri: URIRef = s223.Connector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         logging.debug(f"Connector.__init__ {function_block} {kwargs}")
@@ -55,21 +55,21 @@ class Connector(Node):
 
 
 class InputConnector(Connector):
-    node_type: URIRef = s223.InputConnector
+    _class_iri: URIRef = s223.InputConnector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block.node, s223.input, self.node))
+        data_graph.add((function_block._node_iri, s223.input, self._node_iri))
 
 
 class OutputConnector(Connector):
-    node_type: URIRef = s223.OutputConnector
+    _class_iri: URIRef = s223.OutputConnector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block.node, s223.output, self.node))
+        data_graph.add((function_block._node_iri, s223.output, self._node_iri))
 
 
 @multimethod
@@ -79,7 +79,9 @@ def connect_mm(
     """OutputConnector >> InputConnector"""
     logging.info(f"connect from {output_connector} to {input_connector}")
 
-    data_graph.add((output_connector.node, s223.connect, input_connector.node))
+    data_graph.add(
+        (output_connector._node_iri, s223.connect, input_connector._node_iri)
+    )
 
 
 @multimethod
@@ -87,9 +89,11 @@ def connect_mm(prop: Property, input_connector: InputConnector) -> None:
     """Property >> InputConnector"""
     logging.info(f"connect from {prop} to {input_connector}")
 
-    data_graph.add((input_connector.node, s223.usesInput, prop.node))
+    data_graph.add((input_connector._node_iri, s223.usesInput, prop._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((prop.node, s223.isUsedAsInputBy, input_connector.node))
+        data_graph.add(
+            (prop._node_iri, s223.isUsedAsInputBy, input_connector._node_iri)
+        )
 
 
 @multimethod
@@ -97,9 +101,9 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
     """OutputConnector >> Property"""
     logging.info(f"connect from {output_connector} to {prop}")
 
-    data_graph.add((output_connector.node, s223.producesOutput, prop.node))
+    data_graph.add((output_connector._node_iri, s223.producesOutput, prop._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((prop.node, s223.isProducedBy, output_connector.node))
+        data_graph.add((prop._node_iri, s223.isProducedBy, output_connector._node_iri))
 
 
 #
@@ -108,35 +112,35 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
 
 
 class AnalogInput(InputConnector):
-    node_type: URIRef = s223.AnalogInput
+    _class_iri: URIRef = s223.AnalogInput
 
 
 class AnalogOutput(OutputConnector):
-    node_type: URIRef = s223.AnalogOutput
+    _class_iri: URIRef = s223.AnalogOutput
 
 
 class BinaryInput(InputConnector):
-    node_type: URIRef = s223.BinaryInput
+    _class_iri: URIRef = s223.BinaryInput
 
 
 class BinaryOutput(OutputConnector):
-    node_type: URIRef = s223.BinaryOutput
+    _class_iri: URIRef = s223.BinaryOutput
 
 
 class Parameter(Node):
-    node_type: URIRef = s223.Parameter
+    _class_iri: URIRef = s223.Parameter
 
 
 class Constant(Parameter):
-    node_type: URIRef = s223.Constant
+    _class_iri: URIRef = s223.Constant
 
 
 class AnalogConstant(Constant):
-    node_type: URIRef = None
+    _class_iri: URIRef = None
 
 
 class BinaryConstant(Constant):
-    node_type: URIRef = None
+    _class_iri: URIRef = None
 
 
 #
@@ -151,7 +155,7 @@ class FunctionBlock(Node):
     be related to observable and actuatable properties in the 223 model.
     """
 
-    node_type: URIRef = s223.FunctionBlock
+    _class_iri: URIRef = s223.FunctionBlock
     _connectors: Dict[str, Connector]
     _parameters: Dict[str, Parameter]
 
@@ -206,8 +210,8 @@ class FunctionBlock(Node):
 
 
 class ElementaryBlock(FunctionBlock):
-    node_type: URIRef = s223.ElementaryBlock
+    _class_iri: URIRef = s223.ElementaryBlock
 
 
 class CompositeBlock(FunctionBlock):
-    node_type: URIRef = s223.CompositeBlock
+    _class_iri: URIRef = s223.CompositeBlock

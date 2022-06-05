@@ -39,7 +39,7 @@ _namespace = p223
 
 
 class Transformer(Device):
-    node_type = p223.ElectricalTransformer
+    _class_iri = p223.ElectricalTransformer
     hasPower: Literal
 
     def __init__(self, config: Dict = {}, **kwargs):
@@ -58,7 +58,7 @@ class Transformer(Device):
 
 
 class SinglePhaseDistributionPanel(Device):
-    node_type = p223.ElectricalDistributionPanel
+    _class_iri = p223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
     hasNumberOfCircuits: QuantifiableObservableProperty
@@ -172,7 +172,7 @@ class ThreePhaseDistributionPanel(Device):
 
 
 class CircuitBreaker(Device):
-    node_type = p223.ElectricalCircuitBreaker
+    _class_iri = p223.ElectricalCircuitBreaker
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
     hasMaxRange: QuantifiableObservableProperty

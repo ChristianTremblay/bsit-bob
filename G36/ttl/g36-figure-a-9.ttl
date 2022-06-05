@@ -13,7 +13,6 @@ exg3609:00001 a s223:System,
         exg3609:00003,
         exg3609:00004,
         exg3609:00005 ;
-    s223:node_type exg3609:AHU ;
     exg3609:exhaustAirOutlet exg3609:00005 ;
     exg3609:outsideAirInlet exg3609:00002 ;
     exg3609:returnAirInlet exg3609:00004 ;
@@ -52,7 +51,6 @@ exg3609:00006 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00007,
         exg3609:00008 ;
     s223:hasProperty exg3609:00010 ;
-    s223:node_type exg3609:Damper ;
     exg3609:airInlet exg3609:00007 ;
     exg3609:airOutlet exg3609:00008 ;
     exg3609:position exg3609:00010 .
@@ -75,7 +73,6 @@ exg3609:00009 a s223:Connectable,
         exg3609:DamperPositioner ;
     rdfs:label "A-9.min_oa_damper.damper_positioner" ;
     s223:hasProperty exg3609:00010 ;
-    s223:node_type exg3609:DamperPositioner ;
     exg3609:position exg3609:00010 .
 exg3609:00010 a s223:Property,
         g36:AnalogOut .
@@ -88,7 +85,6 @@ exg3609:00011 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00012,
         exg3609:00013 ;
     s223:hasProperty exg3609:00015 ;
-    s223:node_type exg3609:Damper ;
     exg3609:airInlet exg3609:00012 ;
     exg3609:airOutlet exg3609:00013 ;
     exg3609:position exg3609:00015 .
@@ -111,22 +107,18 @@ exg3609:00014 a s223:Connectable,
         exg3609:DamperPositioner ;
     rdfs:label "A-9.economizer_oa_damper.damper_positioner" ;
     s223:hasProperty exg3609:00015 ;
-    s223:node_type exg3609:DamperPositioner ;
     exg3609:position exg3609:00015 .
 exg3609:00015 a s223:Property,
         g36:AnalogOut .
 exg3609:00016 a s223:Junction ;
     s223:lnx exg3609:00017,
-        exg3609:00018 ;
-    s223:node_type s223:Junction .
+        exg3609:00018 .
 exg3609:00017 a s223:Segment ;
     s223:lnx exg3609:00007,
-        exg3609:00016 ;
-    s223:node_type s223:Segment .
+        exg3609:00016 .
 exg3609:00018 a s223:Segment ;
     s223:lnx exg3609:00012,
-        exg3609:00016 ;
-    s223:node_type s223:Segment .
+        exg3609:00016 .
 exg3609:00019 a s223:Connectable,
         s223:Device,
         exg3609:AirFlowStation ;
@@ -137,7 +129,6 @@ exg3609:00019 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00021,
         exg3609:00022 ;
     s223:hasProperty exg3609:00020 ;
-    s223:node_type exg3609:AirFlowStation ;
     exg3609:airInlet exg3609:00021 ;
     exg3609:airOutlet exg3609:00022 ;
     exg3609:flow exg3609:00020 .
@@ -161,9 +152,7 @@ exg3609:00023 a s223:Connection ;
     s223:connectsAt exg3609:00008,
         exg3609:00021 ;
     s223:connectsFrom exg3609:00006 ;
-    s223:connectsTo exg3609:00019 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:connectsTo exg3609:00019 .
 exg3609:00024 a s223:Connection ;
     rdfs:label "A-9.mixed_air" ;
     s223:connectsAt exg3609:00013,
@@ -185,7 +174,6 @@ exg3609:00025 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00027,
         exg3609:00028 ;
     s223:hasProperty exg3609:00026 ;
-    s223:node_type exg3609:AirFilter ;
     exg3609:airInlet exg3609:00027 ;
     exg3609:airOutlet exg3609:00028 ;
     exg3609:dp exg3609:00026 .
@@ -258,8 +246,7 @@ exg3609:00034 a s223:Connectable,
         exg3609:00037,
         exg3609:00038 ;
     s223:hotWaterReturn exg3609:00038 ;
-    s223:hotWaterSupply exg3609:00037 ;
-    s223:node_type s223:HotWaterCoil .
+    s223:hotWaterSupply exg3609:00037 .
 exg3609:00035 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-9.hot_water_coil.hw_coil.airInlet" ;
@@ -299,7 +286,6 @@ exg3609:00039 a s223:Connectable,
         exg3609:00044 ;
     s223:hasPositionFeedback exg3609:00040 ;
     s223:hasProperty exg3609:00040 ;
-    s223:node_type s223:Valve ;
     s223:onOffInlet exg3609:00042 ;
     s223:positionInlet exg3609:00041 .
 exg3609:00040 a p223:Percent,
@@ -309,7 +295,6 @@ exg3609:00040 a p223:Percent,
         s223:QuantifiableProperty ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
-    s223:node_type p223:Percent ;
     s223:unit unit:Percent .
 exg3609:00041 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -338,9 +323,7 @@ exg3609:00045 a s223:Connection ;
     s223:connectsAt exg3609:00037,
         exg3609:00044 ;
     s223:connectsFrom exg3609:00039 ;
-    s223:connectsTo exg3609:00034 ;
-    s223:hasMedium s223:Water-HotWater ;
-    s223:node_type s223:Connection .
+    s223:connectsTo exg3609:00034 .
 exg3609:00046 a s223:Property,
         g36:AnalogOut ;
     s223:hasValue "<Percent at http://data.ashrae.org/standard223/data/g36-figure-a-9#00040>" .
@@ -348,9 +331,7 @@ exg3609:00047 a s223:Connection ;
     s223:connectsAt exg3609:00028,
         exg3609:00035 ;
     s223:connectsFrom exg3609:00025 ;
-    s223:connectsTo exg3609:00034 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:connectsTo exg3609:00034 .
 exg3609:00048 a s223:ChilledWaterCoil2,
         s223:System ;
     rdfs:label "A-9.chilled_water_coil" ;
@@ -361,8 +342,7 @@ exg3609:00048 a s223:ChilledWaterCoil2,
     s223:hasSystemConnectionPoint exg3609:00049,
         exg3609:00050,
         exg3609:00051,
-        exg3609:00052 ;
-    s223:node_type s223:ChilledWaterCoil2 .
+        exg3609:00052 .
 exg3609:00049 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "A-9.chilled_water_coil.airInlet" ;
@@ -404,8 +384,7 @@ exg3609:00053 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00054,
         exg3609:00055,
         exg3609:00056,
-        exg3609:00057 ;
-    s223:node_type s223:CoolingCoil .
+        exg3609:00057 .
 exg3609:00054 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-9.chilled_water_coil.cw_coil.airInlet" ;
@@ -445,7 +424,6 @@ exg3609:00058 a s223:Connectable,
         exg3609:00063 ;
     s223:hasPositionFeedback exg3609:00059 ;
     s223:hasProperty exg3609:00059 ;
-    s223:node_type s223:Valve ;
     s223:onOffInlet exg3609:00061 ;
     s223:positionInlet exg3609:00060 .
 exg3609:00059 a p223:Percent,
@@ -455,7 +433,6 @@ exg3609:00059 a p223:Percent,
         s223:QuantifiableProperty ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
-    s223:node_type p223:Percent ;
     s223:unit unit:Percent .
 exg3609:00060 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -484,16 +461,12 @@ exg3609:00064 a s223:Connection ;
     s223:connectsAt exg3609:00056,
         exg3609:00063 ;
     s223:connectsFrom exg3609:00058 ;
-    s223:connectsTo exg3609:00053 ;
-    s223:hasMedium s223:Water-ChilledWater ;
-    s223:node_type s223:Connection .
+    s223:connectsTo exg3609:00053 .
 exg3609:00065 a s223:Connection ;
     s223:connectsAt exg3609:00036,
         exg3609:00054 ;
     s223:connectsFrom exg3609:00034 ;
-    s223:connectsTo exg3609:00053 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:connectsTo exg3609:00053 .
 exg3609:00066 a s223:Connectable,
         s223:Device,
         s223:Fan ;
@@ -504,8 +477,7 @@ exg3609:00066 a s223:Connectable,
     s223:connectedThrough exg3609:00070 ;
     s223:hasConnectionPoint exg3609:00067,
         exg3609:00068,
-        exg3609:00069 ;
-    s223:node_type s223:Fan .
+        exg3609:00069 .
 exg3609:00067 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-9.supply_fan.airInlet" ;
@@ -529,9 +501,7 @@ exg3609:00070 a s223:Connection ;
     s223:connectsAt exg3609:00055,
         exg3609:00067 ;
     s223:connectsFrom exg3609:00053 ;
-    s223:connectsTo exg3609:00066 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:connectsTo exg3609:00066 .
 exg3609:00071 a s223:Connectable,
         s223:Device,
         s223:Fan ;
@@ -540,8 +510,7 @@ exg3609:00071 a s223:Connectable,
     s223:airOutlet exg3609:00073 ;
     s223:hasConnectionPoint exg3609:00072,
         exg3609:00073,
-        exg3609:00074 ;
-    s223:node_type s223:Fan .
+        exg3609:00074 .
 exg3609:00072 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-9.return_fan.airInlet" ;
@@ -576,7 +545,6 @@ exg3609:00076 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00077,
         exg3609:00078 ;
     s223:hasProperty exg3609:00080 ;
-    s223:node_type exg3609:Damper ;
     exg3609:airInlet exg3609:00077 ;
     exg3609:airOutlet exg3609:00078 ;
     exg3609:position exg3609:00080 .
@@ -598,7 +566,6 @@ exg3609:00079 a s223:Connectable,
         exg3609:DamperPositioner ;
     rdfs:label "A-9.exhaust_air_damper.damper_positioner" ;
     s223:hasProperty exg3609:00080 ;
-    s223:node_type exg3609:DamperPositioner ;
     exg3609:position exg3609:00080 .
 exg3609:00080 a s223:Property,
         g36:AnalogOut .
@@ -612,7 +579,6 @@ exg3609:00081 a s223:Connectable,
     s223:hasConnectionPoint exg3609:00082,
         exg3609:00083 ;
     s223:hasProperty exg3609:00085 ;
-    s223:node_type exg3609:Damper ;
     exg3609:airInlet exg3609:00082 ;
     exg3609:airOutlet exg3609:00083 ;
     exg3609:position exg3609:00085 .
@@ -635,7 +601,6 @@ exg3609:00084 a s223:Connectable,
         exg3609:DamperPositioner ;
     rdfs:label "A-9.return_air_damper.damper_positioner" ;
     s223:hasProperty exg3609:00085 ;
-    s223:node_type exg3609:DamperPositioner ;
     exg3609:position exg3609:00085 .
 exg3609:00085 a s223:Property,
         g36:AnalogOut .

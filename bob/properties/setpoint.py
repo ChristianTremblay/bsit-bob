@@ -7,7 +7,7 @@ _namespace = s223
 
 
 class Setpoint(QuantifiableProperty):
-    node_type: URIRef = s223.Setpoint
+    _class_iri: URIRef = s223.Setpoint
     hasApsect: EnumerationKind
     hasDeadband: Literal
     hasValue: Literal

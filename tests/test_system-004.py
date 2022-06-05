@@ -13,6 +13,7 @@ from bob.core import (
     bind_model_namespace,
     dump,
 )
+from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -21,13 +22,13 @@ core.INCLUDE_INVERSE = True
 
 def test_systems_004(bob_fixture):
     class A(Device):
-        cOut: OutletConnectionPoint
+        cOut: AirOutletConnectionPoint
 
     class X(System):
         cOut: OutletSystemConnectionPoint
 
     class B(Device):
-        cIn: InletConnectionPoint
+        cIn: AirInletConnectionPoint
 
     class Y(System):
         cIn: InletSystemConnectionPoint

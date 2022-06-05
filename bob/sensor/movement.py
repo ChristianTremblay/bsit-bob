@@ -37,4 +37,4 @@ class MovementSensor(Sensor):
 
 
 class OccupancySensor(MovementSensor):
-    node_type: URIRef = p223.OccupancySensor
+    _class_iri: URIRef = p223.OccupancySensor

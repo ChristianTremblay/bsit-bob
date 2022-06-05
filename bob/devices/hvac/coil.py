@@ -39,7 +39,7 @@ chilledWaterCoil_template = {
 
 
 class WaterCoil(Device):
-    node_type: URIRef = s223.Coil
+    _class_iri: URIRef = s223.Coil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     waterInlet: WaterInletConnectionPoint
@@ -47,7 +47,7 @@ class WaterCoil(Device):
 
 
 class ChilledWaterCoil(Device):
-    node_type: URIRef = s223.CoolingCoil
+    _class_iri: URIRef = s223.CoolingCoil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     chilledWaterInlet: ChilledWaterInletConnectionPoint
@@ -55,7 +55,7 @@ class ChilledWaterCoil(Device):
 
 
 class HotWaterCoil(Device):
-    node_type: URIRef = s223.HeatingCoil
+    _class_iri: URIRef = s223.HeatingCoil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     hotWaterInlet: HotWaterInletConnectionPoint
@@ -64,7 +64,7 @@ class HotWaterCoil(Device):
 
 # Electrical Coil
 class ElectricalHeatingCoil(Device):
-    node_type: URIRef = s223.HeatingCoil
+    _class_iri: URIRef = s223.HeatingCoil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     electricalInlet: ElectricalInletConnectionPoint  # can come from a SCR or a contactor...(maybe more than 1 contactor that would give x% of power)
@@ -72,6 +72,6 @@ class ElectricalHeatingCoil(Device):
 
 # Baseboard, radiant panel, heating floor
 class ElectricalRadiantHeatingCoil(Device):
-    node_type: URIRef = s223.HeatingCoil
+    _class_iri: URIRef = s223.HeatingCoil
     airContact: AirBidirectionalConnectionPoint
     electricalInlet: ElectricalInletConnectionPoint  # can come from a SCR or a contactor...(maybe more than 1 contactor that would give x% of power)

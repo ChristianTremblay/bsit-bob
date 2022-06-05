@@ -26,7 +26,7 @@ class SteamPipe(Device):
 
 
 class Humidifier(Device):
-    node_type: URIRef = p223.Humidifier
+    _class_iri: URIRef = p223.Humidifier
     steamOutlet: SteamOutletConnectionPoint
     waterInlet: WaterInletConnectionPoint
 

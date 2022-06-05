@@ -13,7 +13,6 @@ exg3611:00001 a s223:System,
         exg3611:00003,
         exg3611:00004,
         exg3611:00005 ;
-    s223:node_type exg3611:VAV ;
     exg3611:hwInlet exg3611:00004 ;
     exg3611:hwOutlet exg3611:00005 ;
     exg3611:hwValvePosition exg3611:00016 ;
@@ -53,7 +52,6 @@ exg3611:00006 a s223:Connectable,
     s223:hasConnectionPoint exg3611:00008,
         exg3611:00009 ;
     s223:hasProperty exg3611:00007 ;
-    s223:node_type exg3611:AirFilter ;
     exg3611:airInlet exg3611:00008 ;
     exg3611:airOutlet exg3611:00009 ;
     exg3611:dp exg3611:00007 .
@@ -87,7 +85,6 @@ exg3611:00010 a s223:Connectable,
         exg3611:00013,
         exg3611:00014 ;
     s223:hasProperty exg3611:00016 ;
-    s223:node_type exg3611:HotWaterCoil ;
     exg3611:airInlet exg3611:00011 ;
     exg3611:airOutlet exg3611:00012 ;
     exg3611:hwInlet exg3611:00013 ;
@@ -124,22 +121,18 @@ exg3611:00015 a s223:Connectable,
         exg3611:ValvePositioner ;
     rdfs:label "A-11.hot_water_coil.damper_positioner" ;
     s223:hasProperty exg3611:00016 ;
-    s223:node_type exg3611:ValvePositioner ;
     exg3611:position exg3611:00016 .
 exg3611:00016 a s223:Property,
         g36:AnalogOut .
 exg3611:00017 a s223:Connectable,
         s223:Device,
         exg3611:HotWaterValve ;
-    rdfs:label "A-11.hot_water_coil.hot_water_valve" ;
-    s223:node_type exg3611:HotWaterValve .
+    rdfs:label "A-11.hot_water_coil.hot_water_valve" .
 exg3611:00018 a s223:Connection ;
     s223:connectsAt exg3611:00009,
         exg3611:00011 ;
     s223:connectsFrom exg3611:00006 ;
-    s223:connectsTo exg3611:00010 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:connectsTo exg3611:00010 .
 exg3611:00019 a s223:Connectable,
         s223:Device,
         s223:Fan,
@@ -156,7 +149,6 @@ exg3611:00019 a s223:Connectable,
     s223:hasProperty exg3611:00024,
         exg3611:00025,
         exg3611:00026 ;
-    s223:node_type exg3611:VFDFan ;
     exg3611:fanSpeedCommand exg3611:00025 ;
     exg3611:fanStart exg3611:00026 ;
     exg3611:fanStatus exg3611:00024 .
@@ -186,7 +178,6 @@ exg3611:00023 a s223:Connectable,
     s223:hasProperty exg3611:00024,
         exg3611:00025,
         exg3611:00026 ;
-    s223:node_type exg3611:VFD ;
     exg3611:fanSpeedCommand exg3611:00025 ;
     exg3611:fanStart exg3611:00026 ;
     exg3611:fanStatus exg3611:00024 .
@@ -200,6 +191,4 @@ exg3611:00027 a s223:Connection ;
     s223:connectsAt exg3611:00012,
         exg3611:00020 ;
     s223:connectsFrom exg3611:00010 ;
-    s223:connectsTo exg3611:00019 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:node_type s223:Connection .
+    s223:connectsTo exg3611:00019 .

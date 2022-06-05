@@ -35,7 +35,7 @@ class Fan(Device):
     A fan is composed of a blower and an electrical motor
     """
 
-    node_type: URIRef = s223.Fan
+    _class_iri: URIRef = s223.Fan
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     # electricalInlet: ElectricalInletConnectionPoint  # Dynamic ConnectionPoint should not be defined in annotation of the class
