@@ -35,7 +35,7 @@ _namespace = s223
 
 
 class Damper(Device):
-    node_type = s223.Damper
+    _class_iri =s223.Damper
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     position: PropertyReference  # Union[Percent,OnOffStatus,OpenCloseStatus]
@@ -44,11 +44,11 @@ class Damper(Device):
 
 
 class GravityDamper(Damper):
-    node_type = s223.Damper
+    _class_iri =s223.Damper
 
 
 class FireDamper(Damper):
-    node_type = s223.Damper
+    _class_iri =s223.Damper
 
 
 # DAMPER + ACTUATORS
@@ -66,7 +66,7 @@ ElectricalActuatedOnOffDamper_template = {
 
 
 class ElectricalActuatedProportionalDamper(Damper):
-    node_type: URIRef = s223.Damper
+    _class_iri: URIRef = s223.Damper
 
     def __init__(
         self, config: Dict = ElectricalActuatedProportionalDamper_template, **kwargs
@@ -83,7 +83,7 @@ class ElectricalActuatedProportionalDamper(Damper):
 
 
 class ElectricalActuatedOnOffDamper(Damper):
-    node_type: URIRef = s223.Damper
+    _class_iri: URIRef = s223.Damper
 
     def __init__(self, config: Dict = ElectricalActuatedOnOffDamper_template, **kwargs):
         config["properties"] = config.get(
@@ -111,7 +111,7 @@ PneumaticActuatedOnOffDamper_template = {
 
 
 class PneumaticActuatedProportionalDamper(Damper):
-    node_type = s223.Damper
+    _class_iri =s223.Damper
 
     def __init__(
         self, config: Dict = PneumaticActuatedProportionalDamper_template, **kwargs
@@ -128,7 +128,7 @@ class PneumaticActuatedProportionalDamper(Damper):
 
 
 class PneumaticActuatedOnOffDamper(Damper):
-    node_type = s223.Damper
+    _class_iri =s223.Damper
 
     def __init__(self, config: Dict = PneumaticActuatedOnOffDamper_template, **kwargs):
         config["properties"] = config.get(

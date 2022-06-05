@@ -27,104 +27,104 @@ LightVisible = Light("Visible")
 # === Light
 class LightVisibleConnection(Connection):
     hasMedium: Medium = Light
-    node_type = None
+    _class_iri =None
 
 
 class LightConnectionPoint(ConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class LightInletConnectionPoint(LightConnectionPoint, InletConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class LightOutletConnectionPoint(LightConnectionPoint, OutletConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class LightSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Light
-    node_type = None
+    _class_iri =None
 
 
 class LightInletSystemConnectionPoint(
     LightSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class LightOutletSystemConnectionPoint(
     LightSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class LightZoneConnectionPoint(ZoneConnectionPoint):
     hasMedium: Medium = Light
-    node_type = None
+    _class_iri =None
 
 
 class LightInletZoneConnectionPoint(LightZoneConnectionPoint, InletZoneConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class LightOutletZoneConnectionPoint(
     LightZoneConnectionPoint, OutletZoneConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleConnection(Connection):
     hasMedium: Medium = LightVisible
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleConnectionPoint(ConnectionPoint):
     hasMedium: Medium = LightVisible
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleInletConnectionPoint(
     LightVisibleConnectionPoint, InletConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleOutletConnectionPoint(
     LightVisibleConnectionPoint, OutletConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = LightVisible
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleInletSystemConnectionPoint(
     LightVisibleSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleOutletSystemConnectionPoint(
     LightVisibleSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleZoneConnectionPoint(ZoneConnectionPoint):
     hasMedium: Medium = LightVisible
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleInletZoneConnectionPoint(
     LightVisibleZoneConnectionPoint, InletZoneConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class LightVisibleOutletZoneConnectionPoint(
     LightVisibleZoneConnectionPoint, OutletZoneConnectionPoint
 ):
-    node_type = None
+    _class_iri =None

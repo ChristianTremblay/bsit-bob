@@ -31,7 +31,7 @@ pump_template = {
 
 
 class Pump(Device):
-    node_type: URIRef = s223.Pump
+    _class_iri: URIRef = s223.Pump
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
     onOffStatus: PropertyReference

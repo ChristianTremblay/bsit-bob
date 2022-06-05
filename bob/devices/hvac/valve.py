@@ -71,7 +71,7 @@ valve_3w_mixing_template = {
 
 
 class Valve(Device):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
     position: PropertyReference  # Union[Percent,OnOffStatus,OpenCloseStatus]
     command: PropertyReference
     feedback: PropertyReference
@@ -83,7 +83,7 @@ class Valve(Device):
 
 
 class TwoWayValve(Valve):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(self, config: Dict = valve2w_template, **kwargs):
         config["properties"] = config.get("properties", valve2w_template["properties"])
@@ -96,7 +96,7 @@ class ThreeWayValveDiverting(Valve):
     A diverting valve has 1 inlet and 2 outlets
     """
 
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(self, config: Dict = valve_3w_diverting_template, **kwargs):
         config["properties"] = config.get(
@@ -111,7 +111,7 @@ class ThreeWayValveMixing(Valve):
     A mixing valve has 2 inlet and 1 outlet
     """
 
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(self, config: Dict = valve_3w_mixing_template, **kwargs):
         config["properties"] = config.get(
@@ -122,13 +122,13 @@ class ThreeWayValveMixing(Valve):
 
 
 class NaturalGasValve(TwoWayValve):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
 
 
 class PneumaticValve(TwoWayValve):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 
@@ -145,7 +145,7 @@ ActuatedOnOffValve_template = {
 
 
 class TwoWayActuatedProportionalValve(TwoWayValve):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(
         self,
@@ -165,7 +165,7 @@ class TwoWayActuatedProportionalValve(TwoWayValve):
 
 
 class TwoWayActuatedOnOffValve(TwoWayValve):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(
         self,
@@ -187,7 +187,7 @@ class TwoWayActuatedOnOffValve(TwoWayValve):
 
 
 class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(
         self,
@@ -212,7 +212,7 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
 
 
 class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(
         self,
@@ -234,7 +234,7 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
 
 
 class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(
         self,
@@ -259,7 +259,7 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
 
 
 class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
-    node_type: URIRef = s223.Valve
+    _class_iri: URIRef = s223.Valve
 
     def __init__(
         self,

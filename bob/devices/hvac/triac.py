@@ -34,7 +34,7 @@ class Triac(Device):
     # takes 600V (or 347V) in and use PWM to modulate
     # power given to electrical coil
     # a triac accept On-Off pulsed signal to modulate
-    node_type: URIRef = p223.Triac
+    _class_iri: URIRef = p223.Triac
 
     def __init__(self, config: Dict = Triac_template, **kwargs):
         config["properties"] = config.get("properties", Triac_template["properties"])

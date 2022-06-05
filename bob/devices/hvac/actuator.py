@@ -29,7 +29,7 @@ _namespace = s223
 
 
 class Actuator(Device):
-    node_type = s223.Actuator
+    _class_iri =s223.Actuator
     command: PercentCommand
     actuatesProperty: Property
     feedback: Percent
@@ -42,7 +42,7 @@ class Actuator(Device):
 
 
 class ProportionalActuator(Actuator):
-    node_type = s223.Actuator
+    _class_iri =s223.Actuator
     command: PercentCommand
     actuatesProperty: Property
     feedback: Percent
@@ -54,7 +54,7 @@ class ProportionalActuator(Actuator):
 
 
 class OnOffActuator(Actuator):
-    node_type = s223.Actuator
+    _class_iri =s223.Actuator
     command: OnOffCommand
     actuatesProperty: Property
     feedbackOpen: OnOffStatus
@@ -88,7 +88,7 @@ ElectricalOnOffActuator_template = {
 
 
 class ElectricalProportionalActuator(ProportionalActuator):
-    node_type = s223.Actuator
+    _class_iri =s223.Actuator
 
     def __init__(
         self, config: Dict = ElectricalProportionalActuator_template, **kwargs
@@ -101,7 +101,7 @@ class ElectricalProportionalActuator(ProportionalActuator):
 
 
 class ElectricalOnOffActuator(OnOffActuator):
-    node_type = s223.Actuator
+    _class_iri =s223.Actuator
 
     def __init__(self, config: Dict = ElectricalOnOffActuator_template, **kwargs):
         config["properties"] = config.get(
@@ -132,7 +132,7 @@ PneumaticOnOffActuator_template = {
 
 
 class PneumaticProportionalActuator(ProportionalActuator):
-    node_type = s223.Actuator
+    _class_iri =s223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = PneumaticProportionalActuator_template, **kwargs):
@@ -144,7 +144,7 @@ class PneumaticProportionalActuator(ProportionalActuator):
 
 
 class PneumaticOnOffActuator(OnOffActuator):
-    node_type = s223.Actuator
+    _class_iri =s223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = PneumaticOnOffActuator_template, **kwargs):

@@ -33,7 +33,7 @@ class SCR(Device):
     # takes 600V (or 347V) in and use triacs to modulate
     # power given to electrical coil
     # a SCR accept 0-10VDC signal to modulate
-    node_type: URIRef = p223.SCR
+    _class_iri: URIRef = p223.SCR
 
     def __init__(self, config: Dict = SCR_template, **kwargs):
         config["properties"] = config.get("properties", SCR_template["properties"])

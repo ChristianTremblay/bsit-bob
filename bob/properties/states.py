@@ -34,48 +34,48 @@ _namespace = p223
 
 
 class OnOffStatus(EnumeratedObservableProperty):
-    node_type: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OnOffEnum
 
 
 class OnOffCommand(EnumeratedActuatableProperty):
-    node_type: URIRef = s223.EnumeratedActuatableProperty
+    _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OnOffEnum
 
 
 class NormalAlarmStatus(EnumeratedObservableProperty):
-    node_type: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: NormalAlarmEnum
 
 
 class OpenCloseCommand(EnumeratedActuatableProperty):
-    node_type: URIRef = s223.EnumeratedActuatableProperty
+    _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OpenCloseEnum
 
 
 class OpenCloseStatus(EnumeratedActuatableProperty):
-    node_type: URIRef = s223.EnumeratedActuatableProperty
+    _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OpenCloseEnum
 
 
 class Schedule(EnumerableProperty):
-    node_type: URIRef = s223.EnumerableProperty
+    _class_iri: URIRef = s223.EnumerableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OccupancyEnum
 
 
 class OccupancyStatus(EnumeratedObservableProperty):
-    node_type: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasEnumerationKind: OccupancyEnum
 
 
 class Movement(EnumeratedObservableProperty):
-    node_type: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OnOffEnum
 

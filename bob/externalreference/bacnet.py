@@ -22,7 +22,7 @@ url_pattern = re.compile("^bacnet:[/][/]([0-9]+)[/]([A-Za-z0-9-]+),([1-9][0-9]*)
 
 
 class BACnetProperty(Node):
-    node_type: URIRef = bacnet.Property
+    _class_iri: URIRef = bacnet.Property
     hasValue: Literal
 
     def __init__(self, value: Any = None, **kwargs: Any):
@@ -42,51 +42,51 @@ class BACnetProperty(Node):
 
 
 class BACnetDeviceId(BACnetProperty):
-    node_type: URIRef = bacnet["device-identifier"]
+    _class_iri: URIRef = bacnet["device-identifier"]
 
 
 class BACnetDeviceName(BACnetProperty):
-    node_type: URIRef = bacnet["device-name"]
+    _class_iri: URIRef = bacnet["device-name"]
 
 
 class BACnetNetworkNumber(BACnetProperty):
-    node_type: URIRef = bacnet["network-number"]
+    _class_iri: URIRef = bacnet["network-number"]
 
 
 class BACnetAddress(BACnetProperty):
-    node_type: URIRef = bacnet["address"]
+    _class_iri: URIRef = bacnet["address"]
 
 
 class BACnetVendorId(BACnetProperty):
-    node_type: URIRef = bacnet["vendor-id"]
+    _class_iri: URIRef = bacnet["vendor-id"]
 
 
 class BACnetObjectInstance(BACnetProperty):
-    node_type: URIRef = bacnet["object-instance"]
+    _class_iri: URIRef = bacnet["object-instance"]
 
 
 class BACnetObjectOf(BACnetProperty):
-    node_type: URIRef = bacnet["BACnetDevice"]
+    _class_iri: URIRef = bacnet["BACnetDevice"]
 
 
 class BACnetObjectName(BACnetProperty):
-    node_type: URIRef = bacnet["object-name"]
+    _class_iri: URIRef = bacnet["object-name"]
 
 
 class BACnetDescription(BACnetProperty):
-    node_type: URIRef = bacnet["description"]
+    _class_iri: URIRef = bacnet["description"]
 
 
 class BACnetObjectType(BACnetProperty):
-    node_type: URIRef = bacnet["object-type"]
+    _class_iri: URIRef = bacnet["object-type"]
 
 
 class BACnetURI(BACnetProperty):
-    node_type: URIRef = bacnet["BACnetURI"]
+    _class_iri: URIRef = bacnet["BACnetURI"]
 
 
 class BACnetDevice(Node):
-    node_type: URIRef = bacnet.BACnetDevice
+    _class_iri: URIRef = bacnet.BACnetDevice
     deviceId: BACnetDeviceId
     deviceName: BACnetDeviceName
     networkNumber: BACnetNetworkNumber
@@ -96,7 +96,7 @@ class BACnetDevice(Node):
 
 
 class BACnetReference(ExternalReference):
-    node_type: URIRef = ref.BACnetReference
+    _class_iri: URIRef = ref.BACnetReference
     objectInstance: BACnetObjectInstance
     objectOf: BACnetObjectOf
     objectName: BACnetObjectName

@@ -25,7 +25,7 @@ class ActuatableProperty(Property):
     Such as the setting of a switch.
     """
 
-    node_type: URIRef = s223.ActuatableProperty
+    _class_iri: URIRef = s223.ActuatableProperty
     hasExternalReference: ExternalReference
 
 
@@ -34,7 +34,7 @@ class ObservableProperty(Property):
     Such as the state of an alarm detector.
     """
 
-    node_type: URIRef = s223.ObservableProperty
+    _class_iri: URIRef = s223.ObservableProperty
     hasExternalReference: ExternalReference
     isObservedBy: Node
 
@@ -46,7 +46,7 @@ class QuantifiableProperty(Property):
 
     _attr_uriref = {"unit": qudt["unit"], "hasQuantityKind": qudt["hasQuantityKind"]}
 
-    node_type: URIRef = s223.QuantifiableProperty
+    _class_iri: URIRef = s223.QuantifiableProperty
     hasQuantityKind: URIRef
     unit: URIRef
     hasExternalReference: ExternalReference
@@ -82,7 +82,7 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
     Such as a numerical setpoint.
     """
 
-    node_type: URIRef = s223.QuantifiableActuatableProperty
+    _class_iri: URIRef = s223.QuantifiableActuatableProperty
     hasExternalReference: ExternalReference
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -94,7 +94,7 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
 # are observable
 # There could be 2 subclasses of setpoint ?
 class Setpoint(QuantifiableProperty):
-    node_type: URIRef = s223.Setpoint
+    _class_iri: URIRef = s223.Setpoint
     hasApsect: EnumerationKind
     hasDeadband: Literal
     hasValue: Literal
@@ -117,7 +117,7 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
     Such as a temperature reading.
     """
 
-    node_type: URIRef = s223.QuantifiableObservableProperty
+    _class_iri: URIRef = s223.QuantifiableObservableProperty
     hasSetpoint: Setpoint
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -131,7 +131,7 @@ class EnumerableProperty(Property):
 
     # _attr_uriref = {}
 
-    node_type: URIRef = s223.EnumerableProperty
+    _class_iri: URIRef = s223.EnumerableProperty
     hasEnumerationKind: EnumerationKind
     hasExternalReference: ExternalReference
 
@@ -162,7 +162,7 @@ class EnumeratedObservableProperty(EnumerableProperty, ObservableProperty):
     Such as a On-Off Status.
     """
 
-    node_type: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -173,7 +173,7 @@ class EnumeratedActuatableProperty(EnumerableProperty, ActuatableProperty):
     Such as a On-Off command.
     """
 
-    node_type: URIRef = s223.EnumeratedActuatableProperty
+    _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:

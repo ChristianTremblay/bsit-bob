@@ -23,19 +23,19 @@ _namespace = g36
 
 
 class AnalogIn(InputConnector):
-    node_type = g36.AnalogIn
+    _class_iri =g36.AnalogIn
 
 
 class AnalogOut(OutputConnector):
-    node_type = g36.AnalogOut
+    _class_iri =g36.AnalogOut
 
 
 class BinaryIn(InputConnector):
-    node_type = g36.BinaryIn
+    _class_iri =g36.BinaryIn
 
 
 class BinaryOut(OutputConnector):
-    node_type = g36.BinaryOut
+    _class_iri =g36.BinaryOut
 
 
 class G36Sequence(FunctionBlock):
@@ -51,7 +51,7 @@ class G36Sequence(FunctionBlock):
     Comment of this block is the description of the sequence.
     """
 
-    node_type = g36.FunctionBlock
+    _class_iri =g36.FunctionBlock
 
 
 class G36Figure_A_1(G36Sequence):

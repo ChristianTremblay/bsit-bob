@@ -26,33 +26,33 @@ GlycoledWater = Water("GlycoledWater")
 Steam = Water("Steam")
 
 # class DomesticWater(Water):
-#     node_type: URIRef = s223["Water-DomesticWater"]
+#     _class_iri: URIRef = s223["Water-DomesticWater"]
 
 
 # class DomesticHotWater(Water):
-#     node_type: URIRef = s223["Water-DomesticHotWater"]
+#     _class_iri: URIRef = s223["Water-DomesticHotWater"]
 
 
 # class ChilledWater(Water):
-#     node_type: URIRef = s223["Water-ChilledWater"]
+#     _class_iri: URIRef = s223["Water-ChilledWater"]
 
 
 # class HotWater(Water):
-#     node_type: URIRef = s223["Water-HotWater"]
+#     _class_iri: URIRef = s223["Water-HotWater"]
 
 
 # class CondensedWater(Water):
-#     node_type: URIRef = s223["Water-CondensedWater"]
+#     _class_iri: URIRef = s223["Water-CondensedWater"]
 
 
 # class GlycoledWater(Water):
 #     # glycol_proportion =
-#     node_type: URIRef = s223["Water-GlycoledWater"]
+#     _class_iri: URIRef = s223["Water-GlycoledWater"]
 
 
 # class Steam(Water):
 #     # glycol_proportion =
-#     node_type: URIRef = s223["Water-Steam"]
+#     _class_iri: URIRef = s223["Water-Steam"]
 
 
 # Connections
@@ -65,216 +65,216 @@ Steam = Water("Steam")
 # === WATER
 class WaterConnection(Connection):
     hasMedium: Medium = Water
-    node_type = None
+    _class_iri =None
 
 
 class WaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water
-    node_type = None
+    _class_iri =None
 
 
 class WaterInletConnectionPoint(InletConnectionPoint, WaterConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class WaterOutletConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class WaterSystemConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water
-    node_type = None
+    _class_iri =None
 
 
 class WaterInletSystemConnectionPoint(InletConnectionPoint, WaterConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class WaterOutletSystemConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 # === HOT WATER
 class HotWaterConnection(Connection):
     hasMedium: Medium = HotWater
-    node_type = None
+    _class_iri =None
 
 
 class HotWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = HotWater
-    node_type = None
+    _class_iri =None
 
 
 class HotWaterInletConnectionPoint(InletConnectionPoint, HotWaterConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = HotWater
-    node_type = None
+    _class_iri =None
 
 
 class HotWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, HotWaterSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class HotWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, HotWaterSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 # === HOT WATER
 class MixedWaterConnection(Connection):
     hasMedium: Medium = MixedWater
-    node_type = None
+    _class_iri =None
 
 
 class MixedWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = MixedWater
-    node_type = None
+    _class_iri =None
 
 
 class MixedWaterInletConnectionPoint(InletConnectionPoint, MixedWaterConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class MixedWaterOutletConnectionPoint(OutletConnectionPoint, MixedWaterConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class MixedWaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = MixedWater
-    node_type = None
+    _class_iri =None
 
 
 class MixedWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, MixedWaterSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class MixedWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, MixedWaterSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 # === STEAM
 class SteamConnection(Connection):
     hasMedium: Medium = Steam
-    node_type = None
+    _class_iri =None
 
 
 class SteamConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Steam
-    node_type = None
+    _class_iri =None
 
 
 class SteamInletConnectionPoint(InletConnectionPoint, SteamConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class SteamOutletConnectionPoint(OutletConnectionPoint, SteamConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class SteamSystemConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Steam
-    node_type = None
+    _class_iri =None
 
 
 class SteamInletSystemConnectionPoint(InletConnectionPoint, SteamSystemConnectionPoint):
-    node_type = None
+    _class_iri =None
 
 
 class SteamOutletSystemConnectionPoint(
     OutletConnectionPoint, SteamSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 # === CHILLED WATER
 class ChilledWaterConnection(Connection):
     hasMedium: Medium = ChilledWater
-    node_type = None
+    _class_iri =None
 
 
 class ChilledWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = ChilledWater
-    node_type = None
+    _class_iri =None
 
 
 class ChilledWaterInletConnectionPoint(
     InletConnectionPoint, ChilledWaterConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class ChilledWaterOutletConnectionPoint(
     OutletConnectionPoint, ChilledWaterConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = ChilledWater
-    node_type = None
+    _class_iri =None
 
 
 class ChilledWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class ChilledWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 # === CONDENSED WATER
 class CondensedWaterConnection(Connection):
     hasMedium: Medium = CondensedWater
-    node_type = None
+    _class_iri =None
 
 
 class CondensedWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = CondensedWater
-    node_type = None
+    _class_iri =None
 
 
 class CondensedWaterInletConnectionPoint(
     InletConnectionPoint, CondensedWaterConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class CondensedWaterOutletConnectionPoint(
     OutletConnectionPoint, CondensedWaterConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class CondensedWaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = CondensedWater
-    node_type = None
+    _class_iri =None
 
 
 class CondensedWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None
 
 
 class CondensedWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
 ):
-    node_type = None
+    _class_iri =None

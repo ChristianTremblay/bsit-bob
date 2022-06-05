@@ -20,7 +20,7 @@ _namespace = s223
 
 
 class Thermostat(Device):
-    node_type: URIRef = s223.Thermostat
+    _class_iri: URIRef = s223.Thermostat
     temperature: PropertyReference
     setpoint: PropertyReference
     differential: PropertyReference
@@ -28,7 +28,7 @@ class Thermostat(Device):
 
 
 class Pressurestat(Device):
-    node_type: URIRef = s223.Pressurestat
+    _class_iri: URIRef = s223.Pressurestat
     pressure: PropertyReference
     setpoint: PropertyReference
     differential: PropertyReference
@@ -36,7 +36,7 @@ class Pressurestat(Device):
 
 
 class Humidistat(Device):
-    node_type: URIRef = s223.Humidistat
+    _class_iri: URIRef = s223.Humidistat
     humidity: PropertyReference
     setpoint: PropertyReference
     differential: PropertyReference
@@ -152,7 +152,7 @@ class NetworkRoomSensor(Device):
     But no outputs to activate loads.
     """
 
-    node_type: URIRef = s223.NetworkRoomSensor
+    _class_iri: URIRef = s223.NetworkRoomSensor
 
     def __init__(self, config: Dict = NetworkRoomSensor_template, **kwargs):
         config["properties"] = config.get(
@@ -197,7 +197,7 @@ class FlowSwitch(Device):
     A contact On Off controlled by static pressure in duct
     """
 
-    node_type: URIRef = s223.Flowswitch
+    _class_iri: URIRef = s223.Flowswitch
 
     def __init__(self, config: Dict = flowswitch_template, **kwargs):
         config["properties"] = config.get(

@@ -38,7 +38,7 @@ chilledWaterCoil_template = {
 
 
 class HeatExchanger(Device):
-    node_type: URIRef = s223.HeatExchanger
+    _class_iri: URIRef = s223.HeatExchanger
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 
@@ -51,7 +51,7 @@ class Accumulator(Device):
     will repeat.
     """
 
-    node_type: URIRef = s223.HeatExchanger
+    _class_iri: URIRef = s223.HeatExchanger
     outdoorSide: AirBidirectionalConnectionPoint
     indoorSide: AirBidirectionalConnectionPoint
 
@@ -63,7 +63,7 @@ class Accumulator4SidesDuct(Device):
     Return and supply are directional, but accumulator 1 and 2 are bidirectional
     """
 
-    node_type: URIRef = p223.FourSideDuctForHeatExchanger
+    _class_iri: URIRef = p223.FourSideDuctForHeatExchanger
     accumulator1Connection: AirBidirectionalConnectionPoint
     accumulator2Connection: AirBidirectionalConnectionPoint
     supplyDuctOutlet: AirOutletConnectionPoint

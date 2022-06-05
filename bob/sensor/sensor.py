@@ -86,7 +86,7 @@ class Sensor(Device):
     A sensor can have only one measurement (observesProperty)
     """
 
-    node_type: URIRef = s223.Sensor
+    _class_iri: URIRef = s223.Sensor
     # ISSUE
     # How can I define that ?
     # hasMeasurementLocation: Union[
@@ -157,23 +157,23 @@ def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
 
 class DifferentialSensor(Sensor):
     "Differential sensor"
-    node_type: URIRef = s223.DifferentialSensor
+    _class_iri: URIRef = s223.DifferentialSensor
     # hasMeasurementLocation: # maxCount = 2, minCount=2
 
 
 class VirtualSensor(Sensor):
     "Virtal Sensor"
-    node_type: URIRef = s223.VirtualSensor
+    _class_iri: URIRef = s223.VirtualSensor
     # hasMeasurementLocation: # maxCount = 0
     hasFunctionInput: Property
 
 
 # class MeasuredProperty(ObservableProperty):
-#    node_type: URIRef = None
+#    _class_iri: URIRef = None
 #    isObservedBy: Sensor
 
 
 # class QuantifiableMeasuredProperty(QuantifiableObservableProperty, MeasuredProperty):
-#    node_type: URIRef = None
+#    _class_iri: URIRef = None
 # hasQuantityKind inherited from QuantifiableProperty
 # isObservedBy inherited from MeasuredProperty

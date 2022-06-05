@@ -31,7 +31,7 @@ _namespace = s223
 
 
 class Connector(Node):
-    node_type: URIRef = s223.Connector
+    _class_iri: URIRef = s223.Connector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         logging.debug(f"Connector.__init__ {function_block} {kwargs}")
@@ -54,7 +54,7 @@ class Connector(Node):
 
 
 class InputConnector(Connector):
-    node_type: URIRef = s223.InputConnector
+    _class_iri: URIRef = s223.InputConnector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
@@ -63,7 +63,7 @@ class InputConnector(Connector):
 
 
 class OutputConnector(Connector):
-    node_type: URIRef = s223.OutputConnector
+    _class_iri: URIRef = s223.OutputConnector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
@@ -107,35 +107,35 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
 
 
 class AnalogInput(InputConnector):
-    node_type: URIRef = s223.AnalogInput
+    _class_iri: URIRef = s223.AnalogInput
 
 
 class AnalogOutput(OutputConnector):
-    node_type: URIRef = s223.AnalogOutput
+    _class_iri: URIRef = s223.AnalogOutput
 
 
 class BinaryInput(InputConnector):
-    node_type: URIRef = s223.BinaryInput
+    _class_iri: URIRef = s223.BinaryInput
 
 
 class BinaryOutput(OutputConnector):
-    node_type: URIRef = s223.BinaryOutput
+    _class_iri: URIRef = s223.BinaryOutput
 
 
 class Parameter(Node):
-    node_type: URIRef = s223.Parameter
+    _class_iri: URIRef = s223.Parameter
 
 
 class Constant(Parameter):
-    node_type: URIRef = s223.Constant
+    _class_iri: URIRef = s223.Constant
 
 
 class AnalogConstant(Constant):
-    node_type: URIRef = None
+    _class_iri: URIRef = None
 
 
 class BinaryConstant(Constant):
-    node_type: URIRef = None
+    _class_iri: URIRef = None
 
 
 #
@@ -152,7 +152,7 @@ class FunctionBlock(Node):
     Connections from or to a function block are made from/to properties only
     """
 
-    node_type: URIRef = s223.FunctionBlock
+    _class_iri: URIRef = s223.FunctionBlock
     _connectors: Dict[str, Connector]
     _parameters: Dict[str, Parameter]
 
@@ -217,8 +217,8 @@ class FunctionBlock(Node):
 
 
 class ElementaryBlock(FunctionBlock):
-    node_type: URIRef = s223.ElementaryBlock
+    _class_iri: URIRef = s223.ElementaryBlock
 
 
 class CompositeBlock(FunctionBlock):
-    node_type: URIRef = s223.CompositeBlock
+    _class_iri: URIRef = s223.CompositeBlock
