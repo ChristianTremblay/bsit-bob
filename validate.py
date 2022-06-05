@@ -87,6 +87,21 @@ parser.add_argument(
     help="store the inference graph",
 )
 
+# load/run inference rules in s223 standard inference directory
+parser.add_argument(
+    "--s223-sparql-rule",
+    action="store_true",
+    help="runs SPARQL construct rules in inference directory",
+)
+
+# run file(s) of sparql rules
+parser.add_argument(
+    "--sparql-rule",
+    type=str,
+    nargs='+',
+    help="runs SPARQL rules in file",
+)
+
 # sample additional option to store the post-validate graph
 parser.add_argument(
     "--report",
@@ -140,6 +155,15 @@ if args.ontology:
     ontology_graph.parse(fname, format="turtle")
     if args.info and sys.stdin.isatty():
         print(f"ontology triples: {len(ontology_graph)}")
+
+if args.s223_sparql_rule:
+    for fname in glob.glob(os.path.join(S223_DIRECTORY, "inference", "*.ttl")):
+        logging.debug(fname)
+        shacl_graph.load(fname, format="turtle")
+if args.sparql_rule:
+    for fname in args.sparql_rule:
+        shacl_graph.parse(fname, format = 'turtle')
+        print(shacl_graph.print())
 
 # expand the graph
 if args.rdfs or args.owlrl or args.both:
