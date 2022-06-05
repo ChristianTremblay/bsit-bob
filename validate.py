@@ -86,15 +86,17 @@ parser.add_argument(
     type=str,
     help="store the inference graph",
 )
-#run inference rules in s223standard inference directory
+
+# load/run inference rules in s223 standard inference directory
 parser.add_argument(
-    "--s223_sparql_rule",
+    "--s223-sparql-rule",
     action="store_true",
     help="runs SPARQL construct rules in inference directory",
 )
-#run file of sparql_rules
+
+# run file(s) of sparql rules
 parser.add_argument(
-    "--sparql_rule",
+    "--sparql-rule",
     type=str,
     nargs='+',
     help="runs SPARQL rules in file",
