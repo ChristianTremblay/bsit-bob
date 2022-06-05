@@ -44,16 +44,16 @@ class QuantifiableProperty(Property):
     A property to be expressed as a quantity, it has units.
     """
 
-    _attr_uriref = {"unit": qudt["unit"], "hasQuantityKind": qudt["hasQuantityKind"]}
-
     _class_iri: URIRef = s223.QuantifiableProperty
-    hasQuantityKind: URIRef
-    unit: URIRef
     hasExternalReference: ExternalReference
+    unit: URIRef
+    hasQuantityKind: URIRef
 
     def __init__(self, value: Any = None, **kwargs: Any) -> None:
         logging.debug(f"QuantifiableProperty.__init__ {value!r} {kwargs}")
-
+        self._attr_uriref.update(
+            {"unit": qudt["unit"], "hasQuantityKind": qudt["hasQuantityKind"]}
+        )
         init_value = None
         if value is None:
             if "hasValue" in kwargs:
@@ -83,7 +83,6 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
     """
 
     _class_iri: URIRef = s223.QuantifiableActuatableProperty
-    hasExternalReference: ExternalReference
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -98,8 +97,6 @@ class Setpoint(QuantifiableProperty):
     hasApsect: EnumerationKind
     hasDeadband: Literal
     hasValue: Literal
-    hasQuantityKind: URIRef
-    unit: URIRef
 
     def __init__(self, **kwargs):
         _properties = {}

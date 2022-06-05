@@ -4,6 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -228,9 +229,9 @@ ex:00026 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "ZN-T.Temperature" ;
-    s223:hasQuantityKind quantitykind:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:DEG_C .
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex:00027 a s223:Connectable,
         s223:Damper,
         s223:Device ;
@@ -354,9 +355,9 @@ ex:00043 a s223:Flow,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "SA-F.Flow" ;
-    s223:hasQuantityKind quantitykind:VolumeFlowRate ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:L_PER_SEC .
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:unit unit:L_PER_SEC .
 ex:00044 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
@@ -372,9 +373,9 @@ ex:00045 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "DA-T.Temperature" ;
-    s223:hasQuantityKind quantitykind:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:DEG_C .
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex:00046 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
@@ -389,9 +390,9 @@ ex:00047 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "ZN-T.Temperature" ;
-    s223:hasQuantityKind quantitykind:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:DEG_C .
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex:00048 a s223:Connectable,
         s223:Damper,
         s223:Device ;
@@ -438,8 +439,8 @@ ex:00053 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "command" ;
     s223:hasExternalReference ex:00054 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    s223:unit unit:PERCENT .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 ex:00054 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/sample005/00051>" .
@@ -450,8 +451,8 @@ ex:00055 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference ex:00056 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    s223:unit unit:PERCENT .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 ex:00056 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/sample005/00051>" .
@@ -462,8 +463,8 @@ ex:00057 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference ex:00058 ;
-    s223:hasQuantityKind quantitykind:Torque ;
-    s223:unit unit:N-M .
+    qudt:hasQuantityKind quantitykind:Torque ;
+    qudt:unit unit:N-M .
 ex:00058 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/sample005/00051>" .

@@ -4,6 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -77,10 +78,10 @@ ex30:00008 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "fine_sensor.ParticulateCount" ;
     s223:hasExternalReference ex30:00009 ;
-    s223:hasQuantityKind quantitykind:NumberDensity ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance s223:Substance-PM2.5 ;
-    s223:unit unit:NUM-PER-M3 .
+    qudt:hasQuantityKind quantitykind:NumberDensity ;
+    qudt:unit unit:NUM-PER-M3 .
 ex30:00009 a s223:ExternalReference ;
     rdfs:label "fine_sensor.ParticulateCount.ExternalReference" ;
     s223:hasRef "bacnet://1/analog-input,2/present-value" .
@@ -100,10 +101,10 @@ ex30:00011 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "ultrafine_sensor.ParticulateCount" ;
     s223:hasExternalReference ex30:00012 ;
-    s223:hasQuantityKind quantitykind:NumberDensity ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance s223:Substance-PM1.0 ;
-    s223:unit unit:NUM-PER-M3 .
+    qudt:hasQuantityKind quantitykind:NumberDensity ;
+    qudt:unit unit:NUM-PER-M3 .
 ex30:00012 a s223:ExternalReference ;
     rdfs:label "ultrafine_sensor.ParticulateCount.ExternalReference" ;
     s223:hasRef "bacnet://1/analog-input,3/present-value" .
