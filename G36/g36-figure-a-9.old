@@ -5,7 +5,7 @@ Figure A-9
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict
 
 from header import g36_header
 
@@ -19,7 +19,9 @@ from bob.connections.air import (
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import Device, Junction, System, bind_model_namespace, dump
 from bob.devices.hvac.fan import Fan
-from bob.signal import AnalogIn, AnalogOut
+from bob.properties.flow import Flow
+from bob.properties.force import DifferentialStaticPressure
+from bob.properties.ratio import PercentCommand
 from bob.systems.archives.coolingcoil import ChilledWaterCoil2
 from bob.systems.archives.heatingcoil import HotWaterCoil2
 
@@ -32,23 +34,23 @@ _namespace = bind_model_namespace(
 class AirFilter(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    dp = AnalogIn
+    dp = DifferentialStaticPressure
 
 
 class AirFlowStation(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    flow = AnalogIn
+    flow = Flow
 
 
 class DamperPositioner(Device):
-    position = AnalogOut
+    position = PercentCommand
 
 
 class Damper(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position: AnalogOut
+    position: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)

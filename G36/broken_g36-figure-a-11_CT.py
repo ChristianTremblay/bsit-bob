@@ -23,6 +23,7 @@ from bob.connections.water import (
 )
 from bob.core import (
     BidirectionalSystemConnectionPoint,
+    Node,
     System,
     bind_model_namespace,
     clear,
@@ -36,11 +37,16 @@ from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.stats import HighStaticPressureStat
 from bob.devices.hvac.valve import TwoWayValve
 from bob.devices.hvac.vfd import VFD
-from bob.externalreference.bacnet import BACnetReference
+from bob.externalreference.bacnet import BACnetDevice, BACnetReference
+from bob.functions import InputConnector
+
+# from bob.systems.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
+from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
+from bob.properties.ratio import Percent, PercentCommand
+from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.fire import SmokeDetectionSensor
 from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor
-from bob.systems.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
@@ -63,6 +69,9 @@ vfd_template = {
         "comment": "VFD for Fan",
         "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
         "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
+        "drive_running": 0,
+        "run_command": 0,
+        "speed_reference": 0,
     },
     "sensors": {},
     "devices": {},
@@ -86,17 +95,16 @@ class VFDController(System):
     bacnetIP: EthernetBidirectionalSystemConnectionPoint
 
 
-class FIG_A_11(G36Block):
-    sf_high_static_reset: BinaryOut
-    return_air_temp: AnalogIn
-    filter_dp: AnalogIn
-    hw_valve: AnalogOut
-    sf_status: BinaryIn
-    sf_speed: AnalogOut
-    sf_start: BinaryOut
-    supply_air_temp: AnalogIn
-    duct_static_press: AnalogIn
-    network: RS485BidirectionalSystemConnectionPoint
+class FIG_A_11(G36Sequence):
+    # network: Node
+    returnAirTemp: AnalogIn
+    dischargeAirTemp: AnalogIn
+    filterDiffPressure: AnalogIn
+    ductStaticPressure: AnalogIn
+    highStaticReset: BinaryIn
+    fanStatus: BinaryIn
+    fanStart: BinaryOut
+    fanSpeed: AnalogOut
 
 
 # HVAC Side
@@ -112,6 +120,7 @@ hw_valve = TwoWayValve(
     comment="Hot Water Valve",
     waterInlet=HotWaterInletConnectionPoint,
     waterOutlet=HotWaterOutletConnectionPoint,
+    hasPositionCommand=0,
 )
 
 f = Fan(config=fan_template)
@@ -156,12 +165,20 @@ vfd_controller = VFDController(
     label="VFDController",
     comment="This is the abstraction of the VFD Controller that interact with other systems like DDC controlers and other controllers. Each property is related to something in the device itself.",
 )
-
+vfd_bacnet = BACnetDevice(
+    label="VFDBACNET",
+    comment="BACnet controller of VFD",
+    deviceId=5206,
+    deviceName="VFD",
+    networkNumber=2,
+    address=6,
+    vendorId=5,
+)
 
 # Connections
 
+vfd.electricalOutlet >> f.electricalInlet
 # Air
-vfd >> f
 ra >> filter >> hwc >> f >> sa
 
 # Water
@@ -192,15 +209,15 @@ high_static.enableVFD.mapsTo = vfd_controller.enable
 
 # vfd > vfd_controller  ###TODO: devices cannot contain systems
 
-a11.return_air_temp.uses_input(rat.observesProperty)
-a11.supply_air_temp.uses_input(dat.observesProperty)
-a11.sf_high_static_reset.uses_input(high_static.resetInput)
-a11.filter_dp.uses_input(dpt1.observesProperty)
-a11.hw_valve.uses_input(hw_valve.observesProperty)
-a11.sf_status.uses_input(vfd_controller.status)
-a11.sf_start.uses_input(vfd_controller.run)
-a11.sf_speed.uses_input(vfd_controller.speed)
-a11.duct_static_press.uses_input(dpt2.observesProperty)
-a11.network.uses_input(vfd_controller.mstp)
+a11.uses_input(rat.observesProperty)
+a11.uses_input(dat.observesProperty)
+# a11.uses_input(high_static.resetInput)
+a11.uses_input(dpt1.observesProperty)
+a11.produces_output(hw_valve.hasPositionCommand)
+a11.uses_input(vfd.drive_running)
+a11.produces_output(vfd.run_command)
+a11.produces_output(vfd.speed_reference)
+a11.uses_input(dpt2.observesProperty)
+# a11.network.uses_input(vfd_controller.mstp) Is Network part of the G36 requirement ? Should this be there ?
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

@@ -3,6 +3,7 @@ from typing import Any
 from rdflib import URIRef
 
 from bob.connections.naturalgas import NaturalGasInletConnectionPoint
+from bob.properties import Percent, PercentCommand
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import ElectricalInletConnectionPoint
@@ -12,7 +13,6 @@ from ...connections.water import (
     WaterInletConnectionPoint,
 )
 from ...core import Device, p223, s223
-from ...signal import AnalogOut
 
 _namespace = p223
 
@@ -33,9 +33,9 @@ class Humidifier(Device):
 
 class ElectricalHumidifier(Humidifier):
     powerInlet: ElectricalInletConnectionPoint
-    modulation = AnalogOut
+    modulation = PercentCommand
 
 
 class NaturalGasHumidifier(Humidifier):
     naturalGasInlet: NaturalGasInletConnectionPoint
-    modulation = AnalogOut
+    modulation = PercentCommand

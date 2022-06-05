@@ -37,8 +37,14 @@ class OnOffStatus(EnumeratedObservableProperty):
     hasEnumerationKind: OnOffEnum
 
 
-class OnOffCommand(EnumeratedActuatableProperty):
-    _class_iri: URIRef = s223.EnumeratedActuatableProperty
+class NormalAlarmStatus(ObservableProperty):
+    _class_iri: URIRef = p223.NormalAlarmStatus
+    hasExternalReference: ExternalReference
+    measuresMedium: Medium
+
+
+class OnOffCommand(ActuatableProperty):
+    _class_iri: URIRef = p223.OnOffCommand
     hasExternalReference: ExternalReference
     hasEnumerationKind: OnOffEnum
 

@@ -1,7 +1,10 @@
 @prefix exg3608: <http://data.ashrae.org/standard223/data/g36-figure-a-8#> .
-@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 exg3608:00001 a s223:System,
         exg3608:VAV ;
     rdfs:label "A-8" ;
@@ -69,8 +72,19 @@ exg3608:00008 a s223:Connectable,
     rdfs:label "A-8.hot_deck_damper.damper_positioner" ;
     s223:hasProperty exg3608:00009 ;
     exg3608:position exg3608:00009 .
+<<<<<<< HEAD
 exg3608:00009 a s223:Property,
         g36:AnalogOut .
+=======
+exg3608:00009 a p223:PercentCommand,
+        s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "A-8.hot_deck_damper.damper_positioner.position" ;
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
+>>>>>>> master
 exg3608:00010 a s223:Connectable,
         s223:Device,
         exg3608:Damper ;
@@ -102,8 +116,19 @@ exg3608:00013 a s223:Connectable,
     rdfs:label "A-8.cold_deck_damper.damper_positioner" ;
     s223:hasProperty exg3608:00014 ;
     exg3608:position exg3608:00014 .
+<<<<<<< HEAD
 exg3608:00014 a s223:Property,
         g36:AnalogOut .
+=======
+exg3608:00014 a p223:PercentCommand,
+        s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "A-8.cold_deck_damper.damper_positioner.position" ;
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
+>>>>>>> master
 exg3608:00015 a s223:Connectable,
         s223:Device,
         exg3608:AirFlowStation ;

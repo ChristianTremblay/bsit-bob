@@ -12,7 +12,14 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import System, SystemConnectionPoint, bind_model_namespace, dump, s223
+from bob.core import (
+    System,
+    SystemConnectionPoint,
+    bind_model_namespace,
+    dump,
+    s223,
+    unit,
+)
 from bob.devices.hvac.coil import ElectricalHeatingCoil
 from bob.devices.hvac.fan import Fan
 from bob.devices.lighting.light import Luminaire
@@ -53,8 +60,8 @@ garage_hvac.ductAirOutlet >> fan.airInlet
 fan.airOutlet >> heating_coil.airInlet
 heating_coil.airOutlet >> garage_hvac.ductAirInlet
 
-dat = AirTemperatureSensor(label="Discharge Air temperature sensor")
-znt = AirTemperatureSensor(label="Zone Air temperature sensor")
+dat = AirTemperatureSensor(label="Discharge Air temperature sensor", unit=unit.DEG_C)
+znt = AirTemperatureSensor(label="Zone Air temperature sensor", unit=unit.DEG_C)
 
 dat.hasMeasurementLocation = heating_coil.airOutlet
 znt.hasMeasurementLocation = garage_hvac

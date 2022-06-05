@@ -19,8 +19,8 @@ class CurrentSwitch(Device):
     """
 
     _class_iri = s223.CurrentSwitch
-    hasStatusOutlet: OnOffSignalOutletConnectionPoint
-    hasOnOffStatus: OnOffStatus
+    outputSignal: OnOffSignalOutletConnectionPoint
+    onOffStatus: OnOffStatus
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
@@ -36,5 +36,6 @@ class CurrentSwitch(Device):
             ofMedium=_ofMedium,
             hasMeasurementLocation=_hasMeasurementLocation,
         )
+        self.onOffStatus = sensor.observesProperty
         self._sensors = [sensor]
         self > sensor

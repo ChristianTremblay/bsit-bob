@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 
 from rdflib import URIRef
 
@@ -10,6 +10,7 @@ from bob.connections.naturalgas import (
     NaturalGasInletConnectionPoint,
     NaturalGasOutletConnectionPoint,
 )
+from bob.properties.ratio import PercentCommand
 
 from ...connections.electricity import (
     ModulationSignalInletConnectionPoint,
@@ -25,42 +26,62 @@ from ...connections.water import (
 )
 from ...core import Device, PropertyReference, s223
 from ...properties import Gallons, Percent
+from .actuator import ElectricalActuator
 
 _namespace = s223
 
-# ISSUE
-# Technically, valve are manual, electrical, pneumatic... should we define
-# all classes or find a way to make it ?
+valve2w_template = {
+    "cp": {
+        "waterInlet": WaterInletConnectionPoint,
+        "waterOutlet": WaterOutletConnectionPoint,
+        "positionInlet": ModulationSignalInletConnectionPoint,
+        "onOffInlet": OnOffSignalInletConnectionPoint,
+    },
+    "properties": {
+        ("flowCoefficient", Gallons): {},
+    },
+}
+
+valve_3w_diverting_template = {
+    "cp": {
+        "waterInletAB": WaterInletConnectionPoint,
+        "waterOutletA": WaterOutletConnectionPoint,
+        "waterOutletB": WaterOutletConnectionPoint,
+        "positionInlet": ModulationSignalInletConnectionPoint,
+        "onOffInlet": OnOffSignalInletConnectionPoint,
+    },
+    "properties": {
+        ("flowCoefficient", Gallons): {},
+    },
+}
+
+valve_3w_mixing_template = {
+    "cp": {
+        "waterInletAB": WaterInletConnectionPoint,
+        "waterOutletA": WaterOutletConnectionPoint,
+        "waterOutletB": WaterOutletConnectionPoint,
+        "positionInlet": ModulationSignalInletConnectionPoint,
+        "onOffInlet": OnOffSignalInletConnectionPoint,
+    },
+    "properties": {
+        ("flowCoefficient", Gallons): {},
+    },
+}
 
 
 class Valve(Device):
     _class_iri: URIRef = s223.Valve
-    positionInlet: ModulationSignalInletConnectionPoint
-    onOffInlet: OnOffSignalInletConnectionPoint
-    flowCoefficient: Gallons
-    hasPositionCommand: Percent
-    hasPositionFeedback: Percent
-
-    def __init__(self, **kwargs):
-        _properties = {}
-        for k, v in self.__annotations__.items():
-            if k in kwargs:
-                _properties[k] = kwargs.pop(k)
-        super().__init__(**kwargs)
-        for k, v in _properties.items():
-            if v is not None:
-                setattr(self, k, self.__annotations__[k](v))
+    position: PropertyReference
+    feedback: PropertyReference
 
 
 class TwoWayValve(Valve):
     _class_iri: URIRef = s223.Valve
 
-    def __init__(self, **kwargs):
-        _waterInlet = kwargs.pop("waterInlet", WaterInletConnectionPoint)
-        _waterOutlet = kwargs.pop("waterOutlet", WaterOutletConnectionPoint)
-        super().__init__(**kwargs)
-        self.waterInlet = _waterInlet(self)
-        self.waterOutlet = _waterOutlet(self)
+    def __init__(self, config: Dict = valve2w_template, **kwargs):
+        config["properties"] = config.get("properties", valve2w_template["properties"])
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
 
 class ThreeWayValveDiverting(Valve):
@@ -70,14 +91,12 @@ class ThreeWayValveDiverting(Valve):
 
     _class_iri: URIRef = s223.Valve
 
-    def __init__(self, **kwargs):
-        _waterInletAB = kwargs.pop("waterInletAB", WaterInletConnectionPoint)
-        _waterOutletA = kwargs.pop("waterOutletA", WaterOutletConnectionPoint)
-        _waterOutletB = kwargs.pop("waterOutletB", WaterOutletConnectionPoint)
-        super().__init__(**kwargs)
-        self.waterInletAB = _waterInletAB(self)
-        self.waterOutletA = _waterOutletA(self)
-        self.waterOutletB = _waterOutletB(self)
+    def __init__(self, config: Dict = valve_3w_diverting_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", valve_3w_diverting_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
 
 class ThreeWayValveMixing(Valve):
@@ -87,23 +106,81 @@ class ThreeWayValveMixing(Valve):
 
     _class_iri: URIRef = s223.Valve
 
-    def __init__(self, **kwargs):
-        _waterInletA = kwargs.pop("waterInletA", WaterInletConnectionPoint)
-        _waterInletB = kwargs.pop("waterInletB", WaterInletConnectionPoint)
-        _waterOutletAB = kwargs.pop("waterOutletAB", WaterOutletConnectionPoint)
-        super().__init__(**kwargs)
-        self.waterInletA = _waterInletA(self)
-        self.waterInletB = _waterInletB(self)
-        self.waterOutletAB = _waterOutletAB(self)
+    def __init__(self, config: Dict = valve_3w_mixing_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", valve_3w_mixing_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
 
 
-class NaturalGasValve(Valve):
-    _class_iri: URIRef = s223.Valve
+class NaturalGasValve(TwoWayValve):
+    _class_iri: URIRef = s223.NaturalGasValve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
 
 
-class PneumaticValve(Valve):
-    _class_iri: URIRef = s223.Valve
+class PneumaticValve(TwoWayValve):
+    _class_iri: URIRef = s223.PneumaticValve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint
+
+
+actuated_valve_template = {
+    "devices": {("actuator", ElectricalActuator): {}},
+    "properties": {},
+}
+
+
+class TwoWayActuatedValve(TwoWayValve):
+    node_type: URIRef = s223.Valve
+
+    def __init__(
+        self, config: Dict = {**actuated_valve_template, **valve2w_template}, **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties", {**actuated_valve_template, **valve2w_template}["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.position = self["actuator"]["position"]
+        self.torque = self["actuator"]["torque"]
+        self["actuator"].actuates = self
+
+
+class ThreeWayMixingActuatedValve(ThreeWayValveMixing):
+    node_type: URIRef = s223.Valve
+
+    def __init__(
+        self,
+        config: Dict = {**actuated_valve_template, **valve_3w_mixing_template},
+        **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties",
+            {**actuated_valve_template, **valve_3w_mixing_template}["properties"],
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.position = self["actuator"]["position"]
+        self.torque = self["actuator"]["torque"]
+        self["actuator"].actuates = self
+
+
+class ThreeWayDivertingActuatedValve(ThreeWayValveDiverting):
+    node_type: URIRef = s223.Valve
+
+    def __init__(
+        self,
+        config: Dict = {**actuated_valve_template, **valve_3w_diverting_template},
+        **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties",
+            {**actuated_valve_template, **valve_3w_diverting_template}["properties"],
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.position = self["actuator"]["position"]
+        self.torque = self["actuator"]["torque"]
+        self["actuator"].actuates = self

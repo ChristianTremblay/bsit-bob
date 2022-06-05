@@ -27,6 +27,7 @@ from bob.core import (
     bind_model_namespace,
     dump,
     s223,
+    unit,
 )
 from bob.devices.hvac import Fan
 from bob.devices.hvac.airflowstation import AirFlowMonitor
@@ -34,7 +35,7 @@ from bob.devices.hvac.coil import ChilledWaterCoil
 from bob.devices.hvac.damper import Damper
 from bob.devices.hvac.filter import Filter
 from bob.enum import Exhaust, Supply
-from bob.signal import AnalogIn, AnalogOut
+from bob.properties.temperature import Temperature
 from bob.space.hvac import HVACZone
 
 # from header import g36_header
@@ -46,7 +47,7 @@ _namespace = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 class TemperatureSensor(Device):
     connection: AirInletConnectionPoint
-    temperature = AnalogIn
+    temperature = Temperature
 
     # not sure about this at all, should be air inlet outlet, something else? If I make it one of the directional connections, which?
     # Should a temperature output be its own property?
@@ -123,7 +124,7 @@ class RooftopUnit(System):
 
         # ALTERNATIVELY
         pre_filtered = Segment()
-        sensor = TemperatureSensor(label=self.label + ".MA_sensor")
+        sensor = TemperatureSensor(label=self.label + ".MA_sensor", unit=unit.DEG_C)
         pre_filtered.link_to(sensor.connection)
 
 

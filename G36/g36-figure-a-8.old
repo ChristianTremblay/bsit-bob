@@ -17,7 +17,8 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.core import Device, System, bind_model_namespace, dump
-from bob.signal import AnalogIn, AnalogOut
+from bob.properties import Flow
+from bob.properties.ratio import PercentCommand
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
@@ -28,17 +29,17 @@ _namespace = bind_model_namespace(
 class AirFlowStation(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    flow = AnalogIn
+    flow = Flow
 
 
 class DamperPositioner(Device):
-    position = AnalogOut
+    position = PercentCommand
 
 
 class Damper(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position: AnalogOut
+    position: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -57,9 +58,9 @@ class VAV(System):
     hotDeckAirInlet: AirInletSystemConnectionPoint
     coldDeckAirInlet: AirInletSystemConnectionPoint
     supplyAirOutlet: AirOutletSystemConnectionPoint
-    supplyAirFlow: AnalogIn
-    hotDeckDamperPosition: AnalogOut
-    coldDeckDamperPosition: AnalogOut
+    supplyAirFlow: Flow
+    hotDeckDamperPosition: PercentCommand
+    coldDeckDamperPosition: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)

@@ -8,7 +8,7 @@ Find the external references for lights which could be read to determine if the 
 
 
 ```
-match (d:Luminaire)-[:hasOnOffStatus]-(s {hasValue: 1})  return count(d)
+match (d:Luminaire)-[:onOffStatus]-(s {hasValue: 1})  return count(d)
 # result = 2
 ```
 
@@ -17,7 +17,7 @@ In the model I set the corridor lights to On (OnOffStatus.hasValue=1)
 
 And the Bathroom to Off (OnOffStatus.hasValue=0)
 ```
-match (d:Luminaire)-[:hasOnOffStatus]-(s {hasValue: 0})  return count(d)
+match (d:Luminaire)-[:onOffStatus]-(s {hasValue: 0})  return count(d)
 # result = 1
 ```
 
@@ -37,6 +37,15 @@ MATCH (s)<-[:hasMeasurementLocation]-(t:Sensor)
 WITH t
 MATCH path=(t)-[:observesProperty]-()-[:hasExternalReference]-(bacnet) return path
 ```
+
+```
+match path=(d:VAV {label:"VAVBox1"})-[:servesZone]-(z)-[:contains]-(s:HVACSpace)
+WITH s
+MATCH (s)<-[:hasMeasurementLocation]-(t:Sensor)
+WITH t
+MATCH (t)-[:observesProperty]-(temp) return temp.hasValue
+```
+
 
 To answer the "number" part, we need to lookup the BACnet value(s)
 

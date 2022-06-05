@@ -43,12 +43,10 @@ def test_junction_or_connection(bob_fixture):
 
     sf = Fan(
         label="Supply Fan",
-        electricalInlet=ElectricalInletConnectionPoint,
         hasPhysicalLocation=mechroom,
     )
     rf = Fan(
         label="Return Fan",
-        electricalInlet=ElectricalInletConnectionPoint,
         hasPhysicalLocation=mechroom,
     )
 

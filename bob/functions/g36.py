@@ -1,64 +1,44 @@
-from rdflib import URIRef
-
-from bob.connections.electricity import (
+from ..connections.electricity import (
     ModulationSignalSystemInletConnectionPoint,
     ModulationSignalSystemOutletConnectionPoint,
     OnOffSignalSystemInletConnectionPoint,
     OnOffSignalSystemOutletConnectionPoint,
 )
-
-from ...connections.air import (
-    AirBidirectionalConnectionPoint,
-    AirInletConnectionPoint,
-    AirInletSystemConnectionPoint,
-    AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
-)
-from ...core import (
-    ExternalReference,
-    InletConnectionPoint,
-    InletSystemConnectionPoint,
-    Outlet,
-    OutletConnectionPoint,
-    OutletSystemConnectionPoint,
-    Property,
-    System,
-    SystemConnectionPoint,
-    bind_namespace,
-    enum,
-    p223,
-)
-from ...functions import (
+from ..core import Node, PropertyReference, bind_namespace
+from ..properties import OccupancyStatus, Schedule
+from ..property import ObservableProperty, QuantifiableObservableProperty
+from . import (
     AnalogInput,
     AnalogOutput,
     BinaryInput,
     BinaryOutput,
     FunctionBlock,
+    InputConnector,
+    OutputConnector,
 )
-from ...property import ObservableProperty, QuantifiableObservableProperty
 
 g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
 
 _namespace = g36
 
 
-class AnalogIn(AnalogInput):
+class AnalogIn(InputConnector):
     _class_iri = g36.AnalogIn
 
 
-class AnalogOut(AnalogOutput):
+class AnalogOut(OutputConnector):
     _class_iri = g36.AnalogOut
 
 
-class BinaryIn(BinaryInput):
+class BinaryIn(InputConnector):
     _class_iri = g36.BinaryIn
 
 
-class BinaryOut(BinaryOutput):
+class BinaryOut(OutputConnector):
     _class_iri = g36.BinaryOut
 
 
-class G36Block(FunctionBlock):
+class G36Sequence(FunctionBlock):
     """
     This function is a subclass of a Function Block kept
     in the namespace of G36.

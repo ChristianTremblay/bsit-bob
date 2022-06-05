@@ -1,7 +1,10 @@
 @prefix exg3607: <http://data.ashrae.org/standard223/data/g36-figure-a-7#> .
-@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
 exg3607:00001 a s223:System,
         exg3607:VAV ;
     rdfs:label "A-7" ;
@@ -101,8 +104,19 @@ exg3607:00012 a s223:Connectable,
     rdfs:label "A-7.hot_deck_damper.damper_positioner" ;
     s223:hasProperty exg3607:00013 ;
     exg3607:position exg3607:00013 .
+<<<<<<< HEAD
 exg3607:00013 a s223:Property,
         g36:AnalogOut .
+=======
+exg3607:00013 a p223:PercentCommand,
+        s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "A-7.hot_deck_damper.damper_positioner.position" ;
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
+>>>>>>> master
 exg3607:00014 a s223:Connection ;
     s223:connectsAt exg3607:00008,
         exg3607:00010 ;
@@ -168,8 +182,19 @@ exg3607:00022 a s223:Connectable,
     rdfs:label "A-7.cold_deck_damper.damper_positioner" ;
     s223:hasProperty exg3607:00023 ;
     exg3607:position exg3607:00023 .
+<<<<<<< HEAD
 exg3607:00023 a s223:Property,
         g36:AnalogOut .
+=======
+exg3607:00023 a p223:PercentCommand,
+        s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "A-7.cold_deck_damper.damper_positioner.position" ;
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
+>>>>>>> master
 exg3607:00024 a s223:Connection ;
     s223:connectsAt exg3607:00018,
         exg3607:00020 ;

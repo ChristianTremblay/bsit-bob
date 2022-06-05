@@ -102,8 +102,8 @@ hd.ahu["TPD3"].hasMeasurementLocationLow = plenum
 
 hd.ahu["RF-VFD"].drive_running = OnOffStatus(label="VFD DriveRunning")
 hd.ahu["RF-VFD"].run_command = OnOffCommand(label="Run Command")
-hd.ahu["RF"].hasOnOffStatus = hd.ahu["RF-VFD"].drive_running
-hd.ahu["RF"].hasOnOffCommand = hd.ahu["RF-VFD"].run_command
+hd.ahu["RF"].onOffStatus = hd.ahu["RF-VFD"].drive_running
+hd.ahu["RF"].onOffCommand = hd.ahu["RF-VFD"].run_command
 
 
 # Windows

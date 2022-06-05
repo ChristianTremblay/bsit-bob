@@ -1,11 +1,11 @@
 """
-Figure A-6
+Figure A-11
 """
 
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict
 
 from header import g36_header
 
@@ -22,30 +22,32 @@ from bob.connections.water import (
     HotWaterOutletConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
-from bob.core import Device, Junction, System, bind_model_namespace, dump
+from bob.core import Device, System, bind_model_namespace, dump
 from bob.devices.hvac.fan import Fan
-from bob.signal import AnalogIn, AnalogOut, BinaryOut
+from bob.properties.force import DifferentialStaticPressure
+from bob.properties.ratio import PercentCommand
+from bob.properties.states import OnOffCommand, OnOffStatus
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
-    "exg3606", f"http://data.ashrae.org/standard223/data/{model_name}#"
+    "exg3611", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 
 
-class AirFlowStation(Device):
+class AirFilter(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    flow = AnalogIn
+    dp = DifferentialStaticPressure
 
 
 class DamperPositioner(Device):
-    position = AnalogOut
+    position = PercentCommand
 
 
 class Damper(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position: AnalogOut
+    position: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -60,24 +62,38 @@ class Damper(Device):
         self.position = self.damper_positioner.position
 
 
+class VFD(Device):
+    fanStatus = OnOffStatus
+    fanSpeedCommand = PercentCommand
+    fanStart = OnOffCommand
+
+
+class VFDFan(Fan):
+    # airInlet: AirInletConnectionPoint - inherits from Fan
+    # airOutlet: AirOutletConnectionPoint - inherits from Fan
+    fanStatus: OnOffStatus
+    fanSpeedCommand: PercentCommand
+    fanStart: OnOffCommand
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+        # create a positioner
+        self.variable_frequency_drive = VFD(label=self.label + ".vfd")
+        self > self.variable_frequency_drive
+
+        # reference the properties
+        self.fanStatus = self.variable_frequency_drive.fanStatus
+        self.fanSpeedCommand = self.variable_frequency_drive.fanSpeedCommand
+        self.fanStart = self.variable_frequency_drive.fanStart
+
+
 class ValvePositioner(Device):
-    position = AnalogOut
+    position = PercentCommand
 
 
 class HotWaterValve(Device):
     pass
-
-
-class ECMFan(Fan):
-    # airInlet: AirInletConnectionPoint
-    # airOutlet: AirOutletConnectionPoint
-    pass
-
-
-class ECM(Device):
-    fanStart = BinaryOut
-    fanSpeedFeedback = AnalogIn
-    fanSpeedCommand = AnalogOut
 
 
 class HotWaterCoil(Device):
@@ -85,7 +101,7 @@ class HotWaterCoil(Device):
     airOutlet: AirOutletConnectionPoint
     hwInlet: HotWaterInletConnectionPoint
     hwOutlet: HotWaterOutletConnectionPoint
-    valvePosition: AnalogOut
+    valvePosition: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -103,35 +119,24 @@ class HotWaterCoil(Device):
 
 
 class VAV(System):
-    supplyAirInlet: AirInletSystemConnectionPoint
     returnAirInlet: AirInletSystemConnectionPoint
+    returnAirFilterDP: DifferentialStaticPressure
     supplyAirOutlet: AirOutletSystemConnectionPoint
-    supplyAirFlow: AnalogIn
-    damperPosition: AnalogOut
+    supplyAirDP: DifferentialStaticPressure
     hwInlet: HotWaterInletSystemConnectionPoint
     hwOutlet: HotWaterOutletSystemConnectionPoint
-    hwValvePosition: AnalogOut
+    hwValvePosition: PercentCommand
 
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
+        _electricalInlet = kwargs.pop("electricalInlet")
 
-        # create an air flow station
-        self.air_flow_station = AirFlowStation(label=self.label + ".air_flow_station")
-        self > self.air_flow_station
-        self.supplyAirInlet.mapsTo = self.air_flow_station.airInlet
-        self.supplyAirFlow = self.air_flow_station.flow
+        super().__init__(config, **kwargs)
 
-        # create a damper
-        self.damper = Damper(label=self.label + ".damper")
-        self > self.damper
-        self.damperPosition = self.damper.position
-
-        # create a fan with an ECM part
-        self.fan = ECMFan(
-            label=self.label + ".fan", electricalInlet=ElectricalInletConnectionPoint
-        )
-        self.fan_ecm = ECM(label=self.label + ".fan.ecm")
-        self > self.fan > self.fan_ecm
+        # create an air filter
+        self.air_filter = AirFilter(label=self.label + ".air_filter")
+        self.returnAirInlet.mapsTo = self.air_filter.airInlet
+        self.returnAirFilterDP = self.air_filter.dp
 
         # create a hot water coil
         self.hot_water_coil = HotWaterCoil(label=self.label + ".hot_water_coil")
@@ -140,18 +145,19 @@ class VAV(System):
         self.hwOutlet.mapsTo = self.hot_water_coil.hwOutlet
         self.hwValvePosition = self.hot_water_coil.valvePosition
 
-        # fan output goes to the hot water coil
-        self.fan >> self.hot_water_coil
-        self.supplyAirOutlet.mapsTo = self.hot_water_coil.airOutlet
+        # filter to hot water coil
+        self.air_filter.airOutlet >> self.hot_water_coil.airInlet
 
-        # merge the inlets together
-        junction = Junction()
-        junction.link_to(self.damper.airOutlet)
-        junction.link_to(self.fan.airInlet)
-        self.returnAirInlet.mapsTo = junction
+        # create a fan with a variable frequency drive
+        self.fan = VFDFan(label=self.label + ".fan", electricalInlet=_electricalInlet)
+        self > self.fan
+
+        # link the air pieces together
+        self.hot_water_coil >> self.fan
+        self.supplyAirOutlet.mapsTo = self.fan.airOutlet
 
 
 # make one
-vav = VAV(label="A-6")
+vav = VAV(label="A-11", electricalInlet=ElectricalInletConnectionPoint)
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

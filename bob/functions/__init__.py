@@ -8,17 +8,15 @@ from __future__ import annotations
 
 import inspect
 import logging
-
-from typing import Any, Dict
+from typing import Any, AnyStr, Dict
 
 from rdflib import URIRef  # type: ignore
 
 from ..core import (
-    bind_namespace,
-    data_graph,
     INCLUDE_INVERSE,
     Node,
     Property,
+    data_graph,
     s223,
 )
 from ..multimethods import multimethod
@@ -153,6 +151,8 @@ class FunctionBlock(Node):
     In 223, function blocks are black boxes representing a sequence or
     an algorithm. Function blocks use inputs and produce outputs that can
     be related to observable and actuatable properties in the 223 model.
+
+    Connections from or to a function block are made from/to properties only
     """
 
     _class_iri: URIRef = s223.FunctionBlock
@@ -183,7 +183,7 @@ class FunctionBlock(Node):
 
             if issubclass(attr_type, Connector):
                 # build an instance of this connector
-                attr_element = attr_type(label=self.label + "." + attr_name)
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
                 self._connectors[attr_name] = attr_element
                 logging.debug(f"    - connector {attr_name}: {attr_element}")
 
@@ -200,12 +200,22 @@ class FunctionBlock(Node):
 
             setattr(self, attr_name, attr_element)
 
-    def uses_input(self, prop: Property) -> None:
-        connector = InputConnector(self, label=f"{self.label}.input")
+    def uses_input(
+        self,
+        prop: Property,
+        klass: InputConnector = InputConnector,
+        label: AnyStr = "input",
+    ) -> None:
+        connector = klass(self, label=f"{self.label}.{label}")
         prop >> connector
 
-    def produces_output(self, prop: Property) -> None:
-        connector = OutputConnector(self, label=f"{self.label}.output")
+    def produces_output(
+        self,
+        prop: Property,
+        klass: OutputConnector = OutputConnector,
+        label: AnyStr = "output",
+    ) -> None:
+        connector = klass(self, label=f"{self.label}.{label}")
         connector >> prop
 
 

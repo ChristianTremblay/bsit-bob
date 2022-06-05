@@ -9,10 +9,19 @@ from bob.connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from bob.core import Device, System, bind_model_namespace, dump, get_datagraph, p223
+from bob.core import (
+    Device,
+    System,
+    bind_model_namespace,
+    dump,
+    get_datagraph,
+    p223,
+    unit,
+)
+from bob.devices.architectural import Window
 from bob.devices.hvac.boiler import ElectricalHotWaterBoiler, HotWaterBoiler
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper, Window
+from bob.devices.hvac.damper import ElectricalActuatedDamper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.pump import Pump

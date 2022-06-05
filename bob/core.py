@@ -732,7 +732,8 @@ class Node(metaclass=NodeMetaclass):
 class ExternalReference(Node):
     """
     This will be subclassed by different specific datasources, this simplest
-    form uses hasRef as a literal, most likely a string.
+    form uses hasRef as a literal, most likely a string.  Note that this is
+    currently from the "ref" schema.
     """
 
     _class_iri: URIRef = s223.ExternalReference
@@ -1106,6 +1107,7 @@ class System(Container, Node):
 
                 things = []
                 for (thing_name, thing_class), thing_kwargs in group_items.items():
+                    logging.debug(f"    - thing_name, thing_class: {thing_name}, {thing_class}")
                     if thing_name in self._contents:
                         raise ValueError(
                             f"label already used: {self._contents[thing_name]}"
@@ -2897,13 +2899,36 @@ class Device(Container, Connectable):
         # if config and "params" in config:
         #     kwargs = {**config["params"], **kwargs}
 
+        # When passing kwargs to create an instance of a class, some datatype
+        # are not yet visible in the chain of creation. This lead to
+        # ex. TypeError: unexpected keyword argument: waterInlet
+        # By removing properties and connection points from kwargs and explicitly
+        # putting them in config, it should be better
+        for attr_name, attr_value in kwargs.copy().items():
+            if inspect.isclass(attr_value):
+                if issubclass(attr_value, Property):
+                    config["properties"] = (
+                        {**config["properties"], **{attr_name: kwargs.pop(attr_name)}}
+                        if "properties" in config.keys()
+                        else {attr_name: kwargs.pop(attr_name)}
+                    )
+                if issubclass(attr_value, ConnectionPoint):
+                    config["cp"] = (
+                        {**config["cp"], **{attr_name: kwargs.pop(attr_name)}}
+                        if "cp" in config.keys()
+                        else {attr_name: kwargs.pop(attr_name)}
+                    )
+
         super().__init__(*args, **kwargs)
 
         if config:
             for group_name, group_items in config.items():
                 if group_name == "params":
                     continue
-
+                if group_name == "cp":
+                    for (thing_name, thing_class) in group_items.items():
+                        setattr(self, thing_name, thing_class(self))
+                    continue
                 things = []
                 for (thing_name, thing_class), thing_kwargs in group_items.items():
                     if thing_name in self._contents:

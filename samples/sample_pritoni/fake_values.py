@@ -1,7 +1,7 @@
 from pathlib import Path
 
-import hvac_devices as hd
 import functions as fn
+import hvac_devices as hd
 import lighting_devices as ld
 from rdflib import URIRef
 
@@ -21,41 +21,41 @@ fn.private_office_occ_control.hasOccupancyStatus.hasValue = 0
 fn.bathroom_occ_control.hasOccupancyStatus.hasValue = 0
 fn.corridor_occ_control.hasOccupancyStatus.hasValue = 0
 
-ld.openofficeEast_luminaire_1.hasOnOffStatus.hasValue = 1
-ld.openofficeEast_luminaire_1.hasOnOffCommand.hasValue = 1
+ld.openofficeEast_luminaire_1.onOffStatus.hasValue = 1
+ld.openofficeEast_luminaire_1.onOffCommand.hasValue = 1
 
-ld.openofficeEast_luminaire_2.hasOnOffStatus.hasValue = 1
-ld.openofficeEast_luminaire_2.hasOnOffCommand.hasValue = 1
+ld.openofficeEast_luminaire_2.onOffStatus.hasValue = 1
+ld.openofficeEast_luminaire_2.onOffCommand.hasValue = 1
 
-ld.openofficeWest_luminaire_3.hasOnOffStatus.hasValue = 1
-ld.openofficeWest_luminaire_3.hasOnOffCommand.hasValue = 1
+ld.openofficeWest_luminaire_3.onOffStatus.hasValue = 1
+ld.openofficeWest_luminaire_3.onOffCommand.hasValue = 1
 
-ld.openofficeWest_luminaire_4.hasOnOffStatus.hasValue = 1
-ld.openofficeWest_luminaire_4.hasOnOffCommand.hasValue = 1
+ld.openofficeWest_luminaire_4.onOffStatus.hasValue = 1
+ld.openofficeWest_luminaire_4.onOffCommand.hasValue = 1
 
-ld.bathroom_luminaire_5.hasOnOffStatus.hasValue = 0
-ld.bathroom_luminaire_5.hasOnOffCommand.hasValue = 1
+ld.bathroom_luminaire_5.onOffStatus.hasValue = 0
+ld.bathroom_luminaire_5.onOffCommand.hasValue = 1
 
-ld.bathroom_luminaire_6.hasOnOffStatus.hasValue = 0
-ld.bathroom_luminaire_6.hasOnOffCommand.hasValue = 0
+ld.bathroom_luminaire_6.onOffStatus.hasValue = 0
+ld.bathroom_luminaire_6.onOffCommand.hasValue = 0
 
-ld.privateoffice_luminaire_8.hasOnOffStatus.hasValue = 0
-ld.privateoffice_luminaire_8.hasOnOffCommand.hasValue = 0
+ld.privateoffice_luminaire_8.onOffStatus.hasValue = 0
+ld.privateoffice_luminaire_8.onOffCommand.hasValue = 0
 
-ld.privateoffice_luminaire_8.hasOnOffStatus.hasValue = 0
-ld.privateoffice_luminaire_8.hasOnOffCommand.hasValue = 0
+ld.privateoffice_luminaire_8.onOffStatus.hasValue = 0
+ld.privateoffice_luminaire_8.onOffCommand.hasValue = 0
 
-ld.corridor_luminaire_9.hasOnOffStatus.hasValue = 0
-ld.corridor_luminaire_9.hasOnOffCommand.hasValue = 0
+ld.corridor_luminaire_9.onOffStatus.hasValue = 0
+ld.corridor_luminaire_9.onOffCommand.hasValue = 0
 
-ld.corridor_luminaire_10.hasOnOffStatus.hasValue = 1
-ld.corridor_luminaire_10.hasOnOffCommand.hasValue = 1
+ld.corridor_luminaire_10.onOffStatus.hasValue = 1
+ld.corridor_luminaire_10.onOffCommand.hasValue = 1
 
-ld.kitchenette_luminaire_11.hasOnOffStatus.hasValue = 1
-ld.kitchenette_luminaire_11.hasOnOffCommand.hasValue = 1
+ld.kitchenette_luminaire_11.onOffStatus.hasValue = 1
+ld.kitchenette_luminaire_11.onOffCommand.hasValue = 1
 
-ld.kitchenette_luminaire_12.hasOnOffStatus.hasValue = 1
-ld.kitchenette_luminaire_12.hasOnOffCommand.hasValue = 1
+ld.kitchenette_luminaire_12.onOffStatus.hasValue = 1
+ld.kitchenette_luminaire_12.onOffCommand.hasValue = 1
 
 if __name__ == "__main__":
     dump()

@@ -20,8 +20,7 @@ from ...connections.water import (
     HotWaterOutletConnectionPoint,
 )
 from ...core import Device, p223, s223
-from ...signal import AnalogIn
-from .damper import PneumaticDamper
+from .damper import PneumaticActuatedDamper
 
 _namespace = s223
 

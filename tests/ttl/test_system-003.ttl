@@ -1,7 +1,7 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_system-003
 # imports: http://data.ashrae.org/standard223/1.0/model/all
-@prefix ex25: <urn:ex/test_system-003/> .
-@prefix ex29: <urn:ex/test_system-007/> .
+@prefix ex26: <urn:ex/test_system-003/> .
+@prefix ex30: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -12,60 +12,60 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_system-003> ;
   rdfs:label "test_system-003" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex29:00001 a s223:Connectable,
+ex30:00001 a s223:Connectable,
         s223:Device,
-        ex25:A ;
+        ex26:A ;
     rdfs:label "a" ;
-    s223:connectedThrough ex29:00009 ;
-    s223:connectedTo ex29:00005 ;
-    s223:hasConnectionPoint ex29:00002 ;
-    ex25:cOut ex29:00002 .
-ex29:00002 a s223:ConnectionPoint,
+    s223:connectedThrough ex30:00009 ;
+    s223:connectedTo ex30:00005 ;
+    s223:hasConnectionPoint ex30:00002 ;
+    ex26:cOut ex30:00002 .
+ex30:00002 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "a.cOut" ;
-    s223:connectsThrough ex29:00009 ;
+    s223:connectsThrough ex30:00009 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00001 .
-ex29:00003 a s223:System,
-        ex25:X ;
+    s223:isConnectionPointOf ex30:00001 .
+ex30:00003 a s223:System,
+        ex26:X ;
     rdfs:label "x" ;
-    s223:hasSystemConnectionPoint ex29:00004 ;
-    ex25:cOut ex29:00004 .
-ex29:00004 a s223:OutletSystemConnectionPoint,
+    s223:hasSystemConnectionPoint ex30:00004 ;
+    ex26:cOut ex30:00004 .
+ex30:00004 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "x.cOut" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:isSystemConnectionPointOf ex29:00003 ;
-    s223:mapsTo ex29:00002 .
-ex29:00005 a s223:Connectable,
+    s223:isSystemConnectionPointOf ex30:00003 ;
+    s223:mapsTo ex30:00002 .
+ex30:00005 a s223:Connectable,
         s223:Device,
-        ex25:B ;
+        ex26:B ;
     rdfs:label "b" ;
-    s223:connectedFrom ex29:00001 ;
-    s223:connectedThrough ex29:00009 ;
-    s223:hasConnectionPoint ex29:00006 ;
-    ex25:cIn ex29:00006 .
-ex29:00006 a s223:ConnectionPoint,
+    s223:connectedFrom ex30:00001 ;
+    s223:connectedThrough ex30:00009 ;
+    s223:hasConnectionPoint ex30:00006 ;
+    ex26:cIn ex30:00006 .
+ex30:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "b.cIn" ;
-    s223:connectsThrough ex29:00009 ;
+    s223:connectsThrough ex30:00009 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex29:00005 .
-ex29:00007 a s223:System,
-        ex25:Y ;
+    s223:isConnectionPointOf ex30:00005 .
+ex30:00007 a s223:System,
+        ex26:Y ;
     rdfs:label "y" ;
-    s223:hasSystemConnectionPoint ex29:00008 ;
-    ex25:cIn ex29:00008 .
-ex29:00008 a s223:InletSystemConnectionPoint,
+    s223:hasSystemConnectionPoint ex30:00008 ;
+    ex26:cIn ex30:00008 .
+ex30:00008 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "y.cIn" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:isSystemConnectionPointOf ex29:00007 ;
-    s223:mapsTo ex29:00006 .
-ex29:00009 a s223:Connection ;
-    s223:connectsAt ex29:00002,
-        ex29:00006 ;
-    s223:connectsFrom ex29:00001 ;
-    s223:connectsTo ex29:00005 .
+    s223:isSystemConnectionPointOf ex30:00007 ;
+    s223:mapsTo ex30:00006 .
+ex30:00009 a s223:Connection ;
+    s223:connectsAt ex30:00002,
+        ex30:00006 ;
+    s223:connectsFrom ex30:00001 ;
+    s223:connectsTo ex30:00005 .

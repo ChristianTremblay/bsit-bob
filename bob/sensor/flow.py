@@ -45,13 +45,13 @@ class FlowSensor(Sensor):
 
 class AirFlowSensor(FlowSensor):
     _class_iri: URIRef = p223.AirFlowSensor
-
+    # typical unit : unit=unit["FT3-PER-MIN"]
     def __init__(self, **kwargs):
-        super().__init__(ofMedium=Air, unit=unit["FT3-PER-MIN"], **kwargs)
+        super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterFlowSensor(FlowSensor):
     _class_iri: URIRef = p223.WaterFlowSensor
-
+    # typical unit : unit=unit["GAL_UK-PER-MIN"]
     def __init__(self, **kwargs):
-        super().__init__(ofMedium=Water, unit=unit["GAL_UK-PER-MIN"], **kwargs)
+        super().__init__(ofMedium=Water, **kwargs)

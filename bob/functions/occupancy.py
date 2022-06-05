@@ -8,6 +8,6 @@ _namespace = p223
 class OccupancyControl(FunctionBlock):
     hasOccupancyStatus: OccupancyStatus
     hasSchedule: Schedule
-    hasOccupancySensor: PropertyReference
+    # hasOccupancySensor: PropertyReference
     # What if I need to connect more than 1 ???
     # def __init__(self, **kwargs):

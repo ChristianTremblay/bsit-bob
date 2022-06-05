@@ -14,7 +14,6 @@ from ...connections.water import (
 from ...core import System, s223
 from ...devices.hvac.coil import ChilledWaterCoil
 from ...devices.hvac.valve import TwoWayValve
-from ...signal import AnalogIn
 
 _namespace = s223
 

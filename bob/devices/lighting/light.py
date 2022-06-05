@@ -22,8 +22,8 @@ class Luminaire(Device):
     lightOutlet: LightVisibleOutletConnectionPoint
     brightness: RelativeLuminousFlux
     brightnessRatio: PercentCommand
-    hasOnOffStatus: OnOffStatus
-    hasOnOffCommand: OnOffCommand
+    onOffStatus: OnOffStatus
+    onOffCommand: OnOffCommand
     electricalPower: ElectricPowerW
 
     def __init__(self, config: Dict = {}, **kwargs):

@@ -2,6 +2,7 @@ from typing import Dict
 
 from rdflib import Literal
 
+from bob.properties import ElectricPowerkW
 from bob.property import QuantifiableObservableProperty
 
 from ...connections.electricity import (
@@ -40,7 +41,7 @@ _namespace = p223
 
 class Transformer(Device):
     _class_iri = p223.ElectricalTransformer
-    hasPower: Literal
+    hasPower: ElectricPowerkW
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
@@ -61,7 +62,7 @@ class SinglePhaseDistributionPanel(Device):
     _class_iri = p223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
-    hasNumberOfCircuits: QuantifiableObservableProperty
+    number_of_circuits: QuantifiableObservableProperty
 
     # Bus Bar
     _cross_ref = {
@@ -109,7 +110,7 @@ class SinglePhaseDistributionPanel(Device):
 class ThreePhaseDistributionPanel(Device):
     manufacturer: str
     modelNumber: str
-    hasNumberOfCircuits: QuantifiableObservableProperty
+    number_of_circuits: QuantifiableObservableProperty
 
     # Bus Bar
     _cross_ref = {

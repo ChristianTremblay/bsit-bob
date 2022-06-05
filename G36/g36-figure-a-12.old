@@ -19,7 +19,9 @@ from bob.connections.air import (
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import Air, Device, Junction, System, bind_model_namespace, dump
 from bob.devices.hvac.fan import Fan
-from bob.signal import AnalogIn, AnalogOut, BinaryIn, BinaryOut
+from bob.properties.force import DifferentialStaticPressure
+from bob.properties.ratio import PercentCommand
+from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.systems.archives.coolingcoil import ChilledWaterCoil2
 from bob.systems.archives.heatingcoil import HotWaterCoil2
 
@@ -32,17 +34,17 @@ _namespace = bind_model_namespace(
 class AirFilter(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    dp = AnalogIn
+    dp = DifferentialStaticPressure
 
 
 class DamperPositioner(Device):
-    position = AnalogOut
+    position = PercentCommand
 
 
 class Damper(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position: AnalogOut
+    position: PercentCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -58,17 +60,17 @@ class Damper(Device):
 
 
 class VFD(Device):
-    fanStatus = BinaryIn
-    fanSpeedCommand = AnalogOut
-    fanStart = BinaryOut
+    fanStatus = OnOffStatus
+    fanSpeedCommand = PercentCommand
+    fanStart = OnOffCommand
 
 
 class VFDFan(Fan):
     # airInlet: AirInletConnectionPoint - inherits from Fan
     # airOutlet: AirOutletConnectionPoint - inherits from Fan
-    fanStatus: BinaryIn
-    fanSpeedCommand: AnalogOut
-    fanStart: BinaryOut
+    fanStatus: OnOffStatus
+    fanSpeedCommand: PercentCommand
+    fanStart: OnOffCommand
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)

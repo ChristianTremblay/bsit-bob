@@ -2,43 +2,42 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from ...connections.electricity import ElectricalInletConnectionPoint
+from ...connections.electricity import Electricity_575V_60HzInletConnectionPoint
 from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
-from ...core import Device, PropertyReference, s223
-from ...properties import HP, RPM, Amps, ElectricPowerkW, OnOffStatus, PowerFactor
+from ...core import Device, PropertyReference, s223, unit
+from ...properties import (
+    HP,
+    RPM,
+    Amps,
+    ElectricPowerkW,
+    OnOffStatus,
+    PowerFactor,
+    Pressure,
+)
 
 _namespace = s223
 
-"""
-fan_template = {
-    "params": {"label": "Name", "comment": "Description"},
-    "sensors": {},
-    "devices": {("sub_device1_label", Device): {"comment": "SubDev comment"}},
+pump_template = {
+    "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
+    "properties": {
+        ("head_pressure", Pressure): {"unit": unit.PSI},
+        ("amps", Amps): {},
+        ("rpm", RPM): {},
+        ("hp", HP): {},
+        ("kW", ElectricPowerkW): {},
+        ("powerFactor", PowerFactor): {},
+    },
 }
-"""
 
 
 class Pump(Device):
-    _class_iri: URIRef = s223.Fan
+    _class_iri: URIRef = s223.Pump
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
-    # electricalInlet: ElectricalInletConnectionPoint  # can come from a VFD
-    # Properties
-    amps: Amps
-    rpm: RPM
-    hp: HP
-    kW: ElectricPowerkW
-    powerFactor: PowerFactor
-    hasOnOffStatus: PropertyReference
-    hasOnOffCommand: PropertyReference
+    onOffStatus: PropertyReference
+    onOffCommand: PropertyReference
 
-    def __init__(self, config: Dict = {}, **kwargs):
+    def __init__(self, config: Dict = pump_template, **kwargs):
+        config["properties"] = config.get("properties", pump_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
-        _electricalInlet = kwargs.pop("electricalInlet", None)
-
         super().__init__(config, **kwargs)
-
-        if _electricalInlet:
-            self.electricalInlet = _electricalInlet(
-                self, label=f"{self.label}.electricalInlet"
-            )

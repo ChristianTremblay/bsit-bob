@@ -17,6 +17,8 @@ class TemperatureSetpoint(Setpoint):
 
 class TemperatureSensor(Sensor):
     observesProperty: PropertyReference  # Temperature
+    hasMinRange: PropertyReference
+    hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
@@ -41,9 +43,9 @@ class TemperatureSensor(Sensor):
 
 class AirTemperatureSensor(TemperatureSensor):
     def __init__(self, **kwargs):
-        super().__init__(ofMedium=Air, unit=unit.DEG_C, **kwargs)
+        super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterTemperatureSensor(TemperatureSensor):
     def __init__(self, **kwargs):
-        super().__init__(ofMedium=Water, unit=unit.DEG_C, **kwargs)
+        super().__init__(ofMedium=Water, **kwargs)
