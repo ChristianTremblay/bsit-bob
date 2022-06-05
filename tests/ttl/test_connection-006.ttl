@@ -6,7 +6,6 @@
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -99,7 +98,7 @@ ex30:00011 a p223:Pressure,
     s223:hasExternalReference ex30:00012 ;
     s223:hasQuantityKind quantitykind:Pressure ;
     s223:unit unit:PA .
-ex30:00012 a ref:ExternalReference ;
+ex30:00012 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
 ex30:00013 a p223:Amps,
@@ -111,7 +110,7 @@ ex30:00013 a p223:Amps,
     s223:hasExternalReference ex30:00014 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-ex30:00014 a ref:ExternalReference ;
+ex30:00014 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
 ex30:00015 a p223:RPM,
@@ -123,7 +122,7 @@ ex30:00015 a p223:RPM,
     s223:hasExternalReference ex30:00016 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-ex30:00016 a ref:ExternalReference ;
+ex30:00016 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
 ex30:00017 a p223:HP,
@@ -135,7 +134,7 @@ ex30:00017 a p223:HP,
     s223:hasExternalReference ex30:00018 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-ex30:00018 a ref:ExternalReference ;
+ex30:00018 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
 ex30:00019 a p223:ElectricPowerkW,
@@ -147,7 +146,7 @@ ex30:00019 a p223:ElectricPowerkW,
     s223:hasExternalReference ex30:00020 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-ex30:00020 a ref:ExternalReference ;
+ex30:00020 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
 ex30:00021 a p223:PowerFactor,
@@ -159,12 +158,11 @@ ex30:00021 a p223:PowerFactor,
     s223:hasExternalReference ex30:00022 ;
     s223:hasQuantityKind quantitykind:PowerFactor ;
     s223:unit unit:UNITLESS .
-ex30:00022 a ref:ExternalReference ;
+ex30:00022 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/test_system-007/00007>" .
 ex30:00023 a s223:Connection ;
     s223:connectsAt ex30:00003,
         ex30:00009 ;
     s223:connectsFrom ex30:00007 ;
-    s223:connectsTo ex30:00002 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo ex30:00002 .

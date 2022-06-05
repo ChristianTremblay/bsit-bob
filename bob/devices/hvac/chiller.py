@@ -33,7 +33,7 @@ chiller_template = {
 
 
 class Chiller(Device):
-    _class_iri =s223.Chiller
+    _class_iri = p223.Chiller
     chilledWaterEntering: ChilledWaterInletConnectionPoint
     chilledWaterLeaving: ChilledWaterOutletConnectionPoint
     condensedWaterEntering: CondensedWaterInletConnectionPoint
@@ -58,7 +58,7 @@ class Chiller(Device):
 
 
 class AgnosticChiller(Device):
-    _class_iri =p223.Chiller
+    _class_iri = p223.Chiller
     chilledWaterLeaving: WaterOutletConnectionPoint
     chilledWaterEntering: WaterInletConnectionPoint
     condensedWaterLeaving: WaterOutletConnectionPoint

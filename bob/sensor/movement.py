@@ -42,6 +42,7 @@ class OccupancySensor(MovementSensor):
 
 
 class IntrusionSensor(Sensor):
+    _class_iri: URIRef = p223.IntrusionSensor
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Intrusion...good for Windows and doors
 

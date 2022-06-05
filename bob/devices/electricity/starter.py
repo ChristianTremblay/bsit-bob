@@ -18,7 +18,7 @@ class MotorStarter(Device):
 
     """
 
-    _class_iri =s223.MotorStarter
+    _class_iri = s223.MotorStarter
     outputSignal: OnOffSignalOutletConnectionPoint
     inputSignal: OnOffSignalInletConnectionPoint
     onOffStatus: OnOffStatus

@@ -47,7 +47,7 @@ class PhysicSystem(System):
 
     """
 
-    _class_iri =p223.PhysicSystem
+    _class_iri = p223.PhysicSystem
 
 
 class IndoorAir(PhysicSystem):
@@ -73,7 +73,7 @@ class IndoorAir(PhysicSystem):
 
     """
 
-    _class_iri =p223.PhysicSystem
+    _class_iri = p223.PhysicSystem
     hasMedium: Medium = Air
     ductAirInlet: AirInletSystemConnectionPoint
     ductAirOutlet: AirOutletSystemConnectionPoint

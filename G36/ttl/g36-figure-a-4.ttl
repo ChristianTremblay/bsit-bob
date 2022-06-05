@@ -49,7 +49,6 @@ exg3604:00001 a s223:System,
         exg3604:00004,
         exg3604:00005,
         exg3604:00006 ;
-    s223:node_type exg3604:VAV ;
     exg3604:damperPosition exg3604:00015 ;
     exg3604:hwInlet exg3604:00005 ;
     exg3604:hwOutlet exg3604:00006 ;
@@ -95,7 +94,6 @@ exg3604:00007 a s223:Connectable,
     s223:hasConnectionPoint exg3604:00009,
         exg3604:00010 ;
     s223:hasProperty exg3604:00008 ;
-    s223:node_type exg3604:AirFlowStation ;
     exg3604:airInlet exg3604:00009 ;
     exg3604:airOutlet exg3604:00010 ;
     exg3604:flow exg3604:00008 .
@@ -121,7 +119,6 @@ exg3604:00011 a s223:Connectable,
     s223:hasConnectionPoint exg3604:00012,
         exg3604:00013 ;
     s223:hasProperty exg3604:00015 ;
-    s223:node_type exg3604:Damper ;
     exg3604:airInlet exg3604:00012 ;
     exg3604:airOutlet exg3604:00013 ;
     exg3604:position exg3604:00015 .
@@ -143,9 +140,14 @@ exg3604:00014 a s223:Connectable,
         exg3604:DamperPositioner ;
     rdfs:label "A-4.damper.damper_positioner" ;
     s223:hasProperty exg3604:00015 ;
-    s223:node_type exg3604:DamperPositioner ;
     exg3604:position exg3604:00015 .
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+exg3604:00015 a s223:Property,
+        g36:AnalogOut .
+=======
+>>>>>>> origin/21-rename-enumerationkinds
 exg3604:00015 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -154,9 +156,13 @@ exg3604:00015 a p223:PercentCommand,
     rdfs:label "A-4.damper.damper_positioner.position" ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
+<<<<<<< HEAD
 =======
 exg3604:00015 a s223:Property,
         g36:AnalogOut .
+>>>>>>> origin/21-rename-enumerationkinds
+=======
+>>>>>>> master
 >>>>>>> origin/21-rename-enumerationkinds
 exg3604:00016 a s223:Connectable,
         s223:Device,
@@ -169,7 +175,6 @@ exg3604:00016 a s223:Connectable,
         exg3604:00019,
         exg3604:00020 ;
     s223:hasProperty exg3604:00022 ;
-    s223:node_type exg3604:HotWaterCoil ;
     exg3604:airInlet exg3604:00017 ;
     exg3604:airOutlet exg3604:00018 ;
     exg3604:hwInlet exg3604:00019 ;
@@ -204,9 +209,14 @@ exg3604:00021 a s223:Connectable,
         exg3604:ValvePositioner ;
     rdfs:label "A-4.hot_water_coil.damper_positioner" ;
     s223:hasProperty exg3604:00022 ;
-    s223:node_type exg3604:ValvePositioner ;
     exg3604:position exg3604:00022 .
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+exg3604:00022 a s223:Property,
+        g36:AnalogOut .
+=======
+>>>>>>> origin/21-rename-enumerationkinds
 exg3604:00022 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -215,15 +225,18 @@ exg3604:00022 a p223:PercentCommand,
     rdfs:label "A-4.hot_water_coil.damper_positioner.position" ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
+<<<<<<< HEAD
 =======
 exg3604:00022 a s223:Property,
         g36:AnalogOut .
 >>>>>>> origin/21-rename-enumerationkinds
+=======
+>>>>>>> master
+>>>>>>> origin/21-rename-enumerationkinds
 exg3604:00023 a s223:Connectable,
         s223:Device,
         exg3604:HotWaterValve ;
-    rdfs:label "A-4.hot_water_coil.hot_water_valve" ;
-    s223:node_type exg3604:HotWaterValve .
+    rdfs:label "A-4.hot_water_coil.hot_water_valve" .
 exg3604:00024 a s223:Connectable,
         s223:Device,
         s223:Fan,
@@ -232,8 +245,7 @@ exg3604:00024 a s223:Connectable,
     s223:contains exg3604:00040 ;
     s223:hasConnectionPoint exg3604:00025,
         exg3604:00026,
-        exg3604:00027 ;
-    s223:node_type exg3604:ECMFan .
+        exg3604:00027 .
 exg3604:00025 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-4.fan.airInlet" ;
@@ -339,6 +351,26 @@ exg3604:00040 a s223:Connectable,
         exg3604:ECM ;
     rdfs:label "A-4.fan.ecm" ;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    s223:hasProperty exg3604:00029,
+        exg3604:00030,
+        exg3604:00031 ;
+    exg3604:fanSpeedCommand exg3604:00031 ;
+    exg3604:fanSpeedFeedback exg3604:00030 ;
+    exg3604:fanStart exg3604:00029 .
+exg3604:00029 a s223:Property,
+        g36:BinaryOut .
+exg3604:00030 a s223:Property,
+        g36:AnalogIn .
+exg3604:00031 a s223:Property,
+        g36:AnalogOut .
+exg3604:00032 a s223:Junction ;
+    s223:lnx exg3604:00033,
+        exg3604:00034 .
+exg3604:00033 a s223:Segment ;
+=======
+>>>>>>> origin/21-rename-enumerationkinds
     s223:hasProperty exg3604:00041,
         exg3604:00042,
         exg3604:00043 ;
@@ -365,11 +397,13 @@ exg3604:00044 a s223:Junction ;
     s223:lnx exg3604:00045,
         exg3604:00046 .
 exg3604:00045 a s223:Segment ;
+>>>>>>> master
     s223:lnx exg3604:00013,
         exg3604:00044 .
 exg3604:00046 a s223:Segment ;
     s223:lnx exg3604:00027,
         exg3604:00044 .
+<<<<<<< HEAD
 =======
     s223:hasProperty exg3604:00029,
         exg3604:00030,
@@ -396,4 +430,6 @@ exg3604:00034 a s223:Segment ;
     s223:lnx exg3604:00026,
         exg3604:00032 ;
     s223:node_type s223:Segment .
+>>>>>>> origin/21-rename-enumerationkinds
+=======
 >>>>>>> origin/21-rename-enumerationkinds

@@ -34,7 +34,7 @@ class ThreePhaseElectricalMeter(Device):
 
     """
 
-    _class_iri =s223.ElectricMeter
+    _class_iri = s223.ElectricMeter
 
     def __init__(self, config: Dict = {}, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}

@@ -14,18 +14,18 @@ _namespace = s223
 
 
 class HotWaterBoiler(Device):
-    _class_iri =s223.Boiler
+    _class_iri = s223.Boiler
     hotWaterLeaving: HotWaterInletConnectionPoint
     hotWaterEntering: HotWaterOutletConnectionPoint
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):
-    _class_iri =s223.Boiler
+    _class_iri = s223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
 
 
 class NaturalGasHotWaterBoiler(HotWaterBoiler):
-    _class_iri =s223.Boiler
+    _class_iri = s223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
     naturalGasInlet: NaturalGasInletConnectionPoint
     combustionAirInlet: AirInletConnectionPoint

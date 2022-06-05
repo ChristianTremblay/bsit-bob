@@ -95,8 +95,8 @@ bacnet_references:00017 a bacnet:Property,
 bacnet_references:00018 a bacnet:Property,
         bacnet:vendor-id ;
     p223:hasValue 5 .
-bacnet_references:00019 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00019 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:description bacnet_references:00023 ;
     p223:objectInstance bacnet_references:00020 ;
     p223:objectName bacnet_references:00022 ;
@@ -117,8 +117,8 @@ bacnet_references:00023 a bacnet:Property,
 bacnet_references:00024 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "analog-input" .
-bacnet_references:00025 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00025 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:description bacnet_references:00029 ;
     p223:objectInstance bacnet_references:00026 ;
     p223:objectName bacnet_references:00028 ;
@@ -139,8 +139,8 @@ bacnet_references:00029 a bacnet:Property,
 bacnet_references:00030 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "analog-value" .
-bacnet_references:00031 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00031 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:description bacnet_references:00035 ;
     p223:objectInstance bacnet_references:00032 ;
     p223:objectName bacnet_references:00034 ;
@@ -161,8 +161,8 @@ bacnet_references:00035 a bacnet:Property,
 bacnet_references:00036 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "analog-input" .
-bacnet_references:00037 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00037 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:description bacnet_references:00041 ;
     p223:objectInstance bacnet_references:00038 ;
     p223:objectName bacnet_references:00040 ;
@@ -183,8 +183,8 @@ bacnet_references:00041 a bacnet:Property,
 bacnet_references:00042 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "analog-input" .
-bacnet_references:00043 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00043 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:description bacnet_references:00047 ;
     p223:objectInstance bacnet_references:00044 ;
     p223:objectName bacnet_references:00046 ;
@@ -205,8 +205,8 @@ bacnet_references:00047 a bacnet:Property,
 bacnet_references:00048 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "analog-input" .
-bacnet_references:00049 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00049 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:description bacnet_references:00053 ;
     p223:objectInstance bacnet_references:00050 ;
     p223:objectName bacnet_references:00052 ;
@@ -227,8 +227,8 @@ bacnet_references:00053 a bacnet:Property,
 bacnet_references:00054 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "binary-input" .
-bacnet_references:00055 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00055 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:description bacnet_references:00059 ;
     p223:objectInstance bacnet_references:00056 ;
     p223:objectName bacnet_references:00058 ;
@@ -249,8 +249,8 @@ bacnet_references:00059 a bacnet:Property,
 bacnet_references:00060 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "binary-output" .
-bacnet_references:00061 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00061 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:description bacnet_references:00065 ;
     p223:objectInstance bacnet_references:00062 ;
     p223:objectName bacnet_references:00064 ;
@@ -271,14 +271,14 @@ bacnet_references:00065 a bacnet:Property,
 bacnet_references:00066 a bacnet:Property,
         bacnet:object-type ;
     p223:hasValue "schedule" .
-bacnet_references:00067 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00067 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:uri bacnet_references:00068 .
 bacnet_references:00068 a bacnet:BACnetURI,
         bacnet:Property ;
     p223:hasValue "bacnet://2/analog-input,1" .
-bacnet_references:00069 a ref:BACnetReference,
-        ref:ExternalReference ;
+bacnet_references:00069 a s223:ExternalReference,
+        ref:BACnetReference ;
     p223:uri bacnet_references:00070 .
 bacnet_references:00070 a bacnet:BACnetURI,
         bacnet:Property ;
@@ -810,14 +810,12 @@ electrical_devices:00063 a s223:Connection ;
     s223:connectsAt electrical_devices:00020,
         electrical_devices:00030 ;
     s223:connectsFrom electrical_devices:00017 ;
-    s223:connectsTo electrical_devices:00029 ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:connectsTo electrical_devices:00029 .
 electrical_devices:00064 a s223:Connection ;
     s223:connectsAt electrical_devices:00031,
         electrical_devices:00035 ;
     s223:connectsFrom electrical_devices:00029 ;
-    s223:connectsTo electrical_devices:00033 ;
-    s223:hasMedium s223:Electricity-120V_240V_60Hz .
+    s223:connectsTo electrical_devices:00033 .
 electrical_devices:00065 a s223:Connection ;
     rdfs:label "DISTPANEL-CB1" ;
     s223:connectsAt electrical_devices:00042,
@@ -866,26 +864,22 @@ electricity:00001 a s223:Connection ;
     s223:connectsAt electrical_devices:00016,
         hvac_devices:00049 ;
     s223:connectsFrom electrical_devices:00013 ;
-    s223:connectsTo hvac_devices:00046 ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:connectsTo hvac_devices:00046 .
 electricity:00002 a s223:Connection ;
     s223:connectsAt hvac_devices:00033,
         hvac_devices:00050 ;
     s223:connectsFrom hvac_devices:00046 ;
-    s223:connectsTo hvac_devices:00030 ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:connectsTo hvac_devices:00030 .
 electricity:00003 a s223:Connection ;
     s223:connectsAt electrical_devices:00024,
         hvac_devices:00056 ;
     s223:connectsFrom electrical_devices:00021 ;
-    s223:connectsTo hvac_devices:00055 ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:connectsTo hvac_devices:00055 .
 electricity:00004 a s223:Connection ;
     s223:connectsAt hvac_devices:00017,
         hvac_devices:00057 ;
     s223:connectsFrom hvac_devices:00055 ;
-    s223:connectsTo hvac_devices:00014 ;
-    s223:hasMedium s223:Electricity-575V_60Hz .
+    s223:connectsTo hvac_devices:00014 .
 functions:00001 a s223:FunctionBlock,
         functions:AVG_Temp ;
     rdfs:label "FB-1" ;
@@ -1112,14 +1106,12 @@ hvac:00002 a s223:Connection ;
     s223:connectsAt hvac_spaces:00033,
         hvac_spaces:00051 ;
     s223:connectsFrom hvac_spaces:00047 ;
-    s223:connectsTo hvac_spaces:00029 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_spaces:00029 .
 hvac:00003 a s223:Connection ;
     s223:connectsAt hvac_spaces:00023,
         hvac_spaces:00032 ;
     s223:connectsFrom hvac_spaces:00029 ;
-    s223:connectsTo hvac_spaces:00020 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_spaces:00020 .
 hvac:00004 a s223:Connection ;
     rdfs:label "Outdoor" ;
     s223:connectsAt hvac_devices:00090,
@@ -1190,20 +1182,17 @@ hvac:00011 a s223:Connection ;
     s223:connectsAt hvac_devices:00082,
         hvac_devices:00088 ;
     s223:connectsFrom hvac_devices:00086 ;
-    s223:connectsTo hvac_devices:00081 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_devices:00081 .
 hvac:00012 a s223:Connection ;
     s223:connectsAt hvac_devices:00077,
         hvac_devices:00083 ;
     s223:connectsFrom hvac_devices:00081 ;
-    s223:connectsTo hvac_devices:00076 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_devices:00076 .
 hvac:00013 a s223:Connection ;
     s223:connectsAt hvac_devices:00031,
         hvac_devices:00078 ;
     s223:connectsFrom hvac_devices:00076 ;
-    s223:connectsTo hvac_devices:00030 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_devices:00030 .
 hvac:00014 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
@@ -1220,32 +1209,27 @@ hvac:00016 a s223:Connection ;
     s223:connectsAt hvac_devices:00128,
         hvac_spaces:00013 ;
     s223:connectsFrom hvac_spaces:00011 ;
-    s223:connectsTo hvac_devices:00127 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_devices:00127 .
 hvac:00017 a s223:Connection ;
     s223:connectsAt hvac_devices:00160,
         hvac_devices:00170 ;
     s223:connectsFrom hvac_devices:00158 ;
-    s223:connectsTo hvac_devices:00169 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_devices:00169 .
 hvac:00018 a s223:Connection ;
     s223:connectsAt hvac_devices:00171,
         hvac_spaces:00039 ;
     s223:connectsFrom hvac_devices:00169 ;
-    s223:connectsTo hvac_spaces:00038 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_spaces:00038 .
 hvac:00019 a s223:Connection ;
     s223:connectsAt hvac_devices:00185,
         hvac_devices:00195 ;
     s223:connectsFrom hvac_devices:00183 ;
-    s223:connectsTo hvac_devices:00194 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_devices:00194 .
 hvac:00020 a s223:Connection ;
     s223:connectsAt hvac_devices:00196,
         hvac_spaces:00048 ;
     s223:connectsFrom hvac_devices:00194 ;
-    s223:connectsTo hvac_spaces:00047 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_spaces:00047 .
 hvac_devices:00001 a p223:AirHandlingUnit,
         s223:System ;
     rdfs:label "AHU" ;
@@ -1432,7 +1416,7 @@ hvac_devices:00018 a p223:Pressure,
     s223:hasExternalReference hvac_devices:00019 ;
     s223:hasQuantityKind quantitykind:Pressure ;
     s223:unit unit:PA .
-hvac_devices:00019 a ref:ExternalReference ;
+hvac_devices:00019 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan RF at urn:ex/hvac_devices/00014>" .
 hvac_devices:00020 a p223:Amps,
@@ -1444,7 +1428,7 @@ hvac_devices:00020 a p223:Amps,
     s223:hasExternalReference hvac_devices:00021 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-hvac_devices:00021 a ref:ExternalReference ;
+hvac_devices:00021 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan RF at urn:ex/hvac_devices/00014>" .
 hvac_devices:00022 a p223:RPM,
@@ -1456,7 +1440,7 @@ hvac_devices:00022 a p223:RPM,
     s223:hasExternalReference hvac_devices:00023 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-hvac_devices:00023 a ref:ExternalReference ;
+hvac_devices:00023 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan RF at urn:ex/hvac_devices/00014>" .
 hvac_devices:00024 a p223:HP,
@@ -1468,7 +1452,7 @@ hvac_devices:00024 a p223:HP,
     s223:hasExternalReference hvac_devices:00025 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-hvac_devices:00025 a ref:ExternalReference ;
+hvac_devices:00025 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan RF at urn:ex/hvac_devices/00014>" .
 hvac_devices:00026 a p223:ElectricPowerkW,
@@ -1480,7 +1464,7 @@ hvac_devices:00026 a p223:ElectricPowerkW,
     s223:hasExternalReference hvac_devices:00027 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-hvac_devices:00027 a ref:ExternalReference ;
+hvac_devices:00027 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan RF at urn:ex/hvac_devices/00014>" .
 hvac_devices:00028 a p223:PowerFactor,
@@ -1492,7 +1476,7 @@ hvac_devices:00028 a p223:PowerFactor,
     s223:hasExternalReference hvac_devices:00029 ;
     s223:hasQuantityKind quantitykind:PowerFactor ;
     s223:unit unit:UNITLESS .
-hvac_devices:00029 a ref:ExternalReference ;
+hvac_devices:00029 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan RF at urn:ex/hvac_devices/00014>" .
 hvac_devices:00030 a s223:Connectable,
@@ -1539,7 +1523,7 @@ hvac_devices:00034 a p223:Pressure,
     s223:hasExternalReference hvac_devices:00035 ;
     s223:hasQuantityKind quantitykind:Pressure ;
     s223:unit unit:PA .
-hvac_devices:00035 a ref:ExternalReference ;
+hvac_devices:00035 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan SF at urn:ex/hvac_devices/00030>" .
 hvac_devices:00036 a p223:Amps,
@@ -1551,7 +1535,7 @@ hvac_devices:00036 a p223:Amps,
     s223:hasExternalReference hvac_devices:00037 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-hvac_devices:00037 a ref:ExternalReference ;
+hvac_devices:00037 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan SF at urn:ex/hvac_devices/00030>" .
 hvac_devices:00038 a p223:RPM,
@@ -1563,7 +1547,7 @@ hvac_devices:00038 a p223:RPM,
     s223:hasExternalReference hvac_devices:00039 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-hvac_devices:00039 a ref:ExternalReference ;
+hvac_devices:00039 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan SF at urn:ex/hvac_devices/00030>" .
 hvac_devices:00040 a p223:HP,
@@ -1575,7 +1559,7 @@ hvac_devices:00040 a p223:HP,
     s223:hasExternalReference hvac_devices:00041 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-hvac_devices:00041 a ref:ExternalReference ;
+hvac_devices:00041 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan SF at urn:ex/hvac_devices/00030>" .
 hvac_devices:00042 a p223:ElectricPowerkW,
@@ -1587,7 +1571,7 @@ hvac_devices:00042 a p223:ElectricPowerkW,
     s223:hasExternalReference hvac_devices:00043 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-hvac_devices:00043 a ref:ExternalReference ;
+hvac_devices:00043 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan SF at urn:ex/hvac_devices/00030>" .
 hvac_devices:00044 a p223:PowerFactor,
@@ -1599,7 +1583,7 @@ hvac_devices:00044 a p223:PowerFactor,
     s223:hasExternalReference hvac_devices:00045 ;
     s223:hasQuantityKind quantitykind:PowerFactor ;
     s223:unit unit:UNITLESS .
-hvac_devices:00045 a ref:ExternalReference ;
+hvac_devices:00045 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan SF at urn:ex/hvac_devices/00030>" .
 hvac_devices:00046 a s223:Connectable,
@@ -1706,7 +1690,7 @@ hvac_devices:00058 a p223:Amps,
     s223:hasExternalReference hvac_devices:00059 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-hvac_devices:00059 a ref:ExternalReference ;
+hvac_devices:00059 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00060 a p223:HP,
@@ -1718,7 +1702,7 @@ hvac_devices:00060 a p223:HP,
     s223:hasExternalReference hvac_devices:00061 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-hvac_devices:00061 a ref:ExternalReference ;
+hvac_devices:00061 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00062 a p223:ElectricPowerkW,
@@ -1730,7 +1714,7 @@ hvac_devices:00062 a p223:ElectricPowerkW,
     s223:hasExternalReference hvac_devices:00063 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-hvac_devices:00063 a ref:ExternalReference ;
+hvac_devices:00063 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00064 a p223:PercentCommand,
@@ -1742,7 +1726,7 @@ hvac_devices:00064 a p223:PercentCommand,
     s223:hasExternalReference hvac_devices:00065 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00065 a ref:ExternalReference ;
+hvac_devices:00065 a s223:ExternalReference ;
     rdfs:label "speed_reference.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00066 a p223:RPM,
@@ -1754,7 +1738,7 @@ hvac_devices:00066 a p223:RPM,
     s223:hasExternalReference hvac_devices:00067 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-hvac_devices:00067 a ref:ExternalReference ;
+hvac_devices:00067 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00068 a p223:Temperature,
@@ -1765,7 +1749,7 @@ hvac_devices:00068 a p223:Temperature,
     rdfs:label "motor_temp" ;
     s223:hasExternalReference hvac_devices:00069 ;
     s223:hasQuantityKind quantitykind:Temperature .
-hvac_devices:00069 a ref:ExternalReference ;
+hvac_devices:00069 a s223:ExternalReference ;
     rdfs:label "motor_temp.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00070 a s223:EnumerableProperty,
@@ -1774,7 +1758,7 @@ hvac_devices:00070 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasExternalReference hvac_devices:00071 .
-hvac_devices:00071 a ref:ExternalReference ;
+hvac_devices:00071 a s223:ExternalReference ;
     rdfs:label "drive_running.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00072 a s223:ActuatableProperty,
@@ -1783,7 +1767,7 @@ hvac_devices:00072 a s223:ActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasExternalReference hvac_devices:00073 .
-hvac_devices:00073 a ref:ExternalReference ;
+hvac_devices:00073 a s223:ExternalReference ;
     rdfs:label "run_command.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00074 a s223:EnumerableProperty,
@@ -1792,7 +1776,7 @@ hvac_devices:00074 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasExternalReference hvac_devices:00075 .
-hvac_devices:00075 a ref:ExternalReference ;
+hvac_devices:00075 a s223:ExternalReference ;
     rdfs:label "alarm_status.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
 hvac_devices:00076 a s223:Coil,
@@ -1959,7 +1943,7 @@ hvac_devices:00094 a p223:PercentCommand,
     s223:hasExternalReference hvac_devices:00095 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00095 a ref:ExternalReference ;
+hvac_devices:00095 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00096 a p223:Percent,
@@ -1971,7 +1955,7 @@ hvac_devices:00096 a p223:Percent,
     s223:hasExternalReference hvac_devices:00097 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00097 a ref:ExternalReference ;
+hvac_devices:00097 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00098 a p223:Nm,
@@ -1983,7 +1967,7 @@ hvac_devices:00098 a p223:Nm,
     s223:hasExternalReference hvac_devices:00099 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-hvac_devices:00099 a ref:ExternalReference ;
+hvac_devices:00099 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00100 a s223:Connectable,
@@ -2036,7 +2020,7 @@ hvac_devices:00105 a p223:PercentCommand,
     s223:hasExternalReference hvac_devices:00106 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00106 a ref:ExternalReference ;
+hvac_devices:00106 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00107 a p223:Percent,
@@ -2048,7 +2032,7 @@ hvac_devices:00107 a p223:Percent,
     s223:hasExternalReference hvac_devices:00108 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00108 a ref:ExternalReference ;
+hvac_devices:00108 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00109 a p223:Nm,
@@ -2060,7 +2044,7 @@ hvac_devices:00109 a p223:Nm,
     s223:hasExternalReference hvac_devices:00110 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-hvac_devices:00110 a ref:ExternalReference ;
+hvac_devices:00110 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00111 a s223:Connectable,
@@ -2113,7 +2097,7 @@ hvac_devices:00116 a p223:PercentCommand,
     s223:hasExternalReference hvac_devices:00117 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00117 a ref:ExternalReference ;
+hvac_devices:00117 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00118 a p223:Percent,
@@ -2125,7 +2109,7 @@ hvac_devices:00118 a p223:Percent,
     s223:hasExternalReference hvac_devices:00119 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00119 a ref:ExternalReference ;
+hvac_devices:00119 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00120 a p223:Nm,
@@ -2137,7 +2121,7 @@ hvac_devices:00120 a p223:Nm,
     s223:hasExternalReference hvac_devices:00121 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-hvac_devices:00121 a ref:ExternalReference ;
+hvac_devices:00121 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00122 a s223:InletSystemConnectionPoint,
@@ -2207,7 +2191,7 @@ hvac_devices:00131 a p223:Pressure,
     s223:hasExternalReference hvac_devices:00132 ;
     s223:hasQuantityKind quantitykind:Pressure ;
     s223:unit unit:PA .
-hvac_devices:00132 a ref:ExternalReference ;
+hvac_devices:00132 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan ExhaustFan at urn:ex/hvac_devices/00127>" .
 hvac_devices:00133 a p223:Amps,
@@ -2219,7 +2203,7 @@ hvac_devices:00133 a p223:Amps,
     s223:hasExternalReference hvac_devices:00134 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-hvac_devices:00134 a ref:ExternalReference ;
+hvac_devices:00134 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan ExhaustFan at urn:ex/hvac_devices/00127>" .
 hvac_devices:00135 a p223:RPM,
@@ -2231,7 +2215,7 @@ hvac_devices:00135 a p223:RPM,
     s223:hasExternalReference hvac_devices:00136 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-hvac_devices:00136 a ref:ExternalReference ;
+hvac_devices:00136 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan ExhaustFan at urn:ex/hvac_devices/00127>" .
 hvac_devices:00137 a p223:HP,
@@ -2243,7 +2227,7 @@ hvac_devices:00137 a p223:HP,
     s223:hasExternalReference hvac_devices:00138 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-hvac_devices:00138 a ref:ExternalReference ;
+hvac_devices:00138 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan ExhaustFan at urn:ex/hvac_devices/00127>" .
 hvac_devices:00139 a p223:ElectricPowerkW,
@@ -2255,7 +2239,7 @@ hvac_devices:00139 a p223:ElectricPowerkW,
     s223:hasExternalReference hvac_devices:00140 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-hvac_devices:00140 a ref:ExternalReference ;
+hvac_devices:00140 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan ExhaustFan at urn:ex/hvac_devices/00127>" .
 hvac_devices:00141 a p223:PowerFactor,
@@ -2267,7 +2251,7 @@ hvac_devices:00141 a p223:PowerFactor,
     s223:hasExternalReference hvac_devices:00142 ;
     s223:hasQuantityKind quantitykind:PowerFactor ;
     s223:unit unit:UNITLESS .
-hvac_devices:00142 a ref:ExternalReference ;
+hvac_devices:00142 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan ExhaustFan at urn:ex/hvac_devices/00127>" .
 hvac_devices:00143 a s223:Connectable,
@@ -2465,7 +2449,7 @@ hvac_devices:00163 a p223:PercentCommand,
     s223:hasExternalReference hvac_devices:00164 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00164 a ref:ExternalReference ;
+hvac_devices:00164 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00165 a p223:Percent,
@@ -2477,7 +2461,7 @@ hvac_devices:00165 a p223:Percent,
     s223:hasExternalReference hvac_devices:00166 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00166 a ref:ExternalReference ;
+hvac_devices:00166 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00167 a p223:Nm,
@@ -2489,7 +2473,7 @@ hvac_devices:00167 a p223:Nm,
     s223:hasExternalReference hvac_devices:00168 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-hvac_devices:00168 a ref:ExternalReference ;
+hvac_devices:00168 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00169 a s223:Coil,
@@ -2671,7 +2655,7 @@ hvac_devices:00188 a p223:PercentCommand,
     s223:hasExternalReference hvac_devices:00189 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00189 a ref:ExternalReference ;
+hvac_devices:00189 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00190 a p223:Percent,
@@ -2683,7 +2667,7 @@ hvac_devices:00190 a p223:Percent,
     s223:hasExternalReference hvac_devices:00191 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-hvac_devices:00191 a ref:ExternalReference ;
+hvac_devices:00191 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00192 a p223:Nm,
@@ -2695,7 +2679,7 @@ hvac_devices:00192 a p223:Nm,
     s223:hasExternalReference hvac_devices:00193 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-hvac_devices:00193 a ref:ExternalReference ;
+hvac_devices:00193 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00194 a s223:Coil,

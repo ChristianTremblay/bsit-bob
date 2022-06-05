@@ -7,7 +7,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -496,7 +495,7 @@ ex:00064 a p223:Amps,
     s223:hasExternalReference ex:00065 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-ex:00065 a ref:ExternalReference ;
+ex:00065 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<ElectricalHeatingCoil Baseboard heater at urn:ex/sample_radiant-heater-1/00060>" .
 ex:00066 a p223:ElectricPowerkW,
@@ -508,18 +507,16 @@ ex:00066 a p223:ElectricPowerkW,
     s223:hasExternalReference ex:00067 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-ex:00067 a ref:ExternalReference ;
+ex:00067 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<ElectricalHeatingCoil Baseboard heater at urn:ex/sample_radiant-heater-1/00060>" .
 ex:00068 a s223:Connection ;
     s223:connectsAt ex:00043,
         ex:00050 ;
     s223:connectsFrom ex:00041 ;
-    s223:connectsTo ex:00049 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo ex:00049 .
 ex:00069 a s223:Connection ;
     s223:connectsAt ex:00042,
         ex:00051 ;
     s223:connectsFrom ex:00049 ;
-    s223:connectsTo ex:00041 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo ex:00041 .

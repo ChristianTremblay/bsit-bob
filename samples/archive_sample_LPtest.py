@@ -35,7 +35,7 @@ from bob.devices.hvac.coil import ChilledWaterCoil
 from bob.devices.hvac.damper import Damper
 from bob.devices.hvac.filter import Filter
 from bob.enum import Exhaust, Supply
-from bob.signal import AnalogIn, AnalogOut
+from bob.properties.temperature import Temperature
 from bob.space.hvac import HVACZone
 
 # from header import g36_header
@@ -130,6 +130,6 @@ class RooftopUnit(System):
 
 # make an instance
 
-r = RooftopUnit(node_iri=ex.rtu, label="rtu")
+r = RooftopUnit(_node_iri=ex.rtu, label="rtu")
 # g36_header(model_name)
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

@@ -6,7 +6,7 @@ _namespace = s223
 
 
 class Door(Device):
-    _class_iri =s223.Door
+    _class_iri = s223.Door
     door: AirBidirectionalConnectionPoint
     naturalLight: LightVisibleOutletConnectionPoint
 

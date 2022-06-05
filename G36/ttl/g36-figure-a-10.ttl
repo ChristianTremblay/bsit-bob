@@ -3,7 +3,6 @@
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 exg3610:00001 a s223:Connectable,
@@ -56,7 +55,7 @@ exg3610:00006 a p223:PercentCommand,
     s223:hasExternalReference exg3610:00007 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00007 a ref:ExternalReference ;
+exg3610:00007 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00004>" .
 exg3610:00008 a p223:Percent,
@@ -68,7 +67,7 @@ exg3610:00008 a p223:Percent,
     s223:hasExternalReference exg3610:00009 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00009 a ref:ExternalReference ;
+exg3610:00009 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00004>" .
 exg3610:00010 a p223:Nm,
@@ -80,7 +79,7 @@ exg3610:00010 a p223:Nm,
     s223:hasExternalReference exg3610:00011 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-exg3610:00011 a ref:ExternalReference ;
+exg3610:00011 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00004>" .
 exg3610:00012 a s223:Connectable,
@@ -133,7 +132,7 @@ exg3610:00017 a p223:PercentCommand,
     s223:hasExternalReference exg3610:00018 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00018 a ref:ExternalReference ;
+exg3610:00018 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00015>" .
 exg3610:00019 a p223:Percent,
@@ -145,7 +144,7 @@ exg3610:00019 a p223:Percent,
     s223:hasExternalReference exg3610:00020 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00020 a ref:ExternalReference ;
+exg3610:00020 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00015>" .
 exg3610:00021 a p223:Nm,
@@ -157,7 +156,7 @@ exg3610:00021 a p223:Nm,
     s223:hasExternalReference exg3610:00022 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-exg3610:00022 a ref:ExternalReference ;
+exg3610:00022 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00015>" .
 exg3610:00023 a s223:Connection ;
@@ -268,10 +267,8 @@ exg3610:00034 a s223:Coil,
     s223:connectedFrom exg3610:00029 ;
     s223:connectedThrough exg3610:00056,
         exg3610:00211,
-        exg3610:00212,
-        exg3610:00215 ;
-    s223:connectedTo exg3610:00039,
-        exg3610:00058 ;
+        exg3610:00212 ;
+    s223:connectedTo exg3610:00058 ;
     s223:hasConnectionPoint exg3610:00035,
         exg3610:00036,
         exg3610:00037,
@@ -303,7 +300,6 @@ exg3610:00037 a s223:ConnectionPoint,
 exg3610:00038 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "HWC.hotWaterOutlet" ;
-    s223:connectsThrough exg3610:00215 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00034 .
@@ -312,9 +308,6 @@ exg3610:00039 a s223:Connectable,
         s223:Valve ;
     rdfs:label "HTG-VLV" ;
     s223:command exg3610:00048 ;
-    s223:connectedFrom exg3610:00034 ;
-    s223:connectedThrough exg3610:00057,
-        exg3610:00215 ;
     s223:contains exg3610:00046 ;
     s223:feedback exg3610:00050 ;
     s223:hasConnectionPoint exg3610:00040,
@@ -325,13 +318,11 @@ exg3610:00039 a s223:Connectable,
     rdfs:comment "Heating 2W Valve" .
 exg3610:00040 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    s223:connectsThrough exg3610:00215 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00039 .
 exg3610:00041 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    s223:connectsThrough exg3610:00057 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00039 .
@@ -354,7 +345,7 @@ exg3610:00044 a p223:Gallons,
     s223:hasExternalReference exg3610:00045 ;
     s223:hasQuantityKind quantitykind:LiquidVolume ;
     s223:unit unit:GAL_US .
-exg3610:00045 a ref:ExternalReference ;
+exg3610:00045 a s223:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
     s223:hasRef "<TwoWayActuatedProportionalValve HTG-VLV at http://data.ashrae.org/standard223/data/g36-figure-a-10#00039>" .
 exg3610:00046 a s223:Actuator,
@@ -378,7 +369,7 @@ exg3610:00048 a p223:PercentCommand,
     s223:hasExternalReference exg3610:00049 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00049 a ref:ExternalReference ;
+exg3610:00049 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00046>" .
 exg3610:00050 a p223:Percent,
@@ -390,7 +381,7 @@ exg3610:00050 a p223:Percent,
     s223:hasExternalReference exg3610:00051 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00051 a ref:ExternalReference ;
+exg3610:00051 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00046>" .
 exg3610:00052 a p223:Nm,
@@ -402,7 +393,7 @@ exg3610:00052 a p223:Nm,
     s223:hasExternalReference exg3610:00053 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-exg3610:00053 a ref:ExternalReference ;
+exg3610:00053 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00046>" .
 exg3610:00054 a p223:AirTemperatureSensor,
@@ -430,8 +421,6 @@ exg3610:00056 a s223:Connection ;
     s223:hasMedium s223:Water-HotWater .
 exg3610:00057 a s223:Connection ;
     rdfs:label "Hot Water Return" ;
-    s223:connectsAt exg3610:00041 ;
-    s223:connectsFrom exg3610:00039 ;
     s223:hasMedium s223:Water-HotWater .
 exg3610:00058 a s223:Coil,
         s223:Connectable,
@@ -445,10 +434,8 @@ exg3610:00058 a s223:Coil,
     s223:connectedFrom exg3610:00034 ;
     s223:connectedThrough exg3610:00078,
         exg3610:00212,
-        exg3610:00213,
-        exg3610:00216 ;
-    s223:connectedTo exg3610:00063,
-        exg3610:00080 ;
+        exg3610:00213 ;
+    s223:connectedTo exg3610:00080 ;
     s223:hasConnectionPoint exg3610:00059,
         exg3610:00060,
         exg3610:00061,
@@ -478,7 +465,6 @@ exg3610:00061 a s223:ConnectionPoint,
 exg3610:00062 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CWC.chilledWaterOutlet" ;
-    s223:connectsThrough exg3610:00216 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00058 .
@@ -487,9 +473,6 @@ exg3610:00063 a s223:Connectable,
         s223:Valve ;
     rdfs:label "CLG-VLV" ;
     s223:command exg3610:00072 ;
-    s223:connectedFrom exg3610:00058 ;
-    s223:connectedThrough exg3610:00079,
-        exg3610:00216 ;
     s223:contains exg3610:00070 ;
     s223:feedback exg3610:00074 ;
     s223:hasConnectionPoint exg3610:00064,
@@ -500,13 +483,11 @@ exg3610:00063 a s223:Connectable,
     rdfs:comment "Cooling 2W Valve" .
 exg3610:00064 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    s223:connectsThrough exg3610:00216 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00063 .
 exg3610:00065 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    s223:connectsThrough exg3610:00079 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00063 .
@@ -529,7 +510,7 @@ exg3610:00068 a p223:Gallons,
     s223:hasExternalReference exg3610:00069 ;
     s223:hasQuantityKind quantitykind:LiquidVolume ;
     s223:unit unit:GAL_US .
-exg3610:00069 a ref:ExternalReference ;
+exg3610:00069 a s223:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
     s223:hasRef "<TwoWayActuatedProportionalValve CLG-VLV at http://data.ashrae.org/standard223/data/g36-figure-a-10#00063>" .
 exg3610:00070 a s223:Actuator,
@@ -553,7 +534,7 @@ exg3610:00072 a p223:PercentCommand,
     s223:hasExternalReference exg3610:00073 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00073 a ref:ExternalReference ;
+exg3610:00073 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00070>" .
 exg3610:00074 a p223:Percent,
@@ -565,7 +546,7 @@ exg3610:00074 a p223:Percent,
     s223:hasExternalReference exg3610:00075 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00075 a ref:ExternalReference ;
+exg3610:00075 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00070>" .
 exg3610:00076 a p223:Nm,
@@ -577,7 +558,7 @@ exg3610:00076 a p223:Nm,
     s223:hasExternalReference exg3610:00077 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-exg3610:00077 a ref:ExternalReference ;
+exg3610:00077 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00070>" .
 exg3610:00078 a s223:Connection ;
@@ -587,8 +568,6 @@ exg3610:00078 a s223:Connection ;
     s223:hasMedium s223:Water-ChilledWater .
 exg3610:00079 a s223:Connection ;
     rdfs:label "Chilled Water Return" ;
-    s223:connectsAt exg3610:00065 ;
-    s223:connectsFrom exg3610:00063 ;
     s223:hasMedium s223:Water-ChilledWater .
 exg3610:00080 a s223:Connectable,
         s223:Device,
@@ -631,7 +610,7 @@ exg3610:00084 a p223:Pressure,
     s223:hasExternalReference exg3610:00085 ;
     s223:hasQuantityKind quantitykind:Pressure ;
     s223:unit unit:PA .
-exg3610:00085 a ref:ExternalReference ;
+exg3610:00085 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan SF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00080>" .
 exg3610:00086 a p223:Amps,
@@ -643,7 +622,7 @@ exg3610:00086 a p223:Amps,
     s223:hasExternalReference exg3610:00087 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-exg3610:00087 a ref:ExternalReference ;
+exg3610:00087 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan SF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00080>" .
 exg3610:00088 a p223:RPM,
@@ -655,7 +634,7 @@ exg3610:00088 a p223:RPM,
     s223:hasExternalReference exg3610:00089 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-exg3610:00089 a ref:ExternalReference ;
+exg3610:00089 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan SF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00080>" .
 exg3610:00090 a p223:HP,
@@ -667,7 +646,7 @@ exg3610:00090 a p223:HP,
     s223:hasExternalReference exg3610:00091 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-exg3610:00091 a ref:ExternalReference ;
+exg3610:00091 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan SF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00080>" .
 exg3610:00092 a p223:ElectricPowerkW,
@@ -679,7 +658,7 @@ exg3610:00092 a p223:ElectricPowerkW,
     s223:hasExternalReference exg3610:00093 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-exg3610:00093 a ref:ExternalReference ;
+exg3610:00093 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan SF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00080>" .
 exg3610:00094 a p223:PowerFactor,
@@ -691,7 +670,7 @@ exg3610:00094 a p223:PowerFactor,
     s223:hasExternalReference exg3610:00095 ;
     s223:hasQuantityKind quantitykind:PowerFactor ;
     s223:unit unit:UNITLESS .
-exg3610:00095 a ref:ExternalReference ;
+exg3610:00095 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan SF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00080>" .
 exg3610:00096 a s223:Connectable,
@@ -720,7 +699,7 @@ exg3610:00099 a p223:Amps,
     s223:hasExternalReference exg3610:00100 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-exg3610:00100 a ref:ExternalReference ;
+exg3610:00100 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00101 a p223:HP,
@@ -732,7 +711,7 @@ exg3610:00101 a p223:HP,
     s223:hasExternalReference exg3610:00102 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-exg3610:00102 a ref:ExternalReference ;
+exg3610:00102 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00103 a p223:ElectricPowerkW,
@@ -744,7 +723,7 @@ exg3610:00103 a p223:ElectricPowerkW,
     s223:hasExternalReference exg3610:00104 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-exg3610:00104 a ref:ExternalReference ;
+exg3610:00104 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00105 a p223:PercentCommand,
@@ -756,7 +735,7 @@ exg3610:00105 a p223:PercentCommand,
     s223:hasExternalReference exg3610:00106 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00106 a ref:ExternalReference ;
+exg3610:00106 a s223:ExternalReference ;
     rdfs:label "speed_reference.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00107 a p223:RPM,
@@ -768,7 +747,7 @@ exg3610:00107 a p223:RPM,
     s223:hasExternalReference exg3610:00108 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-exg3610:00108 a ref:ExternalReference ;
+exg3610:00108 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00109 a p223:Temperature,
@@ -779,7 +758,7 @@ exg3610:00109 a p223:Temperature,
     rdfs:label "motor_temp" ;
     s223:hasExternalReference exg3610:00110 ;
     s223:hasQuantityKind quantitykind:Temperature .
-exg3610:00110 a ref:ExternalReference ;
+exg3610:00110 a s223:ExternalReference ;
     rdfs:label "motor_temp.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00111 a s223:EnumerableProperty,
@@ -788,7 +767,7 @@ exg3610:00111 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasExternalReference exg3610:00112 .
-exg3610:00112 a ref:ExternalReference ;
+exg3610:00112 a s223:ExternalReference ;
     rdfs:label "drive_running.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00113 a s223:ActuatableProperty,
@@ -797,7 +776,7 @@ exg3610:00113 a s223:ActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasExternalReference exg3610:00114 .
-exg3610:00114 a ref:ExternalReference ;
+exg3610:00114 a s223:ExternalReference ;
     rdfs:label "run_command.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00115 a s223:EnumerableProperty,
@@ -806,7 +785,7 @@ exg3610:00115 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasExternalReference exg3610:00116 .
-exg3610:00116 a ref:ExternalReference ;
+exg3610:00116 a s223:ExternalReference ;
     rdfs:label "alarm_status.ExternalReference" ;
     s223:hasRef "<VFD SF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00096>" .
 exg3610:00117 a s223:Connectable,
@@ -833,7 +812,7 @@ exg3610:00120 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
     s223:hasExternalReference exg3610:00121 .
-exg3610:00121 a ref:ExternalReference ;
+exg3610:00121 a s223:ExternalReference ;
     rdfs:label "onOffStatus.ExternalReference" ;
     s223:hasRef "<HighStaticPressureStat HighStaticPressureLimit_Mix at http://data.ashrae.org/standard223/data/g36-figure-a-10#00117>" .
 exg3610:00122 a p223:AirDifferentialStaticPressureSensor,
@@ -878,7 +857,7 @@ exg3610:00127 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
     s223:hasExternalReference exg3610:00128 .
-exg3610:00128 a ref:ExternalReference ;
+exg3610:00128 a s223:ExternalReference ;
     rdfs:label "onOffStatus.ExternalReference" ;
     s223:hasRef "<HighStaticPressureStat HighStaticPressureLimit_Supply at http://data.ashrae.org/standard223/data/g36-figure-a-10#00124>" .
 exg3610:00129 a p223:AirDifferentialStaticPressureSensor,
@@ -1042,7 +1021,7 @@ exg3610:00147 a p223:PercentCommand,
     s223:hasExternalReference exg3610:00148 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00148 a ref:ExternalReference ;
+exg3610:00148 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00145>" .
 exg3610:00149 a p223:Percent,
@@ -1054,7 +1033,7 @@ exg3610:00149 a p223:Percent,
     s223:hasExternalReference exg3610:00150 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00150 a ref:ExternalReference ;
+exg3610:00150 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00145>" .
 exg3610:00151 a p223:Nm,
@@ -1066,7 +1045,7 @@ exg3610:00151 a p223:Nm,
     s223:hasExternalReference exg3610:00152 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-exg3610:00152 a ref:ExternalReference ;
+exg3610:00152 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00145>" .
 exg3610:00153 a s223:Connectable,
@@ -1110,7 +1089,7 @@ exg3610:00157 a p223:Pressure,
     s223:hasExternalReference exg3610:00158 ;
     s223:hasQuantityKind quantitykind:Pressure ;
     s223:unit unit:PA .
-exg3610:00158 a ref:ExternalReference ;
+exg3610:00158 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan EF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00153>" .
 exg3610:00159 a p223:Amps,
@@ -1122,7 +1101,7 @@ exg3610:00159 a p223:Amps,
     s223:hasExternalReference exg3610:00160 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-exg3610:00160 a ref:ExternalReference ;
+exg3610:00160 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan EF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00153>" .
 exg3610:00161 a p223:RPM,
@@ -1134,7 +1113,7 @@ exg3610:00161 a p223:RPM,
     s223:hasExternalReference exg3610:00162 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-exg3610:00162 a ref:ExternalReference ;
+exg3610:00162 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan EF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00153>" .
 exg3610:00163 a p223:HP,
@@ -1146,7 +1125,7 @@ exg3610:00163 a p223:HP,
     s223:hasExternalReference exg3610:00164 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-exg3610:00164 a ref:ExternalReference ;
+exg3610:00164 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan EF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00153>" .
 exg3610:00165 a p223:ElectricPowerkW,
@@ -1158,7 +1137,7 @@ exg3610:00165 a p223:ElectricPowerkW,
     s223:hasExternalReference exg3610:00166 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-exg3610:00166 a ref:ExternalReference ;
+exg3610:00166 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan EF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00153>" .
 exg3610:00167 a p223:PowerFactor,
@@ -1170,7 +1149,7 @@ exg3610:00167 a p223:PowerFactor,
     s223:hasExternalReference exg3610:00168 ;
     s223:hasQuantityKind quantitykind:PowerFactor ;
     s223:unit unit:UNITLESS .
-exg3610:00168 a ref:ExternalReference ;
+exg3610:00168 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan EF at http://data.ashrae.org/standard223/data/g36-figure-a-10#00153>" .
 exg3610:00169 a s223:Connectable,
@@ -1199,7 +1178,7 @@ exg3610:00172 a p223:Amps,
     s223:hasExternalReference exg3610:00173 ;
     s223:hasQuantityKind quantitykind:ElectricCurrent ;
     s223:unit unit:A .
-exg3610:00173 a ref:ExternalReference ;
+exg3610:00173 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00174 a p223:HP,
@@ -1211,7 +1190,7 @@ exg3610:00174 a p223:HP,
     s223:hasExternalReference exg3610:00175 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:HP .
-exg3610:00175 a ref:ExternalReference ;
+exg3610:00175 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00176 a p223:ElectricPowerkW,
@@ -1223,7 +1202,7 @@ exg3610:00176 a p223:ElectricPowerkW,
     s223:hasExternalReference exg3610:00177 ;
     s223:hasQuantityKind quantitykind:Power ;
     s223:unit unit:KiloW .
-exg3610:00177 a ref:ExternalReference ;
+exg3610:00177 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00178 a p223:PercentCommand,
@@ -1235,7 +1214,7 @@ exg3610:00178 a p223:PercentCommand,
     s223:hasExternalReference exg3610:00179 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00179 a ref:ExternalReference ;
+exg3610:00179 a s223:ExternalReference ;
     rdfs:label "speed_reference.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00180 a p223:RPM,
@@ -1247,7 +1226,7 @@ exg3610:00180 a p223:RPM,
     s223:hasExternalReference exg3610:00181 ;
     s223:hasQuantityKind quantitykind:AngularVolocity ;
     s223:unit unit:REV-PER-MIN .
-exg3610:00181 a ref:ExternalReference ;
+exg3610:00181 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00182 a p223:Temperature,
@@ -1258,7 +1237,7 @@ exg3610:00182 a p223:Temperature,
     rdfs:label "motor_temp" ;
     s223:hasExternalReference exg3610:00183 ;
     s223:hasQuantityKind quantitykind:Temperature .
-exg3610:00183 a ref:ExternalReference ;
+exg3610:00183 a s223:ExternalReference ;
     rdfs:label "motor_temp.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00184 a s223:EnumerableProperty,
@@ -1267,7 +1246,7 @@ exg3610:00184 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasExternalReference exg3610:00185 .
-exg3610:00185 a ref:ExternalReference ;
+exg3610:00185 a s223:ExternalReference ;
     rdfs:label "drive_running.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00186 a s223:ActuatableProperty,
@@ -1276,7 +1255,7 @@ exg3610:00186 a s223:ActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasExternalReference exg3610:00187 .
-exg3610:00187 a ref:ExternalReference ;
+exg3610:00187 a s223:ExternalReference ;
     rdfs:label "run_command.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00188 a s223:EnumerableProperty,
@@ -1285,7 +1264,7 @@ exg3610:00188 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasExternalReference exg3610:00189 .
-exg3610:00189 a ref:ExternalReference ;
+exg3610:00189 a s223:ExternalReference ;
     rdfs:label "alarm_status.ExternalReference" ;
     s223:hasRef "<VFD EF-VFD at http://data.ashrae.org/standard223/data/g36-figure-a-10#00169>" .
 exg3610:00190 a s223:Connectable,
@@ -1339,7 +1318,7 @@ exg3610:00195 a p223:PercentCommand,
     s223:hasExternalReference exg3610:00196 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00196 a ref:ExternalReference ;
+exg3610:00196 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00193>" .
 exg3610:00197 a p223:Percent,
@@ -1351,7 +1330,7 @@ exg3610:00197 a p223:Percent,
     s223:hasExternalReference exg3610:00198 ;
     s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:unit unit:PERCENT .
-exg3610:00198 a ref:ExternalReference ;
+exg3610:00198 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00193>" .
 exg3610:00199 a p223:Nm,
@@ -1363,7 +1342,7 @@ exg3610:00199 a p223:Nm,
     s223:hasExternalReference exg3610:00200 ;
     s223:hasQuantityKind quantitykind:Torque ;
     s223:unit unit:N-M .
-exg3610:00200 a ref:ExternalReference ;
+exg3610:00200 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalProportionalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-10#00193>" .
 exg3610:00201 a p223:DifferentialStaticPressureSensor,
@@ -1454,88 +1433,72 @@ exg3610:00211 a s223:Connection ;
     s223:connectsAt exg3610:00031,
         exg3610:00035 ;
     s223:connectsFrom exg3610:00029 ;
-    s223:connectsTo exg3610:00034 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3610:00034 .
 exg3610:00212 a s223:Connection ;
     s223:connectsAt exg3610:00036,
         exg3610:00059 ;
     s223:connectsFrom exg3610:00034 ;
-    s223:connectsTo exg3610:00058 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3610:00058 .
 exg3610:00213 a s223:Connection ;
     s223:connectsAt exg3610:00060,
         exg3610:00081 ;
     s223:connectsFrom exg3610:00058 ;
-    s223:connectsTo exg3610:00080 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3610:00080 .
 exg3610:00214 a s223:Connection ;
     s223:connectsAt exg3610:00155,
         exg3610:00191 ;
     s223:connectsFrom exg3610:00153 ;
-    s223:connectsTo exg3610:00190 ;
-    s223:hasMedium s223:Medium-Air .
-exg3610:00215 a s223:Connection ;
-    s223:connectsAt exg3610:00038,
-        exg3610:00040 ;
-    s223:connectsFrom exg3610:00034 ;
-    s223:connectsTo exg3610:00039 ;
-    s223:hasMedium s223:Water-HotWater .
-exg3610:00216 a s223:Connection ;
-    s223:connectsAt exg3610:00062,
-        exg3610:00064 ;
-    s223:connectsFrom exg3610:00058 ;
-    s223:connectsTo exg3610:00063 ;
-    s223:hasMedium s223:Water-ChilledWater .
-exg3610:00217 a s223:System,
+    s223:connectsTo exg3610:00190 .
+exg3610:00215 a s223:System,
         exg3610:G36_FIG10_AHU ;
     rdfs:label "AHU" ;
-    s223:hasSystemConnectionPoint exg3610:00218,
-        exg3610:00219,
-        exg3610:00220,
-        exg3610:00221 ;
+    s223:hasSystemConnectionPoint exg3610:00216,
+        exg3610:00217,
+        exg3610:00218,
+        exg3610:00219 ;
     exg3610:cooling exg3610:00074 ;
-    exg3610:exhaustAir exg3610:00220 ;
+    exg3610:exhaustAir exg3610:00218 ;
     exg3610:heating exg3610:00050 ;
-    exg3610:outdoorAir exg3610:00221 ;
-    exg3610:returnAir exg3610:00218 ;
-    exg3610:supplyAir exg3610:00219 ;
+    exg3610:outdoorAir exg3610:00219 ;
+    exg3610:returnAir exg3610:00216 ;
+    exg3610:supplyAir exg3610:00217 ;
     rdfs:comment "Is this really required ?" .
-exg3610:00218 a s223:InletSystemConnectionPoint,
+exg3610:00216 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "AHU.returnAir" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3610:00139 .
-exg3610:00219 a s223:OutletSystemConnectionPoint,
+exg3610:00217 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "AHU.supplyAir" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3610:00138 .
-exg3610:00220 a s223:OutletSystemConnectionPoint,
+exg3610:00218 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "AHU.exhaustAir" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3610:00192 .
-exg3610:00221 a s223:InletSystemConnectionPoint,
+exg3610:00219 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "AHU.outdoorAir" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3610:00013 .
-exg3610:00222 a s223:FunctionBlock,
+exg3610:00220 a s223:FunctionBlock,
         g36:FunctionBlock ;
     rdfs:label "G36_FIG_A_10" ;
-    s223:input exg3610:00223 ;
-    s223:output exg3610:00224 ;
+    s223:input exg3610:00221 ;
+    s223:output exg3610:00222 ;
     rdfs:comment "lorem ipsum of sequence" .
-exg3610:00223 a s223:Connector,
+exg3610:00221 a s223:Connector,
         s223:InputConnector,
         g36:AnalogIn ;
     rdfs:label "G36_FIG_A_10.return-air-temp" ;
     s223:usesInput exg3610:00141 .
-exg3610:00224 a s223:Connector,
+exg3610:00222 a s223:Connector,
         s223:OutputConnector,
         g36:AnalogOut ;
     rdfs:label "G36_FIG_A_10.HW VALVE" ;

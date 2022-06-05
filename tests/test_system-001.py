@@ -3,11 +3,10 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob import core
+from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.core import (
     Device,
-    InletConnectionPoint,
     InletSystemConnectionPoint,
-    OutletConnectionPoint,
     OutletSystemConnectionPoint,
     System,
     bind_model_namespace,
@@ -21,13 +20,13 @@ core.INCLUDE_INVERSE = True
 
 def test_systems(bob_fixture):
     class A(Device):
-        cOut: OutletConnectionPoint
+        cOut: AirOutletConnectionPoint
 
     class X(System):
         cOut: OutletSystemConnectionPoint
 
     class B(Device):
-        cIn: InletConnectionPoint
+        cIn: AirInletConnectionPoint
 
     class Y(System):
         cIn: InletSystemConnectionPoint

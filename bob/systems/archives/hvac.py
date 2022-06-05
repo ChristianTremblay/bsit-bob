@@ -26,7 +26,7 @@ class HVACZone1(HVACZone):
     A simple HVAC Zone with a single space.
     """
 
-    _class_iri =None
+    _class_iri = None
 
     def __init__(self, label: str) -> None:
         super().__init__(label=label)

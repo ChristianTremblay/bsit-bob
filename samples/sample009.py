@@ -3,11 +3,10 @@ from pathlib import Path
 
 from header import sample_header
 
+from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.core import (
     Device,
-    InletConnectionPoint,
     InletSystemConnectionPoint,
-    OutletConnectionPoint,
     OutletSystemConnectionPoint,
     System,
     bind_model_namespace,
@@ -19,7 +18,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class DeviceIn1(Device):
-    cp: InletConnectionPoint
+    cp: AirInletConnectionPoint
 
 
 class SystemIn1(System):
@@ -33,8 +32,8 @@ class SystemIn1(System):
 
 
 class DeviceIn2(Device):
-    cp1: InletConnectionPoint
-    cp2: InletConnectionPoint
+    cp1: AirInletConnectionPoint
+    cp2: AirInletConnectionPoint
 
 
 class SystemIn2(System):
@@ -50,7 +49,7 @@ class SystemIn2(System):
 
 
 class DeviceOut1(Device):
-    cp: OutletConnectionPoint
+    cp: AirOutletConnectionPoint
 
 
 class SystemOut1(System):
@@ -64,8 +63,8 @@ class SystemOut1(System):
 
 
 class DeviceOut2(Device):
-    cp1: OutletConnectionPoint
-    cp2: OutletConnectionPoint
+    cp1: AirOutletConnectionPoint
+    cp2: AirOutletConnectionPoint
 
 
 class SystemOut2(System):
@@ -81,8 +80,8 @@ class SystemOut2(System):
 
 
 class DeviceInOut(Device):
-    cp1: InletConnectionPoint
-    cp2: OutletConnectionPoint
+    cp1: AirInletConnectionPoint
+    cp2: AirOutletConnectionPoint
 
 
 class SystemInOut(System):

@@ -126,11 +126,11 @@ def contains_mm(parent_device: Device, child_device: Sensor) -> None:
     """Device > Device"""
     logging.info(f"device {parent_device} contains device {child_device}")
     parent_device._data_graph.add(
-        (parent_device.node, s223.contains, child_device.node)
+        (parent_device._node_iri, s223.contains, child_device._node_iri)
     )
     if INCLUDE_INVERSE:
         parent_device._data_graph.add(
-            (child_device.node, s223.isContainedIn, parent_device.node)
+            (child_device._node_iri, s223.isContainedIn, parent_device._node_iri)
         )
 
 
@@ -140,17 +140,17 @@ def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
     logging.info(f"device {parent_device} contains device {child_device}")
     parent_device._data_graph.add(
         (
-            parent_device.observesProperty.node,
+            parent_device.observesProperty._node_iri,
             s223.hasExternalReference,
-            child_device.node,
+            child_device._node_iri,
         )
     )
     if INCLUDE_INVERSE:
         parent_device._data_graph.add(
             (
-                child_device.node,
+                child_device._node_iri,
                 s223.isExternalReferenceOf,
-                parent_device.observesProperty.node,
+                parent_device.observesProperty._node_iri,
             )
         )
 

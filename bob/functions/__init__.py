@@ -8,18 +8,11 @@ from __future__ import annotations
 
 import inspect
 import logging
-
-from typing import Any, Dict, AnyStr
+from typing import Any, AnyStr, Dict
 
 from rdflib import URIRef  # type: ignore
 
-from ..core import (
-    INCLUDE_INVERSE,
-    Node,
-    Property,
-    s223,
-    data_graph,
-)
+from ..core import INCLUDE_INVERSE, Node, Property, data_graph, s223
 from ..multimethods import multimethod
 
 _namespace = s223
@@ -59,7 +52,7 @@ class InputConnector(Connector):
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block.node, s223.input, self.node))
+        data_graph.add((function_block._node_iri, s223.input, self._node_iri))
 
 
 class OutputConnector(Connector):
@@ -68,7 +61,7 @@ class OutputConnector(Connector):
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block.node, s223.output, self.node))
+        data_graph.add((function_block._node_iri, s223.output, self._node_iri))
 
 
 @multimethod
@@ -78,7 +71,9 @@ def connect_mm(
     """OutputConnector >> InputConnector"""
     logging.info(f"connect from {output_connector} to {input_connector}")
 
-    data_graph.add((output_connector.node, s223.connect, input_connector.node))
+    data_graph.add(
+        (output_connector._node_iri, s223.connect, input_connector._node_iri)
+    )
 
 
 @multimethod
@@ -86,9 +81,11 @@ def connect_mm(prop: Property, input_connector: InputConnector) -> None:
     """Property >> InputConnector"""
     logging.info(f"connect from {prop} to {input_connector}")
 
-    data_graph.add((input_connector.node, s223.usesInput, prop.node))
+    data_graph.add((input_connector._node_iri, s223.usesInput, prop._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((prop.node, s223.isUsedAsInputBy, input_connector.node))
+        data_graph.add(
+            (prop._node_iri, s223.isUsedAsInputBy, input_connector._node_iri)
+        )
 
 
 @multimethod
@@ -96,9 +93,9 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
     """OutputConnector >> Property"""
     logging.info(f"connect from {output_connector} to {prop}")
 
-    data_graph.add((output_connector.node, s223.producesOutput, prop.node))
+    data_graph.add((output_connector._node_iri, s223.producesOutput, prop._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((prop.node, s223.isProducedBy, output_connector.node))
+        data_graph.add((prop._node_iri, s223.isProducedBy, output_connector._node_iri))
 
 
 #
@@ -180,7 +177,7 @@ class FunctionBlock(Node):
 
             if issubclass(attr_type, Connector):
                 # build an instance of this connector
-                attr_element = attr_type(label=self.label + "." + attr_name)
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
                 self._connectors[attr_name] = attr_element
                 logging.debug(f"    - connector {attr_name}: {attr_element}")
 

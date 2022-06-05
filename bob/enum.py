@@ -1,15 +1,15 @@
 from rdflib import Graph, URIRef
 
 from .core import (
+    NormalAlarmEnum,
     OccupancyEnum,
+    OnOffEnum,
+    OpenCloseEnum,
+    PositionStatusEnum,
     Role,
     Substance,
     YesNoEnum,
     s223,
-    OnOffEnum,
-    PositionStatusEnum,
-    NormalAlarmEnum,
-    OpenCloseEnum,
 )
 
 _namespace = s223

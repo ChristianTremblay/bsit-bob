@@ -2,7 +2,6 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 @prefix ex: <urn:ex/sample_joelsboilers/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -12,16 +11,15 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_joelsboilers> ;
   rdfs:label "sample_joelsboilers" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex:00001 a p223:AgnosticBoiler,
-        s223:Connectable,
-        s223:Device ;
+ex:00001 a s223:Connectable,
+        s223:Device,
+        ex:AgnosticWaterBoiler ;
     rdfs:label "DHW-BOILER" ;
     s223:connectedThrough ex:00013,
         ex:00040 ;
     s223:connectedTo ex:00007 ;
     s223:hasConnectionPoint ex:00002,
         ex:00003 ;
-    s223:node_type p223:AgnosticBoiler ;
     ex:waterInlet ex:00002 ;
     ex:waterOutlet ex:00003 .
 ex:00002 a s223:ConnectionPoint,
@@ -38,9 +36,9 @@ ex:00003 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00001 .
-ex:00004 a p223:AgnosticBoiler,
-        s223:Connectable,
-        s223:Device ;
+ex:00004 a s223:Connectable,
+        s223:Device,
+        ex:AgnosticWaterBoiler ;
     rdfs:label "HTGLOOP-BOILER" ;
     s223:connectedFrom ex:00010 ;
     s223:connectedThrough ex:00041,
@@ -48,7 +46,6 @@ ex:00004 a p223:AgnosticBoiler,
     s223:connectedTo ex:00022 ;
     s223:hasConnectionPoint ex:00005,
         ex:00006 ;
-    s223:node_type p223:AgnosticBoiler ;
     ex:waterInlet ex:00005 ;
     ex:waterOutlet ex:00006 .
 ex:00005 a s223:ConnectionPoint,
@@ -65,16 +62,15 @@ ex:00006 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00004 .
-ex:00007 a p223:HotWaterTank,
-        s223:Connectable,
-        s223:Device ;
+ex:00007 a s223:Connectable,
+        s223:Device,
+        ex:HotWaterTank ;
     rdfs:label "DHW-TANK" ;
     s223:connectedFrom ex:00001 ;
     s223:connectedThrough ex:00014,
         ex:00040 ;
     s223:hasConnectionPoint ex:00008,
         ex:00009 ;
-    s223:node_type p223:HotWaterTank ;
     ex:waterInlet ex:00008 ;
     ex:waterOutlet ex:00009 .
 ex:00008 a s223:ConnectionPoint,
@@ -91,16 +87,15 @@ ex:00009 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00007 .
-ex:00010 a p223:HotWaterTank,
-        s223:Connectable,
-        s223:Device ;
+ex:00010 a s223:Connectable,
+        s223:Device,
+        ex:HotWaterTank ;
     rdfs:label "HTG-TANK" ;
     s223:connectedThrough ex:00026,
         ex:00041 ;
     s223:connectedTo ex:00004 ;
     s223:hasConnectionPoint ex:00011,
         ex:00012 ;
-    s223:node_type p223:HotWaterTank ;
     ex:waterInlet ex:00011 ;
     ex:waterOutlet ex:00012 .
 ex:00011 a s223:ConnectionPoint,
@@ -141,7 +136,6 @@ ex:00015 a s223:Connectable,
         ex:00017,
         ex:00018,
         ex:00019 ;
-    s223:node_type s223:Valve ;
     s223:onOffInlet ex:00017 ;
     s223:positionInlet ex:00016 .
 ex:00016 a s223:ConnectionPoint,
@@ -185,7 +179,6 @@ ex:00022 a s223:Connectable,
         ex:00042 ;
     s223:hasConnectionPoint ex:00023,
         ex:00024 ;
-    s223:node_type s223:Fan ;
     s223:waterInlet ex:00023 ;
     s223:waterOutlet ex:00024 .
 ex:00023 a s223:ConnectionPoint,
@@ -229,7 +222,6 @@ ex:00027 a s223:Connectable,
         ex:00029,
         ex:00030,
         ex:00031 ;
-    s223:node_type s223:Valve ;
     s223:onOffInlet ex:00029 ;
     s223:positionInlet ex:00028 .
 ex:00028 a s223:ConnectionPoint,
@@ -256,16 +248,15 @@ ex:00031 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex:00027 .
-ex:00032 a p223:AgnosticCoil,
-        s223:Connectable,
-        s223:Device ;
+ex:00032 a s223:Connectable,
+        s223:Device,
+        ex:AgnosticWaterCoil ;
     rdfs:label "JoelsOfficeCoil" ;
     s223:connectedFrom ex:00027 ;
     s223:connectedThrough ex:00026,
         ex:00043 ;
     s223:hasConnectionPoint ex:00033,
         ex:00034 ;
-    s223:node_type p223:AgnosticCoil ;
     ex:waterInlet ex:00033 ;
     ex:waterOutlet ex:00034 .
 ex:00033 a s223:ConnectionPoint,
@@ -292,7 +283,6 @@ ex:00035 a s223:Connectable,
         ex:00037,
         ex:00038,
         ex:00039 ;
-    s223:node_type s223:Valve ;
     s223:onOffInlet ex:00037 ;
     s223:positionInlet ex:00036 ;
     rdfs:comment "Fill Hot Water Loop with water" .
@@ -324,33 +314,24 @@ ex:00040 a s223:Connection ;
     s223:connectsAt ex:00003,
         ex:00008 ;
     s223:connectsFrom ex:00001 ;
-    s223:connectsTo ex:00007 ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:node_type s223:Connection .
+    s223:connectsTo ex:00007 .
 ex:00041 a s223:Connection ;
     s223:connectsAt ex:00005,
         ex:00012 ;
     s223:connectsFrom ex:00010 ;
-    s223:connectsTo ex:00004 ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:node_type s223:Connection .
+    s223:connectsTo ex:00004 .
 ex:00042 a s223:Connection ;
     s223:connectsAt ex:00006,
         ex:00023 ;
     s223:connectsFrom ex:00004 ;
-    s223:connectsTo ex:00022 ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:node_type s223:Connection .
+    s223:connectsTo ex:00022 .
 ex:00043 a s223:Connection ;
     s223:connectsAt ex:00031,
         ex:00033 ;
     s223:connectsFrom ex:00027 ;
-    s223:connectsTo ex:00032 ;
-    s223:hasMedium s223:Medium-Water ;
-    s223:node_type s223:Connection .
+    s223:connectsTo ex:00032 .
 ex:00044 a s223:System ;
     rdfs:label "DHW" ;
     s223:contains ex:00001,
         ex:00007 ;
-    s223:node_type s223:System ;
     rdfs:comment "DHW loop in my house" .
