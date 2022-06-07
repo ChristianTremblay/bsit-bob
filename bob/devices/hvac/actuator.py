@@ -123,7 +123,7 @@ PneumaticProportionalActuator_template = {
 PneumaticOnOffActuator_template = {
     "cp": {},
     "properties": {
-        ("command", PercentCommand): {},
+        ("command", OnOffCommand): {},
         ("feedbackOpen", OnOffStatus): {},
         ("feedbackClose", OnOffStatus): {},
         ("torque", Nm): {},

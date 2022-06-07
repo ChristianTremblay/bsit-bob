@@ -245,7 +245,7 @@ zoo:00031 a s223:OutletSystemConnectionPoint,
 zoo:00032 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-CompressedAir .
+    s223:hasMedium s223:Air-CompressedAir .
 zoo:00033 a s223:Connectable,
         s223:Device,
         s223:HeatExchanger ;
@@ -582,17 +582,14 @@ zoo:00072 a s223:ConnectionPoint,
     rdfs:label "actuator.compressedAirInlet" ;
     s223:connectsThrough zoo:00189 ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-CompressedAir ;
+    s223:hasMedium s223:Air-CompressedAir ;
     s223:isConnectionPointOf zoo:00071 .
-zoo:00073 a p223:PercentCommand,
-        s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty ;
+zoo:00073 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
+        s223:Property ;
     rdfs:label "command" ;
-    s223:hasExternalReference zoo:00074 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    s223:hasExternalReference zoo:00074 .
 zoo:00074 a s223:ExternalReference ;
     rdfs:label "command.ExternalReference" ;
     s223:hasRef "<PneumaticOnOffActuator actuator at urn:zoo/sample_zoo_elephants/00071>" .
@@ -1332,7 +1329,7 @@ zoo:00185 a s223:ConnectionPoint,
     rdfs:label "ACOMP-1.compressedAirOutlet" ;
     s223:connectsThrough zoo:00189 ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-CompressedAir ;
+    s223:hasMedium s223:Air-CompressedAir ;
     s223:isConnectionPointOf zoo:00184 .
 zoo:00186 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1356,7 +1353,7 @@ zoo:00189 a s223:Connection ;
         zoo:00185 ;
     s223:connectsFrom zoo:00184 ;
     s223:connectsTo zoo:00071 ;
-    s223:hasMedium s223:Medium-CompressedAir .
+    s223:hasMedium s223:Air-CompressedAir .
 zoo:00190 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,

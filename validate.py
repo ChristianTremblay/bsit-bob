@@ -98,7 +98,7 @@ parser.add_argument(
 parser.add_argument(
     "--sparql-rule",
     type=str,
-    nargs='+',
+    nargs="+",
     help="runs SPARQL rules in file",
 )
 
@@ -162,7 +162,7 @@ if args.s223_sparql_rule:
         shacl_graph.load(fname, format="turtle")
 if args.sparql_rule:
     for fname in args.sparql_rule:
-        shacl_graph.parse(fname, format = 'turtle')
+        shacl_graph.parse(fname, format="turtle")
         print(shacl_graph.print())
 
 # expand the graph

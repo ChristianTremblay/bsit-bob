@@ -14,6 +14,7 @@ from ..core import (
     quantitykind,
     unit,
 )
+from ..enum import Particulate
 from ..properties import ParticulateCount
 from ..property import (
     ObservableProperty,
@@ -24,10 +25,6 @@ from ..property import (
 from .sensor import Sensor, split_kwargs
 
 _namespace = p223
-
-PM1_0 = Substance("PM1.0")
-PM2_5 = Substance("PM2.5")
-PM10_0 = Substance("PM10.0")
 
 
 class ParticulateSensor(Sensor):
@@ -50,7 +47,7 @@ class UltraFineParticulateSensor(ParticulateSensor):
     comment = "Ultra Fine Particulate Sensor"
     # measuresSubstance: Substance = PM1_0
     def __init__(self, **kwargs):
-        super().__init__(ofSubstance=PM1_0, **kwargs)
+        super().__init__(ofSubstance=Particulate.PM1_0, **kwargs)
 
 
 class FineParticulateSensor(ParticulateSensor):
@@ -58,7 +55,7 @@ class FineParticulateSensor(ParticulateSensor):
     comment = "Fine Particulate Sensor"
     # measuresSubstance: Substance = PM2_5
     def __init__(self, **kwargs):
-        super().__init__(ofSubstance=PM2_5, **kwargs)
+        super().__init__(ofSubstance=Particulate.PM2_5, **kwargs)
 
 
 class CoarseParticulateSensor(ParticulateSensor):
@@ -66,4 +63,4 @@ class CoarseParticulateSensor(ParticulateSensor):
     comment = "Coarse Particulate Sensor"
     # measuresSubstance: Substance = PM10_0
     def __init__(self, **kwargs):
-        super().__init__(ofSubstance=PM10_0, **kwargs)
+        super().__init__(ofSubstance=Particulate.PM10_0, **kwargs)

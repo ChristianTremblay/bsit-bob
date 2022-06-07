@@ -3117,34 +3117,29 @@ class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
 #   EnumerationKind Instances
 #
 
+# General EnumerationKind
 Medium = EnumerationKind("Medium")
+Substance = EnumerationKind("Substance")
+Role = EnumerationKind("Role")
+Domain = EnumerationKind("Domain")
+
+# Enumeration to create hasValue
+OnOffEnum = EnumerationKind("OnOff")
+PositionEnum = EnumerationKind("Position")
+YesNoEnum = EnumerationKind("YesNo")
+NormalAlarmEnum = EnumerationKind("NormalAlarm")
+OpenCloseEnum = EnumerationKind("OpenClose")
+OccupancyEnum = EnumerationKind("Occupancy")
+ActiveInactiveEnum = EnumerationKind("ActiveInactive")
+Effectiveness = EnumerationKind("Effectiveness")
+HVACOperatingMode = EnumerationKind("HVACOperatingMode")
+HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
+
+
+# Top Hierarchy Media
 Air = Medium("Air")
 Water = Medium("Water")
-ChilledWater = Water("ChilledWater")
-PotableWater = Water("PotableWater")
 Light = Medium("Light")
 Electricity = Medium("Electricity")
 NaturalGas = Medium("NaturalGas")
-CompressedAir = Medium("CompressedAir")
-
-Substance = EnumerationKind("Substance")
-
-Role = EnumerationKind("Role")
-
-OnOffEnum = EnumerationKind("OnOffEnum")
-PositionStatusEnum = EnumerationKind("PositionStatusEnum")
-YesNoEnum = EnumerationKind("YesNoEnum")
-NormalAlarmEnum = EnumerationKind("NormalAlarmEnum")
-OpenCloseEnum = EnumerationKind("OpenCloseEnum")
-
-# This one is weird...but to create an occupancy space, zone we
-# need a medium.
-Domain = EnumerationKind("Domain")
-HVAC = Domain("HVAC")
-Lighting = Domain("Lighting")
-Occupancy = Domain("Occupancy")
-Physical = Domain("Physical")
-
-OccupancyEnum = EnumerationKind("OccupancyEnum")
-
-People = Medium("People")
+Glycol = Medium("Glycol")

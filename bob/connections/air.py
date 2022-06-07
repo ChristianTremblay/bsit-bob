@@ -4,7 +4,6 @@ from ..core import (
     Air,
     BidirectionalConnectionPoint,
     BidirectionalSystemConnectionPoint,
-    CompressedAir,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -81,12 +80,12 @@ class AirOutletZoneConnectionPoint(AirZoneConnectionPoint, OutletZoneConnectionP
 
 
 class CompressedAirConnection(Connection):
-    hasMedium: Medium = CompressedAir
+    hasMedium = Air.CompressedAir
     _class_iri = None
 
 
 class CompressedAirConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = CompressedAir
+    hasMedium = Air.CompressedAir
     _class_iri = None
 
 
@@ -103,7 +102,7 @@ class CompressedAirOutletConnectionPoint(
 
 
 class CompressedAirSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = CompressedAir
+    hasMedium = Air.CompressedAir
     _class_iri = None
 
 

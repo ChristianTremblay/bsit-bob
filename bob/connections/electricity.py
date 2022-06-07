@@ -59,16 +59,14 @@ class ElectricalSystemOutletConnectionPoint(
 
 # === 575V 60Hz
 
-Electricity_575V_60Hz = Electricity("575V_60Hz")
-
 
 class Electricity_575V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_575V_60Hz
+    hasMedium = Electricity.AC575V_60Hz
     _class_iri = None
 
 
 class Electricity_575V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_575V_60Hz
+    hasMedium = Electricity.AC575V_60Hz
     _class_iri = None
 
 
@@ -85,7 +83,7 @@ class Electricity_575V_60HzOutletConnectionPoint(
 
 
 class Electricity_575V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_575V_60Hz
+    hasMedium = Electricity.AC575V_60Hz
     _class_iri = None
 
 
@@ -103,16 +101,14 @@ class Electricity_575V_60HzSystemOutletConnectionPoint(
 
 # === 480V 60Hz
 
-Electricity_480V_60Hz = Electricity("480V_60Hz")
-
 
 class Electricity_480V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_480V_60Hz
+    hasMedium = Electricity.AC480V_60Hz
     _class_iri = None
 
 
 class Electricity_480V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_480V_60Hz
+    hasMedium = Electricity.AC480V_60Hz
     _class_iri = None
 
 
@@ -129,7 +125,7 @@ class Electricity_480V_60HzOutletConnectionPoint(
 
 
 class Electricity_480V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_480V_60Hz
+    hasMedium = Electricity.AC480V_60Hz
     _class_iri = None
 
 
@@ -148,16 +144,14 @@ class Electricity_480V_60HzSystemOutletConnectionPoint(
 # === 347V 60Hz
 # 1 phase of 575V
 
-Electricity_347V_60Hz = Electricity("347V_60Hz")
-
 
 class Electricity_347V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_347V_60Hz
+    hasMedium = Electricity.AC347V_60Hz
     _class_iri = None
 
 
 class Electricity_347V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_347V_60Hz
+    hasMedium = Electricity.AC347V_60Hz
     _class_iri = None
 
 
@@ -174,7 +168,7 @@ class Electricity_347V_60HzOutletConnectionPoint(
 
 
 class Electricity_347V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_347V_60Hz
+    hasMedium = Electricity.AC347V_60Hz
     _class_iri = None
 
 
@@ -193,16 +187,14 @@ class Electricity_347V_60HzSystemOutletConnectionPoint(
 # === 277V 60Hz
 # 1 phase of 480V (US)
 
-Electricity_277V_60Hz = Electricity("277V_60Hz")
-
 
 class Electricity_277V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_277V_60Hz
+    hasMedium = Electricity.AC277V_60Hz
     _class_iri = None
 
 
 class Electricity_277V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_277V_60Hz
+    hasMedium = Electricity.AC277V_60Hz
     _class_iri = None
 
 
@@ -219,7 +211,7 @@ class Electricity_277V_60HzOutletConnectionPoint(
 
 
 class Electricity_277V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_277V_60Hz
+    hasMedium = Electricity.AC277V_60Hz
     _class_iri = None
 
 
@@ -238,16 +230,14 @@ class Electricity_277V_60HzSystemOutletConnectionPoint(
 # === 208V 60Hz
 # 3 phase
 
-Electricity_208V_60Hz = Electricity("208V_60Hz")
-
 
 class Electricity_208V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_208V_60Hz
+    hasMedium = Electricity.AC208V_60Hz
     _class_iri = None
 
 
 class Electricity_208V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_208V_60Hz
+    hasMedium = Electricity.AC208V_60Hz
     _class_iri = None
 
 
@@ -264,7 +254,7 @@ class Electricity_208V_60HzOutletConnectionPoint(
 
 
 class Electricity_208V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_208V_60Hz
+    hasMedium = Electricity.AC208V_60Hz
     _class_iri = None
 
 
@@ -287,16 +277,13 @@ class Electricity_208V_60HzSystemOutletConnectionPoint(
 # Each phase can be used to provide 120VAC
 
 
-Electricity_120V_240V_60Hz = Electricity("120V_240V_60Hz")
-
-
 class Electricity_120V_240V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_120V_240V_60Hz
+    hasMedium = Electricity.AC120V_240V_60Hz
     _class_iri = None
 
 
 class Electricity_120V_240V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_120V_240V_60Hz
+    hasMedium = Electricity.AC120V_240V_60Hz
     _class_iri = None
 
 
@@ -313,7 +300,7 @@ class Electricity_120V_240V_60HzOutletConnectionPoint(
 
 
 class Electricity_120V_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_120V_240V_60Hz
+    hasMedium = Electricity.AC120V_240V_60Hz
     _class_iri = None
 
 
@@ -332,16 +319,13 @@ class lectricity_120V_240V_60HzSystemOutletConnectionPoint(
 # === 240V 60Hz
 
 
-Electricity_240V_60Hz = Electricity("240V_60Hz")
-
-
 class Electricity_240V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_240V_60Hz
+    hasMedium = Electricity.AC240V_60Hz
     _class_iri = None
 
 
 class Electricity_240V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_240V_60Hz
+    hasMedium = Electricity.AC240V_60Hz
     _class_iri = None
 
 
@@ -358,7 +342,7 @@ class Electricity_240V_60HzOutletConnectionPoint(
 
 
 class Electricity_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_240V_60Hz
+    hasMedium = Electricity.AC240V_60Hz
     _class_iri = None
 
 
@@ -377,16 +361,13 @@ class Electricity_240V_60HzSystemOutletConnectionPoint(
 # === 120V 60Hz
 
 
-Electricity_120V_60Hz = Electricity("120V_60Hz")
-
-
 class Electricity_120V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_120V_60Hz
+    hasMedium = Electricity.AC120V_60Hz
     _class_iri = None
 
 
 class Electricity_120V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_120V_60Hz
+    hasMedium = Electricity.AC120V_60Hz
     _class_iri = None
 
 
@@ -403,7 +384,7 @@ class Electricity_120V_60HzOutletConnectionPoint(
 
 
 class Electricity_120V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_120V_60Hz
+    hasMedium = Electricity.AC120V_60Hz
     _class_iri = None
 
 
@@ -422,16 +403,13 @@ class Electricity_120V_60HzSystemOutletConnectionPoint(
 # === 24V 60Hz
 
 
-Electricity_24V_60Hz = Electricity("24V_60Hz")
-
-
 class Electricity_24V_60HzConnection(Connection):
-    hasMedium: Medium = Electricity_24V_60Hz
+    hasMedium = Electricity.AC24V_60Hz
     _class_iri = None
 
 
 class Electricity_24V_60HzConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_24V_60Hz
+    hasMedium = Electricity.AC24V_60Hz
     _class_iri = None
 
 
@@ -448,7 +426,7 @@ class Electricity_24V_60HzOutletConnectionPoint(
 
 
 class Electricity_24V_60HzSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_24V_60Hz
+    hasMedium = Electricity.AC24V_60Hz
     _class_iri = None
 
 
@@ -477,18 +455,17 @@ class Electricity_24V_60HzSystemOutletConnectionPoint(
 # and European
 
 
-Electricity_OnOffSignal = Electricity("OnOffSignal")
 # This is high level and we don't know if it's using 120V or 24VAC or 5VDC...
 # It is modeling dry contact, Triac and other On-Off relationships
 
 # === GENERAL
 class OnOffSignalConnection(Connection):
-    hasMedium: Medium = Electricity_OnOffSignal
+    hasMedium = Electricity.OnOffSignal
     _class_iri = None
 
 
 class OnOffSignalConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_OnOffSignal
+    hasMedium = Electricity.OnOffSignal
     _class_iri = None
 
 
@@ -503,7 +480,7 @@ class OnOffSignalOutletConnectionPoint(
 
 
 class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_OnOffSignal
+    hasMedium = Electricity.OnOffSignal
     _class_iri = None
 
 
@@ -519,16 +496,15 @@ class OnOffSignalSystemOutletConnectionPoint(
     _class_iri = None
 
 
-Electricity_ModulationSignal = Electricity("ModulationSignal")
 # This is high level and we don't know if it's using 0-10VDC, 4-20mA, etc...
 # === Modulation signals
 class ModulationSignalConnection(Connection):
-    hasMedium: Medium = Electricity_ModulationSignal
+    hasMedium = Electricity.ModulationSignal
     _class_iri = None
 
 
 class ModulationSignalConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_ModulationSignal
+    hasMedium = Electricity.ModulationSignal
     _class_iri = None
 
 
@@ -545,7 +521,7 @@ class ModulationSignalOutletConnectionPoint(
 
 
 class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_ModulationSignal
+    hasMedium = Electricity.ModulationSignal
     _class_iri = None
 
 
@@ -561,15 +537,14 @@ class ModulationSignalSystemOutletConnectionPoint(
     _class_iri = None
 
 
-Electricity_RS485 = Electricity("RS485")
 # === Networks
 class RS485Connection(Connection):
-    hasMedium: Medium = Electricity_RS485
+    hasMedium = Electricity.RS485
     _class_iri = None
 
 
 class RS485ConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_RS485
+    hasMedium = Electricity.RS485
     _class_iri = None
 
 
@@ -580,7 +555,7 @@ class RS485BidirectionalConnectionPoint(
 
 
 class RS485SystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_RS485
+    hasMedium = Electricity.RS485
     _class_iri = None
 
 
@@ -590,15 +565,14 @@ class RS485BidirectionalSystemConnectionPoint(
     _class_iri = None
 
 
-Electricity_Ethernet = Electricity("Ethernet")
 # === Networks
 class EthernetConnection(Connection):
-    hasMedium: Medium = Electricity_Ethernet
+    hasMedium = Electricity.Ethernet
     _class_iri = None
 
 
 class EthernetConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Electricity_Ethernet
+    hasMedium = Electricity.Ethernet
     _class_iri = None
 
 
@@ -609,7 +583,7 @@ class EthernetBidirectionalConnectionPoint(
 
 
 class EthernetSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Electricity_Ethernet
+    hasMedium = Electricity.Ethernet
     _class_iri = None
 
 

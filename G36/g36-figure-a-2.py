@@ -33,7 +33,6 @@ from bob.connections.water import (
 )
 from bob.core import (
     Device,
-    Occupancy,
     PropertyReference,
     System,
     bind_model_namespace,

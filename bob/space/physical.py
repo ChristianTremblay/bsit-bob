@@ -1,6 +1,6 @@
 from rdflib import URIRef
 
-from ..core import Physical, PhysicalSpace, bind_namespace, s223
+from ..core import PhysicalSpace, bind_namespace, s223
 
 """
 This is a hack, Real Estate Core has many namespaces, and some of the physical

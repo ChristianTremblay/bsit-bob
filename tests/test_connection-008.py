@@ -5,8 +5,6 @@ from rdflib import URIRef
 
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.light import (
-    Light,
-    LightVisible,
     LightVisibleConnection,
     LightVisibleOutletConnectionPoint,
 )

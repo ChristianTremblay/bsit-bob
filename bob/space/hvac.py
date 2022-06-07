@@ -18,14 +18,14 @@ from bob.properties import (
 )
 from bob.property import Setpoint
 
-from ..core import HVAC, Air, DomainSpace, Medium, Zone, enum, s223
+from ..core import Air, Domain, DomainSpace, Medium, Zone, enum, s223
 from ..systems.physic import IndoorAir
 
 _namespace = s223
 
 
 class HVACSpace(DomainSpace):
-    hasDomain = HVAC
+    hasDomain = Domain.HVAC
     hasMedium: Medium = Air
     # Connection points
     ductAirInlet: AirInletConnectionPoint
@@ -50,7 +50,7 @@ class HVACSpace(DomainSpace):
 
 
 class HVACZone(Zone):
-    hasDomain = HVAC
+    hasDomain = Domain.HVAC
 
     # Connection points
     airInlet: AirInletZoneConnectionPoint

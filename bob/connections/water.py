@@ -16,14 +16,6 @@ from ..core import (
 
 _namespace = s223
 
-DomesticWater = Water("DomesticWater")
-DomesticHotWater = Water("DomesticHotWater")
-ChilledWater = Water("ChilledWater")
-HotWater = Water("HotWater")
-CondensedWater = Water("CondensedWater")
-MixedWater = Water("MixedWater")
-GlycoledWater = Water("GlycoledWater")
-Steam = Water("Steam")
 
 # class DomesticWater(Water):
 #     _class_iri: URIRef = s223["Water-DomesticWater"]
@@ -96,12 +88,12 @@ class WaterOutletSystemConnectionPoint(OutletConnectionPoint, WaterConnectionPoi
 
 # === HOT WATER
 class HotWaterConnection(Connection):
-    hasMedium: Medium = HotWater
+    hasMedium: Medium = Water.HotWater
     _class_iri = None
 
 
 class HotWaterConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = HotWater
+    hasMedium: Medium = Water.HotWater
     _class_iri = None
 
 
@@ -114,7 +106,7 @@ class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoi
 
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = HotWater
+    hasMedium: Medium = Water.HotWater
     _class_iri = None
 
 
@@ -132,12 +124,12 @@ class HotWaterOutletSystemConnectionPoint(
 
 # === HOT WATER
 class MixedWaterConnection(Connection):
-    hasMedium: Medium = MixedWater
+    hasMedium: Medium = Water.MixedWater
     _class_iri = None
 
 
 class MixedWaterConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = MixedWater
+    hasMedium: Medium = Water.MixedWater
     _class_iri = None
 
 
@@ -150,7 +142,7 @@ class MixedWaterOutletConnectionPoint(OutletConnectionPoint, MixedWaterConnectio
 
 
 class MixedWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = MixedWater
+    hasMedium: Medium = Water.MixedWater
     _class_iri = None
 
 
@@ -168,12 +160,12 @@ class MixedWaterOutletSystemConnectionPoint(
 
 # === STEAM
 class SteamConnection(Connection):
-    hasMedium: Medium = Steam
+    hasMedium: Medium = Water.Steam
     _class_iri = None
 
 
 class SteamConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Steam
+    hasMedium: Medium = Water.Steam
     _class_iri = None
 
 
@@ -186,7 +178,7 @@ class SteamOutletConnectionPoint(OutletConnectionPoint, SteamConnectionPoint):
 
 
 class SteamSystemConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Steam
+    hasMedium: Medium = Water.Steam
     _class_iri = None
 
 
@@ -202,12 +194,12 @@ class SteamOutletSystemConnectionPoint(
 
 # === CHILLED WATER
 class ChilledWaterConnection(Connection):
-    hasMedium: Medium = ChilledWater
+    hasMedium: Medium = Water.ChilledWater
     _class_iri = None
 
 
 class ChilledWaterConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = ChilledWater
+    hasMedium: Medium = Water.ChilledWater
     _class_iri = None
 
 
@@ -224,7 +216,7 @@ class ChilledWaterOutletConnectionPoint(
 
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = ChilledWater
+    hasMedium: Medium = Water.ChilledWater
     _class_iri = None
 
 
@@ -242,12 +234,12 @@ class ChilledWaterOutletSystemConnectionPoint(
 
 # === CONDENSED WATER
 class CondensedWaterConnection(Connection):
-    hasMedium: Medium = CondensedWater
+    hasMedium: Medium = Water.CondensedWater
     _class_iri = None
 
 
 class CondensedWaterConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = CondensedWater
+    hasMedium: Medium = Water.CondensedWater
     _class_iri = None
 
 
@@ -264,7 +256,7 @@ class CondensedWaterOutletConnectionPoint(
 
 
 class CondensedWaterSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = CondensedWater
+    hasMedium: Medium = Water.CondensedWater
     _class_iri = None
 
 
