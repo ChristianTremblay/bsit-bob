@@ -80,10 +80,10 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 MANDITORY_LABEL = True
 
 # include inverse relations
-INCLUDE_INVERSE = bool(os.getenv("INCLUDE_INVERSE", None) == "True")
+INCLUDE_INVERSE = os.getenv("INCLUDE_INVERSE", "False") == "True"
 
 # connection requires hasMedium
-CONNECTION_HAS_MEDIUM = bool(os.getenv("CONNECTION_HAS_MEDIUM", None) == "True")
+CONNECTION_HAS_MEDIUM = os.getenv("CONNECTION_HAS_MEDIUM", "True") == "True"
 
 # globals
 data_graph = None
