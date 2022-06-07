@@ -157,6 +157,7 @@ class VAV_FIGA2(System):
     def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+
         self.airInlet.mapsTo = self["DPR"].airInlet
         self.airOutlet.mapsTo = self["HTG-COIL"].airOutlet
 
@@ -186,7 +187,11 @@ hvac_space.occupancy = OccupancyStatus()
 window = Window(label="Window")
 window.indoor >> hvac_space.windows
 vav = VAV_FIGA2(config=vav_system_template)
-supply_air >> vav["DPR"] >> vav["HTG-COIL"] >> discharge_air >> hvac_space.ductAirInlet
+
+# supply_air >> vav["DPR"] >> vav["HTG-COIL"] >> discharge_air >> hvac_space.ductAirInlet
+supply_air >> vav["DPR"] >> vav["HTG-COIL"]
+vav["HTG-COIL"].airOutlet >> discharge_air >> hvac_space.ductAirInlet
+
 hws >> vav["HTG-COIL"]
 vav["HTG-COIL"] >> vav["HTG-VLV"] >> hwr
 

@@ -8,7 +8,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -183,7 +182,8 @@ ex:00021 a p223:MovementSensor,
     s223:hasMeasurementLocation ex:00011 ;
     s223:hasPhysicalLocation ex:00001 ;
     s223:observesProperty ex:00022 .
-ex:00022 a p223:Movement,
+ex:00022 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "Movement Sensor Space #1.Movement" ;
@@ -196,7 +196,8 @@ ex:00023 a p223:MovementSensor,
     s223:hasMeasurementLocation ex:00014 ;
     s223:hasPhysicalLocation ex:00001 ;
     s223:observesProperty ex:00024 .
-ex:00024 a p223:Movement,
+ex:00024 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "Movement Sensor Space #2.Movement" ;
@@ -242,7 +243,7 @@ ex:00029 a p223:Pressure,
     s223:hasExternalReference ex:00030 ;
     qudt:quantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
-ex:00030 a ref:ExternalReference ;
+ex:00030 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan Fan at urn:ex/sample_big_garage_occupied/00025>" .
 ex:00031 a p223:Amps,
@@ -254,7 +255,7 @@ ex:00031 a p223:Amps,
     s223:hasExternalReference ex:00032 ;
     qudt:quantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex:00032 a ref:ExternalReference ;
+ex:00032 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan Fan at urn:ex/sample_big_garage_occupied/00025>" .
 ex:00033 a p223:RPM,
@@ -266,7 +267,7 @@ ex:00033 a p223:RPM,
     s223:hasExternalReference ex:00034 ;
     qudt:quantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
-ex:00034 a ref:ExternalReference ;
+ex:00034 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan Fan at urn:ex/sample_big_garage_occupied/00025>" .
 ex:00035 a p223:HP,
@@ -278,7 +279,7 @@ ex:00035 a p223:HP,
     s223:hasExternalReference ex:00036 ;
     qudt:quantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex:00036 a ref:ExternalReference ;
+ex:00036 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan Fan at urn:ex/sample_big_garage_occupied/00025>" .
 ex:00037 a p223:ElectricPowerkW,
@@ -290,7 +291,7 @@ ex:00037 a p223:ElectricPowerkW,
     s223:hasExternalReference ex:00038 ;
     qudt:quantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex:00038 a ref:ExternalReference ;
+ex:00038 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan Fan at urn:ex/sample_big_garage_occupied/00025>" .
 ex:00039 a p223:PowerFactor,
@@ -302,7 +303,7 @@ ex:00039 a p223:PowerFactor,
     s223:hasExternalReference ex:00040 ;
     qudt:quantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
-ex:00040 a ref:ExternalReference ;
+ex:00040 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan Fan at urn:ex/sample_big_garage_occupied/00025>" .
 ex:00041 a s223:Coil,
@@ -347,7 +348,7 @@ ex:00045 a p223:Amps,
     s223:hasExternalReference ex:00046 ;
     qudt:quantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex:00046 a ref:ExternalReference ;
+ex:00046 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<ElectricalHeatingCoil Heating Coil at urn:ex/sample_big_garage_occupied/00041>" .
 ex:00047 a p223:ElectricPowerkW,
@@ -359,27 +360,24 @@ ex:00047 a p223:ElectricPowerkW,
     s223:hasExternalReference ex:00048 ;
     qudt:quantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex:00048 a ref:ExternalReference ;
+ex:00048 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<ElectricalHeatingCoil Heating Coil at urn:ex/sample_big_garage_occupied/00041>" .
 ex:00049 a s223:Connection ;
     s223:connectsAt ex:00005,
         ex:00026 ;
     s223:connectsFrom ex:00003 ;
-    s223:connectsTo ex:00025 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo ex:00025 .
 ex:00050 a s223:Connection ;
     s223:connectsAt ex:00027,
         ex:00042 ;
     s223:connectsFrom ex:00025 ;
-    s223:connectsTo ex:00041 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo ex:00041 .
 ex:00051 a s223:Connection ;
     s223:connectsAt ex:00004,
         ex:00043 ;
     s223:connectsFrom ex:00041 ;
-    s223:connectsTo ex:00003 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo ex:00003 .
 ex:00052 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
@@ -420,14 +418,12 @@ ex:00056 a s223:Connection ;
     s223:connectsAt ex:00012,
         ex:00018 ;
     s223:connectsFrom ex:00017 ;
-    s223:connectsTo ex:00011 ;
-    s223:hasMedium s223:Light-Visible .
+    s223:connectsTo ex:00011 .
 ex:00057 a s223:Connection ;
     s223:connectsAt ex:00015,
         ex:00020 ;
     s223:connectsFrom ex:00019 ;
-    s223:connectsTo ex:00014 ;
-    s223:hasMedium s223:Light-Visible .
+    s223:connectsTo ex:00014 .
 ex:00058 a s223:System ;
     rdfs:label "Fan coil" ;
     s223:hasSystemConnectionPoint ex:00059,

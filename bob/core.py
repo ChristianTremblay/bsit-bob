@@ -5,16 +5,29 @@ Bob the SI-WG Builder
 from __future__ import annotations
 
 import inspect
+import itertools
 import io
 import logging
 import os
 import sys
 from collections import Counter, defaultdict
-from typing import Any, Dict, List, Optional, Set, TextIO, Tuple, TypeVar, Union, cast
+from typing import (
+    Any,
+    Dict,
+    List,
+    Optional,
+    Set,
+    TextIO,
+    Tuple,
+    TypeVar,
+    Union,
+    cast,
+    get_origin,
+)
 
 from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 
-from .multimethods import multimethod, new_class
+from .multimethods import multimethod, new_class, all_subclasses
 
 T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
@@ -65,48 +78,16 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 
 # options
 MANDITORY_LABEL = True
-INCLUDE_INVERSE = bool(
-    os.getenv("INCLUDE_INVERSE", None) == "True"
-)  # include inverse relations
+
+# include inverse relations
+INCLUDE_INVERSE = os.getenv("INCLUDE_INVERSE", "False") == "True"
+
+# connection requires hasMedium
+CONNECTION_HAS_MEDIUM = os.getenv("CONNECTION_HAS_MEDIUM", "True") == "True"
 
 # globals
 data_graph = None
 schema_graph = None
-
-# cleanup annotation references, i.e. "System" to _nodes[attr] = System
-_annotation_reference: Dict[str, type] = {}
-
-
-def annotation_reference(cls: type) -> type:
-    """
-    Class decorator that maps the class name to the class because annotations
-    are just strings.
-    """
-    global _annotation_reference
-
-    cls_name = cls.__name__
-    if cls_name in _annotation_reference:
-        raise RuntimeError(
-            f"{cls_name} already references {_annotation_reference[cls_name]}"
-        )
-
-    _annotation_reference[cls_name] = cls
-    return cls
-
-
-def resolve_reference(cls_name: str) -> Optional[type]:
-    """Return the class that this name resolves to, or None."""
-    return _annotation_reference.get(cls_name, None)
-
-
-# pre-load annotation references
-annotation_reference(URIRef)
-annotation_reference(BNode)
-annotation_reference(Literal)
-annotation_reference(bool)
-annotation_reference(int)
-annotation_reference(float)
-annotation_reference(str)
 
 
 class DataGraph(Graph):
@@ -305,7 +286,6 @@ def clear(graph: Graph = data_graph) -> None:
     _next_node = Counter()
 
 
-# === NODES
 class NodeMetaclass(type):
     def __new__(
         cls: Any,
@@ -318,117 +298,13 @@ class NodeMetaclass(type):
         # start with empty maps
         _nodes: NodeMap = {}
         _datatypes: Dict[str, Literal] = {}
-        _inits: Dict[str, Any] = {}
-
-        attr_names: Set[str] = set()
         _attr_uriref: Dict[str, URIRef] = {}
 
-        _data_graph: Graph
-        _schema_graph: Graph
-
-        # include the maps this class is inheriting
-        for supercls in reversed(superclasses):
-            logging.debug(f"    - supercls: {supercls!r}")
-            if hasattr(supercls, "_data_graph"):
-                _data_graph = supercls._data_graph  # type: ignore[attr-defined]
-            if hasattr(supercls, "_schema_graph"):
-                _schema_graph = supercls._schema_graph  # type: ignore[attr-defined]
-
-            if hasattr(supercls, "_nodes"):
-                _nodes.update(supercls._nodes)  # type: ignore[attr-defined]
-            if hasattr(supercls, "_datatypes"):
-                _datatypes.update(supercls._datatypes)  # type: ignore[attr-defined]
-            if hasattr(supercls, "_inits"):
-                _inits.update(supercls._inits)  # type: ignore[attr-defined]
-            if hasattr(supercls, "_attr_uriref"):
-                _attr_uriref.update(supercls._attr_uriref)  # type: ignore[attr-defined]
-        logging.debug("    - from super classes:")
-        logging.debug(f"    -     _nodes: {_nodes!r}")
-        logging.debug(f"    -     _datatypes: {_datatypes!r}")
-        logging.debug(f"    -     _inits: {_inits!r}")
-
-        # update uri references defined in this new class
-        _attr_uriref.update(attributedict.get("_attr_uriref", {}))  # type: ignore[attr-defined]
-        logging.debug(f"    -     _attr_uriref: {_attr_uriref!r}")
-
-        # pick up the attributes defined by annotations
-        annotations = attributedict.get("__annotations__", {})
-        global _annotation_reference
-        for attr, attr_type in annotations.items():
-            logging.debug(f"    - annotate {attr!r}: {attr_type!r}")
-
-            if attr.startswith("_"):
-                continue
-            if attr in (
-                "node",
-                "node_type",
-                "label",
-                "comment",
-            ):
-                continue
-
-            if isinstance(attr_type, URIRef):
-                if attr_type.startswith(XSD):
-                    _datatypes[attr] = attr_type
-                else:
-                    raise ValueError(f"datatype URI expected for {attr}: {attr_type}")
-            elif inspect.isclass(attr_type):
-                _nodes[attr] = attr_type
-                attr_names.add(attr)
-            elif isinstance(attr_type, str):
-                if attr_type in _annotation_reference:
-                    attr_type = _annotation_reference[attr_type]
-                else:
-                    _annotation_reference[attr_type] = None  # type: ignore[assignment]
-                _nodes[attr] = attr_type
-                attr_names.add(attr)
-            else:
-                raise ValueError(f"unknown annotation for {attr}: {attr_type}")
-        logging.debug(f"    - _nodes: {_nodes!r}")
-        logging.debug(f"    - _datatypes: {_datatypes!r}")
-
-        # look for initializers like hasUnit = QUDT.DEG_F
-        for attr, value in attributedict.items():
-            if attr.startswith("_"):
-                continue
-            logging.debug(f"    - initialize {attr!r} = {value!r}")
-
-            if attr in _nodes:
-                if value is None:
-                    continue
-                if not isinstance(value, cast(type, _nodes[attr])):
-                    raise TypeError(f"initializing {attr}: {_nodes[attr]} expected")
-
-            elif attr in _datatypes:
-                if isinstance(value, Literal):
-                    if value.datatype != _datatypes[attr]:
-                        raise TypeError(
-                            f"initializing {attr}: literal {_datatypes[attr]} expected"
-                        )
-                elif isinstance(value, str):
-                    value = Literal(value, datatype=_datatypes[attr])
-                else:
-                    value = Literal(value)
-                    if value.datatype != _datatypes[attr]:
-                        raise TypeError(
-                            f"initializing {attr}: literal {_datatypes[attr]} expected"
-                        )
-
-            elif inspect.isclass(value) and issubclass(value, Node):
-                _nodes[attr] = value
-                attr_names.add(attr)
-
-            else:
-                continue
-
-            _inits[attr] = value
-        logging.debug(f"    - _inits: {_inits!r}")
-
         # add these special attributes to the class before building it
+        attributedict["_resolved"] = False
         attributedict["_nodes"] = _nodes
         attributedict["_datatypes"] = _datatypes
-        attributedict["_inits"] = _inits
-        attributedict["_attr_uriref"] = _attr_uriref
+        attributedict["_attr_uriref"] = attributedict.get("_attr_uriref", _attr_uriref)
 
         # build the class
         metaclass = cast(
@@ -437,132 +313,6 @@ class NodeMetaclass(type):
                 cls, clsname, superclasses, attributedict
             ),
         )
-
-        # find the namespace in the class definition
-        _namespace = None
-        if "_namespace" in attributedict:
-            _namespace = attributedict["_namespace"]
-            logging.debug(f"    - class namespace: {_namespace}")
-        else:
-            # check the module
-            cls_module = inspect.getmodule(metaclass)
-            assert cls_module
-            logging.debug(f"    - cls_module: {cls_module} {cls_module.__name__}")
-
-            _namespace = getattr(cls_module, "_namespace", None)
-            if _namespace:
-                logging.debug(f"    - module {cls_module} namespace: {_namespace}")
-            else:
-                # check the parent module
-                parent_module = sys.modules[
-                    ".".join(cls_module.__name__.split(".")[:-1]) or "__main__"
-                ]
-                logging.debug(f"    - parent_module: {parent_module}")
-                _namespace = getattr(parent_module, "_namespace", None)
-                if _namespace:
-                    logging.debug(
-                        f"    - parent module {parent_module} namespace: {_namespace}"
-                    )
-                else:
-                    # check the superclasses that are in the same module
-                    for supercls in superclasses:
-                        supercls_module = inspect.getmodule(supercls)
-                        logging.debug(
-                            f"    - supercls {supercls} module: {supercls_module}"
-                        )
-                        if supercls_module is not cls_module:
-                            continue
-
-                        _namespace = getattr(supercls, "_namespace", None)
-                        if _namespace:
-                            logging.debug(
-                                f"    - supercls {supercls} namespace: {_namespace}"
-                            )
-                            break
-
-        if _namespace is None:
-            raise AttributeError(f"namespace not found: {clsname}")
-        metaclass._namespace = _namespace  # type: ignore[attr-defined]
-
-        # set the URIRef for the attrs defined in this class based on the
-        # namespace that was just discovered _after_ the class is created
-        for attr in attr_names:
-            if attr in _attr_uriref:
-                logging.debug(
-                    f"    - attribute uri {attr!r} = already {_attr_uriref[attr]!r}"
-                )
-            else:
-                logging.debug(f"    - attribute uri {attr!r} = {_namespace[attr]!r}")
-                _attr_uriref[attr] = _namespace[attr]
-        metaclass._attr_uriref = _attr_uriref  # type: ignore[attr-defined]
-
-        # make sure it has a type
-        if "node_type" not in attributedict:
-            metaclass.node_type = _namespace[clsname]  # type: ignore[attr-defined]
-
-        # this is a class, and a subclass of the super classes
-        if metaclass.node_type is not None:
-            _schema_graph.add((metaclass.node_type, RDF.type, RDFS.Class))
-            for supercls in superclasses:
-                if issubclass(supercls, Node):
-                    node_type = getattr(supercls, "node_type", None)
-                    if node_type is not None:
-                        _schema_graph.add(
-                            (metaclass.node_type, RDFS.subClassOf, supercls.node_type)
-                        )
-
-        # test to see if these special types resolve yet
-        special_types_resolved = all(
-            _annotation_reference.get(cname, None)
-            for cname in (
-                "Property",
-                "ConnectionPoint",
-                "SystemConnectionPoint",
-                "ZoneConnectionPoint",
-            )
-        )
-
-        # attributes are properties
-        for attr in attr_names:
-            _schema_graph.add((_attr_uriref[attr], RDF.type, RDF.Property))
-
-            # special types get automatic sub-properties
-            if special_types_resolved and (attr in _nodes):
-                attr_type = _nodes[attr]
-                if isinstance(attr_type, str):
-                    raise RuntimeError(
-                        f"unable to resolve {attr_type!r} in the definition of {attr!r}"
-                    )
-                if issubclass(attr_type, Property):
-                    _schema_graph.add(
-                        (_attr_uriref[attr], RDFS.subPropertyOf, s223.hasProperty)
-                    )
-                if issubclass(attr_type, ConnectionPoint):
-                    _schema_graph.add(
-                        (
-                            _attr_uriref[attr],
-                            RDFS.subPropertyOf,
-                            s223.hasConnectionPoint,
-                        )
-                    )
-                if issubclass(attr_type, SystemConnectionPoint):
-                    _schema_graph.add(
-                        (
-                            _attr_uriref[attr],
-                            RDFS.subPropertyOf,
-                            s223.hasSystemConnectionPoint,
-                        )
-                    )
-                if issubclass(attr_type, ZoneConnectionPoint):
-                    _schema_graph.add(
-                        (
-                            _attr_uriref[attr],
-                            RDFS.subPropertyOf,
-                            s223.hasZoneConnectionPoint,
-                        )
-                    )
-        # save the reference
-        _annotation_reference[metaclass.__name__] = metaclass
 
         # let the multimethods know this is a new class, the typemap might have
         # to be reconstructed
@@ -581,23 +331,24 @@ class Node(metaclass=NodeMetaclass):
     _data_graph: Graph = data_graph
     _schema_graph: Graph = schema_graph
 
-    # assigned by NodeMetaclass
+    # resolved annotations into nodes and datatypes
+    _resolved: bool
     _nodes: NodeMap
     _datatypes: Dict[str, Literal]
-    _inits: Dict[str, Any]
+    _attr_uriref: Dict[str, URIRef] = {}
 
     # attributes that can be changed
     _volatile: Tuple[str, ...] = ()
 
-    node: URIRef
-    node_type: Optional[URIRef] = None
+    _node_iri: URIRef
+    _class_iri: Optional[URIRef] = None
     label: str
     comment: str
 
     def __init__(
         self,
         *,
-        node_iri: URIRef = None,
+        _node_iri: URIRef = None,
         label: str = "",
         comment: str = None,
         **kwargs: Any,
@@ -605,56 +356,262 @@ class Node(metaclass=NodeMetaclass):
         logging.debug(f"Node.__init__ label={label!r} {kwargs}")
         global _next_node, model_namespace
 
-        if node_iri is not None:
-            if not isinstance(node_iri, URIRef):
-                raise TypeError(f"URIRef expected: {node_iri}")
-            self.node = node_iri
+        if not self._resolved:
+            self._resolve_annotations()
+        logging.debug(f"    - continue Node.__init__")
+
+        if _node_iri is not None:
+            if not isinstance(_node_iri, URIRef):
+                raise TypeError(f"URIRef expected: {_node_iri}")
+            super().__setattr__("_node_iri", _node_iri)
         elif model_namespace:
             _next_node[model_namespace] += 1
-            self.node = model_namespace[f"{_next_node[model_namespace]:05d}"]
+            super().__setattr__(
+                "_node_iri", model_namespace[f"{_next_node[model_namespace]:05d}"]
+            )
         else:
-            self.node = BNode()
+            super().__setattr__("_node_iri", BNode())
 
-        self.label = label or getattr(self, "label", "")
+        super().__setattr__("label", label or getattr(self, "label", ""))
         if self.label:
-            self._data_graph.add((self.node, RDFS.label, Literal(self.label)))
+            self._data_graph.add((self._node_iri, RDFS.label, Literal(self.label)))
 
-        self.comment = comment or getattr(self, "comment", "")
+        super().__setattr__("comment", comment or getattr(self, "comment", ""))
         if self.comment:
-            self._data_graph.add((self.node, RDFS.comment, Literal(self.comment)))
+            self._data_graph.add((self._node_iri, RDFS.comment, Literal(self.comment)))
 
-        if hasattr(self, "node_type"):
-            if self.node_type is not None:
-                self._data_graph.add((self.node, RDF.type, self.node_type))
+        if hasattr(self, "_class_iri"):
+            if self._class_iri is not None:
+                self._data_graph.add((self._node_iri, RDF.type, self._class_iri))
 
+        # pull out the kwargs that are nodes and datatypes
+        inits = {}
+        for k, v in kwargs.items():
+            if k in self._nodes or k in self._datatypes:
+                inits[k] = v
+
+        # pull out the init values in classes that aren't already found
         for supercls in self.__class__.__mro__:
             if issubclass(supercls, Node):
-                node_type = getattr(supercls, "node_type", None)
-                if node_type is not None:
-                    self._data_graph.add((self.node, RDF.type, node_type))
+                _class_iri = vars(supercls).get("_class_iri")
+                if _class_iri is not None:
+                    self._data_graph.add((self._node_iri, RDF.type, _class_iri))
 
-        logging.debug(f"    - _nodes: {self._nodes}")
-        for attr, attr_type in self._nodes.items():
-            super().__setattr__(attr, None)
-            if attr in kwargs:
+            for k, v in supercls.__dict__.items():
+                if k.startswith("_") or (k in inits):
+                    continue
+                if (k in self._datatypes) or (k in self._nodes):
+                    inits[k] = v
+                if inspect.isclass(v) and issubclass(v, Node):
+                    logging.debug(f"    - ding {k!r} = {v!r}")
 
-                setattr(self, attr, kwargs.pop(attr))
-
-        logging.debug(f"    - _inits: {self._inits}")
-        for attr, value in self._inits.items():
-            if attr in kwargs:
-                setattr(self, attr, kwargs.pop(attr))
-            elif inspect.isclass(value):
-                setattr(self, attr, value(label=self.label + "." + attr))
+        # set the values
+        for attr, attr_value in inits.items():
+            logging.debug(f"    - init {attr}: {attr_value}")
+            if attr_value is None:
+                super().__setattr__(attr, None)
             else:
-                setattr(self, attr, value)
+                setattr(self, attr, attr_value)
 
-        logging.debug(f"    - other: {kwargs}")
-        for attr, value in kwargs.items():
-            if attr in self._datatypes:
-                setattr(self, attr, value)
+        # clear the nodes with no values
+        for attr in self._nodes:
+            if attr not in inits:
+                super().__setattr__(attr, None)
+
+        # unknown args
+        unknown_kwargs = [attr for attr in kwargs if attr not in inits]
+        if unknown_kwargs:
+            raise RuntimeError(
+                f"unexpected keyword arguments: {', '.join(unknown_kwargs)}"
+            )
+
+    @classmethod
+    def _resolve_annotations(cls) -> None:
+        """
+        .
+        """
+        logging.debug(f"Node._resolve_annotations {cls}")
+        if cls is Node:
+            logging.debug(f"    - nothing to resolve here")
+            cls._resolved = True
+            return
+
+        # include the maps this class is inheriting
+        for supercls in reversed(cls.__mro__[1:]):
+            logging.debug(f"    - supercls: {supercls}")
+            if supercls is cls:
+                break
+
+            if not hasattr(supercls, "_resolved"):
+                continue
+            if not supercls._resolved:
+                supercls._resolve_annotations()
+
+            if hasattr(supercls, "_nodes"):
+                cls._nodes.update(supercls._nodes)  # type: ignore[attr-defined]
+            if hasattr(supercls, "_datatypes"):
+                cls._datatypes.update(supercls._datatypes)  # type: ignore[attr-defined]
+            if hasattr(supercls, "_attr_uriref"):
+                cls._attr_uriref.update(supercls._attr_uriref)  # type: ignore[attr-defined]
+        logging.debug("    - from super classes:")
+        logging.debug(f"    -     _nodes: {cls._nodes!r}")
+        logging.debug(f"    -     _datatypes: {cls._datatypes!r}")
+        logging.debug(f"    -     _attr_uriref: {cls._attr_uriref!r}")
+
+        # find the namespace in the class definition
+        _namespace = vars(cls).get("_namespace")
+        if _namespace:
+            logging.debug(f"    - class namespace: {_namespace}")
+        else:
+            # check the module
+            cls_module = inspect.getmodule(cls)
+            logging.debug(f"    - cls_module: {cls_module} {cls_module.__name__}")
+
+            _namespace = vars(cls_module).get("_namespace")
+            if _namespace:
+                logging.debug(f"    - module {cls_module} namespace: {_namespace}")
             else:
-                raise TypeError(f"unexpected keyword argument: {attr}")
+                # check the parent module
+                parent_module = sys.modules[
+                    ".".join(cls_module.__name__.split(".")[:-1]) or "__main__"
+                ]
+                logging.debug(f"    - parent_module: {parent_module}")
+                _namespace = vars(parent_module).get("_namespace")
+                if _namespace:
+                    logging.debug(
+                        f"    - parent module {parent_module} namespace: {_namespace}"
+                    )
+                else:
+                    # check the superclasses that are in the same module
+                    for supercls in cls.__mro__:
+                        supercls_module = inspect.getmodule(supercls)
+                        logging.debug(
+                            f"    - supercls {supercls} module: {supercls_module}"
+                        )
+                        if supercls_module is not cls_module:
+                            continue
+
+                        _namespace = vars(supercls).get("_namespace")
+                        if _namespace:
+                            logging.debug(
+                                f"    - supercls {supercls} namespace: {_namespace}"
+                            )
+                            break
+        if _namespace is None:
+            raise AttributeError(f"namespace not found: {cls}")
+        cls._namespace = _namespace  # type: ignore[attr-defined]
+
+        attr_annotations = vars(cls).get("__annotations__", {})
+        for attr, attr_annotation in attr_annotations.items():
+            if attr.startswith("_"):
+                continue
+            logging.debug(f"    - attr: {attr!r}")
+            logging.debug(f"        - attr_annotation: {attr_annotation!r}")
+
+            if isinstance(attr_annotation, str):
+                # eval the string in the context of the globals in its module
+                try:
+                    cls_module = inspect.getmodule(cls)
+                    logging.debug(f"        - {cls_module=}")
+                    attr_type = eval(attr_annotation, vars(cls_module))
+                except NameError:
+                    raise RuntimeError(
+                        f"class {cls}, attribute {attr}: unable to resolve {attr_annotation}"
+                    )
+            else:
+                attr_type = attr_annotation
+            logging.debug(f"        - attr_type: {attr_type!r}")
+
+            attr_origin = get_origin(attr_type)
+            logging.debug(f"        - attr_origin: {attr_origin!r}")
+
+            attr_uriref = cls._attr_uriref.get(attr, _namespace[attr])
+            logging.debug(f"        - attr_uriref: {attr_uriref!r}")
+
+            if isinstance(attr_type, URIRef):
+                if not attr_type.startswith(XSD):
+                    raise ValueError(f"datatype URI expected for {attr}: {attr_type}")
+
+                cls._datatypes[attr] = attr_type
+                cls._attr_uriref[attr] = attr_uriref
+                cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
+
+            elif attr_origin in (Any, Dict, Set, Union):
+                logging.debug(f"    - inspection not supported")
+
+            elif inspect.isclass(attr_type):
+                cls._nodes[attr] = attr_type
+                cls._attr_uriref[attr] = attr_uriref
+                cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
+
+                if issubclass(attr_type, Property):
+                    cls._schema_graph.add(
+                        (attr_uriref, RDFS.subPropertyOf, s223.hasProperty)
+                    )
+                elif issubclass(attr_type, ConnectionPoint):
+                    cls._schema_graph.add(
+                        (
+                            attr_uriref,
+                            RDFS.subPropertyOf,
+                            s223.hasConnectionPoint,
+                        )
+                    )
+                elif issubclass(attr_type, SystemConnectionPoint):
+                    cls._schema_graph.add(
+                        (
+                            attr_uriref,
+                            RDFS.subPropertyOf,
+                            s223.hasSystemConnectionPoint,
+                        )
+                    )
+                elif issubclass(attr_type, ZoneConnectionPoint):
+                    cls._schema_graph.add(
+                        (
+                            attr_uriref,
+                            RDFS.subPropertyOf,
+                            s223.hasZoneConnectionPoint,
+                        )
+                    )
+
+            elif isinstance(attr_type, EnumerationKind):
+                cls._nodes[attr] = attr_type
+                cls._attr_uriref[attr] = attr_uriref
+                cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
+
+            else:
+                raise ValueError(f"unknown annotation for {attr}: {attr_type}")
+
+        for attr, attr_value in vars(cls).items():
+            if attr.startswith("_"):
+                continue
+            if attr in attr_annotations:
+                continue
+            if inspect.isclass(attr_value) and issubclass(attr_value, Node):
+                logging.debug(
+                    f"    - future init {attr!r} to instance of {attr_value!r}"
+                )
+                attr_uriref = cls._attr_uriref.get(attr, _namespace[attr])
+
+                cls._nodes[attr] = attr_value
+                cls._attr_uriref[attr] = attr_uriref
+
+        # give the class an IRI if it doesn't have one
+        if "_class_iri" not in vars(cls):
+            cls._class_iri = _namespace[cls.__name__]  # type: ignore[attr-defined]
+
+        # this is a class, and a subclass of the super classes
+        if cls._class_iri is not None:
+            cls._schema_graph.add((cls._class_iri, RDF.type, RDFS.Class))
+            for supercls in cls.__mro__[1:]:
+                if issubclass(supercls, Node):
+                    _class_iri = vars(supercls).get("_class_iri")
+                    if _class_iri is not None:
+                        cls._schema_graph.add(
+                            (cls._class_iri, RDFS.subClassOf, supercls._class_iri)
+                        )
+
+        cls._resolved = True
+        logging.debug(f"    - resolved {cls}")
 
     def __setattr__(self, attr: str, value: Any) -> None:
         """
@@ -672,47 +629,56 @@ class Node(metaclass=NodeMetaclass):
             raise ValueError(f"{attr} is None")
 
         # make sure the current value is None, no "reassigning" content
-        current_value = super().__getattribute__(attr)
+        current_value = vars(self).get(attr)
         if current_value is not None:
-            volatile_attrs = super().__getattribute__("_volatile")
-            if attr not in volatile_attrs:
-                raise RuntimeError(f"attribute {attr} already has a value")
+            if attr not in getattr(self, "_volatile", {}):
+                raise RuntimeError(
+                    f"attribute {attr} already has a value: {current_value}"
+                )
 
         # if this is a node, double check the type
         if attr in self._nodes:
-            if isinstance(self._nodes[attr], str):
-                node_class = _annotation_reference.get(self._nodes[attr], None)  # type: ignore[arg-type]
-                if not node_class:
-                    raise NotImplementedError(
-                        f"class {self._nodes[attr]!r} for attribute {attr!r} not found"
+            attr_type = self._nodes[attr]
+
+            # if the type reference is still a string, find the real type
+            if isinstance(attr_type, str):
+                raise RuntimeError(f"{attr_type!r} still a string for {attr!r}")
+
+            # enumerations are both types and instances
+            if isinstance(value, EnumerationKind):
+                if not isinstance(attr_type, EnumerationKind):
+                    raise TypeError(f"attribute {attr} not an enumeration kind")
+
+                if value not in attr_type._children:
+                    raise TypeError(
+                        f"value {value} for attribute {attr} not a {attr_type}"
                     )
-                self._nodes[attr] = node_class
-            else:
-                node_class = cast(type, self._nodes[attr])
+
+            # special case assigning type means creating an instance
+            elif value is attr_type:
+                logging.debug(f"    - construct new {attr_type}")
+                value = attr_type()
 
             # pass the value to the class to build one
-            if not isinstance(value, node_class):
-                ### if the node class doesn't allow passing an arg it SHOULD fail
-                # This solves a bug when creating devices
-                # where the number of argument of value is wrong
-                # TypeError: __init__() takes 1 positional argument but 2 were given
+            elif not isinstance(value, attr_type):
                 try:
-                    logging.debug(f"    - construct {node_class} from: {value!r}")
-                    value = node_class(value)
+                    logging.debug(f"    - construct {attr_type} from: {value!r}")
+                    value = attr_type(value)
                 except TypeError:
-                    value = node_class(node_iri=value)
+                    logging.debug(f"    - why is this trapped?")
+                    value = attr_type(_node_iri=value)
 
             # add the link(s)
             if isinstance(value, (URIRef, Literal)):
                 if attr == "hasValue":
-                    self._data_graph.set((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+                    self._data_graph.set((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
                 else:
-                    self._data_graph.add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+                    self._data_graph.add((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
             if isinstance(value, Node):
-                self._data_graph.add((self.node, self._attr_uriref[attr], value.node))  # type: ignore[attr-defined]
+                self._data_graph.add((self._node_iri, self._attr_uriref[attr], value._node_iri))  # type: ignore[attr-defined]
 
             # if the value is a property, link it to the node
-            if isinstance(value, Property) and issubclass(node_class, Property):
+            if isinstance(value, Property) and issubclass(attr_type, Property):
                 self.add_property(value)
 
             # if the value is an external reference, link it to the node
@@ -732,7 +698,7 @@ class Node(metaclass=NodeMetaclass):
                     raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
 
             # add the literal
-            self._data_graph.add((self.node, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+            self._data_graph.add((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
 
         # carry on
         super().__setattr__(attr, value)
@@ -751,16 +717,16 @@ class Node(metaclass=NodeMetaclass):
         label = getattr(self, "label", "")
         if label:
             label = " " + label
-        return f"<{self.__class__.__name__}{label} at {self.node}>"
+        return f"<{self.__class__.__name__}{label} at {self._node_iri}>"
 
     def add_property(self, prop: Property) -> Property:
         """Add a property to a node, returns the added property."""
         assert isinstance(prop, Property)
 
         # link the two together
-        self._data_graph.add((self.node, s223.hasProperty, prop.node))
+        self._data_graph.add((self._node_iri, s223.hasProperty, prop._node_iri))
         if INCLUDE_INVERSE:
-            self._data_graph.add((prop.node, s223.isPropertyOf, self.node))
+            self._data_graph.add((prop._node_iri, s223.isPropertyOf, self._node_iri))
 
         return prop
 
@@ -772,7 +738,7 @@ class ExternalReference(Node):
     currently from the "ref" schema.
     """
 
-    node_type: URIRef = ref.ExternalReference
+    _class_iri: URIRef = s223.ExternalReference
     # isExternalReferenceOf: Property
     hasRef: Literal
 
@@ -809,10 +775,10 @@ class Property(Node):
     an abstract base class.
     """
 
-    # node_type: URIRef = None
-    hasValue: Literal
+    # _class_iri: URIRef = None
     ofMedium: Medium
     ofSubstance: Substance
+    hasValue: Literal
     hasExternalReference: ExternalReference
 
     # override this for a specialize subclass
@@ -867,7 +833,7 @@ class Property(Node):
 
         # link the two together
         self._data_graph.add(
-            (self.node, s223.hasExternalReference, external_reference.node)
+            (self._node_iri, s223.hasExternalReference, external_reference._node_iri)
         )
         if INCLUDE_INVERSE:
             external_reference.isExternalReferenceOf = self
@@ -880,7 +846,6 @@ class Property(Node):
         return self
 
 
-@annotation_reference
 class PropertyReference:
     def __new__(cls, property):
         if not isinstance(property, Property):
@@ -893,7 +858,7 @@ class Container(Node):
     This class implements the Container Abstract Base Class.
     """
 
-    node_type: URIRef = None
+    _class_iri: URIRef = None
     _contents: Dict[str, Node]
 
     def __init__(self, *args, **kwargs) -> None:
@@ -936,62 +901,50 @@ class Container(Node):
         return self
 
 
+#
+#   Enumerations
+#
+
+
 class EnumerationKind(Node):
-    node_type: URIRef = s223.EnumerationKind
-    _data_graph: Graph = schema_graph
+    _class_iri: URIRef = _namespace["EnumerationKind"]
+    _data_graph = schema_graph
 
+    def __init__(self, name, *args, **kwargs) -> None:
+        logging.debug("EnumerationKind.__init__ %r", name)
 
-class Medium(EnumerationKind):
-    node_type: URIRef = s223.Medium
-    _data_graph: Graph = schema_graph
+        if "_node_iri" not in kwargs:
+            kwargs["_node_iri"] = _namespace["EnumerationKind" + "-" + name]
 
+        super().__init__(**kwargs)
 
-Air = Medium(node_iri=s223["Medium-Air"])
-Water = Medium(node_iri=s223["Medium-Water"])
-Light = Medium(node_iri=s223["Medium-Light"])
-Electricity = Medium(node_iri=s223["Medium-Electricity"])
-NaturalGas = Medium(node_iri=s223["Medium-NaturalGas"])
-CompressedAir = Medium(node_iri=s223["Medium-CompressedAir"])
-# This one is weird...but to create an occupancy space, zone we
-# need a medium.
-# would Medium-People be better ?
-People = Medium(node_iri=s223["Medium-People"])
+        schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
+        schema_graph.add((self._node_iri, RDF.type, self._node_iri))
 
+        schema_graph.add(
+            (self._node_iri, RDFS.subClassOf, _namespace["EnumerationKind"])
+        )
 
-class Direction(EnumerationKind):
-    node_type: URIRef = s223.Direction
-    _data_graph: Graph = schema_graph
+        logging.debug("     - len(schema_graph): %r", len(schema_graph))
 
+        self._name = name
+        self._parent = None
+        self._children = set([self])
 
-Inlet = Direction(node_iri=s223["Direction-Inlet"])
-Outlet = Direction(node_iri=s223["Direction-Outlet"])
-Bidirectional = Direction(node_iri=s223["Direction-Bidirectional"])
+    def __call__(self, name) -> EnumerationKind:
+        logging.debug(f"EnumerationKind.__init__({self}) %r", name)
 
+        new_child = EnumerationKind(name, _node_iri=_namespace[self._name + "-" + name])
 
-class Substance(EnumerationKind):
-    node_type: URIRef = s223.Substance
-    _data_graph: Graph = schema_graph
+        new_child._parent = self
 
+        pnode = self
+        while pnode:
+            pnode._children.add(new_child)
+            schema_graph.add((new_child._node_iri, RDFS.subClassOf, pnode._node_iri))
+            pnode = pnode._parent
 
-class Domain(EnumerationKind):
-    _data_graph: Graph = schema_graph
-
-
-Electrical = Domain(node_iri=s223["Domain-Electrical"])
-Fire = Domain(node_iri=s223["Domain-Fire"])
-HVAC = Domain(node_iri=s223["Domain-HVAC"])
-Lighting = Domain(node_iri=s223["Domain-Lighting"])
-Networking = Domain(node_iri=s223["Domain-Networking"])
-Security = Domain(node_iri=s223["Domain-Security"])
-Physical = Domain(node_iri=s223["Domain-Physical"])
-Refrigeration = Domain(node_iri=s223["Domain-Refrigeration"])
-Plumbing = Domain(node_iri=s223["Domain-Plumbing"])
-ConveyanceSystems = Domain(node_iri=s223["Domain-ConveyanceSystems"])
-Occupancy = Domain(node_iri=p223["Domain-Occupancy"])
-
-
-class Role(EnumerationKind):
-    _data_graph: Graph = schema_graph
+        return new_child
 
 
 class Junction(Node):
@@ -999,7 +952,7 @@ class Junction(Node):
     Junction.
     """
 
-    node_type: URIRef = s223.Junction
+    _class_iri: URIRef = s223.Junction
     hasMedium: Medium
     _lnx: Set[Segment]
 
@@ -1087,7 +1040,7 @@ class Segment(Node):
     Segment.
     """
 
-    node_type: URIRef = s223.Segment
+    _class_iri: URIRef = s223.Segment
     hasMedium: Medium
     _lnx: Set[Union[Junction, ConnectionPoint]]
 
@@ -1108,9 +1061,9 @@ class Segment(Node):
             other._lnx.add(self)
             self._data_graph.add(
                 (
-                    other.node,
+                    other._node_iri,
                     s223.lnx,
-                    self.node,
+                    self._node_iri,
                 )
             )
         elif isinstance(other, ConnectionPoint):
@@ -1122,9 +1075,9 @@ class Segment(Node):
         self._lnx.add(other)
         self._data_graph.add(
             (
-                self.node,
+                self._node_iri,
                 s223.lnx,
-                other.node,
+                other._node_iri,
             )
         )
 
@@ -1134,7 +1087,7 @@ class System(Container, Node):
     System
     """
 
-    node_type: URIRef = s223.System
+    _class_iri: URIRef = s223.System
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
 
@@ -1158,6 +1111,9 @@ class System(Container, Node):
 
                 things = []
                 for (thing_name, thing_class), thing_kwargs in group_items.items():
+                    logging.debug(
+                        f"    - thing_name, thing_class: {thing_name}, {thing_class}"
+                    )
                     if thing_name in self._contents:
                         raise ValueError(
                             f"label already used: {self._contents[thing_name]}"
@@ -1180,39 +1136,20 @@ class System(Container, Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-
         # instantiate and associate all of the system connection points
         self._system_connection_points = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
-                continue
-
-            if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_reference:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = _annotation_reference.get(var_annotation)
-
-            if issubclass(var_annotation, ConnectionPoint):
-                raise TypeError(
-                    f"connection point {var_name}: must be a system connection point"
+        for attr_name, attr_type in self._nodes.items():
+            if inspect.isclass(attr_type) and issubclass(
+                attr_type, SystemConnectionPoint
+            ):
+                # build an instance of this connection point
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
+                self._system_connection_points[attr_name] = attr_element
+                logging.debug(
+                    f"    - system connection point {attr_name}: {attr_element}"
                 )
-            if not issubclass(var_annotation, SystemConnectionPoint):
-                continue
-            logging.debug(f"    var_annotation: {var_annotation}")
 
-            # build an instance of this connection point
-            var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._system_connection_points[var_name] = var_element
-            logging.debug(f"    - connection point {var_name}: {var_element}")
-
-            setattr(self, var_name, var_element)
+                setattr(self, attr_name, attr_element)
 
         # zone references
         self._serves_zones = {}
@@ -1226,9 +1163,9 @@ def contains_mm(system: System, device: Device) -> None:
     """System > Device"""
     logging.info(f"system {system} contains device {device}")
 
-    system._data_graph.add((system.node, s223.contains, device.node))
+    system._data_graph.add((system._node_iri, s223.contains, device._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add((device.node, s223.isContainedIn, system.node))
+        system._data_graph.add((device._node_iri, s223.isContainedIn, system._node_iri))
 
 
 @multimethod
@@ -1236,9 +1173,11 @@ def contains_mm(system: System, subsystem: System) -> None:
     """System > System"""
     logging.info(f"system {system} contains subsystem {subsystem}")
 
-    system._data_graph.add((system.node, s223.contains, subsystem.node))
+    system._data_graph.add((system._node_iri, s223.contains, subsystem._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add((subsystem.node, s223.isContainedIn, system.node))
+        system._data_graph.add(
+            (subsystem._node_iri, s223.isContainedIn, system._node_iri)
+        )
 
 
 @multimethod
@@ -1277,7 +1216,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     Generic connection object type, unrestricted.
     """
 
-    node_type: URIRef = s223.Connection
+    _class_iri: URIRef = s223.Connection
     hasMedium: Medium
 
     def __init__(self, **kwargs: Any) -> None:
@@ -1289,7 +1228,7 @@ class Connectable(Node):
     A type of thing that can have connection points.
     """
 
-    # node_type: URIRef = None
+    # _class_iri: URIRef = None
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -1304,35 +1243,16 @@ class Connectable(Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-        logging.debug(f"    - merged_annotations: {merged_annotations}")
-
         # instantiate and associate all of the connection points
         self._connection_points = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
-                continue
+        for attr_name, attr_type in self._nodes.items():
+            if inspect.isclass(attr_type) and issubclass(attr_type, ConnectionPoint):
+                # build an instance of this connection point
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
+                self._connection_points[attr_name] = attr_element
+                logging.debug(f"    - connection point {attr_name}: {attr_element}")
 
-            if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_reference:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = _annotation_reference.get(var_annotation)
-
-            if not issubclass(var_annotation, ConnectionPoint):
-                continue
-
-            # build an instance of this connection point
-            var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._connection_points[var_name] = var_element
-            logging.debug(f"    - connection point {var_name}: {var_element}")
-
-            setattr(self, var_name, var_element)
+                setattr(self, attr_name, attr_element)
 
 
 @multimethod
@@ -1349,7 +1269,8 @@ def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
         if not isinstance(connection_point, OutletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
         from_out[medium].add(connection_point)
 
     # filter them to a set where there is only one for that medium so it
@@ -1369,7 +1290,8 @@ def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
         if not isinstance(connection_point, InletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
         to_in[medium].add(connection_point)
 
     # filter them to a set where there is only one for that medium so it
@@ -1380,18 +1302,21 @@ def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
         raise RuntimeError(f"no candidate destinations from {from_thing} to {to_thing}")
     logging.debug(f"    - to_types: {to_types}")
 
-    # find the common medium
-    common_types = from_types.intersection(to_types)
-    if not common_types:
-        raise RuntimeError("no common connection types")
-    if len(common_types) > 1:
-        raise RuntimeError("too many common connection types")
-    medium = common_types.pop()
-    logging.debug(f"    - medium: {medium}")
+    # find compatible pairs
+    pairs = []
+    for from_medium, to_medium in itertools.product(from_types, to_types):
+        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
+            pairs.append((from_medium, to_medium))
+    if len(pairs) == 0:
+        raise RuntimeError("no compatiable connection points")
+    if len(pairs) > 1:
+        raise RuntimeError("too many compatiable connection points")
 
-    # get the two connection points
-    from_connection_point = from_out[medium].pop()
-    to_connection_point = to_in[medium].pop()
+    from_medium, to_medium = pairs[0]
+    from_connection_point = from_out[from_medium].pop()
+    logging.debug(f"    - from_connection_point: {from_connection_point}")
+    to_connection_point = to_in[to_medium].pop()
+    logging.debug(f"    - to_connection_point: {to_connection_point}")
 
     # continue creating the connection
     connect_mm(from_connection_point, to_connection_point)
@@ -1459,7 +1384,10 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
     from_connection_point = from_out[medium].pop()
 
     # create a connection
-    connection = Connection(hasMedium=medium)
+    if CONNECTION_HAS_MEDIUM:
+        connection = Connection(hasMedium=medium)
+    else:
+        connection = Connection()
 
     # connect the from thing
     connect_mm(from_connection_point, connection)
@@ -1470,7 +1398,7 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
 
 
 class ConnectionPoint(Node):
-    node_type: URIRef = s223.ConnectionPoint
+    _class_iri: URIRef = s223.ConnectionPoint
     hasMedium: Medium
     hasDirection: Direction
 
@@ -1485,11 +1413,11 @@ class ConnectionPoint(Node):
 
         super().__init__(**kwargs)
 
-        self._data_graph.add((thing.node, s223.hasConnectionPoint, self.node))
+        self._data_graph.add((thing._node_iri, s223.hasConnectionPoint, self._node_iri))
         self.isConnectionPointOf = thing
 
         # this is one of the connection points of the device
-        thing._connection_points[str(self.node)] = self
+        thing._connection_points[str(self._node_iri)] = self
 
     def link_to(self, other: Union[Junction, Segment]) -> None:
         """
@@ -1527,32 +1455,41 @@ def connect_mm(
     if to_connection_point.connectsThrough:
         raise RuntimeError("inlet connection point already connected")
 
-    from_medium = getattr(from_connection_point, "hasMedium", None)
-    logging.debug("    - from_medium: %r", from_medium)
-    to_medium = getattr(to_connection_point, "hasMedium", None)
-    logging.debug("    - to_medium: %r", to_medium)
+    # check medium
+    if not (from_medium := getattr(from_connection_point, "hasMedium", None)):
+        raise AttributeError(f"{from_connection_point} hasMedium")
+    logging.debug(f"    - from_medium: {from_medium}")
 
-    if from_medium and to_medium and (from_medium != to_medium):
-        raise RuntimeError(f"mismatched medium: {from_medium} != {to_medium}")
+    if not (to_medium := getattr(to_connection_point, "hasMedium", None)):
+        raise AttributeError(f"{to_connection_point} hasMedium")
+    logging.debug(f"    - to_medium: {to_medium}")
+
+    if (from_medium not in to_medium._children) and (
+        to_medium not in from_medium._children
+    ):
+        raise RuntimeError(
+            f"mismatched medium: {from_connection_point} >> {to_connection_point}"
+        )
 
     # create a connection between the two
-    connection = Connection()
-    if from_medium:
-        connection.hasMedium = from_medium
+    if CONNECTION_HAS_MEDIUM:
+        connection = Connection(hasMedium=from_medium)
+    else:
+        connection = Connection()
 
     # link the two things together
     from_connection_point._data_graph.add(
         (
-            from_connection_point.isConnectionPointOf.node,
+            from_connection_point.isConnectionPointOf._node_iri,
             s223.connectedTo,
-            to_connection_point.isConnectionPointOf.node,
+            to_connection_point.isConnectionPointOf._node_iri,
         )
     )
     from_connection_point._data_graph.add(
         (
-            to_connection_point.isConnectionPointOf.node,
+            to_connection_point.isConnectionPointOf._node_iri,
             s223.connectedFrom,
-            from_connection_point.isConnectionPointOf.node,
+            from_connection_point.isConnectionPointOf._node_iri,
         )
     )
 
@@ -1572,39 +1509,41 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         raise RuntimeError("connection point already connected")
 
     # check medium
-    connection_medium = getattr(connection, "hasMedium", None)
-    logging.debug(f"    - connection_medium: {connection_medium}")
-    connection_point_medium = getattr(connection_point, "hasMedium", None)
-    logging.debug(f"    - connection_point_medium: {connection_point_medium}")
+    if CONNECTION_HAS_MEDIUM:
+        if not (connection_medium := getattr(connection, "hasMedium", None)):
+            raise AttributeError(f"{connection} hasMedium")
+        logging.debug(f"    - connection_medium: {connection_medium}")
 
-    if (
-        connection_medium
-        and connection_point_medium
-        and (connection_medium != connection_point_medium)
-    ):
-        raise RuntimeError(
-            f"mismatched medium: {connection_medium} != {connection_point_medium}"
-        )
+        if not (
+            connection_point_medium := getattr(connection_point, "hasMedium", None)
+        ):
+            raise AttributeError(f"{connection_point} hasMedium")
+        logging.debug(f"    - connection_point_medium: {connection_point_medium}")
+
+        if (connection_medium not in connection_point_medium._children) and (
+            connection_point_medium not in connection_medium._children
+        ):
+            raise RuntimeError(f"mismatched medium: {connection_point} >> {connection}")
 
     # property based link
     connection_point.connectsThrough = connection
 
     # link connection to the connection point and its device
     connection_point._data_graph.add(
-        (connection.node, s223.connectsAt, connection_point.node)
+        (connection._node_iri, s223.connectsAt, connection_point._node_iri)
     )
     connection_point._data_graph.add(
         (
-            connection_point.isConnectionPointOf.node,
+            connection_point.isConnectionPointOf._node_iri,
             s223.connectedThrough,
-            connection.node,
+            connection._node_iri,
         )
     )
     connection_point._data_graph.add(
         (
-            connection.node,
+            connection._node_iri,
             s223.connectsFrom,
-            connection_point.isConnectionPointOf.node,
+            connection_point.isConnectionPointOf._node_iri,
         )
     )
 
@@ -1620,19 +1559,21 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
         raise RuntimeError("connection point already connected")
 
     # check medium
-    connection_medium = getattr(connection, "hasMedium", None)
-    logging.debug(f"    - connection_medium: {connection_medium}")
-    connection_point_medium = getattr(connection_point, "hasMedium", None)
-    logging.debug(f"    - connection_point_medium: {connection_point_medium}")
+    if CONNECTION_HAS_MEDIUM:
+        if not (connection_medium := getattr(connection, "hasMedium", None)):
+            raise AttributeError(f"{connection} hasMedium")
+        logging.debug(f"    - connection_medium: {connection_medium}")
 
-    if (
-        connection_medium
-        and connection_point_medium
-        and (connection_medium != connection_point_medium)
-    ):
-        raise RuntimeError(
-            f"mismatched medium: {connection_medium} != {connection_point_medium}"
-        )
+        if not (
+            connection_point_medium := getattr(connection_point, "hasMedium", None)
+        ):
+            raise AttributeError(f"{connection_point} hasMedium")
+        logging.debug(f"    - connection_point_medium: {connection_point_medium}")
+
+        if (connection_medium not in connection_point_medium._children) and (
+            connection_point_medium not in connection_medium._children
+        ):
+            raise RuntimeError(f"mismatched medium: {connection} >> {connection_point}")
 
     # property based link
     connection_point.connectsThrough = connection
@@ -1640,16 +1581,20 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
     # link connection to the connection point and its device
     connection_point._data_graph.add(
         (
-            connection_point.isConnectionPointOf.node,
+            connection_point.isConnectionPointOf._node_iri,
             s223.connectedThrough,
-            connection.node,
+            connection._node_iri,
         )
     )
     connection._data_graph.add(
-        (connection.node, s223.connectsAt, connection_point.node)
+        (connection._node_iri, s223.connectsAt, connection_point._node_iri)
     )
     connection._data_graph.add(
-        (connection.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
+        (
+            connection._node_iri,
+            s223.connectsTo,
+            connection_point.isConnectionPointOf._node_iri,
+        )
     )
 
 
@@ -1674,11 +1619,12 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
 
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
-    to_medium = getattr(connection_point, "hasMedium", None)
+    if not (to_medium := getattr(connection_point, "hasMedium", None)):
+        raise AttributeError(f"{connection_point} hasMedium")
     logging.debug(f"    - to_medium: {to_medium}")
 
-    # build a dict of outlet connection points that are not already connected
-    # that have the same medium
+    # build a dict of outlet connection points of the device that are not
+    # already connected that have a compatiable medium
     from_out = set()
     for attr, cp in device._connection_points.items():
         if connection_point.connectsThrough:
@@ -1686,31 +1632,32 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
         if not isinstance(cp, OutletConnectionPoint):
             continue
 
-        medium = getattr(cp, "hasMedium", None)
-        if medium == to_medium:
+        if not (medium := getattr(cp, "hasMedium", None)):
+            continue
+        if (medium in to_medium._children) or (to_medium in medium._children):
             from_out.add(cp)
     logging.debug(f"    - from_out: {from_out}")
 
     if not from_out:
         raise RuntimeError(f"no candidate sources from {device} to {connection_point}")
     if len(from_out) > 1:
-        raise RuntimeError("too many connection points")
+        raise RuntimeError("too many candidate connection points")
     from_thing = from_out.pop()
     logging.debug(f"    - from_thing: {from_thing}")
 
     # link the two things together
     from_thing._data_graph.add(
         (
-            from_thing.isConnectionPointOf.node,
+            from_thing.isConnectionPointOf._node_iri,
             s223.connectedTo,
-            connection_point.isConnectionPointOf.node,
+            connection_point.isConnectionPointOf._node_iri,
         )
     )
     from_thing._data_graph.add(
         (
-            connection_point.isConnectionPointOf.node,
+            connection_point.isConnectionPointOf._node_iri,
             s223.connectedFrom,
-            from_thing.isConnectionPointOf.node,
+            from_thing.isConnectionPointOf._node_iri,
         )
     )
 
@@ -1722,11 +1669,14 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
 def connect_mm(device: Device, connection: Connection) -> None:
     """Device >> Connection"""
     logging.info(f"connect from {device} to {connection}")
-    connection_medium = getattr(connection, "hasMedium", None)
-    logging.debug(f"    - to_medium: {connection_medium}")
 
-    # build a dict of outlet connection points that are not already connected
-    # that have the same medium
+    if CONNECTION_HAS_MEDIUM:
+        if not (connection_medium := getattr(connection, "hasMedium", None)):
+            raise AttributeError(f"{connection} hasMedium")
+        logging.debug(f"    - connection_medium: {connection_medium}")
+
+    # build a dict of outlet connection points of the device that are not
+    # already connected that have a compatable medium
     from_out = set()
     for attr, connection_point in device._connection_points.items():
         if connection_point.connectsThrough:
@@ -1734,9 +1684,16 @@ def connect_mm(device: Device, connection: Connection) -> None:
         if not isinstance(connection_point, OutletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
-        if medium == connection_medium:
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
+        if CONNECTION_HAS_MEDIUM:
+            if (medium in connection_medium._children) or (
+                connection_medium in medium._children
+            ):
+                from_out.add(connection_point)
+        else:
             from_out.add(connection_point)
+    logging.debug(f"    - from_out: {from_out}")
 
     if not from_out:
         raise RuntimeError(f"no candidate sources from {device} to {connection}")
@@ -1752,11 +1709,14 @@ def connect_mm(device: Device, connection: Connection) -> None:
 def connect_mm(connection: Connection, device: Device) -> None:
     """Connection >> Device"""
     logging.info(f"connect from {connection} to {device}")
-    connection_medium = getattr(connection, "hasMedium", None)
-    logging.debug(f"    - to_medium: {connection_medium}")
 
-    # build a dict of outlet connection points that are not already connected
-    # that have the same medium
+    if CONNECTION_HAS_MEDIUM:
+        if not (connection_medium := getattr(connection, "hasMedium", None)):
+            raise AttributeError(f"{connection} hasMedium")
+        logging.debug(f"    - connection_medium: {connection_medium}")
+
+    # build a dict of inlet connection points that are not already connected
+    # that have a compatable medium
     to_in = set()
     for attr, connection_point in device._connection_points.items():
         if connection_point.connectsThrough:
@@ -1764,8 +1724,15 @@ def connect_mm(connection: Connection, device: Device) -> None:
         if isinstance(connection_point, OutletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
-        if medium == connection_medium:
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
+
+        if CONNECTION_HAS_MEDIUM:
+            if (medium in connection_medium._children) or (
+                connection_medium in medium._children
+            ):
+                to_in.add(connection_point)
+        else:
             to_in.add(connection_point)
     logging.debug("    - to_in: %r", to_in)
 
@@ -1784,12 +1751,15 @@ def connect_mm(connection: Connection, device: Device) -> None:
 def connect_mm(connection: Connection, devices: List[Device]) -> None:
     """Connection >> [Device]"""
     logging.info(f"connect from {connection} to {devices}")
-    connection_medium = getattr(connection, "hasMedium", None)
-    logging.debug("    - connection_medium: %r", connection_medium)
+
+    if CONNECTION_HAS_MEDIUM:
+        if not (connection_medium := getattr(connection, "hasMedium", None)):
+            raise AttributeError(f"{connection} hasMedium")
+        logging.debug(f"    - connection_medium: {connection_medium}")
 
     for device in devices:
         # build a dict of inlet connection points that are not already connected
-        # that have the same medium
+        # that have a compatible medium
         to_in = set()
         for attr, connection_point in device._connection_points.items():
             if connection_point.connectsThrough:
@@ -1797,8 +1767,15 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
             if isinstance(connection_point, OutletConnectionPoint):
                 continue
 
-            medium = getattr(connection_point, "hasMedium", None)
-            if medium == connection_medium:
+            if not (medium := getattr(connection_point, "hasMedium", None)):
+                continue
+
+            if CONNECTION_HAS_MEDIUM:
+                if (medium in connection_medium._children) or (
+                    connection_medium in medium._children
+                ):
+                    to_in.add(connection_point)
+            else:
                 to_in.add(connection_point)
         logging.debug("    - to_in: %r", to_in)
 
@@ -1807,7 +1784,7 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
                 f"no candidate destinations from {connection} to {device}"
             )
         if len(to_in) > 1:
-            raise RuntimeError("too many connection points")
+            raise RuntimeError("too many destinations from {connection} to {device}")
         to_thing = to_in.pop()
         logging.debug("    - to_thing: %r", to_thing)
 
@@ -1819,21 +1796,25 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
 def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
     """ConnectionPoint >> Device"""
     logging.info(f"connect from {connection_point} to {device}")
-    connection_point_medium = getattr(connection_point, "hasMedium", None)
+    if not (connection_point_medium := getattr(connection_point, "hasMedium", None)):
+        raise AttributeError(f"{connection_point} hasMedium")
     logging.debug("    - connection_point_medium: %r", connection_point_medium)
 
-    # build a dict of outlet connection points that are not already connected
-    # that have the same medium
+    # build a dict of inlet connection points that are not already connected
+    # that have a compatable medium
     to_in = set()
-    for attr, cp in device._connection_points.items():
-        if cp.connectsThrough:
+    for attr, connection_point in device._connection_points.items():
+        if connection_point.connectsThrough:
             continue
-        if isinstance(cp, OutletConnectionPoint):
+        if isinstance(connection_point, OutletConnectionPoint):
             continue
 
-        medium = getattr(cp, "hasMedium", None)
-        if medium == connection_point_medium:
-            to_in.add(cp)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
+        if (medium in connection_point_medium._children) or (
+            connection_point_medium in medium._children
+        ):
+            to_in.add(connection_point)
     logging.debug("    - to_in: %r", to_in)
 
     if not to_in:
@@ -1854,11 +1835,13 @@ def connect_mm(connection: Connection, system: System) -> None:
     """Connection >> System"""
     logging.info(f"connect from {connection} to {system}")
 
-    connection_medium = getattr(connection, "hasMedium", None)
-    logging.debug(f"    - connection_medium: {connection_medium}")
+    if CONNECTION_HAS_MEDIUM:
+        if not (connection_medium := getattr(connection, "hasMedium", None)):
+            raise AttributeError(f"{connection} hasMedium")
+        logging.debug(f"    - connection_medium: {connection_medium}")
 
     # build a dict of mapped inlet connection points that are not
-    # already connected, organized by medium
+    # already connected, filtered by medium
     to_in = set()
     for attr, system_connection_point in system._system_connection_points.items():
         if isinstance(system_connection_point, OutletSystemConnectionPoint):
@@ -1871,10 +1854,15 @@ def connect_mm(connection: Connection, system: System) -> None:
         if isinstance(connection_point, OutletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
-        if medium and connection_medium and (medium != connection_medium):
+        if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
-        to_in.add(connection_point)
+        if CONNECTION_HAS_MEDIUM:
+            if (medium in connection_medium._children) or (
+                connection_medium in medium._children
+            ):
+                to_in.add(connection_point)
+        else:
+            to_in.add(connection_point)
 
     if not to_in:
         raise RuntimeError(f"no candidate destinations from {connection} to {system}")
@@ -1892,8 +1880,10 @@ def connect_mm(system: System, connection: Connection) -> None:
     """System >> Connection"""
     logging.info(f"connect from {system} to {connection}")
 
-    connection_medium = getattr(connection, "hasMedium", None)
-    logging.debug("    - connection_medium: %r", connection_medium)
+    if CONNECTION_HAS_MEDIUM:
+        if not (connection_medium := getattr(connection, "hasMedium", None)):
+            raise AttributeError(f"{connection} hasMedium")
+        logging.debug(f"    - connection_medium: {connection_medium}")
 
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
@@ -1909,10 +1899,15 @@ def connect_mm(system: System, connection: Connection) -> None:
         if isinstance(connection_point, InletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
-        if medium and connection_medium and (medium != connection_medium):
+        if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
-        from_out.add(connection_point)
+        if CONNECTION_HAS_MEDIUM:
+            if (medium in connection_medium._children) or (
+                connection_medium in medium._children
+            ):
+                from_out.add(connection_point)
+        else:
+            from_out.add(connection_point)
 
     if not from_out:
         raise RuntimeError(f"no candidate destinations from {system} to {connection}")
@@ -1963,7 +1958,8 @@ def connect_mm(device: Device, system: System) -> None:
         if not isinstance(connection_point, OutletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
         from_out[medium].add(connection_point)
 
     # filter them to a set where there is only one for that medium so it
@@ -1988,7 +1984,8 @@ def connect_mm(device: Device, system: System) -> None:
         if not isinstance(connection_point, InletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
         to_in[medium].add(connection_point)
 
     # filter them to a set where there is only one for that medium so it
@@ -1999,18 +1996,21 @@ def connect_mm(device: Device, system: System) -> None:
         raise RuntimeError(f"no candidate destinations from {device} to {system}")
     logging.debug(f"    - to_types: {to_types}")
 
-    # find the common medium
-    common_types = from_types.intersection(to_types)
-    if not common_types:
-        raise RuntimeError("no common connection types")
-    if len(common_types) > 1:
-        raise RuntimeError("too many common connection types")
-    medium = common_types.pop()
-    logging.debug(f"    - medium: {medium}")
+    # find compatible pairs
+    pairs = []
+    for from_medium, to_medium in itertools.product(from_types, to_types):
+        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
+            pairs.append((from_medium, to_medium))
+    if len(pairs) == 0:
+        raise RuntimeError("no compatiable connection points")
+    if len(pairs) > 1:
+        raise RuntimeError("too many compatiable connection points")
 
-    # get the two connection points
-    from_connection_point = from_out[medium].pop()
-    to_connection_point = to_in[medium].pop()
+    from_medium, to_medium = pairs[0]
+    from_connection_point = from_out[from_medium].pop()
+    logging.debug(f"    - from_connection_point: {from_connection_point}")
+    to_connection_point = to_in[to_medium].pop()
+    logging.debug(f"    - to_connection_point: {to_connection_point}")
 
     # continue creating the connection
     connect_mm(from_connection_point, to_connection_point)
@@ -2042,7 +2042,8 @@ def connect_mm(system: System, device: Device) -> None:
             logging.debug("        - not an outlet")
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
         from_out[medium].add(connection_point)
     logging.debug("    - from_out: %r", from_out)
 
@@ -2063,7 +2064,8 @@ def connect_mm(system: System, device: Device) -> None:
         if not isinstance(connection_point, InletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
         to_in[medium].add(connection_point)
 
     # filter them to a set where there is only one for that medium so it
@@ -2074,33 +2076,25 @@ def connect_mm(system: System, device: Device) -> None:
         raise RuntimeError(f"no candidate destinations from {system} to {device}")
     logging.debug(f"    - from_types: {from_types}")
 
-    # find the common medium
-    common_types = from_types.intersection(to_types)
-    if not common_types:
-        raise RuntimeError("no common connection types")
-    if len(common_types) > 1:
-        raise RuntimeError("too many common connection types")
-    medium = common_types.pop()
-    logging.debug(f"    - medium: {medium}")
+    # find compatible pairs
+    pairs = []
+    for from_medium, to_medium in itertools.product(from_types, to_types):
+        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
+            pairs.append((from_medium, to_medium))
+    if len(pairs) == 0:
+        raise RuntimeError("no compatiable connection points")
+    if len(pairs) > 1:
+        raise RuntimeError("too many compatiable connection points")
 
     # get the two connection points
-    from_connection_point = from_out[medium].pop()
-    to_connection_point = to_in[medium].pop()
+    from_medium, to_medium = pairs[0]
+    from_connection_point = from_out[from_medium].pop()
+    logging.debug(f"    - from_connection_point: {from_connection_point}")
+    to_connection_point = to_in[to_medium].pop()
+    logging.debug(f"    - to_connection_point: {to_connection_point}")
 
     # continue creating the connection
     connect_mm(from_connection_point, to_connection_point)
-
-
-class InletConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Inlet
-
-
-class OutletConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Outlet
-
-
-class BidirectionalConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Bidirectional
 
 
 class SystemConnectionPoint(Node):
@@ -2108,7 +2102,7 @@ class SystemConnectionPoint(Node):
     System Connection Point
     """
 
-    node_type: URIRef = s223.SystemConnectionPoint
+    _class_iri: URIRef = s223.SystemConnectionPoint
     hasMedium: Medium
     hasDirection: Direction
 
@@ -2124,12 +2118,14 @@ class SystemConnectionPoint(Node):
 
         super().__init__(**kwargs)
 
-        self._data_graph.add((system.node, s223.hasSystemConnectionPoint, self.node))
+        self._data_graph.add(
+            (system._node_iri, s223.hasSystemConnectionPoint, self._node_iri)
+        )
         if INCLUDE_INVERSE:
             self.isSystemConnectionPointOf = system
 
         # this is one of the connection points of the system
-        system._system_connection_points[str(self.node)] = self
+        system._system_connection_points[str(self._node_iri)] = self
 
     def maps_to(self, other: Union[Junction, ConnectionPoint]) -> None:
         """
@@ -2164,7 +2160,8 @@ def connect_mm(from_system: System, to_system: System) -> None:
         if isinstance(connection_point, InletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
         from_out[medium].add(connection_point)
     logging.debug(f"    - from_out: {from_out}")
 
@@ -2190,7 +2187,8 @@ def connect_mm(from_system: System, to_system: System) -> None:
         if isinstance(connection_point, OutletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
+        if not (medium := getattr(connection_point, "hasMedium", None)):
+            continue
         to_in[medium].add(connection_point)
     logging.debug(f"    - to_in: {to_in}")
 
@@ -2204,18 +2202,21 @@ def connect_mm(from_system: System, to_system: System) -> None:
         )
     logging.debug(f"    - to_types: {to_types}")
 
-    # find the common medium
-    common_types = from_types.intersection(to_types)
-    if not common_types:
-        raise RuntimeError("no common connection types")
-    if len(common_types) > 1:
-        raise RuntimeError("too many common connection types")
-    medium = common_types.pop()
-    logging.debug(f"    - medium: {medium}")
+    # find compatible pairs
+    pairs = []
+    for from_medium, to_medium in itertools.product(from_types, to_types):
+        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
+            pairs.append((from_medium, to_medium))
+    if len(pairs) == 0:
+        raise RuntimeError("no compatiable connection points")
+    if len(pairs) > 1:
+        raise RuntimeError("too many compatiable connection points")
 
-    # get the two connection points
-    from_connection_point = from_out[medium].pop()
-    to_connection_point = to_in[medium].pop()
+    from_medium, to_medium = pairs[0]
+    from_connection_point = from_out[from_medium].pop()
+    logging.debug(f"    - from_connection_point: {from_connection_point}")
+    to_connection_point = to_in[to_medium].pop()
+    logging.debug(f"    - to_connection_point: {to_connection_point}")
 
     # continue creating the connection
     connect_mm(from_connection_point, to_connection_point)
@@ -2297,24 +2298,12 @@ def connect_mm(
     connect_mm(from_connection_point, to_connection_point)
 
 
-class InletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Inlet
-
-
-class OutletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Outlet
-
-
-class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Bidirectional
-
-
 class Zone(Container, Node):
     """
     A collection of spaces.
     """
 
-    node_type: URIRef = s223.Zone
+    _class_iri: URIRef = s223.Zone
     _zone_connection_points: Dict[str, ZoneConnectionPoint]
     hasDomain: Domain
 
@@ -2328,35 +2317,18 @@ class Zone(Container, Node):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-        logging.debug(f"    - merged_annotations: {merged_annotations}")
-
-        # instantiate and associate all of the connection points
+        # instantiate and associate all of the zone connection points
         self._zone_connection_points = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
-                continue
+        for attr_name, attr_type in self._nodes.items():
+            if inspect.isclass(attr_type) and issubclass(
+                attr_type, ZoneConnectionPoint
+            ):
+                # build an instance of this connection point
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
+                self._zone_connection_points[attr_name] = attr_element
+                logging.debug(f"    - connection point {attr_name}: {attr_element}")
 
-            if isinstance(var_annotation, str):
-                if var_annotation not in _annotation_reference:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = _annotation_reference.get(var_annotation)
-
-            if not issubclass(var_annotation, ZoneConnectionPoint):
-                continue
-
-            # build an instance of this connection point
-            var_element = var_annotation(self, label=self.label + "." + var_name)
-            self._zone_connection_points[var_name] = var_element
-            logging.debug(f"    - connection point {var_name}: {var_element}")
-
-            setattr(self, var_name, var_element)
+                setattr(self, attr_name, attr_element)
 
 
 @multimethod
@@ -2367,9 +2339,13 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # stash this in the system
     from_system._serves_zones[to_zone.label] = to_zone
 
-    from_system._data_graph.add((from_system.node, s223.servesZone, to_zone.node))
+    from_system._data_graph.add(
+        (from_system._node_iri, s223.servesZone, to_zone._node_iri)
+    )
     if INCLUDE_INVERSE:
-        from_system._data_graph.add((to_zone.node, s223.isServedBy, from_system.node))
+        from_system._data_graph.add(
+            (to_zone._node_iri, s223.isServedBy, from_system._node_iri)
+        )
 
     return
 
@@ -2427,25 +2403,32 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
         raise RuntimeError(f"no candidate destinations from {from_system} to {to_zone}")
     logging.debug(f"    - to_types: {to_types}")
 
-    # find the common medium
-    common_types = from_types.intersection(to_types)
-    if not common_types:
-        raise RuntimeError("no common connection types")
-    if len(common_types) > 1:
-        raise RuntimeError("too many common connection types")
-    medium = common_types.pop()
-    logging.debug(f"    - medium: {medium}")
+    # find compatible pairs
+    pairs = []
+    for from_medium, to_medium in itertools.product(from_types, to_types):
+        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
+            pairs.append((from_medium, to_medium))
+    if len(pairs) == 0:
+        raise RuntimeError("no compatiable connection points")
+    if len(pairs) > 1:
+        raise RuntimeError("too many compatiable connection points")
 
-    # get the two connection points
-    from_connection_point = from_out[medium].pop()
-    to_connection_point = to_in[medium].pop()
+    from_medium, to_medium = pairs[0]
+    from_connection_point = from_out[from_medium].pop()
+    logging.debug(f"    - from_connection_point: {from_connection_point}")
+    to_connection_point = to_in[to_medium].pop()
+    logging.debug(f"    - to_connection_point: {to_connection_point}")
 
     # continue creating the connection
     connect_mm(from_connection_point, to_connection_point)
 
-    from_system._data_graph.add((from_system.node, s223.servesZone, to_zone.node))
+    from_system._data_graph.add(
+        (from_system._node_iri, s223.servesZone, to_zone._node_iri)
+    )
     if INCLUDE_INVERSE:
-        from_system._data_graph.add((to_zone.node, s223.isServedBy, from_system.node))
+        from_system._data_graph.add(
+            (to_zone._node_iri, s223.isServedBy, from_system._node_iri)
+        )
 
 
 @multimethod
@@ -2453,8 +2436,10 @@ def connect_mm(zone: Zone, connection: Connection) -> None:
     """Zone >> Connection"""
     logging.info(f"connect from {zone} to {connection}")
 
-    connection_medium = getattr(connection, "hasMedium", None)
-    logging.info(f"    - connection_medium: {connection_medium}")
+    if CONNECTION_HAS_MEDIUM:
+        if not (connection_medium := getattr(connection, "hasMedium", None)):
+            raise AttributeError(f"{connection} hasMedium")
+        logging.debug(f"    - connection_medium: {connection_medium}")
 
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
@@ -2470,10 +2455,15 @@ def connect_mm(zone: Zone, connection: Connection) -> None:
         if isinstance(connection_point, InletConnectionPoint):
             continue
 
-        medium = getattr(connection_point, "hasMedium", None)
-        if medium and connection_medium and (medium != connection_medium):
+        if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
-        from_out.add(connection_point)
+        if CONNECTION_HAS_MEDIUM:
+            if (medium in connection_medium._children) or (
+                connection_medium in medium._children
+            ):
+                from_out.add(connection_point)
+        else:
+            from_out.add(connection_point)
 
     if len(from_out) > 1:
         raise RuntimeError("too many source connection points")
@@ -2490,9 +2480,11 @@ def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
     """Zone > DomainSpace"""
     logging.info(f"zone {zone} contains domain space {domain_space}")
 
-    zone._data_graph.add((zone.node, s223.contains, domain_space.node))
+    zone._data_graph.add((zone._node_iri, s223.contains, domain_space._node_iri))
     if INCLUDE_INVERSE:
-        zone._data_graph.add((domain_space.node, s223.isContainedIn, zone.node))
+        zone._data_graph.add(
+            (domain_space._node_iri, s223.isContainedIn, zone._node_iri)
+        )
 
 
 class ZoneConnectionPoint(Node):
@@ -2500,7 +2492,7 @@ class ZoneConnectionPoint(Node):
     Zone Connection Point
     """
 
-    node_type: URIRef = s223.ZoneConnectionPoint
+    _class_iri: URIRef = s223.ZoneConnectionPoint
     hasMedium: Medium
     hasDirection: Direction
 
@@ -2515,12 +2507,14 @@ class ZoneConnectionPoint(Node):
 
         super().__init__(**kwargs)
 
-        self._data_graph.add((zone.node, s223.hasZoneConnectionPoint, self.node))
+        self._data_graph.add(
+            (zone._node_iri, s223.hasZoneConnectionPoint, self._node_iri)
+        )
         if INCLUDE_INVERSE:
             self.isZoneConnectionPointOf = zone
 
         # this is one of the connection points of the zone
-        zone._zone_connection_points[str(self.node)] = self
+        zone._zone_connection_points[str(self._node_iri)] = self
 
     def maps_to(self, other: Union[Junction, ConnectionPoint]) -> None:
         """
@@ -2619,24 +2613,12 @@ def connect_mm(
     connect_mm(from_connection_point, to_connection_point)
 
 
-class InletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Inlet"]
-
-
-class OutletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Outlet"]
-
-
-class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: URIRef = s223["Direction-Bidirectional"]
-
-
 class PhysicalSpace(Container, Node):
     """
     A part of the physical world whose 3D spatial extent is bounded.
     """
 
-    node_type: URIRef = s223.PhysicalSpace
+    _class_iri: URIRef = s223.PhysicalSpace
 
 
 @multimethod
@@ -2644,10 +2626,12 @@ def contains_mm(parent_space: PhysicalSpace, child_space: PhysicalSpace) -> None
     """PhysicalSpace > PhysicalSpace"""
     logging.info(f"physical space {parent_space} contains physical space {child_space}")
 
-    parent_space._data_graph.add((parent_space.node, s223.contains, child_space.node))
+    parent_space._data_graph.add(
+        (parent_space._node_iri, s223.contains, child_space._node_iri)
+    )
     if INCLUDE_INVERSE:
         parent_space._data_graph.add(
-            (child_space.node, s223.isContainedIn, parent_space.node)
+            (child_space._node_iri, s223.isContainedIn, parent_space._node_iri)
         )
 
 
@@ -2657,11 +2641,11 @@ def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> Non
     logging.info(f"physical space {physical_space} encloses {domain_space}")
 
     physical_space._data_graph.add(
-        (physical_space.node, s223.encloses, domain_space.node)
+        (physical_space._node_iri, s223.encloses, domain_space._node_iri)
     )
     if INCLUDE_INVERSE:
         physical_space._data_graph.add(
-            (domain_space.node, s223.isEnclosedIn, physical_space.node)
+            (domain_space._node_iri, s223.isEnclosedIn, physical_space._node_iri)
         )
 
 
@@ -2910,7 +2894,7 @@ class Device(Container, Connectable):
     A Device is normally a physical entity that one might buy from a vendor - a tangible object designed to accomplish a specific task.
     """
 
-    node_type: URIRef = s223.Device
+    _class_iri: URIRef = s223.Device
     # hasContextualRoleShape: Any
     # hasPropertyShape: Any
     hasRole: Role
@@ -2978,9 +2962,9 @@ def contains_mm(system: System, device: Device) -> None:
     """System > Device"""
     logging.info(f"system {system} contains device {device}")
 
-    system._data_graph.add((system.node, s223.contains, device.node))
+    system._data_graph.add((system._node_iri, s223.contains, device._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add((device.node, s223.isContainedIn, system.node))
+        system._data_graph.add((device._node_iri, s223.isContainedIn, system._node_iri))
 
 
 @multimethod
@@ -2989,11 +2973,11 @@ def contains_mm(parent_device: Device, child_device: Device) -> None:
     logging.info(f"device {parent_device} contains device {child_device}")
 
     parent_device._data_graph.add(
-        (parent_device.node, s223.contains, child_device.node)
+        (parent_device._node_iri, s223.contains, child_device._node_iri)
     )
     if INCLUDE_INVERSE:
         parent_device._data_graph.add(
-            (child_device.node, s223.isContainedIn, parent_device.node)
+            (child_device._node_iri, s223.isContainedIn, parent_device._node_iri)
         )
 
 
@@ -3004,9 +2988,9 @@ class DomainSpace(Connectable):
     within the zone it is contained in.
     """
 
-    node_type: URIRef = s223.DomainSpace
+    _class_iri: URIRef = s223.DomainSpace
     hasDomain: Domain
-    hasMedium: Medium  ### required?  maybe implied by Domain?
+    hasMedium: Medium
 
 
 @multimethod
@@ -3014,9 +2998,11 @@ def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
     """Zone > DomainSpace"""
     logging.info(f"zone {zone} contains domain space {domain_space}")
 
-    zone._data_graph.add((zone.node, s223.contains, domain_space.node))
+    zone._data_graph.add((zone._node_iri, s223.contains, domain_space._node_iri))
     if INCLUDE_INVERSE:
-        zone._data_graph.add((domain_space.node, s223.isContainedIn, zone.node))
+        zone._data_graph.add(
+            (domain_space._node_iri, s223.isContainedIn, zone._node_iri)
+        )
 
 
 @multimethod
@@ -3032,6 +3018,7 @@ def contains_mm(zone: Zone, domain_spaces: List[DomainSpace]) -> None:
 def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> None:
     """DomainSpace >> ConnectionPoint"""
     logging.info(f"connect from {domain_space} to {connection_point}")
+    raise NotImplementedError("DomainSpace >> ConnectionPoint")
 
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
@@ -3062,3 +3049,100 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
     logging.debug(f"    - from_thing: {from_thing}")
 
     connect_mm(from_thing, connection_point)
+
+
+#
+#   Direction EnumerationKind Instances
+#
+
+Direction = EnumerationKind("Direction")
+logging.debug("Direction: %r", Direction)
+
+Inlet = Direction("Inlet")
+Outlet = Direction("Outlet")
+Bidirectional = Direction("Bidirectional")
+
+#
+#   Direction Specific Connection Points
+#
+
+
+class InletConnectionPoint(ConnectionPoint):
+    hasDirection: Direction = Inlet
+
+
+class OutletConnectionPoint(ConnectionPoint):
+    hasDirection: Direction = Outlet
+
+
+class BidirectionalConnectionPoint(ConnectionPoint):
+    hasDirection: Direction = Bidirectional
+
+
+#
+#   Direction Specific System Connection Points
+#
+
+
+class InletSystemConnectionPoint(SystemConnectionPoint):
+    hasDirection: Direction = Inlet
+
+
+class OutletSystemConnectionPoint(SystemConnectionPoint):
+    hasDirection: Direction = Outlet
+
+
+class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
+    hasDirection: Direction = Bidirectional
+
+
+#
+#   Direction Specific Zone Connection Points
+#
+
+
+class InletZoneConnectionPoint(ZoneConnectionPoint):
+    hasDirection: Direction = Inlet
+
+
+class OutletZoneConnectionPoint(ZoneConnectionPoint):
+    hasDirection: Direction = Outlet
+
+
+class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
+    hasDirection: Direction = Bidirectional
+
+
+#
+#   EnumerationKind Instances
+#
+
+Medium = EnumerationKind("Medium")
+Air = Medium("Air")
+Water = Medium("Water")
+ChilledWater = Water("ChilledWater")
+PotableWater = Water("PotableWater")
+Light = Medium("Light")
+Electricity = Medium("Electricity")
+NaturalGas = Medium("NaturalGas")
+CompressedAir = Medium("CompressedAir")
+
+Substance = EnumerationKind("Substance")
+
+Role = EnumerationKind("Role")
+
+OnOffEnum = EnumerationKind("OnOffEnum")
+PositionStatusEnum = EnumerationKind("PositionStatusEnum")
+YesNoEnum = EnumerationKind("YesNoEnum")
+
+# This one is weird...but to create an occupancy space, zone we
+# need a medium.
+Domain = EnumerationKind("Domain")
+HVAC = Domain("HVAC")
+Lighting = Domain("Lighting")
+Occupancy = Domain("Occupancy")
+Physical = Domain("Physical")
+
+OccupancyEnum = EnumerationKind("OccupancyEnum")
+
+People = Medium("People")

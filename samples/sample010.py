@@ -8,6 +8,10 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+from bob.connections.water import (
+    WaterInletConnectionPoint,
+    WaterOutletConnectionPoint,
+)
 from bob.core import (
     Device,
     InletConnectionPoint,
@@ -48,8 +52,8 @@ d3 = Device(label="d3")
 d4 = Device(label="d4")
 
 # create some connection points on the fly
-d3_cp = OutletConnectionPoint(d3, label="d3.cp")
-d4_cp = InletConnectionPoint(d4, label="d4.cp")
+d3_cp = WaterOutletConnectionPoint(d3, label="d3.cp")
+d4_cp = WaterInletConnectionPoint(d4, label="d4.cp")
 
 # make a couple systems
 s3 = System(label="s3")

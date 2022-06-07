@@ -38,10 +38,11 @@ class MovementSensor(Sensor):
 
 
 class OccupancySensor(MovementSensor):
-    node_type: URIRef = p223.OccupancySensor
+    _class_iri: URIRef = p223.OccupancySensor
 
 
 class IntrusionSensor(Sensor):
+    _class_iri: URIRef = p223.IntrusionSensor
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Intrusion...good for Windows and doors
 

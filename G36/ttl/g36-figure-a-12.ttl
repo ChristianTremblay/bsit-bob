@@ -2,7 +2,6 @@
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
@@ -102,8 +101,7 @@ exg3612:00013 a s223:Connectable,
     s223:hasProperty exg3612:00014 ;
     exg3612:position exg3612:00014 .
 exg3612:00014 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "A-12.linked_dampers.outside_air_damper.damper_positioner.position" .
+        g36:AnalogOut .
 exg3612:00015 a s223:Connectable,
         s223:Device,
         exg3612:Damper ;
@@ -137,8 +135,7 @@ exg3612:00018 a s223:Connectable,
     s223:hasProperty exg3612:00019 ;
     exg3612:position exg3612:00019 .
 exg3612:00019 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "A-12.linked_dampers.return_air_damper.damper_positioner.position" .
+        g36:AnalogOut .
 exg3612:00020 a s223:Junction ;
     s223:hasMedium s223:Medium-Air ;
     s223:lnx exg3612:00021,
@@ -163,8 +160,7 @@ exg3612:00023 a s223:Connectable,
     exg3612:airOutlet exg3612:00026 ;
     exg3612:dp exg3612:00024 .
 exg3612:00024 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "A-12.air_filter.dp" .
+        g36:AnalogIn .
 exg3612:00025 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.air_filter.airInlet" ;
@@ -282,9 +278,9 @@ exg3612:00039 a p223:Percent,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    s223:unit unit:Percent .
 exg3612:00040 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.hot_water_coil.hw_valve.positionInlet" ;
@@ -312,8 +308,7 @@ exg3612:00044 a s223:Connection ;
     s223:connectsAt exg3612:00036,
         exg3612:00043 ;
     s223:connectsFrom exg3612:00038 ;
-    s223:connectsTo exg3612:00033 ;
-    s223:hasMedium s223:Water-HotWater .
+    s223:connectsTo exg3612:00033 .
 exg3612:00045 a s223:Property,
         g36:AnalogOut ;
     s223:hasValue "<Percent at http://data.ashrae.org/standard223/data/g36-figure-a-12#00039>" .
@@ -321,8 +316,7 @@ exg3612:00046 a s223:Connection ;
     s223:connectsAt exg3612:00026,
         exg3612:00034 ;
     s223:connectsFrom exg3612:00023 ;
-    s223:connectsTo exg3612:00033 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3612:00033 .
 exg3612:00047 a s223:ChilledWaterCoil2,
         s223:System ;
     rdfs:label "A-12.chilled_water_coil" ;
@@ -422,9 +416,9 @@ exg3612:00058 a p223:Percent,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    s223:unit unit:Percent .
 exg3612:00059 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-12.chilled_water_coil.cw_valve.positionInlet" ;
@@ -452,14 +446,12 @@ exg3612:00063 a s223:Connection ;
     s223:connectsAt exg3612:00055,
         exg3612:00062 ;
     s223:connectsFrom exg3612:00057 ;
-    s223:connectsTo exg3612:00052 ;
-    s223:hasMedium s223:Water-ChilledWater .
+    s223:connectsTo exg3612:00052 .
 exg3612:00064 a s223:Connection ;
     s223:connectsAt exg3612:00035,
         exg3612:00053 ;
     s223:connectsFrom exg3612:00033 ;
-    s223:connectsTo exg3612:00052 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3612:00052 .
 exg3612:00065 a s223:Connectable,
         s223:Device,
         s223:Fan,
@@ -509,20 +501,16 @@ exg3612:00069 a s223:Connectable,
     exg3612:fanStart exg3612:00072 ;
     exg3612:fanStatus exg3612:00070 .
 exg3612:00070 a s223:Property,
-        g36:BinaryIn ;
-    rdfs:label "A-12.supply_fan.vfd.fanStatus" .
+        g36:BinaryIn .
 exg3612:00071 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "A-12.supply_fan.vfd.fanSpeedCommand" .
+        g36:AnalogOut .
 exg3612:00072 a s223:Property,
-        g36:BinaryOut ;
-    rdfs:label "A-12.supply_fan.vfd.fanStart" .
+        g36:BinaryOut .
 exg3612:00073 a s223:Connection ;
     s223:connectsAt exg3612:00054,
         exg3612:00066 ;
     s223:connectsFrom exg3612:00052 ;
-    s223:connectsTo exg3612:00065 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3612:00065 .
 exg3612:00074 a s223:Connectable,
         s223:Device,
         s223:Fan,
@@ -571,14 +559,11 @@ exg3612:00078 a s223:Connectable,
     exg3612:fanStart exg3612:00081 ;
     exg3612:fanStatus exg3612:00079 .
 exg3612:00079 a s223:Property,
-        g36:BinaryIn ;
-    rdfs:label "A-12.return_fan.vfd.fanStatus" .
+        g36:BinaryIn .
 exg3612:00080 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "A-12.return_fan.vfd.fanSpeedCommand" .
+        g36:AnalogOut .
 exg3612:00081 a s223:Property,
-        g36:BinaryOut ;
-    rdfs:label "A-12.return_fan.vfd.fanStart" .
+        g36:BinaryOut .
 exg3612:00082 a s223:Connectable,
         s223:Device,
         exg3612:Damper ;
@@ -611,8 +596,7 @@ exg3612:00085 a s223:Connectable,
     s223:hasProperty exg3612:00086 ;
     exg3612:position exg3612:00086 .
 exg3612:00086 a s223:Property,
-        g36:AnalogOut ;
-    rdfs:label "A-12.exhaust_air_damper.damper_positioner.position" .
+        g36:AnalogOut .
 exg3612:00087 a s223:Connection ;
     rdfs:label "A-12.return_air" ;
     s223:connectsAt exg3612:00016,

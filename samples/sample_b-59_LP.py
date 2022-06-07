@@ -28,7 +28,7 @@ from bob.core import (
 from bob.devices.hvac.coil import ChilledWaterCoil
 from bob.devices.hvac.damper import ElectricalActuatedDamper
 from bob.devices.hvac.fan import Fan
-from bob.role import Exhaust, Supply
+from bob.enum import Exhaust, Supply
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof

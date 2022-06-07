@@ -4,13 +4,24 @@ from ..core import (
     EnumerationKind,
     ExternalReference,
     Medium,
+    OnOffEnum,
+    OccupancyEnum,
     SchemaGraph,
     Substance,
+    YesNoEnum,
     p223,
     quantitykind,
     unit,
+    s223,
 )
-from ..property import ActuatableProperty, ObservableProperty
+from ..property import (
+    ActuatableProperty,
+    EnumerableProperty,
+    EnumeratedActuatableProperty,
+    EnumeratedObservableProperty,
+    ObservableProperty,
+)
+from ..enum import Smoke
 
 _namespace = p223
 
@@ -20,43 +31,43 @@ _namespace = p223
 # which is not what we want. We want to know where to find this real time status.
 
 
-class OnOffStatus(ObservableProperty):
-    node_type: URIRef = p223.OnOffStatus
+class OnOffStatus(EnumeratedObservableProperty):
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
+    hasEnumerationKind: OnOffEnum
 
 
 class NormalAlarmStatus(ObservableProperty):
-    node_type: URIRef = p223.NormalAlarmStatus
+    _class_iri: URIRef = p223.NormalAlarmStatus
     hasExternalReference: ExternalReference
     measuresMedium: Medium
 
 
 class OnOffCommand(ActuatableProperty):
-    node_type: URIRef = p223.OnOffCommand
+    _class_iri: URIRef = p223.OnOffCommand
     hasExternalReference: ExternalReference
+    hasEnumerationKind: OnOffEnum
 
 
-Occupancy = EnumerationKind(node_iri=p223["EnumerationKind-Occupancy"])
-
-
-class Schedule(ObservableProperty):
-    node_type: URIRef = p223.Schedule
+class Schedule(EnumerableProperty):
+    _class_iri: URIRef = s223.EnumerableProperty
     hasExternalReference: ExternalReference
+    hasEnumerationKind: OccupancyEnum
 
 
-class OccupancyStatus(ObservableProperty):
-    node_type: URIRef = p223.OccupancyStatus
-    hasEnumerationKind: EnumerationKind = Occupancy
+class OccupancyStatus(EnumeratedObservableProperty):
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
+    hasEnumerationKind: OccupancyEnum
 
 
-class Movement(ObservableProperty):
+class Movement(EnumeratedObservableProperty):
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
+    hasEnumerationKind: OnOffEnum
 
 
-Smoke = Substance(node_iri=p223["Substance-Smoke"])
-
-
-class SmokePresence(ObservableProperty):
+class SmokePresence(EnumeratedObservableProperty):
     ofMedium: Medium  # set from the sensor
     ofSubstance: Substance = Smoke
     # isObservedBy: Sensor
+    hasEnumerationKind: YesNoEnum

@@ -61,7 +61,7 @@ class GasMonitor(Device):
 
     """
 
-    node_type: URIRef = p223.GasMonitor
+    _class_iri: URIRef = p223.GasMonitor
     airInletSupply: AirInletConnectionPoint
 
     alarmStatus: PropertyReference

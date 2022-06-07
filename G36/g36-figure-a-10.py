@@ -171,15 +171,17 @@ outside >> econ_dpr >> mixed_air_supply
 rad.airOutlet >> mixed_air_supply
 
 mixed_air_supply >> filter >> htg_coil >> clg_coil >> sf >> supply_air >> hvacspace.ductAirInlet
-hvacspace.ductAirOutlet >> return_air >> ef >> ead >> outside
+hvacspace.ductAirOutlet >> return_air
+return_air >> ef.airInlet
+ef >> ead >> outside
 return_air >> rad.airInlet
 
 # WATER
 hws >> htg_coil.hotWaterInlet
-htg_coil.hotWaterOutlet >> htg_vlv >> hwr
+### TODO htg_coil.hotWaterOutlet >> htg_vlv >> hwr
 
 chws >> clg_coil.chilledWaterInlet
-clg_coil.chilledWaterOutlet >> clg_vlv >> chwr
+### TODO clg_coil.chilledWaterOutlet >> clg_vlv >> chwr
 
 # Sensors measurements
 oat.hasMeasurementLocation = econ_dpr.airOutlet

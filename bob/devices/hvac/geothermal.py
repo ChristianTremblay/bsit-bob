@@ -38,6 +38,6 @@ chilledWaterCoil_template = {
 
 
 class GeothermalWell(Device):
-    node_type: URIRef = p223.GeothermalWell
+    _class_iri: URIRef = p223.GeothermalWell
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint

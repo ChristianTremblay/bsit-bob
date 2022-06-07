@@ -28,7 +28,7 @@ class FlowSetpoint(Setpoint):
 
 
 class FlowSensor(Sensor):
-    node_type: URIRef = p223.FlowSensor
+    _class_iri: URIRef = p223.FlowSensor
     observesProperty: PropertyReference  # Flow
 
     def __init__(self, **kwargs: Any) -> None:
@@ -44,14 +44,14 @@ class FlowSensor(Sensor):
 
 
 class AirFlowSensor(FlowSensor):
-    node_type: URIRef = p223.AirFlowSensor
+    _class_iri: URIRef = p223.AirFlowSensor
     # typical unit : unit=unit["FT3-PER-MIN"]
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterFlowSensor(FlowSensor):
-    node_type: URIRef = p223.WaterFlowSensor
+    _class_iri: URIRef = p223.WaterFlowSensor
     # typical unit : unit=unit["GAL_UK-PER-MIN"]
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Water, **kwargs)

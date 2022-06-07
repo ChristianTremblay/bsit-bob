@@ -5,6 +5,7 @@ from header import ttl_test_header
 from bob import core
 from bob.core import (
     Connection,
+    Air,
     Device,
     InletConnectionPoint,
     OutletConnectionPoint,
@@ -19,12 +20,12 @@ core.INCLUDE_INVERSE = True
 
 def test_connect_from_and_to(bob_fixture):
     d1 = Device(label="d1")
-    cp1 = OutletConnectionPoint(d1, label="d1.out")
+    cp1 = OutletConnectionPoint(d1, label="d1.out", hasMedium=Air)
 
     d2 = Device(label="d2")
-    cp2 = InletConnectionPoint(d2, label="d2.in")
+    cp2 = InletConnectionPoint(d2, label="d2.in", hasMedium=Air)
 
-    c = Connection()
+    c = Connection(hasMedium=Air)
     cp1 >> c
     c >> cp2
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

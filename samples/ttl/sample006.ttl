@@ -5,7 +5,6 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -114,9 +113,9 @@ ex:00012 a p223:Percent,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
+    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    s223:unit unit:Percent .
 ex:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "hot_water_coil.hw_valve.positionInlet" ;
@@ -144,8 +143,7 @@ ex:00017 a s223:Connection ;
     s223:connectsAt ex:00009,
         ex:00016 ;
     s223:connectsFrom ex:00011 ;
-    s223:connectsTo ex:00006 ;
-    s223:hasMedium s223:Water-HotWater .
+    s223:connectsTo ex:00006 .
 ex:00018 a s223:Property,
         g36:AnalogOut ;
     s223:hasValue "<Percent at urn:ex/sample006/00012>" .

@@ -59,7 +59,7 @@ mixedAir = AirConnection(
     label="MixedAirDuct",
     comment="Mix between return air and outdoor air",
 )
-returnExhaut = AirConnection(
+returnExhaust = AirConnection(
     label="Return / Exhaust",
     comment="Paths for return or exhaust",
 )
@@ -78,15 +78,16 @@ plenum = AirConnection(
 )
 
 # AHU
-outdoor >> hd.ahu["OADPR"] >> mixedAir
+outdoor >> hd.ahu["OADPR"].airInlet  # >> mixedAir
+hd.ahu["OADPR"] >> mixedAir
 hd.ahu["MADPR"] >> mixedAir
 mixedAir >> hd.ahu["FILTER"] >> hd.ahu["HTGCOIL"] >> hd.ahu["CLGCOIL"] >> hd.ahu[
     "SF"
 ] >> supplyAir
-hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"] >> returnExhaut >> hd.ahu[
-    "EADPR"
-] >> outdoor
-returnExhaut >> hd.ahu["MADPR"]
+hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"].airInlet
+hd.ahu["RF"].airOutlet >> returnExhaust >> hd.ahu["EADPR"].airInlet
+hd.ahu["EADPR"] >> outdoor
+returnExhaust >> hd.ahu["MADPR"].airInlet
 
 # AHU Sensors
 hd.ahu["OA-T"].hasMeasurementLocation = outdoor

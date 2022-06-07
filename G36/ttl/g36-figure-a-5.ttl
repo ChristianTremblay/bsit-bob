@@ -98,8 +98,7 @@ exg3605:00007 a s223:Connectable,
     exg3605:airOutlet exg3605:00010 ;
     exg3605:flow exg3605:00008 .
 exg3605:00008 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "A-5.air_flow_station.flow" .
+        g36:AnalogIn .
 exg3605:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-5.air_flow_station.airInlet" ;
@@ -142,6 +141,10 @@ exg3605:00014 a s223:Connectable,
     rdfs:label "A-5.damper.damper_positioner" ;
     s223:hasProperty exg3605:00015 ;
     exg3605:position exg3605:00015 .
+<<<<<<< HEAD
+exg3605:00015 a s223:Property,
+        g36:AnalogOut .
+=======
 exg3605:00015 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -150,6 +153,7 @@ exg3605:00015 a p223:PercentCommand,
     rdfs:label "A-5.damper.damper_positioner.position" ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
+>>>>>>> master
 exg3605:00016 a s223:Connectable,
         s223:Device,
         s223:Fan ;
@@ -308,6 +312,13 @@ exg3605:00037 a s223:Connectable,
         s223:Device,
         exg3605:ValvePositioner ;
     rdfs:label "A-5.hot_water_coil.damper_positioner" ;
+<<<<<<< HEAD
+    s223:hasProperty exg3605:00026 ;
+    exg3605:position exg3605:00026 .
+exg3605:00026 a s223:Property,
+        g36:AnalogOut .
+exg3605:00027 a s223:Connectable,
+=======
     s223:hasProperty exg3605:00038 ;
     exg3605:position exg3605:00038 .
 exg3605:00038 a p223:PercentCommand,
@@ -319,6 +330,7 @@ exg3605:00038 a p223:PercentCommand,
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
 exg3605:00039 a s223:Connectable,
+>>>>>>> master
         s223:Device,
         exg3605:HotWaterValve ;
     rdfs:label "A-5.hot_water_coil.hot_water_valve" .
@@ -326,12 +338,20 @@ exg3605:00040 a s223:Connection ;
     s223:connectsAt exg3605:00019,
         exg3605:00033 ;
     s223:connectsFrom exg3605:00016 ;
+<<<<<<< HEAD
+    s223:connectsTo exg3605:00020 .
+exg3605:00029 a s223:Junction ;
+    s223:lnx exg3605:00030,
+        exg3605:00031 .
+exg3605:00030 a s223:Segment ;
+=======
     s223:connectsTo exg3605:00032 ;
     s223:hasMedium s223:Medium-Air .
 exg3605:00041 a s223:Junction ;
     s223:lnx exg3605:00042,
         exg3605:00043 .
 exg3605:00042 a s223:Segment ;
+>>>>>>> master
     s223:lnx exg3605:00013,
         exg3605:00041 .
 exg3605:00043 a s223:Segment ;

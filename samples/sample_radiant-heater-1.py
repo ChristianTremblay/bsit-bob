@@ -24,13 +24,14 @@ basement = Floor(label="Basement")
 office1 = Office(label="Office 1")
 office2 = Office(label="Office 2")
 office3 = Office(label="Office 3")
-joelsoffice = Office(label="Joel's Office")
+joels_office = Office(label="Joel's Office")
 
 office1_hvac = HVACSpace(label="Office 1")
 office2_hvac = HVACSpace(label="Office 2")
 office3_hvac = HVACSpace(label="Office 3")
 basementhvac = HVACSpace(label="Basement HVAC Space")
-joelsoffice_hvac = HVACSpace(label="Joel's Office HVAC Space")
+joels_office_hvac = HVACSpace(label="Joel's Office HVAC")
+joels_office_space = HVACSpace(label="Joel's Office HVAC Space")
 
 zone1 = HVACZone(label="Zone1")
 
@@ -41,7 +42,7 @@ building > basement
 floor > office1
 floor > office2
 floor > office3
-basement > joelsoffice > joelsoffice_hvac
+basement > joels_office > joels_office_space
 
 # Spaces relationships
 # SPACES | PHYSICAL
@@ -57,13 +58,10 @@ office1_hvac < zone1
 office2_hvac < zone1
 
 baseboard = ElectricalHeatingCoil(label="Baseboard heater")
-AirInJoelsOfficeSpace = AirConnection(label="Air inside the office")
-joelsoffice_hvac.airFromSpace = AirOutletConnectionPoint
-joelsoffice_hvac.airFromBaseboard = AirInletConnectionPoint
 
-AirInJoelsOfficeSpace << joelsoffice_hvac.ductAirOutlet
-AirInJoelsOfficeSpace >> joelsoffice_hvac.ductAirInlet
-AirInJoelsOfficeSpace << baseboard
-AirInJoelsOfficeSpace >> baseboard
+joels_office_space << joels_office_hvac
+joels_office_space >> joels_office_hvac
+# joels_office_space << baseboard
+# joels_office_space >> baseboard
 
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

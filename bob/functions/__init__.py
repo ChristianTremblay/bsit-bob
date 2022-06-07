@@ -6,6 +6,7 @@ This is a facade for ASHRAE 231 Controls Description Language
 
 from __future__ import annotations
 
+import inspect
 import logging
 from typing import Any, AnyStr, Dict
 
@@ -15,9 +16,7 @@ from ..core import (
     INCLUDE_INVERSE,
     Node,
     Property,
-    bind_namespace,
     data_graph,
-    resolve_reference,
     s223,
 )
 from ..multimethods import multimethod
@@ -31,7 +30,7 @@ _namespace = s223
 
 
 class Connector(Node):
-    node_type: URIRef = s223.Connector
+    _class_iri: URIRef = s223.Connector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         logging.debug(f"Connector.__init__ {function_block} {kwargs}")
@@ -54,21 +53,21 @@ class Connector(Node):
 
 
 class InputConnector(Connector):
-    node_type: URIRef = s223.InputConnector
+    _class_iri: URIRef = s223.InputConnector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block.node, s223.input, self.node))
+        data_graph.add((function_block._node_iri, s223.input, self._node_iri))
 
 
 class OutputConnector(Connector):
-    node_type: URIRef = s223.OutputConnector
+    _class_iri: URIRef = s223.OutputConnector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block.node, s223.output, self.node))
+        data_graph.add((function_block._node_iri, s223.output, self._node_iri))
 
 
 @multimethod
@@ -78,7 +77,9 @@ def connect_mm(
     """OutputConnector >> InputConnector"""
     logging.info(f"connect from {output_connector} to {input_connector}")
 
-    data_graph.add((output_connector.node, s223.connect, input_connector.node))
+    data_graph.add(
+        (output_connector._node_iri, s223.connect, input_connector._node_iri)
+    )
 
 
 @multimethod
@@ -86,9 +87,11 @@ def connect_mm(prop: Property, input_connector: InputConnector) -> None:
     """Property >> InputConnector"""
     logging.info(f"connect from {prop} to {input_connector}")
 
-    data_graph.add((input_connector.node, s223.usesInput, prop.node))
+    data_graph.add((input_connector._node_iri, s223.usesInput, prop._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((prop.node, s223.isUsedAsInputBy, input_connector.node))
+        data_graph.add(
+            (prop._node_iri, s223.isUsedAsInputBy, input_connector._node_iri)
+        )
 
 
 @multimethod
@@ -96,9 +99,9 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
     """OutputConnector >> Property"""
     logging.info(f"connect from {output_connector} to {prop}")
 
-    data_graph.add((output_connector.node, s223.producesOutput, prop.node))
+    data_graph.add((output_connector._node_iri, s223.producesOutput, prop._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((prop.node, s223.isProducedBy, output_connector.node))
+        data_graph.add((prop._node_iri, s223.isProducedBy, output_connector._node_iri))
 
 
 #
@@ -107,35 +110,35 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
 
 
 class AnalogInput(InputConnector):
-    node_type: URIRef = s223.AnalogInput
+    _class_iri: URIRef = s223.AnalogInput
 
 
 class AnalogOutput(OutputConnector):
-    node_type: URIRef = s223.AnalogOutput
+    _class_iri: URIRef = s223.AnalogOutput
 
 
 class BinaryInput(InputConnector):
-    node_type: URIRef = s223.BinaryInput
+    _class_iri: URIRef = s223.BinaryInput
 
 
 class BinaryOutput(OutputConnector):
-    node_type: URIRef = s223.BinaryOutput
+    _class_iri: URIRef = s223.BinaryOutput
 
 
 class Parameter(Node):
-    node_type: URIRef = s223.Parameter
+    _class_iri: URIRef = s223.Parameter
 
 
 class Constant(Parameter):
-    node_type: URIRef = s223.Constant
+    _class_iri: URIRef = s223.Constant
 
 
 class AnalogConstant(Constant):
-    node_type: URIRef = None
+    _class_iri: URIRef = None
 
 
 class BinaryConstant(Constant):
-    node_type: URIRef = None
+    _class_iri: URIRef = None
 
 
 #
@@ -152,36 +155,19 @@ class FunctionBlock(Node):
     Connections from or to a function block are made from/to properties only
     """
 
-    node_type: URIRef = s223.FunctionBlock
+    _class_iri: URIRef = s223.FunctionBlock
     _connectors: Dict[str, Connector]
     _parameters: Dict[str, Parameter]
 
     def __init__(self, **kwargs: Any) -> None:
         logging.debug(f"FunctionBlock.__init__ {kwargs}")
 
-        # merge the annotations
-        merged_annotations = {}
-        for cls in reversed(self.__class__.__mro__[:-1]):
-            merged_annotations.update(cls.__annotations__)
-        logging.debug(f"    - merged_annotations: {merged_annotations}")
-
         # pull out the parameters and constants
         parameter_inits: Dict[str, Any] = {}
-        for kw_name, kw_value in kwargs.items():
-            if kw_name in merged_annotations:
-                var_annotation = merged_annotations[kw_name]
-                if isinstance(var_annotation, str):
-                    annotation_resolved = resolve_reference(var_annotation)
-                    if not annotation_resolved:
-                        logging.debug(
-                            f"resolving {var_annotation!r} for attribute {kw_name!r}, class not found"
-                        )
-                        continue
-                    var_annotation = annotation_resolved
-                if issubclass(var_annotation, Parameter):
-                    parameter_inits[kw_name] = kw_value
-        for parm_name in parameter_inits:
-            del kwargs[parm_name]
+        for attr_name, attr_type in self._nodes.items():
+            if inspect.isclass(attr_type) and issubclass(attr_type, Parameter):
+                if attr_name in kwargs:
+                    parameter_inits[attr_name] = kwargs.pop(attr_name)
         logging.debug(f"    - parameter_inits: {parameter_inits}")
         logging.debug(f"    - remaining kwargs: {kwargs}")
 
@@ -191,48 +177,28 @@ class FunctionBlock(Node):
         # instantiate and associate all of the connectors and parameters
         self._connectors = {}
         self._parameters = {}
-        for var_name, var_annotation in merged_annotations.items():
-            if var_name.startswith("_"):
+        for attr_name, attr_type in self._nodes.items():
+            if not inspect.isclass(attr_type):
                 continue
-            var_label = self.label + "." + var_name
 
-            if isinstance(var_annotation, str):
-                annotation_resolved = resolve_reference(var_annotation)
-                if not annotation_resolved:
-                    logging.debug(
-                        f"resolving {var_annotation!r} for attribute {var_name!r}, class not found"
-                    )
-                    continue
-                var_annotation = annotation_resolved
+            if issubclass(attr_type, Connector):
+                # build an instance of this connector
+                attr_element = attr_type(self, label=self.label + "." + attr_name)
+                self._connectors[attr_name] = attr_element
+                logging.debug(f"    - connector {attr_name}: {attr_element}")
 
-            if issubclass(var_annotation, Connector):
-                if var_name in self._connectors:
-                    raise RuntimeError("existing connector")
-                if var_name in self._parameters:
-                    raise RuntimeError("existing parameter")
+            elif issubclass(attr_type, Parameter):
+                # build an instance of this parameter
+                attr_element = attr_type(label=self.label + "." + attr_name)
+                self._parameters[attr_name] = attr_element
+                logging.debug(f"    - parameter {attr_name}: {attr_element}")
 
-                var_element = var_annotation(self, label=var_label)
-                logging.debug(f"    - connector {var_name}: {var_element}")
-
-                self._connectors[var_name] = var_element
-
-            elif issubclass(var_annotation, Parameter):
-                if var_name in self._connectors:
-                    raise RuntimeError("existing connector")
-                if var_name in self._parameters:
-                    raise RuntimeError("existing parameter")
-
-                # maybe a value was provided
-                var_value = parameter_inits.pop(var_name, None)
-                var_element = var_annotation(self, value=var_value, label=var_label)
-                logging.debug(f"    - parameter {var_name}: {var_element}")
-
-                self._parameters[var_name] = var_element
-
+                if attr_name in parameter_inits:
+                    logging.debug(f"        - init: {parameter_inits[attr_name]}")
             else:
                 continue
 
-            setattr(self, var_name, var_element)
+            setattr(self, attr_name, attr_element)
 
     def uses_input(
         self,
@@ -254,8 +220,8 @@ class FunctionBlock(Node):
 
 
 class ElementaryBlock(FunctionBlock):
-    node_type: URIRef = s223.ElementaryBlock
+    _class_iri: URIRef = s223.ElementaryBlock
 
 
 class CompositeBlock(FunctionBlock):
-    node_type: URIRef = s223.CompositeBlock
+    _class_iri: URIRef = s223.CompositeBlock

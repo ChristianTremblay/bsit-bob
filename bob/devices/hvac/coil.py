@@ -34,7 +34,7 @@ coil_template = {
 
 
 class Coil(Device):
-    node_type: URIRef = s223.Coil
+    _class_iri: URIRef = s223.Coil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     # Those could come from a valve, SCR, Triac, etc...
@@ -59,7 +59,7 @@ class WaterCoil(Coil):
 
 
 class ChilledWaterCoil(Coil):
-    node_type: URIRef = s223.CoolingCoil
+    _class_iri: URIRef = s223.CoolingCoil
     chilledWaterInlet: ChilledWaterInletConnectionPoint
     chilledWaterOutlet: ChilledWaterOutletConnectionPoint
 
@@ -70,7 +70,7 @@ class ChilledWaterCoil(Coil):
 
 
 class HotWaterCoil(Coil):
-    node_type: URIRef = s223.HeatingCoil
+    _class_iri: URIRef = s223.HeatingCoil
     hotWaterInlet: HotWaterInletConnectionPoint
     hotWaterOutlet: HotWaterOutletConnectionPoint
 
@@ -91,7 +91,7 @@ electricalheating_template = {
 
 
 class ElectricalHeatingCoil(Coil):
-    node_type: URIRef = s223.HeatingCoil
+    _class_iri: URIRef = s223.HeatingCoil
 
     def __init__(self, config: Dict = electricalheating_template, **kwargs):
         config["properties"] = config.get(
@@ -112,7 +112,7 @@ electricalradiant_template = {
 
 # Baseboard, radiant panel, heating floor
 class ElectricalRadiantHeatingCoil(Device):
-    node_type: URIRef = s223.HeatingCoil
+    _class_iri: URIRef = s223.HeatingCoil
     airContact: AirBidirectionalConnectionPoint
 
     def __init__(self, config: Dict = electricalradiant_template, **kwargs):

@@ -88,8 +88,7 @@ exg3611:00006 a s223:Connectable,
     exg3611:airOutlet exg3611:00009 ;
     exg3611:dp exg3611:00007 .
 exg3611:00007 a s223:Property,
-        g36:AnalogIn ;
-    rdfs:label "A-11.air_filter.dp" .
+        g36:AnalogIn .
 exg3611:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "A-11.air_filter.airInlet" ;
@@ -155,6 +154,10 @@ exg3611:00015 a s223:Connectable,
     rdfs:label "A-11.hot_water_coil.damper_positioner" ;
     s223:hasProperty exg3611:00016 ;
     exg3611:position exg3611:00016 .
+<<<<<<< HEAD
+exg3611:00016 a s223:Property,
+        g36:AnalogOut .
+=======
 exg3611:00016 a p223:PercentCommand,
         s223:ActuatableProperty,
         s223:Property,
@@ -163,6 +166,7 @@ exg3611:00016 a p223:PercentCommand,
     rdfs:label "A-11.hot_water_coil.damper_positioner.position" ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
+>>>>>>> master
 exg3611:00017 a s223:Connectable,
         s223:Device,
         exg3611:HotWaterValve ;
@@ -171,8 +175,7 @@ exg3611:00018 a s223:Connection ;
     s223:connectsAt exg3611:00009,
         exg3611:00011 ;
     s223:connectsFrom exg3611:00006 ;
-    s223:connectsTo exg3611:00010 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3611:00010 .
 exg3611:00019 a s223:Connectable,
         s223:Device,
         s223:Fan,
@@ -294,6 +297,21 @@ exg3611:00035 a s223:Connectable,
         s223:Device,
         exg3611:VFD ;
     rdfs:label "A-11.fan.vfd" ;
+<<<<<<< HEAD
+    s223:hasProperty exg3611:00024,
+        exg3611:00025,
+        exg3611:00026 ;
+    exg3611:fanSpeedCommand exg3611:00025 ;
+    exg3611:fanStart exg3611:00026 ;
+    exg3611:fanStatus exg3611:00024 .
+exg3611:00024 a s223:Property,
+        g36:BinaryIn .
+exg3611:00025 a s223:Property,
+        g36:AnalogOut .
+exg3611:00026 a s223:Property,
+        g36:BinaryOut .
+exg3611:00027 a s223:Connection ;
+=======
     s223:hasProperty exg3611:00036,
         exg3611:00037,
         exg3611:00038 ;
@@ -317,8 +335,8 @@ exg3611:00038 a p223:OnOffCommand,
         s223:Property ;
     rdfs:label "A-11.fan.vfd.fanStart" .
 exg3611:00039 a s223:Connection ;
+>>>>>>> master
     s223:connectsAt exg3611:00012,
         exg3611:00021 ;
     s223:connectsFrom exg3611:00010 ;
-    s223:connectsTo exg3611:00019 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3611:00019 .

@@ -74,7 +74,7 @@ airFromBaseboard = AirInletConnectionPoint(
     comment="Air that doesn't leave the room, used internally",
 )
 
-airFromBaseboard << baseboard
-airFromSpace >> baseboard
+airFromBaseboard << baseboard.airOutlet
+airFromSpace >> baseboard.airInlet
 
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

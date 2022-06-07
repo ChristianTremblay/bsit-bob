@@ -45,7 +45,7 @@ vfd_template = {
 
 
 class VFD(Device):
-    node_type: URIRef = s223.VariableFrequencyDrive
+    _class_iri: URIRef = s223.VariableFrequencyDrive
 
     def __init__(self, config: Dict = vfd_template, **kwargs):
         config["properties"] = config.get("properties", vfd_template["properties"])

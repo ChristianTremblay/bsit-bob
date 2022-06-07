@@ -7,7 +7,6 @@
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -100,7 +99,7 @@ ex:00011 a p223:Pressure,
     s223:hasExternalReference ex:00012 ;
     qudt:quantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
-ex:00012 a ref:ExternalReference ;
+ex:00012 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/sample003/00007>" .
 ex:00013 a p223:Amps,
@@ -112,7 +111,7 @@ ex:00013 a p223:Amps,
     s223:hasExternalReference ex:00014 ;
     qudt:quantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex:00014 a ref:ExternalReference ;
+ex:00014 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/sample003/00007>" .
 ex:00015 a p223:RPM,
@@ -124,7 +123,7 @@ ex:00015 a p223:RPM,
     s223:hasExternalReference ex:00016 ;
     qudt:quantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
-ex:00016 a ref:ExternalReference ;
+ex:00016 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/sample003/00007>" .
 ex:00017 a p223:HP,
@@ -136,7 +135,7 @@ ex:00017 a p223:HP,
     s223:hasExternalReference ex:00018 ;
     qudt:quantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex:00018 a ref:ExternalReference ;
+ex:00018 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/sample003/00007>" .
 ex:00019 a p223:ElectricPowerkW,
@@ -148,7 +147,7 @@ ex:00019 a p223:ElectricPowerkW,
     s223:hasExternalReference ex:00020 ;
     qudt:quantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex:00020 a ref:ExternalReference ;
+ex:00020 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/sample003/00007>" .
 ex:00021 a p223:PowerFactor,
@@ -160,15 +159,14 @@ ex:00021 a p223:PowerFactor,
     s223:hasExternalReference ex:00022 ;
     qudt:quantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
-ex:00022 a ref:ExternalReference ;
+ex:00022 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan F at urn:ex/sample003/00007>" .
 ex:00023 a s223:Connection ;
     s223:connectsAt ex:00003,
         ex:00009 ;
     s223:connectsFrom ex:00007 ;
-    s223:connectsTo ex:00002 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo ex:00002 .
 ex:00024 a s223:Zone,
         ex:HVACZone ;
     rdfs:label "Zone-1" ;
@@ -181,12 +179,71 @@ ex:00025 a s223:InletZoneConnectionPoint,
     rdfs:label "Zone-1.supplyAir" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex:00027 .
+    s223:mapsTo ex:00034 .
 ex:00026 a s223:Connectable,
-        s223:DomainSpace ;
+        s223:DomainSpace,
+        s223:HVACSpace ;
     rdfs:label "Space" ;
-    s223:hasConnectionPoint ex:00027 .
+    s223:airTransfer ex:00029 ;
+    s223:doors ex:00030 ;
+    s223:ductAirInlet ex:00027 ;
+    s223:ductAirOutlet ex:00028 ;
+    s223:hasConnectionPoint ex:00027,
+        ex:00028,
+        ex:00029,
+        ex:00030,
+        ex:00031,
+        ex:00032,
+        ex:00033,
+        ex:00034 ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:radiantCooling ex:00033 ;
+    s223:radiantHeating ex:00032 ;
+    s223:windows ex:00031 .
 ex:00027 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Space.ductAirInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00026 .
+ex:00028 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "Space.ductAirOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00026 .
+ex:00029 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Space.airTransfer" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00026 .
+ex:00030 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Space.doors" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00026 .
+ex:00031 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Space.windows" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00026 .
+ex:00032 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Space.radiantHeating" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00026 .
+ex:00033 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "Space.radiantCooling" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00026 .
+ex:00034 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "scp" ;
     s223:hasDirection s223:Direction-Inlet ;

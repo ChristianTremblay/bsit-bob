@@ -86,7 +86,7 @@ class Sensor(Device):
     A sensor can have only one measurement (observesProperty)
     """
 
-    node_type: URIRef = s223.Sensor
+    _class_iri: URIRef = s223.Sensor
     # ISSUE
     # How can I define that ?
     # hasMeasurementLocation: Union[
@@ -126,11 +126,11 @@ def contains_mm(parent_device: Device, child_device: Sensor) -> None:
     """Device > Device"""
     logging.info(f"device {parent_device} contains device {child_device}")
     parent_device._data_graph.add(
-        (parent_device.node, s223.contains, child_device.node)
+        (parent_device._node_iri, s223.contains, child_device._node_iri)
     )
     if INCLUDE_INVERSE:
         parent_device._data_graph.add(
-            (child_device.node, s223.isContainedIn, parent_device.node)
+            (child_device._node_iri, s223.isContainedIn, parent_device._node_iri)
         )
 
 
@@ -140,40 +140,40 @@ def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
     logging.info(f"device {parent_device} contains device {child_device}")
     parent_device._data_graph.add(
         (
-            parent_device.observesProperty.node,
+            parent_device.observesProperty._node_iri,
             s223.hasExternalReference,
-            child_device.node,
+            child_device._node_iri,
         )
     )
     if INCLUDE_INVERSE:
         parent_device._data_graph.add(
             (
-                child_device.node,
+                child_device._node_iri,
                 s223.isExternalReferenceOf,
-                parent_device.observesProperty.node,
+                parent_device.observesProperty._node_iri,
             )
         )
 
 
 class DifferentialSensor(Sensor):
     "Differential sensor"
-    node_type: URIRef = s223.DifferentialSensor
+    _class_iri: URIRef = s223.DifferentialSensor
     # hasMeasurementLocation: # maxCount = 2, minCount=2
 
 
 class VirtualSensor(Sensor):
     "Virtal Sensor"
-    node_type: URIRef = s223.VirtualSensor
+    _class_iri: URIRef = s223.VirtualSensor
     # hasMeasurementLocation: # maxCount = 0
     hasFunctionInput: Property
 
 
 # class MeasuredProperty(ObservableProperty):
-#    node_type: URIRef = None
+#    _class_iri: URIRef = None
 #    isObservedBy: Sensor
 
 
 # class QuantifiableMeasuredProperty(QuantifiableObservableProperty, MeasuredProperty):
-#    node_type: URIRef = None
+#    _class_iri: URIRef = None
 # hasQuantityKind inherited from QuantifiableProperty
 # isObservedBy inherited from MeasuredProperty

@@ -4,7 +4,6 @@
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -130,10 +129,10 @@ exg3601:00015 a s223:BidirectionalConnectionPoint,
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00008 .
-exg3601:00016 a p223:OccupancyStatus,
+exg3601:00016 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property ;
-    p223:hasEnumerationKind p223:EnumerationKind-Occupancy .
+        s223:Property .
 exg3601:00017 a s223:Connectable,
         s223:Device,
         s223:Window ;
@@ -169,8 +168,7 @@ exg3601:00021 a s223:Connection ;
     s223:connectsAt exg3601:00013,
         exg3601:00018 ;
     s223:connectsFrom exg3601:00017 ;
-    s223:connectsTo exg3601:00008 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3601:00008 .
 exg3601:00022 a s223:System,
         exg3601:VAV_FIGA3 ;
     rdfs:label "VAV_FIG.A2" ;
@@ -236,7 +234,8 @@ exg3601:00027 a p223:MovementSensor,
     rdfs:label "ZN-OCC-SENSOR" ;
     s223:hasMeasurementLocation exg3601:00008 ;
     s223:observesProperty exg3601:00028 .
-exg3601:00028 a p223:Movement,
+exg3601:00028 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "ZN-OCC-SENSOR.Movement" ;
@@ -248,7 +247,8 @@ exg3601:00029 a p223:IntrusionSensor,
     rdfs:label "ZN-WINDOW-SWITCH" ;
     s223:hasMeasurementLocation exg3601:00017 ;
     s223:observesProperty exg3601:00030 .
-exg3601:00030 a p223:OnOffStatus,
+exg3601:00030 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "ZN-WINDOW-SWITCH.Intrusion" .
@@ -261,7 +261,7 @@ exg3601:00031 a p223:Temperature,
     s223:hasExternalReference exg3601:00032 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-exg3601:00032 a ref:ExternalReference ;
+exg3601:00032 a s223:ExternalReference ;
     rdfs:label "zoneTemperature.ExternalReference" ;
     s223:hasRef "<VAV_FIGA3 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-3#00022>" .
 exg3601:00033 a p223:Temperature,
@@ -273,16 +273,16 @@ exg3601:00033 a p223:Temperature,
     s223:hasExternalReference exg3601:00034 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-exg3601:00034 a ref:ExternalReference ;
+exg3601:00034 a s223:ExternalReference ;
     rdfs:label "supplyAirTemperature.ExternalReference" ;
     s223:hasRef "<VAV_FIGA3 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-3#00022>" .
-exg3601:00035 a p223:OccupancyStatus,
+exg3601:00035 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "occupancy" ;
-    p223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
     s223:hasExternalReference exg3601:00036 .
-exg3601:00036 a ref:ExternalReference ;
+exg3601:00036 a s223:ExternalReference ;
     rdfs:label "occupancy.ExternalReference" ;
     s223:hasRef "<VAV_FIGA3 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-3#00022>" .
 exg3601:00037 a p223:PercentCommand,
@@ -294,7 +294,7 @@ exg3601:00037 a p223:PercentCommand,
     s223:hasExternalReference exg3601:00038 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
-exg3601:00038 a ref:ExternalReference ;
+exg3601:00038 a s223:ExternalReference ;
     rdfs:label "damperPosition.ExternalReference" ;
     s223:hasRef "<VAV_FIGA3 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-3#00022>" .
 exg3601:00039 a p223:PercentCommand,
@@ -306,7 +306,7 @@ exg3601:00039 a p223:PercentCommand,
     s223:hasExternalReference exg3601:00040 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
-exg3601:00040 a ref:ExternalReference ;
+exg3601:00040 a s223:ExternalReference ;
     rdfs:label "valvePosition.ExternalReference" ;
     s223:hasRef "<VAV_FIGA3 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-3#00022>" .
 exg3601:00041 a s223:Flow,
@@ -318,15 +318,16 @@ exg3601:00041 a s223:Flow,
     s223:hasExternalReference exg3601:00042 ;
     qudt:quantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:L_PER_SEC .
-exg3601:00042 a ref:ExternalReference ;
+exg3601:00042 a s223:ExternalReference ;
     rdfs:label "airFlow.ExternalReference" ;
     s223:hasRef "<VAV_FIGA3 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-3#00022>" .
-exg3601:00043 a p223:OnOffStatus,
+exg3601:00043 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "fanStatus" ;
     s223:hasExternalReference exg3601:00044 .
-exg3601:00044 a ref:ExternalReference ;
+exg3601:00044 a s223:ExternalReference ;
     rdfs:label "fanStatus.ExternalReference" ;
     s223:hasRef "<VAV_FIGA3 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-3#00022>" .
 exg3601:00045 a p223:OnOffCommand,
@@ -334,7 +335,7 @@ exg3601:00045 a p223:OnOffCommand,
         s223:Property ;
     rdfs:label "fanCommand" ;
     s223:hasExternalReference exg3601:00046 .
-exg3601:00046 a ref:ExternalReference ;
+exg3601:00046 a s223:ExternalReference ;
     rdfs:label "fanCommand.ExternalReference" ;
     s223:hasRef "<VAV_FIGA3 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-3#00022>" .
 exg3601:00047 a s223:Connectable,
@@ -344,6 +345,7 @@ exg3601:00047 a s223:Connectable,
     s223:contains exg3601:00051,
         exg3601:00053 ;
     s223:hasConnectionPoint exg3601:00048 ;
+    s223:node_type s223:NetworkRoomSensor ;
     rdfs:comment "Zone Thermostat with setpoint adj and local override" .
 exg3601:00048 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
@@ -358,7 +360,7 @@ exg3601:00049 a p223:TemperatureSetpoint,
     s223:hasExternalReference exg3601:00050 ;
     qudt:quantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-exg3601:00050 a ref:ExternalReference ;
+exg3601:00050 a s223:ExternalReference ;
     rdfs:label "temperature_setpoint.ExternalReference" ;
     s223:hasRef "<NetworkRoomSensor ZONE-THERMOSTAT at http://data.ashrae.org/standard223/data/g36-figure-a-3#00047>" .
 exg3601:00051 a p223:AirTemperatureSensor,
@@ -385,7 +387,8 @@ exg3601:00053 a p223:MovementSensor,
         s223:Sensor ;
     rdfs:label "local_override" ;
     s223:observesProperty exg3601:00054 .
-exg3601:00054 a p223:Movement,
+exg3601:00054 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "local_override.Movement" ;
@@ -419,11 +422,14 @@ exg3601:00057 a s223:ConnectionPoint,
     s223:isConnectionPointOf exg3601:00055 .
 exg3601:00058 a s223:Actuator,
         s223:Connectable,
-        s223:Device ;
+        s223:Device,
+        s223:ElectricalActuator ;
     rdfs:label "actuator" ;
     s223:actuates exg3601:00055 ;
     s223:hasConnectionPoint exg3601:00059 .
 exg3601:00059 a s223:ConnectionPoint,
+        s223:Electricity_24V_60HzConnectionPoint,
+        s223:Electricity_24V_60HzInletConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-24V_60Hz ;
@@ -437,7 +443,7 @@ exg3601:00060 a p223:PercentCommand,
     s223:hasExternalReference exg3601:00061 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
-exg3601:00061 a ref:ExternalReference ;
+exg3601:00061 a s223:ExternalReference ;
     rdfs:label "position.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
 exg3601:00062 a p223:Percent,
@@ -449,7 +455,7 @@ exg3601:00062 a p223:Percent,
     s223:hasExternalReference exg3601:00063 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
-exg3601:00063 a ref:ExternalReference ;
+exg3601:00063 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
 exg3601:00064 a p223:Nm,
@@ -461,7 +467,7 @@ exg3601:00064 a p223:Nm,
     s223:hasExternalReference exg3601:00065 ;
     qudt:quantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
-exg3601:00065 a ref:ExternalReference ;
+exg3601:00065 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00058>" .
 exg3601:00066 a p223:GasMonitor,
@@ -497,10 +503,10 @@ exg3601:00069 a p223:GasConcentration,
     rdfs:label "CO2.GasConcentration" ;
     s223:hasExternalReference exg3601:00070 ;
     s223:ofMedium s223:Medium-Air ;
-    s223:ofSubstance p223:Substance-CO2 ;
+    s223:ofSubstance s223:Substance-CO2 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PPM .
-exg3601:00070 a ref:ExternalReference ;
+exg3601:00070 a s223:ExternalReference ;
     rdfs:label "CO2.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
 exg3601:00071 a s223:Coil,
@@ -553,6 +559,7 @@ exg3601:00075 a s223:ConnectionPoint,
     s223:isConnectionPointOf exg3601:00071 .
 exg3601:00076 a s223:Connectable,
         s223:Device,
+        s223:TwoWayActuatedValve,
         s223:Valve ;
     rdfs:label "HTG-VLV" ;
     s223:connectedFrom exg3601:00071 ;
@@ -563,6 +570,7 @@ exg3601:00076 a s223:Connectable,
         exg3601:00078,
         exg3601:00079,
         exg3601:00080 ;
+    s223:node_type s223:Valve ;
     s223:position exg3601:00085 .
 exg3601:00077 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -595,16 +603,19 @@ exg3601:00081 a p223:Gallons,
     s223:hasExternalReference exg3601:00082 ;
     qudt:quantityKind quantitykind:LiquidVolume ;
     qudt:unit unit:GAL_US .
-exg3601:00082 a ref:ExternalReference ;
+exg3601:00082 a s223:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
     s223:hasRef "<TwoWayActuatedValve HTG-VLV at http://data.ashrae.org/standard223/data/g36-figure-a-3#00076>" .
 exg3601:00083 a s223:Actuator,
         s223:Connectable,
-        s223:Device ;
+        s223:Device,
+        s223:ElectricalActuator ;
     rdfs:label "actuator" ;
     s223:actuates exg3601:00076 ;
     s223:hasConnectionPoint exg3601:00084 .
 exg3601:00084 a s223:ConnectionPoint,
+        s223:Electricity_24V_60HzConnectionPoint,
+        s223:Electricity_24V_60HzInletConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-24V_60Hz ;
@@ -618,7 +629,7 @@ exg3601:00085 a p223:PercentCommand,
     s223:hasExternalReference exg3601:00086 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
-exg3601:00086 a ref:ExternalReference ;
+exg3601:00086 a s223:ExternalReference ;
     rdfs:label "position.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
 exg3601:00087 a p223:Percent,
@@ -630,7 +641,7 @@ exg3601:00087 a p223:Percent,
     s223:hasExternalReference exg3601:00088 ;
     qudt:quantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:Percent .
-exg3601:00088 a ref:ExternalReference ;
+exg3601:00088 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
 exg3601:00089 a p223:Nm,
@@ -642,7 +653,7 @@ exg3601:00089 a p223:Nm,
     s223:hasExternalReference exg3601:00090 ;
     qudt:quantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
-exg3601:00090 a ref:ExternalReference ;
+exg3601:00090 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-3#00083>" .
 exg3601:00091 a s223:Connectable,
@@ -688,7 +699,7 @@ exg3601:00095 a p223:Pressure,
     s223:hasExternalReference exg3601:00096 ;
     qudt:quantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
-exg3601:00096 a ref:ExternalReference ;
+exg3601:00096 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
     s223:hasRef "<Fan FAN at http://data.ashrae.org/standard223/data/g36-figure-a-3#00091>" .
 exg3601:00097 a p223:Amps,
@@ -700,7 +711,7 @@ exg3601:00097 a p223:Amps,
     s223:hasExternalReference exg3601:00098 ;
     qudt:quantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-exg3601:00098 a ref:ExternalReference ;
+exg3601:00098 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
     s223:hasRef "<Fan FAN at http://data.ashrae.org/standard223/data/g36-figure-a-3#00091>" .
 exg3601:00099 a p223:RPM,
@@ -712,7 +723,7 @@ exg3601:00099 a p223:RPM,
     s223:hasExternalReference exg3601:00100 ;
     qudt:quantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
-exg3601:00100 a ref:ExternalReference ;
+exg3601:00100 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
     s223:hasRef "<Fan FAN at http://data.ashrae.org/standard223/data/g36-figure-a-3#00091>" .
 exg3601:00101 a p223:HP,
@@ -724,7 +735,7 @@ exg3601:00101 a p223:HP,
     s223:hasExternalReference exg3601:00102 ;
     qudt:quantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-exg3601:00102 a ref:ExternalReference ;
+exg3601:00102 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
     s223:hasRef "<Fan FAN at http://data.ashrae.org/standard223/data/g36-figure-a-3#00091>" .
 exg3601:00103 a p223:ElectricPowerkW,
@@ -736,7 +747,7 @@ exg3601:00103 a p223:ElectricPowerkW,
     s223:hasExternalReference exg3601:00104 ;
     qudt:quantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-exg3601:00104 a ref:ExternalReference ;
+exg3601:00104 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
     s223:hasRef "<Fan FAN at http://data.ashrae.org/standard223/data/g36-figure-a-3#00091>" .
 exg3601:00105 a p223:PowerFactor,
@@ -748,7 +759,7 @@ exg3601:00105 a p223:PowerFactor,
     s223:hasExternalReference exg3601:00106 ;
     qudt:quantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
-exg3601:00106 a ref:ExternalReference ;
+exg3601:00106 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
     s223:hasRef "<Fan FAN at http://data.ashrae.org/standard223/data/g36-figure-a-3#00091>" .
 exg3601:00107 a s223:Connectable,
@@ -813,7 +824,8 @@ exg3601:00114 a s223:Connectable,
     rdfs:label "FAN-STARTER.sensorCurrentBinarySensor" ;
     s223:hasMeasurementLocation exg3601:00111 ;
     s223:observesProperty exg3601:00115 .
-exg3601:00115 a p223:OnOffStatus,
+exg3601:00115 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "FAN-STARTER.sensorCurrentBinarySensor.CurrentBinarySensor" ;
@@ -840,20 +852,17 @@ exg3601:00119 a s223:Connection ;
     s223:connectsAt exg3601:00073,
         exg3601:00092 ;
     s223:connectsFrom exg3601:00071 ;
-    s223:connectsTo exg3601:00091 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo exg3601:00091 .
 exg3601:00120 a s223:Connection ;
     s223:connectsAt exg3601:00094,
         exg3601:00111 ;
     s223:connectsFrom exg3601:00107 ;
-    s223:connectsTo exg3601:00091 ;
-    s223:hasMedium s223:Electricity-120V_60Hz .
+    s223:connectsTo exg3601:00091 .
 exg3601:00121 a s223:Connection ;
     s223:connectsAt exg3601:00075,
         exg3601:00077 ;
     s223:connectsFrom exg3601:00071 ;
-    s223:connectsTo exg3601:00076 ;
-    s223:hasMedium s223:Water-HotWater .
+    s223:connectsTo exg3601:00076 .
 exg3601:00122 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone" ;
@@ -901,10 +910,10 @@ exg3601:00127 a s223:Connector,
         g36:BinaryIn ;
     rdfs:label "OccControl.local-override" ;
     s223:usesInput exg3601:00054 .
-exg3601:00128 a p223:OccupancyStatus,
+exg3601:00128 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property ;
-    p223:hasEnumerationKind p223:EnumerationKind-Occupancy .
+        s223:Property .
 exg3601:00129 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "OccControl.output" ;

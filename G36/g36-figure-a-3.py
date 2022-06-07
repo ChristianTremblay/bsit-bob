@@ -197,7 +197,8 @@ window = Window(label="Window")
 window.indoor >> hvac_space.windows
 vav = VAV_FIGA3(config=vav_system_template)
 supply_air >> vav["DPR"] >> discharge_air
-plenum >> vav["HTG-COIL"] >> vav["FAN"] >> discharge_air >> hvac_space.ductAirInlet
+plenum >> vav["HTG-COIL"].airInlet
+vav["HTG-COIL"] >> vav["FAN"] >> discharge_air >> hvac_space.ductAirInlet
 vav["FAN-STARTER"] >> vav["FAN"]
 hws >> vav["HTG-COIL"]
 vav["HTG-COIL"] >> vav["HTG-VLV"] >> hwr

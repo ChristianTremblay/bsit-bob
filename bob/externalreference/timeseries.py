@@ -7,14 +7,14 @@ _namespace = p223
 
 class BACnetReference(ExternalReference):
     hasRef: Literal
-    node_type = None
+    _class_iri = None
 
 
 class NiagaraORDReference(ExternalReference):
     hasRef: Literal
-    node_type = None
+    _class_iri = None
 
 
 class TimeSeriesReference(ExternalReference):
     hasRef: Literal
-    node_type = None
+    _class_iri = None
