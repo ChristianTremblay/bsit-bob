@@ -2,6 +2,7 @@
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
@@ -10,16 +11,16 @@ exg3601:00001 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 0.0 ;
-    s223:unit unit:PPM .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PPM .
 exg3601:00002 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:hasValue 2000.0 ;
-    s223:unit unit:PPM .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PPM .
 exg3601:00003 a s223:Connection ;
     rdfs:label "SA_In" ;
     s223:connectsAt exg3601:00052 ;
@@ -196,9 +197,9 @@ exg3601:00024 a s223:Flow,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "SA-F.Flow" ;
-    s223:hasQuantityKind quantitykind:VolumeFlowRate ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:L_PER_SEC .
+    qudt:quantityKind quantitykind:VolumeFlowRate ;
+    qudt:unit unit:L_PER_SEC .
 exg3601:00025 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
@@ -214,9 +215,9 @@ exg3601:00026 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "DA-T.Temperature" ;
-    s223:hasQuantityKind quantitykind:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:DEG_C .
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 exg3601:00027 a p223:MovementSensor,
         p223:OccupancySensor,
         s223:Connectable,
@@ -259,8 +260,8 @@ exg3601:00033 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "zoneTemperature" ;
     s223:hasExternalReference exg3601:00034 ;
-    s223:hasQuantityKind quantitykind:Temperature ;
-    s223:unit unit:DEG_C .
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 exg3601:00034 a s223:ExternalReference ;
     rdfs:label "zoneTemperature.ExternalReference" ;
     s223:hasRef "<VAV_FIGA2 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-2#00022>" .
@@ -271,8 +272,8 @@ exg3601:00035 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "supplyAirTemperature" ;
     s223:hasExternalReference exg3601:00036 ;
-    s223:hasQuantityKind quantitykind:Temperature ;
-    s223:unit unit:DEG_C .
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 exg3601:00036 a s223:ExternalReference ;
     rdfs:label "supplyAirTemperature.ExternalReference" ;
     s223:hasRef "<VAV_FIGA2 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-2#00022>" .
@@ -283,8 +284,8 @@ exg3601:00037 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "damperPosition" ;
     s223:hasExternalReference exg3601:00038 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    s223:unit unit:Percent .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
 exg3601:00038 a s223:ExternalReference ;
     rdfs:label "damperPosition.ExternalReference" ;
     s223:hasRef "<VAV_FIGA2 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-2#00022>" .
@@ -295,8 +296,8 @@ exg3601:00039 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "valvePosition" ;
     s223:hasExternalReference exg3601:00040 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    s223:unit unit:Percent .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
 exg3601:00040 a s223:ExternalReference ;
     rdfs:label "valvePosition.ExternalReference" ;
     s223:hasRef "<VAV_FIGA2 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-2#00022>" .
@@ -307,8 +308,8 @@ exg3601:00041 a s223:Flow,
         s223:QuantifiableProperty ;
     rdfs:label "airFlow" ;
     s223:hasExternalReference exg3601:00042 ;
-    s223:hasQuantityKind quantitykind:VolumeFlowRate ;
-    s223:unit unit:L_PER_SEC .
+    qudt:quantityKind quantitykind:VolumeFlowRate ;
+    qudt:unit unit:L_PER_SEC .
 exg3601:00042 a s223:ExternalReference ;
     rdfs:label "airFlow.ExternalReference" ;
     s223:hasRef "<VAV_FIGA2 VAV_FIG.A2 at http://data.ashrae.org/standard223/data/g36-figure-a-2#00022>" .
@@ -332,8 +333,8 @@ exg3601:00045 a p223:TemperatureSetpoint,
         s223:Setpoint ;
     rdfs:label "temperature_setpoint" ;
     s223:hasExternalReference exg3601:00046 ;
-    s223:hasQuantityKind quantitykind:Temperature ;
-    s223:unit unit:DEG_C .
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 exg3601:00046 a s223:ExternalReference ;
     rdfs:label "temperature_setpoint.ExternalReference" ;
     s223:hasRef "<NetworkRoomSensor ZONE-THERMOSTAT at http://data.ashrae.org/standard223/data/g36-figure-a-2#00043>" .
@@ -351,9 +352,9 @@ exg3601:00048 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "temperature_sensor.Temperature" ;
-    s223:hasQuantityKind quantitykind:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:DEG_C .
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 exg3601:00049 a p223:MovementSensor,
         p223:OccupancySensor,
         s223:Connectable,
@@ -416,8 +417,8 @@ exg3601:00056 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "position" ;
     s223:hasExternalReference exg3601:00057 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    s223:unit unit:Percent .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
 exg3601:00057 a s223:ExternalReference ;
     rdfs:label "position.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-2#00054>" .
@@ -428,8 +429,8 @@ exg3601:00058 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference exg3601:00059 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    s223:unit unit:Percent .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
 exg3601:00059 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-2#00054>" .
@@ -440,8 +441,8 @@ exg3601:00060 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference exg3601:00061 ;
-    s223:hasQuantityKind quantitykind:Torque ;
-    s223:unit unit:N-M .
+    qudt:quantityKind quantitykind:Torque ;
+    qudt:unit unit:N-M .
 exg3601:00061 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-2#00054>" .
@@ -477,10 +478,10 @@ exg3601:00065 a p223:GasConcentration,
         s223:QuantifiableProperty ;
     rdfs:label "CO2.GasConcentration" ;
     s223:hasExternalReference exg3601:00066 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance s223:Substance-CO2 ;
-    s223:unit unit:PPM .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PPM .
 exg3601:00066 a s223:ExternalReference ;
     rdfs:label "CO2.GasConcentration.ExternalReference" ;
     s223:hasRef "bacnet://" .
@@ -576,8 +577,8 @@ exg3601:00077 a p223:Gallons,
         s223:QuantifiableProperty ;
     rdfs:label "flowCoefficient" ;
     s223:hasExternalReference exg3601:00078 ;
-    s223:hasQuantityKind quantitykind:LiquidVolume ;
-    s223:unit unit:GAL_US .
+    qudt:quantityKind quantitykind:LiquidVolume ;
+    qudt:unit unit:GAL_US .
 exg3601:00078 a s223:ExternalReference ;
     rdfs:label "flowCoefficient.ExternalReference" ;
     s223:hasRef "<TwoWayActuatedValve HTG-VLV at http://data.ashrae.org/standard223/data/g36-figure-a-2#00072>" .
@@ -602,8 +603,8 @@ exg3601:00081 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "position" ;
     s223:hasExternalReference exg3601:00082 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    s223:unit unit:Percent .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
 exg3601:00082 a s223:ExternalReference ;
     rdfs:label "position.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-2#00079>" .
@@ -614,8 +615,8 @@ exg3601:00083 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference exg3601:00084 ;
-    s223:hasQuantityKind quantitykind:DimensionlessRatio ;
-    s223:unit unit:Percent .
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
 exg3601:00084 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-2#00079>" .
@@ -626,8 +627,8 @@ exg3601:00085 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference exg3601:00086 ;
-    s223:hasQuantityKind quantitykind:Torque ;
-    s223:unit unit:N-M .
+    qudt:quantityKind quantitykind:Torque ;
+    qudt:unit unit:N-M .
 exg3601:00086 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
     s223:hasRef "<ElectricalActuator actuator at http://data.ashrae.org/standard223/data/g36-figure-a-2#00079>" .

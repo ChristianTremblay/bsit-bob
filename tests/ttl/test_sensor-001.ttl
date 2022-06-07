@@ -4,6 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -27,9 +28,9 @@ ex30:00002 a p223:Temperature,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "ats1.Temperature" ;
-    s223:hasQuantityKind quantitykind:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:DEG_C .
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex30:00003 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
@@ -45,9 +46,9 @@ ex30:00004 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "ats2.Temperature" ;
     s223:hasExternalReference ex30:00005 ;
-    s223:hasQuantityKind quantitykind:Temperature ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:DEG_C .
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
 ex30:00005 a s223:ExternalReference ;
     rdfs:label "ats2.Temperature.ExternalReference" ;
     s223:hasRef "bacnet://570005/analog-input,10084/present-value" .
@@ -65,7 +66,7 @@ ex30:00007 a p223:RelativeHumidity,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "ahs1.Measure" ;
-    s223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:hasValue 20.0 ;
     s223:ofMedium s223:Medium-Air ;
-    s223:unit unit:PERCENT_RH .
+    qudt:quantityKind quantitykind:RelativeHumidity ;
+    qudt:unit unit:PERCENT_RH .
