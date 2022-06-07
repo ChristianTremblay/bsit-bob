@@ -6,6 +6,7 @@ from bob import core
 from bob.core import (
     Connection,
     Device,
+    Air,
     InletConnectionPoint,
     bind_model_namespace,
     dump,
@@ -19,9 +20,10 @@ core.INCLUDE_INVERSE = True
 
 def test_connect_to(bob_fixture):
     d1 = Device(label="d1")
-    cp1 = InletConnectionPoint(d1)
 
-    c = Connection()
+    cp1 = InletConnectionPoint(d1, hasMedium=Air)
+
+    c = Connection(hasMedium=Air)
     c >> cp1
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

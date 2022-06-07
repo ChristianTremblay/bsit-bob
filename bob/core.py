@@ -78,10 +78,16 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 
 # options
 MANDITORY_LABEL = True
+
+# include inverse relations
 INCLUDE_INVERSE = bool(
     os.getenv("INCLUDE_INVERSE", None) == "True"
-)  # include inverse relations
-CONNECTION_HAS_MEDIUM = False
+)
+
+# connection requires hasMedium
+CONNECTION_HAS_MEDIUM = bool(
+    os.getenv("CONNECTION_HAS_MEDIUM", None) == "True"
+)
 
 # globals
 data_graph = None
@@ -923,6 +929,8 @@ class EnumerationKind(Node):
             (self._node_iri, RDFS.subClassOf, _namespace["EnumerationKind"])
         )
 
+        logging.debug("     - len(schema_graph): %r", len(schema_graph))
+
         self._name = name
         self._parent = None
         self._children = set([self])
@@ -1761,6 +1769,9 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
             if connection_point.connectsThrough:
                 continue
             if isinstance(connection_point, OutletConnectionPoint):
+                continue
+
+            if not (medium := getattr(connection_point, "hasMedium", None)):
                 continue
 
             if CONNECTION_HAS_MEDIUM:
