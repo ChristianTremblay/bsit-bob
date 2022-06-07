@@ -3123,19 +3123,6 @@ Substance = EnumerationKind("Substance")
 Role = EnumerationKind("Role")
 Domain = EnumerationKind("Domain")
 
-# Enumeration to create hasValue
-OnOffEnum = EnumerationKind("OnOff")
-PositionEnum = EnumerationKind("Position")
-YesNoEnum = EnumerationKind("YesNo")
-NormalAlarmEnum = EnumerationKind("NormalAlarm")
-OpenCloseEnum = EnumerationKind("OpenClose")
-OccupancyEnum = EnumerationKind("Occupancy")
-ActiveInactiveEnum = EnumerationKind("ActiveInactive")
-Effectiveness = EnumerationKind("Effectiveness")
-HVACOperatingMode = EnumerationKind("HVACOperatingMode")
-HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
-
-
 # Top Hierarchy Media
 Air = Medium("Air")
 Water = Medium("Water")
