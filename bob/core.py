@@ -80,14 +80,10 @@ logging.debug(f"exclude_predicates {exclude_predicates}")
 MANDITORY_LABEL = True
 
 # include inverse relations
-INCLUDE_INVERSE = bool(
-    os.getenv("INCLUDE_INVERSE", None) == "True"
-)
+INCLUDE_INVERSE = bool(os.getenv("INCLUDE_INVERSE", None) == "True")
 
 # connection requires hasMedium
-CONNECTION_HAS_MEDIUM = bool(
-    os.getenv("CONNECTION_HAS_MEDIUM", None) == "True"
-)
+CONNECTION_HAS_MEDIUM = bool(os.getenv("CONNECTION_HAS_MEDIUM", None) == "True")
 
 # globals
 data_graph = None
@@ -308,7 +304,7 @@ class NodeMetaclass(type):
         attributedict["_resolved"] = False
         attributedict["_nodes"] = _nodes
         attributedict["_datatypes"] = _datatypes
-        attributedict["_attr_uriref"] = _attr_uriref
+        attributedict["_attr_uriref"] = attributedict.get("_attr_uriref", _attr_uriref)
 
         # build the class
         metaclass = cast(
@@ -780,9 +776,9 @@ class Property(Node):
     """
 
     # _class_iri: URIRef = None
-    hasValue: Literal
     ofMedium: Medium
     ofSubstance: Substance
+    hasValue: Literal
     hasExternalReference: ExternalReference
 
     # override this for a specialize subclass

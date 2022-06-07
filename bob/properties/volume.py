@@ -7,6 +7,6 @@ _namespace = p223
 
 
 class Gallons(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.LiquidVolume
-    unit: URIRef = unit.GAL_US
+    hasQuantityKind = quantitykind.LiquidVolume
+    unit = unit.GAL_US
     measuresMedium: Medium  # set from the sensor

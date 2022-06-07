@@ -7,28 +7,28 @@ _namespace = p223
 
 
 class Percent(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    unit: URIRef = unit.PERCENT
+    hasQuantityKind = quantitykind.DimensionlessRatio
+    unit = unit.PERCENT
 
 
 class PercentCommand(QuantifiableActuatableProperty):
-    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    unit: URIRef = unit.PERCENT
+    hasQuantityKind = quantitykind.DimensionlessRatio
+    unit = unit.PERCENT
 
 
 class RPM(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.AngularVolocity
-    unit: URIRef = unit["REV-PER-MIN"]
+    hasQuantityKind = quantitykind.AngularVolocity
+    unit = unit["REV-PER-MIN"]
 
 
 class RelativeHumidity(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.RelativeHumidity
-    unit: URIRef = unit.PERCENT_RH
+    hasQuantityKind = quantitykind.RelativeHumidity
+    unit = unit.PERCENT_RH
     ofMedium: Medium = Air
 
 
 class GasConcentration(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    unit: URIRef = unit.PPM
+    hasQuantityKind = quantitykind.DimensionlessRatio
+    unit = unit.PPM
     ofMedium: Medium = Air
     ofSubstance: Substance

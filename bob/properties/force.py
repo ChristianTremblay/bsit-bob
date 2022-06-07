@@ -9,20 +9,20 @@ _namespace = p223
 
 
 class HP(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.Power
-    unit: URIRef = unit.HP
+    hasQuantityKind = quantitykind.Power
+    unit = unit.HP
 
 
 class Nm(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.Torque
-    unit: URIRef = unit["N-M"]
+    hasQuantityKind = quantitykind.Torque
+    unit = unit["N-M"]
 
 
 class Pressure(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.Pressure
+    hasQuantityKind = quantitykind.Pressure
 
 
 class DifferentialStaticPressure(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.ForcePerArea
+    hasQuantityKind = quantitykind.ForcePerArea
     unit: URIRef
     ofMedium: Medium  # set from the sensor
