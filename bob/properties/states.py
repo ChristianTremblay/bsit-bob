@@ -4,19 +4,21 @@ from ..core import (
     EnumerationKind,
     ExternalReference,
     Medium,
-    NormalAlarmEnum,
-    OccupancyEnum,
-    OnOffEnum,
-    OpenCloseEnum,
     SchemaGraph,
     Substance,
-    YesNoEnum,
     p223,
     quantitykind,
     s223,
     unit,
 )
-from ..enum import Smoke
+from ..enum import (
+    NormalAlarmEnum,
+    OccupancyEnum,
+    OnOffEnum,
+    OpenCloseEnum,
+    Smoke,
+    YesNoEnum,
+)
 from ..property import (
     ActuatableProperty,
     EnumerableProperty,
@@ -37,47 +39,55 @@ class OnOffStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OnOffEnum
+    hasValue: OnOffEnum
 
 
 class OnOffCommand(EnumeratedActuatableProperty):
     _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OnOffEnum
+    hasValue: OnOffEnum
 
 
 class NormalAlarmStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: NormalAlarmEnum
+    hasValue: NormalAlarmEnum
 
 
 class OpenCloseCommand(EnumeratedActuatableProperty):
     _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OpenCloseEnum
+    hasValue: NormalAlarmEnum
 
 
 class OpenCloseStatus(EnumeratedActuatableProperty):
     _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OpenCloseEnum
+    hasValue: OpenCloseEnum
 
 
 class Schedule(EnumerableProperty):
     _class_iri: URIRef = s223.EnumerableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OccupancyEnum
+    hasValue: OccupancyEnum
 
 
 class OccupancyStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasEnumerationKind: OccupancyEnum
+    hasValue: OccupancyEnum
 
 
 class Movement(EnumeratedObservableProperty):
     _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OnOffEnum
+    hasValue: OnOffEnum
 
 
 class SmokePresence(EnumeratedObservableProperty):

@@ -19,7 +19,6 @@ from bob.connections.air import (
 from bob.connections.electricity import RS485BidirectionalConnectionPoint
 from bob.core import (
     Device,
-    Occupancy,
     PropertyReference,
     System,
     bind_model_namespace,

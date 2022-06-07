@@ -3,19 +3,16 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob import core
+from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.core import (
+    Air,
     Connection,
     Device,
-    Air,
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
     System,
     bind_model_namespace,
     dump,
-)
-from bob.connections.air import (
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
 )
 
 model_name = Path(__file__).stem

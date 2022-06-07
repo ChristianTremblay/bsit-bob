@@ -12,7 +12,6 @@ from ..core import (
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     OutletZoneConnectionPoint,
-    People,
     SystemConnectionPoint,
     ZoneConnectionPoint,
     enum,
@@ -23,12 +22,12 @@ _namespace = s223
 
 
 class OccupancyConnection(Connection):
-    hasMedium: Medium = People
+    hasMedium: Medium
     _class_iri = None
 
 
 class OccupancyConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = People
+    hasMedium: Medium
     _class_iri = None
 
 
@@ -41,7 +40,7 @@ class OccupancyOutletConnectionPoint(OccupancyConnectionPoint, OutletConnectionP
 
 
 class OccupancySystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = People
+    hasMedium: Medium
     _class_iri = None
 
 
@@ -58,7 +57,7 @@ class OccupancyOutletSystemConnectionPoint(
 
 
 class OccupancyZoneConnectionPoint(ZoneConnectionPoint):
-    hasMedium: Medium = People
+    hasMedium: Medium
     _class_iri = None
 
 

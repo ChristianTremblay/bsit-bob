@@ -8,7 +8,7 @@ from bob.connections import (
     ChilledWaterConnection,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import HVAC, Domain, DomainSpace, Zone, bind_model_namespace, dump
+from bob.core import Domain, DomainSpace, Zone, bind_model_namespace, dump
 from bob.devices.hvac import ChilledWaterCoil, Fan
 from bob.space.hvac import HVACSpace
 
@@ -17,7 +17,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class HVACZone(Zone):
-    hasDomain: Domain = HVAC
+    hasDomain: Domain = Domain.HVAC
     supplyAir: AirInletZoneConnectionPoint
 
 

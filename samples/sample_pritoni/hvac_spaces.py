@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bob.core import Occupancy, bind_model_namespace, dump
+from bob.core import bind_model_namespace, dump
 from bob.space.hvac import *
 
 model_name = Path(__file__).stem

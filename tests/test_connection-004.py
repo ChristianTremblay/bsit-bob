@@ -4,9 +4,9 @@ from header import ttl_test_header
 
 from bob import core
 from bob.core import (
+    Air,
     Connection,
     Device,
-    Air,
     InletConnectionPoint,
     OutletConnectionPoint,
     bind_model_namespace,

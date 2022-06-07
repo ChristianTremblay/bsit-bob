@@ -28,12 +28,6 @@ _namespace = p223
 # http://operadetectors.com/category/gas-monitors-1.aspx
 
 
-CO = Substance("CO")
-CO2 = Substance("CO2")
-NO2 = Substance("NO2")
-CH4 = Substance("CH4")
-
-
 class GasConcentrationSetpoint(Setpoint):
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     unit: URIRef = unit.PPM
@@ -66,7 +60,7 @@ class CO2Sensor(GasConcentrationSensor):
     hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs):
-        super().__init__(ofSubstance=CO2, **kwargs)
+        super().__init__(ofSubstance=Substance.CO2, **kwargs)
 
 
 class COSensor(GasConcentrationSensor):
@@ -75,7 +69,7 @@ class COSensor(GasConcentrationSensor):
     hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs):
-        super().__init__(ofSubstance=CO, **kwargs)
+        super().__init__(ofSubstance=Substance.CO, **kwargs)
 
 
 class NO2Sensor(GasConcentrationSensor):
@@ -84,7 +78,7 @@ class NO2Sensor(GasConcentrationSensor):
     hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs):
-        super().__init__(ofSubstance=NO2, **kwargs)
+        super().__init__(ofSubstance=Substance.NO2, **kwargs)
 
 
 class CH4Sensor(GasConcentrationSensor):
@@ -93,4 +87,4 @@ class CH4Sensor(GasConcentrationSensor):
     hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs):
-        super().__init__(ofSubstance=CH4, **kwargs)
+        super().__init__(ofSubstance=Substance.CH4, **kwargs)

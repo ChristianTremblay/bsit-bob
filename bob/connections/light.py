@@ -21,15 +21,7 @@ from ..core import (
 
 _namespace = s223
 
-LightVisible = Light("Visible")
-
-
 # === Light
-class LightVisibleConnection(Connection):
-    hasMedium: Medium = Light
-    _class_iri = None
-
-
 class LightConnectionPoint(ConnectionPoint):
     _class_iri = None
 
@@ -75,12 +67,12 @@ class LightOutletZoneConnectionPoint(
 
 
 class LightVisibleConnection(Connection):
-    hasMedium: Medium = LightVisible
+    hasMedium = Light.Visible
     _class_iri = None
 
 
 class LightVisibleConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = LightVisible
+    hasMedium = Light.Visible
     _class_iri = None
 
 
@@ -97,7 +89,7 @@ class LightVisibleOutletConnectionPoint(
 
 
 class LightVisibleSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = LightVisible
+    hasMedium = Light.Visible
     _class_iri = None
 
 
@@ -114,7 +106,7 @@ class LightVisibleOutletSystemConnectionPoint(
 
 
 class LightVisibleZoneConnectionPoint(ZoneConnectionPoint):
-    hasMedium: Medium = LightVisible
+    hasMedium = Light.Visible
     _class_iri = None
 
 
