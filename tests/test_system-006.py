@@ -6,13 +6,16 @@ from bob import core
 from bob.core import (
     Connection,
     Device,
-    InletConnectionPoint,
+    Air,
     InletSystemConnectionPoint,
-    OutletConnectionPoint,
     OutletSystemConnectionPoint,
     System,
     bind_model_namespace,
     dump,
+)
+from bob.connections.air import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
 )
 
 model_name = Path(__file__).stem
@@ -22,13 +25,13 @@ core.INCLUDE_INVERSE = True
 
 def test_systems_006(bob_fixture):
     class A(Device):
-        cOut: OutletConnectionPoint
+        cOut: AirOutletConnectionPoint
 
     class X(System):
         cOut: OutletSystemConnectionPoint
 
     class B(Device):
-        cIn: InletConnectionPoint
+        cIn: AirInletConnectionPoint
 
     class Y(System):
         cIn: InletSystemConnectionPoint
@@ -42,7 +45,7 @@ def test_systems_006(bob_fixture):
     y.cIn.mapsTo = b.cIn
 
     # connection from system connection point
-    c = Connection()
+    c = Connection(hasMedium=Air)
     c << x.cOut
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
