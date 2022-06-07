@@ -8,10 +8,7 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.connections.water import (
-    WaterInletConnectionPoint,
-    WaterOutletConnectionPoint,
-)
+from bob.connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
 from bob.core import (
     Device,
     InletConnectionPoint,

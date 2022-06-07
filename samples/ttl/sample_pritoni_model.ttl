@@ -318,7 +318,7 @@ electrical_devices:00003 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 400.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -372,7 +372,7 @@ electrical_devices:00010 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 15.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -406,7 +406,7 @@ electrical_devices:00014 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 40.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -441,7 +441,7 @@ electrical_devices:00018 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 100.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00019 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -476,7 +476,7 @@ electrical_devices:00022 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 40.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00023 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -578,7 +578,7 @@ electrical_devices:00034 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 200.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00035 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -626,7 +626,7 @@ electrical_devices:00040 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 15.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00041 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -659,7 +659,7 @@ electrical_devices:00044 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 20.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00045 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -692,7 +692,7 @@ electrical_devices:00048 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 15.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00049 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -726,7 +726,7 @@ electrical_devices:00052 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 15.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00053 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -760,7 +760,7 @@ electrical_devices:00056 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Current rating of breaker" ;
     s223:hasValue 15.0 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 electrical_devices:00057 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -811,12 +811,14 @@ electrical_devices:00063 a s223:Connection ;
     s223:connectsAt electrical_devices:00020,
         electrical_devices:00030 ;
     s223:connectsFrom electrical_devices:00017 ;
-    s223:connectsTo electrical_devices:00029 .
+    s223:connectsTo electrical_devices:00029 ;
+    s223:hasMedium s223:Electricity-575V_60Hz .
 electrical_devices:00064 a s223:Connection ;
     s223:connectsAt electrical_devices:00031,
         electrical_devices:00035 ;
     s223:connectsFrom electrical_devices:00029 ;
-    s223:connectsTo electrical_devices:00033 .
+    s223:connectsTo electrical_devices:00033 ;
+    s223:hasMedium s223:Electricity-120V_240V_60Hz .
 electrical_devices:00065 a s223:Connection ;
     rdfs:label "DISTPANEL-CB1" ;
     s223:connectsAt electrical_devices:00042,
@@ -865,22 +867,26 @@ electricity:00001 a s223:Connection ;
     s223:connectsAt electrical_devices:00016,
         hvac_devices:00049 ;
     s223:connectsFrom electrical_devices:00013 ;
-    s223:connectsTo hvac_devices:00046 .
+    s223:connectsTo hvac_devices:00046 ;
+    s223:hasMedium s223:Electricity-575V_60Hz .
 electricity:00002 a s223:Connection ;
     s223:connectsAt hvac_devices:00033,
         hvac_devices:00050 ;
     s223:connectsFrom hvac_devices:00046 ;
-    s223:connectsTo hvac_devices:00030 .
+    s223:connectsTo hvac_devices:00030 ;
+    s223:hasMedium s223:Electricity-575V_60Hz .
 electricity:00003 a s223:Connection ;
     s223:connectsAt electrical_devices:00024,
         hvac_devices:00056 ;
     s223:connectsFrom electrical_devices:00021 ;
-    s223:connectsTo hvac_devices:00055 .
+    s223:connectsTo hvac_devices:00055 ;
+    s223:hasMedium s223:Electricity-575V_60Hz .
 electricity:00004 a s223:Connection ;
     s223:connectsAt hvac_devices:00017,
         hvac_devices:00057 ;
     s223:connectsFrom hvac_devices:00055 ;
-    s223:connectsTo hvac_devices:00014 .
+    s223:connectsTo hvac_devices:00014 ;
+    s223:hasMedium s223:Electricity-575V_60Hz .
 functions:00001 a s223:FunctionBlock,
         functions:AVG_Temp ;
     rdfs:label "FB-1" ;
@@ -896,7 +902,7 @@ functions:00002 a p223:Temperature,
         s223:QuantifiableProperty ;
     s223:hasExternalReference bacnet_references:00025 ;
     s223:hasValue 0.0 ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 functions:00003 a s223:Connector,
         s223:InputConnector ;
@@ -1107,12 +1113,14 @@ hvac:00002 a s223:Connection ;
     s223:connectsAt hvac_spaces:00033,
         hvac_spaces:00051 ;
     s223:connectsFrom hvac_spaces:00047 ;
-    s223:connectsTo hvac_spaces:00029 .
+    s223:connectsTo hvac_spaces:00029 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00003 a s223:Connection ;
     s223:connectsAt hvac_spaces:00023,
         hvac_spaces:00032 ;
     s223:connectsFrom hvac_spaces:00029 ;
-    s223:connectsTo hvac_spaces:00020 .
+    s223:connectsTo hvac_spaces:00020 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00004 a s223:Connection ;
     rdfs:label "Outdoor" ;
     s223:connectsAt hvac_devices:00090,
@@ -1183,25 +1191,29 @@ hvac:00011 a s223:Connection ;
     s223:connectsAt hvac_devices:00082,
         hvac_devices:00088 ;
     s223:connectsFrom hvac_devices:00086 ;
-    s223:connectsTo hvac_devices:00081 .
+    s223:connectsTo hvac_devices:00081 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00012 a s223:Connection ;
     s223:connectsAt hvac_devices:00077,
         hvac_devices:00083 ;
     s223:connectsFrom hvac_devices:00081 ;
-    s223:connectsTo hvac_devices:00076 .
+    s223:connectsTo hvac_devices:00076 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00013 a s223:Connection ;
     s223:connectsAt hvac_devices:00031,
         hvac_devices:00078 ;
     s223:connectsFrom hvac_devices:00076 ;
-    s223:connectsTo hvac_devices:00030 .
+    s223:connectsTo hvac_devices:00030 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00014 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "VFD DriveRunning" ;
     s223:hasExternalReference bacnet_references:00049 .
-hvac:00015 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+hvac:00015 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "Run Command" ;
     s223:hasExternalReference bacnet_references:00055 .
@@ -1209,27 +1221,32 @@ hvac:00016 a s223:Connection ;
     s223:connectsAt hvac_devices:00128,
         hvac_spaces:00013 ;
     s223:connectsFrom hvac_spaces:00011 ;
-    s223:connectsTo hvac_devices:00127 .
+    s223:connectsTo hvac_devices:00127 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00017 a s223:Connection ;
     s223:connectsAt hvac_devices:00160,
         hvac_devices:00170 ;
     s223:connectsFrom hvac_devices:00158 ;
-    s223:connectsTo hvac_devices:00169 .
+    s223:connectsTo hvac_devices:00169 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00018 a s223:Connection ;
     s223:connectsAt hvac_devices:00171,
         hvac_spaces:00039 ;
     s223:connectsFrom hvac_devices:00169 ;
-    s223:connectsTo hvac_spaces:00038 .
+    s223:connectsTo hvac_spaces:00038 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00019 a s223:Connection ;
     s223:connectsAt hvac_devices:00185,
         hvac_devices:00195 ;
     s223:connectsFrom hvac_devices:00183 ;
-    s223:connectsTo hvac_devices:00194 .
+    s223:connectsTo hvac_devices:00194 ;
+    s223:hasMedium s223:Medium-Air .
 hvac:00020 a s223:Connection ;
     s223:connectsAt hvac_devices:00196,
         hvac_spaces:00048 ;
     s223:connectsFrom hvac_devices:00194 ;
-    s223:connectsTo hvac_spaces:00047 .
+    s223:connectsTo hvac_spaces:00047 ;
+    s223:hasMedium s223:Medium-Air .
 hvac_devices:00001 a p223:AirHandlingUnit,
         s223:System ;
     rdfs:label "AHU" ;
@@ -1276,7 +1293,7 @@ hvac_devices:00003 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "OA-T.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00004 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
@@ -1295,7 +1312,7 @@ hvac_devices:00005 a p223:DifferentialStaticPressure,
         s223:QuantifiableProperty ;
     rdfs:label "TPD1.DifferentialStaticPressure" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:ForcePerArea ;
+    qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
 hvac_devices:00006 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -1313,7 +1330,7 @@ hvac_devices:00007 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "HC-T.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00008 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -1331,7 +1348,7 @@ hvac_devices:00009 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "DA-T.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00010 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
@@ -1350,7 +1367,7 @@ hvac_devices:00011 a p223:DifferentialStaticPressure,
         s223:QuantifiableProperty ;
     rdfs:label "TPD2.DifferentialStaticPressure" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:ForcePerArea ;
+    qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
 hvac_devices:00012 a p223:AirDifferentialStaticPressureSensor,
         p223:DifferentialStaticPressureSensor,
@@ -1369,7 +1386,7 @@ hvac_devices:00013 a p223:DifferentialStaticPressure,
         s223:QuantifiableProperty ;
     rdfs:label "TPD3.DifferentialStaticPressure" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:ForcePerArea ;
+    qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
 hvac_devices:00014 a s223:Connectable,
         s223:Device,
@@ -1414,7 +1431,7 @@ hvac_devices:00018 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
     s223:hasExternalReference hvac_devices:00019 ;
-    qudt:quantityKind quantitykind:Pressure ;
+    qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
 hvac_devices:00019 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
@@ -1426,7 +1443,7 @@ hvac_devices:00020 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference hvac_devices:00021 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 hvac_devices:00021 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
@@ -1438,7 +1455,7 @@ hvac_devices:00022 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference hvac_devices:00023 ;
-    qudt:quantityKind quantitykind:AngularVolocity ;
+    qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
 hvac_devices:00023 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
@@ -1450,7 +1467,7 @@ hvac_devices:00024 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference hvac_devices:00025 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
 hvac_devices:00025 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
@@ -1462,7 +1479,7 @@ hvac_devices:00026 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference hvac_devices:00027 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 hvac_devices:00027 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
@@ -1474,7 +1491,7 @@ hvac_devices:00028 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference hvac_devices:00029 ;
-    qudt:quantityKind quantitykind:PowerFactor ;
+    qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
 hvac_devices:00029 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
@@ -1521,7 +1538,7 @@ hvac_devices:00034 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
     s223:hasExternalReference hvac_devices:00035 ;
-    qudt:quantityKind quantitykind:Pressure ;
+    qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
 hvac_devices:00035 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
@@ -1533,7 +1550,7 @@ hvac_devices:00036 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference hvac_devices:00037 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 hvac_devices:00037 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
@@ -1545,7 +1562,7 @@ hvac_devices:00038 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference hvac_devices:00039 ;
-    qudt:quantityKind quantitykind:AngularVolocity ;
+    qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
 hvac_devices:00039 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
@@ -1557,7 +1574,7 @@ hvac_devices:00040 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference hvac_devices:00041 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
 hvac_devices:00041 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
@@ -1569,7 +1586,7 @@ hvac_devices:00042 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference hvac_devices:00043 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 hvac_devices:00043 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
@@ -1581,7 +1598,7 @@ hvac_devices:00044 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference hvac_devices:00045 ;
-    qudt:quantityKind quantitykind:PowerFactor ;
+    qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
 hvac_devices:00045 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
@@ -1688,7 +1705,7 @@ hvac_devices:00058 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference hvac_devices:00059 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 hvac_devices:00059 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
@@ -1700,7 +1717,7 @@ hvac_devices:00060 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference hvac_devices:00061 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
 hvac_devices:00061 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
@@ -1712,7 +1729,7 @@ hvac_devices:00062 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference hvac_devices:00063 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 hvac_devices:00063 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
@@ -1724,8 +1741,8 @@ hvac_devices:00064 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     rdfs:label "speed_reference" ;
     s223:hasExternalReference hvac_devices:00065 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00065 a s223:ExternalReference ;
     rdfs:label "speed_reference.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
@@ -1736,7 +1753,7 @@ hvac_devices:00066 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference hvac_devices:00067 ;
-    qudt:quantityKind quantitykind:AngularVolocity ;
+    qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
 hvac_devices:00067 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
@@ -1748,7 +1765,7 @@ hvac_devices:00068 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "motor_temp" ;
     s223:hasExternalReference hvac_devices:00069 ;
-    qudt:quantityKind quantitykind:Temperature .
+    qudt:hasQuantityKind quantitykind:Temperature .
 hvac_devices:00069 a s223:ExternalReference ;
     rdfs:label "motor_temp.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
@@ -1761,15 +1778,17 @@ hvac_devices:00070 a s223:EnumerableProperty,
 hvac_devices:00071 a s223:ExternalReference ;
     rdfs:label "drive_running.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
-hvac_devices:00072 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+hvac_devices:00072 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasExternalReference hvac_devices:00073 .
 hvac_devices:00073 a s223:ExternalReference ;
     rdfs:label "run_command.ExternalReference" ;
     s223:hasRef "<VFD RF-VFD at urn:ex/hvac_devices/00055>" .
-hvac_devices:00074 a p223:NormalAlarmStatus,
+hvac_devices:00074 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
@@ -1897,12 +1916,14 @@ hvac_devices:00089 a s223:Connectable,
     rdfs:label "OADPR" ;
     s223:airInlet hvac_devices:00090 ;
     s223:airOutlet hvac_devices:00091 ;
+    s223:command hvac_devices:00094 ;
     s223:connectedThrough hvac:00004,
         hvac:00006 ;
     s223:contains hvac_devices:00092 ;
+    s223:feedback hvac_devices:00096 ;
     s223:hasConnectionPoint hvac_devices:00090,
         hvac_devices:00091 ;
-    s223:position hvac_devices:00094 ;
+    s223:position hvac_devices:00096 ;
     rdfs:comment "Outdoor air damper" .
 hvac_devices:00090 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1920,14 +1941,12 @@ hvac_devices:00091 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00089 .
 hvac_devices:00092 a s223:Actuator,
         s223:Connectable,
-        s223:Device,
-        s223:ElectricalActuator ;
+        s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00089 ;
-    s223:hasConnectionPoint hvac_devices:00093 .
+    s223:actuatesProperty hvac_devices:00096 ;
+    s223:hasConnectionPoint hvac_devices:00093 ;
+    s223:hasProperty hvac_devices:00096 .
 hvac_devices:00093 a s223:ConnectionPoint,
-        s223:Electricity_24V_60HzConnectionPoint,
-        s223:Electricity_24V_60HzInletConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-24V_60Hz ;
@@ -1937,13 +1956,13 @@ hvac_devices:00094 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00095 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00095 a s223:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00092>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00096 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -1951,11 +1970,11 @@ hvac_devices:00096 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference hvac_devices:00097 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00097 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00092>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00098 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -1963,23 +1982,25 @@ hvac_devices:00098 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference hvac_devices:00099 ;
-    qudt:quantityKind quantitykind:Torque ;
+    qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
 hvac_devices:00099 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00092>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00092>" .
 hvac_devices:00100 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "MADPR" ;
     s223:airInlet hvac_devices:00101 ;
     s223:airOutlet hvac_devices:00102 ;
+    s223:command hvac_devices:00105 ;
     s223:connectedThrough hvac:00006,
         hvac:00007 ;
     s223:contains hvac_devices:00103 ;
+    s223:feedback hvac_devices:00107 ;
     s223:hasConnectionPoint hvac_devices:00101,
         hvac_devices:00102 ;
-    s223:position hvac_devices:00105 ;
+    s223:position hvac_devices:00107 ;
     rdfs:comment "Mixed Air Damper" .
 hvac_devices:00101 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -1997,14 +2018,12 @@ hvac_devices:00102 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00100 .
 hvac_devices:00103 a s223:Actuator,
         s223:Connectable,
-        s223:Device,
-        s223:ElectricalActuator ;
+        s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00100 ;
-    s223:hasConnectionPoint hvac_devices:00104 .
+    s223:actuatesProperty hvac_devices:00107 ;
+    s223:hasConnectionPoint hvac_devices:00104 ;
+    s223:hasProperty hvac_devices:00107 .
 hvac_devices:00104 a s223:ConnectionPoint,
-        s223:Electricity_24V_60HzConnectionPoint,
-        s223:Electricity_24V_60HzInletConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-24V_60Hz ;
@@ -2014,13 +2033,13 @@ hvac_devices:00105 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00106 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00106 a s223:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00103>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00107 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -2028,11 +2047,11 @@ hvac_devices:00107 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference hvac_devices:00108 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00108 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00103>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00109 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -2040,23 +2059,25 @@ hvac_devices:00109 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference hvac_devices:00110 ;
-    qudt:quantityKind quantitykind:Torque ;
+    qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
 hvac_devices:00110 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00103>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00103>" .
 hvac_devices:00111 a s223:Connectable,
         s223:Damper,
         s223:Device ;
     rdfs:label "EADPR" ;
     s223:airInlet hvac_devices:00112 ;
     s223:airOutlet hvac_devices:00113 ;
+    s223:command hvac_devices:00116 ;
     s223:connectedThrough hvac:00004,
         hvac:00007 ;
     s223:contains hvac_devices:00114 ;
+    s223:feedback hvac_devices:00118 ;
     s223:hasConnectionPoint hvac_devices:00112,
         hvac_devices:00113 ;
-    s223:position hvac_devices:00116 ;
+    s223:position hvac_devices:00118 ;
     rdfs:comment "Exhaust Air Damper" .
 hvac_devices:00112 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2074,14 +2095,12 @@ hvac_devices:00113 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00111 .
 hvac_devices:00114 a s223:Actuator,
         s223:Connectable,
-        s223:Device,
-        s223:ElectricalActuator ;
+        s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00111 ;
-    s223:hasConnectionPoint hvac_devices:00115 .
+    s223:actuatesProperty hvac_devices:00118 ;
+    s223:hasConnectionPoint hvac_devices:00115 ;
+    s223:hasProperty hvac_devices:00118 .
 hvac_devices:00115 a s223:ConnectionPoint,
-        s223:Electricity_24V_60HzConnectionPoint,
-        s223:Electricity_24V_60HzInletConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-24V_60Hz ;
@@ -2091,13 +2110,13 @@ hvac_devices:00116 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00117 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00117 a s223:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00114>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00118 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -2105,11 +2124,11 @@ hvac_devices:00118 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference hvac_devices:00119 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00119 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00114>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00120 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -2117,11 +2136,11 @@ hvac_devices:00120 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference hvac_devices:00121 ;
-    qudt:quantityKind quantitykind:Torque ;
+    qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
 hvac_devices:00121 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00114>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00114>" .
 hvac_devices:00122 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "AHU.outsideAirInlet" ;
@@ -2187,7 +2206,7 @@ hvac_devices:00131 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
     s223:hasExternalReference hvac_devices:00132 ;
-    qudt:quantityKind quantitykind:Pressure ;
+    qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
 hvac_devices:00132 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
@@ -2199,7 +2218,7 @@ hvac_devices:00133 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference hvac_devices:00134 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 hvac_devices:00134 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
@@ -2211,7 +2230,7 @@ hvac_devices:00135 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference hvac_devices:00136 ;
-    qudt:quantityKind quantitykind:AngularVolocity ;
+    qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
 hvac_devices:00136 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
@@ -2223,7 +2242,7 @@ hvac_devices:00137 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference hvac_devices:00138 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
 hvac_devices:00138 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
@@ -2235,7 +2254,7 @@ hvac_devices:00139 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference hvac_devices:00140 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 hvac_devices:00140 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
@@ -2247,7 +2266,7 @@ hvac_devices:00141 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference hvac_devices:00142 ;
-    qudt:quantityKind quantitykind:PowerFactor ;
+    qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
 hvac_devices:00142 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
@@ -2334,6 +2353,7 @@ hvac_devices:00151 a p223:VAV,
         hvac_devices:00156,
         hvac_devices:00158,
         hvac_devices:00169 ;
+    s223:hasPhysicalLocation physical_spaces:00006 ;
     s223:hasSystemConnectionPoint hvac_devices:00174,
         hvac_devices:00175 ;
     s223:servesZone hvac_spaces:00056 ;
@@ -2354,7 +2374,7 @@ hvac_devices:00153 a s223:Flow,
         s223:QuantifiableProperty ;
     rdfs:label "VAV1_SA-F.Flow" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:VolumeFlowRate ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:L-PER-SEC .
 hvac_devices:00154 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -2372,7 +2392,7 @@ hvac_devices:00155 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "VAV1_DA-T.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00156 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -2391,9 +2411,9 @@ hvac_devices:00157 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "VAV1_ZN-T.Temperature" ;
     s223:hasExternalReference bacnet_references:00037 ;
-    s223:hasValue 2.03e+01 ;
+    s223:hasValue 20.3 ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00158 a s223:Connectable,
         s223:Damper,
@@ -2401,13 +2421,15 @@ hvac_devices:00158 a s223:Connectable,
     rdfs:label "VAV1_damper" ;
     s223:airInlet hvac_devices:00159 ;
     s223:airOutlet hvac_devices:00160 ;
+    s223:command hvac_devices:00163 ;
     s223:connectedThrough hvac:00008,
         hvac:00017 ;
     s223:connectedTo hvac_devices:00169 ;
     s223:contains hvac_devices:00161 ;
+    s223:feedback hvac_devices:00165 ;
     s223:hasConnectionPoint hvac_devices:00159,
         hvac_devices:00160 ;
-    s223:position hvac_devices:00163 ;
+    s223:position hvac_devices:00165 ;
     rdfs:comment "VAV Box 1 Air Damper" .
 hvac_devices:00159 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2425,14 +2447,12 @@ hvac_devices:00160 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00158 .
 hvac_devices:00161 a s223:Actuator,
         s223:Connectable,
-        s223:Device,
-        s223:ElectricalActuator ;
+        s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00158 ;
-    s223:hasConnectionPoint hvac_devices:00162 .
+    s223:actuatesProperty hvac_devices:00165 ;
+    s223:hasConnectionPoint hvac_devices:00162 ;
+    s223:hasProperty hvac_devices:00165 .
 hvac_devices:00162 a s223:ConnectionPoint,
-        s223:Electricity_24V_60HzConnectionPoint,
-        s223:Electricity_24V_60HzInletConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-24V_60Hz ;
@@ -2442,13 +2462,13 @@ hvac_devices:00163 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00164 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00164 a s223:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00161>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00165 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -2456,11 +2476,11 @@ hvac_devices:00165 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference hvac_devices:00166 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00166 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00161>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00167 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -2468,11 +2488,11 @@ hvac_devices:00167 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference hvac_devices:00168 ;
-    qudt:quantityKind quantitykind:Torque ;
+    qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
 hvac_devices:00168 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00161>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00161>" .
 hvac_devices:00169 a s223:Coil,
         s223:Connectable,
         s223:Device,
@@ -2539,6 +2559,7 @@ hvac_devices:00176 a p223:VAV,
         hvac_devices:00181,
         hvac_devices:00183,
         hvac_devices:00194 ;
+    s223:hasPhysicalLocation physical_spaces:00007 ;
     s223:hasSystemConnectionPoint hvac_devices:00199,
         hvac_devices:00200 ;
     s223:servesZone hvac_spaces:00060 ;
@@ -2559,7 +2580,7 @@ hvac_devices:00178 a s223:Flow,
         s223:QuantifiableProperty ;
     rdfs:label "VAV2_SA-F.Flow" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:VolumeFlowRate ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:L-PER-SEC .
 hvac_devices:00179 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -2577,7 +2598,7 @@ hvac_devices:00180 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "VAV2_DA-T.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00181 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -2596,9 +2617,9 @@ hvac_devices:00182 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "VAV2_ZN-T.Temperature" ;
     s223:hasExternalReference bacnet_references:00043 ;
-    s223:hasValue 2.22e+01 ;
+    s223:hasValue 22.2 ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 hvac_devices:00183 a s223:Connectable,
         s223:Damper,
@@ -2606,13 +2627,15 @@ hvac_devices:00183 a s223:Connectable,
     rdfs:label "VAV2_damper" ;
     s223:airInlet hvac_devices:00184 ;
     s223:airOutlet hvac_devices:00185 ;
+    s223:command hvac_devices:00188 ;
     s223:connectedThrough hvac:00008,
         hvac:00019 ;
     s223:connectedTo hvac_devices:00194 ;
     s223:contains hvac_devices:00186 ;
+    s223:feedback hvac_devices:00190 ;
     s223:hasConnectionPoint hvac_devices:00184,
         hvac_devices:00185 ;
-    s223:position hvac_devices:00188 ;
+    s223:position hvac_devices:00190 ;
     rdfs:comment "VAV Box 2 Air Damper" .
 hvac_devices:00184 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -2630,14 +2653,12 @@ hvac_devices:00185 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00183 .
 hvac_devices:00186 a s223:Actuator,
         s223:Connectable,
-        s223:Device,
-        s223:ElectricalActuator ;
+        s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuates hvac_devices:00183 ;
-    s223:hasConnectionPoint hvac_devices:00187 .
+    s223:actuatesProperty hvac_devices:00190 ;
+    s223:hasConnectionPoint hvac_devices:00187 ;
+    s223:hasProperty hvac_devices:00190 .
 hvac_devices:00187 a s223:ConnectionPoint,
-        s223:Electricity_24V_60HzConnectionPoint,
-        s223:Electricity_24V_60HzInletConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-24V_60Hz ;
@@ -2647,13 +2668,13 @@ hvac_devices:00188 a p223:PercentCommand,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty ;
-    rdfs:label "position" ;
+    rdfs:label "command" ;
     s223:hasExternalReference hvac_devices:00189 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00189 a s223:ExternalReference ;
-    rdfs:label "position.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00186>" .
+    rdfs:label "command.ExternalReference" ;
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00190 a p223:Percent,
         s223:ObservableProperty,
         s223:Property,
@@ -2661,11 +2682,11 @@ hvac_devices:00190 a p223:Percent,
         s223:QuantifiableProperty ;
     rdfs:label "feedback" ;
     s223:hasExternalReference hvac_devices:00191 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 hvac_devices:00191 a s223:ExternalReference ;
     rdfs:label "feedback.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00186>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00192 a p223:Nm,
         s223:ObservableProperty,
         s223:Property,
@@ -2673,11 +2694,11 @@ hvac_devices:00192 a p223:Nm,
         s223:QuantifiableProperty ;
     rdfs:label "torque" ;
     s223:hasExternalReference hvac_devices:00193 ;
-    qudt:quantityKind quantitykind:Torque ;
+    qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
 hvac_devices:00193 a s223:ExternalReference ;
     rdfs:label "torque.ExternalReference" ;
-    s223:hasRef "<ElectricalActuator actuator at urn:ex/hvac_devices/00186>" .
+    s223:hasRef "<ElectricalProportionalActuator actuator at urn:ex/hvac_devices/00186>" .
 hvac_devices:00194 a s223:Coil,
         s223:Connectable,
         s223:Device,
@@ -3246,8 +3267,9 @@ lighting_devices:00001 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 1 .
-lighting_devices:00002 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00002 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 1 .
 lighting_devices:00003 a s223:Connectable,
@@ -3273,7 +3295,7 @@ lighting_devices:00004 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 100.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00005 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3294,8 +3316,9 @@ lighting_devices:00007 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 1 .
-lighting_devices:00008 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00008 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 1 .
 lighting_devices:00009 a s223:Connectable,
@@ -3321,7 +3344,7 @@ lighting_devices:00010 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 100.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00011 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3367,8 +3390,9 @@ lighting_devices:00016 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property .
-lighting_devices:00017 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00017 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property .
 lighting_devices:00018 a s223:Connectable,
         s223:Device,
@@ -3393,7 +3417,7 @@ lighting_devices:00019 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 60.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00020 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3414,8 +3438,9 @@ lighting_devices:00022 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 0 .
-lighting_devices:00023 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00023 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 0 .
 lighting_devices:00024 a s223:Connectable,
@@ -3441,7 +3466,7 @@ lighting_devices:00025 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 60.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00026 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3487,8 +3512,9 @@ lighting_devices:00031 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 0 .
-lighting_devices:00032 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00032 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 0 .
 lighting_devices:00033 a s223:Connectable,
@@ -3514,7 +3540,7 @@ lighting_devices:00034 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 100.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00035 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3535,8 +3561,9 @@ lighting_devices:00037 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 1 .
-lighting_devices:00038 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00038 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 1 .
 lighting_devices:00039 a s223:Connectable,
@@ -3562,7 +3589,7 @@ lighting_devices:00040 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 100.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00041 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3609,8 +3636,9 @@ lighting_devices:00046 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 0 .
-lighting_devices:00047 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00047 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 1 .
 lighting_devices:00048 a s223:Connectable,
@@ -3636,7 +3664,7 @@ lighting_devices:00049 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 60.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00050 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3657,8 +3685,9 @@ lighting_devices:00052 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 0 .
-lighting_devices:00053 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00053 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 0 .
 lighting_devices:00054 a s223:Connectable,
@@ -3684,7 +3713,7 @@ lighting_devices:00055 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 60.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00056 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3732,8 +3761,9 @@ lighting_devices:00061 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasExternalReference bacnet_references:00069 ;
     s223:hasValue 1 .
-lighting_devices:00062 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00062 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 1 .
 lighting_devices:00063 a s223:Connectable,
@@ -3762,15 +3792,15 @@ lighting_devices:00064 a p223:PercentCommand,
         s223:QuantifiableProperty ;
     s223:hasExternalReference bacnet_references:00067 ;
     s223:hasValue 0.0 ;
-    qudt:quantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:Percent .
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 lighting_devices:00065 a p223:ElectricPowerW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 13.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00066 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3791,8 +3821,9 @@ lighting_devices:00068 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 1 .
-lighting_devices:00069 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00069 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 1 .
 lighting_devices:00070 a s223:Connectable,
@@ -3818,7 +3849,7 @@ lighting_devices:00071 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 13.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00072 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3839,8 +3870,9 @@ lighting_devices:00074 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 1 .
-lighting_devices:00075 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00075 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 1 .
 lighting_devices:00076 a s223:Connectable,
@@ -3866,7 +3898,7 @@ lighting_devices:00077 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 13.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00078 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -3887,8 +3919,9 @@ lighting_devices:00080 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasValue 1 .
-lighting_devices:00081 a p223:OnOffCommand,
-        s223:ActuatableProperty,
+lighting_devices:00081 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasValue 1 .
 lighting_devices:00082 a s223:Connectable,
@@ -3914,7 +3947,7 @@ lighting_devices:00083 a p223:ElectricPowerW,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 13.0 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:W .
 lighting_devices:00084 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;

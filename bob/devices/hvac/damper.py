@@ -1,6 +1,8 @@
-from typing import Dict
+from typing import Dict, Union
 
 from rdflib import URIRef
+
+from bob.properties.states import OnOffStatus, OpenCloseStatus
 
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
@@ -21,37 +23,26 @@ from ...connections.light import (
 from ...core import Device, PropertyReference, p223, s223
 from ...functions import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
-from .actuator import ElectricalActuator, PneumaticActuator
+from .actuator import (
+    ElectricalOnOffActuator,
+    ElectricalProportionalActuator,
+    PneumaticOnOffActuator,
+    PneumaticProportionalActuator,
+)
 
 _namespace = s223
 
-class DamperActuator(Device):
-    _class_iri = s223.DamperActuator
-    position = AnalogOutput
-    feedback = AnalogInput
-
-
-class ElectricalDamperActuator(Device):
-    _class_iri = s223.DamperActuator
-    electricalInlet: ElectricalInletConnectionPoint
-    position = AnalogOutput
-    feedback = AnalogInput
-
-
-class PneumaticDamperActuator(Device):
-    _class_iri = s223.DamperActuator
-    compressedAirInlet: CompressedAirInletConnectionPoint
-    position = AnalogOutput
-    feedback = AnalogInput
 
 # DAMPERS
+
 
 class Damper(Device):
     _class_iri = s223.Damper
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    position: PropertyReference
+    command: PropertyReference
     feedback: PropertyReference
+    position: PropertyReference
 
 
 class GravityDamper(Damper):
@@ -62,63 +53,105 @@ class FireDamper(Damper):
     _class_iri = s223.Damper
 
 
-class ActuatedDamper(Damper):
-    _class_iri = s223.Damper
-
-
-class ElectricalActuatedDamper(Damper):
-    _class_iri = s223.Damper
-    powerInlet: ElectricalInletConnectionPoint
-
 # DAMPER + ACTUATORS
 
-electrical_actuated_damper_template = {
-    "devices": {("actuator", ElectricalActuator): {}},
+
+electrical_actuated_proportional_damper_template = {
+    "devices": {("actuator", ElectricalProportionalActuator): {}},
+    "properties": {},
+}
+
+electrical_actuated_onoff_damper_template = {
+    "devices": {("actuator", ElectricalOnOffActuator): {}},
     "properties": {},
 }
 
 
-class ElectricalActuatedDamper(Damper):
+class ElectricalActuatedProportionalDamper(Damper):
     _class_iri: URIRef = s223.Damper
 
-    def __init__(self, config: Dict = electrical_actuated_damper_template, **kwargs):
+    def __init__(
+        self, config: Dict = electrical_actuated_proportional_damper_template, **kwargs
+    ):
         config["properties"] = config.get(
-            "properties", electrical_actuated_damper_template["properties"]
+            "properties", electrical_actuated_proportional_damper_template["properties"]
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.position = self["actuator"]["position"]
-        self.torque = self["actuator"]["torque"]
-        self["actuator"].actuates = self
+        self.command = self["actuator"]["command"]
+        self.feedback = self["actuator"]["feedback"]
+        self.position = (
+            self["actuator"]["feedback"]
+            if self["actuator"]["feedback"]
+            else self["actuator"]["command"]
+        )
+        self["actuator"].actuatesProperty = self.position
 
 
-class PneumaticDamper(Damper):
-    _class_iri = s223.Damper
-    compressedAirInlet: CompressedAirConnectionPoint
+class ElectricalActuatedOnOffDamper(Damper):
+    _class_iri: URIRef = s223.Damper
+
+    def __init__(
+        self, config: Dict = electrical_actuated_onoff_damper_template, **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties", electrical_actuated_onoff_damper_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.command = self["actuator"]["command"]
+        self.feedbackOpen = self["actuator"]["feedbackOpen"]
+        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.position = self["actuator"][
+            "command"
+        ]  # TODO Discussion required here... the concept of position when feedbackOpen and feedbackClose is avialable... it's super close from telemetry... how could we communicate the concept that if feedback is avialable, you can infer the position from validating both feedback. Then you will know if the thing is open, close or moving. Else, command becomes the position.
+        self["actuator"].actuatesProperty = self.position
 
 
-pneumatic_actuated_damper_template = {
-    "devices": {("actuator", PneumaticActuator): {}},
+pneumatic_actuated_proportional_damper_template = {
+    "devices": {("actuator", PneumaticProportionalActuator): {}},
+    "properties": {},
+}
+pneumatic_actuated_onoff_damper_template = {
+    "devices": {("actuator", PneumaticOnOffActuator): {}},
     "properties": {},
 }
 
 
-class PneumaticActuatedDamper(Damper):
+class PneumaticActuatedProportionalDamper(Damper):
     _class_iri = s223.Damper
 
-    def __init__(self, config: Dict = pneumatic_actuated_damper_template, **kwargs):
+    def __init__(
+        self, config: Dict = pneumatic_actuated_proportional_damper_template, **kwargs
+    ):
         config["properties"] = config.get(
-            "properties", pneumatic_actuated_damper_template["properties"]
+            "properties", pneumatic_actuated_proportional_damper_template["properties"]
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.position = self["actuator"]["position"]
-        self.torque = self["actuator"]["torque"]
-        self["actuator"].actuates = self
+        self.command = self["actuator"]["command"]
+        self.feedback = self["actuator"]["feedback"]
+        self.position = (
+            self["actuator"]["feedback"]
+            if self["actuator"]["feedback"]
+            else self["actuator"]["command"]
+        )
+        self["actuator"].actuatesProperty = self.position
 
 
-class Window(Device):
-    _class_iri = p223.Window
-    indoor: AirBidirectionalConnectionPoint
-    outdoor: AirBidirectionalConnectionPoint
-    naturalLight: LightVisibleOutletConnectionPoint
+class PneumaticActuatedOnOffDamper(Damper):
+    _class_iri = s223.Damper
+
+    def __init__(
+        self, config: Dict = pneumatic_actuated_onoff_damper_template, **kwargs
+    ):
+        config["properties"] = config.get(
+            "properties", pneumatic_actuated_onoff_damper_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+        self.command = self["actuator"]["command"]
+        self.feedbackOpen = self["actuator"]["feedbackOpen"]
+        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.position = self["actuator"]["command"]
+        self["actuator"].actuatesProperty = self.position

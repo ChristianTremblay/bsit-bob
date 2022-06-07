@@ -48,7 +48,7 @@ class Coil(Device):
 
 
 class WaterCoil(Coil):
-    node_type: URIRef = s223.Coil
+    _class_iri: URIRef = s223.Coil
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
 

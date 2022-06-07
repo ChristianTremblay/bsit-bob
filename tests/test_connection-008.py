@@ -21,7 +21,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 def test_Light_Subclass_of_Medium_Connection(bob_fixture):
     class WeirdLuminaire(Device):
-        node_type: URIRef = p223.Light
+        _class_iri: URIRef = p223.Light
         lightOutlet: LightVisibleOutletConnectionPoint
         electricalInlet: ElectricalInletConnectionPoint
 

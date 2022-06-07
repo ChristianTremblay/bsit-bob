@@ -241,7 +241,7 @@ ex:00029 a p223:Pressure,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
     s223:hasExternalReference ex:00030 ;
-    qudt:quantityKind quantitykind:Pressure ;
+    qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
 ex:00030 a s223:ExternalReference ;
     rdfs:label "staticPressure.ExternalReference" ;
@@ -253,7 +253,7 @@ ex:00031 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference ex:00032 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 ex:00032 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
@@ -265,7 +265,7 @@ ex:00033 a p223:RPM,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
     s223:hasExternalReference ex:00034 ;
-    qudt:quantityKind quantitykind:AngularVolocity ;
+    qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
 ex:00034 a s223:ExternalReference ;
     rdfs:label "rpm.ExternalReference" ;
@@ -277,7 +277,7 @@ ex:00035 a p223:HP,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
     s223:hasExternalReference ex:00036 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
 ex:00036 a s223:ExternalReference ;
     rdfs:label "hp.ExternalReference" ;
@@ -289,7 +289,7 @@ ex:00037 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference ex:00038 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 ex:00038 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
@@ -301,7 +301,7 @@ ex:00039 a p223:PowerFactor,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
     s223:hasExternalReference ex:00040 ;
-    qudt:quantityKind quantitykind:PowerFactor ;
+    qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
 ex:00040 a s223:ExternalReference ;
     rdfs:label "powerFactor.ExternalReference" ;
@@ -346,7 +346,7 @@ ex:00045 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference ex:00046 ;
-    qudt:quantityKind quantitykind:ElectricCurrent ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 ex:00046 a s223:ExternalReference ;
     rdfs:label "amps.ExternalReference" ;
@@ -358,7 +358,7 @@ ex:00047 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference ex:00048 ;
-    qudt:quantityKind quantitykind:Power ;
+    qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 ex:00048 a s223:ExternalReference ;
     rdfs:label "kW.ExternalReference" ;
@@ -367,17 +367,20 @@ ex:00049 a s223:Connection ;
     s223:connectsAt ex:00005,
         ex:00026 ;
     s223:connectsFrom ex:00003 ;
-    s223:connectsTo ex:00025 .
+    s223:connectsTo ex:00025 ;
+    s223:hasMedium s223:Medium-Air .
 ex:00050 a s223:Connection ;
     s223:connectsAt ex:00027,
         ex:00042 ;
     s223:connectsFrom ex:00025 ;
-    s223:connectsTo ex:00041 .
+    s223:connectsTo ex:00041 ;
+    s223:hasMedium s223:Medium-Air .
 ex:00051 a s223:Connection ;
     s223:connectsAt ex:00004,
         ex:00043 ;
     s223:connectsFrom ex:00041 ;
-    s223:connectsTo ex:00003 .
+    s223:connectsTo ex:00003 ;
+    s223:hasMedium s223:Medium-Air .
 ex:00052 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
         s223:Connectable,
@@ -394,7 +397,7 @@ ex:00053 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "Discharge Air temperature sensor.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 ex:00054 a p223:AirTemperatureSensor,
         p223:TemperatureSensor,
@@ -412,15 +415,17 @@ ex:00055 a p223:Temperature,
         s223:QuantifiableProperty ;
     rdfs:label "Zone Air temperature sensor.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:quantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 ex:00056 a s223:Connection ;
     s223:connectsAt ex:00012,
         ex:00018 ;
     s223:connectsFrom ex:00017 ;
-    s223:connectsTo ex:00011 .
+    s223:connectsTo ex:00011 ;
+    s223:hasMedium s223:Light-Visible .
 ex:00057 a s223:Connection ;
     s223:connectsAt ex:00015,
         ex:00020 ;
     s223:connectsFrom ex:00019 ;
-    s223:connectsTo ex:00014 .
+    s223:connectsTo ex:00014 ;
+    s223:hasMedium s223:Light-Visible .

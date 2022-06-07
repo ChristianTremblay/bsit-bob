@@ -4,16 +4,19 @@ from ..core import (
     EnumerationKind,
     ExternalReference,
     Medium,
-    OnOffEnum,
+    NormalAlarmEnum,
     OccupancyEnum,
+    OnOffEnum,
+    OpenCloseEnum,
     SchemaGraph,
     Substance,
     YesNoEnum,
     p223,
     quantitykind,
-    unit,
     s223,
+    unit,
 )
+from ..enum import Smoke
 from ..property import (
     ActuatableProperty,
     EnumerableProperty,
@@ -21,7 +24,6 @@ from ..property import (
     EnumeratedObservableProperty,
     ObservableProperty,
 )
-from ..enum import Smoke
 
 _namespace = p223
 
@@ -37,16 +39,28 @@ class OnOffStatus(EnumeratedObservableProperty):
     hasEnumerationKind: OnOffEnum
 
 
-class NormalAlarmStatus(ObservableProperty):
-    _class_iri: URIRef = p223.NormalAlarmStatus
-    hasExternalReference: ExternalReference
-    measuresMedium: Medium
-
-
-class OnOffCommand(ActuatableProperty):
-    _class_iri: URIRef = p223.OnOffCommand
+class OnOffCommand(EnumeratedActuatableProperty):
+    _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind: OnOffEnum
+
+
+class NormalAlarmStatus(EnumeratedObservableProperty):
+    _class_iri: URIRef = s223.EnumeratedObservableProperty
+    hasExternalReference: ExternalReference
+    hasEnumerationKind: NormalAlarmEnum
+
+
+class OpenCloseCommand(EnumeratedActuatableProperty):
+    _class_iri: URIRef = s223.EnumeratedActuatableProperty
+    hasExternalReference: ExternalReference
+    hasEnumerationKind: OpenCloseEnum
+
+
+class OpenCloseStatus(EnumeratedActuatableProperty):
+    _class_iri: URIRef = s223.EnumeratedActuatableProperty
+    hasExternalReference: ExternalReference
+    hasEnumerationKind: OpenCloseEnum
 
 
 class Schedule(EnumerableProperty):

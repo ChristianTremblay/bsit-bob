@@ -73,6 +73,7 @@ class COSensor(GasConcentrationSensor):
     "Carbon monoxide concentration sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
+
     def __init__(self, **kwargs):
         super().__init__(ofSubstance=CO, **kwargs)
 
@@ -81,6 +82,7 @@ class NO2Sensor(GasConcentrationSensor):
     "Diesel (NO2) concentration sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
+
     def __init__(self, **kwargs):
         super().__init__(ofSubstance=NO2, **kwargs)
 
@@ -89,5 +91,6 @@ class CH4Sensor(GasConcentrationSensor):
     "Natural gas sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
+
     def __init__(self, **kwargs):
         super().__init__(ofSubstance=CH4, **kwargs)

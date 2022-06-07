@@ -5,8 +5,8 @@ Bob the SI-WG Builder
 from __future__ import annotations
 
 import inspect
-import itertools
 import io
+import itertools
 import logging
 import os
 import sys
@@ -27,7 +27,7 @@ from typing import (
 
 from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 
-from .multimethods import multimethod, new_class, all_subclasses
+from .multimethods import all_subclasses, multimethod, new_class
 
 T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
@@ -503,7 +503,7 @@ class Node(metaclass=NodeMetaclass):
 
         attr_annotations = vars(cls).get("__annotations__", {})
         for attr, attr_annotation in attr_annotations.items():
-            if attr.startswith("_"):
+            if attr.startswith("_") or attr == "node_type":
                 continue
             logging.debug(f"    - attr: {attr!r}")
             logging.debug(f"        - attr_annotation: {attr_annotation!r}")
@@ -3134,6 +3134,8 @@ Role = EnumerationKind("Role")
 OnOffEnum = EnumerationKind("OnOffEnum")
 PositionStatusEnum = EnumerationKind("PositionStatusEnum")
 YesNoEnum = EnumerationKind("YesNoEnum")
+NormalAlarmEnum = EnumerationKind("NormalAlarmEnum")
+OpenCloseEnum = EnumerationKind("OpenCloseEnum")
 
 # This one is weird...but to create an occupancy space, zone we
 # need a medium.

@@ -17,5 +17,5 @@ class Air_Change_Per_Hour(QuantifiableObservableProperty):
 
     """
 
-    hasQuantityKind: URIRef = quantitykind.Dimensionless
-    unit: URIRef = unit.UNITLESS
+    hasQuantityKind = quantitykind.Dimensionless
+    unit = unit.UNITLESS

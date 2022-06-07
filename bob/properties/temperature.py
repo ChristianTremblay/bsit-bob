@@ -7,7 +7,7 @@ _namespace = p223
 
 
 class Temperature(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.Temperature
+    hasQuantityKind = quantitykind.Temperature
     unit: URIRef
     ofMedium: Medium  # set from the sensor
     # isObservedBy: Sensor

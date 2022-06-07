@@ -6,7 +6,7 @@ _namespace = s223
 
 
 class Window(Device):
-    node_type = s223.Window
+    _class_iri = s223.Window
     indoor: AirBidirectionalConnectionPoint
     outdoor: AirBidirectionalConnectionPoint
     naturalLight: LightVisibleOutletConnectionPoint

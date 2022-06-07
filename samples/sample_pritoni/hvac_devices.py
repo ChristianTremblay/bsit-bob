@@ -11,7 +11,7 @@ from bob.core import bind_model_namespace, dump, unit
 from bob.devices.architectural import Window
 from bob.devices.electricity.starter import MotorStarter
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.stats import AirDifferentialStaticPressureSensor
@@ -76,9 +76,15 @@ ahu_template = {
         ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Heating coil"},
         ("FILTER", Filter): {"comment": "Filter"},
-        ("OADPR", ElectricalActuatedDamper): {"comment": "Outdoor air damper"},
-        ("MADPR", ElectricalActuatedDamper): {"comment": "Mixed Air Damper"},
-        ("EADPR", ElectricalActuatedDamper): {"comment": "Exhaust Air Damper"},
+        ("OADPR", ElectricalActuatedProportionalDamper): {
+            "comment": "Outdoor air damper"
+        },
+        ("MADPR", ElectricalActuatedProportionalDamper): {
+            "comment": "Mixed Air Damper"
+        },
+        ("EADPR", ElectricalActuatedProportionalDamper): {
+            "comment": "Exhaust Air Damper"
+        },
     },
 }
 
@@ -99,7 +105,9 @@ vav1_config = {
         },
     },
     "devices": {
-        ("VAV1_damper", ElectricalActuatedDamper): {"comment": "VAV Box 1 Air Damper"},
+        ("VAV1_damper", ElectricalActuatedProportionalDamper): {
+            "comment": "VAV Box 1 Air Damper"
+        },
         ("VAV1_HeatingCoil", HotWaterCoil): {"comment": "VAV Box 1 Hot Water Coil"},
     },
 }
@@ -121,7 +129,9 @@ vav2_config = {
         },
     },
     "devices": {
-        ("VAV2_damper", ElectricalActuatedDamper): {"comment": "VAV Box 2 Air Damper"},
+        ("VAV2_damper", ElectricalActuatedProportionalDamper): {
+            "comment": "VAV Box 2 Air Damper"
+        },
         ("VAV2_HeatingCoil", HotWaterCoil): {"comment": "VAV Box 2 Hot Water Coil"},
     },
 }
@@ -141,9 +151,9 @@ window2 = Window(
     comment="Second Window in OpenOffice, covering East portion of room",
 )
 
-vav1 = VAV(config=vav1_config)  ###TODO hasPhysicalLocation=ps.private_office
+vav1 = VAV(config=vav1_config)
 vav1.serves_zone(hs.hvac_zone_1)
-vav2 = VAV(config=vav2_config)  ### TODO hasPhysicalLocation=ps.kitchenette
+vav2 = VAV(config=vav2_config)
 vav2.serves_zone(hs.hvac_zone_2)
 
 

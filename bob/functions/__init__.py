@@ -12,13 +12,7 @@ from typing import Any, AnyStr, Dict
 
 from rdflib import URIRef  # type: ignore
 
-from ..core import (
-    INCLUDE_INVERSE,
-    Node,
-    Property,
-    data_graph,
-    s223,
-)
+from ..core import INCLUDE_INVERSE, Node, Property, data_graph, s223
 from ..multimethods import multimethod
 
 _namespace = s223

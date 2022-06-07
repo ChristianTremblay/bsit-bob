@@ -38,9 +38,9 @@ from bob.core import (
     quantitykind,
     unit,
 )
-from bob.devices.hvac.actuator import ElectricalActuator
+from bob.devices.hvac.actuator import ElectricalProportionalActuator
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.gas import GasMonitor
@@ -49,7 +49,7 @@ from bob.devices.hvac.stats import (
     NetworkRoomSensor,
     NetworkThermostat,
 )
-from bob.devices.hvac.valve import TwoWayActuatedValve, TwoWayValve
+from bob.devices.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
 from bob.devices.hvac.vfd import VFD
 from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, G36Sequence
 from bob.properties import Flow, PercentCommand, Temperature
@@ -69,10 +69,10 @@ _namespace = bind_model_namespace(
     "exg3610", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
 
-min_oa_dpr = ElectricalActuatedDamper(
+min_oa_dpr = ElectricalActuatedProportionalDamper(
     label="MIN-OA-DPR", comment="Minimum ouside air damper, 2 pos"
 )
-econ_dpr = ElectricalActuatedDamper(
+econ_dpr = ElectricalActuatedProportionalDamper(
     label="ECON-DPR", comment="Economizer damper, modulating"
 )
 
@@ -97,10 +97,10 @@ hot_water_valve_template = {
     "properties": {
         ("flowCoefficient", Gallons): {},
     },
-    "devices": {("actuator", ElectricalActuator): {}},
+    "devices": {("actuator", ElectricalProportionalActuator): {}},
 }
 htg_coil = HotWaterCoil(label="HWC", comment="Hot Water Coil")
-htg_vlv = TwoWayActuatedValve(
+htg_vlv = TwoWayActuatedProportionalValve(
     label="HTG-VLV", comment="Heating 2W Valve", config=hot_water_valve_template
 )
 hwct = AirTemperatureSensor(
@@ -121,10 +121,10 @@ chilled_water_valve_template = {
     "properties": {
         ("flowCoefficient", Gallons): {},
     },
-    "devices": {("actuator", ElectricalActuator): {}},
+    "devices": {("actuator", ElectricalProportionalActuator): {}},
 }
 clg_coil = ChilledWaterCoil(label="CWC", comment="Chilled Water Coil")
-clg_vlv = TwoWayActuatedValve(
+clg_vlv = TwoWayActuatedProportionalValve(
     label="CLG-VLV", comment="Cooling 2W Valve", config=chilled_water_valve_template
 )
 
@@ -151,12 +151,12 @@ return_air = AirConnection(label="Return Air")
 
 rat = AirTemperatureSensor(label="RA-T", unit=unit.DEG_C, comment="Return Air Temp")
 
-rad = ElectricalActuatedDamper(label="RAD", comment="Return Air Damper")
+rad = ElectricalActuatedProportionalDamper(label="RAD", comment="Return Air Damper")
 
 # Exhaust Fan with its VFD
 ef = Fan(label="EF", comment="Exhaust Fan")
 ef_vfd = VFD(label="EF-VFD", comment="Exhaust Fan VFD")
-ead = ElectricalActuatedDamper(label="EAD", comment="Exhaust Air Damper")
+ead = ElectricalActuatedProportionalDamper(label="EAD", comment="Exhaust Air Damper")
 
 building_dpt = DifferentialStaticPressureSensor(
     label="DPT-3", unit=unit.PA, comment="Building Static Pressure Transmitter"
@@ -217,7 +217,7 @@ ahu.returnAir.mapsTo = return_air
 ahu.supplyAir.mapsTo = supply_air
 ahu.exhaustAir.mapsTo = ead.airOutlet
 ahu.outdoorAir.mapsTo = econ_dpr.airInlet
-ahu.cooling = clg_vlv["actuator"]["position"]  #
+ahu.cooling = clg_vlv.position  #
 ahu.heating = htg_vlv.position  # equivalent to htg_vlv['actuator']['postion']
 
 
@@ -227,6 +227,6 @@ sequence = "lorem ipsum of sequence"
 g36_fig_a_10 = G36Sequence(label="G36_FIG_A_10", comment=sequence)
 
 g36_fig_a_10.uses_input(rat.observesProperty, AnalogIn, "return-air-temp")
-g36_fig_a_10.produces_output(htg_vlv["actuator"]["position"], AnalogOut, "HW VALVE")
+g36_fig_a_10.produces_output(htg_vlv["actuator"]["command"], AnalogOut, "HW VALVE")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

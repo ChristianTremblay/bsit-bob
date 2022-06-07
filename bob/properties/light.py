@@ -8,10 +8,10 @@ _namespace = p223
 
 
 class Brightness(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.Illuminance
-    unit: URIRef = unit.LUX
+    hasQuantityKind = quantitykind.Illuminance
+    unit = unit.LUX
 
 
 class RelativeLuminousFlux(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.RelativeLuminousFlux
-    unit: URIRef = unit.PERCENT
+    hasQuantityKind = quantitykind.RelativeLuminousFlux
+    unit = unit.PERCENT

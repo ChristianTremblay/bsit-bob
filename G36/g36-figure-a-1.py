@@ -28,10 +28,18 @@ from bob.core import (
     unit,
 )
 from bob.devices.architectural import Window
-from bob.devices.hvac.damper import ElectricalActuatedDamper
+from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.gas import GasMonitor
 from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
+from bob.functions import FunctionBlock
+from bob.functions.g36 import (
+    AnalogIn,
+    AnalogOut,
+    BinaryIn,
+    BinaryOut,
+    G36Figure_A_1,
+    G36Sequence,
+)
 from bob.functions.occupancy import OccupancyControl
 from bob.properties import Flow, PercentCommand, Temperature, temperature
 from bob.properties.states import OccupancyStatus
@@ -97,7 +105,7 @@ vav_system_template = {
     },
     "devices": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
-        ("DPR", ElectricalActuatedDamper): {
+        ("DPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with electrical actuator"
         },
         ("ZN-CO2", GasMonitor): {
@@ -127,7 +135,7 @@ class VAV_FIGA1(System):
         self["zoneTemperature"].mapsTo = self["ZONE-THERMOSTAT"][
             "temperature_sensor"
         ].observesProperty
-        self["damperPosition"].mapsTo = self["DPR"]["actuator"].position
+        self["damperPosition"].mapsTo = self["DPR"].position
 
         self["SA-F"].hasMeasurementLocation = self["DPR"].airInlet
         self["DA-T"].hasMeasurementLocation = self["DPR"].airOutlet
@@ -185,20 +193,11 @@ occupancy.hasOccupancyStatus = OccupancyStatus()
 occupancy.produces_output(occupancy.hasOccupancyStatus)
 occupancy.produces_output(hvac_space.occupancy)
 
-
-class G36_FigA1(G36Sequence):
-    zoneSetpointAdj: AnalogIn
-    LocalOverride: BinaryIn
-    zoneTemp: AnalogIn
-    zoneCO2: AnalogIn
-    zonewindowSwitch: BinaryIn
-    zoneOccupancySensor: BinaryIn
-
-
 # TODO : Complete
 sequence = "Lorem ipsum of sequence"
 
-g36fig_a_1 = G36_FigA1(label="G36_FIG_A_1", comment=sequence)
+g36fig_a_1 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
+
 g36fig_a_1.uses_input(vav.airFlow, AnalogIn, "supplyAirFlow")
 g36fig_a_1.uses_input(
     hvac_zone.temperature_setpoint, AnalogIn, "zoneTemperatureSetpoint"

@@ -7,25 +7,25 @@ _namespace = p223
 
 
 class Volts(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.Voltage
-    unit: URIRef = unit.V
+    hasQuantityKind = quantitykind.Voltage
+    unit = unit.V
 
 
 class Amps(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.ElectricCurrent
-    unit: URIRef = unit.A
+    hasQuantityKind = quantitykind.ElectricCurrent
+    unit = unit.A
 
 
 class PowerFactor(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.PowerFactor
-    unit: URIRef = unit.UNITLESS
+    hasQuantityKind = quantitykind.PowerFactor
+    unit = unit.UNITLESS
 
 
 class ElectricPowerkW(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.Power
-    unit: URIRef = unit.KiloW
+    hasQuantityKind = quantitykind.Power
+    unit = unit.KiloW
 
 
 class ElectricPowerW(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.Power
-    unit: URIRef = unit.W
+    hasQuantityKind = quantitykind.Power
+    unit = unit.W
