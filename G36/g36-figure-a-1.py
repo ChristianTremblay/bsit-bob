@@ -134,7 +134,7 @@ class VAV_FIGA1(System):
         self["zoneTemperature"].mapsTo = self["ZONE-THERMOSTAT"][
             "temperature_sensor"
         ].observesProperty
-        self["damperPosition"].mapsTo = self["DPR"].position
+        self["damperPosition"].mapsTo = self["DPR"]["position"]
 
         self["SA-F"].hasMeasurementLocation = self["DPR"].airInlet
         self["DA-T"].hasMeasurementLocation = self["DPR"].airOutlet

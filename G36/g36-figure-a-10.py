@@ -95,6 +95,7 @@ hot_water_valve_template = {
         "onOffInlet": OnOffSignalInletConnectionPoint,
     },
     "properties": {
+        ("position", PercentCommand): {},
         ("flowCoefficient", Gallons): {},
     },
     "devices": {("actuator", ElectricalProportionalActuator): {}},
@@ -120,6 +121,7 @@ chilled_water_valve_template = {
     },
     "properties": {
         ("flowCoefficient", Gallons): {},
+        ("position", PercentCommand): {},
     },
     "devices": {("actuator", ElectricalProportionalActuator): {}},
 }
@@ -217,8 +219,8 @@ ahu.returnAir.mapsTo = return_air
 ahu.supplyAir.mapsTo = supply_air
 ahu.exhaustAir.mapsTo = ead.airOutlet
 ahu.outdoorAir.mapsTo = econ_dpr.airInlet
-ahu.cooling = clg_vlv.position  #
-ahu.heating = htg_vlv.position  # equivalent to htg_vlv['actuator']['postion']
+ahu.cooling = clg_vlv['position']  #
+ahu.heating = htg_vlv['position']  # equivalent to htg_vlv['actuator']['postion']
 
 
 # TODO : Complete this
