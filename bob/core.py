@@ -10,7 +10,6 @@ import itertools
 import logging
 import os
 import sys
-
 from collections import Counter, defaultdict
 from typing import (
     Any,
@@ -51,7 +50,7 @@ log_filename = os.getenv("BOB_LOGFILENAME", None)
 numeric_level = getattr(logging, log_level.upper(), None)
 if not isinstance(numeric_level, int):
     raise ValueError("Invalid log level: %s" % log_level)
-logging.basicConfig(filename=log_filename,level=numeric_level)
+logging.basicConfig(filename=log_filename, level=numeric_level)
 
 if _dotenv_import_error:
     logging.warning("install python-dotenv to use your .env file")
@@ -648,12 +647,18 @@ class Node(metaclass=NodeMetaclass):
             if isinstance(attr_type, str):
                 raise RuntimeError(f"{attr_type!r} still a string for {attr!r}")
 
-            # enumerations are both types and instances
-            if isinstance(value, EnumerationKind):
-                if not isinstance(attr_type, EnumerationKind):
-                    raise TypeError(f"attribute {attr} not an enumeration kind")
+            # attr_type allows any instance of an enumeration kind
+            if attr_type is EnumerationKind:
+                if not isinstance(value, EnumerationKind):
+                    raise TypeError(
+                        f"value {value} for attribute {attr} not a {attr_type}"
+                    )
 
-                if value not in attr_type._children:
+            # attr_type requires a some sub-kind
+            elif isinstance(attr_type, EnumerationKind):
+                if (not isinstance(value, EnumerationKind)) or (
+                    value not in attr_type._children
+                ):
                     raise TypeError(
                         f"value {value} for attribute {attr} not a {attr_type}"
                     )
@@ -2920,7 +2925,7 @@ class Device(Container, Connectable):
         # putting them in config, it should be better
         for attr_name, attr_value in kwargs.copy().items():
             if inspect.isclass(attr_value):
-                #if issubclass(attr_value, Property):
+                # if issubclass(attr_value, Property):
                 #    config["properties"] = (
                 #        {**config["properties"], **{attr_name: kwargs.pop(attr_name)}}
                 #        if "properties" in config.keys()

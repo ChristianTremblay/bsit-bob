@@ -38,55 +38,55 @@ _namespace = p223
 class OnOffStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
-    hasEnumerationKind: OnOffEnum
+    hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum
 
 
 class OnOffCommand(EnumeratedActuatableProperty):
     _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
-    hasEnumerationKind: OnOffEnum
+    hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum
 
 
 class NormalAlarmStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
-    hasEnumerationKind: NormalAlarmEnum
+    hasEnumerationKind = NormalAlarmEnum
     hasValue: NormalAlarmEnum
 
 
 class OpenCloseCommand(EnumeratedActuatableProperty):
     _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
-    hasEnumerationKind: OpenCloseEnum
-    hasValue: NormalAlarmEnum
+    hasEnumerationKind = OpenCloseEnum
+    hasValue: OpenCloseEnum
 
 
 class OpenCloseStatus(EnumeratedActuatableProperty):
     _class_iri: URIRef = s223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
-    hasEnumerationKind: OpenCloseEnum
+    hasEnumerationKind = OpenCloseEnum
     hasValue: OpenCloseEnum
 
 
 class Schedule(EnumerableProperty):
     _class_iri: URIRef = s223.EnumerableProperty
     hasExternalReference: ExternalReference
-    hasEnumerationKind: OccupancyEnum
+    hasEnumerationKind = OccupancyEnum
     hasValue: OccupancyEnum
 
 
 class OccupancyStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = s223.EnumeratedObservableProperty
-    hasEnumerationKind: OccupancyEnum
+    hasEnumerationKind = OccupancyEnum
     hasValue: OccupancyEnum
 
 
 class Movement(EnumeratedObservableProperty):
     _class_iri: URIRef = s223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
-    hasEnumerationKind: OnOffEnum
+    hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum
 
 
@@ -94,4 +94,5 @@ class SmokePresence(EnumeratedObservableProperty):
     ofMedium: Medium  # set from the sensor
     ofSubstance: Substance = Smoke
     # isObservedBy: Sensor
-    hasEnumerationKind: YesNoEnum
+    hasEnumerationKind = YesNoEnum
+    hasValue: YesNoEnum

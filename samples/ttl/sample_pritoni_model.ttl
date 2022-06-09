@@ -743,11 +743,13 @@ functions:00004 a s223:Connector,
     s223:producesOutput functions:00002 .
 functions:00005 a s223:EnumerableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasExternalReference bacnet_references:00011 .
 functions:00006 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasValue s223:Occupancy-Occupied .
 functions:00007 a p223:OccupancyControl,
         s223:FunctionBlock ;
@@ -784,11 +786,13 @@ functions:00012 a s223:Connector,
     s223:usesInput lighting_devices:00089 .
 functions:00013 a s223:EnumerableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasExternalReference bacnet_references:00011 .
 functions:00014 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasValue s223:Occupancy-Occupied .
 functions:00015 a p223:OccupancyControl,
         s223:FunctionBlock ;
@@ -820,11 +824,13 @@ functions:00019 a s223:Connector,
     s223:usesInput lighting_devices:00014 .
 functions:00020 a s223:EnumerableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasExternalReference bacnet_references:00011 .
 functions:00021 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasValue s223:Occupancy-Unoccupied .
 functions:00022 a p223:OccupancyControl,
         s223:FunctionBlock ;
@@ -856,11 +862,13 @@ functions:00026 a s223:Connector,
     s223:usesInput lighting_devices:00029 .
 functions:00027 a s223:EnumerableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasExternalReference bacnet_references:00011 .
 functions:00028 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasValue s223:Occupancy-Unoccupied .
 functions:00029 a p223:OccupancyControl,
         s223:FunctionBlock ;
@@ -892,11 +900,13 @@ functions:00033 a s223:Connector,
     s223:usesInput lighting_devices:00060 .
 functions:00034 a s223:EnumerableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasExternalReference bacnet_references:00011 .
 functions:00035 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasValue s223:Occupancy-Unoccupied .
 functions:00036 a p223:OccupancyControl,
         s223:FunctionBlock ;
@@ -1038,12 +1048,14 @@ hvac:00014 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    rdfs:label "VFD DriveRunning" .
+    rdfs:label "VFD DriveRunning" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 hvac:00015 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    rdfs:label "Run Command" .
+    rdfs:label "Run Command" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 hvac:00016 a s223:Connection ;
     s223:connectsAt hvac_devices:00104,
         hvac_spaces:00013 ;
@@ -1465,6 +1477,7 @@ hvac_devices:00042 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "SF-STARTER.sensorCurrentBinarySensor.CurrentBinarySensor" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Electricity-575V-60Hz .
 hvac_devices:00043 a s223:Connectable,
         s223:Device,
@@ -1550,18 +1563,21 @@ hvac_devices:00052 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasExternalReference bacnet_references:00009 .
 hvac_devices:00053 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasExternalReference bacnet_references:00010 .
 hvac_devices:00054 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    rdfs:label "alarm_status" .
+    rdfs:label "alarm_status" ;
+    s223:hasEnumerationKind s223:EnumerationKind-NormalAlarm .
 hvac_devices:00055 a s223:Coil,
         s223:Connectable,
         s223:CoolingCoil,
@@ -2541,7 +2557,8 @@ hvac_devices:00168 a s223:OutletSystemConnectionPoint,
 hvac_spaces:00001 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 hvac_spaces:00002 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -2616,7 +2633,8 @@ hvac_spaces:00009 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00010 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 hvac_spaces:00011 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -2690,7 +2708,8 @@ hvac_spaces:00018 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00019 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 hvac_spaces:00020 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -2764,7 +2783,8 @@ hvac_spaces:00027 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00028 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 hvac_spaces:00029 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -2839,7 +2859,8 @@ hvac_spaces:00036 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00037 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 hvac_spaces:00038 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -2913,7 +2934,8 @@ hvac_spaces:00045 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00046 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 hvac_spaces:00047 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
@@ -2988,7 +3010,8 @@ hvac_spaces:00054 a s223:BidirectionalConnectionPoint,
 hvac_spaces:00055 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 hvac_spaces:00056 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone1" ;
@@ -3019,7 +3042,8 @@ hvac_spaces:00058 a s223:OutletZoneConnectionPoint,
 hvac_spaces:00059 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 hvac_spaces:00060 a s223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone2" ;
@@ -3049,11 +3073,13 @@ lighting_devices:00001 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00002 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00003 a s223:Connectable,
         s223:Device,
@@ -3098,11 +3124,13 @@ lighting_devices:00007 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00008 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00009 a s223:Connectable,
         s223:Device,
@@ -3158,6 +3186,7 @@ lighting_devices:00014 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor4.Movement" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00015 a s223:Connection ;
     rdfs:label "LightHub_11_12" ;
@@ -3172,11 +3201,13 @@ lighting_devices:00015 a s223:Connection ;
 lighting_devices:00016 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 lighting_devices:00017 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 lighting_devices:00018 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
@@ -3220,11 +3251,13 @@ lighting_devices:00022 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off .
 lighting_devices:00023 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off .
 lighting_devices:00024 a s223:Connectable,
         s223:Device,
@@ -3279,6 +3312,7 @@ lighting_devices:00029 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor3.Movement" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00030 a s223:Connection ;
     rdfs:label "LightHub_7_8" ;
@@ -3294,11 +3328,13 @@ lighting_devices:00031 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off .
 lighting_devices:00032 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off .
 lighting_devices:00033 a s223:Connectable,
         s223:Device,
@@ -3343,11 +3379,13 @@ lighting_devices:00037 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00038 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00039 a s223:Connectable,
         s223:Device,
@@ -3403,6 +3441,7 @@ lighting_devices:00044 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor5.Movement" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00045 a s223:Connection ;
     rdfs:label "LightHub_9_10" ;
@@ -3418,11 +3457,13 @@ lighting_devices:00046 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off .
 lighting_devices:00047 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00048 a s223:Connectable,
         s223:Device,
@@ -3467,11 +3508,13 @@ lighting_devices:00052 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off .
 lighting_devices:00053 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off .
 lighting_devices:00054 a s223:Connectable,
         s223:Device,
@@ -3537,17 +3580,20 @@ lighting_devices:00060 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor2.Movement" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00061 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasExternalReference bacnet_references:00013 ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00062 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00063 a s223:Connectable,
         s223:Device,
@@ -3603,11 +3649,13 @@ lighting_devices:00068 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00069 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00070 a s223:Connectable,
         s223:Device,
@@ -3652,11 +3700,13 @@ lighting_devices:00074 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00075 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00076 a s223:Connectable,
         s223:Device,
@@ -3701,11 +3751,13 @@ lighting_devices:00080 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00081 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-On .
 lighting_devices:00082 a s223:Connectable,
         s223:Device,
@@ -3781,6 +3833,7 @@ lighting_devices:00089 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "OccSensor1.Movement" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
 lighting_devices:00090 a s223:Connection ;
     rdfs:label "LightHub_NaturalLight" ;
@@ -3951,7 +4004,8 @@ lighting_spaces:00018 a s223:ConnectionPoint,
 lighting_spaces:00019 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 lighting_spaces:00020 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone1" ;
@@ -3970,7 +4024,8 @@ lighting_spaces:00021 a s223:InletZoneConnectionPoint,
 lighting_spaces:00022 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 lighting_spaces:00023 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone2" ;
@@ -3989,7 +4044,8 @@ lighting_spaces:00024 a s223:InletZoneConnectionPoint,
 lighting_spaces:00025 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 lighting_spaces:00026 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone3" ;
@@ -4008,7 +4064,8 @@ lighting_spaces:00027 a s223:InletZoneConnectionPoint,
 lighting_spaces:00028 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 lighting_spaces:00029 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone4" ;
@@ -4027,7 +4084,8 @@ lighting_spaces:00030 a s223:InletZoneConnectionPoint,
 lighting_spaces:00031 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 lighting_spaces:00032 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone5" ;
@@ -4046,7 +4104,8 @@ lighting_spaces:00033 a s223:InletZoneConnectionPoint,
 lighting_spaces:00034 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 lighting_spaces:00035 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone6" ;
