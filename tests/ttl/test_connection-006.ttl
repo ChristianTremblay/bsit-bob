@@ -30,7 +30,7 @@ ex30:00002 a s223:Coil,
     s223:chilledWaterOutlet ex30:00006 ;
     s223:connectedFrom ex30:00007 ;
     s223:connectedThrough ex30:00001,
-        ex30:00023 ;
+        ex30:00017 ;
     s223:hasConnectionPoint ex30:00003,
         ex30:00004,
         ex30:00005,
@@ -38,7 +38,7 @@ ex30:00002 a s223:Coil,
 ex30:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
-    s223:connectsThrough ex30:00023 ;
+    s223:connectsThrough ex30:00017 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex30:00002 .
@@ -67,17 +67,17 @@ ex30:00007 a s223:Connectable,
     rdfs:label "F" ;
     s223:airInlet ex30:00008 ;
     s223:airOutlet ex30:00009 ;
-    s223:connectedThrough ex30:00023 ;
+    s223:connectedThrough ex30:00017 ;
     s223:connectedTo ex30:00002 ;
     s223:hasConnectionPoint ex30:00008,
         ex30:00009,
         ex30:00010 ;
     s223:hasProperty ex30:00011,
+        ex30:00012,
         ex30:00013,
+        ex30:00014,
         ex30:00015,
-        ex30:00017,
-        ex30:00019,
-        ex30:00021 .
+        ex30:00016 .
 ex30:00008 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "F.airInlet" ;
@@ -87,7 +87,7 @@ ex30:00008 a s223:ConnectionPoint,
 ex30:00009 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "F.airOutlet" ;
-    s223:connectsThrough ex30:00023 ;
+    s223:connectsThrough ex30:00017 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex30:00007 .
@@ -102,73 +102,55 @@ ex30:00011 a p223:Pressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
-    s223:hasExternalReference ex30:00012 ;
     s223:isPropertyOf ex30:00007 ;
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
-ex30:00012 a s223:ExternalReference ;
-    rdfs:label "staticPressure.ExternalReference" .
-ex30:00013 a p223:Amps,
+ex30:00012 a p223:Amps,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
-    s223:hasExternalReference ex30:00014 ;
     s223:isPropertyOf ex30:00007 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex30:00014 a s223:ExternalReference ;
-    rdfs:label "amps.ExternalReference" .
-ex30:00015 a p223:RPM,
+ex30:00013 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
-    s223:hasExternalReference ex30:00016 ;
     s223:isPropertyOf ex30:00007 ;
     qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
-ex30:00016 a s223:ExternalReference ;
-    rdfs:label "rpm.ExternalReference" .
-ex30:00017 a p223:HP,
+ex30:00014 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
-    s223:hasExternalReference ex30:00018 ;
     s223:isPropertyOf ex30:00007 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex30:00018 a s223:ExternalReference ;
-    rdfs:label "hp.ExternalReference" .
-ex30:00019 a p223:ElectricPowerkW,
+ex30:00015 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
-    s223:hasExternalReference ex30:00020 ;
     s223:isPropertyOf ex30:00007 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex30:00020 a s223:ExternalReference ;
-    rdfs:label "kW.ExternalReference" .
-ex30:00021 a p223:PowerFactor,
+ex30:00016 a p223:PowerFactor,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
-    s223:hasExternalReference ex30:00022 ;
     s223:isPropertyOf ex30:00007 ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
-ex30:00022 a s223:ExternalReference ;
-    rdfs:label "powerFactor.ExternalReference" .
-ex30:00023 a s223:Connection ;
+ex30:00017 a s223:Connection ;
     s223:connectsAt ex30:00003,
         ex30:00009 ;
     s223:connectsFrom ex30:00007 ;

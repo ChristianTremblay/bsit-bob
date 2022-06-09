@@ -310,8 +310,8 @@ ex:00041 a s223:Connectable,
     rdfs:label "Joel's Office HVAC Space" ;
     s223:airTransfer ex:00044 ;
     s223:connectedFrom ex:00052 ;
-    s223:connectedThrough ex:00062,
-        ex:00063 ;
+    s223:connectedThrough ex:00060,
+        ex:00061 ;
     s223:connectedTo ex:00052 ;
     s223:doors ex:00045 ;
     s223:ductAirInlet ex:00042 ;
@@ -323,8 +323,8 @@ ex:00041 a s223:Connectable,
         ex:00046,
         ex:00047,
         ex:00048,
-        ex:00060,
-        ex:00061 ;
+        ex:00058,
+        ex:00059 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
     s223:radiantCooling ex:00048 ;
@@ -400,25 +400,25 @@ ex:00052 a s223:Coil,
     s223:airInlet ex:00053 ;
     s223:airOutlet ex:00054 ;
     s223:connectedFrom ex:00041 ;
-    s223:connectedThrough ex:00062,
-        ex:00063 ;
+    s223:connectedThrough ex:00060,
+        ex:00061 ;
     s223:connectedTo ex:00041 ;
     s223:hasConnectionPoint ex:00053,
         ex:00054,
         ex:00055 ;
     s223:hasProperty ex:00056,
-        ex:00058 .
+        ex:00057 .
 ex:00053 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Baseboard heater.airInlet" ;
-    s223:connectsThrough ex:00063 ;
+    s223:connectsThrough ex:00061 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00052 .
 ex:00054 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Baseboard heater.airOutlet" ;
-    s223:connectsThrough ex:00062 ;
+    s223:connectsThrough ex:00060 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00052 .
@@ -433,47 +433,41 @@ ex:00056 a p223:Amps,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
-    s223:hasExternalReference ex:00057 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex:00057 a s223:ExternalReference ;
-    rdfs:label "amps.ExternalReference" .
-ex:00058 a p223:ElectricPowerkW,
+ex:00057 a p223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
-    s223:hasExternalReference ex:00059 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex:00059 a s223:ExternalReference ;
-    rdfs:label "kW.ExternalReference" .
-ex:00060 a s223:ConnectionPoint,
+ex:00058 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Internal Use To be treated" ;
-    s223:connectsThrough ex:00063 ;
+    s223:connectsThrough ex:00061 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00041 ;
     rdfs:comment "Air that doesn't leave the room, used internally by a radiant heater for example" .
-ex:00061 a s223:ConnectionPoint,
+ex:00059 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Internal Use treated" ;
-    s223:connectsThrough ex:00062 ;
+    s223:connectsThrough ex:00060 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00041 ;
     rdfs:comment "Air that doesn't leave the room, used internally" .
-ex:00062 a s223:Connection ;
+ex:00060 a s223:Connection ;
     s223:connectsAt ex:00054,
-        ex:00061 ;
+        ex:00059 ;
     s223:connectsFrom ex:00052 ;
     s223:connectsTo ex:00041 ;
     s223:hasMedium s223:Medium-Air .
-ex:00063 a s223:Connection ;
+ex:00061 a s223:Connection ;
     s223:connectsAt ex:00053,
-        ex:00060 ;
+        ex:00058 ;
     s223:connectsFrom ex:00041 ;
     s223:connectsTo ex:00052 ;
     s223:hasMedium s223:Medium-Air .
