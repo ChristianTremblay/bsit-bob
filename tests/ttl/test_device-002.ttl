@@ -208,7 +208,9 @@ ex30:00026 a s223:Coil,
     s223:airOutlet ex30:00028 ;
     s223:hasConnectionPoint ex30:00027,
         ex30:00028,
-        ex30:00029 .
+        ex30:00029 ;
+    s223:hasProperty ex30:00030,
+        ex30:00032 .
 ex30:00027 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airInlet" ;
@@ -233,6 +235,7 @@ ex30:00030 a p223:Amps,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
     s223:hasExternalReference ex30:00031 ;
+    s223:isPropertyOf ex30:00026 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 ex30:00031 a s223:ExternalReference ;
@@ -244,6 +247,7 @@ ex30:00032 a p223:ElectricPowerkW,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
     s223:hasExternalReference ex30:00033 ;
+    s223:isPropertyOf ex30:00026 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 ex30:00033 a s223:ExternalReference ;
