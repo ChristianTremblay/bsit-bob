@@ -1,5 +1,8 @@
-select ?node ?label ?value where {
-    ?node a s223:Property .
-    optional { ?node rdfs:label ?label } .
-    optional { ?node s223:hasValue ?value } .
+select ?node ?nlabel ?prop ?plabel ?value ?xref where {
+    ?node s223:hasProperty ?prop .
+    ?prop a s223:Property .
+    optional { ?node rdfs:label ?nlabel } .
+    optional { ?prop rdfs:label ?plabel } .
+    optional { ?prop s223:hasValue ?value } .
+    optional { ?prop s223:hasExternalReference ?xref } .
     }

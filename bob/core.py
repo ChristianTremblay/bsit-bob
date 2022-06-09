@@ -407,7 +407,7 @@ class Node(metaclass=NodeMetaclass):
 
         # set the values
         for attr, attr_value in inits.items():
-            logging.debug(f"    - init {attr}: {attr_value}")
+            logging.debug(f"    - init {attr}: {attr_value!r}")
             if attr_value is None:
                 super().__setattr__(attr, None)
             else:
@@ -508,7 +508,9 @@ class Node(metaclass=NodeMetaclass):
             logging.debug(f"    - attr: {attr!r}")
             logging.debug(f"        - attr_annotation: {attr_annotation!r}")
 
-            if isinstance(attr_annotation, str):
+            if isinstance(attr_annotation, str) and not isinstance(
+                attr_annotation, URIRef
+            ):
                 # eval the string in the context of the globals in its module
                 try:
                     cls_module = inspect.getmodule(cls)

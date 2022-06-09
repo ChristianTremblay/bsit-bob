@@ -111,8 +111,8 @@ pritoni_schedule = BACnetReference(
 hd.vav1["VAV1_ZN-T"].observesProperty @ zn1_t
 hd.vav2["VAV2_ZN-T"].observesProperty @ zn2_t
 
-hd.ahu["RF-VFD"].drive_running @ rf_vfd_status
-hd.ahu["RF-VFD"].run_command @ rf_vfd_cmd
+hd.ahu["RF-VFD"]["drive_running"] @ rf_vfd_status
+hd.ahu["RF-VFD"]["run_command"] @ rf_vfd_cmd
 
 # A bulb with only one object
 ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference(
