@@ -11,6 +11,7 @@ from ...connections.air import (
     AirOutletConnectionPoint,
     CompressedAirConnectionPoint,
     CompressedAirInletConnectionPoint,
+    CompressedAirOutletConnectionPoint,
 )
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
@@ -44,7 +45,7 @@ class Actuator(Device):
 class ProportionalActuator(Actuator):
     _class_iri = s223.Actuator
     command: PercentCommand
-    actuatesProperty: Property
+    actuatesProperty: PercentCommand
     feedback: Percent
 
     def __init__(self, config: Dict = {}, **kwargs):
@@ -56,7 +57,7 @@ class ProportionalActuator(Actuator):
 class OnOffActuator(Actuator):
     _class_iri = s223.Actuator
     command: OnOffCommand
-    actuatesProperty: Property
+    actuatesProperty: OnOffCommand
     feedbackOpen: OnOffStatus
     feedbackClose: OnOffStatus
 
@@ -69,6 +70,7 @@ class OnOffActuator(Actuator):
 ElectricalProportionalActuator_template = {
     "cp": {"electricalInlet": Electricity_24V_60HzInletConnectionPoint},
     "properties": {
+        ("actuatesProperty", PercentCommand): {},
         ("command", PercentCommand): {},
         ("feedback", Percent): {},
         ("torque", Nm): {},
@@ -79,6 +81,7 @@ ElectricalProportionalActuator_template = {
 ElectricalOnOffActuator_template = {
     "cp": {"electricalInlet": Electricity_24V_60HzInletConnectionPoint},
     "properties": {
+        ("actuatesProperty", OnOffCommand): {},
         ("command", OnOffCommand): {},
         ("feedbackOpen", OnOffStatus): {},
         ("feedbackClose", OnOffStatus): {},
@@ -93,27 +96,28 @@ class ElectricalProportionalActuator(ProportionalActuator):
     def __init__(
         self, config: Dict = ElectricalProportionalActuator_template, **kwargs
     ):
-        config["properties"] = config.get(
-            "properties", ElectricalProportionalActuator_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+        _config = ElectricalProportionalActuator_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
 
 
 class ElectricalOnOffActuator(OnOffActuator):
     _class_iri = s223.Actuator
 
     def __init__(self, config: Dict = ElectricalOnOffActuator_template, **kwargs):
-        config["properties"] = config.get(
-            "properties", ElectricalOnOffActuator_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+        _config = ElectricalOnOffActuator_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
 
 
 PneumaticProportionalActuator_template = {
     "cp": {},
     "properties": {
+        ("actuatesProperty", PercentCommand): {},
         ("command", PercentCommand): {},
         ("feedback", Percent): {},
         ("torque", Nm): {},
@@ -123,6 +127,7 @@ PneumaticProportionalActuator_template = {
 PneumaticOnOffActuator_template = {
     "cp": {},
     "properties": {
+        ("actuatesProperty", OnOffCommand): {},
         ("command", OnOffCommand): {},
         ("feedbackOpen", OnOffStatus): {},
         ("feedbackClose", OnOffStatus): {},
@@ -135,21 +140,21 @@ class PneumaticProportionalActuator(ProportionalActuator):
     _class_iri = s223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
-    def __init__(self, config: Dict = PneumaticProportionalActuator_template, **kwargs):
-        config["properties"] = config.get(
-            "properties", PneumaticProportionalActuator_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = PneumaticProportionalActuator_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
 
 
 class PneumaticOnOffActuator(OnOffActuator):
     _class_iri = s223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
-    def __init__(self, config: Dict = PneumaticOnOffActuator_template, **kwargs):
-        config["properties"] = config.get(
-            "properties", PneumaticOnOffActuator_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = PneumaticOnOffActuator_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
