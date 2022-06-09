@@ -2917,12 +2917,12 @@ class Device(Container, Connectable):
         # putting them in config, it should be better
         for attr_name, attr_value in kwargs.copy().items():
             if inspect.isclass(attr_value):
-                if issubclass(attr_value, Property):
-                    config["properties"] = (
-                        {**config["properties"], **{attr_name: kwargs.pop(attr_name)}}
-                        if "properties" in config.keys()
-                        else {attr_name: kwargs.pop(attr_name)}
-                    )
+                #if issubclass(attr_value, Property):
+                #    config["properties"] = (
+                #        {**config["properties"], **{attr_name: kwargs.pop(attr_name)}}
+                #        if "properties" in config.keys()
+                #        else {attr_name: kwargs.pop(attr_name)}
+                #    )
                 if issubclass(attr_value, ConnectionPoint):
                     config["cp"] = (
                         {**config["cp"], **{attr_name: kwargs.pop(attr_name)}}
@@ -2953,6 +2953,7 @@ class Device(Container, Connectable):
                     if isinstance(thing, Property):
                         thing @ self
                         self._contents[thing_name] = thing
+                        self.add_property(thing)
 
                     things.append(thing)
 
