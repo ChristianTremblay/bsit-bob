@@ -128,7 +128,8 @@ exg3601:00015 a s223:BidirectionalConnectionPoint,
 exg3601:00016 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 exg3601:00017 a s223:Connectable,
         s223:Device,
         s223:Window ;
@@ -232,6 +233,7 @@ exg3601:00028 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "ZN-OCC-SENSOR.Movement" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
 exg3601:00029 a p223:IntrusionSensor,
         s223:Connectable,
@@ -244,12 +246,14 @@ exg3601:00030 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    rdfs:label "ZN-WINDOW-SWITCH.Intrusion" .
+    rdfs:label "ZN-WINDOW-SWITCH.Intrusion" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 exg3601:00031 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "occupancy" ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
     s223:hasExternalReference exg3601:00032 .
 exg3601:00032 a s223:ExternalReference ;
     rdfs:label "occupancy.ExternalReference" ;
@@ -367,6 +371,7 @@ exg3601:00050 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "local_override.Movement" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
 exg3601:00051 a s223:Connectable,
         s223:Damper,
@@ -704,7 +709,8 @@ exg3601:00096 a s223:Connector,
 exg3601:00097 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
-        s223:Property .
+        s223:Property ;
+    s223:hasEnumerationKind s223:EnumerationKind-Occupancy .
 exg3601:00098 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "OccControl.output" ;

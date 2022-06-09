@@ -646,12 +646,16 @@ class Node(metaclass=NodeMetaclass):
             if isinstance(attr_type, str):
                 raise RuntimeError(f"{attr_type!r} still a string for {attr!r}")
 
-            # enumerations are both types and instances
-            if isinstance(value, EnumerationKind):
-                if not isinstance(attr_type, EnumerationKind):
-                    raise TypeError(f"attribute {attr} not an enumeration kind")
+            # attr_type allows any instance of an enumeration kind
+            if attr_type is EnumerationKind:
+                if not isinstance(value, EnumerationKind):
+                    raise TypeError(
+                        f"value {value} for attribute {attr} not a {attr_type}"
+                    )
 
-                if value not in attr_type._children:
+            # attr_type requires a some sub-kind
+            elif isinstance(attr_type, EnumerationKind):
+                if (not isinstance(value, EnumerationKind)) or (value not in attr_type._children):
                     raise TypeError(
                         f"value {value} for attribute {attr} not a {attr_type}"
                     )
