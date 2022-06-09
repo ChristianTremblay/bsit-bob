@@ -26,8 +26,11 @@ class BACnetProperty(Node):
     hasValue: Literal
 
     def __init__(self, value: Any = None, **kwargs: Any):
+        logging.debug(
+            f"BACnetProperty.__init__ {value!r} arg type={type(value)} {kwargs}"
+        )
         init_value = None
-        if value is None:
+        if value is None or isinstance(value,Node):
             if "hasValue" in kwargs:
                 init_value = kwargs.pop("hasValue")
         elif "hasValue" in kwargs:
@@ -104,9 +107,8 @@ class BACnetReference(ExternalReference):
     objectType: BACnetObjectType
     uri: BACnetURI
 
-    def __init__(self, arg: str = "", **kwargs) -> None:
-        logging.debug("__init__ %r %r", arg, kwargs)
-
+    def __init__(self, arg: str = None, **kwargs) -> None:
+        logging.debug("BACnetReference.__init__ %r %r", arg, kwargs)
         if arg:
             url_match = url_pattern.match(arg)
             if not url_match:

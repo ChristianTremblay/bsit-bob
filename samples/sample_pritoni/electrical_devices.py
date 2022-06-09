@@ -106,7 +106,7 @@ hq_600 >> main_panel["MainBreaker"]
 main_panel["CB#3"] >> transformer_120_240 >> dist_panel["MainBreaker"]
 
 
-# We need a truff so light breakers will be connected to multiple loads
+# We need a trough so light breakers will be connected to multiple loads
 dist_panel_cb1 = Electricity_120V_60HzConnection(label="DISTPANEL-CB1")
 dist_panel_cb3 = Electricity_120V_60HzConnection(label="DISTPANEL-CB3")
 dist_panel_cb4 = Electricity_120V_60HzConnection(label="DISTPANEL-CB4")

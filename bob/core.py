@@ -46,10 +46,11 @@ except ImportError:
 
 # logging
 log_level = os.getenv("BOB_LOG", "WARNING")
+log_filename = os.getenv("BOB_LOGFILENAME", None)
 numeric_level = getattr(logging, log_level.upper(), None)
 if not isinstance(numeric_level, int):
     raise ValueError("Invalid log level: %s" % log_level)
-logging.basicConfig(level=numeric_level)
+logging.basicConfig(filename=log_filename,level=numeric_level)
 
 if _dotenv_import_error:
     logging.warning("install python-dotenv to use your .env file")
@@ -751,7 +752,7 @@ class ExternalReference(Node):
         **kwargs: Any,
     ):
         logging.debug(
-            f"ExternalReference.__init__ {arg!r} lang={lang!r} datetype={datatype!r} {kwargs}"
+            f"ExternalReference.__init__ {arg!r} arg type={type(arg)} lang={lang!r} datatype={datatype!r} {kwargs}"
         )
         if arg is not None:
             if "hasRef" in kwargs:
@@ -764,7 +765,8 @@ class ExternalReference(Node):
             elif lang is not None:
                 arg = Literal(arg, lang=lang)
 
-            kwargs["hasRef"] = arg
+            if isinstance(arg, Literal):
+                kwargs["hasRef"] = arg
 
         super().__init__(**kwargs)
 
