@@ -59,7 +59,7 @@ from bob.property import QuantifiableObservableProperty
 from bob.sensor.fire import SmokeDetectionSensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
-from bob.sensor.movement import IntrusionSensor, OccupancySensor
+from bob.sensor.light import IntrusionSensor, OccupancySensor
 from bob.sensor.pressure import DifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace
@@ -219,8 +219,8 @@ ahu.returnAir.mapsTo = return_air
 ahu.supplyAir.mapsTo = supply_air
 ahu.exhaustAir.mapsTo = ead.airOutlet
 ahu.outdoorAir.mapsTo = econ_dpr.airInlet
-ahu.cooling = clg_vlv['position']  #
-ahu.heating = htg_vlv['position']  # equivalent to htg_vlv['actuator']['postion']
+ahu.cooling = clg_vlv["position"]  #
+ahu.heating = htg_vlv["position"]  # equivalent to htg_vlv['actuator']['postion']
 
 
 # TODO : Complete this

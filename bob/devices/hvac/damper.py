@@ -26,7 +26,7 @@ from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import Device, PropertyReference, p223, s223, logging
+from ...core import Device, PropertyReference, logging, p223, s223
 from ...functions import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
 from .actuator import (
@@ -48,7 +48,7 @@ class Damper(Device):
     airOutlet: AirOutletConnectionPoint
     command: PropertyReference
     # feedback: PropertyReference
-    #position: ActuatableProperty
+    # position: ActuatableProperty
 
 
 class GravityDamper(Damper):
@@ -66,7 +66,7 @@ electrical_actuated_proportional_damper_template = {
     "devices": {("actuator", ElectricalProportionalActuator): {}},
     "properties": {
         ("position", PercentCommand): {},
-        #("feedback", PropertyReference): {},
+        # ("feedback", PropertyReference): {},
     },
 }
 
@@ -81,9 +81,7 @@ electrical_actuated_onoff_damper_template = {
 class ElectricalActuatedProportionalDamper(Damper):
     _class_iri: URIRef = s223.Damper
 
-    def __init__(
-        self, config: Dict = None, **kwargs
-    ):
+    def __init__(self, config: Dict = None, **kwargs):
         _config = electrical_actuated_proportional_damper_template
         if config:
             _config.update(config)
@@ -94,16 +92,14 @@ class ElectricalActuatedProportionalDamper(Damper):
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
-        self["actuator"].actuatesProperty = self['position']
+        self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
 
 class ElectricalActuatedOnOffDamper(Damper):
     _class_iri: URIRef = s223.Damper
 
-    def __init__(
-        self, config: Dict = None, **kwargs
-    ):
+    def __init__(self, config: Dict = None, **kwargs):
         _config = electrical_actuated_onoff_damper_template
         if config:
             _config.update(config)
@@ -112,7 +108,7 @@ class ElectricalActuatedOnOffDamper(Damper):
         self.command = self["actuator"]["command"]
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
-        self["actuator"].actuatesProperty = self['position']
+        self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
 
@@ -133,9 +129,7 @@ pneumatic_actuated_onoff_damper_template = {
 class PneumaticActuatedProportionalDamper(Damper):
     _class_iri = s223.Damper
 
-    def __init__(
-        self, config: Dict = None, **kwargs
-    ):
+    def __init__(self, config: Dict = None, **kwargs):
 
         _config = pneumatic_actuated_proportional_damper_template
         if config:
@@ -143,17 +137,15 @@ class PneumaticActuatedProportionalDamper(Damper):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
-        self.feedback  = self["actuator"]["feedback"]
-        self["actuator"].actuatesProperty = self['position']
+        self.feedback = self["actuator"]["feedback"]
+        self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
 
 class PneumaticActuatedOnOffDamper(Damper):
     _class_iri = s223.Damper
 
-    def __init__(
-        self, config: Dict = None, **kwargs
-    ):
+    def __init__(self, config: Dict = None, **kwargs):
         _config = pneumatic_actuated_onoff_damper_template
         if config:
             _config.update(config)
@@ -162,5 +154,5 @@ class PneumaticActuatedOnOffDamper(Damper):
         self.command = self["actuator"]["command"]
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
-        self["actuator"].actuatesProperty = self['position']
+        self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position

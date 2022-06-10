@@ -9,7 +9,7 @@ from bob.devices.lighting.light import *
 from bob.externalreference.bacnet import BACnetReference
 from bob.properties.light import RelativeLuminousFlux
 from bob.properties.states import OnOffCommand
-from bob.sensor.movement import MovementSensor, OccupancySensor
+from bob.sensor.light import DaylightSensor, MovementSensor, OccupancySensor
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
@@ -36,7 +36,7 @@ kitchenette_luminaire_12 = Luminaire(
 )
 kitchenette_movement = OccupancySensor(
     label="OccSensor4",
-    comment="Occupancy sensor for kitchenette luminaires 11 & 12",
+    comment="Occupancy sensor for kitchenette luminaires 11 & 12 (O4)",
 )
 kitch_light_conn = LightVisibleConnection(
     label="LightHub_11_12", comment="Needed to connect multiple luminaires to space"
@@ -64,7 +64,7 @@ privateoffice_luminaire_8 = Luminaire(
 )
 privateoffice_movement = MovementSensor(
     label="OccSensor3",
-    comment="Occupancy sensor for Privtae Office",
+    comment="Occupancy sensor for Privtae Office (O3)",
     hasPhysicalLocation=ps.private_office,
     hasMeasurementLocation=ls.privateoffice_lightspace,
 )
@@ -97,7 +97,7 @@ corridor_luminaire_10 = Luminaire(
 )
 corridor_movement = OccupancySensor(
     label="OccSensor5",
-    comment="Occupancy sensor for Corridor",
+    comment="Occupancy sensor for Corridor (O5)",
 )
 corridor_light_conn = LightVisibleConnection(
     label="LightHub_9_10", comment="Needed to connect multiple luminaires to space"
@@ -128,7 +128,7 @@ bathroom_light_conn = LightVisibleConnection(
 )
 bathroom_movement = OccupancySensor(
     label="OccSensor2",
-    comment="Occupancy sensor for Bathroom",
+    comment="Occupancy sensor for Bathroom (O2)",
 )
 
 
@@ -181,9 +181,12 @@ openofficeWest_light_conn = LightVisibleConnection(
 # Occupancy in OpenOffice comes from 1 sensors for both spaces
 openoffice_movement = OccupancySensor(
     label="OccSensor1",
-    comment="Occupancy sensor for OpenOffice",
+    comment="Occupancy sensor for OpenOffice (O1)",
 )
 
+daylight_sensor = DaylightSensor(
+    label="Daylight Sensor", comment="Daylight sensor installed in open office (D1)"
+)
 
 # Windows are good for natural light
 natural_ligth_conn = LightVisibleConnection(

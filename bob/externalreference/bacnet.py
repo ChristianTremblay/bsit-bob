@@ -2,7 +2,7 @@ import logging
 import re
 from typing import Any
 
-from rdflib import Literal, URIRef, XSD
+from rdflib import XSD, Literal, URIRef
 
 from ..core import (
     Device,

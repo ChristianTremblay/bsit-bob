@@ -53,5 +53,8 @@ hd.window2.naturalLight >> ld.natural_ligth_conn
 ld.natural_ligth_conn >> ls.openofficeEast_lightspace.naturalLightInlet
 ld.natural_ligth_conn >> ls.openofficeWest_lightspace.naturalLightInlet
 
+ld.daylight_sensor.hasMeasurementLocation = ls.openofficeEast_lightspace
+ld.daylight_sensor.hasPhysicalLocation = ps.openoffice
+
 if __name__ == "__main__":
     dump()

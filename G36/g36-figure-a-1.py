@@ -45,7 +45,7 @@ from bob.properties.states import OccupancyStatus
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
-from bob.sensor.movement import IntrusionSensor, OccupancySensor
+from bob.sensor.light import IntrusionSensor, OccupancySensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace, HVACZone
 
