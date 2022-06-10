@@ -22,26 +22,31 @@ hd.vav2["VAV2_DA-T"].observesProperty.set_value(
 )  # PD-SR-MP VAV2 Outlet Temperature
 hd.ahu["DA-T"].observesProperty.set_value(70.2)  # PD-SR-MP VAV1&VAV2 Inlet Temperature
 
-fn.open_office_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Occupied
-fn.kitchenette_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Occupied
+#hd.bathroom_exhaust_fan.onOffStatus = OnOffEnum.On
+hd.ahu['RF-VFD'].onOffStatus = OnOffEnum.On
+#hd.ahu['SF-STARTER']['SF-STARTER.sensor'].onOffStatus = OnOffEnum.On
+hd.ahu['TPD3'].observesProperty.set_value(129.3) # !!! My TPD3 is static pressure...not flow
+
+fn.open_office_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Unoccupied
+fn.kitchenette_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Unoccupied
 fn.private_office_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Unoccupied
 fn.bathroom_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Unoccupied
 fn.corridor_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Unoccupied
 
-ld.openofficeEast_luminaire_1.onOffStatus.hasValue = OnOffEnum.On
-ld.openofficeEast_luminaire_1.onOffCommand.hasValue = OnOffEnum.On
+ld.openofficeEast_luminaire_1.onOffStatus.hasValue = OnOffEnum.Off
+ld.openofficeEast_luminaire_1.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.openofficeEast_luminaire_2.onOffStatus.hasValue = OnOffEnum.On
-ld.openofficeEast_luminaire_2.onOffCommand.hasValue = OnOffEnum.On
+ld.openofficeEast_luminaire_2.onOffStatus.hasValue = OnOffEnum.Off
+ld.openofficeEast_luminaire_2.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.openofficeWest_luminaire_3.onOffStatus.hasValue = OnOffEnum.On
-ld.openofficeWest_luminaire_3.onOffCommand.hasValue = OnOffEnum.On
+ld.openofficeWest_luminaire_3.onOffStatus.hasValue = OnOffEnum.Off
+ld.openofficeWest_luminaire_3.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.openofficeWest_luminaire_4.onOffStatus.hasValue = OnOffEnum.On
-ld.openofficeWest_luminaire_4.onOffCommand.hasValue = OnOffEnum.On
+ld.openofficeWest_luminaire_4.onOffStatus.hasValue = OnOffEnum.Off
+ld.openofficeWest_luminaire_4.onOffCommand.hasValue = OnOffEnum.Off
 
 ld.bathroom_luminaire_5.onOffStatus.hasValue = OnOffEnum.Off
-ld.bathroom_luminaire_5.onOffCommand.hasValue = OnOffEnum.On
+ld.bathroom_luminaire_5.onOffCommand.hasValue = OnOffEnum.Off
 
 ld.bathroom_luminaire_6.onOffStatus.hasValue = OnOffEnum.Off
 ld.bathroom_luminaire_6.onOffCommand.hasValue = OnOffEnum.Off
@@ -55,14 +60,14 @@ ld.privateoffice_luminaire_8.onOffCommand.hasValue = OnOffEnum.Off
 ld.corridor_luminaire_9.onOffStatus.hasValue = OnOffEnum.Off
 ld.corridor_luminaire_9.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.corridor_luminaire_10.onOffStatus.hasValue = OnOffEnum.On
-ld.corridor_luminaire_10.onOffCommand.hasValue = OnOffEnum.On
+ld.corridor_luminaire_10.onOffStatus.hasValue = OnOffEnum.Off
+ld.corridor_luminaire_10.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.kitchenette_luminaire_11.onOffStatus.hasValue = OnOffEnum.On
-ld.kitchenette_luminaire_11.onOffCommand.hasValue = OnOffEnum.On
+ld.kitchenette_luminaire_11.onOffStatus.hasValue = OnOffEnum.Off
+ld.kitchenette_luminaire_11.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.kitchenette_luminaire_12.onOffStatus.hasValue = OnOffEnum.On
-ld.kitchenette_luminaire_12.onOffCommand.hasValue = OnOffEnum.On
+ld.kitchenette_luminaire_12.onOffStatus.hasValue = OnOffEnum.Off
+ld.kitchenette_luminaire_12.onOffCommand.hasValue = OnOffEnum.Off
 
 if __name__ == "__main__":
     dump()

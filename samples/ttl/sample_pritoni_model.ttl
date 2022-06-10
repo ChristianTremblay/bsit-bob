@@ -3,7 +3,6 @@
 @prefix bacnet: <http://data.ashrae.org/bacnet/2020#> .
 @prefix bacnet_references: <urn:ex/bacnet_references/> .
 @prefix electrical_devices: <urn:ex/electrical_devices/> .
-@prefix electricity: <urn:ex/electricity/> .
 @prefix functions: <urn:ex/functions/> .
 @prefix hvac: <urn:ex/hvac/> .
 @prefix hvac_devices: <urn:ex/hvac_devices/> .
@@ -121,7 +120,8 @@ electrical_devices:00001 a p223:ThreePhaseDistributionPanel,
         electrical_devices:00009,
         electrical_devices:00013,
         electrical_devices:00017,
-        electrical_devices:00021 ;
+        electrical_devices:00021,
+        electrical_devices:00025 ;
     rdfs:comment "Main Entry Panel of Building at 575V" .
 electrical_devices:00002 a p223:ElectricalCircuitBreaker,
         p223:ThreePolesMainCircuitBreaker,
@@ -129,11 +129,11 @@ electrical_devices:00002 a p223:ElectricalCircuitBreaker,
         s223:Device ;
     rdfs:label "MainBreaker" ;
     p223:hasMaxRange electrical_devices:00003 ;
-    s223:connectedThrough electrical_devices:00025,
-        electrical_devices:00026,
-        electrical_devices:00027,
-        electrical_devices:00028,
-        electrical_devices:00062 ;
+    s223:connectedThrough electrical_devices:00029,
+        electrical_devices:00030,
+        electrical_devices:00031,
+        electrical_devices:00032,
+        electrical_devices:00066 ;
     s223:hasConnectionPoint electrical_devices:00004,
         electrical_devices:00005,
         electrical_devices:00006,
@@ -152,35 +152,35 @@ electrical_devices:00003 a s223:ObservableProperty,
 electrical_devices:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00062 ;
+    s223:connectsThrough electrical_devices:00066 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 electrical_devices:00005 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletA" ;
-    s223:connectsThrough electrical_devices:00025 ;
+    s223:connectsThrough electrical_devices:00029 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 electrical_devices:00006 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletB" ;
-    s223:connectsThrough electrical_devices:00026 ;
+    s223:connectsThrough electrical_devices:00030 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 electrical_devices:00007 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletC" ;
-    s223:connectsThrough electrical_devices:00027 ;
+    s223:connectsThrough electrical_devices:00031 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 electrical_devices:00008 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletABC" ;
-    s223:connectsThrough electrical_devices:00028 ;
+    s223:connectsThrough electrical_devices:00032 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
@@ -190,7 +190,7 @@ electrical_devices:00009 a p223:ElectricalCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#1" ;
     p223:hasMaxRange electrical_devices:00010 ;
-    s223:connectedThrough electrical_devices:00025 ;
+    s223:connectedThrough electrical_devices:00029 ;
     s223:hasConnectionPoint electrical_devices:00011,
         electrical_devices:00012 ;
     s223:hasProperty electrical_devices:00010 ;
@@ -206,7 +206,7 @@ electrical_devices:00010 a s223:ObservableProperty,
 electrical_devices:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00025 ;
+    s223:connectsThrough electrical_devices:00029 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00009 .
@@ -222,9 +222,7 @@ electrical_devices:00013 a p223:ElectricalCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#2" ;
     p223:hasMaxRange electrical_devices:00014 ;
-    s223:connectedThrough electrical_devices:00028,
-        electricity:00001 ;
-    s223:connectedTo hvac_devices:00036 ;
+    s223:connectedThrough electrical_devices:00032 ;
     s223:hasConnectionPoint electrical_devices:00015,
         electrical_devices:00016 ;
     s223:hasProperty electrical_devices:00014 ;
@@ -240,14 +238,13 @@ electrical_devices:00014 a s223:ObservableProperty,
 electrical_devices:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00028 ;
+    s223:connectsThrough electrical_devices:00032 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00013 .
 electrical_devices:00016 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#2.electricalOutlet" ;
-    s223:connectsThrough electricity:00001 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00013 .
@@ -257,9 +254,9 @@ electrical_devices:00017 a p223:ElectricalCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#3" ;
     p223:hasMaxRange electrical_devices:00018 ;
-    s223:connectedThrough electrical_devices:00028,
-        electrical_devices:00063 ;
-    s223:connectedTo electrical_devices:00029 ;
+    s223:connectedThrough electrical_devices:00032,
+        electrical_devices:00067 ;
+    s223:connectedTo electrical_devices:00033 ;
     s223:hasConnectionPoint electrical_devices:00019,
         electrical_devices:00020 ;
     s223:hasProperty electrical_devices:00018 ;
@@ -275,14 +272,14 @@ electrical_devices:00018 a s223:ObservableProperty,
 electrical_devices:00019 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#3.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00028 ;
+    s223:connectsThrough electrical_devices:00032 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00017 .
 electrical_devices:00020 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#3.electricalOutlet" ;
-    s223:connectsThrough electrical_devices:00063 ;
+    s223:connectsThrough electrical_devices:00067 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00017 .
@@ -292,9 +289,7 @@ electrical_devices:00021 a p223:ElectricalCircuitBreaker,
         s223:Device ;
     rdfs:label "CB#4" ;
     p223:hasMaxRange electrical_devices:00022 ;
-    s223:connectedThrough electrical_devices:00028,
-        electricity:00003 ;
-    s223:connectedTo hvac_devices:00045 ;
+    s223:connectedThrough electrical_devices:00032 ;
     s223:hasConnectionPoint electrical_devices:00023,
         electrical_devices:00024 ;
     s223:hasProperty electrical_devices:00022 ;
@@ -310,98 +305,131 @@ electrical_devices:00022 a s223:ObservableProperty,
 electrical_devices:00023 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#4.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00028 ;
+    s223:connectsThrough electrical_devices:00032 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00021 .
 electrical_devices:00024 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#4.electricalOutlet" ;
-    s223:connectsThrough electricity:00003 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00021 .
-electrical_devices:00025 a s223:Connection ;
+electrical_devices:00025 a p223:ElectricalCircuitBreaker,
+        p223:ThreePolesCircuitBreaker,
+        s223:Connectable,
+        s223:Device ;
+    rdfs:label "CB#5" ;
+    p223:hasMaxRange electrical_devices:00026 ;
+    s223:connectedThrough electrical_devices:00032 ;
+    s223:hasConnectionPoint electrical_devices:00027,
+        electrical_devices:00028 ;
+    s223:hasProperty electrical_devices:00026 ;
+    rdfs:comment "Building Meter Voltage Measurement Breaker" .
+electrical_devices:00026 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Current rating of breaker" ;
+    s223:hasValue 15.0 ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
+    qudt:unit unit:A .
+electrical_devices:00027 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CB#5.electricalInlet" ;
+    s223:connectsThrough electrical_devices:00032 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:isConnectionPointOf electrical_devices:00025 .
+electrical_devices:00028 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CB#5.electricalOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:isConnectionPointOf electrical_devices:00025 .
+electrical_devices:00029 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusA" ;
     s223:connectsAt electrical_devices:00005,
         electrical_devices:00011 ;
     s223:connectsFrom electrical_devices:00002 ;
     s223:connectsTo electrical_devices:00009 ;
     s223:hasMedium s223:Electricity-347V-60Hz .
-electrical_devices:00026 a s223:Connection ;
+electrical_devices:00030 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusB" ;
     s223:connectsAt electrical_devices:00006 ;
     s223:connectsFrom electrical_devices:00002 ;
     s223:hasMedium s223:Electricity-347V-60Hz .
-electrical_devices:00027 a s223:Connection ;
+electrical_devices:00031 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusC" ;
     s223:connectsAt electrical_devices:00007 ;
     s223:connectsFrom electrical_devices:00002 ;
     s223:hasMedium s223:Electricity-347V-60Hz .
-electrical_devices:00028 a s223:Connection ;
+electrical_devices:00032 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusABC" ;
     s223:connectsAt electrical_devices:00008,
         electrical_devices:00015,
         electrical_devices:00019,
-        electrical_devices:00023 ;
+        electrical_devices:00023,
+        electrical_devices:00027 ;
     s223:connectsFrom electrical_devices:00002 ;
     s223:connectsTo electrical_devices:00013,
         electrical_devices:00017,
-        electrical_devices:00021 ;
+        electrical_devices:00021,
+        electrical_devices:00025 ;
     s223:hasMedium s223:Electricity-575V-60Hz .
-electrical_devices:00029 a p223:ElectricalTransformer,
+electrical_devices:00033 a p223:ElectricalTransformer,
         s223:Connectable,
         s223:Device ;
     rdfs:label "TX-1" ;
     s223:connectedFrom electrical_devices:00017 ;
-    s223:connectedThrough electrical_devices:00063,
-        electrical_devices:00064 ;
-    s223:connectedTo electrical_devices:00033 ;
-    s223:hasConnectionPoint electrical_devices:00030,
-        electrical_devices:00031 .
-electrical_devices:00030 a s223:ConnectionPoint,
+    s223:connectedThrough electrical_devices:00067,
+        electrical_devices:00068 ;
+    s223:connectedTo electrical_devices:00037 ;
+    s223:hasConnectionPoint electrical_devices:00034,
+        electrical_devices:00035 .
+electrical_devices:00034 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "TX-1.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00063 ;
+    s223:connectsThrough electrical_devices:00067 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00029 .
-electrical_devices:00031 a s223:ConnectionPoint,
+    s223:isConnectionPointOf electrical_devices:00033 .
+electrical_devices:00035 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "TX-1.electricalOutlet" ;
-    s223:connectsThrough electrical_devices:00064 ;
+    s223:connectsThrough electrical_devices:00068 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V-240V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00029 .
-electrical_devices:00032 a p223:ElectricalDistributionPanel,
+    s223:isConnectionPointOf electrical_devices:00033 .
+electrical_devices:00036 a p223:ElectricalDistributionPanel,
         s223:Connectable,
         s223:Device ;
     rdfs:label "My Panel" ;
-    s223:contains electrical_devices:00033,
-        electrical_devices:00039,
+    s223:contains electrical_devices:00037,
         electrical_devices:00043,
         electrical_devices:00047,
         electrical_devices:00051,
-        electrical_devices:00055 ;
+        electrical_devices:00055,
+        electrical_devices:00059 ;
     rdfs:comment "Description of my panel" .
-electrical_devices:00033 a p223:ElectricalCircuitBreaker,
+electrical_devices:00037 a p223:ElectricalCircuitBreaker,
         p223:TwoPolesMainCircuitBreaker,
         s223:Connectable,
         s223:Device ;
     rdfs:label "MainBreaker" ;
-    p223:hasMaxRange electrical_devices:00034 ;
-    s223:connectedFrom electrical_devices:00029 ;
-    s223:connectedThrough electrical_devices:00059,
-        electrical_devices:00060,
-        electrical_devices:00061,
-        electrical_devices:00064 ;
-    s223:hasConnectionPoint electrical_devices:00035,
-        electrical_devices:00036,
-        electrical_devices:00037,
-        electrical_devices:00038 ;
-    s223:hasProperty electrical_devices:00034 ;
+    p223:hasMaxRange electrical_devices:00038 ;
+    s223:connectedFrom electrical_devices:00033 ;
+    s223:connectedThrough electrical_devices:00063,
+        electrical_devices:00064,
+        electrical_devices:00065,
+        electrical_devices:00068 ;
+    s223:hasConnectionPoint electrical_devices:00039,
+        electrical_devices:00040,
+        electrical_devices:00041,
+        electrical_devices:00042 ;
+    s223:hasProperty electrical_devices:00038 ;
     rdfs:comment "Main breaker of panel" .
-electrical_devices:00034 a s223:ObservableProperty,
+electrical_devices:00038 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -409,47 +437,47 @@ electrical_devices:00034 a s223:ObservableProperty,
     s223:hasValue 200.0 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-electrical_devices:00035 a s223:ConnectionPoint,
+electrical_devices:00039 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00064 ;
+    s223:connectsThrough electrical_devices:00068 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-240V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00033 .
-electrical_devices:00036 a s223:ConnectionPoint,
+    s223:isConnectionPointOf electrical_devices:00037 .
+electrical_devices:00040 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineA_Neutral" ;
-    s223:connectsThrough electrical_devices:00059 ;
+    s223:connectsThrough electrical_devices:00063 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00033 .
-electrical_devices:00037 a s223:ConnectionPoint,
+    s223:isConnectionPointOf electrical_devices:00037 .
+electrical_devices:00041 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineB_Neutral" ;
-    s223:connectsThrough electrical_devices:00060 ;
+    s223:connectsThrough electrical_devices:00064 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00033 .
-electrical_devices:00038 a s223:ConnectionPoint,
+    s223:isConnectionPointOf electrical_devices:00037 .
+electrical_devices:00042 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineA_LineB" ;
-    s223:connectsThrough electrical_devices:00061 ;
+    s223:connectsThrough electrical_devices:00065 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-240V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00033 .
-electrical_devices:00039 a p223:ElectricalCircuitBreaker,
+    s223:isConnectionPointOf electrical_devices:00037 .
+electrical_devices:00043 a p223:ElectricalCircuitBreaker,
         p223:SinglePoleCircuitBreaker,
         s223:Connectable,
         s223:Device ;
     rdfs:label "CB#1" ;
-    p223:hasMaxRange electrical_devices:00040 ;
-    s223:connectedThrough electrical_devices:00059,
-        electrical_devices:00065 ;
-    s223:hasConnectionPoint electrical_devices:00041,
-        electrical_devices:00042 ;
-    s223:hasProperty electrical_devices:00040 ;
+    p223:hasMaxRange electrical_devices:00044 ;
+    s223:connectedThrough electrical_devices:00063,
+        electrical_devices:00069 ;
+    s223:hasConnectionPoint electrical_devices:00045,
+        electrical_devices:00046 ;
+    s223:hasProperty electrical_devices:00044 ;
     rdfs:comment "Lights in OpenOffice" .
-electrical_devices:00040 a s223:ObservableProperty,
+electrical_devices:00044 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -457,32 +485,32 @@ electrical_devices:00040 a s223:ObservableProperty,
     s223:hasValue 15.0 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-electrical_devices:00041 a s223:ConnectionPoint,
+electrical_devices:00045 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00059 ;
+    s223:connectsThrough electrical_devices:00063 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00039 .
-electrical_devices:00042 a s223:ConnectionPoint,
+    s223:isConnectionPointOf electrical_devices:00043 .
+electrical_devices:00046 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#1.electricalOutlet" ;
-    s223:connectsThrough electrical_devices:00065 ;
+    s223:connectsThrough electrical_devices:00069 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00039 .
-electrical_devices:00043 a p223:ElectricalCircuitBreaker,
+    s223:isConnectionPointOf electrical_devices:00043 .
+electrical_devices:00047 a p223:ElectricalCircuitBreaker,
         p223:TwoPolesCircuitBreaker,
         s223:Connectable,
         s223:Device ;
     rdfs:label "CB#2" ;
-    p223:hasMaxRange electrical_devices:00044 ;
-    s223:connectedThrough electrical_devices:00061 ;
-    s223:hasConnectionPoint electrical_devices:00045,
-        electrical_devices:00046 ;
-    s223:hasProperty electrical_devices:00044 ;
+    p223:hasMaxRange electrical_devices:00048 ;
+    s223:connectedThrough electrical_devices:00065 ;
+    s223:hasConnectionPoint electrical_devices:00049,
+        electrical_devices:00050 ;
+    s223:hasProperty electrical_devices:00048 ;
     rdfs:comment "Heater" .
-electrical_devices:00044 a s223:ObservableProperty,
+electrical_devices:00048 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
@@ -490,65 +518,31 @@ electrical_devices:00044 a s223:ObservableProperty,
     s223:hasValue 20.0 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-electrical_devices:00045 a s223:ConnectionPoint,
+electrical_devices:00049 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00061 ;
+    s223:connectsThrough electrical_devices:00065 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-240V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00043 .
-electrical_devices:00046 a s223:ConnectionPoint,
+    s223:isConnectionPointOf electrical_devices:00047 .
+electrical_devices:00050 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "CB#2.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-240V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00043 .
-electrical_devices:00047 a p223:ElectricalCircuitBreaker,
-        p223:SinglePoleCircuitBreaker,
-        s223:Connectable,
-        s223:Device ;
-    rdfs:label "CB#3" ;
-    p223:hasMaxRange electrical_devices:00048 ;
-    s223:connectedThrough electrical_devices:00059,
-        electrical_devices:00066 ;
-    s223:hasConnectionPoint electrical_devices:00049,
-        electrical_devices:00050 ;
-    s223:hasProperty electrical_devices:00048 ;
-    rdfs:comment "Lights in Kitchenette" .
-electrical_devices:00048 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    rdfs:label "Current rating of breaker" ;
-    s223:hasValue 15.0 ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
-electrical_devices:00049 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "CB#3.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00059 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Electricity-120V-60Hz ;
-    s223:isConnectionPointOf electrical_devices:00047 .
-electrical_devices:00050 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "CB#3.electricalOutlet" ;
-    s223:connectsThrough electrical_devices:00066 ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00047 .
 electrical_devices:00051 a p223:ElectricalCircuitBreaker,
         p223:SinglePoleCircuitBreaker,
         s223:Connectable,
         s223:Device ;
-    rdfs:label "CB#4" ;
+    rdfs:label "CB#3" ;
     p223:hasMaxRange electrical_devices:00052 ;
-    s223:connectedThrough electrical_devices:00059,
-        electrical_devices:00067 ;
+    s223:connectedThrough electrical_devices:00063,
+        electrical_devices:00070 ;
     s223:hasConnectionPoint electrical_devices:00053,
         electrical_devices:00054 ;
     s223:hasProperty electrical_devices:00052 ;
-    rdfs:comment "Lights in Corridors + bathroom" .
+    rdfs:comment "Lights in Kitchenette" .
 electrical_devices:00052 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -559,15 +553,15 @@ electrical_devices:00052 a s223:ObservableProperty,
     qudt:unit unit:A .
 electrical_devices:00053 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "CB#4.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00059 ;
+    rdfs:label "CB#3.electricalInlet" ;
+    s223:connectsThrough electrical_devices:00063 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00051 .
 electrical_devices:00054 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "CB#4.electricalOutlet" ;
-    s223:connectsThrough electrical_devices:00067 ;
+    rdfs:label "CB#3.electricalOutlet" ;
+    s223:connectsThrough electrical_devices:00070 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00051 .
@@ -575,14 +569,14 @@ electrical_devices:00055 a p223:ElectricalCircuitBreaker,
         p223:SinglePoleCircuitBreaker,
         s223:Connectable,
         s223:Device ;
-    rdfs:label "CB#5" ;
+    rdfs:label "CB#4" ;
     p223:hasMaxRange electrical_devices:00056 ;
-    s223:connectedThrough electrical_devices:00059,
-        electrical_devices:00068 ;
+    s223:connectedThrough electrical_devices:00063,
+        electrical_devices:00071 ;
     s223:hasConnectionPoint electrical_devices:00057,
         electrical_devices:00058 ;
     s223:hasProperty electrical_devices:00056 ;
-    rdfs:comment "Lights in Private Office" .
+    rdfs:comment "Lights in Corridors + bathroom" .
 electrical_devices:00056 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -593,129 +587,139 @@ electrical_devices:00056 a s223:ObservableProperty,
     qudt:unit unit:A .
 electrical_devices:00057 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "CB#5.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00059 ;
+    rdfs:label "CB#4.electricalInlet" ;
+    s223:connectsThrough electrical_devices:00063 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00055 .
 electrical_devices:00058 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "CB#5.electricalOutlet" ;
-    s223:connectsThrough electrical_devices:00068 ;
+    rdfs:label "CB#4.electricalOutlet" ;
+    s223:connectsThrough electrical_devices:00071 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00055 .
-electrical_devices:00059 a s223:Connection ;
+electrical_devices:00059 a p223:ElectricalCircuitBreaker,
+        p223:SinglePoleCircuitBreaker,
+        s223:Connectable,
+        s223:Device ;
+    rdfs:label "CB#5" ;
+    p223:hasMaxRange electrical_devices:00060 ;
+    s223:connectedThrough electrical_devices:00063,
+        electrical_devices:00072 ;
+    s223:hasConnectionPoint electrical_devices:00061,
+        electrical_devices:00062 ;
+    s223:hasProperty electrical_devices:00060 ;
+    rdfs:comment "Lights in Private Office" .
+electrical_devices:00060 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "Current rating of breaker" ;
+    s223:hasValue 15.0 ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
+    qudt:unit unit:A .
+electrical_devices:00061 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CB#5.electricalInlet" ;
+    s223:connectsThrough electrical_devices:00063 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-120V-60Hz ;
+    s223:isConnectionPointOf electrical_devices:00059 .
+electrical_devices:00062 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CB#5.electricalOutlet" ;
+    s223:connectsThrough electrical_devices:00072 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-120V-60Hz ;
+    s223:isConnectionPointOf electrical_devices:00059 .
+electrical_devices:00063 a s223:Connection ;
     rdfs:label "My Panel.electricalBusA" ;
-    s223:connectsAt electrical_devices:00036,
-        electrical_devices:00041,
-        electrical_devices:00049,
+    s223:connectsAt electrical_devices:00040,
+        electrical_devices:00045,
         electrical_devices:00053,
-        electrical_devices:00057 ;
-    s223:connectsFrom electrical_devices:00033 ;
-    s223:connectsTo electrical_devices:00039,
-        electrical_devices:00047,
+        electrical_devices:00057,
+        electrical_devices:00061 ;
+    s223:connectsFrom electrical_devices:00037 ;
+    s223:connectsTo electrical_devices:00043,
         electrical_devices:00051,
-        electrical_devices:00055 ;
+        electrical_devices:00055,
+        electrical_devices:00059 ;
     s223:hasMedium s223:Electricity-120V-60Hz .
-electrical_devices:00060 a s223:Connection ;
+electrical_devices:00064 a s223:Connection ;
     rdfs:label "My Panel.electricalBusB" ;
-    s223:connectsAt electrical_devices:00037 ;
-    s223:connectsFrom electrical_devices:00033 ;
+    s223:connectsAt electrical_devices:00041 ;
+    s223:connectsFrom electrical_devices:00037 ;
     s223:hasMedium s223:Electricity-120V-60Hz .
-electrical_devices:00061 a s223:Connection ;
+electrical_devices:00065 a s223:Connection ;
     rdfs:label "My Panel.electricalBusAB" ;
-    s223:connectsAt electrical_devices:00038,
-        electrical_devices:00045 ;
-    s223:connectsFrom electrical_devices:00033 ;
-    s223:connectsTo electrical_devices:00043 ;
+    s223:connectsAt electrical_devices:00042,
+        electrical_devices:00049 ;
+    s223:connectsFrom electrical_devices:00037 ;
+    s223:connectsTo electrical_devices:00047 ;
     s223:hasMedium s223:Electricity-240V-60Hz .
-electrical_devices:00062 a s223:Connection ;
+electrical_devices:00066 a s223:Connection ;
     rdfs:label "Hydro-Québec" ;
     s223:connectsAt electrical_devices:00004 ;
     s223:connectsTo electrical_devices:00002 ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     rdfs:comment "600V" .
-electrical_devices:00063 a s223:Connection ;
+electrical_devices:00067 a s223:Connection ;
     s223:connectsAt electrical_devices:00020,
-        electrical_devices:00030 ;
+        electrical_devices:00034 ;
     s223:connectsFrom electrical_devices:00017 ;
-    s223:connectsTo electrical_devices:00029 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
-electrical_devices:00064 a s223:Connection ;
-    s223:connectsAt electrical_devices:00031,
-        electrical_devices:00035 ;
-    s223:connectsFrom electrical_devices:00029 ;
     s223:connectsTo electrical_devices:00033 ;
+    s223:hasMedium s223:Electricity-575V-60Hz .
+electrical_devices:00068 a s223:Connection ;
+    s223:connectsAt electrical_devices:00035,
+        electrical_devices:00039 ;
+    s223:connectsFrom electrical_devices:00033 ;
+    s223:connectsTo electrical_devices:00037 ;
     s223:hasMedium s223:Electricity-120V-240V-60Hz .
-electrical_devices:00065 a s223:Connection ;
+electrical_devices:00069 a s223:Connection ;
     rdfs:label "DISTPANEL-CB1" ;
-    s223:connectsAt electrical_devices:00042,
+    s223:connectsAt electrical_devices:00046,
         lighting_devices:00067,
         lighting_devices:00073,
         lighting_devices:00079,
         lighting_devices:00085 ;
-    s223:connectsFrom electrical_devices:00039 ;
+    s223:connectsFrom electrical_devices:00043 ;
     s223:connectsTo lighting_devices:00063,
         lighting_devices:00070,
         lighting_devices:00076,
         lighting_devices:00082 ;
     s223:hasMedium s223:Electricity-120V-60Hz .
-electrical_devices:00066 a s223:Connection ;
+electrical_devices:00070 a s223:Connection ;
     rdfs:label "DISTPANEL-CB3" ;
-    s223:connectsAt electrical_devices:00050,
+    s223:connectsAt electrical_devices:00054,
         lighting_devices:00006,
         lighting_devices:00012 ;
-    s223:connectsFrom electrical_devices:00047 ;
+    s223:connectsFrom electrical_devices:00051 ;
     s223:connectsTo lighting_devices:00003,
         lighting_devices:00009 ;
     s223:hasMedium s223:Electricity-120V-60Hz .
-electrical_devices:00067 a s223:Connection ;
+electrical_devices:00071 a s223:Connection ;
     rdfs:label "DISTPANEL-CB4" ;
-    s223:connectsAt electrical_devices:00054,
+    s223:connectsAt electrical_devices:00058,
         lighting_devices:00036,
         lighting_devices:00042,
         lighting_devices:00051,
         lighting_devices:00057 ;
-    s223:connectsFrom electrical_devices:00051 ;
+    s223:connectsFrom electrical_devices:00055 ;
     s223:connectsTo lighting_devices:00033,
         lighting_devices:00039,
         lighting_devices:00048,
         lighting_devices:00054 ;
     s223:hasMedium s223:Electricity-120V-60Hz .
-electrical_devices:00068 a s223:Connection ;
+electrical_devices:00072 a s223:Connection ;
     rdfs:label "DISTPANEL-CB5" ;
-    s223:connectsAt electrical_devices:00058,
+    s223:connectsAt electrical_devices:00062,
         lighting_devices:00021,
         lighting_devices:00027 ;
-    s223:connectsFrom electrical_devices:00055 ;
+    s223:connectsFrom electrical_devices:00059 ;
     s223:connectsTo lighting_devices:00018,
         lighting_devices:00024 ;
     s223:hasMedium s223:Electricity-120V-60Hz .
-electricity:00001 a s223:Connection ;
-    s223:connectsAt electrical_devices:00016,
-        hvac_devices:00039 ;
-    s223:connectsFrom electrical_devices:00013 ;
-    s223:connectsTo hvac_devices:00036 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
-electricity:00002 a s223:Connection ;
-    s223:connectsAt hvac_devices:00029,
-        hvac_devices:00040 ;
-    s223:connectsFrom hvac_devices:00036 ;
-    s223:connectsTo hvac_devices:00026 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
-electricity:00003 a s223:Connection ;
-    s223:connectsAt electrical_devices:00024,
-        hvac_devices:00046 ;
-    s223:connectsFrom electrical_devices:00021 ;
-    s223:connectsTo hvac_devices:00045 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
-electricity:00004 a s223:Connection ;
-    s223:connectsAt hvac_devices:00019,
-        hvac_devices:00047 ;
-    s223:connectsFrom hvac_devices:00045 ;
-    s223:connectsTo hvac_devices:00016 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
 functions:00001 a s223:FunctionBlock,
         functions:AVG_Temp ;
     rdfs:label "FB-1" ;
@@ -750,7 +754,7 @@ functions:00006 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
-    s223:hasValue s223:Occupancy-Occupied .
+    s223:hasValue s223:Occupancy-Unoccupied .
 functions:00007 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "OpenOffice Occ Control" ;
@@ -793,7 +797,7 @@ functions:00014 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-Occupancy ;
-    s223:hasValue s223:Occupancy-Occupied .
+    s223:hasValue s223:Occupancy-Unoccupied .
 functions:00015 a p223:OccupancyControl,
         s223:FunctionBlock ;
     rdfs:label "Kitchenette Occ Control" ;
@@ -1243,6 +1247,7 @@ hvac_devices:00015 a p223:DifferentialStaticPressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "TPD3.DifferentialStaticPressure" ;
+    s223:hasValue 129.3 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
@@ -1252,9 +1257,7 @@ hvac_devices:00016 a s223:Connectable,
     rdfs:label "RF" ;
     s223:airInlet hvac_devices:00017 ;
     s223:airOutlet hvac_devices:00018 ;
-    s223:connectedFrom hvac_devices:00045 ;
-    s223:connectedThrough electricity:00004,
-        hvac:00007,
+    s223:connectedThrough hvac:00007,
         hvac:00009 ;
     s223:hasConnectionPoint hvac_devices:00017,
         hvac_devices:00018,
@@ -1284,7 +1287,6 @@ hvac_devices:00018 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00016 .
 hvac_devices:00019 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    s223:connectsThrough electricity:00004 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00016 .
@@ -1342,10 +1344,8 @@ hvac_devices:00026 a s223:Connectable,
     rdfs:label "SF" ;
     s223:airInlet hvac_devices:00027 ;
     s223:airOutlet hvac_devices:00028 ;
-    s223:connectedFrom hvac_devices:00036,
-        hvac_devices:00057 ;
-    s223:connectedThrough electricity:00002,
-        hvac:00008,
+    s223:connectedFrom hvac_devices:00057 ;
+    s223:connectedThrough hvac:00008,
         hvac:00013 ;
     s223:hasConnectionPoint hvac_devices:00027,
         hvac_devices:00028,
@@ -1373,7 +1373,6 @@ hvac_devices:00028 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00026 .
 hvac_devices:00029 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    s223:connectsThrough electricity:00002 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00026 .
@@ -1429,10 +1428,6 @@ hvac_devices:00036 a s223:Connectable,
         s223:Device,
         s223:MotorStarter ;
     rdfs:label "SF-STARTER" ;
-    s223:connectedFrom electrical_devices:00013 ;
-    s223:connectedThrough electricity:00001,
-        electricity:00002 ;
-    s223:connectedTo hvac_devices:00026 ;
     s223:contains hvac_devices:00041 ;
     s223:hasConnectionPoint hvac_devices:00037,
         hvac_devices:00038,
@@ -1458,14 +1453,12 @@ hvac_devices:00038 a s223:ConnectionPoint,
 hvac_devices:00039 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SF-STARTER.electricalInlet" ;
-    s223:connectsThrough electricity:00001 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00036 .
 hvac_devices:00040 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "SF-STARTER.electricalOutlet" ;
-    s223:connectsThrough electricity:00002 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00036 .
@@ -1502,10 +1495,6 @@ hvac_devices:00045 a s223:Connectable,
         s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "RF-VFD" ;
-    s223:connectedFrom electrical_devices:00021 ;
-    s223:connectedThrough electricity:00003,
-        electricity:00004 ;
-    s223:connectedTo hvac_devices:00016 ;
     s223:hasConnectionPoint hvac_devices:00046,
         hvac_devices:00047 ;
     s223:hasProperty hvac_devices:00048,
@@ -1520,13 +1509,11 @@ hvac_devices:00045 a s223:Connectable,
     rdfs:comment "VFD for return Fan" .
 hvac_devices:00046 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
-    s223:connectsThrough electricity:00003 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00045 .
 hvac_devices:00047 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    s223:connectsThrough electricity:00004 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00045 .
@@ -3095,18 +3082,18 @@ lighting_devices:00001 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00002 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00003 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire11" ;
-    s223:connectedThrough electrical_devices:00066,
+    s223:connectedThrough electrical_devices:00070,
         lighting_devices:00015 ;
     s223:electricalPower lighting_devices:00004 ;
     s223:hasConnectionPoint lighting_devices:00005,
@@ -3137,7 +3124,7 @@ lighting_devices:00005 a s223:ConnectionPoint,
 lighting_devices:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire11.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00066 ;
+    s223:connectsThrough electrical_devices:00070 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00003 .
@@ -3146,18 +3133,18 @@ lighting_devices:00007 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00008 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00009 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire12" ;
-    s223:connectedThrough electrical_devices:00066,
+    s223:connectedThrough electrical_devices:00070,
         lighting_devices:00015 ;
     s223:electricalPower lighting_devices:00010 ;
     s223:hasConnectionPoint lighting_devices:00011,
@@ -3188,7 +3175,7 @@ lighting_devices:00011 a s223:ConnectionPoint,
 lighting_devices:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire12.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00066 ;
+    s223:connectsThrough electrical_devices:00070 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00009 .
@@ -3233,7 +3220,7 @@ lighting_devices:00018 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire7" ;
-    s223:connectedThrough electrical_devices:00068,
+    s223:connectedThrough electrical_devices:00072,
         lighting_devices:00030 ;
     s223:electricalPower lighting_devices:00019 ;
     s223:hasConnectionPoint lighting_devices:00020,
@@ -3264,7 +3251,7 @@ lighting_devices:00020 a s223:ConnectionPoint,
 lighting_devices:00021 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire7.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00068 ;
+    s223:connectsThrough electrical_devices:00072 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00018 .
@@ -3284,7 +3271,7 @@ lighting_devices:00024 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire8" ;
-    s223:connectedThrough electrical_devices:00068,
+    s223:connectedThrough electrical_devices:00072,
         lighting_devices:00030 ;
     s223:electricalPower lighting_devices:00025 ;
     s223:hasConnectionPoint lighting_devices:00026,
@@ -3315,7 +3302,7 @@ lighting_devices:00026 a s223:ConnectionPoint,
 lighting_devices:00027 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire8.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00068 ;
+    s223:connectsThrough electrical_devices:00072 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00024 .
@@ -3361,7 +3348,7 @@ lighting_devices:00033 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire9" ;
-    s223:connectedThrough electrical_devices:00067,
+    s223:connectedThrough electrical_devices:00071,
         lighting_devices:00045 ;
     s223:electricalPower lighting_devices:00034 ;
     s223:hasConnectionPoint lighting_devices:00035,
@@ -3392,7 +3379,7 @@ lighting_devices:00035 a s223:ConnectionPoint,
 lighting_devices:00036 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire9.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00067 ;
+    s223:connectsThrough electrical_devices:00071 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00033 .
@@ -3401,18 +3388,18 @@ lighting_devices:00037 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00038 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00039 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire10" ;
-    s223:connectedThrough electrical_devices:00067,
+    s223:connectedThrough electrical_devices:00071,
         lighting_devices:00045 ;
     s223:electricalPower lighting_devices:00040 ;
     s223:hasConnectionPoint lighting_devices:00041,
@@ -3443,7 +3430,7 @@ lighting_devices:00041 a s223:ConnectionPoint,
 lighting_devices:00042 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire10.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00067 ;
+    s223:connectsThrough electrical_devices:00071 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00039 .
@@ -3485,12 +3472,12 @@ lighting_devices:00047 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00048 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire5" ;
-    s223:connectedThrough electrical_devices:00067,
+    s223:connectedThrough electrical_devices:00071,
         lighting_devices:00058 ;
     s223:electricalPower lighting_devices:00049 ;
     s223:hasConnectionPoint lighting_devices:00050,
@@ -3521,7 +3508,7 @@ lighting_devices:00050 a s223:ConnectionPoint,
 lighting_devices:00051 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire5.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00067 ;
+    s223:connectsThrough electrical_devices:00071 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00048 .
@@ -3541,7 +3528,7 @@ lighting_devices:00054 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire6" ;
-    s223:connectedThrough electrical_devices:00067,
+    s223:connectedThrough electrical_devices:00071,
         lighting_devices:00058 ;
     s223:electricalPower lighting_devices:00055 ;
     s223:hasConnectionPoint lighting_devices:00056,
@@ -3572,7 +3559,7 @@ lighting_devices:00056 a s223:ConnectionPoint,
 lighting_devices:00057 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire6.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00067 ;
+    s223:connectsThrough electrical_devices:00071 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00054 .
@@ -3609,19 +3596,19 @@ lighting_devices:00061 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasExternalReference bacnet_references:00013 ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00062 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00063 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire1" ;
     s223:brightnessRatio lighting_devices:00064 ;
-    s223:connectedThrough electrical_devices:00065,
+    s223:connectedThrough electrical_devices:00069,
         lighting_devices:00086 ;
     s223:electricalPower lighting_devices:00065 ;
     s223:hasConnectionPoint lighting_devices:00066,
@@ -3662,7 +3649,7 @@ lighting_devices:00066 a s223:ConnectionPoint,
 lighting_devices:00067 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire1.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00065 ;
+    s223:connectsThrough electrical_devices:00069 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00063 .
@@ -3671,18 +3658,18 @@ lighting_devices:00068 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00069 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00070 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire2" ;
-    s223:connectedThrough electrical_devices:00065,
+    s223:connectedThrough electrical_devices:00069,
         lighting_devices:00086 ;
     s223:electricalPower lighting_devices:00071 ;
     s223:hasConnectionPoint lighting_devices:00072,
@@ -3713,7 +3700,7 @@ lighting_devices:00072 a s223:ConnectionPoint,
 lighting_devices:00073 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire2.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00065 ;
+    s223:connectsThrough electrical_devices:00069 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00070 .
@@ -3722,18 +3709,18 @@ lighting_devices:00074 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00075 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00076 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire3" ;
-    s223:connectedThrough electrical_devices:00065,
+    s223:connectedThrough electrical_devices:00069,
         lighting_devices:00087 ;
     s223:electricalPower lighting_devices:00077 ;
     s223:hasConnectionPoint lighting_devices:00078,
@@ -3764,7 +3751,7 @@ lighting_devices:00078 a s223:ConnectionPoint,
 lighting_devices:00079 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire3.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00065 ;
+    s223:connectsThrough electrical_devices:00069 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00076 .
@@ -3773,18 +3760,18 @@ lighting_devices:00080 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00081 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-On .
+    s223:hasValue s223:OnOff-Off .
 lighting_devices:00082 a s223:Connectable,
         s223:Device,
         s223:Luminaire ;
     rdfs:label "Luminaire4" ;
-    s223:connectedThrough electrical_devices:00065,
+    s223:connectedThrough electrical_devices:00069,
         lighting_devices:00087 ;
     s223:electricalPower lighting_devices:00083 ;
     s223:hasConnectionPoint lighting_devices:00084,
@@ -3815,7 +3802,7 @@ lighting_devices:00084 a s223:ConnectionPoint,
 lighting_devices:00085 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire4.electricalInlet" ;
-    s223:connectsThrough electrical_devices:00065 ;
+    s223:connectsThrough electrical_devices:00069 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf lighting_devices:00082 .
