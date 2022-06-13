@@ -3,6 +3,7 @@ from typing import Dict
 from rdflib import Literal
 
 from bob.properties import ElectricPowerkW
+from bob.properties.electricity import Amps
 from bob.property import QuantifiableObservableProperty
 
 from ...connections.electricity import (
@@ -176,7 +177,7 @@ class CircuitBreaker(Device):
     _class_iri = p223.ElectricalCircuitBreaker
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
-    hasMaxRange: QuantifiableObservableProperty
+    hasMaxRange: Amps
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
@@ -184,12 +185,7 @@ class CircuitBreaker(Device):
 
         super().__init__(config, **kwargs)
 
-        self.hasMaxRange = QuantifiableObservableProperty(
-            amps,
-            label="Current rating of breaker",
-            hasQuantityKind=quantitykind.ElectricCurrent,
-            unit=unit.A,
-        )
+        self.hasMaxRange = Amps(amps, label="Current rating of breaker")
 
 
 class SinglePoleCircuitBreaker(CircuitBreaker):
