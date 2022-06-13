@@ -2,7 +2,6 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 @prefix ex30: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -228,7 +227,7 @@ ex30:00029 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf ex30:00026 .
-ex30:00030 a p223:Amps,
+ex30:00030 a s223:Amps,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -237,7 +236,8 @@ ex30:00030 a p223:Amps,
     s223:isPropertyOf ex30:00026 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex30:00031 a p223:ElectricPowerkW,
+ex30:00031 a s223:ElectricPower,
+        s223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,

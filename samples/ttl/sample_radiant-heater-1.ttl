@@ -2,7 +2,6 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 @prefix ex: <urn:ex/sample_radiant-heater-1/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -489,7 +488,7 @@ ex:00063 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf ex:00060 .
-ex:00064 a p223:Amps,
+ex:00064 a s223:Amps,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -497,7 +496,8 @@ ex:00064 a p223:Amps,
     rdfs:label "amps" ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex:00065 a p223:ElectricPowerkW,
+ex:00065 a s223:ElectricPower,
+        s223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
