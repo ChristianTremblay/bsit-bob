@@ -4,6 +4,7 @@ import hvac_spaces as hs
 import physical_spaces as ps
 
 from bob.connections.electricity import (
+    Electricity_120V_60HzInletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
@@ -146,9 +147,14 @@ vav2_config = {
 
 ahu = AirHandlingUnit(config=ahu_template)
 
-
+exhaustfan_template = {
+    "cp": {"electricalInlet": Electricity_120V_60HzInletConnectionPoint},
+}
 bathroom_exhaust_fan = Fan(
-    label="ExhaustFan", comment="Bathroom exhaust fan", hasPhysicalLocation=ps.bathroom
+    config=exhaustfan_template,
+    label="ExhaustFan",
+    comment="Bathroom exhaust fan",
+    hasPhysicalLocation=ps.bathroom,
 )
 window1 = Window(
     label="Window_West",

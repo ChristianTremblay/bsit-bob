@@ -36,6 +36,8 @@ ed.dist_panel_cb5 >> [
     ld.privateoffice_luminaire_8,
 ]
 
+ed.dist_panel_cb6 >> ed.bathroom_timer_switch >> hd.bathroom_exhaust_fan.electricalInlet
+
 """
 ed.main_panel["CB#2"] >> hd.ahu["SF-STARTER"] >> hd.ahu["SF"]
 ed.main_panel["CB#4"] >> hd.ahu["RF-VFD"] >> hd.ahu["RF"]

@@ -4,6 +4,8 @@ from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
 from bob.devices.electricity.distribution import *
 from bob.devices.electricity.meter import ThreePhaseElectricalMeter
+from bob.devices.electricity.switch import TimerSwitch
+from bob.properties.time import Hour
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
@@ -94,6 +96,12 @@ distribution_panel_config = {
             "voltage": "120",
             "bus_bar": "A",
         },
+        ("CB#6", SinglePoleCircuitBreaker): {
+            "comment": "Bathroom Fan",
+            "amps": 15,
+            "voltage": "120",
+            "bus_bar": "B",
+        },
     },
     # other properties could go there... ?
 }
@@ -117,10 +125,14 @@ dist_panel_cb1 = Electricity_120V_60HzConnection(label="DISTPANEL-CB1")
 dist_panel_cb3 = Electricity_120V_60HzConnection(label="DISTPANEL-CB3")
 dist_panel_cb4 = Electricity_120V_60HzConnection(label="DISTPANEL-CB4")
 dist_panel_cb5 = Electricity_120V_60HzConnection(label="DISTPANEL-CB5")
+dist_panel_cb6 = Electricity_120V_60HzConnection(label="DISTPANEL-CB6")
 dist_panel["CB#1"] >> dist_panel_cb1
 dist_panel["CB#3"] >> dist_panel_cb3
 dist_panel["CB#4"] >> dist_panel_cb4
 dist_panel["CB#5"] >> dist_panel_cb5
+dist_panel["CB#6"] >> dist_panel_cb6
+
+bathroom_timer_switch = TimerSwitch(label="Bathroom Timer Switch", voltage=120, delay=2)
 
 
 return_fan_electrical_meter = ThreePhaseElectricalMeter(
