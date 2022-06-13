@@ -23,7 +23,7 @@ hd.vav2["VAV2_DA-T"].observesProperty.set_value(
 hd.ahu["DA-T"].observesProperty.set_value(70.2)  # PD-SR-MP VAV1&VAV2 Inlet Temperature
 
 # hd.bathroom_exhaust_fan.onOffStatus = OnOffEnum.On
-hd.ahu["RF-VFD"].onOffStatus = OnOffEnum.On
+hd.ahu["RF-VFD"].drive_running = OnOffEnum.On
 # hd.ahu['SF-STARTER']['SF-STARTER.sensor'].onOffStatus = OnOffEnum.On
 hd.ahu["TPD3"].observesProperty.set_value(
     129.3

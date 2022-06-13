@@ -33,8 +33,10 @@ import hvac  # isort: skip
 import lighting_spaces as ls  # isort: skip
 import lighting_devices as ld  # isort: skip
 import lighting  # isort: skip
+import network_devices as nd  # isort: skip
 import electrical_devices as ed  # isort: skip
 import electricity  # isort: skip
+
 import functions  # isort: skip
 import bacnet_references  # isort: skip
 import fake_values  # isort: skip

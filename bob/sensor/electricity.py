@@ -20,10 +20,6 @@ from .sensor import Sensor, split_kwargs
 _namespace = s223
 
 
-class CurrentSwitch(OnOffStatus):
-    ofMedium: Medium  # set from the sensor
-
-
 class VoltageSensor(Sensor):
     observesProperty: PropertyReference  # Temperature
     hasMinRange: PropertyReference

@@ -102,6 +102,12 @@ distribution_panel_config = {
             "voltage": "120",
             "bus_bar": "B",
         },
+        ("CB#7", SinglePoleCircuitBreaker): {
+            "comment": "IT Room",
+            "amps": 15,
+            "voltage": "120",
+            "bus_bar": "B",
+        },
     },
     # other properties could go there... ?
 }
@@ -126,11 +132,13 @@ dist_panel_cb3 = Electricity_120V_60HzConnection(label="DISTPANEL-CB3")
 dist_panel_cb4 = Electricity_120V_60HzConnection(label="DISTPANEL-CB4")
 dist_panel_cb5 = Electricity_120V_60HzConnection(label="DISTPANEL-CB5")
 dist_panel_cb6 = Electricity_120V_60HzConnection(label="DISTPANEL-CB6")
+dist_panel_cb7 = Electricity_120V_60HzConnection(label="DISTPANEL-CB7")
 dist_panel["CB#1"] >> dist_panel_cb1
 dist_panel["CB#3"] >> dist_panel_cb3
 dist_panel["CB#4"] >> dist_panel_cb4
 dist_panel["CB#5"] >> dist_panel_cb5
 dist_panel["CB#6"] >> dist_panel_cb6
+dist_panel["CB#7"] >> dist_panel_cb7
 
 bathroom_timer_switch = TimerSwitch(label="Bathroom Timer Switch", voltage=120, delay=2)
 

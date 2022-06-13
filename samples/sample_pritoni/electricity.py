@@ -3,6 +3,7 @@ from pathlib import Path
 import electrical_devices as ed
 import hvac_devices as hd
 import lighting_devices as ld
+import network_devices as nd
 import physical_spaces as ps
 
 from bob.connections.electricity import *
@@ -37,6 +38,8 @@ ed.dist_panel_cb5 >> [
 ]
 
 ed.dist_panel_cb6 >> ed.bathroom_timer_switch >> hd.bathroom_exhaust_fan.electricalInlet
+
+ed.dist_panel_cb7 >> nd.ip_switch.electricalInlet
 
 """
 ed.main_panel["CB#2"] >> hd.ahu["SF-STARTER"] >> hd.ahu["SF"]

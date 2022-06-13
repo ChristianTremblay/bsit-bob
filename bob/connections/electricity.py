@@ -1,4 +1,6 @@
-from rdflib import URIRef
+from rdflib import Literal, URIRef
+
+from bob.properties.network import Mbit_per_seconds
 
 from ..core import (
     BidirectionalConnectionPoint,
@@ -573,6 +575,8 @@ class EthernetConnection(Connection):
 
 class EthernetConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.Ethernet
+    data_rate: Mbit_per_seconds
+    vlan: Literal
     _class_iri = None
 
 
