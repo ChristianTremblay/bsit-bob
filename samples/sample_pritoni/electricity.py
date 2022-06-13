@@ -47,8 +47,10 @@ ed.supply_fan_electrical_meter.hasPhysicalLocation = ps.bldg
 ed.supply_fan_electrical_meter.hasMeasurementLocation = hd.ahu["SF"].electricalInlet
 
 ed.building_electrical_meter.hasPhysicalLocation = ps.bldg
-ed.building_electrical_meter.set_voltage_measurement_location(ed.main_panel['CB#5'])
-ed.building_electrical_meter.set_current_measurement_location(ed.main_panel['MainBreaker'].electricalInlet)
+ed.building_electrical_meter.set_voltage_measurement_location(ed.main_panel["CB#5"])
+ed.building_electrical_meter.set_current_measurement_location(
+    ed.main_panel["MainBreaker"].electricalInlet
+)
 
 
 if __name__ == "__main__":

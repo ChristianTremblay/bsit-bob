@@ -22,10 +22,12 @@ hd.vav2["VAV2_DA-T"].observesProperty.set_value(
 )  # PD-SR-MP VAV2 Outlet Temperature
 hd.ahu["DA-T"].observesProperty.set_value(70.2)  # PD-SR-MP VAV1&VAV2 Inlet Temperature
 
-#hd.bathroom_exhaust_fan.onOffStatus = OnOffEnum.On
-hd.ahu['RF-VFD'].onOffStatus = OnOffEnum.On
-#hd.ahu['SF-STARTER']['SF-STARTER.sensor'].onOffStatus = OnOffEnum.On
-hd.ahu['TPD3'].observesProperty.set_value(129.3) # !!! My TPD3 is static pressure...not flow
+# hd.bathroom_exhaust_fan.onOffStatus = OnOffEnum.On
+hd.ahu["RF-VFD"].onOffStatus = OnOffEnum.On
+# hd.ahu['SF-STARTER']['SF-STARTER.sensor'].onOffStatus = OnOffEnum.On
+hd.ahu["TPD3"].observesProperty.set_value(
+    129.3
+)  # !!! My TPD3 is static pressure...not flow
 
 fn.open_office_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Unoccupied
 fn.kitchenette_occ_control.hasOccupancyStatus.hasValue = OccupancyEnum.Unoccupied

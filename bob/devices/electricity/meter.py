@@ -189,7 +189,9 @@ class ThreePhaseElectricalMeter(Device):
     def __init__(self, config: Dict = None, **kwargs):
         _config = three_phase_electricalmeter_template
         if "medium" not in kwargs:
-            raise ValueError("You must provide medium when defining an electrical meter")
+            raise ValueError(
+                "You must provide medium when defining an electrical meter"
+            )
         _medium = kwargs.pop("medium")
         for k, v in _config["sensors"].items():
             v["ofMedium"] = _medium

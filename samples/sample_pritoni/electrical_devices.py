@@ -126,19 +126,19 @@ dist_panel["CB#5"] >> dist_panel_cb5
 return_fan_electrical_meter = ThreePhaseElectricalMeter(
     label="RF Meter",
     comment="Return Fan Electrical Meter (M1)",
-    medium=Electricity.AC575V_60Hz
+    medium=Electricity.AC575V_60Hz,
 )
 
 supply_fan_electrical_meter = ThreePhaseElectricalMeter(
     label="SF Meter",
     comment="Supply Fan Electrical Meter (M2)",
-    medium=Electricity.AC575V_60Hz
+    medium=Electricity.AC575V_60Hz,
 )
 
 building_electrical_meter = ThreePhaseElectricalMeter(
     label="Building Meter",
     comment="Building Electrical Meter (M3)",
-    medium=Electricity.AC575V_60Hz
+    medium=Electricity.AC575V_60Hz,
 )
 
 if __name__ == "__main__":
