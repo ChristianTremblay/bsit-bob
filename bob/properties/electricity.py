@@ -1,7 +1,8 @@
 from re import L
+from typing import Any
 
 from rdflib import URIRef
-from typing import Any
+
 from ..core import quantitykind, s223, unit
 from ..property import QuantifiableObservableProperty
 
