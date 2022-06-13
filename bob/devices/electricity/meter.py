@@ -1,10 +1,171 @@
 from typing import Dict
 
+from bob.properties import electricity
+from bob.properties.electricity import (
+    ElectricApparentEnergy,
+    ElectricEnergy,
+    ElectricPower,
+    Frequency,
+    PowerFactor,
+    Volts,
+)
+from bob.sensor.electricity import CurrentAnalogSensor, VoltageSensor
+
 from ...connections.electricity import *
-from ...core import Device, Node, p223, s223
-from ...sensor.electricity import create_3phase_meter_sensors
+from ...core import Device, Node, p223, s223, unit
 
 _namespace = s223
+
+three_phase_electricalmeter_template = {
+    "properties": {
+        ("energy", ElectricEnergy): {
+            "unit": unit["KiloW-HR"],
+            "comment": "Real Energy Consumption",
+        },
+        ("kW_total", ElectricPower): {
+            "unit": unit["KiloW"],
+            "comment": "Total Real Power",
+        },
+        ("kVAR_total", ElectricPower): {
+            "unit": unit["KiloV-A_Reactive"],
+            "comment": "Total Reactive Power",
+        },
+        ("kVA_total", ElectricPower): {
+            "unit": unit["KiloV-A"],
+            "comment": "Total Apparent Power",
+        },
+        ("power_factor", PowerFactor): {"comment": "Total Power Factor"},
+        ("voltage_ll_avg", Volts): {"comment": "Voltage L-L Average"},
+        ("voltage_ln_avg", Volts): {"comment": "Voltage L-N Average"},
+        ("current_avg", Volts): {"comment": "Current Average"},
+        ("kW_A", ElectricPower): {
+            "unit": unit["KiloW"],
+            "comment": "Real Power Phase A",
+        },
+        ("kW_B", ElectricPower): {
+            "unit": unit["KiloW"],
+            "comment": "Real Power Phase B",
+        },
+        ("kW_C", ElectricPower): {
+            "unit": unit["KiloW"],
+            "comment": "Real Power Phase C",
+        },
+        ("power_factor_A", PowerFactor): {"comment": "Power Factor Phase A"},
+        ("power_factor_B", PowerFactor): {"comment": "Power Factor Phase B"},
+        ("power_factor_C", PowerFactor): {"comment": "Power Factor Phase C"},
+        ("frequency", Frequency): {"comment": "Frequency"},
+        ("kVAh", ElectricApparentEnergy): {
+            "unit": unit["KiloV-A-HR"],
+            "comment": "Apparent Energy Consumption",
+        },
+        ("kVARh", ElectricApparentEnergy): {
+            "unit": unit["KiloV-A_Reactive-HR"],
+            "comment": "Reactive Energy Consumption",
+        },
+        ("kVA_A", ElectricPower): {
+            "unit": unit["KiloV-A"],
+            "comment": "Apparent Power Phase A",
+        },
+        ("kVA_B", ElectricPower): {
+            "unit": unit["KiloV-A"],
+            "comment": "Apparent Power Phase B",
+        },
+        ("kVA_C", ElectricPower): {
+            "unit": unit["KiloV-A"],
+            "comment": "Apparent Power Phase C",
+        },
+        ("kVAR_A", ElectricPower): {
+            "unit": unit["KiloV-A_Reactive"],
+            "comment": "Reactive Power Phase A",
+        },
+        ("kVAR_B", ElectricPower): {
+            "unit": unit["KiloV-A_Reactive"],
+            "comment": "Reactive Power Phase B",
+        },
+        ("kVAR_C", ElectricPower): {
+            "unit": unit["KiloV-A_Reactive"],
+            "comment": "Reactive Power Phase C",
+        },
+        ("kW_present_demand", ElectricPower): {
+            "unit": unit["KiloW"],
+            "comment": "Total Real Power Present Demand",
+        },
+        ("kVAR_present_demand", ElectricPower): {
+            "unit": unit["KiloV-A_Reactive"],
+            "comment": "Total Reactive Power Present Demand",
+        },
+        ("kVA_present_demand", ElectricPower): {
+            "unit": unit["KiloV-A"],
+            "comment": "Total Apparent Power Present Demand",
+        },
+        ("kW_max_demand", ElectricPower): {
+            "unit": unit["KiloW"],
+            "comment": "Total Real Power Maximum Demand",
+        },
+        ("kVAR_max_demand", ElectricPower): {
+            "unit": unit["KiloV-A_Reactive"],
+            "comment": "Total Reactive Power Maximum Demand",
+        },
+        ("kVA_max_demand", ElectricPower): {
+            "unit": unit["KiloV-A"],
+            "comment": "Total Apparent Power Maximum Demand",
+        },
+        ("kWh_A", ElectricEnergy): {
+            "unit": unit["KiloW-HR"],
+            "comment": "Real Energy Consumption Phase A",
+        },
+        ("kWh_B", ElectricEnergy): {
+            "unit": unit["KiloW-HR"],
+            "comment": "Real Energy Consumption Phase B",
+        },
+        ("kWh_C", ElectricEnergy): {
+            "unit": unit["KiloW-HR"],
+            "comment": "Real Energy Consumption Phase C",
+        },
+        ("max_power", ElectricPower): {
+            "unit": unit["KiloW"],
+            "comment": "Maximum Power of device",
+        },
+    },
+    "sensors": {
+        ("VoltageAB", VoltageSensor): {
+            "comment": "Voltage reading A-B",
+            "ofMedium": Electricity,
+        },
+        ("VoltageAC", VoltageSensor): {
+            "comment": "Voltage reading A-C",
+            "ofMedium": Electricity,
+        },
+        ("VoltageBC", VoltageSensor): {
+            "comment": "Voltage reading B-C",
+            "ofMedium": Electricity,
+        },
+        ("VoltageAN", VoltageSensor): {
+            "comment": "Voltage reading A-N",
+            "ofMedium": Electricity,
+        },
+        ("VoltageBN", VoltageSensor): {
+            "comment": "Voltage reading B-N",
+            "ofMedium": Electricity,
+        },
+        ("VoltageCN", VoltageSensor): {
+            "comment": "Voltage reading C-N",
+            "ofMedium": Electricity,
+        },
+        ("CurrentPhaseA", CurrentAnalogSensor): {
+            "comment": "Current reading of phase A",
+            "ofMedium": Electricity,
+        },
+        ("CurrentPhaseB", CurrentAnalogSensor): {
+            "comment": "Current reading of phase B",
+            "ofMedium": Electricity,
+        },
+        ("CurrentPhaseC", CurrentAnalogSensor): {
+            "comment": "Current reading of phase C",
+            "ofMedium": Electricity,
+        },
+    },
+}
 
 
 class ThreePhaseElectricalMeter(Device):
@@ -18,52 +179,33 @@ class ThreePhaseElectricalMeter(Device):
     Sensors will be added to the Meter device and be available
     by square bracket requests.
 
-    ex. :
-
-        meter = ThreePhaseElectricalMeter(label="Meter#1", ofMedium=Electricity_575V_60Hz)
-        meter["Meter#1_VoltageAB"]
-
-    # optional : you can set hasMeasurementLocation intially:
-
-        a = Electricity_575V_60HzConnection(label="A")
-        meter = ThreePhaseElectricalMeter(label="Meter#1", ofMedium=Electricity_575V_60Hz, hasMeasurementLocation=a)
-
-    # or later:
-
-        meter.set_measurement_location(a)
-
     """
 
-    _class_iri = s223.ElectricMeter
+    _class_iri: URIRef = s223.ElectricalMeter
 
-    def __init__(self, config: Dict = {}, **kwargs) -> None:
-        kwargs = {**config.get("params", {}), **kwargs}
-        _label = kwargs["label"]
-        _ofMedium = kwargs.pop("ofMedium")
-        _hasMeasurementLocation = kwargs.pop("hasMeasurementLocation", None)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = three_phase_electricalmeter_template
+        if "medium" not in kwargs:
+            raise ValueError("You must provide units when defining an electrical meter")
+        _medium = kwargs.pop("medium")
+        for k, v in _config["sensors"].items():
+            v["ofMedium"] = _medium
 
-        super().__init__(**kwargs)
-
-        self.voltage_sensors, self.current_sensors = create_3phase_meter_sensors(
-            label=_label,
-            ofMedium=_ofMedium,
-            hasMeasurementLocation=_hasMeasurementLocation,
-        )
-
-        for each in self.voltage_sensors:
-            self > each
-
-        for each in self.current_sensors:
-            self > each
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
 
     def set_measurement_location(self, node: Node = None):
         self.set_voltage_measurement_location(node)
         self.set_current_measurement_location(node)
 
     def set_voltage_measurement_location(self, node: Node = None):
-        for each in self.voltage_sensors:
-            each.hasMeasurementLocation = node
+        for each in self._sensors:
+            if isinstance(each, VoltageSensor):
+                each.hasMeasurementLocation = node
 
     def set_current_measurement_location(self, node: Node = None):
-        for each in self.current_sensors:
-            each.hasMeasurementLocation = node
+        for each in self._sensors:
+            if isinstance(each, CurrentAnalogSensor):
+                each.hasMeasurementLocation = node
