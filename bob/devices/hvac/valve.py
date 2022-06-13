@@ -90,7 +90,7 @@ class Valve(Device):
 class TwoWayValve(Valve):
     _class_iri: URIRef = s223.Valve
 
-    def __init__(self, config: Dict = valve2w_template, **kwargs):
+    def __init__(self, config: Dict = None, **kwargs):
         _config = valve2w_template
         if config:
             _config.update(config)
