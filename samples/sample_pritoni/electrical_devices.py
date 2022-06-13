@@ -3,6 +3,7 @@ from pathlib import Path
 from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
 from bob.devices.electricity.distribution import *
+from bob.devices.electricity.meter import ThreePhaseElectricalMeter
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
@@ -40,6 +41,11 @@ mainentry_panel_config = {
         ("CB#4", ThreePolesCircuitBreaker): {
             "comment": "Return Fans, AHU",
             "amps": 40,
+            "voltage": "575",
+        },
+        ("CB#5", ThreePolesCircuitBreaker): {
+            "comment": "Building Meter Voltage Measurement Breaker",
+            "amps": 15,
             "voltage": "575",
         },
     },
@@ -115,6 +121,25 @@ dist_panel["CB#1"] >> dist_panel_cb1
 dist_panel["CB#3"] >> dist_panel_cb3
 dist_panel["CB#4"] >> dist_panel_cb4
 dist_panel["CB#5"] >> dist_panel_cb5
+
+
+return_fan_electrical_meter = ThreePhaseElectricalMeter(
+    label="RF Meter",
+    comment="Return Fan Electrical Meter (M1)",
+    medium=Electricity.AC575V_60Hz
+)
+
+supply_fan_electrical_meter = ThreePhaseElectricalMeter(
+    label="SF Meter",
+    comment="Supply Fan Electrical Meter (M2)",
+    medium=Electricity.AC575V_60Hz
+)
+
+building_electrical_meter = ThreePhaseElectricalMeter(
+    label="Building Meter",
+    comment="Building Electrical Meter (M3)",
+    medium=Electricity.AC575V_60Hz
+)
 
 if __name__ == "__main__":
     dump()

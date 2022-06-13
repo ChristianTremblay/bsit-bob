@@ -3,6 +3,7 @@ from pathlib import Path
 import electrical_devices as ed
 import hvac_devices as hd
 import lighting_devices as ld
+import physical_spaces as ps
 
 from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
@@ -35,8 +36,20 @@ ed.dist_panel_cb5 >> [
     ld.privateoffice_luminaire_8,
 ]
 
+"""
 ed.main_panel["CB#2"] >> hd.ahu["SF-STARTER"] >> hd.ahu["SF"]
 ed.main_panel["CB#4"] >> hd.ahu["RF-VFD"] >> hd.ahu["RF"]
+"""
+ed.return_fan_electrical_meter.hasPhysicalLocation = ps.bldg
+ed.return_fan_electrical_meter.hasMeasurementLocation = hd.ahu["RF"].electricalInlet
+
+ed.supply_fan_electrical_meter.hasPhysicalLocation = ps.bldg
+ed.supply_fan_electrical_meter.hasMeasurementLocation = hd.ahu["SF"].electricalInlet
+
+ed.building_electrical_meter.hasPhysicalLocation = ps.bldg
+ed.building_electrical_meter.set_voltage_measurement_location(ed.main_panel['CB#5'])
+ed.building_electrical_meter.set_current_measurement_location(ed.main_panel['MainBreaker'].electricalInlet)
+
 
 if __name__ == "__main__":
     dump()

@@ -3,8 +3,11 @@ from typing import Dict
 from bob.properties import electricity
 from bob.properties.electricity import (
     ElectricApparentEnergy,
+    ElectricApparentPower,
     ElectricEnergy,
     ElectricPower,
+    ElectricReactiveEnergy,
+    ElectricReactivePower,
     Frequency,
     PowerFactor,
     Volts,
@@ -26,11 +29,11 @@ three_phase_electricalmeter_template = {
             "unit": unit["KiloW"],
             "comment": "Total Real Power",
         },
-        ("kVAR_total", ElectricPower): {
+        ("kVAR_total", ElectricReactivePower): {
             "unit": unit["KiloV-A_Reactive"],
             "comment": "Total Reactive Power",
         },
-        ("kVA_total", ElectricPower): {
+        ("kVA_total", ElectricApparentPower): {
             "unit": unit["KiloV-A"],
             "comment": "Total Apparent Power",
         },
@@ -58,31 +61,31 @@ three_phase_electricalmeter_template = {
             "unit": unit["KiloV-A-HR"],
             "comment": "Apparent Energy Consumption",
         },
-        ("kVARh", ElectricApparentEnergy): {
+        ("kVARh", ElectricReactiveEnergy): {
             "unit": unit["KiloV-A_Reactive-HR"],
             "comment": "Reactive Energy Consumption",
         },
-        ("kVA_A", ElectricPower): {
+        ("kVA_A", ElectricApparentPower): {
             "unit": unit["KiloV-A"],
             "comment": "Apparent Power Phase A",
         },
-        ("kVA_B", ElectricPower): {
+        ("kVA_B", ElectricApparentPower): {
             "unit": unit["KiloV-A"],
             "comment": "Apparent Power Phase B",
         },
-        ("kVA_C", ElectricPower): {
+        ("kVA_C", ElectricApparentPower): {
             "unit": unit["KiloV-A"],
             "comment": "Apparent Power Phase C",
         },
-        ("kVAR_A", ElectricPower): {
+        ("kVAR_A", ElectricReactivePower): {
             "unit": unit["KiloV-A_Reactive"],
             "comment": "Reactive Power Phase A",
         },
-        ("kVAR_B", ElectricPower): {
+        ("kVAR_B", ElectricReactivePower): {
             "unit": unit["KiloV-A_Reactive"],
             "comment": "Reactive Power Phase B",
         },
-        ("kVAR_C", ElectricPower): {
+        ("kVAR_C", ElectricReactivePower): {
             "unit": unit["KiloV-A_Reactive"],
             "comment": "Reactive Power Phase C",
         },
@@ -90,11 +93,11 @@ three_phase_electricalmeter_template = {
             "unit": unit["KiloW"],
             "comment": "Total Real Power Present Demand",
         },
-        ("kVAR_present_demand", ElectricPower): {
+        ("kVAR_present_demand", ElectricReactivePower): {
             "unit": unit["KiloV-A_Reactive"],
             "comment": "Total Reactive Power Present Demand",
         },
-        ("kVA_present_demand", ElectricPower): {
+        ("kVA_present_demand", ElectricApparentPower): {
             "unit": unit["KiloV-A"],
             "comment": "Total Apparent Power Present Demand",
         },
@@ -102,11 +105,11 @@ three_phase_electricalmeter_template = {
             "unit": unit["KiloW"],
             "comment": "Total Real Power Maximum Demand",
         },
-        ("kVAR_max_demand", ElectricPower): {
+        ("kVAR_max_demand", ElectricReactivePower): {
             "unit": unit["KiloV-A_Reactive"],
             "comment": "Total Reactive Power Maximum Demand",
         },
-        ("kVA_max_demand", ElectricPower): {
+        ("kVA_max_demand", ElectricApparentPower): {
             "unit": unit["KiloV-A"],
             "comment": "Total Apparent Power Maximum Demand",
         },
@@ -186,7 +189,7 @@ class ThreePhaseElectricalMeter(Device):
     def __init__(self, config: Dict = None, **kwargs):
         _config = three_phase_electricalmeter_template
         if "medium" not in kwargs:
-            raise ValueError("You must provide units when defining an electrical meter")
+            raise ValueError("You must provide medium when defining an electrical meter")
         _medium = kwargs.pop("medium")
         for k, v in _config["sensors"].items():
             v["ofMedium"] = _medium
