@@ -25,12 +25,12 @@ ip_switch_template = {
 }
 
 
-class IPSwitch(Device):
+class EthernetSwitch(Device):
     """
-    An IP Switch
+    An Ethernet Switch
     """
 
-    _class_iri: URIRef = s223.IPSwitch
+    _class_iri: URIRef = s223.EthernetSwitch
 
     def __init__(self, config: Dict = None, **kwargs):
         if "ports" in kwargs:

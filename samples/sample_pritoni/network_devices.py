@@ -7,11 +7,11 @@ import physical_spaces as ps
 
 from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
-from bob.devices.network.switch import IPSwitch
+from bob.devices.network.switch import EthernetSwitch
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
-ip_switch = IPSwitch(label="Simple Switch", ports=8, data_rate=1000)
+ethernet_switch = EthernetSwitch(label="Simple Switch", ports=8, data_rate=1000)
 
-# ip_switch.port0 >> hd.ahu["RF-VFD"]
+# ethernet_switch.port0 >> hd.ahu["RF-VFD"]

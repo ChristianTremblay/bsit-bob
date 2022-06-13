@@ -39,7 +39,7 @@ ed.dist_panel_cb5 >> [
 
 ed.dist_panel_cb6 >> ed.bathroom_timer_switch >> hd.bathroom_exhaust_fan.electricalInlet
 
-ed.dist_panel_cb7 >> nd.ip_switch.electricalInlet
+ed.dist_panel_cb7 >> nd.ethernet_switch.electricalInlet
 
 """
 ed.main_panel["CB#2"] >> hd.ahu["SF-STARTER"] >> hd.ahu["SF"]
