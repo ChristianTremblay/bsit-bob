@@ -23,7 +23,7 @@ from bob.core import (
 from bob.devices.hvac.coil import ElectricalHeatingCoil
 from bob.devices.hvac.fan import Fan
 from bob.devices.lighting.light import Luminaire
-from bob.sensor.movement import MovementSensor
+from bob.sensor.light import MovementSensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace

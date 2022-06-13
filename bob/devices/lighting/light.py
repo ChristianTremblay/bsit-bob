@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.properties.electricity import ElectricPowerW
+from bob.properties.electricity import ElectricPower
 
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
@@ -24,7 +24,7 @@ class Luminaire(Device):
     brightnessRatio: PercentCommand
     onOffStatus: OnOffStatus
     onOffCommand: OnOffCommand
-    electricalPower: ElectricPowerW
+    electricalPower: ElectricPower
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}

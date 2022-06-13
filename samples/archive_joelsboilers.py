@@ -28,7 +28,7 @@ from bob.devices.hvac.pump import Pump
 from bob.devices.hvac.valve import TwoWayValve
 from bob.devices.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
-from bob.sensor.movement import MovementSensor
+from bob.sensor.light import MovementSensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone

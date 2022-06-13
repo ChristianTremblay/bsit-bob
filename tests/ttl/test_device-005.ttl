@@ -24,7 +24,13 @@ ex30:00001 a s223:Connectable,
     s223:contains ex30:00004 ;
     s223:hasConnectionPoint ex30:00002,
         ex30:00003,
-        ex30:00017 ;
+        ex30:00011 ;
+    s223:hasProperty ex30:00005,
+        ex30:00006,
+        ex30:00007,
+        ex30:00008,
+        ex30:00009,
+        ex30:00010 ;
     rdfs:comment "Supply Fan" .
 ex30:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -49,172 +55,144 @@ ex30:00005 a p223:Pressure,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
-    s223:hasExternalReference ex30:00006 ;
+    s223:isPropertyOf ex30:00001 ;
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
-ex30:00006 a s223:ExternalReference ;
-    rdfs:label "staticPressure.ExternalReference" ;
-    s223:hasRef "<Fan VA-1 at urn:ex/test_system-007/00001>" .
-ex30:00007 a p223:Amps,
+ex30:00006 a s223:Amps,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
-    s223:hasExternalReference ex30:00008 ;
+    s223:isPropertyOf ex30:00001 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex30:00008 a s223:ExternalReference ;
-    rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Fan VA-1 at urn:ex/test_system-007/00001>" .
-ex30:00009 a p223:RPM,
+ex30:00007 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
-    s223:hasExternalReference ex30:00010 ;
+    s223:isPropertyOf ex30:00001 ;
     qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
-ex30:00010 a s223:ExternalReference ;
-    rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Fan VA-1 at urn:ex/test_system-007/00001>" .
-ex30:00011 a p223:HP,
+ex30:00008 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
-    s223:hasExternalReference ex30:00012 ;
+    s223:isPropertyOf ex30:00001 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex30:00012 a s223:ExternalReference ;
-    rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Fan VA-1 at urn:ex/test_system-007/00001>" .
-ex30:00013 a p223:ElectricPowerkW,
+ex30:00009 a s223:ElectricPower,
+        s223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
-    s223:hasExternalReference ex30:00014 ;
+    s223:isPropertyOf ex30:00001 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex30:00014 a s223:ExternalReference ;
-    rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Fan VA-1 at urn:ex/test_system-007/00001>" .
-ex30:00015 a p223:PowerFactor,
-        s223:ObservableProperty,
+ex30:00010 a s223:ObservableProperty,
+        s223:PowerFactor,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
-    s223:hasExternalReference ex30:00016 ;
+    s223:isPropertyOf ex30:00001 ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
-ex30:00016 a s223:ExternalReference ;
-    rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Fan VA-1 at urn:ex/test_system-007/00001>" .
-ex30:00017 a s223:ConnectionPoint,
+ex30:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex30:00001 .
-ex30:00018 a s223:Connectable,
+ex30:00012 a s223:Connectable,
         s223:Device,
         s223:Fan ;
     rdfs:label "VA-2" ;
-    s223:airInlet ex30:00019 ;
-    s223:airOutlet ex30:00020 ;
-    s223:hasConnectionPoint ex30:00019,
+    s223:airInlet ex30:00013 ;
+    s223:airOutlet ex30:00014 ;
+    s223:hasConnectionPoint ex30:00013,
+        ex30:00014,
+        ex30:00015 ;
+    s223:hasProperty ex30:00016,
+        ex30:00017,
+        ex30:00018,
+        ex30:00019,
         ex30:00020,
         ex30:00021 .
-ex30:00019 a s223:ConnectionPoint,
+ex30:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "VA-2.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00018 .
-ex30:00020 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex30:00012 .
+ex30:00014 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "VA-2.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex30:00018 .
-ex30:00021 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex30:00012 .
+ex30:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf ex30:00018 .
-ex30:00022 a p223:Pressure,
+    s223:isConnectionPointOf ex30:00012 .
+ex30:00016 a p223:Pressure,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "staticPressure" ;
-    s223:hasExternalReference ex30:00023 ;
+    s223:isPropertyOf ex30:00012 ;
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
-ex30:00023 a s223:ExternalReference ;
-    rdfs:label "staticPressure.ExternalReference" ;
-    s223:hasRef "<Fan VA-2 at urn:ex/test_system-007/00018>" .
-ex30:00024 a p223:Amps,
+ex30:00017 a s223:Amps,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
-    s223:hasExternalReference ex30:00025 ;
+    s223:isPropertyOf ex30:00012 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex30:00025 a s223:ExternalReference ;
-    rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<Fan VA-2 at urn:ex/test_system-007/00018>" .
-ex30:00026 a p223:RPM,
+ex30:00018 a p223:RPM,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "rpm" ;
-    s223:hasExternalReference ex30:00027 ;
+    s223:isPropertyOf ex30:00012 ;
     qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
-ex30:00027 a s223:ExternalReference ;
-    rdfs:label "rpm.ExternalReference" ;
-    s223:hasRef "<Fan VA-2 at urn:ex/test_system-007/00018>" .
-ex30:00028 a p223:HP,
+ex30:00019 a p223:HP,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "hp" ;
-    s223:hasExternalReference ex30:00029 ;
+    s223:isPropertyOf ex30:00012 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex30:00029 a s223:ExternalReference ;
-    rdfs:label "hp.ExternalReference" ;
-    s223:hasRef "<Fan VA-2 at urn:ex/test_system-007/00018>" .
-ex30:00030 a p223:ElectricPowerkW,
+ex30:00020 a s223:ElectricPower,
+        s223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
-    s223:hasExternalReference ex30:00031 ;
+    s223:isPropertyOf ex30:00012 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex30:00031 a s223:ExternalReference ;
-    rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<Fan VA-2 at urn:ex/test_system-007/00018>" .
-ex30:00032 a p223:PowerFactor,
-        s223:ObservableProperty,
+ex30:00021 a s223:ObservableProperty,
+        s223:PowerFactor,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "powerFactor" ;
-    s223:hasExternalReference ex30:00033 ;
+    s223:isPropertyOf ex30:00012 ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
-ex30:00033 a s223:ExternalReference ;
-    rdfs:label "powerFactor.ExternalReference" ;
-    s223:hasRef "<Fan VA-2 at urn:ex/test_system-007/00018>" .

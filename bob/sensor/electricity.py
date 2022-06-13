@@ -20,74 +20,44 @@ from .sensor import Sensor, split_kwargs
 _namespace = s223
 
 
-class CurrentSwitch(OnOffStatus):
-    ofMedium: Medium  # set from the sensor
-
-
 class VoltageSensor(Sensor):
-    observesProperty: PropertyReference  # Voltage
+    observesProperty: PropertyReference  # Temperature
+    hasMinRange: PropertyReference
+    hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
-        _class = _sensor_kwargs.pop("measures")
+
+        if "ofMedium" not in _property_kwargs:
+            raise ValueError("You must provide ofMedium when defining a voltage sensor")
+
         super().__init__(**_sensor_kwargs)
-        self.observesProperty = _class(
+
+        self.observesProperty = Volts(
             # isObservedBy=self,
-            label=f"{self.label}.{_class.__name__}",
+            label=f"{self.label}.Voltage",
             **_property_kwargs,
         )
 
 
 class CurrentAnalogSensor(Sensor):
-    observesProperty: PropertyReference  # Current
+    observesProperty: PropertyReference  # Temperature
+    hasMinRange: PropertyReference
+    hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
-        _class = _sensor_kwargs.pop("measures")
+
+        if "ofMedium" not in _property_kwargs:
+            raise ValueError("You must provide ofMedium when defining a current sensor")
+
         super().__init__(**_sensor_kwargs)
-        self.observesProperty = _class(
+
+        self.observesProperty = Amps(
             # isObservedBy=self,
-            label=f"{self.label}.{_class.__name__}",
+            label=f"{self.label}.Amps",
             **_property_kwargs,
         )
-
-
-def create_3phase_meter_sensors(
-    label: str = None,
-    ofMedium: Medium = None,
-    hasMeasurementLocation: Node = None,
-):
-    voltage_sensors = [
-        "VoltageAB",
-        "VoltageAC",
-        "VoltageBC",
-        "VoltageAN",
-        "VoltageBN",
-        "VoltageCN",
-    ]
-    current_sensors = ["CurrentPhaseA", "CurrentPhaseB", "CurrentPhaseC"]
-
-    v_sensors = []
-    for each in voltage_sensors:
-        v_sensors.append(
-            VoltageSensor(
-                label=f"{label}_{each}",
-                measures=Volts(label=each),
-                ofMedium=ofMedium,
-            )
-        )
-
-    c_sensors = []
-    for each in current_sensors:
-        c_sensors.append(
-            CurrentAnalogSensor(
-                label=f"{label}_{each}",
-                measures=Amps(label=each),
-                ofMedium=ofMedium,
-            )
-        )
-
-    return (v_sensors, c_sensors)
 
 
 class CurrentBinarySensor(Sensor):

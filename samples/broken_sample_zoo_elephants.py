@@ -37,7 +37,7 @@ from bob.devices.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
 from bob.sensor.humidity import AirHumiditySensor
-from bob.sensor.movement import MovementSensor
+from bob.sensor.light import MovementSensor
 from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, WaterTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone

@@ -1,6 +1,5 @@
 from typing import Dict
 
-from bob.devices.electricity.switch import CurrentSwitch
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import *
@@ -38,11 +37,11 @@ class MotorStarter(Device):
             self, label=f"{self.label}.electricalOutlet"
         )
 
-        sensor = CurrentSwitch(
+        sensor = CurrentBinarySensor(
             label=f"{self.label}.sensor",
             ofMedium=self.electricalInlet.hasMedium,
             hasMeasurementLocation=self.electricalOutlet,
         )
-        self.onOffStatus = sensor.onOffStatus
+        self.onOffStatus = sensor.observesProperty
         self._sensors = [sensor]
         self > sensor

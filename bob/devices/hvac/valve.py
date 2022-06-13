@@ -11,7 +11,13 @@ from bob.connections.naturalgas import (
     NaturalGasOutletConnectionPoint,
 )
 from bob.properties.ratio import PercentCommand
-from bob.properties.states import OnOffCommand, OnOffStatus, OpenCloseStatus
+from bob.properties.states import (
+    OnOffCommand,
+    OnOffStatus,
+    OpenCloseCommand,
+    OpenCloseStatus,
+)
+from bob.property import ActuatableProperty
 
 from ...connections.electricity import (
     ModulationSignalInletConnectionPoint,
@@ -73,8 +79,7 @@ valve_3w_mixing_template = {
 class Valve(Device):
     _class_iri: URIRef = s223.Valve
     command: PropertyReference
-    feedback: PropertyReference
-    position: PropertyReference
+    position: ActuatableProperty
 
     def __init__(self, config: Dict = {}, **kwargs):
         super().__init__(config, **kwargs)
@@ -85,10 +90,12 @@ class Valve(Device):
 class TwoWayValve(Valve):
     _class_iri: URIRef = s223.Valve
 
-    def __init__(self, config: Dict = valve2w_template, **kwargs):
-        config["properties"] = config.get("properties", valve2w_template["properties"])
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = valve2w_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
 
 
 class ThreeWayValveDiverting(Valve):
@@ -98,12 +105,12 @@ class ThreeWayValveDiverting(Valve):
 
     _class_iri = s223.Valve
 
-    def __init__(self, config: Dict = valve_3w_diverting_template, **kwargs):
-        config["properties"] = config.get(
-            "properties", valve_3w_diverting_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = valve_3w_diverting_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
 
 
 class ThreeWayValveMixing(Valve):
@@ -113,12 +120,12 @@ class ThreeWayValveMixing(Valve):
 
     _class_iri: URIRef = s223.Valve
 
-    def __init__(self, config: Dict = valve_3w_mixing_template, **kwargs):
-        config["properties"] = config.get(
-            "properties", valve_3w_mixing_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = valve_3w_mixing_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
 
 
 class NaturalGasValve(TwoWayValve):
@@ -135,177 +142,117 @@ class PneumaticValve(TwoWayValve):
 
 electrical_actuated_proportional_valve_template = {
     "devices": {("actuator", ElectricalProportionalActuator): {}},
-    "properties": {},
+    "properties": {
+        ("feedback", PropertyReference): {},
+        ("position", PercentCommand): {},
+    },
 }
 
 electrical_actuated_onoff_valve_template = {
     "devices": {("actuator", ElectricalOnOffActuator): {}},
-    "properties": {},
+    "properties": {
+        ("feedbackOpen", PropertyReference): {},
+        ("feedbackClose", PropertyReference): {},
+        ("position", OpenCloseCommand): {},
+    },
 }
 
 
 class TwoWayActuatedProportionalValve(TwoWayValve):
     _class_iri = s223.Valve
 
-    def __init__(
-        self,
-        config: Dict = {
-            **electrical_actuated_proportional_valve_template,
-            **valve2w_template,
-        },
-        **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties",
-            {**electrical_actuated_proportional_valve_template, **valve2w_template}[
-                "properties"
-            ],
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = valve2w_template
+        _config.update(electrical_actuated_proportional_valve_template)
+        if config:
+            _config.update(config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
         self.torque = self["actuator"]["torque"]
-        self.position = (
-            self["actuator"]["feedback"]
-            if self["actuator"]["feedback"]
-            else self["actuator"]["command"]
-        )
-        self["actuator"].actuatesProperty = self.position
+        # self["actuator"].actuatesProperty = self['position']
+        # TODO : ExtRef of position
 
 
 class TwoWayActuatedOnOffValve(TwoWayValve):
     _class_iri = s223.Valve
 
-    def __init__(
-        self,
-        config: Dict = {
-            **electrical_actuated_onoff_valve_template,
-            **valve_3w_diverting_template,
-        },
-        **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties",
-            {**electrical_actuated_onoff_valve_template, **valve_3w_diverting_template}[
-                "properties"
-            ],
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = valve2w_template
+        _config.update(electrical_actuated_onoff_valve_template)
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
         self.command = self["actuator"]["command"]
-        self.position = self["actuator"]["command"]
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position
 
 
 class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
     node_type = s223.Valve
 
-    def __init__(
-        self,
-        config: Dict = {
-            **electrical_actuated_proportional_valve_template,
-            **valve_3w_mixing_template,
-        },
-        **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties",
-            {
-                **electrical_actuated_proportional_valve_template,
-                **valve_3w_mixing_template,
-            }["properties"],
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = valve_3w_mixing_template
+        _config.update(electrical_actuated_proportional_valve_template)
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
-        self.position = (
-            self["actuator"]["feedback"]
-            if self["actuator"]["feedback"]
-            else self["actuator"]["command"]
-        )
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position
 
 
 class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
     _class_iri = s223.Valve
 
-    def __init__(
-        self,
-        config: Dict = {
-            **electrical_actuated_onoff_valve_template,
-            **valve_3w_mixing_template,
-        },
-        **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties",
-            {**electrical_actuated_onoff_valve_template, **valve_3w_mixing_template}[
-                "properties"
-            ],
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = valve_3w_mixing_template
+        _config.update(electrical_actuated_onoff_valve_template)
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
-        self.position = self["actuator"]["command"]
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position
 
 
 class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
     _class_iri = s223.Valve
 
-    def __init__(
-        self,
-        config: Dict = {
-            **electrical_actuated_proportional_valve_template,
-            **valve_3w_diverting_template,
-        },
-        **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties",
-            {
-                **electrical_actuated_proportional_valve_template,
-                **valve_3w_diverting_template,
-            }["properties"],
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = valve_3w_diverting_template
+        _config.update(electrical_actuated_proportional_valve_template)
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
-        self.position = (
-            self["actuator"]["feedback"]
-            if self["actuator"]["feedback"]
-            else self["actuator"]["command"]
-        )
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position
 
 
 class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
     _class_iri = s223.Valve
 
-    def __init__(
-        self,
-        config: Dict = {
-            **electrical_actuated_onoff_valve_template,
-            **valve_3w_diverting_template,
-        },
-        **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties",
-            {**electrical_actuated_onoff_valve_template, **valve_3w_diverting_template}[
-                "properties"
-            ],
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+
+        _config = valve_3w_diverting_template
+        _config.update(electrical_actuated_onoff_valve_template)
+        if config:
+            _config.update(config)
+        kwargs = {**_config.get("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
         self.command = self["actuator"]["command"]
-        self.position = self["actuator"]["command"]
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position

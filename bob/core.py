@@ -46,10 +46,11 @@ except ImportError:
 
 # logging
 log_level = os.getenv("BOB_LOG", "WARNING")
+log_filename = os.getenv("BOB_LOGFILENAME", None)
 numeric_level = getattr(logging, log_level.upper(), None)
 if not isinstance(numeric_level, int):
     raise ValueError("Invalid log level: %s" % log_level)
-logging.basicConfig(level=numeric_level)
+logging.basicConfig(filename=log_filename, level=numeric_level)
 
 if _dotenv_import_error:
     logging.warning("install python-dotenv to use your .env file")
@@ -655,7 +656,9 @@ class Node(metaclass=NodeMetaclass):
 
             # attr_type requires a some sub-kind
             elif isinstance(attr_type, EnumerationKind):
-                if (not isinstance(value, EnumerationKind)) or (value not in attr_type._children):
+                if (not isinstance(value, EnumerationKind)) or (
+                    value not in attr_type._children
+                ):
                     raise TypeError(
                         f"value {value} for attribute {attr} not a {attr_type}"
                     )
@@ -757,7 +760,7 @@ class ExternalReference(Node):
         **kwargs: Any,
     ):
         logging.debug(
-            f"ExternalReference.__init__ {arg!r} lang={lang!r} datetype={datatype!r} {kwargs}"
+            f"ExternalReference.__init__ {arg!r} arg type={type(arg)} lang={lang!r} datatype={datatype!r} {kwargs}"
         )
         if arg is not None:
             if "hasRef" in kwargs:
@@ -770,7 +773,8 @@ class ExternalReference(Node):
             elif lang is not None:
                 arg = Literal(arg, lang=lang)
 
-            kwargs["hasRef"] = arg
+            if isinstance(arg, Literal):
+                kwargs["hasRef"] = arg
 
         super().__init__(**kwargs)
 
@@ -2921,12 +2925,12 @@ class Device(Container, Connectable):
         # putting them in config, it should be better
         for attr_name, attr_value in kwargs.copy().items():
             if inspect.isclass(attr_value):
-                if issubclass(attr_value, Property):
-                    config["properties"] = (
-                        {**config["properties"], **{attr_name: kwargs.pop(attr_name)}}
-                        if "properties" in config.keys()
-                        else {attr_name: kwargs.pop(attr_name)}
-                    )
+                # if issubclass(attr_value, Property):
+                #    config["properties"] = (
+                #        {**config["properties"], **{attr_name: kwargs.pop(attr_name)}}
+                #        if "properties" in config.keys()
+                #        else {attr_name: kwargs.pop(attr_name)}
+                #    )
                 if issubclass(attr_value, ConnectionPoint):
                     config["cp"] = (
                         {**config["cp"], **{attr_name: kwargs.pop(attr_name)}}
@@ -2955,8 +2959,8 @@ class Device(Container, Connectable):
                     if isinstance(thing, (Device, System)):
                         self > thing
                     if isinstance(thing, Property):
-                        thing @ self
                         self._contents[thing_name] = thing
+                        self.add_property(thing)
 
                     things.append(thing)
 

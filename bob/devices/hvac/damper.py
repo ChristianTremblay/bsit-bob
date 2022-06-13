@@ -2,7 +2,13 @@ from typing import Dict, Union
 
 from rdflib import URIRef
 
-from bob.properties.states import OnOffStatus, OpenCloseStatus
+from bob.properties.states import (
+    OnOffCommand,
+    OnOffStatus,
+    OpenCloseCommand,
+    OpenCloseStatus,
+)
+from bob.property import ActuatableProperty
 
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
@@ -20,7 +26,7 @@ from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import Device, PropertyReference, p223, s223
+from ...core import Device, PropertyReference, logging, p223, s223
 from ...functions import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
 from .actuator import (
@@ -41,8 +47,8 @@ class Damper(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     command: PropertyReference
-    feedback: PropertyReference
-    position: PropertyReference
+    # feedback: PropertyReference
+    # position: ActuatableProperty
 
 
 class GravityDamper(Damper):
@@ -58,100 +64,95 @@ class FireDamper(Damper):
 
 electrical_actuated_proportional_damper_template = {
     "devices": {("actuator", ElectricalProportionalActuator): {}},
-    "properties": {},
+    "properties": {
+        ("position", PercentCommand): {},
+        # ("feedback", PropertyReference): {},
+    },
 }
 
 electrical_actuated_onoff_damper_template = {
     "devices": {("actuator", ElectricalOnOffActuator): {}},
-    "properties": {},
+    "properties": {
+        ("position", OnOffCommand): {},
+    },
 }
 
 
 class ElectricalActuatedProportionalDamper(Damper):
     _class_iri: URIRef = s223.Damper
 
-    def __init__(
-        self, config: Dict = electrical_actuated_proportional_damper_template, **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties", electrical_actuated_proportional_damper_template["properties"]
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = electrical_actuated_proportional_damper_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        logging.debug(
+            f"ElectricalActuatedProportionalDamper.__init__ {_config} {kwargs}"
         )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+        super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
-        self.position = (
-            self["actuator"]["feedback"]
-            if self["actuator"]["feedback"]
-            else self["actuator"]["command"]
-        )
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position
 
 
 class ElectricalActuatedOnOffDamper(Damper):
     _class_iri: URIRef = s223.Damper
 
-    def __init__(
-        self, config: Dict = electrical_actuated_onoff_damper_template, **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties", electrical_actuated_onoff_damper_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = electrical_actuated_onoff_damper_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
-        self.position = self["actuator"][
-            "command"
-        ]  # TODO Discussion required here... the concept of position when feedbackOpen and feedbackClose is avialable... it's super close from telemetry... how could we communicate the concept that if feedback is avialable, you can infer the position from validating both feedback. Then you will know if the thing is open, close or moving. Else, command becomes the position.
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position
 
 
 pneumatic_actuated_proportional_damper_template = {
     "devices": {("actuator", PneumaticProportionalActuator): {}},
-    "properties": {},
+    "properties": {
+        ("position", PercentCommand): {},
+    },
 }
 pneumatic_actuated_onoff_damper_template = {
     "devices": {("actuator", PneumaticOnOffActuator): {}},
-    "properties": {},
+    "properties": {
+        ("position", OnOffCommand): {},
+    },
 }
 
 
 class PneumaticActuatedProportionalDamper(Damper):
     _class_iri = s223.Damper
 
-    def __init__(
-        self, config: Dict = pneumatic_actuated_proportional_damper_template, **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties", pneumatic_actuated_proportional_damper_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+
+        _config = pneumatic_actuated_proportional_damper_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
-        self.position = (
-            self["actuator"]["feedback"]
-            if self["actuator"]["feedback"]
-            else self["actuator"]["command"]
-        )
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position
 
 
 class PneumaticActuatedOnOffDamper(Damper):
     _class_iri = s223.Damper
 
-    def __init__(
-        self, config: Dict = pneumatic_actuated_onoff_damper_template, **kwargs
-    ):
-        config["properties"] = config.get(
-            "properties", pneumatic_actuated_onoff_damper_template["properties"]
-        )
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = pneumatic_actuated_onoff_damper_template
+        if config:
+            _config.update(config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
-        self.position = self["actuator"]["command"]
-        self["actuator"].actuatesProperty = self.position
+        self["actuator"].actuatesProperty = self["position"]
+        # TODO : ExtRef of position

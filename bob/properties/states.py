@@ -3,6 +3,7 @@ from rdflib import Graph, URIRef
 from ..core import (
     EnumerationKind,
     ExternalReference,
+    Light,
     Medium,
     SchemaGraph,
     Substance,
@@ -95,4 +96,10 @@ class SmokePresence(EnumeratedObservableProperty):
     ofSubstance: Substance = Smoke
     # isObservedBy: Sensor
     hasEnumerationKind = YesNoEnum
+    hasValue: YesNoEnum
+
+
+class DaylightDetected(EnumeratedObservableProperty):
+    ofMedium: Light.Visible
+    hasEnumerationKind: YesNoEnum
     hasValue: YesNoEnum

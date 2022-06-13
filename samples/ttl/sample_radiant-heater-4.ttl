@@ -2,7 +2,6 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 @prefix ex: <urn:ex/sample_radiant-heater-4/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -392,7 +391,9 @@ ex:00052 a s223:Connectable,
     rdfs:label "Baseboard heater" ;
     s223:airContact ex:00053 ;
     s223:hasConnectionPoint ex:00053,
-        ex:00054 .
+        ex:00054 ;
+    s223:hasProperty ex:00055,
+        ex:00056 .
 ex:00053 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint ;
     rdfs:label "Baseboard heater.airContact" ;
@@ -404,27 +405,20 @@ ex:00054 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-240V-60Hz ;
     s223:isConnectionPointOf ex:00052 .
-ex:00055 a p223:Amps,
+ex:00055 a s223:Amps,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "amps" ;
-    s223:hasExternalReference ex:00056 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex:00056 a s223:ExternalReference ;
-    rdfs:label "amps.ExternalReference" ;
-    s223:hasRef "<ElectricalRadiantHeatingCoil Baseboard heater at urn:ex/sample_radiant-heater-4/00052>" .
-ex:00057 a p223:ElectricPowerkW,
+ex:00056 a s223:ElectricPower,
+        s223:ElectricPowerkW,
         s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "kW" ;
-    s223:hasExternalReference ex:00058 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex:00058 a s223:ExternalReference ;
-    rdfs:label "kW.ExternalReference" ;
-    s223:hasRef "<ElectricalRadiantHeatingCoil Baseboard heater at urn:ex/sample_radiant-heater-4/00052>" .

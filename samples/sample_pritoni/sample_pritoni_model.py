@@ -15,7 +15,7 @@ from bob.devices.hvac.filter import Filter
 from bob.devices.lighting.light import Luminaire
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
-from bob.sensor.movement import MovementSensor, OccupancySensor
+from bob.sensor.light import MovementSensor, OccupancySensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone
@@ -33,8 +33,10 @@ import hvac  # isort: skip
 import lighting_spaces as ls  # isort: skip
 import lighting_devices as ld  # isort: skip
 import lighting  # isort: skip
+import network_devices as nd  # isort: skip
 import electrical_devices as ed  # isort: skip
 import electricity  # isort: skip
+
 import functions  # isort: skip
 import bacnet_references  # isort: skip
 import fake_values  # isort: skip
