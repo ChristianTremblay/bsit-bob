@@ -14,4 +14,4 @@ _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 ethernet_switch = EthernetSwitch(label="Simple Switch", ports=8, data_rate=1000)
 
-# ethernet_switch.port0 >> hd.ahu["RF-VFD"]
+ethernet_switch.port0 >> hd.ahu["RF-VFD"].ethernet_port

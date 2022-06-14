@@ -78,7 +78,7 @@ ahu_template = {
             "comment": "VFD for return Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
             "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
-            "ip_port": EthernetBidirectionalConnectionPoint,
+            "ethernet_port": EthernetBidirectionalConnectionPoint,
         },
         ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Heating coil"},

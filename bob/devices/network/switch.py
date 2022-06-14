@@ -17,7 +17,7 @@ from ...property import QuantifiableObservableProperty
 
 _namespace = s223
 
-ip_switch_template = {
+ethernet_switch_template = {
     "cp": {
         "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
     },
@@ -41,7 +41,7 @@ class EthernetSwitch(Device):
             _data_rate = float(kwargs.pop("data_rate"))
         else:
             raise ValueError("Please provide data rate using data_rate=x in Mbit/s")
-        _config = ip_switch_template
+        _config = ethernet_switch_template
         for i, each in enumerate(range(_number_of_ports)):
             _config["cp"][f"port{i}"] = EthernetBidirectionalConnectionPoint
         if config:
