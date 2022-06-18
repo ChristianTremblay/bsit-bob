@@ -35,9 +35,9 @@ from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from ...core import Device, p223, quantitykind, unit
+from ...core import Device, bob, p223, quantitykind, unit
 
-_namespace = p223
+_namespace = bob
 
 
 class Transformer(Device):
@@ -109,6 +109,7 @@ class SinglePhaseDistributionPanel(Device):
 
 
 class ThreePhaseDistributionPanel(Device):
+    _class_iri = p223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
     number_of_circuits: QuantifiableObservableProperty
@@ -177,7 +178,7 @@ class CircuitBreaker(Device):
     _class_iri = p223.ElectricalCircuitBreaker
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
-    hasMaxRange: Amps
+    currentRating: Amps
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
@@ -185,7 +186,7 @@ class CircuitBreaker(Device):
 
         super().__init__(config, **kwargs)
 
-        self.hasMaxRange = Amps(amps, label="Current rating of breaker")
+        self.currentRating = Amps(amps, label="Current rating of breaker")
 
 
 class SinglePoleCircuitBreaker(CircuitBreaker):

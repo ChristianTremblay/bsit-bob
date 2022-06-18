@@ -10,17 +10,20 @@ from ..core import (
     Light,
     Medium,
     PropertyReference,
+    bob,
     p223,
     quantitykind,
+    s223,
     unit,
 )
 from ..properties import Movement
 from .sensor import Sensor, split_kwargs
 
-_namespace = p223
+_namespace = bob
 
 
 class MovementSensor(Sensor):
+    _class_iri = s223.Sensor
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Movement
 
@@ -38,6 +41,7 @@ class MovementSensor(Sensor):
 
 
 class DaylightSensor(Sensor):
+    _class_iri = s223.Sensor
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Movement
 
@@ -55,11 +59,11 @@ class DaylightSensor(Sensor):
 
 
 class OccupancySensor(MovementSensor):
-    _class_iri: URIRef = p223.OccupancySensor
+    _class_iri = s223.Sensor
 
 
 class IntrusionSensor(Sensor):
-    _class_iri: URIRef = p223.IntrusionSensor
+    _class_iri = s223.Sensor
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Intrusion...good for Windows and doors
 

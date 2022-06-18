@@ -12,9 +12,9 @@ from ...connections.water import (
     SteamOutletConnectionPoint,
     WaterInletConnectionPoint,
 )
-from ...core import Device, p223, s223
+from ...core import Device, bob, p223, s223
 
-_namespace = p223
+_namespace = bob
 
 
 class SteamPipe(Device):
@@ -26,16 +26,18 @@ class SteamPipe(Device):
 
 
 class Humidifier(Device):
-    _class_iri: URIRef = p223.Humidifier
+    _class_iri = p223.Humidifier
     steamOutlet: SteamOutletConnectionPoint
     waterInlet: WaterInletConnectionPoint
 
 
 class ElectricalHumidifier(Humidifier):
+    _class_iri = p223.Humidifier
     powerInlet: ElectricalInletConnectionPoint
     modulation = PercentCommand
 
 
 class NaturalGasHumidifier(Humidifier):
+    _class_iri = p223.Humidifier
     naturalGasInlet: NaturalGasInletConnectionPoint
     modulation = PercentCommand

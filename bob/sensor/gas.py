@@ -11,15 +11,17 @@ from ..core import (
     Node,
     PropertyReference,
     Substance,
+    bob,
     p223,
     quantitykind,
+    s223,
     unit,
 )
 from ..properties import GasConcentration
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-_namespace = p223
+_namespace = bob
 
 # TODO :
 # try to create an exmaple for the sensors found here
@@ -29,11 +31,13 @@ _namespace = p223
 
 
 class GasConcentrationSetpoint(Setpoint):
+    _class_iri = s223.Setpoint
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     unit: URIRef = unit.PPM
 
 
 class GasConcentrationSensor(Sensor):
+    _class_iri = s223.Sensor
     hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
     observesProperty: PropertyReference  # GasConcentration
 
@@ -55,6 +59,7 @@ class GasConcentrationSensor(Sensor):
 
 
 class CO2Sensor(GasConcentrationSensor):
+    _class_iri = s223.Sensor
     "Carbon Dioxide concentration sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -64,6 +69,7 @@ class CO2Sensor(GasConcentrationSensor):
 
 
 class COSensor(GasConcentrationSensor):
+    _class_iri = s223.Sensor
     "Carbon monoxide concentration sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -73,6 +79,7 @@ class COSensor(GasConcentrationSensor):
 
 
 class NO2Sensor(GasConcentrationSensor):
+    _class_iri = s223.Sensor
     "Diesel (NO2) concentration sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -82,6 +89,7 @@ class NO2Sensor(GasConcentrationSensor):
 
 
 class CH4Sensor(GasConcentrationSensor):
+    _class_iri = s223.Sensor
     "Natural gas sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference

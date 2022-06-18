@@ -7,6 +7,7 @@ from ..core import (
     Medium,
     SchemaGraph,
     Substance,
+    bob,
     p223,
     quantitykind,
     s223,
@@ -28,7 +29,7 @@ from ..property import (
     ObservableProperty,
 )
 
-_namespace = p223
+_namespace = bob
 
 
 # On Off Status is telemetry so the value depends on hasExternalReference

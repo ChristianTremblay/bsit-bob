@@ -11,9 +11,9 @@ from ...connections.electricity import (
     ElectricalOutletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
 )
-from ...core import Device, PropertyReference, p223, s223
+from ...core import Device, PropertyReference, bob, p223, s223
 
-_namespace = p223
+_namespace = bob
 
 compressor_template = {
     "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},

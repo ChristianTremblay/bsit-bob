@@ -19,9 +19,9 @@ from ...connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
 )
-from ...core import Device, p223, s223
+from ...core import Device, bob, p223, s223
 
-_namespace = s223
+_namespace = bob
 
 """
 chilledWaterCoil_template = {
@@ -63,7 +63,7 @@ class Accumulator4SidesDuct(Device):
     Return and supply are directional, but accumulator 1 and 2 are bidirectional
     """
 
-    _class_iri: URIRef = p223.FourSideDuctForHeatExchanger
+    _class_iri: URIRef = s223.HeatExchanger
     accumulator1Connection: AirBidirectionalConnectionPoint
     accumulator2Connection: AirBidirectionalConnectionPoint
     supplyDuctOutlet: AirOutletConnectionPoint

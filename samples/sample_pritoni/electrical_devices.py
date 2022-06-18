@@ -4,7 +4,7 @@ from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
 from bob.devices.electricity.distribution import *
 from bob.devices.electricity.meter import ThreePhaseElectricalMeter
-from bob.devices.electricity.switch import TimerSwitch
+from bob.devices.electricity.switch import DimmableSwitch, TimerSwitch
 from bob.properties.time import Hour
 
 model_name = Path(__file__).stem
@@ -142,6 +142,9 @@ dist_panel["CB#7"] >> dist_panel_cb7
 
 bathroom_timer_switch = TimerSwitch(label="Bathroom Timer Switch", voltage=120, delay=2)
 
+openofficeEast_luminaire_1_dimmer = DimmableSwitch(
+    label="Dimmer1", comment="Dimmable Switch Luminaire 1", voltage=120
+)
 
 return_fan_electrical_meter = ThreePhaseElectricalMeter(
     label="RF Meter",

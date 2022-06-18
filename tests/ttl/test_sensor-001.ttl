@@ -1,8 +1,8 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_sensor-001
 # imports: http://data.ashrae.org/standard223/1.0/model/all
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex30: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -15,35 +15,32 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_sensor-001> ;
   rdfs:label "test_sensor-001" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex30:00001 a p223:TemperatureSensor,
-        s223:Connectable,
+ex30:00001 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "ats1" ;
     s223:observesProperty ex30:00002 ;
     rdfs:comment "Supply Air Temperature Sensor" .
-ex30:00002 a p223:Temperature,
-        s223:ObservableProperty,
+ex30:00002 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:Temperature ;
     rdfs:label "ats1.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-ex30:00003 a p223:AirTemperatureSensor,
-        p223:TemperatureSensor,
-        s223:Connectable,
+ex30:00003 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "ats2" ;
     s223:observesProperty ex30:00004 ;
     rdfs:comment "Supply Air Temperature Sensor" .
-ex30:00004 a p223:Temperature,
-        s223:ObservableProperty,
+ex30:00004 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:Temperature ;
     rdfs:label "ats2.Temperature" ;
     s223:hasExternalReference ex30:00005 ;
     s223:ofMedium s223:Medium-Air ;
@@ -51,19 +48,18 @@ ex30:00004 a p223:Temperature,
     qudt:unit unit:DEG_C .
 ex30:00005 a s223:ExternalReference ;
     rdfs:label "ats2.Temperature.ExternalReference" .
-ex30:00006 a p223:AirHumiditySensor,
-        s223:Connectable,
+ex30:00006 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "ahs1" ;
-    p223:hasQuantityKind quantitykind:RelativeHumidity ;
     s223:observesProperty ex30:00007 ;
+    bob:hasQuantityKind quantitykind:RelativeHumidity ;
     rdfs:comment "Zone Humidity Sensor with a value of 20" .
-ex30:00007 a p223:RelativeHumidity,
-        s223:ObservableProperty,
+ex30:00007 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:RelativeHumidity ;
     rdfs:label "ahs1.Measure" ;
     s223:hasValue 20.0 ;
     s223:ofMedium s223:Medium-Air ;

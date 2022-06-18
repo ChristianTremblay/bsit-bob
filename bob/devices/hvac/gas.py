@@ -4,7 +4,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import Device, PropertyReference, enum, p223, quantitykind, s223, unit
+from ...core import Device, PropertyReference, bob, enum, p223, quantitykind, s223, unit
 from ...property import QuantifiableObservableProperty
 from ...sensor import Sensor
 from ...sensor.gas import (
@@ -15,7 +15,7 @@ from ...sensor.gas import (
     NO2Sensor,
 )
 
-_namespace = p223
+_namespace = bob
 
 gasmonitor_template = {
     "params": {

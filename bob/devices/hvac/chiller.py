@@ -19,10 +19,10 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, p223, s223
+from ...core import Device, bob, p223, s223
 from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
 
-_namespace = s223
+_namespace = bob
 
 chiller_template = {
     "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
@@ -33,7 +33,7 @@ chiller_template = {
 
 
 class Chiller(Device):
-    _class_iri = p223.Chiller
+    _class_iri = s223.Chiller
     chilledWaterEntering: ChilledWaterInletConnectionPoint
     chilledWaterLeaving: ChilledWaterOutletConnectionPoint
     condensedWaterEntering: CondensedWaterInletConnectionPoint
@@ -58,7 +58,7 @@ class Chiller(Device):
 
 
 class AgnosticChiller(Device):
-    _class_iri = p223.Chiller
+    _class_iri = s223.Chiller
     chilledWaterLeaving: WaterOutletConnectionPoint
     chilledWaterEntering: WaterInletConnectionPoint
     condensedWaterLeaving: WaterOutletConnectionPoint

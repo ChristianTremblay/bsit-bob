@@ -4,6 +4,7 @@ Bob the SI-WG Builder
 
 from __future__ import annotations
 
+import copy
 import inspect
 import io
 import itertools
@@ -155,7 +156,11 @@ s223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
 
 # This namespace is added so in the development of Bob, when new cases occurs
 # we can clearly establish that a new class is not yet part of the standard
-p223 = bind_namespace("p223", "http://data.ashrae.org/proposal_to_standard223#")
+p223 = bind_namespace("p223", "http://data.ashrae.org/proposal-to-standard223#")
+
+# This namespace is added so si-builder (aka Bob), can provide its own schema
+# of classes which are assemblage of s223 classes
+bob = bind_namespace("bob", "http://data.ashrae.org/standard223/si-builder#")
 
 
 # everything in this module belongs in the standard
@@ -1395,9 +1400,9 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
 
     # create a connection
     if CONNECTION_HAS_MEDIUM:
-        connection = Connection(hasMedium=medium)
+        connection = Connection(hasMedium=medium, label="cnx")
     else:
-        connection = Connection()
+        connection = Connection(label="cnx")
 
     # connect the from thing
     connect_mm(from_connection_point, connection)
@@ -1483,9 +1488,9 @@ def connect_mm(
 
     # create a connection between the two
     if CONNECTION_HAS_MEDIUM:
-        connection = Connection(hasMedium=from_medium)
+        connection = Connection(hasMedium=from_medium, label="cnx")
     else:
-        connection = Connection()
+        connection = Connection(label="cnx")
 
     # link the two things together
     from_connection_point._data_graph.add(
@@ -2923,6 +2928,7 @@ class Device(Container, Connectable):
         # ex. TypeError: unexpected keyword argument: waterInlet
         # By removing properties and connection points from kwargs and explicitly
         # putting them in config, it should be better
+        _config = dict(config.items())
         for attr_name, attr_value in kwargs.copy().items():
             if inspect.isclass(attr_value):
                 # if issubclass(attr_value, Property):
@@ -2932,21 +2938,25 @@ class Device(Container, Connectable):
                 #        else {attr_name: kwargs.pop(attr_name)}
                 #    )
                 if issubclass(attr_value, ConnectionPoint):
-                    config["cp"] = (
-                        {**config["cp"], **{attr_name: kwargs.pop(attr_name)}}
-                        if "cp" in config.keys()
+                    _config["cp"] = (
+                        {**_config["cp"], **{attr_name: kwargs.pop(attr_name)}}
+                        if "cp" in _config.keys()
                         else {attr_name: kwargs.pop(attr_name)}
                     )
 
         super().__init__(*args, **kwargs)
 
-        if config:
-            for group_name, group_items in config.items():
+        if _config:
+            for group_name, group_items in _config.items():
                 if group_name == "params":
                     continue
                 if group_name == "cp":
                     for (thing_name, thing_class) in group_items.items():
-                        setattr(self, thing_name, thing_class(self))
+                        setattr(
+                            self,
+                            thing_name,
+                            thing_class(self, label=f"{self.label}.{thing_name}"),
+                        )
                     continue
                 things = []
                 for (thing_name, thing_class), thing_kwargs in group_items.items():
@@ -3059,6 +3069,31 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
     logging.debug(f"    - from_thing: {from_thing}")
 
     connect_mm(from_thing, connection_point)
+
+
+def template_update(base: Dict = {}, config: Dict = None, bases: List = None):
+    """
+    This utility allows to preserve module templates from
+    undesired modification during creation of devices.
+
+    Usage :
+    _config = template_update(template, user_provided_config_dict)
+
+    """
+    if bases:
+        d1, d2 = bases
+        _d1 = copy.deepcopy(d1)
+        _d2 = copy.deepcopy(d2)
+        _d1.update(_d2)
+        if config:
+            _d1.update(config)
+        return _d1
+
+    else:
+        _d = copy.deepcopy(base)
+        if config:
+            _d.update(config)
+        return _d
 
 
 #

@@ -9,16 +9,16 @@ from ...connections.electricity import (
     Electricity_120V_60HzInletConnectionPoint,
 )
 from ...connections.light import LightVisibleOutletConnectionPoint
-from ...core import Device, s223
+from ...core import Device, bob, p223, s223
 from ...properties.light import RelativeLuminousFlux
 from ...properties.ratio import PercentCommand
 from ...properties.states import OnOffCommand, OnOffStatus
 
-_namespace = s223
+_namespace = bob
 
 
 class Luminaire(Device):
-    _class_iri: URIRef = s223.Luminaire
+    _class_iri = s223.Luminaire
     lightOutlet: LightVisibleOutletConnectionPoint
     brightness: RelativeLuminousFlux
     brightnessRatio: PercentCommand

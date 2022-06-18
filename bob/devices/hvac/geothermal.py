@@ -19,9 +19,9 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, enum, p223
+from ...core import Device, bob, enum, p223, s223
 
-_namespace = p223
+_namespace = bob
 
 """
 chilledWaterCoil_template = {

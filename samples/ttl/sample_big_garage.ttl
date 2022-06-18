@@ -1,8 +1,8 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/sample_big_garage
 # imports: http://data.ashrae.org/standard223/1.0/model/all
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex: <urn:ex/sample_big_garage/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -30,14 +30,10 @@ ex:00003 a s223:Connectable,
         s223:DomainSpace,
         s223:HVACSpace ;
     rdfs:label "My Big Garage" ;
-    s223:airTransfer ex:00006 ;
     s223:connectedFrom ex:00035 ;
     s223:connectedThrough ex:00041,
         ex:00043 ;
     s223:connectedTo ex:00025 ;
-    s223:doors ex:00007 ;
-    s223:ductAirInlet ex:00004 ;
-    s223:ductAirOutlet ex:00005 ;
     s223:hasConnectionPoint ex:00004,
         ex:00005,
         ex:00006,
@@ -47,9 +43,13 @@ ex:00003 a s223:Connectable,
         ex:00010 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:radiantCooling ex:00010 ;
-    s223:radiantHeating ex:00009 ;
-    s223:windows ex:00008 .
+    bob:airTransfer ex:00006 ;
+    bob:doors ex:00007 ;
+    bob:ductAirInlet ex:00004 ;
+    bob:ductAirOutlet ex:00005 ;
+    bob:radiantCooling ex:00010 ;
+    bob:radiantHeating ex:00009 ;
+    bob:windows ex:00008 .
 ex:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "My Big Garage.ductAirInlet" ;
@@ -94,18 +94,18 @@ ex:00010 a s223:BidirectionalConnectionPoint,
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex:00003 .
-ex:00011 a p223:LightingSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+ex:00011 a s223:Connectable,
+        s223:DomainSpace,
+        s223:LightingSpace ;
     rdfs:label "Light Space #1 near entry" ;
-    p223:lightInlet ex:00012 ;
-    p223:naturalLightInlet ex:00013 ;
     s223:connectedFrom ex:00017 ;
     s223:connectedThrough ex:00048 ;
     s223:hasConnectionPoint ex:00012,
         ex:00013 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasMedium s223:Light-Visible .
+    s223:hasMedium s223:Light-Visible ;
+    bob:lightInlet ex:00012 ;
+    bob:naturalLightInlet ex:00013 .
 ex:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Light Space #1 near entry.lightInlet" ;
@@ -119,18 +119,18 @@ ex:00013 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex:00011 .
-ex:00014 a p223:LightingSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+ex:00014 a s223:Connectable,
+        s223:DomainSpace,
+        s223:LightingSpace ;
     rdfs:label "Light Space #2 back of the garage" ;
-    p223:lightInlet ex:00015 ;
-    p223:naturalLightInlet ex:00016 ;
     s223:connectedFrom ex:00019 ;
     s223:connectedThrough ex:00049 ;
     s223:hasConnectionPoint ex:00015,
         ex:00016 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasMedium s223:Light-Visible .
+    s223:hasMedium s223:Light-Visible ;
+    bob:lightInlet ex:00015 ;
+    bob:naturalLightInlet ex:00016 .
 ex:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Light Space #2 back of the garage.lightInlet" ;
@@ -151,7 +151,7 @@ ex:00017 a s223:Connectable,
     s223:connectedThrough ex:00048 ;
     s223:connectedTo ex:00011 ;
     s223:hasConnectionPoint ex:00018 ;
-    s223:lightOutlet ex:00018 .
+    bob:lightOutlet ex:00018 .
 ex:00018 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Ballast #1, space #1.lightOutlet" ;
@@ -166,7 +166,7 @@ ex:00019 a s223:Connectable,
     s223:connectedThrough ex:00049 ;
     s223:connectedTo ex:00014 ;
     s223:hasConnectionPoint ex:00020 ;
-    s223:lightOutlet ex:00020 .
+    bob:lightOutlet ex:00020 .
 ex:00020 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Ballast #2, space #2.lightOutlet" ;
@@ -174,8 +174,7 @@ ex:00020 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex:00019 .
-ex:00021 a p223:MovementSensor,
-        s223:Connectable,
+ex:00021 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #1" ;
@@ -189,8 +188,7 @@ ex:00022 a s223:EnumerableProperty,
     rdfs:label "Movement Sensor Space #1.Movement" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
-ex:00023 a p223:MovementSensor,
-        s223:Connectable,
+ex:00023 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #2" ;
@@ -208,8 +206,6 @@ ex:00025 a s223:Connectable,
         s223:Device,
         s223:Fan ;
     rdfs:label "Fan" ;
-    s223:airInlet ex:00026 ;
-    s223:airOutlet ex:00027 ;
     s223:connectedFrom ex:00003 ;
     s223:connectedThrough ex:00041,
         ex:00042 ;
@@ -222,7 +218,9 @@ ex:00025 a s223:Connectable,
         ex:00031,
         ex:00032,
         ex:00033,
-        ex:00034 .
+        ex:00034 ;
+    bob:airInlet ex:00026 ;
+    bob:airOutlet ex:00027 .
 ex:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Fan.airInlet" ;
@@ -239,55 +237,56 @@ ex:00027 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex:00025 .
 ex:00028 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
+    rdfs:label "Fan.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex:00025 .
-ex:00029 a p223:Pressure,
-        s223:ObservableProperty,
+ex:00029 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:Pressure ;
     rdfs:label "staticPressure" ;
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
-ex:00030 a s223:Amps,
-        s223:ObservableProperty,
+ex:00030 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:Amps ;
     rdfs:label "amps" ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex:00031 a p223:RPM,
-        s223:ObservableProperty,
+ex:00031 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:RPM ;
     rdfs:label "rpm" ;
     qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
-ex:00032 a p223:HP,
-        s223:ObservableProperty,
+ex:00032 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:HP ;
     rdfs:label "hp" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex:00033 a s223:ElectricPower,
-        s223:ElectricPowerkW,
-        s223:ObservableProperty,
+ex:00033 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:ElectricPower,
+        bob:ElectricPowerkW ;
     rdfs:label "kW" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 ex:00034 a s223:ObservableProperty,
-        s223:PowerFactor,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:PowerFactor ;
     rdfs:label "powerFactor" ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
@@ -296,8 +295,6 @@ ex:00035 a s223:Coil,
         s223:Device,
         s223:HeatingCoil ;
     rdfs:label "Heating Coil" ;
-    s223:airInlet ex:00036 ;
-    s223:airOutlet ex:00037 ;
     s223:connectedFrom ex:00025 ;
     s223:connectedThrough ex:00042,
         ex:00043 ;
@@ -306,7 +303,9 @@ ex:00035 a s223:Coil,
         ex:00037,
         ex:00038 ;
     s223:hasProperty ex:00039,
-        ex:00040 .
+        ex:00040 ;
+    bob:airInlet ex:00036 ;
+    bob:airOutlet ex:00037 .
 ex:00036 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Heating Coil.airInlet" ;
@@ -323,87 +322,89 @@ ex:00037 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex:00035 .
 ex:00038 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
+    rdfs:label "Heating Coil.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf ex:00035 .
-ex:00039 a s223:Amps,
-        s223:ObservableProperty,
+ex:00039 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:Amps ;
     rdfs:label "amps" ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex:00040 a s223:ElectricPower,
-        s223:ElectricPowerkW,
-        s223:ObservableProperty,
+ex:00040 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:ElectricPower,
+        bob:ElectricPowerkW ;
     rdfs:label "kW" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
 ex:00041 a s223:Connection ;
+    rdfs:label "cnx" ;
     s223:connectsAt ex:00005,
         ex:00026 ;
     s223:connectsFrom ex:00003 ;
     s223:connectsTo ex:00025 ;
     s223:hasMedium s223:Medium-Air .
 ex:00042 a s223:Connection ;
+    rdfs:label "cnx" ;
     s223:connectsAt ex:00027,
         ex:00036 ;
     s223:connectsFrom ex:00025 ;
     s223:connectsTo ex:00035 ;
     s223:hasMedium s223:Medium-Air .
 ex:00043 a s223:Connection ;
+    rdfs:label "cnx" ;
     s223:connectsAt ex:00004,
         ex:00037 ;
     s223:connectsFrom ex:00035 ;
     s223:connectsTo ex:00003 ;
     s223:hasMedium s223:Medium-Air .
-ex:00044 a p223:AirTemperatureSensor,
-        p223:TemperatureSensor,
-        s223:Connectable,
+ex:00044 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Discharge Air temperature sensor" ;
     s223:hasMeasurementLocation ex:00037 ;
     s223:hasPhysicalLocation ex:00001 ;
     s223:observesProperty ex:00045 .
-ex:00045 a p223:Temperature,
-        s223:ObservableProperty,
+ex:00045 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:Temperature ;
     rdfs:label "Discharge Air temperature sensor.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-ex:00046 a p223:AirTemperatureSensor,
-        p223:TemperatureSensor,
-        s223:Connectable,
+ex:00046 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "Zone Air temperature sensor" ;
     s223:hasMeasurementLocation ex:00003 ;
     s223:hasPhysicalLocation ex:00001 ;
     s223:observesProperty ex:00047 .
-ex:00047 a p223:Temperature,
-        s223:ObservableProperty,
+ex:00047 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:Temperature ;
     rdfs:label "Zone Air temperature sensor.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 ex:00048 a s223:Connection ;
+    rdfs:label "cnx" ;
     s223:connectsAt ex:00012,
         ex:00018 ;
     s223:connectsFrom ex:00017 ;
     s223:connectsTo ex:00011 ;
     s223:hasMedium s223:Light-Visible .
 ex:00049 a s223:Connection ;
+    rdfs:label "cnx" ;
     s223:connectsAt ex:00015,
         ex:00020 ;
     s223:connectsFrom ex:00019 ;

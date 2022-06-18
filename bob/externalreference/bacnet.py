@@ -11,12 +11,13 @@ from ..core import (
     Graph,
     Node,
     bacnet,
+    bob,
     p223,
     ref,
     schema_graph,
 )
 
-_namespace = p223
+_namespace = ref
 
 url_pattern = re.compile("^bacnet:[/][/]([0-9]+)[/]([A-Za-z0-9-]+),([1-9][0-9]*)$")
 

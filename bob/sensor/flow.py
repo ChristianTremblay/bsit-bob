@@ -9,6 +9,7 @@ from ..core import (
     Medium,
     PropertyReference,
     Water,
+    bob,
     enum,
     p223,
     quantitykind,
@@ -19,16 +20,17 @@ from ..properties import Flow
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-_namespace = s223
+_namespace = bob
 
 
 class FlowSetpoint(Setpoint):
+    _class_iri = s223.Setpoint
     hasQuantityKind: URIRef = quantitykind.VolumeFlowRate
     unit: URIRef
 
 
 class FlowSensor(Sensor):
-    _class_iri: URIRef = p223.FlowSensor
+    _class_iri = s223.Sensor
     observesProperty: PropertyReference  # Flow
 
     def __init__(self, **kwargs: Any) -> None:
@@ -44,14 +46,14 @@ class FlowSensor(Sensor):
 
 
 class AirFlowSensor(FlowSensor):
-    _class_iri: URIRef = p223.AirFlowSensor
+    _class_iri = s223.Sensor
     # typical unit : unit=unit["FT3-PER-MIN"]
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterFlowSensor(FlowSensor):
-    _class_iri: URIRef = p223.WaterFlowSensor
+    _class_iri = s223.Sensor
     # typical unit : unit=unit["GAL_UK-PER-MIN"]
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Water, **kwargs)
