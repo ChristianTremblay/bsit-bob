@@ -5,12 +5,20 @@ from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import Electricity_575V_60HzInletConnectionPoint
-from ...core import ConnectionPoint, Device, PropertyReference, quantitykind, s223, unit
+from ...core import (
+    ConnectionPoint,
+    Device,
+    PropertyReference,
+    bob,
+    quantitykind,
+    s223,
+    unit,
+)
 from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus
 from ...property import QuantifiableObservableProperty
 
-_namespace = s223
+_namespace = bob
 
 fan_template = {
     "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},

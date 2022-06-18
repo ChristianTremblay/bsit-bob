@@ -31,11 +31,11 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, Node, PropertyReference, s223
+from ...core import Device, Node, PropertyReference, bob, p223, s223, template_update
 from ...properties import Gallons, Percent
 from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
-_namespace = s223
+_namespace = bob
 
 valve2w_template = {
     "cp": {
@@ -91,9 +91,7 @@ class TwoWayValve(Valve):
     _class_iri: URIRef = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = valve2w_template
-        if config:
-            _config.update(config)
+        _config = template_update(valve2w_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
@@ -106,9 +104,7 @@ class ThreeWayValveDiverting(Valve):
     _class_iri = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = valve_3w_diverting_template
-        if config:
-            _config.update(config)
+        _config = template_update(valve_3w_diverting_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
@@ -121,21 +117,19 @@ class ThreeWayValveMixing(Valve):
     _class_iri: URIRef = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = valve_3w_mixing_template
-        if config:
-            _config.update(config)
+        _config = template_update(valve_3w_mixing_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
 
 class NaturalGasValve(TwoWayValve):
-    _class_iri = s223.NaturalGasValve
+    _class_iri = s223.Valve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
 
 
 class PneumaticValve(TwoWayValve):
-    _class_iri = s223.PneumaticValve
+    _class_iri = s223.Valve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 
@@ -162,10 +156,10 @@ class TwoWayActuatedProportionalValve(TwoWayValve):
     _class_iri = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = valve2w_template
-        _config.update(electrical_actuated_proportional_valve_template)
-        if config:
-            _config.update(config)
+        _config = template_update(
+            bases=[valve2w_template, electrical_actuated_proportional_valve_template],
+            config=config,
+        )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
@@ -179,10 +173,10 @@ class TwoWayActuatedOnOffValve(TwoWayValve):
     _class_iri = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = valve2w_template
-        _config.update(electrical_actuated_onoff_valve_template)
-        if config:
-            _config.update(config)
+        _config = template_update(
+            bases=[valve2w_template, electrical_actuated_onoff_valve_template],
+            config=config,
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
@@ -196,10 +190,13 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
     node_type = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = valve_3w_mixing_template
-        _config.update(electrical_actuated_proportional_valve_template)
-        if config:
-            _config.update(config)
+        _config = template_update(
+            bases=[
+                valve_3w_mixing_template,
+                electrical_actuated_proportional_valve_template,
+            ],
+            config=config,
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
@@ -212,10 +209,10 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
     _class_iri = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = valve_3w_mixing_template
-        _config.update(electrical_actuated_onoff_valve_template)
-        if config:
-            _config.update(config)
+        _config = template_update(
+            bases=[valve_3w_mixing_template, electrical_actuated_onoff_valve_template],
+            config=config,
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
@@ -228,10 +225,13 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
     _class_iri = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = valve_3w_diverting_template
-        _config.update(electrical_actuated_proportional_valve_template)
-        if config:
-            _config.update(config)
+        _config = template_update(
+            bases=[
+                valve_3w_diverting_template,
+                electrical_actuated_proportional_valve_template,
+            ],
+            config=config,
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
@@ -244,11 +244,13 @@ class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
     _class_iri = s223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
-
-        _config = valve_3w_diverting_template
-        _config.update(electrical_actuated_onoff_valve_template)
-        if config:
-            _config.update(config)
+        _config = template_update(
+            bases=[
+                valve_3w_diverting_template,
+                electrical_actuated_onoff_valve_template,
+            ],
+            config=config,
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]

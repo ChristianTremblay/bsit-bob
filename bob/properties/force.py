@@ -1,9 +1,9 @@
 from rdflib import URIRef
 
-from ..core import Medium, p223, quantitykind, unit
+from ..core import Medium, bob, p223, quantitykind, unit
 from ..property import QuantifiableObservableProperty
 
-_namespace = p223
+_namespace = bob
 
 # all = [HP, Pressure, DifferentialStaticPressure]
 

@@ -4,7 +4,17 @@ from typing import Any
 
 from rdflib import URIRef
 
-from ..core import Air, Medium, PropertyReference, enum, p223, quantitykind, unit
+from ..core import (
+    Air,
+    Medium,
+    PropertyReference,
+    bob,
+    enum,
+    p223,
+    quantitykind,
+    s223,
+    unit,
+)
 from ..properties import RelativeHumidity
 from ..property import (
     ObservableProperty,
@@ -14,10 +24,11 @@ from ..property import (
 )
 from .sensor import Sensor, split_kwargs
 
-_namespace = p223
+_namespace = bob
 
 
 class HumiditySetpoint(Setpoint):
+    _class_iri = s223.Setpoint
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity
     unit: URIRef = unit.PERCENT_RH
 
@@ -26,6 +37,8 @@ class AirHumiditySensor(Sensor):
     """
     Air humidity sensor. Can model room sensor or duct sensor.
     """
+
+    _class_iri = s223.Sensor
 
     # measuresMedium: Medium = Air
     hasQuantityKind: URIRef = quantitykind.RelativeHumidity

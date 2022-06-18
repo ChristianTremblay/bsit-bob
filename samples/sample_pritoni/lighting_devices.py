@@ -5,6 +5,7 @@ import physical_spaces as ps
 
 from bob.connections.light import *
 from bob.core import bind_model_namespace, dump, unit
+from bob.devices.electricity.switch import DimmableSwitch
 from bob.devices.lighting.light import *
 from bob.externalreference.bacnet import BACnetReference
 from bob.properties.electricity import ElectricPower
@@ -134,6 +135,8 @@ bathroom_movement = OccupancySensor(
 
 
 # Now we build lights for OpenOffice East
+
+
 openofficeEast_luminaire_1 = Luminaire(
     label="Luminaire1",
     comment="Luminaire #1 in OpenOffice East",

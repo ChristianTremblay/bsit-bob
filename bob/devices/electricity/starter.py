@@ -3,10 +3,10 @@ from typing import Dict
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import *
-from ...core import Device, Node, p223, s223
+from ...core import Device, Node, bob, p223, s223
 from ...sensor.electricity import CurrentBinarySensor
 
-_namespace = s223
+_namespace = bob
 
 
 class MotorStarter(Device):
@@ -17,13 +17,14 @@ class MotorStarter(Device):
 
     """
 
-    _class_iri = s223.MotorStarter
+    _class_iri = p223.MotorStarter
     outputSignal: OnOffSignalOutletConnectionPoint
     inputSignal: OnOffSignalInletConnectionPoint
     onOffStatus: OnOffStatus
     onOffCommand: OnOffCommand
 
     def __init__(self, config: Dict = {}, **kwargs):
+        # _config = template_update(starter_template, config)
         kwargs = {**config.get("params", {}), **kwargs}
         _electricalInlet = kwargs.pop("electricalInlet")
         _electricalOutlet = kwargs.pop("electricalOutlet")

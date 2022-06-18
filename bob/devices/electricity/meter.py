@@ -15,9 +15,9 @@ from bob.properties.electricity import (
 from bob.sensor.electricity import CurrentAnalogSensor, VoltageSensor
 
 from ...connections.electricity import *
-from ...core import Device, Node, p223, s223, unit
+from ...core import Device, Node, bob, p223, s223, template_update, unit
 
-_namespace = s223
+_namespace = bob
 
 three_phase_electricalmeter_template = {
     "properties": {
@@ -184,10 +184,10 @@ class ThreePhaseElectricalMeter(Device):
 
     """
 
-    _class_iri: URIRef = s223.ElectricalMeter
+    _class_iri: URIRef = p223.ElectricalMeter
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = three_phase_electricalmeter_template
+        _config = template_update(three_phase_electricalmeter_template, config)
         if "medium" not in kwargs:
             raise ValueError(
                 "You must provide medium when defining an electrical meter"
@@ -196,8 +196,6 @@ class ThreePhaseElectricalMeter(Device):
         for k, v in _config["sensors"].items():
             v["ofMedium"] = _medium
 
-        if config:
-            _config.update(config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 

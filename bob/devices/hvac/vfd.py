@@ -8,7 +8,7 @@ from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from ...core import ConnectionPoint, Device, Property, p223, s223
+from ...core import ConnectionPoint, Device, Property, bob, p223, s223
 from ...properties import (
     HP,
     RPM,
@@ -23,7 +23,7 @@ from ...properties import (
     Temperature,
 )
 
-_namespace = s223
+_namespace = bob
 
 vfd_template = {
     "cp": {

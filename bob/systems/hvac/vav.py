@@ -13,14 +13,14 @@ from ...connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
-from ...core import Device, PropertyReference, System, p223, unit
+from ...core import Device, PropertyReference, System, bob, p223, s223, unit
 from ...devices.hvac.coil import HotWaterCoil
 from ...devices.hvac.damper import Damper, ElectricalActuatedProportionalDamper
 from ...devices.hvac.fan import Fan
 from ...devices.hvac.valve import TwoWayActuatedProportionalValve
 from ...sensor.flow import AirFlowSensor
 
-_namespace = p223
+_namespace = bob
 
 vav_system_template = {
     "params": {"label": "VAV", "comment": "VAV Description"},
@@ -82,6 +82,7 @@ vav_withreheat_template = {
 
 
 class VAV(System):
+    _class_iri = s223.VAV
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
 
@@ -91,6 +92,7 @@ class VAV(System):
 
 
 class VAV_Simple(System):
+    _class_iri = s223.VAV
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
     airFlow: PropertyReference
@@ -112,6 +114,7 @@ class VAV_Simple(System):
 
 
 class VAV_Dual(System):
+    _class_iri = s223.VAV
     airInlet: AirInletSystemConnectionPoint
     plenumInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
@@ -134,6 +137,7 @@ class VAV_Dual(System):
 
 
 class VAV_Reheat(System):
+    _class_iri = s223.VAV
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
     airFlow: PropertyReference

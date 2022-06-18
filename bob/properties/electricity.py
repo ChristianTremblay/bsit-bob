@@ -3,38 +3,38 @@ from typing import Any
 
 from rdflib import URIRef
 
-from ..core import quantitykind, s223, unit
+from ..core import bob, p223, quantitykind, s223, unit
 from ..property import QuantifiableObservableProperty
 
-_namespace = s223
+_namespace = bob
 
 
 class Volts(QuantifiableObservableProperty):
-    _node_iri = s223.Volts
+    _node_iri = p223.Volts
     hasQuantityKind = quantitykind.Voltage
     unit = unit.V
 
 
 class Amps(QuantifiableObservableProperty):
-    _node_iri = s223.Amps
+    _node_iri = p223.Amps
     hasQuantityKind = quantitykind.ElectricCurrent
     unit = unit.A
 
 
 class PowerFactor(QuantifiableObservableProperty):
-    _node_iri = s223.PowerFactor
+    _node_iri = p223.PowerFactor
     hasQuantityKind = quantitykind.PowerFactor
     unit = unit.UNITLESS
 
 
 class Frequency(QuantifiableObservableProperty):
-    _node_iri = s223.Frequency
+    _node_iri = p223.Frequency
     hasQuantityKind = quantitykind.Frequency
     unit = unit.HZ
 
 
 class ElectricPower(QuantifiableObservableProperty):
-    _node_iri = s223.ElectricPower
+    _node_iri = p223.ElectricPower
     hasQuantityKind = quantitykind.Power
     unit: URIRef
     _supported_units = [
@@ -60,7 +60,7 @@ class ElectricPower(QuantifiableObservableProperty):
 
 
 class ElectricApparentPower(QuantifiableObservableProperty):
-    _node_iri = s223.ElectricApparentPower
+    _node_iri = p223.ElectricApparentPower
     hasQuantityKind = quantitykind.ComplexPower
     unit: URIRef
     _supported_units = [unit["V-A"], unit["KiloV-A"]]
@@ -75,7 +75,7 @@ class ElectricApparentPower(QuantifiableObservableProperty):
 
 
 class ElectricReactivePower(QuantifiableObservableProperty):
-    _node_iri = s223.ElectricReactivePower
+    _node_iri = p223.ElectricReactivePower
     hasQuantityKind = quantitykind.ReactivePower
     unit: URIRef
     _supported_units = [unit["V-A_Reactive"], unit["KiloV-A_Reactive"]]
@@ -106,7 +106,7 @@ class ElectricPowerW(ElectricPower):
 
 # Energy
 class ElectricEnergy(QuantifiableObservableProperty):
-    _node_iri = s223.ElectricEnergy
+    _node_iri = p223.ElectricEnergy
     hasQuantityKind = quantitykind.Energy
     unit: URIRef
     _supported_units = [
@@ -127,7 +127,7 @@ class ElectricEnergy(QuantifiableObservableProperty):
 
 
 class ElectricApparentEnergy(QuantifiableObservableProperty):
-    _node_iri = s223.ElectricApparentEnergy
+    _node_iri = p223.ElectricApparentEnergy
     hasQuantityKind = quantitykind.Energy
     unit: URIRef
     _supported_units = [unit["V-A-HR"], unit["KiloV-A-HR"]]
@@ -142,7 +142,7 @@ class ElectricApparentEnergy(QuantifiableObservableProperty):
 
 
 class ElectricReactiveEnergy(QuantifiableObservableProperty):
-    _node_iri = s223.ElectricReactiveEnergy
+    _node_iri = p223.ElectricReactiveEnergy
     hasQuantityKind = quantitykind.Energy
     unit: URIRef
     _supported_units = [unit["V-A_Reactive-HR"], unit["KiloV-A_Reactive-HR"]]

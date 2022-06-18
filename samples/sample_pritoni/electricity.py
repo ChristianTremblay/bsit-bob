@@ -15,11 +15,13 @@ _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 # Make Electrical connections
 ed.dist_panel_cb1 >> [
-    ld.openofficeEast_luminaire_1,
+    ed.openofficeEast_luminaire_1_dimmer,
     ld.openofficeEast_luminaire_2,
     ld.openofficeWest_luminaire_3,
     ld.openofficeWest_luminaire_4,
 ]
+ed.openofficeEast_luminaire_1_dimmer.electricalOutlet >> ld.openofficeEast_luminaire_1.electricalInlet
+
 ed.dist_panel_cb3 >> [
     ld.kitchenette_luminaire_11,
     ld.kitchenette_luminaire_12,
@@ -40,6 +42,7 @@ ed.dist_panel_cb5 >> [
 ed.dist_panel_cb6 >> ed.bathroom_timer_switch >> hd.bathroom_exhaust_fan.electricalInlet
 
 ed.dist_panel_cb7 >> nd.ethernet_switch.electricalInlet
+ed.dist_panel_cb7 >> nd.firewall.electricalInlet
 
 """
 ed.main_panel["CB#2"] >> hd.ahu["SF-STARTER"] >> hd.ahu["SF"]

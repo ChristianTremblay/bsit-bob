@@ -17,6 +17,7 @@ from ..core import (
     PropertyReference,
     Segment,
     Substance,
+    bob,
     logging,
     p223,
     quantitykind,
@@ -158,7 +159,8 @@ def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
 class DifferentialSensor(Sensor):
     "Differential sensor"
     _class_iri: URIRef = s223.DifferentialSensor
-    # hasMeasurementLocation: # maxCount = 2, minCount=2
+    hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
+    hasMeasurementLocationLow: Node
 
 
 class VirtualSensor(Sensor):

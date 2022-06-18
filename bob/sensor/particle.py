@@ -9,9 +9,11 @@ from ..core import (
     Medium,
     PropertyReference,
     Substance,
+    bob,
     enum,
     p223,
     quantitykind,
+    s223,
     unit,
 )
 from ..enum import Particulate
@@ -24,10 +26,11 @@ from ..property import (
 )
 from .sensor import Sensor, split_kwargs
 
-_namespace = p223
+_namespace = bob
 
 
 class ParticulateSensor(Sensor):
+    _class_iri = s223.Sensor
     observesProperty: PropertyReference  # ParticulateCount
 
     def __init__(self, **kwargs: Any) -> None:
@@ -43,6 +46,7 @@ class ParticulateSensor(Sensor):
 
 
 class UltraFineParticulateSensor(ParticulateSensor):
+    _class_iri = s223.Sensor
     "PM 1.0 Count"
     comment = "Ultra Fine Particulate Sensor"
     # measuresSubstance: Substance = PM1_0
@@ -51,6 +55,7 @@ class UltraFineParticulateSensor(ParticulateSensor):
 
 
 class FineParticulateSensor(ParticulateSensor):
+    _class_iri = s223.Sensor
     "PM 2.5 Count"
     comment = "Fine Particulate Sensor"
     # measuresSubstance: Substance = PM2_5
@@ -59,6 +64,7 @@ class FineParticulateSensor(ParticulateSensor):
 
 
 class CoarseParticulateSensor(ParticulateSensor):
+    _class_iri = s223.Sensor
     "PM 10 Count"
     comment = "Coarse Particulate Sensor"
     # measuresSubstance: Substance = PM10_0

@@ -9,6 +9,7 @@ from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
     Electricity_120V_60HzInletConnectionPoint,
     EthernetBidirectionalConnectionPoint,
+    EthernetConnection,
 )
 from ...core import (
     ConnectionPoint,
@@ -27,33 +28,41 @@ from ...property import QuantifiableObservableProperty
 
 _namespace = bob
 
-ethernet_switch_template = {
+ethernet_firewall_template = {
     "cp": {
         "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
     },
     "properties": {},
 }
 
+internet = EthernetConnection(label="internet")
 
-class EthernetSwitch(Device):
+
+class EthernetFirewall(Device):
     """
-    An Ethernet Switch
+    An Ethernet Firewall with wan and lan ports
     """
 
-    _class_iri: URIRef = s223.EthernetSwitch
+    _class_iri = p223.EthernetFirewall
 
     def __init__(self, config: Dict = None, **kwargs):
-        if "ports" in kwargs:
-            _number_of_ports = int(kwargs.pop("ports"))
+        if "wan_ports" in kwargs:
+            _number_of_wanports = int(kwargs.pop("wan_ports"))
         else:
-            raise ValueError("Please provide number of IP ports using ports=x")
+            raise ValueError("Please provide number of IP ports using wan_ports=x")
+        if "lan_ports" in kwargs:
+            _number_of_lanports = int(kwargs.pop("lan_ports"))
+        else:
+            raise ValueError("Please provide number of IP ports using wan_ports=x")
         if "data_rate" in kwargs:
             _data_rate = float(kwargs.pop("data_rate"))
         else:
             raise ValueError("Please provide data rate using data_rate=x in Mbit/s")
-        _config = template_update(ethernet_switch_template, config)
-        for i, each in enumerate(range(_number_of_ports)):
-            _config["cp"][f"port{i}"] = EthernetBidirectionalConnectionPoint
+        _config = template_update(ethernet_firewall_template, config)
+        for i, each in enumerate(range(_number_of_wanports)):
+            _config["cp"][f"wan_port{i}"] = EthernetBidirectionalConnectionPoint
+        for i, each in enumerate(range(_number_of_lanports)):
+            _config["cp"][f"lan_port{i}"] = EthernetBidirectionalConnectionPoint
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         for k, v in self._connection_points.items():

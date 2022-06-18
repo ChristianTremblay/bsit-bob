@@ -8,9 +8,9 @@ from ...connections.water import (
     HotWaterOutletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, p223, s223
+from ...core import Device, bob, p223, s223
 
-_namespace = s223
+_namespace = bob
 
 
 class HotWaterBoiler(Device):

@@ -1,9 +1,9 @@
 from rdflib import URIRef
 
-from ..core import Air, Medium, Substance, p223, quantitykind, unit
+from ..core import Air, Medium, Substance, bob, p223, quantitykind, unit
 from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 
-_namespace = p223
+_namespace = bob
 
 
 class Air_Change_Per_Hour(QuantifiableObservableProperty):
@@ -17,5 +17,6 @@ class Air_Change_Per_Hour(QuantifiableObservableProperty):
 
     """
 
+    _class_iri = p223.AirChangePerHour
     hasQuantityKind = quantitykind.Dimensionless
     unit = unit.UNITLESS

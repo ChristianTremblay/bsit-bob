@@ -12,24 +12,28 @@ from ..core import (
     Node,
     PropertyReference,
     Water,
+    bob,
     enum,
     p223,
     quantitykind,
+    s223,
     unit,
 )
 from ..properties import DifferentialStaticPressure
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-_namespace = p223
+_namespace = bob
 
 
 class DifferentialStaticPressureSetpoint(Setpoint):
+    _class_iri = s223.Sensor
     hasQuantityKind: URIRef = quantitykind.ForcePerArea
     unit: URIRef
 
 
 class DifferentialStaticPressureSensor(Sensor):
+    _class_iri = s223.Sensor
     observesProperty: PropertyReference  # DifferentialStaticPressure
     hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
     hasMeasurementLocationLow: Node
@@ -47,10 +51,14 @@ class DifferentialStaticPressureSensor(Sensor):
 
 
 class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
+    _class_iri = s223.Sensor
+
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
+    _class_iri = s223.Sensor
+
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Water, **kwargs)

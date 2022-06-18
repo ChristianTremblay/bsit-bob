@@ -26,7 +26,7 @@ from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import Device, PropertyReference, logging, p223, s223
+from ...core import Device, PropertyReference, bob, logging, p223, s223, template_update
 from ...functions import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
 from .actuator import (
@@ -36,7 +36,7 @@ from .actuator import (
     PneumaticProportionalActuator,
 )
 
-_namespace = s223
+_namespace = bob
 
 
 # DAMPERS
@@ -47,7 +47,7 @@ class Damper(Device):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     command: PropertyReference
-    # feedback: PropertyReference
+    feedback: PropertyReference
     # position: ActuatableProperty
 
 
@@ -66,7 +66,6 @@ electrical_actuated_proportional_damper_template = {
     "devices": {("actuator", ElectricalProportionalActuator): {}},
     "properties": {
         ("position", PercentCommand): {},
-        # ("feedback", PropertyReference): {},
     },
 }
 
@@ -82,9 +81,9 @@ class ElectricalActuatedProportionalDamper(Damper):
     _class_iri: URIRef = s223.Damper
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = electrical_actuated_proportional_damper_template
-        if config:
-            _config.update(config)
+        _config = template_update(
+            electrical_actuated_proportional_damper_template, config
+        )
         kwargs = {**_config.pop("params", {}), **kwargs}
         logging.debug(
             f"ElectricalActuatedProportionalDamper.__init__ {_config} {kwargs}"
@@ -100,9 +99,7 @@ class ElectricalActuatedOnOffDamper(Damper):
     _class_iri: URIRef = s223.Damper
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = electrical_actuated_onoff_damper_template
-        if config:
-            _config.update(config)
+        _config = template_update(electrical_actuated_onoff_damper_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
@@ -130,10 +127,9 @@ class PneumaticActuatedProportionalDamper(Damper):
     _class_iri = s223.Damper
 
     def __init__(self, config: Dict = None, **kwargs):
-
-        _config = pneumatic_actuated_proportional_damper_template
-        if config:
-            _config.update(config)
+        _config = template_update(
+            pneumatic_actuated_proportional_damper_template, config
+        )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
@@ -146,9 +142,7 @@ class PneumaticActuatedOnOffDamper(Damper):
     _class_iri = s223.Damper
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = pneumatic_actuated_onoff_damper_template
-        if config:
-            _config.update(config)
+        _config = template_update(pneumatic_actuated_onoff_damper_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]

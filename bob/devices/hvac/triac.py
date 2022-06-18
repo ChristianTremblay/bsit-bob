@@ -11,9 +11,9 @@ from ...connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     ModulationSignalInletConnectionPoint,
 )
-from ...core import Device, p223, s223
+from ...core import Device, bob, p223, s223
 
-_namespace = p223
+_namespace = bob
 
 # TRIAC
 Triac_template = {

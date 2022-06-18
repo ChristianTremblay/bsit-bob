@@ -22,14 +22,24 @@ from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import Device, Property, PropertyReference, p223, s223
+from ...core import (
+    Device,
+    Property,
+    PropertyReference,
+    bob,
+    p223,
+    s223,
+    template_update,
+)
 
-_namespace = s223
+from . import _Actuator
+
+_namespace = bob
 
 # ACTUATORS
 
 
-class Actuator(Device):
+class Actuator(_Actuator):
     _class_iri = s223.Actuator
     command: PercentCommand
     actuatesProperty: Property
@@ -96,9 +106,7 @@ class ElectricalProportionalActuator(ProportionalActuator):
     def __init__(
         self, config: Dict = ElectricalProportionalActuator_template, **kwargs
     ):
-        _config = ElectricalProportionalActuator_template
-        if config:
-            _config.update(config)
+        _config = template_update(ElectricalProportionalActuator_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
@@ -107,9 +115,7 @@ class ElectricalOnOffActuator(OnOffActuator):
     _class_iri = s223.Actuator
 
     def __init__(self, config: Dict = ElectricalOnOffActuator_template, **kwargs):
-        _config = ElectricalOnOffActuator_template
-        if config:
-            _config.update(config)
+        _config = template_update(ElectricalOnOffActuator_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
@@ -141,9 +147,7 @@ class PneumaticProportionalActuator(ProportionalActuator):
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = PneumaticProportionalActuator_template
-        if config:
-            _config.update(config)
+        _config = template_update(PneumaticProportionalActuator_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 

@@ -2,20 +2,32 @@ from typing import Any
 
 from rdflib import URIRef
 
-from ..core import Air, Medium, PropertyReference, Water, p223, quantitykind, unit
+from ..core import (
+    Air,
+    Medium,
+    PropertyReference,
+    Water,
+    bob,
+    p223,
+    quantitykind,
+    s223,
+    unit,
+)
 from ..properties import Temperature
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-_namespace = p223
+_namespace = bob
 
 
 class TemperatureSetpoint(Setpoint):
+    _class_iri = s223.Setpoint
     hasQuantityKind: URIRef = quantitykind.Temperature
     unit: URIRef
 
 
 class TemperatureSensor(Sensor):
+    _class_iri = s223.Sensor
     observesProperty: PropertyReference  # Temperature
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -42,10 +54,14 @@ class TemperatureSensor(Sensor):
 
 
 class AirTemperatureSensor(TemperatureSensor):
+    _class_iri = s223.Sensor
+
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterTemperatureSensor(TemperatureSensor):
+    _class_iri = s223.Sensor
+
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Water, **kwargs)

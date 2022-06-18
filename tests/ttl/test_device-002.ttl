@@ -1,5 +1,6 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_device-002
 # imports: http://data.ashrae.org/standard223/1.0/model/all
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex30: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -20,8 +21,8 @@ ex30:00001 a s223:Boiler,
     rdfs:label "HWB-1" ;
     s223:hasConnectionPoint ex30:00002,
         ex30:00003 ;
-    s223:hotWaterEntering ex30:00003 ;
-    s223:hotWaterLeaving ex30:00002 ;
+    bob:hotWaterEntering ex30:00003 ;
+    bob:hotWaterLeaving ex30:00002 ;
     rdfs:comment "Hot Water Boiler" .
 ex30:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -39,12 +40,12 @@ ex30:00004 a s223:Boiler,
         s223:Connectable,
         s223:Device ;
     rdfs:label "Electrical Hot Water Boiler" ;
-    s223:electricalInlet ex30:00007 ;
     s223:hasConnectionPoint ex30:00005,
         ex30:00006,
         ex30:00007 ;
-    s223:hotWaterEntering ex30:00006 ;
-    s223:hotWaterLeaving ex30:00005 .
+    bob:electricalInlet ex30:00007 ;
+    bob:hotWaterEntering ex30:00006 ;
+    bob:hotWaterLeaving ex30:00005 .
 ex30:00005 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.hotWaterLeaving" ;
@@ -67,10 +68,6 @@ ex30:00008 a s223:Boiler,
         s223:Connectable,
         s223:Device ;
     rdfs:label "HWB-2" ;
-    s223:combustionAirInlet ex30:00013 ;
-    s223:combustionAirOutlet ex30:00014 ;
-    s223:condensedWaterOutlet ex30:00015 ;
-    s223:electricalInlet ex30:00011 ;
     s223:hasConnectionPoint ex30:00009,
         ex30:00010,
         ex30:00011,
@@ -78,9 +75,13 @@ ex30:00008 a s223:Boiler,
         ex30:00013,
         ex30:00014,
         ex30:00015 ;
-    s223:hotWaterEntering ex30:00010 ;
-    s223:hotWaterLeaving ex30:00009 ;
-    s223:naturalGasInlet ex30:00012 ;
+    bob:combustionAirInlet ex30:00013 ;
+    bob:combustionAirOutlet ex30:00014 ;
+    bob:condensedWaterOutlet ex30:00015 ;
+    bob:electricalInlet ex30:00011 ;
+    bob:hotWaterEntering ex30:00010 ;
+    bob:hotWaterLeaving ex30:00009 ;
+    bob:naturalGasInlet ex30:00012 ;
     rdfs:comment "Natural Gas Hot Water Boiler" .
 ex30:00009 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -129,14 +130,14 @@ ex30:00016 a s223:Coil,
         s223:Device,
         s223:HeatingCoil ;
     rdfs:label "Hot Water Coil" ;
-    s223:airInlet ex30:00017 ;
-    s223:airOutlet ex30:00018 ;
     s223:hasConnectionPoint ex30:00017,
         ex30:00018,
         ex30:00019,
         ex30:00020 ;
-    s223:hotWaterInlet ex30:00019 ;
-    s223:hotWaterOutlet ex30:00020 .
+    bob:airInlet ex30:00017 ;
+    bob:airOutlet ex30:00018 ;
+    bob:hotWaterInlet ex30:00019 ;
+    bob:hotWaterOutlet ex30:00020 .
 ex30:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Hot Water Coil.airInlet" ;
@@ -166,14 +167,14 @@ ex30:00021 a s223:Coil,
         s223:CoolingCoil,
         s223:Device ;
     rdfs:label "Chilled Water Coil" ;
-    s223:airInlet ex30:00022 ;
-    s223:airOutlet ex30:00023 ;
-    s223:chilledWaterInlet ex30:00024 ;
-    s223:chilledWaterOutlet ex30:00025 ;
     s223:hasConnectionPoint ex30:00022,
         ex30:00023,
         ex30:00024,
-        ex30:00025 .
+        ex30:00025 ;
+    bob:airInlet ex30:00022 ;
+    bob:airOutlet ex30:00023 ;
+    bob:chilledWaterInlet ex30:00024 ;
+    bob:chilledWaterOutlet ex30:00025 .
 ex30:00022 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Chilled Water Coil.airInlet" ;
@@ -203,13 +204,13 @@ ex30:00026 a s223:Coil,
         s223:Device,
         s223:HeatingCoil ;
     rdfs:label "Electrical Heating Coil" ;
-    s223:airInlet ex30:00027 ;
-    s223:airOutlet ex30:00028 ;
     s223:hasConnectionPoint ex30:00027,
         ex30:00028,
         ex30:00029 ;
     s223:hasProperty ex30:00030,
-        ex30:00031 .
+        ex30:00031 ;
+    bob:airInlet ex30:00027 ;
+    bob:airOutlet ex30:00028 .
 ex30:00027 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airInlet" ;
@@ -224,24 +225,25 @@ ex30:00028 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex30:00026 .
 ex30:00029 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
+    rdfs:label "Electrical Heating Coil.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf ex30:00026 .
-ex30:00030 a s223:Amps,
-        s223:ObservableProperty,
+ex30:00030 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:Amps ;
     rdfs:label "amps" ;
     s223:isPropertyOf ex30:00026 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex30:00031 a s223:ElectricPower,
-        s223:ElectricPowerkW,
-        s223:ObservableProperty,
+ex30:00031 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
+        s223:QuantifiableProperty,
+        bob:ElectricPower,
+        bob:ElectricPowerkW ;
     rdfs:label "kW" ;
     s223:isPropertyOf ex30:00026 ;
     qudt:hasQuantityKind quantitykind:Power ;
