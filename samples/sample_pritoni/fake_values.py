@@ -4,6 +4,7 @@ import electrical_devices as ed
 import functions as fn
 import hvac_devices as hd
 import lighting_devices as ld
+import electrical_devices as ed
 from rdflib import URIRef
 
 from bob.core import bind_model_namespace, dump
