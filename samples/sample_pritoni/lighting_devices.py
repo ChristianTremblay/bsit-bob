@@ -1,4 +1,5 @@
 from pathlib import Path
+from bob.devices.electricity.switch import DimmableSwitch
 
 import lighting_spaces as ls
 import physical_spaces as ps

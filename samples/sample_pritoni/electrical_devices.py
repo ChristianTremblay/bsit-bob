@@ -143,7 +143,9 @@ dist_panel["CB#7"] >> dist_panel_cb7
 bathroom_timer_switch = TimerSwitch(label="Bathroom Timer Switch", voltage=120, delay=2)
 
 openofficeEast_luminaire_1_dimmer = DimmableSwitch(
-    label="Dimmer1", comment="Dimmable Switch Luminaire 1", voltage=120
+    label="Dimmer1",
+    comment="Dimmable Switch Luminaire 1",
+    voltage=120
 )
 
 return_fan_electrical_meter = ThreePhaseElectricalMeter(
