@@ -11,11 +11,11 @@ from ...connections.water import (
     ChilledWaterOutletConnectionPoint,
     ChilledWaterOutletSystemConnectionPoint,
 )
-from ...core import System, s223
+from ...core import System, S223
 from ...devices.hvac.coil import ChilledWaterCoil
 from ...devices.hvac.valve import TwoWayValve
 
-_namespace = s223
+_namespace = S223
 
 
 class ChilledWaterCoil2(System):

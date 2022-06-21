@@ -1,18 +1,18 @@
 from rdflib import URIRef
 
-from ..core import Medium, bob, p223, quantitykind, s223, unit
+from ..core import Medium, BOB, P223, QUANTITYKIND, S223, UNIT
 from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 
 class Hour(QuantifiableObservableProperty):
-    _class_iri = p223.Hour
-    hasQuantityKind = quantitykind.Time
-    unit: URIRef = unit.HR
+    _class_iri = P223.Hour
+    hasQuantityKind = QUANTITYKIND.Time
+    unit: URIRef = UNIT.HR
 
 
 class Minute(QuantifiableObservableProperty):
-    _class_iri = p223.Minute
-    hasQuantityKind = quantitykind.Time
-    unit: URIRef = unit.MIN
+    _class_iri = P223.Minute
+    hasQuantityKind = QUANTITYKIND.Time
+    unit: URIRef = UNIT.MIN

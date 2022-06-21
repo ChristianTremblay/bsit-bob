@@ -1,12 +1,12 @@
 from bob.connections.air import AirBidirectionalConnectionPoint
 from bob.connections.light import LightVisibleOutletConnectionPoint
-from bob.core import Device, PropertyReference, bob, s223
+from bob.core import Device, PropertyReference, BOB, S223
 
-_namespace = bob
+_namespace = BOB
 
 
 class Window(Device):
-    _class_iri = s223.Window
+    _class_iri = S223.Window
     indoor: AirBidirectionalConnectionPoint
     outdoor: AirBidirectionalConnectionPoint
     naturalLight: LightVisibleOutletConnectionPoint

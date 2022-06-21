@@ -17,8 +17,8 @@ from bob.core import (
     SystemConnectionPoint,
     bind_model_namespace,
     dump,
-    s223,
-    unit,
+    S223,
+    UNIT,
 )
 from bob.devices.hvac.coil import ElectricalHeatingCoil
 from bob.devices.hvac.fan import Fan
@@ -60,8 +60,8 @@ garage_hvac.ductAirOutlet >> fan.airInlet
 fan.airOutlet >> heating_coil.airInlet
 heating_coil.airOutlet >> garage_hvac.ductAirInlet
 
-dat = AirTemperatureSensor(label="Discharge Air temperature sensor", unit=unit.DEG_C)
-znt = AirTemperatureSensor(label="Zone Air temperature sensor", unit=unit.DEG_C)
+dat = AirTemperatureSensor(label="Discharge Air temperature sensor", unit=UNIT.DEG_C)
+znt = AirTemperatureSensor(label="Zone Air temperature sensor", unit=UNIT.DEG_C)
 
 dat.hasMeasurementLocation = heating_coil.airOutlet
 znt.hasMeasurementLocation = garage_hvac
@@ -83,7 +83,7 @@ fc_airOutlet = AirOutletSystemConnectionPoint(fancoil, label="Fan coil air outle
 ###TODO:  the occupancy status of the fan coil should be the movement property
 #         movement_1.observesProperty
 # fc_occupancy = SystemConnectionPoint(
-#     fancoil, label="Occupancy Inlet", hasDirection=s223["Direction-Inlet"]
+#     fancoil, label="Occupancy Inlet", hasDirection=S223["Direction-Inlet"]
 # )
 # fc_occupancy.mapsTo = movement_1
 fc_airInlet.mapsTo = fan.airInlet

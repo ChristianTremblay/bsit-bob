@@ -8,7 +8,7 @@ from pathlib import Path
 from header import sample_header
 
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import bind_model_namespace, dump, unit
+from bob.core import bind_model_namespace, dump, UNIT
 from bob.devices.hvac.coil import ElectricalHeatingCoil
 from bob.devices.hvac.fan import Fan
 from bob.devices.lighting.light import Luminaire
@@ -49,8 +49,8 @@ garage_hvac.ductAirOutlet >> fan.airInlet
 fan.airOutlet >> heating_coil.airInlet
 heating_coil.airOutlet >> garage_hvac.ductAirInlet
 
-dat = AirTemperatureSensor(label="Discharge Air temperature sensor", unit=unit.DEG_C)
-znt = AirTemperatureSensor(label="Zone Air temperature sensor", unit=unit.DEG_C)
+dat = AirTemperatureSensor(label="Discharge Air temperature sensor", unit=UNIT.DEG_C)
+znt = AirTemperatureSensor(label="Zone Air temperature sensor", unit=UNIT.DEG_C)
 
 dat.hasMeasurementLocation = heating_coil.airOutlet
 znt.hasMeasurementLocation = garage_hvac

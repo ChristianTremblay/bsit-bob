@@ -11,7 +11,7 @@ from bob.connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.core import Junction, System, bind_model_namespace, dump, quantitykind, unit
+from bob.core import Junction, System, bind_model_namespace, dump, QUANTITYKIND, UNIT
 from bob.devices.hvac.damper import Damper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
@@ -35,19 +35,19 @@ _namespace = ex = bind_model_namespace(
 # Should have library of properties
 class Percent_Rotational_Speed(QuantifiableObservableProperty):
     hasQuantityKind: URIRef = (
-        quantitykind.AngularFrequency
+        QUANTITYKIND.AngularFrequency
     )  # really don't know if this is right, just make it Speed?
-    unit: URIRef = unit["PERCENT"]
+    unit: URIRef = UNIT["PERCENT"]
 
 
 class Electric_Power(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.ElectricPower
-    unit: URIRef = unit["W"]
+    hasQuantityKind: URIRef = QUANTITYKIND.ElectricPower
+    unit: URIRef = UNIT["W"]
 
 
 class Speed_Setpoint(Setpoint):
-    hasQuantityKind: URIRef = quantitykind.ElectricPower
-    unit: URIRef = unit["W"]
+    hasQuantityKind: URIRef = QUANTITYKIND.ElectricPower
+    unit: URIRef = UNIT["W"]
 
 
 class DDAHU_Fan(Fan):

@@ -9,21 +9,21 @@ from ..core import (
     Node,
     PropertyReference,
     Water,
-    bob,
-    p223,
-    quantitykind,
-    s223,
-    unit,
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from ..properties import Amps, OnOffStatus, Volts
 from ..property import ObservableProperty, QuantifiableProperty
 from .sensor import Sensor, split_kwargs
 
-_namespace = bob
+_namespace = BOB
 
 
 class VoltageSensor(Sensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     observesProperty: PropertyReference  # Temperature
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -44,7 +44,7 @@ class VoltageSensor(Sensor):
 
 
 class CurrentAnalogSensor(Sensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     observesProperty: PropertyReference  # Temperature
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -65,7 +65,7 @@ class CurrentAnalogSensor(Sensor):
 
 
 class CurrentBinarySensor(Sensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     observesProperty: PropertyReference  # Electrical Current
     hasMeasurementLocation: Node
 

@@ -9,21 +9,21 @@ from ..core import (
     PropertyReference,
     Substance,
     Water,
-    bob,
-    p223,
-    quantitykind,
-    s223,
-    unit,
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from ..properties import SmokePresence
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-_namespace = bob
+_namespace = BOB
 
 
 class SmokeDetectionSensor(Sensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     observesProperty: PropertyReference
     dryContactOutlet: OnOffSignalOutletConnectionPoint
 

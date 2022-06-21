@@ -1,8 +1,8 @@
 from rdflib import Literal, URIRef
 
-from ..core import ExternalReference, bob, p223, s223
+from ..core import ExternalReference, BOB, P223, S223
 
-_namespace = p223
+_namespace = P223
 
 
 class BACnetReference(ExternalReference):

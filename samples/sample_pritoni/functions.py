@@ -5,7 +5,7 @@ import hvac_spaces as hs
 import lighting_devices as ld
 import lighting_spaces as ls
 
-from bob.core import bind_model_namespace, unit
+from bob.core import bind_model_namespace, UNIT
 from bob.functions import FunctionBlock
 from bob.functions.occupancy import OccupancyControl
 from bob.properties import Temperature
@@ -21,7 +21,7 @@ class AVG_Temp(FunctionBlock):
 
 
 f = AVG_Temp(label="FB-1", comment="Compute DA-T Avg")
-f.avg_tmp = Temperature(hasValue=0, unit=unit.DEG_C)
+f.avg_tmp = Temperature(hasValue=0, unit=UNIT.DEG_C)
 f.uses_input(hd.ahu["DA-T"].observesProperty)
 f.produces_output(f.avg_tmp)
 

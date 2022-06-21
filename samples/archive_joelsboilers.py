@@ -15,8 +15,8 @@ from bob.core import (
     bind_model_namespace,
     dump,
     get_datagraph,
-    p223,
-    unit,
+    P223,
+    UNIT,
 )
 from bob.devices.architectural import Window
 from bob.devices.hvac.boiler import ElectricalHotWaterBoiler, HotWaterBoiler
@@ -42,17 +42,17 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 def sample_using_only_water_medium():
     class AgnosticWaterBoiler(Device):
-        node_type = p223.AgnosticBoiler
+        node_type = P223.AgnosticBoiler
         waterInlet: WaterInletConnectionPoint
         waterOutlet: WaterOutletConnectionPoint
 
     class AgnosticWaterCoil(Device):
-        node_type = p223.AgnosticCoil
+        node_type = P223.AgnosticCoil
         waterInlet: WaterInletConnectionPoint
         waterOutlet: WaterOutletConnectionPoint
 
     class HotWaterTank(Device):
-        node_type = p223.HotWaterTank
+        node_type = P223.HotWaterTank
         waterInlet: WaterInletConnectionPoint
         waterOutlet: WaterOutletConnectionPoint
 

@@ -1,28 +1,28 @@
 from rdflib import URIRef
 
-from ..core import Medium, bob, p223, quantitykind, unit
+from ..core import Medium, BOB, P223, QUANTITYKIND, UNIT
 from ..property import QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 # all = [HP, Pressure, DifferentialStaticPressure]
 
 
 class HP(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.Power
-    unit = unit.HP
+    hasQuantityKind = QUANTITYKIND.Power
+    unit = UNIT.HP
 
 
 class Nm(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.Torque
-    unit = unit["N-M"]
+    hasQuantityKind = QUANTITYKIND.Torque
+    unit = UNIT["N-M"]
 
 
 class Pressure(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.Pressure
+    hasQuantityKind = QUANTITYKIND.Pressure
 
 
 class DifferentialStaticPressure(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.ForcePerArea
+    hasQuantityKind = QUANTITYKIND.ForcePerArea
     unit: URIRef
     ofMedium: Medium  # set from the sensor

@@ -7,11 +7,11 @@ from ..core import (
     Medium,
     SchemaGraph,
     Substance,
-    bob,
-    p223,
-    quantitykind,
-    s223,
-    unit,
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from ..enum import (
     NormalAlarmEnum,
@@ -29,7 +29,7 @@ from ..property import (
     ObservableProperty,
 )
 
-_namespace = bob
+_namespace = BOB
 
 
 # On Off Status is telemetry so the value depends on hasExternalReference
@@ -38,55 +38,55 @@ _namespace = bob
 
 
 class OnOffStatus(EnumeratedObservableProperty):
-    _class_iri: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = S223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum
 
 
 class OnOffCommand(EnumeratedActuatableProperty):
-    _class_iri: URIRef = s223.EnumeratedActuatableProperty
+    _class_iri: URIRef = S223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum
 
 
 class NormalAlarmStatus(EnumeratedObservableProperty):
-    _class_iri: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = S223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind = NormalAlarmEnum
     hasValue: NormalAlarmEnum
 
 
 class OpenCloseCommand(EnumeratedActuatableProperty):
-    _class_iri: URIRef = s223.EnumeratedActuatableProperty
+    _class_iri: URIRef = S223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind = OpenCloseEnum
     hasValue: OpenCloseEnum
 
 
 class OpenCloseStatus(EnumeratedActuatableProperty):
-    _class_iri: URIRef = s223.EnumeratedActuatableProperty
+    _class_iri: URIRef = S223.EnumeratedActuatableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind = OpenCloseEnum
     hasValue: OpenCloseEnum
 
 
 class Schedule(EnumerableProperty):
-    _class_iri: URIRef = s223.EnumerableProperty
+    _class_iri: URIRef = S223.EnumerableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind = OccupancyEnum
     hasValue: OccupancyEnum
 
 
 class OccupancyStatus(EnumeratedObservableProperty):
-    _class_iri: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = S223.EnumeratedObservableProperty
     hasEnumerationKind = OccupancyEnum
     hasValue: OccupancyEnum
 
 
 class Movement(EnumeratedObservableProperty):
-    _class_iri: URIRef = s223.EnumeratedObservableProperty
+    _class_iri: URIRef = S223.EnumeratedObservableProperty
     hasExternalReference: ExternalReference
     hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum

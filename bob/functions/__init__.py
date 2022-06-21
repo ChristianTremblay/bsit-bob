@@ -12,10 +12,10 @@ from typing import Any, AnyStr, Dict
 
 from rdflib import URIRef  # type: ignore
 
-from ..core import INCLUDE_INVERSE, Node, Property, data_graph, s223
+from ..core import INCLUDE_INVERSE, Node, Property, data_graph, S223
 from ..multimethods import multimethod
 
-_namespace = s223
+_namespace = S223
 
 
 #
@@ -24,7 +24,7 @@ _namespace = s223
 
 
 class Connector(Node):
-    _class_iri: URIRef = s223.Connector
+    _class_iri: URIRef = S223.Connector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         logging.debug(f"Connector.__init__ {function_block} {kwargs}")
@@ -47,21 +47,21 @@ class Connector(Node):
 
 
 class InputConnector(Connector):
-    _class_iri: URIRef = s223.InputConnector
+    _class_iri: URIRef = S223.InputConnector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block._node_iri, s223.input, self._node_iri))
+        data_graph.add((function_block._node_iri, S223.input, self._node_iri))
 
 
 class OutputConnector(Connector):
-    _class_iri: URIRef = s223.OutputConnector
+    _class_iri: URIRef = S223.OutputConnector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block._node_iri, s223.output, self._node_iri))
+        data_graph.add((function_block._node_iri, S223.output, self._node_iri))
 
 
 @multimethod
@@ -72,7 +72,7 @@ def connect_mm(
     logging.info(f"connect from {output_connector} to {input_connector}")
 
     data_graph.add(
-        (output_connector._node_iri, s223.connect, input_connector._node_iri)
+        (output_connector._node_iri, S223.connect, input_connector._node_iri)
     )
 
 
@@ -81,10 +81,10 @@ def connect_mm(prop: Property, input_connector: InputConnector) -> None:
     """Property >> InputConnector"""
     logging.info(f"connect from {prop} to {input_connector}")
 
-    data_graph.add((input_connector._node_iri, s223.usesInput, prop._node_iri))
+    data_graph.add((input_connector._node_iri, S223.usesInput, prop._node_iri))
     if INCLUDE_INVERSE:
         data_graph.add(
-            (prop._node_iri, s223.isUsedAsInputBy, input_connector._node_iri)
+            (prop._node_iri, S223.isUsedAsInputBy, input_connector._node_iri)
         )
 
 
@@ -93,9 +93,9 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
     """OutputConnector >> Property"""
     logging.info(f"connect from {output_connector} to {prop}")
 
-    data_graph.add((output_connector._node_iri, s223.producesOutput, prop._node_iri))
+    data_graph.add((output_connector._node_iri, S223.producesOutput, prop._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((prop._node_iri, s223.isProducedBy, output_connector._node_iri))
+        data_graph.add((prop._node_iri, S223.isProducedBy, output_connector._node_iri))
 
 
 #
@@ -104,27 +104,27 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
 
 
 class AnalogInput(InputConnector):
-    _class_iri: URIRef = s223.AnalogInput
+    _class_iri: URIRef = S223.AnalogInput
 
 
 class AnalogOutput(OutputConnector):
-    _class_iri: URIRef = s223.AnalogOutput
+    _class_iri: URIRef = S223.AnalogOutput
 
 
 class BinaryInput(InputConnector):
-    _class_iri: URIRef = s223.BinaryInput
+    _class_iri: URIRef = S223.BinaryInput
 
 
 class BinaryOutput(OutputConnector):
-    _class_iri: URIRef = s223.BinaryOutput
+    _class_iri: URIRef = S223.BinaryOutput
 
 
 class Parameter(Node):
-    _class_iri: URIRef = s223.Parameter
+    _class_iri: URIRef = S223.Parameter
 
 
 class Constant(Parameter):
-    _class_iri: URIRef = s223.Constant
+    _class_iri: URIRef = S223.Constant
 
 
 class AnalogConstant(Constant):
@@ -149,7 +149,7 @@ class FunctionBlock(Node):
     Connections from or to a function block are made from/to properties only
     """
 
-    _class_iri: URIRef = s223.FunctionBlock
+    _class_iri: URIRef = S223.FunctionBlock
     _connectors: Dict[str, Connector]
     _parameters: Dict[str, Parameter]
 
@@ -214,8 +214,8 @@ class FunctionBlock(Node):
 
 
 class ElementaryBlock(FunctionBlock):
-    _class_iri: URIRef = s223.ElementaryBlock
+    _class_iri: URIRef = S223.ElementaryBlock
 
 
 class CompositeBlock(FunctionBlock):
-    _class_iri: URIRef = s223.CompositeBlock
+    _class_iri: URIRef = S223.CompositeBlock

@@ -11,9 +11,9 @@ from ...connections.electricity import (
     ElectricalOutletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
 )
-from ...core import Device, PropertyReference, bob, p223, s223
+from ...core import Device, PropertyReference, BOB, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 compressor_template = {
     "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
@@ -24,7 +24,7 @@ compressor_template = {
 
 
 class AirCompressor(Device):
-    _class_iri: URIRef = p223.AirCompressor
+    _class_iri: URIRef = P223.AirCompressor
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 
     onOffStatus: OnOffStatus

@@ -20,7 +20,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -29,92 +28,94 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model> ;
   rdfs:label "sample_pritoni_model" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-bacnet_references:00001 a bacnet:BACnetDevice ;
+bacnet_references:00001 a bacnet:Device ;
     rdfs:label "CGM-2-004" ;
-    rdfs:comment "AHU Controller" ;
-    ref:address 4 ;
-    ref:deviceId 5204 ;
-    ref:deviceName "CGM-2-004" ;
-    ref:networkNumber 2 ;
-    ref:vendorId 5 .
-bacnet_references:00002 a bacnet:BACnetDevice ;
+    bacnet:address 4 ;
+    bacnet:deviceId 5204 ;
+    bacnet:deviceName "CGM-2-004" ;
+    bacnet:networkNumber 2 ;
+    bacnet:vendorId 5 ;
+    rdfs:comment "AHU Controller" .
+bacnet_references:00002 a bacnet:Device ;
     rdfs:label "CVM-2-005" ;
-    rdfs:comment "VAV for Zone 1" ;
-    ref:address 5 ;
-    ref:deviceId 5205 ;
-    ref:deviceName "CVM-2-005" ;
-    ref:networkNumber 2 ;
-    ref:vendorId 5 .
-bacnet_references:00003 a bacnet:BACnetDevice ;
+    bacnet:address 5 ;
+    bacnet:deviceId 5205 ;
+    bacnet:deviceName "CVM-2-005" ;
+    bacnet:networkNumber 2 ;
+    bacnet:vendorId 5 ;
+    rdfs:comment "VAV for Zone 1" .
+bacnet_references:00003 a bacnet:Device ;
     rdfs:label "CVM-2-006" ;
-    rdfs:comment "VAV for Zone 2" ;
-    ref:address 6 ;
-    ref:deviceId 5206 ;
-    ref:deviceName "CVM-2-006" ;
-    ref:networkNumber 2 ;
-    ref:vendorId 5 .
-bacnet_references:00004 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:description "Return Air Temeprature" ;
-    ref:objectInstance 1209 ;
-    ref:objectName "RA-T" ;
-    ref:objectOf bacnet_references:00001 ;
-    ref:objectType "analog-input" .
-bacnet_references:00005 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:description "Discharge Air Temp Average" ;
-    ref:objectInstance 321 ;
-    ref:objectName "DAT-AVG" ;
-    ref:objectOf bacnet_references:00001 ;
-    ref:objectType "analog-value" .
-bacnet_references:00006 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:description "Discharge Air Temperature" ;
-    ref:objectInstance 1210 ;
-    ref:objectName "DA-T" ;
-    ref:objectOf bacnet_references:00001 ;
-    ref:objectType "analog-input" .
-bacnet_references:00007 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:description "Zone 1 Temperature" ;
-    ref:objectInstance 1002 ;
-    ref:objectName "ZN1-T" ;
-    ref:objectOf bacnet_references:00002 ;
-    ref:objectType "analog-input" .
-bacnet_references:00008 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:description "Zone 2 Temperature" ;
-    ref:objectInstance 1002 ;
-    ref:objectName "ZN2-T" ;
-    ref:objectOf bacnet_references:00003 ;
-    ref:objectType "analog-input" .
-bacnet_references:00009 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:description "Return Fan Status from VFD drive running" ;
-    ref:objectInstance 5021 ;
-    ref:objectName "RF-S" ;
-    ref:objectOf bacnet_references:00001 ;
-    ref:objectType "binary-input" .
-bacnet_references:00010 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:description "Return Fan Command from VFD run command" ;
-    ref:objectInstance 12345 ;
-    ref:objectName "RF-C" ;
-    ref:objectOf bacnet_references:00001 ;
-    ref:objectType "binary-output" .
-bacnet_references:00011 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:description "Building Occupancy Schedule" ;
-    ref:objectInstance 1 ;
-    ref:objectName "OCC-SCHEDULE" ;
-    ref:objectOf bacnet_references:00001 ;
-    ref:objectType "schedule" .
-bacnet_references:00012 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:uri <bacnet://2/analog-input,1> .
-bacnet_references:00013 a s223:ExternalReference,
-        ref:BACnetReference ;
-    ref:uri <bacnet://2/binary-input,1> .
+    bacnet:address 6 ;
+    bacnet:deviceId 5206 ;
+    bacnet:deviceName "CVM-2-006" ;
+    bacnet:networkNumber 2 ;
+    bacnet:vendorId 5 ;
+    rdfs:comment "VAV for Zone 2" .
+bacnet_references:00004 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:description "Return Air Temeprature" ;
+    bacnet:objectInstance 1209 ;
+    bacnet:objectName "RA-T" ;
+    bacnet:objectOf bacnet_references:00001 ;
+    bacnet:objectType "analog-input" .
+bacnet_references:00005 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:description "Discharge Air Temp Average" ;
+    bacnet:objectInstance 321 ;
+    bacnet:objectName "DAT-AVG" ;
+    bacnet:objectOf bacnet_references:00001 ;
+    bacnet:objectType "analog-value" .
+bacnet_references:00006 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:description "Discharge Air Temperature" ;
+    bacnet:objectInstance 1210 ;
+    bacnet:objectName "DA-T" ;
+    bacnet:objectOf bacnet_references:00001 ;
+    bacnet:objectType "analog-input" .
+bacnet_references:00007 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:description "Zone 1 Temperature" ;
+    bacnet:objectInstance 1002 ;
+    bacnet:objectName "ZN1-T" ;
+    bacnet:objectOf bacnet_references:00002 ;
+    bacnet:objectType "analog-input" .
+bacnet_references:00008 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:description "Zone 2 Temperature" ;
+    bacnet:objectInstance 1002 ;
+    bacnet:objectName "ZN2-T" ;
+    bacnet:objectOf bacnet_references:00003 ;
+    bacnet:objectType "analog-input" .
+bacnet_references:00009 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:description "Return Fan Status from VFD drive running" ;
+    bacnet:objectInstance 5021 ;
+    bacnet:objectName "RF-S" ;
+    bacnet:objectOf bacnet_references:00001 ;
+    bacnet:objectType "binary-input" .
+bacnet_references:00010 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:description "Return Fan Command from VFD run command" ;
+    bacnet:objectInstance 12345 ;
+    bacnet:objectName "RF-C" ;
+    bacnet:objectOf bacnet_references:00001 ;
+    bacnet:objectType "binary-output" .
+bacnet_references:00011 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:description "Building Occupancy Schedule" ;
+    bacnet:objectInstance 1 ;
+    bacnet:objectName "OCC-SCHEDULE" ;
+    bacnet:objectOf bacnet_references:00001 ;
+    bacnet:objectType "schedule" .
+bacnet_references:00012 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:objectInstance 1 ;
+    bacnet:objectType "analog-input" .
+bacnet_references:00013 a bacnet:DeviceObjectPropertyReference,
+        s223:ExternalReference ;
+    bacnet:objectInstance 1 ;
+    bacnet:objectType "binary-input" .
 electrical_devices:00001 a p223:ElectricalDistributionPanel,
         s223:Connectable,
         s223:Device ;

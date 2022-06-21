@@ -5,7 +5,7 @@ import hvac_spaces as hs
 import physical_spaces as ps
 
 from bob.connections.air import *
-from bob.core import bind_model_namespace, dump, unit
+from bob.core import bind_model_namespace, dump, UNIT
 from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.temperature import Temperature
 

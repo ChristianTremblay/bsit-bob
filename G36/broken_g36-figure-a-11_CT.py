@@ -37,7 +37,7 @@ from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.stats import HighStaticPressureStat
 from bob.devices.hvac.valve import TwoWayValve
 from bob.devices.hvac.vfd import VFD
-from bob.externalreference.bacnet import BACnetDevice, BACnetReference
+from bob.externalreference.BACNET import BACnetDevice, BACnetReference
 from bob.functions import InputConnector
 
 # from bob.systems.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block

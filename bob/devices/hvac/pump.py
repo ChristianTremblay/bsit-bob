@@ -4,7 +4,7 @@ from rdflib import URIRef
 
 from ...connections.electricity import Electricity_575V_60HzInletConnectionPoint
 from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
-from ...core import Device, PropertyReference, bob, s223, unit
+from ...core import Device, PropertyReference, BOB, S223, UNIT
 from ...properties import (
     HP,
     RPM,
@@ -15,12 +15,12 @@ from ...properties import (
     Pressure,
 )
 
-_namespace = bob
+_namespace = BOB
 
 pump_template = {
     "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
     "properties": {
-        ("head_pressure", Pressure): {"unit": unit.PSI},
+        ("head_pressure", Pressure): {"unit": UNIT.PSI},
         ("amps", Amps): {},
         ("rpm", RPM): {},
         ("hp", HP): {},
@@ -31,7 +31,7 @@ pump_template = {
 
 
 class Pump(Device):
-    _class_iri = s223.Pump
+    _class_iri = S223.Pump
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
     onOffStatus: PropertyReference

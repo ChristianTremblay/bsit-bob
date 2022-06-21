@@ -5,7 +5,7 @@ from rdflib import URIRef
 from bob.properties.states import NormalAlarmStatus
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import Device, bob, enum, p223, s223
+from ...core import Device, BOB, enum, P223, S223
 from ...sensor import Sensor
 from ...sensor.particle import (
     CoarseParticulateSensor,
@@ -13,7 +13,7 @@ from ...sensor.particle import (
     UltraFineParticulateSensor,
 )
 
-_namespace = p223
+_namespace = P223
 
 
 particlecounter_template = {
@@ -36,7 +36,7 @@ particlecounter_template = {
 
 
 class ParticleCounter(Device):
-    _class_iri = p223.ParticleCounter
+    _class_iri = P223.ParticleCounter
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 

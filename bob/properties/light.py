@@ -1,17 +1,17 @@
 from rdflib import URIRef
 
-from ..core import bob, p223, quantitykind, unit
+from ..core import BOB, P223, QUANTITYKIND, UNIT
 from ..property import QuantifiableObservableProperty, QuantifiableProperty
 from .ratio import Percent
 
-_namespace = bob
+_namespace = BOB
 
 
 class Brightness(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.Illuminance
-    unit = unit.LUX
+    hasQuantityKind = QUANTITYKIND.Illuminance
+    unit = UNIT.LUX
 
 
 class RelativeLuminousFlux(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.RelativeLuminousFlux
-    unit = unit.PERCENT
+    hasQuantityKind = QUANTITYKIND.RelativeLuminousFlux
+    unit = UNIT.PERCENT

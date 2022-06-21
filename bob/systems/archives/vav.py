@@ -11,13 +11,13 @@ from ...connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
 )
-from ...core import System, s223
+from ...core import System, S223
 from ...devices.hvac.airflowstation import AirFlowMonitor
 from ...devices.hvac.coil import HotWaterCoil
 from ...devices.hvac.damper import Damper
 from ...devices.hvac.valve import TwoWayValve
 
-_namespace = s223
+_namespace = S223
 
 
 class VAV1(System):

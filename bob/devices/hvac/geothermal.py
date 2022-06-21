@@ -19,9 +19,9 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, bob, enum, p223, s223
+from ...core import Device, BOB, enum, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 """
 chilledWaterCoil_template = {
@@ -38,6 +38,6 @@ chilledWaterCoil_template = {
 
 
 class GeothermalWell(Device):
-    _class_iri: URIRef = p223.GeothermalWell
+    _class_iri: URIRef = P223.GeothermalWell
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint

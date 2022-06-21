@@ -11,9 +11,9 @@ from ...connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     ModulationSignalInletConnectionPoint,
 )
-from ...core import Device, bob, p223, s223
+from ...core import Device, BOB, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 # TRIAC
 Triac_template = {
@@ -34,7 +34,7 @@ class Triac(Device):
     # takes 600V (or 347V) in and use PWM to modulate
     # power given to electrical coil
     # a triac accept On-Off pulsed signal to modulate
-    _class_iri: URIRef = p223.Triac
+    _class_iri: URIRef = P223.Triac
 
     def __init__(self, config: Dict = Triac_template, **kwargs):
         config["properties"] = config.get("properties", Triac_template["properties"])

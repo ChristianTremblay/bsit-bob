@@ -21,9 +21,9 @@ from bob.core import (
     dump,
     enum,
     get_datagraph,
-    quantitykind,
-    s223,
-    unit,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from bob.devices.hvac.coil import ChilledWaterCoil
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
@@ -50,15 +50,15 @@ config = {
     "sensors": {
         ("DA-T", AirTemperatureSensor): {
             "comment": "Supply Air Temperature sensor",
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
         },
         ("RA-T", AirTemperatureSensor): {
             "comment": "Return Air Temperature sensor",
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
         },
         ("ZN-T", AirTemperatureSensor): {
             "comment": "Zone Air Temperature sensor",
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
         },
     },
     "devices": {

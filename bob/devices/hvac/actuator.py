@@ -26,20 +26,20 @@ from ...core import (
     Device,
     Property,
     PropertyReference,
-    bob,
-    p223,
-    s223,
+    BOB,
+    P223,
+    S223,
     template_update,
 )
 from . import _Actuator
 
-_namespace = bob
+_namespace = BOB
 
 # ACTUATORS
 
 
 class Actuator(_Actuator):
-    _class_iri = s223.Actuator
+    _class_iri = S223.Actuator
     command: PercentCommand
     actuatesProperty: Property
     feedback: Percent
@@ -52,7 +52,7 @@ class Actuator(_Actuator):
 
 
 class ProportionalActuator(Actuator):
-    _class_iri = s223.Actuator
+    _class_iri = S223.Actuator
     command: PercentCommand
     actuatesProperty: PercentCommand
     feedback: Percent
@@ -64,7 +64,7 @@ class ProportionalActuator(Actuator):
 
 
 class OnOffActuator(Actuator):
-    _class_iri = s223.Actuator
+    _class_iri = S223.Actuator
     command: OnOffCommand
     actuatesProperty: OnOffCommand
     feedbackOpen: OnOffStatus
@@ -100,7 +100,7 @@ ElectricalOnOffActuator_template = {
 
 
 class ElectricalProportionalActuator(ProportionalActuator):
-    _class_iri = s223.Actuator
+    _class_iri = S223.Actuator
 
     def __init__(
         self, config: Dict = ElectricalProportionalActuator_template, **kwargs
@@ -111,7 +111,7 @@ class ElectricalProportionalActuator(ProportionalActuator):
 
 
 class ElectricalOnOffActuator(OnOffActuator):
-    _class_iri = s223.Actuator
+    _class_iri = S223.Actuator
 
     def __init__(self, config: Dict = ElectricalOnOffActuator_template, **kwargs):
         _config = template_update(ElectricalOnOffActuator_template, config)
@@ -142,7 +142,7 @@ PneumaticOnOffActuator_template = {
 
 
 class PneumaticProportionalActuator(ProportionalActuator):
-    _class_iri = s223.Actuator
+    _class_iri = S223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -152,7 +152,7 @@ class PneumaticProportionalActuator(ProportionalActuator):
 
 
 class PneumaticOnOffActuator(OnOffActuator):
-    _class_iri = s223.Actuator
+    _class_iri = S223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):

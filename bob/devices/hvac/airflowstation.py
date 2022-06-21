@@ -1,14 +1,14 @@
 from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import Device, bob, p223, s223
+from ...core import Device, BOB, P223, S223
 from ...sensor import Sensor
 
-_namespace = bob
+_namespace = BOB
 
 
 class AirFlowMonitor(Device):
-    _class_iri = p223.Actuator
+    _class_iri = P223.Actuator
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flowSensor: Sensor

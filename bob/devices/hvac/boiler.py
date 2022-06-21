@@ -8,24 +8,24 @@ from ...connections.water import (
     HotWaterOutletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, bob, p223, s223
+from ...core import Device, BOB, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 
 class HotWaterBoiler(Device):
-    _class_iri = s223.Boiler
+    _class_iri = S223.Boiler
     hotWaterLeaving: HotWaterInletConnectionPoint
     hotWaterEntering: HotWaterOutletConnectionPoint
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):
-    _class_iri = s223.Boiler
+    _class_iri = S223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
 
 
 class NaturalGasHotWaterBoiler(HotWaterBoiler):
-    _class_iri = s223.Boiler
+    _class_iri = S223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
     naturalGasInlet: NaturalGasInletConnectionPoint
     combustionAirInlet: AirInletConnectionPoint

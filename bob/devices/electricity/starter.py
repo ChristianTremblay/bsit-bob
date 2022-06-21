@@ -3,10 +3,10 @@ from typing import Dict
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import *
-from ...core import Device, Node, bob, p223, s223
+from ...core import Device, Node, BOB, P223, S223
 from ...sensor.electricity import CurrentBinarySensor
 
-_namespace = bob
+_namespace = BOB
 
 
 class MotorStarter(Device):
@@ -17,7 +17,7 @@ class MotorStarter(Device):
 
     """
 
-    _class_iri = p223.MotorStarter
+    _class_iri = P223.MotorStarter
     outputSignal: OnOffSignalOutletConnectionPoint
     inputSignal: OnOffSignalInletConnectionPoint
     onOffStatus: OnOffStatus

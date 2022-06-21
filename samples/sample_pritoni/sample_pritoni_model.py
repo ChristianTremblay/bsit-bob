@@ -6,7 +6,7 @@ from header import sample_header
 from bob.connections.air import *
 from bob.connections.electricity import *
 from bob.connections.light import LightVisibleConnection
-from bob.core import bind_model_namespace, dump, p223, quantitykind, unit
+from bob.core import bind_model_namespace, dump, P223, QUANTITYKIND, UNIT
 from bob.devices.architectural import Window
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper

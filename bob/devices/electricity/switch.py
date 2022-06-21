@@ -11,16 +11,16 @@ from ...core import (
     Device,
     Node,
     PropertyReference,
-    bob,
+    BOB,
     logging,
-    p223,
-    s223,
+    P223,
+    S223,
     template_update,
 )
 from ...properties.time import Hour
 from ...sensor.electricity import CurrentBinarySensor
 
-_namespace = bob
+_namespace = BOB
 
 # TODO : Use templates
 
@@ -37,7 +37,7 @@ switch_template = {
 
 
 class Switch(Device):
-    _class_iri = p223.ElectricalSwitch
+    _class_iri = P223.ElectricalSwitch
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
     hasMaxRange: Amps
@@ -96,7 +96,7 @@ class CurrentRelay(Device):
 
     """
 
-    _class_iri = p223.CurrentRelay
+    _class_iri = P223.CurrentRelay
     outputSignal: OnOffSignalOutletConnectionPoint
     onOffStatus: OnOffStatus
 

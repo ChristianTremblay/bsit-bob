@@ -18,10 +18,10 @@ from ..connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from ..core import Air, Medium, System, bob, p223, s223
+from ..core import Air, Medium, System, BOB, P223, S223
 from ..property import QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 
 class PhysicSystem(System):
@@ -47,7 +47,7 @@ class PhysicSystem(System):
 
     """
 
-    _class_iri = bob.PhysicSystem
+    _class_iri = BOB.PhysicSystem
 
 
 class IndoorAir(PhysicSystem):
@@ -73,7 +73,7 @@ class IndoorAir(PhysicSystem):
 
     """
 
-    _class_iri = bob.PhysicSystem
+    _class_iri = BOB.PhysicSystem
     hasMedium: Medium = Air
     ductAirInlet: AirInletSystemConnectionPoint
     ductAirOutlet: AirOutletSystemConnectionPoint

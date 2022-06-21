@@ -95,12 +95,12 @@ class SchemaGraph(Graph):
         """
         Add a triple to the schema graph for statements about things in the
         model being build (like subtypes of a Device) but not about things
-        in the s223 namespace.
+        in the S223 namespace.
         """
         subj, pred, obj = triple
 
-        # exclude the schema content in the s223 namespace by default
-        if subj.startswith(s223):
+        # exclude the schema content in the S223 namespace by default
+        if subj.startswith(S223):
             return
 
         # passes the tests
@@ -130,15 +130,15 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 # or in the _namespace special global for the module of the class, or the
 # parent module, or it is inherited from a superclass that is defined in the
 # same module
-s223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
+S223 = bind_namespace("S223", "http://data.ashrae.org/standard223#")
 
 # everything in this module belongs in the standard
-_namespace = s223
+_namespace = S223
 
 # common namespaces
-qudt = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
-quantitykind = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
-brick = bind_namespace("brick", "https://brickschema.org/schema/1.1.0/Brick#")
+QUDT = bind_namespace("QUDT", "http://QUDT.org/schema/QUDT/")
+QUANTITYKIND = bind_namespace("QUANTITYKIND", "http://QUDT.org/vocab/QUANTITYKIND/")
+BRICK = bind_namespace("BRICK", "https://brickschema.org/schema/1.1.0/Brick#")
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
@@ -155,7 +155,7 @@ def bind_model_namespace(prefix: str, uri: str) -> Namespace:
     return model_namespace
 
 
-# substance identifier (s223.Air, etc) to Connection subclass
+# substance identifier (S223.Air, etc) to Connection subclass
 substance_classes: Dict[URIRef, Any] = {}
 
 
@@ -373,14 +373,14 @@ class NodeMetaclass(type):
                     attr_type = _nodes[attr]
                     if issubclass(attr_type, Property):
                         _schema_graph.add(
-                            (_attr_uriref[attr], RDFS.subPropertyOf, s223.hasProperty)
+                            (_attr_uriref[attr], RDFS.subPropertyOf, S223.hasProperty)
                         )
                     if issubclass(attr_type, ConnectionPoint):
                         _schema_graph.add(
                             (
                                 _attr_uriref[attr],
                                 RDFS.subPropertyOf,
-                                s223.hasConnectionPoint,
+                                S223.hasConnectionPoint,
                             )
                         )
                     if issubclass(attr_type, SystemConnectionPoint):
@@ -388,7 +388,7 @@ class NodeMetaclass(type):
                             (
                                 _attr_uriref[attr],
                                 RDFS.subPropertyOf,
-                                s223.hasSystemConnectionPoint,
+                                S223.hasSystemConnectionPoint,
                             )
                         )
 
@@ -553,8 +553,8 @@ class Node(metaclass=NodeMetaclass):
         assert isinstance(prop, Property)
 
         # link the two together
-        self._data_graph.add((self.node, s223.hasProperty, prop.node))
-        self._data_graph.add((prop.node, s223.isPropertyOf, self.node))
+        self._data_graph.add((self.node, S223.hasProperty, prop.node))
+        self._data_graph.add((prop.node, S223.isPropertyOf, self.node))
 
         return prop
 
@@ -575,9 +575,9 @@ class Direction(Node):
     _data_graph: Graph = schema_graph
 
 
-Inlet = Direction(node_iri=s223.Inlet)
-Outlet = Direction(node_iri=s223.Outlet)
-Bidirectional = Direction(node_iri=s223.Bidirectional)
+Inlet = Direction(node_iri=S223.Inlet)
+Outlet = Direction(node_iri=S223.Outlet)
+Bidirectional = Direction(node_iri=S223.Bidirectional)
 
 
 class Junction(Node):
@@ -585,7 +585,7 @@ class Junction(Node):
     Junction.
     """
 
-    node_type: URIRef = s223.Junction
+    node_type: URIRef = S223.Junction
     hasSubstance: Substance
     _lnx: Set[Segment]
 
@@ -647,7 +647,7 @@ class Segment(Node):
     Segment.
     """
 
-    node_type: URIRef = s223.Segment
+    node_type: URIRef = S223.Segment
     hasSubstance: Substance
     _lnx: Set[Union[Junction, ConnectionPoint]]
 
@@ -669,7 +669,7 @@ class Segment(Node):
             self._data_graph.add(
                 (
                     other.node,
-                    s223.lnx,
+                    S223.lnx,
                     self.node,
                 )
             )
@@ -683,7 +683,7 @@ class Segment(Node):
         self._data_graph.add(
             (
                 self.node,
-                s223.lnx,
+                S223.lnx,
                 other.node,
             )
         )
@@ -725,7 +725,7 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     Generic connection object type, unrestricted.
     """
 
-    node_type: URIRef = s223.Connection
+    node_type: URIRef = S223.Connection
     hasSubstance: Substance
 
     def __init__(self, **kwargs: Any) -> None:
@@ -746,16 +746,16 @@ class Connection(Node, metaclass=ConnectionMetaclass):
         connection_point.connectsThrough = self
 
         # link connection to the connection point and its device
-        self._data_graph.add((self.node, s223.connectsAt, connection_point.node))
+        self._data_graph.add((self.node, S223.connectsAt, connection_point.node))
         self._data_graph.add(
             (
                 connection_point.isConnectionPointOf.node,
-                s223.connectedThrough,
+                S223.connectedThrough,
                 self.node,
             )
         )
         self._data_graph.add(
-            (self.node, s223.connectsTo, connection_point.isConnectionPointOf.node)
+            (self.node, S223.connectsTo, connection_point.isConnectionPointOf.node)
         )
 
     def connect_from(self, connection_point: ConnectionPoint) -> None:
@@ -773,16 +773,16 @@ class Connection(Node, metaclass=ConnectionMetaclass):
         connection_point.connectsThrough = self
 
         # link connection to the connection point and its device
-        self._data_graph.add((self.node, s223.connectsAt, connection_point.node))
+        self._data_graph.add((self.node, S223.connectsAt, connection_point.node))
         self._data_graph.add(
             (
                 connection_point.isConnectionPointOf.node,
-                s223.connectedThrough,
+                S223.connectedThrough,
                 self.node,
             )
         )
         self._data_graph.add(
-            (self.node, s223.connectsFrom, connection_point.isConnectionPointOf.node)
+            (self.node, S223.connectsFrom, connection_point.isConnectionPointOf.node)
         )
 
 
@@ -838,7 +838,7 @@ class Connectable(Node):
 
 
 class ConnectionPoint(Node):
-    node_type: URIRef = s223.ConnectionPoint
+    node_type: URIRef = S223.ConnectionPoint
     hasSubstance: Substance
     hasDirection: Direction
 
@@ -849,7 +849,7 @@ class ConnectionPoint(Node):
     def __init__(self, thing: Connectable, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        self._data_graph.add((thing.node, s223.hasConnectionPoint, self.node))
+        self._data_graph.add((thing.node, S223.hasConnectionPoint, self.node))
         self.isConnectionPointOf = thing
 
         # this is one of the connection points of the device
@@ -927,7 +927,7 @@ class Device(Connectable):
     .
     """
 
-    node_type: URIRef = s223.Device
+    node_type: URIRef = S223.Device
     hasRole: Role
 
     def __gt__(self, other: Union[Device, System]) -> Union[Device, System]:
@@ -938,8 +938,8 @@ class Device(Connectable):
         if not isinstance(other, (Device, System)):
             raise TypeError("device or system expected")
 
-        self._data_graph.add((self.node, s223.contains, other.node))
-        self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        self._data_graph.add((self.node, S223.contains, other.node))
+        self._data_graph.add((other.node, S223.isContainedIn, self.node))
 
         return self
 
@@ -951,8 +951,8 @@ class Device(Connectable):
         if not isinstance(other, (Device, System)):
             raise TypeError("device or system expected")
 
-        self._data_graph.add((self.node, s223.isContainedIn, other.node))
-        self._data_graph.add((other.node, s223.contains, self.node))
+        self._data_graph.add((self.node, S223.isContainedIn, other.node))
+        self._data_graph.add((other.node, S223.contains, self.node))
 
         return other
 
@@ -962,7 +962,7 @@ class SystemConnectionPoint(Node):
     System Connection Point
     """
 
-    node_type: URIRef = s223.SystemConnectionPoint
+    node_type: URIRef = S223.SystemConnectionPoint
     hasSubstance: Substance
     hasDirection: Direction
 
@@ -974,7 +974,7 @@ class SystemConnectionPoint(Node):
         logging.debug(f"SystemConnectionPoint.__init__ {system} {kwargs}")
         super().__init__(**kwargs)
 
-        self._data_graph.add((system.node, s223.hasSystemConnectionPoint, self.node))
+        self._data_graph.add((system.node, S223.hasSystemConnectionPoint, self.node))
         self.isSystemConnectionPointOf = system
 
         # this is one of the connection points of the system
@@ -1007,7 +1007,7 @@ class System(Node):
     System
     """
 
-    node_type: URIRef = s223.System
+    node_type: URIRef = S223.System
     hasDomain: Domain
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
@@ -1065,8 +1065,8 @@ class System(Node):
         logging.debug(f"__gt__ {self} {other}")
 
         if isinstance(other, (Device, System)):
-            self._data_graph.add((self.node, s223.contains, other.node))
-            self._data_graph.add((other.node, s223.isContainedIn, self.node))
+            self._data_graph.add((self.node, S223.contains, other.node))
+            self._data_graph.add((other.node, S223.isContainedIn, self.node))
         else:
             raise TypeError("system or device expected")
 
@@ -1081,8 +1081,8 @@ class System(Node):
         logging.debug(f"__lt__ {self} {other}")
 
         if isinstance(other, System):
-            self._data_graph.add((self.node, s223.isContainedIn, other.node))
-            self._data_graph.add((other.node, s223.contains, self.node))
+            self._data_graph.add((self.node, S223.isContainedIn, other.node))
+            self._data_graph.add((other.node, S223.contains, self.node))
         else:
             raise TypeError("system expected")
 
@@ -1094,7 +1094,7 @@ class Zone(Node):
     A collection of spaces.
     """
 
-    node_type: URIRef = s223.Zone
+    node_type: URIRef = S223.Zone
     _zone_connection_points: Dict[str, ZoneConnectionPoint]
     hasDomain: Domain
 
@@ -1149,8 +1149,8 @@ class Zone(Node):
         if not isinstance(other, DomainSpace):
             raise TypeError("space expected")
 
-        self._data_graph.add((self.node, s223.contains, other.node))
-        self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        self._data_graph.add((self.node, S223.contains, other.node))
+        self._data_graph.add((other.node, S223.isContainedIn, self.node))
 
         return self
 
@@ -1160,7 +1160,7 @@ class ZoneConnectionPoint(Node):
     Zone Connection Point
     """
 
-    node_type: URIRef = s223.ZoneConnectionPoint
+    node_type: URIRef = S223.ZoneConnectionPoint
     hasSubstance: Substance
     hasDirection: Direction
 
@@ -1171,7 +1171,7 @@ class ZoneConnectionPoint(Node):
         logging.debug(f"ZoneConnectionPoint.__init__ {zone} {kwargs}")
         super().__init__(**kwargs)
 
-        self._data_graph.add((zone.node, s223.hasZoneConnectionPoint, self.node))
+        self._data_graph.add((zone.node, S223.hasZoneConnectionPoint, self.node))
         self.isZoneConnectionPointOf = zone
 
         # this is one of the connection points of the zone
@@ -1206,7 +1206,7 @@ class DomainSpace(Connectable):
     within the zone it is contained in.
     """
 
-    node_type: URIRef = s223.DomainSpace
+    node_type: URIRef = S223.DomainSpace
     hasDomain: Domain
 
     def __lt__(self, other: Union[Zone, PhysicalSpace]) -> Node:
@@ -1220,8 +1220,8 @@ class DomainSpace(Connectable):
         if not isinstance(other, (Zone, PhysicalSpace)):
             raise TypeError("zone or physical space expected")
 
-        self._data_graph.add((other.node, s223.contains, self.node))
-        self._data_graph.add((self.node, s223.isContainedIn, other.node))
+        self._data_graph.add((other.node, S223.contains, self.node))
+        self._data_graph.add((self.node, S223.isContainedIn, other.node))
 
         return self
 
@@ -1231,7 +1231,7 @@ class PhysicalSpace(Node):
     A part of the physical world whose 3D spatial extent is bounded.
     """
 
-    node_type: URIRef = s223.PhysicalSpace
+    node_type: URIRef = S223.PhysicalSpace
 
     def __gt__(self, other: DomainSpace) -> Node:
         """self > other
@@ -1243,8 +1243,8 @@ class PhysicalSpace(Node):
         if not isinstance(other, DomainSpace):
             raise TypeError("domain space expected")
 
-        self._data_graph.add((self.node, s223.contains, other.node))
-        self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        self._data_graph.add((self.node, S223.contains, other.node))
+        self._data_graph.add((other.node, S223.isContainedIn, self.node))
 
         return self
 
@@ -1258,8 +1258,8 @@ class PhysicalSpace(Node):
         if not isinstance(other, Enclosure):
             raise TypeError("space expected")
 
-        self._data_graph.add((other.node, s223.contains, self.node))
-        self._data_graph.add((self.node, s223.isContainedIn, other.node))
+        self._data_graph.add((other.node, S223.contains, self.node))
+        self._data_graph.add((self.node, S223.isContainedIn, other.node))
 
         return other
 
@@ -1269,7 +1269,7 @@ class Enclosure(Node):
     A part of the physical world whose 3D spatial extent is bounded.
     """
 
-    node_type: URIRef = s223.Enclosure
+    node_type: URIRef = S223.Enclosure
 
     def __init__(self, **kwargs: Any) -> None:
         logging.debug(f"Enclosure.__init__ {kwargs}")
@@ -1291,8 +1291,8 @@ class Enclosure(Node):
         if not isinstance(other, (DomainSpace, PhysicalSpace, Enclosure)):
             raise TypeError("space or enclosure expected")
 
-        self._data_graph.add((self.node, s223.contains, other.node))
-        self._data_graph.add((other.node, s223.isContainedIn, self.node))
+        self._data_graph.add((self.node, S223.contains, other.node))
+        self._data_graph.add((other.node, S223.isContainedIn, self.node))
 
         return self
 
@@ -1306,8 +1306,8 @@ class Enclosure(Node):
         if not isinstance(other, Enclosure):
             raise TypeError("enclosure expected")
 
-        self._data_graph.add((other.node, s223.contains, self.node))
-        self._data_graph.add((self.node, s223.isContainedIn, other.node))
+        self._data_graph.add((other.node, S223.contains, self.node))
+        self._data_graph.add((self.node, S223.isContainedIn, other.node))
 
         return other
 
@@ -1539,7 +1539,7 @@ class Value(Node):
     Literal.  The 'lang' and 'datatype' values are forwarded to rdflib.
     """
 
-    node_type: URIRef = s223.Value
+    node_type: URIRef = S223.Value
     isValueOf: Property
 
     hasTimestamp: Literal
@@ -1578,7 +1578,7 @@ class Property(Node):
     An attribute, quality, or characteristic of a feature of interest.
     """
 
-    node_type: URIRef = s223.Property
+    node_type: URIRef = S223.Property
     hasValue: Value
 
     # override this for a specialize subclass
@@ -1611,7 +1611,7 @@ class Property(Node):
         assert isinstance(value, Value)
 
         # link the two together
-        self._data_graph.add((self.node, s223.hasValue, value.node))
+        self._data_graph.add((self.node, S223.hasValue, value.node))
         value.isValueOf = self
 
         return value
@@ -1622,7 +1622,7 @@ class ActuatableProperty(Property):
     Such as the setting of a switch.
     """
 
-    node_type: URIRef = s223.ActuatableProperty
+    node_type: URIRef = S223.ActuatableProperty
 
 
 class ObservableProperty(Property):
@@ -1630,7 +1630,7 @@ class ObservableProperty(Property):
     Such as the state of an alarm detector.
     """
 
-    node_type: URIRef = s223.ObservableProperty
+    node_type: URIRef = S223.ObservableProperty
 
 
 class QuantifiableProperty(Property):
@@ -1638,7 +1638,7 @@ class QuantifiableProperty(Property):
     A property to be expressed as a quantity, it has units.
     """
 
-    node_type: URIRef = s223.QuantifiableProperty
+    node_type: URIRef = S223.QuantifiableProperty
     hasQuantityKind: URIRef
     hasUnits: URIRef
 
@@ -1651,7 +1651,7 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
     Such as a numerical setpoint.
     """
 
-    node_type: URIRef = s223.QuantifiableActuatableProperty
+    node_type: URIRef = S223.QuantifiableActuatableProperty
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -1662,7 +1662,7 @@ class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
     Such as a temperature reading.
     """
 
-    node_type: URIRef = s223.QuantifiableObservableProperty
+    node_type: URIRef = S223.QuantifiableObservableProperty
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

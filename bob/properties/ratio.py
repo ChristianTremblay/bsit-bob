@@ -1,34 +1,34 @@
 from rdflib import URIRef
 
-from ..core import Air, Medium, Substance, bob, p223, quantitykind, s223, unit
+from ..core import Air, Medium, Substance, BOB, P223, QUANTITYKIND, S223, UNIT
 from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 
 class Percent(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.DimensionlessRatio
-    unit = unit.PERCENT
+    hasQuantityKind = QUANTITYKIND.DimensionlessRatio
+    unit = UNIT.PERCENT
 
 
 class PercentCommand(QuantifiableActuatableProperty):
-    hasQuantityKind = quantitykind.DimensionlessRatio
-    unit = unit.PERCENT
+    hasQuantityKind = QUANTITYKIND.DimensionlessRatio
+    unit = UNIT.PERCENT
 
 
 class RPM(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.AngularVolocity
-    unit = unit["REV-PER-MIN"]
+    hasQuantityKind = QUANTITYKIND.AngularVolocity
+    unit = UNIT["REV-PER-MIN"]
 
 
 class RelativeHumidity(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.RelativeHumidity
-    unit = unit.PERCENT_RH
+    hasQuantityKind = QUANTITYKIND.RelativeHumidity
+    unit = UNIT.PERCENT_RH
     ofMedium: Medium = Air
 
 
 class GasConcentration(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.DimensionlessRatio
-    unit = unit.PPM
+    hasQuantityKind = QUANTITYKIND.DimensionlessRatio
+    unit = UNIT.PPM
     ofMedium: Medium = Air
     ofSubstance: Substance

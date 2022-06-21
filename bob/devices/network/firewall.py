@@ -15,18 +15,18 @@ from ...core import (
     ConnectionPoint,
     Device,
     PropertyReference,
-    bob,
-    p223,
-    quantitykind,
-    s223,
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
     template_update,
-    unit,
+    UNIT,
 )
 from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus
 from ...property import QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 ethernet_firewall_template = {
     "cp": {
@@ -43,7 +43,7 @@ class EthernetFirewall(Device):
     An Ethernet Firewall with wan and lan ports
     """
 
-    _class_iri = p223.EthernetFirewall
+    _class_iri = P223.EthernetFirewall
 
     def __init__(self, config: Dict = None, **kwargs):
         if "wan_ports" in kwargs:

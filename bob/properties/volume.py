@@ -1,12 +1,12 @@
 from rdflib import URIRef
 
-from ..core import Medium, bob, p223, quantitykind, s223, unit
+from ..core import Medium, BOB, P223, QUANTITYKIND, S223, UNIT
 from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 
 class Gallons(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.LiquidVolume
-    unit = unit.GAL_US
+    hasQuantityKind = QUANTITYKIND.LiquidVolume
+    unit = UNIT.GAL_US
     measuresMedium: Medium  # set from the sensor

@@ -2,7 +2,7 @@ from pathlib import Path
 
 from header import sample_header
 
-from bob.core import Device, bind_model_namespace, dump, quantitykind, qudt, unit
+from bob.core import Device, bind_model_namespace, dump, QUANTITYKIND, QUDT, UNIT
 from bob.property import QuantifiableObservableProperty, QuantifiableProperty
 
 model_name = Path(__file__).stem
@@ -10,7 +10,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TemperatureProperty(QuantifiableProperty):
-    hasQuantityKind = quantitykind.Temperature
+    hasQuantityKind = QUANTITYKIND.Temperature
 
 
 class SampleDevice(Device):
@@ -25,19 +25,19 @@ class SampleDevice2(Device):
 
 # individual pieces
 d1 = SampleDevice(label="Test Device 1")
-temp = TemperatureProperty(75.5, unit=unit.DEG_F, label="temp")
+temp = TemperatureProperty(75.5, unit=UNIT.DEG_F, label="temp")
 
 d1.add_property(temp)
 
 # auto build value
 d2 = SampleDevice(label="Test Device 2")
-d2.add_property(TemperatureProperty(90.5, unit=unit.DEG_F, label="temp"))
+d2.add_property(TemperatureProperty(90.5, unit=UNIT.DEG_F, label="temp"))
 
 # named property, kwarg value
 d3 = SampleDevice2(label="Test Device 3", hasTemp=100.5)
 
 # needs a unit to validate
-d3.hasTemp.unit = unit.DEG_F
+d3.hasTemp.unit = UNIT.DEG_F
 
 # dump the result
 

@@ -26,8 +26,8 @@ from bob.core import (
     Zone,
     bind_model_namespace,
     dump,
-    s223,
-    unit,
+    S223,
+    UNIT,
 )
 from bob.devices.hvac import Fan
 from bob.devices.hvac.airflowstation import AirFlowMonitor
@@ -124,7 +124,7 @@ class RooftopUnit(System):
 
         # ALTERNATIVELY
         pre_filtered = Segment()
-        sensor = TemperatureSensor(label=self.label + ".MA_sensor", unit=unit.DEG_C)
+        sensor = TemperatureSensor(label=self.label + ".MA_sensor", unit=UNIT.DEG_C)
         pre_filtered.link_to(sensor.connection)
 
 

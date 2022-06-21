@@ -1,13 +1,13 @@
 from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import Device, PropertyReference, bob, p223, s223
+from ...core import Device, PropertyReference, BOB, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 
 class Filter(Device):
-    _class_iri = s223.Filter
+    _class_iri = S223.Filter
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 

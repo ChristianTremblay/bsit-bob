@@ -17,12 +17,12 @@ from ..core import (
     PropertyReference,
     Segment,
     Substance,
-    bob,
+    BOB,
     logging,
-    p223,
-    quantitykind,
-    s223,
-    unit,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from ..multimethods import multimethod
 from ..property import (
@@ -31,7 +31,7 @@ from ..property import (
     QuantifiableProperty,
 )
 
-_namespace = s223
+_namespace = S223
 
 
 def split_kwargs(given_kwargs):
@@ -87,7 +87,7 @@ class Sensor(Device):
     A sensor can have only one measurement (observesProperty)
     """
 
-    _class_iri: URIRef = s223.Sensor
+    _class_iri: URIRef = S223.Sensor
     # ISSUE
     # How can I define that ?
     # hasMeasurementLocation: Union[
@@ -127,11 +127,11 @@ def contains_mm(parent_device: Device, child_device: Sensor) -> None:
     """Device > Device"""
     logging.info(f"device {parent_device} contains device {child_device}")
     parent_device._data_graph.add(
-        (parent_device._node_iri, s223.contains, child_device._node_iri)
+        (parent_device._node_iri, S223.contains, child_device._node_iri)
     )
     if INCLUDE_INVERSE:
         parent_device._data_graph.add(
-            (child_device._node_iri, s223.isContainedIn, parent_device._node_iri)
+            (child_device._node_iri, S223.isContainedIn, parent_device._node_iri)
         )
 
 
@@ -142,7 +142,7 @@ def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
     parent_device._data_graph.add(
         (
             parent_device.observesProperty._node_iri,
-            s223.hasExternalReference,
+            S223.hasExternalReference,
             child_device._node_iri,
         )
     )
@@ -150,7 +150,7 @@ def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
         parent_device._data_graph.add(
             (
                 child_device._node_iri,
-                s223.isExternalReferenceOf,
+                S223.isExternalReferenceOf,
                 parent_device.observesProperty._node_iri,
             )
         )
@@ -158,14 +158,14 @@ def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
 
 class DifferentialSensor(Sensor):
     "Differential sensor"
-    _class_iri: URIRef = s223.DifferentialSensor
+    _class_iri: URIRef = S223.DifferentialSensor
     hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
     hasMeasurementLocationLow: Node
 
 
 class VirtualSensor(Sensor):
     "Virtal Sensor"
-    _class_iri: URIRef = s223.VirtualSensor
+    _class_iri: URIRef = S223.VirtualSensor
     # hasMeasurementLocation: # maxCount = 0
     hasFunctionInput: Property
 
