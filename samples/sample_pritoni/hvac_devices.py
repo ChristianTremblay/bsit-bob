@@ -37,11 +37,15 @@ ahu_template = {
         },
         ("TPD1", AirDifferentialStaticPressureSensor): {
             "unit": UNIT.PA,
-            "comment": "Filter Differential Pressure Sensor (S4-S5)",
+            "comment": "Filter Differential Pressure Sensor (S5)",
         },
         ("HC-T", AirTemperatureSensor): {
             "unit": UNIT.DEG_C,
             "comment": "Air temperature after heating coil (S6)",
+        },
+        ("MA-T", AirTemperatureSensor): {
+            "unit": UNIT.DEG_F,
+            "comment": "Return Air temperature (S4)",
         },
         ("DA-T", AirTemperatureSensor): {
             "unit": UNIT.DEG_F,
@@ -70,12 +74,12 @@ ahu_template = {
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
         },
         ("SF-STARTER", MotorStarter): {
-            "comment": "Supply Air Fan Starter",
+            "comment": "Supply Air Fan Starter (A6)",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
             "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
         },
         ("RF-VFD", VFD): {
-            "comment": "VFD for return Fan",
+            "comment": "VFD for return Fan (A7)",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
             "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
             "ethernet_port": EthernetBidirectionalConnectionPoint,
