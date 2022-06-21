@@ -10,10 +10,10 @@ _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 # Light Spaces
 openofficeEast_lightspace = LightingSpace(
-    label="LightingSpace1", comment="OpenOfficeEast.Light"
+    label="LightingSpace1", comment="OpenOffice North.Light"
 )
 openofficeWest_lightspace = LightingSpace(
-    label="LightingSpace2", comment="OpenOfficeWest.Light"
+    label="LightingSpace2", comment="OpenOffice South.Light"
 )
 bathroom_lightspace = LightingSpace(label="LightingSpace3", comment="Bathroom.Light")
 corridor_lightspace = LightingSpace(label="LightingSpace5", comment="Corridor.Light")
