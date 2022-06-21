@@ -1,0 +1,6 @@
+select ?node ?ds ?label ?comment where {
+    ?node a s223:Zone ; s223:contains ?ds .
+    ?ds a s223:DomainSpace .
+    optional { ?ds rdfs:label ?label } .
+    optional { ?ds rdfs:comment ?comment } .
+    }

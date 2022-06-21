@@ -221,10 +221,6 @@ if args.report:
     with open(args.report, "wb") as f:
         report_graph.serialize(f, format="turtle")
 
-if 0:
-    print("----- report_text -----")
-    print(report_text)
-
 # find the definitions
 namespace_map = {}
 for prefix, uriref in report_graph.namespaces():

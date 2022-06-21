@@ -1,0 +1,1455 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+[] a sh:ValidationReport ;
+    sh:conforms false ;
+    sh:result [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00040> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00083> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-24V-60Hz> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00179> ;
+            sh:resultMessage "Node electrical_devices:00179 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00179> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00026> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00031> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00014> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00185> ;
+            sh:resultMessage "Node electrical_devices:00185 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00185> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00021> ;
+            sh:resultMessage "urn:ex/functions/00021 has an enumeration value of http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied which is not a valid http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy." ;
+            sh:resultPath s223:hasValue ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraint _:n126600b36d1242dfa93bda5344488a2db5 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n126600b36d1242dfa93bda5344488a2db4 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00010> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00025> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00040> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00059> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00157> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-24V-60Hz> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00024> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00187> ;
+            sh:resultMessage "Node electrical_devices:00187 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00187> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00044> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00049> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00083> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00030> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00133> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00027> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00055> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-NormalAlarm> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00141> ;
+            sh:resultMessage "Node electrical_devices:00141 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00141> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00004> ;
+            sh:resultMessage "Node hvac_devices:00004 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/hvac_devices/00004> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00022> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00103> ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00103->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b104 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00038> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-OnOffSignal> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00053> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00035> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00099> ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00099->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b104 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00003> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00026> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00030> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00006> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00028> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00024> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00005> ;
+            sh:resultMessage "Node functions:00005 does not conform to exactly one shape in [ sh:property [ rdf:type sh:PropertyShape ; sh:class ref:ExternalReference ; sh:description Literal(\"Used to provide a pointer of any kind to a data source containing a simple value. Either s223:hasExternalReference or s223:hasValue is populated, but not both.\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] , [ sh:property [ rdf:type sh:PropertyShape ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] , [ sh:and ( [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] ) ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:XoneConstraintComponent ;
+            sh:sourceShape s223:Property ;
+            sh:value <urn:ex/functions/00005> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00035> ;
+            sh:resultMessage "urn:ex/functions/00035 has an enumeration value of http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied which is not a valid http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy." ;
+            sh:resultPath s223:hasValue ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraint _:n126600b36d1242dfa93bda5344488a2db5 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n126600b36d1242dfa93bda5344488a2db4 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00191> ;
+            sh:resultMessage "Node electrical_devices:00191 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00191> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00025> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00006> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00073> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00249> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b18 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00022> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00135> ;
+            sh:resultMessage "Node electrical_devices:00135 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00135> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00014> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00009> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00166> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00034> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00013> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00031> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00034> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00039> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00024> ;
+            sh:resultMessage "Less than 1 values on lighting_spaces:00024->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b129 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00127> ;
+            sh:resultMessage "Node electrical_devices:00127 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00127> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00008> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00015> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00009> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00044> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00064> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00017> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00055> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00157> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00143> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00189> ;
+            sh:resultMessage "Node electrical_devices:00189 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00189> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00131> ;
+            sh:resultMessage "Node electrical_devices:00131 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00131> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00027> ;
+            sh:resultMessage "Node functions:00027 does not conform to exactly one shape in [ sh:property [ rdf:type sh:PropertyShape ; sh:class ref:ExternalReference ; sh:description Literal(\"Used to provide a pointer of any kind to a data source containing a simple value. Either s223:hasExternalReference or s223:hasValue is populated, but not both.\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] , [ sh:property [ rdf:type sh:PropertyShape ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] , [ sh:and ( [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] ) ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:XoneConstraintComponent ;
+            sh:sourceShape s223:Property ;
+            sh:value <urn:ex/functions/00027> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00029> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00038> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00021> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00193> ;
+            sh:resultMessage "Node electrical_devices:00193 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00193> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00028> ;
+            sh:resultMessage "urn:ex/functions/00028 has an enumeration value of http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied which is not a valid http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy." ;
+            sh:resultPath s223:hasValue ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraint _:n126600b36d1242dfa93bda5344488a2db5 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n126600b36d1242dfa93bda5344488a2db4 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00100> ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00100->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b104 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00023> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00035> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00031> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00010> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00006> ;
+            sh:resultMessage "urn:ex/functions/00006 has an enumeration value of http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied which is not a valid http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy." ;
+            sh:resultPath s223:hasValue ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraint _:n126600b36d1242dfa93bda5344488a2db5 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n126600b36d1242dfa93bda5344488a2db4 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00017> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00033> ;
+            sh:resultMessage "Less than 1 values on lighting_spaces:00033->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b129 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00003> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00037> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-OnOffSignal> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00073> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-24V-60Hz> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00181> ;
+            sh:resultMessage "Node electrical_devices:00181 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00181> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00053> ;
+            sh:resultMessage "Node hvac_devices:00053 does not conform to exactly one shape in [ sh:property [ rdf:type sh:PropertyShape ; sh:class ref:ExternalReference ; sh:description Literal(\"Used to provide a pointer of any kind to a data source containing a simple value. Either s223:hasExternalReference or s223:hasValue is populated, but not both.\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] , [ sh:property [ rdf:type sh:PropertyShape ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] , [ sh:and ( [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] ) ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:XoneConstraintComponent ;
+            sh:sourceShape s223:Property ;
+            sh:value <urn:ex/hvac_devices/00053> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00007> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00008> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00023> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00004> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00032> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00037> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00028> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00018> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00139> ;
+            sh:resultMessage "Node electrical_devices:00139 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00139> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00001> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00005> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00102> ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00102->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b104 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00019> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b18 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00054> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00142> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00019> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00019> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00005> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00019> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00037> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00021> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00026> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00050> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00195> ;
+            sh:resultMessage "Node electrical_devices:00195 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00195> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00022> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00101> ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00101->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b104 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00009> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00050> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00011> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00007> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00004> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00006> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00014> ;
+            sh:resultMessage "urn:ex/functions/00014 has an enumeration value of http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied which is not a valid http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy." ;
+            sh:resultPath s223:hasValue ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraint _:n126600b36d1242dfa93bda5344488a2db5 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n126600b36d1242dfa93bda5344488a2db4 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Occupancy-Unoccupied> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00028> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00019> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00025> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00013> ;
+            sh:resultMessage "Node functions:00013 does not conform to exactly one shape in [ sh:property [ rdf:type sh:PropertyShape ; sh:class ref:ExternalReference ; sh:description Literal(\"Used to provide a pointer of any kind to a data source containing a simple value. Either s223:hasExternalReference or s223:hasValue is populated, but not both.\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] , [ sh:property [ rdf:type sh:PropertyShape ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] , [ sh:and ( [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] ) ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:XoneConstraintComponent ;
+            sh:sourceShape s223:Property ;
+            sh:value <urn:ex/functions/00013> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00025> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00046> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00093> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-24V-60Hz> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00043> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00020> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00036> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00010> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00026> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00032> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b18 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00037> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00018> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00133> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-24V-60Hz> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00027> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00045> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00030> ;
+            sh:resultMessage "Less than 1 values on lighting_spaces:00030->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b129 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00008> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00012> ;
+            sh:resultMessage "Node hvac_devices:00012 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/hvac_devices/00012> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00034> ;
+            sh:resultMessage "Node functions:00034 does not conform to exactly one shape in [ sh:property [ rdf:type sh:PropertyShape ; sh:class ref:ExternalReference ; sh:description Literal(\"Used to provide a pointer of any kind to a data source containing a simple value. Either s223:hasExternalReference or s223:hasValue is populated, but not both.\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] , [ sh:property [ rdf:type sh:PropertyShape ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] , [ sh:and ( [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] ) ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:XoneConstraintComponent ;
+            sh:sourceShape s223:Property ;
+            sh:value <urn:ex/functions/00034> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00052> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00010> ;
+            sh:resultMessage "Node hvac_devices:00010 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/hvac_devices/00010> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00059> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00009> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00016> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00025> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_devices/00091> ;
+            sh:resultMessage "Less than 1 values on lighting_devices:00091->s223:hasEnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00018> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00065> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00036> ;
+            sh:resultMessage "Less than 1 values on lighting_spaces:00036->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b129 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00016> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00027> ;
+            sh:resultMessage "Less than 1 values on lighting_spaces:00027->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b129 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00093> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00012> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00034> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00046> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00020> ;
+            sh:resultMessage "Node functions:00020 does not conform to exactly one shape in [ sh:property [ rdf:type sh:PropertyShape ; sh:class ref:ExternalReference ; sh:description Literal(\"Used to provide a pointer of any kind to a data source containing a simple value. Either s223:hasExternalReference or s223:hasValue is populated, but not both.\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] , [ sh:property [ rdf:type sh:PropertyShape ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] , [ sh:and ( [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] ) ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:XoneConstraintComponent ;
+            sh:sourceShape s223:Property ;
+            sh:value <urn:ex/functions/00020> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00003> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00038> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00028> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00012> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00005> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00009> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00005> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00129> ;
+            sh:resultMessage "Node electrical_devices:00129 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00129> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00040> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00021> ;
+            sh:resultMessage "Less than 1 values on lighting_spaces:00021->s223:mapsTo" ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b129 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00010> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind" ;
+            sh:resultPath s223:hasEnumerationKind ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b42 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#EnumerationKind-Occupancy> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00041> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00024> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00045> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00024> ;
+            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b30 ;
+            sh:value <http://data.ashrae.org/proposal-to-standard223#Electricity-Ethernet> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00143> ;
+            sh:resultMessage "Node electrical_devices:00143 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00143> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00054> ;
+            sh:resultMessage "Node hvac_devices:00054 does not conform to exactly one shape in [ sh:property [ rdf:type sh:PropertyShape ; sh:class ref:ExternalReference ; sh:description Literal(\"Used to provide a pointer of any kind to a data source containing a simple value. Either s223:hasExternalReference or s223:hasValue is populated, but not both.\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] , [ sh:property [ rdf:type sh:PropertyShape ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] , [ sh:and ( [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasExternalReference ] ] [ sh:property [ rdf:type sh:PropertyShape ; sh:maxCount Literal(\"0\", datatype=xsd:integer) ; sh:path s223:hasValue ] ] ) ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:XoneConstraintComponent ;
+            sh:sourceShape s223:Property ;
+            sh:value <urn:ex/hvac_devices/00054> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/network_devices/00008> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00167> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00133> ;
+            sh:resultMessage "Node electrical_devices:00133 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00133> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00137> ;
+            sh:resultMessage "Node electrical_devices:00137 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00137> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00039> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/lighting_spaces/00012> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_spaces/00012> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00060> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00016> ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:naef7fcc26dc14944984a11bd77ffb1d3b22 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/functions/00033> ;
+            sh:resultMessage "This Connector must be associated with exactly 1 FunctionBlock." ;
+            sh:resultPath _:n6274edd90530438581716b3576380d5ab2 ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n6274edd90530438581716b3576380d5ab1 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/hvac_devices/00014> ;
+            sh:resultMessage "Node hvac_devices:00014 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/hvac_devices/00014> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex/electrical_devices/00183> ;
+            sh:resultMessage "Node electrical_devices:00183 does not conform to one or more shapes in [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:message Literal(\"A non-differential Sensor must have exactly 1 measurement location\") ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path s223:hasMeasurementLocation ] ] , [ sh:property [ sh:hasValue s223:DifferentialSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] , [ sh:property [ sh:hasValue s223:VirtualSensor ; sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ]" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape s223:Sensor ;
+            sh:value <urn:ex/electrical_devices/00183> ] .
+
+_:N25a8c972626248d5b86156cb98056565 rdf:first [ sh:class s223:ConnectionPoint ] ;
+    rdf:rest ( [ sh:class s223:SystemConnectionPoint ] [ sh:class s223:Junction ] ) .
+
+_:N7c08363a182648eb83d5dc46ec33c1d1 sh:class s223:ZoneConnectionPoint .
+
+_:N925aeb5b0eaa4518942cc7d58ca17831 rdf:first _:N7c08363a182648eb83d5dc46ec33c1d1 ;
+    rdf:rest ( [ sh:class s223:Junction ] ) .
+
+_:Nb56f53f851ee4ee6869f3156aaa760e8 sh:inversePath s223:hasConnector .
+
+_:Nc0a44afbdf1a46b58ccab15e3c4cd420 a sh:SPARQLConstraint ;
+    sh:message "{$this} has an enumeration value of {?value} which is not a valid {?kind}." ;
+    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+    sh:select """
+SELECT $this ?value ?kind
+WHERE {
+$this s223:hasValue ?value .
+$this s223:hasEnumerationKind ?kind .
+FILTER (NOT EXISTS {?value a/rdfs:subClassOf* ?kind}) .
+}
+""" .
+
+_:Ndf411eef0b6d48af9ab295c5d246fb7d sh:class s223:ConnectionPoint .
+
+_:Ndfa3789bee8b4ecb8e706d2ec559dfb4 rdf:first _:Ndf411eef0b6d48af9ab295c5d246fb7d ;
+    rdf:rest _:N925aeb5b0eaa4518942cc7d58ca17831 .
+
+_:naef7fcc26dc14944984a11bd77ffb1d3b18 sh:class s223:EnumerationKind-Medium ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "Connection medium" ;
+    sh:path s223:hasMedium .
+
+_:n126600b36d1242dfa93bda5344488a2db4 sh:path s223:hasValue ;
+    sh:sparql _:Nc0a44afbdf1a46b58ccab15e3c4cd420 .
+
+_:n126600b36d1242dfa93bda5344488a2db5 a sh:SPARQLConstraint ;
+    sh:message "{$this} has an enumeration value of {?value} which is not a valid {?kind}." ;
+    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+    sh:select """
+SELECT $this ?value ?kind
+WHERE {
+$this s223:hasValue ?value .
+$this s223:hasEnumerationKind ?kind .
+FILTER (NOT EXISTS {?value a/rdfs:subClassOf* ?kind}) .
+}
+""" .
+
+_:naef7fcc26dc14944984a11bd77ffb1d3b104 sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:or _:N25a8c972626248d5b86156cb98056565 ;
+    sh:path s223:mapsTo .
+
+_:naef7fcc26dc14944984a11bd77ffb1d3b129 sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:or _:Ndfa3789bee8b4ecb8e706d2ec559dfb4 ;
+    sh:path s223:mapsTo .
+
+_:naef7fcc26dc14944984a11bd77ffb1d3b30 sh:class s223:EnumerationKind-Medium ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:name "ConnectionPoint medium" ;
+    sh:path s223:hasMedium .
+
+_:n6274edd90530438581716b3576380d5ab1 sh:class s223:FunctionBlock ;
+    sh:maxCount 1 ;
+    sh:message "This Connector must be associated with exactly 1 FunctionBlock." ;
+    sh:minCount 1 ;
+    sh:name "ConnectorToFunctionBlock" ;
+    sh:path _:Nb56f53f851ee4ee6869f3156aaa760e8 .
+
+_:n6274edd90530438581716b3576380d5ab2 sh:inversePath s223:hasConnector .
+
+_:naef7fcc26dc14944984a11bd77ffb1d3b42 sh:class s223:EnumerationKind ;
+    sh:maxCount 1 ;
+    sh:minCount 1 ;
+    sh:path s223:hasEnumerationKind .
+
+_:naef7fcc26dc14944984a11bd77ffb1d3b22 sh:class s223:Connection ;
+    sh:maxCount 1 ;
+    sh:message "This ConnectionPoint must be associated with exactly 1 Connection." ;
+    sh:minCount 1 ;
+    sh:name "ConnectionPointToConnectionShape" ;
+    sh:path s223:connectsThrough ;
+    sh:severity sh:Info .
+
