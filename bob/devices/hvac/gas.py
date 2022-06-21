@@ -4,7 +4,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import Device, PropertyReference, bob, enum, p223, quantitykind, s223, unit
+from ...core import Device, PropertyReference, BOB, enum, P223, QUANTITYKIND, S223, UNIT
 from ...property import QuantifiableObservableProperty
 from ...sensor import Sensor
 from ...sensor.gas import (
@@ -15,7 +15,7 @@ from ...sensor.gas import (
     NO2Sensor,
 )
 
-_namespace = bob
+_namespace = BOB
 
 gasmonitor_template = {
     "params": {
@@ -27,22 +27,22 @@ gasmonitor_template = {
             "hasExternalReference": "bacnet://",
             #             "properties": {
             #                 ("hasMinRange", QuantifiableObservableProperty): {
-            #                     "hasQuantityKind": quantitykind.DimensionlessRatio,
-            #                     "unit": unit.PPM,
+            #                     "hasQuantityKind": QUANTITYKIND.DimensionlessRatio,
+            #                     "unit": UNIT.PPM,
             #                 },
             #                 ("hasMaxRange", QuantifiableObservableProperty): {
-            #                     "hasQuantityKind": quantitykind.DimensionlessRatio,
-            #                     "unit": unit.PPM,
+            #                     "hasQuantityKind": QUANTITYKIND.DimensionlessRatio,
+            #                     "unit": UNIT.PPM,
             #                 },
             #             },
         },
         ("label_of_sensor_2", NO2Sensor): {
             "hasExternalReference": "bacnet://",
             #             "hasMinRange": QuantifiableObservableProperty(
-            #                 0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+            #                 0, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
             #             ),
             #             "hasMaxRange": QuantifiableObservableProperty(
-            #                 100, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+            #                 100, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
             #             ),
         },
     },
@@ -61,7 +61,7 @@ class GasMonitor(Device):
 
     """
 
-    _class_iri: URIRef = p223.GasMonitor
+    _class_iri: URIRef = P223.GasMonitor
     airInletSupply: AirInletConnectionPoint
 
     alarmStatus: PropertyReference

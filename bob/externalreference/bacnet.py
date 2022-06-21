@@ -5,25 +5,21 @@ from typing import Any
 from rdflib import XSD, Literal, URIRef
 
 from ..core import (
+    bind_namespace,
     Device,
-    EnumerationKind,
     ExternalReference,
-    Graph,
     Node,
-    bacnet,
-    bob,
-    p223,
-    ref,
-    schema_graph,
 )
 
-_namespace = ref
+
+BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
 
 url_pattern = re.compile("^bacnet:[/][/]([0-9]+)[/]([A-Za-z0-9-]+),([1-9][0-9]*)$")
 
 
 class BACnetDevice(Node):
-    _class_iri: URIRef = bacnet.BACnetDevice
+    _class_iri: URIRef = BACNET.Device
+    _namespace = BACNET
     deviceId: XSD.integer
     deviceName: Literal
     networkNumber: XSD.integer
@@ -32,7 +28,8 @@ class BACnetDevice(Node):
 
 
 class BACnetReference(ExternalReference):
-    _class_iri: URIRef = ref.BACnetReference
+    _class_iri: URIRef = BACNET.DeviceObjectPropertyReference
+    _namespace = BACNET
     objectInstance: XSD.integer
     objectOf: BACnetDevice
     objectName: Literal

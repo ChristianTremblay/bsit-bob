@@ -9,17 +9,17 @@ from .core import (
     Role,
     Substance,
     Water,
-    p223,
-    s223,
+    S223,
+    P223,
 )
 
-_alt_namespace = s223
+_namespace = S223
 
 # ===================
 # MEDIA FLAVOURS
 # ===================
 # Air
-Air.CompressedAir = CompressedAir = Air("CompressedAir", _alt_namespace=p223)
+Air.CompressedAir = CompressedAir = Air("CompressedAir", _alt_namespace=P223)
 
 # Electricity
 Electricity.AC575V_60Hz = Electricity("575V-60Hz")
@@ -30,23 +30,23 @@ Electricity.AC208V_60Hz = Electricity("208V-60Hz")
 Electricity.AC120V_240V_60Hz = Electricity("120V-240V-60Hz")
 Electricity.AC240V_60Hz = Electricity("240V-60Hz")
 Electricity.AC120V_60Hz = Electricity("120V-60Hz")
-Electricity.AC24V_60Hz = Electricity("24V-60Hz", _alt_namespace=p223)
+Electricity.AC24V_60Hz = Electricity("24V-60Hz", _alt_namespace=P223)
 Electricity.DC48V = Electricity(
-    "48V-DC", _alt_namespace=p223
+    "48V-DC", _alt_namespace=P223
 )  # TODO : Create connections
 Electricity.DC24V = Electricity(
-    "24V-DC", _alt_namespace=p223
+    "24V-DC", _alt_namespace=P223
 )  # TODO : Create connections
 Electricity.DC12V = Electricity(
-    "12V-DC", _alt_namespace=p223
+    "12V-DC", _alt_namespace=P223
 )  # TODO : Create connections
 Electricity.DC5V = Electricity(
-    "5V-DC", _alt_namespace=p223
+    "5V-DC", _alt_namespace=P223
 )  # TODO : Create connections
-Electricity.OnOffSignal = Electricity("OnOffSignal", _alt_namespace=p223)
-Electricity.ModulationSignal = Electricity("ModulationSignal", _alt_namespace=p223)
-Electricity.RS485 = Electricity("RS485", _alt_namespace=p223)
-Electricity.Ethernet = Electricity("Ethernet", _alt_namespace=p223)
+Electricity.OnOffSignal = Electricity("OnOffSignal", _alt_namespace=P223)
+Electricity.ModulationSignal = Electricity("ModulationSignal", _alt_namespace=P223)
+Electricity.RS485 = Electricity("RS485", _alt_namespace=P223)
+Electricity.Ethernet = Electricity("Ethernet", _alt_namespace=P223)
 
 # Water
 Water.ChilledWater = ChilledWater = Water("ChilledWater")
@@ -113,42 +113,42 @@ Substance.Soot = Soot = Substance("Soot")
 # Values Enumeration
 # ===================
 # Enumeration kinds to create hasValue
-ActiveInactiveEnum = EnumerationKind("ActiveInactive", _alt_namespace=p223)
+ActiveInactiveEnum = EnumerationKind("ActiveInactive", _alt_namespace=P223)
 Effectiveness = EnumerationKind("Effectiveness")
-HandOffAutoEnum = EnumerationKind("HandOffAuto", _alt_namespace=p223)
+HandOffAutoEnum = EnumerationKind("HandOffAuto", _alt_namespace=P223)
 HVACOperatingMode = EnumerationKind("HVACOperatingMode")
 HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
-LeftRightEnum = EnumerationKind("LeftRight", _alt_namespace=p223)
-ManualAutoEnum = EnumerationKind("ManualAuto", _alt_namespace=p223)
-NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=p223)  # SEE BELOW
-NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=p223)
-NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=p223)
-OccupancyEnum = EnumerationKind("Occupancy", _alt_namespace=p223)
+LeftRightEnum = EnumerationKind("LeftRight", _alt_namespace=P223)
+ManualAutoEnum = EnumerationKind("ManualAuto", _alt_namespace=P223)
+NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE BELOW
+NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
+NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
+OccupancyEnum = EnumerationKind("Occupancy", _alt_namespace=P223)
 OnOffEnum = EnumerationKind("OnOff")
-OpenCloseEnum = EnumerationKind("OpenClose", _alt_namespace=p223)
-OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=p223)
-PositionEnum = EnumerationKind("Position", _alt_namespace=p223)
-RunningNotRunningEnum = EnumerationKind("RunningNotRunning", _alt_namespace=p223)
+OpenCloseEnum = EnumerationKind("OpenClose", _alt_namespace=P223)
+OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=P223)
+PositionEnum = EnumerationKind("Position", _alt_namespace=P223)
+RunningNotRunningEnum = EnumerationKind("RunningNotRunning", _alt_namespace=P223)
 ThreeSpeedSetting = EnumerationKind("ThreeSpeedSetting")
-TopBottomEnum = EnumerationKind("TopBottom", _alt_namespace=p223)
-TrueFalseEnum = EnumerationKind("TrueFalse", _alt_namespace=p223)
-YesNoEnum = EnumerationKind("YesNo", _alt_namespace=p223)
+TopBottomEnum = EnumerationKind("TopBottom", _alt_namespace=P223)
+TrueFalseEnum = EnumerationKind("TrueFalse", _alt_namespace=P223)
+YesNoEnum = EnumerationKind("YesNo", _alt_namespace=P223)
 
 # Enumerated Values
 #
-ActiveInactiveEnum.Active = ActiveInactiveEnum("Active", _alt_namespace=p223)
-ActiveInactiveEnum.Inactive = ActiveInactiveEnum("Inactive", _alt_namespace=p223)
-ActiveInactiveEnum.Unknown = ActiveInactiveEnum("Unknown", _alt_namespace=p223)
+ActiveInactiveEnum.Active = ActiveInactiveEnum("Active", _alt_namespace=P223)
+ActiveInactiveEnum.Inactive = ActiveInactiveEnum("Inactive", _alt_namespace=P223)
+ActiveInactiveEnum.Unknown = ActiveInactiveEnum("Unknown", _alt_namespace=P223)
 
 #
-Effectiveness.Active = Effectiveness("Active", _alt_namespace=p223)
-Effectiveness.Inactive = Effectiveness("Inactive", _alt_namespace=p223)
-Effectiveness.Unknown = Effectiveness("Unknown", _alt_namespace=p223)
+Effectiveness.Active = Effectiveness("Active", _alt_namespace=P223)
+Effectiveness.Inactive = Effectiveness("Inactive", _alt_namespace=P223)
+Effectiveness.Unknown = Effectiveness("Unknown", _alt_namespace=P223)
 
 #
-HandOffAutoEnum.Hand = HandOffAutoEnum("Hand", _alt_namespace=p223)
-HandOffAutoEnum.Off = HandOffAutoEnum("Off", _alt_namespace=p223)
-HandOffAutoEnum.Auto = HandOffAutoEnum("Auto", _alt_namespace=p223)
+HandOffAutoEnum.Hand = HandOffAutoEnum("Hand", _alt_namespace=P223)
+HandOffAutoEnum.Off = HandOffAutoEnum("Off", _alt_namespace=P223)
+HandOffAutoEnum.Auto = HandOffAutoEnum("Auto", _alt_namespace=P223)
 
 #
 HVACOperatingMode.Auto = HVACOperatingMode("Auto")
@@ -165,12 +165,12 @@ HVACOperatingStatus.Heating = HVACOperatingStatus("Heating")
 HVACOperatingStatus.Ventilating = HVACOperatingStatus("Ventilating")
 
 #
-LeftRightEnum.Left = LeftRightEnum("Left", _alt_namespace=p223)
-LeftRightEnum.Right = LeftRightEnum("Right", _alt_namespace=p223)
+LeftRightEnum.Left = LeftRightEnum("Left", _alt_namespace=P223)
+LeftRightEnum.Right = LeftRightEnum("Right", _alt_namespace=P223)
 
 #
-ManualAutoEnum.Manual = ManualAutoEnum("Manual", _alt_namespace=p223)
-ManualAutoEnum.Auto = ManualAutoEnum("Auto", _alt_namespace=p223)
+ManualAutoEnum.Manual = ManualAutoEnum("Manual", _alt_namespace=P223)
+ManualAutoEnum.Auto = ManualAutoEnum("Auto", _alt_namespace=P223)
 
 # This is a test example... do we want to fill 223 with
 # that kind of enums ?
@@ -178,30 +178,30 @@ ManualAutoEnum.Auto = ManualAutoEnum("Auto", _alt_namespace=p223)
 # Niagara is widely used though....
 # Same apply to BACnet....
 # Alignment ?
-NiagaraStatusEnum.ok = NiagaraStatusEnum("ok", _alt_namespace=p223)
-NiagaraStatusEnum.unackedAlarm = NiagaraStatusEnum("unackedAlarm", _alt_namespace=p223)
-NiagaraStatusEnum.null = NiagaraStatusEnum("null", _alt_namespace=p223)
-NiagaraStatusEnum.overridden = NiagaraStatusEnum("overridden", _alt_namespace=p223)
-NiagaraStatusEnum.stale = NiagaraStatusEnum("stale", _alt_namespace=p223)
-NiagaraStatusEnum.down = NiagaraStatusEnum("down", _alt_namespace=p223)
-NiagaraStatusEnum.fault = NiagaraStatusEnum("fault", _alt_namespace=p223)
-NiagaraStatusEnum.disabled = NiagaraStatusEnum("disabled", _alt_namespace=p223)
-NiagaraStatusEnum.alarm = NiagaraStatusEnum("alarm", _alt_namespace=p223)
+NiagaraStatusEnum.ok = NiagaraStatusEnum("ok", _alt_namespace=P223)
+NiagaraStatusEnum.unackedAlarm = NiagaraStatusEnum("unackedAlarm", _alt_namespace=P223)
+NiagaraStatusEnum.null = NiagaraStatusEnum("null", _alt_namespace=P223)
+NiagaraStatusEnum.overridden = NiagaraStatusEnum("overridden", _alt_namespace=P223)
+NiagaraStatusEnum.stale = NiagaraStatusEnum("stale", _alt_namespace=P223)
+NiagaraStatusEnum.down = NiagaraStatusEnum("down", _alt_namespace=P223)
+NiagaraStatusEnum.fault = NiagaraStatusEnum("fault", _alt_namespace=P223)
+NiagaraStatusEnum.disabled = NiagaraStatusEnum("disabled", _alt_namespace=P223)
+NiagaraStatusEnum.alarm = NiagaraStatusEnum("alarm", _alt_namespace=P223)
 
 #
-NormalAlarmEnum.Normal = NormalAlarmEnum("Normal", _alt_namespace=p223)
-NormalAlarmEnum.Alarm = NormalAlarmEnum("Alarm", _alt_namespace=p223)
+NormalAlarmEnum.Normal = NormalAlarmEnum("Normal", _alt_namespace=P223)
+NormalAlarmEnum.Alarm = NormalAlarmEnum("Alarm", _alt_namespace=P223)
 
 #
-NormalFaultEnum.Normal = NormalFaultEnum("Normal", _alt_namespace=p223)
-NormalFaultEnum.Fault = NormalFaultEnum("Fault", _alt_namespace=p223)
+NormalFaultEnum.Normal = NormalFaultEnum("Normal", _alt_namespace=P223)
+NormalFaultEnum.Fault = NormalFaultEnum("Fault", _alt_namespace=P223)
 
 #
-OccupancyEnum.Unknown = OccupancyEnum("Unknown", _alt_namespace=p223)
-OccupancyEnum.Occupied = OccupancyEnum("Occupied", _alt_namespace=p223)
-OccupancyEnum.Unoccupied = OccupancyEnum("Unoccupied", _alt_namespace=p223)
-OccupancyEnum.Standby = OccupancyEnum("Standby", _alt_namespace=p223)
-OccupancyEnum.Bypass = OccupancyEnum("Bypass", _alt_namespace=p223)
+OccupancyEnum.Unknown = OccupancyEnum("Unknown", _alt_namespace=P223)
+OccupancyEnum.Occupied = OccupancyEnum("Occupied", _alt_namespace=P223)
+OccupancyEnum.Unoccupied = OccupancyEnum("Unoccupied", _alt_namespace=P223)
+OccupancyEnum.Standby = OccupancyEnum("Standby", _alt_namespace=P223)
+OccupancyEnum.Bypass = OccupancyEnum("Bypass", _alt_namespace=P223)
 
 #
 OnOffEnum.On = OnOffEnum("On")
@@ -209,25 +209,25 @@ OnOffEnum.Off = OnOffEnum("Off")
 OnOffEnum.Unknown = OnOffEnum("Unknown")
 
 #
-OpenCloseEnum.Open = OpenCloseEnum("Open", _alt_namespace=p223)
-OpenCloseEnum.Close = OpenCloseEnum("Close", _alt_namespace=p223)
+OpenCloseEnum.Open = OpenCloseEnum("Open", _alt_namespace=P223)
+OpenCloseEnum.Close = OpenCloseEnum("Close", _alt_namespace=P223)
 
 #
-OverriddenAuto.Auto = OverriddenAuto("Auto", _alt_namespace=p223)
-OverriddenAuto.Overridden = OverriddenAuto("Overridden", _alt_namespace=p223)
+OverriddenAuto.Auto = OverriddenAuto("Auto", _alt_namespace=P223)
+OverriddenAuto.Overridden = OverriddenAuto("Overridden", _alt_namespace=P223)
 
 #
-PositionEnum.Close = PositionEnum("Close", _alt_namespace=p223)
-PositionEnum.Open = PositionEnum("Open", _alt_namespace=p223)
-PositionEnum.Moving = PositionEnum("Moving", _alt_namespace=p223)
-PositionEnum.Unknown = PositionEnum("Unknown", _alt_namespace=p223)
+PositionEnum.Close = PositionEnum("Close", _alt_namespace=P223)
+PositionEnum.Open = PositionEnum("Open", _alt_namespace=P223)
+PositionEnum.Moving = PositionEnum("Moving", _alt_namespace=P223)
+PositionEnum.Unknown = PositionEnum("Unknown", _alt_namespace=P223)
 
 #
-RunningNotRunningEnum.Running = RunningNotRunningEnum("Running", _alt_namespace=p223)
+RunningNotRunningEnum.Running = RunningNotRunningEnum("Running", _alt_namespace=P223)
 RunningNotRunningEnum.NotRunning = RunningNotRunningEnum(
-    "NotRunning", _alt_namespace=p223
+    "NotRunning", _alt_namespace=P223
 )
-RunningNotRunningEnum.Unknown = RunningNotRunningEnum("Unknown", _alt_namespace=p223)
+RunningNotRunningEnum.Unknown = RunningNotRunningEnum("Unknown", _alt_namespace=P223)
 
 #
 ThreeSpeedSetting.High = ThreeSpeedSetting("High")
@@ -236,32 +236,32 @@ ThreeSpeedSetting.Medium = ThreeSpeedSetting("Medium")
 ThreeSpeedSetting.Off = ThreeSpeedSetting("Off")
 
 #
-TopBottomEnum.Top = TopBottomEnum("Top", _alt_namespace=p223)
-TopBottomEnum.Bottom = TopBottomEnum("Bottom", _alt_namespace=p223)
+TopBottomEnum.Top = TopBottomEnum("Top", _alt_namespace=P223)
+TopBottomEnum.Bottom = TopBottomEnum("Bottom", _alt_namespace=P223)
 
 # lowercase so we don't clash with internal booleans
-TrueFalseEnum.true = TrueFalseEnum("True", _alt_namespace=p223)
-TrueFalseEnum.false = TrueFalseEnum("False", _alt_namespace=p223)
+TrueFalseEnum.true = TrueFalseEnum("True", _alt_namespace=P223)
+TrueFalseEnum.false = TrueFalseEnum("False", _alt_namespace=P223)
 
 #
-YesNoEnum.Yes = YesNoEnum("Yes", _alt_namespace=p223)
-YesNoEnum.No = YesNoEnum("No", _alt_namespace=p223)
+YesNoEnum.Yes = YesNoEnum("Yes", _alt_namespace=P223)
+YesNoEnum.No = YesNoEnum("No", _alt_namespace=P223)
 
 """
 Those are relatively central....let's keep them in core...
-s223:EnumerationKind-Direction
-    s223:Direction-Inlet
-    s223:Direction-Outlet
-    s223:Direction-Bidirectional
+S223:EnumerationKind-Direction
+    S223:Direction-Inlet
+    S223:Direction-Outlet
+    S223:Direction-Bidirectional
 
 I created ActiveInactive.... still needed ?
-s223:EnumerationKind-Effectiveness
-    s223:Effectiveness-Active
+S223:EnumerationKind-Effectiveness
+    S223:Effectiveness-Active
 
 RunningNotRunning ?
-s223:EnumerationKind-RunStatus
-    s223:RunStatus-Off
-    s223:RunStatus-On
-    s223:RunStatus-Unknown
+S223:EnumerationKind-RunStatus
+    S223:RunStatus-Off
+    S223:RunStatus-On
+    S223:RunStatus-Unknown
 
 """

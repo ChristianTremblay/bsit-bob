@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.core import Device, Property, PropertyReference, bob, p223, s223, unit
+from bob.core import Device, Property, PropertyReference, BOB, P223, S223, UNIT
 from bob.properties.states import OnOffStatus
 
 from ...connections.electricity import (
@@ -16,11 +16,11 @@ from ...sensor.humidity import AirHumiditySensor
 from ...sensor.pressure import AirDifferentialStaticPressureSensor
 from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 
-_namespace = bob
+_namespace = BOB
 
 
 class Thermostat(Device):
-    _class_iri = p223.Thermostat
+    _class_iri = P223.Thermostat
     temperature: PropertyReference
     setpoint: PropertyReference
     differential: PropertyReference
@@ -28,7 +28,7 @@ class Thermostat(Device):
 
 
 class Pressurestat(Device):
-    _class_iri = p223.Pressurestat
+    _class_iri = P223.Pressurestat
     pressure: PropertyReference
     setpoint: PropertyReference
     differential: PropertyReference
@@ -36,7 +36,7 @@ class Pressurestat(Device):
 
 
 class Humidistat(Device):
-    _class_iri = p223.Humidistat
+    _class_iri = P223.Humidistat
     humidity: PropertyReference
     setpoint: PropertyReference
     differential: PropertyReference
@@ -50,7 +50,7 @@ MechanicalOnOffThermostat_template = {
         "coolingOutput": OnOffSignalOutletConnectionPoint,
         "fanOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
     "sensors": {
         ("temperature_sensor", AirTemperatureSensor): {},
         ("humidity_sensor", AirHumiditySensor): {},
@@ -80,7 +80,7 @@ MechanicalModulatingThermostat_template = {
         "coolingOutput": ModulationSignalOutletConnectionPoint,
         "fanOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
     "sensors": {
         ("temperature_sensor", AirTemperatureSensor): {},
         ("humidity_sensor", AirHumiditySensor): {},
@@ -112,9 +112,9 @@ NetworkThermostat_template = {
         "heatingOutput": OnOffSignalOutletConnectionPoint,
         "coolingOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {"unit": unit.DEG_C},
+        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
     },
 }
@@ -137,9 +137,9 @@ class NetworkThermostat(Thermostat):
 
 NetworkRoomSensor_template = {
     "cp": {"mstp": RS485BidirectionalConnectionPoint},
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {"unit": unit.DEG_C},
+        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
     },
 }
@@ -152,7 +152,7 @@ class NetworkRoomSensor(Device):
     But no outputs to activate loads.
     """
 
-    _class_iri: URIRef = p223.NetworkRoomSensor
+    _class_iri: URIRef = P223.NetworkRoomSensor
 
     def __init__(self, config: Dict = NetworkRoomSensor_template, **kwargs):
         config["properties"] = config.get(
@@ -169,7 +169,7 @@ HighStaticPressureStat_template = {
     },
     "properties": {("onOffStatus", OnOffStatus): {}},
     "sensors": {
-        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": unit.PA}
+        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": UNIT.PA}
     },
 }
 
@@ -187,7 +187,7 @@ flowswitch_template = {
     "cp": {"signalOutput": OnOffSignalOutletConnectionPoint},
     "properties": {("onOffStatus", OnOffStatus): {}},
     "sensors": {
-        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": unit.PA}
+        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": UNIT.PA}
     },
 }
 
@@ -197,7 +197,7 @@ class FlowSwitch(Device):
     A contact On Off controlled by static pressure in duct
     """
 
-    _class_iri: URIRef = p223.Flowswitch
+    _class_iri: URIRef = P223.Flowswitch
 
     def __init__(self, config: Dict = flowswitch_template, **kwargs):
         config["properties"] = config.get(

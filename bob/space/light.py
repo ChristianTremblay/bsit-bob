@@ -8,13 +8,13 @@ from bob.connections.light import (
 )
 from bob.properties.states import OccupancyStatus
 
-from ..core import Domain, DomainSpace, Light, Zone, bob, p223, s223
+from ..core import Domain, DomainSpace, Light, Zone, BOB, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 
 class LightingSpace(DomainSpace):
-    _class_iri = s223.LightingSpace
+    _class_iri = S223.LightingSpace
     hasDomain = Domain.Lighting
     hasMedium = Light.Visible
     lightInlet: LightVisibleInletConnectionPoint
@@ -23,7 +23,7 @@ class LightingSpace(DomainSpace):
 
 
 class LightingZone(Zone):
-    _class_iri = s223.LightingZone
+    _class_iri = S223.LightingZone
     hasDomain = Domain.Lighting
     lightInlet: LightVisibleInletZoneConnectionPoint
     occupancy: OccupancyStatus

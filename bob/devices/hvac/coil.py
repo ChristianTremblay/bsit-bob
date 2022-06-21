@@ -23,9 +23,9 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, PropertyReference, bob, p223, s223
+from ...core import Device, PropertyReference, BOB, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 coil_template = {
     "cp": {},
@@ -34,7 +34,7 @@ coil_template = {
 
 
 class Coil(Device):
-    _class_iri = s223.Coil
+    _class_iri = S223.Coil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     # Those could come from a valve, SCR, Triac, etc...
@@ -48,7 +48,7 @@ class Coil(Device):
 
 
 class WaterCoil(Coil):
-    _class_iri = s223.Coil
+    _class_iri = S223.Coil
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
 
@@ -59,7 +59,7 @@ class WaterCoil(Coil):
 
 
 class ChilledWaterCoil(Coil):
-    _class_iri = s223.CoolingCoil
+    _class_iri = S223.CoolingCoil
     chilledWaterInlet: ChilledWaterInletConnectionPoint
     chilledWaterOutlet: ChilledWaterOutletConnectionPoint
 
@@ -70,7 +70,7 @@ class ChilledWaterCoil(Coil):
 
 
 class HotWaterCoil(Coil):
-    _class_iri = s223.HeatingCoil
+    _class_iri = S223.HeatingCoil
     hotWaterInlet: HotWaterInletConnectionPoint
     hotWaterOutlet: HotWaterOutletConnectionPoint
 
@@ -91,7 +91,7 @@ electricalheating_template = {
 
 
 class ElectricalHeatingCoil(Coil):
-    _class_iri = s223.HeatingCoil
+    _class_iri = S223.HeatingCoil
 
     def __init__(self, config: Dict = electricalheating_template, **kwargs):
         config["properties"] = config.get(
@@ -112,7 +112,7 @@ electricalradiant_template = {
 
 # Baseboard, radiant panel, heating floor
 class ElectricalRadiantHeatingCoil(Device):
-    _class_iri = s223.HeatingCoil
+    _class_iri = S223.HeatingCoil
     airContact: AirBidirectionalConnectionPoint
 
     def __init__(self, config: Dict = electricalradiant_template, **kwargs):

@@ -1,7 +1,7 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_device-006
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex30: <urn:ex/test_system-007/> .
+@prefix ex31: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -16,106 +16,106 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/test_device-006> ;
   rdfs:label "test_device-006" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex30:00001 a s223:Connectable,
+ex31:00001 a s223:Connectable,
         s223:Device,
         s223:VariableFrequencyDrive ;
     rdfs:label "MyVFD" ;
-    s223:hasConnectionPoint ex30:00002,
-        ex30:00003 ;
-    s223:hasProperty ex30:00004,
-        ex30:00005,
-        ex30:00006,
-        ex30:00007,
-        ex30:00008,
-        ex30:00009,
-        ex30:00010,
-        ex30:00011,
-        ex30:00012 ;
+    s223:hasConnectionPoint ex31:00002,
+        ex31:00003 ;
+    s223:hasProperty ex31:00004,
+        ex31:00005,
+        ex31:00006,
+        ex31:00007,
+        ex31:00008,
+        ex31:00009,
+        ex31:00010,
+        ex31:00011,
+        ex31:00012 ;
     rdfs:comment "A VFD for a Big Fan" .
-ex30:00002 a s223:ConnectionPoint,
+ex31:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MyVFD.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
-    s223:isConnectionPointOf ex30:00001 .
-ex30:00003 a s223:ConnectionPoint,
+    s223:isConnectionPointOf ex31:00001 .
+ex31:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MyVFD.electricalOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
-    s223:isConnectionPointOf ex30:00001 .
-ex30:00004 a s223:ObservableProperty,
+    s223:isConnectionPointOf ex31:00001 .
+ex31:00004 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf ex30:00001 ;
+    s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex30:00005 a s223:ObservableProperty,
+ex31:00005 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf ex30:00001 ;
+    s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex30:00006 a s223:ObservableProperty,
+ex31:00006 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf ex30:00001 ;
+    s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex30:00007 a s223:ActuatableProperty,
+ex31:00007 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speed_reference" ;
-    s223:isPropertyOf ex30:00001 ;
+    s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
-ex30:00008 a s223:ObservableProperty,
+ex31:00008 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf ex30:00001 ;
+    s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:AngularVolocity ;
     qudt:unit unit:REV-PER-MIN .
-ex30:00009 a s223:ObservableProperty,
+ex31:00009 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "motor_temp" ;
-    s223:isPropertyOf ex30:00001 ;
+    s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:Temperature .
-ex30:00010 a s223:EnumerableProperty,
+ex31:00010 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf ex30:00001 .
-ex30:00011 a s223:ActuatableProperty,
+    s223:isPropertyOf ex31:00001 .
+ex31:00011 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf ex30:00001 .
-ex30:00012 a s223:EnumerableProperty,
+    s223:isPropertyOf ex31:00001 .
+ex31:00012 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasEnumerationKind p223:EnumerationKind-NormalAlarm ;
-    s223:isPropertyOf ex30:00001 .
+    s223:isPropertyOf ex31:00001 .

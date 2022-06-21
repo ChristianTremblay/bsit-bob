@@ -3,51 +3,51 @@ from typing import Any
 
 from rdflib import URIRef
 
-from ..core import bob, p223, quantitykind, s223, unit
+from ..core import BOB, P223, QUANTITYKIND, S223, UNIT
 from ..property import QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 
 class Volts(QuantifiableObservableProperty):
-    _node_iri = p223.Volts
-    hasQuantityKind = quantitykind.Voltage
-    unit = unit.V
+    _node_iri = P223.Volts
+    hasQuantityKind = QUANTITYKIND.Voltage
+    unit = UNIT.V
 
 
 class Amps(QuantifiableObservableProperty):
-    _node_iri = p223.Amps
-    hasQuantityKind = quantitykind.ElectricCurrent
-    unit = unit.A
+    _node_iri = P223.Amps
+    hasQuantityKind = QUANTITYKIND.ElectricCurrent
+    unit = UNIT.A
 
 
 class PowerFactor(QuantifiableObservableProperty):
-    _node_iri = p223.PowerFactor
-    hasQuantityKind = quantitykind.PowerFactor
-    unit = unit.UNITLESS
+    _node_iri = P223.PowerFactor
+    hasQuantityKind = QUANTITYKIND.PowerFactor
+    unit = UNIT.UNITLESS
 
 
 class Frequency(QuantifiableObservableProperty):
-    _node_iri = p223.Frequency
-    hasQuantityKind = quantitykind.Frequency
-    unit = unit.HZ
+    _node_iri = P223.Frequency
+    hasQuantityKind = QUANTITYKIND.Frequency
+    unit = UNIT.HZ
 
 
 class ElectricPower(QuantifiableObservableProperty):
-    _node_iri = p223.ElectricPower
-    hasQuantityKind = quantitykind.Power
+    _node_iri = P223.ElectricPower
+    hasQuantityKind = QUANTITYKIND.Power
     unit: URIRef
     _supported_units = [
-        unit.KiloW,
-        unit.W,
-        unit.TeraW,
-        unit.PicoW,
-        unit.NanoW,
-        unit.MilliW,
-        unit.MicroW,
-        unit.MegaW,
-        unit.HP_Electric,
-        unit.GigaW,
+        UNIT.KiloW,
+        UNIT.W,
+        UNIT.TeraW,
+        UNIT.PicoW,
+        UNIT.NanoW,
+        UNIT.MilliW,
+        UNIT.MicroW,
+        UNIT.MegaW,
+        UNIT.HP_Electric,
+        UNIT.GigaW,
     ]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -60,10 +60,10 @@ class ElectricPower(QuantifiableObservableProperty):
 
 
 class ElectricApparentPower(QuantifiableObservableProperty):
-    _node_iri = p223.ElectricApparentPower
-    hasQuantityKind = quantitykind.ComplexPower
+    _node_iri = P223.ElectricApparentPower
+    hasQuantityKind = QUANTITYKIND.ComplexPower
     unit: URIRef
-    _supported_units = [unit["V-A"], unit["KiloV-A"]]
+    _supported_units = [UNIT["V-A"], UNIT["KiloV-A"]]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         if not ("unit" in kwargs and kwargs["unit"] in self._supported_units):
@@ -75,10 +75,10 @@ class ElectricApparentPower(QuantifiableObservableProperty):
 
 
 class ElectricReactivePower(QuantifiableObservableProperty):
-    _node_iri = p223.ElectricReactivePower
-    hasQuantityKind = quantitykind.ReactivePower
+    _node_iri = P223.ElectricReactivePower
+    hasQuantityKind = QUANTITYKIND.ReactivePower
     unit: URIRef
-    _supported_units = [unit["V-A_Reactive"], unit["KiloV-A_Reactive"]]
+    _supported_units = [UNIT["V-A_Reactive"], UNIT["KiloV-A_Reactive"]]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         if not ("unit" in kwargs and kwargs["unit"] in self._supported_units):
@@ -94,27 +94,27 @@ class ElectricReactivePower(QuantifiableObservableProperty):
 
 class ElectricPowerkW(ElectricPower):
     def __init__(self, **kwargs):
-        kwargs["unit"] = unit.KiloW
+        kwargs["unit"] = UNIT.KiloW
         super().__init__(**kwargs)
 
 
 class ElectricPowerW(ElectricPower):
     def __init__(self, **kwargs):
-        kwargs["unit"] = unit.W
+        kwargs["unit"] = UNIT.W
         super().__init__(**kwargs)
 
 
 # Energy
 class ElectricEnergy(QuantifiableObservableProperty):
-    _node_iri = p223.ElectricEnergy
-    hasQuantityKind = quantitykind.Energy
+    _node_iri = P223.ElectricEnergy
+    hasQuantityKind = QUANTITYKIND.Energy
     unit: URIRef
     _supported_units = [
-        unit["KiloW-HR"],
-        unit["W-HR"],
-        unit["TeraW-HR"],
-        unit["MegaW-HR"],
-        unit["GigaW-HR"],
+        UNIT["KiloW-HR"],
+        UNIT["W-HR"],
+        UNIT["TeraW-HR"],
+        UNIT["MegaW-HR"],
+        UNIT["GigaW-HR"],
     ]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -127,10 +127,10 @@ class ElectricEnergy(QuantifiableObservableProperty):
 
 
 class ElectricApparentEnergy(QuantifiableObservableProperty):
-    _node_iri = p223.ElectricApparentEnergy
-    hasQuantityKind = quantitykind.Energy
+    _node_iri = P223.ElectricApparentEnergy
+    hasQuantityKind = QUANTITYKIND.Energy
     unit: URIRef
-    _supported_units = [unit["V-A-HR"], unit["KiloV-A-HR"]]
+    _supported_units = [UNIT["V-A-HR"], UNIT["KiloV-A-HR"]]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         if not ("unit" in kwargs and kwargs["unit"] in self._supported_units):
@@ -142,10 +142,10 @@ class ElectricApparentEnergy(QuantifiableObservableProperty):
 
 
 class ElectricReactiveEnergy(QuantifiableObservableProperty):
-    _node_iri = p223.ElectricReactiveEnergy
-    hasQuantityKind = quantitykind.Energy
+    _node_iri = P223.ElectricReactiveEnergy
+    hasQuantityKind = QUANTITYKIND.Energy
     unit: URIRef
-    _supported_units = [unit["V-A_Reactive-HR"], unit["KiloV-A_Reactive-HR"]]
+    _supported_units = [UNIT["V-A_Reactive-HR"], UNIT["KiloV-A_Reactive-HR"]]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         if not ("unit" in kwargs and kwargs["unit"] in self._supported_units):

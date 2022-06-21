@@ -26,7 +26,7 @@ from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import Device, PropertyReference, bob, logging, p223, s223, template_update
+from ...core import Device, PropertyReference, BOB, logging, P223, S223, template_update
 from ...functions import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
 from .actuator import (
@@ -36,14 +36,14 @@ from .actuator import (
     PneumaticProportionalActuator,
 )
 
-_namespace = bob
+_namespace = BOB
 
 
 # DAMPERS
 
 
 class Damper(Device):
-    _class_iri = s223.Damper
+    _class_iri = S223.Damper
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     command: PropertyReference
@@ -52,11 +52,11 @@ class Damper(Device):
 
 
 class GravityDamper(Damper):
-    _class_iri = s223.Damper
+    _class_iri = S223.Damper
 
 
 class FireDamper(Damper):
-    _class_iri = s223.Damper
+    _class_iri = S223.Damper
 
 
 # DAMPER + ACTUATORS
@@ -78,7 +78,7 @@ electrical_actuated_onoff_damper_template = {
 
 
 class ElectricalActuatedProportionalDamper(Damper):
-    _class_iri: URIRef = s223.Damper
+    _class_iri: URIRef = S223.Damper
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -96,7 +96,7 @@ class ElectricalActuatedProportionalDamper(Damper):
 
 
 class ElectricalActuatedOnOffDamper(Damper):
-    _class_iri: URIRef = s223.Damper
+    _class_iri: URIRef = S223.Damper
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electrical_actuated_onoff_damper_template, config)
@@ -124,7 +124,7 @@ pneumatic_actuated_onoff_damper_template = {
 
 
 class PneumaticActuatedProportionalDamper(Damper):
-    _class_iri = s223.Damper
+    _class_iri = S223.Damper
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -139,7 +139,7 @@ class PneumaticActuatedProportionalDamper(Damper):
 
 
 class PneumaticActuatedOnOffDamper(Damper):
-    _class_iri = s223.Damper
+    _class_iri = S223.Damper
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(pneumatic_actuated_onoff_damper_template, config)

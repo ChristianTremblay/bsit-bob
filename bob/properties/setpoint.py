@@ -1,13 +1,13 @@
 from rdflib import XSD, Literal, URIRef
 
-from ..core import EnumerationKind, Node, bob, p223, s223
+from ..core import EnumerationKind, Node, BOB, P223, S223
 from ..property import QuantifiableProperty
 
-_namespace = bob
+_namespace = BOB
 
 
 class Setpoint(QuantifiableProperty):
-    _class_iri: URIRef = s223.Setpoint
+    _class_iri: URIRef = S223.Setpoint
     hasApsect: EnumerationKind
     hasDeadband: Literal
     hasValue: Literal

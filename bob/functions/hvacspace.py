@@ -1,8 +1,8 @@
-from ..core import PropertyReference, bob, p223, s223
+from ..core import PropertyReference, BOB, P223, S223
 from ..functions import FunctionBlock
 from ..properties import OccupancyStatus, PercentCommand, Schedule, Temperature
 
-_namespace = bob
+_namespace = BOB
 
 # WIP : For now, it won't be in hvacspace by default
 

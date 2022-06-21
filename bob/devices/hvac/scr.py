@@ -10,9 +10,9 @@ from ...connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     ModulationSignalInletConnectionPoint,
 )
-from ...core import Device, bob, p223, s223
+from ...core import Device, BOB, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 # SCR
 SCR_template = {
@@ -33,7 +33,7 @@ class SCR(Device):
     # takes 600V (or 347V) in and use triacs to modulate
     # power given to electrical coil
     # a SCR accept 0-10VDC signal to modulate
-    _class_iri: URIRef = p223.SCR
+    _class_iri: URIRef = P223.SCR
 
     def __init__(self, config: Dict = SCR_template, **kwargs):
         config["properties"] = config.get("properties", SCR_template["properties"])

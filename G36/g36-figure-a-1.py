@@ -23,8 +23,8 @@ from bob.core import (
     System,
     bind_model_namespace,
     dump,
-    quantitykind,
-    unit,
+    QUANTITYKIND,
+    UNIT,
 )
 from bob.devices.architectural import Window
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
@@ -63,10 +63,10 @@ co2Sensor_template = {
         ("CO2", CO2Sensor): {
             "hasExternalReference": "bacnet://",
             "hasMinRange": QuantifiableObservableProperty(
-                0, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                0, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
             ),
             "hasMaxRange": QuantifiableObservableProperty(
-                2000, hasQuantityKind=quantitykind.DimensionlessRatio, unit=unit.PPM
+                2000, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
             ),
         }
     },
@@ -78,9 +78,9 @@ Thermostat_template = {
         "comment": "Zone Thermostat with setpoint adj and local override",
     },
     "cp": {"mstp": RS485BidirectionalConnectionPoint},
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": unit.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {"unit": unit.DEG_C},
+        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
         ("local_override", OccupancySensor): {},
     },
 }
@@ -89,18 +89,18 @@ Thermostat_template = {
 vav_system_template = {
     "params": {"label": "VAV_FIG.A1", "comment": "VAV with Airflow + Damper"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": unit.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
         },
         ("ZN-OCC-SENSOR", OccupancySensor): {},
         ("ZN-WINDOW-SWITCH", IntrusionSensor): {},
     },
     "properties": {
-        ("zoneTemperature", Temperature): {"unit": unit.DEG_C},
+        ("zoneTemperature", Temperature): {"unit": UNIT.DEG_C},
         ("damperPosition", PercentCommand): {},
-        ("airFlow", Flow): {"unit": unit.L_PER_SEC},
+        ("airFlow", Flow): {"unit": UNIT.L_PER_SEC},
     },
     "devices": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},

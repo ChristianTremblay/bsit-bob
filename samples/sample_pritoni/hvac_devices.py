@@ -9,7 +9,7 @@ from bob.connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     EthernetBidirectionalConnectionPoint,
 )
-from bob.core import bind_model_namespace, dump, unit
+from bob.core import bind_model_namespace, dump, UNIT
 from bob.devices.architectural import Window
 from bob.devices.electricity.starter import MotorStarter
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
@@ -32,31 +32,31 @@ ahu_template = {
     "params": {"label": "AHU", "comment": "AHU delivering air to 2 VAV boxes"},
     "sensors": {
         ("OA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Oudoor air temperature (S3)",
         },
         ("TPD1", AirDifferentialStaticPressureSensor): {
-            "unit": unit.PA,
+            "unit": UNIT.PA,
             "comment": "Filter Differential Pressure Sensor (S4-S5)",
         },
         ("HC-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Air temperature after heating coil (S6)",
         },
         ("DA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_F,
+            "unit": UNIT.DEG_F,
             "comment": "Discharge Air temperature after cooling coil (S7)",
         },
         ("RA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_F,
+            "unit": UNIT.DEG_F,
             "comment": "Return Air temperature (S2)",
         },
         ("TPD2", AirDifferentialStaticPressureSensor): {
-            "unit": unit.PA,
+            "unit": UNIT.PA,
             "comment": "Supply Duct Static Pressure (S8)",
         },
         ("TPD3", AirDifferentialStaticPressureSensor): {
-            "unit": unit.PA,
+            "unit": UNIT.PA,
             "comment": "Return Duct Static Pressure (S1)",
         },
     },
@@ -99,15 +99,15 @@ vav1_config = {
     "params": {"label": "VAVBox1", "comment": "VAV Serving HVAC Zone 1"},
     "sensors": {
         ("VAV1_SA-F", AirFlowSensor): {
-            "unit": unit["L-PER-SEC"],
+            "unit": UNIT["L-PER-SEC"],
             "comment": "Air flow used to control damper (S9)",
         },
         ("VAV1_DA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_F,
+            "unit": UNIT.DEG_F,
             "comment": "Air supplied to zone by VAV 1, AKA discharge air temperature (S10)",
         },
         ("VAV1_ZN-T", AirTemperatureSensor): {
-            "unit": unit.DEG_F,
+            "unit": UNIT.DEG_F,
             "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },
@@ -125,15 +125,15 @@ vav2_config = {
     "params": {"label": "VAVBox2", "comment": "VAV Serving HVAC Zone 2"},
     "sensors": {
         ("VAV2_SA-F", AirFlowSensor): {
-            "unit": unit["L-PER-SEC"],
+            "unit": UNIT["L-PER-SEC"],
             "comment": "Air flow used to control damper (S11)",
         },
         ("VAV2_DA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_F,
+            "unit": UNIT.DEG_F,
             "comment": "Air supplied to zone by VAV 2, AKA discharge air temperature (S12)",
         },
         ("VAV2_ZN-T", AirTemperatureSensor): {
-            "unit": unit.DEG_F,
+            "unit": UNIT.DEG_F,
             "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },

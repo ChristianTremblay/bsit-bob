@@ -8,12 +8,12 @@ from ..core import (
     Air,
     Medium,
     PropertyReference,
-    bob,
+    BOB,
     enum,
-    p223,
-    quantitykind,
-    s223,
-    unit,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from ..properties import RelativeHumidity
 from ..property import (
@@ -24,13 +24,13 @@ from ..property import (
 )
 from .sensor import Sensor, split_kwargs
 
-_namespace = bob
+_namespace = BOB
 
 
 class HumiditySetpoint(Setpoint):
-    _class_iri = s223.Setpoint
-    hasQuantityKind: URIRef = quantitykind.RelativeHumidity
-    unit: URIRef = unit.PERCENT_RH
+    _class_iri = S223.Setpoint
+    hasQuantityKind: URIRef = QUANTITYKIND.RelativeHumidity
+    unit: URIRef = UNIT.PERCENT_RH
 
 
 class AirHumiditySensor(Sensor):
@@ -38,10 +38,10 @@ class AirHumiditySensor(Sensor):
     Air humidity sensor. Can model room sensor or duct sensor.
     """
 
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
 
     # measuresMedium: Medium = Air
-    hasQuantityKind: URIRef = quantitykind.RelativeHumidity
+    hasQuantityKind: URIRef = QUANTITYKIND.RelativeHumidity
     observesProperty: PropertyReference  # Humidity
 
     def __init__(self, **kwargs: Any) -> None:

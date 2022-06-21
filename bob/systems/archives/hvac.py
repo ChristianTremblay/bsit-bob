@@ -4,9 +4,9 @@ from ...connections.air import (
     AirOutletConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
-from ...core import HVAC, Domain, DomainSpace, Zone, s223
+from ...core import HVAC, Domain, DomainSpace, Zone, S223
 
-_namespace = s223
+_namespace = S223
 
 
 class HVACZone(Zone):

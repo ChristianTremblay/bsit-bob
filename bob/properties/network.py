@@ -1,16 +1,16 @@
 from rdflib import URIRef
 
-from ..core import Medium, bob, p223, quantitykind, s223, unit
+from ..core import Medium, BOB, P223, QUANTITYKIND, S223, UNIT
 from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 
 class Mbit_per_seconds(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.DataRate
-    unit = unit["MegaBIT-PER-SEC"]
+    hasQuantityKind = QUANTITYKIND.DataRate
+    unit = UNIT["MegaBIT-PER-SEC"]
 
 
 class Kbit_per_seconds(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.DataRate
-    unit = unit["KiloBIT-PER-SEC"]
+    hasQuantityKind = QUANTITYKIND.DataRate
+    unit = UNIT["KiloBIT-PER-SEC"]

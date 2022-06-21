@@ -15,26 +15,26 @@ from bob.properties.electricity import (
 from bob.sensor.electricity import CurrentAnalogSensor, VoltageSensor
 
 from ...connections.electricity import *
-from ...core import Device, Node, bob, p223, s223, template_update, unit
+from ...core import Device, Node, BOB, P223, S223, template_update, UNIT
 
-_namespace = bob
+_namespace = BOB
 
 three_phase_electricalmeter_template = {
     "properties": {
         ("energy", ElectricEnergy): {
-            "unit": unit["KiloW-HR"],
+            "unit": UNIT["KiloW-HR"],
             "comment": "Real Energy Consumption",
         },
         ("kW_total", ElectricPower): {
-            "unit": unit["KiloW"],
+            "unit": UNIT["KiloW"],
             "comment": "Total Real Power",
         },
         ("kVAR_total", ElectricReactivePower): {
-            "unit": unit["KiloV-A_Reactive"],
+            "unit": UNIT["KiloV-A_Reactive"],
             "comment": "Total Reactive Power",
         },
         ("kVA_total", ElectricApparentPower): {
-            "unit": unit["KiloV-A"],
+            "unit": UNIT["KiloV-A"],
             "comment": "Total Apparent Power",
         },
         ("power_factor", PowerFactor): {"comment": "Total Power Factor"},
@@ -42,15 +42,15 @@ three_phase_electricalmeter_template = {
         ("voltage_ln_avg", Volts): {"comment": "Voltage L-N Average"},
         ("current_avg", Volts): {"comment": "Current Average"},
         ("kW_A", ElectricPower): {
-            "unit": unit["KiloW"],
+            "unit": UNIT["KiloW"],
             "comment": "Real Power Phase A",
         },
         ("kW_B", ElectricPower): {
-            "unit": unit["KiloW"],
+            "unit": UNIT["KiloW"],
             "comment": "Real Power Phase B",
         },
         ("kW_C", ElectricPower): {
-            "unit": unit["KiloW"],
+            "unit": UNIT["KiloW"],
             "comment": "Real Power Phase C",
         },
         ("power_factor_A", PowerFactor): {"comment": "Power Factor Phase A"},
@@ -58,75 +58,75 @@ three_phase_electricalmeter_template = {
         ("power_factor_C", PowerFactor): {"comment": "Power Factor Phase C"},
         ("frequency", Frequency): {"comment": "Frequency"},
         ("kVAh", ElectricApparentEnergy): {
-            "unit": unit["KiloV-A-HR"],
+            "unit": UNIT["KiloV-A-HR"],
             "comment": "Apparent Energy Consumption",
         },
         ("kVARh", ElectricReactiveEnergy): {
-            "unit": unit["KiloV-A_Reactive-HR"],
+            "unit": UNIT["KiloV-A_Reactive-HR"],
             "comment": "Reactive Energy Consumption",
         },
         ("kVA_A", ElectricApparentPower): {
-            "unit": unit["KiloV-A"],
+            "unit": UNIT["KiloV-A"],
             "comment": "Apparent Power Phase A",
         },
         ("kVA_B", ElectricApparentPower): {
-            "unit": unit["KiloV-A"],
+            "unit": UNIT["KiloV-A"],
             "comment": "Apparent Power Phase B",
         },
         ("kVA_C", ElectricApparentPower): {
-            "unit": unit["KiloV-A"],
+            "unit": UNIT["KiloV-A"],
             "comment": "Apparent Power Phase C",
         },
         ("kVAR_A", ElectricReactivePower): {
-            "unit": unit["KiloV-A_Reactive"],
+            "unit": UNIT["KiloV-A_Reactive"],
             "comment": "Reactive Power Phase A",
         },
         ("kVAR_B", ElectricReactivePower): {
-            "unit": unit["KiloV-A_Reactive"],
+            "unit": UNIT["KiloV-A_Reactive"],
             "comment": "Reactive Power Phase B",
         },
         ("kVAR_C", ElectricReactivePower): {
-            "unit": unit["KiloV-A_Reactive"],
+            "unit": UNIT["KiloV-A_Reactive"],
             "comment": "Reactive Power Phase C",
         },
         ("kW_present_demand", ElectricPower): {
-            "unit": unit["KiloW"],
+            "unit": UNIT["KiloW"],
             "comment": "Total Real Power Present Demand",
         },
         ("kVAR_present_demand", ElectricReactivePower): {
-            "unit": unit["KiloV-A_Reactive"],
+            "unit": UNIT["KiloV-A_Reactive"],
             "comment": "Total Reactive Power Present Demand",
         },
         ("kVA_present_demand", ElectricApparentPower): {
-            "unit": unit["KiloV-A"],
+            "unit": UNIT["KiloV-A"],
             "comment": "Total Apparent Power Present Demand",
         },
         ("kW_max_demand", ElectricPower): {
-            "unit": unit["KiloW"],
+            "unit": UNIT["KiloW"],
             "comment": "Total Real Power Maximum Demand",
         },
         ("kVAR_max_demand", ElectricReactivePower): {
-            "unit": unit["KiloV-A_Reactive"],
+            "unit": UNIT["KiloV-A_Reactive"],
             "comment": "Total Reactive Power Maximum Demand",
         },
         ("kVA_max_demand", ElectricApparentPower): {
-            "unit": unit["KiloV-A"],
+            "unit": UNIT["KiloV-A"],
             "comment": "Total Apparent Power Maximum Demand",
         },
         ("kWh_A", ElectricEnergy): {
-            "unit": unit["KiloW-HR"],
+            "unit": UNIT["KiloW-HR"],
             "comment": "Real Energy Consumption Phase A",
         },
         ("kWh_B", ElectricEnergy): {
-            "unit": unit["KiloW-HR"],
+            "unit": UNIT["KiloW-HR"],
             "comment": "Real Energy Consumption Phase B",
         },
         ("kWh_C", ElectricEnergy): {
-            "unit": unit["KiloW-HR"],
+            "unit": UNIT["KiloW-HR"],
             "comment": "Real Energy Consumption Phase C",
         },
         ("max_power", ElectricPower): {
-            "unit": unit["KiloW"],
+            "unit": UNIT["KiloW"],
             "comment": "Maximum Power of device",
         },
     },
@@ -184,7 +184,7 @@ class ThreePhaseElectricalMeter(Device):
 
     """
 
-    _class_iri: URIRef = p223.ElectricalMeter
+    _class_iri: URIRef = P223.ElectricalMeter
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(three_phase_electricalmeter_template, config)

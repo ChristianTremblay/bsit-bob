@@ -9,21 +9,21 @@ from ...core import (
     ConnectionPoint,
     Device,
     PropertyReference,
-    bob,
-    quantitykind,
-    s223,
-    unit,
+    BOB,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus
 from ...property import QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 fan_template = {
     "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
     "properties": {
-        ("staticPressure", Pressure): {"unit": unit.PA},
+        ("staticPressure", Pressure): {"unit": UNIT.PA},
         ("amps", Amps): {},
         ("rpm", RPM): {},
         ("hp", HP): {},
@@ -38,7 +38,7 @@ class Fan(Device):
     A fan is composed of a blower and an electrical motor
     """
 
-    _class_iri: URIRef = s223.Fan
+    _class_iri: URIRef = S223.Fan
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     onOffStatus: PropertyReference

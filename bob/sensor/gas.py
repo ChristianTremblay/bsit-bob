@@ -11,17 +11,17 @@ from ..core import (
     Node,
     PropertyReference,
     Substance,
-    bob,
-    p223,
-    quantitykind,
-    s223,
-    unit,
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from ..properties import GasConcentration
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-_namespace = bob
+_namespace = BOB
 
 # TODO :
 # try to create an exmaple for the sensors found here
@@ -31,14 +31,14 @@ _namespace = bob
 
 
 class GasConcentrationSetpoint(Setpoint):
-    _class_iri = s223.Setpoint
-    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
-    unit: URIRef = unit.PPM
+    _class_iri = S223.Setpoint
+    hasQuantityKind: URIRef = QUANTITYKIND.DimensionlessRatio
+    unit: URIRef = UNIT.PPM
 
 
 class GasConcentrationSensor(Sensor):
-    _class_iri = s223.Sensor
-    hasQuantityKind: URIRef = quantitykind.DimensionlessRatio
+    _class_iri = S223.Sensor
+    hasQuantityKind: URIRef = QUANTITYKIND.DimensionlessRatio
     observesProperty: PropertyReference  # GasConcentration
 
     def __init__(self, **kwargs: Any) -> None:
@@ -59,7 +59,7 @@ class GasConcentrationSensor(Sensor):
 
 
 class CO2Sensor(GasConcentrationSensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     "Carbon Dioxide concentration sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -69,7 +69,7 @@ class CO2Sensor(GasConcentrationSensor):
 
 
 class COSensor(GasConcentrationSensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     "Carbon monoxide concentration sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -79,7 +79,7 @@ class COSensor(GasConcentrationSensor):
 
 
 class NO2Sensor(GasConcentrationSensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     "Diesel (NO2) concentration sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -89,7 +89,7 @@ class NO2Sensor(GasConcentrationSensor):
 
 
 class CH4Sensor(GasConcentrationSensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     "Natural gas sensor"
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference

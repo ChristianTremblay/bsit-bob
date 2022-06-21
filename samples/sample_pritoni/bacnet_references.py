@@ -115,12 +115,8 @@ hd.ahu["RF-VFD"]["drive_running"] @ rf_vfd_status
 hd.ahu["RF-VFD"]["run_command"] @ rf_vfd_cmd
 
 # A bulb with only one object
-ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference(
-    uri=URIRef("bacnet://2/analog-input,1")
-)
-ld.openofficeEast_luminaire_1.onOffStatus @ BACnetReference(
-    uri=URIRef("bacnet://2/binary-input,1")
-)
+ld.openofficeEast_luminaire_1.brightnessRatio @ BACnetReference("bacnet://2/analog-input,1")
+ld.openofficeEast_luminaire_1.onOffStatus @ BACnetReference("bacnet://2/binary-input,1")
 
 fn.f.avg_tmp @ dat_avg
 

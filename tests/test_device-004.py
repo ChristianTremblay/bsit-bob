@@ -3,7 +3,7 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import bind_model_namespace, dump, quantitykind, unit
+from bob.core import bind_model_namespace, dump, QUANTITYKIND, UNIT
 from bob.devices.hvac.gas import GasMonitor
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.gas import CO2Sensor, COSensor, NO2Sensor
@@ -26,30 +26,30 @@ def test_create_gas_monitor(bob_fixture):
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
+                    hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                    unit=UNIT.PPM,
                     label="CO2_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
                     2000,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
+                    hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                    unit=UNIT.PPM,
                     label="CO2_sensor.MaxRange",
                 ),
             },
             ("Temperature_sensor", AirTemperatureSensor): {
-                "unit": unit.DEG_C,
+                "unit": UNIT.DEG_C,
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
-                    hasQuantityKind=quantitykind.Temperature,
-                    unit=unit.DEG_C,
+                    hasQuantityKind=QUANTITYKIND.Temperature,
+                    unit=UNIT.DEG_C,
                     label="Temperature_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
                     50,
-                    hasQuantityKind=quantitykind.Temperature,
-                    unit=unit.DEG_C,
+                    hasQuantityKind=QUANTITYKIND.Temperature,
+                    unit=UNIT.DEG_C,
                     label="Temperature_sensor.MaxRange",
                 ),
                 "comment": "Internal temperature sensor of device",
@@ -70,14 +70,14 @@ def test_create_gas_monitor(bob_fixture):
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
+                    hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                    unit=UNIT.PPM,
                     label="CO_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
                     100,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
+                    hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                    unit=UNIT.PPM,
                     label="CO_sensor.MaxRange",
                 ),
             },
@@ -85,14 +85,14 @@ def test_create_gas_monitor(bob_fixture):
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
+                    hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                    unit=UNIT.PPM,
                     label="NO2_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
                     250,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
+                    hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                    unit=UNIT.PPM,
                     label="NO2_sensor.MaxRange",
                 ),
             },
@@ -112,14 +112,14 @@ def test_create_gas_monitor(bob_fixture):
                 "hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
+                    hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                    unit=UNIT.PPM,
                     label="CO2_sensor.MinRange",
                 ),
                 "hasMaxRange": QuantifiableObservableProperty(
                     2000,
-                    hasQuantityKind=quantitykind.DimensionlessRatio,
-                    unit=unit.PPM,
+                    hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                    unit=UNIT.PPM,
                     label="CO2_sensor.MaxRange",
                 ),
             },

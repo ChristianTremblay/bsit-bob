@@ -10,9 +10,9 @@ from ...connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
-from ...core import Device, System, bob, p223, s223
+from ...core import Device, System, BOB, P223, S223
 
-_namespace = bob
+_namespace = BOB
 
 ahu_template = {
     "params": {"label": "Name", "comment": "Description"},
@@ -22,7 +22,7 @@ ahu_template = {
 
 
 class AirHandlingUnit(System):
-    _class_iri = p223.AirHandlingUnit
+    _class_iri = P223.AirHandlingUnit
     outsideAirInlet: AirInletSystemConnectionPoint
     returnAirInlet: AirInletSystemConnectionPoint
     supplyAirOutlet: AirOutletSystemConnectionPoint
@@ -35,7 +35,7 @@ class AirHandlingUnit(System):
 
 
 class FanCoil(System):
-    _class_iri = p223.Fancoil
+    _class_iri = P223.Fancoil
     returnAirInlet: AirInletSystemConnectionPoint
     supplyAirOutlet: AirOutletSystemConnectionPoint
     exhaustAirOutlet: AirOutletSystemConnectionPoint

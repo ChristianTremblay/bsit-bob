@@ -35,13 +35,13 @@ from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from ...core import Device, bob, p223, quantitykind, unit
+from ...core import Device, BOB, P223, QUANTITYKIND, UNIT
 
-_namespace = bob
+_namespace = BOB
 
 
 class Transformer(Device):
-    _class_iri = p223.ElectricalTransformer
+    _class_iri = P223.ElectricalTransformer
     hasPower: ElectricPowerkW
 
     def __init__(self, config: Dict = {}, **kwargs):
@@ -60,7 +60,7 @@ class Transformer(Device):
 
 
 class SinglePhaseDistributionPanel(Device):
-    _class_iri = p223.ElectricalDistributionPanel
+    _class_iri = P223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
     number_of_circuits: QuantifiableObservableProperty
@@ -109,7 +109,7 @@ class SinglePhaseDistributionPanel(Device):
 
 
 class ThreePhaseDistributionPanel(Device):
-    _class_iri = p223.ElectricalDistributionPanel
+    _class_iri = P223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
     number_of_circuits: QuantifiableObservableProperty
@@ -175,7 +175,7 @@ class ThreePhaseDistributionPanel(Device):
 
 
 class CircuitBreaker(Device):
-    _class_iri = p223.ElectricalCircuitBreaker
+    _class_iri = P223.ElectricalCircuitBreaker
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
     currentRating: Amps

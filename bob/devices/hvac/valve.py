@@ -31,11 +31,11 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, Node, PropertyReference, bob, p223, s223, template_update
+from ...core import Device, Node, PropertyReference, BOB, P223, S223, template_update
 from ...properties import Gallons, Percent
 from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
-_namespace = bob
+_namespace = BOB
 
 valve2w_template = {
     "cp": {
@@ -77,7 +77,7 @@ valve_3w_mixing_template = {
 
 
 class Valve(Device):
-    _class_iri: URIRef = s223.Valve
+    _class_iri: URIRef = S223.Valve
     command: PropertyReference
     position: ActuatableProperty
 
@@ -88,7 +88,7 @@ class Valve(Device):
 
 
 class TwoWayValve(Valve):
-    _class_iri: URIRef = s223.Valve
+    _class_iri: URIRef = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(valve2w_template, config)
@@ -101,7 +101,7 @@ class ThreeWayValveDiverting(Valve):
     A diverting valve has 1 inlet and 2 outlets
     """
 
-    _class_iri = s223.Valve
+    _class_iri = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(valve_3w_diverting_template, config)
@@ -114,7 +114,7 @@ class ThreeWayValveMixing(Valve):
     A mixing valve has 2 inlet and 1 outlet
     """
 
-    _class_iri: URIRef = s223.Valve
+    _class_iri: URIRef = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(valve_3w_mixing_template, config)
@@ -123,13 +123,13 @@ class ThreeWayValveMixing(Valve):
 
 
 class NaturalGasValve(TwoWayValve):
-    _class_iri = s223.Valve
+    _class_iri = S223.Valve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
 
 
 class PneumaticValve(TwoWayValve):
-    _class_iri = s223.Valve
+    _class_iri = S223.Valve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 
@@ -153,7 +153,7 @@ electrical_actuated_onoff_valve_template = {
 
 
 class TwoWayActuatedProportionalValve(TwoWayValve):
-    _class_iri = s223.Valve
+    _class_iri = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -170,7 +170,7 @@ class TwoWayActuatedProportionalValve(TwoWayValve):
 
 
 class TwoWayActuatedOnOffValve(TwoWayValve):
-    _class_iri = s223.Valve
+    _class_iri = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -187,7 +187,7 @@ class TwoWayActuatedOnOffValve(TwoWayValve):
 
 
 class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
-    node_type = s223.Valve
+    node_type = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -206,7 +206,7 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
 
 
 class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
-    _class_iri = s223.Valve
+    _class_iri = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -222,7 +222,7 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
 
 
 class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
-    _class_iri = s223.Valve
+    _class_iri = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -241,7 +241,7 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
 
 
 class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
-    _class_iri = s223.Valve
+    _class_iri = S223.Valve
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(

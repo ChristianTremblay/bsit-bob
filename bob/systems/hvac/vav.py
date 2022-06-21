@@ -13,25 +13,25 @@ from ...connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
-from ...core import Device, PropertyReference, System, bob, p223, s223, unit
+from ...core import Device, PropertyReference, System, BOB, P223, S223, UNIT
 from ...devices.hvac.coil import HotWaterCoil
 from ...devices.hvac.damper import Damper, ElectricalActuatedProportionalDamper
 from ...devices.hvac.fan import Fan
 from ...devices.hvac.valve import TwoWayActuatedProportionalValve
 from ...sensor.flow import AirFlowSensor
 
-_namespace = bob
+_namespace = BOB
 
 vav_system_template = {
     "params": {"label": "VAV", "comment": "VAV Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": unit.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
         },
         ("ZN-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Temperature of space",
         },
     },
@@ -43,13 +43,13 @@ vav_system_template = {
 vav_dual_template = {
     "params": {"label": "VAV", "comment": "VAV Dual Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": unit.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
         },
         ("ZN-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Temperature of space",
         },
     },
@@ -64,13 +64,13 @@ vav_dual_template = {
 vav_withreheat_template = {
     "params": {"label": "VAV", "comment": "VAV Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": unit.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
         },
         ("ZN-T", AirTemperatureSensor): {
-            "unit": unit.DEG_C,
+            "unit": UNIT.DEG_C,
             "comment": "Temperature of space",
         },
     },
@@ -82,7 +82,7 @@ vav_withreheat_template = {
 
 
 class VAV(System):
-    _class_iri = s223.VAV
+    _class_iri = S223.VAV
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
 
@@ -92,7 +92,7 @@ class VAV(System):
 
 
 class VAV_Simple(System):
-    _class_iri = s223.VAV
+    _class_iri = S223.VAV
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
     airFlow: PropertyReference
@@ -114,7 +114,7 @@ class VAV_Simple(System):
 
 
 class VAV_Dual(System):
-    _class_iri = s223.VAV
+    _class_iri = S223.VAV
     airInlet: AirInletSystemConnectionPoint
     plenumInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
@@ -137,7 +137,7 @@ class VAV_Dual(System):
 
 
 class VAV_Reheat(System):
-    _class_iri = s223.VAV
+    _class_iri = S223.VAV
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
     airFlow: PropertyReference

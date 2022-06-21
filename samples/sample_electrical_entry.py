@@ -11,7 +11,7 @@ from bob.connections.occupancy import (
     OccupancyInletSystemConnectionPoint,
     OccupancyOutletSystemConnectionPoint,
 )
-from bob.core import bind_model_namespace, dump, get_datagraph, p223, quantitykind, unit
+from bob.core import bind_model_namespace, dump, get_datagraph, P223, QUANTITYKIND, UNIT
 from bob.devices.architectural import Window
 from bob.devices.electricity.distribution import (
     SinglePhaseDistributionPanel,

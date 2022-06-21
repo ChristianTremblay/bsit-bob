@@ -1,13 +1,13 @@
 from rdflib import URIRef
 
-from ..core import Medium, bob, p223, quantitykind, s223, unit
+from ..core import Medium, BOB, P223, QUANTITYKIND, S223, UNIT
 from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
 
-_namespace = bob
+_namespace = BOB
 
 
 class Temperature(QuantifiableObservableProperty):
-    hasQuantityKind = quantitykind.Temperature
+    hasQuantityKind = QUANTITYKIND.Temperature
     unit: URIRef
     ofMedium: Medium  # set from the sensor
     # isObservedBy: Sensor

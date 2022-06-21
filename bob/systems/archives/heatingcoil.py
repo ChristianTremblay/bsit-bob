@@ -18,12 +18,12 @@ from ...connections.water import (
     HotWaterOutletConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
-from ...core import Device, System, s223
+from ...core import Device, System, S223
 from ...devices.hvac.coil import ElectricalHeatingCoil
 from ...devices.hvac.scr import SCR
 from ...devices.hvac.valve import TwoWayValve
 
-_namespace = s223
+_namespace = S223
 
 
 class ElectricalHeatingCoilWithSCR(System):

@@ -8,7 +8,7 @@ from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from ...core import ConnectionPoint, Device, Property, bob, p223, s223
+from ...core import ConnectionPoint, Device, Property, BOB, P223, S223
 from ...properties import (
     HP,
     RPM,
@@ -23,7 +23,7 @@ from ...properties import (
     Temperature,
 )
 
-_namespace = bob
+_namespace = BOB
 
 vfd_template = {
     "cp": {
@@ -45,7 +45,7 @@ vfd_template = {
 
 
 class VFD(Device):
-    _class_iri: URIRef = s223.VariableFrequencyDrive
+    _class_iri: URIRef = S223.VariableFrequencyDrive
 
     def __init__(self, config: Dict = vfd_template, **kwargs):
         config["properties"] = config.get("properties", vfd_template["properties"])

@@ -35,8 +35,8 @@ from bob.core import (
     System,
     bind_model_namespace,
     dump,
-    quantitykind,
-    unit,
+    QUANTITYKIND,
+    UNIT,
 )
 from bob.devices.hvac.actuator import ElectricalProportionalActuator
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
@@ -78,12 +78,12 @@ econ_dpr = ElectricalActuatedProportionalDamper(
 
 outside = AirConnection(label="Outside")
 mixed_air_supply = AirConnection(label="MixedAirSupply")
-oat = AirTemperatureSensor(label="OA-T", unit=unit.DEG_C, comment="Outside Air Temp")
-mat = AirTemperatureSensor(label="MA-T", unit=unit.DEG_C, comment="Mixed Air Temp")
+oat = AirTemperatureSensor(label="OA-T", unit=UNIT.DEG_C, comment="Outside Air Temp")
+mat = AirTemperatureSensor(label="MA-T", unit=UNIT.DEG_C, comment="Mixed Air Temp")
 
 filter = Filter(label="Filter")
 filter_dpt = DifferentialStaticPressureSensor(
-    label="DPT-1", unit=unit.PA, comment="Filter Differential Pressure Transmitter"
+    label="DPT-1", unit=UNIT.PA, comment="Filter Differential Pressure Transmitter"
 )
 
 # Heating coil
@@ -105,7 +105,7 @@ htg_vlv = TwoWayActuatedProportionalValve(
     label="HTG-VLV", comment="Heating 2W Valve", config=hot_water_valve_template
 )
 hwct = AirTemperatureSensor(
-    label="HTGCOIL-T", unit=unit.DEG_C, comment="Heat Coil Air Temp"
+    label="HTGCOIL-T", unit=UNIT.DEG_C, comment="Heat Coil Air Temp"
 )
 
 hws = HotWaterConnection(label="Hot Water Supply")
@@ -143,15 +143,15 @@ hsp_limit_mix = HighStaticPressureStat(label="HighStaticPressureLimit_Mix")
 hsp_limit_supply = HighStaticPressureStat(label="HighStaticPressureLimit_Supply")
 smoke = SmokeDetectionSensor(label="SD", comment="Supply Air Smoke Detector")
 
-sat = AirTemperatureSensor(label="SA-T", unit=unit.DEG_C, comment="Supply Air Temp")
+sat = AirTemperatureSensor(label="SA-T", unit=UNIT.DEG_C, comment="Supply Air Temp")
 duct_dpt = DifferentialStaticPressureSensor(
-    label="DPT-2", unit=unit.PA, comment="Duct Static Pressure Transmitter"
+    label="DPT-2", unit=UNIT.PA, comment="Duct Static Pressure Transmitter"
 )
 
 supply_air = AirConnection(label="Supply Air")
 return_air = AirConnection(label="Return Air")
 
-rat = AirTemperatureSensor(label="RA-T", unit=unit.DEG_C, comment="Return Air Temp")
+rat = AirTemperatureSensor(label="RA-T", unit=UNIT.DEG_C, comment="Return Air Temp")
 
 rad = ElectricalActuatedProportionalDamper(label="RAD", comment="Return Air Damper")
 
@@ -161,7 +161,7 @@ ef_vfd = VFD(label="EF-VFD", comment="Exhaust Fan VFD")
 ead = ElectricalActuatedProportionalDamper(label="EAD", comment="Exhaust Air Damper")
 
 building_dpt = DifferentialStaticPressureSensor(
-    label="DPT-3", unit=unit.PA, comment="Building Static Pressure Transmitter"
+    label="DPT-3", unit=UNIT.PA, comment="Building Static Pressure Transmitter"
 )
 
 hvacspace = HVACSpace(label="SPACE", comment="Space where this unit feeds air")

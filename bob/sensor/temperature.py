@@ -7,27 +7,27 @@ from ..core import (
     Medium,
     PropertyReference,
     Water,
-    bob,
-    p223,
-    quantitykind,
-    s223,
-    unit,
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
 )
 from ..properties import Temperature
 from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
-_namespace = bob
+_namespace = BOB
 
 
 class TemperatureSetpoint(Setpoint):
-    _class_iri = s223.Setpoint
-    hasQuantityKind: URIRef = quantitykind.Temperature
+    _class_iri = S223.Setpoint
+    hasQuantityKind: URIRef = QUANTITYKIND.Temperature
     unit: URIRef
 
 
 class TemperatureSensor(Sensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
     observesProperty: PropertyReference  # Temperature
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
@@ -54,14 +54,14 @@ class TemperatureSensor(Sensor):
 
 
 class AirTemperatureSensor(TemperatureSensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
 
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    _class_iri = s223.Sensor
+    _class_iri = S223.Sensor
 
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Water, **kwargs)

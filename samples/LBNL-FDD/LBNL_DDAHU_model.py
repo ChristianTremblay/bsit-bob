@@ -18,7 +18,7 @@ from bob.connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from bob.core import Junction, System, bind_model_namespace, dump, quantitykind, unit
+from bob.core import Junction, System, bind_model_namespace, dump, QUANTITYKIND, UNIT
 from bob.devices.hvac.damper import Damper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
