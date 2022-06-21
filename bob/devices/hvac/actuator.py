@@ -31,7 +31,6 @@ from ...core import (
     s223,
     template_update,
 )
-
 from . import _Actuator
 
 _namespace = bob

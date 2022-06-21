@@ -928,7 +928,10 @@ class EnumerationKind(Node):
     def __init__(self, name, *args, **kwargs) -> None:
         logging.debug("EnumerationKind.__init__ %r", name)
 
-        if "_node_iri" not in kwargs:
+        if "_alt_namespace" in kwargs:
+            _ns = kwargs.pop("_alt_namespace")
+            kwargs["_node_iri"] = _ns["EnumerationKind" + "-" + name]
+        elif "_node_iri" not in kwargs:
             kwargs["_node_iri"] = _namespace["EnumerationKind" + "-" + name]
 
         super().__init__(**kwargs)
@@ -946,10 +949,15 @@ class EnumerationKind(Node):
         self._parent = None
         self._children = set([self])
 
-    def __call__(self, name) -> EnumerationKind:
-        logging.debug(f"EnumerationKind.__init__({self}) %r", name)
-
-        new_child = EnumerationKind(name, _node_iri=_namespace[self._name + "-" + name])
+    def __call__(self, name, _alt_namespace=None) -> EnumerationKind:
+        if _alt_namespace:
+            new_child = EnumerationKind(
+                name, _node_iri=_alt_namespace[self._name + "-" + name]
+            )
+        else:
+            new_child = EnumerationKind(
+                name, _node_iri=_namespace[self._name + "-" + name]
+            )
 
         new_child._parent = self
 
