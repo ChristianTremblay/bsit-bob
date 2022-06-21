@@ -100,7 +100,7 @@ ahu_template = {
 }
 
 vav1_config = {
-    "params": {"label": "VAVBox1", "comment": "VAV Serving HVAC Zone 1"},
+    "params": {"label": "VAVBox1System", "comment": "VAV Serving HVAC Zone 1"},
     "sensors": {
         ("VAV1_SA-F", AirFlowSensor): {
             "unit": UNIT["L-PER-SEC"],
@@ -126,7 +126,7 @@ vav1_config = {
 }
 
 vav2_config = {
-    "params": {"label": "VAVBox2", "comment": "VAV Serving HVAC Zone 2"},
+    "params": {"label": "VAVBox2System", "comment": "VAV Serving HVAC Zone 2"},
     "sensors": {
         ("VAV2_SA-F", AirFlowSensor): {
             "unit": UNIT["L-PER-SEC"],

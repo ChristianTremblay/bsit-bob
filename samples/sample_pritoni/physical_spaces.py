@@ -10,10 +10,10 @@ _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 # Define the building Physical Spaces
 bldg = Building(label="Pritoni Building")
 roof = Roof(label="Roof of building")
-floor1 = Floor(label="Floor on which everything is")
-openoffice = Office(label="Open Office")
+floor1 = Floor(label="Floor1")
+openoffice = Office(label="Open office")
 bathroom = Bathroom(label="Bathroom")
-private_office = Office(label="Private Office")
+private_office = Office(label="Private office")
 kitchenette = Room(label="Kitchenette")
 corridor = Corridor(label="Corridor")
 
