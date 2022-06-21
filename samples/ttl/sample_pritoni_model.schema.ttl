@@ -1,0 +1,709 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+@prefix bacnet: <http://data.ashrae.org/bacnet/2020#> .
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix functions: <urn:ex/functions/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rec: <https://w3id.org/rec/core/> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+<http://data.ashrae.org/standard223/1.0/data/sample_pritoni_model>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model> ;
+  rdfs:label "sample_pritoni_model" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+bacnet:Device a rdfs:Class .
+bacnet:DeviceObjectPropertyReference a rdfs:Class ;
+    rdfs:subClassOf s223:ExternalReference .
+bacnet:address a rdf:Property .
+bacnet:description a rdf:Property .
+bacnet:deviceId a rdf:Property .
+bacnet:deviceName a rdf:Property .
+bacnet:networkNumber a rdf:Property .
+bacnet:objectInstance a rdf:Property .
+bacnet:objectName a rdf:Property .
+bacnet:objectOf a rdf:Property .
+bacnet:objectType a rdf:Property .
+bacnet:uri a rdf:Property .
+bacnet:vendorId a rdf:Property .
+bob:Amps a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:DaylightDetected a rdfs:Class ;
+    rdfs:subClassOf s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property .
+bob:DifferentialStaticPressure a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:DimmableSwitch a rdfs:Class ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
+        s223:Device,
+        bob:SinglePoleSwitch .
+bob:ElectricApparentEnergy a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:ElectricApparentPower a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:ElectricEnergy a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:ElectricPower a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:ElectricPowerkW a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower .
+bob:ElectricReactiveEnergy a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:ElectricReactivePower a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:Flow a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:Frequency a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:HP a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:Mbit_per_seconds a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:Nm a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:Percent a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:PercentCommand a rdfs:Class ;
+    rdfs:subClassOf s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty .
+bob:PowerFactor a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:Pressure a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:RPM a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:SinglePoleCircuitBreaker a rdfs:Class ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
+        s223:Device .
+bob:SinglePoleSwitch a rdfs:Class ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
+        s223:Device .
+bob:Temperature a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:ThreePolesCircuitBreaker a rdfs:Class ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
+        s223:Device .
+bob:ThreePolesMainCircuitBreaker a rdfs:Class ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
+        s223:Device .
+bob:TimerSwitch a rdfs:Class ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
+        s223:Device,
+        bob:SinglePoleSwitch .
+bob:TwoPolesCircuitBreaker a rdfs:Class ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
+        s223:Device .
+bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
+        s223:Device .
+bob:Volts a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:airInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        s223:hasSystemConnectionPoint,
+        s223:hasZoneConnectionPoint .
+bob:airOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        s223:hasSystemConnectionPoint,
+        s223:hasZoneConnectionPoint .
+bob:airTransfer a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:air_change_per_hour a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:alarmStatus a rdf:Property .
+bob:breakDetection a rdf:Property .
+bob:brightness a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:brightnessRatio a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:chilledWaterInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:chilledWaterOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:co a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:co2 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:command a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:currentRating a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:data_rate a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:delay a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:differentialPressure a rdf:Property .
+bob:doors a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:ductAirInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:ductAirOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:electricalInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasSystemConnectionPoint .
+bob:electricalPower a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:exhaustAirOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasSystemConnectionPoint .
+bob:feedback a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:hasMaxRange a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:hasMeasurementLocationHigh a rdf:Property .
+bob:hasMeasurementLocationLow a rdf:Property .
+bob:hasPower a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:hotWaterInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:hotWaterOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:humidity a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:indoor a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:inputSignal a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:lightInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        s223:hasZoneConnectionPoint .
+bob:lightOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:manufacturer a rdf:Property .
+bob:measuresMedium a rdf:Property .
+bob:modelNumber a rdf:Property .
+bob:modulation a rdf:Property .
+bob:naturalLight a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:naturalLightInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:no2 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:number_of_circuits a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:occupancy a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:occupancyStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:onOffCommand a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:onOffStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:openCloseCommand a rdf:Property .
+bob:openCloseStatus a rdf:Property .
+bob:outdoor a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:outputSignal a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:outsideAirInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasSystemConnectionPoint .
+bob:radiantCooling a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:radiantHeating a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:returnAirInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasSystemConnectionPoint .
+bob:schedule a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:shadeCommand a rdf:Property .
+bob:shadeStatus a rdf:Property .
+bob:supplyAirOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasSystemConnectionPoint .
+bob:temperature a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:temperature_setpoint a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:torque a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:vlan a rdf:Property .
+bob:windows a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+functions:AVG_Temp a rdfs:Class ;
+    rdfs:subClassOf s223:FunctionBlock .
+functions:avg_tmp a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+p223:ActiveInactive-Active a p223:ActiveInactive-Active,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+p223:ActiveInactive-Inactive a p223:ActiveInactive-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+p223:ActiveInactive-Unknown a p223:ActiveInactive-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+p223:Air-CompressedAir a p223:Air-CompressedAir,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Air .
+p223:AirHandlingUnit a rdfs:Class ;
+    rdfs:subClassOf s223:System .
+p223:Effectiveness-Active a p223:Effectiveness-Active,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+p223:Effectiveness-Inactive a p223:Effectiveness-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+p223:ElectricalCircuitBreaker a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:ElectricalDistributionPanel a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:ElectricalMeter a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:ElectricalSwitch a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:ElectricalTransformer a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:Electricity-12V-DC a p223:Electricity-12V-DC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:Electricity-24V-60Hz a p223:Electricity-24V-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:Electricity-24V-DC a p223:Electricity-24V-DC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:Electricity-48V-DC a p223:Electricity-48V-DC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:Electricity-5V-DC a p223:Electricity-5V-DC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:Electricity-Ethernet a p223:Electricity-Ethernet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:Electricity-ModulationSignal a p223:Electricity-ModulationSignal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:Electricity-OnOffSignal a p223:Electricity-OnOffSignal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:Electricity-RS485 a p223:Electricity-RS485,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-HandOffAuto a p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-LeftRight a p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-ManualAuto a p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-NiagaraStatus a p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-NormalAlarm a p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-NormalFault a p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-Occupancy a p223:EnumerationKind-Occupancy,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-OpenClose a p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-OverriddenAuto a p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-Position a p223:EnumerationKind-Position,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-RunningNotRunning a p223:EnumerationKind-RunningNotRunning,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-TopBottom a p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-TrueFalse a p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EnumerationKind-YesNo a p223:EnumerationKind-YesNo,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+p223:EthernetFirewall a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+p223:HandOffAuto-Hand a p223:HandOffAuto-Hand,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+p223:HandOffAuto-Off a p223:HandOffAuto-Off,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+p223:Hour a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+p223:LeftRight-Left a p223:LeftRight-Left,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind .
+p223:LeftRight-Right a p223:LeftRight-Right,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind .
+p223:ManualAuto-Auto a p223:ManualAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind .
+p223:ManualAuto-Manual a p223:ManualAuto-Manual,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind .
+p223:MotorStarter a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NiagaraStatus-disabled a p223:NiagaraStatus-disabled,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NiagaraStatus-down a p223:NiagaraStatus-down,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NiagaraStatus-fault a p223:NiagaraStatus-fault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NiagaraStatus-null a p223:NiagaraStatus-null,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NiagaraStatus-ok a p223:NiagaraStatus-ok,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NiagaraStatus-overridden a p223:NiagaraStatus-overridden,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NiagaraStatus-stale a p223:NiagaraStatus-stale,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NiagaraStatus-unackedAlarm a p223:NiagaraStatus-unackedAlarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+p223:NormalAlarm-Alarm a p223:NormalAlarm-Alarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind .
+p223:NormalAlarm-Normal a p223:NormalAlarm-Normal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind .
+p223:NormalFault-Fault a p223:NormalFault-Fault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind .
+p223:NormalFault-Normal a p223:NormalFault-Normal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind .
+p223:Occupancy-Bypass a p223:Occupancy-Bypass,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Occupancy,
+        s223:EnumerationKind .
+p223:Occupancy-Occupied a p223:Occupancy-Occupied,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Occupancy,
+        s223:EnumerationKind .
+p223:Occupancy-Standby a p223:Occupancy-Standby,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Occupancy,
+        s223:EnumerationKind .
+p223:Occupancy-Unknown a p223:Occupancy-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Occupancy,
+        s223:EnumerationKind .
+p223:Occupancy-Unoccupied a p223:Occupancy-Unoccupied,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Occupancy,
+        s223:EnumerationKind .
+p223:OccupancyFunctionBlock a rdfs:Class ;
+    rdfs:subClassOf s223:FunctionBlock .
+p223:OpenClose-Close a p223:OpenClose-Close,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind .
+p223:OpenClose-Open a p223:OpenClose-Open,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind .
+p223:OverriddenAuto-Auto a p223:OverriddenAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind .
+p223:OverriddenAuto-Overridden a p223:OverriddenAuto-Overridden,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind .
+p223:Position-Close a p223:Position-Close,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+p223:Position-Moving a p223:Position-Moving,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+p223:Position-Open a p223:Position-Open,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+p223:Position-Unknown a p223:Position-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+p223:RunningNotRunning-NotRunning a p223:RunningNotRunning-NotRunning,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
+        s223:EnumerationKind .
+p223:RunningNotRunning-Running a p223:RunningNotRunning-Running,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
+        s223:EnumerationKind .
+p223:RunningNotRunning-Unknown a p223:RunningNotRunning-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
+        s223:EnumerationKind .
+p223:TopBottom-Bottom a p223:TopBottom-Bottom,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind .
+p223:TopBottom-Top a p223:TopBottom-Top,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind .
+p223:TrueFalse-False a p223:TrueFalse-False,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind .
+p223:TrueFalse-True a p223:TrueFalse-True,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind .
+p223:YesNo-No a p223:YesNo-No,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-YesNo,
+        s223:EnumerationKind .
+p223:YesNo-Yes a p223:YesNo-Yes,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-YesNo,
+        s223:EnumerationKind .
+qudt:hasQuantityKind a rdf:Property .
+qudt:unit a rdf:Property .
+rec:Bathroom a rdfs:Class ;
+    rdfs:subClassOf s223:PhysicalSpace,
+        rec:Room .
+rec:Building a rdfs:Class ;
+    rdfs:subClassOf s223:PhysicalSpace .
+rec:Corridor a rdfs:Class ;
+    rdfs:subClassOf s223:PhysicalSpace,
+        rec:Room .
+rec:Floor a rdfs:Class ;
+    rdfs:subClassOf s223:PhysicalSpace .
+rec:Office a rdfs:Class ;
+    rdfs:subClassOf s223:PhysicalSpace,
+        rec:Room .
+rec:Roof a rdfs:Class ;
+    rdfs:subClassOf s223:PhysicalSpace .
+rec:Room a rdfs:Class ;
+    rdfs:subClassOf s223:PhysicalSpace .

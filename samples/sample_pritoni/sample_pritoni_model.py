@@ -6,7 +6,7 @@ from header import sample_header
 from bob.connections.air import *
 from bob.connections.electricity import *
 from bob.connections.light import LightVisibleConnection
-from bob.core import bind_model_namespace, dump, P223, QUANTITYKIND, UNIT
+from bob.core import bind_model_namespace, dump, data_graph, schema_graph
 from bob.devices.architectural import Window
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
@@ -61,4 +61,5 @@ ps.private_office > ls.privateoffice_lightspace
 ps.floor1 > ps.kitchenette > hs.kitchenette_hvac
 ps.kitchenette > ls.kitchenette_lightspace
 
-dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(data_graph, filename=f"samples/ttl/{model_name}.data.ttl", header=sample_header(model_name))
+dump(schema_graph, filename=f"samples/ttl/{model_name}.schema.ttl", header=sample_header(model_name))
