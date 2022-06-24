@@ -7,7 +7,7 @@ _namespace = BOB
 
 
 class Filter(Device):
-    _class_iri = S223.Filter
+    _class_iri = P223.Filter
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 

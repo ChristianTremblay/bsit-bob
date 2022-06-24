@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import hvac_devices as hd
+import hvac_spaces as hs
 import lighting_devices as ld
 import lighting_spaces as ls
 import physical_spaces as ps
@@ -33,27 +34,36 @@ ld.corridor_movement.hasPhysicalLocation = ps.corridor
 ld.bathroom_luminaire_5.lightOutlet >> ld.bathroom_light_conn
 ld.bathroom_luminaire_6.lightOutlet >> ld.bathroom_light_conn
 ld.bathroom_light_conn >> ls.bathroom_lightspace.lightInlet
+
 ld.bathroom_movement.hasMeasurementLocation = ls.bathroom_lightspace
 ld.bathroom_movement.hasPhysicalLocation = ps.bathroom
 
+# In SR-PD-MP Pritoni Layout, O1, LZ1, LZ2 have been modified
+# and O1 overlap LZ1 and LZ2.
+# Only one measurement location can be used for the movement
+# sensor. If it's true that this sensor will see anything moving
+# in those 2 spaces... then it would be a good idea to choose
+# a space that correspond to the real coverage of the sensor.
+# In this case, I would choose HVACSpace OpenOffice.
+# Then Light could use the result of the function block Occupancy
 
-ld.openofficeEast_luminaire_1.lightOutlet >> ld.openofficeEast_light_conn
-ld.openofficeEast_luminaire_2.lightOutlet >> ld.openofficeEast_light_conn
-ld.openofficeEast_light_conn >> ls.openofficeEast_lightspace.lightInlet
+ld.openofficeNorth_luminaire_1.lightOutlet >> ld.openofficeNorth_light_conn
+ld.openofficeNorth_luminaire_2.lightOutlet >> ld.openofficeNorth_light_conn
+ld.openofficeNorth_light_conn >> ls.openofficeNorth_lightspace.lightInlet
 
-ld.openofficeWest_luminaire_3.lightOutlet >> ld.openofficeWest_light_conn
-ld.openofficeWest_luminaire_4.lightOutlet >> ld.openofficeWest_light_conn
-ld.openofficeWest_light_conn >> ls.openofficeWest_lightspace.lightInlet
+ld.openofficeSouth_luminaire_3.lightOutlet >> ld.openofficeSouth_light_conn
+ld.openofficeSouth_luminaire_4.lightOutlet >> ld.openofficeSouth_light_conn
+ld.openofficeSouth_light_conn >> ls.openofficeSouth_lightspace.lightInlet
 
-ld.openoffice_movement.hasMeasurementLocation = ls.openofficeWest_lightspace
+# ld.openoffice_movement.hasMeasurementLocation = ls.openofficeSouth_lightspace
+ld.openoffice_movement.hasMeasurementLocation = hs.openoffice_hvac
 ld.openoffice_movement.hasPhysicalLocation = ps.openoffice
 
 hd.window1.naturalLight >> ld.natural_ligth_conn
 hd.window2.naturalLight >> ld.natural_ligth_conn
-ld.natural_ligth_conn >> ls.openofficeEast_lightspace.naturalLightInlet
-ld.natural_ligth_conn >> ls.openofficeWest_lightspace.naturalLightInlet
+ld.natural_ligth_conn >> ls.openofficeNorth_lightspace.naturalLightInlet
 
-ld.daylight_sensor.hasMeasurementLocation = ls.openofficeEast_lightspace
+ld.daylight_sensor.hasMeasurementLocation = ls.openofficeNorth_lightspace
 ld.daylight_sensor.hasPhysicalLocation = ps.openoffice
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@ hd.vav2["VAV2_DA-T"].observesProperty.set_value(
 hd.ahu["DA-T"].observesProperty.set_value(70.2)  # PD-SR-MP VAV1&VAV2 Inlet Temperature
 
 # hd.bathroom_exhaust_fan.onOffStatus = OnOffEnum.On
-hd.ahu["RF-VFD"].drive_running = OnOffEnum.On
+hd.ahu["RF"]["vfd"].drive_running = OnOffEnum.On
 # hd.ahu['SF-STARTER']['SF-STARTER.sensor'].onOffStatus = OnOffEnum.On
 hd.ahu["TPD3"].observesProperty.set_value(
     129.3
@@ -37,17 +37,17 @@ fn.private_office_occ_control.occupancyStatus.hasValue = OccupancyEnum.Unoccupie
 fn.bathroom_occ_control.occupancyStatus.hasValue = OccupancyEnum.Unoccupied
 fn.corridor_occ_control.occupancyStatus.hasValue = OccupancyEnum.Unoccupied
 
-ld.openofficeEast_luminaire_1.onOffStatus.hasValue = OnOffEnum.Off
-ld.openofficeEast_luminaire_1.onOffCommand.hasValue = OnOffEnum.Off
+ld.openofficeNorth_luminaire_1.onOffStatus.hasValue = OnOffEnum.Off
+ld.openofficeNorth_luminaire_1.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.openofficeEast_luminaire_2.onOffStatus.hasValue = OnOffEnum.Off
-ld.openofficeEast_luminaire_2.onOffCommand.hasValue = OnOffEnum.Off
+ld.openofficeNorth_luminaire_2.onOffStatus.hasValue = OnOffEnum.Off
+ld.openofficeNorth_luminaire_2.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.openofficeWest_luminaire_3.onOffStatus.hasValue = OnOffEnum.Off
-ld.openofficeWest_luminaire_3.onOffCommand.hasValue = OnOffEnum.Off
+ld.openofficeSouth_luminaire_3.onOffStatus.hasValue = OnOffEnum.Off
+ld.openofficeSouth_luminaire_3.onOffCommand.hasValue = OnOffEnum.Off
 
-ld.openofficeWest_luminaire_4.onOffStatus.hasValue = OnOffEnum.Off
-ld.openofficeWest_luminaire_4.onOffCommand.hasValue = OnOffEnum.Off
+ld.openofficeSouth_luminaire_4.onOffStatus.hasValue = OnOffEnum.Off
+ld.openofficeSouth_luminaire_4.onOffCommand.hasValue = OnOffEnum.Off
 
 ld.bathroom_luminaire_5.onOffStatus.hasValue = OnOffEnum.Off
 ld.bathroom_luminaire_5.onOffCommand.hasValue = OnOffEnum.Off
@@ -73,7 +73,7 @@ ld.kitchenette_luminaire_11.onOffCommand.hasValue = OnOffEnum.Off
 ld.kitchenette_luminaire_12.onOffStatus.hasValue = OnOffEnum.Off
 ld.kitchenette_luminaire_12.onOffCommand.hasValue = OnOffEnum.Off
 
-ed.openofficeEast_luminaire_1_dimmer["dimmer_command"].set_value(50.5)
+ed.openofficeNorth_luminaire_1_dimmer["dimmer_command"].set_value(50.5)
 
 if __name__ == "__main__":
     dump()

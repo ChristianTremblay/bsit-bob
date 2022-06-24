@@ -50,6 +50,26 @@ mainentry_panel_config = {
             "amps": 15,
             "voltage": "575",
         },
+        ("CB#6", ThreePolesCircuitBreaker): {
+            "comment": "Chiller",
+            "amps": 40,
+            "voltage": "575",
+        },
+        ("CB#7", ThreePolesCircuitBreaker): {
+            "comment": "Boiler",
+            "amps": 100,
+            "voltage": "575",
+        },
+        ("CB#8", ThreePolesCircuitBreaker): {
+            "comment": "HotWaterPump",
+            "amps": 20,
+            "voltage": "575",
+        },
+        ("CB#9", ThreePolesCircuitBreaker): {
+            "comment": "ChilledWaterPump",
+            "amps": 20,
+            "voltage": "575",
+        },
     },
     # other properties could go there... ?
 }
@@ -142,10 +162,8 @@ dist_panel["CB#7"] >> dist_panel_cb7
 
 bathroom_timer_switch = TimerSwitch(label="Bathroom Timer Switch", voltage=120, delay=2)
 
-openofficeEast_luminaire_1_dimmer = DimmableSwitch(
-    label="Dimmer1",
-    comment="Dimmable Switch Luminaire 1",
-    voltage=120
+openofficeNorth_luminaire_1_dimmer = DimmableSwitch(
+    label="Dimmer1", comment="Dimmable Switch Luminaire 1", voltage=120
 )
 
 return_fan_electrical_meter = ThreePhaseElectricalMeter(

@@ -30,35 +30,35 @@ exg3601:00003 a s223:Connection ;
     rdfs:comment "Supply Air for VAV" .
 exg3601:00004 a s223:Connection ;
     rdfs:label "Plenum_In" ;
-    s223:connectsAt exg3601:00070 ;
-    s223:connectsTo exg3601:00069 ;
+    s223:connectsAt exg3601:00069 ;
+    s223:connectsTo exg3601:00068 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Plenum Air Returning to VAV" .
 exg3601:00005 a s223:Connection ;
     rdfs:label "SA_Out" ;
     s223:connectsAt exg3601:00009,
         exg3601:00056,
-        exg3601:00088 ;
+        exg3601:00087 ;
     s223:connectsFrom exg3601:00054,
-        exg3601:00086 ;
+        exg3601:00085 ;
     s223:connectsTo exg3601:00008 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Supply Air from VAV" .
 exg3601:00006 a s223:Connection ;
     rdfs:label "HWS" ;
-    s223:connectsAt exg3601:00072 ;
-    s223:connectsTo exg3601:00069 ;
+    s223:connectsAt exg3601:00071 ;
+    s223:connectsTo exg3601:00068 ;
     s223:hasMedium s223:Water-HotWater ;
     rdfs:comment "Hot Water Supply" .
 exg3601:00007 a s223:Connection ;
     rdfs:label "HWR" ;
-    s223:connectsAt exg3601:00076 ;
-    s223:connectsFrom exg3601:00074 ;
+    s223:connectsAt exg3601:00075 ;
+    s223:connectsFrom exg3601:00073 ;
     s223:hasMedium s223:Water-HotWater ;
     rdfs:comment "Hot Water Return" .
-exg3601:00008 a s223:Connectable,
-        s223:DomainSpace,
-        s223:HVACSpace ;
+exg3601:00008 a p223:HVACSpace,
+        s223:Connectable,
+        s223:DomainSpace ;
     rdfs:label "space" ;
     s223:connectedFrom exg3601:00017 ;
     s223:connectedThrough exg3601:00005,
@@ -74,9 +74,9 @@ exg3601:00008 a s223:Connectable,
     s223:hasMedium s223:Medium-Air ;
     s223:hasProperty exg3601:00016,
         exg3601:00051,
-        exg3601:00067 ;
+        exg3601:00066 ;
     bob:airTransfer exg3601:00011 ;
-    bob:co2 exg3601:00067 ;
+    bob:co2 exg3601:00066 ;
     bob:doors exg3601:00012 ;
     bob:ductAirInlet exg3601:00009 ;
     bob:ductAirOutlet exg3601:00010 ;
@@ -135,9 +135,9 @@ exg3601:00016 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind p223:EnumerationKind-Occupancy .
-exg3601:00017 a s223:Connectable,
-        s223:Device,
-        s223:Window ;
+exg3601:00017 a p223:Window,
+        s223:Connectable,
+        s223:Device ;
     rdfs:label "Window" ;
     s223:connectedThrough exg3601:00021 ;
     s223:connectedTo exg3601:00008 ;
@@ -182,17 +182,17 @@ exg3601:00022 a s223:System,
         exg3601:00029,
         exg3601:00047,
         exg3601:00054,
-        exg3601:00064,
-        exg3601:00069,
-        exg3601:00074,
-        exg3601:00086,
-        exg3601:00096 ;
-    s223:hasSystemConnectionPoint exg3601:00103,
-        exg3601:00104,
-        exg3601:00105 ;
-    exg3601:airOutlet exg3601:00105 ;
-    exg3601:plenumAirInlet exg3601:00104 ;
-    exg3601:supplyAirInlet exg3601:00103 ;
+        exg3601:00063,
+        exg3601:00068,
+        exg3601:00073,
+        exg3601:00085,
+        exg3601:00098 ;
+    s223:hasSystemConnectionPoint exg3601:00107,
+        exg3601:00108,
+        exg3601:00109 ;
+    exg3601:airOutlet exg3601:00109 ;
+    exg3601:plenumAirInlet exg3601:00108 ;
+    exg3601:supplyAirInlet exg3601:00107 ;
     rdfs:comment "VAV with Airflow + Damper + Dual Duct" .
 exg3601:00023 a s223:Connectable,
         s223:Device,
@@ -390,11 +390,11 @@ exg3601:00054 a s223:Connectable,
     s223:contains exg3601:00057 ;
     s223:hasConnectionPoint exg3601:00055,
         exg3601:00056 ;
-    s223:hasProperty exg3601:00063 ;
+    s223:hasProperty exg3601:00062 ;
     bob:airInlet exg3601:00055 ;
     bob:airOutlet exg3601:00056 ;
-    bob:command exg3601:00060 ;
-    bob:feedback exg3601:00061 ;
+    bob:command exg3601:00059 ;
+    bob:feedback exg3601:00060 ;
     rdfs:comment "VAV Box Damper with electrical actuator" .
 exg3601:00055 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -414,13 +414,12 @@ exg3601:00057 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuatesProperty exg3601:00063 ;
+    s223:actuatesProperty exg3601:00062 ;
     s223:hasConnectionPoint exg3601:00058 ;
     s223:hasProperty exg3601:00059,
         exg3601:00060,
         exg3601:00061,
-        exg3601:00062,
-        exg3601:00063 .
+        exg3601:00062 .
 exg3601:00058 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
@@ -432,18 +431,10 @@ exg3601:00059 a s223:ActuatableProperty,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
-    rdfs:label "actuatesProperty" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
-exg3601:00060 a s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty,
-        bob:PercentCommand ;
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
-exg3601:00061 a s223:ObservableProperty,
+exg3601:00060 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -451,7 +442,7 @@ exg3601:00061 a s223:ObservableProperty,
     rdfs:label "feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
-exg3601:00062 a s223:ObservableProperty,
+exg3601:00061 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -459,7 +450,7 @@ exg3601:00062 a s223:ObservableProperty,
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
-exg3601:00063 a s223:ActuatableProperty,
+exg3601:00062 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -467,131 +458,133 @@ exg3601:00063 a s223:ActuatableProperty,
     rdfs:label "position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
-exg3601:00064 a p223:GasMonitor,
+exg3601:00063 a p223:GasMonitor,
         s223:Connectable,
         s223:Device ;
     rdfs:label "ZN-CO2" ;
-    s223:contains exg3601:00066 ;
-    s223:hasConnectionPoint exg3601:00065 ;
-    bob:airInletSupply exg3601:00065 ;
+    s223:contains exg3601:00065 ;
+    s223:hasConnectionPoint exg3601:00064 ;
+    bob:airInletSupply exg3601:00064 ;
     rdfs:comment "CO2 of space" .
-exg3601:00065 a s223:ConnectionPoint,
+exg3601:00064 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "ZN-CO2.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf exg3601:00064 .
-exg3601:00066 a s223:Connectable,
+    s223:isConnectionPointOf exg3601:00063 .
+exg3601:00065 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
     rdfs:label "CO2" ;
     s223:hasMaxRange exg3601:00002 ;
     s223:hasMeasurementLocation exg3601:00008 ;
     s223:hasMinRange exg3601:00001 ;
-    s223:observesProperty exg3601:00067 ;
+    s223:observesProperty exg3601:00066 ;
     bob:hasQuantityKind quantitykind:DimensionlessRatio .
-exg3601:00067 a s223:ObservableProperty,
+exg3601:00066 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:GasConcentration ;
     rdfs:label "CO2.GasConcentration" ;
-    s223:hasExternalReference exg3601:00068 ;
+    s223:hasExternalReference exg3601:00067 ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance s223:Substance-CO2 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PPM .
-exg3601:00068 a s223:ExternalReference ;
+exg3601:00067 a s223:ExternalReference ;
     rdfs:label "CO2.GasConcentration.ExternalReference" .
-exg3601:00069 a s223:Coil,
+exg3601:00068 a s223:Coil,
         s223:Connectable,
         s223:Device,
         s223:HeatingCoil ;
     rdfs:label "HTG-COIL" ;
     s223:connectedThrough exg3601:00004,
         exg3601:00006,
-        exg3601:00106,
-        exg3601:00108 ;
-    s223:connectedTo exg3601:00074,
-        exg3601:00086 ;
-    s223:hasConnectionPoint exg3601:00070,
+        exg3601:00110,
+        exg3601:00112 ;
+    s223:connectedTo exg3601:00073,
+        exg3601:00085 ;
+    s223:hasConnectionPoint exg3601:00069,
+        exg3601:00070,
         exg3601:00071,
-        exg3601:00072,
-        exg3601:00073 ;
-    bob:airInlet exg3601:00070 ;
-    bob:airOutlet exg3601:00071 ;
-    bob:hotWaterInlet exg3601:00072 ;
-    bob:hotWaterOutlet exg3601:00073 ;
+        exg3601:00072 ;
+    bob:airInlet exg3601:00069 ;
+    bob:airOutlet exg3601:00070 ;
+    bob:hotWaterInlet exg3601:00071 ;
+    bob:hotWaterOutlet exg3601:00072 ;
     rdfs:comment "Hot Water Coil" .
-exg3601:00070 a s223:ConnectionPoint,
+exg3601:00069 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "HTG-COIL.airInlet" ;
     s223:connectsThrough exg3601:00004 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf exg3601:00069 .
-exg3601:00071 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00068 .
+exg3601:00070 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "HTG-COIL.airOutlet" ;
-    s223:connectsThrough exg3601:00106 ;
+    s223:connectsThrough exg3601:00110 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf exg3601:00069 .
-exg3601:00072 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00068 .
+exg3601:00071 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "HTG-COIL.hotWaterInlet" ;
     s223:connectsThrough exg3601:00006 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf exg3601:00069 .
-exg3601:00073 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00068 .
+exg3601:00072 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "HTG-COIL.hotWaterOutlet" ;
-    s223:connectsThrough exg3601:00108 ;
+    s223:connectsThrough exg3601:00112 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf exg3601:00069 .
-exg3601:00074 a s223:Connectable,
+    s223:isConnectionPointOf exg3601:00068 .
+exg3601:00073 a s223:Connectable,
         s223:Device,
         s223:Valve ;
     rdfs:label "HTG-VLV" ;
-    s223:connectedFrom exg3601:00069 ;
+    s223:connectedFrom exg3601:00068 ;
     s223:connectedThrough exg3601:00007,
-        exg3601:00108 ;
+        exg3601:00112 ;
     s223:contains exg3601:00080 ;
-    s223:hasConnectionPoint exg3601:00075,
+    s223:hasConnectionPoint exg3601:00074,
+        exg3601:00075,
         exg3601:00076,
-        exg3601:00077,
-        exg3601:00078 ;
-    s223:hasProperty exg3601:00079 ;
-    bob:command exg3601:00083 .
-exg3601:00075 a s223:ConnectionPoint,
+        exg3601:00077 ;
+    s223:hasProperty exg3601:00078,
+        exg3601:00079 ;
+    bob:command exg3601:00082 ;
+    bob:feedback exg3601:00083 .
+exg3601:00074 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "HTG-VLV.waterInlet" ;
-    s223:connectsThrough exg3601:00108 ;
+    s223:connectsThrough exg3601:00112 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf exg3601:00074 .
-exg3601:00076 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00073 .
+exg3601:00075 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "HTG-VLV.waterOutlet" ;
     s223:connectsThrough exg3601:00007 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf exg3601:00074 .
-exg3601:00077 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00073 .
+exg3601:00076 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "HTG-VLV.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
-    s223:isConnectionPointOf exg3601:00074 .
-exg3601:00078 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00073 .
+exg3601:00077 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "HTG-VLV.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
-    s223:isConnectionPointOf exg3601:00074 .
-exg3601:00079 a s223:ObservableProperty,
+    s223:isConnectionPointOf exg3601:00073 .
+exg3601:00078 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -599,6 +592,14 @@ exg3601:00079 a s223:ObservableProperty,
     rdfs:label "flowCoefficient" ;
     qudt:hasQuantityKind quantitykind:LiquidVolume ;
     qudt:unit unit:GAL_US .
+exg3601:00079 a s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        bob:PercentCommand ;
+    rdfs:label "position" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 exg3601:00080 a s223:Actuator,
         s223:Connectable,
         s223:Device ;
@@ -606,8 +607,7 @@ exg3601:00080 a s223:Actuator,
     s223:hasConnectionPoint exg3601:00081 ;
     s223:hasProperty exg3601:00082,
         exg3601:00083,
-        exg3601:00084,
-        exg3601:00085 .
+        exg3601:00084 .
 exg3601:00081 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
@@ -619,18 +619,10 @@ exg3601:00082 a s223:ActuatableProperty,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
-    rdfs:label "actuatesProperty" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
-exg3601:00083 a s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty,
-        bob:PercentCommand ;
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
-exg3601:00084 a s223:ObservableProperty,
+exg3601:00083 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -638,7 +630,7 @@ exg3601:00084 a s223:ObservableProperty,
     rdfs:label "feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
-exg3601:00085 a s223:ObservableProperty,
+exg3601:00084 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -646,47 +638,58 @@ exg3601:00085 a s223:ObservableProperty,
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
-exg3601:00086 a s223:Connectable,
+exg3601:00085 a s223:Connectable,
         s223:Device,
         s223:Fan ;
     rdfs:label "FAN" ;
-    s223:connectedFrom exg3601:00069,
-        exg3601:00096 ;
+    s223:connectedFrom exg3601:00068,
+        exg3601:00098 ;
     s223:connectedThrough exg3601:00005,
-        exg3601:00106,
-        exg3601:00107 ;
-    s223:hasConnectionPoint exg3601:00087,
-        exg3601:00088,
-        exg3601:00089 ;
-    s223:hasProperty exg3601:00090,
+        exg3601:00110,
+        exg3601:00111 ;
+    s223:hasConnectionPoint exg3601:00086,
+        exg3601:00087,
+        exg3601:00088 ;
+    s223:hasProperty exg3601:00089,
+        exg3601:00090,
         exg3601:00091,
         exg3601:00092,
         exg3601:00093,
         exg3601:00094,
-        exg3601:00095 ;
-    bob:airInlet exg3601:00087 ;
-    bob:airOutlet exg3601:00088 .
-exg3601:00087 a s223:ConnectionPoint,
+        exg3601:00095,
+        exg3601:00096,
+        exg3601:00097 ;
+    bob:airInlet exg3601:00086 ;
+    bob:airOutlet exg3601:00087 .
+exg3601:00086 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "FAN.airInlet" ;
-    s223:connectsThrough exg3601:00106 ;
+    s223:connectsThrough exg3601:00110 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf exg3601:00086 .
-exg3601:00088 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00085 .
+exg3601:00087 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "FAN.airOutlet" ;
     s223:connectsThrough exg3601:00005 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf exg3601:00086 .
-exg3601:00089 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00085 .
+exg3601:00088 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "FAN.electricalInlet" ;
-    s223:connectsThrough exg3601:00107 ;
+    s223:connectsThrough exg3601:00111 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
-    s223:isConnectionPointOf exg3601:00086 .
+    s223:isConnectionPointOf exg3601:00085 .
+exg3601:00089 a s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        bob:PercentCommand ;
+    rdfs:label "speedRatio" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
 exg3601:00090 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -709,9 +712,17 @@ exg3601:00092 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
+    qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:unit unit:REV-PER-MIN .
 exg3601:00093 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Flow ;
+    rdfs:label "cfm" ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:unit unit:FT3-PER-MIN .
+exg3601:00094 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -719,7 +730,7 @@ exg3601:00093 a s223:ObservableProperty,
     rdfs:label "hp" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-exg3601:00094 a s223:ObservableProperty,
+exg3601:00095 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -728,7 +739,7 @@ exg3601:00094 a s223:ObservableProperty,
     rdfs:label "kW" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-exg3601:00095 a s223:ObservableProperty,
+exg3601:00096 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -736,221 +747,245 @@ exg3601:00095 a s223:ObservableProperty,
     rdfs:label "powerFactor" ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
-exg3601:00096 a p223:MotorStarter,
+exg3601:00097 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
+    rdfs:label "efficiency" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
+exg3601:00098 a p223:MotorStarter,
         s223:Connectable,
-        s223:Device ;
+        s223:Device,
+        s223:MotorStarter ;
     rdfs:label "FAN-STARTER" ;
-    s223:connectedThrough exg3601:00107 ;
-    s223:connectedTo exg3601:00086 ;
-    s223:contains exg3601:00101 ;
-    s223:hasConnectionPoint exg3601:00097,
-        exg3601:00098,
-        exg3601:00099,
-        exg3601:00100 ;
-    s223:hasProperty exg3601:00102 ;
-    bob:inputSignal exg3601:00098 ;
-    bob:onOffStatus exg3601:00102 ;
-    bob:outputSignal exg3601:00097 .
-exg3601:00097 a s223:ConnectionPoint,
+    s223:connectedThrough exg3601:00111 ;
+    s223:connectedTo exg3601:00085 ;
+    s223:contains exg3601:00105 ;
+    s223:hasConnectionPoint exg3601:00099,
+        exg3601:00100,
+        exg3601:00101,
+        exg3601:00102 ;
+    s223:hasProperty exg3601:00103,
+        exg3601:00104 ;
+    bob:inputSignal exg3601:00100 ;
+    bob:onOffStatus exg3601:00106 ;
+    bob:outputSignal exg3601:00099 .
+exg3601:00099 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "FAN-STARTER.outputSignal" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
-    s223:isConnectionPointOf exg3601:00096 .
-exg3601:00098 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00098 .
+exg3601:00100 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "FAN-STARTER.inputSignal" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
-    s223:isConnectionPointOf exg3601:00096 .
-exg3601:00099 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00098 .
+exg3601:00101 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "FAN-STARTER.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
-    s223:isConnectionPointOf exg3601:00096 .
-exg3601:00100 a s223:ConnectionPoint,
+    s223:isConnectionPointOf exg3601:00098 .
+exg3601:00102 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "FAN-STARTER.electricalOutlet" ;
-    s223:connectsThrough exg3601:00107 ;
+    s223:connectsThrough exg3601:00111 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
-    s223:isConnectionPointOf exg3601:00096 .
-exg3601:00101 a s223:Connectable,
+    s223:isConnectionPointOf exg3601:00098 .
+exg3601:00103 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
+        s223:Property ;
+    rdfs:label "onOffCommand" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+exg3601:00104 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower ;
+    rdfs:label "power_rating" ;
+    qudt:hasQuantityKind quantitykind:Power ;
+    qudt:unit unit:HP_Electric .
+exg3601:00105 a s223:Connectable,
         s223:Device,
         s223:Sensor ;
-    rdfs:label "FAN-STARTER.sensor" ;
-    s223:hasMeasurementLocation exg3601:00100 ;
-    s223:observesProperty exg3601:00102 .
-exg3601:00102 a s223:EnumerableProperty,
+    rdfs:label "FAN-STARTER.current_sensor" ;
+    s223:hasMeasurementLocation exg3601:00102 ;
+    s223:observesProperty exg3601:00106 .
+exg3601:00106 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    rdfs:label "FAN-STARTER.sensor.CurrentBinarySensor" ;
+    rdfs:label "FAN-STARTER.current_sensor.CurrentBinarySensor" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Electricity-120V-60Hz .
-exg3601:00103 a s223:InletSystemConnectionPoint,
+exg3601:00107 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "VAV_FIG.A2.supplyAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3601:00055 .
-exg3601:00104 a s223:InletSystemConnectionPoint,
+exg3601:00108 a s223:InletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "VAV_FIG.A2.plenumAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo exg3601:00070 .
-exg3601:00105 a s223:OutletSystemConnectionPoint,
+    s223:mapsTo exg3601:00069 .
+exg3601:00109 a s223:OutletSystemConnectionPoint,
         s223:SystemConnectionPoint ;
     rdfs:label "VAV_FIG.A2.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3601:00056 .
-exg3601:00106 a s223:Connection ;
+exg3601:00110 a s223:Connection ;
     rdfs:label "cnx" ;
-    s223:connectsAt exg3601:00071,
-        exg3601:00087 ;
-    s223:connectsFrom exg3601:00069 ;
-    s223:connectsTo exg3601:00086 ;
+    s223:connectsAt exg3601:00070,
+        exg3601:00086 ;
+    s223:connectsFrom exg3601:00068 ;
+    s223:connectsTo exg3601:00085 ;
     s223:hasMedium s223:Medium-Air .
-exg3601:00107 a s223:Connection ;
+exg3601:00111 a s223:Connection ;
     rdfs:label "cnx" ;
-    s223:connectsAt exg3601:00089,
-        exg3601:00100 ;
-    s223:connectsFrom exg3601:00096 ;
-    s223:connectsTo exg3601:00086 ;
+    s223:connectsAt exg3601:00088,
+        exg3601:00102 ;
+    s223:connectsFrom exg3601:00098 ;
+    s223:connectsTo exg3601:00085 ;
     s223:hasMedium s223:Electricity-120V-60Hz .
-exg3601:00108 a s223:Connection ;
+exg3601:00112 a s223:Connection ;
     rdfs:label "cnx" ;
-    s223:connectsAt exg3601:00073,
-        exg3601:00075 ;
-    s223:connectsFrom exg3601:00069 ;
-    s223:connectsTo exg3601:00074 ;
+    s223:connectsAt exg3601:00072,
+        exg3601:00074 ;
+    s223:connectsFrom exg3601:00068 ;
+    s223:connectsTo exg3601:00073 ;
     s223:hasMedium s223:Water-HotWater .
-exg3601:00109 a s223:HVACZone,
+exg3601:00113 a p223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone" ;
     s223:contains exg3601:00008 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasProperty exg3601:00049,
         exg3601:00051,
-        exg3601:00067 ;
-    s223:hasZoneConnectionPoint exg3601:00110,
-        exg3601:00111 ;
-    bob:airInlet exg3601:00110 ;
-    bob:airOutlet exg3601:00111 ;
-    bob:co2 exg3601:00067 ;
+        exg3601:00066 ;
+    s223:hasZoneConnectionPoint exg3601:00114,
+        exg3601:00115 ;
+    bob:airInlet exg3601:00114 ;
+    bob:airOutlet exg3601:00115 ;
+    bob:co2 exg3601:00066 ;
     bob:temperature exg3601:00051 ;
     bob:temperature_setpoint exg3601:00049 ;
     rdfs:comment "Contains HVACSpace" .
-exg3601:00110 a s223:InletZoneConnectionPoint,
+exg3601:00114 a s223:InletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "HVACZone.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3601:00009 .
-exg3601:00111 a s223:OutletZoneConnectionPoint,
+exg3601:00115 a s223:OutletZoneConnectionPoint,
         s223:ZoneConnectionPoint ;
     rdfs:label "HVACZone.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
-exg3601:00112 a p223:OccupancyFunctionBlock,
+exg3601:00116 a p223:OccupancyFunctionBlock,
         s223:FunctionBlock ;
     rdfs:label "OccControl" ;
-    s223:input exg3601:00113,
-        exg3601:00114 ;
-    s223:output exg3601:00116,
-        exg3601:00117 ;
+    s223:input exg3601:00117,
+        exg3601:00118 ;
+    s223:output exg3601:00120,
+        exg3601:00121 ;
     rdfs:comment "This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED" .
-exg3601:00113 a s223:Connector,
+exg3601:00117 a s223:Connector,
         s223:InputConnector,
         g36:BinaryIn ;
     rdfs:label "OccControl.occupancy-sensor" ;
     s223:usesInput exg3601:00028 .
-exg3601:00114 a s223:Connector,
+exg3601:00118 a s223:Connector,
         s223:InputConnector,
         g36:BinaryIn ;
     rdfs:label "OccControl.local-override" ;
     s223:usesInput exg3601:00053 .
-exg3601:00115 a s223:EnumerableProperty,
+exg3601:00119 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind p223:EnumerationKind-Occupancy .
-exg3601:00116 a s223:Connector,
+exg3601:00120 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "OccControl.output" ;
-    s223:producesOutput exg3601:00115 .
-exg3601:00117 a s223:Connector,
+    s223:producesOutput exg3601:00119 .
+exg3601:00121 a s223:Connector,
         s223:OutputConnector ;
     rdfs:label "OccControl.output" ;
     s223:producesOutput exg3601:00016 .
-exg3601:00118 a s223:FunctionBlock ;
+exg3601:00122 a s223:FunctionBlock ;
     rdfs:label "G36_FIG_A_1" ;
-    s223:input exg3601:00119,
-        exg3601:00120,
-        exg3601:00121,
-        exg3601:00122,
-        exg3601:00123,
+    s223:input exg3601:00123,
         exg3601:00124,
         exg3601:00125,
-        exg3601:00126 ;
-    s223:output exg3601:00127,
+        exg3601:00126,
+        exg3601:00127,
         exg3601:00128,
-        exg3601:00129 ;
+        exg3601:00129,
+        exg3601:00130 ;
+    s223:output exg3601:00131,
+        exg3601:00132,
+        exg3601:00133 ;
     rdfs:comment "Lorem ipsum of sequence" .
-exg3601:00119 a s223:Connector,
+exg3601:00123 a s223:Connector,
         s223:InputConnector,
         g36:AnalogIn ;
     rdfs:label "G36_FIG_A_1.supplyAirFlow" ;
     s223:usesInput exg3601:00024 .
-exg3601:00120 a s223:Connector,
+exg3601:00124 a s223:Connector,
         s223:InputConnector,
         g36:AnalogIn ;
     rdfs:label "G36_FIG_A_1.zoneTemperatureSetpoint" ;
     s223:usesInput exg3601:00049 .
-exg3601:00121 a s223:Connector,
+exg3601:00125 a s223:Connector,
         s223:InputConnector,
         g36:AnalogIn ;
     rdfs:label "G36_FIG_A_1.zoneTemperature" ;
     s223:usesInput exg3601:00051 .
-exg3601:00122 a s223:Connector,
+exg3601:00126 a s223:Connector,
         s223:InputConnector,
         g36:AnalogIn ;
     rdfs:label "G36_FIG_A_1.supplyAirTemprature" ;
     s223:usesInput exg3601:00033 .
-exg3601:00123 a s223:Connector,
+exg3601:00127 a s223:Connector,
         s223:InputConnector,
         g36:AnalogIn ;
     rdfs:label "G36_FIG_A_1.zoneCO2" ;
-    s223:usesInput exg3601:00067 .
-exg3601:00124 a s223:Connector,
+    s223:usesInput exg3601:00066 .
+exg3601:00128 a s223:Connector,
         s223:InputConnector,
         g36:BinaryIn ;
     rdfs:label "G36_FIG_A_1.window-switch" ;
     s223:usesInput exg3601:00030 .
-exg3601:00125 a s223:Connector,
+exg3601:00129 a s223:Connector,
         s223:InputConnector,
         g36:BinaryIn ;
     rdfs:label "G36_FIG_A_1.fanStatus" ;
     s223:usesInput exg3601:00043 .
-exg3601:00126 a s223:Connector,
+exg3601:00130 a s223:Connector,
         s223:InputConnector,
         g36:BinaryIn ;
     rdfs:label "G36_FIG_A_1.occupancy-status" ;
-    s223:usesInput exg3601:00115 .
-exg3601:00127 a s223:Connector,
+    s223:usesInput exg3601:00119 .
+exg3601:00131 a s223:Connector,
         s223:OutputConnector,
         g36:AnalogOut ;
     rdfs:label "G36_FIG_A_1.damperPosition" ;
     s223:producesOutput exg3601:00037 .
-exg3601:00128 a s223:Connector,
+exg3601:00132 a s223:Connector,
         s223:OutputConnector,
         g36:AnalogOut ;
     rdfs:label "G36_FIG_A_1.valvePosition" ;
     s223:producesOutput exg3601:00039 .
-exg3601:00129 a s223:Connector,
+exg3601:00133 a s223:Connector,
         s223:OutputConnector,
         g36:BinaryOut ;
     rdfs:label "G36_FIG_A_1.fanCommand" ;

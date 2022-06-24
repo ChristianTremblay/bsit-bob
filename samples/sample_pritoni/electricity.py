@@ -14,13 +14,20 @@ _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 # Make Electrical connections
+ed.main_panel["CB#2"] >> hd.ahu["SF"]["starter"].electricalInlet
+ed.main_panel["CB#4"] >> hd.ahu["RF"]["vfd"].electricalInlet
+ed.main_panel["CB#6"] >> hd.chiller.electricalInlet
+ed.main_panel["CB#7"] >> hd.boiler.electricalInlet
+ed.main_panel["CB#8"] >> hd.hot_water_pump["starter"].electricalInlet
+ed.main_panel["CB#9"] >> hd.chilled_water_pump["starter"].electricalInlet
+
 ed.dist_panel_cb1 >> [
-    ed.openofficeEast_luminaire_1_dimmer,
-    ld.openofficeEast_luminaire_2,
-    ld.openofficeWest_luminaire_3,
-    ld.openofficeWest_luminaire_4,
+    ed.openofficeNorth_luminaire_1_dimmer,
+    ld.openofficeNorth_luminaire_2,
+    ld.openofficeSouth_luminaire_3,
+    ld.openofficeSouth_luminaire_4,
 ]
-ed.openofficeEast_luminaire_1_dimmer.electricalOutlet >> ld.openofficeEast_luminaire_1.electricalInlet
+ed.openofficeNorth_luminaire_1_dimmer.electricalOutlet >> ld.openofficeNorth_luminaire_1.electricalInlet
 
 ed.dist_panel_cb3 >> [
     ld.kitchenette_luminaire_11,
@@ -44,10 +51,7 @@ ed.dist_panel_cb6 >> ed.bathroom_timer_switch >> hd.bathroom_exhaust_fan.electri
 ed.dist_panel_cb7 >> nd.ethernet_switch.electricalInlet
 ed.dist_panel_cb7 >> nd.firewall.electricalInlet
 
-"""
-ed.main_panel["CB#2"] >> hd.ahu["SF-STARTER"] >> hd.ahu["SF"]
-ed.main_panel["CB#4"] >> hd.ahu["RF-VFD"] >> hd.ahu["RF"]
-"""
+
 ed.return_fan_electrical_meter.hasPhysicalLocation = ps.bldg
 ed.return_fan_electrical_meter.hasMeasurementLocation = hd.ahu["RF"].electricalInlet
 

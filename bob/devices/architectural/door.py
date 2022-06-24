@@ -1,12 +1,12 @@
 from bob.connections.air import AirBidirectionalConnectionPoint
 from bob.connections.light import LightVisibleOutletConnectionPoint
-from bob.core import Device, PropertyReference, BOB, S223
+from bob.core import Device, PropertyReference, BOB, S223, P223
 
 _namespace = BOB
 
 
 class Door(Device):
-    _class_iri = S223.Door
+    _class_iri = P223.Door
     door: AirBidirectionalConnectionPoint
     naturalLight: LightVisibleOutletConnectionPoint
 

@@ -21,16 +21,17 @@ ex31:00001 a s223:Connectable,
         s223:VariableFrequencyDrive ;
     rdfs:label "MyVFD" ;
     s223:hasConnectionPoint ex31:00002,
-        ex31:00003 ;
-    s223:hasProperty ex31:00004,
-        ex31:00005,
+        ex31:00003,
+        ex31:00004 ;
+    s223:hasProperty ex31:00005,
         ex31:00006,
         ex31:00007,
         ex31:00008,
         ex31:00009,
         ex31:00010,
         ex31:00011,
-        ex31:00012 ;
+        ex31:00012,
+        ex31:00013 ;
     rdfs:comment "A VFD for a Big Fan" .
 ex31:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
@@ -44,7 +45,13 @@ ex31:00003 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf ex31:00001 .
-ex31:00004 a s223:ObservableProperty,
+ex31:00004 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint ;
+    rdfs:label "MyVFD.ethernet_port" ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium p223:Electricity-Ethernet ;
+    s223:isConnectionPointOf ex31:00001 .
+ex31:00005 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -53,7 +60,7 @@ ex31:00004 a s223:ObservableProperty,
     s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex31:00005 a s223:ObservableProperty,
+ex31:00006 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -62,7 +69,7 @@ ex31:00005 a s223:ObservableProperty,
     s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex31:00006 a s223:ObservableProperty,
+ex31:00007 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -72,7 +79,7 @@ ex31:00006 a s223:ObservableProperty,
     s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex31:00007 a s223:ActuatableProperty,
+ex31:00008 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -81,16 +88,16 @@ ex31:00007 a s223:ActuatableProperty,
     s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
-ex31:00008 a s223:ObservableProperty,
+ex31:00009 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
     s223:isPropertyOf ex31:00001 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
+    qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:unit unit:REV-PER-MIN .
-ex31:00009 a s223:ObservableProperty,
+ex31:00010 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -98,21 +105,21 @@ ex31:00009 a s223:ObservableProperty,
     rdfs:label "motor_temp" ;
     s223:isPropertyOf ex31:00001 ;
     qudt:hasQuantityKind quantitykind:Temperature .
-ex31:00010 a s223:EnumerableProperty,
+ex31:00011 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:isPropertyOf ex31:00001 .
-ex31:00011 a s223:ActuatableProperty,
+ex31:00012 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:isPropertyOf ex31:00001 .
-ex31:00012 a s223:EnumerableProperty,
+ex31:00013 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;

@@ -31,7 +31,16 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, Node, PropertyReference, BOB, P223, S223, template_update
+from ...core import (
+    Device,
+    logging,
+    Node,
+    PropertyReference,
+    BOB,
+    P223,
+    S223,
+    template_update,
+)
 from ...properties import Gallons, Percent
 from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
@@ -82,6 +91,7 @@ class Valve(Device):
     position: ActuatableProperty
 
     def __init__(self, config: Dict = {}, **kwargs):
+        logging.debug(f"Valve.__init__ {config} {kwargs}")
         super().__init__(config, **kwargs)
         # TODO find a way to do that
         # self.position = self.feedback if self.feedback else self.command
@@ -93,6 +103,7 @@ class TwoWayValve(Valve):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(valve2w_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
+        logging.debug(f"TwoWayValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
 
@@ -106,6 +117,7 @@ class ThreeWayValveDiverting(Valve):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(valve_3w_diverting_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
+        logging.debug(f"ThreeWayValveDiverting.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
 
@@ -119,6 +131,7 @@ class ThreeWayValveMixing(Valve):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(valve_3w_mixing_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
+        logging.debug(f"ThreeWayValveMixing.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
 
@@ -137,7 +150,6 @@ class PneumaticValve(TwoWayValve):
 electrical_actuated_proportional_valve_template = {
     "devices": {("actuator", ElectricalProportionalActuator): {}},
     "properties": {
-        ("feedback", PropertyReference): {},
         ("position", PercentCommand): {},
     },
 }
@@ -145,8 +157,6 @@ electrical_actuated_proportional_valve_template = {
 electrical_actuated_onoff_valve_template = {
     "devices": {("actuator", ElectricalOnOffActuator): {}},
     "properties": {
-        ("feedbackOpen", PropertyReference): {},
-        ("feedbackClose", PropertyReference): {},
         ("position", OpenCloseCommand): {},
     },
 }
@@ -154,6 +164,7 @@ electrical_actuated_onoff_valve_template = {
 
 class TwoWayActuatedProportionalValve(TwoWayValve):
     _class_iri = S223.Valve
+    feedback: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -161,6 +172,7 @@ class TwoWayActuatedProportionalValve(TwoWayValve):
             config=config,
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
+        logging.debug(f"TwoWayActuatedProportionalValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
@@ -171,6 +183,8 @@ class TwoWayActuatedProportionalValve(TwoWayValve):
 
 class TwoWayActuatedOnOffValve(TwoWayValve):
     _class_iri = S223.Valve
+    feedbackOpen: PropertyReference
+    feedbackClose: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -178,6 +192,7 @@ class TwoWayActuatedOnOffValve(TwoWayValve):
             config=config,
         )
         kwargs = {**_config.get("params", {}), **kwargs}
+        logging.debug(f"TwoWayActuatedOnOffValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
@@ -188,6 +203,7 @@ class TwoWayActuatedOnOffValve(TwoWayValve):
 
 class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
     node_type = S223.Valve
+    feedback: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -198,6 +214,9 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
             config=config,
         )
         kwargs = {**_config.get("params", {}), **kwargs}
+        logging.debug(
+            f"ThreeWayMixingActuatedProportionalValve.__init__ {_config} {kwargs}"
+        )
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
@@ -207,6 +226,8 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
 
 class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
     _class_iri = S223.Valve
+    feedbackOpen: PropertyReference
+    feedbackClose: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -214,6 +235,7 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
             config=config,
         )
         kwargs = {**_config.get("params", {}), **kwargs}
+        logging.debug(f"ThreeWayMixingActuatedOnOffValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
@@ -223,6 +245,7 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
 
 class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
     _class_iri = S223.Valve
+    feedback: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -233,6 +256,9 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
             config=config,
         )
         kwargs = {**_config.get("params", {}), **kwargs}
+        logging.debug(
+            f"ThreeWayDivertingActuatedProportionalValve.__init__ {_config} {kwargs}"
+        )
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
@@ -242,6 +268,8 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
 
 class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
     _class_iri = S223.Valve
+    feedbackOpen: PropertyReference
+    feedbackClose: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -252,6 +280,9 @@ class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
             config=config,
         )
         kwargs = {**_config.get("params", {}), **kwargs}
+        logging.debug(
+            f"ThreeWayDivertingActuatedOnOffValve.__init__ {_config} {kwargs}"
+        )
         super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]

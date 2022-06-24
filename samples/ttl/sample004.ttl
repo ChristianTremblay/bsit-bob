@@ -3,6 +3,7 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex1: <urn:ex/sample004/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -12,7 +13,7 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample004> ;
   rdfs:label "sample004" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-ex1:00001 a s223:HVACZone,
+ex1:00001 a p223:HVACZone,
         s223:Zone ;
     rdfs:label "Zone" ;
     s223:contains ex1:00004 ;
@@ -33,9 +34,9 @@ ex1:00003 a s223:OutletZoneConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00006 .
-ex1:00004 a s223:Connectable,
-        s223:DomainSpace,
-        s223:HVACSpace ;
+ex1:00004 a p223:HVACSpace,
+        s223:Connectable,
+        s223:DomainSpace ;
     rdfs:label "Domain_Space" ;
     s223:connectedFrom ex1:00015 ;
     s223:connectedThrough ex1:00018 ;

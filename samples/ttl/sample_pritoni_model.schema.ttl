@@ -35,6 +35,11 @@ bob:Amps a rdfs:Class ;
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty .
+bob:Area a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
 bob:DaylightDetected a rdfs:Class ;
     rdfs:subClassOf s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -92,6 +97,11 @@ bob:Flow a rdfs:Class ;
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty .
 bob:Frequency a rdfs:Class ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+bob:Gallons a rdfs:Class ;
     rdfs:subClassOf s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -187,13 +197,24 @@ bob:airTransfer a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:air_change_per_hour a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
-bob:alarmStatus a rdf:Property .
+bob:alarmOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:alarmStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 bob:breakDetection a rdf:Property .
 bob:brightness a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:brightnessRatio a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+bob:capacityLimit a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:capacityLimitInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:chilledWaterEntering a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:chilledWaterInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:chilledWaterLeaving a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:chilledWaterOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -203,6 +224,10 @@ bob:co2 a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:command a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+bob:condensedWaterEntering a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:condensedWaterLeaving a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:currentRating a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:data_rate a rdf:Property ;
@@ -217,7 +242,8 @@ bob:ductAirInlet a rdf:Property ;
 bob:ductAirOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:electricalInlet a rdf:Property ;
-    rdfs:subPropertyOf s223:hasSystemConnectionPoint .
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        s223:hasSystemConnectionPoint .
 bob:electricalPower a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:exhaustAirOutlet a rdf:Property ;
@@ -230,7 +256,11 @@ bob:hasMeasurementLocationHigh a rdf:Property .
 bob:hasMeasurementLocationLow a rdf:Property .
 bob:hasPower a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+bob:hotWaterEntering a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:hotWaterInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:hotWaterLeaving a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:hotWaterOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -273,6 +303,8 @@ bob:outputSignal a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:outsideAirInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasSystemConnectionPoint .
+bob:position a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 bob:radiantCooling a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:radiantHeating a rdf:Property ;
@@ -281,6 +313,10 @@ bob:returnAirInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasSystemConnectionPoint .
 bob:schedule a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+bob:setpointReset a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+bob:setpointResetInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:shadeCommand a rdf:Property .
 bob:shadeStatus a rdf:Property .
 bob:supplyAirOutlet a rdf:Property ;
@@ -292,6 +328,10 @@ bob:temperature_setpoint a rdf:Property ;
 bob:torque a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:vlan a rdf:Property .
+bob:waterInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+bob:waterOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:windows a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 functions:AVG_Temp a rdfs:Class ;
@@ -468,6 +508,17 @@ p223:EnumerationKind-YesNo a p223:EnumerationKind-YesNo,
 p223:EthernetFirewall a rdfs:Class ;
     rdfs:subClassOf s223:Connectable,
         s223:Device .
+p223:EthernetSwitch a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:Filter a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
+p223:HVACSpace a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:DomainSpace .
+p223:HVACZone a rdfs:Class ;
+    rdfs:subClassOf s223:Zone .
 p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -498,6 +549,11 @@ p223:LeftRight-Right a p223:LeftRight-Right,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-LeftRight,
         s223:EnumerationKind .
+p223:LightingSpace a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:DomainSpace .
+p223:LightingZone a rdfs:Class ;
+    rdfs:subClassOf s223:Zone .
 p223:ManualAuto-Auto a p223:ManualAuto-Auto,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -510,7 +566,8 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
         s223:EnumerationKind .
 p223:MotorStarter a rdfs:Class ;
     rdfs:subClassOf s223:Connectable,
-        s223:Device .
+        s223:Device,
+        s223:MotorStarter .
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -678,6 +735,9 @@ p223:TrueFalse-True a p223:TrueFalse-True,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
+p223:Window a rdfs:Class ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Device .
 p223:YesNo-No a p223:YesNo-No,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -690,6 +750,8 @@ p223:YesNo-Yes a p223:YesNo-Yes,
         s223:EnumerationKind .
 qudt:hasQuantityKind a rdf:Property .
 qudt:unit a rdf:Property .
+rec:Area a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 rec:Bathroom a rdfs:Class ;
     rdfs:subClassOf s223:PhysicalSpace,
         rec:Room .

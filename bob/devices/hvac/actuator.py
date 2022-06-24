@@ -41,7 +41,7 @@ _namespace = BOB
 class Actuator(_Actuator):
     _class_iri = S223.Actuator
     command: PercentCommand
-    actuatesProperty: Property
+    # actuatesProperty: Property
     feedback: Percent
     torque: Nm
 
@@ -54,7 +54,7 @@ class Actuator(_Actuator):
 class ProportionalActuator(Actuator):
     _class_iri = S223.Actuator
     command: PercentCommand
-    actuatesProperty: PercentCommand
+    # actuatesProperty: PercentCommand
     feedback: Percent
 
     def __init__(self, config: Dict = {}, **kwargs):
@@ -66,7 +66,7 @@ class ProportionalActuator(Actuator):
 class OnOffActuator(Actuator):
     _class_iri = S223.Actuator
     command: OnOffCommand
-    actuatesProperty: OnOffCommand
+    # actuatesProperty: OnOffCommand
     feedbackOpen: OnOffStatus
     feedbackClose: OnOffStatus
 
@@ -79,7 +79,7 @@ class OnOffActuator(Actuator):
 ElectricalProportionalActuator_template = {
     "cp": {"electricalInlet": Electricity_24V_60HzInletConnectionPoint},
     "properties": {
-        ("actuatesProperty", PercentCommand): {},
+        # ("actuatesProperty", PercentCommand): {},
         ("command", PercentCommand): {},
         ("feedback", Percent): {},
         ("torque", Nm): {},
@@ -90,7 +90,7 @@ ElectricalProportionalActuator_template = {
 ElectricalOnOffActuator_template = {
     "cp": {"electricalInlet": Electricity_24V_60HzInletConnectionPoint},
     "properties": {
-        ("actuatesProperty", OnOffCommand): {},
+        # ("actuatesProperty", OnOffCommand): {},
         ("command", OnOffCommand): {},
         ("feedbackOpen", OnOffStatus): {},
         ("feedbackClose", OnOffStatus): {},
@@ -122,7 +122,7 @@ class ElectricalOnOffActuator(OnOffActuator):
 PneumaticProportionalActuator_template = {
     "cp": {},
     "properties": {
-        ("actuatesProperty", PercentCommand): {},
+        # ("actuatesProperty", PercentCommand): {},
         ("command", PercentCommand): {},
         ("feedback", Percent): {},
         ("torque", Nm): {},
@@ -132,7 +132,7 @@ PneumaticProportionalActuator_template = {
 PneumaticOnOffActuator_template = {
     "cp": {},
     "properties": {
-        ("actuatesProperty", OnOffCommand): {},
+        # ("actuatesProperty", OnOffCommand): {},
         ("command", OnOffCommand): {},
         ("feedbackOpen", OnOffStatus): {},
         ("feedbackClose", OnOffStatus): {},

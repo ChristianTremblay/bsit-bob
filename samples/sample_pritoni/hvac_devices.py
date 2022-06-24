@@ -1,4 +1,6 @@
 from pathlib import Path
+from bob.devices.hvac.pump import PumpWithStarter
+from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
 
 import hvac_spaces as hs
 import physical_spaces as ps
@@ -14,10 +16,12 @@ from bob.devices.architectural import Window
 from bob.devices.electricity.starter import MotorStarter
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.fan import Fan
+from bob.devices.hvac.fan import Fan, FanWithStarter, FanWithVFD
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.stats import AirDifferentialStaticPressureSensor
-from bob.devices.hvac.vfd import VFD
+from bob.devices.hvac.chiller import Chiller
+from bob.devices.hvac.boiler import ElectricalHotWaterBoiler
+from bob.devices.electricity.vfd import VFD
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
@@ -65,24 +69,13 @@ ahu_template = {
         },
     },
     "devices": {
-        ("RF", Fan): {
+        ("RF", FanWithVFD): {
             "comment": "Return Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
         },
-        ("SF", Fan): {
+        ("SF", FanWithStarter): {
             "comment": "Supply Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
-        },
-        ("SF-STARTER", MotorStarter): {
-            "comment": "Supply Air Fan Starter (A6)",
-            "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
-            "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
-        },
-        ("RF-VFD", VFD): {
-            "comment": "VFD for return Fan (A7)",
-            "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
-            "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
-            "ethernet_port": EthernetBidirectionalConnectionPoint,
         },
         ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Heating coil"},
@@ -152,6 +145,15 @@ vav2_config = {
 }
 
 ahu = AirHandlingUnit(config=ahu_template)
+
+clg_vlv = TwoWayActuatedProportionalValve(label="A5")
+htg_vlv = TwoWayActuatedProportionalValve(label="A4")
+
+chiller = Chiller(label="Chiller")
+chilled_water_pump = PumpWithStarter(label="ChilledWaterPump")
+boiler = ElectricalHotWaterBoiler(label="Boiler")
+hot_water_pump = PumpWithStarter(label="HotWaterPump")
+
 
 exhaustfan_template = {
     "cp": {"electricalInlet": Electricity_120V_60HzInletConnectionPoint},

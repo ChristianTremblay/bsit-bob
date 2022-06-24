@@ -9,10 +9,10 @@ _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
 # Light Spaces
-openofficeEast_lightspace = LightingSpace(
+openofficeNorth_lightspace = LightingSpace(
     label="LightingSpace1", comment="OpenOffice North.Light"
 )
-openofficeWest_lightspace = LightingSpace(
+openofficeSouth_lightspace = LightingSpace(
     label="LightingSpace2", comment="OpenOffice South.Light"
 )
 bathroom_lightspace = LightingSpace(label="LightingSpace3", comment="Bathroom.Light")
@@ -27,16 +27,16 @@ kitchenette_lightspace = LightingSpace(
 # Lighting Zones
 lighting_zone_1 = LightingZone(
     label="LightingZone1",
-    comment="Contains OpenOffice Space West",
+    comment="Contains OpenOffice Space North",
     occupancy=OccupancyStatus(),
 )
-lighting_zone_1 > openofficeWest_lightspace
+lighting_zone_1 > openofficeNorth_lightspace
 lighting_zone_2 = LightingZone(
     label="LightingZone2",
-    comment="Contains OpenOffice Space East",
+    comment="Contains OpenOffice Space South",
     occupancy=OccupancyStatus(),
 )
-lighting_zone_2 > openofficeEast_lightspace
+lighting_zone_2 > openofficeSouth_lightspace
 
 lighting_zone_3 = LightingZone(
     label="LightingZone3",

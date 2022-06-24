@@ -14,7 +14,7 @@ _namespace = BOB
 
 
 class LightingSpace(DomainSpace):
-    _class_iri = S223.LightingSpace
+    _class_iri = P223.LightingSpace
     hasDomain = Domain.Lighting
     hasMedium = Light.Visible
     lightInlet: LightVisibleInletConnectionPoint
@@ -23,7 +23,7 @@ class LightingSpace(DomainSpace):
 
 
 class LightingZone(Zone):
-    _class_iri = S223.LightingZone
+    _class_iri = P223.LightingZone
     hasDomain = Domain.Lighting
     lightInlet: LightVisibleInletZoneConnectionPoint
     occupancy: OccupancyStatus

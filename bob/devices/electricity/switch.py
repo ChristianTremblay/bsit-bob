@@ -35,7 +35,6 @@ switch_template = {
 }
 
 
-
 class Switch(Device):
     _class_iri = P223.ElectricalSwitch
     # electricalInlet: ElectricalInletConnectionPoint

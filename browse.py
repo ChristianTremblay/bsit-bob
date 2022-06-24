@@ -133,7 +133,7 @@ while True:
         print()
         break
 
-    if (upstream := line[0] == "^"):
+    if (upstream := line[0] == "^") :
         line = line[1:]
 
     # get a prefixed node name

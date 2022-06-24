@@ -26,7 +26,7 @@ ex31:00002 a s223:Coil,
     rdfs:label "CW-Coil-1" ;
     s223:connectedFrom ex31:00007 ;
     s223:connectedThrough ex31:00001,
-        ex31:00017 ;
+        ex31:00020 ;
     s223:hasConnectionPoint ex31:00003,
         ex31:00004,
         ex31:00005,
@@ -38,7 +38,7 @@ ex31:00002 a s223:Coil,
 ex31:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
-    s223:connectsThrough ex31:00017 ;
+    s223:connectsThrough ex31:00020 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00002 .
@@ -65,7 +65,7 @@ ex31:00007 a s223:Connectable,
         s223:Device,
         s223:Fan ;
     rdfs:label "F" ;
-    s223:connectedThrough ex31:00017 ;
+    s223:connectedThrough ex31:00020 ;
     s223:connectedTo ex31:00002 ;
     s223:hasConnectionPoint ex31:00008,
         ex31:00009,
@@ -75,7 +75,10 @@ ex31:00007 a s223:Connectable,
         ex31:00013,
         ex31:00014,
         ex31:00015,
-        ex31:00016 ;
+        ex31:00016,
+        ex31:00017,
+        ex31:00018,
+        ex31:00019 ;
     bob:airInlet ex31:00008 ;
     bob:airOutlet ex31:00009 .
 ex31:00008 a s223:ConnectionPoint,
@@ -87,7 +90,7 @@ ex31:00008 a s223:ConnectionPoint,
 ex31:00009 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "F.airOutlet" ;
-    s223:connectsThrough ex31:00017 ;
+    s223:connectsThrough ex31:00020 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00007 .
@@ -97,7 +100,16 @@ ex31:00010 a s223:ConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf ex31:00007 .
-ex31:00011 a s223:ObservableProperty,
+ex31:00011 a s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        bob:PercentCommand ;
+    rdfs:label "speedRatio" ;
+    s223:isPropertyOf ex31:00007 ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
+ex31:00012 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -106,7 +118,7 @@ ex31:00011 a s223:ObservableProperty,
     s223:isPropertyOf ex31:00007 ;
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
-ex31:00012 a s223:ObservableProperty,
+ex31:00013 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -115,16 +127,25 @@ ex31:00012 a s223:ObservableProperty,
     s223:isPropertyOf ex31:00007 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
-ex31:00013 a s223:ObservableProperty,
+ex31:00014 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
     s223:isPropertyOf ex31:00007 ;
-    qudt:hasQuantityKind quantitykind:AngularVolocity ;
+    qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:unit unit:REV-PER-MIN .
-ex31:00014 a s223:ObservableProperty,
+ex31:00015 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Flow ;
+    rdfs:label "cfm" ;
+    s223:isPropertyOf ex31:00007 ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:unit unit:FT3-PER-MIN .
+ex31:00016 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -133,7 +154,7 @@ ex31:00014 a s223:ObservableProperty,
     s223:isPropertyOf ex31:00007 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
-ex31:00015 a s223:ObservableProperty,
+ex31:00017 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -143,7 +164,7 @@ ex31:00015 a s223:ObservableProperty,
     s223:isPropertyOf ex31:00007 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
-ex31:00016 a s223:ObservableProperty,
+ex31:00018 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -152,7 +173,16 @@ ex31:00016 a s223:ObservableProperty,
     s223:isPropertyOf ex31:00007 ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
-ex31:00017 a s223:Connection ;
+ex31:00019 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
+    rdfs:label "efficiency" ;
+    s223:isPropertyOf ex31:00007 ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
+ex31:00020 a s223:Connection ;
     rdfs:label "cnx" ;
     s223:connectsAt ex31:00003,
         ex31:00009 ;
