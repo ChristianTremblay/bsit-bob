@@ -5,6 +5,7 @@
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -257,9 +258,9 @@ exg3601:00031 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "zoneTemperature" ;
-    s223:hasExternalReference exg3601:00032 ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
+    qudt:unit unit:DEG_C ;
+    ref:hasExternalReference exg3601:00032 .
 exg3601:00032 a s223:ExternalReference ;
     rdfs:label "zoneTemperature.ExternalReference" .
 exg3601:00033 a s223:ObservableProperty,
@@ -268,9 +269,9 @@ exg3601:00033 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "supplyAirTemperature" ;
-    s223:hasExternalReference exg3601:00034 ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
+    qudt:unit unit:DEG_C ;
+    ref:hasExternalReference exg3601:00034 .
 exg3601:00034 a s223:ExternalReference ;
     rdfs:label "supplyAirTemperature.ExternalReference" .
 exg3601:00035 a s223:EnumerableProperty,
@@ -279,7 +280,7 @@ exg3601:00035 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "occupancy" ;
     s223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasExternalReference exg3601:00036 .
+    ref:hasExternalReference exg3601:00036 .
 exg3601:00036 a s223:ExternalReference ;
     rdfs:label "occupancy.ExternalReference" .
 exg3601:00037 a s223:ActuatableProperty,
@@ -288,9 +289,9 @@ exg3601:00037 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "damperPosition" ;
-    s223:hasExternalReference exg3601:00038 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:unit unit:PERCENT ;
+    ref:hasExternalReference exg3601:00038 .
 exg3601:00038 a s223:ExternalReference ;
     rdfs:label "damperPosition.ExternalReference" .
 exg3601:00039 a s223:ActuatableProperty,
@@ -299,9 +300,9 @@ exg3601:00039 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "valvePosition" ;
-    s223:hasExternalReference exg3601:00040 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:unit unit:PERCENT ;
+    ref:hasExternalReference exg3601:00040 .
 exg3601:00040 a s223:ExternalReference ;
     rdfs:label "valvePosition.ExternalReference" .
 exg3601:00041 a s223:ObservableProperty,
@@ -310,9 +311,9 @@ exg3601:00041 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "airFlow" ;
-    s223:hasExternalReference exg3601:00042 ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:unit unit:L_PER_SEC .
+    qudt:unit unit:L_PER_SEC ;
+    ref:hasExternalReference exg3601:00042 .
 exg3601:00042 a s223:ExternalReference ;
     rdfs:label "airFlow.ExternalReference" .
 exg3601:00043 a s223:EnumerableProperty,
@@ -321,7 +322,7 @@ exg3601:00043 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "fanStatus" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasExternalReference exg3601:00044 .
+    ref:hasExternalReference exg3601:00044 .
 exg3601:00044 a s223:ExternalReference ;
     rdfs:label "fanStatus.ExternalReference" .
 exg3601:00045 a s223:ActuatableProperty,
@@ -330,7 +331,7 @@ exg3601:00045 a s223:ActuatableProperty,
         s223:Property ;
     rdfs:label "fanCommand" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasExternalReference exg3601:00046 .
+    ref:hasExternalReference exg3601:00046 .
 exg3601:00046 a s223:ExternalReference ;
     rdfs:label "fanCommand.ExternalReference" .
 exg3601:00047 a p223:NetworkRoomSensor,
@@ -487,11 +488,11 @@ exg3601:00066 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:GasConcentration ;
     rdfs:label "CO2.GasConcentration" ;
-    s223:hasExternalReference exg3601:00067 ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance s223:Substance-CO2 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PPM .
+    qudt:unit unit:PPM ;
+    ref:hasExternalReference exg3601:00067 .
 exg3601:00067 a s223:ExternalReference ;
     rdfs:label "CO2.GasConcentration.ExternalReference" .
 exg3601:00068 a s223:Coil,

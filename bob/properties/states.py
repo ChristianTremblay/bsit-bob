@@ -39,42 +39,36 @@ _namespace = BOB
 
 class OnOffStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = S223.EnumeratedObservableProperty
-    hasExternalReference: ExternalReference
     hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum
 
 
 class OnOffCommand(EnumeratedActuatableProperty):
     _class_iri: URIRef = S223.EnumeratedActuatableProperty
-    hasExternalReference: ExternalReference
     hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum
 
 
 class NormalAlarmStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = S223.EnumeratedObservableProperty
-    hasExternalReference: ExternalReference
     hasEnumerationKind = NormalAlarmEnum
     hasValue: NormalAlarmEnum
 
 
 class OpenCloseCommand(EnumeratedActuatableProperty):
     _class_iri: URIRef = S223.EnumeratedActuatableProperty
-    hasExternalReference: ExternalReference
     hasEnumerationKind = OpenCloseEnum
     hasValue: OpenCloseEnum
 
 
 class OpenCloseStatus(EnumeratedActuatableProperty):
     _class_iri: URIRef = S223.EnumeratedActuatableProperty
-    hasExternalReference: ExternalReference
     hasEnumerationKind = OpenCloseEnum
     hasValue: OpenCloseEnum
 
 
 class Schedule(EnumerableProperty):
     _class_iri: URIRef = S223.EnumerableProperty
-    hasExternalReference: ExternalReference
     hasEnumerationKind = OccupancyEnum
     hasValue: OccupancyEnum
 
@@ -87,7 +81,6 @@ class OccupancyStatus(EnumeratedObservableProperty):
 
 class Movement(EnumeratedObservableProperty):
     _class_iri: URIRef = S223.EnumeratedObservableProperty
-    hasExternalReference: ExternalReference
     hasEnumerationKind = OnOffEnum
     hasValue: OnOffEnum
 

@@ -20,6 +20,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
+@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -2604,10 +2605,10 @@ functions:00002 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
-    s223:hasExternalReference bacnet_references:00005 ;
     s223:hasValue 0.0 ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
+    qudt:unit unit:DEG_C ;
+    ref:hasExternalReference bacnet_references:00005 .
 functions:00003 a s223:Connector,
         s223:InputConnector ;
     rdfs:label "FB-1.input" ;
@@ -2619,7 +2620,7 @@ functions:00004 a s223:Connector,
 functions:00005 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00011 .
 functions:00006 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
@@ -2662,7 +2663,7 @@ functions:00012 a s223:Connector,
 functions:00013 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00011 .
 functions:00014 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
@@ -2700,7 +2701,7 @@ functions:00019 a s223:Connector,
 functions:00020 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00011 .
 functions:00021 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
@@ -2738,7 +2739,7 @@ functions:00026 a s223:Connector,
 functions:00027 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00011 .
 functions:00028 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
@@ -2776,7 +2777,7 @@ functions:00033 a s223:Connector,
 functions:00034 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind p223:EnumerationKind-Occupancy ;
-    s223:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00011 .
 functions:00035 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
@@ -3408,14 +3409,14 @@ hvac_devices:00041 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasExternalReference bacnet_references:00009 .
+    ref:hasExternalReference bacnet_references:00009 .
 hvac_devices:00042 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasExternalReference bacnet_references:00010 .
+    ref:hasExternalReference bacnet_references:00010 .
 hvac_devices:00043 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
@@ -4956,11 +4957,11 @@ hvac_devices:00220 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "VAV1_ZN-T.Temperature" ;
-    s223:hasExternalReference bacnet_references:00007 ;
     s223:hasValue 69.7 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_F .
+    qudt:unit unit:DEG_F ;
+    ref:hasExternalReference bacnet_references:00007 .
 hvac_devices:00221 a s223:Connectable,
         s223:Damper,
         s223:Device ;
@@ -5157,11 +5158,11 @@ hvac_devices:00243 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "VAV2_ZN-T.Temperature" ;
-    s223:hasExternalReference bacnet_references:00008 ;
     s223:hasValue 73.2 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_F .
+    qudt:unit unit:DEG_F ;
+    ref:hasExternalReference bacnet_references:00008 .
 hvac_devices:00244 a s223:Connectable,
         s223:Damper,
         s223:Device ;
@@ -6322,8 +6323,8 @@ lighting_devices:00061 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasExternalReference bacnet_references:00013 ;
-    s223:hasValue s223:OnOff-Off .
+    s223:hasValue s223:OnOff-Off ;
+    ref:hasExternalReference bacnet_references:00013 .
 lighting_devices:00062 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
@@ -6363,10 +6364,10 @@ lighting_devices:00065 a s223:ActuatableProperty,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
-    s223:hasExternalReference bacnet_references:00012 ;
     s223:hasValue 0.0 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:unit unit:PERCENT ;
+    ref:hasExternalReference bacnet_references:00012 .
 lighting_devices:00066 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "Luminaire1.lightOutlet" ;

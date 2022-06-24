@@ -180,6 +180,7 @@ UNIT = bind_namespace("unit", "http://qudt.org/vocab/unit/")
 enum = bind_namespace(
     "enum", "http://data.ashrae.org/standard223/1.0/vocab/enumeration#"
 )
+REF = bind_namespace("ref", "https://brickschema.org/schema/Brick/ref#")
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
@@ -791,8 +792,8 @@ class Property(Node):
     An attribute, quality, or characteristic of a feature of interest.  This is
     an abstract base class.
     """
+    _attr_uriref = {"hasExternalReference": REF.hasExternalReference}
 
-    # _class_iri: URIRef = None
     ofMedium: Medium
     ofSubstance: Substance
     hasValue: Literal
@@ -850,7 +851,7 @@ class Property(Node):
 
         # link the two together
         self._data_graph.add(
-            (self._node_iri, S223.hasExternalReference, external_reference._node_iri)
+            (self._node_iri, REF.hasExternalReference, external_reference._node_iri)
         )
         if INCLUDE_INVERSE:
             external_reference.isExternalReferenceOf = self

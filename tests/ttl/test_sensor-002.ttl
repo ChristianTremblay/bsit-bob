@@ -9,6 +9,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
+@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 <http://data.ashrae.org/standard223/1.0/data/test_sensor-002>
@@ -178,8 +179,8 @@ ex31:00022 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "TPD-01.DifferentialStaticPressure" ;
-    s223:hasExternalReference ex31:00023 ;
     s223:ofMedium s223:Medium-Air ;
-    qudt:hasQuantityKind quantitykind:ForcePerArea .
+    qudt:hasQuantityKind quantitykind:ForcePerArea ;
+    ref:hasExternalReference ex31:00023 .
 ex31:00023 a s223:ExternalReference ;
     rdfs:label "TPD-01.DifferentialStaticPressure.ExternalReference" .

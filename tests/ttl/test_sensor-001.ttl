@@ -7,6 +7,7 @@
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -42,10 +43,10 @@ ex31:00004 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ats2.Temperature" ;
-    s223:hasExternalReference ex31:00005 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
+    qudt:unit unit:DEG_C ;
+    ref:hasExternalReference ex31:00005 .
 ex31:00005 a s223:ExternalReference ;
     rdfs:label "ats2.Temperature.ExternalReference" .
 ex31:00006 a s223:Connectable,

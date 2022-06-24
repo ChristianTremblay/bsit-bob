@@ -26,7 +26,6 @@ class ActuatableProperty(Property):
     """
 
     _class_iri: URIRef = S223.ActuatableProperty
-    hasExternalReference: ExternalReference
 
 
 class ObservableProperty(Property):
@@ -35,7 +34,6 @@ class ObservableProperty(Property):
     """
 
     _class_iri: URIRef = S223.ObservableProperty
-    hasExternalReference: ExternalReference
     isObservedBy: Node
 
 
@@ -47,7 +45,6 @@ class QuantifiableProperty(Property):
     _attr_uriref = {"unit": QUDT["unit"], "hasQuantityKind": QUDT["hasQuantityKind"]}
 
     _class_iri: URIRef = S223.QuantifiableProperty
-    hasExternalReference: ExternalReference
     unit: URIRef
     hasQuantityKind: URIRef
 
@@ -129,7 +126,6 @@ class EnumerableProperty(Property):
 
     _class_iri: URIRef = S223.EnumerableProperty
     hasEnumerationKind: EnumerationKind
-    hasExternalReference: ExternalReference
 
     def __init__(self, value: Any = None, **kwargs: Any) -> None:
         logging.debug(f"EnumerableProperty.__init__ {value!r} {kwargs}")
@@ -170,7 +166,6 @@ class EnumeratedActuatableProperty(EnumerableProperty, ActuatableProperty):
     """
 
     _class_iri: URIRef = S223.EnumeratedActuatableProperty
-    hasExternalReference: ExternalReference
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

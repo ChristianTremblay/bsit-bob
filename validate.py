@@ -87,13 +87,6 @@ parser.add_argument(
     help="store the inference graph",
 )
 
-# load/run inference rules in s223 standard inference directory
-parser.add_argument(
-    "--s223-sparql-rule",
-    action="store_true",
-    help="runs SPARQL construct rules in inference directory",
-)
-
 # run file(s) of sparql rules
 parser.add_argument(
     "--sparql-rule",
@@ -145,37 +138,58 @@ for fname in glob.glob(os.path.join(S223_DIRECTORY, "validation", "*.ttl")):
     logging.debug(fname)
     shacl_graph.load(fname, format="turtle")
 
+for fname in glob.glob(os.path.join(S223_DIRECTORY, "inference", "*.ttl")):
+    logging.debug(fname)
+    shacl_graph.load(fname, format="turtle")
+
 # load the vocabulary into the ontology graph
 ontology_graph = Graph()
 for fname in glob.glob(os.path.join(S223_DIRECTORY, "vocab", "*.ttl")):
     logging.debug(fname)
     ontology_graph.load(fname, format="turtle")
 
+# additional ontology graph files
 if args.ontology:
     ontology_graph.parse(fname, format="turtle")
     if args.info and sys.stdin.isatty():
         print(f"ontology triples: {len(ontology_graph)}")
 
-if args.s223_sparql_rule:
-    for fname in glob.glob(os.path.join(S223_DIRECTORY, "inference", "*.ttl")):
-        logging.debug(fname)
-        shacl_graph.load(fname, format="turtle")
+# additional sparql rule files
 if args.sparql_rule:
     for fname in args.sparql_rule:
         shacl_graph.parse(fname, format="turtle")
         print(shacl_graph.print())
 
 # expand the graph
-if args.rdfs or args.owlrl or args.both:
-    if (args.rdfs and args.owlrl) or args.both:
-        inferencer = owlrl.DeductiveClosure(owlrl.RDFS_OWLRL_Semantics)
-    elif args.rdfs and not args.owlrl:
-        inferencer = owlrl.DeductiveClosure(owlrl.RDFS_Semantics)
-    elif not args.rdfs and args.owlrl:
-        inferencer = owlrl.DeductiveClosure(owlrl.OWLRL_Semantics)
-    inferencer.expand(data_graph)
-    if args.info and sys.stdin.isatty():
-        print(f"data triples after inferencer: {len(data_graph)}")
+inference = 'none'
+if (args.rdfs and args.owlrl) or args.both:
+    inference = 'both'
+elif args.rdfs and not args.owlrl:
+    inference = 'rdfs'
+elif not args.rdfs and args.owlrl:
+    inference = 'owlrl'
+
+# print out the prefixes
+if args.info and sys.stdin.isatty():
+    print("prefixes:")
+    for prefix, uriref in data_graph.namespaces():
+        print(f"    {prefix}: {uriref}")
+    print("")
+
+# create a validator and run it
+v = Validator(
+    data_graph,
+    shacl_graph=shacl_graph,
+    ont_graph=ontology_graph,
+    inference=inference,
+    options={"iterate_rules": True, "advanced": True},
+)
+conforms, report_graph, report_text = v.run()
+
+# option to save the report graph
+if args.report:
+    with open(args.report, "wb") as f:
+        report_graph.serialize(f, format="turtle")
 
 # clean out most of the useless triples
 if args.clean:
@@ -199,27 +213,6 @@ if args.clean:
 if args.expanded:
     with open(args.expanded, "wb") as f:
         data_graph.serialize(f, format="turtle")
-
-# print out the prefixes
-if args.info and sys.stdin.isatty():
-    print("prefixes:")
-    for prefix, uriref in data_graph.namespaces():
-        print(f"    {prefix}: {uriref}")
-    print("")
-
-# create a validator and run it
-v = Validator(
-    data_graph,
-    shacl_graph=shacl_graph,
-    ont_graph=ontology_graph,
-    options={"iterate_rules": True, "advanced": True},
-)
-conforms, report_graph, report_text = v.run()
-
-# option to save the report graph
-if args.report:
-    with open(args.report, "wb") as f:
-        report_graph.serialize(f, format="turtle")
 
 # find the definitions
 namespace_map = {}
