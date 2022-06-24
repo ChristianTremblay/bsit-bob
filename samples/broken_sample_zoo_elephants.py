@@ -32,7 +32,7 @@ from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
 from bob.devices.hvac.humidifier import Humidifier, SteamPipe
 from bob.devices.hvac.pump import Pump
 from bob.devices.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.devices.hvac.vfd import VFD
+from bob.devices.electricity.vfd import VFD
 from bob.devices.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor

@@ -40,7 +40,7 @@ class EthernetSwitch(Device):
     An Ethernet Switch
     """
 
-    _class_iri: URIRef = S223.EthernetSwitch
+    _class_iri: URIRef = P223.EthernetSwitch
 
     def __init__(self, config: Dict = None, **kwargs):
         if "ports" in kwargs:

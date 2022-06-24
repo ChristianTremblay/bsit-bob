@@ -5,7 +5,7 @@ import hvac_spaces as hs
 import physical_spaces as ps
 
 from bob.connections.air import *
-from bob.core import bind_model_namespace, dump, UNIT
+from bob.core import UNIT, bind_model_namespace, dump
 from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.temperature import Temperature
 
@@ -92,6 +92,7 @@ returnExhaust >> hd.ahu["MADPR"].airInlet
 # AHU Sensors
 hd.ahu["OA-T"].hasMeasurementLocation = outdoor
 hd.ahu["TPD1"].hasMeasurementLocationHigh = hd.ahu["FILTER"].airInlet
+hd.ahu["MA-T"].hasMeasurementLocation = hd.ahu["FILTER"].airInlet
 hd.ahu["TPD1"].hasMeasurementLocationLow = hd.ahu["FILTER"].airOutlet
 hd.ahu["HC-T"].hasMeasurementLocation = hd.ahu["HTGCOIL"].airOutlet
 hd.ahu["DA-T"].hasMeasurementLocation = hd.ahu["CLGCOIL"].airOutlet
@@ -100,10 +101,19 @@ hd.ahu["TPD2"].hasMeasurementLocationLow = plenum
 hd.ahu["TPD3"].hasMeasurementLocationHigh = hd.ahu["RF"].airOutlet
 hd.ahu["TPD3"].hasMeasurementLocationLow = plenum
 
-hd.ahu["RF-VFD"].drive_running = OnOffStatus(label="VFD DriveRunning")
-hd.ahu["RF-VFD"].run_command = OnOffCommand(label="Run Command")
-hd.ahu["RF"].onOffStatus = hd.ahu["RF-VFD"].drive_running
-hd.ahu["RF"].onOffCommand = hd.ahu["RF-VFD"].run_command
+hd.ahu["RF"]["vfd"].drive_running = OnOffStatus(label="VFD DriveRunning")
+hd.ahu["RF"]["vfd"].run_command = OnOffCommand(label="Run Command")
+
+hd.boiler.hotWaterLeaving >> hd.hot_water_pump.waterInlet
+hd.hot_water_pump.waterOutlet >> hd.ahu["HTGCOIL"].hotWaterInlet
+
+hd.ahu["HTGCOIL"].hotWaterOutlet >> hd.htg_vlv.waterInlet
+hd.htg_vlv.waterOutlet >> hd.boiler.hotWaterEntering
+
+hd.chiller.chilledWaterLeaving >> hd.chilled_water_pump.waterInlet
+hd.chilled_water_pump.waterOutlet >> hd.ahu["CLGCOIL"].chilledWaterInlet
+hd.ahu["CLGCOIL"].chilledWaterOutlet >> hd.clg_vlv.waterInlet
+hd.clg_vlv.waterOutlet >> hd.chiller.chilledWaterEntering
 
 
 # Windows
@@ -154,6 +164,12 @@ hd.vav1.airInlet.mapsTo = hd.vav1["VAV1_damper"].airInlet
 hd.vav1.airOutlet.mapsTo = hd.vav1["VAV1_HeatingCoil"].airOutlet
 hd.vav2.airInlet.mapsTo = hd.vav2["VAV2_damper"].airInlet
 hd.vav2.airOutlet.mapsTo = hd.vav2["VAV2_HeatingCoil"].airOutlet
+
+hd.ahu.outsideAirInlet.mapsTo = hd.ahu["OADPR"].airInlet
+hd.ahu.returnAirInlet.mapsTo = hd.ahu["MADPR"].airInlet
+hd.ahu.supplyAirOutlet.mapsTo = hd.ahu["SF"].airOutlet
+hd.ahu.exhaustAirOutlet.mapsTo = hd.ahu["EADPR"].airOutlet
+hd.ahu.electricalInlet.mapsTo = hd.ahu["SF"]["starter"].electricalInlet
 
 if __name__ == "__main__":
     dump()

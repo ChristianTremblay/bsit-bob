@@ -15,8 +15,8 @@ _namespace = BOB
 
 class HotWaterBoiler(Device):
     _class_iri = S223.Boiler
-    hotWaterLeaving: HotWaterInletConnectionPoint
-    hotWaterEntering: HotWaterOutletConnectionPoint
+    hotWaterLeaving: HotWaterOutletConnectionPoint
+    hotWaterEntering: HotWaterInletConnectionPoint
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):

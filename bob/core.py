@@ -3090,19 +3090,30 @@ def template_update(base: Dict = {}, config: Dict = None, bases: List = None):
     _config = template_update(template, user_provided_config_dict)
 
     """
+
+    def merge_dict(existing, new):
+        for k in new:
+            if k in existing:
+                if isinstance(existing[k], dict) and isinstance(new[k], dict):
+                    merge_dict(existing[k], new[k])
+                else:
+                    existing[k] = new[k]
+            else:
+                existing[k] = new[k]
+
     if bases:
         d1, d2 = bases
         _d1 = copy.deepcopy(d1)
         _d2 = copy.deepcopy(d2)
-        _d1.update(_d2)
+        merge_dict(_d1, _d2)
         if config:
-            _d1.update(config)
+            merge_dict(_d1, config)
         return _d1
 
     else:
         _d = copy.deepcopy(base)
         if config:
-            _d.update(config)
+            merge_dict(_d, config)
         return _d
 
 

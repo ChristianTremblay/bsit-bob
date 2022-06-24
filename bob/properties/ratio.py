@@ -17,7 +17,7 @@ class PercentCommand(QuantifiableActuatableProperty):
 
 
 class RPM(QuantifiableObservableProperty):
-    hasQuantityKind = QUANTITYKIND.AngularVolocity
+    hasQuantityKind = QUANTITYKIND.AngularVelocity
     unit = UNIT["REV-PER-MIN"]
 
 

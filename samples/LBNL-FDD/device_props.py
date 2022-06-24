@@ -15,7 +15,7 @@ from bob.core import Junction, System, bind_model_namespace, dump, QUANTITYKIND,
 from bob.devices.hvac.damper import Damper
 from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.vfd import VFD
+from bob.devices.electricity.vfd import VFD
 from bob.property import QuantifiableObservableProperty, Setpoint
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.humidity import AirHumiditySensor

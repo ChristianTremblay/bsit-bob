@@ -1,6 +1,7 @@
 from rdflib import URIRef
 
-from ..core import PhysicalSpace, bind_namespace, S223
+from ..core import PhysicalSpace, bind_namespace, QUANTITYKIND, S223, UNIT
+from ..properties.physical import Length, Area
 
 """
 This is a hack, Real Estate Core has many namespaces, and some of the physical
@@ -10,44 +11,44 @@ _namespace = bind_namespace("rec", "https://w3id.org/rec/core/")
 
 
 class Site(PhysicalSpace):
-    pass
+    Area: Area
 
 
 class Building(PhysicalSpace):
-    pass
+    Area: Area
 
 
 class Roof(PhysicalSpace):
-    pass
+    Area: Area
 
 
 class Floor(PhysicalSpace):
-    pass
+    Area: Area
 
 
 class Basement(Floor):
-    pass
+    Area: Area
 
 
 class Room(PhysicalSpace):
-    pass
+    Area: Area
 
 
 class Hall(Room):
-    pass
+    Area: Area
 
 
 class Corridor(Room):
-    pass
+    Area: Area
 
 
 class Bathroom(Room):
-    pass
+    Area: Area
 
 
 class Office(Room):
-    pass
+    Area: Area
 
 
 class MechanicalRoom(Room):
-    pass
+    Area: Area

@@ -36,7 +36,7 @@ from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.stats import HighStaticPressureStat
 from bob.devices.hvac.valve import TwoWayValve
-from bob.devices.hvac.vfd import VFD
+from bob.devices.electricity.vfd import VFD
 from bob.externalreference.BACNET import BACnetDevice, BACnetReference
 from bob.functions import InputConnector
 

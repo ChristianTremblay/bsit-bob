@@ -41,7 +41,7 @@ from bob.core import (
 from bob.devices.hvac.actuator import ElectricalProportionalActuator
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.fan import Fan
+from bob.devices.hvac.fan import Fan, FanWithVFD
 from bob.devices.hvac.filter import Filter
 from bob.devices.hvac.gas import GasMonitor
 from bob.devices.hvac.stats import (
@@ -50,7 +50,7 @@ from bob.devices.hvac.stats import (
     NetworkThermostat,
 )
 from bob.devices.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.devices.hvac.vfd import VFD
+from bob.devices.electricity.vfd import VFD
 from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, G36Sequence
 from bob.properties import Flow, PercentCommand, Temperature
 from bob.properties.states import SmokePresence
@@ -134,8 +134,7 @@ chws = ChilledWaterConnection(label="Chilled Water Supply")
 chwr = ChilledWaterConnection(label="Chilled Water Return")
 
 # Supply Fan with its VFD
-sf = Fan(label="SF", comment="Supply Fan")
-sf_vfd = VFD(label="SF-VFD", comment="Supply Fan VFD")
+sf = FanWithVFD(label="SF", comment="Supply Fan")
 
 
 # Protections
@@ -156,8 +155,7 @@ rat = AirTemperatureSensor(label="RA-T", unit=UNIT.DEG_C, comment="Return Air Te
 rad = ElectricalActuatedProportionalDamper(label="RAD", comment="Return Air Damper")
 
 # Exhaust Fan with its VFD
-ef = Fan(label="EF", comment="Exhaust Fan")
-ef_vfd = VFD(label="EF-VFD", comment="Exhaust Fan VFD")
+ef = FanWithVFD(label="EF", comment="Exhaust Fan")
 ead = ElectricalActuatedProportionalDamper(label="EAD", comment="Exhaust Air Damper")
 
 building_dpt = DifferentialStaticPressureSensor(

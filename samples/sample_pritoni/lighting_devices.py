@@ -24,7 +24,7 @@ kitchenette_luminaire_11 = Luminaire(
     comment="Luminaire in kitchenette #11",
     hasPhysicalLocation=ps.kitchenette,
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(100, unit=UNIT.W),
+    electricalPower=ElectricPower(15, unit=UNIT.W),
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
 )
@@ -33,12 +33,12 @@ kitchenette_luminaire_12 = Luminaire(
     comment="Luminaire in kitchenette #12",
     hasPhysicalLocation=ps.kitchenette,
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(100, unit=UNIT.W),
+    electricalPower=ElectricPower(15, unit=UNIT.W),
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
 )
 kitchenette_movement = OccupancySensor(
-    label="OccSensor4",
+    label="O4",
     comment="Occupancy sensor for kitchenette luminaires 11 & 12 (O4)",
 )
 kitch_light_conn = LightVisibleConnection(
@@ -54,7 +54,7 @@ privateoffice_luminaire_7 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(60, unit=UNIT.W),
+    electricalPower=ElectricPower(20, unit=UNIT.W),
 )
 privateoffice_luminaire_8 = Luminaire(
     label="Luminaire8",
@@ -63,10 +63,10 @@ privateoffice_luminaire_8 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(60, unit=UNIT.W),
+    electricalPower=ElectricPower(20, unit=UNIT.W),
 )
 privateoffice_movement = MovementSensor(
-    label="OccSensor3",
+    label="O3",
     comment="Occupancy sensor for Privtae Office (O3)",
     hasPhysicalLocation=ps.private_office,
     hasMeasurementLocation=ls.privateoffice_lightspace,
@@ -87,7 +87,7 @@ corridor_luminaire_9 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(100, unit=UNIT.W),
+    electricalPower=ElectricPower(15, unit=UNIT.W),
 )
 corridor_luminaire_10 = Luminaire(
     label="Luminaire10",
@@ -96,10 +96,10 @@ corridor_luminaire_10 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(100, unit=UNIT.W),
+    electricalPower=ElectricPower(15, unit=UNIT.W),
 )
 corridor_movement = OccupancySensor(
-    label="OccSensor5",
+    label="O5",
     comment="Occupancy sensor for Corridor (O5)",
 )
 corridor_light_conn = LightVisibleConnection(
@@ -115,7 +115,7 @@ bathroom_luminaire_5 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(60, unit=UNIT.W),
+    electricalPower=ElectricPower(10, unit=UNIT.W),
 )
 bathroom_luminaire_6 = Luminaire(
     label="Luminaire6",
@@ -124,13 +124,13 @@ bathroom_luminaire_6 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(60, unit=UNIT.W),
+    electricalPower=ElectricPower(10, unit=UNIT.W),
 )
 bathroom_light_conn = LightVisibleConnection(
     label="LightHub_5_6", comment="Needed to connect multiple luminaires to space"
 )
 bathroom_movement = OccupancySensor(
-    label="OccSensor2",
+    label="O2",
     comment="Occupancy sensor for Bathroom (O2)",
 )
 
@@ -138,59 +138,58 @@ bathroom_movement = OccupancySensor(
 # Now we build lights for OpenOffice East
 
 
-openofficeEast_luminaire_1 = Luminaire(
+openofficeNorth_luminaire_1 = Luminaire(
     label="Luminaire1",
-    comment="Luminaire #1 in OpenOffice East",
+    comment="Luminaire #1 in OpenOffice North",
     hasPhysicalLocation=ps.openoffice,
     brightnessRatio=0,
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(13, unit=UNIT.W),
+    electricalPower=ElectricPower(40, unit=UNIT.W),
 )
-openofficeEast_luminaire_2 = Luminaire(
+openofficeNorth_luminaire_2 = Luminaire(
     label="Luminaire2",
-    comment="Luminaire #2 in OpenOffice East",
+    comment="Luminaire #2 in OpenOffice North",
     hasPhysicalLocation=ps.openoffice,
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(13, unit=UNIT.W),
+    electricalPower=ElectricPower(40, unit=UNIT.W),
 )
-openofficeWest_luminaire_3 = Luminaire(
+openofficeSouth_luminaire_3 = Luminaire(
     label="Luminaire3",
-    comment="Luminaire #3 in OpenOffice West",
+    comment="Luminaire #3 in OpenOffice South",
     hasPhysicalLocation=ps.openoffice,
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(13, unit=UNIT.W),
+    electricalPower=ElectricPower(40, unit=UNIT.W),
 )
-openofficeWest_luminaire_4 = Luminaire(
+openofficeSouth_luminaire_4 = Luminaire(
     label="Luminaire4",
-    comment="Luminaire #4 in OpenOffice West",
+    comment="Luminaire #4 in OpenOffice South",
     hasPhysicalLocation=ps.openoffice,
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(13, unit=UNIT.W),
+    electricalPower=ElectricPower(40, unit=UNIT.W),
 )
-# openofficeEast_luminaire_1.lightOutlet >> openofficeEast_lightspace.lightInlet
-openofficeEast_light_conn = LightVisibleConnection(
+openofficeNorth_light_conn = LightVisibleConnection(
     label="LightHub_1_2", comment="Needed to connect multiple luminaires to space"
 )
-openofficeWest_light_conn = LightVisibleConnection(
+openofficeSouth_light_conn = LightVisibleConnection(
     label="LightHub_3_4", comment="Needed to connect multiple luminaires to space"
 )
 
 # Occupancy in OpenOffice comes from 1 sensors for both spaces
 openoffice_movement = OccupancySensor(
-    label="OccSensor1",
+    label="O1",
     comment="Occupancy sensor for OpenOffice (O1)",
 )
 
 daylight_sensor = DaylightSensor(
-    label="Daylight Sensor", comment="Daylight sensor installed in open office (D1)"
+    label="D1", comment="Daylight sensor installed in open office (D1)"
 )
 
 # Windows are good for natural light

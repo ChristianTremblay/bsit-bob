@@ -2,13 +2,25 @@ from typing import Dict
 
 from rdflib import URIRef
 
+from bob.devices.electricity import _VFD
+
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
+    EthernetBidirectionalConnectionPoint,
 )
-from ...core import ConnectionPoint, Device, Property, BOB, P223, S223
+from ...core import (
+    ConnectionPoint,
+    Device,
+    logging,
+    Property,
+    BOB,
+    P223,
+    S223,
+    template_update,
+)
 from ...properties import (
     HP,
     RPM,
@@ -29,8 +41,10 @@ vfd_template = {
     "cp": {
         "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
         "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
+        "ethernet_port": EthernetBidirectionalConnectionPoint,
     },
     "properties": {
+        # ("actuatesProperty", PercentCommand): {},
         ("amps", Amps): {},
         ("hp", HP): {},
         ("kW", ElectricPowerkW): {},
@@ -44,10 +58,11 @@ vfd_template = {
 }
 
 
-class VFD(Device):
+class VFD(_VFD):
     _class_iri: URIRef = S223.VariableFrequencyDrive
 
-    def __init__(self, config: Dict = vfd_template, **kwargs):
-        config["properties"] = config.get("properties", vfd_template["properties"])
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update(vfd_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        logging.debug(f"VFD.__init__ {_config} {kwargs}")
+        super().__init__(_config, **kwargs)
