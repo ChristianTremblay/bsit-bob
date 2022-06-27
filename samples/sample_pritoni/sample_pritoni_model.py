@@ -64,10 +64,10 @@ ps.kitchenette > ls.kitchenette_lightspace
 dump(
     data_graph,
     filename=f"samples/ttl/{model_name}.data.ttl",
-    header=sample_header(model_name),
+    header=sample_header(model_name, "data"),
 )
 dump(
     schema_graph,
     filename=f"samples/ttl/{model_name}.schema.ttl",
-    header=sample_header(model_name),
+    header=sample_header(model_name, "schema"),
 )
