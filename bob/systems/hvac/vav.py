@@ -25,7 +25,7 @@ _namespace = BOB
 vav_system_template = {
     "params": {"label": "VAV", "comment": "VAV Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
             "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
@@ -43,7 +43,7 @@ vav_system_template = {
 vav_dual_template = {
     "params": {"label": "VAV", "comment": "VAV Dual Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
             "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
@@ -64,7 +64,7 @@ vav_dual_template = {
 vav_withreheat_template = {
     "params": {"label": "VAV", "comment": "VAV Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
             "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",

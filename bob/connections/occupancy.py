@@ -30,7 +30,6 @@ class OccupancyConnection(Connection):
 
 class OccupancyConnectionPoint(ConnectionPoint):
     hasMedium: Medium
-    _class_iri = S223.ConnectionPoint
 
 
 class OccupancyInletConnectionPoint(OccupancyConnectionPoint, InletConnectionPoint):
@@ -43,7 +42,6 @@ class OccupancyOutletConnectionPoint(OccupancyConnectionPoint, OutletConnectionP
 
 class OccupancySystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium
-    _class_iri = S223.SystemConnectionPoint
 
 
 class OccupancyInletSystemConnectionPoint(

@@ -51,7 +51,6 @@ ex31:00004 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 ex31:00005 a p223:GasMonitor,
-        s223:Connectable,
         s223:Device ;
     rdfs:label "CO2-2" ;
     s223:contains ex31:00007,
@@ -60,14 +59,13 @@ ex31:00005 a p223:GasMonitor,
     s223:hasPhysicalLocation ex31:00037 ;
     bob:airInletSupply ex31:00006 ;
     rdfs:comment "CO2 Monitor with temperature reading" .
-ex31:00006 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00006 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "CO2-2.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00005 .
-ex31:00007 a s223:Connectable,
-        s223:Device,
+ex31:00007 a s223:Device,
         s223:Sensor ;
     rdfs:label "CO2_sensor" ;
     s223:hasMaxRange ex31:00002 ;
@@ -89,8 +87,7 @@ ex31:00008 a s223:ObservableProperty,
     ref:hasExternalReference ex31:00009 .
 ex31:00009 a s223:ExternalReference ;
     rdfs:label "CO2_sensor.GasConcentration.ExternalReference" .
-ex31:00010 a s223:Connectable,
-        s223:Device,
+ex31:00010 a s223:Device,
         s223:Sensor ;
     rdfs:label "Temperature_sensor" ;
     s223:hasMaxRange ex31:00004 ;
@@ -144,7 +141,6 @@ ex31:00016 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PPM .
 ex31:00017 a p223:GasMonitor,
-        s223:Connectable,
         s223:Device ;
     rdfs:label "GM-1" ;
     s223:contains ex31:00019,
@@ -152,14 +148,13 @@ ex31:00017 a p223:GasMonitor,
     s223:hasConnectionPoint ex31:00018 ;
     bob:airInletSupply ex31:00018 ;
     rdfs:comment "Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot" .
-ex31:00018 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00018 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "GM-1.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00017 .
-ex31:00019 a s223:Connectable,
-        s223:Device,
+ex31:00019 a s223:Device,
         s223:Sensor ;
     rdfs:label "CO_sensor" ;
     s223:hasMaxRange ex31:00014 ;
@@ -180,8 +175,7 @@ ex31:00020 a s223:ObservableProperty,
     ref:hasExternalReference ex31:00021 .
 ex31:00021 a s223:ExternalReference ;
     rdfs:label "CO_sensor.GasConcentration.ExternalReference" .
-ex31:00022 a s223:Connectable,
-        s223:Device,
+ex31:00022 a s223:Device,
         s223:Sensor ;
     rdfs:label "NO2_sensor" ;
     s223:hasMaxRange ex31:00016 ;
@@ -219,21 +213,19 @@ ex31:00026 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PPM .
 ex31:00027 a p223:GasMonitor,
-        s223:Connectable,
         s223:Device ;
     rdfs:label "CO2-1" ;
     s223:contains ex31:00029 ;
     s223:hasConnectionPoint ex31:00028 ;
     bob:airInletSupply ex31:00028 ;
     rdfs:comment "CO2 Monitor" .
-ex31:00028 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00028 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "CO2-1.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00027 .
-ex31:00029 a s223:Connectable,
-        s223:Device,
+ex31:00029 a s223:Device,
         s223:Sensor ;
     rdfs:label "CO2_sensor" ;
     s223:hasMaxRange ex31:00026 ;
@@ -255,21 +247,19 @@ ex31:00030 a s223:ObservableProperty,
 ex31:00031 a s223:ExternalReference ;
     rdfs:label "CO2_sensor.GasConcentration.ExternalReference" .
 ex31:00032 a p223:GasMonitor,
-        s223:Connectable,
         s223:Device ;
     rdfs:label "CO2-4" ;
     s223:contains ex31:00034 ;
     s223:hasConnectionPoint ex31:00033 ;
     bob:airInletSupply ex31:00033 ;
     rdfs:comment "CO2 Monitor" .
-ex31:00033 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00033 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "CO2-4.airInletSupply" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00032 .
-ex31:00034 a s223:Connectable,
-        s223:Device,
+ex31:00034 a s223:Device,
         s223:Sensor ;
     rdfs:label "CO2_sensor" ;
     s223:hasMaxRange ex31:00026 ;
@@ -294,7 +284,6 @@ ex31:00037 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Basement" .
 ex31:00038 a p223:HVACSpace,
-        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Basement HVAC Space" ;
     s223:hasConnectionPoint ex31:00039,
@@ -313,44 +302,44 @@ ex31:00038 a p223:HVACSpace,
     bob:radiantCooling ex31:00045 ;
     bob:radiantHeating ex31:00044 ;
     bob:windows ex31:00043 .
-ex31:00039 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00039 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00038 .
-ex31:00040 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex31:00040 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00038 .
 ex31:00041 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00038 .
 ex31:00042 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00038 .
 ex31:00043 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00038 .
 ex31:00044 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00038 .
 ex31:00045 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
