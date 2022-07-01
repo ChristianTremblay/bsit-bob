@@ -89,7 +89,7 @@ Thermostat_template = {
 vav_system_template = {
     "params": {"label": "VAV_FIG.A1", "comment": "VAV with Airflow + Damper"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
             "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
@@ -100,7 +100,7 @@ vav_system_template = {
     "properties": {
         ("zoneTemperature", Temperature): {"unit": UNIT.DEG_C},
         ("damperPosition", PercentCommand): {},
-        ("airFlow", Flow): {"unit": UNIT.L_PER_SEC},
+        ("airFlow", Flow): {"unit": UNIT["L-PER-SEC"]},
     },
     "devices": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},

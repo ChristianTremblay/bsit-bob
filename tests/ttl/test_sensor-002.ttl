@@ -18,7 +18,6 @@
   rdfs:label "test_sensor-002" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 ex31:00001 a p223:HVACSpace,
-        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "CleanRoom HVAC Space" ;
     s223:hasConnectionPoint ex31:00002,
@@ -38,50 +37,49 @@ ex31:00001 a p223:HVACSpace,
     bob:radiantCooling ex31:00008 ;
     bob:radiantHeating ex31:00007 ;
     bob:windows ex31:00006 .
-ex31:00002 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00002 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00001 .
-ex31:00003 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex31:00003 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00001 .
 ex31:00004 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00001 .
 ex31:00005 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00001 .
 ex31:00006 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00001 .
 ex31:00007 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00001 .
 ex31:00008 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00001 .
 ex31:00009 a p223:HVACSpace,
-        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "SAS HVAC Space" ;
     s223:hasConnectionPoint ex31:00010,
@@ -101,44 +99,44 @@ ex31:00009 a p223:HVACSpace,
     bob:radiantCooling ex31:00016 ;
     bob:radiantHeating ex31:00015 ;
     bob:windows ex31:00014 .
-ex31:00010 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00010 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.ductAirInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00009 .
-ex31:00011 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex31:00011 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.ductAirOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00009 .
 ex31:00012 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00009 .
 ex31:00013 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00009 .
 ex31:00014 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00009 .
 ex31:00015 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00009 .
 ex31:00016 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
@@ -164,8 +162,7 @@ ex31:00020 a s223:PhysicalSpace,
         rec:Room ;
     rdfs:label "Mechanical room for Clean Room #1" ;
     s223:isContainedIn ex31:00017 .
-ex31:00021 a s223:Connectable,
-        s223:Device,
+ex31:00021 a s223:Device,
         s223:Sensor ;
     rdfs:label "TPD-01" ;
     s223:hasPhysicalLocation ex31:00020 ;

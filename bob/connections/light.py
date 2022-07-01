@@ -25,11 +25,11 @@ _namespace = BOB
 
 # === Light
 class LightConnectionPoint(ConnectionPoint):
-    _class_iri = S223.ConnectionPoint
+    hasMedium: Medium = Light
 
 
 class LightInletConnectionPoint(LightConnectionPoint, InletConnectionPoint):
-    _class_iri = S223.ConnectionPoint
+    pass
 
 
 class LightOutletConnectionPoint(LightConnectionPoint, OutletConnectionPoint):
@@ -38,7 +38,6 @@ class LightOutletConnectionPoint(LightConnectionPoint, OutletConnectionPoint):
 
 class LightSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Light
-    _class_iri = S223.SystemConnectionPoint
 
 
 class LightInletSystemConnectionPoint(
@@ -75,7 +74,6 @@ class LightVisibleConnection(Connection):
 
 class LightVisibleConnectionPoint(ConnectionPoint):
     hasMedium = Light.Visible
-    _class_iri = S223.ConnectionPoint
 
 
 class LightVisibleInletConnectionPoint(
@@ -92,7 +90,6 @@ class LightVisibleOutletConnectionPoint(
 
 class LightVisibleSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Light.Visible
-    _class_iri = S223.SystemConnectionPoint
 
 
 class LightVisibleInletSystemConnectionPoint(

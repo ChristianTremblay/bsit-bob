@@ -7,12 +7,17 @@ Load in a collection of Turtle files, optionally run an inference engine,
 and prompt for a node.
 """
 
-import argparse
 import sys
+import logging
+import argparse
+
+from rdflib import OWL, RDF, RDFS, Graph, Namespace, URIRef
 
 import owlrl
-import pyparsing
-from rdflib import OWL, RDF, RDFS, Graph, Namespace, URIRef
+import pyshacl
+import ontoenv
+
+logger = logging.getLogger(__name__)
 
 # build a parser for the command line arguments
 parser = argparse.ArgumentParser(
@@ -20,7 +25,7 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
 )
 
-# turtle files to load
+# turtle files to load into the data graph
 parser.add_argument(
     "ttl",
     type=str,
@@ -53,33 +58,53 @@ parser.add_argument(
 parser.add_argument(
     "--clean",
     action="store_true",
-    help="clean out useless statements",
+    help="""clean out "useless" triples""",
 )
 
-# sample additional option to store the expanded graph
+# export the graph for debugging
 parser.add_argument(
-    "--expanded",
+    "-e",
+    "--export",
     type=str,
-    help="load/store the expanded graph",
+    help="export the graph for debugging",
 )
 
-# information about the loaded/interpreted graph
+# logging options
+parser.add_argument(
+    "--debug",
+    action="store_true",
+    help="debug log level",
+)
 parser.add_argument(
     "--info",
-    "-i",
     action="store_true",
-    help="print prefixes in interactive mode",
+    help="info log level",
 )
 
 # parse the command line arguments
 args = parser.parse_args()
 
+# logging options
+if args.debug:
+    logger.setLevel(logging.DEBUG)
+elif args.info:
+    logger.setLevel(logging.INFO)
+
 # make a graph
 g = Graph()
 
-# load the files
+# load the data graph(s)
 for fname in args.ttl:
-    g.parse(fname, format="turtle")
+    if fname == "-":
+        g.parse(sys.stdin, format="turtle")
+    else:
+        g.parse(fname, format="turtle")
+logger.info("g data: %d triples", len(g))
+
+# suck in the ontology files
+env = ontoenv.OntoEnv()
+env.import_dependencies(g)
+logger.info("g env: %d triples", len(g))
 
 # expand the graph
 if args.rdfs or args.owlrl or args.both:
@@ -90,6 +115,7 @@ if args.rdfs or args.owlrl or args.both:
     elif not args.rdfs and args.owlrl:
         inferencer = owlrl.DeductiveClosure(owlrl.OWLRL_Semantics)
     inferencer.expand(g)
+    logger.info("g inference: %d triples", len(g))
 
 # clean out most of the useless triples
 if args.clean:
@@ -106,24 +132,16 @@ if args.clean:
     for (s, p, o) in g.triples((None, OWL.sameAs, None)):
         if s == o:
             g.remove((s, p, o))
+    logger.info("g cleaned: %d triples", len(g))
 
-# save the exloded graph for debugging
-if args.expanded:
-    with open(args.expanded, "wb") as f:
-        g.serialize(f, format="turtle")
+# save the result for debugging
+if args.export:
+    g.serialize(args.export, format="turtle")
 
 # keep an easy reference to prefixes
 prefixes = {}
 for prefix, uriref in g.namespaces():
     prefixes[prefix] = Namespace(uriref)
-
-# print out the prefixes
-if args.info:
-    print(f"triples: {len(g)}")
-    print("prefixes:")
-    for prefix, uriref in prefixes.items():
-        print(f"    {prefix}: {uriref}")
-    print("")
 
 # loop for interactive queries
 while True:
@@ -133,7 +151,7 @@ while True:
         print()
         break
 
-    if (upstream := line[0] == "^") :
+    if upstream := line[0] == "^":
         line = line[1:]
 
     # get a prefixed node name

@@ -52,7 +52,7 @@ class InputConnector(Connector):
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block._node_iri, S223.input, self._node_iri))
+        data_graph.add((function_block._node_iri, S223.hasConnector, self._node_iri))
 
 
 class OutputConnector(Connector):
@@ -61,7 +61,7 @@ class OutputConnector(Connector):
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block._node_iri, S223.output, self._node_iri))
+        data_graph.add((function_block._node_iri, S223.hasConnector, self._node_iri))
 
 
 @multimethod

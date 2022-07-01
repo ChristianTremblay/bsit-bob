@@ -115,7 +115,7 @@ vav_system_template = {
         "comment": "VAV with Airflow + Damper + Dual Duct",
     },
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": UNIT.L_PER_SEC, "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
             "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",

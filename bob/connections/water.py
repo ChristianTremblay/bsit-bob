@@ -63,7 +63,6 @@ class WaterConnection(Connection):
 
 class WaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water
-    _class_iri = S223.ConnectionPoint
 
 
 class WaterInletConnectionPoint(InletConnectionPoint, WaterConnectionPoint):
@@ -76,7 +75,6 @@ class WaterOutletConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
 
 class WaterSystemConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water
-    _class_iri = S223.ConnectionPoint
 
 
 class WaterInletSystemConnectionPoint(InletConnectionPoint, WaterConnectionPoint):
@@ -95,7 +93,6 @@ class HotWaterConnection(Connection):
 
 class HotWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water.HotWater
-    _class_iri = S223.ConnectionPoint
 
 
 class HotWaterInletConnectionPoint(InletConnectionPoint, HotWaterConnectionPoint):
@@ -108,7 +105,6 @@ class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoi
 
 class HotWaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Water.HotWater
-    _class_iri = S223.SystemConnectionPoint
 
 
 class HotWaterInletSystemConnectionPoint(
@@ -131,7 +127,6 @@ class MixedWaterConnection(Connection):
 
 class MixedWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water.MixedWater
-    _class_iri = S223.ConnectionPoint
 
 
 class MixedWaterInletConnectionPoint(InletConnectionPoint, MixedWaterConnectionPoint):
@@ -144,7 +139,6 @@ class MixedWaterOutletConnectionPoint(OutletConnectionPoint, MixedWaterConnectio
 
 class MixedWaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Water.MixedWater
-    _class_iri = S223.SystemConnectionPoint
 
 
 class MixedWaterInletSystemConnectionPoint(
@@ -167,7 +161,6 @@ class SteamConnection(Connection):
 
 class SteamConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water.Steam
-    _class_iri = S223.ConnectionPoint
 
 
 class SteamInletConnectionPoint(InletConnectionPoint, SteamConnectionPoint):
@@ -180,7 +173,6 @@ class SteamOutletConnectionPoint(OutletConnectionPoint, SteamConnectionPoint):
 
 class SteamSystemConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water.Steam
-    _class_iri = S223.ConnectionPoint
 
 
 class SteamInletSystemConnectionPoint(InletConnectionPoint, SteamSystemConnectionPoint):
@@ -201,7 +193,6 @@ class ChilledWaterConnection(Connection):
 
 class ChilledWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water.ChilledWater
-    _class_iri = S223.ConnectionPoint
 
 
 class ChilledWaterInletConnectionPoint(
@@ -218,7 +209,6 @@ class ChilledWaterOutletConnectionPoint(
 
 class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Water.ChilledWater
-    _class_iri = S223.SystemConnectionPoint
 
 
 class ChilledWaterInletSystemConnectionPoint(
@@ -241,7 +231,6 @@ class CondensedWaterConnection(Connection):
 
 class CondensedWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water.CondensedWater
-    _class_iri = S223.ConnectionPoint
 
 
 class CondensedWaterInletConnectionPoint(
@@ -258,7 +247,6 @@ class CondensedWaterOutletConnectionPoint(
 
 class CondensedWaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Water.CondensedWater
-    _class_iri = S223.SystemConnectionPoint
 
 
 class CondensedWaterInletSystemConnectionPoint(

@@ -30,7 +30,6 @@ class AirConnection(Connection):
 
 class AirConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Air
-    _class_iri = S223.ConnectionPoint
 
 
 class AirInletConnectionPoint(AirConnectionPoint, InletConnectionPoint):
@@ -47,7 +46,6 @@ class AirBidirectionalConnectionPoint(AirConnectionPoint, BidirectionalConnectio
 
 class AirSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Air
-    _class_iri = S223.SystemConnectionPoint
 
 
 class AirInletSystemConnectionPoint(
@@ -88,7 +86,6 @@ class CompressedAirConnection(Connection):
 
 class CompressedAirConnectionPoint(ConnectionPoint):
     hasMedium = Air.CompressedAir
-    _class_iri = S223.ConnectionPoint
 
 
 class CompressedAirInletConnectionPoint(
@@ -105,7 +102,6 @@ class CompressedAirOutletConnectionPoint(
 
 class CompressedAirSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Air.CompressedAir
-    _class_iri = S223.SystemConnectionPoint
 
 
 class CompressedAirInletSystemConnectionPoint(

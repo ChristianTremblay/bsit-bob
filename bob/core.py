@@ -388,6 +388,7 @@ class Node(metaclass=NodeMetaclass):
         if hasattr(self, "_class_iri"):
             if self._class_iri is not None:
                 self._data_graph.add((self._node_iri, RDF.type, self._class_iri))
+                logging.debug(f"    - has _class_iri: {self._class_iri}")
 
         # pull out the kwargs that are nodes and datatypes
         inits = {}
@@ -401,6 +402,7 @@ class Node(metaclass=NodeMetaclass):
                 _class_iri = vars(supercls).get("_class_iri")
                 if _class_iri is not None:
                     self._data_graph.add((self._node_iri, RDF.type, _class_iri))
+                    logging.debug(f"    - supercls {supercls} _class_iri: {_class_iri}")
 
             for k, v in supercls.__dict__.items():
                 if k.startswith("_") or (k in inits):
@@ -609,6 +611,7 @@ class Node(metaclass=NodeMetaclass):
         # give the class an IRI if it doesn't have one
         if "_class_iri" not in vars(cls):
             cls._class_iri = _namespace[cls.__name__]  # type: ignore[attr-defined]
+            logging.debug(f"    - class given IRI: {cls._class_iri!r}")
 
         # this is a class, and a subclass of the super classes
         if cls._class_iri is not None:
@@ -792,6 +795,7 @@ class Property(Node):
     An attribute, quality, or characteristic of a feature of interest.  This is
     an abstract base class.
     """
+
     _attr_uriref = {"hasExternalReference": REF.hasExternalReference}
 
     ofMedium: Medium
@@ -881,7 +885,7 @@ class Container(Node):
 
     def __init__(self, *args, **kwargs) -> None:
         logging.debug(f"Container.__init__ {args} {kwargs}")
-        if self.__class__ is Connectable:
+        if self.__class__ is Container:
             raise RuntimeError("Container is an abstract base class")
 
         super().__init__(*args, **kwargs)
@@ -1254,7 +1258,7 @@ class Connectable(Node):
     A type of thing that can have connection points.
     """
 
-    # _class_iri: URIRef = None
+    _class_iri: URIRef = None
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -1424,7 +1428,11 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
 
 
 class ConnectionPoint(Node):
-    _class_iri: URIRef = S223.ConnectionPoint
+    """
+    Connection Point
+    """
+
+    _class_iri: URIRef = None
     hasMedium: Medium
     hasDirection: Direction
 
@@ -2128,7 +2136,7 @@ class SystemConnectionPoint(Node):
     System Connection Point
     """
 
-    _class_iri: URIRef = S223.SystemConnectionPoint
+    _class_iri: URIRef = None
     hasMedium: Medium
     hasDirection: Direction
 

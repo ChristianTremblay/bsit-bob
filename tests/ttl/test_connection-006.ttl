@@ -20,7 +20,6 @@ ex31:00001 a s223:Connection ;
     s223:connectsTo ex31:00002 ;
     s223:hasMedium s223:Water-ChilledWater .
 ex31:00002 a s223:Coil,
-        s223:Connectable,
         s223:CoolingCoil,
         s223:Device ;
     rdfs:label "CW-Coil-1" ;
@@ -35,34 +34,33 @@ ex31:00002 a s223:Coil,
     bob:airOutlet ex31:00004 ;
     bob:chilledWaterInlet ex31:00005 ;
     bob:chilledWaterOutlet ex31:00006 .
-ex31:00003 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00003 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
     s223:connectsThrough ex31:00020 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00002 .
-ex31:00004 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex31:00004 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "CW-Coil-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00002 .
-ex31:00005 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00005 a s223:InletConnectionPoint,
+        bob:ChilledWaterConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterInlet" ;
     s223:connectsThrough ex31:00001 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex31:00002 .
-ex31:00006 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex31:00006 a s223:OutletConnectionPoint,
+        bob:ChilledWaterConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex31:00002 .
-ex31:00007 a s223:Connectable,
-        s223:Device,
+ex31:00007 a s223:Device,
         s223:Fan ;
     rdfs:label "F" ;
     s223:connectedThrough ex31:00020 ;
@@ -81,21 +79,21 @@ ex31:00007 a s223:Connectable,
         ex31:00019 ;
     bob:airInlet ex31:00008 ;
     bob:airOutlet ex31:00009 .
-ex31:00008 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00008 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "F.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00007 .
-ex31:00009 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex31:00009 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "F.airOutlet" ;
     s223:connectsThrough ex31:00020 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00007 .
-ex31:00010 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex31:00010 a s223:InletConnectionPoint,
+        bob:Electricity_575V_60HzConnectionPoint ;
     rdfs:label "F.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;

@@ -3,6 +3,7 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import DomainSpace, PhysicalSpace, bind_model_namespace, dump
+from bob.enum import HVAC
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -27,10 +28,10 @@ building > second_floor
 second_floor > room_201
 second_floor > room_202
 
-room_101_hvac = DomainSpace(label="building.1fl.hvac")
+room_101_hvac = DomainSpace(label="building.1fl.hvac", hasDomain=HVAC)
 room_101_hvac < room_101
 
-room_101_lighting = DomainSpace(label="building.1fl.lighting")
+room_101_lighting = DomainSpace(label="building.1fl.lighting", hasDomain=HVAC)
 room_101_lighting < room_101
 
 # dump the result
