@@ -557,7 +557,9 @@ class Node(metaclass=NodeMetaclass):
                 cls._attr_uriref[attr] = attr_uriref
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
 
-                if issubclass(attr_type, Property):
+                if issubclass(
+                    attr_type, (Property, PropertyReference, LocationReference)
+                ):
                     cls._schema_graph.add(
                         (attr_uriref, RDFS.subPropertyOf, S223.hasProperty)
                     )
@@ -637,6 +639,7 @@ class Node(metaclass=NodeMetaclass):
         ):
             super().__setattr__(attr, value)
             return
+        logging.debug("__setattr__ %r %r", attr, value)
 
         # make sure the value isn't None, no "deleting" content
         if value is None:
@@ -687,6 +690,7 @@ class Node(metaclass=NodeMetaclass):
                 except TypeError:
                     logging.debug(f"    - why is this trapped?")
                     value = attr_type(_node_iri=value)
+                logging.debug("    - new value: %r", value)
 
             # add the link(s)
             if isinstance(value, (URIRef, Literal)):
@@ -695,6 +699,9 @@ class Node(metaclass=NodeMetaclass):
                 else:
                     self._data_graph.add((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
             if isinstance(value, Node):
+                logging.debug(
+                    "    - add (self, %r, %r)", self._attr_uriref[attr], value._node_iri
+                )
                 self._data_graph.add((self._node_iri, self._attr_uriref[attr], value._node_iri))  # type: ignore[attr-defined]
 
             # if the value is a property, link it to the node
@@ -721,6 +728,7 @@ class Node(metaclass=NodeMetaclass):
             self._data_graph.add((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
 
         # carry on
+        logging.debug("    - carry on")
         super().__setattr__(attr, value)
 
     def __rshift__(self, other: Any) -> Any:
@@ -873,6 +881,15 @@ class PropertyReference:
         if not isinstance(property, Property):
             raise TypeError(f"property expected: {property}")
         return property
+
+
+class LocationReference:
+    def __new__(cls, location):
+        if not isinstance(
+            location, (Connectable, Connection, Segment, ConnectionPoint, PhysicalSpace)
+        ):
+            raise TypeError(f"location expected: {location}")
+        return location
 
 
 class Container(Node):
