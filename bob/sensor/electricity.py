@@ -8,6 +8,7 @@ from ..core import (
     Medium,
     Node,
     PropertyReference,
+    LocationReference,
     Water,
     BOB,
     P223,
@@ -67,7 +68,7 @@ class CurrentAnalogSensor(Sensor):
 class CurrentBinarySensor(Sensor):
     _class_iri = S223.Sensor
     observesProperty: PropertyReference  # Electrical Current
-    hasMeasurementLocation: Node
+    hasMeasurementLocation: LocationReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)

@@ -89,16 +89,7 @@ class Sensor(Device):
     """
 
     _class_iri: URIRef = S223.Sensor
-    # ISSUE
-    # How can I define that ?
-    # hasMeasurementLocation: Union[
-    #    Device,
-    #    Connection,
-    #    Segment,
-    #    ConnectionPoint,
-    #    DomainSpace
-    # ]
-    hasMeasurementLocation: Node
+    hasMeasurementLocation: LocationReference
     hasMeasurementPrecision: QuantifiableProperty
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
