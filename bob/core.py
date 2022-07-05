@@ -717,7 +717,7 @@ class Node(metaclass=NodeMetaclass):
             if isinstance(value, Literal):
                 if value.datatype != self._datatypes[attr]:
                     raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
-            elif isinstance(value, str):
+            elif isinstance(value, (str, int, float)):
                 value = Literal(value, datatype=self._datatypes[attr])
             else:
                 value = Literal(value)
