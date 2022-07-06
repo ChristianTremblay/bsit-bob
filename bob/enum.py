@@ -123,7 +123,7 @@ ManualAutoEnum = EnumerationKind("ManualAuto", _alt_namespace=P223)
 NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE BELOW
 NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
 NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
-OccupancyEnum = EnumerationKind("Occupancy", _alt_namespace=P223)
+OccupancyStatus = EnumerationKind("OccupancyStatus")
 OnOffEnum = EnumerationKind("OnOff")
 OpenCloseEnum = EnumerationKind("OpenClose", _alt_namespace=P223)
 OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=P223)
@@ -197,11 +197,11 @@ NormalFaultEnum.Normal = NormalFaultEnum("Normal", _alt_namespace=P223)
 NormalFaultEnum.Fault = NormalFaultEnum("Fault", _alt_namespace=P223)
 
 #
-OccupancyEnum.Unknown = OccupancyEnum("Unknown", _alt_namespace=P223)
-OccupancyEnum.Occupied = OccupancyEnum("Occupied", _alt_namespace=P223)
-OccupancyEnum.Unoccupied = OccupancyEnum("Unoccupied", _alt_namespace=P223)
-OccupancyEnum.Standby = OccupancyEnum("Standby", _alt_namespace=P223)
-OccupancyEnum.Bypass = OccupancyEnum("Bypass", _alt_namespace=P223)
+OccupancyStatus.Unknown = OccupancyStatus("Unknown", _alt_namespace=P223)
+OccupancyStatus.Occupied = OccupancyStatus("Occupied", _alt_namespace=P223)
+OccupancyStatus.Unoccupied = OccupancyStatus("Unoccupied", _alt_namespace=P223)
+OccupancyStatus.Standby = OccupancyStatus("Standby", _alt_namespace=P223)
+OccupancyStatus.Bypass = OccupancyStatus("Bypass", _alt_namespace=P223)
 
 #
 OnOffEnum.On = OnOffEnum("On")

@@ -8,7 +8,7 @@ import electrical_devices as ed
 from rdflib import URIRef
 
 from bob.core import bind_model_namespace, dump
-from bob.enum import OccupancyEnum, OnOffEnum
+from bob.enum import OccupancyStatus, OnOffEnum
 from bob.externalreference.bacnet import BACnetDevice, BACnetReference
 
 model_name = Path(__file__).stem
@@ -31,11 +31,11 @@ hd.ahu["TPD3"].observesProperty.set_value(
     129.3
 )  # !!! My TPD3 is static pressure...not flow
 
-fn.open_office_occ_control.occupancyStatus.hasValue = OccupancyEnum.Unoccupied
-fn.kitchenette_occ_control.occupancyStatus.hasValue = OccupancyEnum.Unoccupied
-fn.private_office_occ_control.occupancyStatus.hasValue = OccupancyEnum.Unoccupied
-fn.bathroom_occ_control.occupancyStatus.hasValue = OccupancyEnum.Unoccupied
-fn.corridor_occ_control.occupancyStatus.hasValue = OccupancyEnum.Unoccupied
+fn.open_office_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
+fn.kitchenette_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
+fn.private_office_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
+fn.bathroom_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
+fn.corridor_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
 
 ld.openofficeNorth_luminaire_1.onOffStatus.hasValue = OnOffEnum.Off
 ld.openofficeNorth_luminaire_1.onOffCommand.hasValue = OnOffEnum.Off
