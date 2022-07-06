@@ -1,0 +1,8 @@
+# Last modified 2022-05-19
+PREFIX s223: <http://data.ashrae.org/standard223#>
+SELECT (COUNT (?d) AS ?count)
+WHERE{
+?d a s223:Luminaire .
+?d s223:hasProperty ?prop .
+?prop s223:hasValue s223:OnOff-On .
+}
