@@ -197,11 +197,11 @@ NormalFaultEnum.Normal = NormalFaultEnum("Normal", _alt_namespace=P223)
 NormalFaultEnum.Fault = NormalFaultEnum("Fault", _alt_namespace=P223)
 
 #
-OccupancyStatus.Unknown = OccupancyStatus("Unknown", _alt_namespace=P223)
-OccupancyStatus.Occupied = OccupancyStatus("Occupied", _alt_namespace=P223)
-OccupancyStatus.Unoccupied = OccupancyStatus("Unoccupied", _alt_namespace=P223)
-OccupancyStatus.Standby = OccupancyStatus("Standby", _alt_namespace=P223)
-OccupancyStatus.Bypass = OccupancyStatus("Bypass", _alt_namespace=P223)
+OccupancyStatus.Unknown = OccupancyStatus("Unknown")
+OccupancyStatus.Occupied = OccupancyStatus("Occupied")
+OccupancyStatus.Unoccupied = OccupancyStatus("Unoccupied")
+OccupancyStatus.Standby = OccupancyStatus("Standby")
+OccupancyStatus.Bypass = OccupancyStatus("Bypass")
 
 #
 OnOffEnum.On = OnOffEnum("On")
