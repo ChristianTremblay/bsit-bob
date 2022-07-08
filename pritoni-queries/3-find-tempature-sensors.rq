@@ -1,12 +1,11 @@
-# Last modified 2022-07-01
-# Fairly self-explanatory
 PREFIX s223: <http://data.ashrae.org/standard223#>
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+
 SELECT DISTINCT ?sensorLabel
 WHERE {
-?sensor a/rdfs:subClassOf* s223:Sensor .
-?sensor s223:observesProperty ?prop .
+    ?sensor a/rdfs:subClassOf* s223:Sensor .
+    ?sensor s223:observesProperty ?prop .
     {
        ?prop qudt:hasQuantityKind quantitykind:Temperature .
     }
@@ -14,6 +13,5 @@ WHERE {
     {
        ?prop qudt:unit/qudt:hasQuantityKind quantitykind:Temperature .
     }
-
-?sensor rdfs:label ?sensorLabel .
+    ?sensor rdfs:label ?sensorLabel .
 }

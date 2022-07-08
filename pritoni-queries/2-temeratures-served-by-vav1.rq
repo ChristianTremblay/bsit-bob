@@ -1,21 +1,20 @@
-# Last modified 2022-05-05
-# What are the average, min and max temperatures (and in what units), in domain spaces served by VAVBox1?
 PREFIX psm: <http://data.ashrae.org/standard223/1.0/data/pd-sr-mp-pritoni#>
 PREFIX s223: <http://data.ashrae.org/standard223#>
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX qudtqk: <http://qudt.org/vocab/quantitykind/>
+
 SELECT (AVG(?value) AS ?avg) (MIN(?value) AS ?min) (MAX(?value) AS ?max) ?unit
 WHERE {
-SELECT DISTINCT ?sensor ?value ?unit
-WHERE {
-?system s223:servesZone ?zone .
-?zone s223:contains ?ds .
-?sensor s223:hasMeasurementLocation ?ds .
-?sensor a/rdfs:subClassOf* s223:Sensor .
-?sensor s223:observesProperty ?t .
-?t qudt:hasQuantityKind qudtqk:Temperature .
-?t s223:hasValue ?value .
-?t qudt:unit ?unit .
-}
+    SELECT DISTINCT ?sensor ?value ?unit
+    WHERE {
+        ?system s223:servesZone ?zone .
+        ?zone s223:contains ?ds .
+        ?sensor s223:hasMeasurementLocation ?ds .
+        ?sensor a/rdfs:subClassOf* s223:Sensor .
+        ?sensor s223:observesProperty ?t .
+        ?t qudt:hasQuantityKind qudtqk:Temperature .
+        ?t s223:hasValue ?value .
+        ?t qudt:unit ?unit .
+    }
 }
 GROUP BY ?unit
