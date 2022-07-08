@@ -65,6 +65,13 @@ parser.add_argument(
     help="run both RDFS and OWLRL semantics",
 )
 
+# option to save the "compiled" graph
+parser.add_argument(
+    "--compiled",
+    type=str,
+    help="compiled graph",
+)
+
 # logging options
 parser.add_argument(
     "-d",
@@ -100,6 +107,13 @@ for fname in args.ttl:
         data_graph.parse(fname, format="turtle")
 logger.info("data_graph: %d triples", len(data_graph))
 
+# copy the model to calculate "compiled" graph
+if args.compiled:
+    model = Graph()
+    pyshacl.rdfutil.clone.clone_graph(data_graph, model)
+    og = Graph()
+    pyshacl.rdfutil.clone.clone_graph(data_graph, og)
+
 # load in all dependent data validation and model definition shapes
 shacl_graph = Graph()
 pyshacl.rdfutil.clone.clone_graph(data_graph, shacl_graph)
@@ -127,12 +141,18 @@ valid, report_graph, report_text = pyshacl.validate(
     js=True,
     allow_warnings=False,
     inplace=True,
+    iterate_rules=True,
 )
 logger.info("report_graph: %d triples", len(report_graph))
 
 # save the report for analysis
 if args.report:
     report_graph.serialize(args.report, format="turtle")
+
+# save the compiled graph
+if args.compiled:
+    data_graph = (data_graph - model) + og
+    data_graph.serialize(args.compiled, format="turtle")
 
 # find the prefix definitions so the select can find them
 namespace_map = {}

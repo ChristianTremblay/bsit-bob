@@ -4,6 +4,7 @@ import electrical_devices as ed
 import functions as fn
 import hvac_devices as hd
 import lighting_devices as ld
+import lighting_spaces as ls
 import electrical_devices as ed
 from rdflib import URIRef
 
@@ -31,11 +32,13 @@ hd.ahu["TPD3"].observesProperty.set_value(
     129.3
 )  # !!! My TPD3 is static pressure...not flow
 
-fn.open_office_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
-fn.kitchenette_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
-fn.private_office_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
-fn.bathroom_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
-fn.corridor_occ_control.occupancyStatus.hasValue = OccupancyStatus.Unoccupied
+# lighting spaces are all unoccupied
+ls.openofficeNorth_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
+ls.openofficeSouth_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
+ls.bathroom_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
+ls.corridor_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
+ls.privateoffice_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
+ls.kitchenette_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
 
 ld.openofficeNorth_luminaire_1.onOffStatus.hasValue = OnOffEnum.Off
 ld.openofficeNorth_luminaire_1.onOffCommand.hasValue = OnOffEnum.Off
