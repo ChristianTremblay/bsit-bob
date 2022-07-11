@@ -14,18 +14,18 @@ _namespace = BOB
 
 
 class HotWaterBoiler(Device):
-    _class_iri = S223.Boiler
+    _class_iri = P223.Boiler
     hotWaterLeaving: HotWaterOutletConnectionPoint
     hotWaterEntering: HotWaterInletConnectionPoint
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):
-    _class_iri = S223.Boiler
+    _class_iri = P223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
 
 
 class NaturalGasHotWaterBoiler(HotWaterBoiler):
-    _class_iri = S223.Boiler
+    _class_iri = P223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
     naturalGasInlet: NaturalGasInletConnectionPoint
     combustionAirInlet: AirInletConnectionPoint
