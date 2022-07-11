@@ -59,7 +59,7 @@ vfd_template = {
 
 
 class VFD(_VFD):
-    _class_iri: URIRef = S223.VariableFrequencyDrive
+    _class_iri: URIRef = S223.VFD
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(vfd_template, config)
