@@ -50,7 +50,7 @@ Electricity.Ethernet = Electricity("Ethernet", _alt_namespace=P223)
 
 # Water
 Water.ChilledWater = ChilledWater = Water("ChilledWater")
-Water.PotableWater = PotableWater = Water("PotableWater")
+Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
 Water.HotWater = HotWater = Water("HotWater")
 Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
 Water.DomesticWater = DomesticWater = Water("DomesticWater", _alt_namespace=P223)
@@ -96,7 +96,7 @@ Role.Supply = Supply = Role("Supply")
 # ===================
 # SUBSTANCES FLAVOURS
 # ===================
-Substance.Smoke = Smoke = Substance("Smoke")
+Substance.Smoke = Smoke = Substance("Smoke", _alt_namespace=P223)
 Substance.Particle = Particulate = Substance("Particulate")
 Substance.PM1_0 = Particulate.PM1_0 = Particulate(
     "PM1.0"
@@ -105,8 +105,8 @@ Substance.PM2_5 = Particulate.PM2_5 = Particulate("PM2.5")
 Substance.PM10_0 = Particulate.PM10_0 = Particulate("PM10.0")
 Substance.CO = CO = Substance("CO")
 Substance.CO2 = CO2 = Substance("CO2")
-Substance.NO2 = NO2 = Substance("NO2")
-Substance.CH4 = CH4 = Substance("CH4")
+Substance.NO2 = NO2 = Substance("NO2", _alt_namespace=P223)
+Substance.CH4 = CH4 = Substance("CH4", _alt_namespace=P223)
 Substance.Soot = Soot = Substance("Soot")
 
 # ===================
