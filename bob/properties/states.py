@@ -95,5 +95,5 @@ class SmokePresence(EnumeratedObservableProperty):
 
 class DaylightDetected(EnumeratedObservableProperty):
     ofMedium: Light.Visible
-    hasEnumerationKind: YesNoEnum
+    hasEnumerationKind = YesNoEnum
     hasValue: YesNoEnum
