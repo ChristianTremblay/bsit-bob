@@ -3246,7 +3246,7 @@ hvac_devices:00030 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 hvac_devices:00031 a s223:Device,
-        s223:VariableFrequencyDrive ;
+        s223:VFD ;
     rdfs:label "vfd" ;
     s223:actuatesProperty hvac_devices:00022 ;
     s223:connectedFrom electrical_devices:00021,
@@ -3485,8 +3485,7 @@ hvac_devices:00057 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 hvac_devices:00058 a p223:MotorStarter,
-        s223:Device,
-        s223:MotorStarter ;
+        s223:Device ;
     rdfs:label "starter" ;
     s223:actuatesProperty hvac_devices:00049 ;
     s223:connectedFrom electrical_devices:00013 ;
@@ -4174,13 +4173,13 @@ hvac_devices:00140 a s223:InletConnectionPoint,
         bob:CondensedWaterConnectionPoint ;
     rdfs:label "Chiller.condensedWaterEntering" ;
     s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Water-CondensedWater ;
+    s223:hasMedium p223:Water-CondensedWater ;
     s223:isConnectionPointOf hvac_devices:00137 .
 hvac_devices:00141 a s223:OutletConnectionPoint,
         bob:CondensedWaterConnectionPoint ;
     rdfs:label "Chiller.condensedWaterLeaving" ;
     s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Water-CondensedWater ;
+    s223:hasMedium p223:Water-CondensedWater ;
     s223:isConnectionPointOf hvac_devices:00137 .
 hvac_devices:00142 a s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
@@ -4319,8 +4318,7 @@ hvac_devices:00157 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 hvac_devices:00158 a p223:MotorStarter,
-        s223:Device,
-        s223:MotorStarter ;
+        s223:Device ;
     rdfs:label "starter" ;
     s223:actuatesProperty hvac_devices:00157 ;
     s223:connectedFrom electrical_devices:00041 ;
@@ -4397,7 +4395,7 @@ hvac_devices:00167 a s223:Connection ;
     s223:connectsFrom hvac_devices:00158 ;
     s223:connectsTo hvac_devices:00147 ;
     s223:hasMedium s223:Electricity-575V-60Hz .
-hvac_devices:00168 a s223:Boiler,
+hvac_devices:00168 a p223:Boiler,
         s223:Device ;
     rdfs:label "Boiler" ;
     s223:connectedFrom electrical_devices:00033,
@@ -4536,8 +4534,7 @@ hvac_devices:00182 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 hvac_devices:00183 a p223:MotorStarter,
-        s223:Device,
-        s223:MotorStarter ;
+        s223:Device ;
     rdfs:label "starter" ;
     s223:actuatesProperty hvac_devices:00182 ;
     s223:connectedFrom electrical_devices:00037 ;
@@ -6455,6 +6452,7 @@ lighting_devices:00091 a s223:EnumerableProperty,
         s223:Property,
         bob:DaylightDetected ;
     rdfs:label "D1.Daylight" ;
+    s223:hasEnumerationKind p223:EnumerationKind-YesNo ;
     s223:ofMedium s223:Light-Visible .
 lighting_devices:00092 a s223:Connection ;
     rdfs:label "LightHub_NaturalLight" ;
@@ -6665,85 +6663,43 @@ lighting_spaces:00025 a p223:LightingZone,
     rdfs:label "LightingZone1" ;
     s223:contains lighting_spaces:00001 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00026 ;
-    bob:lightInlet lighting_spaces:00026 ;
     bob:occupancy lighting_spaces:00004 ;
     rdfs:comment "Contains OpenOffice Space North" .
-lighting_spaces:00026 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone1.lightInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Light-Visible .
-lighting_spaces:00027 a p223:LightingZone,
+lighting_spaces:00026 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone2" ;
     s223:contains lighting_spaces:00005 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00028 ;
-    bob:lightInlet lighting_spaces:00028 ;
     bob:occupancy lighting_spaces:00008 ;
     rdfs:comment "Contains OpenOffice Space South" .
-lighting_spaces:00028 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone2.lightInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Light-Visible .
-lighting_spaces:00029 a p223:LightingZone,
+lighting_spaces:00027 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone3" ;
     s223:contains lighting_spaces:00009 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00030 ;
-    bob:lightInlet lighting_spaces:00030 ;
     bob:occupancy lighting_spaces:00012 ;
     rdfs:comment "Contains Bathroom Light Space" .
-lighting_spaces:00030 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone3.lightInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Light-Visible .
-lighting_spaces:00031 a p223:LightingZone,
+lighting_spaces:00028 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone4" ;
     s223:contains lighting_spaces:00017 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00032 ;
-    bob:lightInlet lighting_spaces:00032 ;
     bob:occupancy lighting_spaces:00020 ;
     rdfs:comment "Contains Private Office Light Space" .
-lighting_spaces:00032 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone4.lightInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Light-Visible .
-lighting_spaces:00033 a p223:LightingZone,
+lighting_spaces:00029 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone5" ;
     s223:contains lighting_spaces:00013 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00034 ;
-    bob:lightInlet lighting_spaces:00034 ;
     bob:occupancy lighting_spaces:00016 ;
     rdfs:comment "Contains Corridor Light Space" .
-lighting_spaces:00034 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone5.lightInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Light-Visible .
-lighting_spaces:00035 a p223:LightingZone,
+lighting_spaces:00030 a p223:LightingZone,
         s223:Zone ;
     rdfs:label "LightingZone6" ;
     s223:contains lighting_spaces:00021 ;
     s223:hasDomain s223:Domain-Lighting ;
-    s223:hasZoneConnectionPoint lighting_spaces:00036 ;
-    bob:lightInlet lighting_spaces:00036 ;
     bob:occupancy lighting_spaces:00024 ;
     rdfs:comment "Contains Kitchenette Light Space" .
-lighting_spaces:00036 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
-    rdfs:label "LightingZone6.lightInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Light-Visible .
 network_devices:00001 a p223:EthernetSwitch,
         s223:Device ;
     rdfs:label "Simple Switch" ;
