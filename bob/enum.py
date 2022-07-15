@@ -1,4 +1,3 @@
-from prometheus_client import Enum
 from rdflib import Graph, URIRef
 
 from .core import (
