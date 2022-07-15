@@ -4,8 +4,6 @@
 @prefix lighting_devices: <urn:ex/lighting_devices/> .
 @prefix lighting_spaces: <urn:ex/lighting_spaces/> .
 @prefix network_devices: <urn:ex/network_devices/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -13,1021 +11,866 @@
 [] a sh:ValidationReport ;
     sh:conforms false ;
     sh:result [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00065 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00065->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00140 ;
-            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb30 ;
-            sh:value s223:Water-CondensedWater ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00209 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00209->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00016 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00002 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00002->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00009 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00016 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00016->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00234 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_devices:00013 ;
-            sh:resultMessage "Less than 1 values on lighting_devices:00013->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00240 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00240->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00026 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00207 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00207->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00059 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00160 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00054 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00022 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
             sh:focusNode hvac_devices:00141 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00165 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00165->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00159 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00159->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00201 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00201->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00032 ;
-            sh:resultMessage "Less than 1 values on lighting_spaces:00032->s223:mapsTo" ;
-            sh:resultPath s223:mapsTo ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb129 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00053 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode network_devices:00008 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00157 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00157->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00060 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00190 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00190->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00143 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00140 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00225 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00025 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00203 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00203->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00005 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00012 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00012->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00248 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00112 ;
-            sh:resultMessage "urn:ex/hvac_devices/00112 is associated with urn:ex/hvac_devices/00001, but it mapsTo a target associated with urn:ex/hvac_devices/00045" ;
-            sh:resultPath s223:mapsTo ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraint [ a sh:SPARQLConstraint ;
-                    rdfs:comment """Ensure that every SystemConnectionPoint maps to a target that is associated with the same System as that associated with the SystemConnectionPoint.
-The test depends on the class of the target - one of ConnectionPoint, Junction, or a SystemConnectionPoint of a contained subSystem.""" ;
-                    sh:message "{$this} is associated with {?system}, but it mapsTo a target associated with {?targetSystem}" ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """
-SELECT $this ?system ?targetSystem
-WHERE {
-$this ^s223:hasSystemConnectionPoint ?system .
-$this s223:mapsTo ?target .
-{
-?target  a/rdfs:subClassOf* s223:ConnectionPoint .
-?target s223:isConnectionPointOf/^s223:contains ?targetSystem .
-}
-UNION
-{
-?target a s223:Junction .
-?target ^s223:contains ?targetSystem .
-}
-UNION
-{
-?target a/rdfs:subClassOf* s223:SystemConnectionPoint .
-?target ^s223:hasSystemConnectionPoint/^s223:contains ?targetSystem .
-}
-FILTER (?system != ?targetSystem ) .
-}
-""" ] ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape [ s223:description "A SystemConnectionPoint maps to a target within the System" ;
-                    sh:name "Test SCP1" ;
-                    sh:path s223:mapsTo ;
-                    sh:sparql [ a sh:SPARQLConstraint ;
-                            rdfs:comment """Ensure that every SystemConnectionPoint maps to a target that is associated with the same System as that associated with the SystemConnectionPoint.
-The test depends on the class of the target - one of ConnectionPoint, Junction, or a SystemConnectionPoint of a contained subSystem.""" ;
-                            sh:message "{$this} is associated with {?system}, but it mapsTo a target associated with {?targetSystem}" ;
-                            sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                            sh:select """
-SELECT $this ?system ?targetSystem
-WHERE {
-$this ^s223:hasSystemConnectionPoint ?system .
-$this s223:mapsTo ?target .
-{
-?target  a/rdfs:subClassOf* s223:ConnectionPoint .
-?target s223:isConnectionPointOf/^s223:contains ?targetSystem .
-}
-UNION
-{
-?target a s223:Junction .
-?target ^s223:contains ?targetSystem .
-}
-UNION
-{
-?target a/rdfs:subClassOf* s223:SystemConnectionPoint .
-?target ^s223:hasSystemConnectionPoint/^s223:contains ?targetSystem .
-}
-FILTER (?system != ?targetSystem ) .
-}
-""" ] ] ],
-        [ a sh:ValidationResult ;
-            sh:focusNode network_devices:00010 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_devices:00088 ;
-            sh:resultMessage "Less than 1 values on lighting_devices:00088->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00034 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00035 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00184 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00116 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00026 ;
-            sh:resultMessage "Less than 1 values on lighting_spaces:00026->s223:mapsTo" ;
-            sh:resultPath s223:mapsTo ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb129 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
             sh:focusNode hvac_devices:00128 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00155 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00155->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00045 ;
+            sh:focusNode hvac_devices:00234 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00049 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00014 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00008 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00008->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00251 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00251->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00036 ;
-            sh:resultMessage "Less than 1 values on lighting_spaces:00036->s223:mapsTo" ;
-            sh:resultPath s223:mapsTo ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb129 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00019 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00247 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00247->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_devices:00090 ;
-            sh:resultMessage "Less than 1 values on lighting_devices:00090->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00256 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00040 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00044 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode network_devices:00024 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00012 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00211 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00211->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00017 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00011 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00144 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00008 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00151 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00151->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00023 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00121 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00142 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_devices:00091 ;
-            sh:resultMessage "Less than 1 values on lighting_devices:00091->s223:hasEnumerationKind" ;
-            sh:resultPath s223:hasEnumerationKind ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape [ s223:description "An EnumerableProperty must be associated with exactly one Enumeration Kind by hasEnumerationKind" ;
-                    sh:class s223:EnumerationKind ;
-                    sh:maxCount 1 ;
-                    sh:minCount 1 ;
-                    sh:path s223:hasEnumerationKind ] ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00255 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00255->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00094 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00004 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00004->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00133 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00003 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00249 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00249->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00041 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_devices:00059 ;
-            sh:resultMessage "Less than 1 values on lighting_devices:00059->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00030 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00195 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00195->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode network_devices:00025 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00018 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00028 ;
-            sh:resultMessage "Less than 1 values on lighting_spaces:00028->s223:mapsTo" ;
-            sh:resultPath s223:mapsTo ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb129 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00197 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00197->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00014 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00014->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00031 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00145 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00145->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode network_devices:00005 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00007 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00034 ;
-            sh:resultMessage "Less than 1 values on lighting_spaces:00034->s223:mapsTo" ;
-            sh:resultPath s223:mapsTo ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb129 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00199 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00199->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00242 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00242->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00012 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00036 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00219 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00219->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00021 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00238 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00238->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00006 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00006->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00261 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00261->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00205 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00205->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00233 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00257 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00257->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00015 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_devices:00043 ;
-            sh:resultMessage "Less than 1 values on lighting_devices:00043->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_spaces:00030 ;
-            sh:resultMessage "Less than 1 values on lighting_spaces:00030->s223:mapsTo" ;
-            sh:resultPath s223:mapsTo ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb129 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00257 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
             sh:focusNode hvac_devices:00117 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
-            sh:focusNode network_devices:00026 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode network_devices:00006 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00215 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00215->s223:hasMedium" ;
+            sh:focusNode hvac_devices:00219 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00219->s223:hasMedium" ;
             sh:resultPath s223:hasMedium ;
             sh:resultSeverity sh:Violation ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00027 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00143 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00143->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00149 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00149->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode network_devices:00007 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00129 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00263 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00263->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00066 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00259 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00259->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00253 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00253->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
         [ a sh:ValidationResult ;
             sh:focusNode hvac_devices:00010 ;
             sh:resultMessage "Less than 1 values on hvac_devices:00010->s223:hasMedium" ;
             sh:resultPath s223:hasMedium ;
             sh:resultSeverity sh:Violation ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00217 ;
-            sh:resultMessage "Less than 1 values on hvac_devices:00217->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode lighting_devices:00028 ;
-            sh:resultMessage "Less than 1 values on lighting_devices:00028->s223:hasMedium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00159 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00103 ;
-            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
-            sh:resultPath s223:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
         [ a sh:ValidationResult ;
             sh:focusNode network_devices:00009 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00043 ;
+            sh:focusNode hvac_spaces:00045 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
-            sh:focusNode hvac_spaces:00052 ;
+            sh:focusNode hvac_spaces:00034 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00085 ;
+            sh:focusNode hvac_devices:00140 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00147 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00147->s223:hasMedium" ;
+            sh:focusNode electrical_devices:00255 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00255->s223:hasMedium" ;
             sh:resultPath s223:hasMedium ;
             sh:resultSeverity sh:Violation ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00247 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00247->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00094 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode network_devices:00024 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00049 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00054 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00014 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00014->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00143 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00195 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00195->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00190 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00190->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_devices:00059 ;
+            sh:resultMessage "Less than 1 values on lighting_devices:00059->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00026 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00151 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00151->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00004 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00004->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00149 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00149->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00018 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00261 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00261->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
         [ a sh:ValidationResult ;
             sh:focusNode hvac_devices:00185 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00197 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00197->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00211 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00211->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_spaces:00007 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00143 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00143->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_devices:00088 ;
+            sh:resultMessage "Less than 1 values on lighting_devices:00088->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_spaces:00015 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode network_devices:00008 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_devices:00090 ;
+            sh:resultMessage "Less than 1 values on lighting_devices:00090->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00053 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00103 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_spaces:00011 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode network_devices:00025 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_spaces:00019 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00012 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00040 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00249 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00249->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00025 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00251 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00251->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00043 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00259 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00259->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_devices:00013 ;
+            sh:resultMessage "Less than 1 values on lighting_devices:00013->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode network_devices:00005 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00012 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00012->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00253 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00253->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00145 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00145->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00238 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00238->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00017 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00002 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00002->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00159 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00147 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00147->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00159 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00159->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00240 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00240->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode network_devices:00026 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00129 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00044 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
             sh:focusNode hvac_spaces:00050 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ],
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
-            sh:focusNode hvac_devices:00141 ;
-            sh:resultMessage "Value does not have class s223:EnumerationKind-Medium" ;
-            sh:resultPath s223:hasMedium ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:ClassConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb30 ;
-            sh:value s223:Water-CondensedWater ],
-        [ a sh:ValidationResult ;
-            sh:focusNode electrical_devices:00153 ;
-            sh:resultMessage "Less than 1 values on electrical_devices:00153->s223:hasMedium" ;
+            sh:focusNode electrical_devices:00263 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00263->s223:hasMedium" ;
             sh:resultPath s223:hasMedium ;
             sh:resultSeverity sh:Violation ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n7b07a92895ce492da4aae0729db1ea17b51 ],
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00066 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00003 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00116 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00142 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00030 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00041 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00065 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00065->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00160 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00248 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00059 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode network_devices:00006 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode network_devices:00010 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00008 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00008->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00060 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00201 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00201->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00207 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00207->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00016 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00016->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00225 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode network_devices:00007 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_devices:00043 ;
+            sh:resultMessage "Less than 1 values on lighting_devices:00043->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00233 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00031 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00257 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
         [ a sh:ValidationResult ;
             sh:focusNode electrical_devices:00028 ;
             sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
             sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:naa0d965f943f4d20a47c38ac2d4e162fb22 ] .
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00165 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00165->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00157 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00157->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00217 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00217->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00005 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00199 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00199->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00256 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00155 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00155->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00209 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00209->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00016 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00242 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00242->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00021 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00014 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00121 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00133 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00153 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00153->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00009 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_spaces:00023 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00215 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00215->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00184 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00052 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00035 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00027 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00203 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00203->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode lighting_devices:00028 ;
+            sh:resultMessage "Less than 1 values on lighting_devices:00028->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00205 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00205->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00144 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00022 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00006 ;
+            sh:resultMessage "Less than 1 values on hvac_devices:00006->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00012 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00036 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode electrical_devices:00257 ;
+            sh:resultMessage "Less than 1 values on electrical_devices:00257->s223:hasMedium" ;
+            sh:resultPath s223:hasMedium ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n0701f4b6ed4843bbb8176a9ba8202313b51 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_spaces:00008 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode hvac_devices:00085 ;
+            sh:resultMessage "This ConnectionPoint must be associated with exactly 1 Connection." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:ndc801c9010cc4f46a34f7715c5c9b0f2b19 ] .
 
-_:N499336f77bbc4048a32d751ad3737c12 rdf:first [ sh:class s223:Junction ] ;
-    rdf:rest () .
-
-_:N4f93045174094e9fb094c2bfaa07db90 rdf:first [ sh:class s223:ZoneConnectionPoint ] ;
-    rdf:rest _:N499336f77bbc4048a32d751ad3737c12 .
-
-_:Na4ddc0d66f11443ca3af99daad7b3686 sh:class s223:ConnectionPoint .
-
-_:Ndbbb9ccb45b642cc96b9ed44a85554c1 rdf:first _:Na4ddc0d66f11443ca3af99daad7b3686 ;
-    rdf:rest _:N4f93045174094e9fb094c2bfaa07db90 .
-
-_:naa0d965f943f4d20a47c38ac2d4e162fb30 <http://data.ashrae.org/standard223#description:> "A ConnectionPoint must be associated with exactly one Medium by hasMedium" ;
-    sh:class s223:EnumerationKind-Medium ;
+_:n0701f4b6ed4843bbb8176a9ba8202313b51 sh:class s223:EnumerationKind-Medium ;
     sh:maxCount 1 ;
     sh:minCount 1 ;
-    sh:name "ConnectionPoint medium" ;
     sh:path s223:hasMedium .
 
-_:naa0d965f943f4d20a47c38ac2d4e162fb129 sh:maxCount 1 ;
-    sh:minCount 1 ;
-    sh:or _:Ndbbb9ccb45b642cc96b9ed44a85554c1 ;
-    sh:path s223:mapsTo .
-
-_:n7b07a92895ce492da4aae0729db1ea17b51 sh:class s223:EnumerationKind-Medium ;
-    sh:maxCount 1 ;
-    sh:minCount 1 ;
-    sh:path s223:hasMedium .
-
-_:naa0d965f943f4d20a47c38ac2d4e162fb22 s223:description "A ConnectionPoint must be associated with exactly one Connection by connectsThrough" ;
+_:ndc801c9010cc4f46a34f7715c5c9b0f2b19 s223:description "A ConnectionPoint must be associated with exactly one Connection by connectsThrough" ;
     sh:class s223:Connection ;
     sh:maxCount 1 ;
     sh:message "This ConnectionPoint must be associated with exactly 1 Connection." ;
