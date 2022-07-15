@@ -232,17 +232,17 @@ occupancy = OccupancyControl(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
-occupancy.uses_input(
+occupancy.uses(
     vav["ZN-OCC-SENSOR"].observesProperty, BinaryIn, "occupancy-sensor"
 )
-occupancy.uses_input(
+occupancy.uses(
     vav["ZONE-THERMOSTAT"]["local_override"].observesProperty,
     BinaryIn,
     "local-override",
 )
 occupancy.hasOccupancyStatus = OccupancyStatus()
-occupancy.produces_output(occupancy.hasOccupancyStatus)
-occupancy.produces_output(hvac_space.occupancy)
+occupancy.produces(occupancy.hasOccupancyStatus)
+occupancy.produces(hvac_space.occupancy)
 
 
 # TODO : Complete
@@ -258,18 +258,18 @@ g36fig_a_3 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
 # zonewindowSwitch = BinaryIn(label='Zone Window Switch', function_block=g36fig_a_3)
 # zoneOccupancySensor = BinaryIn(label='Zone Occupancy Sensor', function_block=g36fig_a_3)
 
-g36fig_a_3.uses_input(vav.airFlow, AnalogIn, "supplyAirFlow")
-g36fig_a_3.uses_input(
+g36fig_a_3.uses(vav.airFlow, AnalogIn, "supplyAirFlow")
+g36fig_a_3.uses(
     hvac_zone.temperature_setpoint, AnalogIn, "zoneTemperatureSetpoint"
 )
-g36fig_a_3.uses_input(hvac_zone.temperature, AnalogIn, "zoneTemperature")
-g36fig_a_3.uses_input(vav["supplyAirTemperature"], AnalogIn, "supplyAirTemprature")
-g36fig_a_3.uses_input(hvac_zone.co2, AnalogIn, "zoneCO2")
-g36fig_a_3.uses_input(hvac_zone.windows_switch, BinaryIn, "window-switch")
-g36fig_a_3.uses_input(vav["fanStatus"], BinaryIn, "fanStatus")
-g36fig_a_3.uses_input(occupancy.hasOccupancyStatus, BinaryIn, "occupancy-status")
-g36fig_a_3.produces_output(vav["damperPosition"], AnalogOut, "damperPosition")
-g36fig_a_3.produces_output(vav["valvePosition"], AnalogOut, "valvePosition")
-g36fig_a_3.produces_output(vav["fanCommand"], BinaryOut, "fanCommand")
+g36fig_a_3.uses(hvac_zone.temperature, AnalogIn, "zoneTemperature")
+g36fig_a_3.uses(vav["supplyAirTemperature"], AnalogIn, "supplyAirTemprature")
+g36fig_a_3.uses(hvac_zone.co2, AnalogIn, "zoneCO2")
+g36fig_a_3.uses(hvac_zone.windows_switch, BinaryIn, "window-switch")
+g36fig_a_3.uses(vav["fanStatus"], BinaryIn, "fanStatus")
+g36fig_a_3.uses(occupancy.hasOccupancyStatus, BinaryIn, "occupancy-status")
+g36fig_a_3.produces(vav["damperPosition"], AnalogOut, "damperPosition")
+g36fig_a_3.produces(vav["valvePosition"], AnalogOut, "valvePosition")
+g36fig_a_3.produces(vav["fanCommand"], BinaryOut, "fanCommand")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

@@ -180,30 +180,30 @@ occupancy = OccupancyControl(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
-occupancy.uses_input(
+occupancy.uses(
     vav["ZN-OCC-SENSOR"].observesProperty, BinaryIn, "occupancy-sensor"
 )
-occupancy.uses_input(
+occupancy.uses(
     vav["ZONE-THERMOSTAT"]["local_override"].observesProperty,
     BinaryIn,
     "local-override",
 )
 occupancy.hasOccupancyStatus = OccupancyStatus()
-occupancy.produces_output(occupancy.hasOccupancyStatus)
-occupancy.produces_output(hvac_space.occupancy)
+occupancy.produces(occupancy.hasOccupancyStatus)
+occupancy.produces(hvac_space.occupancy)
 
 # TODO : Complete
 sequence = "Lorem ipsum of sequence"
 
 g36fig_a_1 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
 
-g36fig_a_1.uses_input(vav.airFlow, AnalogIn, "supplyAirFlow")
-g36fig_a_1.uses_input(
+g36fig_a_1.uses(vav.airFlow, AnalogIn, "supplyAirFlow")
+g36fig_a_1.uses(
     hvac_zone.temperature_setpoint, AnalogIn, "zoneTemperatureSetpoint"
 )
-g36fig_a_1.uses_input(hvac_zone.temperature, AnalogIn, "zoneTemperature")
-g36fig_a_1.uses_input(hvac_zone.co2, AnalogIn, "zoneTemperature")
-g36fig_a_1.uses_input(hvac_zone.windows_switch, BinaryIn, "window-switch")
-g36fig_a_1.produces_output(vav["damperPosition"], AnalogOut, "damperPosition")
+g36fig_a_1.uses(hvac_zone.temperature, AnalogIn, "zoneTemperature")
+g36fig_a_1.uses(hvac_zone.co2, AnalogIn, "zoneTemperature")
+g36fig_a_1.uses(hvac_zone.windows_switch, BinaryIn, "window-switch")
+g36fig_a_1.produces(vav["damperPosition"], AnalogOut, "damperPosition")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
