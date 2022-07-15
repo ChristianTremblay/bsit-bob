@@ -22,8 +22,8 @@ class AVG_Temp(FunctionBlock):
 
 f = AVG_Temp(label="FB-1", comment="Compute DA-T Avg")
 f.avg_tmp = Temperature(hasValue=0, unit=UNIT.DEG_C)
-f.uses_input(hd.ahu["DA-T"].observesProperty)
-f.produces_output(f.avg_tmp)
+f.uses(hd.ahu["DA-T"].observesProperty)
+f.produces(f.avg_tmp)
 
 
 open_office_occ_control = OccupancyControl(
@@ -32,11 +32,11 @@ open_office_occ_control = OccupancyControl(
     schedule=Schedule(),
     occupancyStatus=OccupancyStatus(),
 )
-open_office_occ_control.produces_output(ls.lighting_zone_1.occupancy)
-open_office_occ_control.produces_output(ls.lighting_zone_2.occupancy)
-open_office_occ_control.produces_output(hs.openoffice_hvac.occupancy)
-open_office_occ_control.uses_input(open_office_occ_control.schedule)
-open_office_occ_control.uses_input(ld.openoffice_movement.observesProperty)
+open_office_occ_control.produces(ls.lighting_zone_1.occupancy)
+open_office_occ_control.produces(ls.lighting_zone_2.occupancy)
+open_office_occ_control.produces(hs.openoffice_hvac.occupancy)
+open_office_occ_control.uses(open_office_occ_control.schedule)
+open_office_occ_control.uses(ld.openoffice_movement.observesProperty)
 
 kitchenette_occ_control = OccupancyControl(
     label="Kitchenette Occ Control",
@@ -45,10 +45,10 @@ kitchenette_occ_control = OccupancyControl(
     occupancyStatus=OccupancyStatus(),
 )
 # kitchenette_occ_control > ld.kitchenette_movement
-kitchenette_occ_control.produces_output(ls.lighting_zone_6.occupancy)
-kitchenette_occ_control.produces_output(hs.hvac_zone_2.occupancy)
-kitchenette_occ_control.uses_input(kitchenette_occ_control.schedule)
-kitchenette_occ_control.uses_input(ld.kitchenette_movement.observesProperty)
+kitchenette_occ_control.produces(ls.lighting_zone_6.occupancy)
+kitchenette_occ_control.produces(hs.hvac_zone_2.occupancy)
+kitchenette_occ_control.uses(kitchenette_occ_control.schedule)
+kitchenette_occ_control.uses(ld.kitchenette_movement.observesProperty)
 
 private_office_occ_control = OccupancyControl(
     label="Private Office Occ Control",
@@ -57,10 +57,10 @@ private_office_occ_control = OccupancyControl(
     occupancyStatus=OccupancyStatus(),
 )
 # private_office_occ_control > ld.privateoffice_movement
-private_office_occ_control.produces_output(ls.lighting_zone_4.occupancy)
-private_office_occ_control.produces_output(hs.privateoffice_hvac.occupancy)
-private_office_occ_control.uses_input(private_office_occ_control.schedule)
-private_office_occ_control.uses_input(ld.privateoffice_movement.observesProperty)
+private_office_occ_control.produces(ls.lighting_zone_4.occupancy)
+private_office_occ_control.produces(hs.privateoffice_hvac.occupancy)
+private_office_occ_control.uses(private_office_occ_control.schedule)
+private_office_occ_control.uses(ld.privateoffice_movement.observesProperty)
 
 bathroom_occ_control = OccupancyControl(
     label="Bathroom Occ Control",
@@ -69,10 +69,10 @@ bathroom_occ_control = OccupancyControl(
     occupancyStatus=OccupancyStatus(),
 )
 # bathroom_occ_control > ld.bathroom_movement
-bathroom_occ_control.produces_output(ls.lighting_zone_3.occupancy)
-bathroom_occ_control.produces_output(hs.bathroom_hvac.occupancy)
-bathroom_occ_control.uses_input(bathroom_occ_control.schedule)
-bathroom_occ_control.uses_input(ld.bathroom_movement.observesProperty)
+bathroom_occ_control.produces(ls.lighting_zone_3.occupancy)
+bathroom_occ_control.produces(hs.bathroom_hvac.occupancy)
+bathroom_occ_control.uses(bathroom_occ_control.schedule)
+bathroom_occ_control.uses(ld.bathroom_movement.observesProperty)
 
 corridor_occ_control = OccupancyControl(
     label="Corridor Occ Control",
@@ -81,7 +81,7 @@ corridor_occ_control = OccupancyControl(
     occupancyStatus=OccupancyStatus(),
 )
 # corridor_occ_control > ld.corridor_movement
-corridor_occ_control.produces_output(ls.lighting_zone_5.occupancy)
-corridor_occ_control.produces_output(hs.corridorNorth_hvac.occupancy)
-corridor_occ_control.uses_input(corridor_occ_control.schedule)
-corridor_occ_control.uses_input(ld.corridor_movement.observesProperty)
+corridor_occ_control.produces(ls.lighting_zone_5.occupancy)
+corridor_occ_control.produces(hs.corridorNorth_hvac.occupancy)
+corridor_occ_control.uses(corridor_occ_control.schedule)
+corridor_occ_control.uses(ld.corridor_movement.observesProperty)
