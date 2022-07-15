@@ -12,7 +12,7 @@ from typing import Any, AnyStr, Dict
 
 from rdflib import URIRef  # type: ignore
 
-from ..core import INCLUDE_INVERSE, Node, Property, data_graph, S223
+from ..core import INCLUDE_INVERSE, Node, Property, data_graph, S223, P223, BOB
 from ..multimethods import multimethod
 
 _namespace = S223
@@ -24,7 +24,7 @@ _namespace = S223
 
 
 class Connector(Node):
-    _class_iri: URIRef = S223.Connector
+    _class_iri: URIRef = BOB.Connector
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         logging.debug(f"Connector.__init__ {function_block} {kwargs}")
@@ -46,27 +46,27 @@ class Connector(Node):
         return self
 
 
-class InputConnector(Connector):
-    _class_iri: URIRef = S223.InputConnector
+class Input(Connector):
+    _class_iri: URIRef = S223.FunctionInput
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block._node_iri, S223.hasConnector, self._node_iri))
+        data_graph.add((function_block._node_iri, S223.hasInput, self._node_iri))
 
 
-class OutputConnector(Connector):
-    _class_iri: URIRef = S223.OutputConnector
+class Output(Connector):
+    _class_iri: URIRef = S223.FunctionOutput
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         super().__init__(function_block, **kwargs)
 
-        data_graph.add((function_block._node_iri, S223.hasConnector, self._node_iri))
+        data_graph.add((function_block._node_iri, S223.hasOutput, self._node_iri))
 
 
 @multimethod
 def connect_mm(
-    output_connector: OutputConnector, input_connector: InputConnector
+    output_connector: Output, input_connector: Input
 ) -> None:
     """OutputConnector >> InputConnector"""
     logging.info(f"connect from {output_connector} to {input_connector}")
@@ -77,23 +77,23 @@ def connect_mm(
 
 
 @multimethod
-def connect_mm(prop: Property, input_connector: InputConnector) -> None:
-    """Property >> InputConnector"""
+def connect_mm(prop: Property, input_connector: Input) -> None:
+    """Property >> Input"""
     logging.info(f"connect from {prop} to {input_connector}")
 
-    data_graph.add((input_connector._node_iri, S223.usesInput, prop._node_iri))
+    data_graph.add((input_connector._node_iri, S223.uses, prop._node_iri))
     if INCLUDE_INVERSE:
         data_graph.add(
-            (prop._node_iri, S223.isUsedAsInputBy, input_connector._node_iri)
+            (prop._node_iri, S223.isUsedBy, input_connector._node_iri)
         )
 
 
 @multimethod
-def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
-    """OutputConnector >> Property"""
+def connect_mm(output_connector: Output, prop: Property) -> None:
+    """Output >> Property"""
     logging.info(f"connect from {output_connector} to {prop}")
 
-    data_graph.add((output_connector._node_iri, S223.producesOutput, prop._node_iri))
+    data_graph.add((output_connector._node_iri, S223.produces, prop._node_iri))
     if INCLUDE_INVERSE:
         data_graph.add((prop._node_iri, S223.isProducedBy, output_connector._node_iri))
 
@@ -103,19 +103,19 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
 #
 
 
-class AnalogInput(InputConnector):
+class AnalogInput(Input):
     _class_iri: URIRef = S223.AnalogInput
 
 
-class AnalogOutput(OutputConnector):
+class AnalogOutput(Output):
     _class_iri: URIRef = S223.AnalogOutput
 
 
-class BinaryInput(InputConnector):
+class BinaryInput(Input):
     _class_iri: URIRef = S223.BinaryInput
 
 
-class BinaryOutput(OutputConnector):
+class BinaryOutput(Output):
     _class_iri: URIRef = S223.BinaryOutput
 
 
@@ -194,28 +194,28 @@ class FunctionBlock(Node):
 
             setattr(self, attr_name, attr_element)
 
-    def uses_input(
+    def uses(
         self,
         prop: Property,
-        klass: InputConnector = InputConnector,
+        klass: Input = Input,
         label: AnyStr = "input",
     ) -> None:
         connector = klass(self, label=f"{self.label}.{label}")
         prop >> connector
 
-    def produces_output(
+    def produces(
         self,
         prop: Property,
-        klass: OutputConnector = OutputConnector,
+        klass: Output = Output,
         label: AnyStr = "output",
     ) -> None:
         connector = klass(self, label=f"{self.label}.{label}")
         connector >> prop
 
 
-class ElementaryBlock(FunctionBlock):
-    _class_iri: URIRef = S223.ElementaryBlock
+#class ElementaryBlock(FunctionBlock):
+#    _class_iri: URIRef = S223.ElementaryBlock
 
 
-class CompositeBlock(FunctionBlock):
-    _class_iri: URIRef = S223.CompositeBlock
+#class CompositeBlock(FunctionBlock):
+#    _class_iri: URIRef = S223.CompositeBlock
