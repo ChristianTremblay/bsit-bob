@@ -97,6 +97,23 @@ def connect_mm(output_connector: Output, prop: Property) -> None:
     if INCLUDE_INVERSE:
         data_graph.add((prop._node_iri, S223.isProducedBy, output_connector._node_iri))
 
+@multimethod
+def connect_mm(function_block: FunctionBlock, parameter: Parameter) -> None:
+    """FunctionBlock >> Parameter"""
+    logging.info(f"connect from {function_block} to {parameter}")
+
+    data_graph.add((function_block._node_iri, S223.hasParameter, parameter._node_iri))
+    if INCLUDE_INVERSE:
+        data_graph.add((parameter._node_iri, S223.isParameterOf, function_block._node_iri))
+
+@multimethod
+def connect_mm(parameter: Parameter, function_block: FunctionBlock) -> None:
+    """Parameter >> FunctionBlock"""
+    logging.info(f"connect from {parameter} to {function_block}")
+
+    data_graph.add((function_block._node_iri, S223.hasParameter, parameter._node_iri))
+    if INCLUDE_INVERSE:
+        data_graph.add((parameter._node_iri, S223.isParameterOf, function_block._node_iri))
 
 #
 #   Connector types, parameters, and constants
