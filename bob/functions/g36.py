@@ -13,8 +13,8 @@ from . import (
     BinaryInput,
     BinaryOutput,
     FunctionBlock,
-    InputConnector,
-    OutputConnector,
+    Input,
+    Output,
 )
 
 g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
@@ -22,19 +22,19 @@ g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g3
 _namespace = g36
 
 
-class AnalogIn(InputConnector):
+class AnalogIn(Input):
     _class_iri = g36.AnalogIn
 
 
-class AnalogOut(OutputConnector):
+class AnalogOut(Output):
     _class_iri = g36.AnalogOut
 
 
-class BinaryIn(InputConnector):
+class BinaryIn(Input):
     _class_iri = g36.BinaryIn
 
 
-class BinaryOut(OutputConnector):
+class BinaryOut(Output):
     _class_iri = g36.BinaryOut
 
 

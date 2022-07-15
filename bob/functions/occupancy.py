@@ -1,5 +1,5 @@
 from ..core import PropertyReference, BOB, P223, S223
-from ..functions import FunctionBlock, InputConnector, OutputConnector
+from ..functions import FunctionBlock, Input, Output
 from ..properties import OccupancyStatus, Schedule
 
 _namespace = BOB
@@ -14,9 +14,9 @@ class OccupancyFunction(FunctionBlock):
     """
     _class_iri = P223.OccupancyFunctionBlock
 
-    inStatus: InputConnector
-    inSchedule: InputConnector
-    outStatus: OutputConnector
+    inStatus: Input
+    inSchedule: Input
+    outStatus: Output
 
 
 class OccupancyControl(FunctionBlock):
