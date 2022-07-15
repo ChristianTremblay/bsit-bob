@@ -149,10 +149,10 @@ Effectiveness.Inactive = Effectiveness("Inactive", _alt_namespace=P223)
 Effectiveness.Unknown = Effectiveness("Unknown", _alt_namespace=P223)
 
 #
-G36AlarmLevel.Level1 = EnumerationKind("Level1", description="Life Safetey Message", _alt_namespace=G36)
-G36AlarmLevel.Level2 = EnumerationKind("Level2", description="Critical Equipment Message", _alt_namespace=G36)
-G36AlarmLevel.Level3 = EnumerationKind("Level3", description="Urgent Message", _alt_namespace=G36)
-G36AlarmLevel.Level4 = EnumerationKind("Level4", description="Normal Message", _alt_namespace=G36)
+G36AlarmLevel.Level1 = EnumerationKind("Level1", comment="Life Safetey Message", _alt_namespace=G36)
+G36AlarmLevel.Level2 = EnumerationKind("Level2", comment="Critical Equipment Message", _alt_namespace=G36)
+G36AlarmLevel.Level3 = EnumerationKind("Level3", comment="Urgent Message", _alt_namespace=G36)
+G36AlarmLevel.Level4 = EnumerationKind("Level4", comment="Normal Message", _alt_namespace=G36)
 
 #
 HandOffAutoEnum.Hand = HandOffAutoEnum("Hand", _alt_namespace=P223)
