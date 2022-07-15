@@ -1,3 +1,4 @@
+from prometheus_client import Enum
 from rdflib import Graph, URIRef
 
 from .core import (
@@ -11,6 +12,7 @@ from .core import (
     Water,
     S223,
     P223,
+    G36
 )
 
 _namespace = S223
@@ -115,6 +117,7 @@ Substance.Soot = Soot = Substance("Soot")
 # Enumeration kinds to create hasValue
 ActiveInactiveEnum = EnumerationKind("ActiveInactive", _alt_namespace=P223)
 Effectiveness = EnumerationKind("Effectiveness")
+G36AlarmLevel = EnumerationKind("G36AlarmLevels", _alt_namespace=G36)
 HandOffAutoEnum = EnumerationKind("HandOffAuto", _alt_namespace=P223)
 HVACOperatingMode = EnumerationKind("HVACOperatingMode")
 HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
@@ -144,6 +147,12 @@ ActiveInactiveEnum.Unknown = ActiveInactiveEnum("Unknown", _alt_namespace=P223)
 Effectiveness.Active = Effectiveness("Active", _alt_namespace=P223)
 Effectiveness.Inactive = Effectiveness("Inactive", _alt_namespace=P223)
 Effectiveness.Unknown = Effectiveness("Unknown", _alt_namespace=P223)
+
+#
+G36AlarmLevel.Level1 = EnumerationKind("Level1", description="Life Safetey Message", _alt_namespace=G36)
+G36AlarmLevel.Level2 = EnumerationKind("Level2", description="Critical Equipment Message", _alt_namespace=G36)
+G36AlarmLevel.Level3 = EnumerationKind("Level3", description="Urgent Message", _alt_namespace=G36)
+G36AlarmLevel.Level4 = EnumerationKind("Level4", description="Normal Message", _alt_namespace=G36)
 
 #
 HandOffAutoEnum.Hand = HandOffAutoEnum("Hand", _alt_namespace=P223)
