@@ -18,13 +18,12 @@ from ..multimethods import multimethod
 _namespace = S223
 
 
-#
-#   Connectors
-#
-
-
 class Connector(Node):
-    _class_iri: URIRef = BOB.Connector
+    """
+    This is an abstract class that does not appear in the model and is just
+    used to simplfy the modeling for properties to/from inputs and outputs.
+    """
+    _class_iri: URIRef = None
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
         logging.debug(f"Connector.__init__ {function_block} {kwargs}")
@@ -46,7 +45,7 @@ class Connector(Node):
         return self
 
 
-class Input(Connector):
+class FunctionInput(Connector):
     _class_iri: URIRef = S223.FunctionInput
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
@@ -55,7 +54,7 @@ class Input(Connector):
         data_graph.add((function_block._node_iri, S223.hasInput, self._node_iri))
 
 
-class Output(Connector):
+class FunctionOutput(Connector):
     _class_iri: URIRef = S223.FunctionOutput
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
@@ -64,38 +63,53 @@ class Output(Connector):
         data_graph.add((function_block._node_iri, S223.hasOutput, self._node_iri))
 
 
+class Parameter(Node):
+    _class_iri: URIRef = S223.Parameter
+
+    def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
+        super().__init__(function_block, **kwargs)
+
+        data_graph.add((function_block._node_iri, S223.hasParameter, self._node_iri))
+
+
+class Constant(Parameter):
+    _class_iri: URIRef = S223.Constant
+
+    def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
+        super().__init__(function_block, **kwargs)
+
+
 @multimethod
 def connect_mm(
-    output_connector: Output, input_connector: Input
+    function_output: FunctionOutput, function_input: FunctionInput
 ) -> None:
-    """OutputConnector >> InputConnector"""
+    """FunctionOutput >> FunctionInput"""
     logging.info(f"connect from {output_connector} to {input_connector}")
 
     data_graph.add(
-        (output_connector._node_iri, S223.connect, input_connector._node_iri)
+        (function_output._node_iri, S223.connect, function_input._node_iri)
     )
 
 
 @multimethod
-def connect_mm(prop: Property, input_connector: Input) -> None:
-    """Property >> Input"""
-    logging.info(f"connect from {prop} to {input_connector}")
+def connect_mm(prop: Property, function_input: FunctionInput) -> None:
+    """Property >> FunctionInput"""
+    logging.info(f"connect from {prop} to {function_input}")
 
-    data_graph.add((input_connector._node_iri, S223.uses, prop._node_iri))
-    if INCLUDE_INVERSE:
-        data_graph.add(
-            (prop._node_iri, S223.isUsedBy, input_connector._node_iri)
-        )
+    # check to make sure it doesn't already use something
+    uses_something = list(data_graph.objects(function_input._node_iri, S223.uses))
+    if uses_something:
+        raise RuntimeError(f"{function_input} already uses {uses_something[0]}")
+
+    data_graph.add((function_input._node_iri, S223.uses, prop._node_iri))
 
 
 @multimethod
-def connect_mm(output_connector: Output, prop: Property) -> None:
-    """Output >> Property"""
-    logging.info(f"connect from {output_connector} to {prop}")
+def connect_mm(function_output: FunctionOutput, prop: Property) -> None:
+    """FunctionOutput >> Property"""
+    logging.info(f"connect from {function_output} to {prop}")
 
-    data_graph.add((output_connector._node_iri, S223.produces, prop._node_iri))
-    if INCLUDE_INVERSE:
-        data_graph.add((prop._node_iri, S223.isProducedBy, output_connector._node_iri))
+    data_graph.add((function_output._node_iri, S223.produces, prop._node_iri))
 
 @multimethod
 def connect_mm(function_block: FunctionBlock, parameter: Parameter) -> None:
@@ -116,40 +130,24 @@ def connect_mm(parameter: Parameter, function_block: FunctionBlock) -> None:
         data_graph.add((parameter._node_iri, S223.isParameterOf, function_block._node_iri))
 
 #
-#   Connector types, parameters, and constants
+#   Specialized inputs and outputs
 #
 
 
-class AnalogInput(Input):
+class AnalogInput(FunctionInput):
     _class_iri: URIRef = S223.AnalogInput
 
 
-class AnalogOutput(Output):
+class AnalogOutput(FunctionOutput):
     _class_iri: URIRef = S223.AnalogOutput
 
 
-class BinaryInput(Input):
+class BinaryInput(FunctionInput):
     _class_iri: URIRef = S223.BinaryInput
 
 
-class BinaryOutput(Output):
+class BinaryOutput(FunctionOutput):
     _class_iri: URIRef = S223.BinaryOutput
-
-
-class Parameter(Node):
-    _class_iri: URIRef = S223.Parameter
-
-
-class Constant(Parameter):
-    _class_iri: URIRef = S223.Constant
-
-
-class AnalogConstant(Constant):
-    _class_iri: URIRef = None
-
-
-class BinaryConstant(Constant):
-    _class_iri: URIRef = None
 
 
 #
@@ -210,29 +208,3 @@ class FunctionBlock(Node):
                 continue
 
             setattr(self, attr_name, attr_element)
-
-    def uses(
-        self,
-        prop: Property,
-        klass: Input = Input,
-        label: AnyStr = "input",
-    ) -> None:
-        connector = klass(self, label=f"{self.label}.{label}")
-        prop >> connector
-
-    def produces(
-        self,
-        prop: Property,
-        klass: Output = Output,
-        label: AnyStr = "output",
-    ) -> None:
-        connector = klass(self, label=f"{self.label}.{label}")
-        connector >> prop
-
-
-#class ElementaryBlock(FunctionBlock):
-#    _class_iri: URIRef = S223.ElementaryBlock
-
-
-#class CompositeBlock(FunctionBlock):
-#    _class_iri: URIRef = S223.CompositeBlock

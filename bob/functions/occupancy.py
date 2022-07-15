@@ -1,5 +1,5 @@
 from ..core import PropertyReference, BOB, P223, S223
-from ..functions import FunctionBlock, Input, Output
+from ..functions import FunctionBlock, FunctionInput, FunctionOutput
 from ..properties import OccupancyStatus, Schedule
 
 _namespace = BOB
@@ -12,17 +12,8 @@ class OccupancyFunction(FunctionBlock):
     an external reference to a BACnet Schedule Object) and outputs
     "occupied" if the space/room/zone should be considered occupied.
     """
-    _class_iri = P223.OccupancyFunctionBlock
+    _class_iri = P223.OccupancyFunction
 
-    inStatus: Input
-    inSchedule: Input
-    outStatus: Output
-
-
-class OccupancyControl(FunctionBlock):
-    _class_iri = P223.OccupancyFunctionBlock
-    occupancyStatus: OccupancyStatus
-    schedule: Schedule
-    # hasOccupancySensor: PropertyReference
-    # What if I need to connect more than 1 ???
-    # def __init__(self, **kwargs):
+    inStatus: FunctionInput
+    inSchedule: FunctionInput
+    outStatus: FunctionOutput

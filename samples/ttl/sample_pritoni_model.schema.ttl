@@ -3,6 +3,7 @@
 @prefix bacnet: <http://data.ashrae.org/bacnet/2020#> .
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix functions: <urn:ex/functions/> .
+@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -46,7 +47,6 @@ bob:Area a rdfs:Class ;
         s223:QuantifiableProperty .
 bob:ChilledWaterConnectionPoint a rdfs:Class .
 bob:CondensedWaterConnectionPoint a rdfs:Class .
-bob:Connector a rdfs:Class .
 bob:DaylightDetected a rdfs:Class ;
     rdfs:subClassOf s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -283,6 +283,8 @@ bob:hotWaterOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:humidity a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+bob:inSchedule a rdf:Property .
+bob:inStatus a rdf:Property .
 bob:indoor a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:inputSignal a rdf:Property ;
@@ -306,8 +308,6 @@ bob:number_of_circuits a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:occupancy a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
-bob:occupancyStatus a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
 bob:onOffCommand a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:onOffStatus a rdf:Property ;
@@ -316,6 +316,7 @@ bob:openCloseCommand a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:openCloseStatus a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+bob:outStatus a rdf:Property .
 bob:outdoor a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:outputSignal a rdf:Property ;
@@ -330,8 +331,6 @@ bob:radiantHeating a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:returnAirInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasSystemConnectionPoint .
-bob:schedule a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
 bob:setpointReset a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:setpointResetInlet a rdf:Property ;
@@ -355,10 +354,35 @@ bob:waterOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:windows a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
-functions:AVG_Temp a rdfs:Class ;
+functions:Average a rdfs:Class ;
     rdfs:subClassOf s223:FunctionBlock .
-functions:avg_tmp a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+functions:u1 a rdf:Property .
+functions:u2 a rdf:Property .
+functions:y a rdf:Property .
+g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
+        g36:EnumerationKind-G36AlarmLevels,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+g36:EnumerationKind-Level1 a s223:EnumerationKind,
+        g36:EnumerationKind-Level1,
+        rdfs:Class ;
+    rdfs:comment "Life Safetey Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+g36:EnumerationKind-Level2 a s223:EnumerationKind,
+        g36:EnumerationKind-Level2,
+        rdfs:Class ;
+    rdfs:comment "Critical Equipment Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+g36:EnumerationKind-Level3 a s223:EnumerationKind,
+        g36:EnumerationKind-Level3,
+        rdfs:Class ;
+    rdfs:comment "Urgent Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+g36:EnumerationKind-Level4 a s223:EnumerationKind,
+        g36:EnumerationKind-Level4,
+        rdfs:Class ;
+    rdfs:comment "Normal Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
 p223:ActiveInactive-Active a p223:ActiveInactive-Active,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -641,7 +665,7 @@ p223:NormalFault-Normal a p223:NormalFault-Normal,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-NormalFault,
         s223:EnumerationKind .
-p223:OccupancyFunctionBlock a rdfs:Class ;
+p223:OccupancyFunction a rdfs:Class ;
     rdfs:subClassOf s223:FunctionBlock .
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
