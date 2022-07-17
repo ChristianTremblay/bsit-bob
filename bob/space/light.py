@@ -26,5 +26,5 @@ class LightingSpace(DomainSpace):
 class LightingZone(Zone):
     _class_iri = P223.LightingZone
     hasDomain = Domain.Lighting
-    #lightInlet: LightVisibleInletZoneConnectionPoint
+    # lightInlet: LightVisibleInletZoneConnectionPoint
     occupancy: PropertyReference  # promoted from a space

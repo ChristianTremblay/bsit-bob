@@ -12,6 +12,7 @@ class OccupancyFunction(FunctionBlock):
     an external reference to a BACnet Schedule Object) and outputs
     "occupied" if the space/room/zone should be considered occupied.
     """
+
     _class_iri = P223.OccupancyFunction
 
     inStatus: FunctionInput

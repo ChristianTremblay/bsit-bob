@@ -25,6 +25,7 @@ class Average(FunctionBlock):
     u2: AnalogInput
     y: AnalogOutput
 
+
 # make an instance
 f = Average(label="FB-1", comment="Compute DA-T Avg")
 

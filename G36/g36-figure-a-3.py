@@ -232,9 +232,7 @@ occupancy = OccupancyControl(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
-occupancy.uses(
-    vav["ZN-OCC-SENSOR"].observesProperty, BinaryIn, "occupancy-sensor"
-)
+occupancy.uses(vav["ZN-OCC-SENSOR"].observesProperty, BinaryIn, "occupancy-sensor")
 occupancy.uses(
     vav["ZONE-THERMOSTAT"]["local_override"].observesProperty,
     BinaryIn,
@@ -259,9 +257,7 @@ g36fig_a_3 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
 # zoneOccupancySensor = BinaryIn(label='Zone Occupancy Sensor', function_block=g36fig_a_3)
 
 g36fig_a_3.uses(vav.airFlow, AnalogIn, "supplyAirFlow")
-g36fig_a_3.uses(
-    hvac_zone.temperature_setpoint, AnalogIn, "zoneTemperatureSetpoint"
-)
+g36fig_a_3.uses(hvac_zone.temperature_setpoint, AnalogIn, "zoneTemperatureSetpoint")
 g36fig_a_3.uses(hvac_zone.temperature, AnalogIn, "zoneTemperature")
 g36fig_a_3.uses(vav["supplyAirTemperature"], AnalogIn, "supplyAirTemprature")
 g36fig_a_3.uses(hvac_zone.co2, AnalogIn, "zoneCO2")

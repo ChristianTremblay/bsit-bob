@@ -23,6 +23,7 @@ class Connector(Node):
     This is an abstract class that does not appear in the model and is just
     used to simplfy the modeling for properties to/from inputs and outputs.
     """
+
     _class_iri: URIRef = None
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
@@ -80,15 +81,11 @@ class Constant(Parameter):
 
 
 @multimethod
-def connect_mm(
-    function_output: FunctionOutput, function_input: FunctionInput
-) -> None:
+def connect_mm(function_output: FunctionOutput, function_input: FunctionInput) -> None:
     """FunctionOutput >> FunctionInput"""
     logging.info(f"connect from {output_connector} to {input_connector}")
 
-    data_graph.add(
-        (function_output._node_iri, S223.connect, function_input._node_iri)
-    )
+    data_graph.add((function_output._node_iri, S223.connect, function_input._node_iri))
 
 
 @multimethod
@@ -111,6 +108,7 @@ def connect_mm(function_output: FunctionOutput, prop: Property) -> None:
 
     data_graph.add((function_output._node_iri, S223.produces, prop._node_iri))
 
+
 @multimethod
 def connect_mm(function_block: FunctionBlock, parameter: Parameter) -> None:
     """FunctionBlock >> Parameter"""
@@ -118,7 +116,10 @@ def connect_mm(function_block: FunctionBlock, parameter: Parameter) -> None:
 
     data_graph.add((function_block._node_iri, S223.hasParameter, parameter._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((parameter._node_iri, S223.isParameterOf, function_block._node_iri))
+        data_graph.add(
+            (parameter._node_iri, S223.isParameterOf, function_block._node_iri)
+        )
+
 
 @multimethod
 def connect_mm(parameter: Parameter, function_block: FunctionBlock) -> None:
@@ -127,7 +128,10 @@ def connect_mm(parameter: Parameter, function_block: FunctionBlock) -> None:
 
     data_graph.add((function_block._node_iri, S223.hasParameter, parameter._node_iri))
     if INCLUDE_INVERSE:
-        data_graph.add((parameter._node_iri, S223.isParameterOf, function_block._node_iri))
+        data_graph.add(
+            (parameter._node_iri, S223.isParameterOf, function_block._node_iri)
+        )
+
 
 #
 #   Specialized inputs and outputs
