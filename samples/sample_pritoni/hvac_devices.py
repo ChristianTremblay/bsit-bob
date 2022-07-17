@@ -11,7 +11,7 @@ from bob.connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     EthernetBidirectionalConnectionPoint,
 )
-from bob.core import bind_model_namespace, dump, UNIT
+from bob.core import bind_model_namespace, dump, UNIT, Role
 from bob.devices.architectural import Window
 from bob.devices.electricity.starter import MotorStarter
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
@@ -72,10 +72,12 @@ ahu_template = {
         ("RF", FanWithVFD): {
             "comment": "Return Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
+            "hasRole": Role.Return,
         },
         ("SF", FanWithStarter): {
             "comment": "Supply Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
+            "hasRole": Role.Supply,
         },
         ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Heating coil"},
@@ -156,7 +158,12 @@ hot_water_pump = PumpWithStarter(label="HotWaterPump")
 
 
 exhaustfan_template = {
-    "cp": {"electricalInlet": Electricity_120V_60HzInletConnectionPoint},
+    "cp": {
+        "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
+    },
+    "params":{
+        "hasRole": Role.Exhaust,
+    }
 }
 bathroom_exhaust_fan = Fan(
     config=exhaustfan_template,
