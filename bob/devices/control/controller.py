@@ -1,3 +1,4 @@
+from pyclbr import Function
 from typing import Dict
 
 from rdflib import URIRef
@@ -16,6 +17,7 @@ from ...connections.electricity import (
 )
 
 from ...core import (
+    data_graph,
     Device,
     Property,
     PropertyReference,
@@ -62,3 +64,9 @@ class Controller(Device):
         logging.debug(f"Controller.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
+
+    def executes(self, function_block: FunctionBlock):
+        logging.debug(
+            f"Controller {self._node_iri} executes  {function_block._node_iri}"
+        )
+        data_graph.add((self._node_iri, S223.executes, function_block._node_iri))
