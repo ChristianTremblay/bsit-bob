@@ -49,7 +49,13 @@ from bob.devices.hvac.fan import Fan
 from bob.devices.hvac.gas import GasMonitor
 from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
-from bob.functions import FunctionBlock, AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.functions import (
+    FunctionBlock,
+    AnalogInput,
+    AnalogOutput,
+    BinaryInput,
+    BinaryOutput,
+)
 from bob.functions.g36 import G36Sequence
 from bob.functions.occupancy import OccupancyControl
 from bob.properties import Flow, PercentCommand, Temperature, temperature

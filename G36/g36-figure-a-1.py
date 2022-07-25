@@ -16,7 +16,10 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.connections.electricity import RS485BidirectionalConnectionPoint
+from bob.connections.electricity import (
+    RS485BidirectionalConnectionPoint,
+    Electricity_24V_60HzInletConnectionPoint,
+)
 from bob.core import (
     Device,
     PropertyReference,
@@ -30,7 +33,13 @@ from bob.devices.architectural import Window
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.gas import GasMonitor
 from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.functions import FunctionBlock, AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.functions import (
+    FunctionBlock,
+    AnalogInput,
+    AnalogOutput,
+    BinaryInput,
+    BinaryOutput,
+)
 from bob.functions.g36 import G36Figure_A_1, G36Sequence
 from bob.functions.occupancy import OccupancyControl
 from bob.properties import Flow, PercentCommand, Temperature, temperature
@@ -41,11 +50,35 @@ from bob.sensor.gas import CO2Sensor
 from bob.sensor.light import IntrusionSensor, OccupancySensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace, HVACZone
+from bob.devices.control.controller import (
+    analogInput,
+    analogOutput,
+    binaryInput,
+    binaryOutput,
+    bacnet_mstp,
+    Controller,
+)
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
     "exg3601", f"http://data.ashrae.org/standard223/data/{model_name}#"
 )
+
+controller_template = {
+    "cp": {
+        "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
+        "zone_temperature_sensor": analogInput,
+        "zone_co2_sensor": analogInput,
+        "airflow_sensor": analogInput,
+        "window_switch": binaryInput,
+        "occupancy_sensor": binaryInput,
+        "damper_output": analogOutput,
+        "bacnet_mstp": bacnet_mstp,
+    },
+    "properties": {("occupancy", FunctionBlock): {}, ("g36_figa1", FunctionBlock): {}},
+}
+
+controller = Controller(label="Controller for G36 Fig A-1", config=controller_template)
 
 co2Sensor_template = {
     "params": {
@@ -145,10 +178,15 @@ vav = VAV_FIGA1(config=vav_system_template)
 supply_air >> vav["DPR"].airInlet
 
 vav["DPR"].airOutlet >> discharge_air >> hvac_space.ductAirInlet
+vav["DPR"]["actuator"].proportional_signal << controller.damper_output
 vav["ZONE-THERMOSTAT"]["temperature_sensor"].hasMeasurementLocation = hvac_space
+vav["ZONE-THERMOSTAT"].mstp << controller.bacnet_mstp
 vav["ZN-CO2"]["CO2"].hasMeasurementLocation = hvac_space
+# vav['ZN-CO2'] << controller.zone_co2_sensor
 vav["ZN-WINDOW-SWITCH"].hasMeasurementLocation = window
+vav["ZN-WINDOW-SWITCH"].onoff_contact >> controller.window_switch
 vav["ZN-OCC-SENSOR"].hasMeasurementLocation = hvac_space
+# vav['ZN-OCC-SENSOR'] << controller['occupancy_sensor'] not ready yet
 
 # Not sure if it's really required...but I think readings should be in space
 hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observesProperty
@@ -198,5 +236,10 @@ g36fig_a_1.uses_input(hvac_zone.temperature, AnalogInput, "zoneTemperature")
 g36fig_a_1.uses_input(hvac_zone.co2, AnalogInput, "zoneTemperature")
 g36fig_a_1.uses_input(hvac_zone.windows_switch, BinaryInput, "window-switch")
 g36fig_a_1.produces_output(vav["damperPosition"], AnalogOutput, "damperPosition")
+
+# Controller
+# controller["occupancy"] = occupancy
+# controller["g36_figa1"] = g36fig_a_1
+
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
