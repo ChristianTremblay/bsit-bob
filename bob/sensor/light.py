@@ -4,6 +4,7 @@ from rdflib import URIRef
 
 from bob import core
 from bob.properties.states import DaylightDetected, OnOffStatus
+from bob.connections.electricity import OnOffSignalOutletConnectionPoint
 
 from ..core import (
     ExternalReference,
@@ -66,6 +67,7 @@ class IntrusionSensor(Sensor):
     _class_iri = S223.Sensor
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Intrusion...good for Windows and doors
+    onoff_contact: OnOffSignalOutletConnectionPoint
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
