@@ -116,7 +116,12 @@ Substance.Soot = Soot = Substance("Soot")
 # ===================
 # Enumeration kinds to create hasValue
 ActiveInactiveEnum = EnumerationKind("ActiveInactive", _alt_namespace=P223)
+AITypeEnum = EnumerationKind("AIType", _alt_namespace=P223)
+AOTypeEnum = EnumerationKind("AOType", _alt_namespace=P223)
+BITypeEnum = EnumerationKind("BIType", _alt_namespace=P223)
+BOTypeEnum = EnumerationKind("BOType", _alt_namespace=P223)
 Effectiveness = EnumerationKind("Effectiveness")
+G36AlarmLevel = EnumerationKind("G36AlarmLevels", _alt_namespace=G36)
 HandOffAutoEnum = EnumerationKind("HandOffAuto", _alt_namespace=P223)
 HVACOperatingMode = EnumerationKind("HVACOperatingMode")
 HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
@@ -129,6 +134,7 @@ OccupancyStatus = EnumerationKind("OccupancyStatus")
 OnOffEnum = EnumerationKind("OnOff")
 OpenCloseEnum = EnumerationKind("OpenClose", _alt_namespace=P223)
 OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=P223)
+ProtocolEnum = EnumerationKind("Protocol", _alt_namespace=P223)
 PositionEnum = EnumerationKind("Position", _alt_namespace=P223)
 RunningNotRunningEnum = EnumerationKind("RunningNotRunning", _alt_namespace=P223)
 ThreeSpeedSetting = EnumerationKind("ThreeSpeedSetting")
@@ -143,9 +149,49 @@ ActiveInactiveEnum.Inactive = ActiveInactiveEnum("Inactive", _alt_namespace=P223
 ActiveInactiveEnum.Unknown = ActiveInactiveEnum("Unknown", _alt_namespace=P223)
 
 #
+AITypeEnum.Unknown = AITypeEnum("Unknown", _alt_namespace=P223)
+AITypeEnum.RTD = AITypeEnum("RTD", _alt_namespace=P223)
+AITypeEnum.Nickel1kRTD = AITypeEnum("Nickel1kRTD", _alt_namespace=P223)
+AITypeEnum.Platinum1kRTD = AITypeEnum("Platinum1kRTD", _alt_namespace=P223)
+AITypeEnum.VDC_0_10 = AITypeEnum("0-10VDC", _alt_namespace=P223)
+AITypeEnum.mA_4_20 = AITypeEnum("4-20mA", _alt_namespace=P223)
+AITypeEnum.NTC10kType3 = AITypeEnum("NTC10kType3", _alt_namespace=P223)
+AITypeEnum.NTC10kType2 = AITypeEnum("NTC10kType2", _alt_namespace=P223)
+AITypeEnum.NTC2250Type2 = AITypeEnum("NTC2250Type2", _alt_namespace=P223)
+AITypeEnum.Resistive = AITypeEnum("Resistive", _alt_namespace=P223)
+
+#
+AOTypeEnum.VDC_0_10 = AOTypeEnum("0-10VDC", _alt_namespace=P223)
+AOTypeEnum.mA_4_20 = AOTypeEnum("4-20mA", _alt_namespace=P223)
+
+#
+BITypeEnum.DryContact = BITypeEnum("DryContact", _alt_namespace=P223)
+BITypeEnum.PulseCounter = BITypeEnum("PulseCounter", _alt_namespace=P223)
+
+#
+BOTypeEnum.Maintained = AOTypeEnum("Maintained", _alt_namespace=P223)
+BOTypeEnum.Pulse = AOTypeEnum("Pulse", _alt_namespace=P223)
+BOTypeEnum.StartStop = AOTypeEnum("StartStop", _alt_namespace=P223)
+BOTypeEnum.Incremental = AOTypeEnum("Incremental", _alt_namespace=P223)
+
+#
 Effectiveness.Active = Effectiveness("Active", _alt_namespace=P223)
 Effectiveness.Inactive = Effectiveness("Inactive", _alt_namespace=P223)
 Effectiveness.Unknown = Effectiveness("Unknown", _alt_namespace=P223)
+
+#
+G36AlarmLevel.Level1 = EnumerationKind(
+    "Level1", comment="Life Safetey Message", _alt_namespace=G36
+)
+G36AlarmLevel.Level2 = EnumerationKind(
+    "Level2", comment="Critical Equipment Message", _alt_namespace=G36
+)
+G36AlarmLevel.Level3 = EnumerationKind(
+    "Level3", comment="Urgent Message", _alt_namespace=G36
+)
+G36AlarmLevel.Level4 = EnumerationKind(
+    "Level4", comment="Normal Message", _alt_namespace=G36
+)
 
 #
 HandOffAutoEnum.Hand = HandOffAutoEnum("Hand", _alt_namespace=P223)
@@ -217,6 +263,16 @@ OpenCloseEnum.Close = OpenCloseEnum("Close", _alt_namespace=P223)
 #
 OverriddenAuto.Auto = OverriddenAuto("Auto", _alt_namespace=P223)
 OverriddenAuto.Overridden = OverriddenAuto("Overridden", _alt_namespace=P223)
+
+#
+ProtocolEnum.BACnet = ProtocolEnum("BACnet", _alt_namespace=P223)
+ProtocolEnum.BACnet_MSTP = ProtocolEnum("BACnet_MSTP", _alt_namespace=P223)
+ProtocolEnum.BACnet_IP = ProtocolEnum("BACnet_IP", _alt_namespace=P223)
+ProtocolEnum.BACnet_SC = ProtocolEnum("BACnet_SC", _alt_namespace=P223)
+ProtocolEnum.Modbus = ProtocolEnum("Modbus", _alt_namespace=P223)
+ProtocolEnum.Modbus_RTU = ProtocolEnum("Modbus_RTU", _alt_namespace=P223)
+ProtocolEnum.Modbus_TCP = ProtocolEnum("Modbus_TCP", _alt_namespace=P223)
+ProtocolEnum.Lonworks = ProtocolEnum("Lonworks", _alt_namespace=P223)
 
 #
 PositionEnum.Close = PositionEnum("Close", _alt_namespace=P223)
