@@ -57,7 +57,7 @@ from bob.functions import (
     BinaryOutput,
 )
 from bob.functions.g36 import G36Sequence
-from bob.functions.occupancy import OccupancyControl
+from bob.functions.occupancy import OccupancyFunction
 from bob.properties import Flow, PercentCommand, Temperature, temperature
 from bob.properties.states import OccupancyStatus
 from bob.properties.volume import Gallons
@@ -226,7 +226,7 @@ hvac_zone.co2 = hvac_space.co2
 hvac_zone.windows_switch = hvac_space.window_switch
 
 # Occupancy.... we need a function block
-occupancy = OccupancyControl(
+occupancy = OccupancyFunction(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
@@ -239,8 +239,8 @@ occupancy.uses_input(
     "local-override",
 )
 occupancy.hasOccupancyStatus = OccupancyStatus()
-occupancy.produces_output(occupancy.hasOccupancyStatus)
-occupancy.produces_output(hvac_space.occupancy)
+occupancy.produces(occupancy.hasOccupancyStatus)
+occupancy.produces(hvac_space.occupancy)
 vav.occupancy = hvac_space.occupancy
 
 
