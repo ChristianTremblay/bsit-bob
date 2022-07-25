@@ -30,13 +30,9 @@ _namespace = P223
 
 # Controller
 analogInput = ModulationSignalInletConnectionPoint
-analogInput._class_iri = P223.AnalogInput
 analogOutput = ModulationSignalOutletConnectionPoint
-analogOutput._class_iri = P223.AnalogOutput
 binaryInput = OnOffSignalInletConnectionPoint
-binaryInput._class_iri = P223.BinaryInput
 binaryOutput = OnOffSignalOutletConnectionPoint
-binaryOutput._class_iri = P223.BinaryOutput
 bacnet_mstp = RS485BidirectionalConnectionPoint
 
 controller_template = {
