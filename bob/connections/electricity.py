@@ -1,8 +1,12 @@
 from rdflib import Literal, URIRef
 
+from bob.enum import AITypeEnum, AOTypeEnum, BITypeEnum, BOTypeEnum
 from bob.properties.network import Mbit_per_seconds
 
 from ..core import (
+    BOB,
+    P223,
+    S223,
     BidirectionalConnectionPoint,
     BidirectionalSystemConnectionPoint,
     Connection,
@@ -16,10 +20,7 @@ from ..core import (
     OutletSystemConnectionPoint,
     OutletZoneConnectionPoint,
     SystemConnectionPoint,
-    BOB,
     enum,
-    P223,
-    S223,
 )
 
 _namespace = BOB
@@ -453,13 +454,15 @@ class OnOffSignalConnectionPoint(ConnectionPoint):
 
 
 class OnOffSignalInletConnectionPoint(InletConnectionPoint, OnOffSignalConnectionPoint):
-    _class_iri = S223.InletConnectionPoint
+    _class_iri = S223.BinaryInput
+    hasBIType: BITypeEnum
 
 
 class OnOffSignalOutletConnectionPoint(
     OutletConnectionPoint, OnOffSignalConnectionPoint
 ):
-    _class_iri = S223.OutletConnectionPoint
+    _class_iri = S223.BinaryOutput
+    hasBOType: BOTypeEnum
 
 
 class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
@@ -492,13 +495,15 @@ class ModulationSignalConnectionPoint(ConnectionPoint):
 class ModulationSignalInletConnectionPoint(
     InletConnectionPoint, ModulationSignalConnectionPoint
 ):
-    _class_iri = S223.InletConnectionPoint
+    _class_iri = S223.AnalogInput
+    hasAIType: AITypeEnum
 
 
 class ModulationSignalOutletConnectionPoint(
     OutletConnectionPoint, ModulationSignalConnectionPoint
 ):
-    _class_iri = S223.OutletConnectionPoint
+    _class_iri = S223.AnalogOutput
+    hasAOType: AOTypeEnum
 
 
 class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
