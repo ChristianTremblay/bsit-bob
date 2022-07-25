@@ -230,10 +230,8 @@ occupancy = OccupancyFunction(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
-occupancy.uses_input(
-    vav["ZN-OCC-SENSOR"].observesProperty, BinaryInput, "occupancy-sensor"
-)
-occupancy.uses_input(
+occupancy.uses(vav["ZN-OCC-SENSOR"].observesProperty, BinaryInput, "occupancy-sensor")
+occupancy.uses(
     vav["ZONE-THERMOSTAT"]["local_override"].observesProperty,
     BinaryInput,
     "local-override",
@@ -256,16 +254,14 @@ g36fig_a_2 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
 # zonewindowSwitch = BinaryIn(label='Zone Window Switch', function_block=g36fig_a_2)
 # zoneOccupancySensor = BinaryIn(label='Zone Occupancy Sensor', function_block=g36fig_a_2)
 
-g36fig_a_2.uses_input(vav.airFlow, AnalogInput, "supplyAirFlow")
-g36fig_a_2.uses_input(
-    hvac_zone.temperature_setpoint, AnalogInput, "zoneTemperatureSetpoint"
-)
-g36fig_a_2.uses_input(hvac_zone.temperature, AnalogInput, "zoneTemperature")
-g36fig_a_2.uses_input(vav["supplyAirTemperature"], AnalogInput, "supplyAirTemprature")
-g36fig_a_2.uses_input(hvac_zone.co2, AnalogInput, "zoneCO2")
-g36fig_a_2.uses_input(hvac_zone.windows_switch, BinaryInput, "window-switch")
-g36fig_a_2.uses_input(occupancy.hasOccupancyStatus, BinaryInput, "occupancy-status")
-g36fig_a_2.produces_output(vav["damperPosition"], AnalogOutput, "damperPosition")
-g36fig_a_2.produces_output(vav["valvePosition"], AnalogOutput, "valvePosition")
+g36fig_a_2.uses(vav.airFlow, AnalogInput, "supplyAirFlow")
+g36fig_a_2.uses(hvac_zone.temperature_setpoint, AnalogInput, "zoneTemperatureSetpoint")
+g36fig_a_2.uses(hvac_zone.temperature, AnalogInput, "zoneTemperature")
+g36fig_a_2.uses(vav["supplyAirTemperature"], AnalogInput, "supplyAirTemprature")
+g36fig_a_2.uses(hvac_zone.co2, AnalogInput, "zoneCO2")
+g36fig_a_2.uses(hvac_zone.windows_switch, BinaryInput, "window-switch")
+g36fig_a_2.uses(occupancy.hasOccupancyStatus, BinaryInput, "occupancy-status")
+g36fig_a_2.produces(vav["damperPosition"], AnalogOutput, "damperPosition")
+g36fig_a_2.produces(vav["valvePosition"], AnalogOutput, "valvePosition")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
