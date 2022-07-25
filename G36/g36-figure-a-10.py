@@ -59,7 +59,7 @@ from bob.property import QuantifiableObservableProperty
 from bob.sensor.fire import SmokeDetectionSensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
-from bob.sensor.light import IntrusionSensor, OccupancySensor
+from bob.sensor.motion import IntrusionSensor, OccupancySensor
 from bob.sensor.pressure import DifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace

@@ -12,7 +12,8 @@ from bob.externalreference.bacnet import BACnetReference
 from bob.properties.electricity import ElectricPower
 from bob.properties.light import RelativeLuminousFlux
 from bob.properties.states import OnOffCommand
-from bob.sensor.light import DaylightSensor, MovementSensor, OccupancySensor
+from bob.sensor.light import DaylightSensor
+from bob.sensor.motion import MotionSensor, OccupancySensor
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
@@ -65,9 +66,9 @@ privateoffice_luminaire_8 = Luminaire(
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
     electricalPower=ElectricPower(20, unit=UNIT.W),
 )
-privateoffice_movement = MovementSensor(
+privateoffice_movement = OccupancySensor(
     label="O3",
-    comment="Occupancy sensor for Privtae Office (O3)",
+    comment="Occupancy sensor for Private Office (O3)",
     hasPhysicalLocation=ps.private_office,
     hasMeasurementLocation=ls.privateoffice_lightspace,
 )

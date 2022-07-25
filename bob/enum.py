@@ -1,6 +1,8 @@
 from rdflib import Graph, URIRef
 
 from .core import (
+    P223,
+    S223,
     Air,
     Domain,
     Electricity,
@@ -9,8 +11,6 @@ from .core import (
     Role,
     Substance,
     Water,
-    S223,
-    P223,
 )
 
 _namespace = S223
@@ -54,7 +54,9 @@ Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
 Water.HotWater = HotWater = Water("HotWater")
 Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
 Water.DomesticWater = DomesticWater = Water("DomesticWater", _alt_namespace=P223)
-Water.DomesticHotWater = DomesticHotWater = Water("DomesticHotWater", _alt_namespace=P223)
+Water.DomesticHotWater = DomesticHotWater = Water(
+    "DomesticHotWater", _alt_namespace=P223
+)
 Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
 Water.GlycoledWater = GlycoledWater = Water("GlycoledWater", _alt_namespace=P223)
 Water.Steam = Steam = Water("Steam", _alt_namespace=P223)
@@ -120,6 +122,7 @@ HVACOperatingMode = EnumerationKind("HVACOperatingMode")
 HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
 LeftRightEnum = EnumerationKind("LeftRight", _alt_namespace=P223)
 ManualAutoEnum = EnumerationKind("ManualAuto", _alt_namespace=P223)
+MotionNoMotionEnum = EnumerationKind("MotionNoMotion", _alt_namespace=P223)
 NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE BELOW
 NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
 NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
@@ -171,6 +174,10 @@ LeftRightEnum.Right = LeftRightEnum("Right", _alt_namespace=P223)
 #
 ManualAutoEnum.Manual = ManualAutoEnum("Manual", _alt_namespace=P223)
 ManualAutoEnum.Auto = ManualAutoEnum("Auto", _alt_namespace=P223)
+
+#
+MotionNoMotionEnum.Motion = MotionNoMotionEnum("Motion", _alt_namespace=P223)
+MotionNoMotionEnum.NoMotion = MotionNoMotionEnum("NoMotion", _alt_namespace=P223)
 
 # This is a test example... do we want to fill 223 with
 # that kind of enums ?
