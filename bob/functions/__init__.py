@@ -22,6 +22,7 @@ _namespace = S223
 #   Function Inputs and Outputs
 #
 
+
 class FunctionInput(Node):
     _class_iri: URIRef = S223.FunctionInput
 
@@ -39,7 +40,6 @@ class FunctionInput(Node):
         """Build a connection to this thing from another thing."""
         connect_mm(other, self)
         return self
-
 
 
 class FunctionOutput(Node):

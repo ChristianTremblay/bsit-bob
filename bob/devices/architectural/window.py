@@ -1,4 +1,5 @@
 from bob.connections.air import AirBidirectionalConnectionPoint
+from bob.connections.electricity import OnOffSignalOutletConnectionPoint
 from bob.connections.light import LightVisibleOutletConnectionPoint
 from bob.core import Device, PropertyReference, BOB, S223, P223
 

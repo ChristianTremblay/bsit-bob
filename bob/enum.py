@@ -54,7 +54,9 @@ Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
 Water.HotWater = HotWater = Water("HotWater")
 Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
 Water.DomesticWater = DomesticWater = Water("DomesticWater", _alt_namespace=P223)
-Water.DomesticHotWater = DomesticHotWater = Water("DomesticHotWater", _alt_namespace=P223)
+Water.DomesticHotWater = DomesticHotWater = Water(
+    "DomesticHotWater", _alt_namespace=P223
+)
 Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
 Water.GlycoledWater = GlycoledWater = Water("GlycoledWater", _alt_namespace=P223)
 Water.Steam = Steam = Water("Steam", _alt_namespace=P223)
