@@ -206,7 +206,7 @@ class FunctionBlock(Node):
 
             setattr(self, attr_name, attr_element)
 
-    def uses_input(
+    def uses(
         self,
         prop: Property,
         klass: FunctionInput = FunctionInput,
@@ -215,7 +215,7 @@ class FunctionBlock(Node):
         connector = klass(self, label=f"{self.label}.{label}")
         prop >> connector
 
-    def produces_output(
+    def produces(
         self,
         prop: Property,
         klass: FunctionOutput = FunctionOutput,
