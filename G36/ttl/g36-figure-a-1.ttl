@@ -1,6 +1,5 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix exg3601: <http://data.ashrae.org/standard223/data/g36-figure-a-1#> .
-@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -449,70 +448,60 @@ exg3601:00059 a s223:OutletZoneConnectionPoint,
 exg3601:00060 a p223:OccupancyFunctionBlock,
         s223:FunctionBlock ;
     rdfs:label "OccControl" ;
-    s223:hasConnector exg3601:00061,
-        exg3601:00062,
-        exg3601:00064,
+    s223:hasInput exg3601:00061,
+        exg3601:00062 ;
+    s223:hasOutput exg3601:00064,
         exg3601:00065 ;
     rdfs:comment "This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED" .
-exg3601:00061 a s223:Connector,
-        s223:InputConnector,
-        g36:BinaryIn ;
+exg3601:00061 a s223:BinaryInput,
+        s223:FunctionInput ;
     rdfs:label "OccControl.occupancy-sensor" ;
-    s223:usesInput exg3601:00025 .
-exg3601:00062 a s223:Connector,
-        s223:InputConnector,
-        g36:BinaryIn ;
+    s223:uses exg3601:00025 .
+exg3601:00062 a s223:BinaryInput,
+        s223:FunctionInput ;
     rdfs:label "OccControl.local-override" ;
-    s223:usesInput exg3601:00040 .
+    s223:uses exg3601:00040 .
 exg3601:00063 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
-exg3601:00064 a s223:Connector,
-        s223:OutputConnector ;
+exg3601:00064 a s223:FunctionOutput ;
     rdfs:label "OccControl.output" ;
-    s223:producesOutput exg3601:00063 .
-exg3601:00065 a s223:Connector,
-        s223:OutputConnector ;
+    s223:produces exg3601:00063 .
+exg3601:00065 a s223:FunctionOutput ;
     rdfs:label "OccControl.output" ;
-    s223:producesOutput exg3601:00013 .
+    s223:produces exg3601:00013 .
 exg3601:00066 a s223:FunctionBlock ;
     rdfs:label "G36_FIG_A_1" ;
-    s223:hasConnector exg3601:00067,
+    s223:hasInput exg3601:00067,
         exg3601:00068,
         exg3601:00069,
         exg3601:00070,
-        exg3601:00071,
-        exg3601:00072 ;
+        exg3601:00071 ;
+    s223:hasOutput exg3601:00072 ;
     rdfs:comment "Lorem ipsum of sequence" .
-exg3601:00067 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+exg3601:00067 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.supplyAirFlow" ;
-    s223:usesInput exg3601:00021 .
-exg3601:00068 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+    s223:uses exg3601:00021 .
+exg3601:00068 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.zoneTemperatureSetpoint" ;
-    s223:usesInput exg3601:00036 .
-exg3601:00069 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+    s223:uses exg3601:00036 .
+exg3601:00069 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.zoneTemperature" ;
-    s223:usesInput exg3601:00038 .
-exg3601:00070 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+    s223:uses exg3601:00038 .
+exg3601:00070 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.zoneTemperature" ;
-    s223:usesInput exg3601:00053 .
-exg3601:00071 a s223:Connector,
-        s223:InputConnector,
-        g36:BinaryIn ;
+    s223:uses exg3601:00053 .
+exg3601:00071 a s223:BinaryInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.window-switch" ;
-    s223:usesInput exg3601:00027 .
-exg3601:00072 a s223:Connector,
-        s223:OutputConnector,
-        g36:AnalogOut ;
+    s223:uses exg3601:00027 .
+exg3601:00072 a s223:AnalogOutput,
+        s223:FunctionOutput ;
     rdfs:label "G36_FIG_A_1.damperPosition" ;
-    s223:producesOutput exg3601:00030 .
+    s223:produces exg3601:00030 .

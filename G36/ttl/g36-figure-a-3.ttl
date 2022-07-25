@@ -1,6 +1,5 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix exg3601: <http://data.ashrae.org/standard223/data/g36-figure-a-3#> .
-@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -874,100 +873,85 @@ exg3601:00115 a s223:OutletZoneConnectionPoint,
 exg3601:00116 a p223:OccupancyFunctionBlock,
         s223:FunctionBlock ;
     rdfs:label "OccControl" ;
-    s223:hasConnector exg3601:00117,
-        exg3601:00118,
-        exg3601:00120,
+    s223:hasInput exg3601:00117,
+        exg3601:00118 ;
+    s223:hasOutput exg3601:00120,
         exg3601:00121 ;
     rdfs:comment "This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED" .
-exg3601:00117 a s223:Connector,
-        s223:InputConnector,
-        g36:BinaryIn ;
+exg3601:00117 a s223:BinaryInput,
+        s223:FunctionInput ;
     rdfs:label "OccControl.occupancy-sensor" ;
-    s223:usesInput exg3601:00028 .
-exg3601:00118 a s223:Connector,
-        s223:InputConnector,
-        g36:BinaryIn ;
+    s223:uses exg3601:00028 .
+exg3601:00118 a s223:BinaryInput,
+        s223:FunctionInput ;
     rdfs:label "OccControl.local-override" ;
-    s223:usesInput exg3601:00053 .
+    s223:uses exg3601:00053 .
 exg3601:00119 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
-exg3601:00120 a s223:Connector,
-        s223:OutputConnector ;
+exg3601:00120 a s223:FunctionOutput ;
     rdfs:label "OccControl.output" ;
-    s223:producesOutput exg3601:00119 .
-exg3601:00121 a s223:Connector,
-        s223:OutputConnector ;
+    s223:produces exg3601:00119 .
+exg3601:00121 a s223:FunctionOutput ;
     rdfs:label "OccControl.output" ;
-    s223:producesOutput exg3601:00016 .
+    s223:produces exg3601:00016 .
 exg3601:00122 a s223:FunctionBlock ;
     rdfs:label "G36_FIG_A_1" ;
-    s223:hasConnector exg3601:00123,
+    s223:hasInput exg3601:00123,
         exg3601:00124,
         exg3601:00125,
         exg3601:00126,
         exg3601:00127,
         exg3601:00128,
         exg3601:00129,
-        exg3601:00130,
-        exg3601:00131,
+        exg3601:00130 ;
+    s223:hasOutput exg3601:00131,
         exg3601:00132,
         exg3601:00133 ;
     rdfs:comment "Lorem ipsum of sequence" .
-exg3601:00123 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+exg3601:00123 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.supplyAirFlow" ;
-    s223:usesInput exg3601:00024 .
-exg3601:00124 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+    s223:uses exg3601:00024 .
+exg3601:00124 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.zoneTemperatureSetpoint" ;
-    s223:usesInput exg3601:00049 .
-exg3601:00125 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+    s223:uses exg3601:00049 .
+exg3601:00125 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.zoneTemperature" ;
-    s223:usesInput exg3601:00051 .
-exg3601:00126 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+    s223:uses exg3601:00051 .
+exg3601:00126 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.supplyAirTemprature" ;
-    s223:usesInput exg3601:00033 .
-exg3601:00127 a s223:Connector,
-        s223:InputConnector,
-        g36:AnalogIn ;
+    s223:uses exg3601:00033 .
+exg3601:00127 a s223:AnalogInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.zoneCO2" ;
-    s223:usesInput exg3601:00066 .
-exg3601:00128 a s223:Connector,
-        s223:InputConnector,
-        g36:BinaryIn ;
+    s223:uses exg3601:00066 .
+exg3601:00128 a s223:BinaryInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.window-switch" ;
-    s223:usesInput exg3601:00030 .
-exg3601:00129 a s223:Connector,
-        s223:InputConnector,
-        g36:BinaryIn ;
+    s223:uses exg3601:00030 .
+exg3601:00129 a s223:BinaryInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.fanStatus" ;
-    s223:usesInput exg3601:00043 .
-exg3601:00130 a s223:Connector,
-        s223:InputConnector,
-        g36:BinaryIn ;
+    s223:uses exg3601:00043 .
+exg3601:00130 a s223:BinaryInput,
+        s223:FunctionInput ;
     rdfs:label "G36_FIG_A_1.occupancy-status" ;
-    s223:usesInput exg3601:00119 .
-exg3601:00131 a s223:Connector,
-        s223:OutputConnector,
-        g36:AnalogOut ;
+    s223:uses exg3601:00119 .
+exg3601:00131 a s223:AnalogOutput,
+        s223:FunctionOutput ;
     rdfs:label "G36_FIG_A_1.damperPosition" ;
-    s223:producesOutput exg3601:00037 .
-exg3601:00132 a s223:Connector,
-        s223:OutputConnector,
-        g36:AnalogOut ;
+    s223:produces exg3601:00037 .
+exg3601:00132 a s223:AnalogOutput,
+        s223:FunctionOutput ;
     rdfs:label "G36_FIG_A_1.valvePosition" ;
-    s223:producesOutput exg3601:00039 .
-exg3601:00133 a s223:Connector,
-        s223:OutputConnector,
-        g36:BinaryOut ;
+    s223:produces exg3601:00039 .
+exg3601:00133 a s223:BinaryOutput,
+        s223:FunctionOutput ;
     rdfs:label "G36_FIG_A_1.fanCommand" ;
-    s223:producesOutput exg3601:00045 .
+    s223:produces exg3601:00045 .
