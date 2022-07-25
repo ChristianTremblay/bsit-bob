@@ -166,6 +166,7 @@ BOB = bind_namespace("bob", "http://data.ashrae.org/standard223/si-builder#")
 # which makes short examples easier to create
 EX = bind_namespace("ex", os.getenv("BOB_EX", "http://example/"))
 
+G36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
 
 # everything in this module belongs in the standard
 _namespace = S223

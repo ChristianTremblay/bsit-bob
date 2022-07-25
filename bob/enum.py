@@ -1,6 +1,9 @@
 from rdflib import Graph, URIRef
 
 from .core import (
+    G36,
+    P223,
+    S223,
     Air,
     Domain,
     Electricity,
@@ -9,8 +12,6 @@ from .core import (
     Role,
     Substance,
     Water,
-    S223,
-    P223,
 )
 
 _namespace = S223
