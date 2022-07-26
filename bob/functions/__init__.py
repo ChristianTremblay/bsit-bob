@@ -27,6 +27,10 @@ class FunctionInput(Node):
     _class_iri: URIRef = S223.FunctionInput
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
+        logging.info(
+            f"FunctionInput({self.__class__.__name__}).__init__ {function_block} {kwargs}"
+        )
+
         super().__init__(**kwargs)
 
         data_graph.add((function_block._node_iri, S223.hasInput, self._node_iri))
@@ -46,6 +50,10 @@ class FunctionOutput(Node):
     _class_iri: URIRef = S223.FunctionOutput
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
+        logging.info(
+            f"FunctionOutput({self.__class__.__name__}).__init__ {function_block} {kwargs}"
+        )
+
         super().__init__(**kwargs)
 
         data_graph.add((function_block._node_iri, S223.hasOutput, self._node_iri))
@@ -117,7 +125,9 @@ class Parameter(Node):
     hasValue: Literal
 
     def __init__(self, value: Any = None, **kwargs: Any):
-        logging.debug(f"{self.__class__.__name__}.__init__ {value!r} {kwargs}")
+        logging.debug(
+            f"Parameter({self.__class__.__name__}).__init__ {value!r} {kwargs}"
+        )
 
         init_value = None
         if value is None:
@@ -168,12 +178,21 @@ class FunctionBlock(Node):
     def __init__(self, **kwargs: Any) -> None:
         logging.debug(f"FunctionBlock.__init__ {kwargs}")
 
+        # resolve annotations if necessary
+        if not self._resolved:
+            self._resolve_annotations()
+        logging.debug(f"    - continue FunctionBlock.__init__")
+
         # pull out the parameters and constants
+        connector_inits: Dict[str, Any] = {}
         parameter_inits: Dict[str, Any] = {}
         for attr_name, attr_type in self._nodes.items():
-            if inspect.isclass(attr_type) and issubclass(attr_type, Parameter):
-                if attr_name in kwargs:
+            if inspect.isclass(attr_type) and (attr_name in kwargs):
+                if issubclass(attr_type, (FunctionInput, FunctionOutput)):
+                    connector_inits[attr_name] = kwargs.pop(attr_name)
+                if issubclass(attr_type, Parameter):
                     parameter_inits[attr_name] = kwargs.pop(attr_name)
+        logging.debug(f"    - connector_inits: {connector_inits}")
         logging.debug(f"    - parameter_inits: {parameter_inits}")
         logging.debug(f"    - remaining kwargs: {kwargs}")
 
@@ -193,18 +212,33 @@ class FunctionBlock(Node):
                 self._connectors[attr_name] = attr_element
                 logging.debug(f"    - connector {attr_name}: {attr_element}")
 
+                if attr_name in connector_inits:
+                    logging.debug(f"        - init: {connector_inits[attr_name]}")
+                    if issubclass(attr_type, FunctionInput):
+                        connector_inits[attr_name] >> attr_element
+                    if issubclass(attr_type, FunctionOutput):
+                        attr_element >> connector_inits[attr_name]
+
+                setattr(self, attr_name, attr_element)
+
             elif issubclass(attr_type, Parameter):
-                # build an instance of this parameter
-                attr_element = attr_type(label=self.label + "." + attr_name)
+                # check if an instance was already created
+                attr_element = getattr(self, attr_name, None)
+                if not attr_element:
+                    attr_element = attr_type(label=self.label + "." + attr_name)
+                    setattr(self, attr_name, attr_element)
+
                 self._parameters[attr_name] = attr_element
                 logging.debug(f"    - parameter {attr_name}: {attr_element}")
 
+                data_graph.add(
+                    (self._node_iri, S223.hasParameter, attr_element._node_iri)
+                )
+
+                # give it a value or override the value
                 if attr_name in parameter_inits:
                     logging.debug(f"        - init: {parameter_inits[attr_name]}")
-            else:
-                continue
-
-            setattr(self, attr_name, attr_element)
+                    attr_element.hasValue = parameter_inits[attr_name]
 
     def uses(
         self,
