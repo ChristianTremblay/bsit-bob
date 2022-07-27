@@ -234,7 +234,7 @@ g36fig_a_1.uses(hvac_zone.co2, AnalogInput, "zoneTemperature")
 g36fig_a_1.uses(hvac_zone.windows_switch, BinaryInput, "window-switch")
 g36fig_a_1.produces(vav["DPR"]['actuator']['command'], AnalogOutput, "damperPosition")
 
-controller.executes(occupancy)
-controller.executes(g36fig_a_1)
+controller >> occupancy
+controller >> g36fig_a_1
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
