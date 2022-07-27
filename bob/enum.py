@@ -150,20 +150,34 @@ ActiveInactiveEnum.Unknown = ActiveInactiveEnum("Unknown", _alt_namespace=P223)
 #
 AnalogSignalTypeEnum.Unknown = AnalogSignalTypeEnum("Unknown", _alt_namespace=P223)
 AnalogSignalTypeEnum.RTD = AnalogSignalTypeEnum("RTD", _alt_namespace=P223)
-AnalogSignalTypeEnum.Nickel1kRTD = AnalogSignalTypeEnum("Nickel1kRTD", _alt_namespace=P223)
-AnalogSignalTypeEnum.Platinum1kRTD = AnalogSignalTypeEnum("Platinum1kRTD", _alt_namespace=P223)
+AnalogSignalTypeEnum.Nickel1kRTD = AnalogSignalTypeEnum(
+    "Nickel1kRTD", _alt_namespace=P223
+)
+AnalogSignalTypeEnum.Platinum1kRTD = AnalogSignalTypeEnum(
+    "Platinum1kRTD", _alt_namespace=P223
+)
 AnalogSignalTypeEnum.VDC_0_10 = AnalogSignalTypeEnum("0-10VDC", _alt_namespace=P223)
 AnalogSignalTypeEnum.mA_4_20 = AnalogSignalTypeEnum("4-20mA", _alt_namespace=P223)
-AnalogSignalTypeEnum.NTC10kType3 = AnalogSignalTypeEnum("NTC10kType3", _alt_namespace=P223)
-AnalogSignalTypeEnum.NTC10kType2 = AnalogSignalTypeEnum("NTC10kType2", _alt_namespace=P223)
-AnalogSignalTypeEnum.NTC2250Type2 = AnalogSignalTypeEnum("NTC2250Type2", _alt_namespace=P223)
+AnalogSignalTypeEnum.NTC10kType3 = AnalogSignalTypeEnum(
+    "NTC10kType3", _alt_namespace=P223
+)
+AnalogSignalTypeEnum.NTC10kType2 = AnalogSignalTypeEnum(
+    "NTC10kType2", _alt_namespace=P223
+)
+AnalogSignalTypeEnum.NTC2250Type2 = AnalogSignalTypeEnum(
+    "NTC2250Type2", _alt_namespace=P223
+)
 AnalogSignalTypeEnum.Resistive = AnalogSignalTypeEnum("Resistive", _alt_namespace=P223)
 
 #
-BinarySignalTypeEnum.DryContact = BinarySignalTypeEnum("DryContact", _alt_namespace=P223)
+BinarySignalTypeEnum.DryContact = BinarySignalTypeEnum(
+    "DryContact", _alt_namespace=P223
+)
 BinarySignalTypeEnum.Pulse = BinarySignalTypeEnum("Pulse", _alt_namespace=P223)
 BinarySignalTypeEnum.StartStop = BinarySignalTypeEnum("StartStop", _alt_namespace=P223)
-BinarySignalTypeEnum.Incremental = BinarySignalTypeEnum("Incremental", _alt_namespace=P223)
+BinarySignalTypeEnum.Incremental = BinarySignalTypeEnum(
+    "Incremental", _alt_namespace=P223
+)
 
 #
 Effectiveness.Active = Effectiveness("Active", _alt_namespace=P223)

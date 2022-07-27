@@ -9,13 +9,11 @@ from bob.properties import Nm, Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import (
-    ModulationSignalInletConnectionPoint,
-    ModulationSignalOutletConnectionPoint,
-    OnOffSignalInletConnectionPoint,
-    OnOffSignalOutletConnectionPoint,
     RS485BidirectionalConnectionPoint,
     Electricity_24V_60HzInletConnectionPoint,
 )
+
+from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 
 from ...core import (
     INCLUDE_INVERSE,
@@ -34,19 +32,15 @@ from ...externalreference import NetworkProfile
 
 _namespace = P223
 
-# Controller
-analogInput = ModulationSignalInletConnectionPoint
-analogOutput = ModulationSignalOutletConnectionPoint
-binaryInput = OnOffSignalInletConnectionPoint
-binaryOutput = OnOffSignalOutletConnectionPoint
-bacnet_mstp = RS485BidirectionalConnectionPoint
+
 
 controller_template = {
     "cp": {
         "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
-        "zone_temperature_sensor": analogInput,
-        "airflow_sensor": analogInput,
-        "damper_output": analogOutput,
+        "bacnet_mstp": RS485BidirectionalConnectionPoint,
+        "zone_temperature_sensor": AnalogInput,
+        "airflow_sensor": AnalogInput,
+        "damper_output": AnalogOutput,
     },
     "properties": {},
 }
