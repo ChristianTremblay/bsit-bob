@@ -11,6 +11,7 @@ from ..core import (
     Node,
 )
 from ..devices.control.controller import Controller
+from . import NetworkProfile
 
 
 BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
@@ -20,7 +21,7 @@ url_pattern = re.compile(
 )
 
 
-class BACnetDevice(Node):
+class BACnetDevice(NetworkProfile):
     _class_iri: URIRef = BACNET.Device
     _namespace = BACNET
     deviceId: XSD.integer

@@ -232,7 +232,7 @@ g36fig_a_1.uses(hvac_zone.temperature_setpoint, AnalogInput, "zoneTemperatureSet
 g36fig_a_1.uses(hvac_zone.temperature, AnalogInput, "zoneTemperature")
 g36fig_a_1.uses(hvac_zone.co2, AnalogInput, "zoneTemperature")
 g36fig_a_1.uses(hvac_zone.windows_switch, BinaryInput, "window-switch")
-g36fig_a_1.produces(vav["DPR"]['actuator']['command'], AnalogOutput, "damperPosition")
+g36fig_a_1.produces(vav["DPR"]["actuator"]["command"], AnalogOutput, "damperPosition")
 
 controller >> occupancy
 controller >> g36fig_a_1
