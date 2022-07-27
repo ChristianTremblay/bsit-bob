@@ -136,19 +136,19 @@ def connect_mm(input_connector: FunctionInput, cp: AnalogInput) -> None:
 #
 
 
-class AnalogInput(FunctionInput):
+class G36AnalogInput(FunctionInput):
     _class_iri: URIRef = G36.AnalogInput
 
 
-class AnalogOutput(FunctionOutput):
+class G36AnalogOutput(FunctionOutput):
     _class_iri: URIRef = G36.AnalogOutput
 
 
-class BinaryInput(FunctionInput):
+class G36BinaryInput(FunctionInput):
     _class_iri: URIRef = G36.BinaryInput
 
 
-class BinaryOutput(FunctionOutput):
+class G36BinaryOutput(FunctionOutput):
     _class_iri: URIRef = G36.BinaryOutput
 
 
