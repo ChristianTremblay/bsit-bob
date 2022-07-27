@@ -12,7 +12,7 @@ from typing import Any, AnyStr, Dict
 
 from rdflib import Literal, URIRef  # type: ignore
 
-from ..core import INCLUDE_INVERSE, S223, Node, Property, data_graph
+from ..core import INCLUDE_INVERSE, S223, Node, Property, data_graph, G36
 from ..multimethods import multimethod
 
 _namespace = S223
@@ -103,19 +103,19 @@ def connect_mm(output_connector: FunctionOutput, prop: Property) -> None:
 
 
 class AnalogInput(FunctionInput):
-    _class_iri: URIRef = S223.AnalogInput
+    _class_iri: URIRef = G36.AnalogInput
 
 
 class AnalogOutput(FunctionOutput):
-    _class_iri: URIRef = S223.AnalogOutput
+    _class_iri: URIRef = G36.AnalogOutput
 
 
 class BinaryInput(FunctionInput):
-    _class_iri: URIRef = S223.BinaryInput
+    _class_iri: URIRef = G36.BinaryInput
 
 
 class BinaryOutput(FunctionOutput):
-    _class_iri: URIRef = S223.BinaryOutput
+    _class_iri: URIRef = G36.BinaryOutput
 
 
 class Parameter(Node):
