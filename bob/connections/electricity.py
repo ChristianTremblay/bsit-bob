@@ -451,19 +451,15 @@ class OnOffSignalConnection(Connection):
 
 class OnOffSignalConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.OnOffSignal
-
+    hasSignalType: BinarySignalTypeEnum
 
 class OnOffSignalInletConnectionPoint(InletConnectionPoint, OnOffSignalConnectionPoint):
     _class_iri = S223.BinaryInput
-    hasBIType: BinarySignalTypeEnum
-
 
 class OnOffSignalOutletConnectionPoint(
     OutletConnectionPoint, OnOffSignalConnectionPoint
 ):
     _class_iri = S223.BinaryOutput
-    hasBOType: BinarySignalTypeEnum
-
 
 class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.OnOffSignal
@@ -490,20 +486,18 @@ class ModulationSignalConnection(Connection):
 
 class ModulationSignalConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.ModulationSignal
+    hasSignalType: AnalogSignalTypeEnum
 
 
 class ModulationSignalInletConnectionPoint(
     InletConnectionPoint, ModulationSignalConnectionPoint
 ):
     _class_iri = S223.AnalogInput
-    hasAIType: AnalogSignalTypeEnum
-
 
 class ModulationSignalOutletConnectionPoint(
     OutletConnectionPoint, ModulationSignalConnectionPoint
 ):
     _class_iri = S223.AnalogOutput
-    hasAOType: AnalogSignalTypeEnum
 
 
 class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
