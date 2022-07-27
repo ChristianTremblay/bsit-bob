@@ -12,7 +12,7 @@ from typing import Any, AnyStr, Dict
 
 from rdflib import Literal, URIRef  # type: ignore
 
-from ..core import G36, INCLUDE_INVERSE, P223, S223, Node, Property, data_graph
+from ..core import G36, INCLUDE_INVERSE, P223, S223, Container, Node, Property, data_graph
 from ..devices.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
 
@@ -288,6 +288,7 @@ class FunctionBlock(Node):
         label: AnyStr = "input",
     ) -> None:
         connector = klass(self, label=f"{self.label}.{label}")
+        setattr(self, label, connector)
         prop >> connector
 
     def produces(
@@ -297,4 +298,5 @@ class FunctionBlock(Node):
         label: AnyStr = "output",
     ) -> None:
         connector = klass(self, label=f"{self.label}.{label}")
+        setattr(self, label, connector)
         connector >> prop
