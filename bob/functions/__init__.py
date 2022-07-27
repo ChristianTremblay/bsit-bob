@@ -300,3 +300,5 @@ class FunctionBlock(Node):
         connector = klass(self, label=f"{self.label}.{label}")
         setattr(self, label, connector)
         connector >> prop
+
+# TODO : at some point their will be a clash where no label was given...
