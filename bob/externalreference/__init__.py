@@ -1,0 +1,13 @@
+from rdflib import URIRef
+from ..core import S223, P223, Node
+
+_namespace = P223
+
+class NetworkProfile(Node):
+    """
+    A s223:Controller can be represented by a Network Controller 
+    (like a BACnet or a Lonworks device).
+    This class will be a higher class that will serve to relate
+    the s223:Controller to the said bacnet:Device or other.
+    """
+    _class_iri: URIRef = P223.NetworkProfile
