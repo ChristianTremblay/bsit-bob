@@ -12,7 +12,8 @@ from typing import Any, AnyStr, Dict
 
 from rdflib import Literal, URIRef  # type: ignore
 
-from ..core import INCLUDE_INVERSE, S223, Node, Property, data_graph, G36
+from ..core import INCLUDE_INVERSE, S223, Node, Property, data_graph, G36, P223
+from ..devices.control import AnalogOutput, AnalogInput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
 
 _namespace = S223
@@ -96,7 +97,40 @@ def connect_mm(output_connector: FunctionOutput, prop: Property) -> None:
 
     data_graph.add((output_connector._node_iri, S223.produces, prop._node_iri))
 
+@multimethod
+def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
+    """FunctionOutput >> Property"""
+    logging.info(f"connect from {output_connector} to {cp}")
 
+    data_graph.add((cp._node_iri, P223.hasFunctionOutput, output_connector._node_iri))
+
+@multimethod
+def connect_mm(output_connector: FunctionOutput, cp: BinaryOutput) -> None:
+    """FunctionOutput >> Controller connection point"""
+    logging.info(f"connect from {output_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.hasFunctionOutput, output_connector._node_iri))
+
+@multimethod
+def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
+    """FunctionOutput >> Controller connection point"""
+    logging.info(f"connect from {output_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.hasFunctionOutput, output_connector._node_iri))
+
+@multimethod
+def connect_mm(input_connector: FunctionInput, cp: BinaryInput) -> None:
+    """FunctionInput >> Controller connection point"""
+    logging.info(f"connect from {input_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.isInputOf, input_connector._node_iri))
+
+@multimethod
+def connect_mm(input_connector: FunctionInput, cp: AnalogInput) -> None:
+    """FunctionOutput >> Controller connection point"""
+    logging.info(f"connect from {input_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.isInputOf, input_connector._node_iri))
 #
 #   Connector types, parameters, and constants
 #
