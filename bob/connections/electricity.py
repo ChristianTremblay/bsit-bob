@@ -1,6 +1,6 @@
 from rdflib import Literal, URIRef
 
-from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum
+from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum, ProtocolEnum
 from bob.properties.network import Mbit_per_seconds
 
 from ..core import (
@@ -530,6 +530,7 @@ class RS485Connection(Connection):
 
 class RS485ConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.RS485
+    hasProtocol: ProtocolEnum
 
 
 class RS485BidirectionalConnectionPoint(
@@ -556,6 +557,7 @@ class EthernetConnection(Connection):
 
 class EthernetConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.Ethernet
+    hasProtocol: ProtocolEnum
     data_rate: Mbit_per_seconds
     vlan: Literal
 
