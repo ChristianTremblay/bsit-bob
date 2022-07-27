@@ -18,6 +18,7 @@ from ...connections.electricity import (
 )
 
 from ...core import (
+    INCLUDE_INVERSE,
     data_graph,
     Device,
     Property,
@@ -87,12 +88,26 @@ class Controller(Device):
 
 
 @multimethod
-def connect_mm(
-    controller: Controller, function_block: FunctionBlock
-) -> None:
+def connect_mm(controller: Controller, function_block: FunctionBlock) -> None:
     """Controller >> FucntionBlock"""
     logging.info(f"connect from {controller} to {function_block}")
 
+    data_graph.add((controller._node_iri, P223.executes, function_block._node_iri))
+    if INCLUDE_INVERSE:
+        data_graph.add(
+            (function_block._node_iri, P223.isExecutedBy, controller._node_iri)
+        )
+
+
+@multimethod
+def connect_mm(controller: Controller, network_device: NetworkProfile) -> None:
+    """Controller >> FucntionBlock"""
+    logging.info(f"connect from {controller} to {network_device}")
+
     data_graph.add(
-        (controller._node_iri, P223.executes, function_block._node_iri)
+        (controller._node_iri, P223.hasNetworkProfile, network_device._node_iri)
     )
+    if INCLUDE_INVERSE:
+        data_graph.add(
+            (network_device._node_iri, P223.isNetworkProfileOf, controller._node_iri)
+        )
