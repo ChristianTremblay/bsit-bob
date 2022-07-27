@@ -426,7 +426,6 @@ exg3601:00055 a s223:OutletConnectionPoint,
 exg3601:00056 a s223:Actuator,
         s223:Device ;
     rdfs:label "actuator" ;
-    s223:actuatesProperty exg3601:00063 ;
     s223:connectedFrom exg3601:00001 ;
     s223:connectedThrough exg3601:00071 ;
     s223:hasConnectionPoint exg3601:00057,
@@ -434,8 +433,7 @@ exg3601:00056 a s223:Actuator,
         exg3601:00059 ;
     s223:hasProperty exg3601:00060,
         exg3601:00061,
-        exg3601:00062,
-        exg3601:00063 .
+        exg3601:00062 .
 exg3601:00057 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
@@ -464,6 +462,8 @@ exg3601:00060 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "command" ;
+    s223:actuatesProperty exg3601:00063 ;
+    s223:hasProperty exg3601:00063 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 exg3601:00061 a s223:ObservableProperty,
