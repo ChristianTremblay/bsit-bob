@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, Dict
+from bob.enum import AnalogSignalTypeEnum
 
 from header import g36_header
 
@@ -174,6 +175,7 @@ supply_air >> vav["DPR"].airInlet
 
 vav["DPR"].airOutlet >> discharge_air >> hvac_space.ductAirInlet
 vav["DPR"]["actuator"].proportional_signal << controller.damper_output
+vav["DPR"]["actuator"].proportional_signal.hasSignalType = AnalogSignalTypeEnum.VDC_0_10
 vav["ZONE-THERMOSTAT"]["temperature_sensor"].hasMeasurementLocation = hvac_space
 vav["ZONE-THERMOSTAT"].mstp << controller.bacnet_mstp
 vav["ZN-CO2"]["CO2"].hasMeasurementLocation = hvac_space
@@ -244,5 +246,7 @@ controller >> g36fig_a_1
 
 # relationship between a FB output and a Controller output
 g36fig_a_1.damperPosition >> controller.damper_output
+
+controller.damper_output.hasSignalType = AnalogSignalTypeEnum.VDC_0_10
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
