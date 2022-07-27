@@ -17,29 +17,31 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import (
-    RS485BidirectionalConnectionPoint,
     Electricity_24V_60HzInletConnectionPoint,
+    RS485BidirectionalConnectionPoint,
 )
 from bob.core import (
+    G36,
+    QUANTITYKIND,
+    UNIT,
     Device,
     PropertyReference,
     System,
     bind_model_namespace,
     dump,
-    QUANTITYKIND,
-    UNIT,
-    G36,
 )
 from bob.devices.architectural import Window
+from bob.devices.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.devices.control.controller import Controller
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.gas import GasMonitor
 from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.functions import (
     FunctionBlock,
-    AnalogInput,
-    AnalogOutput,
-    BinaryInput,
-    BinaryOutput,
+    G36AnalogInput,
+    G36AnalogOutput,
+    G36BinaryInput,
+    G36BinaryOutput,
 )
 from bob.functions.g36 import G36Figure_A_1, G36Sequence
 from bob.functions.occupancy import OccupancyFunction
@@ -51,14 +53,6 @@ from bob.sensor.gas import CO2Sensor
 from bob.sensor.light import IntrusionSensor, OccupancySensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace, HVACZone
-from bob.devices.control.controller import (
-    analogInput,
-    analogOutput,
-    binaryInput,
-    binaryOutput,
-    bacnet_mstp,
-    Controller,
-)
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
@@ -68,13 +62,13 @@ _namespace = bind_model_namespace(
 controller_template = {
     "cp": {
         "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
-        "zone_temperature_sensor": analogInput,
-        "zone_co2_sensor": analogInput,
-        "airflow_sensor": analogInput,
-        "window_switch": binaryInput,
-        "occupancy_sensor": binaryInput,
-        "damper_output": analogOutput,
-        "bacnet_mstp": bacnet_mstp,
+        "zone_temperature_sensor": AnalogInput,
+        "zone_co2_sensor": AnalogInput,
+        "airflow_sensor": AnalogInput,
+        "window_switch": BinaryInput,
+        "occupancy_sensor": BinaryInput,
+        "damper_output": AnalogOutput,
+        "bacnet_mstp": RS485BidirectionalConnectionPoint,
     },
     "properties": {("occupancy", FunctionBlock): {}, ("g36_figa1", FunctionBlock): {}},
 }
@@ -212,13 +206,16 @@ occupancy = OccupancyFunction(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
-occupancy.uses(vav["ZN-OCC-SENSOR"].observesProperty, BinaryInput, "occupancy-sensor")
+occupancy.uses(
+    vav["ZN-OCC-SENSOR"].observesProperty, G36BinaryInput, "occupancy-sensor"
+)
 occupancy.uses(
     vav["ZONE-THERMOSTAT"]["local_override"].observesProperty,
-    BinaryInput,
+    G36BinaryInput,
     "local-override",
 )
 occupancy.hasOccupancyStatus = OccupancyStatus()
+# Here, no need to specify G36AnalogOutput, or other... it is just a FunctionOutput
 occupancy.produces(occupancy.hasOccupancyStatus)
 occupancy.produces(hvac_space.occupancy)
 
@@ -227,12 +224,19 @@ sequence = "Lorem ipsum of sequence"
 
 g36fig_a_1 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
 
-g36fig_a_1.uses(vav.airFlow, AnalogInput, "supplyAirFlow")
-g36fig_a_1.uses(hvac_zone.temperature_setpoint, AnalogInput, "zoneTemperatureSetpoint")
-g36fig_a_1.uses(hvac_zone.temperature, AnalogInput, "zoneTemperature")
-g36fig_a_1.uses(hvac_zone.co2, AnalogInput, "zoneTemperature")
-g36fig_a_1.uses(hvac_zone.windows_switch, BinaryInput, "window-switch")
-g36fig_a_1.produces(vav["DPR"]["actuator"]["command"], AnalogOutput, "damperPosition")
+# uses will create a connector node named supplyAirFlow and connect it to property
+# G36AnalogInput refer to the notion of AI in the context of G36
+# We could have used FunctionInput or FunctionOutput
+g36fig_a_1.uses(vav.airFlow, G36AnalogInput, "supplyAirFlow")
+g36fig_a_1.uses(
+    hvac_zone.temperature_setpoint, G36AnalogInput, "zoneTemperatureSetpoint"
+)
+g36fig_a_1.uses(hvac_zone.temperature, G36AnalogInput, "zoneTemperature")
+g36fig_a_1.uses(hvac_zone.co2, G36AnalogInput, "zoneTemperature")
+g36fig_a_1.uses(hvac_zone.windows_switch, G36BinaryInput, "window-switch")
+g36fig_a_1.produces(
+    vav["DPR"]["actuator"]["command"], G36AnalogOutput, "damperPosition"
+)
 
 controller >> occupancy
 controller >> g36fig_a_1
