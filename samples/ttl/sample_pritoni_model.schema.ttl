@@ -18,7 +18,8 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model-schema> ;
   rdfs:label "sample_pritoni_model-schema" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-bacnet:Device a rdfs:Class .
+bacnet:Device a rdfs:Class ;
+    rdfs:subClassOf p223:NetworkProfile .
 bacnet:DeviceObjectPropertyReference a rdfs:Class ;
     rdfs:subClassOf s223:ExternalReference .
 bacnet:address a rdf:Property .
@@ -278,6 +279,7 @@ bob:hasMeasurementLocationLow a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 bob:hasPower a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+bob:hasProtocol a rdf:Property .
 bob:hotWaterEntering a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 bob:hotWaterInlet a rdf:Property ;
@@ -364,6 +366,10 @@ functions:Average a rdfs:Class ;
 functions:u1 a rdf:Property .
 functions:u2 a rdf:Property .
 functions:y a rdf:Property .
+g36:AnalogInput a rdfs:Class ;
+    rdfs:subClassOf s223:FunctionInput .
+g36:AnalogOutput a rdfs:Class ;
+    rdfs:subClassOf s223:FunctionOutput .
 g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
         g36:EnumerationKind-G36AlarmLevels,
         rdfs:Class ;
@@ -687,6 +693,7 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
         s223:EnumerationKind .
 p223:MotorStarter a rdfs:Class ;
     rdfs:subClassOf s223:Device .
+p223:NetworkProfile a rdfs:Class .
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
         rdfs:Class ;

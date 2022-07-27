@@ -6,6 +6,7 @@
 @prefix electrical_devices: <urn:ex/electrical_devices/> .
 @prefix electricity: <urn:ex/electricity/> .
 @prefix functions: <urn:ex/functions/> .
+@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix hvac: <urn:ex/hvac/> .
 @prefix hvac_devices: <urn:ex/hvac_devices/> .
 @prefix hvac_spaces: <urn:ex/hvac_spaces/> .
@@ -29,7 +30,8 @@
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model-data> ;
   rdfs:label "sample_pritoni_model-data" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
-bacnet_references:00001 a bacnet:Device ;
+bacnet_references:00001 a bacnet:Device,
+        p223:NetworkProfile ;
     rdfs:label "CGM-2-004" ;
     bacnet:address 4 ;
     bacnet:deviceId 5204 ;
@@ -37,7 +39,8 @@ bacnet_references:00001 a bacnet:Device ;
     bacnet:networkNumber 2 ;
     bacnet:vendorId 5 ;
     rdfs:comment "AHU Controller" .
-bacnet_references:00002 a bacnet:Device ;
+bacnet_references:00002 a bacnet:Device,
+        p223:NetworkProfile ;
     rdfs:label "CVM-2-005" ;
     bacnet:address 5 ;
     bacnet:deviceId 5205 ;
@@ -45,7 +48,8 @@ bacnet_references:00002 a bacnet:Device ;
     bacnet:networkNumber 2 ;
     bacnet:vendorId 5 ;
     rdfs:comment "VAV for Zone 1" .
-bacnet_references:00003 a bacnet:Device ;
+bacnet_references:00003 a bacnet:Device,
+        p223:NetworkProfile ;
     rdfs:label "CVM-2-006" ;
     bacnet:address 6 ;
     bacnet:deviceId 5206 ;
@@ -2551,15 +2555,15 @@ functions:00001 a s223:FunctionBlock,
     functions:u1 functions:00002 ;
     functions:u2 functions:00003 ;
     functions:y functions:00004 .
-functions:00002 a s223:AnalogInput,
-        s223:FunctionInput ;
+functions:00002 a s223:FunctionInput,
+        g36:AnalogInput ;
     rdfs:label "FB-1.u1" ;
     s223:uses hvac_devices:00011 .
-functions:00003 a s223:AnalogInput,
-        s223:FunctionInput ;
+functions:00003 a s223:FunctionInput,
+        g36:AnalogInput ;
     rdfs:label "FB-1.u2" .
-functions:00004 a s223:AnalogOutput,
-        s223:FunctionOutput ;
+functions:00004 a s223:FunctionOutput,
+        g36:AnalogOutput ;
     rdfs:label "FB-1.y" ;
     s223:produces functions:00005 .
 functions:00005 a s223:ObservableProperty,

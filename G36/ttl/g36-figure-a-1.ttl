@@ -34,21 +34,28 @@ exg3601:00002 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf exg3601:00001 .
-exg3601:00003 a s223:AnalogInput,
+exg3601:00003 a s223:BidirectionalConnectionPoint,
+        bob:RS485ConnectionPoint ;
+    rdfs:label "Controller for G36 Fig A-1.bacnet_mstp" ;
+    s223:connectsThrough exg3601:00072 ;
+    s223:hasDirection s223:Direction-Bidirectional ;
+    s223:hasMedium p223:Electricity-RS485 ;
+    s223:isConnectionPointOf exg3601:00001 .
+exg3601:00004 a s223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 Fig A-1.zone_temperature_sensor" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3601:00001 .
-exg3601:00004 a s223:AnalogInput,
+exg3601:00005 a s223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 Fig A-1.airflow_sensor" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3601:00001 .
-exg3601:00005 a s223:AnalogOutput,
+exg3601:00006 a s223:AnalogOutput,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 Fig A-1.damper_output" ;
@@ -56,14 +63,14 @@ exg3601:00005 a s223:AnalogOutput,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3601:00001 .
-exg3601:00006 a s223:AnalogInput,
+exg3601:00007 a s223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 Fig A-1.zone_co2_sensor" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3601:00001 .
-exg3601:00007 a s223:BinaryInput,
+exg3601:00008 a s223:BinaryInput,
         s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "Controller for G36 Fig A-1.window_switch" ;
@@ -71,19 +78,12 @@ exg3601:00007 a s223:BinaryInput,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3601:00001 .
-exg3601:00008 a s223:BinaryInput,
+exg3601:00009 a s223:BinaryInput,
         s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "Controller for G36 Fig A-1.occupancy_sensor" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
-    s223:isConnectionPointOf exg3601:00001 .
-exg3601:00009 a s223:BidirectionalConnectionPoint,
-        bob:RS485ConnectionPoint ;
-    rdfs:label "Controller for G36 Fig A-1.bacnet_mstp" ;
-    s223:connectsThrough exg3601:00072 ;
-    s223:hasDirection s223:Direction-Bidirectional ;
-    s223:hasMedium p223:Electricity-RS485 ;
     s223:isConnectionPointOf exg3601:00001 .
 exg3601:00010 a s223:FunctionBlock ;
     rdfs:label "occupancy" .
@@ -535,21 +535,21 @@ exg3601:00070 a s223:OutletSystemConnectionPoint,
     s223:mapsTo exg3601:00055 .
 exg3601:00071 a s223:Connection ;
     rdfs:label "cnx" ;
-    s223:connectsAt exg3601:00005,
+    s223:connectsAt exg3601:00006,
         exg3601:00058 ;
     s223:connectsFrom exg3601:00001 ;
     s223:connectsTo exg3601:00056 ;
     s223:hasMedium p223:Electricity-ModulationSignal .
 exg3601:00072 a s223:Connection ;
     rdfs:label "cnx" ;
-    s223:connectsAt exg3601:00009,
+    s223:connectsAt exg3601:00003,
         exg3601:00047 ;
     s223:connectsFrom exg3601:00001 ;
     s223:connectsTo exg3601:00046 ;
     s223:hasMedium p223:Electricity-RS485 .
 exg3601:00073 a s223:Connection ;
     rdfs:label "cnx" ;
-    s223:connectsAt exg3601:00007,
+    s223:connectsAt exg3601:00008,
         exg3601:00038 ;
     s223:connectsFrom exg3601:00037 ;
     s223:connectsTo exg3601:00001 ;
