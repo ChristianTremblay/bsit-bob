@@ -238,7 +238,11 @@ g36fig_a_1.produces(
     vav["DPR"]["actuator"]["command"], G36AnalogOutput, "damperPosition"
 )
 
+# controller executes
 controller >> occupancy
 controller >> g36fig_a_1
+
+# relationship between a FB output and a Controller output
+g36fig_a_1.damperPosition >> controller.damper_output
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
