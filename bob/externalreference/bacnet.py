@@ -10,6 +10,7 @@ from ..core import (
     ExternalReference,
     Node,
 )
+from ..devices.control.controller import Controller
 
 
 BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
@@ -27,6 +28,7 @@ class BACnetDevice(Node):
     networkNumber: XSD.integer
     address: XSD.integer
     vendorId: XSD.integer
+    isNetworkProfileOf: Controller
 
 
 class BACnetReference(ExternalReference):
