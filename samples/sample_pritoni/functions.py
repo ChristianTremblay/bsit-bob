@@ -6,7 +6,7 @@ import lighting_devices as ld
 import lighting_spaces as ls
 
 from bob.core import bind_model_namespace, UNIT, dump
-from bob.functions import FunctionBlock, AnalogInput, AnalogOutput
+from bob.functions import FunctionBlock, AnalogInput, AnalogOutput, G36AnalogInput, G36AnalogOutput
 from bob.functions.occupancy import OccupancyFunction
 from bob.properties import Temperature
 from bob.properties.states import OccupancyStatus, Schedule
@@ -21,9 +21,9 @@ class Average(FunctionBlock):
     y = (u1 + u2) / 2.0
     """
 
-    u1: AnalogInput
-    u2: AnalogInput
-    y: AnalogOutput
+    u1: G36AnalogInput
+    u2: G36AnalogInput
+    y: G36AnalogOutput
 
 
 # make an instance
