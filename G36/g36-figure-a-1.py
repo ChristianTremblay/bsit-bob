@@ -179,7 +179,7 @@ vav = VAV_FIGA1(config=vav_system_template)
 supply_air >> vav["DPR"].airInlet
 
 vav["DPR"].airOutlet >> discharge_air >> hvac_space.ductAirInlet
-vav["DPR"]["actuator"]["proportional_signal"] << controller.damper_output
+vav["DPR"]["actuator"].proportional_signal << controller.damper_output
 vav["ZONE-THERMOSTAT"]["temperature_sensor"].hasMeasurementLocation = hvac_space
 vav["ZONE-THERMOSTAT"].mstp << controller.bacnet_mstp
 vav["ZN-CO2"]["CO2"].hasMeasurementLocation = hvac_space
@@ -232,7 +232,7 @@ g36fig_a_1.uses(hvac_zone.temperature_setpoint, AnalogInput, "zoneTemperatureSet
 g36fig_a_1.uses(hvac_zone.temperature, AnalogInput, "zoneTemperature")
 g36fig_a_1.uses(hvac_zone.co2, AnalogInput, "zoneTemperature")
 g36fig_a_1.uses(hvac_zone.windows_switch, BinaryInput, "window-switch")
-g36fig_a_1.produces(vav["DPR"]["actuator"]["command"], AnalogOutput, "damperPosition")
+g36fig_a_1.produces(vav["DPR"]['actuator']['command'], AnalogOutput, "damperPosition")
 
 controller.executes(occupancy)
 controller.executes(g36fig_a_1)
