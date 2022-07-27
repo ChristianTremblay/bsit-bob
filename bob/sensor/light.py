@@ -4,6 +4,7 @@ from rdflib import URIRef
 
 from bob import core
 from bob.properties.states import DaylightDetected, OnOffStatus
+from bob.connections.electricity import OnOffSignalOutletConnectionPoint
 
 from ..core import (
     BOB,

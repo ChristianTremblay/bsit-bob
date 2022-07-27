@@ -176,15 +176,16 @@ qs = """
 # pretty colors
 color_map = {SH.Violation: 33, SH.Info: 34, SH.Warning: 35}
 
-# query
+# run the query, sort the results
 results = sorted(report_graph.query(qs, initNs=namespace_map))
+
 prev = None
 for resultSeverity, sourceShape, resultMessage, focusNode, value in results:
     if sourceShape != prev:
         color = color_map[resultSeverity]
         print(f"\x1b[{color}m{resultMessage}\x1b[0m")
         prev = sourceShape
-    print(f"    {focusNode} {value or ''}")
+    print(f"    {focusNode}{' ' + value if value else ''}")
 
 # tell the shell
 if not valid:

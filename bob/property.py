@@ -26,6 +26,7 @@ class ActuatableProperty(Property):
     """
 
     _class_iri: URIRef = S223.ActuatableProperty
+    actuatesProperty: Property
 
 
 class ObservableProperty(Property):

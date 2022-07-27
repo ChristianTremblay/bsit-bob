@@ -15,8 +15,11 @@ from ...connections.air import (
 )
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
+    ModulationSignalInletConnectionPoint,
+    ModulationSignalOutletConnectionPoint,
     Electricity_24V_60HzInletConnectionPoint,
     Electricity_120V_60HzInletConnectionPoint,
+    OnOffSignalInletConnectionPoint,
 )
 from ...connections.light import (
     LightOutletConnectionPoint,
@@ -77,7 +80,11 @@ class OnOffActuator(Actuator):
 
 
 ElectricalProportionalActuator_template = {
-    "cp": {"electricalInlet": Electricity_24V_60HzInletConnectionPoint},
+    "cp": {
+        "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
+        "proportional_signal": ModulationSignalInletConnectionPoint,
+        "feedback_signal": ModulationSignalOutletConnectionPoint,
+    },
     "properties": {
         # ("actuatesProperty", PercentCommand): {},
         ("command", PercentCommand): {},
@@ -88,7 +95,10 @@ ElectricalProportionalActuator_template = {
 
 
 ElectricalOnOffActuator_template = {
-    "cp": {"electricalInlet": Electricity_24V_60HzInletConnectionPoint},
+    "cp": {
+        "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
+        "onoff_signal": OnOffSignalInletConnectionPoint,
+    },
     "properties": {
         # ("actuatesProperty", OnOffCommand): {},
         ("command", OnOffCommand): {},

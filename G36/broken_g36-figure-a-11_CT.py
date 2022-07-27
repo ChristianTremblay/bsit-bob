@@ -209,15 +209,15 @@ high_static.enableVFD.mapsTo = vfd_controller.enable
 
 # vfd > vfd_controller  ###TODO: devices cannot contain systems
 
-a11.uses_input(rat.observesProperty)
-a11.uses_input(dat.observesProperty)
-# a11.uses_input(high_static.resetInput)
-a11.uses_input(dpt1.observesProperty)
-a11.produces_output(hw_valve.hasPositionCommand)
-a11.uses_input(vfd.drive_running)
-a11.produces_output(vfd.run_command)
-a11.produces_output(vfd.speed_reference)
-a11.uses_input(dpt2.observesProperty)
-# a11.network.uses_input(vfd_controller.mstp) Is Network part of the G36 requirement ? Should this be there ?
+a11.uses(rat.observesProperty)
+a11.uses(dat.observesProperty)
+# a11.uses(high_static.resetInput)
+a11.uses(dpt1.observesProperty)
+a11.produces(hw_valve.hasPositionCommand)
+a11.uses(vfd.drive_running)
+a11.produces(vfd.run_command)
+a11.produces(vfd.speed_reference)
+a11.uses(dpt2.observesProperty)
+# a11.network.uses(vfd_controller.mstp) Is Network part of the G36 requirement ? Should this be there ?
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

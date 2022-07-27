@@ -1,6 +1,4 @@
 from pathlib import Path
-from bob.devices.hvac.pump import PumpWithStarter
-from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
 
 import hvac_spaces as hs
 import physical_spaces as ps
@@ -11,17 +9,19 @@ from bob.connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     EthernetBidirectionalConnectionPoint,
 )
-from bob.core import bind_model_namespace, dump, UNIT
+from bob.core import UNIT, Role, bind_model_namespace, dump
 from bob.devices.architectural import Window
 from bob.devices.electricity.starter import MotorStarter
+from bob.devices.electricity.vfd import VFD
+from bob.devices.hvac.boiler import ElectricalHotWaterBoiler
+from bob.devices.hvac.chiller import Chiller
 from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.devices.hvac.fan import Fan, FanWithStarter, FanWithVFD
 from bob.devices.hvac.filter import Filter
+from bob.devices.hvac.pump import PumpWithStarter
 from bob.devices.hvac.stats import AirDifferentialStaticPressureSensor
-from bob.devices.hvac.chiller import Chiller
-from bob.devices.hvac.boiler import ElectricalHotWaterBoiler
-from bob.devices.electricity.vfd import VFD
+from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
@@ -72,10 +72,12 @@ ahu_template = {
         ("RF", FanWithVFD): {
             "comment": "Return Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
+            "hasRole": Role.Return,
         },
         ("SF", FanWithStarter): {
             "comment": "Supply Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
+            "hasRole": Role.Supply,
         },
         ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Heating coil"},
@@ -156,7 +158,12 @@ hot_water_pump = PumpWithStarter(label="HotWaterPump")
 
 
 exhaustfan_template = {
-    "cp": {"electricalInlet": Electricity_120V_60HzInletConnectionPoint},
+    "cp": {
+        "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
+    },
+    "params": {
+        "hasRole": Role.Exhaust,
+    },
 }
 bathroom_exhaust_fan = Fan(
     config=exhaustfan_template,

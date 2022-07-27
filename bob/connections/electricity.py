@@ -1,8 +1,12 @@
 from rdflib import Literal, URIRef
 
+from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum, ProtocolEnum
 from bob.properties.network import Mbit_per_seconds
 
 from ..core import (
+    BOB,
+    P223,
+    S223,
     BidirectionalConnectionPoint,
     BidirectionalSystemConnectionPoint,
     Connection,
@@ -16,10 +20,7 @@ from ..core import (
     OutletSystemConnectionPoint,
     OutletZoneConnectionPoint,
     SystemConnectionPoint,
-    BOB,
     enum,
-    P223,
-    S223,
 )
 
 _namespace = BOB
@@ -450,16 +451,17 @@ class OnOffSignalConnection(Connection):
 
 class OnOffSignalConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.OnOffSignal
+    hasSignalType: BinarySignalTypeEnum
 
 
 class OnOffSignalInletConnectionPoint(InletConnectionPoint, OnOffSignalConnectionPoint):
-    _class_iri = S223.InletConnectionPoint
+    _class_iri = S223.BinaryInput
 
 
 class OnOffSignalOutletConnectionPoint(
     OutletConnectionPoint, OnOffSignalConnectionPoint
 ):
-    _class_iri = S223.OutletConnectionPoint
+    _class_iri = S223.BinaryOutput
 
 
 class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
@@ -487,18 +489,19 @@ class ModulationSignalConnection(Connection):
 
 class ModulationSignalConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.ModulationSignal
+    hasSignalType: AnalogSignalTypeEnum
 
 
 class ModulationSignalInletConnectionPoint(
     InletConnectionPoint, ModulationSignalConnectionPoint
 ):
-    _class_iri = S223.InletConnectionPoint
+    _class_iri = S223.AnalogInput
 
 
 class ModulationSignalOutletConnectionPoint(
     OutletConnectionPoint, ModulationSignalConnectionPoint
 ):
-    _class_iri = S223.OutletConnectionPoint
+    _class_iri = S223.AnalogOutput
 
 
 class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
@@ -525,6 +528,7 @@ class RS485Connection(Connection):
 
 class RS485ConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.RS485
+    hasProtocol: ProtocolEnum
 
 
 class RS485BidirectionalConnectionPoint(
@@ -551,6 +555,7 @@ class EthernetConnection(Connection):
 
 class EthernetConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.Ethernet
+    hasProtocol: ProtocolEnum
     data_rate: Mbit_per_seconds
     vlan: Literal
 
