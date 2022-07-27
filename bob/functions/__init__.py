@@ -12,7 +12,16 @@ from typing import Any, AnyStr, Dict
 
 from rdflib import Literal, URIRef  # type: ignore
 
-from ..core import G36, INCLUDE_INVERSE, P223, S223, Container, Node, Property, data_graph
+from ..core import (
+    G36,
+    INCLUDE_INVERSE,
+    P223,
+    S223,
+    Container,
+    Node,
+    Property,
+    data_graph,
+)
 from ..devices.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
 
@@ -188,8 +197,36 @@ class Parameter(Node):
             self.hasValue = init_value
 
 
-class Constant(Parameter):
+class Constant(Node):
+    """
+    Very similar to a Parameter, but a Constant does not have a volatile value.
+    """
+
     _class_iri: URIRef = S223.Constant
+
+    hasValue: Literal
+
+    def __init__(self, value: Any = None, **kwargs: Any):
+        logging.debug(
+            f"Constant({self.__class__.__name__}).__init__ {value!r} {kwargs}"
+        )
+
+        init_value = None
+        if value is None:
+            if "hasValue" in kwargs:
+                init_value = kwargs.pop("hasValue")
+        elif "hasValue" in kwargs:
+            raise RuntimeError("initialization conflict")
+        else:
+            init_value = value
+
+        super().__init__(**kwargs)
+
+        # if there is an initial value, link to it
+        if init_value is not None:
+            if not isinstance(init_value, Literal):
+                init_value = Literal(init_value)
+            self.hasValue = init_value
 
 
 class AnalogConstant(Constant):
@@ -281,6 +318,25 @@ class FunctionBlock(Node):
                     logging.debug(f"        - init: {parameter_inits[attr_name]}")
                     attr_element.hasValue = parameter_inits[attr_name]
 
+            elif issubclass(attr_type, Constant):
+                # check if an instance was already created
+                attr_element = getattr(self, attr_name, None)
+                if not attr_element:
+                    attr_element = attr_type(label=self.label + "." + attr_name)
+                    setattr(self, attr_name, attr_element)
+
+                self._parameters[attr_name] = attr_element
+                logging.debug(f"    - constant {attr_name}: {attr_element}")
+
+                data_graph.add(
+                    (self._node_iri, S223.hasConstant, attr_element._node_iri)
+                )
+
+                # give it a value (might fail if annotation provided value)
+                if attr_name in parameter_inits:
+                    logging.debug(f"        - init: {parameter_inits[attr_name]}")
+                    attr_element.hasValue = parameter_inits[attr_name]
+
     def uses(
         self,
         prop: Property,
@@ -300,5 +356,6 @@ class FunctionBlock(Node):
         connector = klass(self, label=f"{self.label}.{label}")
         setattr(self, label, connector)
         connector >> prop
+
 
 # TODO : at some point their will be a clash where no label was given...
