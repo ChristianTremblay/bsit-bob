@@ -50,14 +50,14 @@ Electricity.Ethernet = Electricity("Ethernet", _alt_namespace=P223)
 
 # Water
 Water.ChilledWater = ChilledWater = Water("ChilledWater")
-Water.PotableWater = PotableWater = Water("PotableWater")
+Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
 Water.HotWater = HotWater = Water("HotWater")
-Water.MixedWater = MixedWater = Water("MixedWater")
-Water.DomesticWater = DomesticWater = Water("DomesticWater")
-Water.DomesticHotWater = DomesticHotWater = Water("DomesticHotWater")
-Water.CondensedWater = CondensedWater = Water("CondensedWater")
-Water.GlycoledWater = GlycoledWater = Water("GlycoledWater")
-Water.Steam = Steam = Water("Steam")
+Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
+Water.DomesticWater = DomesticWater = Water("DomesticWater", _alt_namespace=P223)
+Water.DomesticHotWater = DomesticHotWater = Water("DomesticHotWater", _alt_namespace=P223)
+Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
+Water.GlycoledWater = GlycoledWater = Water("GlycoledWater", _alt_namespace=P223)
+Water.Steam = Steam = Water("Steam", _alt_namespace=P223)
 
 # Light
 Light.Visible = Light("Visible")
@@ -96,7 +96,7 @@ Role.Supply = Supply = Role("Supply")
 # ===================
 # SUBSTANCES FLAVOURS
 # ===================
-Substance.Smoke = Smoke = Substance("Smoke")
+Substance.Smoke = Smoke = Substance("Smoke", _alt_namespace=P223)
 Substance.Particle = Particulate = Substance("Particulate")
 Substance.PM1_0 = Particulate.PM1_0 = Particulate(
     "PM1.0"
@@ -105,8 +105,8 @@ Substance.PM2_5 = Particulate.PM2_5 = Particulate("PM2.5")
 Substance.PM10_0 = Particulate.PM10_0 = Particulate("PM10.0")
 Substance.CO = CO = Substance("CO")
 Substance.CO2 = CO2 = Substance("CO2")
-Substance.NO2 = NO2 = Substance("NO2")
-Substance.CH4 = CH4 = Substance("CH4")
+Substance.NO2 = NO2 = Substance("NO2", _alt_namespace=P223)
+Substance.CH4 = CH4 = Substance("CH4", _alt_namespace=P223)
 Substance.Soot = Soot = Substance("Soot")
 
 # ===================
@@ -123,7 +123,7 @@ ManualAutoEnum = EnumerationKind("ManualAuto", _alt_namespace=P223)
 NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE BELOW
 NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
 NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
-OccupancyEnum = EnumerationKind("Occupancy", _alt_namespace=P223)
+OccupancyStatus = EnumerationKind("OccupancyStatus")
 OnOffEnum = EnumerationKind("OnOff")
 OpenCloseEnum = EnumerationKind("OpenClose", _alt_namespace=P223)
 OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=P223)
@@ -197,11 +197,11 @@ NormalFaultEnum.Normal = NormalFaultEnum("Normal", _alt_namespace=P223)
 NormalFaultEnum.Fault = NormalFaultEnum("Fault", _alt_namespace=P223)
 
 #
-OccupancyEnum.Unknown = OccupancyEnum("Unknown", _alt_namespace=P223)
-OccupancyEnum.Occupied = OccupancyEnum("Occupied", _alt_namespace=P223)
-OccupancyEnum.Unoccupied = OccupancyEnum("Unoccupied", _alt_namespace=P223)
-OccupancyEnum.Standby = OccupancyEnum("Standby", _alt_namespace=P223)
-OccupancyEnum.Bypass = OccupancyEnum("Bypass", _alt_namespace=P223)
+OccupancyStatus.Unknown = OccupancyStatus("Unknown")
+OccupancyStatus.Occupied = OccupancyStatus("Occupied")
+OccupancyStatus.Unoccupied = OccupancyStatus("Unoccupied")
+OccupancyStatus.Standby = OccupancyStatus("Standby")
+OccupancyStatus.Bypass = OccupancyStatus("Bypass")
 
 #
 OnOffEnum.On = OnOffEnum("On")

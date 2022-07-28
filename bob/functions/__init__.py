@@ -10,7 +10,7 @@ import inspect
 import logging
 from typing import Any, AnyStr, Dict
 
-from rdflib import URIRef  # type: ignore
+from rdflib import Literal, URIRef  # type: ignore
 
 from ..core import INCLUDE_INVERSE, Node, Property, data_graph, S223
 from ..multimethods import multimethod
@@ -19,21 +19,21 @@ _namespace = S223
 
 
 #
-#   Connectors
+#   Function Inputs and Outputs
 #
 
 
-class Connector(Node):
-    _class_iri: URIRef = S223.Connector
+class FunctionInput(Node):
+    _class_iri: URIRef = S223.FunctionInput
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
-        logging.debug(f"Connector.__init__ {function_block} {kwargs}")
-        if "label" not in kwargs:
-            raise ValueError("connector label required")
-        if self.__class__ is Connector:
-            raise RuntimeError("Connector is an abstract base class")
+        logging.info(
+            f"FunctionInput({self.__class__.__name__}).__init__ {function_block} {kwargs}"
+        )
 
         super().__init__(**kwargs)
+
+        data_graph.add((function_block._node_iri, S223.hasInput, self._node_iri))
 
     def __rshift__(self, other: Any) -> Any:
         """Build a connection from this thing to another thing."""
@@ -46,29 +46,34 @@ class Connector(Node):
         return self
 
 
-class InputConnector(Connector):
-    _class_iri: URIRef = S223.InputConnector
+class FunctionOutput(Node):
+    _class_iri: URIRef = S223.FunctionOutput
 
     def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
-        super().__init__(function_block, **kwargs)
+        logging.info(
+            f"FunctionOutput({self.__class__.__name__}).__init__ {function_block} {kwargs}"
+        )
 
-        data_graph.add((function_block._node_iri, S223.input, self._node_iri))
+        super().__init__(**kwargs)
 
+        data_graph.add((function_block._node_iri, S223.hasOutput, self._node_iri))
 
-class OutputConnector(Connector):
-    _class_iri: URIRef = S223.OutputConnector
+    def __rshift__(self, other: Any) -> Any:
+        """Build a connection from this thing to another thing."""
+        connect_mm(self, other)
+        return other
 
-    def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
-        super().__init__(function_block, **kwargs)
-
-        data_graph.add((function_block._node_iri, S223.output, self._node_iri))
+    def __lshift__(self, other: Any) -> Any:
+        """Build a connection to this thing from another thing."""
+        connect_mm(other, self)
+        return self
 
 
 @multimethod
 def connect_mm(
-    output_connector: OutputConnector, input_connector: InputConnector
+    output_connector: FunctionOutput, input_connector: FunctionInput
 ) -> None:
-    """OutputConnector >> InputConnector"""
+    """FunctionOutput >> FunctionInput"""
     logging.info(f"connect from {output_connector} to {input_connector}")
 
     data_graph.add(
@@ -77,25 +82,19 @@ def connect_mm(
 
 
 @multimethod
-def connect_mm(prop: Property, input_connector: InputConnector) -> None:
-    """Property >> InputConnector"""
+def connect_mm(prop: Property, input_connector: FunctionInput) -> None:
+    """Property >> FunctionInput"""
     logging.info(f"connect from {prop} to {input_connector}")
 
-    data_graph.add((input_connector._node_iri, S223.usesInput, prop._node_iri))
-    if INCLUDE_INVERSE:
-        data_graph.add(
-            (prop._node_iri, S223.isUsedAsInputBy, input_connector._node_iri)
-        )
+    data_graph.add((input_connector._node_iri, S223.uses, prop._node_iri))
 
 
 @multimethod
-def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
-    """OutputConnector >> Property"""
+def connect_mm(output_connector: FunctionOutput, prop: Property) -> None:
+    """FunctionOutput >> Property"""
     logging.info(f"connect from {output_connector} to {prop}")
 
-    data_graph.add((output_connector._node_iri, S223.producesOutput, prop._node_iri))
-    if INCLUDE_INVERSE:
-        data_graph.add((prop._node_iri, S223.isProducedBy, output_connector._node_iri))
+    data_graph.add((output_connector._node_iri, S223.produces, prop._node_iri))
 
 
 #
@@ -103,28 +102,81 @@ def connect_mm(output_connector: OutputConnector, prop: Property) -> None:
 #
 
 
-class AnalogInput(InputConnector):
+class AnalogInput(FunctionInput):
     _class_iri: URIRef = S223.AnalogInput
 
 
-class AnalogOutput(OutputConnector):
+class AnalogOutput(FunctionOutput):
     _class_iri: URIRef = S223.AnalogOutput
 
 
-class BinaryInput(InputConnector):
+class BinaryInput(FunctionInput):
     _class_iri: URIRef = S223.BinaryInput
 
 
-class BinaryOutput(OutputConnector):
+class BinaryOutput(FunctionOutput):
     _class_iri: URIRef = S223.BinaryOutput
 
 
 class Parameter(Node):
     _class_iri: URIRef = S223.Parameter
+    _volatile = ("hasValue",)
+
+    hasValue: Literal
+
+    def __init__(self, value: Any = None, **kwargs: Any):
+        logging.debug(
+            f"Parameter({self.__class__.__name__}).__init__ {value!r} {kwargs}"
+        )
+
+        init_value = None
+        if value is None:
+            if "hasValue" in kwargs:
+                init_value = kwargs.pop("hasValue")
+        elif "hasValue" in kwargs:
+            raise RuntimeError("initialization conflict")
+        else:
+            init_value = value
+
+        super().__init__(**kwargs)
+
+        # if there is an initial value, link to it
+        if init_value is not None:
+            if not isinstance(init_value, Literal):
+                init_value = Literal(init_value)
+            self.hasValue = init_value
 
 
-class Constant(Parameter):
+class Constant(Node):
+    """
+    Very similar to a Parameter, but a Constant does not have a volatile value.
+    """
+
     _class_iri: URIRef = S223.Constant
+
+    hasValue: Literal
+
+    def __init__(self, value: Any = None, **kwargs: Any):
+        logging.debug(
+            f"Constant({self.__class__.__name__}).__init__ {value!r} {kwargs}"
+        )
+
+        init_value = None
+        if value is None:
+            if "hasValue" in kwargs:
+                init_value = kwargs.pop("hasValue")
+        elif "hasValue" in kwargs:
+            raise RuntimeError("initialization conflict")
+        else:
+            init_value = value
+
+        super().__init__(**kwargs)
+
+        # if there is an initial value, link to it
+        if init_value is not None:
+            if not isinstance(init_value, Literal):
+                init_value = Literal(init_value)
+            self.hasValue = init_value
 
 
 class AnalogConstant(Constant):
@@ -142,11 +194,9 @@ class BinaryConstant(Constant):
 
 class FunctionBlock(Node):
     """
-    In 223, function blocks are black boxes representing a sequence or
-    an algorithm. Function blocks use inputs and produce outputs that can
-    be related to observable and actuatable properties in the 223 model.
-
-    Connections from or to a function block are made from/to properties only
+    Function blocks are black boxes representing a sequence or an
+    algorithm. Function blocks have inputs and produce outputs that are
+    related to observable and actuatable properties.
     """
 
     _class_iri: URIRef = S223.FunctionBlock
@@ -156,12 +206,21 @@ class FunctionBlock(Node):
     def __init__(self, **kwargs: Any) -> None:
         logging.debug(f"FunctionBlock.__init__ {kwargs}")
 
+        # resolve annotations if necessary
+        if not self._resolved:
+            self._resolve_annotations()
+        logging.debug(f"    - continue FunctionBlock.__init__")
+
         # pull out the parameters and constants
+        connector_inits: Dict[str, Any] = {}
         parameter_inits: Dict[str, Any] = {}
         for attr_name, attr_type in self._nodes.items():
-            if inspect.isclass(attr_type) and issubclass(attr_type, Parameter):
-                if attr_name in kwargs:
+            if inspect.isclass(attr_type) and (attr_name in kwargs):
+                if issubclass(attr_type, (FunctionInput, FunctionOutput)):
+                    connector_inits[attr_name] = kwargs.pop(attr_name)
+                if issubclass(attr_type, Parameter):
                     parameter_inits[attr_name] = kwargs.pop(attr_name)
+        logging.debug(f"    - connector_inits: {connector_inits}")
         logging.debug(f"    - parameter_inits: {parameter_inits}")
         logging.debug(f"    - remaining kwargs: {kwargs}")
 
@@ -175,29 +234,63 @@ class FunctionBlock(Node):
             if not inspect.isclass(attr_type):
                 continue
 
-            if issubclass(attr_type, Connector):
+            if issubclass(attr_type, (FunctionInput, FunctionOutput)):
                 # build an instance of this connector
                 attr_element = attr_type(self, label=self.label + "." + attr_name)
                 self._connectors[attr_name] = attr_element
                 logging.debug(f"    - connector {attr_name}: {attr_element}")
 
+                if attr_name in connector_inits:
+                    logging.debug(f"        - init: {connector_inits[attr_name]}")
+                    if issubclass(attr_type, FunctionInput):
+                        connector_inits[attr_name] >> attr_element
+                    if issubclass(attr_type, FunctionOutput):
+                        attr_element >> connector_inits[attr_name]
+
+                setattr(self, attr_name, attr_element)
+
             elif issubclass(attr_type, Parameter):
-                # build an instance of this parameter
-                attr_element = attr_type(label=self.label + "." + attr_name)
+                # check if an instance was already created
+                attr_element = getattr(self, attr_name, None)
+                if not attr_element:
+                    attr_element = attr_type(label=self.label + "." + attr_name)
+                    setattr(self, attr_name, attr_element)
+
                 self._parameters[attr_name] = attr_element
                 logging.debug(f"    - parameter {attr_name}: {attr_element}")
 
+                data_graph.add(
+                    (self._node_iri, S223.hasParameter, attr_element._node_iri)
+                )
+
+                # give it a value or override the value
                 if attr_name in parameter_inits:
                     logging.debug(f"        - init: {parameter_inits[attr_name]}")
-            else:
-                continue
+                    attr_element.hasValue = parameter_inits[attr_name]
 
-            setattr(self, attr_name, attr_element)
+            elif issubclass(attr_type, Constant):
+                # check if an instance was already created
+                attr_element = getattr(self, attr_name, None)
+                if not attr_element:
+                    attr_element = attr_type(label=self.label + "." + attr_name)
+                    setattr(self, attr_name, attr_element)
+
+                self._parameters[attr_name] = attr_element
+                logging.debug(f"    - constant {attr_name}: {attr_element}")
+
+                data_graph.add(
+                    (self._node_iri, S223.hasConstant, attr_element._node_iri)
+                )
+
+                # give it a value (might fail if annotation provided value)
+                if attr_name in parameter_inits:
+                    logging.debug(f"        - init: {parameter_inits[attr_name]}")
+                    attr_element.hasValue = parameter_inits[attr_name]
 
     def uses_input(
         self,
         prop: Property,
-        klass: InputConnector = InputConnector,
+        klass: FunctionInput = FunctionInput,
         label: AnyStr = "input",
     ) -> None:
         connector = klass(self, label=f"{self.label}.{label}")
@@ -206,16 +299,8 @@ class FunctionBlock(Node):
     def produces_output(
         self,
         prop: Property,
-        klass: OutputConnector = OutputConnector,
+        klass: FunctionOutput = FunctionOutput,
         label: AnyStr = "output",
     ) -> None:
         connector = klass(self, label=f"{self.label}.{label}")
         connector >> prop
-
-
-class ElementaryBlock(FunctionBlock):
-    _class_iri: URIRef = S223.ElementaryBlock
-
-
-class CompositeBlock(FunctionBlock):
-    _class_iri: URIRef = S223.CompositeBlock

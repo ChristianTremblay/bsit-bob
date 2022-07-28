@@ -1,0 +1,17 @@
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX qudtqk: <http://qudt.org/vocab/quantitykind/>
+
+SELECT ?roomLabel (AVG(?tval) AS ?avg)
+WHERE {
+    ?oprop a/rdfs:subClassOf* s223:Property .
+    ?oprop s223:hasValue s223:OccupancyStatus-Unoccupied .
+    ?ds s223:hasProperty ?oprop .
+    ?room s223:encloses ?ds .
+    ?room s223:encloses ?otherds .
+    ?otherds s223:hasProperty ?tprop .
+    ?tprop qudt:hasQuantityKind qudtqk:Temperature .
+    ?tprop s223:hasValue ?tval .
+    ?room rdfs:label ?roomLabel .
+}
+GROUP BY ?roomLabel

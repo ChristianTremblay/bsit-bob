@@ -15,7 +15,7 @@ from ..core import (
 )
 from ..enum import (
     NormalAlarmEnum,
-    OccupancyEnum,
+    OccupancyStatus,
     OnOffEnum,
     OpenCloseEnum,
     Smoke,
@@ -69,14 +69,14 @@ class OpenCloseStatus(EnumeratedActuatableProperty):
 
 class Schedule(EnumerableProperty):
     _class_iri: URIRef = S223.EnumerableProperty
-    hasEnumerationKind = OccupancyEnum
-    hasValue: OccupancyEnum
+    hasEnumerationKind = OccupancyStatus
+    hasValue: OccupancyStatus
 
 
 class OccupancyStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = S223.EnumeratedObservableProperty
-    hasEnumerationKind = OccupancyEnum
-    hasValue: OccupancyEnum
+    hasEnumerationKind = OccupancyStatus
+    hasValue: OccupancyStatus
 
 
 class Movement(EnumeratedObservableProperty):
@@ -95,5 +95,5 @@ class SmokePresence(EnumeratedObservableProperty):
 
 class DaylightDetected(EnumeratedObservableProperty):
     ofMedium: Light.Visible
-    hasEnumerationKind: YesNoEnum
+    hasEnumerationKind = YesNoEnum
     hasValue: YesNoEnum

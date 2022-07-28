@@ -24,7 +24,6 @@ class NaturalGasConnection(Connection):
 
 class NaturalGasConnectionPoint(ConnectionPoint):
     hasMedium: Medium = NaturalGas
-    _class_iri = S223.ConnectionPoint
 
 
 class NaturalGasInletConnectionPoint(InletConnectionPoint, NaturalGasConnectionPoint):
@@ -37,7 +36,6 @@ class NaturalGasOutletConnectionPoint(OutletConnectionPoint, NaturalGasConnectio
 
 class NaturalGasSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = NaturalGas
-    _class_iri = S223.SystemConnectionPoint
 
 
 class NaturalGasInletSystemConnectionPoint(

@@ -28,7 +28,6 @@ ex1:00002 a s223:PhysicalSpace,
         rec:Roof ;
     rdfs:label "Roof of building" .
 ex1:00003 a p223:HVACSpace,
-        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "My Big Garage" ;
     s223:connectedFrom ex1:00038 ;
@@ -51,52 +50,51 @@ ex1:00003 a p223:HVACSpace,
     bob:radiantCooling ex1:00010 ;
     bob:radiantHeating ex1:00009 ;
     bob:windows ex1:00008 .
-ex1:00004 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00004 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.ductAirInlet" ;
     s223:connectsThrough ex1:00046 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
-ex1:00005 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex1:00005 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.ductAirOutlet" ;
     s223:connectsThrough ex1:00044 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 ex1:00006 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 ex1:00007 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 ex1:00008 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 ex1:00009 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 ex1:00010 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint ;
+        bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 ex1:00011 a p223:LightingSpace,
-        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Light Space #1 near entry" ;
     s223:connectedFrom ex1:00017 ;
@@ -107,21 +105,20 @@ ex1:00011 a p223:LightingSpace,
     s223:hasMedium s223:Light-Visible ;
     bob:lightInlet ex1:00012 ;
     bob:naturalLightInlet ex1:00013 .
-ex1:00012 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00012 a s223:InletConnectionPoint,
+        bob:LightVisibleConnectionPoint ;
     rdfs:label "Light Space #1 near entry.lightInlet" ;
     s223:connectsThrough ex1:00051 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00011 .
-ex1:00013 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00013 a s223:InletConnectionPoint,
+        bob:LightVisibleConnectionPoint ;
     rdfs:label "Light Space #1 near entry.naturalLightInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00011 .
 ex1:00014 a p223:LightingSpace,
-        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Light Space #2 back of the garage" ;
     s223:connectedFrom ex1:00019 ;
@@ -132,51 +129,48 @@ ex1:00014 a p223:LightingSpace,
     s223:hasMedium s223:Light-Visible ;
     bob:lightInlet ex1:00015 ;
     bob:naturalLightInlet ex1:00016 .
-ex1:00015 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00015 a s223:InletConnectionPoint,
+        bob:LightVisibleConnectionPoint ;
     rdfs:label "Light Space #2 back of the garage.lightInlet" ;
     s223:connectsThrough ex1:00052 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00014 .
-ex1:00016 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00016 a s223:InletConnectionPoint,
+        bob:LightVisibleConnectionPoint ;
     rdfs:label "Light Space #2 back of the garage.naturalLightInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00014 .
-ex1:00017 a s223:Connectable,
-        s223:Device,
+ex1:00017 a s223:Device,
         s223:Luminaire ;
     rdfs:label "Ballast #1, space #1" ;
     s223:connectedThrough ex1:00051 ;
     s223:connectedTo ex1:00011 ;
     s223:hasConnectionPoint ex1:00018 ;
     bob:lightOutlet ex1:00018 .
-ex1:00018 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex1:00018 a s223:OutletConnectionPoint,
+        bob:LightVisibleConnectionPoint ;
     rdfs:label "Ballast #1, space #1.lightOutlet" ;
     s223:connectsThrough ex1:00051 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00017 .
-ex1:00019 a s223:Connectable,
-        s223:Device,
+ex1:00019 a s223:Device,
         s223:Luminaire ;
     rdfs:label "Ballast #2, space #2" ;
     s223:connectedThrough ex1:00052 ;
     s223:connectedTo ex1:00014 ;
     s223:hasConnectionPoint ex1:00020 ;
     bob:lightOutlet ex1:00020 .
-ex1:00020 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex1:00020 a s223:OutletConnectionPoint,
+        bob:LightVisibleConnectionPoint ;
     rdfs:label "Ballast #2, space #2.lightOutlet" ;
     s223:connectsThrough ex1:00052 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00019 .
-ex1:00021 a s223:Connectable,
-        s223:Device,
+ex1:00021 a s223:Device,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #1" ;
     s223:hasMeasurementLocation ex1:00011 ;
@@ -189,8 +183,7 @@ ex1:00022 a s223:EnumerableProperty,
     rdfs:label "Movement Sensor Space #1.Movement" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
-ex1:00023 a s223:Connectable,
-        s223:Device,
+ex1:00023 a s223:Device,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #2" ;
     s223:hasMeasurementLocation ex1:00014 ;
@@ -203,8 +196,7 @@ ex1:00024 a s223:EnumerableProperty,
     rdfs:label "Movement Sensor Space #2.Movement" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:ofMedium s223:Medium-Light .
-ex1:00025 a s223:Connectable,
-        s223:Device,
+ex1:00025 a s223:Device,
         s223:Fan ;
     rdfs:label "Fan" ;
     s223:connectedFrom ex1:00003 ;
@@ -225,22 +217,22 @@ ex1:00025 a s223:Connectable,
         ex1:00037 ;
     bob:airInlet ex1:00026 ;
     bob:airOutlet ex1:00027 .
-ex1:00026 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00026 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "Fan.airInlet" ;
     s223:connectsThrough ex1:00044 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00025 .
-ex1:00027 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex1:00027 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "Fan.airOutlet" ;
     s223:connectsThrough ex1:00045 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00025 .
-ex1:00028 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00028 a s223:InletConnectionPoint,
+        bob:ElectricalConnectionPoint ;
     rdfs:label "Fan.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
@@ -319,7 +311,6 @@ ex1:00037 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 ex1:00038 a s223:Coil,
-        s223:Connectable,
         s223:Device,
         s223:HeatingCoil ;
     rdfs:label "Heating Coil" ;
@@ -334,22 +325,22 @@ ex1:00038 a s223:Coil,
         ex1:00043 ;
     bob:airInlet ex1:00039 ;
     bob:airOutlet ex1:00040 .
-ex1:00039 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00039 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "Heating Coil.airInlet" ;
     s223:connectsThrough ex1:00045 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00038 .
-ex1:00040 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
+ex1:00040 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
     rdfs:label "Heating Coil.airOutlet" ;
     s223:connectsThrough ex1:00046 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00038 .
-ex1:00041 a s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
+ex1:00041 a s223:InletConnectionPoint,
+        bob:Electricity_575V_60HzConnectionPoint ;
     rdfs:label "Heating Coil.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
@@ -392,8 +383,7 @@ ex1:00046 a s223:Connection ;
     s223:connectsFrom ex1:00038 ;
     s223:connectsTo ex1:00003 ;
     s223:hasMedium s223:Medium-Air .
-ex1:00047 a s223:Connectable,
-        s223:Device,
+ex1:00047 a s223:Device,
         s223:Sensor ;
     rdfs:label "Discharge Air temperature sensor" ;
     s223:hasMeasurementLocation ex1:00040 ;
@@ -408,8 +398,7 @@ ex1:00048 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
-ex1:00049 a s223:Connectable,
-        s223:Device,
+ex1:00049 a s223:Device,
         s223:Sensor ;
     rdfs:label "Zone Air temperature sensor" ;
     s223:hasMeasurementLocation ex1:00003 ;

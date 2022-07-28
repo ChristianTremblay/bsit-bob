@@ -33,7 +33,6 @@ class ElectricalConnection(Connection):
 
 class ElectricalConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Electricity
-    _class_iri = S223.ConnectionPoint
 
 
 class ElectricalInletConnectionPoint(InletConnectionPoint, ElectricalConnectionPoint):
@@ -46,7 +45,6 @@ class ElectricalOutletConnectionPoint(OutletConnectionPoint, ElectricalConnectio
 
 class ElectricalSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Electricity
-    _class_iri = S223.SystemConnectionPoint
 
 
 class ElectricalSystemInletConnectionPoint(
@@ -71,7 +69,6 @@ class Electricity_575V_60HzConnection(Connection):
 
 class Electricity_575V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC575V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_575V_60HzInletConnectionPoint(
@@ -88,7 +85,6 @@ class Electricity_575V_60HzOutletConnectionPoint(
 
 class Electricity_575V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC575V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class Electricity_575V_60HzSystemInletConnectionPoint(
@@ -113,7 +109,6 @@ class Electricity_480V_60HzConnection(Connection):
 
 class Electricity_480V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC480V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_480V_60HzInletConnectionPoint(
@@ -130,7 +125,6 @@ class Electricity_480V_60HzOutletConnectionPoint(
 
 class Electricity_480V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC480V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class Electricity_480V_60HzSystemInletConnectionPoint(
@@ -156,7 +150,6 @@ class Electricity_347V_60HzConnection(Connection):
 
 class Electricity_347V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC347V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_347V_60HzInletConnectionPoint(
@@ -173,7 +166,6 @@ class Electricity_347V_60HzOutletConnectionPoint(
 
 class Electricity_347V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC347V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class Electricity_347V_60HzSystemInletConnectionPoint(
@@ -199,7 +191,6 @@ class Electricity_277V_60HzConnection(Connection):
 
 class Electricity_277V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC277V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_277V_60HzInletConnectionPoint(
@@ -216,7 +207,6 @@ class Electricity_277V_60HzOutletConnectionPoint(
 
 class Electricity_277V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC277V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class Electricity_277V_60HzSystemInletConnectionPoint(
@@ -242,7 +232,6 @@ class Electricity_208V_60HzConnection(Connection):
 
 class Electricity_208V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC208V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_208V_60HzInletConnectionPoint(
@@ -259,7 +248,6 @@ class Electricity_208V_60HzOutletConnectionPoint(
 
 class Electricity_208V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC208V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class Electricity_208V_60HzSystemInletConnectionPoint(
@@ -288,7 +276,6 @@ class Electricity_120V_240V_60HzConnection(Connection):
 
 class Electricity_120V_240V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC120V_240V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_120V_240V_60HzInletConnectionPoint(
@@ -305,7 +292,6 @@ class Electricity_120V_240V_60HzOutletConnectionPoint(
 
 class Electricity_120V_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC120V_240V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class lectricity_120V_240V_60HzSystemInletConnectionPoint(
@@ -330,7 +316,6 @@ class Electricity_240V_60HzConnection(Connection):
 
 class Electricity_240V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC240V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_240V_60HzInletConnectionPoint(
@@ -347,7 +332,6 @@ class Electricity_240V_60HzOutletConnectionPoint(
 
 class Electricity_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC240V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class Electricity_240V_60HzSystemInletConnectionPoint(
@@ -372,7 +356,6 @@ class Electricity_120V_60HzConnection(Connection):
 
 class Electricity_120V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC120V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_120V_60HzInletConnectionPoint(
@@ -389,7 +372,6 @@ class Electricity_120V_60HzOutletConnectionPoint(
 
 class Electricity_120V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC120V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class Electricity_120V_60HzSystemInletConnectionPoint(
@@ -414,7 +396,6 @@ class Electricity_24V_60HzConnection(Connection):
 
 class Electricity_24V_60HzConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.AC24V_60Hz
-    _class_iri = S223.ConnectionPoint
 
 
 class Electricity_24V_60HzInletConnectionPoint(
@@ -431,7 +412,6 @@ class Electricity_24V_60HzOutletConnectionPoint(
 
 class Electricity_24V_60HzSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.AC24V_60Hz
-    _class_iri = S223.SystemConnectionPoint
 
 
 class Electricity_24V_60HzSystemInletConnectionPoint(
@@ -470,7 +450,6 @@ class OnOffSignalConnection(Connection):
 
 class OnOffSignalConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.OnOffSignal
-    _class_iri = S223.ConnectionPoint
 
 
 class OnOffSignalInletConnectionPoint(InletConnectionPoint, OnOffSignalConnectionPoint):
@@ -485,7 +464,6 @@ class OnOffSignalOutletConnectionPoint(
 
 class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.OnOffSignal
-    _class_iri = S223.SystemConnectionPoint
 
 
 class OnOffSignalSystemInletConnectionPoint(
@@ -509,7 +487,6 @@ class ModulationSignalConnection(Connection):
 
 class ModulationSignalConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.ModulationSignal
-    _class_iri = S223.ConnectionPoint
 
 
 class ModulationSignalInletConnectionPoint(
@@ -526,7 +503,6 @@ class ModulationSignalOutletConnectionPoint(
 
 class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.ModulationSignal
-    _class_iri = S223.SystemConnectionPoint
 
 
 class ModulationSignalSystemInletConnectionPoint(
@@ -549,7 +525,6 @@ class RS485Connection(Connection):
 
 class RS485ConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.RS485
-    _class_iri = S223.ConnectionPoint
 
 
 class RS485BidirectionalConnectionPoint(
@@ -560,7 +535,6 @@ class RS485BidirectionalConnectionPoint(
 
 class RS485SystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.RS485
-    _class_iri = S223.SystemConnectionPoint
 
 
 class RS485BidirectionalSystemConnectionPoint(
@@ -579,7 +553,6 @@ class EthernetConnectionPoint(ConnectionPoint):
     hasMedium = Electricity.Ethernet
     data_rate: Mbit_per_seconds
     vlan: Literal
-    _class_iri = S223.ConnectionPoint
 
 
 class EthernetBidirectionalConnectionPoint(
@@ -590,7 +563,6 @@ class EthernetBidirectionalConnectionPoint(
 
 class EthernetSystemConnectionPoint(SystemConnectionPoint):
     hasMedium = Electricity.Ethernet
-    _class_iri = S223.SystemConnectionPoint
 
 
 class EthernetBidirectionalSystemConnectionPoint(

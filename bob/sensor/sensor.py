@@ -15,6 +15,7 @@ from ..core import (
     Node,
     Property,
     PropertyReference,
+    LocationReference,
     Segment,
     Substance,
     BOB,
@@ -88,16 +89,7 @@ class Sensor(Device):
     """
 
     _class_iri: URIRef = S223.Sensor
-    # ISSUE
-    # How can I define that ?
-    # hasMeasurementLocation: Union[
-    #    Device,
-    #    Connection,
-    #    Segment,
-    #    ConnectionPoint,
-    #    DomainSpace
-    # ]
-    hasMeasurementLocation: Node
+    hasMeasurementLocation: LocationReference
     hasMeasurementPrecision: QuantifiableProperty
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
@@ -159,8 +151,8 @@ def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
 class DifferentialSensor(Sensor):
     "Differential sensor"
     _class_iri: URIRef = S223.DifferentialSensor
-    hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
-    hasMeasurementLocationLow: Node
+    hasMeasurementLocationHigh: LocationReference
+    hasMeasurementLocationLow: LocationReference
 
 
 class VirtualSensor(Sensor):

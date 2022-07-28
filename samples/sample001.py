@@ -40,5 +40,4 @@ d3 = SampleDevice2(label="Test Device 3", hasTemp=100.5)
 d3.hasTemp.unit = UNIT.DEG_F
 
 # dump the result
-
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

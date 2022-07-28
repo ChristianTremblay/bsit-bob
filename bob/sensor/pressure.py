@@ -11,6 +11,7 @@ from ..core import (
     Medium,
     Node,
     PropertyReference,
+    LocationReference,
     Water,
     BOB,
     enum,
@@ -35,8 +36,8 @@ class DifferentialStaticPressureSetpoint(Setpoint):
 class DifferentialStaticPressureSensor(Sensor):
     _class_iri = S223.Sensor
     observesProperty: PropertyReference  # DifferentialStaticPressure
-    hasMeasurementLocationHigh: Node  # I don't know how to type a list of 2 nodes...
-    hasMeasurementLocationLow: Node
+    hasMeasurementLocationHigh: LocationReference
+    hasMeasurementLocationLow: LocationReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)

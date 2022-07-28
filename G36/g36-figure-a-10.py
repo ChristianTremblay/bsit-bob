@@ -51,7 +51,8 @@ from bob.devices.hvac.stats import (
 )
 from bob.devices.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
 from bob.devices.electricity.vfd import VFD
-from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, G36Sequence
+from bob.functions import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.functions.g36 import G36Sequence
 from bob.properties import Flow, PercentCommand, Temperature
 from bob.properties.states import SmokePresence
 from bob.properties.volume import Gallons
@@ -226,7 +227,7 @@ ahu.heating = htg_vlv["position"]  # equivalent to htg_vlv['actuator']['postion'
 sequence = "lorem ipsum of sequence"
 g36_fig_a_10 = G36Sequence(label="G36_FIG_A_10", comment=sequence)
 
-g36_fig_a_10.uses_input(rat.observesProperty, AnalogIn, "return-air-temp")
-g36_fig_a_10.produces_output(htg_vlv["actuator"]["command"], AnalogOut, "HW VALVE")
+g36_fig_a_10.uses_input(rat.observesProperty, AnalogInput, "return-air-temp")
+g36_fig_a_10.produces_output(htg_vlv["actuator"]["command"], AnalogOutput, "HW VALVE")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
