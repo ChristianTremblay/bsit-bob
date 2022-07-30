@@ -10,6 +10,8 @@ from bob.connections.air import (
     AirConnection,
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
 )
 from bob.core import Junction, System, bind_model_namespace, dump, QUANTITYKIND, UNIT
 from bob.devices.hvac.damper import Damper
