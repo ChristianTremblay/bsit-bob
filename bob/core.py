@@ -308,7 +308,7 @@ class NodeMetaclass(type):
         # add these special attributes to the class before building it
         attributedict["_resolved"] = False
         attributedict["_nodes"] = _nodes
-        attributedict["_datatypes"] = _datatypes
+        attributedict["_datatypes"] = attributedict.get("_datatypes", _datatypes)
         attributedict["_attr_uriref"] = attributedict.get("_attr_uriref", _attr_uriref)
 
         # build the class
@@ -328,8 +328,8 @@ class NodeMetaclass(type):
 
 class Node(metaclass=NodeMetaclass):
     """
-    A node in the graph that optionally has a label.  Instances of this
-    would be something like blank nodes.
+    A node in the graph that optionally has a label and a comment.  Instances
+    of this would be something like blank nodes.
     """
 
     _namespace: Namespace
@@ -339,26 +339,22 @@ class Node(metaclass=NodeMetaclass):
     # resolved annotations into nodes and datatypes
     _resolved: bool
     _nodes: NodeMap
-    _datatypes: Dict[str, Literal]
-    _attr_uriref: Dict[str, URIRef] = {}
+    _datatypes: Dict[str, Literal] = {"label": Literal, "comment": Literal}
+    _attr_uriref: Dict[str, URIRef] = {"label": RDFS.label, "comment": RDFS.comment}
 
     # attributes that can be changed
     _volatile: Tuple[str, ...] = ()
 
     _node_iri: URIRef
     _class_iri: Optional[URIRef] = None
-    label: str
-    comment: str
 
     def __init__(
         self,
         *,
         _node_iri: URIRef = None,
-        label: str = "",
-        comment: str = None,
         **kwargs: Any,
     ) -> None:
-        logging.debug(f"Node.__init__ label={label!r} {kwargs}")
+        logging.debug(f"Node.__init__ {kwargs}")
         global _next_node, model_namespace
 
         if not self._resolved:
@@ -377,14 +373,6 @@ class Node(metaclass=NodeMetaclass):
         else:
             super().__setattr__("_node_iri", BNode())
 
-        super().__setattr__("label", label or getattr(self, "label", ""))
-        if self.label:
-            self._data_graph.add((self._node_iri, RDFS.label, Literal(self.label)))
-
-        super().__setattr__("comment", comment or getattr(self, "comment", ""))
-        if self.comment:
-            self._data_graph.add((self._node_iri, RDFS.comment, Literal(self.comment)))
-
         if hasattr(self, "_class_iri"):
             if self._class_iri is not None:
                 self._data_graph.add((self._node_iri, RDF.type, self._class_iri))
@@ -395,6 +383,7 @@ class Node(metaclass=NodeMetaclass):
         for k, v in kwargs.items():
             if k in self._nodes or k in self._datatypes:
                 inits[k] = v
+        logging.debug(f"    - inits: {inits!r}")
 
         # pull out the init values in classes that aren't already found
         for supercls in self.__class__.__mro__:
@@ -656,6 +645,7 @@ class Node(metaclass=NodeMetaclass):
         # if this is a node, double check the type
         if attr in self._nodes:
             attr_type = self._nodes[attr]
+            logging.debug("    - attr_type: %r", attr_type)
 
             # if the type reference is still a string, find the real type
             if isinstance(attr_type, str):
@@ -693,7 +683,10 @@ class Node(metaclass=NodeMetaclass):
                 logging.debug("    - new value: %r", value)
 
             # add the link(s)
+            ### can two different attributes have the same URIRef for calling
+            ### rather than set()?
             if isinstance(value, (URIRef, Literal)):
+                ### this is weird, why is hasValue special?
                 if attr == "hasValue":
                     self._data_graph.set((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
                 else:
@@ -714,15 +707,19 @@ class Node(metaclass=NodeMetaclass):
 
         # if this needs some datatype decoration, turn it into a literal
         if attr in self._datatypes:
-            if isinstance(value, Literal):
-                if value.datatype != self._datatypes[attr]:
-                    raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
+            attr_datatype = self._datatypes[attr]
+            if attr_datatype is Literal:
+                if not isinstance(value, Literal):
+                    value = Literal(value)
+            elif isinstance(value, Literal):
+                if value.datatype != attr_datatype:
+                    raise TypeError(f"{attr}: literal {attr_datatype} expected")
             elif isinstance(value, (str, int, float)):
-                value = Literal(value, datatype=self._datatypes[attr])
+                value = Literal(value, datatype=attr_datatype)
             else:
                 value = Literal(value)
-                if value.datatype != self._datatypes[attr]:
-                    raise TypeError(f"{attr}: literal {self._datatypes[attr]} expected")
+                if value.datatype != attr_datatype:
+                    raise TypeError(f"{attr}: literal {attr_datatype} expected")
 
             # add the literal
             self._data_graph.add((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
@@ -759,6 +756,23 @@ class Node(metaclass=NodeMetaclass):
         return prop
 
 
+class ExternalReferenceValue:
+    def __new__(cls, value):
+        logging.debug(
+            f"ExternalReferenceValue.__new__ {cls!r} {value!r}"
+        )
+        if isinstance(value, Literal):
+            pass
+        elif isinstance(value, URIRef):
+            pass
+        elif isinstance(value, Node):
+            value = value._node_iri
+        else:
+            value = Literal(value)
+
+        return value
+
+
 class ExternalReference(Node):
     """
     This will be subclassed by different specific datasources, this simplest
@@ -767,33 +781,20 @@ class ExternalReference(Node):
     """
 
     _class_iri: URIRef = S223.ExternalReference
-    # isExternalReferenceOf: Property
-    hasRef: Literal
+    hasRef: ExternalReferenceValue
 
     def __init__(
         self,
-        arg: Any = None,
-        *,
-        lang: Optional[str] = None,
-        datatype: Optional[URIRef] = None,
+        arg: Any = None,  # Union[str, Literal, URIRef, Node]
         **kwargs: Any,
     ):
         logging.debug(
-            f"ExternalReference.__init__ {arg!r} arg type={type(arg)} lang={lang!r} datatype={datatype!r} {kwargs}"
+            f"ExternalReference.__init__ {arg!r} {kwargs}"
         )
         if arg is not None:
             if "hasRef" in kwargs:
                 raise RuntimeError("initialization conflict")
-
-            if isinstance(arg, Literal):
-                pass
-            elif datatype is not None:
-                arg = Literal(arg, datatype=datatype)
-            elif lang is not None:
-                arg = Literal(arg, lang=lang)
-
-            if isinstance(arg, Literal):
-                kwargs["hasRef"] = arg
+            kwargs["hasRef"] = arg
 
         super().__init__(**kwargs)
 
@@ -858,8 +859,9 @@ class Property(Node):
         if not isinstance(external_reference, self._external_reference_class):
             external_reference = self._external_reference_class(
                 external_reference,
-                label=f"{self.label}.ExternalReference",
             )
+            if hasattr(self, "label"):
+                external_reference.label = self.label + ".ExternalReference"
 
         # link the two together
         self._data_graph.add(
@@ -908,9 +910,29 @@ class Container(Node):
         super().__init__(*args, **kwargs)
         self._contents = {}
 
-    def __getitem__(self, label: str) -> Node:
-        logging.debug(f"Container.__getitem__ {label}")
+    def __getitem__(self, label: Union[str, Literal]) -> Node:
+        logging.debug(f"Container.__getitem__ {label!r}")
+        if isinstance(label, str):
+            label = Literal(label)
+        elif not isinstance(label, Literal):
+            raise TypeError(f"Literal or string expected: {label!r}")
         return self._contents[label]
+
+    def __setitem__(self, label: Union[str, Literal], value: Node) -> None:
+        logging.debug(f"Container.__getitem__ {label!r} {value!r}")
+        if isinstance(label, str):
+            label = Literal(label)
+        elif not isinstance(label, Literal):
+            raise TypeError(f"Literal or string expected: {label!r}")
+        self._contents[label] = value
+
+    def __contains__(self, label: Union[str, Literal]) -> bool:
+        logging.debug(f"Container.__contains__ {label!r}")
+        if isinstance(label, str):
+            label = Literal(label)
+        elif not isinstance(label, Literal):
+            raise TypeError(f"Literal or string expected: {label!r}")
+        return label in self._contents
 
     # def __len__(self):
     #     Do not define this function or `a < b < c` will break.
@@ -1161,9 +1183,9 @@ class System(Container, Node):
                     logging.debug(
                         f"    - thing_name, thing_class: {thing_name}, {thing_class}"
                     )
-                    if thing_name in self._contents:
+                    if thing_name in self:
                         raise ValueError(
-                            f"label already used: {self._contents[thing_name]}"
+                            f"label already used: {self[thing_name]}"
                         )
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
@@ -1171,7 +1193,7 @@ class System(Container, Node):
                         self > thing
                     if isinstance(thing, Property):
                         thing @ self
-                        self._contents[thing_name] = thing
+                        self[thing_name] = thing
 
                     things.append(thing)
 
@@ -2996,16 +3018,16 @@ class Device(Container, Connectable):
                     continue
                 things = []
                 for (thing_name, thing_class), thing_kwargs in group_items.items():
-                    if thing_name in self._contents:
+                    if thing_name in self:
                         raise ValueError(
-                            f"label already used: {self._contents[thing_name]}"
+                            f"label already used: {self[thing_name]}"
                         )
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
                     if isinstance(thing, (Device, System)):
                         self > thing
                     if isinstance(thing, Property):
-                        self._contents[thing_name] = thing
+                        self[thing_name] = thing
                         self.add_property(thing)
 
                     things.append(thing)

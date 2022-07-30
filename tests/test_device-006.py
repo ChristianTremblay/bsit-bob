@@ -1,4 +1,5 @@
 from pathlib import Path
+from rdflib import Literal
 
 from header import ttl_test_header
 
@@ -36,5 +37,5 @@ def test_create_vfd_from_template(bob_fixture):
     v = VFD(config=vfd_template)
     assert type(v["rpm"]) is RPM
     assert type(v["alarm_status"]) is NormalAlarmStatus
-    assert v.label == "MyVFD"
+    assert v.label == Literal("MyVFD")
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
