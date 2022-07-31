@@ -10,6 +10,7 @@ import io
 import itertools
 import logging
 import os
+import re
 import sys
 from collections import Counter, defaultdict
 from typing import (
@@ -98,6 +99,7 @@ class DataGraph(Graph):
         Add a triple to the data graph, checking the predicate to see if it should
         be included or excluded.
         """
+        # logging.debug(f"DataGraph.add {triple}")
         subj, pred, obj = triple
 
         (
@@ -121,6 +123,7 @@ class SchemaGraph(Graph):
         model being build (like subtypes of a Device) but not about things
         in the S223 namespace.
         """
+        # logging.debug(f"SchemaGraph.add {triple}")
         subj, pred, obj = triple
 
         # exclude the schema content in the S223 namespace by default
@@ -222,57 +225,83 @@ def clean_and_sort_turtle_file(content: str) -> str:
     """
     This will assure the TTL file header contains no
     duplicates, header is well formatted and
-    all triples are sorted. We also remove blank lines
-    to save some space.
-
-    This is the equivalent of the sort_turtle_file script
-    in the repo.
-
+    all triples are sorted.
     """
-    lines = io.StringIO(content).readlines()
-    new_lines = ""
-    chunks = []
-    while lines:
-        blank_line_index = 0
-        try:
-            blank_line_index = lines.index("\n")
-        except ValueError:
-            pass  # sort already done
-        chunks.append(lines[0 : blank_line_index + 1])
-        lines = lines[blank_line_index + 1 :]
+    logging.debug("clean_and_sort_turtle_file ...")
 
-    # print out the "# baseURI:" and "# imports:"
-    new_lines += "".join(chunks[0][:-1])
-    del chunks[0]
+    header_chunks = []  # lines that start like '# baseURI: ...'
+    prefix_chunks = []  # lines that start like '@prefix ...'
 
-    # sort
+    # pattern for triple quoted literals
+    tql = re.compile("\"\"\"[^\"]*\"\"\"|'''[^']*'''")
+
+    tql_archive = []
+
+    def tql_save(match) -> str:
+        logging.debug("    - match: %r", match)
+        mstart, mend = match.span()
+        tql_archive.append(match.string[mstart:mend])
+        return "\0"
+
+    def tql_restore(match) -> str:
+        return tql_archive.pop(0)
+
+    # save the triple quoted strings
+    content = tql.sub(tql_save, content)
+
+    chunk = ""  # lines that belong together
+    chunks = []  # groups of lines sorted later
+    for line in io.StringIO(content).readlines():
+        logging.debug("    - %r", line)
+
+        # filter out comments and prefixes
+        if line.startswith("# "):
+            logging.debug("    - header")
+            header_chunks.append(line)
+            if chunk:
+                chunks.append(chunk)
+                chunk = ""
+            continue
+        if line.startswith("@prefix"):
+            logging.debug("    - prefix")
+            prefix_chunks.append(line)
+            if chunk:
+                chunks.append(chunk)
+                chunk = ""
+            continue
+
+        chunk += line
+        if line == "\n":
+            logging.debug("    - end of chunk")
+            chunks.append(chunk)
+            chunk = ""
+
+    # trailing chunk
+    if chunk:
+        logging.debug("    - trailing chunk")
+        chunks.append(chunk)
+        chunk = ""
+
+    new_content = ""
+
+    # dump the header chunks
+    if header_chunks:
+        new_content += "".join(header_chunks) + "\n"
+
+    # sort prefix chunks and remove the duplicates
+    if prefix_chunks:
+        prefix_chunks.sort()
+        prefix_chunks = list(dict.fromkeys(prefix_chunks))
+        new_content += "".join(prefix_chunks) + "\n"
+
+    # restore the triple quoted strings
+    chunks = [re.sub("\0", tql_restore, chunk) for chunk in chunks]
+
+    # sort them
     chunks.sort()
+    new_content += "".join(chunks)
 
-    # extract @prefix lines
-    prefix_chunks = []
-    prefix_indx = []
-    for i, chunk in enumerate(chunks):
-        if chunk[0].startswith("@prefix"):
-            prefix_chunks.extend(chunk)
-            prefix_indx.append(i)
-
-    # remove the lines we found
-    for i in reversed(prefix_indx):
-        del chunks[i]
-
-    # remove the blank lines
-    prefix_chunks = [chunk for chunk in prefix_chunks if chunk != "\n"]
-
-    # sort them and remove the duplicates
-    prefix_chunks.sort()
-    prefix_chunks = list(dict.fromkeys(prefix_chunks))
-    new_lines += "".join(prefix_chunks)
-
-    # print the rest
-    for chunk in chunks:
-        new_lines += "".join(chunk[:-1])
-
-    return new_lines
+    return new_content
 
 
 def get_datagraph(graph: Graph = data_graph) -> Graph:
@@ -607,6 +636,20 @@ class Node(metaclass=NodeMetaclass):
         # this is a class, and a subclass of the super classes
         if cls._class_iri is not None:
             cls._schema_graph.add((cls._class_iri, RDF.type, RDFS.Class))
+
+            # some documentation is nice
+            if cls.__doc__:
+                cls._schema_graph.add(
+                    (cls._class_iri, RDFS.comment, Literal(cls.__doc__))
+                )
+            cls._schema_graph.add(
+                (
+                    cls._class_iri,
+                    RDFS.label,
+                    Literal(cls.__module__ + "." + cls.__name__),
+                )
+            )
+
             for supercls in cls.__mro__[1:]:
                 if issubclass(supercls, Node):
                     _class_iri = vars(supercls).get("_class_iri")
@@ -758,9 +801,7 @@ class Node(metaclass=NodeMetaclass):
 
 class ExternalReferenceValue:
     def __new__(cls, value):
-        logging.debug(
-            f"ExternalReferenceValue.__new__ {cls!r} {value!r}"
-        )
+        logging.debug(f"ExternalReferenceValue.__new__ {cls!r} {value!r}")
         if isinstance(value, Literal):
             pass
         elif isinstance(value, URIRef):
@@ -788,9 +829,7 @@ class ExternalReference(Node):
         arg: Any = None,  # Union[str, Literal, URIRef, Node]
         **kwargs: Any,
     ):
-        logging.debug(
-            f"ExternalReference.__init__ {arg!r} {kwargs}"
-        )
+        logging.debug(f"ExternalReference.__init__ {arg!r} {kwargs}")
         if arg is not None:
             if "hasRef" in kwargs:
                 raise RuntimeError("initialization conflict")
@@ -1184,9 +1223,7 @@ class System(Container, Node):
                         f"    - thing_name, thing_class: {thing_name}, {thing_class}"
                     )
                     if thing_name in self:
-                        raise ValueError(
-                            f"label already used: {self[thing_name]}"
-                        )
+                        raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
                     if isinstance(thing, (Device, System)):
@@ -3019,9 +3056,7 @@ class Device(Container, Connectable):
                 things = []
                 for (thing_name, thing_class), thing_kwargs in group_items.items():
                     if thing_name in self:
-                        raise ValueError(
-                            f"label already used: {self[thing_name]}"
-                        )
+                        raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
                     if isinstance(thing, (Device, System)):

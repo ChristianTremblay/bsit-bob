@@ -7,6 +7,8 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
+
+
 exg3610:00001 a s223:Damper,
         s223:Device ;
     rdfs:label "MIN-OA-DPR" ;
@@ -21,6 +23,7 @@ exg3610:00001 a s223:Damper,
     bob:command exg3610:00006 ;
     bob:feedback exg3610:00007 ;
     rdfs:comment "Minimum ouside air damper, 2 pos" .
+
 exg3610:00002 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "MIN-OA-DPR.airInlet" ;
@@ -28,6 +31,7 @@ exg3610:00002 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00001 .
+
 exg3610:00003 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "MIN-OA-DPR.airOutlet" ;
@@ -35,6 +39,7 @@ exg3610:00003 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00001 .
+
 exg3610:00004 a s223:Actuator,
         s223:Device ;
     rdfs:label "actuator" ;
@@ -44,12 +49,14 @@ exg3610:00004 a s223:Actuator,
         exg3610:00007,
         exg3610:00008,
         exg3610:00009 .
+
 exg3610:00005 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf exg3610:00004 .
+
 exg3610:00006 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -58,6 +65,7 @@ exg3610:00006 a s223:ActuatableProperty,
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00007 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -66,6 +74,7 @@ exg3610:00007 a s223:ObservableProperty,
     rdfs:label "feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00008 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -74,6 +83,7 @@ exg3610:00008 a s223:ObservableProperty,
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
+
 exg3610:00009 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -82,6 +92,7 @@ exg3610:00009 a s223:ActuatableProperty,
     rdfs:label "position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00010 a s223:Damper,
         s223:Device ;
     rdfs:label "ECON-DPR" ;
@@ -96,6 +107,7 @@ exg3610:00010 a s223:Damper,
     bob:command exg3610:00015 ;
     bob:feedback exg3610:00016 ;
     rdfs:comment "Economizer damper, modulating" .
+
 exg3610:00011 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "ECON-DPR.airInlet" ;
@@ -103,6 +115,7 @@ exg3610:00011 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00010 .
+
 exg3610:00012 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "ECON-DPR.airOutlet" ;
@@ -110,6 +123,7 @@ exg3610:00012 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00010 .
+
 exg3610:00013 a s223:Actuator,
         s223:Device ;
     rdfs:label "actuator" ;
@@ -119,12 +133,14 @@ exg3610:00013 a s223:Actuator,
         exg3610:00016,
         exg3610:00017,
         exg3610:00018 .
+
 exg3610:00014 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf exg3610:00013 .
+
 exg3610:00015 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -133,6 +149,7 @@ exg3610:00015 a s223:ActuatableProperty,
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00016 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -141,6 +158,7 @@ exg3610:00016 a s223:ObservableProperty,
     rdfs:label "feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00017 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -149,6 +167,7 @@ exg3610:00017 a s223:ObservableProperty,
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
+
 exg3610:00018 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -157,6 +176,7 @@ exg3610:00018 a s223:ActuatableProperty,
     rdfs:label "position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00019 a s223:Connection ;
     rdfs:label "Outside" ;
     s223:connectsAt exg3610:00002,
@@ -166,6 +186,7 @@ exg3610:00019 a s223:Connection ;
     s223:connectsTo exg3610:00001,
         exg3610:00010 ;
     s223:hasMedium s223:Medium-Air .
+
 exg3610:00020 a s223:Connection ;
     rdfs:label "MixedAirSupply" ;
     s223:connectsAt exg3610:00003,
@@ -177,12 +198,14 @@ exg3610:00020 a s223:Connection ;
         exg3610:00120 ;
     s223:connectsTo exg3610:00025 ;
     s223:hasMedium s223:Medium-Air .
+
 exg3610:00021 a s223:Device,
         s223:Sensor ;
     rdfs:label "OA-T" ;
     s223:hasMeasurementLocation exg3610:00012 ;
     s223:observesProperty exg3610:00022 ;
     rdfs:comment "Outside Air Temp" .
+
 exg3610:00022 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -192,12 +215,14 @@ exg3610:00022 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+
 exg3610:00023 a s223:Device,
         s223:Sensor ;
     rdfs:label "MA-T" ;
     s223:hasMeasurementLocation exg3610:00020 ;
     s223:observesProperty exg3610:00024 ;
     rdfs:comment "Mixed Air Temp" .
+
 exg3610:00024 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -207,6 +232,7 @@ exg3610:00024 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+
 exg3610:00025 a p223:Filter,
         s223:Device ;
     rdfs:label "Filter" ;
@@ -217,6 +243,7 @@ exg3610:00025 a p223:Filter,
         exg3610:00027 ;
     bob:airInlet exg3610:00026 ;
     bob:airOutlet exg3610:00027 .
+
 exg3610:00026 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Filter.airInlet" ;
@@ -224,6 +251,7 @@ exg3610:00026 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00025 .
+
 exg3610:00027 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Filter.airOutlet" ;
@@ -231,6 +259,7 @@ exg3610:00027 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00025 .
+
 exg3610:00028 a s223:Device,
         s223:Sensor ;
     rdfs:label "DPT-1" ;
@@ -238,6 +267,7 @@ exg3610:00028 a s223:Device,
     bob:hasMeasurementLocationHigh exg3610:00026 ;
     bob:hasMeasurementLocationLow exg3610:00027 ;
     rdfs:comment "Filter Differential Pressure Transmitter" .
+
 exg3610:00029 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -246,6 +276,7 @@ exg3610:00029 a s223:ObservableProperty,
     rdfs:label "DPT-1.DifferentialStaticPressure" ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
+
 exg3610:00030 a s223:Coil,
         s223:Device,
         s223:HeatingCoil ;
@@ -264,6 +295,7 @@ exg3610:00030 a s223:Coil,
     bob:hotWaterInlet exg3610:00033 ;
     bob:hotWaterOutlet exg3610:00034 ;
     rdfs:comment "Hot Water Coil" .
+
 exg3610:00031 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HWC.airInlet" ;
@@ -271,6 +303,7 @@ exg3610:00031 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00030 .
+
 exg3610:00032 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HWC.airOutlet" ;
@@ -278,6 +311,7 @@ exg3610:00032 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00030 .
+
 exg3610:00033 a s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWC.hotWaterInlet" ;
@@ -285,12 +319,14 @@ exg3610:00033 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00030 .
+
 exg3610:00034 a s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWC.hotWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00030 .
+
 exg3610:00035 a s223:Device,
         s223:Valve ;
     rdfs:label "HTG-VLV" ;
@@ -304,30 +340,35 @@ exg3610:00035 a s223:Device,
     bob:command exg3610:00044 ;
     bob:feedback exg3610:00045 ;
     rdfs:comment "Heating 2W Valve" .
+
 exg3610:00036 a s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HTG-VLV.waterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00035 .
+
 exg3610:00037 a s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HTG-VLV.waterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf exg3610:00035 .
+
 exg3610:00038 a s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "HTG-VLV.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3610:00035 .
+
 exg3610:00039 a s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "HTG-VLV.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3610:00035 .
+
 exg3610:00040 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -336,6 +377,7 @@ exg3610:00040 a s223:ObservableProperty,
     rdfs:label "flowCoefficient" ;
     qudt:hasQuantityKind quantitykind:LiquidVolume ;
     qudt:unit unit:GAL_US .
+
 exg3610:00041 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -344,6 +386,7 @@ exg3610:00041 a s223:ActuatableProperty,
     rdfs:label "position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00042 a s223:Actuator,
         s223:Device ;
     rdfs:label "actuator" ;
@@ -351,12 +394,14 @@ exg3610:00042 a s223:Actuator,
     s223:hasProperty exg3610:00044,
         exg3610:00045,
         exg3610:00046 .
+
 exg3610:00043 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf exg3610:00042 .
+
 exg3610:00044 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -365,6 +410,7 @@ exg3610:00044 a s223:ActuatableProperty,
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00045 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -373,6 +419,7 @@ exg3610:00045 a s223:ObservableProperty,
     rdfs:label "feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00046 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -381,12 +428,14 @@ exg3610:00046 a s223:ObservableProperty,
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
+
 exg3610:00047 a s223:Device,
         s223:Sensor ;
     rdfs:label "HTGCOIL-T" ;
     s223:hasMeasurementLocation exg3610:00032 ;
     s223:observesProperty exg3610:00048 ;
     rdfs:comment "Heat Coil Air Temp" .
+
 exg3610:00048 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -396,14 +445,17 @@ exg3610:00048 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+
 exg3610:00049 a s223:Connection ;
     rdfs:label "Hot Water Supply" ;
     s223:connectsAt exg3610:00033 ;
     s223:connectsTo exg3610:00030 ;
     s223:hasMedium s223:Water-HotWater .
+
 exg3610:00050 a s223:Connection ;
     rdfs:label "Hot Water Return" ;
     s223:hasMedium s223:Water-HotWater .
+
 exg3610:00051 a s223:Coil,
         s223:CoolingCoil,
         s223:Device ;
@@ -422,6 +474,7 @@ exg3610:00051 a s223:Coil,
     bob:chilledWaterInlet exg3610:00054 ;
     bob:chilledWaterOutlet exg3610:00055 ;
     rdfs:comment "Chilled Water Coil" .
+
 exg3610:00052 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CWC.airInlet" ;
@@ -429,6 +482,7 @@ exg3610:00052 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00051 .
+
 exg3610:00053 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CWC.airOutlet" ;
@@ -436,6 +490,7 @@ exg3610:00053 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00051 .
+
 exg3610:00054 a s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CWC.chilledWaterInlet" ;
@@ -443,12 +498,14 @@ exg3610:00054 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00051 .
+
 exg3610:00055 a s223:OutletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CWC.chilledWaterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00051 .
+
 exg3610:00056 a s223:Device,
         s223:Valve ;
     rdfs:label "CLG-VLV" ;
@@ -462,30 +519,35 @@ exg3610:00056 a s223:Device,
     bob:command exg3610:00065 ;
     bob:feedback exg3610:00066 ;
     rdfs:comment "Cooling 2W Valve" .
+
 exg3610:00057 a s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLG-VLV.waterInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00056 .
+
 exg3610:00058 a s223:OutletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLG-VLV.waterOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf exg3610:00056 .
+
 exg3610:00059 a s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "CLG-VLV.positionInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf exg3610:00056 .
+
 exg3610:00060 a s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "CLG-VLV.onOffInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3610:00056 .
+
 exg3610:00061 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -494,6 +556,7 @@ exg3610:00061 a s223:ObservableProperty,
     rdfs:label "flowCoefficient" ;
     qudt:hasQuantityKind quantitykind:LiquidVolume ;
     qudt:unit unit:GAL_US .
+
 exg3610:00062 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -502,6 +565,7 @@ exg3610:00062 a s223:ActuatableProperty,
     rdfs:label "position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00063 a s223:Actuator,
         s223:Device ;
     rdfs:label "actuator" ;
@@ -509,12 +573,14 @@ exg3610:00063 a s223:Actuator,
     s223:hasProperty exg3610:00065,
         exg3610:00066,
         exg3610:00067 .
+
 exg3610:00064 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf exg3610:00063 .
+
 exg3610:00065 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -523,6 +589,7 @@ exg3610:00065 a s223:ActuatableProperty,
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00066 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -531,6 +598,7 @@ exg3610:00066 a s223:ObservableProperty,
     rdfs:label "feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00067 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -539,14 +607,17 @@ exg3610:00067 a s223:ObservableProperty,
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
+
 exg3610:00068 a s223:Connection ;
     rdfs:label "Chilled Water Supply" ;
     s223:connectsAt exg3610:00054 ;
     s223:connectsTo exg3610:00051 ;
     s223:hasMedium s223:Water-ChilledWater .
+
 exg3610:00069 a s223:Connection ;
     rdfs:label "Chilled Water Return" ;
     s223:hasMedium s223:Water-ChilledWater .
+
 exg3610:00070 a s223:Device,
         s223:Fan ;
     rdfs:label "SF" ;
@@ -573,6 +644,7 @@ exg3610:00070 a s223:Device,
     bob:onOffCommand exg3610:00094 ;
     bob:onOffStatus exg3610:00093 ;
     rdfs:comment "Supply Fan" .
+
 exg3610:00071 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF.airInlet" ;
@@ -580,6 +652,7 @@ exg3610:00071 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00070 .
+
 exg3610:00072 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF.airOutlet" ;
@@ -587,6 +660,7 @@ exg3610:00072 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00070 .
+
 exg3610:00073 a s223:InletConnectionPoint,
         bob:Electricity_575V_60HzConnectionPoint ;
     rdfs:label "SF.electricalInlet" ;
@@ -594,6 +668,7 @@ exg3610:00073 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf exg3610:00070 .
+
 exg3610:00074 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -602,6 +677,7 @@ exg3610:00074 a s223:ActuatableProperty,
     rdfs:label "speedRatio" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00075 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -610,6 +686,7 @@ exg3610:00075 a s223:ObservableProperty,
     rdfs:label "staticPressure" ;
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
+
 exg3610:00076 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -618,6 +695,7 @@ exg3610:00076 a s223:ObservableProperty,
     rdfs:label "amps" ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+
 exg3610:00077 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -626,6 +704,7 @@ exg3610:00077 a s223:ObservableProperty,
     rdfs:label "rpm" ;
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:unit unit:REV-PER-MIN .
+
 exg3610:00078 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -634,6 +713,7 @@ exg3610:00078 a s223:ObservableProperty,
     rdfs:label "cfm" ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:FT3-PER-MIN .
+
 exg3610:00079 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -642,6 +722,7 @@ exg3610:00079 a s223:ObservableProperty,
     rdfs:label "hp" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
+
 exg3610:00080 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -651,6 +732,7 @@ exg3610:00080 a s223:ObservableProperty,
     rdfs:label "kW" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
+
 exg3610:00081 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -659,6 +741,7 @@ exg3610:00081 a s223:ObservableProperty,
     rdfs:label "powerFactor" ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
+
 exg3610:00082 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -667,6 +750,7 @@ exg3610:00082 a s223:ObservableProperty,
     rdfs:label "efficiency" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00083 a s223:Device,
         s223:VFD ;
     rdfs:label "vfd" ;
@@ -686,12 +770,14 @@ exg3610:00083 a s223:Device,
         exg3610:00093,
         exg3610:00094,
         exg3610:00095 .
+
 exg3610:00084 a s223:InletConnectionPoint,
         bob:Electricity_575V_60HzConnectionPoint ;
     rdfs:label "vfd.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf exg3610:00083 .
+
 exg3610:00085 a s223:OutletConnectionPoint,
         bob:Electricity_575V_60HzConnectionPoint ;
     rdfs:label "vfd.electricalOutlet" ;
@@ -699,12 +785,14 @@ exg3610:00085 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf exg3610:00083 .
+
 exg3610:00086 a s223:BidirectionalConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "vfd.ethernet_port" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium p223:Electricity-Ethernet ;
     s223:isConnectionPointOf exg3610:00083 .
+
 exg3610:00087 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -713,6 +801,7 @@ exg3610:00087 a s223:ObservableProperty,
     rdfs:label "amps" ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+
 exg3610:00088 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -721,6 +810,7 @@ exg3610:00088 a s223:ObservableProperty,
     rdfs:label "hp" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
+
 exg3610:00089 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -730,6 +820,7 @@ exg3610:00089 a s223:ObservableProperty,
     rdfs:label "kW" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
+
 exg3610:00090 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -738,6 +829,7 @@ exg3610:00090 a s223:ActuatableProperty,
     rdfs:label "speed_reference" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00091 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -746,6 +838,7 @@ exg3610:00091 a s223:ObservableProperty,
     rdfs:label "rpm" ;
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:unit unit:REV-PER-MIN .
+
 exg3610:00092 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -753,24 +846,28 @@ exg3610:00092 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "motor_temp" ;
     qudt:hasQuantityKind quantitykind:Temperature .
+
 exg3610:00093 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
 exg3610:00094 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
 exg3610:00095 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasEnumerationKind p223:EnumerationKind-NormalAlarm .
+
 exg3610:00096 a s223:Connection ;
     rdfs:label "cnx" ;
     s223:connectsAt exg3610:00073,
@@ -778,6 +875,7 @@ exg3610:00096 a s223:Connection ;
     s223:connectsFrom exg3610:00083 ;
     s223:connectsTo exg3610:00070 ;
     s223:hasMedium s223:Electricity-575V-60Hz .
+
 exg3610:00097 a p223:Pressurestat,
         s223:Device,
         bob:HighStaticPressureStat ;
@@ -786,30 +884,35 @@ exg3610:00097 a p223:Pressurestat,
     s223:hasConnectionPoint exg3610:00098,
         exg3610:00099 ;
     s223:hasProperty exg3610:00100 .
+
 exg3610:00098 a s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "HighStaticPressureLimit_Mix.resetInput" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3610:00097 .
+
 exg3610:00099 a s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "HighStaticPressureLimit_Mix.signalOutput" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3610:00097 .
+
 exg3610:00100 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
 exg3610:00101 a s223:Device,
         s223:Sensor ;
     rdfs:label "pressure_sensor" ;
     s223:observesProperty exg3610:00102 ;
     bob:hasMeasurementLocationHigh exg3610:00167 ;
     bob:hasMeasurementLocationLow exg3610:00020 .
+
 exg3610:00102 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -819,6 +922,7 @@ exg3610:00102 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
+
 exg3610:00103 a p223:Pressurestat,
         s223:Device,
         bob:HighStaticPressureStat ;
@@ -827,30 +931,35 @@ exg3610:00103 a p223:Pressurestat,
     s223:hasConnectionPoint exg3610:00104,
         exg3610:00105 ;
     s223:hasProperty exg3610:00106 .
+
 exg3610:00104 a s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "HighStaticPressureLimit_Supply.resetInput" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3610:00103 .
+
 exg3610:00105 a s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "HighStaticPressureLimit_Supply.signalOutput" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3610:00103 .
+
 exg3610:00106 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
 exg3610:00107 a s223:Device,
         s223:Sensor ;
     rdfs:label "pressure_sensor" ;
     s223:observesProperty exg3610:00108 ;
     bob:hasMeasurementLocationHigh exg3610:00072 ;
     bob:hasMeasurementLocationLow exg3610:00167 .
+
 exg3610:00108 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -860,6 +969,7 @@ exg3610:00108 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
+
 exg3610:00109 a s223:Device,
         s223:Sensor ;
     rdfs:label "SD" ;
@@ -868,12 +978,14 @@ exg3610:00109 a s223:Device,
     s223:observesProperty exg3610:00111 ;
     bob:dryContactOutlet exg3610:00110 ;
     rdfs:comment "Supply Air Smoke Detector" .
+
 exg3610:00110 a s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "SD.dryContactOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf exg3610:00109 .
+
 exg3610:00111 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
@@ -884,12 +996,14 @@ exg3610:00111 a s223:EnumerableProperty,
     s223:isObservedBy exg3610:00109 ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance p223:Substance-Smoke .
+
 exg3610:00112 a s223:Device,
         s223:Sensor ;
     rdfs:label "SA-T" ;
     s223:hasMeasurementLocation exg3610:00116 ;
     s223:observesProperty exg3610:00113 ;
     rdfs:comment "Supply Air Temp" .
+
 exg3610:00113 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -899,6 +1013,7 @@ exg3610:00113 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+
 exg3610:00114 a s223:Device,
         s223:Sensor ;
     rdfs:label "DPT-2" ;
@@ -906,6 +1021,7 @@ exg3610:00114 a s223:Device,
     bob:hasMeasurementLocationHigh exg3610:00116 ;
     bob:hasMeasurementLocationLow exg3610:00167 ;
     rdfs:comment "Duct Static Pressure Transmitter" .
+
 exg3610:00115 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -914,6 +1030,7 @@ exg3610:00115 a s223:ObservableProperty,
     rdfs:label "DPT-2.DifferentialStaticPressure" ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
+
 exg3610:00116 a s223:Connection ;
     rdfs:label "Supply Air" ;
     s223:connectsAt exg3610:00072,
@@ -921,6 +1038,7 @@ exg3610:00116 a s223:Connection ;
     s223:connectsFrom exg3610:00070 ;
     s223:connectsTo exg3610:00167 ;
     s223:hasMedium s223:Medium-Air .
+
 exg3610:00117 a s223:Connection ;
     rdfs:label "Return Air" ;
     s223:connectsAt exg3610:00121,
@@ -930,11 +1048,13 @@ exg3610:00117 a s223:Connection ;
     s223:connectsTo exg3610:00120,
         exg3610:00129 ;
     s223:hasMedium s223:Medium-Air .
+
 exg3610:00118 a s223:Device,
         s223:Sensor ;
     rdfs:label "RA-T" ;
     s223:observesProperty exg3610:00119 ;
     rdfs:comment "Return Air Temp" .
+
 exg3610:00119 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -944,6 +1064,7 @@ exg3610:00119 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
+
 exg3610:00120 a s223:Damper,
         s223:Device ;
     rdfs:label "RAD" ;
@@ -958,6 +1079,7 @@ exg3610:00120 a s223:Damper,
     bob:command exg3610:00125 ;
     bob:feedback exg3610:00126 ;
     rdfs:comment "Return Air Damper" .
+
 exg3610:00121 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "RAD.airInlet" ;
@@ -965,6 +1087,7 @@ exg3610:00121 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00120 .
+
 exg3610:00122 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "RAD.airOutlet" ;
@@ -972,6 +1095,7 @@ exg3610:00122 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00120 .
+
 exg3610:00123 a s223:Actuator,
         s223:Device ;
     rdfs:label "actuator" ;
@@ -981,12 +1105,14 @@ exg3610:00123 a s223:Actuator,
         exg3610:00126,
         exg3610:00127,
         exg3610:00128 .
+
 exg3610:00124 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf exg3610:00123 .
+
 exg3610:00125 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -995,6 +1121,7 @@ exg3610:00125 a s223:ActuatableProperty,
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00126 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1003,6 +1130,7 @@ exg3610:00126 a s223:ObservableProperty,
     rdfs:label "feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00127 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1011,6 +1139,7 @@ exg3610:00127 a s223:ObservableProperty,
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
+
 exg3610:00128 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -1019,6 +1148,7 @@ exg3610:00128 a s223:ActuatableProperty,
     rdfs:label "position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00129 a s223:Device,
         s223:Fan ;
     rdfs:label "EF" ;
@@ -1045,6 +1175,7 @@ exg3610:00129 a s223:Device,
     bob:onOffCommand exg3610:00153 ;
     bob:onOffStatus exg3610:00152 ;
     rdfs:comment "Exhaust Fan" .
+
 exg3610:00130 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EF.airInlet" ;
@@ -1052,6 +1183,7 @@ exg3610:00130 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00129 .
+
 exg3610:00131 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EF.airOutlet" ;
@@ -1059,6 +1191,7 @@ exg3610:00131 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00129 .
+
 exg3610:00132 a s223:InletConnectionPoint,
         bob:Electricity_575V_60HzConnectionPoint ;
     rdfs:label "EF.electricalInlet" ;
@@ -1066,6 +1199,7 @@ exg3610:00132 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf exg3610:00129 .
+
 exg3610:00133 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -1074,6 +1208,7 @@ exg3610:00133 a s223:ActuatableProperty,
     rdfs:label "speedRatio" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00134 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1082,6 +1217,7 @@ exg3610:00134 a s223:ObservableProperty,
     rdfs:label "staticPressure" ;
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:unit unit:PA .
+
 exg3610:00135 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1090,6 +1226,7 @@ exg3610:00135 a s223:ObservableProperty,
     rdfs:label "amps" ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+
 exg3610:00136 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1098,6 +1235,7 @@ exg3610:00136 a s223:ObservableProperty,
     rdfs:label "rpm" ;
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:unit unit:REV-PER-MIN .
+
 exg3610:00137 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1106,6 +1244,7 @@ exg3610:00137 a s223:ObservableProperty,
     rdfs:label "cfm" ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:FT3-PER-MIN .
+
 exg3610:00138 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1114,6 +1253,7 @@ exg3610:00138 a s223:ObservableProperty,
     rdfs:label "hp" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
+
 exg3610:00139 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1123,6 +1263,7 @@ exg3610:00139 a s223:ObservableProperty,
     rdfs:label "kW" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
+
 exg3610:00140 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1131,6 +1272,7 @@ exg3610:00140 a s223:ObservableProperty,
     rdfs:label "powerFactor" ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:unit unit:UNITLESS .
+
 exg3610:00141 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1139,6 +1281,7 @@ exg3610:00141 a s223:ObservableProperty,
     rdfs:label "efficiency" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00142 a s223:Device,
         s223:VFD ;
     rdfs:label "vfd" ;
@@ -1158,12 +1301,14 @@ exg3610:00142 a s223:Device,
         exg3610:00152,
         exg3610:00153,
         exg3610:00154 .
+
 exg3610:00143 a s223:InletConnectionPoint,
         bob:Electricity_575V_60HzConnectionPoint ;
     rdfs:label "vfd.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf exg3610:00142 .
+
 exg3610:00144 a s223:OutletConnectionPoint,
         bob:Electricity_575V_60HzConnectionPoint ;
     rdfs:label "vfd.electricalOutlet" ;
@@ -1171,12 +1316,14 @@ exg3610:00144 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Electricity-575V-60Hz ;
     s223:isConnectionPointOf exg3610:00142 .
+
 exg3610:00145 a s223:BidirectionalConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "vfd.ethernet_port" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium p223:Electricity-Ethernet ;
     s223:isConnectionPointOf exg3610:00142 .
+
 exg3610:00146 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1185,6 +1332,7 @@ exg3610:00146 a s223:ObservableProperty,
     rdfs:label "amps" ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
+
 exg3610:00147 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1193,6 +1341,7 @@ exg3610:00147 a s223:ObservableProperty,
     rdfs:label "hp" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:HP .
+
 exg3610:00148 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1202,6 +1351,7 @@ exg3610:00148 a s223:ObservableProperty,
     rdfs:label "kW" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:unit unit:KiloW .
+
 exg3610:00149 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -1210,6 +1360,7 @@ exg3610:00149 a s223:ActuatableProperty,
     rdfs:label "speed_reference" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00150 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1218,6 +1369,7 @@ exg3610:00150 a s223:ObservableProperty,
     rdfs:label "rpm" ;
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:unit unit:REV-PER-MIN .
+
 exg3610:00151 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1225,24 +1377,28 @@ exg3610:00151 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "motor_temp" ;
     qudt:hasQuantityKind quantitykind:Temperature .
+
 exg3610:00152 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
 exg3610:00153 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
 exg3610:00154 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasEnumerationKind p223:EnumerationKind-NormalAlarm .
+
 exg3610:00155 a s223:Connection ;
     rdfs:label "cnx" ;
     s223:connectsAt exg3610:00132,
@@ -1250,6 +1406,7 @@ exg3610:00155 a s223:Connection ;
     s223:connectsFrom exg3610:00142 ;
     s223:connectsTo exg3610:00129 ;
     s223:hasMedium s223:Electricity-575V-60Hz .
+
 exg3610:00156 a s223:Damper,
         s223:Device ;
     rdfs:label "EAD" ;
@@ -1265,6 +1422,7 @@ exg3610:00156 a s223:Damper,
     bob:command exg3610:00161 ;
     bob:feedback exg3610:00162 ;
     rdfs:comment "Exhaust Air Damper" .
+
 exg3610:00157 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EAD.airInlet" ;
@@ -1272,6 +1430,7 @@ exg3610:00157 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00156 .
+
 exg3610:00158 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EAD.airOutlet" ;
@@ -1279,6 +1438,7 @@ exg3610:00158 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00156 .
+
 exg3610:00159 a s223:Actuator,
         s223:Device ;
     rdfs:label "actuator" ;
@@ -1288,12 +1448,14 @@ exg3610:00159 a s223:Actuator,
         exg3610:00162,
         exg3610:00163,
         exg3610:00164 .
+
 exg3610:00160 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf exg3610:00159 .
+
 exg3610:00161 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -1302,6 +1464,7 @@ exg3610:00161 a s223:ActuatableProperty,
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00162 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1310,6 +1473,7 @@ exg3610:00162 a s223:ObservableProperty,
     rdfs:label "feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00163 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1318,6 +1482,7 @@ exg3610:00163 a s223:ObservableProperty,
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
+
 exg3610:00164 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
@@ -1326,6 +1491,7 @@ exg3610:00164 a s223:ActuatableProperty,
     rdfs:label "position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
+
 exg3610:00165 a s223:Device,
         s223:Sensor ;
     rdfs:label "DPT-3" ;
@@ -1333,6 +1499,7 @@ exg3610:00165 a s223:Device,
     bob:hasMeasurementLocationHigh exg3610:00167 ;
     bob:hasMeasurementLocationLow exg3610:00019 ;
     rdfs:comment "Building Static Pressure Transmitter" .
+
 exg3610:00166 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -1341,6 +1508,7 @@ exg3610:00166 a s223:ObservableProperty,
     rdfs:label "DPT-3.DifferentialStaticPressure" ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:unit unit:PA .
+
 exg3610:00167 a p223:HVACSpace,
         s223:DomainSpace ;
     rdfs:label "SPACE" ;
@@ -1363,6 +1531,7 @@ exg3610:00167 a p223:HVACSpace,
     bob:radiantHeating exg3610:00173 ;
     bob:windows exg3610:00172 ;
     rdfs:comment "Space where this unit feeds air" .
+
 exg3610:00168 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SPACE.ductAirInlet" ;
@@ -1370,6 +1539,7 @@ exg3610:00168 a s223:InletConnectionPoint,
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00167 .
+
 exg3610:00169 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SPACE.ductAirOutlet" ;
@@ -1377,36 +1547,42 @@ exg3610:00169 a s223:OutletConnectionPoint,
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00167 .
+
 exg3610:00170 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SPACE.airTransfer" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00167 .
+
 exg3610:00171 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SPACE.doors" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00167 .
+
 exg3610:00172 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SPACE.windows" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00167 .
+
 exg3610:00173 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SPACE.radiantHeating" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00167 .
+
 exg3610:00174 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SPACE.radiantCooling" ;
     s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3610:00167 .
+
 exg3610:00175 a s223:Connection ;
     rdfs:label "cnx" ;
     s223:connectsAt exg3610:00027,
@@ -1414,6 +1590,7 @@ exg3610:00175 a s223:Connection ;
     s223:connectsFrom exg3610:00025 ;
     s223:connectsTo exg3610:00030 ;
     s223:hasMedium s223:Medium-Air .
+
 exg3610:00176 a s223:Connection ;
     rdfs:label "cnx" ;
     s223:connectsAt exg3610:00032,
@@ -1421,6 +1598,7 @@ exg3610:00176 a s223:Connection ;
     s223:connectsFrom exg3610:00030 ;
     s223:connectsTo exg3610:00051 ;
     s223:hasMedium s223:Medium-Air .
+
 exg3610:00177 a s223:Connection ;
     rdfs:label "cnx" ;
     s223:connectsAt exg3610:00053,
@@ -1428,6 +1606,7 @@ exg3610:00177 a s223:Connection ;
     s223:connectsFrom exg3610:00051 ;
     s223:connectsTo exg3610:00070 ;
     s223:hasMedium s223:Medium-Air .
+
 exg3610:00178 a s223:Connection ;
     rdfs:label "cnx" ;
     s223:connectsAt exg3610:00131,
@@ -1435,6 +1614,7 @@ exg3610:00178 a s223:Connection ;
     s223:connectsFrom exg3610:00129 ;
     s223:connectsTo exg3610:00156 ;
     s223:hasMedium s223:Medium-Air .
+
 exg3610:00179 a s223:System,
         exg3610:G36_FIG10_AHU ;
     rdfs:label "AHU" ;
@@ -1449,41 +1629,49 @@ exg3610:00179 a s223:System,
     exg3610:returnAir exg3610:00180 ;
     exg3610:supplyAir exg3610:00181 ;
     rdfs:comment "Is this really required ?" .
+
 exg3610:00180 a s223:InletSystemConnectionPoint,
         bob:AirSystemConnectionPoint ;
     rdfs:label "AHU.returnAir" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3610:00117 .
+
 exg3610:00181 a s223:OutletSystemConnectionPoint,
         bob:AirSystemConnectionPoint ;
     rdfs:label "AHU.supplyAir" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3610:00116 .
+
 exg3610:00182 a s223:OutletSystemConnectionPoint,
         bob:AirSystemConnectionPoint ;
     rdfs:label "AHU.exhaustAir" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3610:00158 .
+
 exg3610:00183 a s223:InletSystemConnectionPoint,
         bob:AirSystemConnectionPoint ;
     rdfs:label "AHU.outdoorAir" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo exg3610:00011 .
+
 exg3610:00184 a s223:FunctionBlock,
         g36:FunctionBlock ;
     rdfs:label "G36_FIG_A_10" ;
     s223:hasInput exg3610:00185 ;
     s223:hasOutput exg3610:00186 ;
     rdfs:comment "lorem ipsum of sequence" .
+
 exg3610:00185 a s223:AnalogInput,
         s223:FunctionInput ;
     rdfs:label "G36_FIG_A_10.return-air-temp" ;
     s223:uses exg3610:00119 .
+
 exg3610:00186 a s223:AnalogOutput,
         s223:FunctionOutput ;
     rdfs:label "G36_FIG_A_10.HW VALVE" ;
     s223:produces exg3610:00044 .
+

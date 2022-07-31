@@ -14,8 +14,13 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class Sample(FunctionBlock):
+    """Multiply _x_ by 10 and add 12."""
     x: AnalogInput
     y: AnalogOutput
+
+    def eval(self):
+        global x, y
+        y = x * 10 + 12
 
 
 f = Sample(label="f")
