@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for f in *model.py device_props.py
+for f in *_model.py DDAHU.py # device_props.py
 do
     ttl=${f/[.]py/.ttl}
     echo $ttl

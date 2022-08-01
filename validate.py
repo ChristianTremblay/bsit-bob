@@ -85,7 +85,13 @@ parser.add_argument(
     action="store_true",
     help="info log level",
 )
-
+#run file of sparql_rules
+parser.add_argument(
+    "--sparql_rule",
+    type=str,
+    nargs='+',
+    help="runs SPARQL rules in file",
+)
 # parse the command line arguments
 args = parser.parse_args()
 
@@ -131,6 +137,7 @@ elif args.rdfs and not args.owlrl:
 elif not args.rdfs and args.owlrl:
     inference = "owlrl"
 logger.info("inference: %r", inference)
+
 
 valid, report_graph, report_text = pyshacl.validate(
     data_graph=data_graph,

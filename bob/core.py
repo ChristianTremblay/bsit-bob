@@ -1198,7 +1198,7 @@ class System(Container, Node):
     _class_iri: URIRef = S223.System
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
-
+    
     _serves_zones: Dict[str, Zone]
 
     _system_connection_points: Dict[str, SystemConnectionPoint]

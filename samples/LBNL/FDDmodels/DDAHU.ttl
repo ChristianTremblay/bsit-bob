@@ -1,0 +1,125 @@
+# baseURI: http://data.ashrae.org/standard223/data/DDAHU
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/data/DDAHU>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/data/DDAHU> ;
+  rdfs:label "DDAHU" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+@prefix ex: <http://data.ashrae.org/standard223/data/DDAHU#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+ex:00001 a s223:ExternalReference .
+ex:00002 a p223:ElectricPowerW,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasExternalReference ex:00001 ;
+    qudt:quantityKind quantitykind:Power ;
+    qudt:unit unit:W .
+ex:00003 a s223:ExternalReference .
+ex:00004 a p223:Percent,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    s223:hasExternalReference ex:00003 ;
+    qudt:quantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:Percent .
+ex:00005 a s223:Connectable,
+        s223:Device,
+        s223:Fan,
+        ex:ddahu_fan ;
+    rdfs:label "f" ;
+    s223:airInlet ex:00006 ;
+    s223:airOutlet ex:00007 ;
+    s223:connectedFrom ex:00010 ;
+    s223:connectedThrough ex:00014 ;
+    s223:contains ex:00008,
+        ex:00010 ;
+    s223:hasConnectionPoint ex:00006,
+        ex:00007,
+        ex:00013 ;
+    rdfs:comment "A Big Fan" .
+ex:00006 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "f.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00005 .
+ex:00007 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "f.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex:00005 .
+ex:00008 a p223:AirDifferentialPressureSensor,
+        p223:DifferentialPressureSensor,
+        s223:Connectable,
+        s223:Device,
+        s223:DifferentialSensor,
+        s223:Sensor ;
+    rdfs:label "TPD1" ;
+    p223:hasMeasurementLocationHigh ex:00007 ;
+    p223:hasMeasurementLocationLow ex:00006 ;
+    s223:observesProperty ex:00009 ;
+    rdfs:comment "Filter Differential Pressure Sensor" .
+ex:00009 a p223:DifferentialStaticPressure,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "TPD1.DifferentialPressure" ;
+    s223:ofMedium s223:Medium-Air ;
+    qudt:quantityKind quantitykind:ForcePerArea ;
+    qudt:unit unit:PA .
+ex:00010 a s223:Connectable,
+        s223:Device,
+        s223:VariableFrequencyDrive ;
+    rdfs:label "vfd" ;
+    p223:W ex:00002 ;
+    p223:speed_reference ex:00004 ;
+    s223:connectedThrough ex:00014 ;
+    s223:connectedTo ex:00005 ;
+    s223:hasConnectionPoint ex:00011,
+        ex:00012 ;
+    s223:hasProperty ex:00002,
+        ex:00004 ;
+    rdfs:comment "A VFD for a Big Fan" .
+ex:00011 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "vfd.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00010 .
+ex:00012 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "vfd.electricalOutlet" ;
+    s223:connectsThrough ex:00014 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00010 .
+ex:00013 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "f.electricalInlet" ;
+    s223:connectsThrough ex:00014 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Electricity-575V_60Hz ;
+    s223:isConnectionPointOf ex:00005 .
+ex:00014 a s223:Connection ;
+    s223:connectsAt ex:00012,
+        ex:00013 ;
+    s223:connectsFrom ex:00010 ;
+    s223:connectsTo ex:00005 ;
+    s223:hasMedium s223:Electricity-575V_60Hz .
