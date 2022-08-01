@@ -131,6 +131,7 @@ class VAV_FIGA1(System):
 
         self["SA-F"].hasMeasurementLocation = self["DPR"].airInlet
         self["DA-T"].hasMeasurementLocation = self["DPR"].airOutlet
+        # properties are not initialized?
 
 
 supply_air = AirConnection(label="SA_In", comment="Supply Air for VAV")
@@ -171,7 +172,6 @@ hvac_zone.windows_switch = hvac_space.window_switch
 hvac_zone.add_property(hvac_space.occupancy)
 vav.serves_zone(hvac_zone)
 
-vav.add_property(vav['airFlow'])
 # Occupancy.... we need a function block
 occupancy = OccupancyControl(
     label="OccControl",
