@@ -28,7 +28,7 @@ bacnet:Device a rdfs:Class ;
 
 bacnet:DeviceObjectPropertyReference a rdfs:Class ;
     rdfs:label "bob.externalreference.bacnet.BACnetReference" ;
-    rdfs:subClassOf s223:ExternalReference .
+    rdfs:subClassOf ref:ExternalReference .
 
 bacnet:address a rdf:Property .
 
@@ -1214,6 +1214,14 @@ rec:Roof a rdfs:Class ;
 rec:Room a rdfs:Class ;
     rdfs:label "bob.space.physical.Room" ;
     rdfs:subClassOf s223:PhysicalSpace .
+
+ref:ExternalReference a rdfs:Class ;
+    rdfs:label "bob.core.ExternalReference" ;
+    rdfs:comment """
+    This will be subclassed by different specific datasources, this simplest
+    form uses hasRef as a literal, most likely a string.  Note that this is
+    currently from the Brick "ref" schema.
+    """ .
 
 ref:hasExternalReference a rdf:Property .
 

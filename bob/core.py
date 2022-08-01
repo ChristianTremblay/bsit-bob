@@ -821,7 +821,7 @@ class ExternalReference(Node):
     currently from the Brick "ref" schema.
     """
 
-    _class_iri: URIRef = S223.ExternalReference
+    _class_iri: URIRef = REF.ExternalReference
     hasRef: ExternalReferenceValue
 
     def __init__(
