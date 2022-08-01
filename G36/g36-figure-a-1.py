@@ -169,8 +169,8 @@ hvac_zone.temperature_setpoint = vav["ZONE-THERMOSTAT"]["temperature_setpoint"]
 hvac_zone.co2 = hvac_space.co2
 hvac_zone.windows_switch = hvac_space.window_switch
 
-hvac_zone.add_property(hvac_space.occupancy)
 vav.serves_zone(hvac_zone)
+hvac_zone.add_property(hvac_space.occupancy)
 
 # Occupancy.... we need a function block
 occupancy = OccupancyControl(
