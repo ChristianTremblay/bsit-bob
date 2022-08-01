@@ -1231,6 +1231,7 @@ class System(Container, Node):
                     if isinstance(thing, Property):
                         thing @ self
                         self[thing_name] = thing
+                        self.add_property(thing)
 
                     things.append(thing)
 
