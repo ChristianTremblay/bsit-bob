@@ -4,6 +4,7 @@
 @prefix bacnet: <http://data.ashrae.org/bacnet/2020#> .
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix functions: <urn:ex/functions/> .
+@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -24,7 +25,8 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 bacnet:Device a rdfs:Class ;
-    rdfs:label "bob.externalreference.bacnet.BACnetDevice" .
+    rdfs:label "bob.externalreference.bacnet.BACnetDevice" ;
+    rdfs:subClassOf p223:NetworkProfile .
 
 bacnet:DeviceObjectPropertyReference a rdfs:Class ;
     rdfs:label "bob.externalreference.bacnet.BACnetReference" ;
@@ -37,6 +39,8 @@ bacnet:description a rdf:Property .
 bacnet:deviceId a rdf:Property .
 
 bacnet:deviceName a rdf:Property .
+
+bacnet:isNetworkProfileOf a rdf:Property .
 
 bacnet:networkNumber a rdf:Property .
 
@@ -436,9 +440,6 @@ bob:condensedWaterLeaving a rdf:Property ;
 bob:currentRating a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:data_rate a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
 bob:delay a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
@@ -494,6 +495,10 @@ bob:hotWaterOutlet a rdf:Property ;
 bob:humidity a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
+bob:inSchedule a rdf:Property .
+
+bob:inStatus a rdf:Property .
+
 bob:indoor a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
@@ -530,9 +535,6 @@ bob:number_of_circuits a rdf:Property ;
 bob:occupancy a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:occupancyStatus a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
 bob:onOffCommand a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
@@ -544,6 +546,8 @@ bob:openCloseCommand a rdf:Property ;
 
 bob:openCloseStatus a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+
+bob:outStatus a rdf:Property .
 
 bob:outdoor a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -565,9 +569,6 @@ bob:radiantHeating a rdf:Property ;
 
 bob:returnAirInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasSystemConnectionPoint .
-
-bob:schedule a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
 
 bob:setpointReset a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -593,8 +594,6 @@ bob:temperature_setpoint a rdf:Property ;
 bob:torque a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:vlan a rdf:Property .
-
 bob:waterInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
@@ -604,12 +603,55 @@ bob:waterOutlet a rdf:Property ;
 bob:windows a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
-functions:AVG_Temp a rdfs:Class ;
-    rdfs:label "functions.AVG_Temp" ;
+functions:Average a rdfs:Class ;
+    rdfs:label "functions.Average" ;
+    rdfs:comment """
+    y = (u1 + u2) / 2.0
+    """ ;
     rdfs:subClassOf s223:FunctionBlock .
 
-functions:avg_tmp a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+functions:u1 a rdf:Property .
+
+functions:u2 a rdf:Property .
+
+functions:y a rdf:Property .
+
+g36:AnalogInput a rdfs:Class ;
+    rdfs:label "bob.functions.G36AnalogInput" ;
+    rdfs:subClassOf s223:FunctionInput .
+
+g36:AnalogOutput a rdfs:Class ;
+    rdfs:label "bob.functions.G36AnalogOutput" ;
+    rdfs:subClassOf s223:FunctionOutput .
+
+g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
+        g36:EnumerationKind-G36AlarmLevels,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level1 a s223:EnumerationKind,
+        g36:EnumerationKind-Level1,
+        rdfs:Class ;
+    rdfs:comment "Life Safetey Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level2 a s223:EnumerationKind,
+        g36:EnumerationKind-Level2,
+        rdfs:Class ;
+    rdfs:comment "Critical Equipment Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level3 a s223:EnumerationKind,
+        g36:EnumerationKind-Level3,
+        rdfs:Class ;
+    rdfs:comment "Urgent Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level4 a s223:EnumerationKind,
+        g36:EnumerationKind-Level4,
+        rdfs:Class ;
+    rdfs:comment "Normal Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
 
 p223:ActiveInactive-Active a p223:ActiveInactive-Active,
         s223:EnumerationKind,
@@ -639,6 +681,110 @@ p223:Air-CompressedAir a p223:Air-CompressedAir,
 p223:AirHandlingUnit a rdfs:Class ;
     rdfs:label "bob.systems.hvac.airhandlingunit.AirHandlingUnit" ;
     rdfs:subClassOf s223:System .
+
+p223:Analog-0-10VDC a p223:Analog-0-10VDC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-4-20mA a p223:Analog-4-20mA,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC10kType2 a p223:Analog-NTC10kType2,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC10kType3 a p223:Analog-NTC10kType3,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC2250Type2 a p223:Analog-NTC2250Type2,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Nickel1kRTD a p223:Analog-Nickel1kRTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Platinum1kRTD a p223:Analog-Platinum1kRTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-RTD a p223:Analog-RTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Resistive a p223:Analog-Resistive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Unknown a p223:Analog-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:AnalogInput a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.ModulationSignalInletConnectionPoint" ;
+    rdfs:subClassOf s223:InletConnectionPoint,
+        bob:ModulationSignalConnectionPoint .
+
+p223:AnalogOutput a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.ModulationSignalOutletConnectionPoint" ;
+    rdfs:subClassOf s223:OutletConnectionPoint,
+        bob:ModulationSignalConnectionPoint .
+
+p223:Binary-DryContact a p223:Binary-DryContact,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-Incremental a p223:Binary-Incremental,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-Pulse a p223:Binary-Pulse,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-StartStop a p223:Binary-StartStop,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:BinaryInput a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.OnOffSignalInletConnectionPoint" ;
+    rdfs:subClassOf s223:InletConnectionPoint,
+        bob:OnOffSignalConnectionPoint .
+
+p223:BinaryOutput a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.OnOffSignalOutletConnectionPoint" ;
+    rdfs:subClassOf s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint .
 
 p223:Boiler a rdfs:Class ;
     rdfs:label "bob.devices.hvac.boiler.ElectricalHotWaterBoiler",
@@ -764,6 +910,16 @@ p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
         rdfs:Class ;
     rdfs:subClassOf s223:EnumerationKind .
 
+p223:EnumerationKind-Analog a p223:EnumerationKind-Analog,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Binary a p223:EnumerationKind-Binary,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+
 p223:EnumerationKind-HandOffAuto a p223:EnumerationKind-HandOffAuto,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -805,6 +961,11 @@ p223:EnumerationKind-OverriddenAuto a p223:EnumerationKind-OverriddenAuto,
     rdfs:subClassOf s223:EnumerationKind .
 
 p223:EnumerationKind-Position a p223:EnumerationKind-Position,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Protocol a p223:EnumerationKind-Protocol,
         s223:EnumerationKind,
         rdfs:Class ;
     rdfs:subClassOf s223:EnumerationKind .
@@ -922,6 +1083,15 @@ p223:MotorStarter a rdfs:Class ;
     """ ;
     rdfs:subClassOf s223:Device .
 
+p223:NetworkProfile a rdfs:Class ;
+    rdfs:label "bob.externalreference.NetworkProfile" ;
+    rdfs:comment """
+    A s223:Controller can be represented by a Network Controller
+    (like a BACnet or a Lonworks device).
+    This class will be a higher class that will serve to relate
+    the s223:Controller to the said bacnet:Device or other.
+    """ .
+
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -1000,8 +1170,14 @@ p223:NormalFault-Normal a p223:NormalFault-Normal,
     rdfs:subClassOf p223:EnumerationKind-NormalFault,
         s223:EnumerationKind .
 
-p223:OccupancyFunctionBlock a rdfs:Class ;
-    rdfs:label "bob.functions.occupancy.OccupancyControl" ;
+p223:OccupancyFunction a rdfs:Class ;
+    rdfs:label "bob.functions.occupancy.OccupancyFunction" ;
+    rdfs:comment """
+    This function takes the the occupancy as detected by a sensor (inStatus,
+    perhaps from a motion sensor), the occupancy schedule (inSchedule with
+    an external reference to a BACnet Schedule Object) and outputs
+    "occupied" if the space/room/zone should be considered occupied.
+    """ ;
     rdfs:subClassOf s223:FunctionBlock .
 
 p223:OpenClose-Close a p223:OpenClose-Close,
@@ -1050,6 +1226,54 @@ p223:Position-Unknown a p223:Position-Unknown,
         s223:EnumerationKind,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet a p223:Protocol-BACnet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_IP a p223:Protocol-BACnet_IP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_MSTP a p223:Protocol-BACnet_MSTP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_SC a p223:Protocol-BACnet_SC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Lonworks a p223:Protocol-Lonworks,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus a p223:Protocol-Modbus,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus_RTU a p223:Protocol-Modbus_RTU,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
         s223:EnumerationKind .
 
 p223:RunningNotRunning-NotRunning a p223:RunningNotRunning-NotRunning,
@@ -1111,6 +1335,8 @@ p223:TrueFalse-True a p223:TrueFalse-True,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
+
+p223:VLAN a rdf:Property .
 
 p223:Water-CondensedWater a p223:Water-CondensedWater,
         s223:EnumerationKind,
@@ -1176,6 +1402,13 @@ p223:YesNo-Yes a p223:YesNo-Yes,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-YesNo,
         s223:EnumerationKind .
+
+p223:data_rate a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+p223:hasProtocol a rdf:Property .
+
+p223:hasSignalType a rdf:Property .
 
 qudt:hasQuantityKind a rdf:Property .
 

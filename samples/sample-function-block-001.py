@@ -7,16 +7,15 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import bind_model_namespace, dump, EX, Property
-from bob.functions import FunctionBlock, AnalogInput, AnalogOutput
+from bob.functions import FunctionBlock, G36AnalogInput, G36AnalogOutput
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class Sample(FunctionBlock):
-    """Multiply _x_ by 10 and add 12."""
-    x: AnalogInput
-    y: AnalogOutput
+    x: G36AnalogInput
+    y: G36AnalogOutput
 
     def eval(self):
         global x, y
