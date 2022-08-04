@@ -35,7 +35,7 @@ class Frequency(QuantifiableObservableProperty):
 
 class ElectricPower(QuantifiableObservableProperty):
     _node_iri = P223.ElectricPower
-    hasQuantityKind = QUANTITYKIND.Power
+    hasQuantityKind = QUANTITYKIND.ElectricPower
     unit: URIRef
     _supported_units = [
         UNIT.KiloW,

@@ -1,6 +1,9 @@
 from rdflib import Graph, URIRef
 
 from .core import (
+    G36,
+    P223,
+    S223,
     Air,
     Domain,
     Electricity,
@@ -9,8 +12,6 @@ from .core import (
     Role,
     Substance,
     Water,
-    S223,
-    P223,
 )
 
 _namespace = S223
@@ -54,7 +55,9 @@ Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
 Water.HotWater = HotWater = Water("HotWater")
 Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
 Water.DomesticWater = DomesticWater = Water("DomesticWater", _alt_namespace=P223)
-Water.DomesticHotWater = DomesticHotWater = Water("DomesticHotWater", _alt_namespace=P223)
+Water.DomesticHotWater = DomesticHotWater = Water(
+    "DomesticHotWater", _alt_namespace=P223
+)
 Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
 Water.GlycoledWater = GlycoledWater = Water("GlycoledWater", _alt_namespace=P223)
 Water.Steam = Steam = Water("Steam", _alt_namespace=P223)
@@ -114,7 +117,10 @@ Substance.Soot = Soot = Substance("Soot")
 # ===================
 # Enumeration kinds to create hasValue
 ActiveInactiveEnum = EnumerationKind("ActiveInactive", _alt_namespace=P223)
+AnalogSignalTypeEnum = EnumerationKind("Analog", _alt_namespace=P223)
+BinarySignalTypeEnum = EnumerationKind("Binary", _alt_namespace=P223)
 Effectiveness = EnumerationKind("Effectiveness")
+G36AlarmLevel = EnumerationKind("G36AlarmLevels", _alt_namespace=G36)
 HandOffAutoEnum = EnumerationKind("HandOffAuto", _alt_namespace=P223)
 HVACOperatingMode = EnumerationKind("HVACOperatingMode")
 HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
@@ -127,6 +133,7 @@ OccupancyStatus = EnumerationKind("OccupancyStatus")
 OnOffEnum = EnumerationKind("OnOff")
 OpenCloseEnum = EnumerationKind("OpenClose", _alt_namespace=P223)
 OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=P223)
+ProtocolEnum = EnumerationKind("Protocol", _alt_namespace=P223)
 PositionEnum = EnumerationKind("Position", _alt_namespace=P223)
 RunningNotRunningEnum = EnumerationKind("RunningNotRunning", _alt_namespace=P223)
 ThreeSpeedSetting = EnumerationKind("ThreeSpeedSetting")
@@ -141,9 +148,55 @@ ActiveInactiveEnum.Inactive = ActiveInactiveEnum("Inactive", _alt_namespace=P223
 ActiveInactiveEnum.Unknown = ActiveInactiveEnum("Unknown", _alt_namespace=P223)
 
 #
+AnalogSignalTypeEnum.Unknown = AnalogSignalTypeEnum("Unknown", _alt_namespace=P223)
+AnalogSignalTypeEnum.RTD = AnalogSignalTypeEnum("RTD", _alt_namespace=P223)
+AnalogSignalTypeEnum.Nickel1kRTD = AnalogSignalTypeEnum(
+    "Nickel1kRTD", _alt_namespace=P223
+)
+AnalogSignalTypeEnum.Platinum1kRTD = AnalogSignalTypeEnum(
+    "Platinum1kRTD", _alt_namespace=P223
+)
+AnalogSignalTypeEnum.VDC_0_10 = AnalogSignalTypeEnum("0-10VDC", _alt_namespace=P223)
+AnalogSignalTypeEnum.mA_4_20 = AnalogSignalTypeEnum("4-20mA", _alt_namespace=P223)
+AnalogSignalTypeEnum.NTC10kType3 = AnalogSignalTypeEnum(
+    "NTC10kType3", _alt_namespace=P223
+)
+AnalogSignalTypeEnum.NTC10kType2 = AnalogSignalTypeEnum(
+    "NTC10kType2", _alt_namespace=P223
+)
+AnalogSignalTypeEnum.NTC2250Type2 = AnalogSignalTypeEnum(
+    "NTC2250Type2", _alt_namespace=P223
+)
+AnalogSignalTypeEnum.Resistive = AnalogSignalTypeEnum("Resistive", _alt_namespace=P223)
+
+#
+BinarySignalTypeEnum.DryContact = BinarySignalTypeEnum(
+    "DryContact", _alt_namespace=P223
+)
+BinarySignalTypeEnum.Pulse = BinarySignalTypeEnum("Pulse", _alt_namespace=P223)
+BinarySignalTypeEnum.StartStop = BinarySignalTypeEnum("StartStop", _alt_namespace=P223)
+BinarySignalTypeEnum.Incremental = BinarySignalTypeEnum(
+    "Incremental", _alt_namespace=P223
+)
+
+#
 Effectiveness.Active = Effectiveness("Active", _alt_namespace=P223)
 Effectiveness.Inactive = Effectiveness("Inactive", _alt_namespace=P223)
 Effectiveness.Unknown = Effectiveness("Unknown", _alt_namespace=P223)
+
+#
+G36AlarmLevel.Level1 = EnumerationKind(
+    "Level1", comment="Life Safetey Message", _alt_namespace=G36
+)
+G36AlarmLevel.Level2 = EnumerationKind(
+    "Level2", comment="Critical Equipment Message", _alt_namespace=G36
+)
+G36AlarmLevel.Level3 = EnumerationKind(
+    "Level3", comment="Urgent Message", _alt_namespace=G36
+)
+G36AlarmLevel.Level4 = EnumerationKind(
+    "Level4", comment="Normal Message", _alt_namespace=G36
+)
 
 #
 HandOffAutoEnum.Hand = HandOffAutoEnum("Hand", _alt_namespace=P223)
@@ -215,6 +268,16 @@ OpenCloseEnum.Close = OpenCloseEnum("Close", _alt_namespace=P223)
 #
 OverriddenAuto.Auto = OverriddenAuto("Auto", _alt_namespace=P223)
 OverriddenAuto.Overridden = OverriddenAuto("Overridden", _alt_namespace=P223)
+
+#
+ProtocolEnum.BACnet = ProtocolEnum("BACnet", _alt_namespace=P223)
+ProtocolEnum.BACnet_MSTP = ProtocolEnum("BACnet_MSTP", _alt_namespace=P223)
+ProtocolEnum.BACnet_IP = ProtocolEnum("BACnet_IP", _alt_namespace=P223)
+ProtocolEnum.BACnet_SC = ProtocolEnum("BACnet_SC", _alt_namespace=P223)
+ProtocolEnum.Modbus = ProtocolEnum("Modbus", _alt_namespace=P223)
+ProtocolEnum.Modbus_RTU = ProtocolEnum("Modbus_RTU", _alt_namespace=P223)
+ProtocolEnum.Modbus_TCP = ProtocolEnum("Modbus_TCP", _alt_namespace=P223)
+ProtocolEnum.Lonworks = ProtocolEnum("Lonworks", _alt_namespace=P223)
 
 #
 PositionEnum.Close = PositionEnum("Close", _alt_namespace=P223)

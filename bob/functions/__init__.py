@@ -12,7 +12,17 @@ from typing import Any, AnyStr, Dict
 
 from rdflib import Literal, URIRef  # type: ignore
 
-from ..core import INCLUDE_INVERSE, Node, Property, data_graph, S223
+from ..core import (
+    G36,
+    INCLUDE_INVERSE,
+    P223,
+    S223,
+    Container,
+    Node,
+    Property,
+    data_graph,
+)
+from ..devices.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
 
 _namespace = S223
@@ -97,25 +107,65 @@ def connect_mm(output_connector: FunctionOutput, prop: Property) -> None:
     data_graph.add((output_connector._node_iri, S223.produces, prop._node_iri))
 
 
+@multimethod
+def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
+    """FunctionOutput >> Property"""
+    logging.info(f"connect from {output_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.hasFunctionOutput, output_connector._node_iri))
+
+
+@multimethod
+def connect_mm(output_connector: FunctionOutput, cp: BinaryOutput) -> None:
+    """FunctionOutput >> Controller connection point"""
+    logging.info(f"connect from {output_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.hasFunctionOutput, output_connector._node_iri))
+
+
+@multimethod
+def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
+    """FunctionOutput >> Controller connection point"""
+    logging.info(f"connect from {output_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.hasFunctionOutput, output_connector._node_iri))
+
+
+@multimethod
+def connect_mm(input_connector: FunctionInput, cp: BinaryInput) -> None:
+    """FunctionInput >> Controller connection point"""
+    logging.info(f"connect from {input_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.isInputOf, input_connector._node_iri))
+
+
+@multimethod
+def connect_mm(input_connector: FunctionInput, cp: AnalogInput) -> None:
+    """FunctionOutput >> Controller connection point"""
+    logging.info(f"connect from {input_connector} to {cp}")
+
+    data_graph.add((cp._node_iri, P223.isInputOf, input_connector._node_iri))
+
+
 #
 #   Connector types, parameters, and constants
 #
 
 
-class AnalogInput(FunctionInput):
-    _class_iri: URIRef = S223.AnalogInput
+class G36AnalogInput(FunctionInput):
+    _class_iri: URIRef = G36.AnalogInput
 
 
-class AnalogOutput(FunctionOutput):
-    _class_iri: URIRef = S223.AnalogOutput
+class G36AnalogOutput(FunctionOutput):
+    _class_iri: URIRef = G36.AnalogOutput
 
 
-class BinaryInput(FunctionInput):
-    _class_iri: URIRef = S223.BinaryInput
+class G36BinaryInput(FunctionInput):
+    _class_iri: URIRef = G36.BinaryInput
 
 
-class BinaryOutput(FunctionOutput):
-    _class_iri: URIRef = S223.BinaryOutput
+class G36BinaryOutput(FunctionOutput):
+    _class_iri: URIRef = G36.BinaryOutput
 
 
 class Parameter(Node):
@@ -200,7 +250,7 @@ class FunctionBlock(Node):
     """
 
     _class_iri: URIRef = S223.FunctionBlock
-    _connectors: Dict[str, Connector]
+    # _connectors: Dict[str, Connector]
     _parameters: Dict[str, Parameter]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -287,20 +337,25 @@ class FunctionBlock(Node):
                     logging.debug(f"        - init: {parameter_inits[attr_name]}")
                     attr_element.hasValue = parameter_inits[attr_name]
 
-    def uses_input(
+    def uses(
         self,
         prop: Property,
         klass: FunctionInput = FunctionInput,
         label: AnyStr = "input",
     ) -> None:
         connector = klass(self, label=f"{self.label}.{label}")
+        setattr(self, label, connector)
         prop >> connector
 
-    def produces_output(
+    def produces(
         self,
         prop: Property,
         klass: FunctionOutput = FunctionOutput,
         label: AnyStr = "output",
     ) -> None:
         connector = klass(self, label=f"{self.label}.{label}")
+        setattr(self, label, connector)
         connector >> prop
+
+
+# TODO : at some point their will be a clash where no label was given...
