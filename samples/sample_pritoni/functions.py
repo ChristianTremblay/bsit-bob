@@ -8,8 +8,6 @@ import lighting_spaces as ls
 from bob.core import bind_model_namespace, UNIT, dump
 from bob.functions import (
     FunctionBlock,
-    AnalogInput,
-    AnalogOutput,
     G36AnalogInput,
     G36AnalogOutput,
 )

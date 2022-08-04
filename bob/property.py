@@ -26,7 +26,8 @@ class ActuatableProperty(Property):
     """
 
     _class_iri: URIRef = S223.ActuatableProperty
-    actuatesProperty: Property
+    # TODO : Would it be possible for an Actuatable property, to actuates another actuatable property ?
+    # actuatesProperty: Property
 
 
 class ObservableProperty(Property):

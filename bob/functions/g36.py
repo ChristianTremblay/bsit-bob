@@ -4,7 +4,7 @@ from ..connections.electricity import (
     OnOffSignalSystemInletConnectionPoint,
     OnOffSignalSystemOutletConnectionPoint,
 )
-from ..core import Node, PropertyReference, bind_namespace
+from ..core import Node, PropertyReference, bind_namespace, G36
 from ..properties import OccupancyStatus, Schedule
 from ..property import ObservableProperty, QuantifiableObservableProperty
 from . import (
@@ -15,9 +15,7 @@ from . import (
     FunctionBlock,
 )
 
-g36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
-
-_namespace = g36
+_namespace = G36
 
 
 class G36Sequence(FunctionBlock):
@@ -33,7 +31,7 @@ class G36Sequence(FunctionBlock):
     Comment of this block is the description of the sequence.
     """
 
-    _class_iri = g36.FunctionBlock
+    _class_iri = G36.FunctionBlock
 
 
 class G36Figure_A_1(G36Sequence):
@@ -59,4 +57,4 @@ class G36Figure_A_10(G36Sequence):
     def __init__(self, comment=None, **kwargs):
         super().__init__(comment=comment, **kwargs)
 
-    _class_iri = g36.FunctionBlock
+    _class_iri = G36.FunctionBlock

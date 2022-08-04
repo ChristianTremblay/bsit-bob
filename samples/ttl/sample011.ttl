@@ -1,16 +1,22 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/sample011
 # imports: http://data.ashrae.org/standard223/1.0/model/all
+
 @prefix ex1: <urn:ex/sample011/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+
 <http://data.ashrae.org/standard223/1.0/data/sample011>
   a owl:Ontology ;
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample011> ;
   rdfs:label "sample011" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
 ex1:00001 a s223:System,
         ex1:TestSystem ;
     rdfs:label "s1" ;
@@ -19,12 +25,15 @@ ex1:00001 a s223:System,
         ex1:00003 ;
     ex1:cpIn ex1:00002 ;
     ex1:cpOut ex1:00003 .
+
 ex1:00002 a s223:InletSystemConnectionPoint ;
     rdfs:label "s1.cpIn" ;
     s223:hasDirection s223:Direction-Inlet .
+
 ex1:00003 a s223:OutletSystemConnectionPoint ;
     rdfs:label "s1.cpOut" ;
     s223:hasDirection s223:Direction-Outlet .
+
 ex1:00004 a s223:Device,
         ex1:TestDevice ;
     rdfs:label "d1" ;
@@ -32,14 +41,17 @@ ex1:00004 a s223:Device,
         ex1:00006 ;
     ex1:cpIn ex1:00005 ;
     ex1:cpOut ex1:00006 .
+
 ex1:00005 a s223:InletConnectionPoint ;
     rdfs:label "d1.cpIn" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:isConnectionPointOf ex1:00004 .
+
 ex1:00006 a s223:OutletConnectionPoint ;
     rdfs:label "d1.cpOut" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:isConnectionPointOf ex1:00004 .
+
 ex1:00007 a s223:System,
         ex1:TestSystem ;
     rdfs:label "s2" ;
@@ -48,13 +60,16 @@ ex1:00007 a s223:System,
         ex1:00009 ;
     ex1:cpIn ex1:00008 ;
     ex1:cpOut ex1:00009 .
+
 ex1:00008 a s223:InletSystemConnectionPoint ;
     rdfs:label "s2.cpIn" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:mapsTo ex1:00011 .
+
 ex1:00009 a s223:OutletSystemConnectionPoint ;
     rdfs:label "s2.cpOut" ;
     s223:hasDirection s223:Direction-Outlet .
+
 ex1:00010 a s223:Device,
         ex1:TestDevice ;
     rdfs:label "d2" ;
@@ -62,11 +77,14 @@ ex1:00010 a s223:Device,
         ex1:00012 ;
     ex1:cpIn ex1:00011 ;
     ex1:cpOut ex1:00012 .
+
 ex1:00011 a s223:InletConnectionPoint ;
     rdfs:label "d2.cpIn" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:isConnectionPointOf ex1:00010 .
+
 ex1:00012 a s223:OutletConnectionPoint ;
     rdfs:label "d2.cpOut" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:isConnectionPointOf ex1:00010 .
+
