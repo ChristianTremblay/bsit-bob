@@ -23,6 +23,8 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex1:00001 a s223:Device,
+        s223:OccupancySensor,
+        s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "Motion Sensor" ;
     s223:observesProperty ex1:00002 .
@@ -31,11 +33,13 @@ ex1:00002 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    rdfs:label "Motion Sensor.Motion" ;
+    rdfs:label "Motion Sensor.OccupantMotion" ;
     s223:hasEnumerationKind p223:EnumerationKind-MotionNoMotion ;
     s223:ofMedium s223:Medium-Occupant .
 
 ex1:00003 a s223:Device,
+        s223:OccupancySensor,
+        s223:OccupantCounter,
         s223:Sensor ;
     rdfs:label "People Counter" ;
     s223:observesProperty ex1:00004 .
@@ -45,7 +49,7 @@ ex1:00004 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Count ;
-    rdfs:label "People Counter.Count" ;
+    rdfs:label "People Counter.OccupantCount" ;
     s223:ofMedium s223:Medium-Occupant ;
     qudt:hasQuantityKind quantitykind:Dimensionless ;
     qudt:unit unit:NUM .

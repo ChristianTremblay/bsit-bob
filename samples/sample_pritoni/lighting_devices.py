@@ -13,7 +13,7 @@ from bob.properties.electricity import ElectricPower
 from bob.properties.light import RelativeLuminousFlux
 from bob.properties.states import OnOffCommand
 from bob.sensor.light import DaylightSensor
-from bob.sensor.motion import MotionSensor, OccupancySensor
+from bob.sensor.motion import OccupantMotionSensor
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
@@ -38,7 +38,7 @@ kitchenette_luminaire_12 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
 )
-kitchenette_movement = OccupancySensor(
+kitchenette_movement = OccupantMotionSensor(
     label="O4",
     comment="Occupancy sensor for kitchenette luminaires 11 & 12 (O4)",
 )
@@ -66,7 +66,7 @@ privateoffice_luminaire_8 = Luminaire(
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
     electricalPower=ElectricPower(20, unit=UNIT.W),
 )
-privateoffice_movement = OccupancySensor(
+privateoffice_movement = OccupantMotionSensor(
     label="O3",
     comment="Occupancy sensor for Private Office (O3)",
     hasPhysicalLocation=ps.private_office,
@@ -99,7 +99,7 @@ corridor_luminaire_10 = Luminaire(
     electricalInlet=Electricity_120V_60HzInletConnectionPoint,
     electricalPower=ElectricPower(15, unit=UNIT.W),
 )
-corridor_movement = OccupancySensor(
+corridor_movement = OccupantMotionSensor(
     label="O5",
     comment="Occupancy sensor for Corridor (O5)",
 )
@@ -130,7 +130,7 @@ bathroom_luminaire_6 = Luminaire(
 bathroom_light_conn = LightVisibleConnection(
     label="LightHub_5_6", comment="Needed to connect multiple luminaires to space"
 )
-bathroom_movement = OccupancySensor(
+bathroom_movement = OccupantMotionSensor(
     label="O2",
     comment="Occupancy sensor for Bathroom (O2)",
 )
@@ -184,7 +184,7 @@ openofficeSouth_light_conn = LightVisibleConnection(
 )
 
 # Occupancy in OpenOffice comes from 1 sensors for both spaces
-openoffice_movement = OccupancySensor(
+openoffice_movement = OccupantMotionSensor(
     label="O1",
     comment="Occupancy sensor for OpenOffice (O1)",
 )
