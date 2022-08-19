@@ -20,11 +20,15 @@ from ..core import (
 from ..properties import Count, Motion
 from .sensor import Sensor, split_kwargs
 
-_namespace = BOB
+_namespace = S223
 
 
-class MotionSensor(Sensor):
-    _class_iri = S223.Sensor
+class OccupancySensor(Sensor):
+    _class_iri = S223.OccupancySensor
+
+
+class PersonMotionSensor(OccupancySensor):
+    _class_iri = S223.PersonMotionSensor
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Movement
 
@@ -35,18 +39,14 @@ class MotionSensor(Sensor):
 
         self.observesProperty = Motion(
             # isObservedBy=self,
-            label=f"{self.label}.Motion",
+            label=f"{self.label}.PersonMotion",
             ofMedium=Occupant,
             **_property_kwargs,
         )
 
 
-class OccupancySensor(MotionSensor):
-    _class_iri = S223.OccupancySensor
-
-
-class PeopleCounter(Sensor):
-    _class_iri = S223.Sensor
+class PersonCounter(OccupancySensor):
+    _class_iri = S223.PersonCounter
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Count
 
@@ -56,13 +56,13 @@ class PeopleCounter(Sensor):
         super().__init__(**_sensor_kwargs)
 
         self.observesProperty = Count(
-            label=f"{self.label}.Count",
+            label=f"{self.label}.PersonCount",
             ofMedium=Occupant,
             **_property_kwargs,
         )
 
 
-class IntrusionSensor(Sensor):
+class PersonPresenceSensor(Sensor):
     _class_iri = S223.Sensor
     # measuresMedium: Medium = Light
     observesProperty: PropertyReference  # Intrusion...good for Windows and doors
@@ -74,6 +74,6 @@ class IntrusionSensor(Sensor):
         super().__init__(**_sensor_kwargs)
         self.observesProperty = OnOffStatus(
             # isObservedBy=self,
-            label=f"{self.label}.Intrusion",
+            label=f"{self.label}.PersonPresence",
             **_measure_kwargs,
         )
