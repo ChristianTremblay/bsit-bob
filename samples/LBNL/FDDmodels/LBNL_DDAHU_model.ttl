@@ -1,0 +1,45 @@
+# baseURI: http://data.ashrae.org/standard223/data/LBNL_DDAHU_model
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.ashrae.org/standard223/data/LBNL_DDAHU_model>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/data/LBNL_DDAHU_model> ;
+  rdfs:label "LBNL_DDAHU_model" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+@prefix ex: <http://data.ashrae.org/standard223/data/LBNL_DDAHU_model#> .
+@prefix p223: <http://data.ashrae.org/proposal_to_standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+ex:00001 a s223:Connectable,
+        s223:DomainSpace,
+        ex:HVAC_rooms ;
+    rdfs:label "ate" ;
+    s223:hasDomain s223:Domain-HVAC ;
+    s223:hasMedium s223:Medium-Air .
+ex:00002 a p223:AirTemperatureSensor,
+        p223:TemperatureSensor,
+        s223:Connectable,
+        s223:Device,
+        s223:Sensor ;
+    rdfs:label "rm_temp" ;
+    s223:hasMeasurementLocation ex:00001 ;
+    s223:observesProperty ex:00003 .
+ex:00003 a p223:Temperature,
+        s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    rdfs:label "rm_temp.Temperature" ;
+    s223:ofMedium s223:Medium-Air ;
+    qudt:quantityKind quantitykind:Temperature ;
+    qudt:unit unit:DEG_C .
+ex:00004 a s223:ExternalReference .

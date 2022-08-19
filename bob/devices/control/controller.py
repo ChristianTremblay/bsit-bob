@@ -52,6 +52,7 @@ class Controller(Device):
     """
 
     _class_iri: URIRef = P223.Controller
+    _attr_uriref = {"hasNetworkProfile": P223.hasNetworkProfile}
     # electricalInlet: Electricity_24V_60HzInletConnectionPoint
     # executes: FunctionBlock
     hasNetworkProfile: NetworkProfile

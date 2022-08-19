@@ -450,18 +450,20 @@ class OnOffSignalConnection(Connection):
 
 
 class OnOffSignalConnectionPoint(ConnectionPoint):
+    _attr_uriref = {"hasSignalType": P223.hasSignalType}
+
     hasMedium = Electricity.OnOffSignal
     hasSignalType: BinarySignalTypeEnum
 
 
 class OnOffSignalInletConnectionPoint(InletConnectionPoint, OnOffSignalConnectionPoint):
-    _class_iri = S223.BinaryInput
+    _class_iri = P223.BinaryInput
 
 
 class OnOffSignalOutletConnectionPoint(
     OutletConnectionPoint, OnOffSignalConnectionPoint
 ):
-    _class_iri = S223.BinaryOutput
+    _class_iri = P223.BinaryOutput
 
 
 class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
@@ -488,6 +490,8 @@ class ModulationSignalConnection(Connection):
 
 
 class ModulationSignalConnectionPoint(ConnectionPoint):
+    _attr_uriref = {"hasSignalType": P223.hasSignalType}
+
     hasMedium = Electricity.ModulationSignal
     hasSignalType: AnalogSignalTypeEnum
 
@@ -495,13 +499,13 @@ class ModulationSignalConnectionPoint(ConnectionPoint):
 class ModulationSignalInletConnectionPoint(
     InletConnectionPoint, ModulationSignalConnectionPoint
 ):
-    _class_iri = S223.AnalogInput
+    _class_iri = P223.AnalogInput
 
 
 class ModulationSignalOutletConnectionPoint(
     OutletConnectionPoint, ModulationSignalConnectionPoint
 ):
-    _class_iri = S223.AnalogOutput
+    _class_iri = P223.AnalogOutput
 
 
 class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
@@ -527,6 +531,8 @@ class RS485Connection(Connection):
 
 
 class RS485ConnectionPoint(ConnectionPoint):
+    _attr_uriref = {"hasProtocol": P223.hasProtocol}
+
     hasMedium = Electricity.RS485
     hasProtocol: ProtocolEnum
 
@@ -554,6 +560,11 @@ class EthernetConnection(Connection):
 
 
 class EthernetConnectionPoint(ConnectionPoint):
+    _attr_uriref = {
+        "hasProtocol": P223.hasProtocol,
+        "data_rate": P223.data_rate,
+        "vlan": P223.VLAN,
+    }
     hasMedium = Electricity.Ethernet
     hasProtocol: ProtocolEnum
     data_rate: Mbit_per_seconds
