@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.core import Device, Property, PropertyReference, BOB, P223, S223, UNIT
+from bob.core import BOB, P223, S223, UNIT, Device, Property, PropertyReference
 from bob.properties.states import OnOffStatus
 
 from ...connections.electricity import (
@@ -52,7 +52,7 @@ MechanicalOnOffThermostat_template = {
     },
     "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {},
+        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
     },
 }
@@ -71,6 +71,7 @@ class MechanicalOnOffThermostat(Thermostat):
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+        self.temperature = self["temperature_sensor"].observesProperty
 
 
 MechanicalModulatingThermostat_template = {
@@ -82,7 +83,7 @@ MechanicalModulatingThermostat_template = {
     },
     "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {},
+        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
     },
 }
