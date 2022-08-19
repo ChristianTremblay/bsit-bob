@@ -61,7 +61,7 @@ class ElectricPower(QuantifiableObservableProperty):
 
 class ElectricApparentPower(QuantifiableObservableProperty):
     _node_iri = P223.ElectricApparentPower
-    hasQuantityKind = QUANTITYKIND.ComplexPower
+    hasQuantityKind = QUANTITYKIND.ApparentPower
     unit: URIRef
     _supported_units = [UNIT["V-A"], UNIT["KiloV-A"]]
 
