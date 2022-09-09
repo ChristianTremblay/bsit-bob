@@ -12,6 +12,7 @@ from rdflib import Graph, Namespace, SH
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.ERROR)
 
+S223 = Namespace("http://data.ashrae.org/standard223#")
 
 # build a parser for the command line arguments
 parser = argparse.ArgumentParser(
@@ -84,13 +85,6 @@ parser.add_argument(
     "--info",
     action="store_true",
     help="info log level",
-)
-#run file of sparql_rules
-parser.add_argument(
-    "--sparql_rule",
-    type=str,
-    nargs='+',
-    help="runs SPARQL rules in file",
 )
 # parse the command line arguments
 args = parser.parse_args()
@@ -181,7 +175,7 @@ qs = """
     """
 
 # pretty colors
-color_map = {SH.Violation: 33, SH.Info: 34, SH.Warning: 35}
+color_map = {SH.Violation: 33, SH.Info: 34, SH.Warning: 35, S223.g36: 36}
 
 # query
 results = sorted(report_graph.query(qs, initNs=namespace_map))
