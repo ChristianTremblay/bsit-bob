@@ -450,8 +450,9 @@ class OnOffSignalConnection(Connection):
 
 
 class OnOffSignalConnectionPoint(ConnectionPoint):
-    hasMedium = Electricity.OnOffSignal
     _attr_uriref = {"hasSignalType": P223.hasSignalType}
+
+    hasMedium = Electricity.OnOffSignal
     hasSignalType: BinarySignalTypeEnum
 
 
@@ -489,8 +490,9 @@ class ModulationSignalConnection(Connection):
 
 
 class ModulationSignalConnectionPoint(ConnectionPoint):
-    hasMedium = Electricity.ModulationSignal
     _attr_uriref = {"hasSignalType": P223.hasSignalType}
+
+    hasMedium = Electricity.ModulationSignal
     hasSignalType: AnalogSignalTypeEnum
 
 
@@ -529,8 +531,9 @@ class RS485Connection(Connection):
 
 
 class RS485ConnectionPoint(ConnectionPoint):
-    hasMedium = Electricity.RS485
     _attr_uriref = {"hasProtocol": P223.hasProtocol}
+
+    hasMedium = Electricity.RS485
     hasProtocol: ProtocolEnum
 
 

@@ -30,7 +30,6 @@ from bob.devices.hvac.filter import Filter
 from bob.devices.lighting.light import Luminaire
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
-from bob.sensor.light import MovementSensor, OccupancySensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone
