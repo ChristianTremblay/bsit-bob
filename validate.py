@@ -85,11 +85,11 @@ parser.add_argument(
     action="store_true",
     help="info log level",
 )
-#run file of sparql_rules
+# run file of sparql_rules
 parser.add_argument(
     "--sparql_rule",
     type=str,
-    nargs='+',
+    nargs="+",
     help="runs SPARQL rules in file",
 )
 # parse the command line arguments

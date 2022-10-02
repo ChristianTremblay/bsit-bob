@@ -15,25 +15,25 @@ from bob.core import (
     get_datagraph,
     UNIT,
 )
-from bob.devices.architectural import Window
-from bob.devices.hvac.chiller import AgnosticChiller
-from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
-from bob.devices.hvac.compressor import AirCompressor
-from bob.devices.hvac.damper import (
+from bob.equipments.architectural import Window
+from bob.equipments.hvac.chiller import AgnosticChiller
+from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
+from bob.equipments.hvac.compressor import AirCompressor
+from bob.equipments.hvac.damper import (
     Damper,
     ElectricalActuatedOnOffDamper,
     ElectricalActuatedProportionalDamper,
     PneumaticActuatedOnOffDamper,
 )
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.geothermal import GeothermalWell
-from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
-from bob.devices.hvac.humidifier import Humidifier, SteamPipe
-from bob.devices.hvac.pump import Pump
-from bob.devices.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.devices.electricity.vfd import VFD
-from bob.devices.lighting.light import Luminaire
+from bob.equipments.hvac.fan import Fan
+from bob.equipments.hvac.filter import Filter
+from bob.equipments.hvac.geothermal import GeothermalWell
+from bob.equipments.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
+from bob.equipments.hvac.humidifier import Humidifier, SteamPipe
+from bob.equipments.hvac.pump import Pump
+from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
+from bob.equipments.electricity.vfd import VFD
+from bob.equipments.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
 from bob.sensor.humidity import AirHumiditySensor
@@ -51,8 +51,8 @@ from bob.space.physical import (
     Roof,
     Room,
 )
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
-from bob.systems.hvac.vav import VAV
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipments.hvac.vav import VAV
 
 # from bob.externalreference.BACNET import BACnetReference, NiagaraORDReference
 

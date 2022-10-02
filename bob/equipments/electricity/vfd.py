@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.devices.electricity import _VFD
+from bob.equipments.electricity import _VFD
 
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,

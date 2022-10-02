@@ -25,14 +25,14 @@ from bob.core import (
     S223,
     UNIT,
 )
-from bob.devices.hvac.coil import ChilledWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.fan import Fan
+from bob.equipments.hvac.coil import ChilledWaterCoil
+from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipments.hvac.fan import Fan
 from bob.enum import Exhaust, Supply
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
 
 # from header import g36_header
 

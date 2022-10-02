@@ -106,7 +106,7 @@ class ElectricalActuatedOnOffDamper(Damper):
         self.command = self["actuator"]["command"]
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
@@ -136,7 +136,7 @@ class PneumaticActuatedProportionalDamper(Damper):
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
@@ -151,6 +151,6 @@ class PneumaticActuatedOnOffDamper(Damper):
         self.command = self["actuator"]["command"]
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position

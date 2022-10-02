@@ -29,11 +29,11 @@ from bob.core import (
     S223,
     UNIT,
 )
-from bob.devices.hvac import Fan
-from bob.devices.hvac.airflowstation import AirFlowMonitor
-from bob.devices.hvac.coil import ChilledWaterCoil
-from bob.devices.hvac.damper import Damper
-from bob.devices.hvac.filter import Filter
+from bob.equipments.hvac import Fan
+from bob.equipments.hvac.airflowstation import AirFlowMonitor
+from bob.equipments.hvac.coil import ChilledWaterCoil
+from bob.equipments.hvac.damper import Damper
+from bob.equipments.hvac.filter import Filter
 from bob.enum import Exhaust, Supply
 from bob.properties.temperature import Temperature
 from bob.space.hvac import HVACZone

@@ -40,15 +40,15 @@ from bob.core import (
     QUANTITYKIND,
     UNIT,
 )
-from bob.devices.architectural import Window
-from bob.devices.electricity.starter import MotorStarter
-from bob.devices.hvac.actuator import ElectricalProportionalActuator
-from bob.devices.hvac.coil import HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.gas import GasMonitor
-from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
+from bob.equipments.architectural import Window
+from bob.equipments.electricity.starter import MotorStarter
+from bob.equipments.hvac.actuator import ElectricalProportionalActuator
+from bob.equipments.hvac.coil import HotWaterCoil
+from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipments.hvac.fan import Fan
+from bob.equipments.hvac.gas import GasMonitor
+from bob.equipments.hvac.stats import NetworkRoomSensor, NetworkThermostat
+from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve
 from bob.functions import (
     FunctionBlock,
     AnalogInput,
@@ -154,7 +154,7 @@ vav_system_template = {
 
 class VAV_FIGA2(System):
     """
-    This is a clone of VAV found in bob.system.hvac.vav VAV_Simple
+    This is a clone of VAV found in from bob.equipments.hvac.vav VAV_Simple
     """
 
     airInlet: AirInletSystemConnectionPoint

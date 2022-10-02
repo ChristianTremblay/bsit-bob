@@ -18,22 +18,22 @@ from bob.core import (
     P223,
     UNIT,
 )
-from bob.devices.architectural import Window
-from bob.devices.hvac.boiler import ElectricalHotWaterBoiler, HotWaterBoiler
-from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedDamper
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.pump import Pump
-from bob.devices.hvac.valve import TwoWayValve
-from bob.devices.lighting.light import Luminaire
+from bob.equipments.architectural import Window
+from bob.equipments.hvac.boiler import ElectricalHotWaterBoiler, HotWaterBoiler
+from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipments.hvac.damper import ElectricalActuatedDamper
+from bob.equipments.hvac.fan import Fan
+from bob.equipments.hvac.filter import Filter
+from bob.equipments.hvac.pump import Pump
+from bob.equipments.hvac.valve import TwoWayValve
+from bob.equipments.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone
 from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
-from bob.systems.hvac.vav import VAV
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipments.hvac.vav import VAV
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

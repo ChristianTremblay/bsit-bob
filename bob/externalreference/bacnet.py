@@ -10,7 +10,7 @@ from ..core import (
     ExternalReference,
     Node,
 )
-from ..devices.control.controller import Controller
+from ..equipments.control.controller import Controller
 from . import NetworkProfile
 
 

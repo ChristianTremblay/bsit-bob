@@ -1,5 +1,5 @@
 from typing import Dict
-from bob.devices.electricity import _MotorStarter
+from bob.equipments.electricity import _MotorStarter
 from bob.enum import HandOffAutoEnum
 from bob.properties.electricity import ElectricPower
 from bob.properties.ratio import Percent, PercentCommand

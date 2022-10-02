@@ -22,9 +22,9 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.core import *
-from bob.devices.hvac.damper import Damper
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
+from bob.equipments.hvac.damper import Damper
+from bob.equipments.hvac.fan import Fan
+from bob.equipments.hvac.filter import Filter
 
 from bob.sensor.pressure import DifferentialStaticPressureSensor
 from bob.sensor.humidity import AirHumiditySensor
@@ -37,14 +37,14 @@ from bob.externalreference.timeseries import TimeSeriesReference
 
 from bob.properties.ratio import PercentAngularVelocity
 from bob.properties.electricity import ElectricPowerW
-from bob.devices.hvac.vfd import VFD
+from bob.equipments.hvac.vfd import VFD
 from bob.property import QuantifiableObservableProperty, Setpoint
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
-from bob.systems.archives.coolingcoil import ChilledWaterCoil2
-from bob.systems.archives.heatingcoil import HotWaterCoil2
+from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
+from bob.equipments.archives.heatingcoil import HotWaterCoil2
 
 # not sure of the difference between differential pressure and differential static pressure in this case
 
@@ -118,9 +118,9 @@ _namespace = ex = bind_model_namespace(
 # # a>>f3
 # f3>>a>>f4
 # f1>>a>>f2
-s = PhysicalSpace(label = 's')
-a = DomainSpace(label = 'a')
-z = Zone(label = 'z')
+s = PhysicalSpace(label="s")
+a = DomainSpace(label="a")
+z = Zone(label="z")
 z.hasDomain = HVAC
 z > a
 s > a

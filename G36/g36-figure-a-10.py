@@ -38,19 +38,19 @@ from bob.core import (
     QUANTITYKIND,
     UNIT,
 )
-from bob.devices.hvac.actuator import ElectricalProportionalActuator
-from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.fan import Fan, FanWithVFD
-from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.gas import GasMonitor
-from bob.devices.hvac.stats import (
+from bob.equipments.hvac.actuator import ElectricalProportionalActuator
+from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipments.hvac.fan import Fan, FanWithVFD
+from bob.equipments.hvac.filter import Filter
+from bob.equipments.hvac.gas import GasMonitor
+from bob.equipments.hvac.stats import (
     HighStaticPressureStat,
     NetworkRoomSensor,
     NetworkThermostat,
 )
-from bob.devices.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.devices.electricity.vfd import VFD
+from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
+from bob.equipments.electricity.vfd import VFD
 from bob.functions import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from bob.functions.g36 import G36Sequence
 from bob.properties import Flow, PercentCommand, Temperature

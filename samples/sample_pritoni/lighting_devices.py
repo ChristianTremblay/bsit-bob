@@ -1,13 +1,13 @@
 from pathlib import Path
-from bob.devices.electricity.switch import DimmableSwitch
+from bob.equipments.electricity.switch import DimmableSwitch
 
 import lighting_spaces as ls
 import physical_spaces as ps
 
 from bob.connections.light import *
 from bob.core import bind_model_namespace, dump, UNIT
-from bob.devices.electricity.switch import DimmableSwitch
-from bob.devices.lighting.light import *
+from bob.equipments.electricity.switch import DimmableSwitch
+from bob.equipments.lighting.light import *
 from bob.externalreference.bacnet import BACnetReference
 from bob.properties.electricity import ElectricPower
 from bob.properties.light import RelativeLuminousFlux

@@ -4,9 +4,9 @@ from header import sample_header
 
 from bob.connections.air import AirConnection
 from bob.core import bind_model_namespace, dump
-from bob.systems.archives.heatingcoil import HotWaterCoil2
-from bob.systems.archives.hvac import HVACZone1
-from bob.systems.archives.vav import VAV2
+from bob.equipments.archives.heatingcoil import HotWaterCoil2
+from bob.equipments.archives.hvac import HVACZone1
+from bob.equipments.archives.vav import VAV2
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

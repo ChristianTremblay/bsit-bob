@@ -31,16 +31,16 @@ from bob.core import (
     contains_mm,
     dump,
 )
-from bob.devices.hvac.coil import HotWaterCoil
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.stats import HighStaticPressureStat
-from bob.devices.hvac.valve import TwoWayValve
-from bob.devices.electricity.vfd import VFD
+from bob.equipments.hvac.coil import HotWaterCoil
+from bob.equipments.hvac.fan import Fan
+from bob.equipments.hvac.filter import Filter
+from bob.equipments.hvac.stats import HighStaticPressureStat
+from bob.equipments.hvac.valve import TwoWayValve
+from bob.equipments.electricity.vfd import VFD
 from bob.externalreference.BACNET import BACnetDevice, BACnetReference
 from bob.functions import InputConnector
 
-# from bob.systems.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
+# from bob.equipments.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
 from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
 from bob.properties.ratio import Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus

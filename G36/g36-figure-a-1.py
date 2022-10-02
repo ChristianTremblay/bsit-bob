@@ -31,12 +31,12 @@ from bob.core import (
     bind_model_namespace,
     dump,
 )
-from bob.devices.architectural import Window
-from bob.devices.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
-from bob.devices.control.controller import Controller
-from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.gas import GasMonitor
-from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
+from bob.equipments.architectural import Window
+from bob.equipments.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.equipments.control.controller import Controller
+from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipments.hvac.gas import GasMonitor
+from bob.equipments.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.functions import (
     FunctionBlock,
     G36AnalogInput,
@@ -139,7 +139,7 @@ vav_system_template = {
 
 class VAV_FIGA1(System):
     """
-    This is a clone of VAV found in bob.system.hvac.vav VAV_Simple
+    This is a clone of VAV found in from bob.equipments.hvac.vav VAV_Simple
     """
 
     airInlet: AirInletSystemConnectionPoint

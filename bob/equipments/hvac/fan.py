@@ -3,7 +3,7 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.devices.electricity.vfd import VFD
+from bob.equipments.electricity.vfd import VFD
 from bob.properties.flow import Flow
 from bob.properties.ratio import Percent, PercentCommand
 

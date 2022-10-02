@@ -10,23 +10,23 @@ from bob.connections.electricity import (
     EthernetBidirectionalConnectionPoint,
 )
 from bob.core import UNIT, Role, bind_model_namespace, dump
-from bob.devices.architectural import Window
-from bob.devices.electricity.starter import MotorStarter
-from bob.devices.electricity.vfd import VFD
-from bob.devices.hvac.boiler import ElectricalHotWaterBoiler
-from bob.devices.hvac.chiller import Chiller
-from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.fan import Fan, FanWithStarter, FanWithVFD
-from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.pump import PumpWithStarter
-from bob.devices.hvac.stats import AirDifferentialStaticPressureSensor
-from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
+from bob.equipments.architectural import Window
+from bob.equipments.electricity.starter import MotorStarter
+from bob.equipments.electricity.vfd import VFD
+from bob.equipments.hvac.boiler import ElectricalHotWaterBoiler
+from bob.equipments.hvac.chiller import Chiller
+from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipments.hvac.fan import Fan, FanWithStarter, FanWithVFD
+from bob.equipments.hvac.filter import Filter
+from bob.equipments.hvac.pump import PumpWithStarter
+from bob.equipments.hvac.stats import AirDifferentialStaticPressureSensor
+from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
-from bob.systems.hvac.vav import VAV
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipments.hvac.vav import VAV
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

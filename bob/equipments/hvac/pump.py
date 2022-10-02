@@ -2,8 +2,8 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.devices.electricity.starter import MotorStarter
-from bob.devices.electricity.vfd import VFD
+from bob.equipments.electricity.starter import MotorStarter
+from bob.equipments.electricity.vfd import VFD
 from bob.properties.ratio import PercentCommand
 
 from ...connections.electricity import (

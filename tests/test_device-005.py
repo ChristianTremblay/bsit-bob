@@ -4,7 +4,7 @@ from header import ttl_test_header
 
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import Device, bind_model_namespace, dump
-from bob.devices.hvac import Fan
+from bob.equipments.hvac import Fan
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

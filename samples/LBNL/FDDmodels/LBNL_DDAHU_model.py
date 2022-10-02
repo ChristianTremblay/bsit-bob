@@ -28,19 +28,19 @@ from bob.core import (
     Junction,
     System,
     bind_model_namespace,
-    dump, 
-    Device, 
-    p223, 
+    dump,
+    Device,
+    p223,
     DomainSpace,
     HVAC,
     Air,
-    QUANTITYKIND, 
+    QUANTITYKIND,
     UNIT,
-    )
-from bob.devices.hvac.damper import Damper
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
-from bob.devices.electricity.vfd import VFD
+)
+from bob.equipments.hvac.damper import Damper
+from bob.equipments.hvac.fan import Fan
+from bob.equipments.hvac.filter import Filter
+from bob.equipments.electricity.vfd import VFD
 from bob.property import QuantifiableObservableProperty
 
 from bob.externalreference.timeseries import TimeSeriesReference
@@ -55,8 +55,8 @@ from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.pressure import AirDifferentialPressureSensor, AirStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 
-from bob.systems.archives.coolingcoil import ChilledWaterCoil2
-from bob.systems.archives.heatingcoil import HotWaterCoil2
+from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
+from bob.equipments.archives.heatingcoil import HotWaterCoil2
 
 # not sure of the difference between differential pressure and differential static pressure in this case
 
@@ -73,8 +73,8 @@ fan_template = {
     "params": {
         "label": "MyFan",
         "comment": "A Big Fan",
-        "electricalInlet": Electricity_575V_60HzInletConnectionPoint, 
-    }, # Fans also have % Speed and On/Off status
+        "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
+    },  # Fans also have % Speed and On/Off status
     "sensors": {
         ("TPD1", AirDifferentialPressureSensor): {
             "comment": "Filter Differential Pressure Sensor"
@@ -96,39 +96,31 @@ vfd_template = {
 
 # will need my own damper since this has no control point properties like g36
 damper_template = {
-    "params": {
-        "label": "damper",
-        "comment": "A hot or cold damper"
-    },
+    "params": {"label": "damper", "comment": "A hot or cold damper"},
     "sensors": {
-        ('vav_eat', AirTemperatureSensor): {
+        ("vav_eat", AirTemperatureSensor): {
             "comment": "Air Temperature Sensor",
-            "hasExternalReference":TimeSeriesReference
+            "hasExternalReference": TimeSeriesReference,
         },
-        ('vav_cfm', AirFlowSensor): {},
-        ('vav_dp', AirStaticPressureSensor): {}
+        ("vav_cfm", AirFlowSensor): {},
+        ("vav_dp", AirStaticPressureSensor): {},
     },
     "devices": {},
 }
 
 mixing_box_template = {
-    "params": {
-        "label": "damper",
-        "comment": "A hot or cold damper"
-    },
+    "params": {"label": "damper", "comment": "A hot or cold damper"},
     "sensors": {
-        ('vav_eat', AirTemperatureSensor): {
-            "comment": "Air Temperature Sensor"
-    }
+        ("vav_eat", AirTemperatureSensor): {"comment": "Air Temperature Sensor"}
     },
     "devices": {},
 }
 
 
 # don't need these functions in the future I think
-def ext_ref_damper(label,  ext_ref = None):
-    dmp = Damper(label = label, config = damper_template)
-    # able to specify in config if they attach at inlet, outlet, or device? 
+def ext_ref_damper(label, ext_ref=None):
+    dmp = Damper(label=label, config=damper_template)
+    # able to specify in config if they attach at inlet, outlet, or device?
     # not defining sensors in template, since I want to specify that they connect at inlet connection point?
     # defining sensors in template, then specifying here that they should measure inlet cp
 
@@ -136,14 +128,15 @@ def ext_ref_damper(label,  ext_ref = None):
     # dmp['vav_cfm'].hasExternalReference = TimeSeriesReference
     # dmp['vav_eat'].hasExternalReference = TimeSeriesReference
 
-    dmp['vav_dp'].hasMeasurementLocation = dmp.airInlet
-    dmp['vav_cfm'].hasMeasurementLocation = dmp.airInlet
-    dmp['vav_eat'].hasMeasurementLocation = dmp.airInlet
+    dmp["vav_dp"].hasMeasurementLocation = dmp.airInlet
+    dmp["vav_cfm"].hasMeasurementLocation = dmp.airInlet
+    dmp["vav_eat"].hasMeasurementLocation = dmp.airInlet
     return dmp
 
-def ext_ref_fan(label, ext_ref = None):
-    f = Fan(config = fan_template, label = label)
-    vfd = VFD(config = vfd_template)
+
+def ext_ref_fan(label, ext_ref=None):
+    f = Fan(config=fan_template, label=label)
+    vfd = VFD(config=vfd_template)
     hsf_wat = ElectricPowerW
     hsf_spd = PercentAngularVelocity
     vfd.W = hsf_wat
@@ -153,9 +146,10 @@ def ext_ref_fan(label, ext_ref = None):
 
     f > vfd  # include VFD in Fan
     vfd >> f  # connect electricity
-    return f 
+    return f
 
-#this feels wrong, but not sure what else would be right
+
+# this feels wrong, but not sure what else would be right
 class VAV_Mixing_Box(Device):
     hotAirInlet: AirInletConnectionPoint
     coldAirInlet: AirInletConnectionPoint
@@ -181,9 +175,7 @@ class HotDeck(System):
 
         # ext_ref1= TimeSeriesReference()
         # hsf.sensors['TPD1'].hasExternalReference = ext_ref1
-        hsf_dp = AirDifferentialPressureSensor(
-            label=self.label + ".fan_dp_sensor"
-        )
+        hsf_dp = AirDifferentialPressureSensor(label=self.label + ".fan_dp_sensor")
         hsf_dp.hasMeasurementLocationHigh = hsf.airOutlet
         hsf_dp.hasMeasurementLocationLow = hsf.airInlet
         # more sensors
@@ -216,12 +208,9 @@ class ColdDeck(System):
         self.airOutlet.mapsTo = hsf.airOutlet
         in_filter >> hwc >> hsf
 
-
         # ext_ref1= TimeSeriesReference()
         # hsf.sensors['TPD1'].hasExternalReference = ext_ref1
-        hsf_dp = AirDifferentialPressureSensor(
-            label=self.label + ".fan_dp_sensor"
-        )
+        hsf_dp = AirDifferentialPressureSensor(label=self.label + ".fan_dp_sensor")
         hsf_dp.hasMeasurementLocationHigh = hsf.airOutlet
         hsf_dp.hasMeasurementLocationLow = hsf.airInlet
 
@@ -268,7 +257,7 @@ class DDAHU(System):
         ma_temp = AirTemperatureSensor(label=self.label + "ma_air_temp_sensor")
         ma_temp.hasMeasurementLocation = mixed_air
 
-        return_air_fan = Fan(label=self.label + ".return_air_fan", config = fan_template)
+        return_air_fan = Fan(label=self.label + ".return_air_fan", config=fan_template)
         self.returnAirInlet.mapsTo = return_air_fan.airInlet
 
         re_dat = AirTemperatureSensor(label=self.label + ".re_air_temp_sensor")
@@ -309,40 +298,45 @@ class ddahu_VAV(System):
     coldAirInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
     node_type = p223.TerminalUnit
-    
-    def __init__(self, ext_ref_dict = None, **kwargs: Any) -> None:
+
+    def __init__(self, ext_ref_dict=None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-        hot_dmp = ext_ref_damper(label = self.label + '.hot_damper')
-        cold_dmp = ext_ref_damper(label = self.label + '.cold_damper')
+        hot_dmp = ext_ref_damper(label=self.label + ".hot_damper")
+        cold_dmp = ext_ref_damper(label=self.label + ".cold_damper")
         self.hotAirInlet.mapsTo = hot_dmp.airInlet
         self.coldAirInlet.mapsTo = cold_dmp.airInlet
 
-        mb = VAV_Mixing_Box(label = self.label + '.mixing_box', config = mixing_box_template)
-        mb['vav_eat'].hasMeasurementLocation = mb.airOutlet
-        
+        mb = VAV_Mixing_Box(
+            label=self.label + ".mixing_box", config=mixing_box_template
+        )
+        mb["vav_eat"].hasMeasurementLocation = mb.airOutlet
+
         hot_dmp >> mb.hotAirInlet
         cold_dmp >> mb.coldAirInlet
 
         self.airOutlet.mapsTo = mb.airOutlet
 
+
 class HVAC_rooms(DomainSpace):
     hasDomain = HVAC
     hasMedium: Medium = Air
-    def __init__(self, ext_ref_dict = None, **kwargs: Any) -> None:
+
+    def __init__(self, ext_ref_dict=None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        rm_temp = AirTemperatureSensor(label = 'rm_temp')
+        rm_temp = AirTemperatureSensor(label="rm_temp")
         rm_temp.hasMeasurementLocation = self
         rm_temp.hasExternalReference = TimeSeriesReference()
 
-#could easily run this from a generic spreadsheet/csv
+
+# could easily run this from a generic spreadsheet/csv
 def DDAHU_assembler():
-    ddahu_refs = ext_ref.get('ddahu_refs')
-    ddahu = DDAHU(label = 'DDAHU', ext_ref_dict = ddahu_refs)
+    ddahu_refs = ext_ref.get("ddahu_refs")
+    ddahu = DDAHU(label="DDAHU", ext_ref_dict=ddahu_refs)
 
 
-#ddvav = ddahu_VAV(label = 'test vav')
-h = HVAC_rooms(label = 'ate')
+# ddvav = ddahu_VAV(label = 'test vav')
+h = HVAC_rooms(label="ate")
 # ddahu = DDAHU(label="DDAHU")
 # vfd = VFD(label = 'vfd', properties = {'Electric_Power': Electric_Power})
 # vfd.properties['Electric_Power'].hasSetpoint = ep

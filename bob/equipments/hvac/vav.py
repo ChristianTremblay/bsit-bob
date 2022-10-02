@@ -14,10 +14,10 @@ from ...connections.air import (
 )
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
 from ...core import Device, PropertyReference, System, BOB, P223, S223, UNIT
-from ...devices.hvac.coil import HotWaterCoil
-from ...devices.hvac.damper import Damper, ElectricalActuatedProportionalDamper
-from ...devices.hvac.fan import Fan
-from ...devices.hvac.valve import TwoWayActuatedProportionalValve
+from ...equipments.hvac.coil import HotWaterCoil
+from ...equipments.hvac.damper import Damper, ElectricalActuatedProportionalDamper
+from ...equipments.hvac.fan import Fan
+from ...equipments.hvac.valve import TwoWayActuatedProportionalValve
 from ...sensor.flow import AirFlowSensor
 
 _namespace = BOB

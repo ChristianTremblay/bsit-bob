@@ -12,7 +12,7 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
 )
 from bob.core import bind_model_namespace, dump
-from bob.devices.hvac.coil import ElectricalHeatingCoil, ElectricalRadiantHeatingCoil
+from bob.equipments.hvac.coil import ElectricalHeatingCoil, ElectricalRadiantHeatingCoil
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
 

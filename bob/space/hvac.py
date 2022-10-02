@@ -19,7 +19,6 @@ from bob.properties import (
 from bob.property import Setpoint
 
 from ..core import Air, Domain, DomainSpace, Medium, Zone, BOB, enum, P223, S223
-from ..systems.physic import IndoorAir
 
 _namespace = BOB
 

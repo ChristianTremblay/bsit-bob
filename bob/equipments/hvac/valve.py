@@ -177,7 +177,7 @@ class TwoWayActuatedProportionalValve(TwoWayValve):
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
         self.torque = self["actuator"]["torque"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
@@ -198,7 +198,7 @@ class TwoWayActuatedOnOffValve(TwoWayValve):
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
         self.command = self["actuator"]["command"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
@@ -222,7 +222,7 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
@@ -242,7 +242,7 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
         super().__init__(_config, **kwargs)
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
@@ -266,7 +266,7 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
         self.feedback = self["actuator"]["feedback"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
 
@@ -292,6 +292,6 @@ class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
         self.feedbackOpen = self["actuator"]["feedbackOpen"]
         self.feedbackClose = self["actuator"]["feedbackClose"]
         self.command = self["actuator"]["command"]
-        #self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
+        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position

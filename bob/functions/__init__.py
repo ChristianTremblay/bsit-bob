@@ -22,7 +22,7 @@ from ..core import (
     Property,
     data_graph,
 )
-from ..devices.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from ..equipments.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
 
 _namespace = S223
