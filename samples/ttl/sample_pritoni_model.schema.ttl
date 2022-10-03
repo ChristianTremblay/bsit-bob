@@ -18,6 +18,41 @@
 
 
 
+
+
+    """ ;
+    rdfs:subClassOf s223:Device .
+
+    A damper would have a shaft_position(?) property, a pump would also have something similar to speed_ratio. All devices should have one main "function"
+    property.
+
+    A sensor could be used to observe the "status" of the fan. We shall resist to relate the actuator to the status. The actuator do
+    not actuate the status, it actuates the rotation of the fan and if we observe it, the status should be On.
+
+    An actuator should not have CP. Its role is to represent the relaiton between properties and action.
+
+    The speed ratio property is not a property that is meant to be observed. It is an intrinsic property of a fan, it is the fact that it can run.
+    It represents the core function of the fan.
+
+    This shows that the actuator is `commandedBy` the property "OnOffCommand". This actuation takes place at the air outlet of the fan.
+    The actuator "actuates" the speed_ratio of the fan which is a property of the fan representing the fact that it can be stopped (speed_ratio
+    of 0%) or run at a speed which is >0% to 100%.
+
+    This way, the model can illutrate the link between a property and something else (like
+    a connection point)
+    example :
+
+    __|___|__|___|___|__
+    |  Supply Fan      |------------s223:hasProperty--------(flow)
+    |  s223:Device     |------------s223:hasProperty--------(OnOffCommand) <-> A
+    |  s223:Fan        |------------s223:hasProperty--------(speed_ratio) <-> B
+    |                  |------------s223:hasProperty--------(status)
+    |__________________|------------s223:hasConnectionPoint----(AirOutlet) <-> C
+            |                               ____________________
+            |___________s223:contains_______|  OnOff Actuator  |---s223:isCommandedBy----------(OnOffCommand) <-> A
+                                            |  s223:Actuator   |---p223:actuatesProperty ------(speed_ratio) <-> B
+                                            |__________________|---p223:hasActuationLocation---(AirOutlet) <-> C
+
 <http://data.ashrae.org/standard223/1.0/data/sample_pritoni_model>
   a owl:Ontology ;
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model-schema> ;
@@ -158,6 +193,10 @@ bob:ElectricReactivePower a rdfs:Class ;
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty .
 
+bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
+    rdfs:label "bob.equipments.hvac.damper.ElectricalActuatedProportionalDamper" ;
+    rdfs:subClassOf s223:System .
+
 bob:ElectricalConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.electricity.ElectricalConnectionPoint" .
 
@@ -194,13 +233,6 @@ bob:Flow a rdfs:Class ;
 
 bob:Frequency a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Frequency" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:Gallons a rdfs:Class ;
-    rdfs:label "bob.properties.volume.Gallons" ;
     rdfs:subClassOf s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
@@ -363,6 +395,10 @@ bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
         s223:Device .
 
+bob:TwoWayActuatedProportionalValve a rdfs:Class ;
+    rdfs:label "bob.equipments.hvac.valve.TwoWayActuatedProportionalValve" ;
+    rdfs:subClassOf s223:System .
+
 bob:Volts a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Volts" ;
     rdfs:subClassOf s223:ObservableProperty,
@@ -372,6 +408,9 @@ bob:Volts a rdfs:Class ;
 
 bob:WaterConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.water.WaterConnectionPoint" .
+
+bob:WaterSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.water.WaterSystemConnectionPoint" .
 
 bob:airInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -465,7 +504,7 @@ bob:electricalPower a rdf:Property ;
 bob:exhaustAirOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasSystemConnectionPoint .
 
-bob:feedback a rdf:Property ;
+bob:flowCoefficient a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
 bob:hasMaxRange a rdf:Property ;
@@ -505,10 +544,19 @@ bob:indoor a rdf:Property ;
 bob:inputSignal a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
+bob:is_closed a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:is_open a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
 bob:lightInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
 bob:lightOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:linkageInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
 bob:manufacturer a rdf:Property .
@@ -561,6 +609,9 @@ bob:outsideAirInlet a rdf:Property ;
 bob:position a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
+bob:position_feedback a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
 bob:radiantCooling a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
@@ -591,14 +642,13 @@ bob:temperature a rdf:Property ;
 bob:temperature_setpoint a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:torque a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
 bob:waterInlet a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint .
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        s223:hasSystemConnectionPoint .
 
 bob:waterOutlet a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint .
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        s223:hasSystemConnectionPoint .
 
 bob:windows a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -670,6 +720,13 @@ p223:ActiveInactive-Unknown a p223:ActiveInactive-Unknown,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind .
+
+p223:Actuator a rdfs:Class ;
+    rdfs:label "bob.equipments._Actuator" ;
+    rdfs:comment """
+    This version of an actuator is meant to be the opposite of a sensor
+    It relates properties to an action
+    It can be located with hasActuationLocation (mirror of hasMeasurementLocation)
 
 p223:Air-CompressedAir a p223:Air-CompressedAir,
         s223:EnumerationKind,
@@ -1078,6 +1135,15 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
     rdfs:subClassOf p223:EnumerationKind-ManualAuto,
         s223:EnumerationKind .
 
+p223:MechanicalConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.mechanical.MechanicalConnectionPoint" .
+
+p223:Medium-MechanicalCoupling a p223:Medium-MechanicalCoupling,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
 p223:MotionNoMotion-Motion a p223:MotionNoMotion-Motion,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -1420,12 +1486,21 @@ p223:YesNo-Yes a p223:YesNo-Yes,
     rdfs:subClassOf p223:EnumerationKind-YesNo,
         s223:EnumerationKind .
 
+p223:actuatesProperty a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
 p223:data_rate a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+p223:hasActuationLocation a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
 p223:hasProtocol a rdf:Property .
 
 p223:hasSignalType a rdf:Property .
+
+p223:isCommandedBy a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 qudt:hasQuantityKind a rdf:Property .
 
