@@ -35,7 +35,7 @@ from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from ...core import Device, BOB, P223, QUANTITYKIND, UNIT
+from ...core import BOB, P223, QUANTITYKIND, UNIT, Device
 
 _namespace = BOB
 

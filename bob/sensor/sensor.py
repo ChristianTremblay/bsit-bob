@@ -5,25 +5,25 @@ from typing import Any, List, Union
 from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 
 from ..core import (
+    BOB,
     INCLUDE_INVERSE,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
     Connection,
     ConnectionPoint,
     Device,
     DomainSpace,
     ExternalReference,
+    LocationReference,
     Medium,
     Node,
     Property,
     PropertyReference,
-    LocationReference,
     Segment,
     Substance,
-    BOB,
     logging,
-    P223,
-    QUANTITYKIND,
-    S223,
-    UNIT,
 )
 from ..multimethods import multimethod
 from ..property import (

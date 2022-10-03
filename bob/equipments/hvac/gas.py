@@ -4,7 +4,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import Device, PropertyReference, BOB, enum, P223, QUANTITYKIND, S223, UNIT
+from ...core import BOB, P223, QUANTITYKIND, S223, UNIT, Device, PropertyReference, enum
 from ...property import QuantifiableObservableProperty
 from ...sensor import Sensor
 from ...sensor.gas import (

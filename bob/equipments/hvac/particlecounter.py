@@ -5,7 +5,7 @@ from rdflib import URIRef
 from bob.properties.states import NormalAlarmStatus
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import Device, BOB, enum, P223, S223
+from ...core import BOB, P223, S223, Device, enum
 from ...sensor import Sensor
 from ...sensor.particle import (
     CoarseParticulateSensor,

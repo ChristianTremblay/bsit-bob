@@ -10,15 +10,16 @@ from bob.connections.water import (
     WaterOutletConnectionPoint,
 )
 from bob.core import (
+    P223,
+    UNIT,
     Device,
     System,
     bind_model_namespace,
     dump,
     get_datagraph,
-    P223,
-    UNIT,
 )
 from bob.equipments.architectural import Window
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipments.hvac.boiler import ElectricalHotWaterBoiler, HotWaterBoiler
 from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.equipments.hvac.damper import ElectricalActuatedDamper
@@ -26,14 +27,13 @@ from bob.equipments.hvac.fan import Fan
 from bob.equipments.hvac.filter import Filter
 from bob.equipments.hvac.pump import Pump
 from bob.equipments.hvac.valve import TwoWayValve
+from bob.equipments.hvac.vav import VAV
 from bob.equipments.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace, LightingZone
 from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.vav import VAV
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

@@ -1,5 +1,6 @@
 from rdflib import URIRef
-from ..core import S223, P223, Node
+
+from ..core import P223, S223, Node
 
 _namespace = P223
 

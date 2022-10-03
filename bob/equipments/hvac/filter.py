@@ -1,7 +1,7 @@
 from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import Device, PropertyReference, BOB, P223, S223
+from ...core import BOB, P223, S223, Device, PropertyReference
 
 _namespace = BOB
 

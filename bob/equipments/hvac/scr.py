@@ -10,7 +10,7 @@ from ...connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     ModulationSignalInletConnectionPoint,
 )
-from ...core import Device, BOB, P223, S223
+from ...core import BOB, P223, S223, Device
 
 _namespace = BOB
 

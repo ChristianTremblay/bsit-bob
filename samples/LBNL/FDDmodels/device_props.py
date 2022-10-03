@@ -5,12 +5,6 @@ Dual Duct AHU
 from __future__ import annotations
 
 from pathlib import Path
-
-from bob.connections.electricity import (
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
-)
-
 from typing import Any
 
 from header import lbnl_header
@@ -21,30 +15,31 @@ from bob.connections.air import (
     AirInletSystemConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
+from bob.connections.electricity import (
+    Electricity_575V_60HzInletConnectionPoint,
+    Electricity_575V_60HzOutletConnectionPoint,
+)
 from bob.core import *
+from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
+from bob.equipments.archives.heatingcoil import HotWaterCoil2
 from bob.equipments.hvac.damper import Damper
 from bob.equipments.hvac.fan import Fan
 from bob.equipments.hvac.filter import Filter
-
-from bob.sensor.pressure import DifferentialStaticPressureSensor
-from bob.sensor.humidity import AirHumiditySensor
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
-from bob.property import QuantifiableObservableProperty
-from bob.externalreference.timeseries import TimeSeriesReference
-
-# not sure of the difference between differential pressure and differential static pressure in this case
-
-from bob.properties.ratio import PercentAngularVelocity
-from bob.properties.electricity import ElectricPowerW
 from bob.equipments.hvac.vfd import VFD
+from bob.externalreference.timeseries import TimeSeriesReference
+from bob.properties.electricity import ElectricPowerW
+from bob.properties.ratio import PercentAngularVelocity
 from bob.property import QuantifiableObservableProperty, Setpoint
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.humidity import AirHumiditySensor
-from bob.sensor.pressure import AirDifferentialStaticPressureSensor
+from bob.sensor.pressure import (
+    AirDifferentialStaticPressureSensor,
+    DifferentialStaticPressureSensor,
+)
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
-from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
-from bob.equipments.archives.heatingcoil import HotWaterCoil2
+
+# not sure of the difference between differential pressure and differential static pressure in this case
+
 
 # not sure of the difference between differential pressure and differential static pressure in this case
 

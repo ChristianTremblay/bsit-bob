@@ -4,8 +4,8 @@ from header import sample_header
 
 from bob.core import bind_model_namespace, dump
 from bob.equipments.hvac.damper import Damper
-from bob.space.hvac import HVACSpace, HVACZone
 from bob.equipments.hvac.vav import VAV
+from bob.space.hvac import HVACSpace, HVACZone
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

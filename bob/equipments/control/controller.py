@@ -1,34 +1,31 @@
 from pyclbr import Function
-from typing import Dict, Any
+from typing import Any, Dict
 
 from rdflib import URIRef
+
 from bob.functions import FunctionBlock
 from bob.multimethods import multimethod
-
 from bob.properties import Nm, Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import (
-    RS485BidirectionalConnectionPoint,
     Electricity_24V_60HzInletConnectionPoint,
+    RS485BidirectionalConnectionPoint,
 )
-
-from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
-
 from ...core import (
+    BOB,
     INCLUDE_INVERSE,
-    data_graph,
+    P223,
+    S223,
     Device,
     Property,
     PropertyReference,
+    data_graph,
     logging,
-    BOB,
-    P223,
-    S223,
     template_update,
 )
-
 from ...externalreference import NetworkProfile
+from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 
 _namespace = P223
 

@@ -7,15 +7,17 @@ from bob.connections.air import *
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.water import WaterConnection
 from bob.core import (
+    UNIT,
     Device,
     Junction,
     System,
     bind_model_namespace,
     dump,
     get_datagraph,
-    UNIT,
 )
 from bob.equipments.architectural import Window
+from bob.equipments.electricity.vfd import VFD
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipments.hvac.chiller import AgnosticChiller
 from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
 from bob.equipments.hvac.compressor import AirCompressor
@@ -32,7 +34,7 @@ from bob.equipments.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
 from bob.equipments.hvac.humidifier import Humidifier, SteamPipe
 from bob.equipments.hvac.pump import Pump
 from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.equipments.electricity.vfd import VFD
+from bob.equipments.hvac.vav import VAV
 from bob.equipments.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
@@ -51,8 +53,6 @@ from bob.space.physical import (
     Roof,
     Room,
 )
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.vav import VAV
 
 # from bob.externalreference.BACNET import BACnetReference, NiagaraORDReference
 

@@ -11,7 +11,7 @@ from ...connections.electricity import (
     ElectricalOutletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
 )
-from ...core import Device, PropertyReference, BOB, P223, S223
+from ...core import BOB, P223, S223, Device, PropertyReference
 
 _namespace = BOB
 

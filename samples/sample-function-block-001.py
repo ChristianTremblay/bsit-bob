@@ -6,7 +6,7 @@ from pathlib import Path
 
 from header import sample_header
 
-from bob.core import bind_model_namespace, dump, EX, Property
+from bob.core import EX, Property, bind_model_namespace, dump
 from bob.functions import FunctionBlock, G36AnalogInput, G36AnalogOutput
 
 model_name = Path(__file__).stem

@@ -1,6 +1,6 @@
 from rdflib import Literal, URIRef
 
-from ..core import ExternalReference, BOB, P223, S223
+from ..core import BOB, P223, S223, ExternalReference
 
 _namespace = P223
 

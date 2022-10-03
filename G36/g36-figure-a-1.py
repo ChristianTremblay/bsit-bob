@@ -6,7 +6,6 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, Dict
-from bob.enum import AnalogSignalTypeEnum
 
 from header import g36_header
 
@@ -31,6 +30,7 @@ from bob.core import (
     bind_model_namespace,
     dump,
 )
+from bob.enum import AnalogSignalTypeEnum
 from bob.equipments.architectural import Window
 from bob.equipments.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from bob.equipments.control.controller import Controller

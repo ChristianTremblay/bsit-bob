@@ -1,7 +1,7 @@
 from pathlib import Path
-from rdflib import Literal
 
 from header import ttl_test_header
+from rdflib import Literal
 
 from bob.connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,

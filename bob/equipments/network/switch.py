@@ -11,15 +11,15 @@ from ...connections.electricity import (
     EthernetBidirectionalConnectionPoint,
 )
 from ...core import (
-    ConnectionPoint,
-    Device,
-    PropertyReference,
     BOB,
     P223,
     QUANTITYKIND,
     S223,
-    template_update,
     UNIT,
+    ConnectionPoint,
+    Device,
+    PropertyReference,
+    template_update,
 )
 from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus

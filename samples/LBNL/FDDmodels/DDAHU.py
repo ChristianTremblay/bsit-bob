@@ -14,50 +14,47 @@ from header import lbnl_header
 
 from bob.connections.air import (
     AirConnection,
-    AirInletSystemConnectionPoint,
-    AirOutletSystemConnectionPoint,
     AirInletConnectionPoint,
+    AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
+    AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
 from bob.core import (
+    HVAC,
+    Air,
+    Device,
+    DomainSpace,
     Junction,
     System,
     bind_model_namespace,
     dump,
+    p223,
     quantitykind,
     unit,
-    Device,
-    p223,
-    DomainSpace,
-    HVAC,
-    Air,
 )
+from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
+from bob.equipments.archives.heatingcoil import HotWaterCoil2
 
 # from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipments.hvac.damper import Damper
 from bob.equipments.hvac.fan import Fan
 from bob.equipments.hvac.filter import Filter
 from bob.equipments.hvac.vfd import VFD
-from bob.property import QuantifiableObservableProperty
-
 from bob.externalreference.timeseries import TimeSeriesReference
-
-# not sure of the difference between differential pressure and differential static pressure in this case
-
-from bob.properties.ratio import PercentAngularVelocity, Percent
-from bob.properties.electricity import ElectricPowerW, ElectricPowerkW, ElectricPower
-
+from bob.properties.electricity import ElectricPower, ElectricPowerkW, ElectricPowerW
+from bob.properties.ratio import Percent, PercentAngularVelocity
+from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.pressure import AirDifferentialPressureSensor, AirStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 
-from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
-from bob.equipments.archives.heatingcoil import HotWaterCoil2
+# not sure of the difference between differential pressure and differential static pressure in this case
+
 
 # not sure of the difference between differential pressure and differential static pressure in this case
 

@@ -1,6 +1,9 @@
 from rdflib import URIRef
 
 from ..core import (
+    BOB,
+    P223,
+    S223,
     BidirectionalConnectionPoint,
     BidirectionalSystemConnectionPoint,
     Connection,
@@ -15,10 +18,7 @@ from ..core import (
     OutletZoneConnectionPoint,
     SystemConnectionPoint,
     ZoneConnectionPoint,
-    BOB,
     enum,
-    P223,
-    S223,
 )
 
 _namespace = BOB

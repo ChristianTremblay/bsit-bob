@@ -2,7 +2,7 @@ from pathlib import Path
 
 from header import sample_header
 
-from bob.core import Device, bind_model_namespace, dump, QUANTITYKIND, QUDT, UNIT
+from bob.core import QUANTITYKIND, QUDT, UNIT, Device, bind_model_namespace, dump
 from bob.property import QuantifiableObservableProperty, QuantifiableProperty
 
 model_name = Path(__file__).stem

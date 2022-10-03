@@ -3,8 +3,8 @@ from typing import Any
 from rdflib import URIRef
 
 from bob import core
-from bob.properties.states import DaylightDetected, OnOffStatus
 from bob.connections.electricity import OnOffSignalOutletConnectionPoint
+from bob.properties.states import DaylightDetected, OnOffStatus
 
 from ..core import (
     BOB,

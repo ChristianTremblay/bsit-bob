@@ -1,4 +1,4 @@
-from bob.core import S223, P223, Device, Property
+from bob.core import P223, S223, Device, Property
 
 _namespace = S223
 

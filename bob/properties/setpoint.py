@@ -1,6 +1,6 @@
 from rdflib import XSD, Literal, URIRef
 
-from ..core import EnumerationKind, Node, BOB, P223, S223
+from ..core import BOB, P223, S223, EnumerationKind, Node
 from ..property import QuantifiableProperty
 
 _namespace = BOB

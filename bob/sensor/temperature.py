@@ -3,15 +3,15 @@ from typing import Any
 from rdflib import URIRef
 
 from ..core import (
-    Air,
-    Medium,
-    PropertyReference,
-    Water,
     BOB,
     P223,
     QUANTITYKIND,
     S223,
     UNIT,
+    Air,
+    Medium,
+    PropertyReference,
+    Water,
 )
 from ..properties import Temperature
 from ..property import QuantifiableProperty, Setpoint

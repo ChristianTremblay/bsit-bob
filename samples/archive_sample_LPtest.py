@@ -14,6 +14,8 @@ from bob.connections.air import (
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import (
+    S223,
+    UNIT,
     Connection,
     ConnectionPoint,
     Device,
@@ -26,15 +28,13 @@ from bob.core import (
     Zone,
     bind_model_namespace,
     dump,
-    S223,
-    UNIT,
 )
+from bob.enum import Exhaust, Supply
 from bob.equipments.hvac import Fan
 from bob.equipments.hvac.airflowstation import AirFlowMonitor
 from bob.equipments.hvac.coil import ChilledWaterCoil
 from bob.equipments.hvac.damper import Damper
 from bob.equipments.hvac.filter import Filter
-from bob.enum import Exhaust, Supply
 from bob.properties.temperature import Temperature
 from bob.space.hvac import HVACZone
 

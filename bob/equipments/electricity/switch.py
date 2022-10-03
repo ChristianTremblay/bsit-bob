@@ -8,13 +8,13 @@ from bob.property import ActuatableProperty
 
 from ...connections.electricity import *
 from ...core import (
+    BOB,
+    P223,
+    S223,
     Device,
     Node,
     PropertyReference,
-    BOB,
     logging,
-    P223,
-    S223,
     template_update,
 )
 from ...properties.time import Hour

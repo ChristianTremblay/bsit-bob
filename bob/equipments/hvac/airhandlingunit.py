@@ -10,7 +10,7 @@ from ...connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
-from ...core import Device, System, BOB, P223, S223
+from ...core import BOB, P223, S223, Device, System, template_update
 
 _namespace = BOB
 
@@ -29,9 +29,11 @@ class AirHandlingUnit(System):
     exhaustAirOutlet: AirOutletSystemConnectionPoint
     electricalInlet: Electricity_575V_60HzSystemInletConnectionPoint
 
-    def __init__(self, config: Dict = {}, **kwargs) -> None:
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update(ahu_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        logging.debug(f"AirHandlingUnit.__init__ {_config} {kwargs}")
+        super().__init__(_config, **kwargs)
 
 
 class FanCoil(System):

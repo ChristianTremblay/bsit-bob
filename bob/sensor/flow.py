@@ -5,16 +5,16 @@ from rdflib import URIRef
 from bob import core
 
 from ..core import (
-    Air,
-    Medium,
-    PropertyReference,
-    Water,
     BOB,
-    enum,
     P223,
     QUANTITYKIND,
     S223,
     UNIT,
+    Air,
+    Medium,
+    PropertyReference,
+    Water,
+    enum,
 )
 from ..properties import Flow
 from ..property import QuantifiableProperty, Setpoint

@@ -3,18 +3,18 @@ from typing import Any
 from rdflib import URIRef
 
 from ..core import (
-    Air,
-    Electricity,
-    Medium,
-    Node,
-    PropertyReference,
-    LocationReference,
-    Water,
     BOB,
     P223,
     QUANTITYKIND,
     S223,
     UNIT,
+    Air,
+    Electricity,
+    LocationReference,
+    Medium,
+    Node,
+    PropertyReference,
+    Water,
 )
 from ..properties import Amps, OnOffStatus, Volts
 from ..property import ObservableProperty, QuantifiableProperty

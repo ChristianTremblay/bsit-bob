@@ -32,13 +32,13 @@ from bob.connections.water import (
     WaterOutletConnectionPoint,
 )
 from bob.core import (
+    QUANTITYKIND,
+    UNIT,
     Device,
     PropertyReference,
     System,
     bind_model_namespace,
     dump,
-    QUANTITYKIND,
-    UNIT,
 )
 from bob.equipments.architectural import Window
 from bob.equipments.electricity.starter import MotorStarter
@@ -50,11 +50,11 @@ from bob.equipments.hvac.gas import GasMonitor
 from bob.equipments.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve
 from bob.functions import (
-    FunctionBlock,
     AnalogInput,
     AnalogOutput,
     BinaryInput,
     BinaryOutput,
+    FunctionBlock,
 )
 from bob.functions.g36 import G36Sequence
 from bob.functions.occupancy import OccupancyFunction

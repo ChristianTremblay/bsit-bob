@@ -5,15 +5,15 @@ from typing import Any
 from rdflib import URIRef
 
 from ..core import (
-    Air,
-    Medium,
-    PropertyReference,
     BOB,
-    enum,
     P223,
     QUANTITYKIND,
     S223,
     UNIT,
+    Air,
+    Medium,
+    PropertyReference,
+    enum,
 )
 from ..properties import RelativeHumidity
 from ..property import (

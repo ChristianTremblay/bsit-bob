@@ -1,6 +1,9 @@
 from rdflib import URIRef
 
 from ..core import (
+    BOB,
+    P223,
+    S223,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -10,9 +13,6 @@ from ..core import (
     OutletSystemConnectionPoint,
     SystemConnectionPoint,
     Water,
-    BOB,
-    P223,
-    S223,
 )
 
 _namespace = BOB

@@ -1,22 +1,22 @@
 from typing import Dict
-from bob.equipments.electricity import _MotorStarter
+
 from bob.enum import HandOffAutoEnum
+from bob.equipments.electricity import _MotorStarter
 from bob.properties.electricity import ElectricPower
 from bob.properties.ratio import Percent, PercentCommand
-
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import *
 from ...core import (
-    Device,
-    logging,
-    Node,
     BOB,
     P223,
     S223,
-    Property,
     UNIT,
+    Device,
+    Node,
+    Property,
     PropertyReference,
+    logging,
     template_update,
 )
 from ...sensor.electricity import CurrentBinarySensor

@@ -12,13 +12,13 @@ from ...connections.electricity import (
     EthernetBidirectionalConnectionPoint,
 )
 from ...core import (
-    ConnectionPoint,
-    Device,
-    logging,
-    Property,
     BOB,
     P223,
     S223,
+    ConnectionPoint,
+    Device,
+    Property,
+    logging,
     template_update,
 )
 from ...properties import (

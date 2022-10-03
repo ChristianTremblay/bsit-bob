@@ -13,12 +13,12 @@ from bob.connections.air import (
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import (
+    S223,
+    UNIT,
     System,
     SystemConnectionPoint,
     bind_model_namespace,
     dump,
-    S223,
-    UNIT,
 )
 from bob.equipments.hvac.coil import ElectricalHeatingCoil
 from bob.equipments.hvac.fan import Fan

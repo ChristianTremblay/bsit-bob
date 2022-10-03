@@ -11,6 +11,9 @@ from rdflib import RDF, RDFS, XSD, BNode, Literal, Namespace, URIRef
 from bob.connections.air import *
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import (
+    QUANTITYKIND,
+    S223,
+    UNIT,
     Junction,
     Node,
     Segment,
@@ -21,18 +24,15 @@ from bob.core import (
     dump,
     enum,
     get_datagraph,
-    QUANTITYKIND,
-    S223,
-    UNIT,
 )
+from bob.enum import Exhaust, Supply
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipments.hvac.coil import ChilledWaterCoil
 from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.equipments.hvac.fan import Fan
-from bob.enum import Exhaust, Supply
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
 
 # from header import g36_header
 

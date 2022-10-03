@@ -3,7 +3,10 @@ Roley - Brick Schema Classes for Bob
 """
 
 from rdflib import URIRef
-from bob.core import bind_namespace, Node as _Node, Device as _Device
+
+from bob.core import Device as _Device
+from bob.core import Node as _Node
+from bob.core import bind_namespace
 from bob.equipments.hvac.fan import Fan as _Fan
 
 _namespace = BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")

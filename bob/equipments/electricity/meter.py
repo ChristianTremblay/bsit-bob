@@ -15,7 +15,7 @@ from bob.properties.electricity import (
 from bob.sensor.electricity import CurrentAnalogSensor, VoltageSensor
 
 from ...connections.electricity import *
-from ...core import Device, Node, BOB, P223, S223, template_update, UNIT
+from ...core import BOB, P223, S223, UNIT, Device, Node, template_update
 
 _namespace = BOB
 

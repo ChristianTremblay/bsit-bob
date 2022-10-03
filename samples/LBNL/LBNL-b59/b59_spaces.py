@@ -3,48 +3,41 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+# from bob.domain import *
+import pandas as pd
+from b59_HVAC import *
+from header import lbnl_header
+
 from bob.connections.air import *
+from bob.connections.water import *
 from bob.core import (
+    HVAC,
+    Air,
+    Device,
+    DomainSpace,
     Junction,
     System,
     bind_model_namespace,
     dump,
+    p223,
     quantitykind,
     unit,
-    Device,
-    p223,
-    DomainSpace,
-    HVAC,
-    Air,
 )
-
-
-from bob.equipments.archives.coolingcoil import ChilledWaterCoil2, ChilledWaterCoil
+from bob.equipments.archives.coolingcoil import ChilledWaterCoil, ChilledWaterCoil2
 from bob.equipments.archives.heatingcoil import HotWaterCoil2
-from bob.property import *
-
+from bob.equipments.hvac.airflowstation import AirFlowMonitor
 from bob.equipments.hvac.damper import Damper
 from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.vfd import VFD
 from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.airflowstation import AirFlowMonitor
-from bob.connections.water import *
-from bob.role import (
-    Exhaust,
-    Supply,
-    Return,
-)
-from b59_HVAC import *
+from bob.equipments.hvac.vfd import VFD
+from bob.property import *
+from bob.role import Exhaust, Return, Supply
 
 # from bob.signal import(
 #     AnalogOut,
 #     AnalogIn,
 #     )
 
-# from bob.domain import *
-import pandas as pd
-
-from header import lbnl_header
 
 # model_name = Path(__file__).stem
 model_name = "b59"

@@ -4,15 +4,9 @@ from typing import Any
 
 from rdflib import XSD, Literal, URIRef
 
-from ..core import (
-    bind_namespace,
-    Device,
-    ExternalReference,
-    Node,
-)
+from ..core import Device, ExternalReference, Node, bind_namespace
 from ..equipments.control.controller import Controller
 from . import NetworkProfile
-
 
 BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, dump, UNIT
+from bob.core import UNIT, bind_model_namespace, dump
 from bob.properties.physical import Area
 from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
 

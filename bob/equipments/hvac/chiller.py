@@ -19,7 +19,7 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import Device, BOB, P223, S223
+from ...core import BOB, P223, S223, Device
 from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
 
 _namespace = BOB

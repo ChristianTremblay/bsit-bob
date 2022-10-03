@@ -30,14 +30,15 @@ from bob.connections.water import (
     HotWaterOutletConnectionPoint,
 )
 from bob.core import (
+    QUANTITYKIND,
+    UNIT,
     Device,
     PropertyReference,
     System,
     bind_model_namespace,
     dump,
-    QUANTITYKIND,
-    UNIT,
 )
+from bob.equipments.electricity.vfd import VFD
 from bob.equipments.hvac.actuator import ElectricalProportionalActuator
 from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
@@ -50,7 +51,6 @@ from bob.equipments.hvac.stats import (
     NetworkThermostat,
 )
 from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.equipments.electricity.vfd import VFD
 from bob.functions import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from bob.functions.g36 import G36Sequence
 from bob.properties import Flow, PercentCommand, Temperature

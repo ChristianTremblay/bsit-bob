@@ -6,19 +6,19 @@ from bob import core
 from bob.connections.electricity import OnOffSignalOutletConnectionPoint
 
 from ..core import (
-    Air,
-    ExternalReference,
-    Medium,
-    Node,
-    PropertyReference,
-    LocationReference,
-    Water,
     BOB,
-    enum,
     P223,
     QUANTITYKIND,
     S223,
     UNIT,
+    Air,
+    ExternalReference,
+    LocationReference,
+    Medium,
+    Node,
+    PropertyReference,
+    Water,
+    enum,
 )
 from ..properties import DifferentialStaticPressure
 from ..property import QuantifiableProperty, Setpoint

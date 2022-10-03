@@ -7,15 +7,14 @@ Load in a collection of Turtle files, optionally run an inference engine,
 and prompt for a node.
 """
 
-import sys
-import logging
 import argparse
+import logging
+import sys
 
-from rdflib import OWL, RDF, RDFS, Graph, Namespace, URIRef
-
+import ontoenv
 import owlrl
 import pyshacl
-import ontoenv
+from rdflib import OWL, RDF, RDFS, Graph, Namespace, URIRef
 
 logger = logging.getLogger(__name__)
 

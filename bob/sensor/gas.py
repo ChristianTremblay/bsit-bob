@@ -5,17 +5,17 @@ from typing import Any
 from rdflib import URIRef
 
 from ..core import (
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
     Air,
     EnumerationKind,
     Medium,
     Node,
     PropertyReference,
     Substance,
-    BOB,
-    P223,
-    QUANTITYKIND,
-    S223,
-    UNIT,
 )
 from ..properties import GasConcentration
 from ..property import QuantifiableProperty, Setpoint

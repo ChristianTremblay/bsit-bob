@@ -8,12 +8,12 @@ from pathlib import Path
 from header import sample_header
 
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import bind_model_namespace, dump, UNIT
+from bob.core import UNIT, bind_model_namespace, dump
 from bob.equipments.hvac.coil import ElectricalHeatingCoil
 from bob.equipments.hvac.fan import Fan
 from bob.equipments.lighting.light import Luminaire
-from bob.sensor.temperature import AirTemperatureSensor
 from bob.sensor.motion import OccupancySensor
+from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace
 from bob.space.physical import Building, Floor, Office, Roof

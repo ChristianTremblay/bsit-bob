@@ -9,18 +9,11 @@ import logging
 import os
 import sys
 from collections import defaultdict
-from typing import Any, Dict, Optional, Set, TextIO, Tuple, TypeVar, Union, cast
+from typing import (Any, Dict, Optional, Set, TextIO, Tuple, TypeVar, Union,
+                    cast)
 
-from rdflib import (
-    RDF,
-    RDFS,
-    XSD,
-    BNode,
-    Graph,
-    Literal,  # type: ignore
-    Namespace,
-    URIRef,
-)
+from rdflib import Literal  # type: ignore
+from rdflib import RDF, RDFS, XSD, BNode, Graph, Namespace, URIRef
 
 # logging
 log_level = os.getenv("BOB_LOG", "WARNING")

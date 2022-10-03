@@ -31,12 +31,12 @@ from bob.core import (
     contains_mm,
     dump,
 )
+from bob.equipments.electricity.vfd import VFD
 from bob.equipments.hvac.coil import HotWaterCoil
 from bob.equipments.hvac.fan import Fan
 from bob.equipments.hvac.filter import Filter
 from bob.equipments.hvac.stats import HighStaticPressureStat
 from bob.equipments.hvac.valve import TwoWayValve
-from bob.equipments.electricity.vfd import VFD
 from bob.externalreference.BACNET import BACnetDevice, BACnetReference
 from bob.functions import InputConnector
 
