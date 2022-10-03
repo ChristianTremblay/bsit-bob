@@ -1200,7 +1200,7 @@ class System(Container, Node):
     _class_iri: URIRef = S223.System
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
-    
+
     _serves_zones: Dict[str, Zone]
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
@@ -3283,3 +3283,4 @@ Electricity = Medium("Electricity")
 NaturalGas = Medium("NaturalGas")
 Glycol = Medium("Glycol")
 Occupant = Medium("Occupant")
+MechanicalCoupling = Medium("MechanicalCoupling", _alt_namespace=P223)
