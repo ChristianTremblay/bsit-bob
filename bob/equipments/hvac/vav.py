@@ -35,8 +35,8 @@ vav_system_template = {
             "comment": "Temperature of space",
         },
     },
-    "devices": {
-        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"}
+    "equipments": {
+        ("ACTDPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"}
     },
 }
 
@@ -53,8 +53,8 @@ vav_dual_template = {
             "comment": "Temperature of space",
         },
     },
-    "devices": {
-        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
+    "equipments": {
+        ("ACTDPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper with its actuator"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Hot Water Coil"},
         ("HTGVLV", TwoWayActuatedProportionalValve): {"comment": "VAV Box Damper"},
         ("FAN", Fan): {"comment": "Fan"},
@@ -74,8 +74,8 @@ vav_withreheat_template = {
             "comment": "Temperature of space",
         },
     },
-    "devices": {
-        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
+    "equipments": {
+        ("ACTDPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
         ("HWC", HotWaterCoil): {"comment": "VAV Hot Water Coil"},
     },
 }
@@ -103,14 +103,14 @@ class VAV_Simple(System):
     def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["DPR"].airInlet
-        self.airOutlet.mapsTo = self["DPR"].airOutlet
+        self.airInlet.mapsTo = self["ACTDPR"].airInlet
+        self.airOutlet.mapsTo = self["ACTDPR"].airOutlet
         self.zoneTemperature = self["ZN-T"].observesProperty
         # self.damperPosition = self['DPR'].position
         # self.airFlow = self['SA-F'].observesProperty
 
-        self["SA-F"].hasMeasurementLocation = self["DPR"].airOutlet
-        self["DA-T"].hasMeasurementLocation = self["DPR"].airOutlet
+        self["SA-F"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
+        self["DA-T"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
 
 
 class VAV_Dual(System):
@@ -126,14 +126,14 @@ class VAV_Dual(System):
     def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["DPR"].airInlet
-        self.airOutlet.mapsTo = self["DPR"].airOutlet
+        self.airInlet.mapsTo = self["ACTDPR"]["damper"].airInlet
+        self.airOutlet.mapsTo = self["ACTDPR"]["damper"].airOutlet
         self.zoneTemperature = self["ZN-T"].observesProperty
         # self.damperPosition = self['DPR'].position
         # self.airFlow = self['SA-F'].observesProperty
 
-        self["SA-F"].hasMeasurementLocation = self["DPR"].airOutlet
-        self["DA-T"].hasMeasurementLocation = self["DPR"].airOutlet
+        self["SA-F"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
+        self["DA-T"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
 
 
 class VAV_Reheat(System):
@@ -147,12 +147,12 @@ class VAV_Reheat(System):
     def __init__(self, config: Dict = vav_withreheat_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["DPR"].airInlet
-        self.airOutlet.mapsTo = self["DPR"].airOutlet
+        self.airInlet.mapsTo = self["ACTDPR"]["damper"].airInlet
+        self.airOutlet.mapsTo = self["ACTDPR"]["damper"].airOutlet
         # self.damperPosition = self['DPR'].position
         # self.airFlow = self['SA-F'].observesProperty
 
-        self["SA-F"].hasMeasurementLocation = self["DPR"].airOutlet
+        self["SA-F"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
         self["DA-T"].hasMeasurementLocation = self["HWC"].airOutlet
 
-        self["DPR"] >> self["HWC"]
+        self["DPR"]["damper"] >> self["HWC"]
