@@ -32,13 +32,13 @@ from ...connections.water import (
     WaterOutletConnectionPoint,
 )
 from ...core import (
-    Device,
-    logging,
-    Node,
-    PropertyReference,
     BOB,
     P223,
     S223,
+    Device,
+    Node,
+    PropertyReference,
+    logging,
     template_update,
 )
 from ...properties import Gallons, Percent
@@ -175,7 +175,7 @@ class TwoWayActuatedProportionalValve(TwoWayValve):
         logging.debug(f"TwoWayActuatedProportionalValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
-        self.feedback = self["actuator"]["feedback"]
+        self.feedback = self["actuator"]["position_feedback"]
         self.torque = self["actuator"]["torque"]
         # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
@@ -195,8 +195,8 @@ class TwoWayActuatedOnOffValve(TwoWayValve):
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(f"TwoWayActuatedOnOffValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
-        self.feedbackOpen = self["actuator"]["feedbackOpen"]
-        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.feedbackOpen = self["actuator"]["is_open"]
+        self.feedbackClose = self["actuator"]["is_closed"]
         self.command = self["actuator"]["command"]
         # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
@@ -221,7 +221,7 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayValveMixing):
         )
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
-        self.feedback = self["actuator"]["feedback"]
+        self.feedback = self["actuator"]["position_feedback"]
         # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
@@ -240,8 +240,8 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(f"ThreeWayMixingActuatedOnOffValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
-        self.feedbackOpen = self["actuator"]["feedbackOpen"]
-        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.feedbackOpen = self["actuator"]["is_open"]
+        self.feedbackClose = self["actuator"]["is_closed"]
         # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
@@ -265,7 +265,7 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayValveDiverting):
         )
         super().__init__(_config, **kwargs)
         self.command = self["actuator"]["command"]
-        self.feedback = self["actuator"]["feedback"]
+        self.feedback = self["actuator"]["position_feedback"]
         # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
         # TODO : ExtRef of position
@@ -289,8 +289,8 @@ class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
             f"ThreeWayDivertingActuatedOnOffValve.__init__ {_config} {kwargs}"
         )
         super().__init__(_config, **kwargs)
-        self.feedbackOpen = self["actuator"]["feedbackOpen"]
-        self.feedbackClose = self["actuator"]["feedbackClose"]
+        self.feedbackOpen = self["actuator"]["is_open"]
+        self.feedbackClose = self["actuator"]["is_closed"]
         self.command = self["actuator"]["command"]
         # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
         self["actuator"].actuatesProperty = self["position"]
