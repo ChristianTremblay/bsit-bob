@@ -1,9 +1,12 @@
-from typing import Dict
+from typing import Dict, Union
 
 from rdflib import URIRef
 
+from bob.connections.mechanical import MechanicalOutletConnectionPoint
+from bob.enum import OpenCloseEnum
 from bob.properties import Nm, Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
+from bob.sensor.sensor import Sensor
 
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
@@ -15,85 +18,158 @@ from ...connections.air import (
 )
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    ModulationSignalInletConnectionPoint,
-    ModulationSignalOutletConnectionPoint,
     Electricity_24V_60HzInletConnectionPoint,
     Electricity_120V_60HzInletConnectionPoint,
+    ModulationSignalInletConnectionPoint,
+    ModulationSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
+    OnOffSignalOutletConnectionPoint,
 )
 from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
 from ...core import (
-    Device,
-    Property,
-    PropertyReference,
     BOB,
     P223,
     S223,
+    Device,
+    Property,
+    PropertyReference,
     template_update,
 )
-from . import _Actuator
+from .. import _Actuator
 
 _namespace = BOB
 
-# ACTUATORS
+# VALVE AND DAMPER ACTUATORS
+
+"""
+  |-------------------s223:hasConnectionPoint-----(24VAC electricalInput CNX)
+  |   |---------------s223:hasConnectionPoint-----(0-10VDC Feedback Output) <-> E
+  |   |  |------------s223:hasConnectionPoint-----(0-10VDC Modulation signal CNX) <-> H                      ____________________
+  |   |  |   |--------s223:hasConnectionPoint-----(linkage coupling CNX  <-> G)--------hasConnectionPoint----|  Damper          |----s223:hasProperty---(position) <-> A
+  |   |  |   |   |----s223:hasConnectionPoint-----(Auxiliary position switch CNX) <-> F                      |  s223:Device     |----s223:hasProperty---(command) <-> B
+  |   |  |   |   |                                                                                           |                  |----s223:hasProperty---(feedback) <-> C
+  |   |  |   |   |                                                                                           |__________________|----s223:hasProperty---(other damper prop...)
+__|___|__|___|___|__                                                                                  
+|  Damper Actuator |------------s223:hasProperty--------(position) <-> A                                   
+|  s223:Device     |------------s223:hasProperty--------(command) <-> B
+|                  |------------s223:hasProperty--------(feedback) <-> C
+|                  |------------s223:hasProperty--------(is_open) <-> D1
+|__________________|------------s223:hasProperty--------(is_closed) <-> D2
+    |   |  |  |
+    |   |  |  |
+    |   |  |  |                     ____________________
+    |   |  |  |___s223:contains_____|  Position Act.   |---s223:isCommandedBy----------(command) <-> B
+    |   |  |                        |  P223:Actuator   |---p223:actuatesProperty-------(position) <-> A
+    |   |  |                        |__________________|---p223:hasActuationLocation---(mechanical coupling CNX) <-> G
+    |   |  |                        ____________________
+    |   |  |______s223:contains_____|  Position Sensor |
+    |   |                           |  s223:Sensor     |---s223:observesProperty----------(position) <-> A
+    |   |                           |__________________|---s223:hasMeasurementLocation----(mechanical coupling CNX) <-> G
+    |   |                           ____________________
+    |   |_________s223:contains_____|  Feedback Act.   |---s223:isCommandedBy----------(position) <-> A
+    |                               |  P223:Actuator   |---p223:actuatesProperty-------(feedback)  <-> C
+    |                               |__________________|---p223:hasActuationLocation---(0-10VDC Feedback Output) <-> E
+    |                               ____________________
+    |___________s223:contains_______|  Aux.Sw.Act. (2x)|---s223:isCommandedBy----------(position) <-> A
+                                    |  P223:Actuator   |---p223:actuatesProperty-------(is_open or is_close)  <-> D1&D2
+                                    |__________________|---p223:hasActuationLocation---(auxiliary position switch CNX) <-> F
+
+"""
+
+BasicActuator_template = {
+    "cp": {
+        "linkageOutlet": MechanicalOutletConnectionPoint,
+        "feedback_signal": ModulationSignalOutletConnectionPoint,
+        "open_auxswitch_signal": OnOffSignalOutletConnectionPoint,
+        "close_auxswitch_signal": OnOffSignalOutletConnectionPoint,
+    },
+    "properties": {
+        ("position", Percent): {},
+        ("position_feedback", Percent): {},
+        ("is_open", OnOffStatus): {},
+        ("is_closed", OnOffStatus): {},
+    },
+    "parts": {
+        ("positionActuator", _Actuator): {},
+        ("feedbackActuator", _Actuator): {},
+        ("auxiliary_switch_open_actuator", _Actuator): {},
+        ("auxiliary_switch_close_actuator", _Actuator): {},
+        ("position_sensor", Sensor): {},
+    },
+}
 
 
-class Actuator(_Actuator):
-    _class_iri = S223.Actuator
-    command: PercentCommand
-    # actuatesProperty: Property
-    feedback: Percent
-    torque: Nm
+class BaseActuator(Device):
+    _class_iri = S223.Device
+    command: Union[PercentCommand, OnOffCommand]
+    position: Percent
+    position_feedback: Union[Percent, OpenCloseEnum]
+    is_open: OnOffStatus
+    is_closed: OnOffStatus
 
-    def __init__(self, config: Dict = {}, **kwargs):
-        config["properties"] = config.get("properties", {})
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update(BasicActuator_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        self["positionActuator"].isCommandedBy = self["command"]
+        self["positionActuator"].actuatesProperty = self["position"]
+        self["positionActuator"].hasActuationLocation = self.linkageOutlet
+
+        self["feedbackActuator"].isCommandedBy = self["position"]
+        self["feedbackActuator"].actuatesProperty = self["position_feedback"]
+        self["feedbackActuator"].hasActuationLocation = self.feedback_signal
+
+        self["auxiliary_switch_open_actuator"].isCommandedBy = self["position"]
+        self["auxiliary_switch_open_actuator"].actuatesProperty = self["is_open"]
+        self[
+            "auxiliary_switch_open_actuator"
+        ].hasActuationLocation = self.open_auxswitch_signal
+
+        self["auxiliary_switch_close_actuator"].isCommandedBy = self["position"]
+        self["auxiliary_switch_close_actuator"].actuatesProperty = self["is_closed"]
+        self[
+            "auxiliary_switch_close_actuator"
+        ].hasActuationLocation = self.close_auxswitch_signal
+
+        self["position_sensor"].observesProperty = self["position"]
+        self["position_sensor"].hasMeasurementLocation = self.linkageOutlet
 
 
-class ProportionalActuator(Actuator):
-    _class_iri = S223.Actuator
-    command: PercentCommand
-    # actuatesProperty: PercentCommand
-    feedback: Percent
-
-    def __init__(self, config: Dict = {}, **kwargs):
-        config["properties"] = config.get("properties", {})
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
-
-
-class OnOffActuator(Actuator):
-    _class_iri = S223.Actuator
-    command: OnOffCommand
-    # actuatesProperty: OnOffCommand
-    feedbackOpen: OnOffStatus
-    feedbackClose: OnOffStatus
-
-    def __init__(self, config: Dict = {}, **kwargs):
-        config["properties"] = config.get("properties", {})
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
-
+"""
+ELECTRICAL PROPORTIONAL DAMPER/VALVE ACTUATOR
+"""
 
 ElectricalProportionalActuator_template = {
     "cp": {
         "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
         "proportional_signal": ModulationSignalInletConnectionPoint,
-        "feedback_signal": ModulationSignalOutletConnectionPoint,
     },
     "properties": {
-        # ("actuatesProperty", PercentCommand): {},
         ("command", PercentCommand): {},
-        ("feedback", Percent): {},
+        ("position_feedback", Percent): {},
+        ("is_open", OnOffStatus): {},
+        ("is_closed", OnOffStatus): {},
         ("torque", Nm): {},
     },
 }
 
 
+class ElectricalProportionalActuator(BaseActuator):
+    _class_iri = S223.Device
+    command: PercentCommand
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update(ElectricalProportionalActuator_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+
+
+"""
+ELECTRICAL ON/OFF DAMPER/VALVE ACTUATOR
+"""
 ElectricalOnOffActuator_template = {
     "cp": {
         "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
@@ -102,39 +178,31 @@ ElectricalOnOffActuator_template = {
     "properties": {
         # ("actuatesProperty", OnOffCommand): {},
         ("command", OnOffCommand): {},
-        ("feedbackOpen", OnOffStatus): {},
-        ("feedbackClose", OnOffStatus): {},
+        ("position_feedback", Percent): {},
+        ("is_open", OnOffStatus): {},
+        ("is_closed", OnOffStatus): {},
         ("torque", Nm): {},
     },
 }
 
 
-class ElectricalProportionalActuator(ProportionalActuator):
-    _class_iri = S223.Actuator
+class ElectricalOnOffActuator(BaseActuator):
+    _class_iri = S223.Device
+    command: OnOffCommand
 
-    def __init__(
-        self, config: Dict = ElectricalProportionalActuator_template, **kwargs
-    ):
-        _config = template_update(ElectricalProportionalActuator_template, config)
-        kwargs = {**_config.get("params", {}), **kwargs}
-        super().__init__(_config, **kwargs)
-
-
-class ElectricalOnOffActuator(OnOffActuator):
-    _class_iri = S223.Actuator
-
-    def __init__(self, config: Dict = ElectricalOnOffActuator_template, **kwargs):
+    def __init__(self, config: Dict = {}, **kwargs):
         _config = template_update(ElectricalOnOffActuator_template, config)
-        kwargs = {**_config.get("params", {}), **kwargs}
+        kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
 
 PneumaticProportionalActuator_template = {
     "cp": {},
     "properties": {
-        # ("actuatesProperty", PercentCommand): {},
         ("command", PercentCommand): {},
-        ("feedback", Percent): {},
+        ("position_feedback", Percent): {},
+        ("is_open", OnOffStatus): {},
+        ("is_closed", OnOffStatus): {},
         ("torque", Nm): {},
     },
 }
@@ -144,15 +212,16 @@ PneumaticOnOffActuator_template = {
     "properties": {
         # ("actuatesProperty", OnOffCommand): {},
         ("command", OnOffCommand): {},
-        ("feedbackOpen", OnOffStatus): {},
-        ("feedbackClose", OnOffStatus): {},
+        ("position_feedback", Percent): {},
+        ("is_open", OnOffStatus): {},
+        ("is_closed", OnOffStatus): {},
         ("torque", Nm): {},
     },
 }
 
 
-class PneumaticProportionalActuator(ProportionalActuator):
-    _class_iri = S223.Actuator
+class PneumaticProportionalActuator(BaseActuator):
+    _class_iri = S223.Device
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -161,8 +230,8 @@ class PneumaticProportionalActuator(ProportionalActuator):
         super().__init__(_config, **kwargs)
 
 
-class PneumaticOnOffActuator(OnOffActuator):
-    _class_iri = S223.Actuator
+class PneumaticOnOffActuator(BaseActuator):
+    _class_iri = S223.Device
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
