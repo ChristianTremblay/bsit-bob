@@ -21,7 +21,7 @@ zone1 > [hvacspace1, hvacspace2]
 
 vav1 = VAV_Simple(label="Zone-1.VAV")
 vav1.serves = zone1
-vav1["DPR"].airOutlet >> hvacspace1.ductAirInlet
+vav1["ACTDPR"]["damper"].airOutlet >> hvacspace1.ductAirInlet
 
 # create Zone-2 and its VAV connected together
 vav2 = VAV_Simple(label="Zone-2.VAV")
