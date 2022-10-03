@@ -74,26 +74,26 @@ class GravityDamper(Damper):
 
 class FireDamper(Damper):
     _class_iri = S223.Damper
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
-    position: PropertyReference
-    command: PropertyReference
-    position_feedback: PropertyReference
-    is_open: PropertyReference
-    is_closed: PropertyReference
 
 
-# DAMPER + ACTUATORS
+# ======
+# Systems definition
+#
+# Below are associations of damper + actuator with different configurations
+# to be used in models
+# 
+# ======
+
 actuated_damper_template = {
-    "devices": {
+    "equipments": {
         # ("actuator", BaseActuator): {},
-        ("damper", Damper): {},
+        #("damper", Damper): {},
     },
 }
 
 
 class DamperAndActuator(System):
-    _class_iri = BOB.DamperAndActuator
+    _class_iri = None
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
     position: PropertyReference
@@ -103,20 +103,21 @@ class DamperAndActuator(System):
     is_closed: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update(actuated_damper_template, config)
+        _config = template_update({}, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.airInlet.mapsTo = self["damper"].airInlet
-        self.airOutlet.mapsTo = self["damper"].airOutlet
         self.command = self["damper"]["command"] = self["actuator"]["command"]
         self["is_open"] = self["damper"]["is_open"] = self["actuator"]["is_open"]
         self["is_closed"] = self["damper"]["is_closed"] = self["actuator"]["is_closed"]
         self["actuator"].linkageOutlet >> self["damper"].linkageInlet
         self["position"] = self["damper"]["position"] = self["actuator"]["position"]
+        self["position_feedback"] = self["actuator"]["position_sensor"].observesProperty
+        self.airInlet.mapsTo = self["damper"].airInlet
+        self.airOutlet.mapsTo = self["damper"].airOutlet        
 
 
 electrical_actuated_proportional_damper_template = {
-    "devices": {
+    "equipments": {
         ("actuator", ElectricalProportionalActuator): {},
         ("damper", Damper): {},
     },
@@ -124,7 +125,10 @@ electrical_actuated_proportional_damper_template = {
 }
 
 electrical_actuated_onoff_damper_template = {
-    "devices": {("actuator", ElectricalOnOffActuator): {}, ("damper", Damper): {}},
+    "equipments": {
+        ("actuator", ElectricalOnOffActuator): {}, 
+        ("damper", Damper): {}
+    },
     "properties": {},
 }
 
