@@ -13,7 +13,9 @@ from bob.property import ActuatableProperty
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
     AirInletConnectionPoint,
+    AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
+    AirOutletSystemConnectionPoint,
     CompressedAirConnectionPoint,
     CompressedAirInletConnectionPoint,
 )
@@ -26,10 +28,22 @@ from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import Device, PropertyReference, BOB, logging, P223, S223, template_update
+from ...connections.mechanical import MechanicalInletConnectionPoint
+from ...core import (
+    BOB,
+    P223,
+    S223,
+    Device,
+    MechanicalCoupling,
+    PropertyReference,
+    System,
+    logging,
+    template_update,
+)
 from ...functions import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
 from .actuator import (
+    BaseActuator,
     ElectricalOnOffActuator,
     ElectricalProportionalActuator,
     PneumaticOnOffActuator,
@@ -44,11 +58,14 @@ _namespace = BOB
 
 class Damper(Device):
     _class_iri = S223.Damper
+    linkageInlet: MechanicalInletConnectionPoint
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
+    position: PropertyReference
     command: PropertyReference
-    feedback: PropertyReference
-    # position: ActuatableProperty
+    position_feedback: PropertyReference
+    is_open: PropertyReference
+    is_closed: PropertyReference
 
 
 class GravityDamper(Damper):
@@ -57,28 +74,63 @@ class GravityDamper(Damper):
 
 class FireDamper(Damper):
     _class_iri = S223.Damper
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
+    position: PropertyReference
+    command: PropertyReference
+    position_feedback: PropertyReference
+    is_open: PropertyReference
+    is_closed: PropertyReference
 
 
 # DAMPER + ACTUATORS
+actuated_damper_template = {
+    "devices": {
+        # ("actuator", BaseActuator): {},
+        ("damper", Damper): {},
+    },
+}
+
+
+class DamperAndActuator(System):
+    _class_iri = BOB.DamperAndActuator
+    airInlet: AirInletSystemConnectionPoint
+    airOutlet: AirOutletSystemConnectionPoint
+    position: PropertyReference
+    command: PropertyReference
+    position_feedback: PropertyReference
+    is_open: PropertyReference
+    is_closed: PropertyReference
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update(actuated_damper_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        self.airInlet.mapsTo = self["damper"].airInlet
+        self.airOutlet.mapsTo = self["damper"].airOutlet
+        self.command = self["damper"]["command"] = self["actuator"]["command"]
+        self["is_open"] = self["damper"]["is_open"] = self["actuator"]["is_open"]
+        self["is_closed"] = self["damper"]["is_closed"] = self["actuator"]["is_closed"]
+        self["actuator"].linkageOutlet >> self["damper"].linkageInlet
+        self["position"] = self["damper"]["position"] = self["actuator"]["position"]
 
 
 electrical_actuated_proportional_damper_template = {
-    "devices": {("actuator", ElectricalProportionalActuator): {}},
-    "properties": {
-        ("position", PercentCommand): {},
+    "devices": {
+        ("actuator", ElectricalProportionalActuator): {},
+        ("damper", Damper): {},
     },
+    "properties": {},
 }
 
 electrical_actuated_onoff_damper_template = {
-    "devices": {("actuator", ElectricalOnOffActuator): {}},
-    "properties": {
-        ("position", OnOffCommand): {},
-    },
+    "devices": {("actuator", ElectricalOnOffActuator): {}, ("damper", Damper): {}},
+    "properties": {},
 }
 
 
-class ElectricalActuatedProportionalDamper(Damper):
-    _class_iri: URIRef = S223.Damper
+class ElectricalActuatedProportionalDamper(DamperAndActuator):
+    _class_iri: URIRef = BOB.ElectricalActuatedProportionalDamper
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -89,44 +141,32 @@ class ElectricalActuatedProportionalDamper(Damper):
             f"ElectricalActuatedProportionalDamper.__init__ {_config} {kwargs}"
         )
         super().__init__(_config, **kwargs)
-        self.command = self["actuator"]["command"]
-        self.feedback = self["actuator"]["feedback"]
-        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
-        self["actuator"].actuatesProperty = self["position"]
-        # TODO : ExtRef of position
 
 
-class ElectricalActuatedOnOffDamper(Damper):
-    _class_iri: URIRef = S223.Damper
+class ElectricalActuatedOnOffDamper(DamperAndActuator):
+    _class_iri: URIRef = BOB.ElectricalActuatedOnOffDamper
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electrical_actuated_onoff_damper_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.command = self["actuator"]["command"]
-        self.feedbackOpen = self["actuator"]["feedbackOpen"]
-        self.feedbackClose = self["actuator"]["feedbackClose"]
-        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
-        self["actuator"].actuatesProperty = self["position"]
-        # TODO : ExtRef of position
 
 
 pneumatic_actuated_proportional_damper_template = {
-    "devices": {("actuator", PneumaticProportionalActuator): {}},
-    "properties": {
-        ("position", PercentCommand): {},
+    "devices": {
+        ("actuator", PneumaticProportionalActuator): {},
+        ("damper", Damper): {},
     },
+    "properties": {},
 }
 pneumatic_actuated_onoff_damper_template = {
-    "devices": {("actuator", PneumaticOnOffActuator): {}},
-    "properties": {
-        ("position", OnOffCommand): {},
-    },
+    "devices": {("actuator", PneumaticOnOffActuator): {}, ("damper", Damper): {}},
+    "properties": {},
 }
 
 
-class PneumaticActuatedProportionalDamper(Damper):
-    _class_iri = S223.Damper
+class PneumaticActuatedProportionalDamper(DamperAndActuator):
+    _class_iri = BOB.PneumaticActuatedProportionalDamper
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -134,23 +174,12 @@ class PneumaticActuatedProportionalDamper(Damper):
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.command = self["actuator"]["command"]
-        self.feedback = self["actuator"]["feedback"]
-        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
-        self["actuator"].actuatesProperty = self["position"]
-        # TODO : ExtRef of position
 
 
-class PneumaticActuatedOnOffDamper(Damper):
-    _class_iri = S223.Damper
+class PneumaticActuatedOnOffDamper(DamperAndActuator):
+    _class_iri = BOB.PneumaticActuatedOnOffDamper
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(pneumatic_actuated_onoff_damper_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.command = self["actuator"]["command"]
-        self.feedbackOpen = self["actuator"]["feedbackOpen"]
-        self.feedbackClose = self["actuator"]["feedbackClose"]
-        # self["actuator"]["command"].actuatesProperty = self["position"] # people arent' ready for that .... yet
-        self["actuator"].actuatesProperty = self["position"]
-        # TODO : ExtRef of position
