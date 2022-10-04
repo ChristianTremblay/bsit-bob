@@ -15,9 +15,9 @@ from ...core import BOB, P223, S223, Device, System, template_update
 _namespace = BOB
 
 ahu_template = {
-    "params": {"label": "Name", "comment": "Description"},
+    "params": {},
     "sensors": {},
-    "devices": {("sub_device1_label", Device): {"comment": "SubDev comment"}},
+    "equipments": {},
 }
 
 
