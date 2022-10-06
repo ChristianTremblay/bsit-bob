@@ -26,6 +26,7 @@ do
     # python3 "$f" | python ../sort_turtle_file.py > "$ttl"
     #python3 "$f" > "$ttl"
    # python3 ../../../sparql-query.py "$onto_ttl" <<< "$sparql_query" > "$log_ttl"
-    python3 ../../../validate.py "$ttl" --inference "$exp_ttl" --sparql_rule "device_props_rules.ttl" --s223_sparql_rule > "$log_ttl"
+    #python3 ../../../validate.py "$ttl" --inference "$exp_ttl" --sparql_rule "device_props_rules.ttl" --s223_sparql_rule > "$log_ttl"
+    python3 ../../../validate.py "$ttl" --inference "$exp_ttl" --shacl_rule "device_props_rules.ttl" --s223_sparql_rule > "$log_ttl"
     #python3 construct.py "$ttl" --expanded "$exp_ttl" > "$log_ttl"
 done
