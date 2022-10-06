@@ -81,13 +81,13 @@ class FireDamper(Damper):
 #
 # Below are associations of damper + actuator with different configurations
 # to be used in models
-# 
+#
 # ======
 
 actuated_damper_template = {
     "equipments": {
         # ("actuator", BaseActuator): {},
-        #("damper", Damper): {},
+        # ("damper", Damper): {},
     },
 }
 
@@ -113,7 +113,7 @@ class DamperAndActuator(System):
         self["position"] = self["damper"]["position"] = self["actuator"]["position"]
         self["position_feedback"] = self["actuator"]["position_sensor"].observesProperty
         self.airInlet.mapsTo = self["damper"].airInlet
-        self.airOutlet.mapsTo = self["damper"].airOutlet        
+        self.airOutlet.mapsTo = self["damper"].airOutlet
 
 
 electrical_actuated_proportional_damper_template = {
@@ -125,10 +125,7 @@ electrical_actuated_proportional_damper_template = {
 }
 
 electrical_actuated_onoff_damper_template = {
-    "equipments": {
-        ("actuator", ElectricalOnOffActuator): {}, 
-        ("damper", Damper): {}
-    },
+    "equipments": {("actuator", ElectricalOnOffActuator): {}, ("damper", Damper): {}},
     "properties": {},
 }
 

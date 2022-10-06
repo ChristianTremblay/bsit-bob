@@ -4,8 +4,6 @@ from typing import Any
 
 from rdflib import XSD, Literal, URIRef
 
-from dizzy import Discharge_Air_Velocity_Pressure_Sensor
-
 from ..core import Equipment, ExternalReference, Node, bind_namespace
 from ..equipments.control.controller import Controller
 from . import NetworkProfile

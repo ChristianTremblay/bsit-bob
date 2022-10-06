@@ -54,7 +54,9 @@ vav_dual_template = {
         },
     },
     "equipments": {
-        ("ACTDPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper with its actuator"},
+        ("ACTDPR", ElectricalActuatedProportionalDamper): {
+            "comment": "VAV Box Damper with its actuator"
+        },
         ("HTGCOIL", HotWaterCoil): {"comment": "Hot Water Coil"},
         ("HTGVLV", TwoWayActuatedProportionalValve): {"comment": "VAV Box Damper"},
         ("FAN", Fan): {"comment": "Fan"},

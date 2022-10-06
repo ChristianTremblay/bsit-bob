@@ -1194,7 +1194,6 @@ class Segment(Node):
         )
 
 
-
 class S223System(Container):
     _class_iri: URIRef = S223.System
     hasPhysicalLocation: PhysicalSpace
@@ -1211,11 +1210,12 @@ class S223System(Container):
         #     kwargs = {**config["params"], **kwargs}
 
         super().__init__(*args, **kwargs)
-            # zone references
+        # zone references
         self._serves_zones = {}
 
     def serves_zone(self, other: Zone) -> None:
         connect_mm(self, other)
+
 
 class System(S223System, Node):
     """
@@ -1281,6 +1281,7 @@ class System(S223System, Node):
 
                 setattr(self, attr_name, attr_element)
 
+
 @multimethod
 def contains_mm(system: System, equipment: Equipment) -> None:
     """System > Equipment"""
@@ -1288,7 +1289,9 @@ def contains_mm(system: System, equipment: Equipment) -> None:
 
     system._data_graph.add((system._node_iri, S223.contains, equipment._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add((equipment._node_iri, S223.isContainedIn, system._node_iri))
+        system._data_graph.add(
+            (equipment._node_iri, S223.isContainedIn, system._node_iri)
+        )
 
 
 @multimethod
@@ -1726,7 +1729,9 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
 
 
 @multimethod
-def connect_mm(equipment: Equipment, system_connection_point: SystemConnectionPoint) -> None:
+def connect_mm(
+    equipment: Equipment, system_connection_point: SystemConnectionPoint
+) -> None:
     """Equipment >> SystemConnectionPoint"""
     logging.debug(f"connect from {equipment} to {system_connection_point}")
 
@@ -1766,7 +1771,9 @@ def connect_mm(equipment: Equipment, connection_point: ConnectionPoint) -> None:
     logging.debug(f"    - from_out: {from_out}")
 
     if not from_out:
-        raise RuntimeError(f"no candidate sources from {equipment} to {connection_point}")
+        raise RuntimeError(
+            f"no candidate sources from {equipment} to {connection_point}"
+        )
     if len(from_out) > 1:
         raise RuntimeError("too many candidate connection points")
     from_thing = from_out.pop()
@@ -1864,7 +1871,9 @@ def connect_mm(connection: Connection, equipment: Equipment) -> None:
     logging.debug("    - to_in: %r", to_in)
 
     if not to_in:
-        raise RuntimeError(f"no candidate destinations from {connection} to {equipment}")
+        raise RuntimeError(
+            f"no candidate destinations from {connection} to {equipment}"
+        )
     if len(to_in) > 1:
         raise RuntimeError("too many connection points")
     to_thing = to_in.pop()
@@ -2268,7 +2277,6 @@ class SystemConnectionPoint(Node):
         self.mapsTo = other
 
 
-
 @multimethod
 def connect_mm(from_system: System, to_system: System) -> None:
     """System >> System"""
@@ -2467,9 +2475,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # stash this in the system
     from_system._serves_zones[to_zone.label] = to_zone
 
-    from_system._data_graph.add(
-        (from_system._node_iri, BRICK.feeds, to_zone._node_iri)
-    )
+    from_system._data_graph.add((from_system._node_iri, BRICK.feeds, to_zone._node_iri))
     if INCLUDE_INVERSE:
         from_system._data_graph.add(
             (to_zone._node_iri, BRICK.isFedBy, from_system._node_iri)
@@ -3095,7 +3101,9 @@ def contains_mm(system: System, equipment: Equipment) -> None:
 
     system._data_graph.add((system._node_iri, S223.contains, equipment._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add((equipment._node_iri, S223.isContainedIn, system._node_iri))
+        system._data_graph.add(
+            (equipment._node_iri, S223.isContainedIn, system._node_iri)
+        )
 
 
 @multimethod

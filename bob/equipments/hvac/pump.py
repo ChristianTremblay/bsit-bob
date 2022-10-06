@@ -11,7 +11,15 @@ from ...connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
 )
 from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
-from ...core import BOB, S223, UNIT, Equipment, PropertyReference, logging, template_update
+from ...core import (
+    BOB,
+    S223,
+    UNIT,
+    Equipment,
+    PropertyReference,
+    logging,
+    template_update,
+)
 from ...properties import (
     HP,
     RPM,

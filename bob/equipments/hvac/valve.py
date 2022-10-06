@@ -52,11 +52,13 @@ from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
 _namespace = BOB
 
+
 class Valve(Equipment):
     """
     Base class for a valve. Must be subclassed to provide inlet and outlet
     depending on configuration
     """
+
     _class_iri: URIRef = S223.Valve
     linkageInlet: MechanicalInletConnectionPoint
     position: Percent
@@ -71,9 +73,11 @@ class TwoWayValve(Valve):
     """
     Two-way valve have 1 inlet and 1 outlet
     """
+
     _class_iri: URIRef = S223.Valve
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
+
 
 class ThreeWayValveDiverting(Valve):
     """
@@ -96,29 +100,34 @@ class ThreeWayValveMixing(Valve):
     waterInletB: WaterOutletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
 
+
 class NaturalGasValve(Valve):
     _class_iri = S223.Valve
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
-    
+
+
 class PneumaticValve(Valve):
     _class_iri = S223.Valve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint
+
 
 # ======
 # Systems definition
 #
 # Below are associations of valve + actuators with different configuration
 # to be used in models
-# 
+#
 # ======
+
 
 class TwoWayActuatedValve(System):
     """
-    This base class allow the creation of SystemConnectionPoints 
+    This base class allow the creation of SystemConnectionPoints
     via the config mechanism
     """
+
     _class_iri = None
     waterInlet: WaterInletSystemConnectionPoint
     waterOutlet: WaterOutletSystemConnectionPoint
@@ -142,34 +151,37 @@ class TwoWayActuatedValve(System):
         self.waterInlet.mapsTo = self["valve"].waterInlet
         self.waterOutlet.mapsTo = self["valve"].waterOutlet
 
+
 electrical_actuated_proportional_2w_valve_template = {
     "equipments": {
         ("actuator", ElectricalProportionalActuator): {},
         ("valve", TwoWayValve): {},
     },
-    "properties": {
-    },
+    "properties": {},
 }
+
 
 class TwoWayActuatedProportionalValve(TwoWayActuatedValve):
     _class_iri = BOB.TwoWayActuatedProportionalValve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update(electrical_actuated_proportional_2w_valve_template, config)
-        kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(
-            f"TwoWayActuatedProportionalValve.__init__ {_config} {kwargs}"
+        _config = template_update(
+            electrical_actuated_proportional_2w_valve_template, config
         )
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        logging.debug(f"TwoWayActuatedProportionalValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
+
 
 electrical_actuated_onoff_2w_valve_template = {
     "equipments": {
         ("actuator", ElectricalOnOffActuator): {},
         ("valve", TwoWayValve): {},
     },
-    "properties": {
-    },
+    "properties": {},
 }
+
+
 class TwoWayActuatedOnOffValve(TwoWayActuatedValve):
     _class_iri = BOB.TwoWayActuatedOnOffValve
 
@@ -178,11 +190,13 @@ class TwoWayActuatedOnOffValve(TwoWayActuatedValve):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
+
 class ThreeWayActuatedValve(System):
     """
-    This base class allow the creation of SystemConnectionPoints 
+    This base class allow the creation of SystemConnectionPoints
     via the config mechanism
     """
+
     _class_iri = None
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -196,26 +210,34 @@ class ThreeWayActuatedValve(System):
         self["position"] = self["valve"]["position"] = self["actuator"]["position"]
         self["position_feedback"] = self["actuator"]["position_sensor"].observesProperty
 
+
 class ThreeWayMixingSystem(ThreeWayActuatedValve):
     _class_iri = None
     waterInletAB: WaterInletSystemConnectionPoint
     waterOutletA: WaterOutletSystemConnectionPoint
     waterOutletB: WaterOutletSystemConnectionPoint
+
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update({"equipments":{("valve",ThreeWayValveMixing): {}}}, config)
+        _config = template_update(
+            {"equipments": {("valve", ThreeWayValveMixing): {}}}, config
+        )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.waterInletAB.mapsTo = self["valve"].waterInletAB
         self.waterOutletA.mapsTo = self["valve"].waterOutletA
         self.waterOutletB.mapsTo = self["valve"].waterOutletB
 
+
 class ThreeWayDivertingSystem(ThreeWayActuatedValve):
     _class_iri = None
     waterInletA: WaterInletSystemConnectionPoint
     waterInletB: WaterInletSystemConnectionPoint
     waterOutlet: WaterOutletSystemConnectionPoint
+
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update({"equipments":{("valve",ThreeWayValveDiverting): {}}}, config)
+        _config = template_update(
+            {"equipments": {("valve", ThreeWayValveDiverting): {}}}, config
+        )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.waterInletA.mapsTo = self["valve"].waterInletA
@@ -227,7 +249,9 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayMixingSystem):
     node_type = BOB.ThreeWayMixingActuatedProportionalValve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update({"equipments":{("actuator",ElectricalProportionalActuator): {}}}, config)
+        _config = template_update(
+            {"equipments": {("actuator", ElectricalProportionalActuator): {}}}, config
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(
             f"ThreeWayMixingActuatedProportionalValve.__init__ {_config} {kwargs}"
@@ -239,18 +263,21 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
     _class_iri = BOB.ThreeWayMixingActuatedOnOffValve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update({"equipments":{("actuator",ElectricalOnOffActuator): {}}}, config)
+        _config = template_update(
+            {"equipments": {("actuator", ElectricalOnOffActuator): {}}}, config
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(f"ThreeWayMixingActuatedOnOffValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
-
 
 
 class ThreeWayDivertingActuatedProportionalValve(ThreeWayDivertingSystem):
     _class_iri = BOB.ThreeWayDivertingActuatedProportionalValve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update({"equipments":{("actuator",ElectricalProportionalActuator): {}}}, config)
+        _config = template_update(
+            {"equipments": {("actuator", ElectricalProportionalActuator): {}}}, config
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(
             f"ThreeWayDivertingActuatedProportionalValve.__init__ {_config} {kwargs}"
@@ -262,10 +289,11 @@ class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
     _class_iri = BOB.ThreeWayDivertingActuatedProportionalValve
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update({"equipments":{("actuator",ElectricalOnOffActuator): {}}}, config)
+        _config = template_update(
+            {"equipments": {("actuator", ElectricalOnOffActuator): {}}}, config
+        )
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(
             f"ThreeWayDivertingActuatedOnOffValve.__init__ {_config} {kwargs}"
         )
         super().__init__(_config, **kwargs)
-
