@@ -60,7 +60,7 @@ from bob.property import QuantifiableObservableProperty
 from bob.sensor.fire import SmokeDetectionSensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
-from bob.sensor.light import IntrusionSensor, OccupancySensor
+from bob.sensor.motion import IntrusionSensor, OccupancySensor
 from bob.sensor.pressure import DifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace
@@ -227,7 +227,7 @@ ahu.heating = htg_vlv["position"]  # equivalent to htg_vlv['actuator']['postion'
 sequence = "lorem ipsum of sequence"
 g36_fig_a_10 = G36Sequence(label="G36_FIG_A_10", comment=sequence)
 
-g36_fig_a_10.uses_input(rat.observesProperty, AnalogInput, "return-air-temp")
-g36_fig_a_10.produces_output(htg_vlv["actuator"]["command"], AnalogOutput, "HW VALVE")
+g36_fig_a_10.uses(rat.observesProperty, AnalogInput, "return-air-temp")
+g36_fig_a_10.produces(htg_vlv["actuator"]["command"], AnalogOutput, "HW VALVE")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

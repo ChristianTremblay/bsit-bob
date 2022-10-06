@@ -122,13 +122,13 @@ ld.openofficeNorth_luminaire_1.onOffStatus @ BACnetReference(
     "bacnet://2/binary-input,1"
 )
 
-fn.f.avg_tmp @ dat_avg
+fn.f_avg_temp @ dat_avg
 
-fn.bathroom_occ_control.schedule @ pritoni_schedule
-fn.corridor_occ_control.schedule @ pritoni_schedule
-fn.kitchenette_occ_control.schedule @ pritoni_schedule
-fn.open_office_occ_control.schedule @ pritoni_schedule
-fn.private_office_occ_control.schedule @ pritoni_schedule
+fn.bathroom_occ_control_schedule @ pritoni_schedule
+fn.corridor_occ_control_schedule @ pritoni_schedule
+fn.kitchenette_occ_control_schedule @ pritoni_schedule
+fn.open_office_occ_control_schedule @ pritoni_schedule
+fn.private_office_occ_control_schedule @ pritoni_schedule
 
 if __name__ == "__main__":
     dump()

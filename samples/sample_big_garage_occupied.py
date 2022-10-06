@@ -23,7 +23,7 @@ from bob.core import (
 from bob.devices.hvac.coil import ElectricalHeatingCoil
 from bob.devices.hvac.fan import Fan
 from bob.devices.lighting.light import Luminaire
-from bob.sensor.light import MovementSensor
+from bob.sensor.motion import OccupancySensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace
@@ -49,8 +49,8 @@ big_garage > lighting_space_back
 light_1 = Luminaire(label="Ballast #1, space #1")
 light_2 = Luminaire(label="Ballast #2, space #2")
 
-movement_1 = MovementSensor(label="Movement Sensor Space #1")
-movement_2 = MovementSensor(label="Movement Sensor Space #2")
+movement_1 = OccupancySensor(label="Movement Sensor Space #1")
+movement_2 = OccupancySensor(label="Movement Sensor Space #2")
 
 # HVAC
 fan = Fan(label="Fan", electricalInlet=ElectricalInletConnectionPoint)
