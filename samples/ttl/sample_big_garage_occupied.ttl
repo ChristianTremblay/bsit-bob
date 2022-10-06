@@ -164,7 +164,7 @@ ex1:00016 a s223:InletConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00014 .
 
-ex1:00017 a s223:Device,
+ex1:00017 a s223:Equipment,
         s223:Luminaire ;
     rdfs:label "Ballast #1, space #1" ;
     s223:connectedThrough ex1:00049 ;
@@ -180,7 +180,7 @@ ex1:00018 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00017 .
 
-ex1:00019 a s223:Device,
+ex1:00019 a s223:Equipment,
         s223:Luminaire ;
     rdfs:label "Ballast #2, space #2" ;
     s223:connectedThrough ex1:00050 ;
@@ -196,21 +196,21 @@ ex1:00020 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00019 .
 
-ex1:00021 a s223:Device,
+ex1:00021 a s223:Equipment,
         s223:OccupancySensor,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #1" ;
     s223:hasMeasurementLocation ex1:00011 ;
     s223:hasPhysicalLocation ex1:00001 .
 
-ex1:00022 a s223:Device,
+ex1:00022 a s223:Equipment,
         s223:OccupancySensor,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #2" ;
     s223:hasMeasurementLocation ex1:00014 ;
     s223:hasPhysicalLocation ex1:00001 .
 
-ex1:00023 a s223:Device,
+ex1:00023 a s223:Equipment,
         s223:Fan ;
     rdfs:label "Fan" ;
     s223:connectedFrom ex1:00003 ;
@@ -338,7 +338,7 @@ ex1:00035 a s223:ObservableProperty,
     qudt:unit unit:PERCENT .
 
 ex1:00036 a s223:Coil,
-        s223:Device,
+        s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Heating Coil" ;
     s223:connectedFrom ex1:00023 ;
@@ -419,7 +419,7 @@ ex1:00044 a s223:Connection ;
     s223:connectsTo ex1:00003 ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00045 a s223:Device,
+ex1:00045 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "Discharge Air temperature sensor" ;
     s223:hasMeasurementLocation ex1:00038 ;
@@ -436,7 +436,7 @@ ex1:00046 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 
-ex1:00047 a s223:Device,
+ex1:00047 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "Zone Air temperature sensor" ;
     s223:hasMeasurementLocation ex1:00003 ;
@@ -469,20 +469,21 @@ ex1:00050 a s223:Connection ;
     s223:connectsTo ex1:00014 ;
     s223:hasMedium s223:Light-Visible .
 
-ex1:00051 a s223:System ;
+ex1:00051 a s223:System,
+        bob:System ;
     rdfs:label "Fan coil" ;
-    s223:hasSystemConnectionPoint ex1:00052,
+    bob:hasSystemConnectionPoint ex1:00052,
         ex1:00053 .
 
-ex1:00052 a s223:InletSystemConnectionPoint,
-        bob:AirSystemConnectionPoint ;
+ex1:00052 a bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint ;
     rdfs:label "Fan coil air inlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00024 .
 
-ex1:00053 a s223:OutletSystemConnectionPoint,
-        bob:AirSystemConnectionPoint ;
+ex1:00053 a bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint ;
     rdfs:label "Fan coil air outlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;

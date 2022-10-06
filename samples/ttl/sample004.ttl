@@ -24,20 +24,20 @@ ex1:00001 a p223:HVACZone,
     rdfs:label "Zone" ;
     s223:contains ex1:00004 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasZoneConnectionPoint ex1:00002,
-        ex1:00003 ;
     bob:airInlet ex1:00002 ;
-    bob:airOutlet ex1:00003 .
+    bob:airOutlet ex1:00003 ;
+    bob:hasZoneConnectionPoint ex1:00002,
+        ex1:00003 .
 
-ex1:00002 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
+ex1:00002 a bob:InletZoneConnectionPoint,
+        bob:ZoneConnectionPoint ;
     rdfs:label "Zone.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00005 .
 
-ex1:00003 a s223:OutletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
+ex1:00003 a bob:OutletZoneConnectionPoint,
+        bob:ZoneConnectionPoint ;
     rdfs:label "Zone.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
@@ -116,31 +116,32 @@ ex1:00011 a s223:BidirectionalConnectionPoint,
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00012 a s223:System,
-        s223:VAV ;
+        s223:VAV,
+        bob:System ;
     rdfs:label "VAV1" ;
     s223:contains ex1:00015 ;
-    s223:hasSystemConnectionPoint ex1:00013,
-        ex1:00014 ;
     bob:airInlet ex1:00013 ;
     bob:airOutlet ex1:00014 ;
+    bob:hasSystemConnectionPoint ex1:00013,
+        ex1:00014 ;
     rdfs:comment "A VAV Box as a system" .
 
-ex1:00013 a s223:InletSystemConnectionPoint,
-        bob:AirSystemConnectionPoint ;
+ex1:00013 a bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint ;
     rdfs:label "VAV1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00017 .
 
-ex1:00014 a s223:OutletSystemConnectionPoint,
-        bob:AirSystemConnectionPoint ;
+ex1:00014 a bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint ;
     rdfs:label "VAV1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00018 .
 
 ex1:00015 a s223:Damper,
-        s223:Device ;
+        s223:Equipment ;
     rdfs:label "VAV1.damper" ;
     s223:connectedThrough ex1:00019 ;
     s223:connectedTo ex1:00004 ;

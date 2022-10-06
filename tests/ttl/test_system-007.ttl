@@ -18,7 +18,7 @@
   rdfs:label "test_system-007" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex32:00001 a s223:Device,
+ex32:00001 a s223:Equipment,
         ex32:A ;
     rdfs:label "a" ;
     s223:connectedThrough ex32:00009 ;
@@ -34,18 +34,18 @@ ex32:00002 a s223:OutletConnectionPoint,
     s223:isConnectionPointOf ex32:00001 .
 
 ex32:00003 a s223:System,
+        bob:System,
         ex32:X ;
     rdfs:label "x" ;
-    s223:hasSystemConnectionPoint ex32:00004 ;
+    bob:hasSystemConnectionPoint ex32:00004 ;
     ex32:cOut ex32:00004 .
 
-ex32:00004 a s223:OutletSystemConnectionPoint ;
-    rdfs:label "x.cOut" ;
+ex32:00004 rdfs:label "x.cOut" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:isSystemConnectionPointOf ex32:00003 ;
     s223:mapsTo ex32:00002 .
 
-ex32:00005 a s223:Device,
+ex32:00005 a s223:Equipment,
         ex32:B ;
     rdfs:label "b" ;
     s223:connectedThrough ex32:00009 ;
@@ -61,13 +61,13 @@ ex32:00006 a s223:InletConnectionPoint,
     s223:isConnectionPointOf ex32:00005 .
 
 ex32:00007 a s223:System,
+        bob:System,
         ex32:Y ;
     rdfs:label "y" ;
-    s223:hasSystemConnectionPoint ex32:00008 ;
+    bob:hasSystemConnectionPoint ex32:00008 ;
     ex32:cIn ex32:00008 .
 
-ex32:00008 a s223:InletSystemConnectionPoint ;
-    rdfs:label "y.cIn" ;
+ex32:00008 rdfs:label "y.cIn" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:isSystemConnectionPointOf ex32:00007 ;
     s223:mapsTo ex32:00006 .

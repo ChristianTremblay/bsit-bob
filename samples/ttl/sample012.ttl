@@ -1,6 +1,7 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/sample012
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex1: <urn:ex/sample012/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -18,24 +19,23 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex1:00001 a s223:System,
+        bob:System,
         ex1:TestSystem ;
     rdfs:label "s1" ;
     s223:contains ex1:00004 ;
-    s223:hasSystemConnectionPoint ex1:00002,
+    bob:hasSystemConnectionPoint ex1:00002,
         ex1:00003 ;
     ex1:cpIn ex1:00002 ;
     ex1:cpOut ex1:00003 .
 
-ex1:00002 a s223:InletSystemConnectionPoint ;
-    rdfs:label "s1.cpIn" ;
+ex1:00002 rdfs:label "s1.cpIn" ;
     s223:hasDirection s223:Direction-Inlet .
 
-ex1:00003 a s223:OutletSystemConnectionPoint ;
-    rdfs:label "s1.cpOut" ;
+ex1:00003 rdfs:label "s1.cpOut" ;
     s223:hasDirection s223:Direction-Outlet .
 
-ex1:00004 a s223:Device,
-        ex1:TestDevice ;
+ex1:00004 a s223:Equipment,
+        ex1:TestEquipment ;
     rdfs:label "d1" ;
     s223:hasConnectionPoint ex1:00005,
         ex1:00006 ;
@@ -53,26 +53,25 @@ ex1:00006 a s223:OutletConnectionPoint ;
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00007 a s223:System,
+        bob:System,
         ex1:TestSystem ;
     rdfs:label "s2" ;
     s223:contains ex1:00010 ;
-    s223:hasSystemConnectionPoint ex1:00008,
+    bob:hasSystemConnectionPoint ex1:00008,
         ex1:00009 ;
     ex1:cpIn ex1:00008 ;
     ex1:cpOut ex1:00009 .
 
-ex1:00008 a s223:InletSystemConnectionPoint ;
-    rdfs:label "s2.cpIn" ;
+ex1:00008 rdfs:label "s2.cpIn" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:mapsTo ex1:00011 .
 
-ex1:00009 a s223:OutletSystemConnectionPoint ;
-    rdfs:label "s2.cpOut" ;
+ex1:00009 rdfs:label "s2.cpOut" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:mapsTo ex1:00012 .
 
-ex1:00010 a s223:Device,
-        ex1:TestDevice ;
+ex1:00010 a s223:Equipment,
+        ex1:TestEquipment ;
     rdfs:label "d2" ;
     s223:hasConnectionPoint ex1:00011,
         ex1:00012 ;

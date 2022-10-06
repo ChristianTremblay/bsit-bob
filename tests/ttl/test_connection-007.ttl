@@ -294,28 +294,28 @@ ex32:00032 a p223:HVACZone,
     s223:contains ex32:00008,
         ex32:00016 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasZoneConnectionPoint ex32:00033,
-        ex32:00034 ;
     bob:airInlet ex32:00033 ;
-    bob:airOutlet ex32:00034 .
+    bob:airOutlet ex32:00034 ;
+    bob:hasZoneConnectionPoint ex32:00033,
+        ex32:00034 .
 
-ex32:00033 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
+ex32:00033 a bob:InletZoneConnectionPoint,
+        bob:ZoneConnectionPoint ;
     rdfs:label "Zone1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isZoneConnectionPointOf ex32:00032 ;
     s223:mapsTo ex32:00061 .
 
-ex32:00034 a s223:OutletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
+ex32:00034 a bob:OutletZoneConnectionPoint,
+        bob:ZoneConnectionPoint ;
     rdfs:label "Zone1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isZoneConnectionPointOf ex32:00032 ;
     s223:mapsTo ex32:00065 .
 
-ex32:00035 a s223:Device,
+ex32:00035 a s223:Equipment,
         s223:Fan ;
     rdfs:label "Supply Fan" ;
     s223:hasConnectionPoint ex32:00036,
@@ -447,7 +447,7 @@ ex32:00047 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 
-ex32:00048 a s223:Device,
+ex32:00048 a s223:Equipment,
         s223:Fan ;
     rdfs:label "Return Fan" ;
     s223:connectedThrough ex32:00065 ;
