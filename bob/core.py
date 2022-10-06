@@ -1191,17 +1191,34 @@ class Segment(Node):
             )
         )
 
-
-class System(Container, Node):
-    """
-    System
-    """
-
+class S223System(Container):
     _class_iri: URIRef = S223.System
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
 
     _serves_zones: Dict[str, Zone]
+
+    def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
+        logging.debug(f"System.__init__ {config} {args} {kwargs}")
+
+        # if there are "params" in the configuation, use those as defaults for
+        # kwargs and allow them to be overriden be additional kwargs
+        # if config and "params" in config:
+        #     kwargs = {**config["params"], **kwargs}
+
+        super().__init__(*args, **kwargs)
+            # zone references
+        self._serves_zones = {}
+
+    def serves_zone(self, other: Zone) -> None:
+        connect_mm(self, other)
+
+class System(S223System, Node):
+    """
+    System
+    """
+
+    _class_iri: URIRef = BOB.System
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
 
@@ -1259,13 +1276,6 @@ class System(Container, Node):
                 )
 
                 setattr(self, attr_name, attr_element)
-
-        # zone references
-        self._serves_zones = {}
-
-    def serves_zone(self, other: Zone) -> None:
-        connect_mm(self, other)
-
 
 @multimethod
 def contains_mm(system: System, device: Device) -> None:
