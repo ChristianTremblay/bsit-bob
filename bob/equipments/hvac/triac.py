@@ -11,7 +11,7 @@ from ...connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     ModulationSignalInletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Device
+from ...core import BOB, P223, S223, Equipment
 
 _namespace = BOB
 
@@ -30,7 +30,7 @@ Triac_template = {
 }
 
 
-class Triac(Device):
+class Triac(Equipment):
     # takes 600V (or 347V) in and use PWM to modulate
     # power given to electrical coil
     # a triac accept On-Off pulsed signal to modulate

@@ -88,7 +88,7 @@ class RTUChilledWaterCoil(ChilledWaterCoil):
     Compressor1Cooling: ActuatableProperty  # not sure what more information the cooling commands should have
     Compressor2Cooling: ActuatableProperty
 
-    # diagram has sensors, but this is not in haystack... Not sure if I want to do the below. Sensors are shown in the diagram so I am including them, like the other devices
+    # diagram has sensors, but this is not in haystack... Not sure if I want to do the below. Sensors are shown in the diagram so I am including them, like the other Equipments
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         ts1 = WaterTemperatureSensor(label=self.label + ".in_temperature_sensor")
@@ -98,14 +98,14 @@ class RTUChilledWaterCoil(ChilledWaterCoil):
         ts2.hasMeasurementLocation = self.chilledWaterOutlet
 
 
-# class AirStaticPressureSensor(Device):
+# class AirStaticPressureSensor(Equipment):
 # should have just made a sensor class probs #WILL NEED TO HANDLE DIFFERENTIAL PRESSURE DIFFERENTLY
 #     node_type: URIRef = s223.Sensor
 #     pressure = QuantifiableObservableProperty  #AnalogIn This results in the turtle file having temperature listed as a property and listed plainly.
 #     pressure.hasQuantityKind = quantitykind.StaticPressure #QUDT doesn't seem to have differential pressure quantity kind
 #     pressure.unit = qudt.IN_H2O
 #     #check what unit
-#     hasMeasurementLocation: Node # FOR DIFFERENTIAL PRESSURE, should probably maybe make a new sensor that measures connection points around device
+#     hasMeasurementLocation: Node # FOR DIFFERENTIAL PRESSURE, should probably maybe make a new sensor that measures connection points around Equipment
 class RooftopUnit(System):
     node_type = None  # missing some of the points in the haystack model that are not attached to equipment or shown in the diagram. (duct heat gain, outside air flow, economizer enable status, outside air temperature)
     returnAirInlet: AirInletSystemConnectionPoint
@@ -264,12 +264,12 @@ class UFT(System):  # Underfloor Fan Terminal Unit
         self.supplyAirInlet.mapsTo = supply_fan.airInlet
         hw_coil = HotWaterCoilUFT(
             label=self.label + ".hw_coil"
-        )  # problem using HotWaterCoil2, mapping a system connection point to a system connection point that maps to a device connection point
+        )  # problem using HotWaterCoil2, mapping a system connection point to a system connection point that maps to a Equipment connection point
         supply_fan >> hw_coil
         self > hw_coil
         self.supplyAirOutlet.mapsTo = (
             hw_coil.hot_water_coil.airOutlet
-        )  # have to map system to the device connection point in the subsystem, does this make sense?
+        )  # have to map system to the Equipment connection point in the subsystem, does this make sense?
 
 
 class UFTZone(
@@ -307,7 +307,7 @@ class CO2Concentration(QuantifiableObservableProperty):
 
 
 # attempt to add water, all from diagram, needs checks/incomplete
-class HeatExchanger(Device):
+class HeatExchanger(Equipment):
     node_type = None
     coolingInlet: ChilledWaterInletConnectionPoint
     coolingOutlet: ChilledWaterOutletConnectionPoint
@@ -333,7 +333,7 @@ class LoopPressureSensor(DifferentialSensor):
             super().__setattr__(attr, value)
 
 
-class CoolingPump(Device):
+class CoolingPump(Equipment):
     node_type = None  # need to check points in Haystack
     waterInlet: ChilledWaterInletConnectionPoint
     waterOutlet: ChilledWaterOutletConnectionPoint
@@ -351,7 +351,7 @@ class CoolingPump(Device):
 
 class CoolingWaterSystem(
     System
-):  # my devices using cool water will be connected to a junction at CWSupply
+):  # my Equipments using cool water will be connected to a junction at CWSupply
     node_type = None
     CWSupply: ChilledWaterOutletSystemConnectionPoint
     # not including BTU meters
@@ -414,7 +414,7 @@ class CoolingWaterSystem(
 
 
 class CoolingTower(
-    Device
+    Equipment
 ):  # should I try to specify type of cooling tower (counterflow I think)
     node_type = None
     waterInlet: ChilledWaterInletConnectionPoint
@@ -425,7 +425,7 @@ class CoolingTower(
     vibrationSwitch = OnOffCommand  # not sure what this is
 
 
-class SSFValve(Device):
+class SSFValve(Equipment):
     node_type = None
     waterInlet: ChilledWaterInletConnectionPoint
     waterOutlet: ChilledWaterOutletConnectionPoint
@@ -433,7 +433,7 @@ class SSFValve(Device):
     openValve = OnOffCommand
 
 
-class SSFilter(Device):  # I need more information on this Filter
+class SSFilter(Equipment):  # I need more information on this Filter
     node_type = None
     waterInlet: ChilledWaterInletConnectionPoint
     waterOutlet: ChilledWaterOutletConnectionPoint
@@ -536,7 +536,7 @@ class Wattage(QuantifiableObservableProperty):
         super().__init__(*args, **kwargs)
 
 
-class Light_Fixtures(Device):
+class Light_Fixtures(Equipment):
     node_type = None
     FixtureWattage = Wattage
     FixtureQty = ObservableProperty  # This is the type and quantity it seems, can separate this out into more properties later
@@ -562,7 +562,7 @@ class Illuminance(QuantifiableObservableProperty):
         super().__init__(*args, **kwargs)
 
 
-class Daylight_Sensor(Device):
+class Daylight_Sensor(Equipment):
     node_type: URIRef = s223.Sensor
     illuminance = Illuminance
     hasMeasurementLocation: Node

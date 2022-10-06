@@ -33,7 +33,7 @@ from ...core import (
     BOB,
     P223,
     S223,
-    Device,
+    Equipment,
     Property,
     PropertyReference,
     template_update,
@@ -49,12 +49,12 @@ _namespace = BOB
   |   |---------------s223:hasConnectionPoint-----(0-10VDC Feedback Output) <-> E
   |   |  |------------s223:hasConnectionPoint-----(0-10VDC Modulation signal CNX) <-> H                      ____________________
   |   |  |   |--------s223:hasConnectionPoint-----(linkage coupling CNX  <-> G)--------hasConnectionPoint----|  Damper          |----s223:hasProperty---(position) <-> A
-  |   |  |   |   |----s223:hasConnectionPoint-----(Auxiliary position switch CNX) <-> F                      |  s223:Device     |----s223:hasProperty---(command) <-> B
+  |   |  |   |   |----s223:hasConnectionPoint-----(Auxiliary position switch CNX) <-> F                      |  s223:Equipment     |----s223:hasProperty---(command) <-> B
   |   |  |   |   |                                                                                           |                  |----s223:hasProperty---(feedback) <-> C
   |   |  |   |   |                                                                                           |__________________|----s223:hasProperty---(other damper prop...)
 __|___|__|___|___|__                                                                                  
 |  Damper Actuator |------------s223:hasProperty--------(position) <-> A                                   
-|  s223:Device     |------------s223:hasProperty--------(command) <-> B
+|  s223:Equipment     |------------s223:hasProperty--------(command) <-> B
 |                  |------------s223:hasProperty--------(feedback) <-> C
 |                  |------------s223:hasProperty--------(is_open) <-> D1
 |__________________|------------s223:hasProperty--------(is_closed) <-> D2
@@ -102,8 +102,8 @@ BasicActuator_template = {
 }
 
 
-class BaseActuator(Device):
-    _class_iri = S223.Device
+class BaseActuator(Equipment):
+    _class_iri = S223.Equipment
     command: Union[PercentCommand, OnOffCommand]
     position: Percent
     position_feedback: Union[Percent, OpenCloseEnum]
@@ -158,7 +158,7 @@ ElectricalProportionalActuator_template = {
 
 
 class ElectricalProportionalActuator(BaseActuator):
-    _class_iri = S223.Device
+    _class_iri = S223.Equipment
     command: PercentCommand
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -187,7 +187,7 @@ ElectricalOnOffActuator_template = {
 
 
 class ElectricalOnOffActuator(BaseActuator):
-    _class_iri = S223.Device
+    _class_iri = S223.Equipment
     command: OnOffCommand
 
     def __init__(self, config: Dict = {}, **kwargs):
@@ -221,7 +221,7 @@ PneumaticOnOffActuator_template = {
 
 
 class PneumaticProportionalActuator(BaseActuator):
-    _class_iri = S223.Device
+    _class_iri = S223.Equipment
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -231,7 +231,7 @@ class PneumaticProportionalActuator(BaseActuator):
 
 
 class PneumaticOnOffActuator(BaseActuator):
-    _class_iri = S223.Device
+    _class_iri = S223.Equipment
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):

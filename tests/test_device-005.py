@@ -3,7 +3,7 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import Device, bind_model_namespace, dump
+from bob.core import Equipment, bind_model_namespace, dump
 from bob.equipments.hvac import Fan
 
 model_name = Path(__file__).stem
@@ -18,7 +18,7 @@ def test_create_fan(bob_fixture):
             "electricalInlet": ElectricalInletConnectionPoint,
         },
         "sensors": {},
-        "devices": {("VA1-VFD", Device): {"comment": "VFD for VA-1"}},
+        "equipments": {("VA1-VFD", Equipment): {"comment": "VFD for VA-1"}},
     }
     fan1 = Fan(
         config=_config,

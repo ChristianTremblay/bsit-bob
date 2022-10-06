@@ -19,7 +19,7 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Device, enum
+from ...core import BOB, P223, S223, Equipment, enum
 
 _namespace = BOB
 
@@ -27,17 +27,17 @@ _namespace = BOB
 chilledWaterCoil_template = {
     "params": {"label": "Name", "comment": "Description"},
     "sensors": {},
-    "devices": {("valve", Device): {"comment": "SubDev comment"}},
+    "equipments": {("valve", Equipment): {"comment": "SubDev comment"}},
 }
 """
 # SEMANTIC QUESTION
 # here, that could be a good way to define the coil and its valve...
 # but the valve connect to the coil
-# can this be considered "contained" in the Coil device ?
+# can this be considered "contained" in the Coil Equipment ?
 # Should this b ea system
 
 
-class GeothermalWell(Device):
+class GeothermalWell(Equipment):
     _class_iri: URIRef = P223.GeothermalWell
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint

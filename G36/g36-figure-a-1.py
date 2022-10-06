@@ -24,7 +24,7 @@ from bob.core import (
     G36,
     QUANTITYKIND,
     UNIT,
-    Device,
+    Equipment,
     PropertyReference,
     System,
     bind_model_namespace,
@@ -124,7 +124,7 @@ vav_system_template = {
         ("damperPosition", PercentCommand): {},
         ("airFlow", Flow): {"unit": UNIT["L-PER-SEC"]},
     },
-    "devices": {
+    "equipments": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
         ("DPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with electrical actuator"
@@ -191,7 +191,7 @@ hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observesPr
 hvac_space.co2 = vav["ZN-CO2"]["CO2"].observesProperty
 hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observesProperty
 
-# Now that space is full of devices and connections...
+# Now that space is full of Equipments and connections...
 # Zone are meant for control, let's define the control side of the thing
 # temperature, co2, etc of zone.... could be the result of a function block
 # making calculation from multiple hvac space readings...

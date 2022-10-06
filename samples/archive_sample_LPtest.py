@@ -18,7 +18,7 @@ from bob.core import (
     UNIT,
     Connection,
     ConnectionPoint,
-    Device,
+    Equipment,
     DomainSpace,
     Junction,
     Node,
@@ -45,7 +45,7 @@ model_name = Path(__file__).stem
 _namespace = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-class TemperatureSensor(Device):
+class TemperatureSensor(Equipment):
     connection: AirInletConnectionPoint
     temperature = Temperature
 

@@ -52,7 +52,7 @@ def test_create_gas_monitor(bob_fixture):
                     unit=UNIT.DEG_C,
                     label="Temperature_sensor.MaxRange",
                 ),
-                "comment": "Internal temperature sensor of device",
+                "comment": "Internal temperature sensor of Equipment",
             },
         },
         "properties": {},
@@ -63,7 +63,7 @@ def test_create_gas_monitor(bob_fixture):
     _dual_no2_co = {
         "params": {
             "label": "GM-1",
-            "comment": "Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot",
+            "comment": "Dual Gas Monitoring Equipment that measure NO2 and CO. Usually used in underground parking lot",
         },
         "sensors": {
             ("CO_sensor", COSensor): {

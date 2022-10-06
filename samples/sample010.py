@@ -10,7 +10,7 @@ from bob.connections.air import (
 )
 from bob.connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
 from bob.core import (
-    Device,
+    Equipment,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     OutletConnectionPoint,
@@ -25,9 +25,9 @@ model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-# make a couple devices
-d1 = Device(label="d1")
-d2 = Device(label="d2")
+# make a couple Equipments
+d1 = Equipment(label="d1")
+d2 = Equipment(label="d2")
 
 # create some connection points on the fly
 d1_cp = AirOutletConnectionPoint(d1, label="d1.cp")
@@ -44,9 +44,9 @@ s2_cp = AirInletSystemConnectionPoint(s2, label="s2.cp", mapsTo=d2_cp)
 # connect the connection points together (directional connection)
 s1_cp >> s2_cp
 
-# make a couple devices
-d3 = Device(label="d3")
-d4 = Device(label="d4")
+# make a couple Equipments
+d3 = Equipment(label="d3")
+d4 = Equipment(label="d4")
 
 # create some connection points on the fly
 d3_cp = WaterOutletConnectionPoint(d3, label="d3.cp")

@@ -13,7 +13,7 @@ from ..core import (
     UNIT,
     Connection,
     ConnectionPoint,
-    Device,
+    Equipment,
     DomainSpace,
     ExternalReference,
     LocationReference,
@@ -78,7 +78,7 @@ def define_sensors(config):
     return sensors
 
 
-class Sensor(Device):
+class Sensor(Equipment):
     """
     A Sensor provides a value for an ObservableProperty which may or may not
     be quantifiable. For example, it might just sense an alarm state, or
@@ -115,35 +115,35 @@ class Sensor(Device):
 
 
 @multimethod
-def contains_mm(parent_device: Device, child_device: Sensor) -> None:
-    """Device > Device"""
-    logging.info(f"device {parent_device} contains device {child_device}")
-    parent_device._data_graph.add(
-        (parent_device._node_iri, S223.contains, child_device._node_iri)
+def contains_mm(parent_equipment: Equipment, child_equipment: Sensor) -> None:
+    """Equipment > Equipment"""
+    logging.info(f"Equipment {parent_equipment} contains Equipment {child_equipment}")
+    parent_equipment._data_graph.add(
+        (parent_equipment._node_iri, S223.contains, child_equipment._node_iri)
     )
     if INCLUDE_INVERSE:
-        parent_device._data_graph.add(
-            (child_device._node_iri, S223.isContainedIn, parent_device._node_iri)
+        parent_equipment._data_graph.add(
+            (child_equipment._node_iri, S223.isContainedIn, parent_equipment._node_iri)
         )
 
 
 @multimethod
-def contains_mm(parent_device: Sensor, child_device: ExternalReference) -> None:
-    """Device > Device"""
-    logging.info(f"device {parent_device} contains device {child_device}")
-    parent_device._data_graph.add(
+def contains_mm(parent_equipment: Sensor, child_equipment: ExternalReference) -> None:
+    """Equipment > Equipment"""
+    logging.info(f"Equipment {parent_equipment} contains Equipment {child_equipment}")
+    parent_equipment._data_graph.add(
         (
-            parent_device.observesProperty._node_iri,
+            parent_equipment.observesProperty._node_iri,
             S223.hasExternalReference,
-            child_device._node_iri,
+            child_equipment._node_iri,
         )
     )
     if INCLUDE_INVERSE:
-        parent_device._data_graph.add(
+        parent_equipment._data_graph.add(
             (
-                child_device._node_iri,
+                child_equipment._node_iri,
                 S223.isExternalReferenceOf,
-                parent_device.observesProperty._node_iri,
+                parent_equipment.observesProperty._node_iri,
             )
         )
 

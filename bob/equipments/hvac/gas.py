@@ -4,7 +4,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import BOB, P223, QUANTITYKIND, S223, UNIT, Device, PropertyReference, enum
+from ...core import BOB, P223, QUANTITYKIND, S223, UNIT, Equipment, PropertyReference, enum
 from ...property import QuantifiableObservableProperty
 from ...sensor import Sensor
 from ...sensor.gas import (
@@ -19,7 +19,7 @@ _namespace = BOB
 
 gasmonitor_template = {
     "params": {
-        "label": "Name Of Device",
+        "label": "Name Of Equipment",
         "comment": "Description",
     },
     "sensors": {
@@ -50,7 +50,7 @@ gasmonitor_template = {
 }
 
 
-class GasMonitor(Device):
+class GasMonitor(Equipment):
     """
     This allow the creation of a gas monitor that
     can contain 1 or more gas sensor

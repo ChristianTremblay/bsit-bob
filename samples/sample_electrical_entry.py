@@ -49,7 +49,7 @@ mainentry_panel_config = {
         "voltage": "575",
     },
     "sensors": {},
-    "devices": {
+    "equipments": {
         ("MainBreaker", ThreePolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 400,
@@ -82,7 +82,7 @@ distribution_panel_config = {
         "voltage": "120_240",
     },
     "sensors": {},
-    "devices": {
+    "equipments": {
         ("MainBreaker", TwoPolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,
@@ -105,7 +105,7 @@ distribution_panel_config = {
 
 
 def test_electrical_entry():
-    # Electrical devices
+    # Electrical Equipments
 
     main_panel = ThreePhaseDistributionPanel(config=mainentry_panel_config)
     transformer_120_240 = Transformer(

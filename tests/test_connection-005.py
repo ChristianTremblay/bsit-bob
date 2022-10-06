@@ -5,7 +5,7 @@ from header import ttl_test_header
 
 from bob.core import (
     Connection,
-    Device,
+    Equipment,
     InletConnectionPoint,
     OutletConnectionPoint,
     bind_model_namespace,
@@ -17,10 +17,10 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_wrong_direction(bob_fixture):
-    d1 = Device(label="d1")
+    d1 = Equipment(label="d1")
     cp1 = OutletConnectionPoint(d1, label="d1.out")
 
-    d2 = Device(label="d2")
+    d2 = Equipment(label="d2")
     cp2 = InletConnectionPoint(d2, label="d2.in")
 
     c = Connection()

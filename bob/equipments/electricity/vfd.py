@@ -16,7 +16,7 @@ from ...core import (
     P223,
     S223,
     ConnectionPoint,
-    Device,
+    Equipment,
     Property,
     logging,
     template_update,

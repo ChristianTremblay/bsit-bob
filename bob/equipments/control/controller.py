@@ -17,7 +17,7 @@ from ...core import (
     INCLUDE_INVERSE,
     P223,
     S223,
-    Device,
+    Equipment,
     Property,
     PropertyReference,
     data_graph,
@@ -42,9 +42,9 @@ controller_template = {
 }
 
 
-class Controller(Device):
+class Controller(Equipment):
     """
-    A controller executes function blocks and connect to other devices
+    A controller executes function blocks and connect to other Equipments
     through different connection points (AI, AO, BI, BO)
     """
 
@@ -91,14 +91,14 @@ def connect_mm(controller: Controller, function_block: FunctionBlock) -> None:
 
 
 @multimethod
-def connect_mm(controller: Controller, network_device: NetworkProfile) -> None:
+def connect_mm(controller: Controller, network_Equipment: NetworkProfile) -> None:
     """Controller >> FucntionBlock"""
-    logging.info(f"connect from {controller} to {network_device}")
+    logging.info(f"connect from {controller} to {network_Equipment}")
 
     data_graph.add(
-        (controller._node_iri, P223.hasNetworkProfile, network_device._node_iri)
+        (controller._node_iri, P223.hasNetworkProfile, network_Equipment._node_iri)
     )
     if INCLUDE_INVERSE:
         data_graph.add(
-            (network_device._node_iri, P223.isNetworkProfileOf, controller._node_iri)
+            (network_Equipment._node_iri, P223.isNetworkProfileOf, controller._node_iri)
         )

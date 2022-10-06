@@ -8,7 +8,7 @@ from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.water import WaterConnection
 from bob.core import (
     UNIT,
-    Device,
+    Equipment,
     Junction,
     System,
     bind_model_namespace,
@@ -194,14 +194,14 @@ tpd1 = AirDifferentialStaticPressureSensor(
 taec1 = WaterTemperatureSensor(
     label="TAEC-1", comment="Water temperature feeding coil", unit=UNIT.DEG_C
 )
-tbl1 = Device(label="TBL-1", comment="Freeze Thermostat")
+tbl1 = Equipment(label="TBL-1", comment="Freeze Thermostat")
 ta1 = AirTemperatureSensor(
     label="TA-1",
     comment="Discharge Air Temperature Sensor",
     unit=UNIT.DEG_C,
 )
-fs1 = Device(label="FS-1", comment="Air flow switch for humidifier")
-hlh1 = Device(label="HLH-1", comment="Humidity High Level Stat")
+fs1 = Equipment(label="FS-1", comment="Air flow switch for humidifier")
+hlh1 = Equipment(label="HLH-1", comment="Humidity High Level Stat")
 tpd2 = AirDifferentialStaticPressureSensor(
     label="TPD-2", comment="Static Discharge Air Pressure Sensor", unit=UNIT.PA
 )

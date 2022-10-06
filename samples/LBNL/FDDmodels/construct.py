@@ -106,7 +106,7 @@ for fname in args.ttl:
 #     logging.debug(fname)
 #     shacl_graph.load(fname, format="turtle")
 
-shacl_graph.load("device_props_rules.ttl", format="turtle")
+shacl_graph.load("Equipment_props_rules.ttl", format="turtle")
 shacl_graph.print()
 
 # expand the graph

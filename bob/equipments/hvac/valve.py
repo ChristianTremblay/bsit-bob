@@ -40,7 +40,7 @@ from ...core import (
     BOB,
     P223,
     S223,
-    Device,
+    Equipment,
     Node,
     PropertyReference,
     System,
@@ -52,7 +52,7 @@ from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
 _namespace = BOB
 
-class Valve(Device):
+class Valve(Equipment):
     """
     Base class for a valve. Must be subclassed to provide inlet and outlet
     depending on configuration

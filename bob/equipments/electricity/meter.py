@@ -15,7 +15,7 @@ from bob.properties.electricity import (
 from bob.sensor.electricity import CurrentAnalogSensor, VoltageSensor
 
 from ...connections.electricity import *
-from ...core import BOB, P223, S223, UNIT, Device, Node, template_update
+from ...core import BOB, P223, S223, UNIT, Equipment, Node, template_update
 
 _namespace = BOB
 
@@ -127,7 +127,7 @@ three_phase_electricalmeter_template = {
         },
         ("max_power", ElectricPower): {
             "unit": UNIT["KiloW"],
-            "comment": "Maximum Power of device",
+            "comment": "Maximum Power of Equipment",
         },
     },
     "sensors": {
@@ -171,7 +171,7 @@ three_phase_electricalmeter_template = {
 }
 
 
-class ThreePhaseElectricalMeter(Device):
+class ThreePhaseElectricalMeter(Equipment):
     """
     This is an attemp to model a complete Electrical meter
     starting with all the voltages and current sensors.
@@ -179,7 +179,7 @@ class ThreePhaseElectricalMeter(Device):
     of calculation based on those measures.
 
     To create one, you must specify a medium and a label
-    Sensors will be added to the Meter device and be available
+    Sensors will be added to the Meter Equipment and be available
     by square bracket requests.
 
     """

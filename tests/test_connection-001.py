@@ -6,7 +6,7 @@ from bob import core
 from bob.core import (
     Air,
     Connection,
-    Device,
+    Equipment,
     InletConnectionPoint,
     bind_model_namespace,
     dump,
@@ -19,7 +19,7 @@ core.INCLUDE_INVERSE = True
 
 
 def test_connect_to(bob_fixture):
-    d1 = Device(label="d1")
+    d1 = Equipment(label="d1")
 
     cp1 = InletConnectionPoint(d1, hasMedium=Air)
 

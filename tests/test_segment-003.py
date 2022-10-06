@@ -2,14 +2,14 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import Device, InletConnectionPoint, Segment, bind_model_namespace, dump
+from bob.core import Equipment, InletConnectionPoint, Segment, bind_model_namespace, dump
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_segment_003(bob_fixture):
-    d1 = Device(label="d1")
+    d1 = Equipment(label="d1")
     cp1 = InletConnectionPoint(d1)
 
     s1 = Segment()

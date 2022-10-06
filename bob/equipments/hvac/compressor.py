@@ -11,7 +11,7 @@ from ...connections.electricity import (
     ElectricalOutletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Device, PropertyReference
+from ...core import BOB, P223, S223, Equipment, PropertyReference
 
 _namespace = BOB
 
@@ -23,7 +23,7 @@ compressor_template = {
 }
 
 
-class AirCompressor(Device):
+class AirCompressor(Equipment):
     _class_iri: URIRef = P223.AirCompressor
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 

@@ -18,7 +18,7 @@ from ...core import (
     S223,
     UNIT,
     ConnectionPoint,
-    Device,
+    Equipment,
     PropertyReference,
     template_update,
 )
@@ -38,7 +38,7 @@ ethernet_firewall_template = {
 internet = EthernetConnection(label="internet")
 
 
-class EthernetFirewall(Device):
+class EthernetFirewall(Equipment):
     """
     An Ethernet Firewall with wan and lan ports
     """

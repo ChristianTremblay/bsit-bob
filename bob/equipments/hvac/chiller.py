@@ -19,7 +19,7 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Device
+from ...core import BOB, P223, S223, Equipment
 from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
 
 _namespace = BOB
@@ -32,7 +32,7 @@ chiller_template = {
 }
 
 
-class Chiller(Device):
+class Chiller(Equipment):
     _class_iri = S223.Chiller
     chilledWaterEntering: ChilledWaterInletConnectionPoint
     chilledWaterLeaving: ChilledWaterOutletConnectionPoint
@@ -57,7 +57,7 @@ class Chiller(Device):
         super().__init__(config, **kwargs)
 
 
-class AgnosticChiller(Device):
+class AgnosticChiller(Equipment):
     _class_iri = S223.Chiller
     chilledWaterLeaving: WaterOutletConnectionPoint
     chilledWaterEntering: WaterInletConnectionPoint

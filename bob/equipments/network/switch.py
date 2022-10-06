@@ -17,7 +17,7 @@ from ...core import (
     S223,
     UNIT,
     ConnectionPoint,
-    Device,
+    Equipment,
     PropertyReference,
     template_update,
 )
@@ -35,7 +35,7 @@ ethernet_switch_template = {
 }
 
 
-class EthernetSwitch(Device):
+class EthernetSwitch(Equipment):
     """
     An Ethernet Switch
     """

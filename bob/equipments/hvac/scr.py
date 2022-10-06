@@ -10,7 +10,7 @@ from ...connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
     ModulationSignalInletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Device
+from ...core import BOB, P223, S223, Equipment
 
 _namespace = BOB
 
@@ -29,7 +29,7 @@ SCR_template = {
 }
 
 
-class SCR(Device):
+class SCR(Equipment):
     # takes 600V (or 347V) in and use triacs to modulate
     # power given to electrical coil
     # a SCR accept 0-10VDC signal to modulate

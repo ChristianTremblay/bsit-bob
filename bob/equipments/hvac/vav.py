@@ -13,7 +13,7 @@ from ...connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
-from ...core import BOB, P223, S223, UNIT, Device, PropertyReference, System
+from ...core import BOB, P223, S223, UNIT, Equipment, PropertyReference, System
 from ...equipments.hvac.coil import HotWaterCoil
 from ...equipments.hvac.damper import Damper, ElectricalActuatedProportionalDamper
 from ...equipments.hvac.fan import Fan

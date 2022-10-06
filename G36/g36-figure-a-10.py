@@ -32,7 +32,7 @@ from bob.connections.water import (
 from bob.core import (
     QUANTITYKIND,
     UNIT,
-    Device,
+    Equipment,
     PropertyReference,
     System,
     bind_model_namespace,
@@ -99,7 +99,7 @@ hot_water_valve_template = {
         ("position", PercentCommand): {},
         ("flowCoefficient", Gallons): {},
     },
-    "devices": {("actuator", ElectricalProportionalActuator): {}},
+    "equipments": {("actuator", ElectricalProportionalActuator): {}},
 }
 htg_coil = HotWaterCoil(label="HWC", comment="Hot Water Coil")
 htg_vlv = TwoWayActuatedProportionalValve(
@@ -124,7 +124,7 @@ chilled_water_valve_template = {
         ("flowCoefficient", Gallons): {},
         ("position", PercentCommand): {},
     },
-    "devices": {("actuator", ElectricalProportionalActuator): {}},
+    "equipments": {("actuator", ElectricalProportionalActuator): {}},
 }
 clg_coil = ChilledWaterCoil(label="CWC", comment="Chilled Water Coil")
 clg_vlv = TwoWayActuatedProportionalValve(

@@ -23,7 +23,7 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Device, PropertyReference
+from ...core import BOB, P223, S223, Equipment, PropertyReference
 
 _namespace = BOB
 
@@ -33,7 +33,7 @@ coil_template = {
 }
 
 
-class Coil(Device):
+class Coil(Equipment):
     _class_iri = S223.Coil
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
@@ -111,7 +111,7 @@ electricalradiant_template = {
 }
 
 # Baseboard, radiant panel, heating floor
-class ElectricalRadiantHeatingCoil(Device):
+class ElectricalRadiantHeatingCoil(Equipment):
     _class_iri = S223.HeatingCoil
     airContact: AirBidirectionalConnectionPoint
 

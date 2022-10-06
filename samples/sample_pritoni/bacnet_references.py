@@ -12,7 +12,7 @@ model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 
-# An HVAC BACnet device
+# An HVAC BACnet Device
 CGM_2_004 = BACnetDevice(
     label="CGM-2-004",
     comment="AHU Controller",

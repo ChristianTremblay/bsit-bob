@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.core import BOB, P223, S223, UNIT, Device, Property, PropertyReference
+from bob.core import BOB, P223, S223, UNIT, Equipment, Property, PropertyReference
 from bob.properties.states import OnOffStatus
 
 from ...connections.electricity import (
@@ -19,7 +19,7 @@ from ...sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 _namespace = BOB
 
 
-class Thermostat(Device):
+class Thermostat(Equipment):
     _class_iri = P223.Thermostat
     temperature: PropertyReference
     setpoint: PropertyReference
@@ -27,7 +27,7 @@ class Thermostat(Device):
     onOffCommand: PropertyReference
 
 
-class Pressurestat(Device):
+class Pressurestat(Equipment):
     _class_iri = P223.Pressurestat
     pressure: PropertyReference
     setpoint: PropertyReference
@@ -35,7 +35,7 @@ class Pressurestat(Device):
     onOffCommand: PropertyReference
 
 
-class Humidistat(Device):
+class Humidistat(Equipment):
     _class_iri = P223.Humidistat
     humidity: PropertyReference
     setpoint: PropertyReference
@@ -146,7 +146,7 @@ NetworkRoomSensor_template = {
 }
 
 
-class NetworkRoomSensor(Device):
+class NetworkRoomSensor(Equipment):
     """
     A network Room Sensor tells information on the room and accept setpoints
     Will communicate thoses information by network.
@@ -193,7 +193,7 @@ flowswitch_template = {
 }
 
 
-class FlowSwitch(Device):
+class FlowSwitch(Equipment):
     """
     A contact On Off controlled by static pressure in duct
     """

@@ -3,7 +3,7 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import (
-    Device,
+    Equipment,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     OutletConnectionPoint,
@@ -22,28 +22,28 @@ class TestSystem(System):
     cpOut: OutletSystemConnectionPoint
 
 
-class TestDevice(Device):
+class TestEquipment(Equipment):
     cpIn: InletConnectionPoint
     cpOut: OutletConnectionPoint
 
 
-# make a system and a device
+# make a system and a Equipment
 s1 = TestSystem(label="s1")
-d1 = TestDevice(label="d1")
+d1 = TestEquipment(label="d1")
 d1 < s1
 
 # pass through the system connection points
 # s1.cpIn >> s1.cpOut
 
-# make a system and a device
+# make a system and a Equipment
 s2 = TestSystem(label="s2")
-d2 = TestDevice(label="d2")
+d2 = TestEquipment(label="d2")
 d2 < s2
 
-# pass-in from the system to the device
+# pass-in from the system to the Equipment
 s2.cpIn.mapsTo = d2.cpIn
 
-# pass-out from the device to the system
+# pass-out from the Equipment to the system
 d2.cpOut.mapsTo = s2.cpOut
 
 # dump the result

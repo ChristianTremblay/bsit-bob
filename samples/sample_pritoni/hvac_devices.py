@@ -68,7 +68,7 @@ ahu_template = {
             "comment": "Return Duct Static Pressure (S1)",
         },
     },
-    "devices": {
+    "equipments": {
         ("RF", FanWithVFD): {
             "comment": "Return Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
@@ -110,7 +110,7 @@ vav1_config = {
             "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },
-    "devices": {
+    "equipments": {
         ("VAV1_damper", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box 1 Air Damper (actuator:Ax)"
         },
@@ -136,7 +136,7 @@ vav2_config = {
             "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },
-    "devices": {
+    "equipments": {
         ("VAV2_damper", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box 2 Air Damper (actuator:A6)"
         },

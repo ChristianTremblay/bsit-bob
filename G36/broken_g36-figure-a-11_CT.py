@@ -37,7 +37,7 @@ from bob.equipments.hvac.fan import Fan
 from bob.equipments.hvac.filter import Filter
 from bob.equipments.hvac.stats import HighStaticPressureStat
 from bob.equipments.hvac.valve import TwoWayValve
-from bob.externalreference.BACNET import BACnetDevice, BACnetReference
+from bob.externalreference.bacnet import BACnetDevice, BACnetReference
 from bob.functions import InputConnector
 
 # from bob.equipments.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
@@ -60,7 +60,7 @@ fan_template = {
         "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
     },
     "sensors": {},
-    "devices": {},
+    "equipments": {},
 }
 
 vfd_template = {
@@ -74,7 +74,7 @@ vfd_template = {
         "speed_reference": 0,
     },
     "sensors": {},
-    "devices": {},
+    "equipments": {},
 }
 
 
@@ -163,7 +163,7 @@ high_static > dps
 
 vfd_controller = VFDController(
     label="VFDController",
-    comment="This is the abstraction of the VFD Controller that interact with other systems like DDC controlers and other controllers. Each property is related to something in the device itself.",
+    comment="This is the abstraction of the VFD Controller that interact with other systems like DDC controlers and other controllers. Each property is related to something in the Equipment itself.",
 )
 vfd_bacnet = BACnetDevice(
     label="VFDBACNET",
@@ -207,7 +207,7 @@ a11 = FIG_A_11(
 high_static.highPressureNO.mapsTo = dps.highStaticPressureOutput
 high_static.enableVFD.mapsTo = vfd_controller.enable
 
-# vfd > vfd_controller  ###TODO: devices cannot contain systems
+# vfd > vfd_controller  ###TODO: Equipments cannot contain systems
 
 a11.uses(rat.observesProperty)
 a11.uses(dat.observesProperty)

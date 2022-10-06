@@ -18,7 +18,7 @@ from ...core import (
     S223,
     UNIT,
     ConnectionPoint,
-    Device,
+    Equipment,
     PropertyReference,
     template_update,
 )
@@ -46,7 +46,7 @@ fan_template = {
 }
 
 
-class Fan(Device):
+class Fan(Equipment):
     """
     A fan is composed of a blower and an electrical motor
 
@@ -86,7 +86,7 @@ class Fan(Device):
 
 
 starter_addon_template = {
-    "devices": {
+    "equipments": {
         ("starter", MotorStarter): {
             "config": {
                 "cp": {
@@ -123,7 +123,7 @@ class FanWithStarter(Fan):
 
 
 VFD_addon_template = {
-    "devices": {("vfd", VFD): {}},
+    "equipments": {("vfd", VFD): {}},
     "properties": {},
 }
 

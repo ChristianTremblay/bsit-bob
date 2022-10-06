@@ -19,7 +19,7 @@ from ...connections.water import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Device
+from ...core import BOB, P223, S223, Equipment
 
 _namespace = BOB
 
@@ -27,23 +27,23 @@ _namespace = BOB
 chilledWaterCoil_template = {
     "params": {"label": "Name", "comment": "Description"},
     "sensors": {},
-    "devices": {("valve", Device): {"comment": "SubDev comment"}},
+    "equipments": {("valve", Equipment): {"comment": "SubDev comment"}},
 }
 """
 # SEMANTIC QUESTION
 # here, that could be a good way to define the coil and its valve...
 # but the valve connect to the coil
-# can this be considered "contained" in the Coil device ?
+# can this be considered "contained" in the Coil Equipment ?
 # Should this b ea system
 
 
-class HeatExchanger(Device):
+class HeatExchanger(Equipment):
     _class_iri: URIRef = S223.HeatExchanger
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 
 
-class Accumulator(Device):
+class Accumulator(Equipment):
     """
     Type of heat exchanger that accumulate heat from exhaust air
     passing through it. Then air flow will switch side. Air will flow
@@ -56,7 +56,7 @@ class Accumulator(Device):
     indoorSide: AirBidirectionalConnectionPoint
 
 
-class Accumulator4SidesDuct(Device):
+class Accumulator4SidesDuct(Equipment):
     """
     This is part of the exchanger and allow air to comes in or out of accumulator
     depending on the position of the pneumatic damper

@@ -1,5 +1,5 @@
 lighting_zones = {}
-# creating the lighting zones and subzones with a system containing a single light_fixtures device serving them.
+# creating the lighting zones and subzones with a system containing a single light_fixtures Equipment serving them.
 for zn in (
     lighting_sys_df["Location"].dropna().unique()
 ):  # creating the lighting zones I can't find rooms for too.

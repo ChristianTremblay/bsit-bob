@@ -11,7 +11,7 @@ from ...connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
 )
 from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
-from ...core import BOB, S223, UNIT, Device, PropertyReference, logging, template_update
+from ...core import BOB, S223, UNIT, Equipment, PropertyReference, logging, template_update
 from ...properties import (
     HP,
     RPM,
@@ -37,7 +37,7 @@ pump_template = {
 }
 
 
-class Pump(Device):
+class Pump(Equipment):
     _class_iri = S223.Pump
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
@@ -53,7 +53,7 @@ class Pump(Device):
 
 
 starter_addon_template = {
-    "devices": {
+    "equipments": {
         ("starter", MotorStarter): {
             "config": {
                 "cp": {
@@ -90,7 +90,7 @@ class PumpWithStarter(Pump):
 
 
 VFD_addon_template = {
-    "devices": {("vfd", VFD): {}},
+    "equipments": {("vfd", VFD): {}},
     "properties": {},
 }
 

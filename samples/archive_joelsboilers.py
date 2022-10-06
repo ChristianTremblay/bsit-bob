@@ -12,7 +12,7 @@ from bob.connections.water import (
 from bob.core import (
     P223,
     UNIT,
-    Device,
+    Equipment,
     System,
     bind_model_namespace,
     dump,
@@ -40,17 +40,17 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def sample_using_only_water_medium():
-    class AgnosticWaterBoiler(Device):
+    class AgnosticWaterBoiler(Equipment):
         node_type = P223.AgnosticBoiler
         waterInlet: WaterInletConnectionPoint
         waterOutlet: WaterOutletConnectionPoint
 
-    class AgnosticWaterCoil(Device):
+    class AgnosticWaterCoil(Equipment):
         node_type = P223.AgnosticCoil
         waterInlet: WaterInletConnectionPoint
         waterOutlet: WaterOutletConnectionPoint
 
-    class HotWaterTank(Device):
+    class HotWaterTank(Equipment):
         node_type = P223.HotWaterTank
         waterInlet: WaterInletConnectionPoint
         waterOutlet: WaterOutletConnectionPoint
@@ -94,7 +94,7 @@ def sample_using_only_water_medium():
     DHWSystem > [
         DHWBoiler,
         dhw_hot_water_tank,
-    ]  ###TODO: dhw_supply_for_house must be a device or system
+    ]  ###TODO: dhw_supply_for_house must be a Equipment or system
 
 
 if __name__ == "__main__":

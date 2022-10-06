@@ -10,13 +10,13 @@
 
 
 
-## Making a device
+## Making a Equipment
 
 
 
 ## Properties
 
-## Making a device with a sensor in it
+## Making a Equipment with a sensor in it
 
 ### Connections 
 

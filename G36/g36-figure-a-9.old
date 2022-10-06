@@ -17,7 +17,7 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import Device, Junction, System, bind_model_namespace, dump
+from bob.core import Equipment, Junction, System, bind_model_namespace, dump
 from bob.equipments.hvac.fan import Fan
 from bob.properties.flow import Flow
 from bob.properties.force import DifferentialStaticPressure
@@ -31,23 +31,23 @@ _namespace = bind_model_namespace(
 )
 
 
-class AirFilter(Device):
+class AirFilter(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     dp = DifferentialStaticPressure
 
 
-class AirFlowStation(Device):
+class AirFlowStation(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flow = Flow
 
 
-class DamperPositioner(Device):
+class DamperPositioner(Equipment):
     position = PercentCommand
 
 
-class Damper(Device):
+class Damper(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     position: PercentCommand

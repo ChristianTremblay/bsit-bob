@@ -1,11 +1,11 @@
-from ..core import P223, S223, Device, LocationReference, Property, PropertyReference
+from ..core import P223, S223, Equipment, LocationReference, Property, PropertyReference
 
 """
 Depending on the nature of equipments, some are considered s223:System, other
-s223:Device. 
+s223:Equipment. 
 
 This lead to potential import issues when using the library as the user will
-have to know upfront if he's looking for a device or a system. 
+have to know upfront if he's looking for a Equipment or a system. 
 
 By merging both modules into one, it'll be easier to find what we look for.
 
@@ -13,7 +13,7 @@ By merging both modules into one, it'll be easier to find what we look for.
 _namespace = P223
 
 
-class _Actuator(Device):
+class _Actuator(Equipment):
     """
     This version of an actuator is meant to be the opposite of a sensor
     It relates properties to an action
@@ -26,7 +26,7 @@ class _Actuator(Device):
 
     __|___|__|___|___|__
     |  Supply Fan      |------------s223:hasProperty--------(flow)
-    |  s223:Device     |------------s223:hasProperty--------(OnOffCommand) <-> A
+    |  s223:Equipment  |------------s223:hasProperty--------(OnOffCommand) <-> A
     |  s223:Fan        |------------s223:hasProperty--------(speed_ratio) <-> B
     |                  |------------s223:hasProperty--------(status)
     |__________________|------------s223:hasConnectionPoint----(AirOutlet) <-> C
@@ -43,7 +43,7 @@ class _Actuator(Device):
     The speed ratio property is not a property that is meant to be observed. It is an intrinsic property of a fan, it is the fact that it can run.
     It represents the core function of the fan.
 
-    A damper would have a shaft_position(?) property, a pump would also have something similar to speed_ratio. All devices should have one main "function"
+    A damper would have a shaft_position(?) property, a pump would also have something similar to speed_ratio. All Equipments should have one main "function"
     property.
 
     A sensor could be used to observe the "status" of the fan. We shall resist to relate the actuator to the status. The actuator do

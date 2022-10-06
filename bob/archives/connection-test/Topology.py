@@ -1,6 +1,6 @@
 from bob.core import (
     Connection,
-    Device,
+    Equipment,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     Junction,
@@ -15,16 +15,16 @@ from bob.core import (
 _namespace = bind_model_namespace("ex", "urn:ex/")
 
 
-class DeviceIn(Device):
+class EquipmentIn(Equipment):
     cpIn: InletConnectionPoint
 
 
-class DeviceInOut(Device):
+class EquipmentInOut(Equipment):
     cpIn: InletConnectionPoint
     cpOut: OutletConnectionPoint
 
 
-class DeviceOut(Device):
+class EquipmentOut(Equipment):
     cpOut: OutletConnectionPoint
 
 
@@ -35,22 +35,22 @@ class SystemInOut(System):
     cpOut2: OutletSystemConnectionPoint
 
 
-d1 = DeviceInOut(label="D1")
-d2 = DeviceInOut(label="D2")
-d3 = DeviceInOut(label="D3")
-d4 = DeviceInOut(label="D4")
-d5 = DeviceInOut(label="D5")
-d6 = DeviceIn(label="D6")
-d7 = DeviceOut(label="D7")
-d8 = DeviceInOut(label="D8")
-d9 = DeviceInOut(label="D9")
+d1 = EquipmentInOut(label="D1")
+d2 = EquipmentInOut(label="D2")
+d3 = EquipmentInOut(label="D3")
+d4 = EquipmentInOut(label="D4")
+d5 = EquipmentInOut(label="D5")
+d6 = EquipmentIn(label="D6")
+d7 = EquipmentOut(label="D7")
+d8 = EquipmentInOut(label="D8")
+d9 = EquipmentInOut(label="D9")
 
 c1 = Connection(label="C1")
 c2 = Connection(label="C2")
 
 s1 = SystemInOut(label="S1")
 
-# D5, D8, and D9 are devices inside S1
+# D5, D8, and D9 are Equipments inside S1
 d5 < s1
 d8 < s1
 d9 < s1
@@ -80,7 +80,7 @@ d1 >> c1 >> d2
 d2 >> c2 >> d3
 c2 >> d4
 
-# device to system connections
+# Equipment to system connections
 d4 >> s1.cpIn1
 s1.cpOut1 >> d6
 d7 >> s1.cpIn2

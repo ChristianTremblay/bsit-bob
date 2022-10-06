@@ -29,7 +29,7 @@ from bob.core import (
     QUANTITYKIND,
     UNIT,
     Air,
-    Device,
+    Equipment,
     DomainSpace,
     Junction,
     System,
@@ -64,7 +64,7 @@ _namespace = ex = bind_model_namespace(
 )
 
 # add properties to config?
-# Devices DON'T have properties as default, but have a default config that you can optionally use.
+# Equipments DON'T have properties as default, but have a default config that you can optionally use.
 
 fan_template = {
     "params": {
@@ -77,7 +77,7 @@ fan_template = {
             "comment": "Filter Differential Pressure Sensor"
         },
     },
-    "devices": {},
+    "equipments": {},
 }
 
 vfd_template = {
@@ -88,7 +88,7 @@ vfd_template = {
         "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
     },
     "sensors": {},
-    "devices": {},
+    "equipments": {},
 }
 
 # will need my own damper since this has no control point properties like g36
@@ -102,7 +102,7 @@ damper_template = {
         ("vav_cfm", AirFlowSensor): {},
         ("vav_dp", AirStaticPressureSensor): {},
     },
-    "devices": {},
+    "equipments": {},
 }
 
 mixing_box_template = {
@@ -110,14 +110,14 @@ mixing_box_template = {
     "sensors": {
         ("vav_eat", AirTemperatureSensor): {"comment": "Air Temperature Sensor"}
     },
-    "devices": {},
+    "equipments": {},
 }
 
 
 # don't need these functions in the future I think
 def ext_ref_damper(label, ext_ref=None):
     dmp = Damper(label=label, config=damper_template)
-    # able to specify in config if they attach at inlet, outlet, or device?
+    # able to specify in config if they attach at inlet, outlet, or Equipment?
     # not defining sensors in template, since I want to specify that they connect at inlet connection point?
     # defining sensors in template, then specifying here that they should measure inlet cp
 
@@ -147,7 +147,7 @@ def ext_ref_fan(label, ext_ref=None):
 
 
 # this feels wrong, but not sure what else would be right
-class VAV_Mixing_Box(Device):
+class VAV_Mixing_Box(Equipment):
     hotAirInlet: AirInletConnectionPoint
     coldAirInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint

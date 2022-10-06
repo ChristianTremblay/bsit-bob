@@ -4,7 +4,7 @@ Roley - Brick Schema Classes for Bob
 
 from rdflib import URIRef
 
-from bob.core import Device as _Device
+from bob.core import Equipment as _Equipment
 from bob.core import Node as _Node
 from bob.core import bind_namespace
 from bob.equipments.hvac.fan import Fan as _Fan
@@ -93,7 +93,7 @@ class Portfolio(Collection):
 
 class System(Collection):
     """
-    A System is a combination of equipment and auxiliary devices (e.g.,
+    A System is a combination of equipment and auxiliary Equipments (e.g.,
     controls, accessories, interconnecting means, and termi­nal elements)
     by which energy is transformed so it performs a specific function such
     as HVAC, service water heating, or lighting. (ASHRAE Dictionary).
@@ -104,7 +104,7 @@ class System(Collection):
 
 class Domestic_Hot_Water_System(System):
     """
-    The equipment, devices and conduits that handle the production and
+    The equipment, Equipments and conduits that handle the production and
     distribution of domestic hot water in a building
     """
 
@@ -113,7 +113,7 @@ class Domestic_Hot_Water_System(System):
 
 class Electrical_System(System):
     """
-    Devices that serve or are part of the electrical subsystem in the
+    Equipments that serve or are part of the electrical subsystem in the
     building
     """
 
@@ -122,7 +122,7 @@ class Electrical_System(System):
 
 class Energy_System(Electrical_System):
     """
-    A collection of devices that generates, stores or transports
+    A collection of Equipments that generates, stores or transports
     electricity
     """
 
@@ -131,7 +131,7 @@ class Energy_System(Electrical_System):
 
 class Energy_Generation_System(Energy_System):
     """
-    A collection of devices that generates electricity
+    A collection of Equipments that generates electricity
     """
 
     pass
@@ -139,7 +139,7 @@ class Energy_Generation_System(Energy_System):
 
 class PV_Generation_System(Energy_Generation_System):
     """
-    A collection of photovoltaic devices that generates energy
+    A collection of photovoltaic Equipments that generates energy
     """
 
     pass
@@ -147,7 +147,7 @@ class PV_Generation_System(Energy_Generation_System):
 
 class Energy_Storage_System(Energy_System):
     """
-    A collection of devices that stores electricity
+    A collection of Equipments that stores electricity
     """
 
     pass
@@ -196,7 +196,7 @@ class Air_System(Heating_Ventilation_Air_Conditioning_System):
 
 class Ventilation_Air_System(Air_System):
     """
-    The equipment, devices, and conduits that handle the introduction and
+    The equipment, Equipments, and conduits that handle the introduction and
     distribution of ventilation air in the building
     """
 
@@ -205,7 +205,7 @@ class Ventilation_Air_System(Air_System):
 
 class Steam_System(Heating_Ventilation_Air_Conditioning_System):
     """
-    The equipment, devices and conduits that handle the production and
+    The equipment, Equipments and conduits that handle the production and
     distribution of steam in a building
     """
 
@@ -214,7 +214,7 @@ class Steam_System(Heating_Ventilation_Air_Conditioning_System):
 
 class Water_System(Heating_Ventilation_Air_Conditioning_System):
     """
-    The equipment, devices and conduits that handle the production and
+    The equipment, Equipments and conduits that handle the production and
     distribution of water in a building
     """
 
@@ -223,7 +223,7 @@ class Water_System(Heating_Ventilation_Air_Conditioning_System):
 
 class Chilled_Water_System(Water_System):
     """
-    The equipment, devices and conduits that handle the production and
+    The equipment, Equipments and conduits that handle the production and
     distribution of chilled water in a building
     """
 
@@ -242,7 +242,7 @@ class Condenser_Water_System(Water_System):
 
 class Hot_Water_System(Water_System):
     """
-    The equipment, devices and conduits that handle the production and
+    The equipment, Equipments and conduits that handle the production and
     distribution of hot water in a building
     """
 
@@ -267,7 +267,7 @@ class Reheat_Hot_Water_System(Hot_Water_System):
 
 class Lighting_System(System):
     """
-    The equipment, devices and interfaces that serve or are a part of the
+    The equipment, Equipments and interfaces that serve or are a part of the
     lighting subsystem in a building
     """
 
@@ -293,7 +293,7 @@ class Emergency_Power_Off_System(Safety_System):
 
 class Fire_Safety_System(Safety_System):
     """
-    A system containing devices and equipment that monitor, detect and
+    A system containing Equipments and equipment that monitor, detect and
     suppress fire hazards
     """
 
@@ -302,7 +302,7 @@ class Fire_Safety_System(Safety_System):
 
 class Shading_System(System):
     """
-    Devices that can control daylighting through various means
+    Equipments that can control daylighting through various means
     """
 
     pass
@@ -316,13 +316,13 @@ class Blind_Group(Shading_System):
     pass
 
 
-class Equipment(Entity, Class, _Device):
+class Equipment(Entity, Class, _Equipment):
     """
-    devices that serve all or part of the building and may include
+    Equipments that serve all or part of the building and may include
     electric power, lighting, transportation, or service water heating,
     including, but not limited to, furnaces, boilers, air conditioners,
     heat pumps, chillers, water heaters, lamps, luminaires, ballasts,
-    elevators, escalators, or other devices or installations.
+    elevators, escalators, or other Equipments or installations.
     """
 
     pass
@@ -369,7 +369,7 @@ class Disconnect_Switch(Electrical_Equipment):
 
 class Energy_Storage(Electrical_Equipment):
     """
-    Devices or equipment that store energy in its various forms
+    Equipments or equipment that store energy in its various forms
     """
 
     pass
@@ -386,7 +386,7 @@ class Battery(Energy_Storage):
 
 class Inverter(Electrical_Equipment):
     """
-    A device that changes direct current into alternating current
+    A Equipment that changes direct current into alternating current
     """
 
     pass
@@ -404,8 +404,8 @@ class Motor_Control_Center(Electrical_Equipment):
 
 class PlugStrip(Electrical_Equipment):
     """
-    A device containing a block of electrical sockets allowing multiple
-    electrical devices to be powered from a single electrical socket.
+    A Equipment containing a block of electrical sockets allowing multiple
+    electrical Equipments to be powered from a single electrical socket.
     """
 
     pass
@@ -434,7 +434,7 @@ class Transformer(Electrical_Equipment):
 
 class Elevator(Equipment):
     """
-    A device that provides vertical transportation between floors, levels
+    A Equipment that provides vertical transportation between floors, levels
     or decks of a building, vessel or other structure
     """
 
@@ -459,7 +459,7 @@ class Fire_Alarm_Control_Panel(Fire_Safety_Equipment):
 
 class Fire_Control_Panel(Fire_Safety_Equipment):
     """
-    A panel-mounted device that provides status and control of a fire
+    A panel-mounted Equipment that provides status and control of a fire
     safety system
     """
 
@@ -472,7 +472,7 @@ class Heat_Detector(Fire_Safety_Equipment):
 
 class Manual_Fire_Alarm_Activation_Equipment(Fire_Safety_Equipment):
     """
-    A device for manually activating fire alarm
+    A Equipment for manually activating fire alarm
     """
 
     pass
@@ -491,7 +491,7 @@ class Fire_Alarm_Manual_Call_Point(Manual_Fire_Alarm_Activation_Equipment):
 
 class Fire_Alarm_Pull_Station(Manual_Fire_Alarm_Activation_Equipment):
     """
-    An active fire protection device (usually wall-mounted) that when
+    An active fire protection Equipment (usually wall-mounted) that when
     activated initiates an alarm on a fire alarm system. In its simplest
     form the user activates the alarm by pulling the handle down.
     """
@@ -567,7 +567,7 @@ class DOAS(AHU):
 
 class Dedicated_Outdoor_Air_System_Unit(AHU):
     """
-    A device that conditions and delivers 100% outdoor air to its assigned
+    A Equipment that conditions and delivers 100% outdoor air to its assigned
     spaces. It decouples air-conditioning of the outdoor air, usually used
     to provide minimum outdoor air ventilation, from conditioning of the
     internal loads.
@@ -595,9 +595,9 @@ class MAU(AHU):
 
 class Makeup_Air_Unit(AHU):
     """
-    A device designed to condition ventilation air introduced into a space
+    A Equipment designed to condition ventilation air introduced into a space
     or to replace air exhausted from a process or general area exhaust.
-    The device may be used to prevent negative pressure within buildings
+    The Equipment may be used to prevent negative pressure within buildings
     or to reduce airborne contaminants in a space.
     """
 
@@ -776,12 +776,12 @@ class Cold_Deck(HVAC_Equipment):
 
 class Compressor(HVAC_Equipment):
     """
-    (1) device for mechanically increasing the pressure of a gas. (2)
+    (1) Equipment for mechanically increasing the pressure of a gas. (2)
     often described as being either open, hermetic, or semihermetic to
     describe how the compressor and motor drive is situated in relation to
     the gas or vapor being compressed. Types include centrifugal, axial
     flow, reciprocating, rotary screw, rotary vane, scroll, or diaphragm.
-    1. device for mechanically increasing the pressure of a gas. 2.
+    1. Equipment for mechanically increasing the pressure of a gas. 2.
     specific machine, with or without accessories, for compressing
     refrigerant vapor.
     """
@@ -791,7 +791,7 @@ class Compressor(HVAC_Equipment):
 
 class Computer_Room_Air_Conditioning(HVAC_Equipment):
     """
-    A device that monitors and maintains the temperature, air distribution
+    A Equipment that monitors and maintains the temperature, air distribution
     and humidity in a network room or data center.
     """
 
@@ -818,7 +818,7 @@ class Condenser(HVAC_Equipment):
 
 class Cooling_Tower(HVAC_Equipment):
     """
-    A cooling tower is a heat rejection device that rejects waste heat to
+    A cooling tower is a heat rejection Equipment that rejects waste heat to
     the atmosphere through the cooling of a water stream to a lower
     temperature. Cooling towers may either use the evaporation of water to
     remove process heat and cool the working fluid to near the wet-bulb
@@ -913,7 +913,7 @@ class Dry_Cooler(HVAC_Equipment):
 
 class Economizer(HVAC_Equipment):
     """
-    Device that, on proper variable sensing, initiates control signals or
+    Equipment that, on proper variable sensing, initiates control signals or
     actions to conserve energy. A control system that reduces the
     mechanical heating and cooling requirement.
     """
@@ -923,7 +923,7 @@ class Economizer(HVAC_Equipment):
 
 class Fan(HVAC_Equipment, _Fan):
     """
-    Any device with two or more blades or vanes attached to a rotating
+    Any Equipment with two or more blades or vanes attached to a rotating
     shaft used to produce an airflow for the purpose of comfort,
     ventilation, exhaust, heating, cooling, or any other gaseous
     transport.
@@ -1041,7 +1041,7 @@ class Transfer_Fan(Fan):
 
 class Filter(HVAC_Equipment):
     """
-    Device to remove gases from a mixture of gases or to remove solid
+    Equipment to remove gases from a mixture of gases or to remove solid
     material from a fluid
     """
 
@@ -1093,7 +1093,7 @@ class Return_Air_Filter(Filter):
 
 class Fume_Hood(HVAC_Equipment):
     """
-    A fume-collection device mounted over a work space, table, or shelf
+    A fume-collection Equipment mounted over a work space, table, or shelf
     and serving to conduct unwanted gases away from the area enclosed.
     """
 
@@ -1232,7 +1232,7 @@ class Hot_Deck(HVAC_Equipment):
 
 class Humidifier(HVAC_Equipment):
     """
-    A device that adds moisture to air or other gases
+    A Equipment that adds moisture to air or other gases
     """
 
     pass
@@ -1315,7 +1315,7 @@ class Steam_Valve(HVAC_Equipment):
 
 class Terminal_Unit(HVAC_Equipment):
     """
-    A device that regulates the volumetric flow rate and/or the
+    A Equipment that regulates the volumetric flow rate and/or the
     temperature of the controlled medium.
     """
 
@@ -1324,7 +1324,7 @@ class Terminal_Unit(HVAC_Equipment):
 
 class Air_Diffuser(Terminal_Unit):
     """
-    A device that is a component of the air distribution system that
+    A Equipment that is a component of the air distribution system that
     controls the delivery of conditioned and/or ventilating air into a
     room
     """
@@ -1368,7 +1368,7 @@ class CAV(Terminal_Unit):
 
 class Chilled_Beam(Terminal_Unit):
     """
-    A device with an integrated coil that performs sensible heating of a
+    A Equipment with an integrated coil that performs sensible heating of a
     space via circulation of room air. Chilled Beams are not designed to
     perform latent cooling; see Induction Units. Despite their name,
     Chilled Beams may perform heating or cooling of a space depending on
@@ -1381,7 +1381,7 @@ class Chilled_Beam(Terminal_Unit):
 class Active_Chilled_Beam(Chilled_Beam):
     """
     A Chilled Beam with an integral primary air connection that induces
-    air flow through the device.
+    air flow through the Equipment.
     """
 
     pass
@@ -1390,7 +1390,7 @@ class Active_Chilled_Beam(Chilled_Beam):
 class Passive_Chilled_Beam(Chilled_Beam):
     """
     A chilled beam that does not have an integral air supply and instead
-    relies on natural convection to draw air through the device.
+    relies on natural convection to draw air through the Equipment.
     """
 
     pass
@@ -1415,7 +1415,7 @@ class FCU(Terminal_Unit):
 
 class Fan_Coil_Unit(Terminal_Unit):
     """
-    Terminal device consisting of a heating and/or cooling heat exchanger
+    Terminal Equipment consisting of a heating and/or cooling heat exchanger
     or 'coil' and fan that is used to control the temperature in the space
     where it is installed
     """
@@ -1425,7 +1425,7 @@ class Fan_Coil_Unit(Terminal_Unit):
 
 class Induction_Unit(Terminal_Unit):
     """
-    A device with an primary air connection and integrated coil and
+    A Equipment with an primary air connection and integrated coil and
     condensate pan that performs sensible and latent cooling of a space.
     Essentially an Active Chilled Beam with a built in condensate pan.
     """
@@ -1507,7 +1507,7 @@ class Radiator(Terminal_Unit):
 
 class Baseboard_Radiator(Radiator):
     """
-    Steam, hydronic, or electric heating device located at or near the
+    Steam, hydronic, or electric heating Equipment located at or near the
     floor.
     """
 
@@ -1516,7 +1516,7 @@ class Baseboard_Radiator(Radiator):
 
 class Electric_Radiator(Radiator):
     """
-    Electric heating device
+    Electric heating Equipment
     """
 
     pass
@@ -1524,7 +1524,7 @@ class Electric_Radiator(Radiator):
 
 class Electric_Baseboard_Radiator(Electric_Radiator, Baseboard_Radiator):
     """
-    Electric heating device located at or near the floor
+    Electric heating Equipment located at or near the floor
     """
 
     pass
@@ -1540,7 +1540,7 @@ class Hot_Water_Radiator(Radiator):
 
 class Hot_Water_Baseboard_Radiator(Hot_Water_Radiator, Baseboard_Radiator):
     """
-    Hydronic heating device located at or near the floor
+    Hydronic heating Equipment located at or near the floor
     """
 
     pass
@@ -1556,7 +1556,7 @@ class Steam_Radiator(Radiator):
 
 class Steam_Baseboard_Radiator(Steam_Radiator, Baseboard_Radiator):
     """
-    Steam heating device located at or near the floor
+    Steam heating Equipment located at or near the floor
     """
 
     pass
@@ -1572,7 +1572,7 @@ class VAV(Terminal_Unit):
 
 class Variable_Air_Volume_Box(Terminal_Unit):
     """
-    A device that regulates the volume and temperature of air delivered to
+    A Equipment that regulates the volume and temperature of air delivered to
     a zone by opening or closing a damper
     """
 
@@ -1598,7 +1598,7 @@ class Variable_Air_Volume_Box_With_Reheat(Variable_Air_Volume_Box):
 
 class Thermostat(HVAC_Equipment):
     """
-    An automatic control device used to maintain temperature at a fixed or
+    An automatic control Equipment used to maintain temperature at a fixed or
     adjustable setpoint.
     """
 
@@ -1611,7 +1611,7 @@ class Lighting_Equipment(Equipment):
 
 class Interface(Lighting_Equipment):
     """
-    A device that provides an occupant control over a lighting system
+    A Equipment that provides an occupant control over a lighting system
     """
 
     pass
@@ -1669,7 +1669,7 @@ class Luminaire_Driver(Lighting):
 
 class Meter(Equipment):
     """
-    A device that measure usage or consumption of some media --- typically
+    A Equipment that measure usage or consumption of some media --- typically
     a form energy or power.
     """
 
@@ -1789,7 +1789,7 @@ class Motor(Equipment):
 
 class VFD(Motor):
     """
-    Electronic device that varies its output frequency to vary the
+    Electronic Equipment that varies its output frequency to vary the
     rotating speed of a motor, given a fixed input frequency. Used with
     fans or pumps to vary the flow in the system as a function of a
     maintained pressure.
@@ -1824,7 +1824,7 @@ class Pump_VFD(VFD):
 
 class Variable_Frequency_Drive(Motor):
     """
-    Electronic device that varies its output frequency to vary the
+    Electronic Equipment that varies its output frequency to vary the
     rotating speed of a motor, given a fixed input frequency. Used with
     fans or pumps to vary the flow in the system as a function of a
     maintained pressure.
@@ -1978,7 +1978,7 @@ class Steam_Distribution(Equipment):
 
 class Valve(Equipment):
     """
-    A device that regulates, directs or controls the flow of a fluid by
+    A Equipment that regulates, directs or controls the flow of a fluid by
     opening, closing or partially obstructing various passageways
     """
 
@@ -3032,7 +3032,7 @@ class Zone(Location):
     primary airflow per unit area. (3) space or group of spaces within a
     building for which the heating, cooling, or lighting requirements are
     sufficiently similar that desired conditions can be maintained
-    throughout by a single controlling device.
+    throughout by a single controlling Equipment.
     """
 
     pass
@@ -3333,7 +3333,7 @@ class Discharge_Condenser_Water(Condenser_Water):
 class Return_Condenser_Water(Condenser_Water):
     """
     In a condenser water loop, this is water being brought away from the
-    condenser side of a heat-rejection device (e.g. chiller). It is the
+    condenser side of a heat-rejection Equipment (e.g. chiller). It is the
     'warm' side.
     """
 
@@ -3343,7 +3343,7 @@ class Return_Condenser_Water(Condenser_Water):
 class Supply_Condenser_Water(Condenser_Water):
     """
     In a condenser water loop, this is water being brought to the
-    condenser side of a heat-rejection device (e.g. chiller). It is the
+    condenser side of a heat-rejection Equipment (e.g. chiller). It is the
     'cold' side.
     """
 
@@ -3572,7 +3572,7 @@ class CO2_Alarm(Alarm):
 
 class High_CO2_Alarm(CO2_Alarm):
     """
-    A device that indicates high concentration of carbon dioxide.
+    A Equipment that indicates high concentration of carbon dioxide.
     """
 
     pass
@@ -3588,7 +3588,7 @@ class Change_Filter_Alarm(Alarm):
 
 class Communication_Loss_Alarm(Alarm):
     """
-    An alarm that indicates a loss of communication e.g. with a device or
+    An alarm that indicates a loss of communication e.g. with a Equipment or
     controller
     """
 
@@ -3633,7 +3633,7 @@ class Emergency_Generator_Alarm(Emergency_Alarm):
 
 class Failure_Alarm(Alarm):
     """
-    Alarms that indicate the failure of devices, equipment, systems and
+    Alarms that indicate the failure of Equipments, equipment, systems and
     control loops
     """
 
@@ -3646,7 +3646,7 @@ class Sensor_Failure_Alarm(Failure_Alarm):
 
 class Unit_Failure_Alarm(Failure_Alarm):
     """
-    An alarm that indicates the failure of an equipment or device
+    An alarm that indicates the failure of an equipment or Equipment
     """
 
     pass
@@ -3712,7 +3712,7 @@ class Luminance_Alarm(Alarm):
 class Maintenance_Required_Alarm(Alarm):
     """
     An alarm that indicates that repair/maintenance is required on an
-    associated device or equipment
+    associated Equipment or equipment
     """
 
     pass
@@ -4252,7 +4252,7 @@ class Fan_Speed_Command(Fan_Command):
 
 class Frequency_Command(Command):
     """
-    Controls the frequency of a device's operation (e.g. rotational
+    Controls the frequency of a Equipment's operation (e.g. rotational
     frequency)
     """
 
@@ -4294,7 +4294,7 @@ class Lead_Lag_Command(Command):
 
 class Light_Command(Command):
     """
-    Controls the amount of the light provided by the device
+    Controls the amount of the light provided by the Equipment
     """
 
     pass
@@ -4342,7 +4342,7 @@ class Luminance_Command(Command):
 
 class Mode_Command(Command):
     """
-    Controls the operating mode of a device or controller
+    Controls the operating mode of a Equipment or controller
     """
 
     pass
@@ -4350,7 +4350,7 @@ class Mode_Command(Command):
 
 class Automatic_Mode_Command(Mode_Command):
     """
-    Controls whether or not a device or controller is operating in
+    Controls whether or not a Equipment or controller is operating in
     "Automatic" mode
     """
 
@@ -4363,7 +4363,7 @@ class Box_Mode_Command(Mode_Command):
 
 class Maintenance_Mode_Command(Mode_Command):
     """
-    Controls whether or not a device or controller is operating in
+    Controls whether or not a Equipment or controller is operating in
     "Maintenance" mode
     """
 
@@ -4372,7 +4372,7 @@ class Maintenance_Mode_Command(Mode_Command):
 
 class Occupancy_Command(Command):
     """
-    Controls whether or not a device or controller is operating in
+    Controls whether or not a Equipment or controller is operating in
     "Occupied" mode
     """
 
@@ -4434,7 +4434,7 @@ class Steam_On_Off_Command(On_Off_Command):
 
 class Override_Command(Command):
     """
-    Controls or reports whether or not a device or control loop is in
+    Controls or reports whether or not a Equipment or control loop is in
     'override'
     """
 
@@ -5673,7 +5673,7 @@ class Temperature_Tolerance_Parameter(Temperature_Parameter, Tolerance_Parameter
 
 class Sensor(Point):
     """
-    A Sensor is an input point that represents the value of a device or
+    A Sensor is an input point that represents the value of a Equipment or
     instrument designed to detect and measure a variable (ASHRAE
     Dictionary).
     """
@@ -6000,7 +6000,7 @@ class Current_Sensor(Sensor):
 class Current_Output_Sensor(Current_Sensor):
     """
     Senses the amperes of electrical current produced as output by a
-    device
+    Equipment
     """
 
     pass
@@ -6017,7 +6017,7 @@ class PV_Current_Output_Sensor(Current_Output_Sensor):
 class Photovoltaic_Current_Output_Sensor(Current_Output_Sensor):
     """
     Senses the amperes of electrical current produced as output by a
-    photovoltaic device
+    photovoltaic Equipment
     """
 
     pass
@@ -6166,7 +6166,7 @@ class Duration_Sensor(Sensor):
 
 class On_Timer_Sensor(Duration_Sensor):
     """
-    Measures the duration for which a device was in an active or "on"
+    Measures the duration for which a Equipment was in an active or "on"
     state
     """
 
@@ -6175,7 +6175,7 @@ class On_Timer_Sensor(Duration_Sensor):
 
 class Run_Time_Sensor(Duration_Sensor):
     """
-    Measures the duration for which a device was in an active or "on"
+    Measures the duration for which a Equipment was in an active or "on"
     state
     """
 
@@ -7241,7 +7241,7 @@ class Frost_Sensor(Temperature_Sensor, Sensor):
 
 class Heat_Sink_Temperature_Sensor(Temperature_Sensor):
     """
-    Measure temperature of the heat sink on a device such as a VFD.
+    Measure temperature of the heat sink on a Equipment such as a VFD.
     """
 
     pass
@@ -7548,8 +7548,8 @@ class Chilled_Water_Differential_Temperature_Sensor(
 ):
     """
     Measures the difference in temperature between the entering water to
-    the chiller or other water cooling device and leaving water from the
-    same chiller or other water cooling device
+    the chiller or other water cooling Equipment and leaving water from the
+    same chiller or other water cooling Equipment
     """
 
     pass
@@ -7583,8 +7583,8 @@ class Hot_Water_Differential_Temperature_Sensor(
 ):
     """
     Measures the difference in temperature between the entering water to
-    the boiler or other water heating device and leaving water from the
-    same boiler or other water heating device
+    the boiler or other water heating Equipment and leaving water from the
+    same boiler or other water heating Equipment
     """
 
     pass
@@ -7662,7 +7662,7 @@ class Hot_Water_Usage_Sensor(Water_Usage_Sensor):
 
 class Voltage_Sensor(Sensor):
     """
-    Measures the voltage of an electrical device or object
+    Measures the voltage of an electrical Equipment or object
     """
 
     pass
@@ -7686,7 +7686,7 @@ class DC_Bus_Voltage_Sensor(Voltage_Sensor):
 
 class Output_Voltage_Sensor(Voltage_Sensor):
     """
-    Measures the voltage output by some process or device
+    Measures the voltage output by some process or Equipment
     """
 
     pass
@@ -9520,7 +9520,7 @@ class Damper_Position_Status(Status):
 
 class Direction_Status(Status):
     """
-    Indicates which direction a device is operating in
+    Indicates which direction a Equipment is operating in
     """
 
     pass
@@ -9545,7 +9545,7 @@ class Disable_Status(Status):
 
 class Drive_Ready_Status(Status):
     """
-    Indicates if a hard drive or other storage device is ready to be used,
+    Indicates if a hard drive or other storage Equipment is ready to be used,
     e.g. in the context of RAID
     """
 
@@ -9590,7 +9590,7 @@ class Fan_Status(Status):
 
 class Fault_Status(Status):
     """
-    Indicates the presence of a fault in a device, system or control loop
+    Indicates the presence of a fault in a Equipment, system or control loop
     """
 
     pass
@@ -9695,7 +9695,7 @@ class Manual_Auto_Status(Status):
 
 class Mode_Status(Status):
     """
-    Indicates which mode a system, device or control loop is currently in
+    Indicates which mode a system, Equipment or control loop is currently in
     """
 
     pass
@@ -9703,7 +9703,7 @@ class Mode_Status(Status):
 
 class Cooling_Mode_Status(Mode_Status):
     """
-    Indicates whether a system, device or control loop is in a cooling
+    Indicates whether a system, Equipment or control loop is in a cooling
     mode
     """
 
@@ -9712,7 +9712,7 @@ class Cooling_Mode_Status(Mode_Status):
 
 class Heating_Mode_Status(Mode_Status):
     """
-    Indicates whether a system, device or control loop is in a heating
+    Indicates whether a system, Equipment or control loop is in a heating
     mode
     """
 
@@ -9721,7 +9721,7 @@ class Heating_Mode_Status(Mode_Status):
 
 class Occupied_Mode_Status(Mode_Status):
     """
-    Indicates if a system, device or control loop is in "Occupied" mode
+    Indicates if a system, Equipment or control loop is in "Occupied" mode
     """
 
     pass
@@ -9737,7 +9737,7 @@ class Occupied_Heating_Mode_Status(Occupied_Mode_Status, Heating_Mode_Status):
 
 class Operating_Mode_Status(Mode_Status):
     """
-    Indicates the current operating mode of a system, device or control
+    Indicates the current operating mode of a system, Equipment or control
     loop
     """
 
@@ -9758,7 +9758,7 @@ class Unoccupied_Mode_Status(Mode_Status):
 
 class Unoccupied_Cooling_Mode_Status(Unoccupied_Mode_Status, Cooling_Mode_Status):
     """
-    Indicates whether a system, device or control loop is in an unoccupied
+    Indicates whether a system, Equipment or control loop is in an unoccupied
     cooling mode
     """
 
@@ -9767,7 +9767,7 @@ class Unoccupied_Cooling_Mode_Status(Unoccupied_Mode_Status, Cooling_Mode_Status
 
 class Unoccupied_Heating_Mode_Status(Unoccupied_Mode_Status, Heating_Mode_Status):
     """
-    Indicates whether a system, device or control loop is in an unoccupied
+    Indicates whether a system, Equipment or control loop is in an unoccupied
     heating mode
     """
 
@@ -9895,7 +9895,7 @@ class Run_Status(Start_Stop_Status):
 
 class Run_Request_Status(Run_Status):
     """
-    Indicates if a request has been filed to start a device or equipment
+    Indicates if a request has been filed to start a Equipment or equipment
     """
 
     pass
@@ -9903,7 +9903,7 @@ class Run_Request_Status(Run_Status):
 
 class Open_Close_Status(Status):
     """
-    Indicates the open/close status of a device such as a damper or valve
+    Indicates the open/close status of a Equipment such as a damper or valve
     """
 
     pass
@@ -10010,7 +10010,7 @@ class Pump_Status(Status):
 
 class Speed_Status(Status):
     """
-    Indicates the operating speed of a device or equipment, e.g. fan
+    Indicates the operating speed of a Equipment or equipment, e.g. fan
     """
 
     pass

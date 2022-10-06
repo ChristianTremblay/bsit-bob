@@ -11,7 +11,7 @@ from ...core import (
     BOB,
     P223,
     S223,
-    Device,
+    Equipment,
     Node,
     PropertyReference,
     logging,
@@ -35,7 +35,7 @@ switch_template = {
 }
 
 
-class Switch(Device):
+class Switch(Equipment):
     _class_iri = P223.ElectricalSwitch
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
@@ -86,9 +86,9 @@ class SinglePoleSwitch(Switch):
         super().__init__(_config, **kwargs)
 
 
-class CurrentRelay(Device):
+class CurrentRelay(Equipment):
     """
-    Current detection device that gives a OnOff status by the action
+    Current detection Equipment that gives a OnOff status by the action
     of a dry contact when electricity is detected.
 
     This serves as motor status sensor

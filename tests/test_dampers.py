@@ -2,7 +2,7 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import Device, Property, bind_model_namespace, dump
+from bob.core import Equipment, Property, bind_model_namespace, dump
 from bob.equipments.hvac.damper import (
     ElectricalActuatedOnOffDamper,
     ElectricalActuatedProportionalDamper,

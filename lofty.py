@@ -4,7 +4,7 @@ Lofty - Real Estate Core Schema Classes for Bob
 
 from rdflib import URIRef
 
-from bob.core import Device as _Device
+from bob.core import Equipment as _Equipment
 from bob.core import Node as _Node
 from bob.core import PhysicalSpace as _PhysicalSpace
 from bob.core import bind_namespace

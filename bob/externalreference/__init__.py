@@ -8,7 +8,7 @@ _namespace = P223
 class NetworkProfile(Node):
     """
     A s223:Controller can be represented by a Network Controller
-    (like a BACnet or a Lonworks device).
+    (like a BACnet or a Lonworks Equipment).
     This class will be a higher class that will serve to relate
     the s223:Controller to the said bacnet:Device or other.
     """

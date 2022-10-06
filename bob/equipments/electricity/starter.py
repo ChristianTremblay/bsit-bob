@@ -12,7 +12,7 @@ from ...core import (
     P223,
     S223,
     UNIT,
-    Device,
+    Equipment,
     Node,
     Property,
     PropertyReference,
@@ -39,8 +39,8 @@ electric_starter_template = {
 class MotorStarter(_MotorStarter):
     """
     Motor starter
-    This device provides command and status for an electrical
-    device like a fan or a pump
+    This Equipment provides command and status for an electrical
+    Equipment like a fan or a pump
 
     """
 

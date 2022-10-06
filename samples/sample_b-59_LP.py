@@ -61,7 +61,7 @@ config = {
             "unit": UNIT.DEG_C,
         },
     },
-    "devices": {
+    "equipments": {
         ("SF-1", Fan): {
             "comment": "Supply Fan",
             "electricalInlet": ElectricalInletConnectionPoint,
@@ -87,7 +87,7 @@ mixedAir = AirConnection(
     label="MIXED-AIR", comment="Where return air and outside air mix"
 )
 
-# Relationships between devices
+# Relationships between Equipments
 rtu["OAD-1"] >> mixedAir
 rtu["RF-1"] >> mixedAir
 mixedAir >> rtu["SF-1"].airInlet

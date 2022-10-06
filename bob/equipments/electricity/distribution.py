@@ -35,12 +35,12 @@ from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
-from ...core import BOB, P223, QUANTITYKIND, UNIT, Device
+from ...core import BOB, P223, QUANTITYKIND, UNIT, Equipment
 
 _namespace = BOB
 
 
-class Transformer(Device):
+class Transformer(Equipment):
     _class_iri = P223.ElectricalTransformer
     hasPower: ElectricPowerkW
 
@@ -59,7 +59,7 @@ class Transformer(Device):
         )
 
 
-class SinglePhaseDistributionPanel(Device):
+class SinglePhaseDistributionPanel(Equipment):
     _class_iri = P223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
@@ -94,7 +94,7 @@ class SinglePhaseDistributionPanel(Device):
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
 
-        for circuit_breaker in getattr(self, "_devices", []):
+        for circuit_breaker in getattr(self, "_Equipments", []):
             if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
                 circuit_breaker.electricalOutletA >> self.electricalBusA
                 circuit_breaker.electricalOutletB >> self.electricalBusB
@@ -108,7 +108,7 @@ class SinglePhaseDistributionPanel(Device):
                     self.electricalBusB >> circuit_breaker
 
 
-class ThreePhaseDistributionPanel(Device):
+class ThreePhaseDistributionPanel(Equipment):
     _class_iri = P223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
@@ -157,7 +157,7 @@ class ThreePhaseDistributionPanel(Device):
             label=f"{self.label}.electricalBusABC"
         )
 
-        for circuit_breaker in getattr(self, "_devices", []):
+        for circuit_breaker in getattr(self, "_Equipments", []):
             if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
                 circuit_breaker.electricalOutletA >> self.electricalBusA
                 circuit_breaker.electricalOutletB >> self.electricalBusB
@@ -174,7 +174,7 @@ class ThreePhaseDistributionPanel(Device):
                     self.electricalBusC >> circuit_breaker
 
 
-class CircuitBreaker(Device):
+class CircuitBreaker(Equipment):
     _class_iri = P223.ElectricalCircuitBreaker
     # electricalInlet: ElectricalInletConnectionPoint
     # electricalOutlet: ElectricalOutletConnectionPoint
@@ -446,7 +446,7 @@ SinglePhasePanel_config = {
         "voltage": 120_240,
     },
     "sensors": {},
-    "devices": {
+    "equipments": {
         ("MainBreaker", TwoPolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,
@@ -475,7 +475,7 @@ ThreePhasePanel_config = {
         "voltage": 575,
     },
     "sensors": {},
-    "devices": {
+    "equipments": {
         ("MainBreaker", ThreePolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,

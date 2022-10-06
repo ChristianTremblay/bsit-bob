@@ -12,12 +12,12 @@ from ...connections.water import (
     SteamOutletConnectionPoint,
     WaterInletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Device
+from ...core import BOB, P223, S223, Equipment
 
 _namespace = BOB
 
 
-class SteamPipe(Device):
+class SteamPipe(Equipment):
     # One way of providing humidity to air
     # a simple pie with steam
     airInlet: AirInletConnectionPoint
@@ -25,7 +25,7 @@ class SteamPipe(Device):
     steamInlet: SteamInletConnectionPoint  # from the humidifier
 
 
-class Humidifier(Device):
+class Humidifier(Equipment):
     _class_iri = P223.Humidifier
     steamOutlet: SteamOutletConnectionPoint
     waterInlet: WaterInletConnectionPoint

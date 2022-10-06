@@ -33,7 +33,7 @@ from ...core import (
     BOB,
     P223,
     S223,
-    Device,
+    Equipment,
     MechanicalCoupling,
     PropertyReference,
     System,
@@ -56,7 +56,7 @@ _namespace = BOB
 # DAMPERS
 
 
-class Damper(Device):
+class Damper(Equipment):
     _class_iri = S223.Damper
     linkageInlet: MechanicalInletConnectionPoint
     airInlet: AirInletConnectionPoint
@@ -157,14 +157,14 @@ class ElectricalActuatedOnOffDamper(DamperAndActuator):
 
 
 pneumatic_actuated_proportional_damper_template = {
-    "devices": {
+    "equipments": {
         ("actuator", PneumaticProportionalActuator): {},
         ("damper", Damper): {},
     },
     "properties": {},
 }
 pneumatic_actuated_onoff_damper_template = {
-    "devices": {("actuator", PneumaticOnOffActuator): {}, ("damper", Damper): {}},
+    "equipments": {("actuator", PneumaticOnOffActuator): {}, ("damper", Damper): {}},
     "properties": {},
 }
 

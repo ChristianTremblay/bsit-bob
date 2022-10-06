@@ -3,7 +3,7 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob.core import (
-    Device,
+    Equipment,
     InletConnectionPoint,
     Junction,
     OutletConnectionPoint,
@@ -16,10 +16,10 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_connect_junction_to_cp(bob_fixture):
-    d1 = Device(label="d1")
+    d1 = Equipment(label="d1")
     cp1 = OutletConnectionPoint(d1)
 
-    d2 = Device(label="d2")
+    d2 = Equipment(label="d2")
     cp2 = InletConnectionPoint(d2)
 
     j1 = Junction()

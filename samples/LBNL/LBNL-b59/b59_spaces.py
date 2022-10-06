@@ -13,7 +13,7 @@ from bob.connections.water import *
 from bob.core import (
     HVAC,
     Air,
-    Device,
+    Equipment,
     DomainSpace,
     Junction,
     System,

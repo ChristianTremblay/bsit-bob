@@ -26,7 +26,7 @@ from bob.connections.electricity import (
 from bob.core import (
     HVAC,
     Air,
-    Device,
+    Equipment,
     DomainSpace,
     Junction,
     System,
@@ -139,7 +139,7 @@ class HotColdDeck(System):
 
 
 # this feels wrong, but not sure what else would be right
-class VAV_Mixing_Box(Device):
+class VAV_Mixing_Box(Equipment):
     hotAirInlet: AirInletConnectionPoint
     coldAirInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
@@ -192,7 +192,7 @@ class HVAC_rooms(DomainSpace):
 
 
 # add properties to config?
-# Devices DON'T have properties as default, but have a default config that you can optionally use.
+# Equipments DON'T have properties as default, but have a default config that you can optionally use.
 
 # should separate units from electric power.
 vfd_template = {
@@ -205,7 +205,7 @@ vfd_template = {
         "speed_reference": Percent(hasExternalReference=TimeSeriesReference()),
     },
     "sensors": {},
-    "devices": {},
+    "equipments": {},
 }
 fan_template = {
     "params": {
@@ -218,7 +218,7 @@ fan_template = {
             "comment": "Filter Differential Pressure Sensor"
         },
     },
-    "devices": {("vfd", VFD): {"config": vfd_template}},
+    "equipments": {("vfd", VFD): {"config": vfd_template}},
 }
 
 hot_deck_template = {
@@ -229,7 +229,7 @@ hot_deck_template = {
         ("cfm", AirFlowSensor): {},
         ("temp", AirTemperatureSensor): {},
     },
-    "devices": {
+    "equipments": {
         ("coil", HotWaterCoil2): {},
         ("in_filter", Filter): {},
         ("supply_fan", ddahu_fan): {"config": fan_template},
@@ -244,7 +244,7 @@ cold_deck_template = {
         ("cfm", AirFlowSensor): {},
         ("temp", AirTemperatureSensor): {},
     },
-    "devices": {
+    "equipments": {
         ("coil", ChilledWaterCoil2): {},
         ("in_filter", Filter): {},
         ("supply_fan", ddahu_fan): {},
@@ -261,7 +261,7 @@ vav_damper_template = {
         ("vav_cfm", AirFlowSensor): {},
         ("vav_dp", AirStaticPressureSensor): {},
     },
-    "devices": {},
+    "equipments": {},
 }
 
 vav_template = {
@@ -272,7 +272,7 @@ vav_template = {
             "hasExternalReference": TimeSeriesReference,
         },
     },
-    "devices": {
+    "equipments": {
         ("hot_dmp", Damper): {"config": vav_damper_template},
         ("cold_dmp", Damper): {"config": vav_damper_template},
         ("mb", VAV_Mixing_Box): {},
@@ -292,7 +292,7 @@ ddahu_template = {
         ("re_humd", AirHumiditySensor): {},
         ("re_cfm", AirFlowSensor): {},
     },
-    "devices": {
+    "equipments": {
         ("oa_damper", Damper): {"comment": ".oa_damper"},
         ("recirc_damper", Damper): {"comment": ".recirc_damper"},
         ("exhaust_damper", Damper): {"comment": ".ea_damper"},

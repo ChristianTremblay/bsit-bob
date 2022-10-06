@@ -5,7 +5,7 @@ from header import ttl_test_header
 from bob import core
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.core import (
-    Device,
+    Equipment,
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
     System,
@@ -19,13 +19,13 @@ core.INCLUDE_INVERSE = True
 
 
 def test_systems_002(bob_fixture):
-    class A(Device):
+    class A(Equipment):
         cOut: AirOutletConnectionPoint
 
     class X(System):
         cOut: OutletSystemConnectionPoint
 
-    class B(Device):
+    class B(Equipment):
         cIn: AirInletConnectionPoint
 
     class Y(System):

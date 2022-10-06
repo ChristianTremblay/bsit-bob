@@ -3,7 +3,7 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import (
-    Device,
+    Equipment,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
@@ -16,7 +16,7 @@ model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-class TestDevice(Device):
+class TestEquipment(Equipment):
     cp: InletConnectionPoint
 
 
@@ -27,8 +27,8 @@ class TestSystem(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        device = TestDevice(label=kwargs["label"] + "-d")
-        self.cpI.mapsTo = device.cp
+        Equipment = TestEquipment(label=kwargs["label"] + "-d")
+        self.cpI.mapsTo = Equipment.cp
 
 
 # two independant systems

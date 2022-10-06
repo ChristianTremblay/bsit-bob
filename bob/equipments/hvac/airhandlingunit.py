@@ -10,7 +10,7 @@ from ...connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
-from ...core import BOB, P223, S223, Device, System, template_update
+from ...core import BOB, P223, S223, Equipment, System, template_update
 
 _namespace = BOB
 

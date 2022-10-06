@@ -26,7 +26,7 @@ zone.airOutlet.mapsTo = domain_space.ductAirOutlet
 vav_template = {
     "params": {"label": "VAV1", "comment": "A VAV Box as a system"},
     "sensors": {},
-    "devices": {},
+    "equipments": {},
 }
 vav = VAV(config=vav_template)
 
