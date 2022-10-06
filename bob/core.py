@@ -3250,17 +3250,17 @@ class BidirectionalConnectionPoint(ConnectionPoint):
 
 
 class InletSystemConnectionPoint(SystemConnectionPoint):
-    _class_uri: URIRef = BOB.InletSystemConnectionPoint
+    _class_iri: URIRef = None
     hasDirection: Direction = Inlet
 
 
 class OutletSystemConnectionPoint(SystemConnectionPoint):
-    _class_uri: URIRef = BOB.OutletSystemConnectionPoint
+    _class_iri: URIRef = None
     hasDirection: Direction = Outlet
 
 
 class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
-    _class_uri: URIRef = BOB.BidirectionalSystemConnectionPoint
+    _class_iri: URIRef = None
     hasDirection: Direction = Bidirectional
 
 
@@ -3270,17 +3270,17 @@ class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
 
 
 class InletZoneConnectionPoint(ZoneConnectionPoint):
-    _class_uri: URIRef = BOB.InletZoneConnectionPoint
+    _class_iri: URIRef = None
     hasDirection: Direction = Inlet
 
 
 class OutletZoneConnectionPoint(ZoneConnectionPoint):
-    _class_uri: URIRef = BOB.OutletZoneConnectionPoint
+    _class_iri: URIRef = None
     hasDirection: Direction = Outlet
 
 
 class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
-    _class_uri: URIRef = BOB.BidirectionalZoneConnectionPoint
+    _class_iri: URIRef = None
     hasDirection: Direction = Bidirectional
 
 
