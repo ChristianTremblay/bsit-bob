@@ -185,6 +185,8 @@ UNIT = bind_namespace("unit", "http://qudt.org/vocab/unit/")
 enum = bind_namespace(
     "enum", "http://data.ashrae.org/standard223/1.0/vocab/enumeration#"
 )
+BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")
+
 REF = bind_namespace("ref", "https://brickschema.org/schema/Brick/ref#")
 
 # the model_namespace is used to create "blank" node identifiers, a serial
@@ -2242,7 +2244,7 @@ class SystemConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add(
-            (system._node_iri, S223.hasSystemConnectionPoint, self._node_iri)
+            (system._node_iri, BOB.hasSystemConnectionPoint, self._node_iri)
         )
         if INCLUDE_INVERSE:
             self.isSystemConnectionPointOf = system
@@ -2262,6 +2264,7 @@ class SystemConnectionPoint(Node):
             raise TypeError("ConnectionPoint expected")
 
         self.mapsTo = other
+
 
 
 @multimethod
@@ -2463,11 +2466,11 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     from_system._serves_zones[to_zone.label] = to_zone
 
     from_system._data_graph.add(
-        (from_system._node_iri, S223.servesZone, to_zone._node_iri)
+        (from_system._node_iri, BRICK.feeds, to_zone._node_iri)
     )
     if INCLUDE_INVERSE:
         from_system._data_graph.add(
-            (to_zone._node_iri, S223.isServedBy, from_system._node_iri)
+            (to_zone._node_iri, BRICK.isFedBy, from_system._node_iri)
         )
 
     return
@@ -2615,7 +2618,7 @@ class ZoneConnectionPoint(Node):
     Zone Connection Point
     """
 
-    _class_iri: URIRef = S223.ZoneConnectionPoint
+    _class_iri: URIRef = BOB.ZoneConnectionPoint
     hasMedium: Medium
     hasDirection: Direction
 
@@ -2631,7 +2634,7 @@ class ZoneConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add(
-            (zone._node_iri, S223.hasZoneConnectionPoint, self._node_iri)
+            (zone._node_iri, BOB.hasZoneConnectionPoint, self._node_iri)
         )
         if INCLUDE_INVERSE:
             self.isZoneConnectionPointOf = zone
@@ -3247,14 +3250,17 @@ class BidirectionalConnectionPoint(ConnectionPoint):
 
 
 class InletSystemConnectionPoint(SystemConnectionPoint):
+    _class_uri: URIRef = BOB.InletSystemConnectionPoint
     hasDirection: Direction = Inlet
 
 
 class OutletSystemConnectionPoint(SystemConnectionPoint):
+    _class_uri: URIRef = BOB.OutletSystemConnectionPoint
     hasDirection: Direction = Outlet
 
 
 class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
+    _class_uri: URIRef = BOB.BidirectionalSystemConnectionPoint
     hasDirection: Direction = Bidirectional
 
 
@@ -3264,14 +3270,17 @@ class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
 
 
 class InletZoneConnectionPoint(ZoneConnectionPoint):
+    _class_uri: URIRef = BOB.InletZoneConnectionPoint
     hasDirection: Direction = Inlet
 
 
 class OutletZoneConnectionPoint(ZoneConnectionPoint):
+    _class_uri: URIRef = BOB.OutletZoneConnectionPoint
     hasDirection: Direction = Outlet
 
 
 class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
+    _class_uri: URIRef = BOB.BidirectionalZoneConnectionPoint
     hasDirection: Direction = Bidirectional
 
 

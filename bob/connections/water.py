@@ -81,11 +81,11 @@ class WaterSystemConnectionPoint(SystemConnectionPoint):
 
 
 class WaterInletSystemConnectionPoint(WaterSystemConnectionPoint, InletSystemConnectionPoint):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class WaterOutletSystemConnectionPoint(WaterSystemConnectionPoint, OutletSystemConnectionPoint):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === HOT WATER
@@ -113,13 +113,13 @@ class HotWaterSystemConnectionPoint(SystemConnectionPoint):
 class HotWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, HotWaterSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class HotWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, HotWaterSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === HOT WATER
@@ -147,13 +147,13 @@ class MixedWaterSystemConnectionPoint(SystemConnectionPoint):
 class MixedWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, MixedWaterSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class MixedWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, MixedWaterSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === STEAM
@@ -179,13 +179,13 @@ class SteamSystemConnectionPoint(SystemConnectionPoint):
 
 
 class SteamInletSystemConnectionPoint(InletSystemConnectionPoint, SteamSystemConnectionPoint):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class SteamOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, SteamSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === CHILLED WATER
@@ -217,13 +217,13 @@ class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
 class ChilledWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class ChilledWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === CONDENSED WATER
@@ -255,10 +255,10 @@ class CondensedWaterSystemConnectionPoint(SystemConnectionPoint):
 class CondensedWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class CondensedWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint

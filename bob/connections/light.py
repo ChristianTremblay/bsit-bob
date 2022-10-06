@@ -43,28 +43,28 @@ class LightSystemConnectionPoint(SystemConnectionPoint):
 class LightInletSystemConnectionPoint(
     LightSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class LightOutletSystemConnectionPoint(
     LightSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 class LightZoneConnectionPoint(ZoneConnectionPoint):
     hasMedium: Medium = Light
-    _class_iri = S223.ZoneConnectionPoint
+    _class_iri = BOB.ZoneConnectionPoint
 
 
 class LightInletZoneConnectionPoint(LightZoneConnectionPoint, InletZoneConnectionPoint):
-    _class_iri = S223.InletZoneConnectionPoint
+    _class_iri = BOB.InletZoneConnectionPoint
 
 
 class LightOutletZoneConnectionPoint(
     LightZoneConnectionPoint, OutletZoneConnectionPoint
 ):
-    _class_iri = S223.OutletZoneConnectionPoint
+    _class_iri = BOB.OutletZoneConnectionPoint
 
 
 class LightVisibleConnection(Connection):
@@ -95,27 +95,27 @@ class LightVisibleSystemConnectionPoint(SystemConnectionPoint):
 class LightVisibleInletSystemConnectionPoint(
     LightVisibleSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class LightVisibleOutletSystemConnectionPoint(
     LightVisibleSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 class LightVisibleZoneConnectionPoint(ZoneConnectionPoint):
     hasMedium = Light.Visible
-    _class_iri = S223.ZoneConnectionPoint
+    _class_iri = BOB.ZoneConnectionPoint
 
 
 class LightVisibleInletZoneConnectionPoint(
     LightVisibleZoneConnectionPoint, InletZoneConnectionPoint
 ):
-    _class_iri = S223.InletZoneConnectionPoint
+    _class_iri = BOB.InletZoneConnectionPoint
 
 
 class LightVisibleOutletZoneConnectionPoint(
     LightVisibleZoneConnectionPoint, OutletZoneConnectionPoint
 ):
-    _class_iri = S223.OutletZoneConnectionPoint
+    _class_iri = BOB.OutletZoneConnectionPoint

@@ -51,13 +51,13 @@ class ElectricalSystemConnectionPoint(SystemConnectionPoint):
 class ElectricalSystemInletConnectionPoint(
     ElectricalSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class ElectricalSystemOutletConnectionPoint(
     ElectricalSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 575V 60Hz
@@ -91,13 +91,13 @@ class Electricity_575V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class Electricity_575V_60HzSystemInletConnectionPoint(
     Electricity_575V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class Electricity_575V_60HzSystemOutletConnectionPoint(
     Electricity_575V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 480V 60Hz
@@ -131,13 +131,13 @@ class Electricity_480V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class Electricity_480V_60HzSystemInletConnectionPoint(
     Electricity_480V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class Electricity_480V_60HzSystemOutletConnectionPoint(
     Electricity_480V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 347V 60Hz
@@ -172,13 +172,13 @@ class Electricity_347V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class Electricity_347V_60HzSystemInletConnectionPoint(
     Electricity_347V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class Electricity_347V_60HzSystemOutletConnectionPoint(
     Electricity_347V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 277V 60Hz
@@ -213,13 +213,13 @@ class Electricity_277V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class Electricity_277V_60HzSystemInletConnectionPoint(
     Electricity_277V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class Electricity_277V_60HzSystemOutletConnectionPoint(
     Electricity_277V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 208V 60Hz
@@ -254,13 +254,13 @@ class Electricity_208V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class Electricity_208V_60HzSystemInletConnectionPoint(
     Electricity_208V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class Electricity_208V_60HzSystemOutletConnectionPoint(
     Electricity_208V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 120V_240V 60Hz
@@ -298,13 +298,13 @@ class Electricity_120V_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class lectricity_120V_240V_60HzSystemInletConnectionPoint(
     Electricity_120V_240V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class lectricity_120V_240V_60HzSystemOutletConnectionPoint(
     Electricity_120V_240V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 240V 60Hz
@@ -338,13 +338,13 @@ class Electricity_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class Electricity_240V_60HzSystemInletConnectionPoint(
     Electricity_240V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class Electricity_240V_60HzSystemOutletConnectionPoint(
     Electricity_240V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 120V 60Hz
@@ -378,13 +378,13 @@ class Electricity_120V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class Electricity_120V_60HzSystemInletConnectionPoint(
     Electricity_120V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class Electricity_120V_60HzSystemOutletConnectionPoint(
     Electricity_120V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === 24V 60Hz
@@ -418,13 +418,13 @@ class Electricity_24V_60HzSystemConnectionPoint(SystemConnectionPoint):
 class Electricity_24V_60HzSystemInletConnectionPoint(
     Electricity_24V_60HzSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class Electricity_24V_60HzSystemOutletConnectionPoint(
     Electricity_24V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # ISSUE - SEMANTIC
@@ -473,13 +473,13 @@ class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
 class OnOffSignalSystemInletConnectionPoint(
     OnOffSignalSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class OnOffSignalSystemOutletConnectionPoint(
     OnOffSignalSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # This is high level and we don't know if it's using 0-10VDC, 4-20mA, etc...
@@ -515,13 +515,13 @@ class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
 class ModulationSignalSystemInletConnectionPoint(
     ModulationSignalSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class ModulationSignalSystemOutletConnectionPoint(
     ModulationSignalSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === Networks
@@ -550,7 +550,7 @@ class RS485SystemConnectionPoint(SystemConnectionPoint):
 class RS485BidirectionalSystemConnectionPoint(
     RS485SystemConnectionPoint, BidirectionalSystemConnectionPoint
 ):
-    _class_iri = S223.BidirectionalSystemConnectionPoint
+    _class_iri = BOB.BidirectionalSystemConnectionPoint
 
 
 # === Networks
@@ -584,4 +584,4 @@ class EthernetSystemConnectionPoint(SystemConnectionPoint):
 class EthernetBidirectionalSystemConnectionPoint(
     EthernetSystemConnectionPoint, BidirectionalSystemConnectionPoint
 ):
-    _class_iri = S223.BidirectionalSystemConnectionPoint
+    _class_iri = BOB.BidirectionalSystemConnectionPoint
