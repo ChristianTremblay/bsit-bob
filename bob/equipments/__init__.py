@@ -27,12 +27,12 @@ class _Actuator(Equipment):
     __|___|__|___|___|__
     |  Supply Fan      |------------s223:hasProperty--------(flow)
     |  s223:Equipment  |------------s223:hasProperty--------(OnOffCommand) <-> A
-    |  s223:Fan        |------------s223:hasProperty--------(speed_ratio) <-> B
+    |  s223:Fan        |------------s223:hasProperty--------(rotation) <-> B
     |                  |------------s223:hasProperty--------(status)
     |__________________|------------s223:hasConnectionPoint----(AirOutlet) <-> C
             |                               ____________________
             |___________s223:contains_______|  OnOff Actuator  |---s223:isCommandedBy----------(OnOffCommand) <-> A
-                                            |  s223:Actuator   |---p223:actuatesProperty ------(speed_ratio) <-> B
+                                            |  P223:Actuator   |---p223:actuatesProperty ------(rotation) <-> B
                                             |__________________|---p223:hasActuationLocation---(AirOutlet) <-> C
 
 

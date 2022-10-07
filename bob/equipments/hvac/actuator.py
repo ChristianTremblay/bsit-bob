@@ -49,12 +49,12 @@ _namespace = BOB
   |   |---------------s223:hasConnectionPoint-----(0-10VDC Feedback Output) <-> E
   |   |  |------------s223:hasConnectionPoint-----(0-10VDC Modulation signal CNX) <-> H                      ____________________
   |   |  |   |--------s223:hasConnectionPoint-----(linkage coupling CNX  <-> G)--------hasConnectionPoint----|  Damper          |----s223:hasProperty---(position) <-> A
-  |   |  |   |   |----s223:hasConnectionPoint-----(Auxiliary position switch CNX) <-> F                      |  s223:Equipment     |----s223:hasProperty---(command) <-> B
+  |   |  |   |   |----s223:hasConnectionPoint-----(Auxiliary position switch CNX) <-> F                      |  s223:Equipment  |----s223:hasProperty---(command) <-> B
   |   |  |   |   |                                                                                           |                  |----s223:hasProperty---(feedback) <-> C
   |   |  |   |   |                                                                                           |__________________|----s223:hasProperty---(other damper prop...)
 __|___|__|___|___|__                                                                                  
 |  Damper Actuator |------------s223:hasProperty--------(position) <-> A                                   
-|  s223:Equipment     |------------s223:hasProperty--------(command) <-> B
+|  s223:Equipment  |------------s223:hasProperty--------(command) <-> B
 |                  |------------s223:hasProperty--------(feedback) <-> C
 |                  |------------s223:hasProperty--------(is_open) <-> D1
 |__________________|------------s223:hasProperty--------(is_closed) <-> D2
