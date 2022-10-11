@@ -1285,31 +1285,31 @@ class System(S223System, Node):
 @multimethod
 def contains_mm(system: System, equipment: Equipment) -> None:
     """System > Equipment"""
-    logging.info(f"system {system} contains Equipment {equipment}")
+    logging.info(f"system {system} hasMember Equipment {equipment}")
 
-    system._data_graph.add((system._node_iri, S223.contains, equipment._node_iri))
+    system._data_graph.add((system._node_iri, S223.hasMember, equipment._node_iri))
     if INCLUDE_INVERSE:
         system._data_graph.add(
-            (equipment._node_iri, S223.isContainedIn, system._node_iri)
+            (equipment._node_iri, S223.isMemberOf, system._node_iri)
         )
 
 
 @multimethod
 def contains_mm(system: System, subsystem: System) -> None:
     """System > System"""
-    logging.info(f"system {system} contains subsystem {subsystem}")
+    logging.info(f"system {system} hasMember subsystem {subsystem}")
 
-    system._data_graph.add((system._node_iri, S223.contains, subsystem._node_iri))
+    system._data_graph.add((system._node_iri, S223.hasMember, subsystem._node_iri))
     if INCLUDE_INVERSE:
         system._data_graph.add(
-            (subsystem._node_iri, S223.isContainedIn, system._node_iri)
+            (subsystem._node_iri, S223.isMemberOf, system._node_iri)
         )
 
 
 @multimethod
 def contains_mm(system: System, thing_list: List[Node]) -> None:
     """System > List[Union[equipment,System]]"""
-    logging.info(f"system {system} contains list of things {thing_list}")
+    logging.info(f"system {system} hasMember list of things {thing_list}")
 
     ###TODO: the signature should be thing_list: List[Union[equipment,System]]
 
