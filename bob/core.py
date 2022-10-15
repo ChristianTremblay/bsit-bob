@@ -1289,9 +1289,7 @@ def contains_mm(system: System, equipment: Equipment) -> None:
 
     system._data_graph.add((system._node_iri, S223.hasMember, equipment._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add(
-            (equipment._node_iri, S223.isMemberOf, system._node_iri)
-        )
+        system._data_graph.add((equipment._node_iri, S223.isMemberOf, system._node_iri))
 
 
 @multimethod
@@ -1301,9 +1299,7 @@ def contains_mm(system: System, subsystem: System) -> None:
 
     system._data_graph.add((system._node_iri, S223.hasMember, subsystem._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add(
-            (subsystem._node_iri, S223.isMemberOf, system._node_iri)
-        )
+        system._data_graph.add((subsystem._node_iri, S223.isMemberOf, system._node_iri))
 
 
 @multimethod
@@ -1530,7 +1526,6 @@ class ConnectionPoint(Node):
 
     _class_iri: URIRef = None
     hasMedium: Medium
-    hasDirection: Direction
 
     lnx: Segment
     connectsThrough: Connection
@@ -2240,7 +2235,6 @@ class SystemConnectionPoint(Node):
 
     _class_iri: URIRef = None
     hasMedium: Medium
-    hasDirection: Direction
 
     connectsThrough: Connection
     isSystemConnectionPointOf: System
@@ -2628,7 +2622,6 @@ class ZoneConnectionPoint(Node):
 
     _class_iri: URIRef = BOB.ZoneConnectionPoint
     hasMedium: Medium
-    hasDirection: Direction
 
     isZoneConnectionPointOf: Zone
     mapsTo: Node
@@ -2833,7 +2826,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
                 raise RuntimeError(
                     f"connection point already connected: {connection_point}"
                 )
-            if getattr(connection_point, "hasDirection", None) == Inlet:
+            if isinstance(connection_point, InletConnectionPoint):
                 raise TypeError(f"connection point direction: {connection_point}")
         elif isinstance(connection_point, Junction):
             pass
@@ -2850,7 +2843,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
-                if getattr(connection_point, "hasDirection", None) == Inlet:
+                if isinstance(connection_point, InletConnectionPoint):
                     continue
             elif isinstance(connection_point, Junction):
                 pass
@@ -2867,7 +2860,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
-                if getattr(connection_point, "hasDirection", None) == Inlet:
+                if isinstance(connection_point, InletConnectionPoint):
                     continue
             elif isinstance(connection_point, Junction):
                 pass
@@ -2924,7 +2917,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
                 raise RuntimeError(
                     f"connection point already connected: {connection_point}"
                 )
-            if getattr(connection_point, "hasDirection", None) == Outlet:
+            if isinstance(connection_point, OutletConnectionPoint):
                 raise TypeError(f"connection point direction: {connection_point}")
         elif isinstance(connection_point, Junction):
             pass
@@ -2941,7 +2934,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
-                if getattr(connection_point, "hasDirection", None) == Outlet:
+                if isinstance(connection_point, OutletConnectionPoint):
                     continue
             elif isinstance(connection_point, Junction):
                 pass
@@ -2958,7 +2951,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
-                if getattr(connection_point, "hasDirection", None) == Outlet:
+                if isinstance(connection_point, OutletConnectionPoint):
                     continue
             elif isinstance(connection_point, Junction):
                 pass
@@ -3243,15 +3236,15 @@ Bidirectional = Direction("Bidirectional")
 
 
 class InletConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Inlet
+    _class_iri: URIRef = S223.InletConnectionPoint
 
 
 class OutletConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Outlet
+    _class_iri: URIRef = S223.OutletConnectionPoint
 
 
 class BidirectionalConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Bidirectional
+    _class_iri: URIRef = S223.BidirectionalConnectionPoint
 
 
 #
@@ -3260,18 +3253,15 @@ class BidirectionalConnectionPoint(ConnectionPoint):
 
 
 class InletSystemConnectionPoint(SystemConnectionPoint):
-    _class_iri: URIRef = None
-    hasDirection: Direction = Inlet
+    _class_iri: URIRef = BOB.InletSystemConnectionPoint
 
 
 class OutletSystemConnectionPoint(SystemConnectionPoint):
-    _class_iri: URIRef = None
-    hasDirection: Direction = Outlet
+    _class_iri: URIRef = BOB.OutletSystemConnectionPoint
 
 
 class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
-    _class_iri: URIRef = None
-    hasDirection: Direction = Bidirectional
+    _class_iri: URIRef = BOB.BidirectionalSystemConnectionPoint
 
 
 #
@@ -3280,18 +3270,15 @@ class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
 
 
 class InletZoneConnectionPoint(ZoneConnectionPoint):
-    _class_iri: URIRef = None
-    hasDirection: Direction = Inlet
+    _class_iri: URIRef = BOB.InletZoneConnectionPoint
 
 
 class OutletZoneConnectionPoint(ZoneConnectionPoint):
-    _class_iri: URIRef = None
-    hasDirection: Direction = Outlet
+    _class_iri: URIRef = BOB.OutletZoneConnectionPoint
 
 
 class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
-    _class_iri: URIRef = None
-    hasDirection: Direction = Bidirectional
+    _class_iri: URIRef = BOB.BidirectionalZoneConnectionPoint
 
 
 #
