@@ -30,7 +30,6 @@ ex32:00002 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "a.cOut" ;
     s223:connectsThrough ex32:00009 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex32:00001 .
 
@@ -41,8 +40,8 @@ ex32:00003 a s223:System,
     bob:hasSystemConnectionPoint ex32:00004 ;
     ex31:cOut ex32:00004 .
 
-ex32:00004 rdfs:label "x.cOut" ;
-    s223:hasDirection s223:Direction-Outlet ;
+ex32:00004 a bob:OutletSystemConnectionPoint ;
+    rdfs:label "x.cOut" ;
     s223:isSystemConnectionPointOf ex32:00003 ;
     s223:mapsTo ex32:00002 .
 
@@ -55,7 +54,6 @@ ex32:00005 a s223:Equipment,
 ex32:00006 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "b.cIn" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex32:00005 .
 
@@ -66,8 +64,8 @@ ex32:00007 a s223:System,
     bob:hasSystemConnectionPoint ex32:00008 ;
     ex31:cIn ex32:00008 .
 
-ex32:00008 rdfs:label "y.cIn" ;
-    s223:hasDirection s223:Direction-Inlet ;
+ex32:00008 a bob:InletSystemConnectionPoint ;
+    rdfs:label "y.cIn" ;
     s223:isSystemConnectionPointOf ex32:00007 ;
     s223:mapsTo ex32:00006 .
 

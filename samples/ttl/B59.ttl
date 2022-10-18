@@ -32,9 +32,9 @@ ex1:00001 a p223:AirHandlingUnit,
         ex1:00006,
         ex1:00008,
         ex1:00021,
-        ex1:00034,
-        ex1:00060,
         ex1:00086 ;
+    s223:hasMember ex1:00034,
+        ex1:00060 ;
     s223:hasPhysicalLocation ex1:00101 ;
     bob:electricalInlet ex1:00095 ;
     bob:exhaustAirOutlet ex1:00094 ;
@@ -128,7 +128,6 @@ ex1:00009 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF-1.airInlet" ;
     s223:connectsThrough ex1:00096 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00008 .
 
@@ -136,14 +135,12 @@ ex1:00010 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF-1.airOutlet" ;
     s223:connectsThrough ex1:00097 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00008 .
 
 ex1:00011 a s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "SF-1.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex1:00008 .
 
@@ -254,7 +251,6 @@ ex1:00022 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "RF-1.airInlet" ;
     s223:connectsThrough ex1:00098 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00021 .
 
@@ -262,14 +258,12 @@ ex1:00023 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "RF-1.airOutlet" ;
     s223:connectsThrough ex1:00096 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00021 .
 
 ex1:00024 a s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "RF-1.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex1:00021 .
 
@@ -394,7 +388,6 @@ ex1:00036 a p223:MechanicalConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
     s223:connectsThrough ex1:00059 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex1:00035 .
 
@@ -402,7 +395,6 @@ ex1:00037 a p223:AnalogOutput,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex1:00035 .
 
@@ -410,7 +402,6 @@ ex1:00038 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex1:00035 .
 
@@ -418,14 +409,12 @@ ex1:00039 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex1:00035 .
 
 ex1:00040 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf ex1:00035 .
 
@@ -433,7 +422,6 @@ ex1:00041 a p223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex1:00035 .
 
@@ -538,14 +526,12 @@ ex1:00054 a p223:MechanicalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
     s223:connectsThrough ex1:00059 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex1:00053 .
 
 ex1:00055 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00053 .
 
@@ -553,21 +539,18 @@ ex1:00056 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:connectsThrough ex1:00096 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00053 .
 
 ex1:00057 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint ;
     rdfs:label "OAD-1.airInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00055 .
 
 ex1:00058 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint ;
     rdfs:label "OAD-1.airOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00056 .
 
@@ -618,7 +601,6 @@ ex1:00062 a p223:MechanicalConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
     s223:connectsThrough ex1:00085 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex1:00061 .
 
@@ -626,7 +608,6 @@ ex1:00063 a p223:AnalogOutput,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex1:00061 .
 
@@ -634,7 +615,6 @@ ex1:00064 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex1:00061 .
 
@@ -642,14 +622,12 @@ ex1:00065 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex1:00061 .
 
 ex1:00066 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf ex1:00061 .
 
@@ -657,7 +635,6 @@ ex1:00067 a p223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex1:00061 .
 
@@ -761,35 +738,30 @@ ex1:00080 a p223:MechanicalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
     s223:connectsThrough ex1:00085 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex1:00079 .
 
 ex1:00081 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00079 .
 
 ex1:00082 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00079 .
 
 ex1:00083 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint ;
     rdfs:label "RAD-1.airInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00081 .
 
 ex1:00084 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint ;
     rdfs:label "RAD-1.airOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00082 .
 
@@ -822,7 +794,6 @@ ex1:00087 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CWC-1.airInlet" ;
     s223:connectsThrough ex1:00097 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00086 .
 
@@ -830,55 +801,47 @@ ex1:00088 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CWC-1.airOutlet" ;
     s223:connectsThrough ex1:00099 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00086 .
 
 ex1:00089 a s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CWC-1.chilledWaterInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex1:00086 .
 
 ex1:00090 a s223:OutletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CWC-1.chilledWaterOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex1:00086 .
 
 ex1:00091 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint ;
     rdfs:label "RTU-1.outsideAirInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00057 .
 
 ex1:00092 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint ;
     rdfs:label "RTU-1.returnAirInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00022 .
 
 ex1:00093 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint ;
     rdfs:label "RTU-1.supplyAirOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00088 .
 
 ex1:00094 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint ;
     rdfs:label "RTU-1.exhaustAirOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
 
 ex1:00095 a bob:Electricity_575V_60HzSystemConnectionPoint,
         bob:InletSystemConnectionPoint ;
     rdfs:label "RTU-1.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Electricity-575V-60Hz .
 
 ex1:00096 a s223:Connection ;
@@ -965,7 +928,6 @@ ex1:00105 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.ductAirInlet" ;
     s223:connectsThrough ex1:00099 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00104 .
 
@@ -973,42 +935,36 @@ ex1:00106 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.ductAirOutlet" ;
     s223:connectsThrough ex1:00098 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00104 .
 
 ex1:00107 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.airTransfer" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00104 .
 
 ex1:00108 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.doors" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00104 .
 
 ex1:00109 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.windows" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00104 .
 
 ex1:00110 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.radiantHeating" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00104 .
 
 ex1:00111 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVAC Space for floor 1.radiantCooling" ;
-    s223:hasDirection s223:Direction-Bidirectional ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00104 .
 
@@ -1025,14 +981,12 @@ ex1:00112 a p223:HVACZone,
 ex1:00113 a bob:InletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "Common workspace zone for HVAC.airInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00099 .
 
 ex1:00114 a bob:OutletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "Common workspace zone for HVAC.airOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00098 .
 

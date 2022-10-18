@@ -45,12 +45,12 @@
     __|___|__|___|___|__
     |  Supply Fan      |------------s223:hasProperty--------(flow)
     |  s223:Equipment  |------------s223:hasProperty--------(OnOffCommand) <-> A
-    |  s223:Fan        |------------s223:hasProperty--------(speed_ratio) <-> B
+    |  s223:Fan        |------------s223:hasProperty--------(rotation) <-> B
     |                  |------------s223:hasProperty--------(status)
     |__________________|------------s223:hasConnectionPoint----(AirOutlet) <-> C
             |                               ____________________
             |___________s223:contains_______|  OnOff Actuator  |---s223:isCommandedBy----------(OnOffCommand) <-> A
-                                            |  s223:Actuator   |---p223:actuatesProperty ------(speed_ratio) <-> B
+                                            |  P223:Actuator   |---p223:actuatesProperty ------(rotation) <-> B
                                             |__________________|---p223:hasActuationLocation---(AirOutlet) <-> C
 
 <http://data.ashrae.org/standard223/1.0/data/sample_pritoni_model>
@@ -252,14 +252,18 @@ bob:HotWaterConnectionPoint a rdfs:Class ;
 bob:InletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
         "bob.connections.electricity.Electricity_575V_60HzSystemInletConnectionPoint",
-        "bob.connections.water.WaterInletSystemConnectionPoint" ;
+        "bob.connections.water.WaterInletSystemConnectionPoint",
+        "bob.core.InletSystemConnectionPoint" ;
     rdfs:subClassOf bob:AirSystemConnectionPoint,
         bob:Electricity_575V_60HzSystemConnectionPoint,
+        bob:InletSystemConnectionPoint,
         bob:WaterSystemConnectionPoint .
 
 bob:InletZoneConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirInletZoneConnectionPoint" ;
-    rdfs:subClassOf bob:ZoneConnectionPoint .
+    rdfs:label "bob.connections.air.AirInletZoneConnectionPoint",
+        "bob.core.InletZoneConnectionPoint" ;
+    rdfs:subClassOf bob:InletZoneConnectionPoint,
+        bob:ZoneConnectionPoint .
 
 bob:LightVisibleConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.light.LightVisibleConnectionPoint" .
@@ -286,13 +290,17 @@ bob:OnOffSignalConnectionPoint a rdfs:Class ;
 
 bob:OutletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
-        "bob.connections.water.WaterOutletSystemConnectionPoint" ;
+        "bob.connections.water.WaterOutletSystemConnectionPoint",
+        "bob.core.OutletSystemConnectionPoint" ;
     rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint,
         bob:WaterSystemConnectionPoint .
 
 bob:OutletZoneConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirOutletZoneConnectionPoint" ;
-    rdfs:subClassOf bob:ZoneConnectionPoint .
+    rdfs:label "bob.connections.air.AirOutletZoneConnectionPoint",
+        "bob.core.OutletZoneConnectionPoint" ;
+    rdfs:subClassOf bob:OutletZoneConnectionPoint,
+        bob:ZoneConnectionPoint .
 
 bob:Percent a rdfs:Class ;
     rdfs:label "bob.properties.ratio.Percent" ;

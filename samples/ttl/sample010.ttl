@@ -34,7 +34,6 @@ ex1:00003 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "d1.cp" ;
     s223:connectsThrough ex1:00009 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00001 .
 
@@ -42,7 +41,6 @@ ex1:00004 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "d2.cp" ;
     s223:connectsThrough ex1:00009 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00002 .
 
@@ -59,14 +57,12 @@ ex1:00006 a s223:System,
 ex1:00007 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint ;
     rdfs:label "s1.cp" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00003 .
 
 ex1:00008 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint ;
     rdfs:label "s2.cp" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:mapsTo ex1:00004 .
 
@@ -94,7 +90,6 @@ ex1:00012 a s223:OutletConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "d3.cp" ;
     s223:connectsThrough ex1:00018 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex1:00010 .
 
@@ -102,7 +97,6 @@ ex1:00013 a s223:InletConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "d4.cp" ;
     s223:connectsThrough ex1:00018 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex1:00011 .
 
@@ -116,12 +110,12 @@ ex1:00015 a s223:System,
     rdfs:label "s4" ;
     bob:hasSystemConnectionPoint ex1:00017 .
 
-ex1:00016 rdfs:label "s3.ocp" ;
-    s223:hasDirection s223:Direction-Outlet ;
+ex1:00016 a bob:OutletSystemConnectionPoint ;
+    rdfs:label "s3.ocp" ;
     s223:mapsTo ex1:00012 .
 
-ex1:00017 rdfs:label "s4.icp" ;
-    s223:hasDirection s223:Direction-Inlet ;
+ex1:00017 a bob:InletSystemConnectionPoint ;
+    rdfs:label "s4.icp" ;
     s223:mapsTo ex1:00013 .
 
 ex1:00018 a s223:Connection ;

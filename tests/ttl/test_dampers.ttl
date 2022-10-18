@@ -61,7 +61,6 @@ ex32:00003 a p223:MechanicalConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
     s223:connectsThrough ex32:00026 ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex32:00002 .
 
@@ -69,7 +68,6 @@ ex32:00004 a p223:AnalogOutput,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex32:00002 .
 
@@ -77,7 +75,6 @@ ex32:00005 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex32:00002 .
 
@@ -85,14 +82,12 @@ ex32:00006 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-OnOffSignal ;
     s223:isConnectionPointOf ex32:00002 .
 
 ex32:00007 a s223:InletConnectionPoint,
         bob:Electricity_24V_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf ex32:00002 .
 
@@ -100,7 +95,6 @@ ex32:00008 a p223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
     s223:isConnectionPointOf ex32:00002 .
 
@@ -216,28 +210,24 @@ ex32:00021 a p223:MechanicalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
     s223:connectsThrough ex32:00026 ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex32:00020 .
 
 ex32:00022 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex32:00020 .
 
 ex32:00023 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex32:00020 .
 
 ex32:00024 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint ;
     rdfs:label "Electrical Proportional Actuated Damper.airInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isSystemConnectionPointOf ex32:00001 ;
     s223:mapsTo ex32:00022 .
@@ -245,7 +235,6 @@ ex32:00024 a bob:AirSystemConnectionPoint,
 ex32:00025 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint ;
     rdfs:label "Electrical Proportional Actuated Damper.airOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isSystemConnectionPointOf ex32:00001 ;
     s223:mapsTo ex32:00023 .
