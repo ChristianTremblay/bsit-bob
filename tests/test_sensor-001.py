@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from header import ttl_test_header
 
-from bob.core import Air, Medium, bind_model_namespace, dump, UNIT
+from bob.core import UNIT, Air, Medium, bind_model_namespace, dump
 from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSensor
 

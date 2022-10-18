@@ -6,15 +6,15 @@ from rdflib import Literal  # type: ignore
 from rdflib import RDF, RDFS, XSD, BNode, Graph, Namespace, URIRef
 
 from .core import (
+    QUANTITYKIND,
+    QUDT,
+    S223,
+    UNIT,
     EnumerationKind,
     ExternalReference,
     Node,
     Property,
     logging,
-    QUANTITYKIND,
-    QUDT,
-    S223,
-    UNIT,
 )
 
 _namespace = S223

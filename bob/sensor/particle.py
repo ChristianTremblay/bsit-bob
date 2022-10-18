@@ -5,16 +5,16 @@ from typing import Any
 from rdflib import URIRef, util
 
 from ..core import (
-    Air,
-    Medium,
-    PropertyReference,
-    Substance,
     BOB,
-    enum,
     P223,
     QUANTITYKIND,
     S223,
     UNIT,
+    Air,
+    Medium,
+    PropertyReference,
+    Substance,
+    enum,
 )
 from ..enum import Particulate
 from ..properties import ParticulateCount

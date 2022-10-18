@@ -1,6 +1,9 @@
 from rdflib import URIRef
 
 from ..core import (
+    BOB,
+    P223,
+    S223,
     BidirectionalConnectionPoint,
     BidirectionalSystemConnectionPoint,
     Connection,
@@ -14,10 +17,7 @@ from ..core import (
     OutletZoneConnectionPoint,
     SystemConnectionPoint,
     ZoneConnectionPoint,
-    BOB,
     enum,
-    P223,
-    S223,
 )
 
 _namespace = BOB
@@ -47,13 +47,13 @@ class OccupancySystemConnectionPoint(SystemConnectionPoint):
 class OccupancyInletSystemConnectionPoint(
     OccupancySystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class OccupancyOutletSystemConnectionPoint(
     OccupancySystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 class OccupancyZoneConnectionPoint(ZoneConnectionPoint):
@@ -64,10 +64,10 @@ class OccupancyZoneConnectionPoint(ZoneConnectionPoint):
 class OccupancyInletZoneConnectionPoint(
     OccupancyZoneConnectionPoint, InletZoneConnectionPoint
 ):
-    _class_iri = S223.InletZoneConnectionPoint
+    _class_iri = BOB.InletZoneConnectionPoint
 
 
 class OccupancyOutletZoneConnectionPoint(
     OccupancyZoneConnectionPoint, OutletZoneConnectionPoint
 ):
-    _class_iri = S223.OutletZoneConnectionPoint
+    _class_iri = BOB.OutletZoneConnectionPoint

@@ -4,8 +4,8 @@ from header import sample_header
 
 from bob.connections.air import AirConnection
 from bob.core import bind_model_namespace, dump
+from bob.equipments.hvac.vav import VAV_Simple
 from bob.space.hvac import HVACSpace, HVACZone
-from bob.systems.hvac.vav import VAV_Simple
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -21,7 +21,7 @@ zone1 > [hvacspace1, hvacspace2]
 
 vav1 = VAV_Simple(label="Zone-1.VAV")
 vav1.serves = zone1
-vav1["DPR"].airOutlet >> hvacspace1.ductAirInlet
+vav1["ACTDPR"]["damper"].airOutlet >> hvacspace1.ductAirInlet
 
 # create Zone-2 and its VAV connected together
 vav2 = VAV_Simple(label="Zone-2.VAV")

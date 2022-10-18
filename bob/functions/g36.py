@@ -4,16 +4,10 @@ from ..connections.electricity import (
     OnOffSignalSystemInletConnectionPoint,
     OnOffSignalSystemOutletConnectionPoint,
 )
-from ..core import Node, PropertyReference, bind_namespace, G36
+from ..core import G36, Node, PropertyReference, bind_namespace
 from ..properties import OccupancyStatus, Schedule
 from ..property import ObservableProperty, QuantifiableObservableProperty
-from . import (
-    AnalogInput,
-    AnalogOutput,
-    BinaryInput,
-    BinaryOutput,
-    FunctionBlock,
-)
+from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput, FunctionBlock
 
 _namespace = G36
 

@@ -1,7 +1,5 @@
 from rdflib import URIRef
 
-from ..core import Domain, DomainSpace, PropertyReference, Light, Zone, BOB, P223, S223
-
 from bob.connections.light import (
     LightInletConnectionPoint,
     LightInletZoneConnectionPoint,
@@ -10,6 +8,7 @@ from bob.connections.light import (
 )
 from bob.properties.states import OccupancyStatus
 
+from ..core import BOB, P223, S223, Domain, DomainSpace, Light, PropertyReference, Zone
 
 _namespace = BOB
 

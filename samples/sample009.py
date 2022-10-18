@@ -5,7 +5,7 @@ from header import sample_header
 
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.core import (
-    Device,
+    Equipment,
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
     System,
@@ -17,7 +17,7 @@ model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-class DeviceIn1(Device):
+class EquipmentIn1(Equipment):
     cp: AirInletConnectionPoint
 
 
@@ -27,11 +27,11 @@ class SystemIn1(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        device = DeviceIn1(label=kwargs["label"] + "-d")
-        self.cp.mapsTo = device.cp
+        Equipment = EquipmentIn1(label=kwargs["label"] + "-d")
+        self.cp.mapsTo = Equipment.cp
 
 
-class DeviceIn2(Device):
+class EquipmentIn2(Equipment):
     cp1: AirInletConnectionPoint
     cp2: AirInletConnectionPoint
 
@@ -43,12 +43,12 @@ class SystemIn2(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        device = DeviceIn2(label=kwargs["label"] + "-d")
-        self.cp1.mapsTo = device.cp1
-        self.cp2.mapsTo = device.cp2
+        Equipment = EquipmentIn2(label=kwargs["label"] + "-d")
+        self.cp1.mapsTo = Equipment.cp1
+        self.cp2.mapsTo = Equipment.cp2
 
 
-class DeviceOut1(Device):
+class EquipmentOut1(Equipment):
     cp: AirOutletConnectionPoint
 
 
@@ -58,11 +58,11 @@ class SystemOut1(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        device = DeviceOut1(label=kwargs["label"] + "-d")
-        self.cp.mapsTo = device.cp
+        Equipment = EquipmentOut1(label=kwargs["label"] + "-d")
+        self.cp.mapsTo = Equipment.cp
 
 
-class DeviceOut2(Device):
+class EquipmentOut2(Equipment):
     cp1: AirOutletConnectionPoint
     cp2: AirOutletConnectionPoint
 
@@ -74,12 +74,12 @@ class SystemOut2(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        device = DeviceOut2(label=kwargs["label"] + "-d")
-        self.cp1.mapsTo = device.cp1
-        self.cp2.mapsTo = device.cp2
+        Equipment = EquipmentOut2(label=kwargs["label"] + "-d")
+        self.cp1.mapsTo = Equipment.cp1
+        self.cp2.mapsTo = Equipment.cp2
 
 
-class DeviceInOut(Device):
+class EquipmentInOut(Equipment):
     cp1: AirInletConnectionPoint
     cp2: AirOutletConnectionPoint
 
@@ -91,9 +91,9 @@ class SystemInOut(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        device = DeviceInOut(label=kwargs["label"] + "-d")
-        self.cp1.mapsTo = device.cp1
-        self.cp2.mapsTo = device.cp2
+        Equipment = EquipmentInOut(label=kwargs["label"] + "-d")
+        self.cp1.mapsTo = Equipment.cp1
+        self.cp2.mapsTo = Equipment.cp2
 
 
 # two independant systems

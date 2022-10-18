@@ -16,7 +16,7 @@ Each panel needs a main breaker. I modeled this breaker in a special way (a litt
 A circuit breaker has one electricalInlet and one electricalOutlet. Even for Three phase breakers as it is illegal to use phases separatly. So a 3-phases breakers will have 1 connection possible.
 
 ## Transformer
-A simple device with an electricalInlet and an electricalOutlet
+A simple Equipment with an electricalInlet and an electricalOutlet
 
 # Bus bars
 The concept of a bus bar is that when installing the breaker, the inlet of the breaker will touch 1, 2 or 3 bus bar (depending on the type of the breaker) at the same time. Then the output of the breaker will serves as connection points. To do that, bus bars in panels have been modeled as `Connections`. This way we limit the number of hops from the main breaker to the circuit breakers themselves.

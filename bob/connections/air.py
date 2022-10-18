@@ -1,6 +1,9 @@
 from rdflib import URIRef
 
 from ..core import (
+    BOB,
+    P223,
+    S223,
     Air,
     BidirectionalConnectionPoint,
     BidirectionalSystemConnectionPoint,
@@ -15,9 +18,6 @@ from ..core import (
     OutletZoneConnectionPoint,
     SystemConnectionPoint,
     ZoneConnectionPoint,
-    BOB,
-    P223,
-    S223,
 )
 
 _namespace = BOB
@@ -51,32 +51,32 @@ class AirSystemConnectionPoint(SystemConnectionPoint):
 class AirInletSystemConnectionPoint(
     AirSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class AirOutletSystemConnectionPoint(
     AirSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 class AirBidirectionalSystemConnectionPoint(
     AirSystemConnectionPoint, BidirectionalSystemConnectionPoint
 ):
-    _class_iri = S223.BidirectionalSystemConnectionPoint
+    _class_iri = BOB.BidirectionalSystemConnectionPoint
 
 
 class AirZoneConnectionPoint(ZoneConnectionPoint):
     hasMedium: Medium = Air
-    _class_iri = S223.ZoneConnectionPoint
+    _class_iri = BOB.ZoneConnectionPoint
 
 
 class AirInletZoneConnectionPoint(AirZoneConnectionPoint, InletZoneConnectionPoint):
-    _class_iri = S223.InletZoneConnectionPoint
+    _class_iri = BOB.InletZoneConnectionPoint
 
 
 class AirOutletZoneConnectionPoint(AirZoneConnectionPoint, OutletZoneConnectionPoint):
-    _class_iri = S223.OutletZoneConnectionPoint
+    _class_iri = BOB.OutletZoneConnectionPoint
 
 
 class CompressedAirConnection(Connection):
@@ -107,10 +107,10 @@ class CompressedAirSystemConnectionPoint(SystemConnectionPoint):
 class CompressedAirInletSystemConnectionPoint(
     CompressedAirSystemConnectionPoint, InletSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class CompressedAirOutletSystemConnectionPoint(
     CompressedAirSystemConnectionPoint, OutletSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint

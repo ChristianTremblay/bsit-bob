@@ -7,33 +7,35 @@ from bob.connections.air import *
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.water import WaterConnection
 from bob.core import (
-    Device,
+    UNIT,
+    Equipment,
     Junction,
     System,
     bind_model_namespace,
     dump,
     get_datagraph,
-    UNIT,
 )
-from bob.devices.architectural import Window
-from bob.devices.hvac.chiller import AgnosticChiller
-from bob.devices.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
-from bob.devices.hvac.compressor import AirCompressor
-from bob.devices.hvac.damper import (
+from bob.equipments.architectural import Window
+from bob.equipments.electricity.vfd import VFD
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipments.hvac.chiller import AgnosticChiller
+from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
+from bob.equipments.hvac.compressor import AirCompressor
+from bob.equipments.hvac.damper import (
     Damper,
     ElectricalActuatedOnOffDamper,
     ElectricalActuatedProportionalDamper,
     PneumaticActuatedOnOffDamper,
 )
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.filter import Filter
-from bob.devices.hvac.geothermal import GeothermalWell
-from bob.devices.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
-from bob.devices.hvac.humidifier import Humidifier, SteamPipe
-from bob.devices.hvac.pump import Pump
-from bob.devices.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.devices.electricity.vfd import VFD
-from bob.devices.lighting.light import Luminaire
+from bob.equipments.hvac.fan import Fan
+from bob.equipments.hvac.filter import Filter
+from bob.equipments.hvac.geothermal import GeothermalWell
+from bob.equipments.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
+from bob.equipments.hvac.humidifier import Humidifier, SteamPipe
+from bob.equipments.hvac.pump import Pump
+from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
+from bob.equipments.hvac.vav import VAV
+from bob.equipments.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
 from bob.sensor.humidity import AirHumiditySensor
@@ -51,8 +53,6 @@ from bob.space.physical import (
     Roof,
     Room,
 )
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
-from bob.systems.hvac.vav import VAV
 
 # from bob.externalreference.BACNET import BACnetReference, NiagaraORDReference
 
@@ -194,14 +194,14 @@ tpd1 = AirDifferentialStaticPressureSensor(
 taec1 = WaterTemperatureSensor(
     label="TAEC-1", comment="Water temperature feeding coil", unit=UNIT.DEG_C
 )
-tbl1 = Device(label="TBL-1", comment="Freeze Thermostat")
+tbl1 = Equipment(label="TBL-1", comment="Freeze Thermostat")
 ta1 = AirTemperatureSensor(
     label="TA-1",
     comment="Discharge Air Temperature Sensor",
     unit=UNIT.DEG_C,
 )
-fs1 = Device(label="FS-1", comment="Air flow switch for humidifier")
-hlh1 = Device(label="HLH-1", comment="Humidity High Level Stat")
+fs1 = Equipment(label="FS-1", comment="Air flow switch for humidifier")
+hlh1 = Equipment(label="HLH-1", comment="Humidity High Level Stat")
 tpd2 = AirDifferentialStaticPressureSensor(
     label="TPD-2", comment="Static Discharge Air Pressure Sensor", unit=UNIT.PA
 )

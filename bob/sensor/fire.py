@@ -4,16 +4,16 @@ from rdflib import URIRef
 
 from ..connections.electricity import OnOffSignalOutletConnectionPoint
 from ..core import (
-    Air,
-    Medium,
-    PropertyReference,
-    Substance,
-    Water,
     BOB,
     P223,
     QUANTITYKIND,
     S223,
     UNIT,
+    Air,
+    Medium,
+    PropertyReference,
+    Substance,
+    Water,
 )
 from ..properties import SmokePresence
 from ..property import QuantifiableProperty, Setpoint

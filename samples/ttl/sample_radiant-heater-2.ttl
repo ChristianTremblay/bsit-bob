@@ -428,25 +428,25 @@ ex1:00049 a p223:HVACZone,
     s223:contains ex1:00009,
         ex1:00017 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasZoneConnectionPoint ex1:00050,
-        ex1:00051 ;
     bob:airInlet ex1:00050 ;
-    bob:airOutlet ex1:00051 .
+    bob:airOutlet ex1:00051 ;
+    bob:hasZoneConnectionPoint ex1:00050,
+        ex1:00051 .
 
-ex1:00050 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
+ex1:00050 a bob:InletZoneConnectionPoint,
+        bob:ZoneConnectionPoint ;
     rdfs:label "Zone1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00051 a s223:OutletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
+ex1:00051 a bob:OutletZoneConnectionPoint,
+        bob:ZoneConnectionPoint ;
     rdfs:label "Zone1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
 
 ex1:00052 a s223:Coil,
-        s223:Device,
+        s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Baseboard heater" ;
     s223:connectedFrom ex1:00041 ;

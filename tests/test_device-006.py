@@ -1,14 +1,14 @@
 from pathlib import Path
-from rdflib import Literal
 
 from header import ttl_test_header
+from rdflib import Literal
 
 from bob.connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
 )
 from bob.core import bind_model_namespace, dump
-from bob.devices.electricity.vfd import VFD
+from bob.equipments.electricity.vfd import VFD
 from bob.properties import (
     HP,
     RPM,

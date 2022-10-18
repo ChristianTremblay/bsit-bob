@@ -1,6 +1,10 @@
 from rdflib import URIRef
 
 from ..core import (
+    BOB,
+    P223,
+    S223,
+    BidirectionalConnectionPoint,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -10,9 +14,6 @@ from ..core import (
     OutletSystemConnectionPoint,
     SystemConnectionPoint,
     Water,
-    BOB,
-    P223,
-    S223,
 )
 
 _namespace = BOB
@@ -65,24 +66,34 @@ class WaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water
 
 
-class WaterInletConnectionPoint(InletConnectionPoint, WaterConnectionPoint):
+class WaterInletConnectionPoint(WaterConnectionPoint, InletConnectionPoint):
     _class_iri = S223.InletConnectionPoint
 
 
-class WaterOutletConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
+class WaterOutletConnectionPoint(WaterConnectionPoint, OutletConnectionPoint):
     _class_iri = S223.OutletConnectionPoint
 
 
-class WaterSystemConnectionPoint(ConnectionPoint):
+class WaterBidirectionalConnectionPoint(
+    WaterConnectionPoint, BidirectionalConnectionPoint
+):
+    _class_iri = S223.BidirectionalConnectionPoint
+
+
+class WaterSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Water
 
 
-class WaterInletSystemConnectionPoint(InletConnectionPoint, WaterConnectionPoint):
-    _class_iri = S223.InletConnectionPoint
+class WaterInletSystemConnectionPoint(
+    WaterSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
-class WaterOutletSystemConnectionPoint(OutletConnectionPoint, WaterConnectionPoint):
-    _class_iri = S223.OutletConnectionPoint
+class WaterOutletSystemConnectionPoint(
+    WaterSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === HOT WATER
@@ -95,11 +106,11 @@ class HotWaterConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Water.HotWater
 
 
-class HotWaterInletConnectionPoint(InletConnectionPoint, HotWaterConnectionPoint):
+class HotWaterInletConnectionPoint(HotWaterConnectionPoint, InletConnectionPoint):
     _class_iri = S223.InletConnectionPoint
 
 
-class HotWaterOutletConnectionPoint(OutletConnectionPoint, HotWaterConnectionPoint):
+class HotWaterOutletConnectionPoint(HotWaterConnectionPoint, OutletConnectionPoint):
     _class_iri = S223.OutletConnectionPoint
 
 
@@ -110,13 +121,13 @@ class HotWaterSystemConnectionPoint(SystemConnectionPoint):
 class HotWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, HotWaterSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class HotWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, HotWaterSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === HOT WATER
@@ -144,13 +155,13 @@ class MixedWaterSystemConnectionPoint(SystemConnectionPoint):
 class MixedWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, MixedWaterSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class MixedWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, MixedWaterSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === STEAM
@@ -171,18 +182,20 @@ class SteamOutletConnectionPoint(OutletConnectionPoint, SteamConnectionPoint):
     _class_iri = S223.OutletConnectionPoint
 
 
-class SteamSystemConnectionPoint(ConnectionPoint):
+class SteamSystemConnectionPoint(SystemConnectionPoint):
     hasMedium: Medium = Water.Steam
 
 
-class SteamInletSystemConnectionPoint(InletConnectionPoint, SteamSystemConnectionPoint):
-    _class_iri = S223.InletConnectionPoint
+class SteamInletSystemConnectionPoint(
+    InletSystemConnectionPoint, SteamSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class SteamOutletSystemConnectionPoint(
-    OutletConnectionPoint, SteamSystemConnectionPoint
+    OutletSystemConnectionPoint, SteamSystemConnectionPoint
 ):
-    _class_iri = S223.OutletConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === CHILLED WATER
@@ -214,13 +227,13 @@ class ChilledWaterSystemConnectionPoint(SystemConnectionPoint):
 class ChilledWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class ChilledWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, ChilledWaterSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === CONDENSED WATER
@@ -252,10 +265,10 @@ class CondensedWaterSystemConnectionPoint(SystemConnectionPoint):
 class CondensedWaterInletSystemConnectionPoint(
     InletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
 ):
-    _class_iri = S223.InletSystemConnectionPoint
+    _class_iri = BOB.InletSystemConnectionPoint
 
 
 class CondensedWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
 ):
-    _class_iri = S223.OutletSystemConnectionPoint
+    _class_iri = BOB.OutletSystemConnectionPoint

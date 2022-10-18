@@ -28,19 +28,19 @@ ex1:00001 a p223:HVACZone,
     s223:contains ex1:00004,
         ex1:00012 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasZoneConnectionPoint ex1:00002,
-        ex1:00003 ;
     bob:airInlet ex1:00002 ;
-    bob:airOutlet ex1:00003 .
+    bob:airOutlet ex1:00003 ;
+    bob:hasZoneConnectionPoint ex1:00002,
+        ex1:00003 .
 
-ex1:00002 a s223:InletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
+ex1:00002 a bob:InletZoneConnectionPoint,
+        bob:ZoneConnectionPoint ;
     rdfs:label "Zone-1.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00003 a s223:OutletZoneConnectionPoint,
-        s223:ZoneConnectionPoint ;
+ex1:00003 a bob:OutletZoneConnectionPoint,
+        bob:ZoneConnectionPoint ;
     rdfs:label "Zone-1.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air .
@@ -48,9 +48,9 @@ ex1:00003 a s223:OutletZoneConnectionPoint,
 ex1:00004 a p223:HVACSpace,
         s223:DomainSpace ;
     rdfs:label "Space-1" ;
-    s223:connectedFrom ex1:00027 ;
-    s223:connectedThrough ex1:00040,
-        ex1:00062 ;
+    s223:connectedFrom ex1:00046 ;
+    s223:connectedThrough ex1:00055,
+        ex1:00092 ;
     s223:hasConnectionPoint ex1:00005,
         ex1:00006,
         ex1:00007,
@@ -71,7 +71,7 @@ ex1:00004 a p223:HVACSpace,
 ex1:00005 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Space-1.ductAirInlet" ;
-    s223:connectsThrough ex1:00040 ;
+    s223:connectsThrough ex1:00055 ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
@@ -79,7 +79,7 @@ ex1:00005 a s223:InletConnectionPoint,
 ex1:00006 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Space-1.ductAirOutlet" ;
-    s223:connectsThrough ex1:00062 ;
+    s223:connectsThrough ex1:00092 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
@@ -122,7 +122,7 @@ ex1:00011 a s223:BidirectionalConnectionPoint,
 ex1:00012 a p223:HVACSpace,
         s223:DomainSpace ;
     rdfs:label "Space-2" ;
-    s223:connectedThrough ex1:00062 ;
+    s223:connectedThrough ex1:00092 ;
     s223:hasConnectionPoint ex1:00013,
         ex1:00014,
         ex1:00015,
@@ -150,7 +150,7 @@ ex1:00013 a s223:InletConnectionPoint,
 ex1:00014 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Space-2.ductAirOutlet" ;
-    s223:connectsThrough ex1:00062 ;
+    s223:connectsThrough ex1:00092 ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00012 .
@@ -191,23 +191,24 @@ ex1:00019 a s223:BidirectionalConnectionPoint,
     s223:isConnectionPointOf ex1:00012 .
 
 ex1:00020 a s223:System,
-        s223:VAV ;
+        s223:VAV,
+        bob:System ;
     rdfs:label "Zone-1.VAV" ;
     s223:contains ex1:00021,
         ex1:00023,
         ex1:00025,
         ex1:00027 ;
-    s223:hasSystemConnectionPoint ex1:00038,
-        ex1:00039 ;
-    bob:airInlet ex1:00038 ;
-    bob:airOutlet ex1:00039 ;
+    bob:airInlet ex1:00053 ;
+    bob:airOutlet ex1:00054 ;
+    bob:hasSystemConnectionPoint ex1:00053,
+        ex1:00054 ;
     bob:zoneTemperature ex1:00026 ;
     rdfs:comment "VAV Description" .
 
-ex1:00021 a s223:Device,
+ex1:00021 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "SA-F" ;
-    s223:hasMeasurementLocation ex1:00029 ;
+    s223:hasMeasurementLocation ex1:00049 ;
     s223:observesProperty ex1:00022 ;
     rdfs:comment "Air Flow" .
 
@@ -221,10 +222,10 @@ ex1:00022 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:L-PER-SEC .
 
-ex1:00023 a s223:Device,
+ex1:00023 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "DA-T" ;
-    s223:hasMeasurementLocation ex1:00029 ;
+    s223:hasMeasurementLocation ex1:00049 ;
     s223:observesProperty ex1:00024 ;
     rdfs:comment "Discharge Air Temperature" .
 
@@ -238,7 +239,7 @@ ex1:00024 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 
-ex1:00025 a s223:Device,
+ex1:00025 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "ZN-T" ;
     s223:observesProperty ex1:00026 ;
@@ -254,74 +255,121 @@ ex1:00026 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 
-ex1:00027 a s223:Damper,
-        s223:Device ;
-    rdfs:label "DPR" ;
-    s223:connectedThrough ex1:00040,
-        ex1:00061 ;
-    s223:connectedTo ex1:00004 ;
-    s223:contains ex1:00030 ;
-    s223:hasConnectionPoint ex1:00028,
-        ex1:00029 ;
-    s223:hasProperty ex1:00037 ;
-    bob:airInlet ex1:00028 ;
-    bob:airOutlet ex1:00029 ;
-    bob:command ex1:00034 ;
-    bob:feedback ex1:00035 ;
+ex1:00027 a s223:System,
+        bob:ElectricalActuatedProportionalDamper,
+        bob:System ;
+    rdfs:label "ACTDPR" ;
+    s223:contains ex1:00028,
+        ex1:00046 ;
+    bob:airInlet ex1:00050 ;
+    bob:airOutlet ex1:00051 ;
+    bob:command ex1:00039 ;
+    bob:hasSystemConnectionPoint ex1:00050,
+        ex1:00051 ;
     rdfs:comment "VAV Box Damper" .
 
-ex1:00028 a s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "DPR.airInlet" ;
-    s223:connectsThrough ex1:00061 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex1:00027 .
-
-ex1:00029 a s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "DPR.airOutlet" ;
-    s223:connectsThrough ex1:00040 ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex1:00027 .
-
-ex1:00030 a s223:Actuator,
-        s223:Device ;
+ex1:00028 a s223:Equipment ;
     rdfs:label "actuator" ;
-    s223:actuatesProperty ex1:00037 ;
-    s223:hasConnectionPoint ex1:00031,
+    s223:connectedThrough ex1:00052 ;
+    s223:connectedTo ex1:00046 ;
+    s223:contains ex1:00041,
+        ex1:00042,
+        ex1:00043,
+        ex1:00044,
+        ex1:00045 ;
+    s223:hasConnectionPoint ex1:00029,
+        ex1:00030,
+        ex1:00031,
         ex1:00032,
-        ex1:00033 ;
-    s223:hasProperty ex1:00034,
-        ex1:00035,
+        ex1:00033,
+        ex1:00034 ;
+    s223:hasProperty ex1:00035,
         ex1:00036,
-        ex1:00037 .
+        ex1:00037,
+        ex1:00038,
+        ex1:00039,
+        ex1:00040 .
 
-ex1:00031 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
-    rdfs:label "actuator.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium p223:Electricity-24V-60Hz ;
-    s223:isConnectionPointOf ex1:00030 .
+ex1:00029 a p223:MechanicalConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "actuator.linkageOutlet" ;
+    s223:connectsThrough ex1:00052 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf ex1:00028 .
 
-ex1:00032 a p223:AnalogInput,
-        s223:InletConnectionPoint,
-        bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.proportional_signal" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium p223:Electricity-ModulationSignal ;
-    s223:isConnectionPointOf ex1:00030 .
-
-ex1:00033 a p223:AnalogOutput,
+ex1:00030 a p223:AnalogOutput,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
-    s223:isConnectionPointOf ex1:00030 .
+    s223:isConnectionPointOf ex1:00028 .
 
-ex1:00034 a s223:ActuatableProperty,
+ex1:00031 a p223:BinaryOutput,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "actuator.open_auxswitch_signal" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium p223:Electricity-OnOffSignal ;
+    s223:isConnectionPointOf ex1:00028 .
+
+ex1:00032 a p223:BinaryOutput,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "actuator.close_auxswitch_signal" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium p223:Electricity-OnOffSignal ;
+    s223:isConnectionPointOf ex1:00028 .
+
+ex1:00033 a s223:InletConnectionPoint,
+        bob:Electricity_24V_60HzConnectionPoint ;
+    rdfs:label "actuator.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium p223:Electricity-24V-60Hz ;
+    s223:isConnectionPointOf ex1:00028 .
+
+ex1:00034 a p223:AnalogInput,
+        s223:InletConnectionPoint,
+        bob:ModulationSignalConnectionPoint ;
+    rdfs:label "actuator.proportional_signal" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium p223:Electricity-ModulationSignal ;
+    s223:isConnectionPointOf ex1:00028 .
+
+ex1:00035 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
+    rdfs:label "position" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
+
+ex1:00036 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
+    rdfs:label "position_feedback" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
+
+ex1:00037 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    rdfs:label "is_open" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+ex1:00038 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    rdfs:label "is_closed" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+ex1:00039 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -330,16 +378,7 @@ ex1:00034 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 
-ex1:00035 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Percent ;
-    rdfs:label "feedback" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
-
-ex1:00036 a s223:ObservableProperty,
+ex1:00040 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -348,59 +387,146 @@ ex1:00036 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
 
-ex1:00037 a s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty,
-        bob:PercentCommand ;
-    rdfs:label "position" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+ex1:00041 a p223:Actuator,
+        s223:Equipment ;
+    rdfs:label "positionActuator" ;
+    p223:actuatesProperty ex1:00035 ;
+    p223:hasActuationLocation ex1:00029 ;
+    p223:isCommandedBy ex1:00039 .
 
-ex1:00038 a s223:InletSystemConnectionPoint,
-        bob:AirSystemConnectionPoint ;
+ex1:00042 a p223:Actuator,
+        s223:Equipment ;
+    rdfs:label "feedbackActuator" ;
+    p223:actuatesProperty ex1:00036 ;
+    p223:hasActuationLocation ex1:00030 ;
+    p223:isCommandedBy ex1:00035 .
+
+ex1:00043 a p223:Actuator,
+        s223:Equipment ;
+    rdfs:label "auxiliary_switch_open_actuator" ;
+    p223:actuatesProperty ex1:00037 ;
+    p223:hasActuationLocation ex1:00031 ;
+    p223:isCommandedBy ex1:00035 .
+
+ex1:00044 a p223:Actuator,
+        s223:Equipment ;
+    rdfs:label "auxiliary_switch_close_actuator" ;
+    p223:actuatesProperty ex1:00038 ;
+    p223:hasActuationLocation ex1:00032 ;
+    p223:isCommandedBy ex1:00035 .
+
+ex1:00045 a s223:Equipment,
+        s223:Sensor ;
+    rdfs:label "position_sensor" ;
+    s223:hasMeasurementLocation ex1:00029 ;
+    s223:observesProperty ex1:00035 .
+
+ex1:00046 a s223:Damper,
+        s223:Equipment ;
+    rdfs:label "damper" ;
+    s223:connectedFrom ex1:00028 ;
+    s223:connectedThrough ex1:00052,
+        ex1:00055,
+        ex1:00091 ;
+    s223:connectedTo ex1:00004 ;
+    s223:hasConnectionPoint ex1:00047,
+        ex1:00048,
+        ex1:00049 ;
+    bob:airInlet ex1:00048 ;
+    bob:airOutlet ex1:00049 ;
+    bob:linkageInlet ex1:00047 .
+
+ex1:00047 a p223:MechanicalConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "damper.linkageInlet" ;
+    s223:connectsThrough ex1:00052 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf ex1:00046 .
+
+ex1:00048 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airInlet" ;
+    s223:connectsThrough ex1:00091 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00046 .
+
+ex1:00049 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airOutlet" ;
+    s223:connectsThrough ex1:00055 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00046 .
+
+ex1:00050 a bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint ;
+    rdfs:label "ACTDPR.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex1:00048 .
+
+ex1:00051 a bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint ;
+    rdfs:label "ACTDPR.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex1:00049 .
+
+ex1:00052 a s223:Connection ;
+    rdfs:label "cnx" ;
+    s223:connectsAt ex1:00029,
+        ex1:00047 ;
+    s223:connectsFrom ex1:00028 ;
+    s223:connectsTo ex1:00046 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling .
+
+ex1:00053 a bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint ;
     rdfs:label "Zone-1.VAV.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex1:00028 .
+    s223:mapsTo ex1:00050 .
 
-ex1:00039 a s223:OutletSystemConnectionPoint,
-        bob:AirSystemConnectionPoint ;
+ex1:00054 a bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint ;
     rdfs:label "Zone-1.VAV.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex1:00029 .
+    s223:mapsTo ex1:00051 .
 
-ex1:00040 a s223:Connection ;
+ex1:00055 a s223:Connection ;
     rdfs:label "cnx" ;
     s223:connectsAt ex1:00005,
-        ex1:00029 ;
-    s223:connectsFrom ex1:00027 ;
+        ex1:00049 ;
+    s223:connectsFrom ex1:00046 ;
     s223:connectsTo ex1:00004 ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00041 a s223:System,
-        s223:VAV ;
+ex1:00056 a s223:System,
+        s223:VAV,
+        bob:System ;
     rdfs:label "Zone-2.VAV" ;
-    s223:contains ex1:00042,
-        ex1:00044,
-        ex1:00046,
-        ex1:00048 ;
-    s223:hasSystemConnectionPoint ex1:00059,
-        ex1:00060 ;
-    bob:airInlet ex1:00059 ;
-    bob:airOutlet ex1:00060 ;
-    bob:zoneTemperature ex1:00047 ;
+    s223:contains ex1:00057,
+        ex1:00059,
+        ex1:00061,
+        ex1:00063 ;
+    bob:airInlet ex1:00089 ;
+    bob:airOutlet ex1:00090 ;
+    bob:hasSystemConnectionPoint ex1:00089,
+        ex1:00090 ;
+    bob:zoneTemperature ex1:00062 ;
     rdfs:comment "VAV Description" .
 
-ex1:00042 a s223:Device,
+ex1:00057 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "SA-F" ;
-    s223:hasMeasurementLocation ex1:00050 ;
-    s223:observesProperty ex1:00043 ;
+    s223:hasMeasurementLocation ex1:00085 ;
+    s223:observesProperty ex1:00058 ;
     rdfs:comment "Air Flow" .
 
-ex1:00043 a s223:ObservableProperty,
+ex1:00058 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -410,14 +536,14 @@ ex1:00043 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:unit unit:L-PER-SEC .
 
-ex1:00044 a s223:Device,
+ex1:00059 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "DA-T" ;
-    s223:hasMeasurementLocation ex1:00050 ;
-    s223:observesProperty ex1:00045 ;
+    s223:hasMeasurementLocation ex1:00085 ;
+    s223:observesProperty ex1:00060 ;
     rdfs:comment "Discharge Air Temperature" .
 
-ex1:00045 a s223:ObservableProperty,
+ex1:00060 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -427,13 +553,13 @@ ex1:00045 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 
-ex1:00046 a s223:Device,
+ex1:00061 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "ZN-T" ;
-    s223:observesProperty ex1:00047 ;
+    s223:observesProperty ex1:00062 ;
     rdfs:comment "Temperature of space" .
 
-ex1:00047 a s223:ObservableProperty,
+ex1:00062 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -443,71 +569,121 @@ ex1:00047 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 
-ex1:00048 a s223:Damper,
-        s223:Device ;
-    rdfs:label "DPR" ;
-    s223:connectedThrough ex1:00061 ;
-    s223:contains ex1:00051 ;
-    s223:hasConnectionPoint ex1:00049,
-        ex1:00050 ;
-    s223:hasProperty ex1:00058 ;
-    bob:airInlet ex1:00049 ;
-    bob:airOutlet ex1:00050 ;
-    bob:command ex1:00055 ;
-    bob:feedback ex1:00056 ;
+ex1:00063 a s223:System,
+        bob:ElectricalActuatedProportionalDamper,
+        bob:System ;
+    rdfs:label "ACTDPR" ;
+    s223:contains ex1:00064,
+        ex1:00082 ;
+    bob:airInlet ex1:00086 ;
+    bob:airOutlet ex1:00087 ;
+    bob:command ex1:00075 ;
+    bob:hasSystemConnectionPoint ex1:00086,
+        ex1:00087 ;
     rdfs:comment "VAV Box Damper" .
 
-ex1:00049 a s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "DPR.airInlet" ;
-    s223:connectsThrough ex1:00061 ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex1:00048 .
-
-ex1:00050 a s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "DPR.airOutlet" ;
-    s223:hasDirection s223:Direction-Outlet ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex1:00048 .
-
-ex1:00051 a s223:Actuator,
-        s223:Device ;
+ex1:00064 a s223:Equipment ;
     rdfs:label "actuator" ;
-    s223:actuatesProperty ex1:00058 ;
-    s223:hasConnectionPoint ex1:00052,
-        ex1:00053,
-        ex1:00054 ;
-    s223:hasProperty ex1:00055,
-        ex1:00056,
-        ex1:00057,
-        ex1:00058 .
+    s223:connectedThrough ex1:00088 ;
+    s223:connectedTo ex1:00082 ;
+    s223:contains ex1:00077,
+        ex1:00078,
+        ex1:00079,
+        ex1:00080,
+        ex1:00081 ;
+    s223:hasConnectionPoint ex1:00065,
+        ex1:00066,
+        ex1:00067,
+        ex1:00068,
+        ex1:00069,
+        ex1:00070 ;
+    s223:hasProperty ex1:00071,
+        ex1:00072,
+        ex1:00073,
+        ex1:00074,
+        ex1:00075,
+        ex1:00076 .
 
-ex1:00052 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
-    rdfs:label "actuator.electricalInlet" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium p223:Electricity-24V-60Hz ;
-    s223:isConnectionPointOf ex1:00051 .
+ex1:00065 a p223:MechanicalConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "actuator.linkageOutlet" ;
+    s223:connectsThrough ex1:00088 ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf ex1:00064 .
 
-ex1:00053 a p223:AnalogInput,
-        s223:InletConnectionPoint,
-        bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.proportional_signal" ;
-    s223:hasDirection s223:Direction-Inlet ;
-    s223:hasMedium p223:Electricity-ModulationSignal ;
-    s223:isConnectionPointOf ex1:00051 .
-
-ex1:00054 a p223:AnalogOutput,
+ex1:00066 a p223:AnalogOutput,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium p223:Electricity-ModulationSignal ;
-    s223:isConnectionPointOf ex1:00051 .
+    s223:isConnectionPointOf ex1:00064 .
 
-ex1:00055 a s223:ActuatableProperty,
+ex1:00067 a p223:BinaryOutput,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "actuator.open_auxswitch_signal" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium p223:Electricity-OnOffSignal ;
+    s223:isConnectionPointOf ex1:00064 .
+
+ex1:00068 a p223:BinaryOutput,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "actuator.close_auxswitch_signal" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium p223:Electricity-OnOffSignal ;
+    s223:isConnectionPointOf ex1:00064 .
+
+ex1:00069 a s223:InletConnectionPoint,
+        bob:Electricity_24V_60HzConnectionPoint ;
+    rdfs:label "actuator.electricalInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium p223:Electricity-24V-60Hz ;
+    s223:isConnectionPointOf ex1:00064 .
+
+ex1:00070 a p223:AnalogInput,
+        s223:InletConnectionPoint,
+        bob:ModulationSignalConnectionPoint ;
+    rdfs:label "actuator.proportional_signal" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium p223:Electricity-ModulationSignal ;
+    s223:isConnectionPointOf ex1:00064 .
+
+ex1:00071 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
+    rdfs:label "position" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
+
+ex1:00072 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
+    rdfs:label "position_feedback" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:unit unit:PERCENT .
+
+ex1:00073 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    rdfs:label "is_open" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+ex1:00074 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    rdfs:label "is_closed" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+ex1:00075 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -516,16 +692,7 @@ ex1:00055 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT .
 
-ex1:00056 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Percent ;
-    rdfs:label "feedback" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
-
-ex1:00057 a s223:ObservableProperty,
+ex1:00076 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -534,38 +701,121 @@ ex1:00057 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:unit unit:N-M .
 
-ex1:00058 a s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty,
-        bob:PercentCommand ;
-    rdfs:label "position" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+ex1:00077 a p223:Actuator,
+        s223:Equipment ;
+    rdfs:label "positionActuator" ;
+    p223:actuatesProperty ex1:00071 ;
+    p223:hasActuationLocation ex1:00065 ;
+    p223:isCommandedBy ex1:00075 .
 
-ex1:00059 a s223:InletSystemConnectionPoint,
-        bob:AirSystemConnectionPoint ;
+ex1:00078 a p223:Actuator,
+        s223:Equipment ;
+    rdfs:label "feedbackActuator" ;
+    p223:actuatesProperty ex1:00072 ;
+    p223:hasActuationLocation ex1:00066 ;
+    p223:isCommandedBy ex1:00071 .
+
+ex1:00079 a p223:Actuator,
+        s223:Equipment ;
+    rdfs:label "auxiliary_switch_open_actuator" ;
+    p223:actuatesProperty ex1:00073 ;
+    p223:hasActuationLocation ex1:00067 ;
+    p223:isCommandedBy ex1:00071 .
+
+ex1:00080 a p223:Actuator,
+        s223:Equipment ;
+    rdfs:label "auxiliary_switch_close_actuator" ;
+    p223:actuatesProperty ex1:00074 ;
+    p223:hasActuationLocation ex1:00068 ;
+    p223:isCommandedBy ex1:00071 .
+
+ex1:00081 a s223:Equipment,
+        s223:Sensor ;
+    rdfs:label "position_sensor" ;
+    s223:hasMeasurementLocation ex1:00065 ;
+    s223:observesProperty ex1:00071 .
+
+ex1:00082 a s223:Damper,
+        s223:Equipment ;
+    rdfs:label "damper" ;
+    s223:connectedFrom ex1:00064 ;
+    s223:connectedThrough ex1:00088,
+        ex1:00091 ;
+    s223:hasConnectionPoint ex1:00083,
+        ex1:00084,
+        ex1:00085 ;
+    bob:airInlet ex1:00084 ;
+    bob:airOutlet ex1:00085 ;
+    bob:linkageInlet ex1:00083 .
+
+ex1:00083 a p223:MechanicalConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "damper.linkageInlet" ;
+    s223:connectsThrough ex1:00088 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf ex1:00082 .
+
+ex1:00084 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airInlet" ;
+    s223:connectsThrough ex1:00091 ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00082 .
+
+ex1:00085 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00082 .
+
+ex1:00086 a bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint ;
+    rdfs:label "ACTDPR.airInlet" ;
+    s223:hasDirection s223:Direction-Inlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex1:00084 .
+
+ex1:00087 a bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint ;
+    rdfs:label "ACTDPR.airOutlet" ;
+    s223:hasDirection s223:Direction-Outlet ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:mapsTo ex1:00085 .
+
+ex1:00088 a s223:Connection ;
+    rdfs:label "cnx" ;
+    s223:connectsAt ex1:00065,
+        ex1:00083 ;
+    s223:connectsFrom ex1:00064 ;
+    s223:connectsTo ex1:00082 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling .
+
+ex1:00089 a bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint ;
     rdfs:label "Zone-2.VAV.airInlet" ;
     s223:hasDirection s223:Direction-Inlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex1:00049 .
+    s223:mapsTo ex1:00086 .
 
-ex1:00060 a s223:OutletSystemConnectionPoint,
-        bob:AirSystemConnectionPoint ;
+ex1:00090 a bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint ;
     rdfs:label "Zone-2.VAV.airOutlet" ;
     s223:hasDirection s223:Direction-Outlet ;
     s223:hasMedium s223:Medium-Air ;
-    s223:mapsTo ex1:00050 .
+    s223:mapsTo ex1:00087 .
 
-ex1:00061 a s223:Connection ;
+ex1:00091 a s223:Connection ;
     rdfs:label "SupplyAir" ;
-    s223:connectsAt ex1:00028,
-        ex1:00049 ;
-    s223:connectsTo ex1:00027,
-        ex1:00048 ;
+    s223:connectsAt ex1:00048,
+        ex1:00084 ;
+    s223:connectsTo ex1:00046,
+        ex1:00082 ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00062 a s223:Connection ;
+ex1:00092 a s223:Connection ;
     rdfs:label "ReturnAir" ;
     s223:connectsAt ex1:00006,
         ex1:00014 ;

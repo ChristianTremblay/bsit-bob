@@ -17,13 +17,13 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import Air, Device, Junction, System, bind_model_namespace, dump
-from bob.devices.hvac.fan import Fan
+from bob.core import Air, Equipment, Junction, System, bind_model_namespace, dump
+from bob.equipments.hvac.fan import Fan
 from bob.properties.force import DifferentialStaticPressure
 from bob.properties.ratio import PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
-from bob.systems.archives.coolingcoil import ChilledWaterCoil2
-from bob.systems.archives.heatingcoil import HotWaterCoil2
+from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
+from bob.equipments.archives.heatingcoil import HotWaterCoil2
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
@@ -31,17 +31,17 @@ _namespace = bind_model_namespace(
 )
 
 
-class AirFilter(Device):
+class AirFilter(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     dp = DifferentialStaticPressure
 
 
-class DamperPositioner(Device):
+class DamperPositioner(Equipment):
     position = PercentCommand
 
 
-class Damper(Device):
+class Damper(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     position: PercentCommand
@@ -59,7 +59,7 @@ class Damper(Device):
         self.position = self.damper_positioner.position
 
 
-class VFD(Device):
+class VFD(Equipment):
     fanStatus = OnOffStatus
     fanSpeedCommand = PercentCommand
     fanStart = OnOffCommand

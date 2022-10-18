@@ -1,6 +1,9 @@
 from rdflib import URIRef
 
 from ..core import (
+    BOB,
+    P223,
+    S223,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
@@ -8,10 +11,7 @@ from ..core import (
     NaturalGas,
     OutletConnectionPoint,
     SystemConnectionPoint,
-    BOB,
     enum,
-    P223,
-    S223,
 )
 
 _namespace = BOB

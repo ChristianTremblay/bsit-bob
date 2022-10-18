@@ -32,29 +32,29 @@ from bob.connections.water import (
     WaterOutletConnectionPoint,
 )
 from bob.core import (
-    Device,
+    QUANTITYKIND,
+    UNIT,
+    Equipment,
     PropertyReference,
     System,
     bind_model_namespace,
     dump,
-    QUANTITYKIND,
-    UNIT,
 )
-from bob.devices.architectural import Window
-from bob.devices.electricity.starter import MotorStarter
-from bob.devices.hvac.actuator import ElectricalProportionalActuator
-from bob.devices.hvac.coil import HotWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.fan import Fan
-from bob.devices.hvac.gas import GasMonitor
-from bob.devices.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.devices.hvac.valve import TwoWayActuatedProportionalValve
+from bob.equipments.architectural import Window
+from bob.equipments.electricity.starter import MotorStarter
+from bob.equipments.hvac.actuator import ElectricalProportionalActuator
+from bob.equipments.hvac.coil import HotWaterCoil
+from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipments.hvac.fan import Fan
+from bob.equipments.hvac.gas import GasMonitor
+from bob.equipments.hvac.stats import NetworkRoomSensor, NetworkThermostat
+from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve
 from bob.functions import (
-    FunctionBlock,
     AnalogInput,
     AnalogOutput,
     BinaryInput,
     BinaryOutput,
+    FunctionBlock,
 )
 from bob.functions.g36 import G36Sequence
 from bob.functions.occupancy import OccupancyFunction
@@ -112,7 +112,7 @@ valve2w_template = {
         "onOffInlet": OnOffSignalInletConnectionPoint,
     },
     "properties": {("flowCoefficient", Gallons): {}},
-    "devices": {("actuator", ElectricalProportionalActuator): {}},
+    "equipments": {("actuator", ElectricalProportionalActuator): {}},
 }
 
 vav_system_template = {
@@ -137,7 +137,7 @@ vav_system_template = {
         ("valvePosition", PercentCommand): {},
         ("airFlow", Flow): {"unit": UNIT.L_PER_SEC},
     },
-    "devices": {
+    "equipments": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
         ("DPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with electrical actuator"
@@ -154,7 +154,7 @@ vav_system_template = {
 
 class VAV_FIGA2(System):
     """
-    This is a clone of VAV found in bob.system.hvac.vav VAV_Simple
+    This is a clone of VAV found in from bob.equipments.hvac.vav VAV_Simple
     """
 
     airInlet: AirInletSystemConnectionPoint
@@ -212,7 +212,7 @@ hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observesPr
 hvac_space.co2 = vav["ZN-CO2"]["CO2"].observesProperty
 hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observesProperty
 
-# Now that space is full of devices and connections...
+# Now that space is full of Equipments and connections...
 # Zone are meant for control, let's define the control side of the thing
 # temperature, co2, etc of zone.... could be the result of a function block
 # making calculation from multiple hvac space readings...

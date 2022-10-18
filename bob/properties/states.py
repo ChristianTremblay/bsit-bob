@@ -1,17 +1,17 @@
 from rdflib import Graph, URIRef
 
 from ..core import (
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
     EnumerationKind,
     ExternalReference,
     Light,
     Medium,
     SchemaGraph,
     Substance,
-    BOB,
-    P223,
-    QUANTITYKIND,
-    S223,
-    UNIT,
 )
 from ..enum import (
     MotionNoMotionEnum,

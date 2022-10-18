@@ -37,9 +37,9 @@ To keep track of the domain in which the entities are, `servesDomainSpace` must 
 
 This approach creates a change of layer for any entity related to a room by mixing multiple domain connection points on the same entity. This is why we can also call this method "cross-domain".
 
-> A device-like entity
+> A Equipment-like entity
 >
-> Physical Spaces in this approach are very similar to devices. In fact, an entity, connectable, with connection points in different domains it is in s223 everywhere else known as a device.
+> Physical Spaces in this approach are very similar to Equipments. In fact, an entity, connectable, with connection points in different domains it is in s223 everywhere else known as a Equipment.
 
 ## What's wrong if all is connected to the physical space ?
 First, this means that a physical space is mandatory, always required. So in the process of creating a complete model, this dependency will eventually create the needs for all teams to build their own physical spaces, so they can work. Which means that at a certain point in time, there will be a need for a merge of all those different point of view on physical spaces coming from different models.
@@ -72,7 +72,7 @@ The only thing required is (if required) to enclose new domain spaces in existin
 ## Maintenance, localisation and interoperability (again)
 When physical spaces are created, it becomes possible for teams (or the maintenance team eventually) to use the `hasPhysicalLocation` to relate things to the physical space and answer the questions like : _"Where is the discharge air temperature sensor located ?"_.
 
-The domain-centric approach allows to locate devices and sensors easily using this predicate when this information is available. 
+The domain-centric approach allows to locate Equipments and sensors easily using this predicate when this information is available. 
 
 It's also important to note that this information (`hasPhysicalLocation`) will be added in the domain-centric parts of the model, which means that once people are aware of physical spaces in the model, they can modify their part of the model to add this information without touching everyone else part. This also allow simultaneous workj from different teams.
 
@@ -116,7 +116,7 @@ The "encloses" relationship is perfeclty meant to describe the fact that some "z
 It is good to notice that physical spaces can contain other physical spaces but a domain space cannot overlap two adjacent physical spaces. In other words, a domain space is no bigger than the smallest physical space that encloses it.
 
 ## Finding entities
-`hasPhysicalLocation` is a perfect fit for any devices, sensors, system, when required, to be able to specify the location inside a building for those entities. When provided, it provides a direct relationshiip to query to find the location of something in a building.
+`hasPhysicalLocation` is a perfect fit for any Equipments, sensors, system, when required, to be able to specify the location inside a building for those entities. When provided, it provides a direct relationshiip to query to find the location of something in a building.
 
 > **Cross-domain approach**
 > 
@@ -124,7 +124,7 @@ It is good to notice that physical spaces can contain other physical spaces but 
 
 
 ## Sensors
-Sensors are subclasses of devices but are special in the way that the medium will not typically pass through them. They are used to make a measurement at a certain point in the flow of the medium.
+Sensors are subclasses of Equipments but are special in the way that the medium will not typically pass through them. They are used to make a measurement at a certain point in the flow of the medium.
 
 Knowing where this measurement takes places is important. This is why typical sensors are connected to connection points or connections.
 
@@ -158,7 +158,7 @@ As seen earlier, connections and connection points are a way to model the fact t
 ## The door example
 Before answering the question on physical spaces medium, I think we could start by modeling a door. We can imagine a door in the physical space as an important part of connections between physical spaces. Looks to me like a good starting point.
 
-So here we are. Imagine a door and make that a device. A door modeled as a device makes sense. We can imagine the thing, it can be controlled, open or close automatically or manually, monitored and can affect its environment. It works.
+So here we are. Imagine a door and make that a Equipment. A door modeled as a Equipment makes sense. We can imagine the thing, it can be controlled, open or close automatically or manually, monitored and can affect its environment. It works.
 
 All aspects of the door can clearly be defined by the domain-centric approach by layering the different concepts and making a clear boundary between them.  
 
@@ -166,7 +166,7 @@ All aspects of the door can clearly be defined by the domain-centric approach by
 If studying the airflow (domain of interest), this door can be used by the HVAC domain so we could add a airConnectionPoint to it. This connection point should be bidirectional as air can flow from both sides, depending on pressures. This connection point could be used to make a specific relationship to tha HVAC spaces of interest. So for now, if someone is interested by the impact of a door on airflow, starting from the HVAC Domain will allow to quickly find the door.
 
 ### Access control and security
-We can monitor this door in the access control domain. Let's add an `intrusionDetectionOutletConnectionPoint` to the device, which can be connected to the access control and security domain space. This way we'll know if someone tries to force the door open. 
+We can monitor this door in the access control domain. Let's add an `intrusionDetectionOutletConnectionPoint` to the Equipment, which can be connected to the access control and security domain space. This way we'll know if someone tries to force the door open. 
 
 ### Light
 Light can pass through this door, we can add a `LightConnectionPoint` and depending on the situation as understood by the domain expert, this can be unidirectional, bidirectional, etc... and connected to the light domain space. No need to go further with the physic details of light propagation, it's supposed to be a simple example.
@@ -187,18 +187,18 @@ Because that is the field of interest.
 >In the domain-centric approach we do not allow connections to be made outside of the field of interest. Keeping this boundary clear, we don't need the supplemental predicate `servesDomainSpace` to fix the broken path created by using the cross-domain approach.
 
 # Sharing information between domain spaces
-This is an important point and real buildings are actually doing this, sharing information from one domain to another domain. And it's always made using some kind of **controller**. An HVAC system that can use the light occupancy sensor to adjust the temperature setpoint for example. **This is not done at the device layer.** It is the result of an algorithm, a function block and in the context of s223, this abstraction is well served by the use of a `System`.
+This is an important point and real buildings are actually doing this, sharing information from one domain to another domain. And it's always made using some kind of **controller**. An HVAC system that can use the light occupancy sensor to adjust the temperature setpoint for example. **This is not done at the Equipment layer.** It is the result of an algorithm, a function block and in the context of s223, this abstraction is well served by the use of a `System`.
 
 In a domain-centric approach, sharing information across domains requires the abstraction provided by Systems.
 
 > `s223:System`
 >
-> By definition, devices can belongs to multiple systems at the same time. Systems are very flexible and can overlap other systems. This is a very powerful feature.
+> By definition, Equipments can belongs to multiple systems at the same time. Systems are very flexible and can overlap other systems. This is a very powerful feature.
 
 ## If everything was in the physical space ?
 In the cross-domain approach, entities inside rooms are connected to the physical space. But putting everything in the same jar isn't sufficient to demonstrate the interactions between entities. At some point, systems and function blocks will be required. Relationships will be required and this will not be easier to find them inside the physical space as you will have to make different queries to find information which are not in physical spaces.
 
-Connecting entities to a physical spaces using cross-domain approach is the equivalent of treating the room as a device. It is not a way to learn more things about the relationship of connections. It doens't make requests easier. It is not a replacement for systems and or function blocks.
+Connecting entities to a physical spaces using cross-domain approach is the equivalent of treating the room as a Equipment. It is not a way to learn more things about the relationship of connections. It doens't make requests easier. It is not a replacement for systems and or function blocks.
 
 # Sharing information with other data-driven services
 BIM, maintenance softwares, haystack, brick, they will all work in a domain-centric way. By keeping our side organized with strong boundaries between domain spaces, it will be easier to build gateways between s223 world an others.

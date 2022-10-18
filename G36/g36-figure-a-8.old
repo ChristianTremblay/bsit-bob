@@ -16,7 +16,7 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.core import Device, System, bind_model_namespace, dump
+from bob.core import Equipment, System, bind_model_namespace, dump
 from bob.properties import Flow
 from bob.properties.ratio import PercentCommand
 
@@ -26,17 +26,17 @@ _namespace = bind_model_namespace(
 )
 
 
-class AirFlowStation(Device):
+class AirFlowStation(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flow = Flow
 
 
-class DamperPositioner(Device):
+class DamperPositioner(Equipment):
     position = PercentCommand
 
 
-class Damper(Device):
+class Damper(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     position: PercentCommand

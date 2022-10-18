@@ -3,8 +3,8 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import bind_model_namespace, dump, QUANTITYKIND, UNIT
-from bob.devices.hvac.gas import GasMonitor
+from bob.core import QUANTITYKIND, UNIT, bind_model_namespace, dump
+from bob.equipments.hvac.gas import GasMonitor
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.gas import CO2Sensor, COSensor, NO2Sensor
 from bob.sensor.temperature import AirTemperatureSensor
@@ -52,7 +52,7 @@ def test_create_gas_monitor(bob_fixture):
                     unit=UNIT.DEG_C,
                     label="Temperature_sensor.MaxRange",
                 ),
-                "comment": "Internal temperature sensor of device",
+                "comment": "Internal temperature sensor of Equipment",
             },
         },
         "properties": {},
@@ -63,7 +63,7 @@ def test_create_gas_monitor(bob_fixture):
     _dual_no2_co = {
         "params": {
             "label": "GM-1",
-            "comment": "Dual Gas Monitoring Device that measure NO2 and CO. Usually used in underground parking lot",
+            "comment": "Dual Gas Monitoring Equipment that measure NO2 and CO. Usually used in underground parking lot",
         },
         "sensors": {
             ("CO_sensor", COSensor): {

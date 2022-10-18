@@ -46,13 +46,13 @@ The model is built by executing the code on the file named `sample_pritoni_model
 # sample Pritoni
     - __init__.py
     - bacnet_reference.py
-    - electrical_devices.py
+    - electrical_Equipments.py
     - electricity.poy
     - header.py
-    - hvac_devices.py
+    - hvac_Equipments.py
     - hvac_spaces.py
     - hvac.py
-    - lighting_devices.py
+    - lighting_Equipments.py
     - lighting_spaces.py
     - lighting.py
     - occupancy.py
@@ -72,7 +72,7 @@ But the rdflib library allows for other type of export but this will not be cove
 The goal here is not to cover s223 but only how Bob will deal with it. So let's proceed...
 
 ### Bob classes
-Before starting to talk about devices and sensors, let's talk about class definitions in Bob.
+Before starting to talk about Equipments and sensors, let's talk about class definitions in Bob.
 
 Bob makes usage of type annotation to create classes. This way, it is possible to define all the properties 
 with the right type.
@@ -86,7 +86,7 @@ class NewClass(ExistingClass):
     airOutlet: AirOutletConnectionPoint
 ```
 
-Here we define a new class that will inherit from the `ExistingClass` class. This means that this new device will get all the properties and method of a `ExistingClass`. It will also being created with an identifier `s223:NewClass` given by `node_type` property. 
+Here we define a new class that will inherit from the `ExistingClass` class. This means that this new Equipment will get all the properties and method of a `ExistingClass`. It will also being created with an identifier `s223:NewClass` given by `node_type` property. 
 
 > node type
 > 
@@ -138,16 +138,16 @@ a_new_class = NewClass(label='NewClass_120V', comment='Super nice shiny new clas
 > 
 > Labels are mandatory when creating classes in Bob. Comments are not, but it is a good thing to provide one.
 
-### Device
+### Equipment
 ```
-A Device is the modeling construct used to represent  a physical entity or piece of mechanical equipment that one might buy from a vendor - a tangible object designed to accomplish a specific task. Examples of possible devices include a pump, fan, heat exchanger, luminaire, temperature sensor, or flow meter.
+A Equipment is the modeling construct used to represent  a physical entity or piece of mechanical equipment that one might buy from a vendor - a tangible object designed to accomplish a specific task. Examples of possible Equipments include a pump, fan, heat exchanger, luminaire, temperature sensor, or flow meter.
 ```
 
-In Bob, you can build a device by subclassing `bob.core.Device`
+In Bob, you can build a Equipment by subclassing `bob.core.Equipment`
 
-#### Pre-made devices
-To facilitate the work of building models, Bob propose already made devices. These will evolve with time. They are stored in the module
-`bob.device` and are organized by `domains`
+#### Pre-made Equipments
+To facilitate the work of building models, Bob propose already made Equipments. These will evolve with time. They are stored in the module
+`bob.Equipment` and are organized by `domains`
 
 - hvac
 - electricity
@@ -155,7 +155,7 @@ To facilitate the work of building models, Bob propose already made devices. The
 - etc (more to come)
 
 ### Connections, Connection points and Mediums
-As you probably know, devices are connected together. Those "links" are made of a connection point, a connection, then another connection point. 
+As you probably know, Equipments are connected together. Those "links" are made of a connection point, a connection, then another connection point. 
 
 > Again, Joel will sparkle RDF details here.
 

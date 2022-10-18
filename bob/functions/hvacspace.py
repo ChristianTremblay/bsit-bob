@@ -1,4 +1,4 @@
-from ..core import PropertyReference, BOB, P223, S223
+from ..core import BOB, P223, S223, PropertyReference
 from ..functions import FunctionBlock
 from ..properties import OccupancyStatus, PercentCommand, Schedule, Temperature
 

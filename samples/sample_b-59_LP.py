@@ -11,6 +11,9 @@ from rdflib import RDF, RDFS, XSD, BNode, Literal, Namespace, URIRef
 from bob.connections.air import *
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import (
+    QUANTITYKIND,
+    S223,
+    UNIT,
     Junction,
     Node,
     Segment,
@@ -21,18 +24,15 @@ from bob.core import (
     dump,
     enum,
     get_datagraph,
-    QUANTITYKIND,
-    S223,
-    UNIT,
 )
-from bob.devices.hvac.coil import ChilledWaterCoil
-from bob.devices.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.devices.hvac.fan import Fan
 from bob.enum import Exhaust, Supply
+from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipments.hvac.coil import ChilledWaterCoil
+from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipments.hvac.fan import Fan
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
-from bob.systems.hvac.airhandlingunit import AirHandlingUnit
 
 # from header import g36_header
 
@@ -61,7 +61,7 @@ config = {
             "unit": UNIT.DEG_C,
         },
     },
-    "devices": {
+    "equipments": {
         ("SF-1", Fan): {
             "comment": "Supply Fan",
             "electricalInlet": ElectricalInletConnectionPoint,
@@ -87,7 +87,7 @@ mixedAir = AirConnection(
     label="MIXED-AIR", comment="Where return air and outside air mix"
 )
 
-# Relationships between devices
+# Relationships between Equipments
 rtu["OAD-1"] >> mixedAir
 rtu["RF-1"] >> mixedAir
 mixedAir >> rtu["SF-1"].airInlet

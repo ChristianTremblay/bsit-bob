@@ -6,8 +6,8 @@ from pathlib import Path
 
 from header import sample_header
 
-from bob.core import bind_model_namespace, dump, EX, Property
-from bob.functions import FunctionBlock, Constant
+from bob.core import EX, Property, bind_model_namespace, dump
+from bob.functions import Constant, FunctionBlock
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

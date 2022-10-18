@@ -3,7 +3,7 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob.core import (
-    Device,
+    Equipment,
     InletConnectionPoint,
     Junction,
     Segment,
@@ -16,7 +16,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_segment(bob_fixture):
-    d1 = Device(label="d1")
+    d1 = Equipment(label="d1")
     cp1 = InletConnectionPoint(d1)
 
     j1 = Junction()

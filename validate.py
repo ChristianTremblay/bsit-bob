@@ -1,13 +1,13 @@
 """
 Performs validation of the model/schema and data files in the 223P repository
 """
-import sys
-import logging
-import pyshacl
-import ontoenv
 import argparse
+import logging
+import sys
 
-from rdflib import Graph, Namespace, SH
+import ontoenv
+import pyshacl
+from rdflib import SH, Graph, Namespace
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.ERROR)

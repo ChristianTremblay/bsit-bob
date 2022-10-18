@@ -1,6 +1,6 @@
 from rdflib import URIRef
 
-from ..core import Medium, BOB, P223, QUANTITYKIND, UNIT
+from ..core import BOB, P223, QUANTITYKIND, UNIT, Medium
 from ..property import QuantifiableObservableProperty
 
 _namespace = BOB

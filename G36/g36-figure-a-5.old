@@ -22,8 +22,8 @@ from bob.connections.water import (
     HotWaterOutletConnectionPoint,
     HotWaterOutletSystemConnectionPoint,
 )
-from bob.core import Device, Junction, System, bind_model_namespace, dump
-from bob.devices.hvac.fan import Fan
+from bob.core import Equipment, Junction, System, bind_model_namespace, dump
+from bob.equipments.hvac.fan import Fan
 from bob.properties import Flow
 from bob.properties.ratio import PercentCommand
 
@@ -33,17 +33,17 @@ _namespace = bind_model_namespace(
 )
 
 
-class AirFlowStation(Device):
+class AirFlowStation(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flow = Flow
 
 
-class DamperPositioner(Device):
+class DamperPositioner(Equipment):
     position = PercentCommand
 
 
-class Damper(Device):
+class Damper(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     position: PercentCommand
@@ -61,15 +61,15 @@ class Damper(Device):
         self.position = self.damper_positioner.position
 
 
-class ValvePositioner(Device):
+class ValvePositioner(Equipment):
     position = PercentCommand
 
 
-class HotWaterValve(Device):
+class HotWaterValve(Equipment):
     pass
 
 
-class HotWaterCoil(Device):
+class HotWaterCoil(Equipment):
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     hwInlet: HotWaterInletConnectionPoint

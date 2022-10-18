@@ -3,7 +3,7 @@
 #### 2022-03-12
 
 Over the last weeks, Strike Team Bravo has been trying to get to a consensus on
-modeling the relationships between devices that provide domain specific services
+modeling the relationships between Equipments that provide domain specific services
 to the topological model of the rooms in a facility called a **connection**.
 
 One of the starting point for the modeling effort when it first changed from
@@ -24,17 +24,17 @@ High Performance Sequence of Operations, and with it the schematic view of
 BAS components like dampers, coils, fans, and the topological organization of
 those components.
 
-These two starting points were merged together, renaming "system" to "device"
+These two starting points were merged together, renaming "system" to "Equipment"
 to make it more easily understood by the BAS audience.  This is similar to the
 "equipment" view from Brick and Haystack.  At some point this text was
 introduced into the model in the Container clause:
 
 > This clause is the top level of the hierarchical structure of the portion of
 > the model that represents the concept of a physical connection between
-> devices. Examples of physical things that are represented by a connection are
+> Equipments. Examples of physical things that are represented by a connection are
 > ducts, pipes, and wires.
 
-At this point "device" stopped being an abstract concept to a physical thing
+At this point "Equipment" stopped being an abstract concept to a physical thing
 and "potential interactions" was changed to physical things but it remained
 being a relationship with a conceptual thing "space".
 
@@ -42,7 +42,7 @@ The next change was to make a distinction between a room and a portion of a
 room specific to a particular service, so earlier concepts of "enclosure" and
 "space" were renamed to **physical space** and **domain space**.
 
-Now the debate is to (1) maintain the connection between the devices providing
+Now the debate is to (1) maintain the connection between the Equipments providing
 a service and the domain space receiving the service, or (2) tighten the
 restriction a connection to being between physical things and introduce a new
 relationship for referring to a domain space.
@@ -103,9 +103,9 @@ To keep track of the domain in which the entities are, the additional
 This approach creates a change of layer for any entity related to a room by
 mixing multiple domain connection points on the same entity.
 
-Physical Spaces in this approach are very similar to devices. In fact, an
+Physical Spaces in this approach are very similar to Equipments. In fact, an
 entity, connectable, with connection points in different domains it is in s223
-everywhere else known as a device.
+everywhere else known as a Equipment.
 
 ## What are the downsides of everything connected to the physical space?
 
@@ -165,7 +165,7 @@ maintenance team eventually) to use the `hasPhysicalLocation` to relate things
 to the physical space and answer the questions like:
 _"Where is the discharge air temperature sensor located ?"_.
 
-The domain-centric approach allows to locate devices and sensors easily using
+The domain-centric approach allows to locate Equipments and sensors easily using
 this predicate when this information is available. 
 
 It's also important to note that this information (`hasPhysicalLocation`) will
@@ -257,7 +257,7 @@ larger than the smallest physical space that encloses it.
 
 ## Finding entities
 
-`hasPhysicalLocation` is a perfect fit for any devices, sensors, system, when
+`hasPhysicalLocation` is a perfect fit for any Equipments, sensors, system, when
 required, to be able to specify the location inside a building for those
 entities. When provided, it provides a direct relationshiip to query to find
 the location of something in a building.
@@ -275,7 +275,7 @@ the location of something in a building.
 
 ## Sensors
 
-Sensors are subclasses of devices but are special in the way that the medium
+Sensors are subclasses of Equipments but are special in the way that the medium
 will not typically pass through them. They are used to make a measurement at a
 certain point in the flow of the medium.
 
@@ -343,7 +343,7 @@ Before answering the question on physical spaces medium, I think we could start
 by modeling a door. We can imagine a door in the physical space as an important
 part of relationships between physical spaces.
 
-Consider a door modeled as a physical device, very similar to damper. The door
+Consider a door modeled as a physical Equipment, very similar to damper. The door
 can be controlled, open or close automatically or manually, monitored and can
 affect its environment.
 
@@ -361,7 +361,7 @@ door.
 ### Access control and security
 
 If the door is "smart" and provides access control and communications, we can
-monitor this door by adding an `intrusionDetected` property to the device, in
+monitor this door by adding an `intrusionDetected` property to the Equipment, in
 addition to other observable properties the door might have such as being open
 or closed.
 
@@ -394,7 +394,7 @@ This is an important point and real buildings are actually doing this, sharing
 information from one domain to another domain. And it's always made using some
 kind of **controller**. An HVAC system that can use the light occupancy sensor
 to adjust the temperature setpoint for example.
-**This is not done at the "application" layer, not at the device layer.**
+**This is not done at the "application" layer, not at the Equipment layer.**
 It is the result of an algorithm, a function block and in the context of s223.
 
 In both a domain-centric and cross-domain approaches, sharing information
@@ -410,7 +410,7 @@ not be easier to find them inside the physical space as you will have to make
 different queries to find information which are not in physical spaces.
 
 Connecting entities to a physical spaces using cross-domain approach is the
-equivalent of treating the room as a device. It is not a way to learn more
+equivalent of treating the room as a Equipment. It is not a way to learn more
 things about the relationship of connections. It doens't make requests easier.
 It is not a replacement for systems and or function blocks.
 

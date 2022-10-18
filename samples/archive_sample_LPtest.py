@@ -14,9 +14,11 @@ from bob.connections.air import (
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import (
+    S223,
+    UNIT,
     Connection,
     ConnectionPoint,
-    Device,
+    Equipment,
     DomainSpace,
     Junction,
     Node,
@@ -26,15 +28,13 @@ from bob.core import (
     Zone,
     bind_model_namespace,
     dump,
-    S223,
-    UNIT,
 )
-from bob.devices.hvac import Fan
-from bob.devices.hvac.airflowstation import AirFlowMonitor
-from bob.devices.hvac.coil import ChilledWaterCoil
-from bob.devices.hvac.damper import Damper
-from bob.devices.hvac.filter import Filter
 from bob.enum import Exhaust, Supply
+from bob.equipments.hvac import Fan
+from bob.equipments.hvac.airflowstation import AirFlowMonitor
+from bob.equipments.hvac.coil import ChilledWaterCoil
+from bob.equipments.hvac.damper import Damper
+from bob.equipments.hvac.filter import Filter
 from bob.properties.temperature import Temperature
 from bob.space.hvac import HVACZone
 
@@ -45,7 +45,7 @@ model_name = Path(__file__).stem
 _namespace = ex = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-class TemperatureSensor(Device):
+class TemperatureSensor(Equipment):
     connection: AirInletConnectionPoint
     temperature = Temperature
 

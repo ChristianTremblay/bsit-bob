@@ -3,7 +3,7 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob.core import bind_model_namespace, dump
-from bob.devices.hvac.particlecounter import ParticleCounter
+from bob.equipments.hvac.particlecounter import ParticleCounter
 from bob.sensor.particle import (
     CoarseParticulateSensor,
     FineParticulateSensor,

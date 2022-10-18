@@ -120,7 +120,7 @@ class SchemaGraph(Graph):
     def add(self, triple: Tuple[Any, Any, Any]) -> None:
         """
         Add a triple to the schema graph for statements about things in the
-        model being build (like subtypes of a Device) but not about things
+        model being build (like subtypes of an equipment) but not about things
         in the S223 namespace.
         """
         # logging.debug(f"SchemaGraph.add {triple}")
@@ -185,6 +185,8 @@ UNIT = bind_namespace("unit", "http://qudt.org/vocab/unit/")
 enum = bind_namespace(
     "enum", "http://data.ashrae.org/standard223/1.0/vocab/enumeration#"
 )
+BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")
+
 REF = bind_namespace("ref", "https://brickschema.org/schema/Brick/ref#")
 
 # the model_namespace is used to create "blank" node identifiers, a serial
@@ -1192,16 +1194,35 @@ class Segment(Node):
         )
 
 
-class System(Container, Node):
+class S223System(Container):
+    _class_iri: URIRef = S223.System
+    hasPhysicalLocation: PhysicalSpace
+    hasDomain: Domain
+
+    _serves_zones: Dict[str, Zone]
+
+    def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
+        logging.debug(f"System.__init__ {config} {args} {kwargs}")
+
+        # if there are "params" in the configuation, use those as defaults for
+        # kwargs and allow them to be overriden be additional kwargs
+        # if config and "params" in config:
+        #     kwargs = {**config["params"], **kwargs}
+
+        super().__init__(*args, **kwargs)
+        # zone references
+        self._serves_zones = {}
+
+    def serves_zone(self, other: Zone) -> None:
+        connect_mm(self, other)
+
+
+class System(S223System, Node):
     """
     System
     """
 
-    _class_iri: URIRef = S223.System
-    hasPhysicalLocation: PhysicalSpace
-    hasDomain: Domain
-    
-    _serves_zones: Dict[str, Zone]
+    _class_iri: URIRef = BOB.System
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
 
@@ -1228,7 +1249,7 @@ class System(Container, Node):
                         raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
-                    if isinstance(thing, (Device, System)):
+                    if isinstance(thing, (Equipment, System)):
                         self > thing
                     if isinstance(thing, Property):
                         thing @ self
@@ -1260,45 +1281,37 @@ class System(Container, Node):
 
                 setattr(self, attr_name, attr_element)
 
-        # zone references
-        self._serves_zones = {}
-
-    def serves_zone(self, other: Zone) -> None:
-        connect_mm(self, other)
-
 
 @multimethod
-def contains_mm(system: System, device: Device) -> None:
-    """System > Device"""
-    logging.info(f"system {system} contains device {device}")
+def contains_mm(system: System, equipment: Equipment) -> None:
+    """System > Equipment"""
+    logging.info(f"system {system} hasMember Equipment {equipment}")
 
-    system._data_graph.add((system._node_iri, S223.contains, device._node_iri))
+    system._data_graph.add((system._node_iri, S223.hasMember, equipment._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add((device._node_iri, S223.isContainedIn, system._node_iri))
+        system._data_graph.add((equipment._node_iri, S223.isMemberOf, system._node_iri))
 
 
 @multimethod
 def contains_mm(system: System, subsystem: System) -> None:
     """System > System"""
-    logging.info(f"system {system} contains subsystem {subsystem}")
+    logging.info(f"system {system} hasMember subsystem {subsystem}")
 
-    system._data_graph.add((system._node_iri, S223.contains, subsystem._node_iri))
+    system._data_graph.add((system._node_iri, S223.hasMember, subsystem._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add(
-            (subsystem._node_iri, S223.isContainedIn, system._node_iri)
-        )
+        system._data_graph.add((subsystem._node_iri, S223.isMemberOf, system._node_iri))
 
 
 @multimethod
 def contains_mm(system: System, thing_list: List[Node]) -> None:
-    """System > List[Union[Device,System]]"""
-    logging.info(f"system {system} contains list of things {thing_list}")
+    """System > List[Union[equipment,System]]"""
+    logging.info(f"system {system} hasMember list of things {thing_list}")
 
-    ###TODO: the signature should be thing_list: List[Union[Device,System]]
+    ###TODO: the signature should be thing_list: List[Union[equipment,System]]
 
     for thing in thing_list:
-        if not isinstance(thing, (Device, System)):
-            raise TypeError(f"device or system expected: {thing}")
+        if not isinstance(thing, (Equipment, System)):
+            raise TypeError(f"Equipment or system expected: {thing}")
         contains_mm(system, thing)
 
 
@@ -1513,7 +1526,6 @@ class ConnectionPoint(Node):
 
     _class_iri: URIRef = None
     hasMedium: Medium
-    hasDirection: Direction
 
     lnx: Segment
     connectsThrough: Connection
@@ -1529,7 +1541,7 @@ class ConnectionPoint(Node):
         self._data_graph.add((thing._node_iri, S223.hasConnectionPoint, self._node_iri))
         self.isConnectionPointOf = thing
 
-        # this is one of the connection points of the device
+        # this is one of the connection points of the Equipment
         thing._connection_points[str(self._node_iri)] = self
 
     def link_to(self, other: Union[Junction, Segment]) -> None:
@@ -1641,7 +1653,7 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
     # property based link
     connection_point.connectsThrough = connection
 
-    # link connection to the connection point and its device
+    # link connection to the connection point and its Equipment
     connection_point._data_graph.add(
         (connection._node_iri, S223.connectsAt, connection_point._node_iri)
     )
@@ -1691,7 +1703,7 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
     # property based link
     connection_point.connectsThrough = connection
 
-    # link connection to the connection point and its device
+    # link connection to the connection point and its Equipment
     connection_point._data_graph.add(
         (
             connection_point.isConnectionPointOf._node_iri,
@@ -1712,9 +1724,11 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
 
 
 @multimethod
-def connect_mm(device: Device, system_connection_point: SystemConnectionPoint) -> None:
-    """Device >> SystemConnectionPoint"""
-    logging.debug(f"connect from {device} to {system_connection_point}")
+def connect_mm(
+    equipment: Equipment, system_connection_point: SystemConnectionPoint
+) -> None:
+    """Equipment >> SystemConnectionPoint"""
+    logging.debug(f"connect from {equipment} to {system_connection_point}")
 
     to_connection_point = system_connection_point.mapsTo
     if not to_connection_point:
@@ -1722,13 +1736,13 @@ def connect_mm(device: Device, system_connection_point: SystemConnectionPoint) -
             f"unmapped system connection point {system_connection_point}"
         )
 
-    connect_mm(device, to_connection_point)
+    connect_mm(equipment, to_connection_point)
 
 
 @multimethod
-def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
-    """Device >> ConnectionPoint"""
-    logging.info(f"connect from {device} to {connection_point}")
+def connect_mm(equipment: Equipment, connection_point: ConnectionPoint) -> None:
+    """Equipment >> ConnectionPoint"""
+    logging.info(f"connect from {equipment} to {connection_point}")
 
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
@@ -1736,10 +1750,10 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
         raise AttributeError(f"{connection_point} hasMedium")
     logging.debug(f"    - to_medium: {to_medium}")
 
-    # build a dict of outlet connection points of the device that are not
+    # build a dict of outlet connection points of the Equipment that are not
     # already connected that have a compatiable medium
     from_out = set()
-    for attr, cp in device._connection_points.items():
+    for attr, cp in equipment._connection_points.items():
         if connection_point.connectsThrough:
             continue
         if not isinstance(cp, OutletConnectionPoint):
@@ -1752,7 +1766,9 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
     logging.debug(f"    - from_out: {from_out}")
 
     if not from_out:
-        raise RuntimeError(f"no candidate sources from {device} to {connection_point}")
+        raise RuntimeError(
+            f"no candidate sources from {equipment} to {connection_point}"
+        )
     if len(from_out) > 1:
         raise RuntimeError("too many candidate connection points")
     from_thing = from_out.pop()
@@ -1779,19 +1795,19 @@ def connect_mm(device: Device, connection_point: ConnectionPoint) -> None:
 
 
 @multimethod
-def connect_mm(device: Device, connection: Connection) -> None:
-    """Device >> Connection"""
-    logging.info(f"connect from {device} to {connection}")
+def connect_mm(equipment: Equipment, connection: Connection) -> None:
+    """Equipment >> Connection"""
+    logging.info(f"connect from {equipment} to {connection}")
 
     if CONNECTION_HAS_MEDIUM:
         if not (connection_medium := getattr(connection, "hasMedium", None)):
             raise AttributeError(f"{connection} hasMedium")
         logging.debug(f"    - connection_medium: {connection_medium}")
 
-    # build a dict of outlet connection points of the device that are not
+    # build a dict of outlet connection points of the Equipment that are not
     # already connected that have a compatable medium
     from_out = set()
-    for attr, connection_point in device._connection_points.items():
+    for attr, connection_point in equipment._connection_points.items():
         if connection_point.connectsThrough:
             continue
         if not isinstance(connection_point, OutletConnectionPoint):
@@ -1809,7 +1825,7 @@ def connect_mm(device: Device, connection: Connection) -> None:
     logging.debug(f"    - from_out: {from_out}")
 
     if not from_out:
-        raise RuntimeError(f"no candidate sources from {device} to {connection}")
+        raise RuntimeError(f"no candidate sources from {equipment} to {connection}")
     if len(from_out) > 1:
         raise RuntimeError("too many connection points")
     from_thing = from_out.pop()
@@ -1819,9 +1835,9 @@ def connect_mm(device: Device, connection: Connection) -> None:
 
 
 @multimethod
-def connect_mm(connection: Connection, device: Device) -> None:
-    """Connection >> Device"""
-    logging.info(f"connect from {connection} to {device}")
+def connect_mm(connection: Connection, equipment: Equipment) -> None:
+    """Connection >> Equipment"""
+    logging.info(f"connect from {connection} to {equipment}")
 
     if CONNECTION_HAS_MEDIUM:
         if not (connection_medium := getattr(connection, "hasMedium", None)):
@@ -1831,7 +1847,7 @@ def connect_mm(connection: Connection, device: Device) -> None:
     # build a dict of inlet connection points that are not already connected
     # that have a compatable medium
     to_in = set()
-    for attr, connection_point in device._connection_points.items():
+    for attr, connection_point in equipment._connection_points.items():
         if connection_point.connectsThrough:
             continue
         if isinstance(connection_point, OutletConnectionPoint):
@@ -1850,7 +1866,9 @@ def connect_mm(connection: Connection, device: Device) -> None:
     logging.debug("    - to_in: %r", to_in)
 
     if not to_in:
-        raise RuntimeError(f"no candidate destinations from {connection} to {device}")
+        raise RuntimeError(
+            f"no candidate destinations from {connection} to {equipment}"
+        )
     if len(to_in) > 1:
         raise RuntimeError("too many connection points")
     to_thing = to_in.pop()
@@ -1861,20 +1879,20 @@ def connect_mm(connection: Connection, device: Device) -> None:
 
 
 @multimethod
-def connect_mm(connection: Connection, devices: List[Device]) -> None:
-    """Connection >> [Device]"""
-    logging.info(f"connect from {connection} to {devices}")
+def connect_mm(connection: Connection, equipments: List[Equipment]) -> None:
+    """Connection >> [Equipment]"""
+    logging.info(f"connect from {connection} to {equipments}")
 
     if CONNECTION_HAS_MEDIUM:
         if not (connection_medium := getattr(connection, "hasMedium", None)):
             raise AttributeError(f"{connection} hasMedium")
         logging.debug(f"    - connection_medium: {connection_medium}")
 
-    for device in devices:
+    for equipment in equipments:
         # build a dict of inlet connection points that are not already connected
         # that have a compatible medium
         to_in = set()
-        for attr, connection_point in device._connection_points.items():
+        for attr, connection_point in equipment._connection_points.items():
             if connection_point.connectsThrough:
                 continue
             if isinstance(connection_point, OutletConnectionPoint):
@@ -1894,10 +1912,10 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
 
         if not to_in:
             raise RuntimeError(
-                f"no candidate destinations from {connection} to {device}"
+                f"no candidate destinations from {connection} to {equipment}"
             )
         if len(to_in) > 1:
-            raise RuntimeError("too many destinations from {connection} to {device}")
+            raise RuntimeError("too many destinations from {connection} to {equipment}")
         to_thing = to_in.pop()
         logging.debug("    - to_thing: %r", to_thing)
 
@@ -1906,9 +1924,9 @@ def connect_mm(connection: Connection, devices: List[Device]) -> None:
 
 
 @multimethod
-def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
-    """ConnectionPoint >> Device"""
-    logging.info(f"connect from {connection_point} to {device}")
+def connect_mm(connection_point: ConnectionPoint, equipment: Equipment) -> None:
+    """ConnectionPoint >> Equipment"""
+    logging.info(f"connect from {connection_point} to {equipment}")
     if not (connection_point_medium := getattr(connection_point, "hasMedium", None)):
         raise AttributeError(f"{connection_point} hasMedium")
     logging.debug("    - connection_point_medium: %r", connection_point_medium)
@@ -1916,7 +1934,7 @@ def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
     # build a dict of inlet connection points that are not already connected
     # that have a compatable medium
     to_in = set()
-    for attr, connection_point in device._connection_points.items():
+    for attr, connection_point in equipment._connection_points.items():
         if connection_point.connectsThrough:
             continue
         if isinstance(connection_point, OutletConnectionPoint):
@@ -1932,7 +1950,7 @@ def connect_mm(connection_point: ConnectionPoint, device: Device) -> None:
 
     if not to_in:
         raise RuntimeError(
-            f"no candidate destinations from {connection_point} to {device}"
+            f"no candidate destinations from {connection_point} to {equipment}"
         )
     if len(to_in) > 1:
         raise RuntimeError("too many connection points")
@@ -2058,14 +2076,14 @@ def connect_mm(
 
 
 @multimethod
-def connect_mm(device: Device, system: System) -> None:
-    """Device >> System"""
-    logging.info(f"connect from {device} to {system}")
+def connect_mm(equipment: Equipment, system: System) -> None:
+    """Equipment >> System"""
+    logging.info(f"connect from {equipment} to {system}")
 
     # build a dict of outlet connection points that are not already connected
     # that have the same medium
     from_out = defaultdict(set)
-    for attr, connection_point in device._connection_points.items():
+    for attr, connection_point in equipment._connection_points.items():
         if connection_point.connectsThrough:
             continue
         if not isinstance(connection_point, OutletConnectionPoint):
@@ -2080,7 +2098,7 @@ def connect_mm(device: Device, system: System) -> None:
     from_types: Set[Medium]
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
-        raise RuntimeError(f"no candidate sources from {device} to {system}")
+        raise RuntimeError(f"no candidate sources from {equipment} to {system}")
     logging.debug(f"    - from_types: {from_types}")
 
     # build a dict of mapped inlet connection points that are not
@@ -2106,7 +2124,7 @@ def connect_mm(device: Device, system: System) -> None:
     to_types: Set[Medium]
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
-        raise RuntimeError(f"no candidate destinations from {device} to {system}")
+        raise RuntimeError(f"no candidate destinations from {equipment} to {system}")
     logging.debug(f"    - to_types: {to_types}")
 
     # find compatible pairs
@@ -2130,9 +2148,9 @@ def connect_mm(device: Device, system: System) -> None:
 
 
 @multimethod
-def connect_mm(system: System, device: Device) -> None:
-    """System >> Device"""
-    logging.info(f"connect from {system} to {device}")
+def connect_mm(system: System, equipment: Equipment) -> None:
+    """System >> Equipment"""
+    logging.info(f"connect from {system} to {equipment}")
 
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
@@ -2165,13 +2183,13 @@ def connect_mm(system: System, device: Device) -> None:
     from_types: Set[Medium]
     from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
     if not from_types:
-        raise RuntimeError(f"no candidate sources from {system} to {device}")
+        raise RuntimeError(f"no candidate sources from {system} to {equipment}")
     logging.debug("    - from_types: %r", from_types)
 
     # build a dict of outlet connection points that are not already connected
     # that have the same medium
     to_in = defaultdict(set)
-    for attr, connection_point in device._connection_points.items():
+    for attr, connection_point in equipment._connection_points.items():
         if connection_point.connectsThrough:
             continue
         if not isinstance(connection_point, InletConnectionPoint):
@@ -2186,7 +2204,7 @@ def connect_mm(system: System, device: Device) -> None:
     to_types: Set[Medium]
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
-        raise RuntimeError(f"no candidate destinations from {system} to {device}")
+        raise RuntimeError(f"no candidate destinations from {system} to {equipment}")
     logging.debug(f"    - from_types: {from_types}")
 
     # find compatible pairs
@@ -2217,7 +2235,6 @@ class SystemConnectionPoint(Node):
 
     _class_iri: URIRef = None
     hasMedium: Medium
-    hasDirection: Direction
 
     connectsThrough: Connection
     isSystemConnectionPointOf: System
@@ -2232,7 +2249,7 @@ class SystemConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add(
-            (system._node_iri, S223.hasSystemConnectionPoint, self._node_iri)
+            (system._node_iri, BOB.hasSystemConnectionPoint, self._node_iri)
         )
         if INCLUDE_INVERSE:
             self.isSystemConnectionPointOf = system
@@ -2452,12 +2469,10 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # stash this in the system
     from_system._serves_zones[to_zone.label] = to_zone
 
-    from_system._data_graph.add(
-        (from_system._node_iri, S223.servesZone, to_zone._node_iri)
-    )
+    from_system._data_graph.add((from_system._node_iri, BRICK.feeds, to_zone._node_iri))
     if INCLUDE_INVERSE:
         from_system._data_graph.add(
-            (to_zone._node_iri, S223.isServedBy, from_system._node_iri)
+            (to_zone._node_iri, BRICK.isFedBy, from_system._node_iri)
         )
 
     return
@@ -2605,9 +2620,8 @@ class ZoneConnectionPoint(Node):
     Zone Connection Point
     """
 
-    _class_iri: URIRef = S223.ZoneConnectionPoint
+    _class_iri: URIRef = BOB.ZoneConnectionPoint
     hasMedium: Medium
-    hasDirection: Direction
 
     isZoneConnectionPointOf: Zone
     mapsTo: Node
@@ -2621,7 +2635,7 @@ class ZoneConnectionPoint(Node):
         super().__init__(**kwargs)
 
         self._data_graph.add(
-            (zone._node_iri, S223.hasZoneConnectionPoint, self._node_iri)
+            (zone._node_iri, BOB.hasZoneConnectionPoint, self._node_iri)
         )
         if INCLUDE_INVERSE:
             self.isZoneConnectionPointOf = zone
@@ -2771,7 +2785,7 @@ def contains_mm(physical_space: PhysicalSpace, thing_list: List[Node]) -> None:
 
     for thing in thing_list:
         if not isinstance(thing, (PhysicalSpace, DomainSpace)):
-            raise TypeError(f"device or system expected: {thing}")
+            raise TypeError(f"Equipment or system expected: {thing}")
         contains_mm(physical_space, thing)
 
 
@@ -2812,7 +2826,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
                 raise RuntimeError(
                     f"connection point already connected: {connection_point}"
                 )
-            if getattr(connection_point, "hasDirection", None) == Inlet:
+            if isinstance(connection_point, InletConnectionPoint):
                 raise TypeError(f"connection point direction: {connection_point}")
         elif isinstance(connection_point, Junction):
             pass
@@ -2829,7 +2843,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
-                if getattr(connection_point, "hasDirection", None) == Inlet:
+                if isinstance(connection_point, InletConnectionPoint):
                     continue
             elif isinstance(connection_point, Junction):
                 pass
@@ -2846,7 +2860,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
-                if getattr(connection_point, "hasDirection", None) == Inlet:
+                if isinstance(connection_point, InletConnectionPoint):
                     continue
             elif isinstance(connection_point, Junction):
                 pass
@@ -2883,7 +2897,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
                 continue
 
             medium = getattr(connection_point, "hasMedium", None)
-            # Here when trying to connect a connectionpoint to a device
+            # Here when trying to connect a connectionpoint to a Equipment
             # medium turned to be
             # {'node': rdflib.term.URIRef('http://data.ashrae.org/standard223/1.0/vocab/enumeration#Water-ChilledWater'), 'label': '', 'comment': ''}
             # and the intersection fails to recognize the substance
@@ -2903,7 +2917,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
                 raise RuntimeError(
                     f"connection point already connected: {connection_point}"
                 )
-            if getattr(connection_point, "hasDirection", None) == Outlet:
+            if isinstance(connection_point, OutletConnectionPoint):
                 raise TypeError(f"connection point direction: {connection_point}")
         elif isinstance(connection_point, Junction):
             pass
@@ -2920,7 +2934,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
-                if getattr(connection_point, "hasDirection", None) == Outlet:
+                if isinstance(connection_point, OutletConnectionPoint):
                     continue
             elif isinstance(connection_point, Junction):
                 pass
@@ -2937,7 +2951,7 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             if isinstance(connection_point, ConnectionPoint):
                 if connection_point.connectsThrough:
                     continue
-                if getattr(connection_point, "hasDirection", None) == Outlet:
+                if isinstance(connection_point, OutletConnectionPoint):
                     continue
             elif isinstance(connection_point, Junction):
                 pass
@@ -3002,19 +3016,19 @@ def obsolete_connect(from_thing: Any, to_thing: Any, segmented: bool = False) ->
             connect_mm(from_connection_point, to_connection_point)
 
 
-class Device(Container, Connectable):
+class Equipment(Container, Connectable):
     """
-    A Device is normally a physical entity that one might buy from a vendor - a tangible object designed to accomplish a specific task.
+    A Equipment is normally a physical entity that one might buy from a vendor - a tangible object designed to accomplish a specific task.
     """
 
-    _class_iri: URIRef = S223.Device
+    _class_iri: URIRef = S223.Equipment
     # hasContextualRoleShape: Any
     # hasPropertyShape: Any
     hasRole: Role
     hasPhysicalLocation: PhysicalSpace
 
     def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
-        logging.debug(f"Device.__init__ {config} {args} {kwargs}")
+        logging.debug(f"Equipment.__init__ {config} {args} {kwargs}")
 
         # if there are "params" in the configuation, use those as defaults for
         # kwargs and allow them to be overriden be additional kwargs
@@ -3062,7 +3076,7 @@ class Device(Container, Connectable):
                         raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
-                    if isinstance(thing, (Device, System)):
+                    if isinstance(thing, (Equipment, System)):
                         self > thing
                     if isinstance(thing, Property):
                         self[thing_name] = thing
@@ -3074,26 +3088,28 @@ class Device(Container, Connectable):
 
 
 @multimethod
-def contains_mm(system: System, device: Device) -> None:
-    """System > Device"""
-    logging.info(f"system {system} contains device {device}")
+def contains_mm(system: System, equipment: Equipment) -> None:
+    """System > Equipment"""
+    logging.info(f"system {system} contains Equipment {equipment}")
 
-    system._data_graph.add((system._node_iri, S223.contains, device._node_iri))
+    system._data_graph.add((system._node_iri, S223.contains, equipment._node_iri))
     if INCLUDE_INVERSE:
-        system._data_graph.add((device._node_iri, S223.isContainedIn, system._node_iri))
+        system._data_graph.add(
+            (equipment._node_iri, S223.isContainedIn, system._node_iri)
+        )
 
 
 @multimethod
-def contains_mm(parent_device: Device, child_device: Device) -> None:
-    """Device > Device"""
-    logging.info(f"device {parent_device} contains device {child_device}")
+def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None:
+    """Equipment > Equipment"""
+    logging.info(f"Equipment {parent_equipment} contains Equipment {child_equipment}")
 
-    parent_device._data_graph.add(
-        (parent_device._node_iri, S223.contains, child_device._node_iri)
+    parent_equipment._data_graph.add(
+        (parent_equipment._node_iri, S223.contains, child_equipment._node_iri)
     )
     if INCLUDE_INVERSE:
-        parent_device._data_graph.add(
-            (child_device._node_iri, S223.isContainedIn, parent_device._node_iri)
+        parent_equipment._data_graph.add(
+            (child_equipment._node_iri, S223.isContainedIn, parent_equipment._node_iri)
         )
 
 
@@ -3170,7 +3186,7 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
 def template_update(base: Dict = {}, config: Dict = None, bases: List = None):
     """
     This utility allows to preserve module templates from
-    undesired modification during creation of devices.
+    undesired modification during creation of Equipments.
 
     Usage :
     _config = template_update(template, user_provided_config_dict)
@@ -3220,15 +3236,15 @@ Bidirectional = Direction("Bidirectional")
 
 
 class InletConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Inlet
+    _class_iri: URIRef = S223.InletConnectionPoint
 
 
 class OutletConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Outlet
+    _class_iri: URIRef = S223.OutletConnectionPoint
 
 
 class BidirectionalConnectionPoint(ConnectionPoint):
-    hasDirection: Direction = Bidirectional
+    _class_iri: URIRef = S223.BidirectionalConnectionPoint
 
 
 #
@@ -3237,15 +3253,15 @@ class BidirectionalConnectionPoint(ConnectionPoint):
 
 
 class InletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Inlet
+    _class_iri: URIRef = BOB.InletSystemConnectionPoint
 
 
 class OutletSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Outlet
+    _class_iri: URIRef = BOB.OutletSystemConnectionPoint
 
 
 class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
-    hasDirection: Direction = Bidirectional
+    _class_iri: URIRef = BOB.BidirectionalSystemConnectionPoint
 
 
 #
@@ -3254,15 +3270,15 @@ class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
 
 
 class InletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: Direction = Inlet
+    _class_iri: URIRef = BOB.InletZoneConnectionPoint
 
 
 class OutletZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: Direction = Outlet
+    _class_iri: URIRef = BOB.OutletZoneConnectionPoint
 
 
 class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
-    hasDirection: Direction = Bidirectional
+    _class_iri: URIRef = BOB.BidirectionalZoneConnectionPoint
 
 
 #
@@ -3283,3 +3299,4 @@ Electricity = Medium("Electricity")
 NaturalGas = Medium("NaturalGas")
 Glycol = Medium("Glycol")
 Occupant = Medium("Occupant")
+MechanicalCoupling = Medium("MechanicalCoupling", _alt_namespace=P223)

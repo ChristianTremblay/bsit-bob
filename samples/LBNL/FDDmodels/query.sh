@@ -1,4 +1,4 @@
-for f in device_props.py
+for f in Equipment_props.py
 do
     ttl=${f/[.]py/.ttl}
     exp_ttl=${f/[.]py/exp.ttl}

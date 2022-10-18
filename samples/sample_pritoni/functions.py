@@ -5,12 +5,8 @@ import hvac_spaces as hs
 import lighting_devices as ld
 import lighting_spaces as ls
 
-from bob.core import bind_model_namespace, UNIT, dump
-from bob.functions import (
-    FunctionBlock,
-    G36AnalogInput,
-    G36AnalogOutput,
-)
+from bob.core import UNIT, bind_model_namespace, dump
+from bob.functions import FunctionBlock, G36AnalogInput, G36AnalogOutput
 from bob.functions.occupancy import OccupancyFunction
 from bob.properties import Temperature
 from bob.properties.states import OccupancyStatus, Schedule

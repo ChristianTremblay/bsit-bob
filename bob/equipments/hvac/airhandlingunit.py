@@ -1,0 +1,48 @@
+import logging
+from typing import Any, Dict
+
+from attr import set_run_validators
+from rdflib import URIRef
+
+from ...connections.air import (
+    AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
+from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
+from ...core import BOB, P223, S223, Equipment, System, template_update
+
+_namespace = BOB
+
+ahu_template = {
+    "params": {},
+    "sensors": {},
+    "equipments": {},
+}
+
+
+class AirHandlingUnit(System):
+    _class_iri = P223.AirHandlingUnit
+    outsideAirInlet: AirInletSystemConnectionPoint
+    returnAirInlet: AirInletSystemConnectionPoint
+    supplyAirOutlet: AirOutletSystemConnectionPoint
+    exhaustAirOutlet: AirOutletSystemConnectionPoint
+    electricalInlet: Electricity_575V_60HzSystemInletConnectionPoint
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update(ahu_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        logging.debug(f"AirHandlingUnit.__init__ {_config} {kwargs}")
+        super().__init__(_config, **kwargs)
+
+
+class FanCoil(System):
+    _class_iri = P223.Fancoil
+    returnAirInlet: AirInletSystemConnectionPoint
+    supplyAirOutlet: AirOutletSystemConnectionPoint
+    exhaustAirOutlet: AirOutletSystemConnectionPoint
+    electricalInlet: Electricity_575V_60HzSystemInletConnectionPoint
+
+    def __init__(self, config: Dict = {}, **kwargs) -> None:
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)

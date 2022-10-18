@@ -8,8 +8,8 @@ from bob.connections.light import (
     LightVisibleConnection,
     LightVisibleOutletConnectionPoint,
 )
-from bob.core import Air, Device, Junction, bind_model_namespace, dump, enum, P223
-from bob.devices.hvac.fan import Fan
+from bob.core import P223, Air, Equipment, Junction, bind_model_namespace, dump, enum
+from bob.equipments.hvac.fan import Fan
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, MechanicalRoom, Office
 
@@ -18,7 +18,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_Light_Subclass_of_Medium_Connection(bob_fixture):
-    class WeirdLuminaire(Device):
+    class WeirdLuminaire(Equipment):
         _class_iri: URIRef = P223.Light
         lightOutlet: LightVisibleOutletConnectionPoint
         electricalInlet: ElectricalInletConnectionPoint

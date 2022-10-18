@@ -1,7 +1,7 @@
 from rdflib import URIRef
 
-from ..core import PhysicalSpace, bind_namespace, QUANTITYKIND, S223, UNIT
-from ..properties.physical import Length, Area
+from ..core import QUANTITYKIND, S223, UNIT, PhysicalSpace, bind_namespace
+from ..properties.physical import Area, Length
 
 """
 This is a hack, Real Estate Core has many namespaces, and some of the physical
