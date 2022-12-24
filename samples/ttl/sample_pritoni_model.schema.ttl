@@ -18,41 +18,6 @@
 
 
 
-
-
-    """ ;
-    rdfs:subClassOf s223:Equipment .
-
-    A damper would have a shaft_position(?) property, a pump would also have something similar to speed_ratio. All Equipments should have one main "function"
-    property.
-
-    A sensor could be used to observe the "status" of the fan. We shall resist to relate the actuator to the status. The actuator do
-    not actuate the status, it actuates the rotation of the fan and if we observe it, the status should be On.
-
-    An actuator should not have CP. Its role is to represent the relaiton between properties and action.
-
-    The speed ratio property is not a property that is meant to be observed. It is an intrinsic property of a fan, it is the fact that it can run.
-    It represents the core function of the fan.
-
-    This shows that the actuator is `commandedBy` the property "OnOffCommand". This actuation takes place at the air outlet of the fan.
-    The actuator "actuates" the speed_ratio of the fan which is a property of the fan representing the fact that it can be stopped (speed_ratio
-    of 0%) or run at a speed which is >0% to 100%.
-
-    This way, the model can illutrate the link between a property and something else (like
-    a connection point)
-    example :
-
-    __|___|__|___|___|__
-    |  Supply Fan      |------------s223:hasProperty--------(flow)
-    |  s223:Equipment  |------------s223:hasProperty--------(OnOffCommand) <-> A
-    |  s223:Fan        |------------s223:hasProperty--------(rotation) <-> B
-    |                  |------------s223:hasProperty--------(status)
-    |__________________|------------s223:hasConnectionPoint----(AirOutlet) <-> C
-            |                               ____________________
-            |___________s223:contains_______|  OnOff Actuator  |---s223:isCommandedBy----------(OnOffCommand) <-> A
-                                            |  P223:Actuator   |---p223:actuatesProperty ------(rotation) <-> B
-                                            |__________________|---p223:hasActuationLocation---(AirOutlet) <-> C
-
 <http://data.ashrae.org/standard223/1.0/data/sample_pritoni_model>
   a owl:Ontology ;
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model-schema> ;
@@ -92,372 +57,6 @@ bacnet:property-array-index a rdf:Property .
 bacnet:property-identifier a rdf:Property .
 
 bacnet:vendorId a rdf:Property .
-
-bob:AirConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirConnectionPoint" .
-
-bob:AirSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirSystemConnectionPoint" .
-
-bob:Amps a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.Amps" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:Area a rdfs:Class ;
-    rdfs:label "bob.properties.physical.Area" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ChilledWaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.ChilledWaterConnectionPoint" .
-
-bob:CondensedWaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.CondensedWaterConnectionPoint" .
-
-bob:DaylightDetected a rdfs:Class ;
-    rdfs:label "bob.properties.states.DaylightDetected" ;
-    rdfs:subClassOf s223:EnumerableProperty,
-        s223:EnumeratedObservableProperty,
-        s223:ObservableProperty,
-        s223:Property .
-
-bob:DifferentialStaticPressure a rdfs:Class ;
-    rdfs:label "bob.properties.force.DifferentialStaticPressure" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:DimmableSwitch a rdfs:Class ;
-    rdfs:label "bob.equipments.electricity.switch.DimmableSwitch" ;
-    rdfs:comment """
-    Manuel dimmable switch
-
-    """ ;
-    rdfs:subClassOf p223:ElectricalSwitch,
-        s223:Equipment,
-        bob:SinglePoleSwitch .
-
-bob:ElectricApparentEnergy a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricApparentEnergy" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ElectricApparentPower a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricApparentPower" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ElectricEnergy a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricEnergy" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ElectricPower a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricPower" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ElectricPowerkW a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricPowerkW" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower .
-
-bob:ElectricReactiveEnergy a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricReactiveEnergy" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ElectricReactivePower a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricReactivePower" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
-    rdfs:label "bob.equipments.hvac.damper.ElectricalActuatedProportionalDamper" ;
-    rdfs:subClassOf s223:System,
-        bob:System .
-
-bob:ElectricalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ElectricalConnectionPoint" .
-
-bob:Electricity_120V_240V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_120V_240V_60HzConnectionPoint" .
-
-bob:Electricity_120V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_120V_60HzConnectionPoint" .
-
-bob:Electricity_240V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_240V_60HzConnectionPoint" .
-
-bob:Electricity_24V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_24V_60HzConnectionPoint" .
-
-bob:Electricity_347V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_347V_60HzConnectionPoint" .
-
-bob:Electricity_575V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_575V_60HzConnectionPoint" .
-
-bob:Electricity_575V_60HzSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_575V_60HzSystemConnectionPoint" .
-
-bob:EthernetConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.EthernetConnectionPoint" .
-
-bob:Flow a rdfs:Class ;
-    rdfs:label "bob.properties.flow.Flow" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:Frequency a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.Frequency" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:HP a rdfs:Class ;
-    rdfs:label "bob.properties.force.HP" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:HotWaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.HotWaterConnectionPoint" .
-
-bob:InletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
-        "bob.connections.electricity.Electricity_575V_60HzSystemInletConnectionPoint",
-        "bob.connections.water.WaterInletSystemConnectionPoint",
-        "bob.core.InletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:Electricity_575V_60HzSystemConnectionPoint,
-        bob:InletSystemConnectionPoint,
-        bob:WaterSystemConnectionPoint .
-
-bob:InletZoneConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirInletZoneConnectionPoint",
-        "bob.core.InletZoneConnectionPoint" ;
-    rdfs:subClassOf bob:InletZoneConnectionPoint,
-        bob:ZoneConnectionPoint .
-
-bob:LightVisibleConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.light.LightVisibleConnectionPoint" .
-
-bob:Mbit_per_seconds a rdfs:Class ;
-    rdfs:label "bob.properties.network.Mbit_per_seconds" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ModulationSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ModulationSignalConnectionPoint" .
-
-bob:Nm a rdfs:Class ;
-    rdfs:label "bob.properties.force.Nm" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:OnOffSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.OnOffSignalConnectionPoint" .
-
-bob:OutletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
-        "bob.connections.water.WaterOutletSystemConnectionPoint",
-        "bob.core.OutletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:OutletSystemConnectionPoint,
-        bob:WaterSystemConnectionPoint .
-
-bob:OutletZoneConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirOutletZoneConnectionPoint",
-        "bob.core.OutletZoneConnectionPoint" ;
-    rdfs:subClassOf bob:OutletZoneConnectionPoint,
-        bob:ZoneConnectionPoint .
-
-bob:Percent a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.Percent" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:PercentCommand a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.PercentCommand" ;
-    rdfs:subClassOf s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty .
-
-bob:PowerFactor a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.PowerFactor" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:Pressure a rdfs:Class ;
-    rdfs:label "bob.properties.force.Pressure" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:RPM a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.RPM" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:SinglePoleCircuitBreaker a rdfs:Class ;
-    rdfs:label "bob.equipments.electricity.distribution.SinglePoleCircuitBreaker" ;
-    rdfs:comment """
-    One inlet and one outlet
-    hasMaxRange = current max of breaker
-    A rule could check inlet and outlet are same class
-    """ ;
-    rdfs:subClassOf p223:ElectricalCircuitBreaker,
-        s223:Equipment .
-
-bob:SinglePoleSwitch a rdfs:Class ;
-    rdfs:label "bob.equipments.electricity.switch.SinglePoleSwitch" ;
-    rdfs:comment """
-    One inlet and one outlet
-    hasMaxRange = current max of switch
-    A rule could check inlet and outlet are same class
-    """ ;
-    rdfs:subClassOf p223:ElectricalSwitch,
-        s223:Equipment .
-
-bob:System a rdfs:Class ;
-    rdfs:label "bob.core.System" ;
-    rdfs:comment """
-    System
-    """ ;
-    rdfs:subClassOf s223:System .
-
-bob:Temperature a rdfs:Class ;
-    rdfs:label "bob.properties.temperature.Temperature" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ThreePolesCircuitBreaker a rdfs:Class ;
-    rdfs:label "bob.equipments.electricity.distribution.ThreePolesCircuitBreaker" ;
-    rdfs:comment """
-    One electrical Inlet because when plugin the breaker
-    in the panel, you get no choice. Both poles are connected
-    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
-    The electrical Outlet is a little different. You could potentially
-    use only 1 pole (347V heating or light for example)
-    So 3 choices are possible pole A, pole B or pole A-B
-    """ ;
-    rdfs:subClassOf p223:ElectricalCircuitBreaker,
-        s223:Equipment .
-
-bob:ThreePolesMainCircuitBreaker a rdfs:Class ;
-    rdfs:label "bob.equipments.electricity.distribution.ThreePolesMainCircuitBreaker" ;
-    rdfs:comment """
-    One electrical Inlet because when plugin the breaker
-    in the panel, you get no choice. Three poles are connected
-    at the same time. Electricity is fed from 3 bus bar (3 x 347V to neutral for example)
-
-    Code do not allow to use only one pole of a 3phase breaker. So
-    this model is just a trick so we can feed 3 bus bar (connect) inside the panel.
-    If not, we would have 3 connections coming from vaccuum of space.
-
-    """ ;
-    rdfs:subClassOf p223:ElectricalCircuitBreaker,
-        s223:Equipment .
-
-bob:TimerSwitch a rdfs:Class ;
-    rdfs:label "bob.equipments.electricity.switch.TimerSwitch" ;
-    rdfs:comment """
-    Manuel switch with integrated timer
-    Typically used for exhaust fan in bathrooms for example
-    """ ;
-    rdfs:subClassOf p223:ElectricalSwitch,
-        s223:Equipment,
-        bob:SinglePoleSwitch .
-
-bob:TwoPolesCircuitBreaker a rdfs:Class ;
-    rdfs:label "bob.equipments.electricity.distribution.TwoPolesCircuitBreaker" ;
-    rdfs:comment """
-    One electrical Inlet because when plugin the breaker
-    in the panel, you get no choice. Both poles are connected
-    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
-    The electrical Outlet is a little different. You could potentially
-    use only 1 pole (347V heating or light for example)
-    So 3 choices are possible pole A, pole B or pole A-B
-    """ ;
-    rdfs:subClassOf p223:ElectricalCircuitBreaker,
-        s223:Equipment .
-
-bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
-    rdfs:label "bob.equipments.electricity.distribution.TwoPolesMainCircuitBreaker" ;
-    rdfs:comment """
-    A 2 poles Main circuit breaker is modeled differently as I
-    wanted to illustrate the fact that it will be connected to
-    the 2 bus bars in the panel (A & B) and will also be connected
-    to AB. It is really a modeling trick.
-    """ ;
-    rdfs:subClassOf p223:ElectricalCircuitBreaker,
-        s223:Equipment .
-
-bob:TwoWayActuatedProportionalValve a rdfs:Class ;
-    rdfs:label "bob.equipments.hvac.valve.TwoWayActuatedProportionalValve" ;
-    rdfs:subClassOf s223:System,
-        bob:System .
-
-bob:Volts a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.Volts" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:WaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.WaterConnectionPoint" .
-
-bob:WaterSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.WaterSystemConnectionPoint" .
-
-bob:ZoneConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirZoneConnectionPoint",
-        "bob.core.ZoneConnectionPoint" ;
-    rdfs:comment """
-    Zone Connection Point
-    """ ;
-    rdfs:subClassOf bob:ZoneConnectionPoint .
 
 bob:airInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -700,55 +299,11 @@ bob:waterOutlet a rdf:Property ;
 bob:windows a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
-functions:Average a rdfs:Class ;
-    rdfs:label "functions.Average" ;
-    rdfs:comment """
-    y = (u1 + u2) / 2.0
-    """ ;
-    rdfs:subClassOf s223:FunctionBlock .
-
 functions:u1 a rdf:Property .
 
 functions:u2 a rdf:Property .
 
 functions:y a rdf:Property .
-
-g36:AnalogInput a rdfs:Class ;
-    rdfs:label "bob.functions.G36AnalogInput" ;
-    rdfs:subClassOf s223:FunctionInput .
-
-g36:AnalogOutput a rdfs:Class ;
-    rdfs:label "bob.functions.G36AnalogOutput" ;
-    rdfs:subClassOf s223:FunctionOutput .
-
-g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
-        g36:EnumerationKind-G36AlarmLevels,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind .
-
-g36:EnumerationKind-Level1 a s223:EnumerationKind,
-        g36:EnumerationKind-Level1,
-        rdfs:Class ;
-    rdfs:comment "Life Safetey Message" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
-g36:EnumerationKind-Level2 a s223:EnumerationKind,
-        g36:EnumerationKind-Level2,
-        rdfs:Class ;
-    rdfs:comment "Critical Equipment Message" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
-g36:EnumerationKind-Level3 a s223:EnumerationKind,
-        g36:EnumerationKind-Level3,
-        rdfs:Class ;
-    rdfs:comment "Urgent Message" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
-g36:EnumerationKind-Level4 a s223:EnumerationKind,
-        g36:EnumerationKind-Level4,
-        rdfs:Class ;
-    rdfs:comment "Normal Message" ;
-    rdfs:subClassOf s223:EnumerationKind .
 
 p223:ActiveInactive-Active a p223:ActiveInactive-Active,
         s223:EnumerationKind,
@@ -774,6 +329,41 @@ p223:Actuator a rdfs:Class ;
     This version of an actuator is meant to be the opposite of a sensor
     It relates properties to an action
     It can be located with hasActuationLocation (mirror of hasMeasurementLocation)
+
+    This way, the model can illutrate the link between a property and something else (like
+    a connection point)
+    example :
+
+
+    __|___|__|___|___|__
+    |  Supply Fan      |------------s223:hasProperty--------(flow)
+    |  s223:Equipment  |------------s223:hasProperty--------(OnOffCommand) <-> A
+    |  s223:Fan        |------------s223:hasProperty--------(rotation) <-> B
+    |                  |------------s223:hasProperty--------(status)
+    |__________________|------------s223:hasConnectionPoint----(AirOutlet) <-> C
+            |                               ____________________
+            |___________s223:contains_______|  OnOff Actuator  |---s223:isCommandedBy----------(OnOffCommand) <-> A
+                                            |  P223:Actuator   |---p223:actuatesProperty ------(rotation) <-> B
+                                            |__________________|---p223:hasActuationLocation---(AirOutlet) <-> C
+
+
+    This shows that the actuator is `commandedBy` the property "OnOffCommand". This actuation takes place at the air outlet of the fan.
+    The actuator "actuates" the speed_ratio of the fan which is a property of the fan representing the fact that it can be stopped (speed_ratio
+    of 0%) or run at a speed which is >0% to 100%.
+
+    The speed ratio property is not a property that is meant to be observed. It is an intrinsic property of a fan, it is the fact that it can run.
+    It represents the core function of the fan.
+
+    A damper would have a shaft_position(?) property, a pump would also have something similar to speed_ratio. All Equipments should have one main "function"
+    property.
+
+    A sensor could be used to observe the "status" of the fan. We shall resist to relate the actuator to the status. The actuator do
+    not actuate the status, it actuates the rotation of the fan and if we observe it, the status should be On.
+
+    An actuator should not have CP. Its role is to represent the relaiton between properties and action.
+
+    """ ;
+    rdfs:subClassOf s223:Equipment .
 
 p223:Air-CompressedAir a p223:Air-CompressedAir,
         s223:EnumerationKind,
@@ -1467,8 +1057,6 @@ p223:TrueFalse-True a p223:TrueFalse-True,
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
 
-p223:VLAN a rdf:Property .
-
 p223:Water-CondensedWater a p223:Water-CondensedWater,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -1534,28 +1122,416 @@ p223:YesNo-Yes a p223:YesNo-Yes,
     rdfs:subClassOf p223:EnumerationKind-YesNo,
         s223:EnumerationKind .
 
-p223:actuatesProperty a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+g36:AnalogInput a rdfs:Class ;
+    rdfs:label "bob.functions.G36AnalogInput" ;
+    rdfs:subClassOf s223:FunctionInput .
 
-p223:data_rate a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+g36:AnalogOutput a rdfs:Class ;
+    rdfs:label "bob.functions.G36AnalogOutput" ;
+    rdfs:subClassOf s223:FunctionOutput .
 
-p223:hasActuationLocation a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
+        g36:EnumerationKind-G36AlarmLevels,
+        rdfs:Class ;
+    rdfs:subClassOf s223:EnumerationKind .
 
-p223:hasProtocol a rdf:Property .
+g36:EnumerationKind-Level1 a s223:EnumerationKind,
+        g36:EnumerationKind-Level1,
+        rdfs:Class ;
+    rdfs:comment "Life Safetey Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
 
-p223:hasSignalType a rdf:Property .
+g36:EnumerationKind-Level2 a s223:EnumerationKind,
+        g36:EnumerationKind-Level2,
+        rdfs:Class ;
+    rdfs:comment "Critical Equipment Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
 
-p223:isCommandedBy a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+g36:EnumerationKind-Level3 a s223:EnumerationKind,
+        g36:EnumerationKind-Level3,
+        rdfs:Class ;
+    rdfs:comment "Urgent Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
 
-qudt:hasQuantityKind a rdf:Property .
+g36:EnumerationKind-Level4 a s223:EnumerationKind,
+        g36:EnumerationKind-Level4,
+        rdfs:Class ;
+    rdfs:comment "Normal Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
 
-qudt:unit a rdf:Property .
+bob:AirConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirConnectionPoint" .
 
-rec:Area a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+bob:AirSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirSystemConnectionPoint" .
+
+bob:Amps a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.Amps" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Area a rdfs:Class ;
+    rdfs:label "bob.properties.physical.Area" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ChilledWaterConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.water.ChilledWaterConnectionPoint" .
+
+bob:CondensedWaterConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.water.CondensedWaterConnectionPoint" .
+
+bob:DaylightDetected a rdfs:Class ;
+    rdfs:label "bob.properties.states.DaylightDetected" ;
+    rdfs:subClassOf s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property .
+
+bob:DifferentialStaticPressure a rdfs:Class ;
+    rdfs:label "bob.properties.force.DifferentialStaticPressure" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:DimmableSwitch a rdfs:Class ;
+    rdfs:label "bob.equipments.electricity.switch.DimmableSwitch" ;
+    rdfs:comment """
+    Manuel dimmable switch
+
+    """ ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Equipment,
+        bob:SinglePoleSwitch .
+
+bob:ElectricApparentEnergy a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricApparentEnergy" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ElectricApparentPower a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricApparentPower" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ElectricEnergy a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricEnergy" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ElectricPower a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricPower" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ElectricPowerkW a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricPowerkW" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower .
+
+bob:ElectricReactiveEnergy a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricReactiveEnergy" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ElectricReactivePower a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricReactivePower" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
+    rdfs:label "bob.equipments.hvac.damper.ElectricalActuatedProportionalDamper" ;
+    rdfs:subClassOf s223:System,
+        bob:System .
+
+bob:ElectricalConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.ElectricalConnectionPoint" .
+
+bob:Electricity_120V_240V_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_120V_240V_60HzConnectionPoint" .
+
+bob:Electricity_120V_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_120V_60HzConnectionPoint" .
+
+bob:Electricity_240V_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_240V_60HzConnectionPoint" .
+
+bob:Electricity_24V_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_24V_60HzConnectionPoint" .
+
+bob:Electricity_347V_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_347V_60HzConnectionPoint" .
+
+bob:Electricity_575V_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_575V_60HzConnectionPoint" .
+
+bob:Electricity_575V_60HzSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_575V_60HzSystemConnectionPoint" .
+
+bob:EthernetConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.EthernetConnectionPoint" .
+
+bob:Flow a rdfs:Class ;
+    rdfs:label "bob.properties.flow.Flow" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Frequency a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.Frequency" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:HP a rdfs:Class ;
+    rdfs:label "bob.properties.force.HP" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:HotWaterConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.water.HotWaterConnectionPoint" .
+
+bob:InletSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
+        "bob.connections.electricity.Electricity_575V_60HzSystemInletConnectionPoint",
+        "bob.connections.water.WaterInletSystemConnectionPoint",
+        "bob.core.InletSystemConnectionPoint" ;
+    rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:Electricity_575V_60HzSystemConnectionPoint,
+        bob:InletSystemConnectionPoint,
+        bob:WaterSystemConnectionPoint .
+
+bob:InletZoneConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirInletZoneConnectionPoint",
+        "bob.core.InletZoneConnectionPoint" ;
+    rdfs:subClassOf bob:InletZoneConnectionPoint,
+        bob:ZoneConnectionPoint .
+
+bob:LightVisibleConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.light.LightVisibleConnectionPoint" .
+
+bob:Mbit_per_seconds a rdfs:Class ;
+    rdfs:label "bob.properties.network.Mbit_per_seconds" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ModulationSignalConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.ModulationSignalConnectionPoint" .
+
+bob:Nm a rdfs:Class ;
+    rdfs:label "bob.properties.force.Nm" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:OnOffSignalConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.OnOffSignalConnectionPoint" .
+
+bob:OutletSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
+        "bob.connections.water.WaterOutletSystemConnectionPoint",
+        "bob.core.OutletSystemConnectionPoint" ;
+    rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint,
+        bob:WaterSystemConnectionPoint .
+
+bob:OutletZoneConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirOutletZoneConnectionPoint",
+        "bob.core.OutletZoneConnectionPoint" ;
+    rdfs:subClassOf bob:OutletZoneConnectionPoint,
+        bob:ZoneConnectionPoint .
+
+bob:Percent a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.Percent" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:PercentCommand a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.PercentCommand" ;
+    rdfs:subClassOf s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty .
+
+bob:PowerFactor a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.PowerFactor" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Pressure a rdfs:Class ;
+    rdfs:label "bob.properties.force.Pressure" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:RPM a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.RPM" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:SinglePoleCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipments.electricity.distribution.SinglePoleCircuitBreaker" ;
+    rdfs:comment """
+    One inlet and one outlet
+    hasMaxRange = current max of breaker
+    A rule could check inlet and outlet are same class
+    """ ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Equipment .
+
+bob:SinglePoleSwitch a rdfs:Class ;
+    rdfs:label "bob.equipments.electricity.switch.SinglePoleSwitch" ;
+    rdfs:comment """
+    One inlet and one outlet
+    hasMaxRange = current max of switch
+    A rule could check inlet and outlet are same class
+    """ ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Equipment .
+
+bob:System a rdfs:Class ;
+    rdfs:label "bob.core.System" ;
+    rdfs:comment """
+    System
+    """ ;
+    rdfs:subClassOf s223:System .
+
+bob:Temperature a rdfs:Class ;
+    rdfs:label "bob.properties.temperature.Temperature" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ThreePolesCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipments.electricity.distribution.ThreePolesCircuitBreaker" ;
+    rdfs:comment """
+    One electrical Inlet because when plugin the breaker
+    in the panel, you get no choice. Both poles are connected
+    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
+    The electrical Outlet is a little different. You could potentially
+    use only 1 pole (347V heating or light for example)
+    So 3 choices are possible pole A, pole B or pole A-B
+    """ ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Equipment .
+
+bob:ThreePolesMainCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipments.electricity.distribution.ThreePolesMainCircuitBreaker" ;
+    rdfs:comment """
+    One electrical Inlet because when plugin the breaker
+    in the panel, you get no choice. Three poles are connected
+    at the same time. Electricity is fed from 3 bus bar (3 x 347V to neutral for example)
+
+    Code do not allow to use only one pole of a 3phase breaker. So
+    this model is just a trick so we can feed 3 bus bar (connect) inside the panel.
+    If not, we would have 3 connections coming from vaccuum of space.
+
+    """ ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Equipment .
+
+bob:TimerSwitch a rdfs:Class ;
+    rdfs:label "bob.equipments.electricity.switch.TimerSwitch" ;
+    rdfs:comment """
+    Manuel switch with integrated timer
+    Typically used for exhaust fan in bathrooms for example
+    """ ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Equipment,
+        bob:SinglePoleSwitch .
+
+bob:TwoPolesCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipments.electricity.distribution.TwoPolesCircuitBreaker" ;
+    rdfs:comment """
+    One electrical Inlet because when plugin the breaker
+    in the panel, you get no choice. Both poles are connected
+    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
+    The electrical Outlet is a little different. You could potentially
+    use only 1 pole (347V heating or light for example)
+    So 3 choices are possible pole A, pole B or pole A-B
+    """ ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Equipment .
+
+bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipments.electricity.distribution.TwoPolesMainCircuitBreaker" ;
+    rdfs:comment """
+    A 2 poles Main circuit breaker is modeled differently as I
+    wanted to illustrate the fact that it will be connected to
+    the 2 bus bars in the panel (A & B) and will also be connected
+    to AB. It is really a modeling trick.
+    """ ;
+    rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Equipment .
+
+bob:TwoWayActuatedProportionalValve a rdfs:Class ;
+    rdfs:label "bob.equipments.hvac.valve.TwoWayActuatedProportionalValve" ;
+    rdfs:subClassOf s223:System,
+        bob:System .
+
+bob:Volts a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.Volts" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:WaterConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.water.WaterConnectionPoint" .
+
+bob:WaterSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.water.WaterSystemConnectionPoint" .
+
+bob:ZoneConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirZoneConnectionPoint",
+        "bob.core.ZoneConnectionPoint" ;
+    rdfs:comment """
+    Zone Connection Point
+    """ ;
+    rdfs:subClassOf bob:ZoneConnectionPoint .
+
+ref:ExternalReference a rdfs:Class ;
+    rdfs:label "bob.core.ExternalReference" ;
+    rdfs:comment """
+    This will be subclassed by different specific datasources, this simplest
+    form uses hasRef as a literal, most likely a string.  Note that this is
+    currently from the Brick "ref" schema.
+    """ .
 
 rec:Bathroom a rdfs:Class ;
     rdfs:label "bob.space.physical.Bathroom" ;
@@ -1588,13 +1564,37 @@ rec:Room a rdfs:Class ;
     rdfs:label "bob.space.physical.Room" ;
     rdfs:subClassOf s223:PhysicalSpace .
 
-ref:ExternalReference a rdfs:Class ;
-    rdfs:label "bob.core.ExternalReference" ;
+functions:Average a rdfs:Class ;
+    rdfs:label "functions.Average" ;
     rdfs:comment """
-    This will be subclassed by different specific datasources, this simplest
-    form uses hasRef as a literal, most likely a string.  Note that this is
-    currently from the Brick "ref" schema.
-    """ .
+    y = (u1 + u2) / 2.0
+    """ ;
+    rdfs:subClassOf s223:FunctionBlock .
+
+p223:VLAN a rdf:Property .
+
+p223:actuatesProperty a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+p223:data_rate a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+p223:hasActuationLocation a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+p223:hasProtocol a rdf:Property .
+
+p223:hasSignalType a rdf:Property .
+
+p223:isCommandedBy a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+qudt:hasQuantityKind a rdf:Property .
+
+qudt:unit a rdf:Property .
+
+rec:Area a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 ref:hasExternalReference a rdf:Property .
 

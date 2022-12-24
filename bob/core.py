@@ -219,9 +219,11 @@ def dump(
         content = content.decode("UTF-8")
 
     content = clean_and_sort_turtle_file(content)
+
     if filename:
         with open(filename, "w", encoding="UTF-8") as ttl_file:
             ttl_file.write(content)
+
     file.write(content)
 
 
@@ -237,8 +239,7 @@ def clean_and_sort_turtle_file(content: str) -> str:
     prefix_chunks = []  # lines that start like '@prefix ...'
 
     # pattern for triple quoted literals
-    tql = re.compile("\"\"\"[^\"]*\"\"\"|'''[^']*'''")
-
+    tql = re.compile("\"\"\".*\"\"\"|'''.*'''", re.DOTALL)
     tql_archive = []
 
     def tql_save(match) -> str:

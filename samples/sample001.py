@@ -37,6 +37,7 @@ d2.add_property(TemperatureProperty(90.5, unit=UNIT.DEG_F, label="temp"))
 d3 = SampleEquipment2(label="Test Equipment 3", hasTemp=100.5)
 
 # needs a unit to validate
+d3.hasTemp.hasQuantityKind = QUANTITYKIND.Temperature
 d3.hasTemp.unit = UNIT.DEG_F
 
 # dump the result
