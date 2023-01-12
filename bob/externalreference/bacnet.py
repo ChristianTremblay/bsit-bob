@@ -61,7 +61,7 @@ class BACnetReference(ExternalReference):
 
             if "objectType" in kwargs:
                 raise ValueError("initialization conflict: objectType")
-            kwargs["objectType"] = BACNET["ObjectType-" + object_type]
+            kwargs["objectType"] = BACNET["ObjectType." + object_type]
 
             if "objectInstance" in kwargs:
                 raise ValueError("initialization conflict: objectInstance")
@@ -76,11 +76,11 @@ class BACnetReference(ExternalReference):
                 raise ValueError("initialization conflict: propertyIdentifier")
             if property_identifier:
                 kwargs["propertyIdentifier"] = BACNET[
-                    "PropertyIdentifier-" + property_identifier
+                    "PropertyIdentifier." + property_identifier
                 ]
             else:
                 kwargs["propertyIdentifier"] = BACNET[
-                    "PropertyIdentifier-present-value"
+                    "PropertyIdentifier.present-value"
                 ]
 
             if "propertyArrayIndex" in kwargs:
