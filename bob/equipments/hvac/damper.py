@@ -28,13 +28,12 @@ from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...connections.mechanical import MechanicalInletConnectionPoint
+from ...connections.mechanical import MechanicalCoupling, MechanicalInletConnectionPoint
 from ...core import (
     BOB,
     P223,
     S223,
     Equipment,
-    MechanicalCoupling,
     PropertyReference,
     System,
     logging,

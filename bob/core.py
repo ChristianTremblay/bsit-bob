@@ -599,7 +599,7 @@ class Node(metaclass=NodeMetaclass):
                         (
                             attr_uriref,
                             RDFS.subPropertyOf,
-                            S223.hasSystemConnectionPoint,
+                            BOB.hasSystemConnectionPoint,
                         )
                     )
                 elif issubclass(attr_type, ZoneConnectionPoint):
@@ -1529,6 +1529,8 @@ class ConnectionPoint(Node):
     hasMedium: Medium
 
     lnx: Segment
+    mapsTo: ConnectionPoint
+
     connectsThrough: Connection
     isConnectionPointOf: Connectable
 
@@ -2235,11 +2237,16 @@ class SystemConnectionPoint(Node):
     """
 
     _class_iri: URIRef = None
+    _attr_uriref: Dict[str, URIRef] = {
+        "mapsTo": BOB.mapsTo,
+        "isSystemConnectionPointOf": BOB.isSystemConnectionPointOf,
+    }
+
     hasMedium: Medium
+    mapsTo: Node  # Union[Junction, ConnectionPoint]
 
     connectsThrough: Connection
     isSystemConnectionPointOf: System
-    mapsTo: Node  # Union[Junction, ConnectionPoint]
 
     def __init__(self, system: System, **kwargs: Any) -> None:
         logging.debug(f"SystemConnectionPoint.__init__ {system} {kwargs}")
@@ -3300,4 +3307,3 @@ Electricity = Medium("Electricity")
 NaturalGas = Medium("NaturalGas")
 Glycol = Medium("Glycol")
 Occupant = Medium("Occupant")
-MechanicalCoupling = Medium("MechanicalCoupling", _alt_namespace=P223)

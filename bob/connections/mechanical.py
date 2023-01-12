@@ -10,18 +10,20 @@ from ..core import (
     ConnectionPoint,
     InletConnectionPoint,
     InletSystemConnectionPoint,
-    MechanicalCoupling,
     Medium,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     SystemConnectionPoint,
-    enum,
 )
 
 _namespace = P223
 
 
 # === GENERAL
+
+MechanicalCoupling = Medium("MechanicalCoupling", _alt_namespace=P223)
+
+
 class MechanicalConnection(Connection):
     hasMedium: Medium = MechanicalCoupling
     _class_iri = S223.Connection

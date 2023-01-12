@@ -27,7 +27,7 @@ class TestEquipment(Equipment):
     cpOut: OutletConnectionPoint
 
 
-# make a system and a Equipment
+# make a system and a piece of equipment
 s1 = TestSystem(label="s1")
 d1 = TestEquipment(label="d1")
 d1 < s1
@@ -44,7 +44,7 @@ d2 < s2
 s2.cpIn.mapsTo = d2.cpIn
 
 # pass-out from the Equipment to the system
-d2.cpOut.mapsTo = s2.cpOut
+s2.cpOut.mapsTo = d2.cpOut
 
 # dump the result
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

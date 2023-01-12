@@ -7,7 +7,7 @@ import sys
 
 import ontoenv
 import pyshacl
-from rdflib import SH, Graph, Namespace
+from rdflib import RDF, SH, Graph, Namespace
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.ERROR)
@@ -28,13 +28,20 @@ parser.add_argument(
     help="turtle files to load",
 )
 
-# option to load an additional ontology graph that is merged with the data
+# option to load an additional shacl graph that is merged with the data
 # graph before validation rules are run
 parser.add_argument(
-    "--ontology",
+    "--shacl",
     type=str,
     nargs="+",
-    help="load an ontology graph",
+    help="load shacl graph(s)",
+)
+
+# option to use ontoenv to resolve dependencies
+parser.add_argument(
+    "--ontoenv",
+    action="store_true",
+    help="use ontoenv to resolve dependencies",
 )
 
 # option to save the report graph
@@ -118,8 +125,20 @@ if args.compiled:
 shacl_graph = Graph()
 pyshacl.rdfutil.clone.clone_graph(data_graph, shacl_graph)
 
-env = ontoenv.OntoEnv()
-env.import_dependencies(shacl_graph)
+# load the shacl graph(s)
+if args.shacl is not None:
+    for fname in args.shacl:
+        if fname == "-":
+            shacl_graph.parse(sys.stdin, format="turtle")
+        else:
+            logger.debug("loading %r", fname)
+            shacl_graph.parse(fname, format="turtle")
+
+# use ontoenv to load dependencies
+if args.ontoenv:
+    env = ontoenv.OntoEnv()
+    env.import_dependencies(shacl_graph)
+
 logger.info("shacl_graph: %d triples", len(shacl_graph) - len(data_graph))
 
 # inferencing option
@@ -159,6 +178,10 @@ if args.compiled:
 namespace_map = {}
 for prefix, uriref in report_graph.namespaces():
     namespace_map[prefix] = Namespace(uriref)
+if "sh" not in namespace_map:
+    namespace_map["sh"] = SH
+
+logger.info("namespace_map: %r", namespace_map)
 
 # find the validation results
 qs = """
