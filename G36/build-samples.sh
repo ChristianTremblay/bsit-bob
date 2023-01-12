@@ -2,7 +2,6 @@
 
 for f in g36-*.py
 do
-    ttl=${f/[.]py/.ttl}
-    echo $ttl
-    python3 "$f" | python ../sort_turtle_file.py > "$ttl"
+    echo "$f"
+    python3 "$f"
 done

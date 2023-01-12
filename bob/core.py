@@ -1508,9 +1508,9 @@ def connect_mm(from_thing: Connectable, to_things: List[Connectable]) -> None:
 
     # create a connection
     if CONNECTION_HAS_MEDIUM:
-        connection = Connection(hasMedium=medium, label="cnx")
+        connection = Connection(hasMedium=medium)
     else:
-        connection = Connection(label="cnx")
+        connection = Connection()
 
     # connect the from thing
     connect_mm(from_connection_point, connection)
@@ -1601,9 +1601,9 @@ def connect_mm(
 
     # create a connection between the two
     if CONNECTION_HAS_MEDIUM:
-        connection = Connection(hasMedium=from_medium, label="cnx")
+        connection = Connection(hasMedium=from_medium)
     else:
-        connection = Connection(label="cnx")
+        connection = Connection()
 
     # link the two things together
     from_connection_point._data_graph.add(
