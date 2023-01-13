@@ -125,6 +125,8 @@ bob:condensedWaterLeaving a rdf:Property ;
 bob:currentRating a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
+bob:damper a rdf:Property .
+
 bob:delay a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
@@ -378,8 +380,7 @@ p223:Air-CompressedAir a p223:Air-CompressedAir,
 
 p223:AirHandlingUnit a rdfs:Class ;
     rdfs:label "bob.equipments.hvac.airhandlingunit.AirHandlingUnit" ;
-    rdfs:subClassOf s223:System,
-        bob:System .
+    rdfs:subClassOf s223:System .
 
 p223:Analog-0-10VDC a p223:Analog-0-10VDC,
         s223:EnumerationKind,
@@ -1265,8 +1266,7 @@ bob:ElectricReactivePower a rdfs:Class ;
 
 bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
     rdfs:label "bob.equipments.hvac.damper.ElectricalActuatedProportionalDamper" ;
-    rdfs:subClassOf s223:System,
-        bob:System .
+    rdfs:subClassOf s223:System .
 
 bob:ElectricalConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.electricity.ElectricalConnectionPoint" .
@@ -1427,13 +1427,6 @@ bob:SinglePoleSwitch a rdfs:Class ;
     rdfs:subClassOf p223:ElectricalSwitch,
         s223:Equipment .
 
-bob:System a rdfs:Class ;
-    rdfs:label "bob.core.System" ;
-    rdfs:comment """
-    System
-    """ ;
-    rdfs:subClassOf s223:System .
-
 bob:Temperature a rdfs:Class ;
     rdfs:label "bob.properties.temperature.Temperature" ;
     rdfs:subClassOf s223:ObservableProperty,
@@ -1505,8 +1498,7 @@ bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
 
 bob:TwoWayActuatedProportionalValve a rdfs:Class ;
     rdfs:label "bob.equipments.hvac.valve.TwoWayActuatedProportionalValve" ;
-    rdfs:subClassOf s223:System,
-        bob:System .
+    rdfs:subClassOf s223:System .
 
 bob:Volts a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Volts" ;

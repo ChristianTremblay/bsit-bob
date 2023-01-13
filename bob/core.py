@@ -1195,43 +1195,23 @@ class Segment(Node):
         )
 
 
-class S223System(Container):
+class System(Container):
+    """
+    System
+    """
+
     _class_iri: URIRef = S223.System
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
 
+    _system_connection_points: Dict[str, SystemConnectionPoint]
     _serves_zones: Dict[str, Zone]
 
     def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
         logging.debug(f"System.__init__ {config} {args} {kwargs}")
 
         # if there are "params" in the configuation, use those as defaults for
-        # kwargs and allow them to be overriden be additional kwargs
-        # if config and "params" in config:
-        #     kwargs = {**config["params"], **kwargs}
-
-        super().__init__(*args, **kwargs)
-        # zone references
-        self._serves_zones = {}
-
-    def serves_zone(self, other: Zone) -> None:
-        connect_mm(self, other)
-
-
-class System(S223System, Node):
-    """
-    System
-    """
-
-    _class_iri: URIRef = BOB.System
-
-    _system_connection_points: Dict[str, SystemConnectionPoint]
-
-    def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
-        logging.debug(f"System.__init__ {config} {args} {kwargs}")
-
-        # if there are "params" in the configuation, use those as defaults for
-        # kwargs and allow them to be overriden be additional kwargs
+        # kwargs and allow them to be overriden by additional kwargs
         # if config and "params" in config:
         #     kwargs = {**config["params"], **kwargs}
 
@@ -1266,6 +1246,9 @@ class System(S223System, Node):
                 raise RuntimeError("no label")
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
+
+        # no relationships to zones yet
+        self._serves_zones = {}
 
         # instantiate and associate all of the system connection points
         self._system_connection_points = {}
@@ -2477,17 +2460,11 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # stash this in the system
     from_system._serves_zones[to_zone.label] = to_zone
 
-    from_system._data_graph.add((from_system._node_iri, BRICK.feeds, to_zone._node_iri))
-    if INCLUDE_INVERSE:
-        from_system._data_graph.add(
-            (to_zone._node_iri, BRICK.isFedBy, from_system._node_iri)
-        )
-
-    return
-
-    #
-    #   skipped for now...
-    #
+    # from_system._data_graph.add((from_system._node_iri, BRICK.feeds, to_zone._node_iri))
+    # if INCLUDE_INVERSE:
+    #     from_system._data_graph.add(
+    #         (to_zone._node_iri, BRICK.isFedBy, from_system._node_iri)
+    #     )
 
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
@@ -2514,7 +2491,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
         raise RuntimeError(f"no candidate sources from {from_system} to {to_zone}")
     logging.debug(f"    - from_types: {from_types}")
 
-    # build a dict of mapped outlet connection points that are not
+    # build a dict of mapped inlet connection points that are not
     # already connected, organized by medium
     to_in = defaultdict(set)
     for attr, system_connection_point in to_zone._zone_connection_points.items():
@@ -3039,7 +3016,7 @@ class Equipment(Container, Connectable):
         logging.debug(f"Equipment.__init__ {config} {args} {kwargs}")
 
         # if there are "params" in the configuation, use those as defaults for
-        # kwargs and allow them to be overriden be additional kwargs
+        # kwargs and allow them to be overriden by additional kwargs
         # if config and "params" in config:
         #     kwargs = {**config["params"], **kwargs}
 

@@ -136,7 +136,10 @@ hd.bathroom_exhaust_fan.airOutlet >> outdoor
 supplyAir >> hd.vav1["VAV1_damper"].airInlet
 hd.vav1.hasPhysicalLocation = ps.private_office
 hd.vav1["VAV1_damper"]["damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
+
+# vav1 >> hs.hvac_zone_1
 hd.vav1["VAV1_HeatingCoil"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
+
 hd.vav1["VAV1_SA-F"].hasMeasurementLocation = hd.vav1["VAV1_damper"]["damper"].airInlet
 hd.vav1["VAV1_DA-T"].hasMeasurementLocation = hd.vav1["VAV1_HeatingCoil"].airOutlet
 hd.vav1["VAV1_ZN-T"].hasMeasurementLocation = hs.openoffice_hvac
@@ -146,12 +149,14 @@ hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
 supplyAir >> hd.vav2["VAV2_damper"].airInlet
 hd.vav2.hasPhysicalLocation = ps.kitchenette
 hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
+
+# vav2 >> hs.hvac_zone_2
 hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
+
 hd.vav2["VAV2_SA-F"].hasMeasurementLocation = hd.vav2["VAV2_damper"]["damper"].airInlet
 hd.vav2["VAV2_DA-T"].hasMeasurementLocation = hd.vav2["VAV2_HeatingCoil"].airOutlet
 hd.vav2["VAV2_ZN-T"].hasMeasurementLocation = hs.corridorSouth_hvac
 hd.vav2["VAV2_ZN-T"].hasPhysicalLocation = ps.corridor
-
 
 hs.hvac_zone_1.airInlet.mapsTo = hs.privateoffice_hvac.ductAirInlet
 hs.hvac_zone_1.airOutlet.mapsTo = hs.openoffice_hvac.ductAirOutlet
@@ -159,11 +164,10 @@ hs.hvac_zone_1.airOutlet.mapsTo = hs.openoffice_hvac.ductAirOutlet
 hs.hvac_zone_2.airInlet.mapsTo = hs.kitchenette_hvac.ductAirInlet
 hs.hvac_zone_2.airOutlet.mapsTo = hs.corridorSouth_hvac.airTransfer
 
-# Would be nice to make this when we create the system...
-hd.vav1.airInlet.mapsTo = hd.vav1["VAV1_damper"].airInlet
-hd.vav1.airOutlet.mapsTo = hd.vav1["VAV1_HeatingCoil"].airOutlet
-hd.vav2.airInlet.mapsTo = hd.vav2["VAV2_damper"].airInlet
-hd.vav2.airOutlet.mapsTo = hd.vav2["VAV2_HeatingCoil"].airOutlet
+# hd.vav1.airInlet.mapsTo = hd.vav1["VAV1_damper"].airInlet
+# hd.vav1.airOutlet.mapsTo = hd.vav1["VAV1_HeatingCoil"].airOutlet
+# hd.vav2.airInlet.mapsTo = hd.vav2["VAV2_damper"].airInlet
+# hd.vav2.airOutlet.mapsTo = hd.vav2["VAV2_HeatingCoil"].airOutlet
 
 hd.ahu.outsideAirInlet.mapsTo = hd.ahu["OADPR"].airInlet
 hd.ahu.returnAirInlet.mapsTo = hd.ahu["MADPR"].airInlet

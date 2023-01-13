@@ -87,10 +87,15 @@ class VAV(System):
     _class_iri = S223.VAV
     airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
+    damper: ElectricalActuatedProportionalDamper
 
     def __init__(self, config: Dict = {}, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+
+        self.damper = ElectricalActuatedProportionalDamper(label=self.label + ".damper")
+        self.airInlet.mapsTo = self.damper.airInlet
+        self.airOutlet.mapsTo = self.damper.airOutlet
 
 
 class VAV_Simple(System):

@@ -135,7 +135,7 @@ for floor in range(3, 5):
                 rtu
             ].returnOutlet
 
-        r_mat[rtu].serves_zone(core_zones[floor][rtu])
+        r_mat[rtu] >> core_zones[floor][rtu]
 
 uft_rooms = []
 ufts = {}
@@ -150,7 +150,7 @@ for i, row in zone_df.iterrows():  # iterating through UFTs
     )  # creating UFT with points, as well as zone and zone sensors
     # creating normal UFT's for each zone (not sure how to determine the different UFTs at this moment)
     uftzones[row["UFT"]] = UFTZone(label=row["UFT"] + ".zone")
-    ufts[row["UFT"]].serves_zone(uftzones[row["UFT"]])
+    ufts[row["UFT"]] >> uftzones[row["UFT"]]
     if bool(row["hasCO2"]):  # some zones have a CO2 concentration
         co2conc = CO2Concentration()
         uftzones[row["UFT"]].add_property(co2conc)

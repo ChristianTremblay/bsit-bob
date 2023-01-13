@@ -30,15 +30,6 @@ vav_template = {
 }
 vav = VAV(config=vav_template)
 
-# create a damper
-damper = Damper(label="VAV1.damper")
-vav > damper
-
-# reference the connections
-vav.airInlet.mapsTo = damper.airInlet
-vav.airOutlet.mapsTo = damper.airOutlet
-
-
 # connect the output of the VAV box to the input of the Zone
 vav.airOutlet >> zone.airInlet
 

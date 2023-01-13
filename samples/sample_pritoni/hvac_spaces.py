@@ -36,6 +36,8 @@ hvac_zone_1 > openoffice_hvac
 hvac_zone_1 > bathroom_hvac
 hvac_zone_1 > corridorNorth_hvac
 hvac_zone_1 > privateoffice_hvac
+# hvac_zone_1.airInlet.mapsTo = privateoffice_hvac.ductAirInlet
+# hvac_zone_1.airOutlet.mapsTo = openoffice_hvac.ductAirOutlet
 
 hvac_zone_2 = HVACZone(
     label="HVACZone2",
@@ -44,6 +46,8 @@ hvac_zone_2 = HVACZone(
 )
 hvac_zone_2 > kitchenette_hvac
 hvac_zone_2 > corridorSouth_hvac
+# hvac_zone_2.airInlet.mapsTo = kitchenette_hvac.ductAirInlet
+# hvac_zone_2.airOutlet.mapsTo = corridorSouth_hvac.ductAirOutlet
 
 if __name__ == "__main__":
     dump()
