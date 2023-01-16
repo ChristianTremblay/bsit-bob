@@ -5,7 +5,7 @@ from typing import Any
 from rdflib import XSD, Literal, URIRef
 
 from ..core import Equipment, ExternalReference, Node, bind_namespace
-from ..equipments.control.controller import Controller
+from ..equipment.control.controller import Controller
 from . import NetworkProfile
 
 BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")

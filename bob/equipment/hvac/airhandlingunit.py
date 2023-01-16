@@ -17,7 +17,7 @@ _namespace = BOB
 ahu_template = {
     "params": {},
     "sensors": {},
-    "equipments": {},
+    "equipment": {},
 }
 
 

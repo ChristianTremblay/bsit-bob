@@ -1882,16 +1882,16 @@ def connect_mm(connection: Connection, equipment: Equipment) -> None:
 
 
 @multimethod
-def connect_mm(connection: Connection, equipments: List[Equipment]) -> None:
+def connect_mm(connection: Connection, equipment_list: List[Equipment]) -> None:
     """Connection >> [Equipment]"""
-    logging.info(f"connect from {connection} to {equipments}")
+    logging.info(f"connect from {connection} to {equipment_list}")
 
     if CONNECTION_HAS_MEDIUM:
         if not (connection_medium := getattr(connection, "hasMedium", None)):
             raise AttributeError(f"{connection} hasMedium")
         logging.debug(f"    - connection_medium: {connection_medium}")
 
-    for equipment in equipments:
+    for equipment in equipment_list:
         # build a dict of inlet connection points that are not already connected
         # that have a compatible medium
         to_in = set()

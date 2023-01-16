@@ -26,10 +26,10 @@ from bob.core import (
     get_datagraph,
 )
 from bob.enum import Exhaust, Supply
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.coil import ChilledWaterCoil
-from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipments.hvac.fan import Fan
+from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipment.hvac.coil import ChilledWaterCoil
+from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipment.hvac.fan import Fan
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
@@ -61,7 +61,7 @@ config = {
             "unit": UNIT.DEG_C,
         },
     },
-    "equipments": {
+    "equipment": {
         ("SF-1", Fan): {
             "comment": "Supply Fan",
             "electricalInlet": ElectricalInletConnectionPoint,

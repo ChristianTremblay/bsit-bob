@@ -446,7 +446,7 @@ SinglePhasePanel_config = {
         "voltage": 120_240,
     },
     "sensors": {},
-    "equipments": {
+    "equipment": {
         ("MainBreaker", TwoPolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,
@@ -475,7 +475,7 @@ ThreePhasePanel_config = {
         "voltage": 575,
     },
     "sensors": {},
-    "equipments": {
+    "equipment": {
         ("MainBreaker", ThreePolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,

@@ -27,7 +27,7 @@ _namespace = BOB
 chilledWaterCoil_template = {
     "params": {"label": "Name", "comment": "Description"},
     "sensors": {},
-    "equipments": {("valve", Equipment): {"comment": "SubDev comment"}},
+    "equipment": {("valve", Equipment): {"comment": "SubDev comment"}},
 }
 """
 # SEMANTIC QUESTION

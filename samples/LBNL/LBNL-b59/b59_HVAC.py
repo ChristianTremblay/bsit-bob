@@ -8,13 +8,13 @@ from header import lbnl_header
 from bob.connections.air import *
 from bob.connections.water import *
 from bob.core import *
-from bob.equipments.archives.coolingcoil import ChilledWaterCoil, ChilledWaterCoil2
-from bob.equipments.archives.heatingcoil import HotWaterCoil2
-from bob.equipments.hvac.airflowstation import AirFlowMonitor
-from bob.equipments.hvac.damper import Damper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.vfd import VFD
+from bob.equipment.archives.coolingcoil import ChilledWaterCoil, ChilledWaterCoil2
+from bob.equipment.archives.heatingcoil import HotWaterCoil2
+from bob.equipment.hvac.airflowstation import AirFlowMonitor
+from bob.equipment.hvac.damper import Damper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.vfd import VFD
 from bob.properties.electricity import ElectricPowerkW
 from bob.properties.flow import Flow
 from bob.properties.ratio import Percent

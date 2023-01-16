@@ -8,7 +8,7 @@ from bob.core import Equipment as _Equipment
 from bob.core import Node as _Node
 from bob.core import PhysicalSpace as _PhysicalSpace
 from bob.core import bind_namespace
-from bob.equipments.hvac.fan import Fan as _Fan
+from bob.equipment.hvac.fan import Fan as _Fan
 
 _namespace = REC = bind_namespace("rec", "https://w3id.org/rec#")
 

@@ -38,19 +38,19 @@ from bob.core import (
     bind_model_namespace,
     dump,
 )
-from bob.equipments.electricity.vfd import VFD
-from bob.equipments.hvac.actuator import ElectricalProportionalActuator
-from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipments.hvac.fan import Fan, FanWithVFD
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.gas import GasMonitor
-from bob.equipments.hvac.stats import (
+from bob.equipment.electricity.vfd import VFD
+from bob.equipment.hvac.actuator import ElectricalProportionalActuator
+from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipment.hvac.fan import Fan, FanWithVFD
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.gas import GasMonitor
+from bob.equipment.hvac.stats import (
     HighStaticPressureStat,
     NetworkRoomSensor,
     NetworkThermostat,
 )
-from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
+from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
 from bob.functions import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from bob.functions.g36 import G36Sequence
 from bob.properties import Flow, PercentCommand, Temperature
@@ -99,7 +99,7 @@ hot_water_valve_template = {
         ("position", PercentCommand): {},
         ("flowCoefficient", Gallons): {},
     },
-    "equipments": {("actuator", ElectricalProportionalActuator): {}},
+    "equipment": {("actuator", ElectricalProportionalActuator): {}},
 }
 htg_coil = HotWaterCoil(label="HWC", comment="Hot Water Coil")
 htg_vlv = TwoWayActuatedProportionalValve(
@@ -124,7 +124,7 @@ chilled_water_valve_template = {
         ("flowCoefficient", Gallons): {},
         ("position", PercentCommand): {},
     },
-    "equipments": {("actuator", ElectricalProportionalActuator): {}},
+    "equipment": {("actuator", ElectricalProportionalActuator): {}},
 }
 clg_coil = ChilledWaterCoil(label="CWC", comment="Chilled Water Coil")
 clg_vlv = TwoWayActuatedProportionalValve(

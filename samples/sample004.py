@@ -3,8 +3,8 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import bind_model_namespace, dump
-from bob.equipments.hvac.damper import Damper
-from bob.equipments.hvac.vav import VAV
+from bob.equipment.hvac.damper import Damper
+from bob.equipment.hvac.vav import VAV
 from bob.space.hvac import HVACSpace, HVACZone
 
 model_name = Path(__file__).stem
@@ -26,7 +26,7 @@ zone.airOutlet.mapsTo = domain_space.ductAirOutlet
 vav_template = {
     "params": {"label": "VAV1", "comment": "A VAV Box as a system"},
     "sensors": {},
-    "equipments": {},
+    "equipment": {},
 }
 vav = VAV(config=vav_template)
 

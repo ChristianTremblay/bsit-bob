@@ -10,20 +10,20 @@ from bob.connections.electricity import (
     EthernetBidirectionalConnectionPoint,
 )
 from bob.core import UNIT, Role, bind_model_namespace, dump
-from bob.equipments.architectural import Window
-from bob.equipments.electricity.starter import MotorStarter
-from bob.equipments.electricity.vfd import VFD
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.boiler import ElectricalHotWaterBoiler
-from bob.equipments.hvac.chiller import Chiller
-from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipments.hvac.fan import Fan, FanWithStarter, FanWithVFD
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.pump import PumpWithStarter
-from bob.equipments.hvac.stats import AirDifferentialStaticPressureSensor
-from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve
-from bob.equipments.hvac.vav import VAV
+from bob.equipment.architectural import Window
+from bob.equipment.electricity.starter import MotorStarter
+from bob.equipment.electricity.vfd import VFD
+from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
+from bob.equipment.hvac.chiller import Chiller
+from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipment.hvac.fan import Fan, FanWithStarter, FanWithVFD
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.pump import PumpWithStarter
+from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
+from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve
+from bob.equipment.hvac.vav import VAV
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
@@ -68,7 +68,7 @@ ahu_template = {
             "comment": "Return Duct Static Pressure (S1)",
         },
     },
-    "equipments": {
+    "equipment": {
         ("RF", FanWithVFD): {
             "comment": "Return Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
@@ -110,7 +110,7 @@ vav1_config = {
             "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },
-    "equipments": {
+    "equipment": {
         ("VAV1_damper", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box 1 Air Damper (actuator:Ax)"
         },
@@ -136,7 +136,7 @@ vav2_config = {
             "comment": "Zone Air Temperature Sensor, which is a thermostats...",
         },
     },
-    "equipments": {
+    "equipment": {
         ("VAV2_damper", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box 2 Air Damper (actuator:A6)"
         },

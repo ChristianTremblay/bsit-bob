@@ -23,13 +23,13 @@ from bob.core import (
     quantitykind,
     unit,
 )
-from bob.equipments.archives.coolingcoil import ChilledWaterCoil, ChilledWaterCoil2
-from bob.equipments.archives.heatingcoil import HotWaterCoil2
-from bob.equipments.hvac.airflowstation import AirFlowMonitor
-from bob.equipments.hvac.damper import Damper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.vfd import VFD
+from bob.equipment.archives.coolingcoil import ChilledWaterCoil, ChilledWaterCoil2
+from bob.equipment.archives.heatingcoil import HotWaterCoil2
+from bob.equipment.hvac.airflowstation import AirFlowMonitor
+from bob.equipment.hvac.damper import Damper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.vfd import VFD
 from bob.property import *
 from bob.role import Exhaust, Return, Supply
 

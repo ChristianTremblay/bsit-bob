@@ -1,7 +1,7 @@
 from typing import Dict
 
 from bob.enum import HandOffAutoEnum
-from bob.equipments.electricity import _MotorStarter
+from bob.equipment.electricity import _MotorStarter
 from bob.properties.electricity import ElectricPower
 from bob.properties.ratio import Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus

@@ -1,7 +1,7 @@
 from ..core import P223, S223, Equipment, LocationReference, Property, PropertyReference
 
 """
-Depending on the nature of equipments, some are considered s223:System, other
+Depending on the nature of equipment, some are considered s223:System, other
 s223:Equipment. 
 
 This lead to potential import issues when using the library as the user will

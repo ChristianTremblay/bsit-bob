@@ -40,15 +40,15 @@ from bob.core import (
     bind_model_namespace,
     dump,
 )
-from bob.equipments.architectural import Window
-from bob.equipments.electricity.starter import MotorStarter
-from bob.equipments.hvac.actuator import ElectricalProportionalActuator
-from bob.equipments.hvac.coil import HotWaterCoil
-from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.gas import GasMonitor
-from bob.equipments.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve
+from bob.equipment.architectural import Window
+from bob.equipment.electricity.starter import MotorStarter
+from bob.equipment.hvac.actuator import ElectricalProportionalActuator
+from bob.equipment.hvac.coil import HotWaterCoil
+from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.gas import GasMonitor
+from bob.equipment.hvac.stats import NetworkRoomSensor, NetworkThermostat
+from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve
 from bob.functions import (
     AnalogInput,
     AnalogOutput,
@@ -112,7 +112,7 @@ valve2w_template = {
         "onOffInlet": OnOffSignalInletConnectionPoint,
     },
     "properties": {("flowCoefficient", Gallons): {}},
-    "equipments": {("actuator", ElectricalProportionalActuator): {}},
+    "equipment": {("actuator", ElectricalProportionalActuator): {}},
 }
 
 vav_system_template = {
@@ -139,7 +139,7 @@ vav_system_template = {
         ("fanStatus", OnOffStatus): {},
         ("fanCommand", OnOffCommand): {},
     },
-    "equipments": {
+    "equipment": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
         ("DPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with electrical actuator"
@@ -161,7 +161,7 @@ vav_system_template = {
 
 class VAV_FIGA3(System):
     """
-    This is a clone of VAV found in from bob.equipments.hvac.vav VAV_Simple
+    This is a clone of VAV found in from bob.equipment.hvac.vav VAV_Simple
     """
 
     supplyAirInlet: AirInletSystemConnectionPoint
