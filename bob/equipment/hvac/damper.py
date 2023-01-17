@@ -84,7 +84,7 @@ class FireDamper(Damper):
 # ======
 
 actuated_damper_template = {
-    "equipments": {
+    "equipment": {
         # ("actuator", BaseActuator): {},
         # ("damper", Damper): {},
     },
@@ -116,7 +116,7 @@ class DamperAndActuator(System):
 
 
 electrical_actuated_proportional_damper_template = {
-    "equipments": {
+    "equipment": {
         ("actuator", ElectricalProportionalActuator): {},
         ("damper", Damper): {},
     },
@@ -124,7 +124,7 @@ electrical_actuated_proportional_damper_template = {
 }
 
 electrical_actuated_onoff_damper_template = {
-    "equipments": {("actuator", ElectricalOnOffActuator): {}, ("damper", Damper): {}},
+    "equipment": {("actuator", ElectricalOnOffActuator): {}, ("damper", Damper): {}},
     "properties": {},
 }
 
@@ -153,14 +153,14 @@ class ElectricalActuatedOnOffDamper(DamperAndActuator):
 
 
 pneumatic_actuated_proportional_damper_template = {
-    "equipments": {
+    "equipment": {
         ("actuator", PneumaticProportionalActuator): {},
         ("damper", Damper): {},
     },
     "properties": {},
 }
 pneumatic_actuated_onoff_damper_template = {
-    "equipments": {("actuator", PneumaticOnOffActuator): {}, ("damper", Damper): {}},
+    "equipment": {("actuator", PneumaticOnOffActuator): {}, ("damper", Damper): {}},
     "properties": {},
 }
 

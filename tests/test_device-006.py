@@ -8,7 +8,7 @@ from bob.connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
 )
 from bob.core import bind_model_namespace, dump
-from bob.equipments.electricity.vfd import VFD
+from bob.equipment.electricity.vfd import VFD
 from bob.properties import (
     HP,
     RPM,

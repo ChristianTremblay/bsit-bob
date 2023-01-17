@@ -3,12 +3,12 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob.core import bind_model_namespace, dump
-from bob.equipments.hvac.boiler import (
+from bob.equipment.hvac.boiler import (
     ElectricalHotWaterBoiler,
     HotWaterBoiler,
     NaturalGasHotWaterBoiler,
 )
-from bob.equipments.hvac.coil import (
+from bob.equipment.hvac.coil import (
     ChilledWaterCoil,
     ElectricalHeatingCoil,
     HotWaterCoil,

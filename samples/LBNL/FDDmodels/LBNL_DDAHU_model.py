@@ -37,12 +37,12 @@ from bob.core import (
     dump,
     p223,
 )
-from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
-from bob.equipments.archives.heatingcoil import HotWaterCoil2
-from bob.equipments.electricity.vfd import VFD
-from bob.equipments.hvac.damper import Damper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
+from bob.equipment.archives.coolingcoil import ChilledWaterCoil2
+from bob.equipment.archives.heatingcoil import HotWaterCoil2
+from bob.equipment.electricity.vfd import VFD
+from bob.equipment.hvac.damper import Damper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
 from bob.externalreference.timeseries import TimeSeriesReference
 from bob.properties.electricity import ElectricPowerW
 from bob.properties.ratio import PercentAngularVelocity
@@ -77,7 +77,7 @@ fan_template = {
             "comment": "Filter Differential Pressure Sensor"
         },
     },
-    "equipments": {},
+    "equipment": {},
 }
 
 vfd_template = {
@@ -88,7 +88,7 @@ vfd_template = {
         "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
     },
     "sensors": {},
-    "equipments": {},
+    "equipment": {},
 }
 
 # will need my own damper since this has no control point properties like g36
@@ -102,7 +102,7 @@ damper_template = {
         ("vav_cfm", AirFlowSensor): {},
         ("vav_dp", AirStaticPressureSensor): {},
     },
-    "equipments": {},
+    "equipment": {},
 }
 
 mixing_box_template = {
@@ -110,7 +110,7 @@ mixing_box_template = {
     "sensors": {
         ("vav_eat", AirTemperatureSensor): {"comment": "Air Temperature Sensor"}
     },
-    "equipments": {},
+    "equipment": {},
 }
 
 

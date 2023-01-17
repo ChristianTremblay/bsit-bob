@@ -30,11 +30,11 @@ from bob.core import (
     dump,
 )
 from bob.enum import Exhaust, Supply
-from bob.equipments.hvac import Fan
-from bob.equipments.hvac.airflowstation import AirFlowMonitor
-from bob.equipments.hvac.coil import ChilledWaterCoil
-from bob.equipments.hvac.damper import Damper
-from bob.equipments.hvac.filter import Filter
+from bob.equipment.hvac import Fan
+from bob.equipment.hvac.airflowstation import AirFlowMonitor
+from bob.equipment.hvac.coil import ChilledWaterCoil
+from bob.equipment.hvac.damper import Damper
+from bob.equipment.hvac.filter import Filter
 from bob.properties.temperature import Temperature
 from bob.space.hvac import HVACZone
 

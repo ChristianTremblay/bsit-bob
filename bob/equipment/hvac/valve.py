@@ -153,7 +153,7 @@ class TwoWayActuatedValve(System):
 
 
 electrical_actuated_proportional_2w_valve_template = {
-    "equipments": {
+    "equipment": {
         ("actuator", ElectricalProportionalActuator): {},
         ("valve", TwoWayValve): {},
     },
@@ -174,7 +174,7 @@ class TwoWayActuatedProportionalValve(TwoWayActuatedValve):
 
 
 electrical_actuated_onoff_2w_valve_template = {
-    "equipments": {
+    "equipment": {
         ("actuator", ElectricalOnOffActuator): {},
         ("valve", TwoWayValve): {},
     },
@@ -219,7 +219,7 @@ class ThreeWayMixingSystem(ThreeWayActuatedValve):
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
-            {"equipments": {("valve", ThreeWayValveMixing): {}}}, config
+            {"equipment": {("valve", ThreeWayValveMixing): {}}}, config
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
@@ -236,7 +236,7 @@ class ThreeWayDivertingSystem(ThreeWayActuatedValve):
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
-            {"equipments": {("valve", ThreeWayValveDiverting): {}}}, config
+            {"equipment": {("valve", ThreeWayValveDiverting): {}}}, config
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
@@ -250,7 +250,7 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayMixingSystem):
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
-            {"equipments": {("actuator", ElectricalProportionalActuator): {}}}, config
+            {"equipment": {("actuator", ElectricalProportionalActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(
@@ -264,7 +264,7 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
-            {"equipments": {("actuator", ElectricalOnOffActuator): {}}}, config
+            {"equipment": {("actuator", ElectricalOnOffActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(f"ThreeWayMixingActuatedOnOffValve.__init__ {_config} {kwargs}")
@@ -276,7 +276,7 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayDivertingSystem):
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
-            {"equipments": {("actuator", ElectricalProportionalActuator): {}}}, config
+            {"equipment": {("actuator", ElectricalProportionalActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(
@@ -290,7 +290,7 @@ class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
-            {"equipments": {("actuator", ElectricalOnOffActuator): {}}}, config
+            {"equipment": {("actuator", ElectricalOnOffActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
         logging.debug(

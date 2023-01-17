@@ -2,9 +2,9 @@ from pathlib import Path
 
 from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
-from bob.equipments.electricity.distribution import *
-from bob.equipments.electricity.meter import ThreePhaseElectricalMeter
-from bob.equipments.electricity.switch import DimmableSwitch, TimerSwitch
+from bob.equipment.electricity.distribution import *
+from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
+from bob.equipment.electricity.switch import DimmableSwitch, TimerSwitch
 from bob.properties.time import Hour
 
 model_name = Path(__file__).stem
@@ -18,7 +18,7 @@ mainentry_panel_config = {
         "voltage": "575",
     },
     "sensors": {},
-    "equipments": {
+    "equipment": {
         ("MainBreaker", ThreePolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 400,
@@ -81,7 +81,7 @@ distribution_panel_config = {
         "voltage": "120_240",
     },
     "sensors": {},
-    "equipments": {
+    "equipment": {
         ("MainBreaker", TwoPolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,

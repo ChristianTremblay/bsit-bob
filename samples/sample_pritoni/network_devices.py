@@ -7,8 +7,8 @@ import physical_spaces as ps
 
 from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
-from bob.equipments.network.firewall import EthernetFirewall, internet
-from bob.equipments.network.switch import EthernetSwitch
+from bob.equipment.network.firewall import EthernetFirewall, internet
+from bob.equipment.network.switch import EthernetSwitch
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

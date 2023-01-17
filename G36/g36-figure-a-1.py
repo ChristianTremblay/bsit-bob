@@ -31,12 +31,12 @@ from bob.core import (
     dump,
 )
 from bob.enum import AnalogSignalTypeEnum
-from bob.equipments.architectural import Window
-from bob.equipments.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
-from bob.equipments.control.controller import Controller
-from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipments.hvac.gas import GasMonitor
-from bob.equipments.hvac.stats import NetworkRoomSensor, NetworkThermostat
+from bob.equipment.architectural import Window
+from bob.equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.equipment.control.controller import Controller
+from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipment.hvac.gas import GasMonitor
+from bob.equipment.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.functions import (
     FunctionBlock,
     G36AnalogInput,
@@ -124,7 +124,7 @@ vav_system_template = {
         ("damperPosition", PercentCommand): {},
         ("airFlow", Flow): {"unit": UNIT["L-PER-SEC"]},
     },
-    "equipments": {
+    "equipment": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
         ("DPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with electrical actuator"
@@ -139,7 +139,7 @@ vav_system_template = {
 
 class VAV_FIGA1(System):
     """
-    This is a clone of VAV found in from bob.equipments.hvac.vav VAV_Simple
+    This is a clone of VAV found in from bob.equipment.hvac.vav VAV_Simple
     """
 
     airInlet: AirInletSystemConnectionPoint

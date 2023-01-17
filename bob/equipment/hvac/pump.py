@@ -2,8 +2,8 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.equipments.electricity.starter import MotorStarter
-from bob.equipments.electricity.vfd import VFD
+from bob.equipment.electricity.starter import MotorStarter
+from bob.equipment.electricity.vfd import VFD
 from bob.properties.ratio import PercentCommand
 
 from ...connections.electricity import (
@@ -61,7 +61,7 @@ class Pump(Equipment):
 
 
 starter_addon_template = {
-    "equipments": {
+    "equipment": {
         ("starter", MotorStarter): {
             "config": {
                 "cp": {
@@ -98,7 +98,7 @@ class PumpWithStarter(Pump):
 
 
 VFD_addon_template = {
-    "equipments": {("vfd", VFD): {}},
+    "equipment": {("vfd", VFD): {}},
     "properties": {},
 }
 

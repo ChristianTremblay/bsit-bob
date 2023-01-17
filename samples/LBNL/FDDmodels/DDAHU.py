@@ -36,14 +36,14 @@ from bob.core import (
     quantitykind,
     unit,
 )
-from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
-from bob.equipments.archives.heatingcoil import HotWaterCoil2
+from bob.equipment.archives.coolingcoil import ChilledWaterCoil2
+from bob.equipment.archives.heatingcoil import HotWaterCoil2
 
-# from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.damper import Damper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.vfd import VFD
+# from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipment.hvac.damper import Damper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.vfd import VFD
 from bob.externalreference.timeseries import TimeSeriesReference
 from bob.properties.electricity import ElectricPower, ElectricPowerkW, ElectricPowerW
 from bob.properties.ratio import Percent, PercentAngularVelocity
@@ -205,7 +205,7 @@ vfd_template = {
         "speed_reference": Percent(hasExternalReference=TimeSeriesReference()),
     },
     "sensors": {},
-    "equipments": {},
+    "equipment": {},
 }
 fan_template = {
     "params": {
@@ -218,7 +218,7 @@ fan_template = {
             "comment": "Filter Differential Pressure Sensor"
         },
     },
-    "equipments": {("vfd", VFD): {"config": vfd_template}},
+    "equipment": {("vfd", VFD): {"config": vfd_template}},
 }
 
 hot_deck_template = {
@@ -229,7 +229,7 @@ hot_deck_template = {
         ("cfm", AirFlowSensor): {},
         ("temp", AirTemperatureSensor): {},
     },
-    "equipments": {
+    "equipment": {
         ("coil", HotWaterCoil2): {},
         ("in_filter", Filter): {},
         ("supply_fan", ddahu_fan): {"config": fan_template},
@@ -244,7 +244,7 @@ cold_deck_template = {
         ("cfm", AirFlowSensor): {},
         ("temp", AirTemperatureSensor): {},
     },
-    "equipments": {
+    "equipment": {
         ("coil", ChilledWaterCoil2): {},
         ("in_filter", Filter): {},
         ("supply_fan", ddahu_fan): {},
@@ -261,7 +261,7 @@ vav_damper_template = {
         ("vav_cfm", AirFlowSensor): {},
         ("vav_dp", AirStaticPressureSensor): {},
     },
-    "equipments": {},
+    "equipment": {},
 }
 
 vav_template = {
@@ -272,7 +272,7 @@ vav_template = {
             "hasExternalReference": TimeSeriesReference,
         },
     },
-    "equipments": {
+    "equipment": {
         ("hot_dmp", Damper): {"config": vav_damper_template},
         ("cold_dmp", Damper): {"config": vav_damper_template},
         ("mb", VAV_Mixing_Box): {},
@@ -292,7 +292,7 @@ ddahu_template = {
         ("re_humd", AirHumiditySensor): {},
         ("re_cfm", AirFlowSensor): {},
     },
-    "equipments": {
+    "equipment": {
         ("oa_damper", Damper): {"comment": ".oa_damper"},
         ("recirc_damper", Damper): {"comment": ".recirc_damper"},
         ("exhaust_damper", Damper): {"comment": ".ea_damper"},

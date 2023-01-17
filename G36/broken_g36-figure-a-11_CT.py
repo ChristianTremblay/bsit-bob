@@ -31,16 +31,16 @@ from bob.core import (
     contains_mm,
     dump,
 )
-from bob.equipments.electricity.vfd import VFD
-from bob.equipments.hvac.coil import HotWaterCoil
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.stats import HighStaticPressureStat
-from bob.equipments.hvac.valve import TwoWayValve
+from bob.equipment.electricity.vfd import VFD
+from bob.equipment.hvac.coil import HotWaterCoil
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.stats import HighStaticPressureStat
+from bob.equipment.hvac.valve import TwoWayValve
 from bob.externalreference.bacnet import BACnetDevice, BACnetReference
 from bob.functions import InputConnector
 
-# from bob.equipments.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
+# from bob.equipment.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
 from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
 from bob.properties.ratio import Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
@@ -60,7 +60,7 @@ fan_template = {
         "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
     },
     "sensors": {},
-    "equipments": {},
+    "equipment": {},
 }
 
 vfd_template = {
@@ -74,7 +74,7 @@ vfd_template = {
         "speed_reference": 0,
     },
     "sensors": {},
-    "equipments": {},
+    "equipment": {},
 }
 
 

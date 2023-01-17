@@ -7,14 +7,14 @@ from bob.connections.air import *
 from bob.connections.electricity import *
 from bob.connections.light import LightVisibleConnection
 from bob.core import bind_model_namespace, data_graph, dump, schema_graph
-from bob.equipments.architectural import Window
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.vav import VAV
-from bob.equipments.lighting.light import Luminaire
+from bob.equipment.architectural import Window
+from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.vav import VAV
+from bob.equipment.lighting.light import Luminaire
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.temperature import AirTemperatureSensor

@@ -3,7 +3,7 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.equipments.electricity.vfd import VFD
+from bob.equipment.electricity.vfd import VFD
 from bob.properties.flow import Flow
 from bob.properties.ratio import Percent, PercentCommand
 
@@ -86,7 +86,7 @@ class Fan(Equipment):
 
 
 starter_addon_template = {
-    "equipments": {
+    "equipment": {
         ("starter", MotorStarter): {
             "config": {
                 "cp": {
@@ -123,7 +123,7 @@ class FanWithStarter(Fan):
 
 
 VFD_addon_template = {
-    "equipments": {("vfd", VFD): {}},
+    "equipment": {("vfd", VFD): {}},
     "properties": {},
 }
 

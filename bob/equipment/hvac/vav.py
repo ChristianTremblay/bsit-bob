@@ -14,10 +14,10 @@ from ...connections.air import (
 )
 from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
 from ...core import BOB, P223, S223, UNIT, Equipment, PropertyReference, System
-from ...equipments.hvac.coil import HotWaterCoil
-from ...equipments.hvac.damper import Damper, ElectricalActuatedProportionalDamper
-from ...equipments.hvac.fan import Fan
-from ...equipments.hvac.valve import TwoWayActuatedProportionalValve
+from ...equipment.hvac.coil import HotWaterCoil
+from ...equipment.hvac.damper import Damper, ElectricalActuatedProportionalDamper
+from ...equipment.hvac.fan import Fan
+from ...equipment.hvac.valve import TwoWayActuatedProportionalValve
 from ...sensor.flow import AirFlowSensor
 
 _namespace = BOB
@@ -35,7 +35,7 @@ vav_system_template = {
             "comment": "Temperature of space",
         },
     },
-    "equipments": {
+    "equipment": {
         ("ACTDPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"}
     },
 }
@@ -53,7 +53,7 @@ vav_dual_template = {
             "comment": "Temperature of space",
         },
     },
-    "equipments": {
+    "equipment": {
         ("ACTDPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with its actuator"
         },
@@ -76,7 +76,7 @@ vav_withreheat_template = {
             "comment": "Temperature of space",
         },
     },
-    "equipments": {
+    "equipment": {
         ("ACTDPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
         ("HWC", HotWaterCoil): {"comment": "VAV Hot Water Coil"},
     },

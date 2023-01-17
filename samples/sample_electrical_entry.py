@@ -12,8 +12,8 @@ from bob.connections.occupancy import (
     OccupancyOutletSystemConnectionPoint,
 )
 from bob.core import P223, QUANTITYKIND, UNIT, bind_model_namespace, dump, get_datagraph
-from bob.equipments.architectural import Window
-from bob.equipments.electricity.distribution import (
+from bob.equipment.architectural import Window
+from bob.equipment.electricity.distribution import (
     SinglePhaseDistributionPanel,
     SinglePoleCircuitBreaker,
     ThreePhaseDistributionPanel,
@@ -23,13 +23,13 @@ from bob.equipments.electricity.distribution import (
     TwoPolesCircuitBreaker,
     TwoPolesMainCircuitBreaker,
 )
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipments.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.vav import VAV
-from bob.equipments.lighting.light import Luminaire
+from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.vav import VAV
+from bob.equipment.lighting.light import Luminaire
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.temperature import AirTemperatureSensor
@@ -49,7 +49,7 @@ mainentry_panel_config = {
         "voltage": "575",
     },
     "sensors": {},
-    "equipments": {
+    "equipment": {
         ("MainBreaker", ThreePolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 400,
@@ -82,7 +82,7 @@ distribution_panel_config = {
         "voltage": "120_240",
     },
     "sensors": {},
-    "equipments": {
+    "equipment": {
         ("MainBreaker", TwoPolesMainCircuitBreaker): {
             "comment": "Main breaker of panel",
             "amps": 200,

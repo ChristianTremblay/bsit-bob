@@ -15,27 +15,27 @@ from bob.core import (
     dump,
     get_datagraph,
 )
-from bob.equipments.architectural import Window
-from bob.equipments.electricity.vfd import VFD
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.chiller import AgnosticChiller
-from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
-from bob.equipments.hvac.compressor import AirCompressor
-from bob.equipments.hvac.damper import (
+from bob.equipment.architectural import Window
+from bob.equipment.electricity.vfd import VFD
+from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipment.hvac.chiller import AgnosticChiller
+from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil, WaterCoil
+from bob.equipment.hvac.compressor import AirCompressor
+from bob.equipment.hvac.damper import (
     Damper,
     ElectricalActuatedOnOffDamper,
     ElectricalActuatedProportionalDamper,
     PneumaticActuatedOnOffDamper,
 )
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.geothermal import GeothermalWell
-from bob.equipments.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
-from bob.equipments.hvac.humidifier import Humidifier, SteamPipe
-from bob.equipments.hvac.pump import Pump
-from bob.equipments.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.equipments.hvac.vav import VAV
-from bob.equipments.lighting.light import Luminaire
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.geothermal import GeothermalWell
+from bob.equipment.hvac.heatexchanger import Accumulator, Accumulator4SidesDuct
+from bob.equipment.hvac.humidifier import Humidifier, SteamPipe
+from bob.equipment.hvac.pump import Pump
+from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
+from bob.equipment.hvac.vav import VAV
+from bob.equipment.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
 from bob.sensor.humidity import AirHumiditySensor

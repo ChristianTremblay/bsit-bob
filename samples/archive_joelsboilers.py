@@ -18,17 +18,17 @@ from bob.core import (
     dump,
     get_datagraph,
 )
-from bob.equipments.architectural import Window
-from bob.equipments.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipments.hvac.boiler import ElectricalHotWaterBoiler, HotWaterBoiler
-from bob.equipments.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipments.hvac.damper import ElectricalActuatedDamper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.pump import Pump
-from bob.equipments.hvac.valve import TwoWayValve
-from bob.equipments.hvac.vav import VAV
-from bob.equipments.lighting.light import Luminaire
+from bob.equipment.architectural import Window
+from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler, HotWaterBoiler
+from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipment.hvac.damper import ElectricalActuatedDamper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.pump import Pump
+from bob.equipment.hvac.valve import TwoWayValve
+from bob.equipment.hvac.vav import VAV
+from bob.equipment.lighting.light import Luminaire
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone

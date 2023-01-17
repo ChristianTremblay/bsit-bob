@@ -20,12 +20,12 @@ from bob.connections.electricity import (
     Electricity_575V_60HzOutletConnectionPoint,
 )
 from bob.core import *
-from bob.equipments.archives.coolingcoil import ChilledWaterCoil2
-from bob.equipments.archives.heatingcoil import HotWaterCoil2
-from bob.equipments.hvac.damper import Damper
-from bob.equipments.hvac.fan import Fan
-from bob.equipments.hvac.filter import Filter
-from bob.equipments.hvac.vfd import VFD
+from bob.equipment.archives.coolingcoil import ChilledWaterCoil2
+from bob.equipment.archives.heatingcoil import HotWaterCoil2
+from bob.equipment.hvac.damper import Damper
+from bob.equipment.hvac.fan import Fan
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.vfd import VFD
 from bob.externalreference.timeseries import TimeSeriesReference
 from bob.properties.electricity import ElectricPowerW
 from bob.properties.ratio import PercentAngularVelocity
