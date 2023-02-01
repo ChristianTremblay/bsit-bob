@@ -88,8 +88,8 @@ class BACnetReference(ExternalReference):
             if property_array_index:
                 kwargs["propertyArrayIndex"] = int(property_array_index)
 
-        if object_type := kwargs.get("objectType", None):
-            if not isinstance(object_type, URIRef):
+        object_type = kwargs.get("objectType", None)
+        if object_type and not isinstance(object_type, URIRef):
                 kwargs["objectType"] = BACNET["ObjectType-" + object_type]
 
         super().__init__(**kwargs)
