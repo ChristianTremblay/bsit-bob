@@ -7,12 +7,15 @@
 [ -d build ] && rm -Rfv build
 
 for version in 3.7 3.8 3.9 3.10; do
-    if [ -a "`which python$version`" ]; then
-        python$version setup.py bdist_egg
-        python$version setup.py bdist_wheel
+    latest=`which python$version`
+    if [ -a "$latest" ]; then
+        $latest setup.py bdist_egg
         rm -Rfv build/
     fi
 done
+
+# use the latest version to build the wheel
+$latest setup.py bdist_wheel
 
 echo
 echo	This is what was built...
