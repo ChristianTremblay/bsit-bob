@@ -49,7 +49,7 @@ parser.add_argument(
     help="run both RDFS and OWLRL semantics",
 )
 
-# add an option to run both RDFS and OWLRL semantics
+# add an option to clean out 'useless' statements
 parser.add_argument(
     "--clean",
     action="store_true",
