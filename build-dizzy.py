@@ -74,7 +74,7 @@ def cname(uri):
 
 
 g = Graph()
-g.parse("rec/Source/SHACL/Brick/Brick.ttl", format="turtle")
+g.parse("/home/joel/bacnet-si-wg/rec/Source/SHACL/Brick/Brick.ttl", format="turtle")
 
 for s, _, o in g.triples((None, RDFS.subClassOf, None)):
     if (s not in BRICK) or (o not in BRICK):

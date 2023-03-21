@@ -1,4 +1,3 @@
-
 """
 Dizzy - Brick Schema Classes for Bob
 """
@@ -10,15 +9,17 @@ from bob.equipment.hvac.fan import Fan as _Fan
 _namespace = BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")
 
 
-
 class Class(_Node):
     pass
+
 
 class Entity(_Node):
     pass
 
+
 class Collection(Entity, Class):
     pass
+
 
 class Loop(Collection):
     """
@@ -27,12 +28,14 @@ class Loop(Collection):
 
     pass
 
+
 class Air_Loop(Loop):
     """
     The set of connected equipment serving one path of air
     """
 
     pass
+
 
 class Water_Loop(Loop):
     """
@@ -42,6 +45,7 @@ class Water_Loop(Loop):
 
     pass
 
+
 class Chilled_Water_Loop(Water_Loop):
     """
     A collection of equipment that transport and regulate chilled water
@@ -50,8 +54,10 @@ class Chilled_Water_Loop(Water_Loop):
 
     pass
 
+
 class Domestic_Water_Loop(Water_Loop):
     pass
+
 
 class Hot_Water_Loop(Water_Loop):
     """
@@ -61,8 +67,10 @@ class Hot_Water_Loop(Water_Loop):
 
     pass
 
+
 class PV_Array(Collection):
     pass
+
 
 class Photovoltaic_Array(Collection):
     """
@@ -71,12 +79,14 @@ class Photovoltaic_Array(Collection):
 
     pass
 
+
 class Portfolio(Collection):
     """
     A collection of sites
     """
 
     pass
+
 
 class System(Collection):
     """
@@ -88,6 +98,7 @@ class System(Collection):
 
     pass
 
+
 class Domestic_Hot_Water_System(System):
     """
     The equipment, devices and conduits that handle the production and
@@ -95,6 +106,7 @@ class Domestic_Hot_Water_System(System):
     """
 
     pass
+
 
 class Electrical_System(System):
     """
@@ -104,6 +116,7 @@ class Electrical_System(System):
 
     pass
 
+
 class Energy_System(Electrical_System):
     """
     A collection of devices that generates, stores or transports
@@ -112,12 +125,14 @@ class Energy_System(Electrical_System):
 
     pass
 
+
 class Energy_Generation_System(Energy_System):
     """
     A collection of devices that generates electricity
     """
 
     pass
+
 
 class PV_Generation_System(Energy_Generation_System):
     """
@@ -126,12 +141,14 @@ class PV_Generation_System(Energy_Generation_System):
 
     pass
 
+
 class Energy_Storage_System(Energy_System):
     """
     A collection of devices that stores electricity
     """
 
     pass
+
 
 class Battery_Energy_Storage_System(Energy_Storage_System):
     """
@@ -141,8 +158,10 @@ class Battery_Energy_Storage_System(Energy_Storage_System):
 
     pass
 
+
 class Gas_System(System):
     pass
+
 
 class HVAC_System(System):
     """
@@ -150,6 +169,7 @@ class HVAC_System(System):
     """
 
     pass
+
 
 class Heating_Ventilation_Air_Conditioning_System(System):
     """
@@ -160,6 +180,7 @@ class Heating_Ventilation_Air_Conditioning_System(System):
 
     pass
 
+
 class Air_System(Heating_Ventilation_Air_Conditioning_System):
     """
     The equipment, distribution systems and terminals that introduce or
@@ -169,6 +190,7 @@ class Air_System(Heating_Ventilation_Air_Conditioning_System):
 
     pass
 
+
 class Ventilation_Air_System(Air_System):
     """
     The equipment, devices, and conduits that handle the introduction and
@@ -176,6 +198,7 @@ class Ventilation_Air_System(Air_System):
     """
 
     pass
+
 
 class Steam_System(Heating_Ventilation_Air_Conditioning_System):
     """
@@ -185,6 +208,7 @@ class Steam_System(Heating_Ventilation_Air_Conditioning_System):
 
     pass
 
+
 class Water_System(Heating_Ventilation_Air_Conditioning_System):
     """
     The equipment, devices and conduits that handle the production and
@@ -193,6 +217,7 @@ class Water_System(Heating_Ventilation_Air_Conditioning_System):
 
     pass
 
+
 class Chilled_Water_System(Water_System):
     """
     The equipment, devices and conduits that handle the production and
@@ -200,6 +225,7 @@ class Chilled_Water_System(Water_System):
     """
 
     pass
+
 
 class Condenser_Water_System(Water_System):
     """
@@ -210,6 +236,7 @@ class Condenser_Water_System(Water_System):
 
     pass
 
+
 class Hot_Water_System(Water_System):
     """
     The equipment, devices and conduits that handle the production and
@@ -218,17 +245,22 @@ class Hot_Water_System(Water_System):
 
     pass
 
+
 class Heat_Recovery_Hot_Water_System(Hot_Water_System):
     pass
+
 
 class Preheat_Hot_Water_System(Hot_Water_System):
     pass
 
+
 class Radiation_Hot_Water_System(Hot_Water_System):
     pass
 
+
 class Reheat_Hot_Water_System(Hot_Water_System):
     pass
+
 
 class Lighting_System(System):
     """
@@ -238,11 +270,14 @@ class Lighting_System(System):
 
     pass
 
+
 class Safety_System(System):
     pass
 
+
 class Emergency_Air_Flow_System(Safety_System):
     pass
+
 
 class Emergency_Power_Off_System(Safety_System):
     """
@@ -252,6 +287,7 @@ class Emergency_Power_Off_System(Safety_System):
 
     pass
 
+
 class Fire_Safety_System(Safety_System):
     """
     A system containing devices and equipment that monitor, detect and
@@ -260,6 +296,7 @@ class Fire_Safety_System(Safety_System):
 
     pass
 
+
 class Shading_System(System):
     """
     Devices that can control daylighting through various means
@@ -267,12 +304,14 @@ class Shading_System(System):
 
     pass
 
+
 class Blind_Group(Shading_System):
     """
     A group of Blinds commonly attached to a single controller.
     """
 
     pass
+
 
 class Equipment(Entity, Class, _Equipment):
     """
@@ -285,11 +324,14 @@ class Equipment(Entity, Class, _Equipment):
 
     pass
 
+
 class Camera(Equipment):
     pass
 
+
 class Electrical_Equipment(Equipment):
     pass
+
 
 class Breaker_Panel(Electrical_Equipment):
     """
@@ -298,6 +340,7 @@ class Breaker_Panel(Electrical_Equipment):
 
     pass
 
+
 class Bus_Riser(Electrical_Equipment):
     """
     Bus Risers are commonly fed from a switchgear and rise up through a
@@ -305,6 +348,7 @@ class Bus_Riser(Electrical_Equipment):
     """
 
     pass
+
 
 class Disconnect_Switch(Electrical_Equipment):
     """
@@ -319,12 +363,14 @@ class Disconnect_Switch(Electrical_Equipment):
 
     pass
 
+
 class Energy_Storage(Electrical_Equipment):
     """
     Devices or equipment that store energy in its various forms
     """
 
     pass
+
 
 class Battery(Energy_Storage):
     """
@@ -334,12 +380,14 @@ class Battery(Energy_Storage):
 
     pass
 
+
 class Inverter(Electrical_Equipment):
     """
     A device that changes direct current into alternating current
     """
 
     pass
+
 
 class Motor_Control_Center(Electrical_Equipment):
     """
@@ -350,6 +398,7 @@ class Motor_Control_Center(Electrical_Equipment):
 
     pass
 
+
 class PlugStrip(Electrical_Equipment):
     """
     A device containing a block of electrical sockets allowing multiple
@@ -357,6 +406,7 @@ class PlugStrip(Electrical_Equipment):
     """
 
     pass
+
 
 class Switchgear(Electrical_Equipment):
     """
@@ -366,6 +416,7 @@ class Switchgear(Electrical_Equipment):
     """
 
     pass
+
 
 class Transformer(Electrical_Equipment):
     """
@@ -377,6 +428,7 @@ class Transformer(Electrical_Equipment):
 
     pass
 
+
 class Elevator(Equipment):
     """
     A device that provides vertical transportation between floors, levels
@@ -385,11 +437,14 @@ class Elevator(Equipment):
 
     pass
 
+
 class Fire_Safety_Equipment(Equipment):
     pass
 
+
 class Fire_Alarm(Fire_Safety_Equipment):
     pass
+
 
 class Fire_Alarm_Control_Panel(Fire_Safety_Equipment):
     """
@@ -397,6 +452,7 @@ class Fire_Alarm_Control_Panel(Fire_Safety_Equipment):
     """
 
     pass
+
 
 class Fire_Control_Panel(Fire_Safety_Equipment):
     """
@@ -406,8 +462,10 @@ class Fire_Control_Panel(Fire_Safety_Equipment):
 
     pass
 
+
 class Heat_Detector(Fire_Safety_Equipment):
     pass
+
 
 class Manual_Fire_Alarm_Activation_Equipment(Fire_Safety_Equipment):
     """
@@ -415,6 +473,7 @@ class Manual_Fire_Alarm_Activation_Equipment(Fire_Safety_Equipment):
     """
 
     pass
+
 
 class Fire_Alarm_Manual_Call_Point(Manual_Fire_Alarm_Activation_Equipment):
     """
@@ -426,6 +485,7 @@ class Fire_Alarm_Manual_Call_Point(Manual_Fire_Alarm_Activation_Equipment):
 
     pass
 
+
 class Fire_Alarm_Pull_Station(Manual_Fire_Alarm_Activation_Equipment):
     """
     An active fire protection device (usually wall-mounted) that when
@@ -435,8 +495,10 @@ class Fire_Alarm_Pull_Station(Manual_Fire_Alarm_Activation_Equipment):
 
     pass
 
+
 class Smoke_Detector(Fire_Safety_Equipment):
     pass
+
 
 class Furniture(Equipment):
     """
@@ -446,12 +508,14 @@ class Furniture(Equipment):
 
     pass
 
+
 class Stage_Riser(Furniture):
     """
     A low platform in a space or on a stage
     """
 
     pass
+
 
 class Gas_Distribution(Equipment):
     """
@@ -461,12 +525,14 @@ class Gas_Distribution(Equipment):
 
     pass
 
+
 class HVAC_Equipment(Equipment):
     """
     See Heating_Ventilation_Air_Conditioning_System
     """
 
     pass
+
 
 class AHU(HVAC_Equipment):
     """
@@ -479,6 +545,7 @@ class AHU(HVAC_Equipment):
 
     pass
 
+
 class DDAHU(AHU):
     """
     See Dual_Duct_Air_Handling_Unit
@@ -486,12 +553,14 @@ class DDAHU(AHU):
 
     pass
 
+
 class DOAS(AHU):
     """
     See Dedicated_Outdoor_Air_System_Unit
     """
 
     pass
+
 
 class Dedicated_Outdoor_Air_System_Unit(AHU):
     """
@@ -503,6 +572,7 @@ class Dedicated_Outdoor_Air_System_Unit(AHU):
 
     pass
 
+
 class Dual_Duct_Air_Handling_Unit(AHU):
     """
     An air handling unit that contains hot and cold decks to supply
@@ -511,12 +581,14 @@ class Dual_Duct_Air_Handling_Unit(AHU):
 
     pass
 
+
 class MAU(AHU):
     """
     See Makeup_Air_Unit
     """
 
     pass
+
 
 class Makeup_Air_Unit(AHU):
     """
@@ -528,12 +600,14 @@ class Makeup_Air_Unit(AHU):
 
     pass
 
+
 class PAU(AHU):
     """
     A type of AHU, use to pre-treat the outdoor air before feed to AHU
     """
 
     pass
+
 
 class RTU(AHU):
     """
@@ -542,6 +616,7 @@ class RTU(AHU):
 
     pass
 
+
 class Rooftop_Unit(AHU):
     """
     Packaged air conditioner mounted on a roof, the conditioned air being
@@ -549,6 +624,7 @@ class Rooftop_Unit(AHU):
     """
 
     pass
+
 
 class Air_Handler_Unit(HVAC_Equipment):
     """
@@ -561,8 +637,10 @@ class Air_Handler_Unit(HVAC_Equipment):
 
     pass
 
+
 class Air_Handling_Unit(HVAC_Equipment):
     pass
+
 
 class Air_Plenum(HVAC_Equipment):
     """
@@ -572,8 +650,10 @@ class Air_Plenum(HVAC_Equipment):
 
     pass
 
+
 class Discharge_Air_Plenum(Air_Plenum):
     pass
+
 
 class Return_Air_Plenum(Air_Plenum):
     """
@@ -583,6 +663,7 @@ class Return_Air_Plenum(Air_Plenum):
 
     pass
 
+
 class Supply_Air_Plenum(Air_Plenum):
     """
     A component of the HVAC the receives air from the air handling unit to
@@ -590,6 +671,7 @@ class Supply_Air_Plenum(Air_Plenum):
     """
 
     pass
+
 
 class Underfloor_Air_Plenum(Supply_Air_Plenum):
     """
@@ -601,6 +683,7 @@ class Underfloor_Air_Plenum(Supply_Air_Plenum):
 
     pass
 
+
 class Bypass_Valve(HVAC_Equipment):
     """
     A type of valve installed in a bypass pipeline
@@ -608,12 +691,14 @@ class Bypass_Valve(HVAC_Equipment):
 
     pass
 
+
 class Condenser_Water_Bypass_Valve(Bypass_Valve):
     """
     A valve installed in a bypass line of a condenser water loop
     """
 
     pass
+
 
 class Differential_Pressure_Bypass_Valve(Bypass_Valve):
     """
@@ -623,8 +708,10 @@ class Differential_Pressure_Bypass_Valve(Bypass_Valve):
 
     pass
 
+
 class CRAC(HVAC_Equipment):
     pass
+
 
 class Standby_CRAC(CRAC):
     """
@@ -634,6 +721,7 @@ class Standby_CRAC(CRAC):
 
     pass
 
+
 class CRAH(HVAC_Equipment):
     """
     a computer room air handler (CRAH) uses fans, cooling coils and a
@@ -642,6 +730,7 @@ class CRAH(HVAC_Equipment):
 
     pass
 
+
 class Chiller(HVAC_Equipment):
     """
     Refrigerating machine used to transfer heat between fluids. Chillers
@@ -649,6 +738,7 @@ class Chiller(HVAC_Equipment):
     """
 
     pass
+
 
 class Absorption_Chiller(Chiller):
     """
@@ -661,6 +751,7 @@ class Absorption_Chiller(Chiller):
 
     pass
 
+
 class Centrifugal_Chiller(Chiller):
     """
     A chiller that uses the vapor compression cycle to chill water. It
@@ -670,6 +761,7 @@ class Centrifugal_Chiller(Chiller):
 
     pass
 
+
 class Cold_Deck(HVAC_Equipment):
     """
     Part of a dual duct air handling unit that supplies cooling to a
@@ -677,6 +769,7 @@ class Cold_Deck(HVAC_Equipment):
     """
 
     pass
+
 
 class Compressor(HVAC_Equipment):
     """
@@ -692,6 +785,7 @@ class Compressor(HVAC_Equipment):
 
     pass
 
+
 class Computer_Room_Air_Conditioning(HVAC_Equipment):
     """
     A device that monitors and maintains the temperature, air distribution
@@ -699,6 +793,7 @@ class Computer_Room_Air_Conditioning(HVAC_Equipment):
     """
 
     pass
+
 
 class Computer_Room_Air_Handler(HVAC_Equipment):
     """
@@ -708,6 +803,7 @@ class Computer_Room_Air_Handler(HVAC_Equipment):
 
     pass
 
+
 class Condenser(HVAC_Equipment):
     """
     A heat exchanger in which the primary heat transfer vapor changes its
@@ -715,6 +811,7 @@ class Condenser(HVAC_Equipment):
     """
 
     pass
+
 
 class Cooling_Tower(HVAC_Equipment):
     """
@@ -729,6 +826,7 @@ class Cooling_Tower(HVAC_Equipment):
 
     pass
 
+
 class Cooling_Valve(HVAC_Equipment):
     """
     A valve that controls air temperature by modulating the amount of cold
@@ -736,6 +834,7 @@ class Cooling_Valve(HVAC_Equipment):
     """
 
     pass
+
 
 class Damper(HVAC_Equipment):
     """
@@ -747,6 +846,7 @@ class Damper(HVAC_Equipment):
 
     pass
 
+
 class Economizer_Damper(Damper):
     """
     A damper that is part of an economizer that is used to module the flow
@@ -755,12 +855,14 @@ class Economizer_Damper(Damper):
 
     pass
 
+
 class Exhaust_Damper(Damper):
     """
     A damper that modulates the flow of exhaust air
     """
 
     pass
+
 
 class Mixed_Damper(Damper):
     """
@@ -770,12 +872,14 @@ class Mixed_Damper(Damper):
 
     pass
 
+
 class Outside_Damper(Damper):
     """
     A damper that modulates the flow of outside air
     """
 
     pass
+
 
 class Relief_Damper(Damper):
     """
@@ -785,12 +889,14 @@ class Relief_Damper(Damper):
 
     pass
 
+
 class Return_Damper(Damper):
     """
     A damper that modulates the flow of return air
     """
 
     pass
+
 
 class Dry_Cooler(HVAC_Equipment):
     """
@@ -801,6 +907,7 @@ class Dry_Cooler(HVAC_Equipment):
 
     pass
 
+
 class Economizer(HVAC_Equipment):
     """
     Device that, on proper variable sensing, initiates control signals or
@@ -809,6 +916,7 @@ class Economizer(HVAC_Equipment):
     """
 
     pass
+
 
 class Fan(HVAC_Equipment, _Fan):
     """
@@ -820,6 +928,7 @@ class Fan(HVAC_Equipment, _Fan):
 
     pass
 
+
 class Booster_Fan(Fan):
     """
     Fan activated to increase airflow beyond what is provided by the
@@ -828,6 +937,7 @@ class Booster_Fan(Fan):
 
     pass
 
+
 class Ceiling_Fan(Fan):
     """
     A fan installed on the ceiling of a room for the purpose of air
@@ -835,6 +945,7 @@ class Ceiling_Fan(Fan):
     """
 
     pass
+
 
 class Cooling_Tower_Fan(Fan):
     """
@@ -845,12 +956,14 @@ class Cooling_Tower_Fan(Fan):
 
     pass
 
+
 class Discharge_Fan(Fan):
     """
     Fan moving air discharged from HVAC vents
     """
 
     pass
+
 
 class Exhaust_Fan(Fan):
     """
@@ -860,6 +973,7 @@ class Exhaust_Fan(Fan):
 
     pass
 
+
 class Outside_Fan(Fan):
     """
     Fan moving outside air; air that is supplied into the building from
@@ -867,6 +981,7 @@ class Outside_Fan(Fan):
     """
 
     pass
+
 
 class Relief_Fan(Fan):
     """
@@ -876,6 +991,7 @@ class Relief_Fan(Fan):
 
     pass
 
+
 class Return_Fan(Fan):
     """
     Fan moving return air -- air that is circulated from the building back
@@ -883,6 +999,7 @@ class Return_Fan(Fan):
     """
 
     pass
+
 
 class Standby_Fan(Fan):
     """
@@ -892,6 +1009,7 @@ class Standby_Fan(Fan):
 
     pass
 
+
 class Supply_Fan(Fan):
     """
     Fan moving supply air -- air that is supplied from the HVAC system
@@ -900,12 +1018,14 @@ class Supply_Fan(Fan):
 
     pass
 
+
 class Transfer_Fan(Fan):
     """
     A fan that transfers air from a space to another space.
     """
 
     pass
+
 
 class Filter(HVAC_Equipment):
     """
@@ -915,6 +1035,7 @@ class Filter(HVAC_Equipment):
 
     pass
 
+
 class Final_Filter(Filter):
     """
     The last, high-efficiency filter installed in a sequence to remove the
@@ -923,12 +1044,14 @@ class Final_Filter(Filter):
 
     pass
 
+
 class Intake_Air_Filter(Filter):
     """
     Filters air intake
     """
 
     pass
+
 
 class Mixed_Air_Filter(Filter):
     """
@@ -938,6 +1061,7 @@ class Mixed_Air_Filter(Filter):
 
     pass
 
+
 class Pre_Filter(Filter):
     """
     A filter installed in front of a more efficient filter to extend the
@@ -946,12 +1070,14 @@ class Pre_Filter(Filter):
 
     pass
 
+
 class Return_Air_Filter(Filter):
     """
     Filters return air
     """
 
     pass
+
 
 class Fume_Hood(HVAC_Equipment):
     """
@@ -961,12 +1087,14 @@ class Fume_Hood(HVAC_Equipment):
 
     pass
 
+
 class HX(HVAC_Equipment):
     """
     See Heat_Exchanger
     """
 
     pass
+
 
 class Heat_Exchanger(HVAC_Equipment):
     """
@@ -977,6 +1105,7 @@ class Heat_Exchanger(HVAC_Equipment):
 
     pass
 
+
 class Coil(Heat_Exchanger):
     """
     Cooling or heating element made of pipe or tube that may or may not be
@@ -984,6 +1113,7 @@ class Coil(Heat_Exchanger):
     """
 
     pass
+
 
 class Cooling_Coil(Coil):
     """
@@ -994,6 +1124,7 @@ class Cooling_Coil(Coil):
 
     pass
 
+
 class Chilled_Water_Coil(Cooling_Coil):
     """
     A cooling element made of pipe or tube that removes heat from
@@ -1002,8 +1133,10 @@ class Chilled_Water_Coil(Cooling_Coil):
 
     pass
 
+
 class Direct_Expansion_Cooling_Coil(Cooling_Coil):
     pass
+
 
 class Heating_Coil(Coil):
     """
@@ -1014,8 +1147,10 @@ class Heating_Coil(Coil):
 
     pass
 
+
 class Direct_Expansion_Heating_Coil(Heating_Coil):
     pass
+
 
 class Hot_Water_Coil(Heating_Coil):
     """
@@ -1025,6 +1160,7 @@ class Hot_Water_Coil(Heating_Coil):
 
     pass
 
+
 class Condenser_Heat_Exchanger(Heat_Exchanger):
     """
     A heat exchanger in which the primary heat transfer vapor changes its
@@ -1033,8 +1169,10 @@ class Condenser_Heat_Exchanger(Heat_Exchanger):
 
     pass
 
+
 class Evaporative_Heat_Exchanger(Heat_Exchanger):
     pass
+
 
 class Heat_Wheel(Heat_Exchanger):
     """
@@ -1044,6 +1182,7 @@ class Heat_Wheel(Heat_Exchanger):
 
     pass
 
+
 class Heating_Valve(HVAC_Equipment):
     """
     A valve that controls air temperature by modulating the amount of hot
@@ -1051,6 +1190,7 @@ class Heating_Valve(HVAC_Equipment):
     """
 
     pass
+
 
 class Reheat_Valve(Heating_Valve):
     """
@@ -1060,12 +1200,14 @@ class Reheat_Valve(Heating_Valve):
 
     pass
 
+
 class Return_Heating_Valve(Heating_Valve):
     """
     A valve installed on the return side of a heat exchanger
     """
 
     pass
+
 
 class Hot_Deck(HVAC_Equipment):
     """
@@ -1075,12 +1217,14 @@ class Hot_Deck(HVAC_Equipment):
 
     pass
 
+
 class Humidifier(HVAC_Equipment):
     """
     A device that adds moisture to air or other gases
     """
 
     pass
+
 
 class Isolation_Valve(HVAC_Equipment):
     """
@@ -1090,12 +1234,14 @@ class Isolation_Valve(HVAC_Equipment):
 
     pass
 
+
 class Condenser_Water_Isolation_Valve(Isolation_Valve):
     """
     An isolation valve installed in the condenser water loop
     """
 
     pass
+
 
 class Pump(HVAC_Equipment):
     """
@@ -1106,12 +1252,14 @@ class Pump(HVAC_Equipment):
 
     pass
 
+
 class Water_Pump(Pump):
     """
     A pump that performs work on water
     """
 
     pass
+
 
 class Chilled_Water_Pump(Water_Pump):
     """
@@ -1121,6 +1269,7 @@ class Chilled_Water_Pump(Water_Pump):
 
     pass
 
+
 class Condenser_Water_Pump(Water_Pump):
     """
     A pump that is part of a condenser system; the pump circulates
@@ -1128,6 +1277,7 @@ class Condenser_Water_Pump(Water_Pump):
     """
 
     pass
+
 
 class Hot_Water_Pump(Water_Pump):
     """
@@ -1137,6 +1287,7 @@ class Hot_Water_Pump(Water_Pump):
 
     pass
 
+
 class Space_Heater(HVAC_Equipment):
     """
     A heater used to warm the air in an enclosed area, such as a room or
@@ -1145,8 +1296,10 @@ class Space_Heater(HVAC_Equipment):
 
     pass
 
+
 class Steam_Valve(HVAC_Equipment):
     pass
+
 
 class Terminal_Unit(HVAC_Equipment):
     """
@@ -1155,6 +1308,7 @@ class Terminal_Unit(HVAC_Equipment):
     """
 
     pass
+
 
 class Air_Diffuser(Terminal_Unit):
     """
@@ -1165,6 +1319,7 @@ class Air_Diffuser(Terminal_Unit):
 
     pass
 
+
 class Displacement_Flow_Air_Diffuser(Air_Diffuser):
     """
     An air diffuser that is designed for low discharge air speeds to
@@ -1173,6 +1328,7 @@ class Displacement_Flow_Air_Diffuser(Air_Diffuser):
     """
 
     pass
+
 
 class Jet_Nozzle_Air_Diffuser(Air_Diffuser):
     """
@@ -1183,6 +1339,7 @@ class Jet_Nozzle_Air_Diffuser(Air_Diffuser):
 
     pass
 
+
 class Laminar_Flow_Air_Diffuser(Air_Diffuser):
     """
     An air diffuser that is designed for low discharge air speeds to
@@ -1192,8 +1349,10 @@ class Laminar_Flow_Air_Diffuser(Air_Diffuser):
 
     pass
 
+
 class CAV(Terminal_Unit):
     pass
+
 
 class Chilled_Beam(Terminal_Unit):
     """
@@ -1206,6 +1365,7 @@ class Chilled_Beam(Terminal_Unit):
 
     pass
 
+
 class Active_Chilled_Beam(Chilled_Beam):
     """
     A Chilled Beam with an integral primary air connection that induces
@@ -1213,6 +1373,7 @@ class Active_Chilled_Beam(Chilled_Beam):
     """
 
     pass
+
 
 class Passive_Chilled_Beam(Chilled_Beam):
     """
@@ -1222,6 +1383,7 @@ class Passive_Chilled_Beam(Chilled_Beam):
 
     pass
 
+
 class Constant_Air_Volume_Box(Terminal_Unit):
     """
     A terminal unit for which supply air flow rate is constant and the
@@ -1230,12 +1392,14 @@ class Constant_Air_Volume_Box(Terminal_Unit):
 
     pass
 
+
 class FCU(Terminal_Unit):
     """
     See Fan_Coil_Unit
     """
 
     pass
+
 
 class Fan_Coil_Unit(Terminal_Unit):
     """
@@ -1246,6 +1410,7 @@ class Fan_Coil_Unit(Terminal_Unit):
 
     pass
 
+
 class Induction_Unit(Terminal_Unit):
     """
     A device with an primary air connection and integrated coil and
@@ -1255,6 +1420,7 @@ class Induction_Unit(Terminal_Unit):
 
     pass
 
+
 class Radiant_Panel(Terminal_Unit):
     """
     A temperature-controlled surface that provides fifty percent (50%) or
@@ -1263,12 +1429,14 @@ class Radiant_Panel(Terminal_Unit):
 
     pass
 
+
 class ESS_Panel(Radiant_Panel):
     """
     See Embedded_Surface_System_Panel
     """
 
     pass
+
 
 class Embedded_Surface_System_Panel(Radiant_Panel):
     """
@@ -1279,12 +1447,14 @@ class Embedded_Surface_System_Panel(Radiant_Panel):
 
     pass
 
+
 class RC_Panel(Radiant_Panel):
     """
     See Radiant_Ceiling_Panel
     """
 
     pass
+
 
 class Radiant_Ceiling_Panel(Radiant_Panel):
     """
@@ -1295,12 +1465,14 @@ class Radiant_Ceiling_Panel(Radiant_Panel):
 
     pass
 
+
 class TABS_Panel(Radiant_Panel):
     """
     See Thermally_Activated_Building_System_Panel
     """
 
     pass
+
 
 class Thermally_Activated_Building_System_Panel(Radiant_Panel):
     """
@@ -1311,6 +1483,7 @@ class Thermally_Activated_Building_System_Panel(Radiant_Panel):
 
     pass
 
+
 class Radiator(Terminal_Unit):
     """
     Heat exchangers designed to transfer thermal energy from one medium to
@@ -1318,6 +1491,7 @@ class Radiator(Terminal_Unit):
     """
 
     pass
+
 
 class Baseboard_Radiator(Radiator):
     """
@@ -1327,12 +1501,14 @@ class Baseboard_Radiator(Radiator):
 
     pass
 
+
 class Electric_Radiator(Radiator):
     """
     Electric heating device
     """
 
     pass
+
 
 class Electric_Baseboard_Radiator(Electric_Radiator, Baseboard_Radiator):
     """
@@ -1341,12 +1517,14 @@ class Electric_Baseboard_Radiator(Electric_Radiator, Baseboard_Radiator):
 
     pass
 
+
 class Hot_Water_Radiator(Radiator):
     """
     Radiator that uses hot water
     """
 
     pass
+
 
 class Hot_Water_Baseboard_Radiator(Hot_Water_Radiator, Baseboard_Radiator):
     """
@@ -1355,12 +1533,14 @@ class Hot_Water_Baseboard_Radiator(Hot_Water_Radiator, Baseboard_Radiator):
 
     pass
 
+
 class Steam_Radiator(Radiator):
     """
     Radiator that uses steam
     """
 
     pass
+
 
 class Steam_Baseboard_Radiator(Steam_Radiator, Baseboard_Radiator):
     """
@@ -1369,12 +1549,14 @@ class Steam_Baseboard_Radiator(Steam_Radiator, Baseboard_Radiator):
 
     pass
 
+
 class VAV(Terminal_Unit):
     """
     See Variable_Air_Volume_Box
     """
 
     pass
+
 
 class Variable_Air_Volume_Box(Terminal_Unit):
     """
@@ -1384,12 +1566,14 @@ class Variable_Air_Volume_Box(Terminal_Unit):
 
     pass
 
+
 class RVAV(Variable_Air_Volume_Box):
     """
     See Variable_Air_Volume_Box_With_Reheat
     """
 
     pass
+
 
 class Variable_Air_Volume_Box_With_Reheat(Variable_Air_Volume_Box):
     """
@@ -1399,6 +1583,7 @@ class Variable_Air_Volume_Box_With_Reheat(Variable_Air_Volume_Box):
 
     pass
 
+
 class Thermostat(HVAC_Equipment):
     """
     An automatic control device used to maintain temperature at a fixed or
@@ -1407,8 +1592,10 @@ class Thermostat(HVAC_Equipment):
 
     pass
 
+
 class Lighting_Equipment(Equipment):
     pass
+
 
 class Interface(Lighting_Equipment):
     """
@@ -1417,12 +1604,14 @@ class Interface(Lighting_Equipment):
 
     pass
 
+
 class Switch(Interface):
     """
     A switch used to operate all or part of a lighting installation
     """
 
     pass
+
 
 class Dimmer(Switch):
     """
@@ -1431,6 +1620,7 @@ class Dimmer(Switch):
     """
 
     pass
+
 
 class Touchpanel(Interface):
     """
@@ -1441,8 +1631,10 @@ class Touchpanel(Interface):
 
     pass
 
+
 class Lighting(Lighting_Equipment):
     pass
+
 
 class Luminaire(Lighting):
     """
@@ -1454,12 +1646,14 @@ class Luminaire(Lighting):
 
     pass
 
+
 class Luminaire_Driver(Lighting):
     """
     A power source for a luminaire
     """
 
     pass
+
 
 class Meter(Equipment):
     """
@@ -1469,6 +1663,7 @@ class Meter(Equipment):
 
     pass
 
+
 class Building_Meter(Meter):
     """
     A meter that measures usage or consumption of some media for a whole
@@ -1477,12 +1672,14 @@ class Building_Meter(Meter):
 
     pass
 
+
 class Electrical_Meter(Meter):
     """
     A meter that measures the usage or consumption of electricity
     """
 
     pass
+
 
 class Building_Electrical_Meter(Electrical_Meter, Building_Meter):
     """
@@ -1492,12 +1689,14 @@ class Building_Electrical_Meter(Electrical_Meter, Building_Meter):
 
     pass
 
+
 class Gas_Meter(Meter):
     """
     A meter that measures the usage or consumption of gas
     """
 
     pass
+
 
 class Building_Gas_Meter(Gas_Meter, Building_Meter):
     """
@@ -1507,6 +1706,7 @@ class Building_Gas_Meter(Gas_Meter, Building_Meter):
 
     pass
 
+
 class Thermal_Power_Meter(Meter):
     """
     A standalone thermal power meter
@@ -1514,12 +1714,14 @@ class Thermal_Power_Meter(Meter):
 
     pass
 
+
 class Water_Meter(Meter):
     """
     A meter that measures the usage or consumption of water
     """
 
     pass
+
 
 class Building_Water_Meter(Building_Meter, Water_Meter):
     """
@@ -1529,12 +1731,14 @@ class Building_Water_Meter(Building_Meter, Water_Meter):
 
     pass
 
+
 class Chilled_Water_Meter(Water_Meter):
     """
     A meter that measures the usage or consumption of chilled water
     """
 
     pass
+
 
 class Building_Chilled_Water_Meter(Chilled_Water_Meter, Building_Meter):
     """
@@ -1544,12 +1748,14 @@ class Building_Chilled_Water_Meter(Chilled_Water_Meter, Building_Meter):
 
     pass
 
+
 class Hot_Water_Meter(Water_Meter):
     """
     A meter that measures the usage or consumption of hot water
     """
 
     pass
+
 
 class Building_Hot_Water_Meter(Hot_Water_Meter, Building_Meter):
     """
@@ -1559,6 +1765,7 @@ class Building_Hot_Water_Meter(Hot_Water_Meter, Building_Meter):
 
     pass
 
+
 class Motor(Equipment):
     """
     A machine in which power is applied to do work by the conversion of
@@ -1566,6 +1773,7 @@ class Motor(Equipment):
     """
 
     pass
+
 
 class VFD(Motor):
     """
@@ -1577,12 +1785,14 @@ class VFD(Motor):
 
     pass
 
+
 class Fan_VFD(VFD):
     """
     Variable-frequency drive for fans
     """
 
     pass
+
 
 class Heat_Wheel_VFD(VFD):
     """
@@ -1591,12 +1801,14 @@ class Heat_Wheel_VFD(VFD):
 
     pass
 
+
 class Pump_VFD(VFD):
     """
     Variable-frequency drive for pumps
     """
 
     pass
+
 
 class Variable_Frequency_Drive(Motor):
     """
@@ -1607,6 +1819,7 @@ class Variable_Frequency_Drive(Motor):
     """
 
     pass
+
 
 class PV_Panel(Equipment):
     """
@@ -1619,6 +1832,7 @@ class PV_Panel(Equipment):
 
     pass
 
+
 class Relay(Equipment):
     """
     an electrically operated switch
@@ -1626,65 +1840,86 @@ class Relay(Equipment):
 
     pass
 
+
 class Safety_Equipment(Equipment):
     pass
+
 
 class AED(Safety_Equipment):
     pass
 
+
 class Automated_External_Defibrillator(Safety_Equipment):
     pass
+
 
 class Emergency_Wash_Station(Safety_Equipment):
     pass
 
+
 class Drench_Hose(Emergency_Wash_Station):
     pass
+
 
 class Eye_Wash_Station(Emergency_Wash_Station):
     pass
 
+
 class Safety_Shower(Emergency_Wash_Station):
     pass
+
 
 class First_Aid_Kit(Safety_Equipment):
     pass
 
+
 class Security_Equipment(Equipment):
     pass
+
 
 class Access_Control_Equipment(Security_Equipment):
     pass
 
+
 class Access_Reader(Access_Control_Equipment):
     pass
+
 
 class Intercom_Equipment(Security_Equipment):
     pass
 
+
 class Emergency_Phone(Intercom_Equipment):
     pass
+
 
 class Video_Intercom(Intercom_Equipment):
     pass
 
+
 class Intrusion_Detection_Equipment(Security_Equipment):
     pass
+
 
 class Video_Surveillance_Equipment(Security_Equipment):
     pass
 
+
 class NVR(Video_Surveillance_Equipment):
     pass
+
 
 class Network_Video_Recorder(Video_Surveillance_Equipment):
     pass
 
+
 class Surveillance_Camera(Camera, Video_Surveillance_Equipment):
     pass
 
+
 class Shading_Equipment(Equipment):
     pass
+
 
 class Automatic_Tint_Window(Shading_Equipment):
     """
@@ -1693,12 +1928,14 @@ class Automatic_Tint_Window(Shading_Equipment):
 
     pass
 
+
 class Blind(Shading_Equipment):
     """
     A window covering.
     """
 
     pass
+
 
 class Solar_Thermal_Collector(Equipment):
     """
@@ -1708,6 +1945,7 @@ class Solar_Thermal_Collector(Equipment):
 
     pass
 
+
 class PVT_Panel(Solar_Thermal_Collector, PV_Panel):
     """
     A type of solar panels that convert solar radiation into usable
@@ -1715,6 +1953,7 @@ class PVT_Panel(Solar_Thermal_Collector, PV_Panel):
     """
 
     pass
+
 
 class Steam_Distribution(Equipment):
     """
@@ -1724,6 +1963,7 @@ class Steam_Distribution(Equipment):
 
     pass
 
+
 class Valve(Equipment):
     """
     A device that regulates, directs or controls the flow of a fluid by
@@ -1732,11 +1972,14 @@ class Valve(Equipment):
 
     pass
 
+
 class Gas_Valve(Valve):
     pass
 
+
 class HVAC_Valve(HVAC_Equipment, Valve):
     pass
+
 
 class Natural_Gas_Seismic_Shutoff_Valve(Valve):
     """
@@ -1746,12 +1989,14 @@ class Natural_Gas_Seismic_Shutoff_Valve(Valve):
 
     pass
 
+
 class Water_Valve(Valve):
     """
     A valve that modulates the flow of water
     """
 
     pass
+
 
 class Chilled_Water_Valve(HVAC_Valve, Water_Valve):
     """
@@ -1760,12 +2005,14 @@ class Chilled_Water_Valve(HVAC_Valve, Water_Valve):
 
     pass
 
+
 class Condenser_Water_Valve(HVAC_Valve, Water_Valve):
     """
     A valve that modulates the flow of condenser water
     """
 
     pass
+
 
 class Hot_Water_Valve(Heating_Valve, Water_Valve):
     """
@@ -1774,6 +2021,7 @@ class Hot_Water_Valve(Heating_Valve, Water_Valve):
 
     pass
 
+
 class Domestic_Hot_Water_Valve(Hot_Water_Valve):
     """
     A valve regulating the flow of domestic hot water
@@ -1781,8 +2029,10 @@ class Domestic_Hot_Water_Valve(Hot_Water_Valve):
 
     pass
 
+
 class Preheat_Hot_Water_Valve(Hot_Water_Valve):
     pass
+
 
 class Makeup_Water_Valve(HVAC_Valve, Water_Valve):
     """
@@ -1792,6 +2042,7 @@ class Makeup_Water_Valve(HVAC_Valve, Water_Valve):
 
     pass
 
+
 class Thermostatic_Mixing_Valve(Water_Valve):
     """
     A valve that blends hot water with cold water to ensure constant, safe
@@ -1799,6 +2050,7 @@ class Thermostatic_Mixing_Valve(Water_Valve):
     """
 
     pass
+
 
 class Water_Distribution(Equipment):
     """
@@ -1808,12 +2060,14 @@ class Water_Distribution(Equipment):
 
     pass
 
+
 class Water_Heater(Equipment):
     """
     An apparatus for heating and usually storing hot water
     """
 
     pass
+
 
 class Boiler(Water_Heater, HVAC_Equipment):
     """
@@ -1824,6 +2078,7 @@ class Boiler(Water_Heater, HVAC_Equipment):
 
     pass
 
+
 class Electric_Boiler(Boiler):
     """
     A closed, pressure vessel that uses electricity for heating water or
@@ -1833,6 +2088,7 @@ class Electric_Boiler(Boiler):
 
     pass
 
+
 class Natural_Gas_Boiler(Boiler):
     """
     A closed, pressure vessel that uses natural gas for heating water or
@@ -1841,6 +2097,7 @@ class Natural_Gas_Boiler(Boiler):
     """
 
     pass
+
 
 class Condensing_Natural_Gas_Boiler(Natural_Gas_Boiler):
     """
@@ -1852,6 +2109,7 @@ class Condensing_Natural_Gas_Boiler(Natural_Gas_Boiler):
 
     pass
 
+
 class Noncondensing_Natural_Gas_Boiler(Natural_Gas_Boiler):
     """
     A closed, pressure vessel that uses natural gas with no system to
@@ -1861,6 +2119,7 @@ class Noncondensing_Natural_Gas_Boiler(Natural_Gas_Boiler):
 
     pass
 
+
 class Collection_Basin_Water_Heater(Water_Heater):
     """
     Basin heaters prevent cold water basin freeze-up, e.g. in cooling
@@ -1869,6 +2128,7 @@ class Collection_Basin_Water_Heater(Water_Heater):
 
     pass
 
+
 class Weather_Station(Equipment):
     """
     A dedicated weather measurement station
@@ -1876,8 +2136,10 @@ class Weather_Station(Equipment):
 
     pass
 
+
 class Location(Entity, Class):
     pass
+
 
 class Building(Location):
     """
@@ -1888,12 +2150,14 @@ class Building(Location):
 
     pass
 
+
 class Parking_Structure(Building):
     """
     A building or part of a building devoted to vehicle parking
     """
 
     pass
+
 
 class Floor(Location):
     """
@@ -1903,6 +2167,7 @@ class Floor(Location):
 
     pass
 
+
 class Basement(Floor):
     """
     The floor of a building which is partly or entirely below ground
@@ -1911,6 +2176,7 @@ class Basement(Floor):
 
     pass
 
+
 class Parking_Level(Floor):
     """
     A floor of a parking structure
@@ -1918,8 +2184,10 @@ class Parking_Level(Floor):
 
     pass
 
+
 class Rooftop(Floor):
     pass
+
 
 class Outdoor_Area(Location):
     """
@@ -1927,6 +2195,7 @@ class Outdoor_Area(Location):
     """
 
     pass
+
 
 class Bench_Space(Outdoor_Area):
     """
@@ -1936,6 +2205,7 @@ class Bench_Space(Outdoor_Area):
 
     pass
 
+
 class Field_Of_Play(Outdoor_Area):
     """
     The area of a stadium where athletic events occur, e.g. the soccer
@@ -1943,6 +2213,7 @@ class Field_Of_Play(Outdoor_Area):
     """
 
     pass
+
 
 class Information_Area(Outdoor_Area):
     """
@@ -1952,8 +2223,10 @@ class Information_Area(Outdoor_Area):
 
     pass
 
+
 class Outside(Location):
     pass
+
 
 class Region(Location):
     """
@@ -1962,6 +2235,7 @@ class Region(Location):
     """
 
     pass
+
 
 class Site(Location):
     """
@@ -1972,6 +2246,7 @@ class Site(Location):
 
     pass
 
+
 class Space(Location):
     """
     A part of the physical world or a virtual world whose 3D spatial
@@ -1981,12 +2256,14 @@ class Space(Location):
 
     pass
 
+
 class Common_Space(Space):
     """
     A class of spaces that are used by multiple people at the same time
     """
 
     pass
+
 
 class Atrium(Common_Space):
     """
@@ -1995,12 +2272,14 @@ class Atrium(Common_Space):
 
     pass
 
+
 class Auditorium(Common_Space):
     """
     A space for performances or larger gatherings
     """
 
     pass
+
 
 class Cafeteria(Common_Space):
     """
@@ -2009,12 +2288,14 @@ class Cafeteria(Common_Space):
 
     pass
 
+
 class Hallway(Common_Space):
     """
     A common space, used to connect other parts of a building
     """
 
     pass
+
 
 class Lobby(Common_Space):
     """
@@ -2024,6 +2305,7 @@ class Lobby(Common_Space):
 
     pass
 
+
 class Employee_Entrance_Lobby(Lobby):
     """
     An open space near an entrance that is typicaly only used for
@@ -2031,6 +2313,7 @@ class Employee_Entrance_Lobby(Lobby):
     """
 
     pass
+
 
 class Visitor_Lobby(Lobby):
     """
@@ -2040,12 +2323,14 @@ class Visitor_Lobby(Lobby):
 
     pass
 
+
 class Lounge(Common_Space):
     """
     A room for lesiure activities or relaxing
     """
 
     pass
+
 
 class Majlis(Lounge):
     """
@@ -2055,6 +2340,7 @@ class Majlis(Lounge):
 
     pass
 
+
 class Entrance(Space):
     """
     The location and space of a building where people enter and exit the
@@ -2062,6 +2348,7 @@ class Entrance(Space):
     """
 
     pass
+
 
 class Gatehouse(Space):
     """
@@ -2071,6 +2358,7 @@ class Gatehouse(Space):
 
     pass
 
+
 class Media_Hot_Desk(Space):
     """
     A non-enclosed space used by members of the media temporarily to cover
@@ -2079,12 +2367,14 @@ class Media_Hot_Desk(Space):
 
     pass
 
+
 class Parking_Space(Space):
     """
     An area large enough to park an individual vehicle
     """
 
     pass
+
 
 class Room(Space):
     """
@@ -2093,12 +2383,14 @@ class Room(Space):
 
     pass
 
+
 class Ablutions_Room(Room):
     """
     A room for performing cleansing rituals before prayer
     """
 
     pass
+
 
 class Break_Room(Room):
     """
@@ -2107,12 +2399,14 @@ class Break_Room(Room):
 
     pass
 
+
 class Breakroom(Room):
     """
     A space for people to relax while not working
     """
 
     pass
+
 
 class Conference_Room(Room):
     """
@@ -2121,12 +2415,14 @@ class Conference_Room(Room):
 
     pass
 
+
 class Control_Room(Room):
     """
     A space from which operations are managed
     """
 
     pass
+
 
 class Copy_Room(Room):
     """
@@ -2136,12 +2432,14 @@ class Copy_Room(Room):
 
     pass
 
+
 class Exercise_Room(Room):
     """
     An indoor room used for exercise and physical activities
     """
 
     pass
+
 
 class Food_Service_Room(Room):
     """
@@ -2151,6 +2449,7 @@ class Food_Service_Room(Room):
 
     pass
 
+
 class Concession(Food_Service_Room):
     """
     A space to sell food and beverages. Usually embedded in a larger space
@@ -2158,6 +2457,7 @@ class Concession(Food_Service_Room):
     """
 
     pass
+
 
 class Hospitality_Box(Room):
     """
@@ -2167,12 +2467,14 @@ class Hospitality_Box(Room):
 
     pass
 
+
 class Janitor_Room(Room):
     """
     A room set aside for the storage of cleaning equipment and supplies
     """
 
     pass
+
 
 class Laboratory(Room):
     """
@@ -2184,6 +2486,7 @@ class Laboratory(Room):
 
     pass
 
+
 class Cold_Box(Laboratory):
     """
     in a gas separation unit, the insulated section that contains the low-
@@ -2191,6 +2494,7 @@ class Cold_Box(Laboratory):
     """
 
     pass
+
 
 class Environment_Box(Laboratory):
     """
@@ -2200,6 +2504,7 @@ class Environment_Box(Laboratory):
 
     pass
 
+
 class Freezer(Laboratory):
     """
     cold chamber usually kept at a temperature of 22°F to 31°F (–5°C to
@@ -2208,12 +2513,14 @@ class Freezer(Laboratory):
 
     pass
 
+
 class Hot_Box(Laboratory):
     """
     hot air chamber forming part of an air handler.
     """
 
     pass
+
 
 class Library(Room):
     """
@@ -2222,6 +2529,7 @@ class Library(Room):
     """
 
     pass
+
 
 class Loading_Dock(Room):
     """
@@ -2232,6 +2540,7 @@ class Loading_Dock(Room):
 
     pass
 
+
 class Mail_Room(Room):
     """
     A room where mail is recieved and sorted for distribution to the rest
@@ -2239,6 +2548,7 @@ class Mail_Room(Room):
     """
 
     pass
+
 
 class Massage_Room(Room):
     """
@@ -2248,6 +2558,7 @@ class Massage_Room(Room):
 
     pass
 
+
 class Media_Room(Room):
     """
     A class of spaces related to the creation of media
@@ -2255,12 +2566,14 @@ class Media_Room(Room):
 
     pass
 
+
 class Broadcast_Room(Media_Room):
     """
     A space to organize and manage a broadcast. Separate from studio
     """
 
     pass
+
 
 class Media_Production_Room(Media_Room):
     """
@@ -2270,6 +2583,7 @@ class Media_Production_Room(Media_Room):
 
     pass
 
+
 class Studio(Media_Room):
     """
     A room used for the production or media, usually with either a
@@ -2278,12 +2592,14 @@ class Studio(Media_Room):
 
     pass
 
+
 class Medical_Room(Room):
     """
     A class of rooms used for medical purposes
     """
 
     pass
+
 
 class First_Aid_Room(Medical_Room):
     """
@@ -2293,12 +2609,14 @@ class First_Aid_Room(Medical_Room):
 
     pass
 
+
 class Office(Room):
     """
     A class of rooms dedicated for work or study
     """
 
     pass
+
 
 class Cubicle(Office):
     """
@@ -2308,12 +2626,14 @@ class Cubicle(Office):
 
     pass
 
+
 class Enclosed_Office(Office):
     """
     A space for individuals to work with walls and a door
     """
 
     pass
+
 
 class Private_Office(Enclosed_Office):
     """
@@ -2322,12 +2642,14 @@ class Private_Office(Enclosed_Office):
 
     pass
 
+
 class Shared_Office(Enclosed_Office):
     """
     An office used by multiple people
     """
 
     pass
+
 
 class Team_Room(Enclosed_Office):
     """
@@ -2337,6 +2659,7 @@ class Team_Room(Enclosed_Office):
 
     pass
 
+
 class Open_Office(Office):
     """
     An open space used for work or study by mulitple people. Usuaully
@@ -2344,6 +2667,7 @@ class Open_Office(Office):
     """
 
     pass
+
 
 class Office_Kitchen(Room):
     """
@@ -2353,12 +2677,14 @@ class Office_Kitchen(Room):
 
     pass
 
+
 class Prayer_Room(Room):
     """
     A room set aside for prayer
     """
 
     pass
+
 
 class Reception(Room):
     """
@@ -2369,6 +2695,7 @@ class Reception(Room):
 
     pass
 
+
 class Rest_Room(Room):
     """
     A room that provides toilets and washbowls. Alternate spelling of
@@ -2377,12 +2704,14 @@ class Rest_Room(Room):
 
     pass
 
+
 class Restroom(Room):
     """
     A room that provides toilets and washbowls.
     """
 
     pass
+
 
 class Retail_Room(Room):
     """
@@ -2392,12 +2721,14 @@ class Retail_Room(Room):
 
     pass
 
+
 class Security_Service_Room(Room):
     """
     A class of spaces used by the security staff of a facility
     """
 
     pass
+
 
 class Detention_Room(Security_Service_Room):
     """
@@ -2406,8 +2737,10 @@ class Detention_Room(Security_Service_Room):
 
     pass
 
+
 class Server_Room(Room):
     pass
+
 
 class Service_Room(Room):
     """
@@ -2417,6 +2750,7 @@ class Service_Room(Room):
 
     pass
 
+
 class Electrical_Room(Service_Room):
     """
     A class of service rooms that house electrical equipment for a
@@ -2425,6 +2759,7 @@ class Electrical_Room(Service_Room):
 
     pass
 
+
 class Battery_Room(Electrical_Room):
     """
     A room used to hold batteries for backup power
@@ -2432,12 +2767,14 @@ class Battery_Room(Electrical_Room):
 
     pass
 
+
 class Generator_Room(Electrical_Room):
     """
     A room for electrical equipment, specifically electrical generators.
     """
 
     pass
+
 
 class Transformer_Room(Electrical_Room):
     """
@@ -2447,6 +2784,7 @@ class Transformer_Room(Electrical_Room):
 
     pass
 
+
 class Mechanical_Room(Service_Room):
     """
     A class of service rooms where mechanical equipment (HVAC) operates
@@ -2454,12 +2792,14 @@ class Mechanical_Room(Service_Room):
 
     pass
 
+
 class Pump_Room(Mechanical_Room):
     """
     A mechanical room that houses pumps
     """
 
     pass
+
 
 class Plumbing_Room(Service_Room):
     """
@@ -2469,6 +2809,7 @@ class Plumbing_Room(Service_Room):
 
     pass
 
+
 class Shower(Room):
     """
     A space containing showers, usually adjacent to an athletic or execise
@@ -2477,6 +2818,7 @@ class Shower(Room):
 
     pass
 
+
 class Sports_Service_Room(Room):
     """
     A class of spaces used in the support of sports
@@ -2484,12 +2826,14 @@ class Sports_Service_Room(Room):
 
     pass
 
+
 class Storage_Room(Room):
     """
     A class of spaces used for storage
     """
 
     pass
+
 
 class Hazardous_Materials_Storage(Storage_Room):
     """
@@ -2500,12 +2844,14 @@ class Hazardous_Materials_Storage(Storage_Room):
 
     pass
 
+
 class Waste_Storage(Storage_Room):
     """
     A room used for storing waste such as trash or recycling
     """
 
     pass
+
 
 class Telecom_Room(Room):
     """
@@ -2514,6 +2860,7 @@ class Telecom_Room(Room):
 
     pass
 
+
 class Distribution_Frame(Telecom_Room):
     """
     A class of spaces where the cables carrying signals meet and connect,
@@ -2521,6 +2868,7 @@ class Distribution_Frame(Telecom_Room):
     """
 
     pass
+
 
 class IDF(Distribution_Frame):
     """
@@ -2531,6 +2879,7 @@ class IDF(Distribution_Frame):
 
     pass
 
+
 class MDF(Distribution_Frame):
     """
     A room for the Main Distribution Frame, the central place of a
@@ -2540,6 +2889,7 @@ class MDF(Distribution_Frame):
 
     pass
 
+
 class Equipment_Room(Telecom_Room):
     """
     A telecommunications room where equipment that serves the building is
@@ -2548,12 +2898,14 @@ class Equipment_Room(Telecom_Room):
 
     pass
 
+
 class Switch_Room(Telecom_Room):
     """
     A telecommuncations room housing network switches
     """
 
     pass
+
 
 class TETRA_Room(Telecom_Room):
     """
@@ -2563,12 +2915,14 @@ class TETRA_Room(Telecom_Room):
 
     pass
 
+
 class Wardrobe(Room):
     """
     Storage for clothing, costumes, or uniforms
     """
 
     pass
+
 
 class Workshop(Room):
     """
@@ -2578,6 +2932,7 @@ class Workshop(Room):
 
     pass
 
+
 class Ticketing_Booth(Space):
     """
     A room or space used to sell or distribute tickets to events at a
@@ -2586,12 +2941,14 @@ class Ticketing_Booth(Space):
 
     pass
 
+
 class Tunnel(Space):
     """
     An enclosed space that connects buildings. Often underground
     """
 
     pass
+
 
 class Vertical_Space(Space):
     """
@@ -2600,6 +2957,7 @@ class Vertical_Space(Space):
 
     pass
 
+
 class Elevator_Shaft(Vertical_Space):
     """
     The vertical space in which an elevator ascends and descends
@@ -2607,12 +2965,14 @@ class Elevator_Shaft(Vertical_Space):
 
     pass
 
+
 class Elevator_Space(Vertical_Space):
     """
     The vertical space in whcih an elevator ascends and descends
     """
 
     pass
+
 
 class Riser(Vertical_Space):
     """
@@ -2622,12 +2982,14 @@ class Riser(Vertical_Space):
 
     pass
 
+
 class Staircase(Vertical_Space):
     """
     A vertical space containing stairs
     """
 
     pass
+
 
 class Water_Tank(Space):
     """
@@ -2636,8 +2998,10 @@ class Water_Tank(Space):
 
     pass
 
+
 class Storey(Location):
     pass
+
 
 class Wing(Location):
     """
@@ -2646,6 +3010,7 @@ class Wing(Location):
     """
 
     pass
+
 
 class Zone(Location):
     """
@@ -2660,6 +3025,7 @@ class Zone(Location):
 
     pass
 
+
 class Energy_Zone(Zone):
     """
     A space or group of spaces that are managed or monitored as one unit
@@ -2668,12 +3034,14 @@ class Energy_Zone(Zone):
 
     pass
 
+
 class Fire_Zone(Zone):
     """
     combustion chamber in a furnace or boiler.
     """
 
     pass
+
 
 class HVAC_Zone(Zone):
     """
@@ -2685,17 +3053,22 @@ class HVAC_Zone(Zone):
 
     pass
 
+
 class Lighting_Zone(Zone):
     pass
+
 
 class Measurable(Entity, Class):
     pass
 
+
 class Quantity(Measurable):
     pass
 
+
 class Substance(Measurable):
     pass
+
 
 class Fluid(Substance):
     """
@@ -2704,6 +3077,7 @@ class Fluid(Substance):
     """
 
     pass
+
 
 class Gas(Fluid):
     """
@@ -2714,6 +3088,7 @@ class Gas(Fluid):
 
     pass
 
+
 class Air(Gas):
     """
     the invisible gaseous substance surrounding the earth, a mixture
@@ -2722,12 +3097,14 @@ class Air(Gas):
 
     pass
 
+
 class Building_Air(Air):
     """
     air contained within a building
     """
 
     pass
+
 
 class Bypass_Air(Air):
     """
@@ -2736,12 +3113,14 @@ class Bypass_Air(Air):
 
     pass
 
+
 class Discharge_Air(Air):
     """
     the air exiting the registers (vents).
     """
 
     pass
+
 
 class Exhaust_Air(Air):
     """
@@ -2751,6 +3130,7 @@ class Exhaust_Air(Air):
 
     pass
 
+
 class Mixed_Air(Air):
     """
     (1) air that contains two or more streams of air. (2) combined outdoor
@@ -2759,12 +3139,14 @@ class Mixed_Air(Air):
 
     pass
 
+
 class Outside_Air(Air):
     """
     air external to a defined zone (e.g., corridors).
     """
 
     pass
+
 
 class Return_Air(Air):
     """
@@ -2775,6 +3157,7 @@ class Return_Air(Air):
     """
 
     pass
+
 
 class Supply_Air(Air):
     """
@@ -2790,12 +3173,14 @@ class Supply_Air(Air):
 
     pass
 
+
 class Zone_Air(Air):
     """
     air inside a defined zone (e.g., corridors).
     """
 
     pass
+
 
 class CO(Gas):
     """
@@ -2804,12 +3189,14 @@ class CO(Gas):
 
     pass
 
+
 class CO2(Gas):
     """
     Carbon Dioxide in the vapor phase
     """
 
     pass
+
 
 class Natural_Gas(Gas):
     """
@@ -2819,12 +3206,14 @@ class Natural_Gas(Gas):
 
     pass
 
+
 class Steam(Gas):
     """
     water in the vapor phase.
     """
 
     pass
+
 
 class Liquid(Fluid):
     """
@@ -2835,6 +3224,7 @@ class Liquid(Fluid):
 
     pass
 
+
 class Gasoline(Liquid):
     """
     Petroleum derived liquid used as a fuel source
@@ -2842,8 +3232,10 @@ class Gasoline(Liquid):
 
     pass
 
+
 class Glycol(Liquid):
     pass
+
 
 class Liquid_CO2(Liquid):
     """
@@ -2851,6 +3243,7 @@ class Liquid_CO2(Liquid):
     """
 
     pass
+
 
 class Oil(Liquid):
     """
@@ -2860,12 +3253,14 @@ class Oil(Liquid):
 
     pass
 
+
 class Fuel_Oil(Oil):
     """
     Petroleum based oil burned for energy
     """
 
     pass
+
 
 class Water(Liquid):
     """
@@ -2876,6 +3271,7 @@ class Water(Liquid):
 
     pass
 
+
 class Blowdown_Water(Water):
     """
     Water expelled from a system to remove mineral build up
@@ -2883,12 +3279,14 @@ class Blowdown_Water(Water):
 
     pass
 
+
 class Bypass_Water(Water):
     """
     Water that circumvents a piece of equipment or system
     """
 
     pass
+
 
 class Chilled_Water(Water):
     """
@@ -2898,11 +3296,14 @@ class Chilled_Water(Water):
 
     pass
 
+
 class Discharge_Chilled_Water(Chilled_Water):
     pass
 
+
 class Supply_Chilled_Water(Chilled_Water):
     pass
+
 
 class Collection_Basin_Water(Water):
     """
@@ -2912,6 +3313,7 @@ class Collection_Basin_Water(Water):
 
     pass
 
+
 class Condenser_Water(Water):
     """
     Water used used to remove heat through condensation
@@ -2919,8 +3321,10 @@ class Condenser_Water(Water):
 
     pass
 
+
 class Discharge_Condenser_Water(Condenser_Water):
     pass
+
 
 class Entering_Condenser_Water(Condenser_Water):
     """
@@ -2931,6 +3335,7 @@ class Entering_Condenser_Water(Condenser_Water):
 
     pass
 
+
 class Leaving_Condenser_Water(Condenser_Water):
     """
     In a condenser water loop, this is water being brought to the
@@ -2940,11 +3345,14 @@ class Leaving_Condenser_Water(Condenser_Water):
 
     pass
 
+
 class Return_Condenser_Water(Condenser_Water):
     pass
 
+
 class Supply_Condenser_Water(Condenser_Water):
     pass
+
 
 class Deionized_Water(Water):
     """
@@ -2954,8 +3362,10 @@ class Deionized_Water(Water):
 
     pass
 
+
 class Discharge_Water(Water):
     pass
+
 
 class Domestic_Water(Water):
     """
@@ -2965,6 +3375,7 @@ class Domestic_Water(Water):
 
     pass
 
+
 class Entering_Water(Water):
     """
     Water that is entering a piece of equipment or system
@@ -2972,8 +3383,10 @@ class Entering_Water(Water):
 
     pass
 
+
 class Entering_Chilled_Water(Entering_Water, Chilled_Water):
     pass
+
 
 class Hot_Water(Water):
     """
@@ -2982,17 +3395,22 @@ class Hot_Water(Water):
 
     pass
 
+
 class Discharge_Hot_Water(Hot_Water):
     pass
+
 
 class Entering_Hot_Water(Hot_Water, Entering_Water):
     pass
 
+
 class Return_Hot_Water(Hot_Water):
     pass
 
+
 class Supply_Hot_Water(Hot_Water):
     pass
+
 
 class Leaving_Water(Water):
     """
@@ -3001,11 +3419,14 @@ class Leaving_Water(Water):
 
     pass
 
+
 class Leaving_Chilled_Water(Leaving_Water, Chilled_Water):
     pass
 
+
 class Leaving_Hot_Water(Leaving_Water, Hot_Water):
     pass
+
 
 class Makeup_Water(Water):
     """
@@ -3015,6 +3436,7 @@ class Makeup_Water(Water):
 
     pass
 
+
 class Potable_Water(Water):
     """
     Water that is safe to drink
@@ -3022,11 +3444,14 @@ class Potable_Water(Water):
 
     pass
 
+
 class Return_Water(Water):
     pass
 
+
 class Supply_Water(Water):
     pass
+
 
 class Refrigerant(Fluid):
     """
@@ -3038,6 +3463,7 @@ class Refrigerant(Fluid):
 
     pass
 
+
 class Solid(Substance):
     """
     one of the three states or phases of matter characterized by stability
@@ -3047,12 +3473,14 @@ class Solid(Substance):
 
     pass
 
+
 class Frost(Solid):
     """
     frost formed on the cold surface (tubes, plates) of a cooling coil.
     """
 
     pass
+
 
 class Hail(Solid):
     """
@@ -3061,6 +3489,7 @@ class Hail(Solid):
 
     pass
 
+
 class Ice(Solid):
     """
     Water in its solid form
@@ -3068,11 +3497,14 @@ class Ice(Solid):
 
     pass
 
+
 class Soil(Solid):
     pass
 
+
 class Point(Entity, Class):
     pass
+
 
 class Alarm(Point):
     """
@@ -3083,8 +3515,10 @@ class Alarm(Point):
 
     pass
 
+
 class Air_Alarm(Alarm):
     pass
+
 
 class Air_Flow_Alarm(Air_Alarm):
     """
@@ -3093,12 +3527,14 @@ class Air_Flow_Alarm(Air_Alarm):
 
     pass
 
+
 class Air_Flow_Loss_Alarm(Air_Flow_Alarm):
     """
     An alarm that indicates loss in air flow.
     """
 
     pass
+
 
 class High_Air_Flow_Alarm(Air_Flow_Alarm):
     """
@@ -3107,12 +3543,14 @@ class High_Air_Flow_Alarm(Air_Flow_Alarm):
 
     pass
 
+
 class Low_Air_Flow_Alarm(Air_Flow_Alarm):
     """
     An alarm that indicates that the air flow is lower than normal.
     """
 
     pass
+
 
 class Low_Discharge_Air_Flow_Alarm(Low_Air_Flow_Alarm):
     """
@@ -3122,8 +3560,10 @@ class Low_Discharge_Air_Flow_Alarm(Low_Air_Flow_Alarm):
 
     pass
 
+
 class Low_Supply_Air_Flow_Alarm(Low_Air_Flow_Alarm):
     pass
+
 
 class CO2_Alarm(Alarm):
     """
@@ -3133,6 +3573,7 @@ class CO2_Alarm(Alarm):
 
     pass
 
+
 class High_CO2_Alarm(CO2_Alarm):
     """
     A device that indicates high concentration of carbon dioxide.
@@ -3140,12 +3581,14 @@ class High_CO2_Alarm(CO2_Alarm):
 
     pass
 
+
 class Change_Filter_Alarm(Alarm):
     """
     An alarm that indicates that a filter must be changed
     """
 
     pass
+
 
 class Communication_Loss_Alarm(Alarm):
     """
@@ -3155,6 +3598,7 @@ class Communication_Loss_Alarm(Alarm):
 
     pass
 
+
 class Cycle_Alarm(Alarm):
     """
     An alarm that indicates off-normal conditions associated with HVAC
@@ -3162,6 +3606,7 @@ class Cycle_Alarm(Alarm):
     """
 
     pass
+
 
 class Short_Cycle_Alarm(Cycle_Alarm):
     """
@@ -3171,6 +3616,7 @@ class Short_Cycle_Alarm(Cycle_Alarm):
 
     pass
 
+
 class Emergency_Alarm(Alarm):
     """
     Alarms that indicate off-normal conditions associated with emergency
@@ -3178,6 +3624,7 @@ class Emergency_Alarm(Alarm):
     """
 
     pass
+
 
 class Emergency_Generator_Alarm(Emergency_Alarm):
     """
@@ -3187,6 +3634,7 @@ class Emergency_Generator_Alarm(Emergency_Alarm):
 
     pass
 
+
 class Failure_Alarm(Alarm):
     """
     Alarms that indicate the failure of devices, equipment, systems and
@@ -3195,8 +3643,10 @@ class Failure_Alarm(Alarm):
 
     pass
 
+
 class Sensor_Failure_Alarm(Failure_Alarm):
     pass
+
 
 class Unit_Failure_Alarm(Failure_Alarm):
     """
@@ -3204,6 +3654,7 @@ class Unit_Failure_Alarm(Failure_Alarm):
     """
 
     pass
+
 
 class Humidity_Alarm(Alarm):
     """
@@ -3213,12 +3664,14 @@ class Humidity_Alarm(Alarm):
 
     pass
 
+
 class High_Humidity_Alarm(Humidity_Alarm):
     """
     An alarm that indicates high concentration of water vapor in the air.
     """
 
     pass
+
 
 class Low_Humidity_Alarm(Humidity_Alarm):
     """
@@ -3227,12 +3680,14 @@ class Low_Humidity_Alarm(Humidity_Alarm):
 
     pass
 
+
 class Leak_Alarm(Alarm):
     """
     An alarm that indicates leaks occured in systems containing fluids
     """
 
     pass
+
 
 class Condensate_Leak_Alarm(Leak_Alarm):
     """
@@ -3241,8 +3696,10 @@ class Condensate_Leak_Alarm(Leak_Alarm):
 
     pass
 
+
 class Liquid_Detection_Alarm(Alarm):
     pass
+
 
 class Low_Battery_Alarm(Alarm):
     """
@@ -3251,8 +3708,10 @@ class Low_Battery_Alarm(Alarm):
 
     pass
 
+
 class Luminance_Alarm(Alarm):
     pass
+
 
 class Maintenance_Required_Alarm(Alarm):
     """
@@ -3262,12 +3721,14 @@ class Maintenance_Required_Alarm(Alarm):
 
     pass
 
+
 class Overload_Alarm(Alarm):
     """
     An alarm that can indicate when a full-load current is exceeded.
     """
 
     pass
+
 
 class Power_Alarm(Alarm):
     """
@@ -3277,12 +3738,14 @@ class Power_Alarm(Alarm):
 
     pass
 
+
 class Power_Loss_Alarm(Power_Alarm):
     """
     An alarm that indicates a power failure.
     """
 
     pass
+
 
 class Pressure_Alarm(Alarm):
     """
@@ -3292,6 +3755,7 @@ class Pressure_Alarm(Alarm):
 
     pass
 
+
 class High_Head_Pressure_Alarm(Pressure_Alarm):
     """
     An alarm that indicates a high pressure generated on the output side
@@ -3299,6 +3763,7 @@ class High_Head_Pressure_Alarm(Pressure_Alarm):
     """
 
     pass
+
 
 class Low_Suction_Pressure_Alarm(Pressure_Alarm):
     """
@@ -3308,6 +3773,7 @@ class Low_Suction_Pressure_Alarm(Pressure_Alarm):
 
     pass
 
+
 class Smoke_Alarm(Alarm):
     """
     An alarm that indicates the off-normal conditions associated with
@@ -3316,14 +3782,18 @@ class Smoke_Alarm(Alarm):
 
     pass
 
+
 class Smoke_Detection_Alarm(Smoke_Alarm):
     pass
+
 
 class Discharge_Air_Smoke_Detection_Alarm(Air_Alarm, Smoke_Detection_Alarm):
     pass
 
+
 class Supply_Air_Smoke_Detection_Alarm(Air_Alarm, Smoke_Detection_Alarm):
     pass
+
 
 class Temperature_Alarm(Alarm):
     """
@@ -3333,6 +3803,7 @@ class Temperature_Alarm(Alarm):
 
     pass
 
+
 class Air_Temperature_Alarm(Air_Alarm, Temperature_Alarm):
     """
     An alarm that indicates the off-normal conditions associated with the
@@ -3340,6 +3811,7 @@ class Air_Temperature_Alarm(Air_Alarm, Temperature_Alarm):
     """
 
     pass
+
 
 class Discharge_Air_Temperature_Alarm(Air_Temperature_Alarm):
     """
@@ -3349,6 +3821,7 @@ class Discharge_Air_Temperature_Alarm(Air_Temperature_Alarm):
 
     pass
 
+
 class Return_Air_Temperature_Alarm(Air_Temperature_Alarm):
     """
     An alarm that indicates the off-normal conditions associated with the
@@ -3356,6 +3829,7 @@ class Return_Air_Temperature_Alarm(Air_Temperature_Alarm):
     """
 
     pass
+
 
 class Supply_Air_Temperature_Alarm(Air_Temperature_Alarm):
     """
@@ -3365,6 +3839,7 @@ class Supply_Air_Temperature_Alarm(Air_Temperature_Alarm):
 
     pass
 
+
 class High_Temperature_Alarm(Temperature_Alarm):
     """
     An alarm that indicates high temperature.
@@ -3372,22 +3847,32 @@ class High_Temperature_Alarm(Temperature_Alarm):
 
     pass
 
-class High_Discharge_Air_Temperature_Alarm(Discharge_Air_Temperature_Alarm, High_Temperature_Alarm):
+
+class High_Discharge_Air_Temperature_Alarm(
+    Discharge_Air_Temperature_Alarm, High_Temperature_Alarm
+):
     """
     An alarm that indicates that discharge air temperature is too high
     """
 
     pass
 
-class High_Return_Air_Temperature_Alarm(Return_Air_Temperature_Alarm, High_Temperature_Alarm):
+
+class High_Return_Air_Temperature_Alarm(
+    Return_Air_Temperature_Alarm, High_Temperature_Alarm
+):
     """
     An alarm that indicates that return air temperature is too high
     """
 
     pass
 
-class High_Supply_Air_Temperature_Alarm(Supply_Air_Temperature_Alarm, High_Temperature_Alarm):
+
+class High_Supply_Air_Temperature_Alarm(
+    Supply_Air_Temperature_Alarm, High_Temperature_Alarm
+):
     pass
+
 
 class Low_Temperature_Alarm(Temperature_Alarm):
     """
@@ -3396,18 +3881,28 @@ class Low_Temperature_Alarm(Temperature_Alarm):
 
     pass
 
-class Low_Discharge_Air_Temperature_Alarm(Discharge_Air_Temperature_Alarm, Low_Temperature_Alarm):
+
+class Low_Discharge_Air_Temperature_Alarm(
+    Discharge_Air_Temperature_Alarm, Low_Temperature_Alarm
+):
     pass
 
-class Low_Return_Air_Temperature_Alarm(Return_Air_Temperature_Alarm, Low_Temperature_Alarm):
+
+class Low_Return_Air_Temperature_Alarm(
+    Return_Air_Temperature_Alarm, Low_Temperature_Alarm
+):
     """
     An alarm that indicates that return air temperature is too low
     """
 
     pass
 
-class Low_Supply_Air_Temperature_Alarm(Supply_Air_Temperature_Alarm, Low_Temperature_Alarm):
+
+class Low_Supply_Air_Temperature_Alarm(
+    Supply_Air_Temperature_Alarm, Low_Temperature_Alarm
+):
     pass
+
 
 class Valve_Position_Alarm(Alarm):
     """
@@ -3417,6 +3912,7 @@ class Valve_Position_Alarm(Alarm):
 
     pass
 
+
 class Voltage_Alarm(Alarm):
     """
     An alarm that indicates the voltage is not in a normal state.
@@ -3424,12 +3920,14 @@ class Voltage_Alarm(Alarm):
 
     pass
 
+
 class Low_Voltage_Alarm(Voltage_Alarm):
     """
     An alarm that indicates the voltage is lower than its normal state.
     """
 
     pass
+
 
 class Water_Alarm(Alarm):
     """
@@ -3439,12 +3937,14 @@ class Water_Alarm(Alarm):
 
     pass
 
+
 class Deionized_Water_Alarm(Water_Alarm):
     """
     An alarm that indicates deionized water leaks.
     """
 
     pass
+
 
 class No_Water_Alarm(Water_Alarm):
     """
@@ -3453,12 +3953,14 @@ class No_Water_Alarm(Water_Alarm):
 
     pass
 
+
 class Water_Level_Alarm(Water_Alarm):
     """
     An alarm that indicates a high or low water level e.g. in a basin
     """
 
     pass
+
 
 class Collection_Basin_Water_Level_Alarm(Water_Level_Alarm):
     """
@@ -3468,12 +3970,14 @@ class Collection_Basin_Water_Level_Alarm(Water_Level_Alarm):
 
     pass
 
+
 class Max_Water_Level_Alarm(Water_Level_Alarm):
     """
     Alarm indicating that the maximum water level was reached
     """
 
     pass
+
 
 class Min_Water_Level_Alarm(Water_Level_Alarm):
     """
@@ -3482,12 +3986,14 @@ class Min_Water_Level_Alarm(Water_Level_Alarm):
 
     pass
 
+
 class Water_Loss_Alarm(Water_Alarm):
     """
     An alarm that indicates a loss of water e.g. during transport
     """
 
     pass
+
 
 class Water_Temperature_Alarm(Water_Alarm, Temperature_Alarm):
     """
@@ -3497,6 +4003,7 @@ class Water_Temperature_Alarm(Water_Alarm, Temperature_Alarm):
 
     pass
 
+
 class Entering_Water_Temperature_Alarm(Water_Temperature_Alarm):
     """
     An alarm that indicates the off-normal conditions associated with
@@ -3504,6 +4011,7 @@ class Entering_Water_Temperature_Alarm(Water_Temperature_Alarm):
     """
 
     pass
+
 
 class Leaving_Water_Temperature_Alarm(Water_Temperature_Alarm):
     """
@@ -3513,6 +4021,7 @@ class Leaving_Water_Temperature_Alarm(Water_Temperature_Alarm):
 
     pass
 
+
 class Command(Point):
     """
     A Command is an output point that directly determines the behavior of
@@ -3521,6 +4030,7 @@ class Command(Point):
 
     pass
 
+
 class Boiler_Command(Command):
     """
     A command to control a boiler
@@ -3528,8 +4038,10 @@ class Boiler_Command(Command):
 
     pass
 
+
 class Bypass_Command(Command):
     pass
+
 
 class Cooling_Command(Command):
     """
@@ -3539,12 +4051,14 @@ class Cooling_Command(Command):
 
     pass
 
+
 class Damper_Command(Command):
     """
     Controls properties of dampers
     """
 
     pass
+
 
 class Direction_Command(Command):
     """
@@ -3553,12 +4067,14 @@ class Direction_Command(Command):
 
     pass
 
+
 class Disable_Command(Command):
     """
     Commands that disable functionality
     """
 
     pass
+
 
 class Disable_Differential_Enthalpy_Command(Disable_Command):
     """
@@ -3567,12 +4083,14 @@ class Disable_Differential_Enthalpy_Command(Disable_Command):
 
     pass
 
+
 class Disable_Differential_Temperature_Command(Disable_Command):
     """
     Disables the use of differential temperature control
     """
 
     pass
+
 
 class Disable_Fixed_Enthalpy_Command(Disable_Command):
     """
@@ -3581,6 +4099,7 @@ class Disable_Fixed_Enthalpy_Command(Disable_Command):
 
     pass
 
+
 class Disable_Fixed_Temperature_Command(Disable_Command):
     """
     Disables the use of fixed temperature temperature
@@ -3588,12 +4107,14 @@ class Disable_Fixed_Temperature_Command(Disable_Command):
 
     pass
 
+
 class Enable_Command(Command):
     """
     Commands that enable functionality
     """
 
     pass
+
 
 class Cooling_Enable_Command(Enable_Command):
     """
@@ -3604,12 +4125,14 @@ class Cooling_Enable_Command(Enable_Command):
 
     pass
 
+
 class Enable_Differential_Enthalpy_Command(Enable_Command):
     """
     Enables the use of differential enthalpy control
     """
 
     pass
+
 
 class Enable_Differential_Temperature_Command(Enable_Command):
     """
@@ -3618,6 +4141,7 @@ class Enable_Differential_Temperature_Command(Enable_Command):
 
     pass
 
+
 class Enable_Fixed_Enthalpy_Command(Enable_Command):
     """
     Enables the use of fixed enthalpy control
@@ -3625,12 +4149,14 @@ class Enable_Fixed_Enthalpy_Command(Enable_Command):
 
     pass
 
+
 class Enable_Fixed_Temperature_Command(Enable_Command):
     """
     Enables the use of fixed temperature control
     """
 
     pass
+
 
 class Heating_Enable_Command(Enable_Command):
     """
@@ -3641,8 +4167,10 @@ class Heating_Enable_Command(Enable_Command):
 
     pass
 
+
 class Run_Enable_Command(Enable_Command):
     pass
+
 
 class Stage_Enable_Command(Enable_Command):
     """
@@ -3653,12 +4181,14 @@ class Stage_Enable_Command(Enable_Command):
 
     pass
 
+
 class System_Enable_Command(Enable_Command):
     """
     Enables operation of a system
     """
 
     pass
+
 
 class Chilled_Water_System_Enable_Command(System_Enable_Command):
     """
@@ -3667,12 +4197,14 @@ class Chilled_Water_System_Enable_Command(System_Enable_Command):
 
     pass
 
+
 class Hot_Water_System_Enable_Command(System_Enable_Command):
     """
     Enables operation of the hot water system
     """
 
     pass
+
 
 class Domestic_Hot_Water_System_Enable_Command(Hot_Water_System_Enable_Command):
     """
@@ -3681,12 +4213,14 @@ class Domestic_Hot_Water_System_Enable_Command(Hot_Water_System_Enable_Command):
 
     pass
 
+
 class VFD_Enable_Command(Enable_Command):
     """
     Enables operation of a variable frequency drive
     """
 
     pass
+
 
 class Fan_Command(Command):
     """
@@ -3695,12 +4229,14 @@ class Fan_Command(Command):
 
     pass
 
+
 class Fan_Speed_Command(Fan_Command):
     """
     Controls the speed of fans
     """
 
     pass
+
 
 class Frequency_Command(Command):
     """
@@ -3710,6 +4246,7 @@ class Frequency_Command(Command):
 
     pass
 
+
 class Max_Frequency_Command(Frequency_Command):
     """
     Sets the maximum permitted frequency
@@ -3717,8 +4254,10 @@ class Max_Frequency_Command(Frequency_Command):
 
     pass
 
+
 class Min_Frequency_Command(Frequency_Command):
     pass
+
 
 class Heating_Command(Command):
     """
@@ -3728,8 +4267,10 @@ class Heating_Command(Command):
 
     pass
 
+
 class Humidify_Command(Command):
     pass
+
 
 class Lead_Lag_Command(Command):
     """
@@ -3738,12 +4279,14 @@ class Lead_Lag_Command(Command):
 
     pass
 
+
 class Light_Command(Command):
     """
     Controls the amount of the light provided by the device
     """
 
     pass
+
 
 class Load_Shed_Command(Command):
     """
@@ -3752,23 +4295,30 @@ class Load_Shed_Command(Command):
 
     pass
 
+
 class Occupied_Load_Shed_Command(Load_Shed_Command):
     pass
+
 
 class Zone_Occupied_Load_Shed_Command(Occupied_Load_Shed_Command):
     pass
 
+
 class Standby_Load_Shed_Command(Load_Shed_Command):
     pass
+
 
 class Zone_Standby_Load_Shed_Command(Standby_Load_Shed_Command):
     pass
 
+
 class Unoccupied_Load_Shed_Command(Load_Shed_Command):
     pass
 
+
 class Zone_Unoccupied_Load_Shed_Command(Unoccupied_Load_Shed_Command):
     pass
+
 
 class Luminance_Command(Command):
     """
@@ -3777,12 +4327,14 @@ class Luminance_Command(Command):
 
     pass
 
+
 class Mode_Command(Command):
     """
     Controls the operating mode of a device or controller
     """
 
     pass
+
 
 class Automatic_Mode_Command(Mode_Command):
     """
@@ -3792,8 +4344,10 @@ class Automatic_Mode_Command(Mode_Command):
 
     pass
 
+
 class Box_Mode_Command(Mode_Command):
     pass
+
 
 class Maintenance_Mode_Command(Mode_Command):
     """
@@ -3803,6 +4357,7 @@ class Maintenance_Mode_Command(Mode_Command):
 
     pass
 
+
 class Occupancy_Command(Command):
     """
     Controls whether or not a device or controller is operating in
@@ -3810,6 +4365,7 @@ class Occupancy_Command(Command):
     """
 
     pass
+
 
 class On_Off_Command(Command):
     """
@@ -3819,6 +4375,7 @@ class On_Off_Command(Command):
 
     pass
 
+
 class Lead_On_Off_Command(On_Off_Command):
     """
     Controls the active/inactive status of the "lead" part of a lead/lag
@@ -3826,6 +4383,7 @@ class Lead_On_Off_Command(On_Off_Command):
     """
 
     pass
+
 
 class Off_Command(On_Off_Command):
     """
@@ -3837,6 +4395,7 @@ class Off_Command(On_Off_Command):
 
     pass
 
+
 class On_Command(On_Off_Command):
     """
     An On Command controls or reports the binary 'on' status of a control
@@ -3847,6 +4406,7 @@ class On_Command(On_Off_Command):
 
     pass
 
+
 class Start_Stop_Command(On_Off_Command):
     """
     A Start/Stop Command controls or reports the active/inactive status of
@@ -3855,8 +4415,10 @@ class Start_Stop_Command(On_Off_Command):
 
     pass
 
+
 class Steam_On_Off_Command(On_Off_Command):
     pass
+
 
 class Override_Command(Command):
     """
@@ -3866,8 +4428,10 @@ class Override_Command(Command):
 
     pass
 
+
 class Curtailment_Override_Command(Override_Command):
     pass
+
 
 class Position_Command(Command):
     """
@@ -3876,6 +4440,7 @@ class Position_Command(Command):
 
     pass
 
+
 class Damper_Position_Command(Position_Command, Damper_Command):
     """
     Controls the position (the degree of openness) of a damper
@@ -3883,12 +4448,14 @@ class Damper_Position_Command(Position_Command, Damper_Command):
 
     pass
 
+
 class Preheat_Command(Command):
     """
     A command to activate preheating
     """
 
     pass
+
 
 class Pump_Command(Command):
     """
@@ -3898,12 +4465,14 @@ class Pump_Command(Command):
 
     pass
 
+
 class Relay_Command(Command):
     """
     Commands to switch the relay
     """
 
     pass
+
 
 class Reset_Command(Command):
     """
@@ -3912,6 +4481,7 @@ class Reset_Command(Command):
 
     pass
 
+
 class Fault_Reset_Command(Reset_Command):
     """
     Clears a fault status
@@ -3919,11 +4489,14 @@ class Fault_Reset_Command(Reset_Command):
 
     pass
 
+
 class Filter_Reset_Command(Reset_Command):
     pass
 
+
 class Speed_Reset_Command(Reset_Command):
     pass
+
 
 class Speed_Command(Command):
     """
@@ -3932,12 +4505,14 @@ class Speed_Command(Command):
 
     pass
 
+
 class Tint_Command(Command):
     """
     The target level of window tint.
     """
 
     pass
+
 
 class Valve_Command(Command):
     """
@@ -3947,12 +4522,14 @@ class Valve_Command(Command):
 
     pass
 
+
 class Valve_Position_Command(Valve_Command, Position_Command):
     """
     Controls the position (the degree of openness) of a valve
     """
 
     pass
+
 
 class Parameter(Point):
     """
@@ -3963,12 +4540,14 @@ class Parameter(Point):
 
     pass
 
+
 class Alarm_Sensitivity_Parameter(Parameter):
     """
     A parameter indicates the sensitivity to activate an alarm.
     """
 
     pass
+
 
 class CO2_Alarm_Sensitivity_Parameter(Alarm_Sensitivity_Parameter):
     """
@@ -3977,12 +4556,14 @@ class CO2_Alarm_Sensitivity_Parameter(Alarm_Sensitivity_Parameter):
 
     pass
 
+
 class Temperature_Alarm_Sensitivity_Parameter(Alarm_Sensitivity_Parameter):
     """
     A parameter indicates the sensitivity to activate a temperature alarm.
     """
 
     pass
+
 
 class Delay_Parameter(Parameter):
     """
@@ -3992,6 +4573,7 @@ class Delay_Parameter(Parameter):
 
     pass
 
+
 class Alarm_Delay_Parameter(Delay_Parameter):
     """
     A parameter determining how long to delay an alarm after sufficient
@@ -4000,12 +4582,14 @@ class Alarm_Delay_Parameter(Delay_Parameter):
 
     pass
 
+
 class Humidity_Parameter(Parameter):
     """
     Parameters relevant to humidity-related systems and points
     """
 
     pass
+
 
 class High_Humidity_Alarm_Parameter(Humidity_Parameter):
     """
@@ -4015,6 +4599,7 @@ class High_Humidity_Alarm_Parameter(Humidity_Parameter):
 
     pass
 
+
 class Low_Humidity_Alarm_Parameter(Humidity_Parameter):
     """
     A parameter determining the humidity level at which to trigger a low
@@ -4022,6 +4607,7 @@ class Low_Humidity_Alarm_Parameter(Humidity_Parameter):
     """
 
     pass
+
 
 class Limit(Parameter):
     """
@@ -4031,6 +4617,7 @@ class Limit(Parameter):
 
     pass
 
+
 class Air_Flow_Setpoint_Limit(Limit):
     """
     A parameter that places a lower or upper bound on the range of
@@ -4038,6 +4625,7 @@ class Air_Flow_Setpoint_Limit(Limit):
     """
 
     pass
+
 
 class Close_Limit(Limit):
     """
@@ -4047,6 +4635,7 @@ class Close_Limit(Limit):
 
     pass
 
+
 class Current_Limit(Limit):
     """
     A parameter that places a lower or upper bound on the range of
@@ -4054,6 +4643,7 @@ class Current_Limit(Limit):
     """
 
     pass
+
 
 class Differential_Pressure_Setpoint_Limit(Limit):
     """
@@ -4063,6 +4653,7 @@ class Differential_Pressure_Setpoint_Limit(Limit):
 
     pass
 
+
 class Fresh_Air_Setpoint_Limit(Limit):
     """
     A parameter that places a lower or upper bound on the range of
@@ -4070,6 +4661,7 @@ class Fresh_Air_Setpoint_Limit(Limit):
     """
 
     pass
+
 
 class Max_Limit(Limit):
     """
@@ -4079,6 +4671,7 @@ class Max_Limit(Limit):
 
     pass
 
+
 class Max_Air_Flow_Setpoint_Limit(Air_Flow_Setpoint_Limit, Max_Limit):
     """
     A parameter that places an upper bound on the range of permitted
@@ -4086,6 +4679,7 @@ class Max_Air_Flow_Setpoint_Limit(Air_Flow_Setpoint_Limit, Max_Limit):
     """
 
     pass
+
 
 class Max_Cooling_Discharge_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit):
     """
@@ -4095,7 +4689,10 @@ class Max_Cooling_Discharge_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit)
 
     pass
 
-class Max_Occupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(Max_Cooling_Discharge_Air_Flow_Setpoint_Limit):
+
+class Max_Occupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(
+    Max_Cooling_Discharge_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Occupied_Cooling_Discharge_Air_Flow_Setpoint.
@@ -4103,13 +4700,17 @@ class Max_Occupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(Max_Cooling_Dischar
 
     pass
 
-class Max_Unoccupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(Max_Cooling_Discharge_Air_Flow_Setpoint_Limit):
+
+class Max_Unoccupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(
+    Max_Cooling_Discharge_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Unoccupied_Cooling_Discharge_Air_Flow_Setpoint.
     """
 
     pass
+
 
 class Max_Cooling_Supply_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit):
     """
@@ -4119,7 +4720,10 @@ class Max_Cooling_Supply_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit):
 
     pass
 
-class Max_Occupied_Cooling_Supply_Air_Flow_Setpoint_Limit(Max_Cooling_Supply_Air_Flow_Setpoint_Limit):
+
+class Max_Occupied_Cooling_Supply_Air_Flow_Setpoint_Limit(
+    Max_Cooling_Supply_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Occupied_Cooling_Supply_Air_Flow_Setpoint.
@@ -4127,13 +4731,17 @@ class Max_Occupied_Cooling_Supply_Air_Flow_Setpoint_Limit(Max_Cooling_Supply_Air
 
     pass
 
-class Max_Unoccupied_Cooling_Supply_Air_Flow_Setpoint_Limit(Max_Cooling_Supply_Air_Flow_Setpoint_Limit):
+
+class Max_Unoccupied_Cooling_Supply_Air_Flow_Setpoint_Limit(
+    Max_Cooling_Supply_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Unoccupied_Cooling_Supply_Air_Flow_Setpoint.
     """
 
     pass
+
 
 class Max_Heating_Discharge_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit):
     """
@@ -4143,7 +4751,10 @@ class Max_Heating_Discharge_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit)
 
     pass
 
-class Max_Occupied_Heating_Discharge_Air_Flow_Setpoint_Limit(Max_Heating_Discharge_Air_Flow_Setpoint_Limit):
+
+class Max_Occupied_Heating_Discharge_Air_Flow_Setpoint_Limit(
+    Max_Heating_Discharge_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Occupied_Heating_Discharge_Air_Flow_Setpoint.
@@ -4151,13 +4762,17 @@ class Max_Occupied_Heating_Discharge_Air_Flow_Setpoint_Limit(Max_Heating_Dischar
 
     pass
 
-class Max_Unoccupied_Heating_Discharge_Air_Flow_Setpoint_Limit(Max_Heating_Discharge_Air_Flow_Setpoint_Limit):
+
+class Max_Unoccupied_Heating_Discharge_Air_Flow_Setpoint_Limit(
+    Max_Heating_Discharge_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Unoccupied_Heating_Discharge_Air_Flow_Setpoint.
     """
 
     pass
+
 
 class Max_Heating_Supply_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit):
     """
@@ -4167,7 +4782,10 @@ class Max_Heating_Supply_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit):
 
     pass
 
-class Max_Occupied_Heating_Supply_Air_Flow_Setpoint_Limit(Max_Heating_Supply_Air_Flow_Setpoint_Limit):
+
+class Max_Occupied_Heating_Supply_Air_Flow_Setpoint_Limit(
+    Max_Heating_Supply_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Occupied_Heating_Supply_Air_Flow_Setpoint.
@@ -4175,13 +4793,17 @@ class Max_Occupied_Heating_Supply_Air_Flow_Setpoint_Limit(Max_Heating_Supply_Air
 
     pass
 
-class Max_Unoccupied_Heating_Supply_Air_Flow_Setpoint_Limit(Max_Heating_Supply_Air_Flow_Setpoint_Limit):
+
+class Max_Unoccupied_Heating_Supply_Air_Flow_Setpoint_Limit(
+    Max_Heating_Supply_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Unoccupied_Heating_Supply_Air_Flow_Setpoint.
     """
 
     pass
+
 
 class Max_Outside_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit):
     """
@@ -4191,13 +4813,17 @@ class Max_Outside_Air_Flow_Setpoint_Limit(Max_Air_Flow_Setpoint_Limit):
 
     pass
 
-class Max_Chilled_Water_Differential_Pressure_Setpoint_Limit(Max_Limit, Differential_Pressure_Setpoint_Limit):
+
+class Max_Chilled_Water_Differential_Pressure_Setpoint_Limit(
+    Max_Limit, Differential_Pressure_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Chilled_Water_Differential_Pressure_Setpoint.
     """
 
     pass
+
 
 class Max_Fresh_Air_Setpoint_Limit(Max_Limit, Fresh_Air_Setpoint_Limit):
     """
@@ -4207,13 +4833,17 @@ class Max_Fresh_Air_Setpoint_Limit(Max_Limit, Fresh_Air_Setpoint_Limit):
 
     pass
 
-class Max_Hot_Water_Differential_Pressure_Setpoint_Limit(Max_Limit, Differential_Pressure_Setpoint_Limit):
+
+class Max_Hot_Water_Differential_Pressure_Setpoint_Limit(
+    Max_Limit, Differential_Pressure_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Hot_Water_Differential_Pressure_Setpoint.
     """
 
     pass
+
 
 class Min_Limit(Limit):
     """
@@ -4223,6 +4853,7 @@ class Min_Limit(Limit):
 
     pass
 
+
 class Min_Air_Flow_Setpoint_Limit(Air_Flow_Setpoint_Limit, Min_Limit):
     """
     A parameter that places a lower bound on the range of permitted values
@@ -4230,6 +4861,7 @@ class Min_Air_Flow_Setpoint_Limit(Air_Flow_Setpoint_Limit, Min_Limit):
     """
 
     pass
+
 
 class Min_Cooling_Discharge_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit):
     """
@@ -4239,7 +4871,10 @@ class Min_Cooling_Discharge_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit)
 
     pass
 
-class Min_Occupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(Min_Cooling_Discharge_Air_Flow_Setpoint_Limit):
+
+class Min_Occupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(
+    Min_Cooling_Discharge_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Occupied_Cooling_Discharge_Air_Flow_Setpoint.
@@ -4247,13 +4882,17 @@ class Min_Occupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(Min_Cooling_Dischar
 
     pass
 
-class Min_Unoccupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(Min_Cooling_Discharge_Air_Flow_Setpoint_Limit):
+
+class Min_Unoccupied_Cooling_Discharge_Air_Flow_Setpoint_Limit(
+    Min_Cooling_Discharge_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Unoccupied_Cooling_Discharge_Air_Flow_Setpoint.
     """
 
     pass
+
 
 class Min_Cooling_Supply_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit):
     """
@@ -4263,7 +4902,10 @@ class Min_Cooling_Supply_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit):
 
     pass
 
-class Min_Occupied_Cooling_Supply_Air_Flow_Setpoint_Limit(Min_Cooling_Supply_Air_Flow_Setpoint_Limit):
+
+class Min_Occupied_Cooling_Supply_Air_Flow_Setpoint_Limit(
+    Min_Cooling_Supply_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Occupied_Cooling_Supply_Air_Flow_Setpoint.
@@ -4271,13 +4913,17 @@ class Min_Occupied_Cooling_Supply_Air_Flow_Setpoint_Limit(Min_Cooling_Supply_Air
 
     pass
 
-class Min_Unoccupied_Cooling_Supply_Air_Flow_Setpoint_Limit(Min_Cooling_Supply_Air_Flow_Setpoint_Limit):
+
+class Min_Unoccupied_Cooling_Supply_Air_Flow_Setpoint_Limit(
+    Min_Cooling_Supply_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Unoccupied_Cooling_Supply_Air_Flow_Setpoint.
     """
 
     pass
+
 
 class Min_Heating_Discharge_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit):
     """
@@ -4287,7 +4933,10 @@ class Min_Heating_Discharge_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit)
 
     pass
 
-class Min_Occupied_Heating_Discharge_Air_Flow_Setpoint_Limit(Min_Heating_Discharge_Air_Flow_Setpoint_Limit):
+
+class Min_Occupied_Heating_Discharge_Air_Flow_Setpoint_Limit(
+    Min_Heating_Discharge_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Occupied_Heating_Discharge_Air_Flow_Setpoint.
@@ -4295,13 +4944,17 @@ class Min_Occupied_Heating_Discharge_Air_Flow_Setpoint_Limit(Min_Heating_Dischar
 
     pass
 
-class Min_Unoccupied_Heating_Discharge_Air_Flow_Setpoint_Limit(Min_Heating_Discharge_Air_Flow_Setpoint_Limit):
+
+class Min_Unoccupied_Heating_Discharge_Air_Flow_Setpoint_Limit(
+    Min_Heating_Discharge_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Unoccupied_Heating_Discharge_Air_Flow_Setpoint.
     """
 
     pass
+
 
 class Min_Heating_Supply_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit):
     """
@@ -4311,7 +4964,10 @@ class Min_Heating_Supply_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit):
 
     pass
 
-class Min_Occupied_Heating_Supply_Air_Flow_Setpoint_Limit(Min_Heating_Supply_Air_Flow_Setpoint_Limit):
+
+class Min_Occupied_Heating_Supply_Air_Flow_Setpoint_Limit(
+    Min_Heating_Supply_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Occupied_Heating_Supply_Air_Flow_Setpoint.
@@ -4319,13 +4975,17 @@ class Min_Occupied_Heating_Supply_Air_Flow_Setpoint_Limit(Min_Heating_Supply_Air
 
     pass
 
-class Min_Unoccupied_Heating_Supply_Air_Flow_Setpoint_Limit(Min_Heating_Supply_Air_Flow_Setpoint_Limit):
+
+class Min_Unoccupied_Heating_Supply_Air_Flow_Setpoint_Limit(
+    Min_Heating_Supply_Air_Flow_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Unoccupied_Heating_Supply_Air_Flow_Setpoint.
     """
 
     pass
+
 
 class Min_Outside_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit):
     """
@@ -4335,13 +4995,17 @@ class Min_Outside_Air_Flow_Setpoint_Limit(Min_Air_Flow_Setpoint_Limit):
 
     pass
 
-class Min_Chilled_Water_Differential_Pressure_Setpoint_Limit(Min_Limit, Differential_Pressure_Setpoint_Limit):
+
+class Min_Chilled_Water_Differential_Pressure_Setpoint_Limit(
+    Min_Limit, Differential_Pressure_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Chilled_Water_Differential_Pressure_Setpoint.
     """
 
     pass
+
 
 class Min_Fresh_Air_Setpoint_Limit(Min_Limit, Fresh_Air_Setpoint_Limit):
     """
@@ -4351,13 +5015,17 @@ class Min_Fresh_Air_Setpoint_Limit(Min_Limit, Fresh_Air_Setpoint_Limit):
 
     pass
 
-class Min_Hot_Water_Differential_Pressure_Setpoint_Limit(Min_Limit, Differential_Pressure_Setpoint_Limit):
+
+class Min_Hot_Water_Differential_Pressure_Setpoint_Limit(
+    Min_Limit, Differential_Pressure_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Hot_Water_Differential_Pressure_Setpoint.
     """
 
     pass
+
 
 class Position_Limit(Limit):
     """
@@ -4367,6 +5035,7 @@ class Position_Limit(Limit):
 
     pass
 
+
 class Max_Position_Setpoint_Limit(Position_Limit, Max_Limit):
     """
     A parameter that places an upper bound on the range of permitted
@@ -4374,6 +5043,7 @@ class Max_Position_Setpoint_Limit(Position_Limit, Max_Limit):
     """
 
     pass
+
 
 class Min_Position_Setpoint_Limit(Position_Limit, Min_Limit):
     """
@@ -4383,6 +5053,7 @@ class Min_Position_Setpoint_Limit(Position_Limit, Min_Limit):
 
     pass
 
+
 class Speed_Setpoint_Limit(Limit):
     """
     A parameter that places a lower or upper bound on the range of
@@ -4390,6 +5061,7 @@ class Speed_Setpoint_Limit(Limit):
     """
 
     pass
+
 
 class Max_Speed_Setpoint_Limit(Speed_Setpoint_Limit, Max_Limit):
     """
@@ -4399,6 +5071,7 @@ class Max_Speed_Setpoint_Limit(Speed_Setpoint_Limit, Max_Limit):
 
     pass
 
+
 class Min_Speed_Setpoint_Limit(Speed_Setpoint_Limit, Min_Limit):
     """
     A parameter that places a lower bound on the range of permitted values
@@ -4406,6 +5079,7 @@ class Min_Speed_Setpoint_Limit(Speed_Setpoint_Limit, Min_Limit):
     """
 
     pass
+
 
 class Static_Pressure_Setpoint_Limit(Limit):
     """
@@ -4415,6 +5089,7 @@ class Static_Pressure_Setpoint_Limit(Limit):
 
     pass
 
+
 class High_Static_Pressure_Cutout_Setpoint_Limit(Static_Pressure_Setpoint_Limit):
     """
     A parameter that places a lower or upper bound on the range of
@@ -4422,6 +5097,7 @@ class High_Static_Pressure_Cutout_Setpoint_Limit(Static_Pressure_Setpoint_Limit)
     """
 
     pass
+
 
 class Max_Static_Pressure_Setpoint_Limit(Static_Pressure_Setpoint_Limit, Max_Limit):
     """
@@ -4431,7 +5107,10 @@ class Max_Static_Pressure_Setpoint_Limit(Static_Pressure_Setpoint_Limit, Max_Lim
 
     pass
 
-class Max_Discharge_Air_Static_Pressure_Setpoint_Limit(Max_Static_Pressure_Setpoint_Limit, Max_Limit):
+
+class Max_Discharge_Air_Static_Pressure_Setpoint_Limit(
+    Max_Static_Pressure_Setpoint_Limit, Max_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Discharge_Air_Static_Pressure_Setpoint.
@@ -4439,13 +5118,17 @@ class Max_Discharge_Air_Static_Pressure_Setpoint_Limit(Max_Static_Pressure_Setpo
 
     pass
 
-class Max_Supply_Air_Static_Pressure_Setpoint_Limit(Max_Static_Pressure_Setpoint_Limit, Max_Limit):
+
+class Max_Supply_Air_Static_Pressure_Setpoint_Limit(
+    Max_Static_Pressure_Setpoint_Limit, Max_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Supply_Air_Static_Pressure_Setpoint.
     """
 
     pass
+
 
 class Min_Static_Pressure_Setpoint_Limit(Static_Pressure_Setpoint_Limit, Min_Limit):
     """
@@ -4455,7 +5138,10 @@ class Min_Static_Pressure_Setpoint_Limit(Static_Pressure_Setpoint_Limit, Min_Lim
 
     pass
 
-class Min_Discharge_Air_Static_Pressure_Setpoint_Limit(Min_Static_Pressure_Setpoint_Limit, Min_Limit):
+
+class Min_Discharge_Air_Static_Pressure_Setpoint_Limit(
+    Min_Static_Pressure_Setpoint_Limit, Min_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Discharge_Air_Static_Pressure_Setpoint.
@@ -4463,13 +5149,17 @@ class Min_Discharge_Air_Static_Pressure_Setpoint_Limit(Min_Static_Pressure_Setpo
 
     pass
 
-class Min_Supply_Air_Static_Pressure_Setpoint_Limit(Min_Static_Pressure_Setpoint_Limit, Min_Limit):
+
+class Min_Supply_Air_Static_Pressure_Setpoint_Limit(
+    Min_Static_Pressure_Setpoint_Limit, Min_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Supply_Air_Static_Pressure_Setpoint.
     """
 
     pass
+
 
 class Ventilation_Air_Flow_Ratio_Limit(Limit):
     """
@@ -4479,137 +5169,214 @@ class Ventilation_Air_Flow_Ratio_Limit(Limit):
 
     pass
 
+
 class Load_Parameter(Parameter):
     pass
+
 
 class Max_Load_Setpoint(Load_Parameter):
     pass
 
+
 class Min_Load_Setpoint(Load_Parameter):
     pass
+
 
 class PID_Parameter(Parameter):
     pass
 
+
 class Gain_Parameter(PID_Parameter):
     pass
+
 
 class Derivative_Gain_Parameter(Gain_Parameter):
     pass
 
+
 class Integral_Gain_Parameter(Gain_Parameter):
     pass
+
 
 class Discharge_Air_Integral_Gain_Parameter(Integral_Gain_Parameter):
     pass
 
+
 class Supply_Air_Integral_Gain_Parameter(Integral_Gain_Parameter):
     pass
+
 
 class Proportional_Gain_Parameter(Gain_Parameter):
     pass
 
+
 class Discharge_Air_Proportional_Gain_Parameter(Proportional_Gain_Parameter):
     pass
+
 
 class Supply_Air_Proportional_Gain_Parameter(Proportional_Gain_Parameter):
     pass
 
+
 class Proportional_Band_Parameter(PID_Parameter):
     pass
+
 
 class Differential_Pressure_Proportional_Band(Proportional_Band_Parameter):
     pass
 
-class Chilled_Water_Differential_Pressure_Proportional_Band_Parameter(Differential_Pressure_Proportional_Band):
+
+class Chilled_Water_Differential_Pressure_Proportional_Band_Parameter(
+    Differential_Pressure_Proportional_Band
+):
     pass
 
-class Entering_Water_Differential_Pressure_Proportional_Band_Parameter(Differential_Pressure_Proportional_Band):
+
+class Entering_Water_Differential_Pressure_Proportional_Band_Parameter(
+    Differential_Pressure_Proportional_Band
+):
     pass
 
-class Hot_Water_Differential_Pressure_Proportional_Band_Parameter(Differential_Pressure_Proportional_Band):
+
+class Hot_Water_Differential_Pressure_Proportional_Band_Parameter(
+    Differential_Pressure_Proportional_Band
+):
     pass
 
-class Leaving_Water_Differential_Pressure_Proportional_Band_Parameter(Differential_Pressure_Proportional_Band):
+
+class Leaving_Water_Differential_Pressure_Proportional_Band_Parameter(
+    Differential_Pressure_Proportional_Band
+):
     pass
+
 
 class Exhaust_Air_Flow_Proportional_Band_Parameter(Proportional_Band_Parameter):
     pass
 
-class Exhaust_Air_Stack_Flow_Proportional_Band_Parameter(Exhaust_Air_Flow_Proportional_Band_Parameter):
+
+class Exhaust_Air_Stack_Flow_Proportional_Band_Parameter(
+    Exhaust_Air_Flow_Proportional_Band_Parameter
+):
     pass
+
 
 class Static_Pressure_Proportional_Band_Parameter(Proportional_Band_Parameter):
     pass
 
-class Discharge_Air_Static_Pressure_Proportional_Band_Parameter(Static_Pressure_Proportional_Band_Parameter):
+
+class Discharge_Air_Static_Pressure_Proportional_Band_Parameter(
+    Static_Pressure_Proportional_Band_Parameter
+):
     pass
 
-class Exhaust_Air_Static_Pressure_Proportional_Band_Parameter(Static_Pressure_Proportional_Band_Parameter):
+
+class Exhaust_Air_Static_Pressure_Proportional_Band_Parameter(
+    Static_Pressure_Proportional_Band_Parameter
+):
     pass
 
-class Supply_Air_Static_Pressure_Proportional_Band_Parameter(Static_Pressure_Proportional_Band_Parameter):
+
+class Supply_Air_Static_Pressure_Proportional_Band_Parameter(
+    Static_Pressure_Proportional_Band_Parameter
+):
     pass
+
 
 class Step_Parameter(PID_Parameter):
     pass
 
+
 class Differential_Pressure_Step_Parameter(Step_Parameter):
     pass
 
-class Chilled_Water_Differential_Pressure_Step_Parameter(Differential_Pressure_Step_Parameter):
+
+class Chilled_Water_Differential_Pressure_Step_Parameter(
+    Differential_Pressure_Step_Parameter
+):
     pass
+
 
 class Static_Pressure_Step_Parameter(Step_Parameter):
     pass
 
+
 class Air_Static_Pressure_Step_Parameter(Static_Pressure_Step_Parameter):
     pass
+
 
 class Discharge_Air_Static_Pressure_Step_Parameter(Air_Static_Pressure_Step_Parameter):
     pass
 
+
 class Supply_Air_Static_Pressure_Step_Parameter(Air_Static_Pressure_Step_Parameter):
     pass
+
 
 class Time_Parameter(PID_Parameter):
     pass
 
+
 class Derivative_Time_Parameter(Time_Parameter):
     pass
+
 
 class Integral_Time_Parameter(Time_Parameter):
     pass
 
+
 class Differential_Pressure_Integral_Time_Parameter(Integral_Time_Parameter):
     pass
 
-class Chilled_Water_Differential_Pressure_Integral_Time_Parameter(Differential_Pressure_Integral_Time_Parameter):
+
+class Chilled_Water_Differential_Pressure_Integral_Time_Parameter(
+    Differential_Pressure_Integral_Time_Parameter
+):
     pass
 
-class Entering_Water_Differential_Pressure_Integral_Time_Parameter(Differential_Pressure_Integral_Time_Parameter):
+
+class Entering_Water_Differential_Pressure_Integral_Time_Parameter(
+    Differential_Pressure_Integral_Time_Parameter
+):
     pass
 
-class Hot_Water_Differential_Pressure_Integral_Time_Parameter(Differential_Pressure_Integral_Time_Parameter):
+
+class Hot_Water_Differential_Pressure_Integral_Time_Parameter(
+    Differential_Pressure_Integral_Time_Parameter
+):
     pass
 
-class Leaving_Water_Differential_Pressure_Integral_Time_Parameter(Differential_Pressure_Integral_Time_Parameter):
+
+class Leaving_Water_Differential_Pressure_Integral_Time_Parameter(
+    Differential_Pressure_Integral_Time_Parameter
+):
     pass
+
 
 class Exhaust_Air_Flow_Integral_Time_Parameter(Integral_Time_Parameter):
     pass
 
-class Exhaust_Air_Stack_Flow_Integral_Time_Parameter(Exhaust_Air_Flow_Integral_Time_Parameter):
+
+class Exhaust_Air_Stack_Flow_Integral_Time_Parameter(
+    Exhaust_Air_Flow_Integral_Time_Parameter
+):
     pass
+
 
 class Static_Pressure_Integral_Time_Parameter(Integral_Time_Parameter):
     pass
 
-class Discharge_Air_Static_Pressure_Integral_Time_Parameter(Static_Pressure_Integral_Time_Parameter):
+
+class Discharge_Air_Static_Pressure_Integral_Time_Parameter(
+    Static_Pressure_Integral_Time_Parameter
+):
     pass
 
-class Supply_Air_Static_Pressure_Integral_Time_Parameter(Static_Pressure_Integral_Time_Parameter):
+
+class Supply_Air_Static_Pressure_Integral_Time_Parameter(
+    Static_Pressure_Integral_Time_Parameter
+):
     pass
+
 
 class Temperature_Parameter(Parameter):
     """
@@ -4618,20 +5385,36 @@ class Temperature_Parameter(Parameter):
 
     pass
 
-class Air_Temperature_Integral_Time_Parameter(Temperature_Parameter, Integral_Time_Parameter):
+
+class Air_Temperature_Integral_Time_Parameter(
+    Temperature_Parameter, Integral_Time_Parameter
+):
     pass
 
-class Cooling_Discharge_Air_Temperature_Integral_Time_Parameter(Air_Temperature_Integral_Time_Parameter):
+
+class Cooling_Discharge_Air_Temperature_Integral_Time_Parameter(
+    Air_Temperature_Integral_Time_Parameter
+):
     pass
 
-class Cooling_Supply_Air_Temperature_Integral_Time_Parameter(Air_Temperature_Integral_Time_Parameter):
+
+class Cooling_Supply_Air_Temperature_Integral_Time_Parameter(
+    Air_Temperature_Integral_Time_Parameter
+):
     pass
 
-class Heating_Discharge_Air_Temperature_Integral_Time_Parameter(Air_Temperature_Integral_Time_Parameter):
+
+class Heating_Discharge_Air_Temperature_Integral_Time_Parameter(
+    Air_Temperature_Integral_Time_Parameter
+):
     pass
 
-class Heating_Supply_Air_Temperature_Integral_Time_Parameter(Air_Temperature_Integral_Time_Parameter):
+
+class Heating_Supply_Air_Temperature_Integral_Time_Parameter(
+    Air_Temperature_Integral_Time_Parameter
+):
     pass
+
 
 class Air_Temperature_Setpoint_Limit(Temperature_Parameter, Limit):
     """
@@ -4641,6 +5424,7 @@ class Air_Temperature_Setpoint_Limit(Temperature_Parameter, Limit):
 
     pass
 
+
 class Discharge_Air_Temperature_Setpoint_Limit(Air_Temperature_Setpoint_Limit):
     """
     A parameter that places a lower or upper bound on the range of
@@ -4649,6 +5433,7 @@ class Discharge_Air_Temperature_Setpoint_Limit(Air_Temperature_Setpoint_Limit):
 
     pass
 
+
 class Supply_Air_Temperature_Setpoint_Limit(Air_Temperature_Setpoint_Limit):
     """
     A parameter limiting a Supply_Air_Temperature_Setpoint
@@ -4656,20 +5441,36 @@ class Supply_Air_Temperature_Setpoint_Limit(Air_Temperature_Setpoint_Limit):
 
     pass
 
-class Discharge_Air_Temperature_Proportional_Band_Parameter(Temperature_Parameter, Proportional_Band_Parameter):
+
+class Discharge_Air_Temperature_Proportional_Band_Parameter(
+    Temperature_Parameter, Proportional_Band_Parameter
+):
     pass
 
-class Cooling_Discharge_Air_Temperature_Proportional_Band_Parameter(Discharge_Air_Temperature_Proportional_Band_Parameter):
+
+class Cooling_Discharge_Air_Temperature_Proportional_Band_Parameter(
+    Discharge_Air_Temperature_Proportional_Band_Parameter
+):
     pass
 
-class Heating_Discharge_Air_Temperature_Proportional_Band_Parameter(Discharge_Air_Temperature_Proportional_Band_Parameter):
+
+class Heating_Discharge_Air_Temperature_Proportional_Band_Parameter(
+    Discharge_Air_Temperature_Proportional_Band_Parameter
+):
     pass
 
-class Entering_Water_Temperature_Integral_Time_Parameter(Temperature_Parameter, Integral_Time_Parameter):
+
+class Entering_Water_Temperature_Integral_Time_Parameter(
+    Temperature_Parameter, Integral_Time_Parameter
+):
     pass
 
-class Entering_Water_Temperature_Proportional_Band_Parameter(Temperature_Parameter, Proportional_Band_Parameter):
+
+class Entering_Water_Temperature_Proportional_Band_Parameter(
+    Temperature_Parameter, Proportional_Band_Parameter
+):
     pass
+
 
 class High_Temperature_Alarm_Parameter(Temperature_Parameter):
     """
@@ -4679,34 +5480,52 @@ class High_Temperature_Alarm_Parameter(Temperature_Parameter):
 
     pass
 
-class Leaving_Water_Temperature_Integral_Time_Parameter(Temperature_Parameter, Integral_Time_Parameter):
+
+class Leaving_Water_Temperature_Integral_Time_Parameter(
+    Temperature_Parameter, Integral_Time_Parameter
+):
     pass
 
-class Leaving_Water_Temperature_Proportional_Band_Parameter(Temperature_Parameter, Proportional_Band_Parameter):
+
+class Leaving_Water_Temperature_Proportional_Band_Parameter(
+    Temperature_Parameter, Proportional_Band_Parameter
+):
     pass
+
 
 class Lockout_Temperature_Differential_Parameter(Temperature_Parameter):
     pass
 
-class Outside_Air_Lockout_Temperature_Differential_Parameter(Lockout_Temperature_Differential_Parameter):
+
+class Outside_Air_Lockout_Temperature_Differential_Parameter(
+    Lockout_Temperature_Differential_Parameter
+):
     pass
 
-class High_Outside_Air_Lockout_Temperature_Differential_Parameter(Outside_Air_Lockout_Temperature_Differential_Parameter):
+
+class High_Outside_Air_Lockout_Temperature_Differential_Parameter(
+    Outside_Air_Lockout_Temperature_Differential_Parameter
+):
     """
     The upper bound of the outside air temperature lockout range
     """
 
     pass
 
-class Low_Outside_Air_Lockout_Temperature_Differential_Parameter(Outside_Air_Lockout_Temperature_Differential_Parameter):
+
+class Low_Outside_Air_Lockout_Temperature_Differential_Parameter(
+    Outside_Air_Lockout_Temperature_Differential_Parameter
+):
     """
     The lower bound of the outside air temperature lockout range
     """
 
     pass
 
+
 class Low_Freeze_Protect_Temperature_Parameter(Temperature_Parameter):
     pass
+
 
 class Low_Temperature_Alarm_Parameter(Temperature_Parameter):
     """
@@ -4716,6 +5535,7 @@ class Low_Temperature_Alarm_Parameter(Temperature_Parameter):
 
     pass
 
+
 class Max_Temperature_Setpoint_Limit(Temperature_Parameter, Max_Limit):
     """
     A parameter that places an upper bound on the range of permitted
@@ -4724,7 +5544,10 @@ class Max_Temperature_Setpoint_Limit(Temperature_Parameter, Max_Limit):
 
     pass
 
-class Max_Discharge_Air_Temperature_Setpoint_Limit(Discharge_Air_Temperature_Setpoint_Limit, Max_Temperature_Setpoint_Limit):
+
+class Max_Discharge_Air_Temperature_Setpoint_Limit(
+    Discharge_Air_Temperature_Setpoint_Limit, Max_Temperature_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Discharge_Air_Temperature_Setpoint.
@@ -4732,13 +5555,17 @@ class Max_Discharge_Air_Temperature_Setpoint_Limit(Discharge_Air_Temperature_Set
 
     pass
 
-class Max_Supply_Air_Temperature_Setpoint_Limit(Supply_Air_Temperature_Setpoint_Limit, Max_Temperature_Setpoint_Limit):
+
+class Max_Supply_Air_Temperature_Setpoint_Limit(
+    Supply_Air_Temperature_Setpoint_Limit, Max_Temperature_Setpoint_Limit
+):
     """
     A parameter that places an upper bound on the range of permitted
     values of a Supply_Air_Temperature_Setpoint.
     """
 
     pass
+
 
 class Min_Temperature_Setpoint_Limit(Temperature_Parameter, Min_Limit):
     """
@@ -4748,7 +5575,10 @@ class Min_Temperature_Setpoint_Limit(Temperature_Parameter, Min_Limit):
 
     pass
 
-class Min_Discharge_Air_Temperature_Setpoint_Limit(Discharge_Air_Temperature_Setpoint_Limit, Min_Temperature_Setpoint_Limit):
+
+class Min_Discharge_Air_Temperature_Setpoint_Limit(
+    Discharge_Air_Temperature_Setpoint_Limit, Min_Temperature_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Discharge_Air_Temperature_Setpoint.
@@ -4756,7 +5586,10 @@ class Min_Discharge_Air_Temperature_Setpoint_Limit(Discharge_Air_Temperature_Set
 
     pass
 
-class Min_Supply_Air_Temperature_Setpoint_Limit(Supply_Air_Temperature_Setpoint_Limit, Min_Temperature_Setpoint_Limit):
+
+class Min_Supply_Air_Temperature_Setpoint_Limit(
+    Supply_Air_Temperature_Setpoint_Limit, Min_Temperature_Setpoint_Limit
+):
     """
     A parameter that places a lower bound on the range of permitted values
     of a Supply_Air_Temperature_Setpoint.
@@ -4764,26 +5597,40 @@ class Min_Supply_Air_Temperature_Setpoint_Limit(Supply_Air_Temperature_Setpoint_
 
     pass
 
-class Supply_Air_Temperature_Proportional_Band_Parameter(Temperature_Parameter, Proportional_Band_Parameter):
+
+class Supply_Air_Temperature_Proportional_Band_Parameter(
+    Temperature_Parameter, Proportional_Band_Parameter
+):
     pass
 
-class Cooling_Supply_Air_Temperature_Proportional_Band_Parameter(Supply_Air_Temperature_Proportional_Band_Parameter):
+
+class Cooling_Supply_Air_Temperature_Proportional_Band_Parameter(
+    Supply_Air_Temperature_Proportional_Band_Parameter
+):
     pass
 
-class Heating_Supply_Air_Temperature_Proportional_Band_Parameter(Supply_Air_Temperature_Proportional_Band_Parameter):
+
+class Heating_Supply_Air_Temperature_Proportional_Band_Parameter(
+    Supply_Air_Temperature_Proportional_Band_Parameter
+):
     pass
+
 
 class Temperature_Step_Parameter(Temperature_Parameter, Step_Parameter):
     pass
 
+
 class Air_Temperature_Step_Parameter(Temperature_Step_Parameter):
     pass
+
 
 class Discharge_Air_Temperature_Step_Parameter(Air_Temperature_Step_Parameter):
     pass
 
+
 class Supply_Air_Temperature_Step_Parameter(Air_Temperature_Step_Parameter):
     pass
+
 
 class Tolerance_Parameter(Parameter):
     """
@@ -4793,6 +5640,7 @@ class Tolerance_Parameter(Parameter):
 
     pass
 
+
 class Humidity_Tolerance_Parameter(Tolerance_Parameter, Humidity_Parameter):
     """
     A parameter determining the difference between upper and lower limits
@@ -4801,6 +5649,7 @@ class Humidity_Tolerance_Parameter(Tolerance_Parameter, Humidity_Parameter):
 
     pass
 
+
 class Temperature_Tolerance_Parameter(Temperature_Parameter, Tolerance_Parameter):
     """
     A parameter determining the difference between upper and lower limits
@@ -4808,6 +5657,7 @@ class Temperature_Tolerance_Parameter(Temperature_Parameter, Tolerance_Parameter
     """
 
     pass
+
 
 class Sensor(Point):
     """
@@ -4818,6 +5668,7 @@ class Sensor(Point):
 
     pass
 
+
 class Adjust_Sensor(Sensor):
     """
     Measures user-provided adjustment of some value
@@ -4825,12 +5676,14 @@ class Adjust_Sensor(Sensor):
 
     pass
 
+
 class Temperature_Adjust_Sensor(Adjust_Sensor):
     """
     Measures user-provided adjustment of temperature
     """
 
     pass
+
 
 class Warm_Cool_Adjust_Sensor(Adjust_Sensor):
     """
@@ -4840,12 +5693,14 @@ class Warm_Cool_Adjust_Sensor(Adjust_Sensor):
 
     pass
 
+
 class Air_Grains_Sensor(Sensor):
     """
     Measures the mass of water vapor in air
     """
 
     pass
+
 
 class Outside_Air_Grains_Sensor(Air_Grains_Sensor):
     """
@@ -4854,12 +5709,14 @@ class Outside_Air_Grains_Sensor(Air_Grains_Sensor):
 
     pass
 
+
 class Return_Air_Grains_Sensor(Air_Grains_Sensor):
     """
     Measures the mass of water vapor in return air
     """
 
     pass
+
 
 class Air_Quality_Sensor(Sensor):
     """
@@ -4868,8 +5725,10 @@ class Air_Quality_Sensor(Sensor):
 
     pass
 
+
 class Ammonia_Sensor(Air_Quality_Sensor):
     pass
+
 
 class CO2_Sensor(Air_Quality_Sensor):
     """
@@ -4878,12 +5737,14 @@ class CO2_Sensor(Air_Quality_Sensor):
 
     pass
 
+
 class CO2_Differential_Sensor(CO2_Sensor):
     """
     Measures the difference between CO2 levels of inside and outside air
     """
 
     pass
+
 
 class CO2_Level_Sensor(CO2_Sensor):
     """
@@ -4892,12 +5753,14 @@ class CO2_Level_Sensor(CO2_Sensor):
 
     pass
 
+
 class Outside_Air_CO2_Sensor(CO2_Sensor):
     """
     Measures the concentration of CO2 in outside air
     """
 
     pass
+
 
 class Return_Air_CO2_Sensor(CO2_Sensor):
     """
@@ -4906,6 +5769,7 @@ class Return_Air_CO2_Sensor(CO2_Sensor):
 
     pass
 
+
 class CO_Sensor(Air_Quality_Sensor):
     """
     Measures properties of CO
@@ -4913,8 +5777,10 @@ class CO_Sensor(Air_Quality_Sensor):
 
     pass
 
+
 class CO_Differential_Sensor(CO_Sensor):
     pass
+
 
 class CO_Level_Sensor(CO_Sensor):
     """
@@ -4923,12 +5789,14 @@ class CO_Level_Sensor(CO_Sensor):
 
     pass
 
+
 class Outside_Air_CO_Sensor(CO_Sensor):
     """
     Measures the concentration of CO in outside air
     """
 
     pass
+
 
 class Return_Air_CO_Sensor(CO_Sensor):
     """
@@ -4937,12 +5805,14 @@ class Return_Air_CO_Sensor(CO_Sensor):
 
     pass
 
+
 class Formaldehyde_Level_Sensor(Air_Quality_Sensor):
     """
     Measures the concentration of formaldehyde in air
     """
 
     pass
+
 
 class Methane_Level_Sensor(Air_Quality_Sensor):
     """
@@ -4951,12 +5821,14 @@ class Methane_Level_Sensor(Air_Quality_Sensor):
 
     pass
 
+
 class NO2_Level_Sensor(Air_Quality_Sensor):
     """
     Measures the concentration of NO2 in air
     """
 
     pass
+
 
 class Ozone_Level_Sensor(Air_Quality_Sensor):
     """
@@ -4965,12 +5837,14 @@ class Ozone_Level_Sensor(Air_Quality_Sensor):
 
     pass
 
+
 class Particulate_Matter_Sensor(Air_Quality_Sensor):
     """
     Detects pollutants in the ambient air
     """
 
     pass
+
 
 class PM10_Sensor(Particulate_Matter_Sensor):
     """
@@ -4979,12 +5853,14 @@ class PM10_Sensor(Particulate_Matter_Sensor):
 
     pass
 
+
 class PM10_Level_Sensor(PM10_Sensor):
     """
     Detects level of particulates of size 10 microns
     """
 
     pass
+
 
 class PM1_Sensor(Particulate_Matter_Sensor):
     """
@@ -4993,12 +5869,14 @@ class PM1_Sensor(Particulate_Matter_Sensor):
 
     pass
 
+
 class PM1_Level_Sensor(PM1_Sensor):
     """
     Detects level of particulates of size 1 microns
     """
 
     pass
+
 
 class PM2_5_Sensor(Particulate_Matter_Sensor):
     """
@@ -5008,6 +5886,7 @@ class PM2_5_Sensor(Particulate_Matter_Sensor):
     _class_iri: URIRef = BRICK["PM2.5_Sensor"]
     pass
 
+
 class PM2_5_Level_Sensor(PM2_5_Sensor):
     """
     Detects level of particulates of size 2.5 microns
@@ -5016,8 +5895,10 @@ class PM2_5_Level_Sensor(PM2_5_Sensor):
     _class_iri: URIRef = BRICK["PM2.5_Level_Sensor"]
     pass
 
+
 class TVOC_Sensor(Particulate_Matter_Sensor):
     pass
+
 
 class TVOC_Level_Sensor(TVOC_Sensor):
     """
@@ -5026,12 +5907,14 @@ class TVOC_Level_Sensor(TVOC_Sensor):
 
     pass
 
+
 class Radioactivity_Concentration_Sensor(Air_Quality_Sensor):
     """
     Measures the concentration of radioactivity
     """
 
     pass
+
 
 class Radon_Concentration_Sensor(Radioactivity_Concentration_Sensor):
     """
@@ -5040,12 +5923,14 @@ class Radon_Concentration_Sensor(Radioactivity_Concentration_Sensor):
 
     pass
 
+
 class Angle_Sensor(Sensor):
     """
     Measues the planar angle of some phenomenon
     """
 
     pass
+
 
 class Solar_Azimuth_Angle_Sensor(Angle_Sensor):
     """
@@ -5054,6 +5939,7 @@ class Solar_Azimuth_Angle_Sensor(Angle_Sensor):
 
     pass
 
+
 class Solar_Zenith_Angle_Sensor(Angle_Sensor):
     """
     Measures the zenith angle of the sun
@@ -5061,8 +5947,10 @@ class Solar_Zenith_Angle_Sensor(Angle_Sensor):
 
     pass
 
+
 class Capacity_Sensor(Sensor):
     pass
+
 
 class Conductivity_Sensor(Sensor):
     """
@@ -5071,12 +5959,14 @@ class Conductivity_Sensor(Sensor):
 
     pass
 
+
 class Deionised_Water_Conductivity_Sensor(Conductivity_Sensor):
     """
     Measures the electrical conductance of deionised water
     """
 
     pass
+
 
 class Contact_Sensor(Sensor):
     """
@@ -5086,12 +5976,14 @@ class Contact_Sensor(Sensor):
 
     pass
 
+
 class Current_Sensor(Sensor):
     """
     Senses the amperes of electrical current passing through the sensor
     """
 
     pass
+
 
 class Current_Output_Sensor(Current_Sensor):
     """
@@ -5101,12 +5993,14 @@ class Current_Output_Sensor(Current_Sensor):
 
     pass
 
+
 class PV_Current_Output_Sensor(Current_Output_Sensor):
     """
     See Photovoltaic_Current_Output_Sensor
     """
 
     pass
+
 
 class Photovoltaic_Current_Output_Sensor(Current_Output_Sensor):
     """
@@ -5116,6 +6010,7 @@ class Photovoltaic_Current_Output_Sensor(Current_Output_Sensor):
 
     pass
 
+
 class Load_Current_Sensor(Current_Sensor):
     """
     Measures the current consumed by a load
@@ -5123,12 +6018,14 @@ class Load_Current_Sensor(Current_Sensor):
 
     pass
 
+
 class Motor_Current_Sensor(Current_Sensor):
     """
     Measures the current consumed by a motor
     """
 
     pass
+
 
 class Demand_Sensor(Sensor):
     """
@@ -5139,6 +6036,7 @@ class Demand_Sensor(Sensor):
 
     pass
 
+
 class Cooling_Demand_Sensor(Demand_Sensor):
     """
     Measures the amount of power consumed by a cooling process; typically
@@ -5148,6 +6046,7 @@ class Cooling_Demand_Sensor(Demand_Sensor):
 
     pass
 
+
 class Average_Cooling_Demand_Sensor(Cooling_Demand_Sensor):
     """
     Measures the average power consumed by a cooling process as the amount
@@ -5155,6 +6054,7 @@ class Average_Cooling_Demand_Sensor(Cooling_Demand_Sensor):
     """
 
     pass
+
 
 class Heating_Demand_Sensor(Demand_Sensor):
     """
@@ -5165,6 +6065,7 @@ class Heating_Demand_Sensor(Demand_Sensor):
 
     pass
 
+
 class Average_Heating_Demand_Sensor(Heating_Demand_Sensor):
     """
     Measures the average power consumed by a heating process as the amount
@@ -5173,12 +6074,14 @@ class Average_Heating_Demand_Sensor(Heating_Demand_Sensor):
 
     pass
 
+
 class Peak_Demand_Sensor(Demand_Sensor):
     """
     The peak power consumed by a process over some period of time
     """
 
     pass
+
 
 class Dewpoint_Sensor(Sensor):
     """
@@ -5188,12 +6091,14 @@ class Dewpoint_Sensor(Sensor):
 
     pass
 
+
 class Discharge_Air_Dewpoint_Sensor(Dewpoint_Sensor):
     """
     Measures dewpoint of discharge air
     """
 
     pass
+
 
 class Exhaust_Air_Dewpoint_Sensor(Dewpoint_Sensor):
     """
@@ -5202,12 +6107,14 @@ class Exhaust_Air_Dewpoint_Sensor(Dewpoint_Sensor):
 
     pass
 
+
 class Outside_Air_Dewpoint_Sensor(Dewpoint_Sensor):
     """
     Senses the dewpoint temperature of outside air
     """
 
     pass
+
 
 class Return_Air_Dewpoint_Sensor(Dewpoint_Sensor):
     """
@@ -5216,8 +6123,10 @@ class Return_Air_Dewpoint_Sensor(Dewpoint_Sensor):
 
     pass
 
+
 class Supply_Air_Dewpoint_Sensor(Dewpoint_Sensor):
     pass
+
 
 class Zone_Air_Dewpoint_Sensor(Dewpoint_Sensor):
     """
@@ -5226,12 +6135,14 @@ class Zone_Air_Dewpoint_Sensor(Dewpoint_Sensor):
 
     pass
 
+
 class Direction_Sensor(Sensor):
     """
     Measures the direction in degrees in which a phenomenon is occuring
     """
 
     pass
+
 
 class Wind_Direction_Sensor(Direction_Sensor):
     """
@@ -5240,12 +6151,14 @@ class Wind_Direction_Sensor(Direction_Sensor):
 
     pass
 
+
 class Duration_Sensor(Sensor):
     """
     Measures the duration of a phenomenon or event
     """
 
     pass
+
 
 class On_Timer_Sensor(Duration_Sensor):
     """
@@ -5255,12 +6168,14 @@ class On_Timer_Sensor(Duration_Sensor):
 
     pass
 
+
 class Rain_Duration_Sensor(Duration_Sensor):
     """
     Measures the duration of precipitation within some time frame
     """
 
     pass
+
 
 class Run_Time_Sensor(Duration_Sensor):
     """
@@ -5270,6 +6185,7 @@ class Run_Time_Sensor(Duration_Sensor):
 
     pass
 
+
 class Energy_Sensor(Sensor):
     """
     Measures energy consumption
@@ -5277,8 +6193,10 @@ class Energy_Sensor(Sensor):
 
     pass
 
+
 class Electric_Energy_Sensor(Energy_Sensor):
     pass
+
 
 class Reactive_Energy_Sensor(Electric_Energy_Sensor):
     """
@@ -5287,12 +6205,14 @@ class Reactive_Energy_Sensor(Electric_Energy_Sensor):
 
     pass
 
+
 class Enthalpy_Sensor(Sensor):
     """
     Measures the total heat content of some substance
     """
 
     pass
+
 
 class Air_Enthalpy_Sensor(Enthalpy_Sensor):
     """
@@ -5301,12 +6221,14 @@ class Air_Enthalpy_Sensor(Enthalpy_Sensor):
 
     pass
 
+
 class Outside_Air_Enthalpy_Sensor(Air_Enthalpy_Sensor):
     """
     Measures the total heat content of outside air
     """
 
     pass
+
 
 class Return_Air_Enthalpy_Sensor(Air_Enthalpy_Sensor):
     """
@@ -5315,12 +6237,14 @@ class Return_Air_Enthalpy_Sensor(Air_Enthalpy_Sensor):
 
     pass
 
+
 class Fire_Sensor(Sensor):
     """
     Measures the presence of fire
     """
 
     pass
+
 
 class Flow_Sensor(Sensor):
     """
@@ -5329,12 +6253,14 @@ class Flow_Sensor(Sensor):
 
     pass
 
+
 class Air_Flow_Sensor(Flow_Sensor):
     """
     Measures the rate of flow of air
     """
 
     pass
+
 
 class Bypass_Air_Flow_Sensor(Air_Flow_Sensor):
     """
@@ -5343,12 +6269,14 @@ class Bypass_Air_Flow_Sensor(Air_Flow_Sensor):
 
     pass
 
+
 class Discharge_Air_Flow_Sensor(Air_Flow_Sensor):
     """
     Measures the rate of flow of discharge air
     """
 
     pass
+
 
 class Average_Discharge_Air_Flow_Sensor(Discharge_Air_Flow_Sensor):
     """
@@ -5357,12 +6285,14 @@ class Average_Discharge_Air_Flow_Sensor(Discharge_Air_Flow_Sensor):
 
     pass
 
+
 class Exhaust_Air_Flow_Sensor(Air_Flow_Sensor):
     """
     Measures the rate of flow of exhaust air
     """
 
     pass
+
 
 class Exhaust_Air_Stack_Flow_Sensor(Exhaust_Air_Flow_Sensor):
     """
@@ -5371,12 +6301,14 @@ class Exhaust_Air_Stack_Flow_Sensor(Exhaust_Air_Flow_Sensor):
 
     pass
 
+
 class Fume_Hood_Air_Flow_Sensor(Air_Flow_Sensor):
     """
     Measures the rate of flow of air in a fume hood
     """
 
     pass
+
 
 class Mixed_Air_Flow_Sensor(Air_Flow_Sensor):
     """
@@ -5385,12 +6317,14 @@ class Mixed_Air_Flow_Sensor(Air_Flow_Sensor):
 
     pass
 
+
 class Outside_Air_Flow_Sensor(Air_Flow_Sensor):
     """
     Measures the rate of flow of outside air into the system
     """
 
     pass
+
 
 class Return_Air_Flow_Sensor(Air_Flow_Sensor):
     """
@@ -5399,12 +6333,14 @@ class Return_Air_Flow_Sensor(Air_Flow_Sensor):
 
     pass
 
+
 class Supply_Air_Flow_Sensor(Air_Flow_Sensor):
     """
     Measures the rate of flow of supply air
     """
 
     pass
+
 
 class Average_Supply_Air_Flow_Sensor(Supply_Air_Flow_Sensor):
     """
@@ -5413,12 +6349,14 @@ class Average_Supply_Air_Flow_Sensor(Supply_Air_Flow_Sensor):
 
     pass
 
+
 class Natural_Gas_Flow_Sensor(Flow_Sensor):
     """
     Measures the rate of flow of natural gas
     """
 
     pass
+
 
 class Water_Flow_Sensor(Flow_Sensor):
     """
@@ -5427,12 +6365,14 @@ class Water_Flow_Sensor(Flow_Sensor):
 
     pass
 
+
 class Bypass_Water_Flow_Sensor(Water_Flow_Sensor):
     """
     Measures the rate of flow of bypass water
     """
 
     pass
+
 
 class Chilled_Water_Flow_Sensor(Water_Flow_Sensor):
     """
@@ -5441,6 +6381,7 @@ class Chilled_Water_Flow_Sensor(Water_Flow_Sensor):
 
     pass
 
+
 class Condenser_Water_Flow_Sensor(Water_Flow_Sensor):
     """
     Measures the flow of the condenser water
@@ -5448,14 +6389,22 @@ class Condenser_Water_Flow_Sensor(Water_Flow_Sensor):
 
     pass
 
+
 class Discharge_Water_Flow_Sensor(Water_Flow_Sensor):
     pass
 
-class Chilled_Water_Discharge_Flow_Sensor(Discharge_Water_Flow_Sensor, Chilled_Water_Flow_Sensor):
+
+class Chilled_Water_Discharge_Flow_Sensor(
+    Discharge_Water_Flow_Sensor, Chilled_Water_Flow_Sensor
+):
     pass
 
-class Discharge_Condenser_Water_Flow_Sensor(Discharge_Water_Flow_Sensor, Condenser_Water_Flow_Sensor):
+
+class Discharge_Condenser_Water_Flow_Sensor(
+    Discharge_Water_Flow_Sensor, Condenser_Water_Flow_Sensor
+):
     pass
+
 
 class Entering_Water_Flow_Sensor(Water_Flow_Sensor):
     """
@@ -5465,12 +6414,16 @@ class Entering_Water_Flow_Sensor(Water_Flow_Sensor):
 
     pass
 
-class Entering_Chilled_Water_Flow_Sensor(Entering_Water_Flow_Sensor, Chilled_Water_Flow_Sensor):
+
+class Entering_Chilled_Water_Flow_Sensor(
+    Entering_Water_Flow_Sensor, Chilled_Water_Flow_Sensor
+):
     """
     Measures the rate of flow of chilled entering water
     """
 
     pass
+
 
 class Entering_Condenser_Water_Flow_Sensor(Entering_Water_Flow_Sensor):
     """
@@ -5479,12 +6432,14 @@ class Entering_Condenser_Water_Flow_Sensor(Entering_Water_Flow_Sensor):
 
     pass
 
+
 class Hot_Water_Flow_Sensor(Water_Flow_Sensor):
     """
     Measures the rate of flow in a hot water circuit
     """
 
     pass
+
 
 class Entering_Hot_Water_Flow_Sensor(Hot_Water_Flow_Sensor, Entering_Water_Flow_Sensor):
     """
@@ -5493,8 +6448,12 @@ class Entering_Hot_Water_Flow_Sensor(Hot_Water_Flow_Sensor, Entering_Water_Flow_
 
     pass
 
-class Hot_Water_Discharge_Flow_Sensor(Hot_Water_Flow_Sensor, Discharge_Water_Flow_Sensor):
+
+class Hot_Water_Discharge_Flow_Sensor(
+    Hot_Water_Flow_Sensor, Discharge_Water_Flow_Sensor
+):
     pass
+
 
 class Leaving_Water_Flow_Sensor(Water_Flow_Sensor):
     """
@@ -5504,19 +6463,26 @@ class Leaving_Water_Flow_Sensor(Water_Flow_Sensor):
 
     pass
 
-class Leaving_Chilled_Water_Flow_Sensor(Leaving_Water_Flow_Sensor, Chilled_Water_Flow_Sensor):
+
+class Leaving_Chilled_Water_Flow_Sensor(
+    Leaving_Water_Flow_Sensor, Chilled_Water_Flow_Sensor
+):
     """
     Measures the rate of flow of chilled leaving water
     """
 
     pass
 
-class Leaving_Condenser_Water_Flow_Sensor(Leaving_Water_Flow_Sensor, Condenser_Water_Flow_Sensor):
+
+class Leaving_Condenser_Water_Flow_Sensor(
+    Leaving_Water_Flow_Sensor, Condenser_Water_Flow_Sensor
+):
     """
     Measures the flow of the leaving condenser water
     """
 
     pass
+
 
 class Leaving_Hot_Water_Flow_Sensor(Leaving_Water_Flow_Sensor, Hot_Water_Flow_Sensor):
     """
@@ -5525,29 +6491,46 @@ class Leaving_Hot_Water_Flow_Sensor(Leaving_Water_Flow_Sensor, Hot_Water_Flow_Se
 
     pass
 
+
 class Return_Water_Flow_Sensor(Water_Flow_Sensor):
     pass
 
-class Chilled_Water_Return_Flow_Sensor(Return_Water_Flow_Sensor, Chilled_Water_Flow_Sensor):
+
+class Chilled_Water_Return_Flow_Sensor(
+    Return_Water_Flow_Sensor, Chilled_Water_Flow_Sensor
+):
     pass
+
 
 class Hot_Water_Return_Flow_Sensor(Return_Water_Flow_Sensor, Hot_Water_Flow_Sensor):
     pass
 
-class Return_Condenser_Water_Flow_Sensor(Return_Water_Flow_Sensor, Condenser_Water_Flow_Sensor):
+
+class Return_Condenser_Water_Flow_Sensor(
+    Return_Water_Flow_Sensor, Condenser_Water_Flow_Sensor
+):
     pass
+
 
 class Supply_Water_Flow_Sensor(Water_Flow_Sensor):
     pass
 
-class Chilled_Water_Supply_Flow_Sensor(Supply_Water_Flow_Sensor, Chilled_Water_Flow_Sensor):
+
+class Chilled_Water_Supply_Flow_Sensor(
+    Supply_Water_Flow_Sensor, Chilled_Water_Flow_Sensor
+):
     pass
+
 
 class Hot_Water_Supply_Flow_Sensor(Supply_Water_Flow_Sensor, Hot_Water_Flow_Sensor):
     pass
 
-class Supply_Condenser_Water_Flow_Sensor(Supply_Water_Flow_Sensor, Condenser_Water_Flow_Sensor):
+
+class Supply_Condenser_Water_Flow_Sensor(
+    Supply_Water_Flow_Sensor, Condenser_Water_Flow_Sensor
+):
     pass
+
 
 class Frequency_Sensor(Sensor):
     """
@@ -5557,8 +6540,10 @@ class Frequency_Sensor(Sensor):
 
     pass
 
+
 class Output_Frequency_Sensor(Frequency_Sensor):
     pass
+
 
 class Gas_Sensor(Sensor):
     """
@@ -5567,12 +6552,14 @@ class Gas_Sensor(Sensor):
 
     pass
 
+
 class Generation_Sensor(Sensor):
     """
     A sensor measuring how much something has been generated.
     """
 
     pass
+
 
 class Energy_Generation_Sensor(Generation_Sensor):
     """
@@ -5581,6 +6568,7 @@ class Energy_Generation_Sensor(Generation_Sensor):
 
     pass
 
+
 class Hail_Sensor(Sensor):
     """
     Measures hail in terms of its size and damage potential
@@ -5588,12 +6576,14 @@ class Hail_Sensor(Sensor):
 
     pass
 
+
 class Heat_Sensor(Sensor):
     """
     Measures heat
     """
 
     pass
+
 
 class Trace_Heat_Sensor(Heat_Sensor):
     """
@@ -5603,12 +6593,14 @@ class Trace_Heat_Sensor(Heat_Sensor):
 
     pass
 
+
 class Humidity_Sensor(Sensor):
     """
     Measures the concentration of water vapor in air
     """
 
     pass
+
 
 class Relative_Humidity_Sensor(Humidity_Sensor):
     """
@@ -5618,12 +6610,14 @@ class Relative_Humidity_Sensor(Humidity_Sensor):
 
     pass
 
+
 class Discharge_Air_Humidity_Sensor(Relative_Humidity_Sensor):
     """
     Measures the relative humidity of discharge air
     """
 
     pass
+
 
 class Exhaust_Air_Humidity_Sensor(Relative_Humidity_Sensor):
     """
@@ -5632,12 +6626,14 @@ class Exhaust_Air_Humidity_Sensor(Relative_Humidity_Sensor):
 
     pass
 
+
 class Mixed_Air_Humidity_Sensor(Relative_Humidity_Sensor):
     """
     Measures the humidity of mixed air
     """
 
     pass
+
 
 class Outside_Air_Humidity_Sensor(Relative_Humidity_Sensor):
     """
@@ -5646,12 +6642,14 @@ class Outside_Air_Humidity_Sensor(Relative_Humidity_Sensor):
 
     pass
 
+
 class Return_Air_Humidity_Sensor(Relative_Humidity_Sensor):
     """
     Measures the relative humidity of return air
     """
 
     pass
+
 
 class Supply_Air_Humidity_Sensor(Relative_Humidity_Sensor):
     """
@@ -5660,12 +6658,14 @@ class Supply_Air_Humidity_Sensor(Relative_Humidity_Sensor):
 
     pass
 
+
 class Zone_Air_Humidity_Sensor(Relative_Humidity_Sensor):
     """
     Measures the relative humidity of zone air
     """
 
     pass
+
 
 class Illuminance_Sensor(Sensor):
     """
@@ -5674,12 +6674,14 @@ class Illuminance_Sensor(Sensor):
 
     pass
 
+
 class Outside_Illuminance_Sensor(Illuminance_Sensor):
     """
     Measures the total luminous flux incident on an outside, per unit area
     """
 
     pass
+
 
 class Imbalance_Sensor(Sensor):
     """
@@ -5689,6 +6691,7 @@ class Imbalance_Sensor(Sensor):
 
     pass
 
+
 class Current_Imbalance_Sensor(Imbalance_Sensor):
     """
     A sensor which measures the current difference (imbalance) between
@@ -5696,6 +6699,7 @@ class Current_Imbalance_Sensor(Imbalance_Sensor):
     """
 
     pass
+
 
 class Voltage_Imbalance_Sensor(Imbalance_Sensor):
     """
@@ -5705,6 +6709,7 @@ class Voltage_Imbalance_Sensor(Imbalance_Sensor):
 
     pass
 
+
 class Luminance_Sensor(Sensor):
     """
     Measures the luminous intensity per unit area of light travelling in a
@@ -5713,12 +6718,14 @@ class Luminance_Sensor(Sensor):
 
     pass
 
+
 class Motion_Sensor(Sensor):
     """
     Detects the presence of motion in some area
     """
 
     pass
+
 
 class PIR_Sensor(Motion_Sensor):
     """
@@ -5728,6 +6735,7 @@ class PIR_Sensor(Motion_Sensor):
 
     pass
 
+
 class Occupancy_Count_Sensor(Sensor):
     """
     Sensors measuring the number of people in an area
@@ -5735,12 +6743,14 @@ class Occupancy_Count_Sensor(Sensor):
 
     pass
 
+
 class Occupancy_Sensor(Sensor):
     """
     Detects occupancy of some space or area
     """
 
     pass
+
 
 class Piezoelectric_Sensor(Sensor):
     """
@@ -5750,6 +6760,7 @@ class Piezoelectric_Sensor(Sensor):
 
     pass
 
+
 class Position_Sensor(Sensor):
     """
     Measures the current position of a component in terms of a fraction of
@@ -5757,6 +6768,7 @@ class Position_Sensor(Sensor):
     """
 
     pass
+
 
 class Damper_Position_Sensor(Position_Sensor):
     """
@@ -5766,6 +6778,7 @@ class Damper_Position_Sensor(Position_Sensor):
 
     pass
 
+
 class Sash_Position_Sensor(Position_Sensor):
     """
     Measures the current position of a sash in terms of the percent of
@@ -5774,6 +6787,7 @@ class Sash_Position_Sensor(Position_Sensor):
 
     pass
 
+
 class Valve_Position_Sensor(Position_Sensor):
     """
     Measures the current position of a valve in terms of the percent of
@@ -5781,6 +6795,7 @@ class Valve_Position_Sensor(Position_Sensor):
     """
 
     pass
+
 
 class Power_Factor_Sensor(Sensor):
     """
@@ -5791,12 +6806,14 @@ class Power_Factor_Sensor(Sensor):
 
     pass
 
+
 class Power_Sensor(Sensor):
     """
     Measures the amount of instantaneous power consumed
     """
 
     pass
+
 
 class Electric_Power_Sensor(Power_Sensor):
     """
@@ -5805,6 +6822,7 @@ class Electric_Power_Sensor(Power_Sensor):
 
     pass
 
+
 class Active_Power_Sensor(Electric_Power_Sensor):
     """
     Measures the portion of power that, averaged over a complete cycle of
@@ -5812,6 +6830,7 @@ class Active_Power_Sensor(Electric_Power_Sensor):
     """
 
     pass
+
 
 class Reactive_Power_Sensor(Electric_Power_Sensor):
     """
@@ -5822,11 +6841,14 @@ class Reactive_Power_Sensor(Electric_Power_Sensor):
 
     pass
 
+
 class Thermal_Power_Sensor(Power_Sensor):
     pass
 
+
 class Heating_Thermal_Power_Sensor(Thermal_Power_Sensor):
     pass
+
 
 class Pressure_Sensor(Sensor):
     """
@@ -5835,12 +6857,14 @@ class Pressure_Sensor(Sensor):
 
     pass
 
+
 class Differential_Pressure_Sensor(Pressure_Sensor):
     """
     Measures the difference between two applied pressures
     """
 
     pass
+
 
 class Air_Differential_Pressure_Sensor(Differential_Pressure_Sensor):
     """
@@ -5849,8 +6873,10 @@ class Air_Differential_Pressure_Sensor(Differential_Pressure_Sensor):
 
     pass
 
+
 class Discharge_Air_Differential_Pressure_Sensor(Air_Differential_Pressure_Sensor):
     pass
+
 
 class Exhaust_Air_Differential_Pressure_Sensor(Air_Differential_Pressure_Sensor):
     """
@@ -5861,12 +6887,14 @@ class Exhaust_Air_Differential_Pressure_Sensor(Air_Differential_Pressure_Sensor)
 
     pass
 
+
 class Return_Air_Differential_Pressure_Sensor(Air_Differential_Pressure_Sensor):
     """
     Measures the difference in pressure between the return and supply side
     """
 
     pass
+
 
 class Supply_Air_Differential_Pressure_Sensor(Air_Differential_Pressure_Sensor):
     """
@@ -5877,6 +6905,7 @@ class Supply_Air_Differential_Pressure_Sensor(Air_Differential_Pressure_Sensor):
 
     pass
 
+
 class Chilled_Water_Differential_Pressure_Sensor(Differential_Pressure_Sensor):
     """
     Measures the difference in water pressure on either side of a chilled
@@ -5885,12 +6914,14 @@ class Chilled_Water_Differential_Pressure_Sensor(Differential_Pressure_Sensor):
 
     pass
 
+
 class Filter_Differential_Pressure_Sensor(Differential_Pressure_Sensor):
     """
     Measures the difference in pressure on either side of a filter
     """
 
     pass
+
 
 class Hot_Water_Differential_Pressure_Sensor(Differential_Pressure_Sensor):
     """
@@ -5900,13 +6931,17 @@ class Hot_Water_Differential_Pressure_Sensor(Differential_Pressure_Sensor):
 
     pass
 
-class Medium_Temperature_Hot_Water_Differential_Pressure_Sensor(Hot_Water_Differential_Pressure_Sensor):
+
+class Medium_Temperature_Hot_Water_Differential_Pressure_Sensor(
+    Hot_Water_Differential_Pressure_Sensor
+):
     """
     Measures the difference in water pressure between sections of a medium
     temperature hot water system
     """
 
     pass
+
 
 class Static_Pressure_Sensor(Pressure_Sensor):
     """
@@ -5916,12 +6951,14 @@ class Static_Pressure_Sensor(Pressure_Sensor):
 
     pass
 
+
 class Building_Air_Static_Pressure_Sensor(Static_Pressure_Sensor):
     """
     The static pressure of air within a building
     """
 
     pass
+
 
 class Discharge_Air_Static_Pressure_Sensor(Static_Pressure_Sensor):
     """
@@ -5930,12 +6967,14 @@ class Discharge_Air_Static_Pressure_Sensor(Static_Pressure_Sensor):
 
     pass
 
+
 class Exhaust_Air_Static_Pressure_Sensor(Static_Pressure_Sensor):
     """
     The static pressure of air within exhaust regions of an HVAC system
     """
 
     pass
+
 
 class Average_Exhaust_Air_Static_Pressure_Sensor(Exhaust_Air_Static_Pressure_Sensor):
     """
@@ -5945,6 +6984,7 @@ class Average_Exhaust_Air_Static_Pressure_Sensor(Exhaust_Air_Static_Pressure_Sen
 
     pass
 
+
 class Lowest_Exhaust_Air_Static_Pressure_Sensor(Exhaust_Air_Static_Pressure_Sensor):
     """
     The lowest observed static pressure of air in exhaust regions of an
@@ -5953,12 +6993,14 @@ class Lowest_Exhaust_Air_Static_Pressure_Sensor(Exhaust_Air_Static_Pressure_Sens
 
     pass
 
+
 class Supply_Air_Static_Pressure_Sensor(Static_Pressure_Sensor):
     """
     The static pressure of air within supply regions of an HVAC system
     """
 
     pass
+
 
 class Underfloor_Air_Plenum_Static_Pressure_Sensor(Static_Pressure_Sensor):
     """
@@ -5968,6 +7010,7 @@ class Underfloor_Air_Plenum_Static_Pressure_Sensor(Static_Pressure_Sensor):
 
     pass
 
+
 class Velocity_Pressure_Sensor(Pressure_Sensor):
     """
     Measures the difference between total pressure and static pressure
@@ -5975,14 +7018,18 @@ class Velocity_Pressure_Sensor(Pressure_Sensor):
 
     pass
 
+
 class Discharge_Air_Velocity_Pressure_Sensor(Velocity_Pressure_Sensor):
     pass
+
 
 class Exhaust_Air_Velocity_Pressure_Sensor(Velocity_Pressure_Sensor):
     pass
 
+
 class Supply_Air_Velocity_Pressure_Sensor(Velocity_Pressure_Sensor):
     pass
+
 
 class Rain_Level_Sensor(Sensor):
     """
@@ -5991,8 +7038,10 @@ class Rain_Level_Sensor(Sensor):
 
     pass
 
+
 class Refrigerant_Level_Sensor(Sensor):
     pass
+
 
 class Solar_Radiance_Sensor(Sensor):
     """
@@ -6002,6 +7051,7 @@ class Solar_Radiance_Sensor(Sensor):
 
     pass
 
+
 class Speed_Sensor(Sensor):
     """
     Measures the magnitude of velocity of some form of movement
@@ -6009,11 +7059,14 @@ class Speed_Sensor(Sensor):
 
     pass
 
+
 class Differential_Speed_Sensor(Speed_Sensor):
     pass
 
+
 class Motor_Speed_Sensor(Speed_Sensor):
     pass
+
 
 class Wind_Speed_Sensor(Speed_Sensor):
     """
@@ -6021,6 +7074,7 @@ class Wind_Speed_Sensor(Speed_Sensor):
     """
 
     pass
+
 
 class Temperature_Sensor(Sensor):
     """
@@ -6030,6 +7084,7 @@ class Temperature_Sensor(Sensor):
 
     pass
 
+
 class Air_Temperature_Sensor(Temperature_Sensor):
     """
     Measures the temperature of air
@@ -6037,8 +7092,10 @@ class Air_Temperature_Sensor(Temperature_Sensor):
 
     pass
 
+
 class Air_Wet_Bulb_Temperature_Sensor(Air_Temperature_Sensor, Temperature_Sensor):
     pass
+
 
 class Discharge_Air_Temperature_Sensor(Air_Temperature_Sensor):
     """
@@ -6047,12 +7104,14 @@ class Discharge_Air_Temperature_Sensor(Air_Temperature_Sensor):
 
     pass
 
+
 class Preheat_Discharge_Air_Temperature_Sensor(Discharge_Air_Temperature_Sensor):
     """
     Measures the temperature of discharge air before heating is applied
     """
 
     pass
+
 
 class Exhaust_Air_Temperature_Sensor(Air_Temperature_Sensor):
     """
@@ -6061,12 +7120,14 @@ class Exhaust_Air_Temperature_Sensor(Air_Temperature_Sensor):
 
     pass
 
+
 class Mixed_Air_Temperature_Sensor(Air_Temperature_Sensor):
     """
     Measures the temperature of mixed air
     """
 
     pass
+
 
 class Outside_Air_Temperature_Sensor(Air_Temperature_Sensor):
     """
@@ -6075,6 +7136,7 @@ class Outside_Air_Temperature_Sensor(Air_Temperature_Sensor):
 
     pass
 
+
 class Intake_Air_Temperature_Sensor(Outside_Air_Temperature_Sensor):
     """
     Measures air at the interface between the building and the outside
@@ -6082,18 +7144,28 @@ class Intake_Air_Temperature_Sensor(Outside_Air_Temperature_Sensor):
 
     pass
 
-class Outside_Air_Temperature_Enable_Differential_Sensor(Outside_Air_Temperature_Sensor):
+
+class Outside_Air_Temperature_Enable_Differential_Sensor(
+    Outside_Air_Temperature_Sensor
+):
     pass
 
-class Low_Outside_Air_Temperature_Enable_Differential_Sensor(Outside_Air_Temperature_Enable_Differential_Sensor):
+
+class Low_Outside_Air_Temperature_Enable_Differential_Sensor(
+    Outside_Air_Temperature_Enable_Differential_Sensor
+):
     pass
 
-class Outside_Air_Wet_Bulb_Temperature_Sensor(Outside_Air_Temperature_Sensor, Air_Wet_Bulb_Temperature_Sensor):
+
+class Outside_Air_Wet_Bulb_Temperature_Sensor(
+    Outside_Air_Temperature_Sensor, Air_Wet_Bulb_Temperature_Sensor
+):
     """
     A sensor measuring the wet-bulb temperature of outside air
     """
 
     pass
+
 
 class Return_Air_Temperature_Sensor(Air_Temperature_Sensor):
     """
@@ -6102,12 +7174,14 @@ class Return_Air_Temperature_Sensor(Air_Temperature_Sensor):
 
     pass
 
+
 class Supply_Air_Temperature_Sensor(Air_Temperature_Sensor):
     """
     Measures the temperature of supply air
     """
 
     pass
+
 
 class Preheat_Supply_Air_Temperature_Sensor(Supply_Air_Temperature_Sensor):
     """
@@ -6116,12 +7190,14 @@ class Preheat_Supply_Air_Temperature_Sensor(Supply_Air_Temperature_Sensor):
 
     pass
 
+
 class Underfloor_Air_Temperature_Sensor(Air_Temperature_Sensor):
     """
     Measures the temperature of underfloor air
     """
 
     pass
+
 
 class Zone_Air_Temperature_Sensor(Air_Temperature_Sensor):
     """
@@ -6131,6 +7207,7 @@ class Zone_Air_Temperature_Sensor(Air_Temperature_Sensor):
 
     pass
 
+
 class Average_Zone_Air_Temperature_Sensor(Zone_Air_Temperature_Sensor):
     """
     The computed average temperature of air in a zone, over some period of
@@ -6138,6 +7215,7 @@ class Average_Zone_Air_Temperature_Sensor(Zone_Air_Temperature_Sensor):
     """
 
     pass
+
 
 class Coldest_Zone_Air_Temperature_Sensor(Zone_Air_Temperature_Sensor):
     """
@@ -6148,6 +7226,7 @@ class Coldest_Zone_Air_Temperature_Sensor(Zone_Air_Temperature_Sensor):
 
     pass
 
+
 class Warmest_Zone_Air_Temperature_Sensor(Zone_Air_Temperature_Sensor):
     """
     The zone temperature that is warmest; drives the supply temperature of
@@ -6157,12 +7236,14 @@ class Warmest_Zone_Air_Temperature_Sensor(Zone_Air_Temperature_Sensor):
 
     pass
 
+
 class Frost_Sensor(Temperature_Sensor, Sensor):
     """
     Senses the presence of frost or conditions that may cause frost
     """
 
     pass
+
 
 class Heat_Sink_Temperature_Sensor(Temperature_Sensor):
     """
@@ -6171,12 +7252,14 @@ class Heat_Sink_Temperature_Sensor(Temperature_Sensor):
 
     pass
 
+
 class Natural_Gas_Temperature_Sensor(Temperature_Sensor):
     """
     Measures the temperature of natural gas
     """
 
     pass
+
 
 class Radiant_Panel_Temperature_Sensor(Temperature_Sensor):
     """
@@ -6186,6 +7269,7 @@ class Radiant_Panel_Temperature_Sensor(Temperature_Sensor):
 
     pass
 
+
 class Embedded_Temperature_Sensor(Radiant_Panel_Temperature_Sensor):
     """
     Measures the internal temperature of the radiant layer of the radiant
@@ -6193,6 +7277,7 @@ class Embedded_Temperature_Sensor(Radiant_Panel_Temperature_Sensor):
     """
 
     pass
+
 
 class Core_Temperature_Sensor(Embedded_Temperature_Sensor):
     """
@@ -6202,6 +7287,7 @@ class Core_Temperature_Sensor(Embedded_Temperature_Sensor):
 
     pass
 
+
 class Inside_Face_Surface_Temperature_Sensor(Radiant_Panel_Temperature_Sensor):
     """
     Measures the inside surface (relative to the space) of the radiant
@@ -6209,6 +7295,7 @@ class Inside_Face_Surface_Temperature_Sensor(Radiant_Panel_Temperature_Sensor):
     """
 
     pass
+
 
 class Outside_Face_Surface_Temperature_Sensor(Radiant_Panel_Temperature_Sensor):
     """
@@ -6218,12 +7305,14 @@ class Outside_Face_Surface_Temperature_Sensor(Radiant_Panel_Temperature_Sensor):
 
     pass
 
+
 class Soil_Temperature_Sensor(Temperature_Sensor):
     """
     Measures the temperature of soil
     """
 
     pass
+
 
 class Water_Temperature_Sensor(Temperature_Sensor):
     """
@@ -6232,6 +7321,7 @@ class Water_Temperature_Sensor(Temperature_Sensor):
 
     pass
 
+
 class Chilled_Water_Temperature_Sensor(Water_Temperature_Sensor):
     """
     Measures the temperature of chilled water
@@ -6239,13 +7329,17 @@ class Chilled_Water_Temperature_Sensor(Water_Temperature_Sensor):
 
     pass
 
-class Differential_Entering_Leaving_Water_Temperature_Sensor(Chilled_Water_Temperature_Sensor):
+
+class Differential_Entering_Leaving_Water_Temperature_Sensor(
+    Chilled_Water_Temperature_Sensor
+):
     """
     Measures the difference in temperature between entering and leaving
     water of water a circuit
     """
 
     pass
+
 
 class Entering_Chilled_Water_Temperature_Sensor(Chilled_Water_Temperature_Sensor):
     """
@@ -6255,6 +7349,7 @@ class Entering_Chilled_Water_Temperature_Sensor(Chilled_Water_Temperature_Sensor
 
     pass
 
+
 class Leaving_Chilled_Water_Temperature_Sensor(Chilled_Water_Temperature_Sensor):
     """
     Measures the temperature of chilled water that is supplied from a
@@ -6262,6 +7357,7 @@ class Leaving_Chilled_Water_Temperature_Sensor(Chilled_Water_Temperature_Sensor)
     """
 
     pass
+
 
 class Collection_Basin_Water_Temperature_Sensor(Water_Temperature_Sensor):
     """
@@ -6271,12 +7367,14 @@ class Collection_Basin_Water_Temperature_Sensor(Water_Temperature_Sensor):
 
     pass
 
+
 class Condenser_Water_Temperature_Sensor(Water_Temperature_Sensor):
     """
     Measures the temperature of condenser water
     """
 
     pass
+
 
 class Entering_Condenser_Water_Temperature_Sensor(Condenser_Water_Temperature_Sensor):
     """
@@ -6285,6 +7383,7 @@ class Entering_Condenser_Water_Temperature_Sensor(Condenser_Water_Temperature_Se
 
     pass
 
+
 class Leaving_Condenser_Water_Temperature_Sensor(Condenser_Water_Temperature_Sensor):
     """
     Measures the temperature of the leaving condenser water
@@ -6292,41 +7391,68 @@ class Leaving_Condenser_Water_Temperature_Sensor(Condenser_Water_Temperature_Sen
 
     pass
 
+
 class Return_Condenser_Water_Temperature_Sensor(Condenser_Water_Temperature_Sensor):
     pass
+
 
 class Discharge_Water_Temperature_Sensor(Water_Temperature_Sensor):
     pass
 
-class Chilled_Water_Discharge_Temperature_Sensor(Discharge_Water_Temperature_Sensor, Chilled_Water_Temperature_Sensor):
+
+class Chilled_Water_Discharge_Temperature_Sensor(
+    Discharge_Water_Temperature_Sensor, Chilled_Water_Temperature_Sensor
+):
     pass
 
-class Discharge_Condenser_Water_Temperature_Sensor(Condenser_Water_Temperature_Sensor, Discharge_Water_Temperature_Sensor):
+
+class Discharge_Condenser_Water_Temperature_Sensor(
+    Condenser_Water_Temperature_Sensor, Discharge_Water_Temperature_Sensor
+):
     pass
 
-class Discharge_Condenser_Water_Temperature_Setpoint(Discharge_Water_Temperature_Sensor):
+
+class Discharge_Condenser_Water_Temperature_Setpoint(
+    Discharge_Water_Temperature_Sensor
+):
     pass
+
 
 class Discharge_Hot_Water_Temperature_Setpoint(Discharge_Water_Temperature_Sensor):
     pass
 
-class Domestic_Hot_Water_Discharge_Temperature_Setpoint(Discharge_Hot_Water_Temperature_Setpoint):
+
+class Domestic_Hot_Water_Discharge_Temperature_Setpoint(
+    Discharge_Hot_Water_Temperature_Setpoint
+):
     pass
+
 
 class Hot_Water_Discharge_Temperature_Sensor(Discharge_Water_Temperature_Sensor):
     pass
 
-class High_Temperature_Hot_Water_Discharge_Temperature_Sensor(Hot_Water_Discharge_Temperature_Sensor):
+
+class High_Temperature_Hot_Water_Discharge_Temperature_Sensor(
+    Hot_Water_Discharge_Temperature_Sensor
+):
     pass
 
-class Medium_Temperature_Hot_Water_Discharge_Temperature_Sensor(Hot_Water_Discharge_Temperature_Sensor):
+
+class Medium_Temperature_Hot_Water_Discharge_Temperature_Sensor(
+    Hot_Water_Discharge_Temperature_Sensor
+):
     pass
+
 
 class Domestic_Hot_Water_Temperature_Sensor(Water_Temperature_Sensor):
     pass
 
-class Domestic_Hot_Water_Discharge_Temperature_Sensor(Domestic_Hot_Water_Temperature_Sensor):
+
+class Domestic_Hot_Water_Discharge_Temperature_Sensor(
+    Domestic_Hot_Water_Temperature_Sensor
+):
     pass
+
 
 class Entering_Hot_Water_Temperature_Sensor(Water_Temperature_Sensor):
     """
@@ -6335,10 +7461,16 @@ class Entering_Hot_Water_Temperature_Sensor(Water_Temperature_Sensor):
 
     pass
 
-class Entering_Domestic_Hot_Water_Temperature_Sensor(Entering_Hot_Water_Temperature_Sensor, Domestic_Hot_Water_Temperature_Sensor):
+
+class Entering_Domestic_Hot_Water_Temperature_Sensor(
+    Entering_Hot_Water_Temperature_Sensor, Domestic_Hot_Water_Temperature_Sensor
+):
     pass
 
-class Entering_High_Temperature_Hot_Water_Temperature_Sensor(Entering_Hot_Water_Temperature_Sensor):
+
+class Entering_High_Temperature_Hot_Water_Temperature_Sensor(
+    Entering_Hot_Water_Temperature_Sensor
+):
     """
     Measures the temperature of high-temperature hot water enteringed to a
     hot water system
@@ -6346,13 +7478,17 @@ class Entering_High_Temperature_Hot_Water_Temperature_Sensor(Entering_Hot_Water_
 
     pass
 
-class Entering_Medium_Temperature_Hot_Water_Temperature_Sensor(Entering_Hot_Water_Temperature_Sensor):
+
+class Entering_Medium_Temperature_Hot_Water_Temperature_Sensor(
+    Entering_Hot_Water_Temperature_Sensor
+):
     """
     Measures the temperature of medium-temperature hot water entering a
     hot water system
     """
 
     pass
+
 
 class Entering_Water_Temperature_Sensor(Water_Temperature_Sensor):
     """
@@ -6361,11 +7497,14 @@ class Entering_Water_Temperature_Sensor(Water_Temperature_Sensor):
 
     pass
 
+
 class Heat_Exchanger_Discharge_Water_Temperature_Sensor(Water_Temperature_Sensor):
     pass
 
+
 class Heat_Exchanger_Supply_Water_Temperature_Sensor(Water_Temperature_Sensor):
     pass
+
 
 class Leaving_Hot_Water_Temperature_Sensor(Water_Temperature_Sensor):
     """
@@ -6374,7 +7513,10 @@ class Leaving_Hot_Water_Temperature_Sensor(Water_Temperature_Sensor):
 
     pass
 
-class Leaving_Domestic_Hot_Water_Temperature_Sensor(Leaving_Hot_Water_Temperature_Sensor, Domestic_Hot_Water_Temperature_Sensor):
+
+class Leaving_Domestic_Hot_Water_Temperature_Sensor(
+    Leaving_Hot_Water_Temperature_Sensor, Domestic_Hot_Water_Temperature_Sensor
+):
     """
     Measures the temperature of domestic water supplied by a hot water
     system
@@ -6382,7 +7524,10 @@ class Leaving_Domestic_Hot_Water_Temperature_Sensor(Leaving_Hot_Water_Temperatur
 
     pass
 
-class Leaving_High_Temperature_Hot_Water_Temperature_Sensor(Leaving_Hot_Water_Temperature_Sensor):
+
+class Leaving_High_Temperature_Hot_Water_Temperature_Sensor(
+    Leaving_Hot_Water_Temperature_Sensor
+):
     """
     Measures the temperature of high-temperature hot water supplied by a
     hot water system
@@ -6390,13 +7535,17 @@ class Leaving_High_Temperature_Hot_Water_Temperature_Sensor(Leaving_Hot_Water_Te
 
     pass
 
-class Leaving_Medium_Temperature_Hot_Water_Temperature_Sensor(Leaving_Hot_Water_Temperature_Sensor):
+
+class Leaving_Medium_Temperature_Hot_Water_Temperature_Sensor(
+    Leaving_Hot_Water_Temperature_Sensor
+):
     """
     Measures the temperature of medium-temperature hot water supplied by a
     hot water system
     """
 
     pass
+
 
 class Leaving_Water_Temperature_Sensor(Water_Temperature_Sensor):
     """
@@ -6406,8 +7555,10 @@ class Leaving_Water_Temperature_Sensor(Water_Temperature_Sensor):
 
     pass
 
+
 class Heat_Exchanger_Leaving_Water_Temperature_Sensor(Leaving_Water_Temperature_Sensor):
     pass
+
 
 class Ice_Tank_Leaving_Water_Temperature_Sensor(Leaving_Water_Temperature_Sensor):
     """
@@ -6416,53 +7567,86 @@ class Ice_Tank_Leaving_Water_Temperature_Sensor(Leaving_Water_Temperature_Sensor
 
     pass
 
+
 class Return_Water_Temperature_Sensor(Water_Temperature_Sensor):
     pass
 
-class Chilled_Water_Return_Temperature_Sensor(Return_Water_Temperature_Sensor, Chilled_Water_Temperature_Sensor):
+
+class Chilled_Water_Return_Temperature_Sensor(
+    Return_Water_Temperature_Sensor, Chilled_Water_Temperature_Sensor
+):
     pass
+
 
 class Hot_Water_Return_Temperature_Sensor(Return_Water_Temperature_Sensor):
     pass
 
-class High_Temperature_Hot_Water_Return_Temperature_Sensor(Hot_Water_Return_Temperature_Sensor):
+
+class High_Temperature_Hot_Water_Return_Temperature_Sensor(
+    Hot_Water_Return_Temperature_Sensor
+):
     pass
 
-class Medium_Temperature_Hot_Water_Return_Temperature_Sensor(Hot_Water_Return_Temperature_Sensor):
+
+class Medium_Temperature_Hot_Water_Return_Temperature_Sensor(
+    Hot_Water_Return_Temperature_Sensor
+):
     pass
+
 
 class Supply_Water_Temperature_Sensor(Water_Temperature_Sensor):
     pass
 
-class Chilled_Water_Supply_Temperature_Sensor(Supply_Water_Temperature_Sensor, Chilled_Water_Temperature_Sensor):
+
+class Chilled_Water_Supply_Temperature_Sensor(
+    Supply_Water_Temperature_Sensor, Chilled_Water_Temperature_Sensor
+):
     pass
+
 
 class Hot_Water_Supply_Flow_Setpoint(Supply_Water_Temperature_Sensor):
     pass
 
+
 class Hot_Water_Supply_Temperature_Sensor(Supply_Water_Temperature_Sensor):
     pass
+
 
 class Domestic_Hot_Water_Supply_Temperature_Sensor(Hot_Water_Supply_Temperature_Sensor):
     pass
 
-class High_Temperature_Hot_Water_Supply_Temperature_Sensor(Hot_Water_Supply_Temperature_Sensor):
+
+class High_Temperature_Hot_Water_Supply_Temperature_Sensor(
+    Hot_Water_Supply_Temperature_Sensor
+):
     pass
 
-class Medium_Temperature_Hot_Water_Supply_Temperature_Sensor(Hot_Water_Supply_Temperature_Sensor):
+
+class Medium_Temperature_Hot_Water_Supply_Temperature_Sensor(
+    Hot_Water_Supply_Temperature_Sensor
+):
     pass
 
-class Supply_Condenser_Water_Temperature_Sensor(Condenser_Water_Temperature_Sensor, Supply_Water_Temperature_Sensor):
+
+class Supply_Condenser_Water_Temperature_Sensor(
+    Condenser_Water_Temperature_Sensor, Supply_Water_Temperature_Sensor
+):
     pass
+
 
 class Supply_Condenser_Water_Temperature_Setpoint(Supply_Water_Temperature_Sensor):
     pass
 
+
 class Supply_Hot_Water_Temperature_Setpoint(Supply_Water_Temperature_Sensor):
     pass
 
-class Domestic_Hot_Water_Supply_Temperature_Setpoint(Supply_Hot_Water_Temperature_Setpoint):
+
+class Domestic_Hot_Water_Supply_Temperature_Setpoint(
+    Supply_Hot_Water_Temperature_Setpoint
+):
     pass
+
 
 class Water_Differential_Temperature_Sensor(Water_Temperature_Sensor):
     """
@@ -6472,7 +7656,10 @@ class Water_Differential_Temperature_Sensor(Water_Temperature_Sensor):
 
     pass
 
-class Chilled_Water_Differential_Temperature_Sensor(Water_Differential_Temperature_Sensor, Chilled_Water_Temperature_Sensor):
+
+class Chilled_Water_Differential_Temperature_Sensor(
+    Water_Differential_Temperature_Sensor, Chilled_Water_Temperature_Sensor
+):
     """
     Measures the difference in temperature between the entering water to
     the chiller or other water cooling device and leaving water from the
@@ -6481,13 +7668,24 @@ class Chilled_Water_Differential_Temperature_Sensor(Water_Differential_Temperatu
 
     pass
 
-class Differential_Discharge_Return_Water_Temperature_Sensor(Water_Differential_Temperature_Sensor):
+
+class Differential_Discharge_Return_Water_Temperature_Sensor(
+    Water_Differential_Temperature_Sensor
+):
     pass
 
-class Differential_Supply_Return_Water_Temperature_Sensor(Water_Differential_Temperature_Sensor):
+
+class Differential_Supply_Return_Water_Temperature_Sensor(
+    Water_Differential_Temperature_Sensor
+):
     pass
 
-class Hot_Water_Differential_Temperature_Sensor(Leaving_Hot_Water_Temperature_Sensor, Entering_Hot_Water_Temperature_Sensor, Water_Differential_Temperature_Sensor):
+
+class Hot_Water_Differential_Temperature_Sensor(
+    Leaving_Hot_Water_Temperature_Sensor,
+    Entering_Hot_Water_Temperature_Sensor,
+    Water_Differential_Temperature_Sensor,
+):
     """
     Measures the difference in temperature between the entering water to
     the boiler or other water heating device and leaving water from the
@@ -6495,6 +7693,7 @@ class Hot_Water_Differential_Temperature_Sensor(Leaving_Hot_Water_Temperature_Se
     """
 
     pass
+
 
 class Torque_Sensor(Sensor):
     """
@@ -6504,12 +7703,14 @@ class Torque_Sensor(Sensor):
 
     pass
 
+
 class Motor_Torque_Sensor(Torque_Sensor):
     """
     Measures the torque, or rotating power, of a motor
     """
 
     pass
+
 
 class Usage_Sensor(Sensor):
     """
@@ -6519,12 +7720,14 @@ class Usage_Sensor(Sensor):
 
     pass
 
+
 class Energy_Usage_Sensor(Usage_Sensor):
     """
     Measures the total amount of energy used over some period of time
     """
 
     pass
+
 
 class Natural_Gas_Usage_Sensor(Usage_Sensor):
     """
@@ -6534,6 +7737,7 @@ class Natural_Gas_Usage_Sensor(Usage_Sensor):
 
     pass
 
+
 class Steam_Usage_Sensor(Usage_Sensor):
     """
     Measures the amount of steam that is consumed or used, over some
@@ -6541,6 +7745,7 @@ class Steam_Usage_Sensor(Usage_Sensor):
     """
 
     pass
+
 
 class Water_Usage_Sensor(Usage_Sensor):
     """
@@ -6550,6 +7755,7 @@ class Water_Usage_Sensor(Usage_Sensor):
 
     pass
 
+
 class Hot_Water_Usage_Sensor(Water_Usage_Sensor):
     """
     Measures the amount of hot water that is consumed, over some period of
@@ -6558,12 +7764,14 @@ class Hot_Water_Usage_Sensor(Water_Usage_Sensor):
 
     pass
 
+
 class Voltage_Sensor(Sensor):
     """
     Measures the voltage of an electrical device or object
     """
 
     pass
+
 
 class Battery_Voltage_Sensor(Voltage_Sensor):
     """
@@ -6572,12 +7780,14 @@ class Battery_Voltage_Sensor(Voltage_Sensor):
 
     pass
 
+
 class DC_Bus_Voltage_Sensor(Voltage_Sensor):
     """
     Measures the voltage across a DC bus
     """
 
     pass
+
 
 class Output_Voltage_Sensor(Voltage_Sensor):
     """
@@ -6586,12 +7796,14 @@ class Output_Voltage_Sensor(Voltage_Sensor):
 
     pass
 
+
 class Water_Level_Sensor(Sensor):
     """
     Measures the height/level of water in some container
     """
 
     pass
+
 
 class Collection_Basin_Water_Level_Sensor(Water_Level_Sensor):
     """
@@ -6601,12 +7813,14 @@ class Collection_Basin_Water_Level_Sensor(Water_Level_Sensor):
 
     pass
 
+
 class Deionised_Water_Level_Sensor(Water_Level_Sensor):
     """
     Measures the height/level of deionised water in some container
     """
 
     pass
+
 
 class Setpoint(Point):
     """
@@ -6615,12 +7829,14 @@ class Setpoint(Point):
 
     pass
 
+
 class CO2_Setpoint(Setpoint):
     """
     Sets some property of CO2
     """
 
     pass
+
 
 class Return_Air_CO2_Setpoint(CO2_Setpoint):
     """
@@ -6629,12 +7845,14 @@ class Return_Air_CO2_Setpoint(CO2_Setpoint):
 
     pass
 
+
 class Current_Ratio_Setpoint(Setpoint):
     """
     Sets the ratio of currents in a transformer
     """
 
     pass
+
 
 class Damper_Position_Setpoint(Setpoint):
     """
@@ -6643,12 +7861,14 @@ class Damper_Position_Setpoint(Setpoint):
 
     pass
 
+
 class Deadband_Setpoint(Setpoint):
     """
     Sets the size of a deadband
     """
 
     pass
+
 
 class Humidity_Deadband_Setpoint(Deadband_Setpoint):
     """
@@ -6657,12 +7877,14 @@ class Humidity_Deadband_Setpoint(Deadband_Setpoint):
 
     pass
 
+
 class Demand_Setpoint(Setpoint):
     """
     Sets the rate required for a process
     """
 
     pass
+
 
 class Cooling_Demand_Setpoint(Demand_Setpoint):
     """
@@ -6671,12 +7893,14 @@ class Cooling_Demand_Setpoint(Demand_Setpoint):
 
     pass
 
+
 class Heating_Demand_Setpoint(Demand_Setpoint):
     """
     Sets the rate required for heating
     """
 
     pass
+
 
 class Preheat_Demand_Setpoint(Demand_Setpoint):
     """
@@ -6685,12 +7909,14 @@ class Preheat_Demand_Setpoint(Demand_Setpoint):
 
     pass
 
+
 class Dewpoint_Setpoint(Setpoint):
     """
     Sets dew point
     """
 
     pass
+
 
 class Differential_Setpoint(Setpoint):
     """
@@ -6700,6 +7926,7 @@ class Differential_Setpoint(Setpoint):
 
     pass
 
+
 class Differential_Pressure_Deadband_Setpoint(Differential_Setpoint):
     """
     Sets the size of a deadband of differential pressure
@@ -6707,33 +7934,46 @@ class Differential_Pressure_Deadband_Setpoint(Differential_Setpoint):
 
     pass
 
-class Chilled_Water_Differential_Pressure_Deadband_Setpoint(Differential_Pressure_Deadband_Setpoint):
+
+class Chilled_Water_Differential_Pressure_Deadband_Setpoint(
+    Differential_Pressure_Deadband_Setpoint
+):
     """
     Sets the size of a deadband of differential pressure of chilled water
     """
 
     pass
 
-class Entering_Water_Differential_Pressure_Deadband_Setpoint(Differential_Pressure_Deadband_Setpoint):
+
+class Entering_Water_Differential_Pressure_Deadband_Setpoint(
+    Differential_Pressure_Deadband_Setpoint
+):
     """
     Sets the size of a deadband of differential pressure of entering water
     """
 
     pass
 
-class Hot_Water_Differential_Pressure_Deadband_Setpoint(Differential_Pressure_Deadband_Setpoint):
+
+class Hot_Water_Differential_Pressure_Deadband_Setpoint(
+    Differential_Pressure_Deadband_Setpoint
+):
     """
     Sets the size of a deadband of differential pressure of hot water
     """
 
     pass
 
-class Leaving_Water_Differential_Pressure_Deadband_Setpoint(Differential_Pressure_Deadband_Setpoint):
+
+class Leaving_Water_Differential_Pressure_Deadband_Setpoint(
+    Differential_Pressure_Deadband_Setpoint
+):
     """
     Sets the size of a deadband of differential pressure of leaving water
     """
 
     pass
+
 
 class Differential_Pressure_Setpoint(Differential_Setpoint):
     """
@@ -6741,6 +7981,7 @@ class Differential_Pressure_Setpoint(Differential_Setpoint):
     """
 
     pass
+
 
 class Air_Differential_Pressure_Setpoint(Differential_Pressure_Setpoint):
     """
@@ -6750,8 +7991,10 @@ class Air_Differential_Pressure_Setpoint(Differential_Pressure_Setpoint):
 
     pass
 
+
 class Discharge_Air_Differential_Pressure_Setpoint(Air_Differential_Pressure_Setpoint):
     pass
+
 
 class Exhaust_Air_Differential_Pressure_Setpoint(Air_Differential_Pressure_Setpoint):
     """
@@ -6761,6 +8004,7 @@ class Exhaust_Air_Differential_Pressure_Setpoint(Air_Differential_Pressure_Setpo
 
     pass
 
+
 class Return_Air_Differential_Pressure_Setpoint(Air_Differential_Pressure_Setpoint):
     """
     Sets the target air differential pressure between an upstream and
@@ -6768,6 +8012,7 @@ class Return_Air_Differential_Pressure_Setpoint(Air_Differential_Pressure_Setpoi
     """
 
     pass
+
 
 class Supply_Air_Differential_Pressure_Setpoint(Air_Differential_Pressure_Setpoint):
     """
@@ -6777,6 +8022,7 @@ class Supply_Air_Differential_Pressure_Setpoint(Air_Differential_Pressure_Setpoi
 
     pass
 
+
 class Water_Differential_Pressure_Setpoint(Differential_Pressure_Setpoint):
     """
     Sets the target water differential pressure between an upstream and
@@ -6785,7 +8031,10 @@ class Water_Differential_Pressure_Setpoint(Differential_Pressure_Setpoint):
 
     pass
 
-class Chilled_Water_Differential_Pressure_Setpoint(Water_Differential_Pressure_Setpoint):
+
+class Chilled_Water_Differential_Pressure_Setpoint(
+    Water_Differential_Pressure_Setpoint
+):
     """
     Sets the target water differential pressure between an upstream and
     downstream point in a water pipe or conduit used to carry chilled
@@ -6793,6 +8042,7 @@ class Chilled_Water_Differential_Pressure_Setpoint(Water_Differential_Pressure_S
     """
 
     pass
+
 
 class Hot_Water_Differential_Pressure_Setpoint(Water_Differential_Pressure_Setpoint):
     """
@@ -6802,8 +8052,12 @@ class Hot_Water_Differential_Pressure_Setpoint(Water_Differential_Pressure_Setpo
 
     pass
 
-class Medium_Temperature_Hot_Water_Differential_Pressure_Setpoint(Hot_Water_Differential_Pressure_Setpoint):
+
+class Medium_Temperature_Hot_Water_Differential_Pressure_Setpoint(
+    Hot_Water_Differential_Pressure_Setpoint
+):
     pass
+
 
 class Differential_Speed_Setpoint(Differential_Setpoint):
     """
@@ -6811,6 +8065,7 @@ class Differential_Speed_Setpoint(Differential_Setpoint):
     """
 
     pass
+
 
 class Differential_Temperature_Setpoint(Differential_Setpoint):
     """
@@ -6820,12 +8075,14 @@ class Differential_Temperature_Setpoint(Differential_Setpoint):
 
     pass
 
+
 class Differential_Air_Temperature_Setpoint(Differential_Temperature_Setpoint):
     """
     Sets temperature of diffrential air
     """
 
     pass
+
 
 class Water_Differential_Temperature_Setpoint(Differential_Temperature_Setpoint):
     """
@@ -6835,23 +8092,40 @@ class Water_Differential_Temperature_Setpoint(Differential_Temperature_Setpoint)
 
     pass
 
-class Medium_Temperature_Hot_Water_Differential_Pressure_Load_Shed_Setpoint(Differential_Setpoint):
+
+class Medium_Temperature_Hot_Water_Differential_Pressure_Load_Shed_Setpoint(
+    Differential_Setpoint
+):
     pass
+
 
 class Temperature_Differential_Reset_Setpoint(Differential_Setpoint):
     pass
 
-class Discharge_Air_Temperature_Reset_Differential_Setpoint(Temperature_Differential_Reset_Setpoint):
+
+class Discharge_Air_Temperature_Reset_Differential_Setpoint(
+    Temperature_Differential_Reset_Setpoint
+):
     pass
 
-class Discharge_Air_Temperature_High_Reset_Setpoint(Discharge_Air_Temperature_Reset_Differential_Setpoint):
+
+class Discharge_Air_Temperature_High_Reset_Setpoint(
+    Discharge_Air_Temperature_Reset_Differential_Setpoint
+):
     pass
 
-class Discharge_Air_Temperature_Low_Reset_Setpoint(Discharge_Air_Temperature_Reset_Differential_Setpoint):
+
+class Discharge_Air_Temperature_Low_Reset_Setpoint(
+    Discharge_Air_Temperature_Reset_Differential_Setpoint
+):
     pass
 
-class Supply_Air_Temperature_Reset_Differential_Setpoint(Temperature_Differential_Reset_Setpoint):
+
+class Supply_Air_Temperature_Reset_Differential_Setpoint(
+    Temperature_Differential_Reset_Setpoint
+):
     pass
+
 
 class Enthalpy_Setpoint(Setpoint):
     """
@@ -6860,12 +8134,14 @@ class Enthalpy_Setpoint(Setpoint):
 
     pass
 
+
 class Flow_Setpoint(Setpoint):
     """
     Sets flow
     """
 
     pass
+
 
 class Air_Flow_Setpoint(Flow_Setpoint):
     """
@@ -6874,12 +8150,14 @@ class Air_Flow_Setpoint(Flow_Setpoint):
 
     pass
 
+
 class Air_Flow_Deadband_Setpoint(Air_Flow_Setpoint, Deadband_Setpoint):
     """
     Sets the size of a deadband of air flow
     """
 
     pass
+
 
 class Air_Flow_Demand_Setpoint(Air_Flow_Setpoint, Demand_Setpoint):
     """
@@ -6888,12 +8166,14 @@ class Air_Flow_Demand_Setpoint(Air_Flow_Setpoint, Demand_Setpoint):
 
     pass
 
+
 class Discharge_Air_Flow_Setpoint(Air_Flow_Setpoint):
     """
     Sets discharge air flow
     """
 
     pass
+
 
 class Cooling_Discharge_Air_Flow_Setpoint(Discharge_Air_Flow_Setpoint):
     """
@@ -6902,12 +8182,16 @@ class Cooling_Discharge_Air_Flow_Setpoint(Discharge_Air_Flow_Setpoint):
 
     pass
 
-class Discharge_Air_Flow_Demand_Setpoint(Discharge_Air_Flow_Setpoint, Air_Flow_Demand_Setpoint):
+
+class Discharge_Air_Flow_Demand_Setpoint(
+    Discharge_Air_Flow_Setpoint, Air_Flow_Demand_Setpoint
+):
     """
     Sets the rate of discharge air flow required for a process
     """
 
     pass
+
 
 class Heating_Discharge_Air_Flow_Setpoint(Discharge_Air_Flow_Setpoint):
     """
@@ -6916,6 +8200,7 @@ class Heating_Discharge_Air_Flow_Setpoint(Discharge_Air_Flow_Setpoint):
 
     pass
 
+
 class Occupied_Discharge_Air_Flow_Setpoint(Discharge_Air_Flow_Setpoint):
     """
     Sets discharge air flow when occupied
@@ -6923,32 +8208,46 @@ class Occupied_Discharge_Air_Flow_Setpoint(Discharge_Air_Flow_Setpoint):
 
     pass
 
-class Occupied_Cooling_Discharge_Air_Flow_Setpoint(Occupied_Discharge_Air_Flow_Setpoint, Cooling_Discharge_Air_Flow_Setpoint):
+
+class Occupied_Cooling_Discharge_Air_Flow_Setpoint(
+    Occupied_Discharge_Air_Flow_Setpoint, Cooling_Discharge_Air_Flow_Setpoint
+):
     """
     Sets discharge air flow for cooling when occupied
     """
 
     pass
 
-class Occupied_Heating_Discharge_Air_Flow_Setpoint(Occupied_Discharge_Air_Flow_Setpoint, Heating_Discharge_Air_Flow_Setpoint):
+
+class Occupied_Heating_Discharge_Air_Flow_Setpoint(
+    Occupied_Discharge_Air_Flow_Setpoint, Heating_Discharge_Air_Flow_Setpoint
+):
     """
     Sets discharge air flow for heating when occupied
     """
 
     pass
 
+
 class Unoccupied_Discharge_Air_Flow_Setpoint(Discharge_Air_Flow_Setpoint):
     pass
 
-class Unoccupied_Cooling_Discharge_Air_Flow_Setpoint(Unoccupied_Discharge_Air_Flow_Setpoint, Cooling_Discharge_Air_Flow_Setpoint):
+
+class Unoccupied_Cooling_Discharge_Air_Flow_Setpoint(
+    Unoccupied_Discharge_Air_Flow_Setpoint, Cooling_Discharge_Air_Flow_Setpoint
+):
     """
     Sets discharge air flow for cooling when unoccupied
     """
 
     pass
 
-class Unoccupied_Heating_Discharge_Air_Flow_Setpoint(Unoccupied_Discharge_Air_Flow_Setpoint, Heating_Discharge_Air_Flow_Setpoint):
+
+class Unoccupied_Heating_Discharge_Air_Flow_Setpoint(
+    Unoccupied_Discharge_Air_Flow_Setpoint, Heating_Discharge_Air_Flow_Setpoint
+):
     pass
+
 
 class Exhaust_Air_Flow_Setpoint(Air_Flow_Setpoint):
     """
@@ -6957,6 +8256,7 @@ class Exhaust_Air_Flow_Setpoint(Air_Flow_Setpoint):
 
     pass
 
+
 class Exhaust_Air_Stack_Flow_Setpoint(Exhaust_Air_Flow_Setpoint):
     """
     Sets exhaust air stack flow rate
@@ -6964,12 +8264,16 @@ class Exhaust_Air_Stack_Flow_Setpoint(Exhaust_Air_Flow_Setpoint):
 
     pass
 
-class Exhaust_Air_Stack_Flow_Deadband_Setpoint(Air_Flow_Deadband_Setpoint, Exhaust_Air_Stack_Flow_Setpoint):
+
+class Exhaust_Air_Stack_Flow_Deadband_Setpoint(
+    Air_Flow_Deadband_Setpoint, Exhaust_Air_Stack_Flow_Setpoint
+):
     """
     Sets the size of a deadband of exhaust air stack flow
     """
 
     pass
+
 
 class Outside_Air_Flow_Setpoint(Air_Flow_Setpoint):
     """
@@ -6978,12 +8282,14 @@ class Outside_Air_Flow_Setpoint(Air_Flow_Setpoint):
 
     pass
 
+
 class Supply_Air_Flow_Setpoint(Air_Flow_Setpoint):
     """
     Sets supply air flow rate
     """
 
     pass
+
 
 class Cooling_Supply_Air_Flow_Setpoint(Supply_Air_Flow_Setpoint):
     """
@@ -6992,12 +8298,14 @@ class Cooling_Supply_Air_Flow_Setpoint(Supply_Air_Flow_Setpoint):
 
     pass
 
+
 class Heating_Supply_Air_Flow_Setpoint(Supply_Air_Flow_Setpoint):
     """
     Sets supply air flow rate for heating
     """
 
     pass
+
 
 class Occupied_Supply_Air_Flow_Setpoint(Supply_Air_Flow_Setpoint):
     """
@@ -7006,35 +8314,52 @@ class Occupied_Supply_Air_Flow_Setpoint(Supply_Air_Flow_Setpoint):
 
     pass
 
-class Occupied_Cooling_Supply_Air_Flow_Setpoint(Occupied_Supply_Air_Flow_Setpoint, Cooling_Supply_Air_Flow_Setpoint):
+
+class Occupied_Cooling_Supply_Air_Flow_Setpoint(
+    Occupied_Supply_Air_Flow_Setpoint, Cooling_Supply_Air_Flow_Setpoint
+):
     """
     Sets supply air flow rate for cooling when occupied
     """
 
     pass
 
-class Occupied_Heating_Supply_Air_Flow_Setpoint(Occupied_Supply_Air_Flow_Setpoint, Heating_Supply_Air_Flow_Setpoint):
+
+class Occupied_Heating_Supply_Air_Flow_Setpoint(
+    Occupied_Supply_Air_Flow_Setpoint, Heating_Supply_Air_Flow_Setpoint
+):
     """
     Sets supply air flow rate for heating when occupied
     """
 
     pass
 
-class Supply_Air_Flow_Demand_Setpoint(Supply_Air_Flow_Setpoint, Air_Flow_Demand_Setpoint):
+
+class Supply_Air_Flow_Demand_Setpoint(
+    Supply_Air_Flow_Setpoint, Air_Flow_Demand_Setpoint
+):
     """
     Sets the rate of supply air flow required for a process
     """
 
     pass
 
+
 class Unoccupied_Supply_Air_Flow_Setpoint(Supply_Air_Flow_Setpoint):
     pass
 
-class Unoccupied_Cooling_Supply_Air_Flow_Setpoint(Unoccupied_Supply_Air_Flow_Setpoint, Cooling_Supply_Air_Flow_Setpoint):
+
+class Unoccupied_Cooling_Supply_Air_Flow_Setpoint(
+    Unoccupied_Supply_Air_Flow_Setpoint, Cooling_Supply_Air_Flow_Setpoint
+):
     pass
 
-class Unoccupied_Heating_Supply_Air_Flow_Setpoint(Unoccupied_Supply_Air_Flow_Setpoint, Heating_Supply_Air_Flow_Setpoint):
+
+class Unoccupied_Heating_Supply_Air_Flow_Setpoint(
+    Unoccupied_Supply_Air_Flow_Setpoint, Heating_Supply_Air_Flow_Setpoint
+):
     pass
+
 
 class Water_Flow_Setpoint(Flow_Setpoint):
     """
@@ -7043,12 +8368,14 @@ class Water_Flow_Setpoint(Flow_Setpoint):
 
     pass
 
+
 class Bypass_Water_Flow_Setpoint(Water_Flow_Setpoint):
     """
     Sets the target flow rate of bypass water
     """
 
     pass
+
 
 class Chilled_Water_Flow_Setpoint(Water_Flow_Setpoint):
     """
@@ -7057,14 +8384,20 @@ class Chilled_Water_Flow_Setpoint(Water_Flow_Setpoint):
 
     pass
 
+
 class Condenser_Water_Flow_Setpoint(Water_Flow_Setpoint):
     pass
+
 
 class Discharge_Water_Flow_Setpoint(Water_Flow_Setpoint):
     pass
 
-class Chilled_Water_Discharge_Flow_Setpoint(Discharge_Water_Flow_Setpoint, Chilled_Water_Flow_Setpoint):
+
+class Chilled_Water_Discharge_Flow_Setpoint(
+    Discharge_Water_Flow_Setpoint, Chilled_Water_Flow_Setpoint
+):
     pass
+
 
 class Entering_Water_Flow_Setpoint(Water_Flow_Setpoint):
     """
@@ -7073,12 +8406,16 @@ class Entering_Water_Flow_Setpoint(Water_Flow_Setpoint):
 
     pass
 
-class Entering_Chilled_Water_Flow_Setpoint(Entering_Water_Flow_Setpoint, Chilled_Water_Flow_Setpoint):
+
+class Entering_Chilled_Water_Flow_Setpoint(
+    Entering_Water_Flow_Setpoint, Chilled_Water_Flow_Setpoint
+):
     """
     Sets the target flow rate of chilled entering water
     """
 
     pass
+
 
 class Hot_Water_Flow_Setpoint(Water_Flow_Setpoint):
     """
@@ -7087,15 +8424,22 @@ class Hot_Water_Flow_Setpoint(Water_Flow_Setpoint):
 
     pass
 
-class Entering_Hot_Water_Flow_Setpoint(Hot_Water_Flow_Setpoint, Entering_Water_Flow_Setpoint):
+
+class Entering_Hot_Water_Flow_Setpoint(
+    Hot_Water_Flow_Setpoint, Entering_Water_Flow_Setpoint
+):
     """
     Sets the target flow rate of hot entering water
     """
 
     pass
 
-class Hot_Water_Discharge_Flow_Setpoint(Hot_Water_Flow_Setpoint, Discharge_Water_Flow_Setpoint):
+
+class Hot_Water_Discharge_Flow_Setpoint(
+    Hot_Water_Flow_Setpoint, Discharge_Water_Flow_Setpoint
+):
     pass
+
 
 class Leaving_Water_Flow_Setpoint(Water_Flow_Setpoint):
     """
@@ -7104,25 +8448,36 @@ class Leaving_Water_Flow_Setpoint(Water_Flow_Setpoint):
 
     pass
 
-class Leaving_Chilled_Water_Flow_Setpoint(Leaving_Water_Flow_Setpoint, Chilled_Water_Flow_Setpoint):
+
+class Leaving_Chilled_Water_Flow_Setpoint(
+    Leaving_Water_Flow_Setpoint, Chilled_Water_Flow_Setpoint
+):
     """
     Sets the target flow rate of chilled leaving water
     """
 
     pass
 
-class Leaving_Hot_Water_Flow_Setpoint(Leaving_Water_Flow_Setpoint, Hot_Water_Flow_Setpoint):
+
+class Leaving_Hot_Water_Flow_Setpoint(
+    Leaving_Water_Flow_Setpoint, Hot_Water_Flow_Setpoint
+):
     """
     Sets the target flow rate of hot leaving water
     """
 
     pass
 
+
 class Supply_Water_Flow_Setpoint(Water_Flow_Setpoint):
     pass
 
-class Chilled_Water_Supply_Flow_Setpoint(Supply_Water_Flow_Setpoint, Chilled_Water_Flow_Setpoint):
+
+class Chilled_Water_Supply_Flow_Setpoint(
+    Supply_Water_Flow_Setpoint, Chilled_Water_Flow_Setpoint
+):
     pass
+
 
 class Frequency_Setpoint(Setpoint):
     """
@@ -7131,12 +8486,14 @@ class Frequency_Setpoint(Setpoint):
 
     pass
 
+
 class Humidity_Setpoint(Setpoint):
     """
     Sets humidity
     """
 
     pass
+
 
 class Building_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
@@ -7145,12 +8502,14 @@ class Building_Air_Humidity_Setpoint(Humidity_Setpoint):
 
     pass
 
+
 class Bypass_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
     Humidity setpoint for bypass air
     """
 
     pass
+
 
 class Discharge_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
@@ -7159,12 +8518,14 @@ class Discharge_Air_Humidity_Setpoint(Humidity_Setpoint):
 
     pass
 
+
 class Exhaust_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
     Humidity setpoint for exhaust air
     """
 
     pass
+
 
 class Mixed_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
@@ -7173,12 +8534,14 @@ class Mixed_Air_Humidity_Setpoint(Humidity_Setpoint):
 
     pass
 
+
 class Occupied_Humidity_Setpoint(Humidity_Setpoint):
     """
     Target humidity level when the location is occupied.
     """
 
     pass
+
 
 class Outside_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
@@ -7187,12 +8550,14 @@ class Outside_Air_Humidity_Setpoint(Humidity_Setpoint):
 
     pass
 
+
 class Return_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
     Humidity setpoint for return air
     """
 
     pass
+
 
 class Supply_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
@@ -7201,12 +8566,14 @@ class Supply_Air_Humidity_Setpoint(Humidity_Setpoint):
 
     pass
 
+
 class Unoccupied_Humidity_Setpoint(Humidity_Setpoint):
     """
     Target humidity level when the location is unoccupied.
     """
 
     pass
+
 
 class Zone_Air_Humidity_Setpoint(Humidity_Setpoint):
     """
@@ -7215,6 +8582,7 @@ class Zone_Air_Humidity_Setpoint(Humidity_Setpoint):
 
     pass
 
+
 class Illuminance_Setpoint(Setpoint):
     """
     Target Illuminance of the zone.
@@ -7222,23 +8590,39 @@ class Illuminance_Setpoint(Setpoint):
 
     pass
 
+
 class Load_Setpoint(Setpoint):
     pass
+
 
 class Load_Shed_Setpoint(Load_Setpoint):
     pass
 
-class Entering_Medium_Temperature_Hot_Water_Temperature_Load_Shed_Setpoint(Load_Shed_Setpoint):
+
+class Entering_Medium_Temperature_Hot_Water_Temperature_Load_Shed_Setpoint(
+    Load_Shed_Setpoint
+):
     pass
 
-class Leaving_Medium_Temperature_Hot_Water_Temperature_Load_Shed_Setpoint(Load_Shed_Setpoint):
+
+class Leaving_Medium_Temperature_Hot_Water_Temperature_Load_Shed_Setpoint(
+    Load_Shed_Setpoint
+):
     pass
 
-class Load_Shed_Differential_Pressure_Setpoint(Differential_Pressure_Setpoint, Load_Shed_Setpoint):
+
+class Load_Shed_Differential_Pressure_Setpoint(
+    Differential_Pressure_Setpoint, Load_Shed_Setpoint
+):
     pass
 
-class Chilled_Water_Differential_Pressure_Load_Shed_Setpoint(Chilled_Water_Differential_Pressure_Setpoint, Load_Shed_Differential_Pressure_Setpoint):
+
+class Chilled_Water_Differential_Pressure_Load_Shed_Setpoint(
+    Chilled_Water_Differential_Pressure_Setpoint,
+    Load_Shed_Differential_Pressure_Setpoint,
+):
     pass
+
 
 class Luminance_Setpoint(Setpoint):
     """
@@ -7247,12 +8631,14 @@ class Luminance_Setpoint(Setpoint):
 
     pass
 
+
 class Pressure_Setpoint(Setpoint):
     """
     Sets pressure
     """
 
     pass
+
 
 class Static_Pressure_Setpoint(Pressure_Setpoint):
     """
@@ -7261,12 +8647,14 @@ class Static_Pressure_Setpoint(Pressure_Setpoint):
 
     pass
 
+
 class Building_Air_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
     """
     Sets static pressure of the entire building
     """
 
     pass
+
 
 class Chilled_Water_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
     """
@@ -7275,12 +8663,14 @@ class Chilled_Water_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
 
     pass
 
+
 class Discharge_Air_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
     """
     Sets static pressure of discharge air
     """
 
     pass
+
 
 class Exhaust_Air_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
     """
@@ -7289,12 +8679,14 @@ class Exhaust_Air_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
 
     pass
 
+
 class Hot_Water_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
     """
     Sets static pressure of hot air
     """
 
     pass
+
 
 class Static_Pressure_Deadband_Setpoint(Static_Pressure_Setpoint, Deadband_Setpoint):
     """
@@ -7303,12 +8695,16 @@ class Static_Pressure_Deadband_Setpoint(Static_Pressure_Setpoint, Deadband_Setpo
 
     pass
 
-class Discharge_Air_Static_Pressure_Deadband_Setpoint(Static_Pressure_Deadband_Setpoint, Discharge_Air_Static_Pressure_Setpoint):
+
+class Discharge_Air_Static_Pressure_Deadband_Setpoint(
+    Static_Pressure_Deadband_Setpoint, Discharge_Air_Static_Pressure_Setpoint
+):
     """
     Sets the size of a deadband of static pressure of discharge air
     """
 
     pass
+
 
 class Supply_Air_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
     """
@@ -7317,12 +8713,16 @@ class Supply_Air_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
 
     pass
 
-class Supply_Air_Static_Pressure_Deadband_Setpoint(Static_Pressure_Deadband_Setpoint, Supply_Air_Static_Pressure_Setpoint):
+
+class Supply_Air_Static_Pressure_Deadband_Setpoint(
+    Static_Pressure_Deadband_Setpoint, Supply_Air_Static_Pressure_Setpoint
+):
     """
     Sets the size of a deadband of static pressure of supply air
     """
 
     pass
+
 
 class Underfloor_Air_Plenum_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
     """
@@ -7331,12 +8731,14 @@ class Underfloor_Air_Plenum_Static_Pressure_Setpoint(Static_Pressure_Setpoint):
 
     pass
 
+
 class Velocity_Pressure_Setpoint(Pressure_Setpoint):
     """
     Sets static veloicty pressure
     """
 
     pass
+
 
 class Reset_Setpoint(Setpoint):
     """
@@ -7345,6 +8747,7 @@ class Reset_Setpoint(Setpoint):
 
     pass
 
+
 class Discharge_Air_Flow_Reset_Setpoint(Reset_Setpoint):
     """
     Setpoints used in Reset strategies
@@ -7352,68 +8755,102 @@ class Discharge_Air_Flow_Reset_Setpoint(Reset_Setpoint):
 
     pass
 
+
 class Discharge_Air_Flow_High_Reset_Setpoint(Discharge_Air_Flow_Reset_Setpoint):
     pass
+
 
 class Discharge_Air_Flow_Low_Reset_Setpoint(Discharge_Air_Flow_Reset_Setpoint):
     pass
 
+
 class Supply_Air_Flow_Reset_Setpoint(Reset_Setpoint):
     pass
+
 
 class Supply_Air_Flow_High_Reset_Setpoint(Supply_Air_Flow_Reset_Setpoint):
     pass
 
+
 class Supply_Air_Flow_Low_Reset_Setpoint(Supply_Air_Flow_Reset_Setpoint):
     pass
+
 
 class Temperature_High_Reset_Setpoint(Reset_Setpoint):
     pass
 
-class Entering_Hot_Water_Temperature_High_Reset_Setpoint(Temperature_High_Reset_Setpoint):
+
+class Entering_Hot_Water_Temperature_High_Reset_Setpoint(
+    Temperature_High_Reset_Setpoint
+):
     pass
 
-class Entering_Medium_Temperature_Hot_Water_Temperature_High_Reset_Setpoint(Entering_Hot_Water_Temperature_High_Reset_Setpoint):
+
+class Entering_Medium_Temperature_Hot_Water_Temperature_High_Reset_Setpoint(
+    Entering_Hot_Water_Temperature_High_Reset_Setpoint
+):
     pass
 
-class Leaving_Hot_Water_Temperature_High_Reset_Setpoint(Temperature_High_Reset_Setpoint):
+
+class Leaving_Hot_Water_Temperature_High_Reset_Setpoint(
+    Temperature_High_Reset_Setpoint
+):
     pass
 
-class Leaving_Medium_Temperature_Hot_Water_Temperature_High_Reset_Setpoint(Leaving_Hot_Water_Temperature_High_Reset_Setpoint):
+
+class Leaving_Medium_Temperature_Hot_Water_Temperature_High_Reset_Setpoint(
+    Leaving_Hot_Water_Temperature_High_Reset_Setpoint
+):
     pass
+
 
 class Outside_Air_Temperature_High_Reset_Setpoint(Temperature_High_Reset_Setpoint):
     pass
 
+
 class Return_Air_Temperature_High_Reset_Setpoint(Temperature_High_Reset_Setpoint):
     pass
+
 
 class Supply_Air_Temperature_High_Reset_Setpoint(Temperature_High_Reset_Setpoint):
     pass
 
+
 class Temperature_Low_Reset_Setpoint(Reset_Setpoint):
     pass
+
 
 class Entering_Hot_Water_Temperature_Low_Reset_Setpoint(Temperature_Low_Reset_Setpoint):
     pass
 
-class Entering_Medium_Temperature_Hot_Water_Temperature_Low_Reset_Setpoint(Entering_Hot_Water_Temperature_Low_Reset_Setpoint):
+
+class Entering_Medium_Temperature_Hot_Water_Temperature_Low_Reset_Setpoint(
+    Entering_Hot_Water_Temperature_Low_Reset_Setpoint
+):
     pass
+
 
 class Leaving_Hot_Water_Temperature_Low_Reset_Setpoint(Temperature_Low_Reset_Setpoint):
     pass
 
-class Leaving_Medium_Temperature_Hot_Water_Temperature_Low_Reset_Setpoint(Leaving_Hot_Water_Temperature_Low_Reset_Setpoint):
+
+class Leaving_Medium_Temperature_Hot_Water_Temperature_Low_Reset_Setpoint(
+    Leaving_Hot_Water_Temperature_Low_Reset_Setpoint
+):
     pass
+
 
 class Outside_Air_Temperature_Low_Reset_Setpoint(Temperature_Low_Reset_Setpoint):
     pass
 
+
 class Return_Air_Temperature_Low_Reset_Setpoint(Temperature_Low_Reset_Setpoint):
     pass
 
+
 class Supply_Air_Temperature_Low_Reset_Setpoint(Temperature_Low_Reset_Setpoint):
     pass
+
 
 class Speed_Setpoint(Setpoint):
     """
@@ -7422,12 +8859,14 @@ class Speed_Setpoint(Setpoint):
 
     pass
 
+
 class Rated_Speed_Setpoint(Speed_Setpoint):
     """
     Sets rated speed
     """
 
     pass
+
 
 class Temperature_Setpoint(Setpoint):
     """
@@ -7436,12 +8875,14 @@ class Temperature_Setpoint(Setpoint):
 
     pass
 
+
 class Air_Temperature_Setpoint(Temperature_Setpoint):
     """
     Sets temperature of air
     """
 
     pass
+
 
 class Discharge_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7450,11 +8891,16 @@ class Discharge_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
+
 class Effective_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     pass
 
-class Effective_Discharge_Air_Temperature_Setpoint(Effective_Air_Temperature_Setpoint, Discharge_Air_Temperature_Setpoint):
+
+class Effective_Discharge_Air_Temperature_Setpoint(
+    Effective_Air_Temperature_Setpoint, Discharge_Air_Temperature_Setpoint
+):
     pass
+
 
 class Max_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7463,12 +8909,14 @@ class Max_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
+
 class Min_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
     Setpoint for minimum air temperature
     """
 
     pass
+
 
 class Mixed_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7477,11 +8925,16 @@ class Mixed_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
+
 class Occupied_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     pass
 
-class Occupied_Discharge_Air_Temperature_Setpoint(Occupied_Air_Temperature_Setpoint, Discharge_Air_Temperature_Setpoint):
+
+class Occupied_Discharge_Air_Temperature_Setpoint(
+    Occupied_Air_Temperature_Setpoint, Discharge_Air_Temperature_Setpoint
+):
     pass
+
 
 class Outside_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7490,7 +8943,10 @@ class Outside_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
-class Disable_Hot_Water_System_Outside_Air_Temperature_Setpoint(Outside_Air_Temperature_Setpoint):
+
+class Disable_Hot_Water_System_Outside_Air_Temperature_Setpoint(
+    Outside_Air_Temperature_Setpoint
+):
     """
     Disables hot water system when outside air temperature reaches the
     indicated value
@@ -7498,7 +8954,10 @@ class Disable_Hot_Water_System_Outside_Air_Temperature_Setpoint(Outside_Air_Temp
 
     pass
 
-class Enable_Hot_Water_System_Outside_Air_Temperature_Setpoint(Outside_Air_Temperature_Setpoint):
+
+class Enable_Hot_Water_System_Outside_Air_Temperature_Setpoint(
+    Outside_Air_Temperature_Setpoint
+):
     """
     Enables hot water system when outside air temperature reaches the
     indicated value
@@ -7506,11 +8965,14 @@ class Enable_Hot_Water_System_Outside_Air_Temperature_Setpoint(Outside_Air_Tempe
 
     pass
 
+
 class Low_Outside_Air_Temperature_Enable_Setpoint(Outside_Air_Temperature_Setpoint):
     pass
 
+
 class Outside_Air_Lockout_Temperature_Setpoint(Outside_Air_Temperature_Setpoint):
     pass
+
 
 class Return_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7520,11 +8982,18 @@ class Return_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
-class Effective_Return_Air_Temperature_Setpoint(Return_Air_Temperature_Setpoint, Effective_Air_Temperature_Setpoint):
+
+class Effective_Return_Air_Temperature_Setpoint(
+    Return_Air_Temperature_Setpoint, Effective_Air_Temperature_Setpoint
+):
     pass
 
-class Occupied_Return_Air_Temperature_Setpoint(Return_Air_Temperature_Setpoint, Occupied_Air_Temperature_Setpoint):
+
+class Occupied_Return_Air_Temperature_Setpoint(
+    Return_Air_Temperature_Setpoint, Occupied_Air_Temperature_Setpoint
+):
     pass
+
 
 class Room_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7533,11 +9002,18 @@ class Room_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
-class Effective_Room_Air_Temperature_Setpoint(Room_Air_Temperature_Setpoint, Effective_Air_Temperature_Setpoint):
+
+class Effective_Room_Air_Temperature_Setpoint(
+    Room_Air_Temperature_Setpoint, Effective_Air_Temperature_Setpoint
+):
     pass
 
-class Occupied_Room_Air_Temperature_Setpoint(Room_Air_Temperature_Setpoint, Occupied_Air_Temperature_Setpoint):
+
+class Occupied_Room_Air_Temperature_Setpoint(
+    Room_Air_Temperature_Setpoint, Occupied_Air_Temperature_Setpoint
+):
     pass
+
 
 class Supply_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7546,11 +9022,18 @@ class Supply_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
-class Effective_Supply_Air_Temperature_Setpoint(Supply_Air_Temperature_Setpoint, Effective_Air_Temperature_Setpoint):
+
+class Effective_Supply_Air_Temperature_Setpoint(
+    Supply_Air_Temperature_Setpoint, Effective_Air_Temperature_Setpoint
+):
     pass
 
-class Occupied_Supply_Air_Temperature_Setpoint(Supply_Air_Temperature_Setpoint, Occupied_Air_Temperature_Setpoint):
+
+class Occupied_Supply_Air_Temperature_Setpoint(
+    Supply_Air_Temperature_Setpoint, Occupied_Air_Temperature_Setpoint
+):
     pass
+
 
 class Unoccupied_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7559,17 +9042,30 @@ class Unoccupied_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
-class Unoccupied_Discharge_Air_Temperature_Setpoint(Unoccupied_Air_Temperature_Setpoint, Discharge_Air_Temperature_Setpoint):
+
+class Unoccupied_Discharge_Air_Temperature_Setpoint(
+    Unoccupied_Air_Temperature_Setpoint, Discharge_Air_Temperature_Setpoint
+):
     pass
 
-class Unoccupied_Return_Air_Temperature_Setpoint(Unoccupied_Air_Temperature_Setpoint, Return_Air_Temperature_Setpoint):
+
+class Unoccupied_Return_Air_Temperature_Setpoint(
+    Unoccupied_Air_Temperature_Setpoint, Return_Air_Temperature_Setpoint
+):
     pass
 
-class Unoccupied_Room_Air_Temperature_Setpoint(Unoccupied_Air_Temperature_Setpoint, Room_Air_Temperature_Setpoint):
+
+class Unoccupied_Room_Air_Temperature_Setpoint(
+    Unoccupied_Air_Temperature_Setpoint, Room_Air_Temperature_Setpoint
+):
     pass
 
-class Unoccupied_Supply_Air_Temperature_Setpoint(Unoccupied_Air_Temperature_Setpoint, Supply_Air_Temperature_Setpoint):
+
+class Unoccupied_Supply_Air_Temperature_Setpoint(
+    Unoccupied_Air_Temperature_Setpoint, Supply_Air_Temperature_Setpoint
+):
     pass
+
 
 class Zone_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
     """
@@ -7578,14 +9074,24 @@ class Zone_Air_Temperature_Setpoint(Air_Temperature_Setpoint):
 
     pass
 
-class Effective_Zone_Air_Temperature_Setpoint(Zone_Air_Temperature_Setpoint, Effective_Air_Temperature_Setpoint):
+
+class Effective_Zone_Air_Temperature_Setpoint(
+    Zone_Air_Temperature_Setpoint, Effective_Air_Temperature_Setpoint
+):
     pass
 
-class Occupied_Zone_Air_Temperature_Setpoint(Zone_Air_Temperature_Setpoint, Occupied_Air_Temperature_Setpoint):
+
+class Occupied_Zone_Air_Temperature_Setpoint(
+    Zone_Air_Temperature_Setpoint, Occupied_Air_Temperature_Setpoint
+):
     pass
 
-class Unoccupied_Zone_Air_Temperature_Setpoint(Zone_Air_Temperature_Setpoint, Unoccupied_Air_Temperature_Setpoint):
+
+class Unoccupied_Zone_Air_Temperature_Setpoint(
+    Zone_Air_Temperature_Setpoint, Unoccupied_Air_Temperature_Setpoint
+):
     pass
+
 
 class Cooling_Temperature_Setpoint(Temperature_Setpoint):
     """
@@ -7594,18 +9100,28 @@ class Cooling_Temperature_Setpoint(Temperature_Setpoint):
 
     pass
 
-class Discharge_Air_Temperature_Cooling_Setpoint(Discharge_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint):
+
+class Discharge_Air_Temperature_Cooling_Setpoint(
+    Discharge_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint
+):
     """
     Sets temperature of discharge air for cooling
     """
 
     pass
 
-class Effective_Air_Temperature_Cooling_Setpoint(Effective_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint):
+
+class Effective_Air_Temperature_Cooling_Setpoint(
+    Effective_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint
+):
     pass
 
-class Occupied_Air_Temperature_Cooling_Setpoint(Occupied_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint):
+
+class Occupied_Air_Temperature_Cooling_Setpoint(
+    Occupied_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint
+):
     pass
+
 
 class Occupied_Cooling_Temperature_Setpoint(Cooling_Temperature_Setpoint):
     """
@@ -7614,25 +9130,36 @@ class Occupied_Cooling_Temperature_Setpoint(Cooling_Temperature_Setpoint):
 
     pass
 
-class Supply_Air_Temperature_Cooling_Setpoint(Supply_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint):
+
+class Supply_Air_Temperature_Cooling_Setpoint(
+    Supply_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint
+):
     pass
 
-class Unoccupied_Air_Temperature_Cooling_Setpoint(Unoccupied_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint):
+
+class Unoccupied_Air_Temperature_Cooling_Setpoint(
+    Unoccupied_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint
+):
     """
     Sets temperature of air when unoccupied for cooling
     """
 
     pass
 
+
 class Unoccupied_Cooling_Temperature_Setpoint(Cooling_Temperature_Setpoint):
     pass
 
-class Zone_Air_Cooling_Temperature_Setpoint(Zone_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint):
+
+class Zone_Air_Cooling_Temperature_Setpoint(
+    Zone_Air_Temperature_Setpoint, Cooling_Temperature_Setpoint
+):
     """
     The upper (cooling) setpoint for zone air temperature
     """
 
     pass
+
 
 class Heating_Temperature_Setpoint(Temperature_Setpoint):
     """
@@ -7641,18 +9168,28 @@ class Heating_Temperature_Setpoint(Temperature_Setpoint):
 
     pass
 
-class Discharge_Air_Temperature_Heating_Setpoint(Discharge_Air_Temperature_Setpoint, Heating_Temperature_Setpoint):
+
+class Discharge_Air_Temperature_Heating_Setpoint(
+    Discharge_Air_Temperature_Setpoint, Heating_Temperature_Setpoint
+):
     """
     Sets temperature of discharge air for heating
     """
 
     pass
 
-class Effective_Air_Temperature_Heating_Setpoint(Effective_Air_Temperature_Setpoint, Heating_Temperature_Setpoint):
+
+class Effective_Air_Temperature_Heating_Setpoint(
+    Effective_Air_Temperature_Setpoint, Heating_Temperature_Setpoint
+):
     pass
 
-class Occupied_Air_Temperature_Heating_Setpoint(Occupied_Air_Temperature_Setpoint, Heating_Temperature_Setpoint):
+
+class Occupied_Air_Temperature_Heating_Setpoint(
+    Occupied_Air_Temperature_Setpoint, Heating_Temperature_Setpoint
+):
     pass
+
 
 class Occupied_Heating_Temperature_Setpoint(Heating_Temperature_Setpoint):
     """
@@ -7661,28 +9198,42 @@ class Occupied_Heating_Temperature_Setpoint(Heating_Temperature_Setpoint):
 
     pass
 
-class Open_Heating_Valve_Outside_Air_Temperature_Setpoint(Outside_Air_Temperature_Setpoint, Heating_Temperature_Setpoint):
+
+class Open_Heating_Valve_Outside_Air_Temperature_Setpoint(
+    Outside_Air_Temperature_Setpoint, Heating_Temperature_Setpoint
+):
     pass
 
-class Supply_Air_Temperature_Heating_Setpoint(Supply_Air_Temperature_Setpoint, Heating_Temperature_Setpoint):
+
+class Supply_Air_Temperature_Heating_Setpoint(
+    Supply_Air_Temperature_Setpoint, Heating_Temperature_Setpoint
+):
     pass
 
-class Unoccupied_Air_Temperature_Heating_Setpoint(Unoccupied_Air_Temperature_Setpoint, Heating_Temperature_Setpoint):
+
+class Unoccupied_Air_Temperature_Heating_Setpoint(
+    Unoccupied_Air_Temperature_Setpoint, Heating_Temperature_Setpoint
+):
     """
     Sets temperature of air when unoccupied for heating
     """
 
     pass
 
+
 class Unoccupied_Heating_Temperature_Setpoint(Heating_Temperature_Setpoint):
     pass
 
-class Zone_Air_Heating_Temperature_Setpoint(Zone_Air_Temperature_Setpoint, Heating_Temperature_Setpoint):
+
+class Zone_Air_Heating_Temperature_Setpoint(
+    Zone_Air_Temperature_Setpoint, Heating_Temperature_Setpoint
+):
     """
     The lower (heating) setpoint for zone air temperature
     """
 
     pass
+
 
 class Radiant_Panel_Temperature_Setpoint(Temperature_Setpoint):
     """
@@ -7690,6 +9241,7 @@ class Radiant_Panel_Temperature_Setpoint(Temperature_Setpoint):
     """
 
     pass
+
 
 class Embedded_Temperature_Setpoint(Radiant_Panel_Temperature_Setpoint):
     """
@@ -7699,6 +9251,7 @@ class Embedded_Temperature_Setpoint(Radiant_Panel_Temperature_Setpoint):
 
     pass
 
+
 class Core_Temperature_Setpoint(Embedded_Temperature_Setpoint):
     """
     Sets temperature for the core, i.e. the temperature at the heat source
@@ -7706,6 +9259,7 @@ class Core_Temperature_Setpoint(Embedded_Temperature_Setpoint):
     """
 
     pass
+
 
 class Inside_Face_Surface_Temperature_Setpoint(Radiant_Panel_Temperature_Setpoint):
     """
@@ -7715,6 +9269,7 @@ class Inside_Face_Surface_Temperature_Setpoint(Radiant_Panel_Temperature_Setpoin
 
     pass
 
+
 class Outside_Face_Surface_Temperature_Setpoint(Radiant_Panel_Temperature_Setpoint):
     """
     Sets temperature for the outside face surface temperature of the
@@ -7723,12 +9278,14 @@ class Outside_Face_Surface_Temperature_Setpoint(Radiant_Panel_Temperature_Setpoi
 
     pass
 
+
 class Schedule_Temperature_Setpoint(Temperature_Setpoint):
     """
     The current setpoint as indicated by the schedule
     """
 
     pass
+
 
 class Temperature_Deadband_Setpoint(Temperature_Setpoint, Deadband_Setpoint):
     """
@@ -7737,67 +9294,100 @@ class Temperature_Deadband_Setpoint(Temperature_Setpoint, Deadband_Setpoint):
 
     pass
 
-class Discharge_Air_Temperature_Deadband_Setpoint(Discharge_Air_Temperature_Setpoint, Temperature_Deadband_Setpoint):
+
+class Discharge_Air_Temperature_Deadband_Setpoint(
+    Discharge_Air_Temperature_Setpoint, Temperature_Deadband_Setpoint
+):
     """
     Sets the size of a deadband of temperature of discharge air
     """
 
     pass
 
-class Cooling_Discharge_Air_Temperature_Deadband_Setpoint(Discharge_Air_Temperature_Deadband_Setpoint, Discharge_Air_Temperature_Cooling_Setpoint):
+
+class Cooling_Discharge_Air_Temperature_Deadband_Setpoint(
+    Discharge_Air_Temperature_Deadband_Setpoint,
+    Discharge_Air_Temperature_Cooling_Setpoint,
+):
     """
     Sets the size of a deadband of temperature of cooling discharge air
     """
 
     pass
 
-class Heating_Discharge_Air_Temperature_Deadband_Setpoint(Discharge_Air_Temperature_Deadband_Setpoint, Discharge_Air_Temperature_Heating_Setpoint):
+
+class Heating_Discharge_Air_Temperature_Deadband_Setpoint(
+    Discharge_Air_Temperature_Deadband_Setpoint,
+    Discharge_Air_Temperature_Heating_Setpoint,
+):
     """
     Sets the size of a deadband of temperature of heating discharge air
     """
 
     pass
 
-class Occupied_Cooling_Temperature_Deadband_Setpoint(Temperature_Deadband_Setpoint, Cooling_Temperature_Setpoint):
+
+class Occupied_Cooling_Temperature_Deadband_Setpoint(
+    Temperature_Deadband_Setpoint, Cooling_Temperature_Setpoint
+):
     """
     Sets the size of a deadband of temperature for cooling when occupied
     """
 
     pass
 
-class Occupied_Heating_Temperature_Deadband_Setpoint(Temperature_Deadband_Setpoint, Heating_Temperature_Setpoint):
+
+class Occupied_Heating_Temperature_Deadband_Setpoint(
+    Temperature_Deadband_Setpoint, Heating_Temperature_Setpoint
+):
     """
     Sets the size of a deadband of temperature for heating when occupied
     """
 
     pass
 
-class Supply_Air_Temperature_Deadband_Setpoint(Air_Temperature_Setpoint, Temperature_Deadband_Setpoint):
+
+class Supply_Air_Temperature_Deadband_Setpoint(
+    Air_Temperature_Setpoint, Temperature_Deadband_Setpoint
+):
     """
     Sets the size of a deadband of temperature of supply air
     """
 
     pass
 
-class Cooling_Supply_Air_Temperature_Deadband_Setpoint(Supply_Air_Temperature_Deadband_Setpoint, Cooling_Temperature_Setpoint):
+
+class Cooling_Supply_Air_Temperature_Deadband_Setpoint(
+    Supply_Air_Temperature_Deadband_Setpoint, Cooling_Temperature_Setpoint
+):
     """
     Sets the size of a deadband of temperature of supply air for cooling
     """
 
     pass
 
-class Heating_Supply_Air_Temperature_Deadband_Setpoint(Supply_Air_Temperature_Deadband_Setpoint, Heating_Temperature_Setpoint):
+
+class Heating_Supply_Air_Temperature_Deadband_Setpoint(
+    Supply_Air_Temperature_Deadband_Setpoint, Heating_Temperature_Setpoint
+):
     """
     Sets the size of a deadband of temperature of supply air for heating
     """
 
     pass
 
-class Unoccupied_Cooling_Temperature_Deadband_Setpoint(Temperature_Deadband_Setpoint, Cooling_Temperature_Setpoint):
+
+class Unoccupied_Cooling_Temperature_Deadband_Setpoint(
+    Temperature_Deadband_Setpoint, Cooling_Temperature_Setpoint
+):
     pass
 
-class Unoccupied_Heating_Temperature_Deadband_Setpoint(Temperature_Deadband_Setpoint, Heating_Temperature_Setpoint):
+
+class Unoccupied_Heating_Temperature_Deadband_Setpoint(
+    Temperature_Deadband_Setpoint, Heating_Temperature_Setpoint
+):
     pass
+
 
 class Water_Temperature_Setpoint(Temperature_Setpoint):
     """
@@ -7806,6 +9396,7 @@ class Water_Temperature_Setpoint(Temperature_Setpoint):
 
     pass
 
+
 class Chilled_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
     """
     Sets the temperature of chilled water
@@ -7813,11 +9404,14 @@ class Chilled_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
 
     pass
 
+
 class Discharge_Chilled_Water_Temperature_Setpoint(Chilled_Water_Temperature_Setpoint):
     pass
 
+
 class Supply_Chilled_Water_Temperature_Setpoint(Chilled_Water_Temperature_Setpoint):
     pass
+
 
 class Entering_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
     """
@@ -7826,7 +9420,10 @@ class Entering_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
 
     pass
 
-class Entering_Chilled_Water_Temperature_Setpoint(Entering_Water_Temperature_Setpoint, Chilled_Water_Temperature_Setpoint):
+
+class Entering_Chilled_Water_Temperature_Setpoint(
+    Entering_Water_Temperature_Setpoint, Chilled_Water_Temperature_Setpoint
+):
     """
     Sets the temperature of entering (downstream of the chilled water
     load) chilled water
@@ -7834,12 +9431,16 @@ class Entering_Chilled_Water_Temperature_Setpoint(Entering_Water_Temperature_Set
 
     pass
 
-class Entering_Water_Temperature_Deadband_Setpoint(Temperature_Deadband_Setpoint, Entering_Water_Temperature_Setpoint):
+
+class Entering_Water_Temperature_Deadband_Setpoint(
+    Temperature_Deadband_Setpoint, Entering_Water_Temperature_Setpoint
+):
     """
     Sets the size of a deadband of temperature of entering water
     """
 
     pass
+
 
 class Hot_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
     """
@@ -7848,23 +9449,33 @@ class Hot_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
 
     pass
 
-class Domestic_Hot_Water_Temperature_Setpoint(Hot_Water_Temperature_Setpoint, Water_Temperature_Setpoint):
+
+class Domestic_Hot_Water_Temperature_Setpoint(
+    Hot_Water_Temperature_Setpoint, Water_Temperature_Setpoint
+):
     """
     Sets temperature of domestic hot water
     """
 
     pass
 
-class Entering_Domestic_Hot_Water_Temperature_Setpoint(Domestic_Hot_Water_Temperature_Setpoint, Entering_Water_Temperature_Setpoint):
+
+class Entering_Domestic_Hot_Water_Temperature_Setpoint(
+    Domestic_Hot_Water_Temperature_Setpoint, Entering_Water_Temperature_Setpoint
+):
     pass
 
-class Entering_Hot_Water_Temperature_Setpoint(Hot_Water_Temperature_Setpoint, Entering_Water_Temperature_Setpoint):
+
+class Entering_Hot_Water_Temperature_Setpoint(
+    Hot_Water_Temperature_Setpoint, Entering_Water_Temperature_Setpoint
+):
     """
     Sets the temperature of entering (downstream of the hot water load)
     hot water
     """
 
     pass
+
 
 class Leaving_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
     """
@@ -7873,6 +9484,7 @@ class Leaving_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
 
     pass
 
+
 class Entering_Condenser_Water_Temperature_Setpoint(Leaving_Water_Temperature_Setpoint):
     """
     The temperature setpoint for the entering condenser water
@@ -7880,12 +9492,16 @@ class Entering_Condenser_Water_Temperature_Setpoint(Leaving_Water_Temperature_Se
 
     pass
 
-class Leaving_Chilled_Water_Temperature_Setpoint(Leaving_Water_Temperature_Setpoint, Chilled_Water_Temperature_Setpoint):
+
+class Leaving_Chilled_Water_Temperature_Setpoint(
+    Leaving_Water_Temperature_Setpoint, Chilled_Water_Temperature_Setpoint
+):
     """
     Temperature setpoint for leaving chilled water
     """
 
     pass
+
 
 class Leaving_Condenser_Water_Temperature_Setpoint(Leaving_Water_Temperature_Setpoint):
     """
@@ -7894,26 +9510,36 @@ class Leaving_Condenser_Water_Temperature_Setpoint(Leaving_Water_Temperature_Set
 
     pass
 
-class Leaving_Domestic_Hot_Water_Temperature_Setpoint(Domestic_Hot_Water_Temperature_Setpoint, Leaving_Water_Temperature_Setpoint):
+
+class Leaving_Domestic_Hot_Water_Temperature_Setpoint(
+    Domestic_Hot_Water_Temperature_Setpoint, Leaving_Water_Temperature_Setpoint
+):
     """
     Sets temperature of leavinging part of domestic hot water
     """
 
     pass
 
-class Leaving_Hot_Water_Temperature_Setpoint(Leaving_Water_Temperature_Setpoint, Hot_Water_Temperature_Setpoint):
+
+class Leaving_Hot_Water_Temperature_Setpoint(
+    Leaving_Water_Temperature_Setpoint, Hot_Water_Temperature_Setpoint
+):
     """
     Temperature setpoint for leaving hot water
     """
 
     pass
 
-class Leaving_Water_Temperature_Deadband_Setpoint(Temperature_Deadband_Setpoint, Leaving_Water_Temperature_Setpoint):
+
+class Leaving_Water_Temperature_Deadband_Setpoint(
+    Temperature_Deadband_Setpoint, Leaving_Water_Temperature_Setpoint
+):
     """
     Sets the size of a deadband of temperature of leaving water
     """
 
     pass
+
 
 class Max_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
     """
@@ -7922,6 +9548,7 @@ class Max_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
 
     pass
 
+
 class Min_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
     """
     Setpoint for min water temperature
@@ -7929,26 +9556,36 @@ class Min_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
 
     pass
 
+
 class Return_Water_Temperature_Setpoint(Water_Temperature_Setpoint):
     pass
 
-class Return_Chilled_Water_Temperature_Setpoint(Return_Water_Temperature_Setpoint, Chilled_Water_Temperature_Setpoint):
+
+class Return_Chilled_Water_Temperature_Setpoint(
+    Return_Water_Temperature_Setpoint, Chilled_Water_Temperature_Setpoint
+):
     pass
+
 
 class Return_Condenser_Water_Temperature_Setpoint(Return_Water_Temperature_Setpoint):
     pass
 
+
 class Return_Hot_Water_Temperature_Setpoint(Return_Water_Temperature_Setpoint):
     pass
+
 
 class Time_Setpoint(Setpoint):
     pass
 
+
 class Acceleration_Time_Setpoint(Time_Setpoint):
     pass
 
+
 class Deceleration_Time_Setpoint(Time_Setpoint):
     pass
+
 
 class Voltage_Ratio_Setpoint(Setpoint):
     """
@@ -7956,6 +9593,7 @@ class Voltage_Ratio_Setpoint(Setpoint):
     """
 
     pass
+
 
 class Status(Point):
     """
@@ -7966,6 +9604,7 @@ class Status(Point):
 
     pass
 
+
 class Availability_Status(Status):
     """
     Indicates if a piece of equipment, system, or functionality is
@@ -7974,8 +9613,10 @@ class Availability_Status(Status):
 
     pass
 
+
 class Damper_Position_Status(Status):
     pass
+
 
 class Direction_Status(Status):
     """
@@ -7983,6 +9624,7 @@ class Direction_Status(Status):
     """
 
     pass
+
 
 class Motor_Direction_Status(Direction_Status):
     """
@@ -7992,12 +9634,14 @@ class Motor_Direction_Status(Direction_Status):
 
     pass
 
+
 class Disable_Status(Status):
     """
     Indicates if functionality has been disabled
     """
 
     pass
+
 
 class Drive_Ready_Status(Status):
     """
@@ -8007,12 +9651,14 @@ class Drive_Ready_Status(Status):
 
     pass
 
+
 class Emergency_Generator_Status(Status):
     """
     Indicates if an emergency generator is active
     """
 
     pass
+
 
 class Emergency_Push_Button_Status(Status):
     """
@@ -8021,6 +9667,7 @@ class Emergency_Push_Button_Status(Status):
 
     pass
 
+
 class Enable_Status(Status):
     """
     Indicates if a system or piece of functionality has been enabled
@@ -8028,8 +9675,10 @@ class Enable_Status(Status):
 
     pass
 
+
 class Even_Month_Status(Status):
     pass
+
 
 class Fan_Status(Status):
     """
@@ -8038,12 +9687,14 @@ class Fan_Status(Status):
 
     pass
 
+
 class Fault_Status(Status):
     """
     Indicates the presence of a fault in a device, system or control loop
     """
 
     pass
+
 
 class Humidifier_Fault_Status(Fault_Status):
     """
@@ -8052,12 +9703,14 @@ class Humidifier_Fault_Status(Fault_Status):
 
     pass
 
+
 class Last_Fault_Code_Status(Fault_Status):
     """
     Indicates the last fault code that occurred
     """
 
     pass
+
 
 class Filter_Status(Status):
     """
@@ -8066,12 +9719,14 @@ class Filter_Status(Status):
 
     pass
 
+
 class Pre_Filter_Status(Filter_Status):
     """
     Indicates if a prefilter needs to be replaced
     """
 
     pass
+
 
 class Freeze_Status(Status):
     """
@@ -8080,8 +9735,10 @@ class Freeze_Status(Status):
 
     pass
 
+
 class Hold_Status(Status):
     pass
+
 
 class Lead_Lag_Status(Status):
     """
@@ -8090,6 +9747,7 @@ class Lead_Lag_Status(Status):
 
     pass
 
+
 class Load_Shed_Status(Status):
     """
     Indicates if a load shedding policy is in effect
@@ -8097,17 +9755,26 @@ class Load_Shed_Status(Status):
 
     pass
 
+
 class Entering_Hot_Water_Temperature_Load_Shed_Status(Load_Shed_Status):
     pass
 
-class Entering_Medium_Temperature_Hot_Water_Temperature_Load_Shed_Status(Entering_Hot_Water_Temperature_Load_Shed_Status):
+
+class Entering_Medium_Temperature_Hot_Water_Temperature_Load_Shed_Status(
+    Entering_Hot_Water_Temperature_Load_Shed_Status
+):
     pass
+
 
 class Leaving_Hot_Water_Temperature_Load_Shed_Status(Load_Shed_Status):
     pass
 
-class Leaving_Medium_Temperature_Hot_Water_Temperature_Load_Shed_Status(Leaving_Hot_Water_Temperature_Load_Shed_Status):
+
+class Leaving_Medium_Temperature_Hot_Water_Temperature_Load_Shed_Status(
+    Leaving_Hot_Water_Temperature_Load_Shed_Status
+):
     pass
+
 
 class Lockout_Status(Status):
     """
@@ -8117,6 +9784,7 @@ class Lockout_Status(Status):
 
     pass
 
+
 class Manual_Auto_Status(Status):
     """
     Indicates if a system is under manual or automatic operation
@@ -8124,12 +9792,14 @@ class Manual_Auto_Status(Status):
 
     pass
 
+
 class Mode_Status(Status):
     """
     Indicates which mode a system, device or control loop is currently in
     """
 
     pass
+
 
 class Cooling_Mode_Status(Mode_Status):
     """
@@ -8139,6 +9809,7 @@ class Cooling_Mode_Status(Mode_Status):
 
     pass
 
+
 class Heating_Mode_Status(Mode_Status):
     """
     Indicates whether a system, device or control loop is in a heating
@@ -8147,6 +9818,7 @@ class Heating_Mode_Status(Mode_Status):
 
     pass
 
+
 class Occupied_Mode_Status(Mode_Status):
     """
     Indicates if a system, device or control loop is in "Occupied" mode
@@ -8154,11 +9826,14 @@ class Occupied_Mode_Status(Mode_Status):
 
     pass
 
+
 class Occupied_Cooling_Mode_Status(Occupied_Mode_Status, Cooling_Mode_Status):
     pass
 
+
 class Occupied_Heating_Mode_Status(Occupied_Mode_Status, Heating_Mode_Status):
     pass
+
 
 class Operating_Mode_Status(Mode_Status):
     """
@@ -8168,6 +9843,7 @@ class Operating_Mode_Status(Mode_Status):
 
     pass
 
+
 class Vent_Operating_Mode_Status(Operating_Mode_Status):
     """
     Indicates the current operating mode of a vent
@@ -8175,8 +9851,10 @@ class Vent_Operating_Mode_Status(Operating_Mode_Status):
 
     pass
 
+
 class Unoccupied_Mode_Status(Mode_Status):
     pass
+
 
 class Unoccupied_Cooling_Mode_Status(Unoccupied_Mode_Status, Cooling_Mode_Status):
     """
@@ -8186,6 +9864,7 @@ class Unoccupied_Cooling_Mode_Status(Unoccupied_Mode_Status, Cooling_Mode_Status
 
     pass
 
+
 class Unoccupied_Heating_Mode_Status(Unoccupied_Mode_Status, Heating_Mode_Status):
     """
     Indicates whether a system, device or control loop is in an unoccupied
@@ -8194,6 +9873,7 @@ class Unoccupied_Heating_Mode_Status(Unoccupied_Mode_Status, Heating_Mode_Status
 
     pass
 
+
 class Zone_Air_Conditioning_Mode_Status(Mode_Status):
     """
     Indicates the mode of AC for a zone
@@ -8201,12 +9881,14 @@ class Zone_Air_Conditioning_Mode_Status(Mode_Status):
 
     pass
 
+
 class Occupancy_Status(Status):
     """
     Indicates if a room or space is occupied
     """
 
     pass
+
 
 class Temporary_Occupancy_Status(Occupancy_Status):
     """
@@ -8217,12 +9899,14 @@ class Temporary_Occupancy_Status(Occupancy_Status):
 
     pass
 
+
 class Off_Status(Status):
     """
     Indicates if a control loop, relay or equipment is off
     """
 
     pass
+
 
 class On_Status(Status):
     """
@@ -8231,6 +9915,7 @@ class On_Status(Status):
 
     pass
 
+
 class On_Off_Status(On_Status, Off_Status, Status):
     """
     Indicates the on/off status of a control loop, relay or equipment
@@ -8238,20 +9923,26 @@ class On_Off_Status(On_Status, Off_Status, Status):
 
     pass
 
+
 class Fan_On_Off_Status(On_Off_Status, Fan_Status):
     pass
+
 
 class Locally_On_Off_Status(On_Off_Status):
     pass
 
+
 class Motor_On_Off_Status(On_Off_Status):
     pass
+
 
 class Pump_On_Off_Status(On_Off_Status):
     pass
 
+
 class Remotely_On_Off_Status(On_Off_Status):
     pass
+
 
 class Standby_Unit_On_Off_Status(On_Off_Status):
     """
@@ -8260,12 +9951,14 @@ class Standby_Unit_On_Off_Status(On_Off_Status):
 
     pass
 
+
 class Standby_Glycool_Unit_On_Off_Status(Standby_Unit_On_Off_Status):
     """
     Indicates the on/off status of a standby glycool unit
     """
 
     pass
+
 
 class Start_Stop_Status(On_Off_Status):
     """
@@ -8275,23 +9968,30 @@ class Start_Stop_Status(On_Off_Status):
 
     pass
 
+
 class Cooling_Start_Stop_Status(Start_Stop_Status):
     pass
+
 
 class Dehumidification_Start_Stop_Status(Start_Stop_Status):
     pass
 
+
 class EconCycle_Start_Stop_Status(Start_Stop_Status):
     pass
+
 
 class Heating_Start_Stop_Status(Start_Stop_Status):
     pass
 
+
 class Humidification_Start_Stop_Status(Start_Stop_Status):
     pass
 
+
 class Run_Status(Start_Stop_Status):
     pass
+
 
 class Run_Request_Status(Run_Status):
     """
@@ -8300,12 +10000,14 @@ class Run_Request_Status(Run_Status):
 
     pass
 
+
 class Open_Close_Status(Status):
     """
     Indicates the open/close status of a device such as a damper or valve
     """
 
     pass
+
 
 class Overridden_Status(Status):
     """
@@ -8315,6 +10017,7 @@ class Overridden_Status(Status):
 
     pass
 
+
 class Overridden_Off_Status(Overridden_Status, Off_Status):
     """
     Indicates if a control loop, relay or equipment has been turned off
@@ -8322,6 +10025,7 @@ class Overridden_Off_Status(Overridden_Status, Off_Status):
     """
 
     pass
+
 
 class Overridden_On_Status(Overridden_Status, On_Status):
     """
@@ -8331,6 +10035,7 @@ class Overridden_On_Status(Overridden_Status, On_Status):
 
     pass
 
+
 class Pressure_Status(Status):
     """
     Indicates if pressure is within expected bounds
@@ -8338,26 +10043,46 @@ class Pressure_Status(Status):
 
     pass
 
+
 class Differential_Pressure_Load_Shed_Status(Pressure_Status, Load_Shed_Status):
     pass
 
-class Chilled_Water_Differential_Pressure_Load_Shed_Status(Differential_Pressure_Load_Shed_Status):
+
+class Chilled_Water_Differential_Pressure_Load_Shed_Status(
+    Differential_Pressure_Load_Shed_Status
+):
     pass
 
-class Chilled_Water_Differential_Pressure_Load_Shed_Reset_Status(Chilled_Water_Differential_Pressure_Load_Shed_Status):
+
+class Chilled_Water_Differential_Pressure_Load_Shed_Reset_Status(
+    Chilled_Water_Differential_Pressure_Load_Shed_Status
+):
     pass
 
-class Hot_Water_Differential_Pressure_Load_Shed_Status(Differential_Pressure_Load_Shed_Status):
+
+class Hot_Water_Differential_Pressure_Load_Shed_Status(
+    Differential_Pressure_Load_Shed_Status
+):
     pass
 
-class Hot_Water_Differential_Pressure_Load_Shed_Reset_Status(Hot_Water_Differential_Pressure_Load_Shed_Status):
+
+class Hot_Water_Differential_Pressure_Load_Shed_Reset_Status(
+    Hot_Water_Differential_Pressure_Load_Shed_Status
+):
     pass
 
-class Medium_Temperature_Hot_Water_Differential_Pressure_Load_Shed_Status(Differential_Pressure_Load_Shed_Status):
+
+class Medium_Temperature_Hot_Water_Differential_Pressure_Load_Shed_Status(
+    Differential_Pressure_Load_Shed_Status
+):
     pass
 
-class Medium_Temperature_Hot_Water_Differential_Pressure_Load_Shed_Reset_Status(Medium_Temperature_Hot_Water_Differential_Pressure_Load_Shed_Status):
+
+class Medium_Temperature_Hot_Water_Differential_Pressure_Load_Shed_Reset_Status(
+    Medium_Temperature_Hot_Water_Differential_Pressure_Load_Shed_Status
+):
     pass
+
 
 class Discharge_Air_Duct_Pressure_Status(Pressure_Status):
     """
@@ -8366,12 +10091,14 @@ class Discharge_Air_Duct_Pressure_Status(Pressure_Status):
 
     pass
 
+
 class Supply_Air_Duct_Pressure_Status(Pressure_Status):
     """
     Indicates if air pressure in supply duct is within expected bounds
     """
 
     pass
+
 
 class Pump_Status(Status):
     """
@@ -8380,12 +10107,14 @@ class Pump_Status(Status):
 
     pass
 
+
 class Speed_Status(Status):
     """
     Indicates the operating speed of a device or equipment, e.g. fan
     """
 
     pass
+
 
 class Speed_Mode_Status(Speed_Status, Mode_Status):
     """
@@ -8394,12 +10123,14 @@ class Speed_Mode_Status(Speed_Status, Mode_Status):
 
     pass
 
+
 class Stages_Status(Status):
     """
     Indicates which stage a control loop or equipment is in
     """
 
     pass
+
 
 class Switch_Status(Status):
     """
@@ -8408,6 +10139,7 @@ class Switch_Status(Status):
 
     pass
 
+
 class System_Status(Status):
     """
     Indicates properties of the activity of a system
@@ -8415,17 +10147,26 @@ class System_Status(Status):
 
     pass
 
+
 class Emergency_Air_Flow_System_Status(System_Status):
     pass
+
 
 class Emergency_Power_Off_System_Status(System_Status, Off_Status):
     pass
 
-class Emergency_Power_Off_System_Activated_By_High_Temperature_Status(Emergency_Power_Off_System_Status):
+
+class Emergency_Power_Off_System_Activated_By_High_Temperature_Status(
+    Emergency_Power_Off_System_Status
+):
     pass
 
-class Emergency_Power_Off_System_Activated_By_Leak_Detection_System_Status(Emergency_Power_Off_System_Status):
+
+class Emergency_Power_Off_System_Activated_By_Leak_Detection_System_Status(
+    Emergency_Power_Off_System_Status
+):
     pass
+
 
 class Heat_Exchanger_System_Enable_Status(System_Status, Enable_Status):
     """
@@ -8434,12 +10175,14 @@ class Heat_Exchanger_System_Enable_Status(System_Status, Enable_Status):
 
     pass
 
+
 class System_Shutdown_Status(System_Status, Status):
     """
     Indicates if a system has been shutdown
     """
 
     pass
+
 
 class Thermostat_Status(Status):
     """
@@ -8448,12 +10191,14 @@ class Thermostat_Status(Status):
 
     pass
 
+
 class Tint_Status(Status):
     """
     The current level of window tint.
     """
 
     pass
+
 
 class Valve_Status(Status):
     """
