@@ -210,7 +210,7 @@ def dump(
     filename: str = None,
     format: str = "turtle",
     header: str = None,
-) -> str:
+) -> None:
     if not header:
         content = graph.serialize(format=format)
     else:
@@ -223,8 +223,8 @@ def dump(
     if filename:
         with open(filename, "w", encoding="UTF-8") as ttl_file:
             ttl_file.write(content)
-
-    file.write(content)
+    else:
+        file.write(content)
 
 
 def clean_and_sort_turtle_file(content: str) -> str:
