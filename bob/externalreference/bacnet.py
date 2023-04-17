@@ -30,19 +30,27 @@ class BACnetReference(ExternalReference):
     _class_iri: URIRef = BACNET.DeviceObjectPropertyReference
     _namespace = BACNET
     _attr_uriref = {
-        "objectName": BACNET["object-name"],
-        "objectInstance": BACNET["object-instance"],
-        "objectType": BACNET["object-type"],
+        "objectIdentifier": BACNET["object-identifier"],
         "propertyIdentifier": BACNET["property-identifier"],
         "propertyArrayIndex": BACNET["property-array-index"],
+        "deviceIdentifier": BACNET["device-identifier"],
     }
+    objectIdentifier: Literal
+    propertyIdentifier: URIRef
+    propertyArrayIndex: XSD.nonNegativeInteger
+    deviceIdentifier: Literal
+
+    objectType: URIRef
     objectInstance: XSD.integer
     objectOf: BACnetDevice
     objectName: Literal
     description: Literal
-    objectType: URIRef
-    propertyIdentifier: URIRef
-    propertyArrayIndex: XSD.nonNegativeInteger
+
+    deviceId: XSD.nonNegativeInteger
+    deviceName: Literal
+    networkNumber: XSD.nonNegativeInteger
+    address: Literal
+    vendorId: XSD.nonNegativeInteger
 
     def __init__(self, arg: str = "", **kwargs) -> None:
         logging.debug("BACnetReference.__init__ %r %r", arg, kwargs)
@@ -52,25 +60,16 @@ class BACnetReference(ExternalReference):
             if not url_match:
                 raise ValueError("not a BACnet URL")
             (
-                device,
+                device_instance,
                 object_type,
                 object_instance,
                 property_identifier,
                 property_array_index,
             ) = url_match.groups()
 
-            if "objectType" in kwargs:
-                raise ValueError("initialization conflict: objectType")
-            kwargs["objectType"] = BACNET["ObjectType." + object_type]
-
-            if "objectInstance" in kwargs:
-                raise ValueError("initialization conflict: objectInstance")
-            kwargs["objectInstance"] = int(object_instance)
-
-            # future work
-            # if "objectIdentifier" in kwargs:
-            #     raise ValueError("initialization conflict: objectIdentifier")
-            # kwargs["objectIdentifier"] = f"{object_type},{object_instance}"
+            if "objectIdentifier" in kwargs:
+                raise ValueError("initialization conflict: objectIdentifier")
+            kwargs["objectIdentifier"] = f"{object_type},{object_instance}"
 
             if "propertyIdentifier" in kwargs:
                 raise ValueError("initialization conflict: propertyIdentifier")
@@ -88,8 +87,8 @@ class BACnetReference(ExternalReference):
             if property_array_index:
                 kwargs["propertyArrayIndex"] = int(property_array_index)
 
-        object_type = kwargs.get("objectType", None)
-        if object_type and not isinstance(object_type, URIRef):
-                kwargs["objectType"] = BACNET["ObjectType-" + object_type]
+            if "deviceIdentifier" in kwargs:
+                raise ValueError("initialization conflict: deviceIdentifier")
+            kwargs["deviceIdentifier"] = f"device,{device_instance}"
 
         super().__init__(**kwargs)
