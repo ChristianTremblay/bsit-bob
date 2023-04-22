@@ -11,7 +11,7 @@ from . import NetworkProfile
 BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
 
 url_pattern = re.compile(
-    "^bacnet:[/][/]([0-9]+)[/]([A-Za-z0-9-]+),([1-9][0-9]*)(?:[/]([A-Za-z0-9-]+)+(?:[/]([1-9][0-9]*)))?$"
+    "^bacnet:[/][/]([0-9]+)?[/]([A-Za-z0-9-]+),([1-9][0-9]*)(?:[/]([A-Za-z0-9-]+)(?:[/]([1-9][0-9]*))?)?$"
 )
 
 
@@ -46,7 +46,6 @@ class BACnetReference(ExternalReference):
     objectName: Literal
     description: Literal
 
-    deviceId: XSD.nonNegativeInteger
     deviceName: Literal
     networkNumber: XSD.nonNegativeInteger
     address: Literal
@@ -67,28 +66,37 @@ class BACnetReference(ExternalReference):
                 property_array_index,
             ) = url_match.groups()
 
+            if "deviceIdentifier" in kwargs:
+                if device_instance is not None:
+                    raise ValueError("initialization conflict: deviceIdentifier")
+            elif device_instance is not None:
+                kwargs["deviceIdentifier"] = f"device,{device_instance}"
+
             if "objectIdentifier" in kwargs:
                 raise ValueError("initialization conflict: objectIdentifier")
             kwargs["objectIdentifier"] = f"{object_type},{object_instance}"
 
             if "propertyIdentifier" in kwargs:
-                raise ValueError("initialization conflict: propertyIdentifier")
-            if property_identifier:
+                if property_identifier is not None:
+                    raise ValueError("initialization conflict: propertyIdentifier")
+                property_identifier = kwargs.get("propertyIdentifier")
+
+            if isinstance(property_identifier, URIRef):
+                kwargs["propertyIdentifier"] = property_identifier
+            elif isinstance(property_identifier, str):
                 kwargs["propertyIdentifier"] = BACNET[
                     "PropertyIdentifier." + property_identifier
                 ]
-            else:
+            elif property_identifier is None:
                 kwargs["propertyIdentifier"] = BACNET[
                     "PropertyIdentifier.present-value"
                 ]
+            else:
+                raise TypeError("propertyIdentifier")
 
             if "propertyArrayIndex" in kwargs:
                 raise ValueError("initialization conflict: propertyArrayIndex")
             if property_array_index:
                 kwargs["propertyArrayIndex"] = int(property_array_index)
-
-            if "deviceIdentifier" in kwargs:
-                raise ValueError("initialization conflict: deviceIdentifier")
-            kwargs["deviceIdentifier"] = f"device,{device_instance}"
 
         super().__init__(**kwargs)

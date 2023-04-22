@@ -185,7 +185,7 @@ te1 = AirTemperatureSensor(
     label="TE-1",
     comment="Outdoor air preheated by exhanger",
     unit=UNIT.DEG_C,
-    # hasExternalReference=BACnetReference("bacnet://345/analog-value/1/present-value"),
+    # hasExternalReference=BACnetReference("bacnet://345/analog-value,1/present-value"),
 )
 ha1 = AirHumiditySensor(label="HA-1")
 tpd1 = AirDifferentialStaticPressureSensor(
