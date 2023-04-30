@@ -4,6 +4,7 @@
 @prefix ex1: <urn:ex/sample-function-block-002/> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -26,7 +27,8 @@ ex1:00002 a s223:Property ;
     rdfs:label "y" ;
     s223:hasValue 3.4e+00 .
 
-ex1:00003 a s223:FunctionBlock,
+ex1:00003 a p223:Producer,
+        s223:FunctionBlock,
         ex1:Sample ;
     rdfs:label "f" ;
     s223:hasInput ex1:00004 ;
@@ -34,12 +36,14 @@ ex1:00003 a s223:FunctionBlock,
     ex1:x ex1:00004 ;
     ex1:y ex1:00005 .
 
-ex1:00004 a s223:FunctionInput,
+ex1:00004 a p223:ProducerInput,
+        s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "f.x" ;
     s223:uses ex1:00001 .
 
-ex1:00005 a s223:FunctionOutput,
+ex1:00005 a p223:ProducerOutput,
+        s223:FunctionOutput,
         g36:AnalogOutput ;
     rdfs:label "f.y" ;
     s223:produces ex1:00002 .

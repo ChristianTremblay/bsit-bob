@@ -1,6 +1,6 @@
 from .coil import ChilledWaterCoil, ElectricalHeatingCoil, HotWaterCoil
 from .fan import Fan
-from .gas import GasConcentrationSensor, GasMonitor
+from .gas import GasMonitor
 from .particlecounter import (
     CoarseParticulateSensor,
     FineParticulateSensor,

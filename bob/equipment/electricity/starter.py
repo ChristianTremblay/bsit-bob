@@ -19,7 +19,7 @@ from ...core import (
     logging,
     template_update,
 )
-from ...sensor.electricity import CurrentBinarySensor
+from .switch import CurrentRelay
 
 _namespace = BOB
 
@@ -28,10 +28,13 @@ electric_starter_template = {
         "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
         "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
     },
+    "sensors": {
+        ("currentRelay", CurrentRelay): {},
+    },
     "properties": {
         # ("actuatesProperty", PercentCommand): {},
         ("onOffCommand", OnOffCommand): {},
-        ("power_rating", ElectricPower): {"unit": UNIT["HP_Electric"]},
+        ("powerRating", ElectricPower): {"unit": UNIT["HP_Electric"]},
     },
 }
 
@@ -56,11 +59,6 @@ class MotorStarter(_MotorStarter):
         logging.debug(f"MotorStarter.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
-        sensor = CurrentBinarySensor(
-            label=f"{self.label}.current_sensor",
-            ofMedium=self.electricalInlet.hasMedium,
-            hasMeasurementLocation=self.electricalOutlet,
-        )
-        self.onOffStatus = sensor.observesProperty
-        self._sensors = [sensor]
-        self > sensor
+        if self["currentRelay"]:
+            self.onOffStatus = self["currentRelay"]["onOffStatus"]
+            self["currentRelay"]["currentSensor"] % self.electricalOutlet

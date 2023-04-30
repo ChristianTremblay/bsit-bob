@@ -1,1 +1,1 @@
-from .sensor import DifferentialSensor, Sensor, VirtualSensor, split_kwargs
+from .sensor import Sensor, VirtualSensor, split_kwargs

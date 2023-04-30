@@ -31,14 +31,14 @@ _namespace = BOB
 
 class ParticulateSensor(Sensor):
     _class_iri = S223.Sensor
-    observesProperty: PropertyReference  # ParticulateCount
+    observes: PropertyReference  # ParticulateCount
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = ParticulateCount(
+        self.observes = ParticulateCount(
             label=f"{self.label}.ParticulateCount",  # needs more focus
             ofMedium=Air,
             **_property_kwargs,

@@ -8,7 +8,8 @@ from bob.equipment.electricity.switch import DimmableSwitch, TimerSwitch
 from bob.properties.time import Hour
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
 mainentry_panel_config = {
@@ -131,7 +132,7 @@ distribution_panel_config = {
     },
     # other properties could go there... ?
 }
-# Electrical Equipments
+# Electrical Equipment
 main_panel = ThreePhaseDistributionPanel(config=mainentry_panel_config)
 transformer_120_240 = Transformer(
     label="TX-1",

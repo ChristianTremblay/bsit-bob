@@ -1,9 +1,9 @@
-from copy import deepcopy
 from collections import defaultdict
+from copy import deepcopy
 from textwrap import fill, indent
-from typing import Dict, Set, List
+from typing import Dict, List, Set
 
-from rdflib import Namespace, RDF, RDFS, SKOS, Graph, URIRef
+from rdflib import RDF, RDFS, SKOS, Graph, Namespace, URIRef
 
 BOB = Namespace("http://data.ashrae.org/standard223/si-builder#")
 BRICK = Namespace("https://brickschema.org/schema/Brick#")

@@ -7,7 +7,7 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import EX, Property, bind_model_namespace, dump
-from bob.functions import FunctionBlock, G36AnalogInput, G36AnalogOutput
+from bob.producer import FunctionBlock, G36AnalogInput, G36AnalogOutput
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

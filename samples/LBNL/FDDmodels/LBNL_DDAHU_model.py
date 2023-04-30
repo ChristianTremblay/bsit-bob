@@ -29,8 +29,8 @@ from bob.core import (
     QUANTITYKIND,
     UNIT,
     Air,
-    Equipment,
     DomainSpace,
+    Equipment,
     Junction,
     System,
     bind_model_namespace,
@@ -64,7 +64,7 @@ _namespace = ex = bind_model_namespace(
 )
 
 # add properties to config?
-# Equipments DON'T have properties as default, but have a default config that you can optionally use.
+# Equipment DON'T have properties as default, but have a default config that you can optionally use.
 
 fan_template = {
     "params": {
@@ -125,9 +125,9 @@ def ext_ref_damper(label, ext_ref=None):
     # dmp['vav_cfm'].hasExternalReference = TimeSeriesReference
     # dmp['vav_eat'].hasExternalReference = TimeSeriesReference
 
-    dmp["vav_dp"].hasMeasurementLocation = dmp.airInlet
-    dmp["vav_cfm"].hasMeasurementLocation = dmp.airInlet
-    dmp["vav_eat"].hasMeasurementLocation = dmp.airInlet
+    dmp["vav_dp"] % dmp.airInlet
+    dmp["vav_cfm"] % dmp.airInlet
+    dmp["vav_eat"] % dmp.airInlet
     return dmp
 
 
@@ -173,8 +173,8 @@ class HotDeck(System):
         # ext_ref1= TimeSeriesReference()
         # hsf.sensors['TPD1'].hasExternalReference = ext_ref1
         hsf_dp = AirDifferentialPressureSensor(label=self.label + ".fan_dp_sensor")
-        hsf_dp.hasMeasurementLocationHigh = hsf.airOutlet
-        hsf_dp.hasMeasurementLocationLow = hsf.airInlet
+        hsf_dp["highPort"] % hsf.airOutlet
+        hsf_dp["lowPort"] % hsf.airInlet
         # more sensors
         dat = AirTemperatureSensor(label=self.label + ".discharge_air_temp_sensor")
         humd = AirHumiditySensor(label=self.label + ".air_humidity_sensor")
@@ -182,12 +182,12 @@ class HotDeck(System):
         temp = AirTemperatureSensor(label=self.label + ".air_temp_sensor")
 
         temp_sp = TemperatureSetpoint(label=self.label + ".air_temp_setpoint")
-        temp.observesProperty.hasSetpoint = temp_sp
+        temp.observedProperty.hasSetpoint = temp_sp
 
-        dat.hasMeasurementLocation = hwc.airOutlet
-        humd.hasMeasurementLocation = hsf.airOutlet
-        cfm.hasMeasurementLocation = hsf.airOutlet
-        temp.hasMeasurementLocation = hsf.airOutlet
+        dat % hwc.airOutlet
+        humd % hsf.airOutlet
+        cfm % hsf.airOutlet
+        temp % hsf.airOutlet
 
 
 class ColdDeck(System):
@@ -208,8 +208,8 @@ class ColdDeck(System):
         # ext_ref1= TimeSeriesReference()
         # hsf.sensors['TPD1'].hasExternalReference = ext_ref1
         hsf_dp = AirDifferentialPressureSensor(label=self.label + ".fan_dp_sensor")
-        hsf_dp.hasMeasurementLocationHigh = hsf.airOutlet
-        hsf_dp.hasMeasurementLocationLow = hsf.airInlet
+        hsf_dp["highPort"] % hsf.airOutlet
+        hsf_dp["lowPort"] % hsf.airInlet
 
         dat = AirTemperatureSensor(label=self.label + ".discharge_air_temp_sensor")
         humd = AirHumiditySensor(label=self.label + ".air_humidity_sensor")
@@ -217,12 +217,12 @@ class ColdDeck(System):
         temp = AirTemperatureSensor(label=self.label + ".air_temp_sensor")
 
         temp_sp = TemperatureSetpoint(label=self.label + ".air_temp_setpoint")
-        temp.observesProperty.hasSetpoint = temp_sp
+        temp.observedProperty.hasSetpoint = temp_sp
 
-        dat.hasMeasurementLocation = hwc.airOutlet
-        humd.hasMeasurementLocation = hsf.airOutlet
-        cfm.hasMeasurementLocation = hsf.airOutlet
-        temp.hasMeasurementLocation = hsf.airOutlet
+        dat % hwc.airOutlet
+        humd % hsf.airOutlet
+        cfm % hsf.airOutlet
+        temp % hsf.airOutlet
 
 
 class DDAHU(System):
@@ -242,9 +242,9 @@ class DDAHU(System):
         oa_cfm = AirFlowSensor(label=self.label + ".oa_air_flow_sensor")
         # could put function for the above sensors
 
-        oa_dat.hasMeasurementLocation = oa_damper.airInlet
-        oa_humd.hasMeasurementLocation = oa_damper.airInlet
-        oa_cfm.hasMeasurementLocation = oa_damper.airInlet
+        oa_dat % oa_damper.airInlet
+        oa_humd % oa_damper.airInlet
+        oa_cfm % oa_damper.airInlet
 
         self.outsideAirInlet.mapsTo = oa_damper.airInlet
         # sensors attach here
@@ -252,7 +252,7 @@ class DDAHU(System):
         mixed_air = AirConnection(label=self.label + ".mixed_air")
         oa_damper >> mixed_air
         ma_temp = AirTemperatureSensor(label=self.label + "ma_air_temp_sensor")
-        ma_temp.hasMeasurementLocation = mixed_air
+        ma_temp % mixed_air
 
         return_air_fan = Fan(label=self.label + ".return_air_fan", config=fan_template)
         self.returnAirInlet.mapsTo = return_air_fan.airInlet
@@ -261,9 +261,9 @@ class DDAHU(System):
         re_humd = AirHumiditySensor(label=self.label + ".re_air_humidity_sensor")
         re_cfm = AirFlowSensor(label=self.label + ".re_air_flow_sensor")
 
-        re_dat.hasMeasurementLocation = return_air_fan.airInlet
-        re_humd.hasMeasurementLocation = return_air_fan.airInlet
-        re_cfm.hasMeasurementLocation = return_air_fan.airInlet
+        re_dat % return_air_fan.airInlet
+        re_humd % return_air_fan.airInlet
+        re_cfm % return_air_fan.airInlet
         # sensors here and about fan
 
         # j1 = Junction()
@@ -307,7 +307,7 @@ class ddahu_VAV(System):
         mb = VAV_Mixing_Box(
             label=self.label + ".mixing_box", config=mixing_box_template
         )
-        mb["vav_eat"].hasMeasurementLocation = mb.airOutlet
+        mb["vav_eat"] % mb.airOutlet
 
         hot_dmp >> mb.hotAirInlet
         cold_dmp >> mb.coldAirInlet
@@ -322,7 +322,7 @@ class HVAC_rooms(DomainSpace):
     def __init__(self, ext_ref_dict=None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         rm_temp = AirTemperatureSensor(label="rm_temp")
-        rm_temp.hasMeasurementLocation = self
+        rm_temp % self
         rm_temp.hasExternalReference = TimeSeriesReference()
 
 

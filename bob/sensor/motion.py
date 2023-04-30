@@ -4,6 +4,8 @@ from rdflib import URIRef
 
 from bob import core
 from bob.connections.electricity import OnOffSignalOutletConnectionPoint
+from bob.producer.causality import Causality
+from bob.properties.ratio import Percent
 from bob.properties.states import DaylightDetected, OnOffStatus
 
 from ..core import (
@@ -12,6 +14,7 @@ from ..core import (
     QUANTITYKIND,
     S223,
     UNIT,
+    Equipment,
     ExternalReference,
     Medium,
     Occupant,
@@ -24,20 +27,20 @@ _namespace = S223
 
 
 class OccupancySensor(Sensor):
-    _class_iri = S223.OccupancySensor
+    _class_iri = S223.Sensor
 
 
 class OccupantMotionSensor(OccupancySensor):
     _class_iri = S223.OccupantMotionSensor
     # measuresMedium: Medium = Light
-    observesProperty: PropertyReference  # Movement
+    observes: PropertyReference  # Movement
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = Motion(
+        self.observes = Motion(
             # isObservedBy=self,
             label=f"{self.label}.OccupantMotion",
             ofMedium=Occupant,
@@ -45,35 +48,55 @@ class OccupantMotionSensor(OccupancySensor):
         )
 
 
-class OccupantCounter(OccupancySensor):
-    _class_iri = S223.OccupantCounter
+# That should provide a producer of count value
+class OccupantCounterSensor(OccupantMotionSensor):
+    _class_iri = S223.Sensor
     # measuresMedium: Medium = Light
-    observesProperty: PropertyReference  # Count
+    occupantCount = Count
+
+    def __init__(self, **kwargs: Any) -> None:
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
+
+        super().__init__(**_sensor_kwargs)
+        self.OccupantCount = Count(
+            label=f"{self.label}.OccupantCount",
+            ofMedium=Occupant,
+            **_property_kwargs,
+        )
+        counter = Causality(label="countProducer")
+        counter.cause_input << self.observedProperty
+        counter.effect_output >> self.occupantCount
+        self > counter
+
+
+# TODO : NOPE.... should observe something and produce a presence property
+class OccupantPresenceSensor(OccupancySensor):
+    _class_iri = S223.OccupantPresenceSensor
+    # measuresMedium: Medium = Light
+    observes: PropertyReference  # Intrusion...good for Windows and doors
+
+    def __init__(self, **kwargs: Any) -> None:
+        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
+
+        super().__init__(**_sensor_kwargs)
+        self.observes = OnOffStatus(
+            # isObservedBy=self,
+            label=f"{self.label}.OccupantPresence",
+            **_measure_kwargs,
+        )
+
+
+class PositionSensor(Sensor):
+    _class_iri = S223.Sensor
+    observes: PropertyReference  # Movement
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = Count(
-            label=f"{self.label}.OccupantCount",
-            ofMedium=Occupant,
-            **_property_kwargs,
-        )
-
-
-class OccupantPresenceSensor(Sensor):
-    _class_iri = S223.OccupantPresenceSensor
-    # measuresMedium: Medium = Light
-    observesProperty: PropertyReference  # Intrusion...good for Windows and doors
-    onoff_contact: OnOffSignalOutletConnectionPoint
-
-    def __init__(self, **kwargs: Any) -> None:
-        _sensor_kwargs, _measure_kwargs = split_kwargs(kwargs)
-
-        super().__init__(**_sensor_kwargs)
-        self.observesProperty = OnOffStatus(
+        self.observes = Percent(
             # isObservedBy=self,
-            label=f"{self.label}.OccupantPresence",
-            **_measure_kwargs,
+            label=f"{self.label}.Position",
+            **_property_kwargs,
         )

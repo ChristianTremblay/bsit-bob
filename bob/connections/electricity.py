@@ -61,6 +61,7 @@ class ElectricalSystemOutletConnectionPoint(
 
 
 # === 575V 60Hz
+# 3 phases
 
 
 class Electricity_575V_60HzConnection(Connection):
@@ -100,7 +101,49 @@ class Electricity_575V_60HzSystemOutletConnectionPoint(
     _class_iri = BOB.OutletSystemConnectionPoint
 
 
+# === 600V 60Hz
+# 1 phases
+
+
+class Electricity_600V1Ph_60HzConnection(Connection):
+    hasMedium = Electricity.AC600V1Ph_60Hz
+    _class_iri = S223.Connection
+
+
+class Electricity_600V1Ph_60HzConnectionPoint(ConnectionPoint):
+    hasMedium = Electricity.AC600V1Ph_60Hz
+
+
+class Electricity_600V1Ph_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_600V1Ph_60HzConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class Electricity_600V1Ph_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_600V1Ph_60HzConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class Electricity_600V1Ph_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium = Electricity.AC600V1Ph_60Hz
+
+
+class Electricity_600V1Ph_60HzSystemInletConnectionPoint(
+    Electricity_600V1Ph_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class Electricity_600V1Ph_60HzSystemOutletConnectionPoint(
+    Electricity_600V1Ph_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
+
+
 # === 480V 60Hz
+# 3 phases
 
 
 class Electricity_480V_60HzConnection(Connection):
@@ -136,6 +179,47 @@ class Electricity_480V_60HzSystemInletConnectionPoint(
 
 class Electricity_480V_60HzSystemOutletConnectionPoint(
     Electricity_480V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
+
+
+# === 480V 60Hz
+# 1 phases
+
+
+class Electricity_480V1Ph_60HzConnection(Connection):
+    hasMedium = Electricity.AC480V1Ph_60Hz
+    _class_iri = S223.Connection
+
+
+class Electricity_480V1Ph_60HzConnectionPoint(ConnectionPoint):
+    hasMedium = Electricity.AC480V1Ph_60Hz
+
+
+class Electricity_480V1Ph_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_480V1Ph_60HzConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class Electricity_480V1Ph_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_480V1Ph_60HzConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class Electricity_480V1Ph_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium = Electricity.AC480V1Ph_60Hz
+
+
+class Electricity_480V1Ph_60HzSystemInletConnectionPoint(
+    Electricity_480V1Ph_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class Electricity_480V1Ph_60HzSystemOutletConnectionPoint(
+    Electricity_480V1Ph_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
     _class_iri = BOB.OutletSystemConnectionPoint
 
@@ -263,6 +347,92 @@ class Electricity_208V_60HzSystemOutletConnectionPoint(
     _class_iri = BOB.OutletSystemConnectionPoint
 
 
+# === 208V 60Hz
+# 1 phase
+
+
+class Electricity_208V1Ph_60HzConnection(Connection):
+    hasMedium = Electricity.AC208V1Ph_60Hz
+    _class_iri = S223.Connection
+
+
+class Electricity_208V1Ph_60HzConnectionPoint(ConnectionPoint):
+    hasMedium = Electricity.AC208V1Ph_60Hz
+
+
+class Electricity_208V1Ph_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_208V1Ph_60HzConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class Electricity_208V1Ph_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_208V1Ph_60HzConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class Electricity_208V1Ph_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium = Electricity.AC208V1Ph_60Hz
+
+
+class Electricity_208V1Ph_60HzSystemInletConnectionPoint(
+    Electricity_208V1Ph_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class Electricity_208V1Ph_60HzSystemOutletConnectionPoint(
+    Electricity_208V1Ph_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
+
+
+# === 120V_208V_240V 60Hz
+# High Leg Delta Configuration
+# LL Voltage = 240V
+# ABC provide 240V 3 phases
+# CN provide 208V 1Ph
+# AN and BN provide 120V
+
+
+class Electricity_120V_208V_240V_60HzConnection(Connection):
+    hasMedium = Electricity.AC120V_208V_240V_60Hz
+    _class_iri = S223.Connection
+
+
+class Electricity_120V_208V_240V_60HzConnectionPoint(ConnectionPoint):
+    hasMedium = Electricity.AC120V_208V_240V_60Hz
+
+
+class Electricity_120V_208V_240V_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_120V_208V_240V_60HzConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class Electricity_120V_208V_240V_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_120V_208V_240V_60HzConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class Electricity_120V_208V_240V_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium = Electricity.AC120V_240V_60Hz
+
+
+class lectricity_120V_208V_240V_60HzSystemInletConnectionPoint(
+    Electricity_120V_208V_240V_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class lectricity_120V_208V_240V_60HzSystemOutletConnectionPoint(
+    Electricity_120V_208V_240V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
+
+
 # === 120V_240V 60Hz
 # Often the output of a transformer feeding a distribution panel
 # Includes 2 x 120VAC 60Hz line, a neutral and a ground
@@ -343,6 +513,46 @@ class Electricity_240V_60HzSystemInletConnectionPoint(
 
 class Electricity_240V_60HzSystemOutletConnectionPoint(
     Electricity_240V_60HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
+
+
+# === 240V 3 Phases 60Hz
+
+
+class Electricity_240V3Ph_60HzConnection(Connection):
+    hasMedium = Electricity.AC240V3Ph_60Hz
+    _class_iri = S223.Connection
+
+
+class Electricity_240V3Ph_60HzConnectionPoint(ConnectionPoint):
+    hasMedium = Electricity.AC240V3Ph_60Hz
+
+
+class Electricity_240V3Ph_60HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_240V3Ph_60HzConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class Electricity_240V3Ph_60HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_240V3Ph_60HzConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class Electricity_240V3Ph_60HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium = Electricity.AC240V_60Hz
+
+
+class Electricity_240V3Ph_60HzSystemInletConnectionPoint(
+    Electricity_240V3Ph_60HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class Electricity_240V3Ph_60HzSystemOutletConnectionPoint(
+    Electricity_240V3Ph_60HzSystemConnectionPoint, OutletSystemConnectionPoint
 ):
     _class_iri = BOB.OutletSystemConnectionPoint
 
@@ -443,6 +653,7 @@ class Electricity_24V_60HzSystemOutletConnectionPoint(
 # This is high level and we don't know if it's using 120V or 24VAC or 5VDC...
 # It is modeling dry contact, Triac and other On-Off relationships
 
+
 # === GENERAL
 class OnOffSignalConnection(Connection):
     hasMedium = Electricity.OnOffSignal
@@ -485,14 +696,14 @@ class OnOffSignalSystemOutletConnectionPoint(
 # This is high level and we don't know if it's using 0-10VDC, 4-20mA, etc...
 # === Modulation signals
 class ModulationSignalConnection(Connection):
-    hasMedium = Electricity.ModulationSignal
+    hasMedium = Electricity.ModulatedSignal
     _class_iri = S223.Connection
 
 
 class ModulationSignalConnectionPoint(ConnectionPoint):
     _attr_uriref = {"hasSignalType": P223.hasSignalType}
 
-    hasMedium = Electricity.ModulationSignal
+    hasMedium = Electricity.ModulatedSignal
     hasSignalType: AnalogSignalTypeEnum
 
 
@@ -509,7 +720,7 @@ class ModulationSignalOutletConnectionPoint(
 
 
 class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium = Electricity.ModulationSignal
+    hasMedium = Electricity.ModulatedSignal
 
 
 class ModulationSignalSystemInletConnectionPoint(

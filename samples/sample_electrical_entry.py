@@ -1,6 +1,7 @@
-from cProfile import label
 from pathlib import Path
 from typing import Any
+from bob.enum import CtxAttribute, ElectricalPhaseIdentifier
+from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
 
 from header import sample_header
 
@@ -71,6 +72,11 @@ mainentry_panel_config = {
             "amps": 100,
             "voltage": "575",
         },
+        ("CB#4", ThreePolesCircuitBreaker): {
+            "comment": "Used for Meter",
+            "amps": 15,
+            "voltage": "575",
+        },
     },
     # other properties could go there... ?
 }
@@ -105,7 +111,7 @@ distribution_panel_config = {
 
 
 def test_electrical_entry():
-    # Electrical Equipments
+    # Electrical Equipment
 
     main_panel = ThreePhaseDistributionPanel(config=mainentry_panel_config)
     transformer_120_240 = Transformer(
@@ -117,8 +123,21 @@ def test_electrical_entry():
     dist_panel = SinglePhaseDistributionPanel(config=distribution_panel_config)
     # hq = Electricity_120V_240V_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
     hq_600 = Electricity_575V_60HzConnection(label="Hydro-Québec", comment="600V")
+    hq_600 + ElectricalPhaseIdentifier.ABC
     hq_600 >> main_panel["MainBreaker"]
     main_panel["CB#3"] >> transformer_120_240 >> dist_panel["MainBreaker"]
+
+    building_electrical_meter = ThreePhaseElectricalMeter(
+        label="Building Meter",
+        comment="Building Electrical Meter (M3)",
+        medium=Electricity.AC575V_60Hz,
+    )
+    # building_electrical_meter.hasPhysicalLocation = ps.bldg
+    building_electrical_meter.set_voltage_measurement_location(main_panel["CB#4"])
+    building_electrical_meter.set_current_measurement_location(
+        main_panel["MainBreaker"].electricalInlet
+    )
+    return main_panel
 
 
 if __name__ == "__main__":

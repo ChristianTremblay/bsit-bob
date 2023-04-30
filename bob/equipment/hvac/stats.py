@@ -71,7 +71,7 @@ class MechanicalOnOffThermostat(Thermostat):
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.temperature = self["temperature_sensor"].observesProperty
+        self.temperature = self["temperature_sensor"].observedProperty
 
 
 MechanicalModulatingThermostat_template = {

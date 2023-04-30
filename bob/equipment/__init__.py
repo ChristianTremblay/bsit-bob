@@ -17,7 +17,7 @@ class _Actuator(Equipment):
     """
     This version of an actuator is meant to be the opposite of a sensor
     It relates properties to an action
-    It can be located with hasActuationLocation (mirror of hasMeasurementLocation)
+    It can be located with hasActuationLocation (mirror of hasObservationLocation)
 
     This way, the model can illutrate the link between a property and something else (like
     a connection point)
@@ -43,7 +43,7 @@ class _Actuator(Equipment):
     The speed ratio property is not a property that is meant to be observed. It is an intrinsic property of a fan, it is the fact that it can run.
     It represents the core function of the fan.
 
-    A damper would have a shaft_position(?) property, a pump would also have something similar to speed_ratio. All Equipments should have one main "function"
+    A damper would have a shaft_position(?) property, a pump would also have something similar to speed_ratio. All Equipment should have one main "function"
     property.
 
     A sensor could be used to observe the "status" of the fan. We shall resist to relate the actuator to the status. The actuator do

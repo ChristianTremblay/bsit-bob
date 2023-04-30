@@ -1,4 +1,5 @@
 from bob.core import P223, S223, Equipment, Property
+from bob.equipment.control.controller import Controller
 
 _namespace = S223
 
@@ -12,10 +13,10 @@ class _MotorStarter(Equipment):
     actuatesProperty: Property
 
 
-class _VFD(Equipment):
+class _VFD(Controller):
     """
     This is required here so actuatesProperty gets its namespace from S223
     """
 
-    _class_iri = S223.Equipment
+    _class_iri = S223.VFD
     actuatesProperty: Property

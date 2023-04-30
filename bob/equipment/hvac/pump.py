@@ -92,7 +92,7 @@ class PumpWithStarter(Pump):
 
         super().__init__(_config, **kwargs)
         self.onOffCommand = self["starter"]["onOffCommand"]
-        self.onOffStatus = self["starter"]["starter.current_sensor"].observesProperty
+        self.onOffStatus = self["starter"]["starter.current_sensor"].observes
         self["starter"].actuatesProperty = self["speedRatio"]
         self["starter"].electricalOutlet >> self.electricalInlet
 

@@ -51,8 +51,8 @@ from bob.equipment.hvac.stats import (
     NetworkThermostat,
 )
 from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
-from bob.functions import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
-from bob.functions.g36 import G36Sequence
+from bob.producer import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.producer.g36 import G36Sequence
 from bob.properties import Flow, PercentCommand, Temperature
 from bob.properties.states import SmokePresence
 from bob.properties.volume import Gallons
@@ -185,21 +185,21 @@ chws >> clg_coil.chilledWaterInlet
 ### TODO clg_coil.chilledWaterOutlet >> clg_vlv >> chwr
 
 # Sensors measurements
-oat.hasMeasurementLocation = econ_dpr.airOutlet
-hsp_limit_mix["pressure_sensor"].hasMeasurementLocationHigh = hvacspace
-hsp_limit_mix["pressure_sensor"].hasMeasurementLocationLow = mixed_air_supply
-mat.hasMeasurementLocation = mixed_air_supply
-filter_dpt.hasMeasurementLocationHigh = filter.airInlet
-filter_dpt.hasMeasurementLocationLow = filter.airOutlet
-hwct.hasMeasurementLocation = htg_coil.airOutlet
-hsp_limit_supply["pressure_sensor"].hasMeasurementLocationLow = hvacspace
-hsp_limit_supply["pressure_sensor"].hasMeasurementLocationHigh = sf.airOutlet
-smoke.hasMeasurementLocation = supply_air
-sat.hasMeasurementLocation = supply_air
-duct_dpt.hasMeasurementLocationHigh = supply_air
-duct_dpt.hasMeasurementLocationLow = hvacspace
-building_dpt.hasMeasurementLocationHigh = hvacspace
-building_dpt.hasMeasurementLocationLow = outside
+oat % econ_dpr.airOutlet
+hsp_limit_mix["pressure_sensor"]["highPort"] % hvacspace
+hsp_limit_mix["pressure_sensor"]["lowPort"] % mixed_air_supply
+mat % mixed_air_supply
+filter_dpt["highPort"] % filter.airInlet
+filter_dpt["lowPort"] % filter.airOutlet
+hwct % htg_coil.airOutlet
+hsp_limit_supply["pressure_sensor"]["lowPort"] % hvacspace
+hsp_limit_supply["pressure_sensor"]["highPort"] % sf.airOutlet
+smoke % supply_air
+sat % supply_air
+duct_dpt["highPort"] % supply_air
+duct_dpt["lowPort"] % hvacspace
+building_dpt["highPort"] % hvacspace
+building_dpt["lowPort"] % outside
 
 
 class G36_FIG10_AHU(System):
@@ -227,7 +227,7 @@ ahu.heating = htg_vlv["position"]  # equivalent to htg_vlv['actuator']['postion'
 sequence = "lorem ipsum of sequence"
 g36_fig_a_10 = G36Sequence(label="G36_FIG_A_10", comment=sequence)
 
-g36_fig_a_10.uses(rat.observesProperty, AnalogInput, "return-air-temp")
+g36_fig_a_10.uses(rat.observedProperty, AnalogInput, "return-air-temp")
 g36_fig_a_10.produces(htg_vlv["actuator"]["command"], AnalogOutput, "HW VALVE")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

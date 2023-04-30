@@ -39,7 +39,7 @@ from ...core import (
     logging,
     template_update,
 )
-from ...functions import AnalogInput, AnalogOutput
+from ...producer import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
 from .actuator import (
     BaseActuator,
@@ -106,11 +106,11 @@ class DamperAndActuator(System):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["damper"]["command"] = self["actuator"]["command"]
-        self["is_open"] = self["damper"]["is_open"] = self["actuator"]["is_open"]
-        self["is_closed"] = self["damper"]["is_closed"] = self["actuator"]["is_closed"]
+        self.is_open = self["damper"]["is_open"] = self["actuator"]["is_open"]
+        self.is_closed = self["damper"]["is_closed"] = self["actuator"]["is_closed"]
         self["actuator"].linkageOutlet >> self["damper"].linkageInlet
-        self["position"] = self["damper"]["position"] = self["actuator"]["position"]
-        self["position_feedback"] = self["actuator"]["position_sensor"].observesProperty
+        self.position = self["damper"].position = self["actuator"].position
+        self.position_feedback = self["actuator"]["position_sensor"].observedProperty
         self.airInlet.mapsTo = self["damper"].airInlet
         self.airOutlet.mapsTo = self["damper"].airOutlet
 

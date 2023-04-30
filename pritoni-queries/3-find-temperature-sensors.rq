@@ -5,7 +5,7 @@ PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
 SELECT DISTINCT ?sensorLabel
 WHERE {
     ?sensor a/rdfs:subClassOf* s223:Sensor .
-    ?sensor s223:observesProperty ?prop .
+    ?sensor s223:observes ?prop .
     {
        ?prop qudt:hasQuantityKind quantitykind:Temperature .
     }

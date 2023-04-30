@@ -1,5 +1,7 @@
 from typing import Dict
 
+from bob.producer import FunctionBlock
+from bob.producer.causality import Causality
 from bob.properties.electricity import Amps
 from bob.properties.light import RelativeLuminousFlux
 from bob.properties.ratio import PercentCommand
@@ -18,7 +20,7 @@ from ...core import (
     template_update,
 )
 from ...properties.time import Hour
-from ...sensor.electricity import CurrentBinarySensor
+from ...sensor.electricity import CurrentSensor
 
 _namespace = BOB
 
@@ -86,6 +88,12 @@ class SinglePoleSwitch(Switch):
         super().__init__(_config, **kwargs)
 
 
+current_relay_template = {
+    "cp": {"dryContact": OnOffSignalOutletConnectionPoint},
+    "properties": {("amps_rating", Amps): {}, ("onOffStatus", OnOffStatus): {}},
+}
+
+
 class CurrentRelay(Equipment):
     """
     Current detection Equipment that gives a OnOff status by the action
@@ -96,26 +104,27 @@ class CurrentRelay(Equipment):
     """
 
     _class_iri = P223.CurrentRelay
-    outputSignal: OnOffSignalOutletConnectionPoint
-    onOffStatus: OnOffStatus
 
     def __init__(self, config: Dict = None, **kwargs):
-        kwargs = {**config.get("params", {}), **kwargs}
-        _ofMedium = kwargs.pop("ofMedium")
-        _hasMeasurementLocation = kwargs.pop("hasMeasurementLocation", None)
+        _config = template_update(current_relay_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+
+        # _hasObservationLocation = kwargs.pop("hasObservationLocation", None)
 
         _label = kwargs["label"]
 
-        super().__init__(config, **kwargs)
+        super().__init__(_config, **kwargs)
 
-        sensor = CurrentBinarySensor(
-            label=_label + "CurrentBinarySensor",
-            ofMedium=_ofMedium,
-            hasMeasurementLocation=_hasMeasurementLocation,
+        sensor = CurrentSensor(
+            label="currentSensor",
+            ofMedium=Electricity,
         )
-        self.onOffStatus = sensor.observesProperty
-        self._sensors = [sensor]
+        # sensor % _hasObservationLocation
         self > sensor
+        status_producer = Causality(label="statusProducer")
+        status_producer.cause_input << sensor.observedProperty
+        status_producer.effect_output >> self["onOffStatus"]
+        self > status_producer
 
 
 class TimerSwitch(SinglePoleSwitch):
@@ -129,13 +138,12 @@ class TimerSwitch(SinglePoleSwitch):
     onOffCommand: OnOffCommand
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update(switch_template, config)
-        if config:
-            _config.update(config)
+        _config = template_update(current_relay_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
         _delay = kwargs.pop("delay") if "delay" in kwargs else None
+
         if _delay:
             _config["properties"][("delay", Hour)] = {"hasValue": _delay}
-        kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
 
@@ -146,14 +154,12 @@ class DimmableSwitch(SinglePoleSwitch):
     """
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update(switch_template, config)
-        if config:
-            _config.update(config)
+        _config = template_update(current_relay_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
         _dimmer_command = (
             kwargs.pop("dimmer_command") if "dimmer_command" in kwargs else 0
         )
         _config["properties"][("dimmer_command", PercentCommand)] = {
             "hasValue": _dimmer_command
         }
-        kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)

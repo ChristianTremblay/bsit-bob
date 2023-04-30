@@ -9,6 +9,7 @@ from ..core import (
     S223,
     UNIT,
     Air,
+    Equipment,
     Medium,
     PropertyReference,
     Water,
@@ -28,9 +29,7 @@ class TemperatureSetpoint(Setpoint):
 
 class TemperatureSensor(Sensor):
     _class_iri = S223.Sensor
-    observesProperty: PropertyReference  # Temperature
-    hasMinRange: PropertyReference
-    hasMaxRange: PropertyReference
+    observes: PropertyReference  # Temperature
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
@@ -46,7 +45,7 @@ class TemperatureSensor(Sensor):
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = Temperature(
+        self.observes = Temperature(
             # isObservedBy=self,
             label=f"{self.label}.Temperature",
             **_property_kwargs,

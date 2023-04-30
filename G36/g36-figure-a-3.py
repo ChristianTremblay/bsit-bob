@@ -49,15 +49,15 @@ from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.gas import GasMonitor
 from bob.equipment.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve
-from bob.functions import (
+from bob.producer import (
     AnalogInput,
     AnalogOutput,
     BinaryInput,
     BinaryOutput,
     FunctionBlock,
 )
-from bob.functions.g36 import G36Sequence
-from bob.functions.occupancy import OccupancyFunction
+from bob.producer.g36 import G36Sequence
+from bob.producer.occupancy import OccupancyFunction
 from bob.properties import Flow, PercentCommand, Temperature, temperature
 from bob.properties.states import OccupancyStatus, OnOffCommand, OnOffStatus
 from bob.properties.volume import Gallons
@@ -175,17 +175,17 @@ class VAV_FIGA3(System):
         self.plenumAirInlet.mapsTo = self["HTG-COIL"].airInlet
         self.airOutlet.mapsTo = self["DPR"].airOutlet
 
-        self.airFlow = self["SA-F"].observesProperty
+        self.airFlow = self["SA-F"].observedProperty
         self.zoneTemperature = self["ZONE-THERMOSTAT"][
             "temperature_sensor"
-        ].observesProperty
-        self.supplyAirTemperature = self["DA-T"].observesProperty
+        ].observedProperty
+        self.supplyAirTemperature = self["DA-T"].observedProperty
         self.damperPosition = self["DPR"]["actuator"].command
         self.valvePosition = self["HTG-VLV"]["actuator"].command
         self.fanStatus = self["FAN-STARTER"].onOffStatus
         self.fanCommand = self["FAN-STARTER"].onOffCommand
 
-        self["SA-F"].hasMeasurementLocation = self["DPR"].airInlet
+        self["SA-F"] % self["DPR"].airInlet
 
 
 supply_air = AirConnection(label="SA_In", comment="Supply Air for VAV")
@@ -209,18 +209,18 @@ vav["FAN-STARTER"] >> vav["FAN"]
 hws >> vav["HTG-COIL"]
 vav["HTG-COIL"] >> vav["HTG-VLV"] >> hwr
 
-vav["ZONE-THERMOSTAT"]["temperature_sensor"].hasMeasurementLocation = hvac_space
-vav["ZN-CO2"]["CO2"].hasMeasurementLocation = hvac_space
-vav["ZN-WINDOW-SWITCH"].hasMeasurementLocation = window
-vav["ZN-OCC-SENSOR"].hasMeasurementLocation = hvac_space
-vav["DA-T"].hasMeasurementLocation = discharge_air
+vav["ZONE-THERMOSTAT"]["temperature_sensor"] % hvac_space
+vav["ZN-CO2"]["CO2"] % hvac_space
+vav["ZN-WINDOW-SWITCH"] % window
+vav["ZN-OCC-SENSOR"] % hvac_space
+vav["DA-T"] % discharge_air
 
 # Not sure if it's really required...but I think readings should be in space
-hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observesProperty
-hvac_space.co2 = vav["ZN-CO2"]["CO2"].observesProperty
-hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observesProperty
+hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observedProperty
+hvac_space.co2 = vav["ZN-CO2"]["CO2"].observedProperty
+hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observedProperty
 
-# Now that space is full of Equipments and connections...
+# Now that space is full of Equipment and connections...
 # Zone are meant for control, let's define the control side of the thing
 # temperature, co2, etc of zone.... could be the result of a function block
 # making calculation from multiple hvac space readings...
@@ -238,9 +238,9 @@ occupancy = OccupancyFunction(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
-occupancy.uses(vav["ZN-OCC-SENSOR"].observesProperty, BinaryInput, "occupancy-sensor")
+occupancy.uses(vav["ZN-OCC-SENSOR"].observedProperty, BinaryInput, "occupancy-sensor")
 occupancy.uses(
-    vav["ZONE-THERMOSTAT"]["local_override"].observesProperty,
+    vav["ZONE-THERMOSTAT"]["local_override"].observedProperty,
     BinaryInput,
     "local-override",
 )

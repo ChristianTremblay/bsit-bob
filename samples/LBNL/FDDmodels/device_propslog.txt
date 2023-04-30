@@ -676,7 +676,7 @@ s223:VirtualSensor a s223:Class,
     sh:property [ sh:class s223:Property ;
             sh:path s223:hasFunctionInput ],
         [ sh:maxCount 0 ;
-            sh:path s223:hasMeasurementLocation ] .
+            sh:path s223:hasObservationLocation ] .
 
 s223:abstract a rdf:Property ;
     rdfs:label "abstract" ;
@@ -731,7 +731,7 @@ s223:hasDeadband a rdf:Property ;
 s223:hasEquipment a rdf:Property ;
     rdfs:label "has Equipment" ;
     s223:inverseOf s223:isEquipmentOf ;
-    rdfs:comment "The relation hasEquipment represents a containment relationship between a system and a Equipment or between two Equipments. A hasEquipment B indicates that Equipment or system A contains Equipment B." ;
+    rdfs:comment "The relation hasEquipment represents a containment relationship between a system and a Equipment or between two Equipment. A hasEquipment B indicates that Equipment or system A contains Equipment B." ;
     rdfs:domain s223:System ;
     rdfs:range s223:Equipment ;
     rdfs:subPropertyOf s223:contains .
@@ -790,7 +790,7 @@ s223:isEquipmentOf a rdf:Property ;
 
 s223:isObservedBy a rdf:Property ;
     rdfs:label "is observed by" ;
-    s223:inverseOf s223:observesProperty .
+    s223:inverseOf s223:observes .
 
 s223:isSubSystemOf a rdf:Property ;
     rdfs:label "is sub system of" ;
@@ -854,7 +854,7 @@ s223:DifferentialSensor a s223:Class,
     rdfs:subClassOf s223:Sensor ;
     sh:property [ sh:maxCount 2 ;
             sh:minCount 2 ;
-            sh:path s223:hasMeasurementLocation ] .
+            sh:path s223:hasObservationLocation ] .
 
 s223:Enumerable a s223:Class,
         sh:NodeShape ;
@@ -984,7 +984,7 @@ s223:measuresSubstance a rdf:Property ;
 s223:observesProperty a rdf:Property ;
     rdfs:label "observes property" ;
     s223:inverseOf s223:isObservedBy ;
-    rdfs:comment "The relation observesProperty binds a sensor to the ObservableProperty that represents the measured value." .
+    rdfs:comment "The relation observes binds a sensor to the ObservableProperty that represents the measured value." .
 
 s223:relativeTo a rdf:Property ;
     rdfs:label "relative to" .
@@ -1108,9 +1108,9 @@ s223:Junction a s223:Class,
             sh:path s223:lnx ;
             sh:severity sh:Info ] .
 
-s223:hasMeasurementLocation a rdf:Property ;
+s223:hasObservationLocation a rdf:Property ;
     rdfs:label "has measurement location" ;
-    rdfs:comment "The relation hasMeasurementLocation binds the ObservableProperty representing a measurement to the topological location where the measurement is made. The measurement location can be a ConnectionPoint, Connection, Segment, or PhysicalSpace." .
+    rdfs:comment "The relation hasObservationLocation binds the ObservableProperty representing a measurement to the topological location where the measurement is made. The measurement location can be a ConnectionPoint, Connection, Segment, or PhysicalSpace." .
 
 s223:hasRole a rdf:Property ;
     rdfs:label "has role" .
@@ -1383,7 +1383,7 @@ A Connection may contain branches or intersections. These are modeled using Segm
 s223:System a s223:Class,
         sh:NodeShape ;
     rdfs:label "System" ;
-    rdfs:comment """A System is a logical grouping of Equipments for some functional or system reason, such as a "chilled water system, or HVAC system"
+    rdfs:comment """A System is a logical grouping of Equipment for some functional or system reason, such as a "chilled water system, or HVAC system"
 A System is distinguished from a Equipment by the fact that you typically have to install and configure a System, while you might just install and use a Equipment.""" ;
     rdfs:subClassOf s223:Concept ;
     sh:property [ a sh:PropertyShape ;
@@ -1449,7 +1449,7 @@ s223:Sensor a s223:Class,
     sh:or ( [ sh:property [ sh:maxCount 1 ;
                         sh:message "A non-differential Sensor must have exactly 1 measurement location" ;
                         sh:minCount 1 ;
-                        sh:path s223:hasMeasurementLocation ] ] [ sh:property [ sh:hasValue s223:DifferentialSensor ;
+                        sh:path s223:hasObservationLocation ] ] [ sh:property [ sh:hasValue s223:DifferentialSensor ;
                         sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] [ sh:property [ sh:hasValue s223:VirtualSensor ;
                         sh:path ( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) ] ] ) ;
     sh:property [ sh:name "Test for compatible declared Substances" ;
@@ -1485,7 +1485,7 @@ FILTER (?ds1 != ?ds2)
 FILTER (?domain1 = ?domain2)
 }""" ] ],
         [ sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Connection ] [ sh:class s223:Segment ] [ sh:class s223:ConnectionPoint ] ) ;
-            sh:path s223:hasMeasurementLocation ],
+            sh:path s223:hasObservationLocation ],
         [ sh:class s223:QuantifiableProperty ;
             sh:path s223:hasMeasurementPrecision ],
         [ sh:class s223:QuantifiableProperty ;
@@ -1522,7 +1522,7 @@ s223:ConnectionPoint a s223:Class,
     rdfs:label "ConnectionPoint" ;
     s223:abstract true ;
     rdfs:comment """
-A ConnectionPoint is the modeling construct used to represent the fact that a Equipment can be connected to another Equipment. It is the abstract representation of the flange, wire terminal, or other physical feature where a connection is made. In addition to Equipments, other Connectable things (see `s223:Connectable`) can have one or more ConnectionPoints.
+A ConnectionPoint is the modeling construct used to represent the fact that a Equipment can be connected to another Equipment. It is the abstract representation of the flange, wire terminal, or other physical feature where a connection is made. In addition to Equipment, other Connectable things (see `s223:Connectable`) can have one or more ConnectionPoints.
 
 A ConnectionPoint can be constrained to relate to a specific medium such as air, water, or electricity which determines what other things can be connected to it. For example, by constraining a ConnectionPoint to be for air it cannot be used for an electrical connection.
 
@@ -1552,14 +1552,14 @@ A ConnectionPoint belongs to exactly one Connectable thing. """ ;
             sh:path s223:hasMedium ],
         [ sh:class s223:Connectable ;
             sh:maxCount 1 ;
-            sh:name "ConnectionPointToEquipmentShape" ;
+            sh:name "ConnectionPointToEquipmenthape" ;
             sh:path s223:isConnectionPointOf ],
         s223:hasPropertyShape .
 
 s223:Equipment a s223:Class,
         sh:NodeShape ;
     rdfs:label "Equipment" ;
-    rdfs:comment "A Equipment is the modeling construct used to represent a physical entity or piece of mechanical equipment that one might buy from a vendor - a tangible object designed to accomplish a specific task. Examples of possible Equipments include a pump, fan, heat exchanger, luminaire, temperature sensor, or flow meter." ;
+    rdfs:comment "A Equipment is the modeling construct used to represent a physical entity or piece of mechanical equipment that one might buy from a vendor - a tangible object designed to accomplish a specific task. Examples of possible Equipment include a pump, fan, heat exchanger, luminaire, temperature sensor, or flow meter." ;
     rdfs:subClassOf s223:Connectable ;
     sh:property [ a sh:PropertyShape ;
             sh:class s223:Equipment ;

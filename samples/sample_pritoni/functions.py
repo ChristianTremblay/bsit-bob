@@ -6,14 +6,15 @@ import lighting_devices as ld
 import lighting_spaces as ls
 
 from bob.core import UNIT, bind_model_namespace, dump
-from bob.functions import FunctionBlock, G36AnalogInput, G36AnalogOutput
-from bob.functions.occupancy import OccupancyFunction
+from bob.producer import FunctionBlock, G36AnalogInput, G36AnalogOutput
+from bob.producer.occupancy import OccupancyFunction
 from bob.properties import Temperature
 from bob.properties.states import OccupancyStatus, Schedule
 from bob.sensor.temperature import TemperatureSensor
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
 class Average(FunctionBlock):
@@ -30,7 +31,7 @@ class Average(FunctionBlock):
 f = Average(label="FB-1", comment="Compute DA-T Avg")
 
 # line up the input(s)
-hd.ahu["DA-T"].observesProperty >> f.u1
+hd.ahu["DA-T"].observedProperty >> f.u1
 
 # line up the output to a special property
 f_avg_temp = Temperature(label="DA-T-AVG", hasValue=0, unit=UNIT.DEG_C)
@@ -47,7 +48,7 @@ open_office_occ_control = OccupancyFunction(
 )
 open_office_occ_control_schedule = Schedule(label="Open Office Occ Schedule")
 
-ld.openoffice_movement.observesProperty >> open_office_occ_control.inStatus
+ld.openoffice_movement.observedProperty >> open_office_occ_control.inStatus
 open_office_occ_control_schedule >> open_office_occ_control.inSchedule
 
 open_office_occ_control.outStatus >> ls.lighting_zone_1.occupancy
@@ -64,7 +65,7 @@ kitchenette_occ_control = OccupancyFunction(
 )
 kitchenette_occ_control_schedule = Schedule(label="Kitchenette Occ Schedule")
 
-ld.kitchenette_movement.observesProperty >> kitchenette_occ_control.inStatus
+ld.kitchenette_movement.observedProperty >> kitchenette_occ_control.inStatus
 kitchenette_occ_control_schedule >> kitchenette_occ_control.inSchedule
 
 kitchenette_occ_control.outStatus >> ls.lighting_zone_6.occupancy
@@ -80,7 +81,7 @@ private_office_occ_control = OccupancyFunction(
 )
 private_office_occ_control_schedule = Schedule(label="Private Office Occ Schedule")
 
-ld.privateoffice_movement.observesProperty >> private_office_occ_control.inStatus
+ld.privateoffice_movement.observedProperty >> private_office_occ_control.inStatus
 private_office_occ_control_schedule >> private_office_occ_control.inSchedule
 
 private_office_occ_control.outStatus >> ls.lighting_zone_4.occupancy
@@ -96,7 +97,7 @@ bathroom_occ_control = OccupancyFunction(
 )
 bathroom_occ_control_schedule = Schedule(label="Bathroom Occ Schedule")
 
-ld.bathroom_movement.observesProperty >> bathroom_occ_control.inStatus
+ld.bathroom_movement.observedProperty >> bathroom_occ_control.inStatus
 bathroom_occ_control_schedule >> bathroom_occ_control.inSchedule
 
 bathroom_occ_control.outStatus >> ls.lighting_zone_3.occupancy
@@ -112,7 +113,7 @@ corridor_occ_control = OccupancyFunction(
 )
 corridor_occ_control_schedule = Schedule(label="Corridor Occ Schedule")
 
-ld.corridor_movement.observesProperty >> corridor_occ_control.inStatus
+ld.corridor_movement.observedProperty >> corridor_occ_control.inStatus
 corridor_occ_control_schedule >> corridor_occ_control.inSchedule
 
 corridor_occ_control.outStatus >> ls.lighting_zone_5.occupancy

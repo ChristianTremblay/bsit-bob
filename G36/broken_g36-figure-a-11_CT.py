@@ -38,10 +38,10 @@ from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.stats import HighStaticPressureStat
 from bob.equipment.hvac.valve import TwoWayValve
 from bob.externalreference.bacnet import BACnetDevice, BACnetReference
-from bob.functions import InputConnector
+from bob.producer import InputConnector
 
 # from bob.equipment.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
-from bob.functions.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
+from bob.producer.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Sequence
 from bob.properties.ratio import Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.fire import SmokeDetectionSensor
@@ -186,17 +186,17 @@ hws >> hwc.hotWaterInlet
 hwc.hotWaterOutlet >> hw_valve >> hwr
 
 # Sensors
-rat.hasMeasurementLocation = ra
-dpt1.hasMeasurementLocationHigh = filter.airInlet
-dpt1.hasMeasurementLocationLow = filter.airOutlet
+rat % ra
+dpt1["highPort"] % filter.airInlet
+dpt1["lowPort"] % filter.airOutlet
 
-dps["DPS.sensor"].hasMeasurementLocationHigh = f.airOutlet
-dps["DPS.sensor"].hasMeasurementLocationLow = inside
-sd.hasMeasurementLocation = f.airOutlet
-dat.hasMeasurementLocation = f.airOutlet
+dps["DPS.sensor"]["highPort"] % f.airOutlet
+dps["DPS.sensor"]["lowPort"] % inside
+sd % f.airOutlet
+dat % f.airOutlet
 
-dpt2.hasMeasurementLocationHigh = sa
-dpt2.hasMeasurementLocationLow = inside
+dpt2["highPort"] % sa
+dpt2["lowPort"] % inside
 
 # Map Systems
 a11 = FIG_A_11(
@@ -207,17 +207,17 @@ a11 = FIG_A_11(
 high_static.highPressureNO.mapsTo = dps.highStaticPressureOutput
 high_static.enableVFD.mapsTo = vfd_controller.enable
 
-# vfd > vfd_controller  ###TODO: Equipments cannot contain systems
+# vfd > vfd_controller  ###TODO: Equipment cannot contain systems
 
-a11.uses(rat.observesProperty)
-a11.uses(dat.observesProperty)
+a11.uses(rat.observedProperty)
+a11.uses(dat.observedProperty)
 # a11.uses(high_static.resetInput)
-a11.uses(dpt1.observesProperty)
+a11.uses(dpt1.observedProperty)
 a11.produces(hw_valve.hasPositionCommand)
 a11.uses(vfd.drive_running)
 a11.produces(vfd.run_command)
 a11.produces(vfd.speed_reference)
-a11.uses(dpt2.observesProperty)
+a11.uses(dpt2.observedProperty)
 # a11.network.uses(vfd_controller.mstp) Is Network part of the G36 requirement ? Should this be there ?
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

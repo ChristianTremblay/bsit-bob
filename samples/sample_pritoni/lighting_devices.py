@@ -15,7 +15,8 @@ from bob.sensor.light import DaylightSensor
 from bob.sensor.motion import OccupantMotionSensor
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
 # Now we build lights for Kitchenette
@@ -69,14 +70,14 @@ privateoffice_movement = OccupantMotionSensor(
     label="O3",
     comment="Occupancy sensor for Private Office (O3)",
     hasPhysicalLocation=ps.private_office,
-    hasMeasurementLocation=ls.privateoffice_lightspace,
 )
+privateoffice_movement % ls.privateoffice_lightspace
 privateoffice_light_conn = LightVisibleConnection(
     label="LightHub_7_8", comment="Needed to connect multiple luminaires to space"
 )
 
 
-# privateoffice_movement.hasMeasurementLocation = privateoffice_lightspace
+# privateoffice_movement % privateoffice_lightspace
 # privateoffice_movement.hasPhysicalLocation = private_office
 
 # Now we build lights for Corridor

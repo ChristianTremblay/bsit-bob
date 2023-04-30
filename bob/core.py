@@ -855,6 +855,7 @@ class Property(Node):
     ofSubstance: Substance
     hasValue: Literal
     hasExternalReference: ExternalReference
+    hasAspect: EnumerationKind
 
     # override this for a specialize subclass
     _external_reference_class: type = ExternalReference
@@ -882,7 +883,18 @@ class Property(Node):
                 )
             external_reference = kwargs.pop("hasExternalReference")
 
+        aspects = []
+        if "hasAspect" in kwargs:
+            _aspects = kwargs.pop("hasAspect")
+            if isinstance(_aspects, list):
+                aspects.extend(_aspects)
+            else:
+                aspects.append(_aspects)
+
         super().__init__(**kwargs)
+
+        for each in aspects:
+            self + each
 
         # if there is an initial value, link to it
         if init_value is not None:
@@ -914,11 +926,27 @@ class Property(Node):
         if INCLUDE_INVERSE:
             external_reference.isExternalReferenceOf = self
 
+    def add_aspect(self, aspect: EnumerationKind) -> Node:
+        """
+        Add an aspect to a property
+        """
+        self._data_graph.add((self._node_iri, S223.hasAspect, aspect._node_iri))
+        if INCLUDE_INVERSE:
+            aspect.isAspectOf = self
+        return self
+
     def __matmul__(self, external_reference: ExternalReference) -> Node:
         """
         This property is at some external reference.
         """
         self.add_external_reference(external_reference)
+        return self
+
+    def __add__(self, aspect: EnumerationKind) -> Node:
+        """
+        Add aspect to property
+        """
+        self.add_aspect(aspect)
         return self
 
 
@@ -1324,9 +1352,26 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
     _class_iri: URIRef = S223.Connection
     hasMedium: Medium
+    hasAspect: EnumerationKind
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
+
+    def add_aspect(self, aspect: EnumerationKind) -> Node:
+        """
+        Add an aspect to a connection
+        """
+        self._data_graph.add((self._node_iri, S223.hasAspect, aspect._node_iri))
+        if INCLUDE_INVERSE:
+            aspect.isAspectOf = self
+        return self
+
+    def __add__(self, aspect: EnumerationKind) -> Node:
+        """
+        Add aspect to property
+        """
+        self.add_aspect(aspect)
+        return self
 
 
 class Connectable(Node):
@@ -1547,6 +1592,22 @@ class ConnectionPoint(Node):
 
         # link the segment back
         segment.link_to(self)
+
+    def add_aspect(self, aspect: EnumerationKind) -> Node:
+        """
+        Add an aspect to a connection
+        """
+        self._data_graph.add((self._node_iri, S223.hasAspect, aspect._node_iri))
+        if INCLUDE_INVERSE:
+            aspect.isAspectOf = self
+        return self
+
+    def __add__(self, aspect: EnumerationKind) -> Node:
+        """
+        Add aspect to property
+        """
+        self.add_aspect(aspect)
+        return self
 
 
 @multimethod
@@ -3048,7 +3109,7 @@ class Equipment(Container, Connectable):
                 if group_name == "params":
                     continue
                 if group_name == "cp":
-                    for (thing_name, thing_class) in group_items.items():
+                    for thing_name, thing_class in group_items.items():
                         setattr(
                             self,
                             thing_name,
@@ -3061,7 +3122,7 @@ class Equipment(Container, Connectable):
                         raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
-                    if isinstance(thing, (Equipment, System)):
+                    if isinstance(thing, (Equipment, System, _Sensor, _Producer)):
                         self > thing
                     if isinstance(thing, Property):
                         self[thing_name] = thing
@@ -3096,6 +3157,52 @@ def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None
         parent_equipment._data_graph.add(
             (child_equipment._node_iri, S223.isContainedIn, parent_equipment._node_iri)
         )
+
+
+@multimethod
+def contains_mm(parent_equipment: Equipment, child_sensor: _Sensor) -> None:
+    """Equipment > Equipment"""
+    logging.info(f"Equipment {parent_equipment} contains Equipment {child_sensor}")
+
+    parent_equipment._data_graph.add(
+        (parent_equipment._node_iri, S223.contains, child_sensor._node_iri)
+    )
+    if INCLUDE_INVERSE:
+        parent_equipment._data_graph.add(
+            (child_sensor._node_iri, S223.isContainedIn, parent_equipment._node_iri)
+        )
+
+
+@multimethod
+def contains_mm(parent_equipment: Equipment, child_producer: _Producer) -> None:
+    """Equipment > Producer"""
+    logging.info(f"Equipment {parent_equipment} contains Equipment {child_producer}")
+
+    parent_equipment._data_graph.add(
+        (parent_equipment._node_iri, S223.contains, child_producer._node_iri)
+    )
+    if INCLUDE_INVERSE:
+        parent_equipment._data_graph.add(
+            (child_producer._node_iri, S223.isContainedIn, parent_equipment._node_iri)
+        )
+
+
+# class _Sensor(Equipment):
+#    "Placeholder to prevent circular reference"
+#    _class_iri: URIRef = S223.Sensor
+
+
+class _Sensor(Equipment):
+    """Placeholder to prevent circular reference
+    I also need that so __matmul__ work when relating sensor to their property
+    """
+
+    _class_iri: URIRef = None
+
+
+class _Producer(Node):
+    "Placeholder to prevent circular reference"
+    _class_iri: URIRef = P223.Producer
 
 
 class DomainSpace(Connectable):
@@ -3171,7 +3278,7 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
 def template_update(base: Dict = {}, config: Dict = None, bases: List = None):
     """
     This utility allows to preserve module templates from
-    undesired modification during creation of Equipments.
+    undesired modification during creation of Equipment.
 
     Usage :
     _config = template_update(template, user_provided_config_dict)
@@ -3279,7 +3386,10 @@ Domain = EnumerationKind("Domain")
 # Top Hierarchy Media
 Air = Medium("Air")
 Water = Medium("Water")
-Light = Medium("Light")
+EM = Medium("EM")  # electro-magnetic
+Light = EM("Light")
+Microwave = EM("Microwave")
+RF = EM("RF")
 Electricity = Medium("Electricity")
 NaturalGas = Medium("NaturalGas")
 Glycol = Medium("Glycol")
