@@ -23,31 +23,50 @@ _namespace = S223
 Air.CompressedAir = CompressedAir = Air("CompressedAir", _alt_namespace=P223)
 
 # Electricity
-Electricity.AC575V_60Hz = Electricity("575V-60Hz")
-Electricity.AC480V_60Hz = Electricity("480V-60Hz")
-Electricity.AC347V_60Hz = Electricity("347V-60Hz")
-Electricity.AC277V_60Hz = Electricity("277V-60Hz")
-Electricity.AC208V_60Hz = Electricity("208V-60Hz")
-Electricity.AC120V_240V_60Hz = Electricity("120V-240V-60Hz")
-Electricity.AC240V_60Hz = Electricity("240V-60Hz")
-Electricity.AC120V_60Hz = Electricity("120V-60Hz")
-Electricity.AC24V_60Hz = Electricity("24V-60Hz", _alt_namespace=P223)
-Electricity.DC48V = Electricity(
-    "48V-DC", _alt_namespace=P223
-)  # TODO : Create connections
-Electricity.DC24V = Electricity(
-    "24V-DC", _alt_namespace=P223
-)  # TODO : Create connections
-Electricity.DC12V = Electricity(
-    "12V-DC", _alt_namespace=P223
-)  # TODO : Create connections
-Electricity.DC5V = Electricity(
-    "5V-DC", _alt_namespace=P223
-)  # TODO : Create connections
-Electricity.OnOffSignal = Electricity("OnOffSignal", _alt_namespace=P223)
-Electricity.ModulationSignal = Electricity("ModulationSignal", _alt_namespace=P223)
-Electricity.RS485 = Electricity("RS485", _alt_namespace=P223)
-Electricity.Ethernet = Electricity("Ethernet", _alt_namespace=P223)
+Electricity.AC = Electricity("AC")
+Electricity.AC575V_60Hz = Electricity.AC("575V-60Hz")
+Electricity.AC600V1Ph_60Hz = Electricity.AC("600V1Ph-60Hz")
+Electricity.AC480V_60Hz = Electricity.AC("480V-60Hz")
+Electricity.AC480V1Ph_60Hz = Electricity.AC("480V1Ph-60Hz")
+Electricity.AC347V_60Hz = Electricity.AC("347V-60Hz")
+Electricity.AC277V_60Hz = Electricity.AC("277V-60Hz")
+Electricity.AC208V_60Hz = Electricity.AC("208V-60Hz")
+Electricity.AC208V1Ph_60Hz = Electricity.AC("208V1Ph-60Hz")
+Electricity.AC120V_208V_240V_60Hz = Electricity.AC("120V-208V-240V-60Hz")
+Electricity.AC120V_240V_60Hz = Electricity.AC("120V-240V-60Hz")
+Electricity.AC240V_60Hz = Electricity.AC("240V-60Hz")
+Electricity.AC240V3Ph_60Hz = Electricity.AC("240V3Ph-60Hz")
+Electricity.AC120V_60Hz = Electricity.AC("120V-60Hz")
+Electricity.AC24V_60Hz = Electricity.AC("24V-60Hz")
+
+Electricity.AC100V_50Hz = Electricity.AC("100V-50Hz")
+Electricity.AC200V_50Hz = Electricity.AC("200V-50Hz")
+Electricity.AC220V_50Hz = Electricity.AC("220V-50Hz")
+Electricity.AC230V_50Hz = Electricity.AC("230V-50Hz")
+Electricity.AC240V_50Hz = Electricity.AC("240V-50Hz")
+Electricity.AC380V_50Hz = Electricity.AC("380V-50Hz")
+Electricity.AC400V_50Hz = Electricity.AC("400V-50Hz")
+Electricity.AC415V_50Hz = Electricity.AC("415V-50Hz")
+
+Electricity.DC = Electricity("DC")
+Electricity.DC380V = Electricity.DC("380V")
+Electricity.DC48V = Electricity.DC("48V")
+Electricity.DC36V = Electricity.DC("36V")
+Electricity.DC28V = Electricity.DC("28V")
+Electricity.DC24V = Electricity.DC("24V")
+Electricity.DC12V = Electricity.DC("12V")
+Electricity.DC5V = Electricity.DC("5V")
+Electricity.Signal = Electricity("Signal")
+# Electricity.Control = Electricity.Signal("Control", _alt_namespace=P223)
+Electricity.OnOffSignal = Electricity.Signal("OnOffSignal", _alt_namespace=P223)
+Electricity.ModulatedSignal = Electricity.Signal("Modulated")
+Electricity.USB = Electricity.Signal("USB")
+Electricity.DC0_10 = Electricity.ModulatedSignal("0-10VDC")
+Electricity.MA4_20 = Electricity.ModulatedSignal("4-20mA")
+Electricity.Communication = Electricity.Signal("Communication", _alt_namespace=P223)
+Electricity.RS485 = Electricity.Communication("EIA-485")
+Electricity.Ethernet = Electricity.Communication("Ethernet")
+Electricity.IEC14908 = Electricity.Communication("IEC14908")
 
 # Water
 Water.ChilledWater = ChilledWater = Water("ChilledWater")
@@ -333,3 +352,66 @@ S223:EnumerationKind-RunStatus
     S223:RunStatus-Unknown
 
 """
+# ===================
+# Aspects
+# ===================
+# Enumeration kinds that add context to properties
+Context = EnumerationKind("Context")
+CtxAttribute = Context("Attribute")
+Dimensioned = Context("Dimensioned")
+Dimensionless = Context("Dimensionless")
+
+Dimensioned.LineLineVoltage = Dimensioned("LineLineVoltage", _alt_namespace=P223)
+Dimensioned.ABLineLineVoltage = Dimensioned("ABLineLineVoltage", _alt_namespace=P223)
+Dimensioned.BCLineLineVoltage = Dimensioned("BCLineLineVoltage", _alt_namespace=P223)
+Dimensioned.CALineLineVoltage = Dimensioned("CALineLineVoltage", _alt_namespace=P223)
+Dimensioned.LineNeutralVoltage = Dimensioned("LineNeutralVoltage", _alt_namespace=P223)
+Dimensioned.ANLineNeutralVoltage = Dimensioned(
+    "ANLineNeutralVoltage", _alt_namespace=P223
+)
+Dimensioned.BNLineNeutralVoltage = Dimensioned(
+    "BNLineNeutralVoltage", _alt_namespace=P223
+)
+Dimensioned.CNLineNeutralVoltage = Dimensioned(
+    "CNLineNeutralVoltage", _alt_namespace=P223
+)
+Dimensioned.NominalFrequency = Dimensioned("NominalFrequency", _alt_namespace=P223)
+
+Dimensioned.Delta = Dimensioned("Delta")
+Dimensioned.DryBulb = Dimensioned("DryBulb")
+Dimensioned.Latent = Dimensioned("Latent")
+Dimensioned.Loss = Dimensioned("Loss")
+Dimensioned.Maximum = Dimensioned("Maximum")
+Dimensioned.Minimum = Dimensioned("Minimum")
+Dimensioned.Nominal = Dimensioned("Nominal")
+Dimensioned.Rated = Dimensioned("Rated")
+Dimensioned.Sensible = Dimensioned("Sensible")
+Dimensioned.StandardConditions = Dimensioned("StandardConditions")
+Dimensioned.Standby = Dimensioned("Standby")
+Dimensioned.Startup = Dimensioned("Startup")
+Dimensioned.Threshold = Dimensioned("Threshold")
+Dimensioned.Total = Dimensioned("Total")
+Dimensioned.Weight = Dimensioned("Weight")
+Dimensioned.WetBulb = Dimensioned("WetBulb")
+Dimensionless.Efficiency = Dimensioned("Efficiency")
+Dimensionless.NumberOfElectricalPhases = Dimensioned("NumberOfElectricalPhases")
+Dimensionless.PhaseAngle = Dimensioned("PhaseAngle")
+Dimensionless.PowerFactor = Dimensioned("PowerFactor")
+Dimensionless.ServiceFactor = Dimensioned("ServiceFactor")
+
+CtxAttribute.CatalogNumber = CtxAttribute("CatalogNumber")
+CtxAttribute.DayOfWeek = CtxAttribute("DayOfWeek")
+CtxAttribute.Effectiveness = CtxAttribute("Effectiveness")
+ElectricalPhaseIdentifier = CtxAttribute("ElectricalPhaseIdentifier")
+ElectricalPhaseIdentifier.A = ElectricalPhaseIdentifier("A")
+ElectricalPhaseIdentifier.B = ElectricalPhaseIdentifier("B")
+ElectricalPhaseIdentifier.C = ElectricalPhaseIdentifier("C")
+ElectricalPhaseIdentifier.AB = ElectricalPhaseIdentifier("AB")
+ElectricalPhaseIdentifier.BC = ElectricalPhaseIdentifier("BC")
+ElectricalPhaseIdentifier.CA = ElectricalPhaseIdentifier("CA")
+ElectricalPhaseIdentifier.ABC = ElectricalPhaseIdentifier("ABC")
+CtxAttribute.Face = CtxAttribute("Face")
+CtxAttribute.Manufacturer = CtxAttribute("Manufacturer")
+CtxAttribute.Model = CtxAttribute("Model")
+CtxAttribute.SerialNumber = CtxAttribute("SerialNumber")
+CtxAttribute.Year = CtxAttribute("Year")

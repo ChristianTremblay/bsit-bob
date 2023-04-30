@@ -8,7 +8,7 @@ model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-def test_create_Equipments(bob_fixture):
+def test_create_Equipment(bob_fixture):
     d1 = Equipment(label="d1")
 
     class TestEquipment2(Equipment):

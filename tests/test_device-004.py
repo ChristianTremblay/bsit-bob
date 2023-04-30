@@ -136,7 +136,7 @@ def test_create_gas_monitor(bob_fixture):
     basement_hvac = HVACSpace(label="Basement HVAC Space")
 
     co2_and_temp_monitor.hasPhysicalLocation = basement
-    co2_and_temp_monitor["CO2_sensor"].hasMeasurementLocation = basement_hvac
-    co2_and_temp_monitor["Temperature_sensor"].hasMeasurementLocation = basement_hvac
+    co2_and_temp_monitor["CO2_sensor"] % basement_hvac
+    co2_and_temp_monitor["Temperature_sensor"] % basement_hvac
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

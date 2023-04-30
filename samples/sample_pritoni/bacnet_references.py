@@ -9,7 +9,8 @@ from bob.core import bind_model_namespace, dump
 from bob.externalreference.bacnet import BACnetDevice, BACnetReference
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
 # An HVAC BACnet Device
@@ -108,11 +109,11 @@ pritoni_schedule = BACnetReference(
     objectType="schedule",
 )
 
-hd.vav1["VAV1_ZN-T"].observesProperty @ zn1_t
-hd.vav2["VAV2_ZN-T"].observesProperty @ zn2_t
+hd.vav1["VAV1_ZN-T"].observedProperty @ zn1_t
+hd.vav2["VAV2_ZN-T"].observedProperty @ zn2_t
 
-hd.ahu["RF"]["vfd"]["drive_running"] @ rf_vfd_status
-hd.ahu["RF"]["vfd"]["run_command"] @ rf_vfd_cmd
+hd.ahu["RF_VFD"]["drive_running"] @ rf_vfd_status
+hd.ahu["RF_VFD"]["run_command"] @ rf_vfd_cmd
 
 # A bulb with only one object
 ld.openofficeNorth_luminaire_1.brightnessRatio @ BACnetReference(

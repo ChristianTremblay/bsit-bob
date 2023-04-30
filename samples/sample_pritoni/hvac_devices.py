@@ -20,7 +20,7 @@ from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.equipment.hvac.fan import Fan, FanWithStarter, FanWithVFD
 from bob.equipment.hvac.filter import Filter
-from bob.equipment.hvac.pump import PumpWithStarter
+from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve
 from bob.equipment.hvac.vav import VAV
@@ -29,7 +29,8 @@ from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
 ahu_template = {
@@ -69,15 +70,21 @@ ahu_template = {
         },
     },
     "equipment": {
-        ("RF", FanWithVFD): {
+        ("RF", Fan): {
             "comment": "Return Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
             "hasRole": Role.Return,
         },
-        ("SF", FanWithStarter): {
+        ("RF_VFD", VFD): {
+            "comment": "Return Air Fan VFD",
+        },
+        ("SF", Fan): {
             "comment": "Supply Air Fan",
             "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
             "hasRole": Role.Supply,
+        },
+        ("SF_Starter", MotorStarter): {
+            "comment": "Supply Air Fan Starter",
         },
         ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Heating coil"},
@@ -147,14 +154,21 @@ vav2_config = {
 }
 
 ahu = AirHandlingUnit(config=ahu_template)
+ahu["SF_Starter"] >> ahu["SF"]
+ahu["SF"].onOffStatus = ahu["SF_Starter"].onOffStatus
+ahu["RF_VFD"] >> ahu["RF"]
 
 clg_vlv = TwoWayActuatedProportionalValve(label="A5")
 htg_vlv = TwoWayActuatedProportionalValve(label="A4")
 
 chiller = Chiller(label="Chiller")
-chilled_water_pump = PumpWithStarter(label="ChilledWaterPump")
+chilled_water_pump = Pump(label="ChilledWaterPump")
+chilled_water_pump_starter = MotorStarter(label="ChilledWaterPumpStarter")
+chilled_water_pump_starter >> chilled_water_pump
 boiler = ElectricalHotWaterBoiler(label="Boiler")
-hot_water_pump = PumpWithStarter(label="HotWaterPump")
+hot_water_pump = Pump(label="HotWaterPump")
+hot_water_pump_starter = MotorStarter(label="HotWaterPumpStarter")
+hot_water_pump_starter >> hot_water_pump
 
 
 exhaustfan_template = {

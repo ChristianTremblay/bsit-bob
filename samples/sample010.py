@@ -25,7 +25,7 @@ model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-# make a couple Equipments
+# make a couple Equipment
 d1 = Equipment(label="d1")
 d2 = Equipment(label="d2")
 
@@ -44,7 +44,7 @@ s2_cp = AirInletSystemConnectionPoint(s2, label="s2.cp", mapsTo=d2_cp)
 # connect the connection points together (directional connection)
 s1_cp >> s2_cp
 
-# make a couple Equipments
+# make a couple Equipment
 d3 = Equipment(label="d3")
 d4 = Equipment(label="d4")
 

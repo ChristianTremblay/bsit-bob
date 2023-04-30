@@ -37,21 +37,22 @@ from bob.equipment.control.controller import Controller
 from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.equipment.hvac.gas import GasMonitor
 from bob.equipment.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.functions import (
+from bob.producer import (
     FunctionBlock,
     G36AnalogInput,
     G36AnalogOutput,
     G36BinaryInput,
     G36BinaryOutput,
 )
-from bob.functions.g36 import G36Figure_A_1, G36Sequence
-from bob.functions.occupancy import OccupancyFunction
+from bob.producer.g36 import G36Figure_A_1, G36Sequence
+from bob.producer.occupancy import OccupancyFunction
 from bob.properties import Flow, PercentCommand, Temperature, temperature
 from bob.properties.states import OccupancyStatus
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
-from bob.sensor.motion import IntrusionSensor, OccupancySensor
+from bob.sensor.motion import OccupantMotionSensor
+from bob.sensor.security import IntrusionSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace, HVACZone
 
@@ -103,7 +104,7 @@ Thermostat_template = {
     "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
     "sensors": {
         ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
-        ("local_override", OccupancySensor): {},
+        ("local_override", OccupantMotionSensor): {},
     },
 }
 
@@ -116,7 +117,7 @@ vav_system_template = {
             "unit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
         },
-        ("ZN-OCC-SENSOR", OccupancySensor): {},
+        ("ZN-OCC-SENSOR", OccupantMotionSensor): {},
         ("ZN-WINDOW-SWITCH", IntrusionSensor): {},
     },
     "properties": {
@@ -152,14 +153,14 @@ class VAV_FIGA1(System):
         self.airInlet.mapsTo = self["DPR"].airInlet
         self.airOutlet.mapsTo = self["DPR"].airOutlet
 
-        self.airFlow = self["SA-F"].observesProperty
+        self.airFlow = self["SA-F"].observedProperty
         self["zoneTemperature"].mapsTo = self["ZONE-THERMOSTAT"][
             "temperature_sensor"
-        ].observesProperty
+        ].observedProperty
         self["damperPosition"].mapsTo = self["DPR"]["position"]
 
-        self["SA-F"].hasMeasurementLocation = self["DPR"].airInlet
-        self["DA-T"].hasMeasurementLocation = self["DPR"].airOutlet
+        self["SA-F"] % self["DPR"].airInlet
+        self["DA-T"] % self["DPR"].airOutlet
         # properties are not initialized?
 
 
@@ -177,21 +178,21 @@ supply_air >> vav["DPR"].airInlet
 vav["DPR"].airOutlet >> discharge_air >> hvac_space.ductAirInlet
 vav["DPR"]["actuator"].proportional_signal << controller.damper_output
 vav["DPR"]["actuator"].proportional_signal.hasSignalType = AnalogSignalTypeEnum.VDC_0_10
-vav["ZONE-THERMOSTAT"]["temperature_sensor"].hasMeasurementLocation = hvac_space
+vav["ZONE-THERMOSTAT"]["temperature_sensor"] % hvac_space
 vav["ZONE-THERMOSTAT"].mstp << controller.bacnet_mstp
-vav["ZN-CO2"]["CO2"].hasMeasurementLocation = hvac_space
+vav["ZN-CO2"]["CO2"] % hvac_space
 # vav['ZN-CO2'] << controller.zone_co2_sensor
-vav["ZN-WINDOW-SWITCH"].hasMeasurementLocation = window
+vav["ZN-WINDOW-SWITCH"] % window
 vav["ZN-WINDOW-SWITCH"].onoff_contact >> controller.window_switch
-vav["ZN-OCC-SENSOR"].hasMeasurementLocation = hvac_space
+vav["ZN-OCC-SENSOR"] % hvac_space
 # vav['ZN-OCC-SENSOR'] << controller['occupancy_sensor'] not ready yet
 
 # Not sure if it's really required...but I think readings should be in space
-hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observesProperty
-hvac_space.co2 = vav["ZN-CO2"]["CO2"].observesProperty
-hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observesProperty
+hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observedProperty
+hvac_space.co2 = vav["ZN-CO2"]["CO2"].observedProperty
+hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observedProperty
 
-# Now that space is full of Equipments and connections...
+# Now that space is full of Equipment and connections...
 # Zone are meant for control, let's define the control side of the thing
 # temperature, co2, etc of zone.... could be the result of a function block
 # making calculation from multiple hvac space readings...
@@ -213,10 +214,10 @@ occupancy = OccupancyFunction(
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
 occupancy.uses(
-    vav["ZN-OCC-SENSOR"].observesProperty, G36BinaryInput, "occupancy-sensor"
+    vav["ZN-OCC-SENSOR"].observedProperty, G36BinaryInput, "occupancy-sensor"
 )
 occupancy.uses(
-    vav["ZONE-THERMOSTAT"]["local_override"].observesProperty,
+    vav["ZONE-THERMOSTAT"]["local_override"].observedProperty,
     G36BinaryInput,
     "local-override",
 )

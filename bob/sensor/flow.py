@@ -11,6 +11,7 @@ from ..core import (
     S223,
     UNIT,
     Air,
+    Equipment,
     Medium,
     PropertyReference,
     Water,
@@ -31,14 +32,14 @@ class FlowSetpoint(Setpoint):
 
 class FlowSensor(Sensor):
     _class_iri = S223.Sensor
-    observesProperty: PropertyReference  # Flow
+    observes: PropertyReference  # Flow
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = Flow(
+        self.observes = Flow(
             # isObservedBy=self,
             label=f"{self.label}.Flow",
             **_property_kwargs,

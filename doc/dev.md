@@ -3,7 +3,7 @@
 ## Making a sensor
 
 
-### hasMeasurementLocation
+### hasObservationLocation
 
 
 ### hasPhysicalLocation

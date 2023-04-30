@@ -25,7 +25,7 @@
 ex32:00001 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "ats1" ;
-    s223:observesProperty ex32:00002 ;
+    s223:observes ex32:00002 ;
     rdfs:comment "Supply Air Temperature Sensor" .
 
 ex32:00002 a s223:ObservableProperty,
@@ -41,7 +41,7 @@ ex32:00002 a s223:ObservableProperty,
 ex32:00003 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "ats2" ;
-    s223:observesProperty ex32:00004 ;
+    s223:observes ex32:00004 ;
     rdfs:comment "Supply Air Temperature Sensor" .
 
 ex32:00004 a s223:ObservableProperty,
@@ -60,10 +60,10 @@ ex32:00005 a ref:ExternalReference ;
     s223:hasRef "bacnet://570005/analog-input,10084/present-value" .
 
 ex32:00006 a s223:Equipment,
+        s223:HumiditySensor,
         s223:Sensor ;
     rdfs:label "ahs1" ;
-    s223:observesProperty ex32:00007 ;
-    bob:hasQuantityKind quantitykind:RelativeHumidity ;
+    s223:observes ex32:00007 ;
     rdfs:comment "Zone Humidity Sensor with a value of 20" .
 
 ex32:00007 a s223:ObservableProperty,
@@ -71,7 +71,7 @@ ex32:00007 a s223:ObservableProperty,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
-    rdfs:label "ahs1.Measure" ;
+    rdfs:label "ahs1.Humidity" ;
     s223:hasValue 20.0 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;

@@ -2,6 +2,7 @@ from typing import Dict
 
 from rdflib import Literal
 
+from bob.enum import ElectricalPhaseIdentifier
 from bob.properties import ElectricPowerkW
 from bob.properties.electricity import Amps
 from bob.property import QuantifiableObservableProperty
@@ -13,27 +14,39 @@ from ...connections.electricity import (
     ElectricalOutletConnectionPoint,
     ElectricalSystemConnectionPoint,
     Electricity,
+    Electricity_120V_208V_240V_60HzInletConnectionPoint,
     Electricity_120V_60HzConnection,
     Electricity_120V_60HzInletConnectionPoint,
     Electricity_120V_60HzOutletConnectionPoint,
     Electricity_120V_240V_60HzConnection,
     Electricity_120V_240V_60HzInletConnectionPoint,
+    Electricity_208V1Ph_60HzConnection,
+    Electricity_208V1Ph_60HzInletConnectionPoint,
+    Electricity_208V1Ph_60HzOutletConnectionPoint,
+    Electricity_208V_60HzConnection,
     Electricity_208V_60HzInletConnectionPoint,
     Electricity_208V_60HzOutletConnectionPoint,
+    Electricity_240V3Ph_60HzConnection,
+    Electricity_240V3Ph_60HzInletConnectionPoint,
+    Electricity_240V3Ph_60HzOutletConnectionPoint,
     Electricity_240V_60HzConnection,
     Electricity_240V_60HzInletConnectionPoint,
     Electricity_240V_60HzOutletConnectionPoint,
     Electricity_277V_60HzInletConnectionPoint,
     Electricity_277V_60HzOutletConnectionPoint,
     Electricity_347V_60HzConnection,
-    Electricity_347V_60HzConnectionPoint,
     Electricity_347V_60HzInletConnectionPoint,
     Electricity_347V_60HzOutletConnectionPoint,
+    Electricity_480V1Ph_60HzInletConnectionPoint,
+    Electricity_480V1Ph_60HzOutletConnectionPoint,
     Electricity_480V_60HzInletConnectionPoint,
     Electricity_480V_60HzOutletConnectionPoint,
     Electricity_575V_60HzConnection,
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
+    Electricity_600V1Ph_60HzConnection,
+    Electricity_600V1Ph_60HzInletConnectionPoint,
+    Electricity_600V1Ph_60HzOutletConnectionPoint,
 )
 from ...core import BOB, P223, QUANTITYKIND, UNIT, Equipment
 
@@ -90,11 +103,20 @@ class SinglePhaseDistributionPanel(Equipment):
 
         super().__init__(config, **kwargs)
 
-        self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
-        self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
-        self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
+        self.electricalBusA = (
+            _electricalBusA(label=f"{self.label}.electricalBusA")
+            + ElectricalPhaseIdentifier.A
+        )
+        self.electricalBusB = (
+            _electricalBusB(label=f"{self.label}.electricalBusB")
+            + ElectricalPhaseIdentifier.B
+        )
+        self.electricalBusAB = (
+            _electricalBusAB(label=f"{self.label}.electricalBusAB")
+            + ElectricalPhaseIdentifier.AB
+        )
 
-        for circuit_breaker in getattr(self, "_Equipments", []):
+        for _lit, circuit_breaker in self._contents.items():
             if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
                 circuit_breaker.electricalOutletA >> self.electricalBusA
                 circuit_breaker.electricalOutletB >> self.electricalBusB
@@ -102,6 +124,11 @@ class SinglePhaseDistributionPanel(Equipment):
             elif isinstance(circuit_breaker, TwoPolesCircuitBreaker):
                 self.electricalBusAB >> circuit_breaker
             elif isinstance(circuit_breaker, SinglePoleCircuitBreaker):
+                if circuit_breaker._bus_bar in ("A", "odd"):
+                    self.electricalBusA >> circuit_breaker
+                else:
+                    self.electricalBusB >> circuit_breaker
+            elif isinstance(circuit_breaker, TandemSinglePoleCircuitBreaker):
                 if circuit_breaker._bus_bar in ("A", "odd"):
                     self.electricalBusA >> circuit_breaker
                 else:
@@ -116,22 +143,40 @@ class ThreePhaseDistributionPanel(Equipment):
 
     # Bus Bar
     _cross_ref = {
+        "HighLeg": (
+            Electricity_120V_60HzConnection,
+            Electricity_120V_60HzConnection,
+            Electricity_208V1Ph_60HzConnection,
+            Electricity_240V_60HzConnection,
+            Electricity_240V_60HzConnection,
+            Electricity_240V_60HzConnection,
+            Electricity_240V3Ph_60HzConnection,
+        ),
         "208": (
-            Electricity_208V_60HzInletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_208V_60HzOutletConnectionPoint,
+            Electricity_120V_60HzConnection,
+            Electricity_120V_60HzConnection,
+            Electricity_120V_60HzConnection,
+            Electricity_208V1Ph_60HzConnection,
+            Electricity_208V1Ph_60HzConnection,
+            Electricity_208V1Ph_60HzConnection,
+            Electricity_208V_60HzConnection,
         ),
         "575": (
             (Electricity_347V_60HzConnection),
             (Electricity_347V_60HzConnection),
             (Electricity_347V_60HzConnection),
+            Electricity_600V1Ph_60HzConnection,
+            (Electricity_600V1Ph_60HzConnection),
+            (Electricity_600V1Ph_60HzConnection),
             (Electricity_575V_60HzConnection),
         ),
         "600": (
             (Electricity_347V_60HzConnection),
             (Electricity_347V_60HzConnection),
             (Electricity_347V_60HzConnection),
+            Electricity_600V1Ph_60HzConnection,
+            (Electricity_600V1Ph_60HzConnection),
+            (Electricity_600V1Ph_60HzConnection),
             (Electricity_575V_60HzConnection),
         ),
     }
@@ -145,6 +190,9 @@ class ThreePhaseDistributionPanel(Equipment):
             _electricalBusA,
             _electricalBusB,
             _electricalBusC,
+            _electricalBusAB,
+            _electricalBusBC,
+            _electricalBusCA,
             _electricalBusABC,
         ) = self._cross_ref[str(voltage)]
 
@@ -153,15 +201,31 @@ class ThreePhaseDistributionPanel(Equipment):
         self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusC = _electricalBusC(label=f"{self.label}.electricalBusC")
+        self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
+        self.electricalBusBC = _electricalBusBC(label=f"{self.label}.electricalBusBC")
+        self.electricalBusCA = _electricalBusCA(label=f"{self.label}.electricalBusCA")
         self.electricalBusABC = _electricalBusABC(
             label=f"{self.label}.electricalBusABC"
         )
 
-        for circuit_breaker in getattr(self, "_Equipments", []):
+        self.electricalBusA + ElectricalPhaseIdentifier.A
+        self.electricalBusB + ElectricalPhaseIdentifier.B
+        self.electricalBusC + ElectricalPhaseIdentifier.C
+        self.electricalBusAB + ElectricalPhaseIdentifier.AB
+        self.electricalBusBC + ElectricalPhaseIdentifier.BC
+        self.electricalBusCA + ElectricalPhaseIdentifier.CA
+        self.electricalBusABC + ElectricalPhaseIdentifier.ABC
+
+        for lit, circuit_breaker in self._contents.items():
+            print(circuit_breaker)
             if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
+                print("connections")
                 circuit_breaker.electricalOutletA >> self.electricalBusA
                 circuit_breaker.electricalOutletB >> self.electricalBusB
                 circuit_breaker.electricalOutletC >> self.electricalBusC
+                circuit_breaker.electricalOutletAB >> self.electricalBusAB
+                circuit_breaker.electricalOutletBC >> self.electricalBusBC
+                circuit_breaker.electricalOutletCA >> self.electricalBusCA
                 circuit_breaker.electricalOutlet >> self.electricalBusABC
             elif isinstance(circuit_breaker, ThreePolesCircuitBreaker):
                 self.electricalBusABC >> circuit_breaker
@@ -172,6 +236,13 @@ class ThreePhaseDistributionPanel(Equipment):
                     self.electricalBusB >> circuit_breaker
                 else:
                     self.electricalBusC >> circuit_breaker
+            elif isinstance(circuit_breaker, TwoPolesCircuitBreaker):
+                if circuit_breaker._bus_bar == "AB":
+                    self.electricalBusAB >> circuit_breaker
+                elif circuit_breaker._bus_bar == "BC":
+                    self.electricalBusBC >> circuit_breaker
+                else:
+                    self.electricalBusCA >> circuit_breaker
 
 
 class CircuitBreaker(Equipment):
@@ -194,12 +265,18 @@ class SinglePoleCircuitBreaker(CircuitBreaker):
     One inlet and one outlet
     hasMaxRange = current max of breaker
     A rule could check inlet and outlet are same class
+
+    208V single pole available in the High Leg Configuration
     """
 
     _cross_ref = {
         "120": (
             Electricity_120V_60HzInletConnectionPoint,
             Electricity_120V_60HzOutletConnectionPoint,
+        ),
+        "208": (
+            Electricity_208V1Ph_60HzInletConnectionPoint,
+            Electricity_208V1Ph_60HzOutletConnectionPoint,
         ),
         "277": (
             Electricity_277V_60HzInletConnectionPoint,
@@ -229,26 +306,75 @@ class SinglePoleCircuitBreaker(CircuitBreaker):
         )
 
 
-class TwoPolesCircuitBreaker(CircuitBreaker):
+class TandemSinglePoleCircuitBreaker(CircuitBreaker):
     """
-    One electrical Inlet because when plugin the breaker
-    in the panel, you get no choice. Both poles are connected
-    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
-    The electrical Outlet is a little different. You could potentially
-    use only 1 pole (347V heating or light for example)
-    So 3 choices are possible pole A, pole B or pole A-B
+    One inlet and two outlets, also known as Twin breakers
+    hasMaxRange = current max of breaker
+    A rule could check inlet and outlets are same class
     """
 
     _cross_ref = {
-        "240": (
-            Electricity_240V_60HzInletConnectionPoint,
-            Electricity_240V_60HzOutletConnectionPoint,
+        "120": (
+            Electricity_120V_60HzInletConnectionPoint,
+            Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_120V_60HzOutletConnectionPoint,
         ),
     }
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
         voltage = kwargs.pop("voltage")
+        self._bus_bar = kwargs.pop("bus_bar")
+
+        # look up the inlet and outlet classes
+        _electricalInlet, _electricalOutletA, _electricalOutletB = self._cross_ref[
+            str(voltage)
+        ]
+
+        super().__init__(config, **kwargs)
+
+        self.electricalInlet = _electricalInlet(
+            self, label=f"{self.label}.electricalInlet"
+        )
+        self.electricalOutletA = _electricalOutletA(
+            self, label=f"{self.label}.electricalOutlet"
+        )
+        self.electricalOutletB = _electricalOutletB(
+            self, label=f"{self.label}.electricalOutlet"
+        )
+
+
+class TwoPolesCircuitBreaker(CircuitBreaker):
+    """
+    One electrical Inlet because when plugin the breaker
+    in the panel, you get no choice. Both poles are connected
+    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
+    Could also use 208V instead of 240V...
+    """
+
+    _cross_ref = {
+        "208": (
+            Electricity_208V1Ph_60HzInletConnectionPoint,
+            Electricity_208V1Ph_60HzOutletConnectionPoint,
+        ),
+        "240": (
+            Electricity_240V_60HzInletConnectionPoint,
+            Electricity_240V_60HzOutletConnectionPoint,
+        ),
+        "480": (
+            Electricity_480V1Ph_60HzInletConnectionPoint,
+            Electricity_480V1Ph_60HzOutletConnectionPoint,
+        ),
+        "600": (
+            Electricity_600V1Ph_60HzInletConnectionPoint,
+            Electricity_600V1Ph_60HzOutletConnectionPoint,
+        ),
+    }
+
+    def __init__(self, config: Dict = {}, **kwargs):
+        kwargs = {**config.get("params", {}), **kwargs}
+        voltage = kwargs.pop("voltage")
+        self._bus_bar = kwargs.pop("bus_bar", "AB")
 
         # look up the connection point classes
         _electricalInlet, _electricalOutlet = self._cross_ref[str(voltage)]
@@ -301,34 +427,43 @@ class TwoPolesMainCircuitBreaker(CircuitBreaker):
 
         super().__init__(**kwargs)
 
-        self.electricalInlet = _electricalInlet(
-            self, label=f"{self.label}.electricalInlet"
+        self.electricalInlet = (
+            _electricalInlet(self, label=f"{self.label}.electricalInlet")
+            + ElectricalPhaseIdentifier.AB
         )
-        self.electricalOutletA = _electricalOutletA(
-            self, label=f"{self.label}.electricalOutlet_LineA_Neutral"
+        self.electricalOutletA = (
+            _electricalOutletA(
+                self, label=f"{self.label}.electricalOutlet_LineA_Neutral"
+            )
+            + ElectricalPhaseIdentifier.A
         )
-        self.electricalOutletB = _electricalOutletB(
-            self, label=f"{self.label}.electricalOutlet_LineB_Neutral"
+        self.electricalOutletB = (
+            _electricalOutletB(
+                self, label=f"{self.label}.electricalOutlet_LineB_Neutral"
+            )
+            + ElectricalPhaseIdentifier.B
         )
-        self.electricalOutlet = _electricalOutlet(
-            self, label=f"{self.label}.electricalOutlet_LineA_LineB"
+        self.electricalOutlet = (
+            _electricalOutlet(self, label=f"{self.label}.electricalOutlet_LineA_LineB")
+            + ElectricalPhaseIdentifier.AB
         )
 
 
 class ThreePolesCircuitBreaker(CircuitBreaker):
     """
     One electrical Inlet because when plugin the breaker
-    in the panel, you get no choice. Both poles are connected
-    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
-    The electrical Outlet is a little different. You could potentially
-    use only 1 pole (347V heating or light for example)
-    So 3 choices are possible pole A, pole B or pole A-B
+    in the panel, you get no choice. Three poles are connected
+    at the same time. Electricity is fed from 3 bus bars
     """
 
     _cross_ref = {
         "208": (
             Electricity_208V_60HzInletConnectionPoint,
             Electricity_208V_60HzOutletConnectionPoint,
+        ),
+        "240": (
+            Electricity_240V3Ph_60HzInletConnectionPoint,
+            Electricity_240V3Ph_60HzOutletConnectionPoint,
         ),
         "480": (
             Electricity_480V_60HzInletConnectionPoint,
@@ -376,11 +511,24 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
 
     # _cross_ref will map the right voltages to input and bus bars
     _cross_ref = {
+        "HighLeg": (
+            Electricity_120V_208V_240V_60HzInletConnectionPoint,
+            Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_208V1Ph_60HzOutletConnectionPoint,
+            Electricity_240V_60HzOutletConnectionPoint,
+            Electricity_240V_60HzOutletConnectionPoint,
+            Electricity_240V_60HzOutletConnectionPoint,
+            Electricity_240V3Ph_60HzOutletConnectionPoint,
+        ),
         "208": (
             Electricity_208V_60HzInletConnectionPoint,
             Electricity_120V_60HzOutletConnectionPoint,
             Electricity_120V_60HzOutletConnectionPoint,
             Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_208V1Ph_60HzOutletConnectionPoint,
+            Electricity_208V1Ph_60HzOutletConnectionPoint,
+            Electricity_208V1Ph_60HzOutletConnectionPoint,
             Electricity_208V_60HzOutletConnectionPoint,
         ),
         "480": (
@@ -388,6 +536,9 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
             Electricity_277V_60HzOutletConnectionPoint,
             Electricity_277V_60HzOutletConnectionPoint,
             Electricity_277V_60HzOutletConnectionPoint,
+            Electricity_480V1Ph_60HzOutletConnectionPoint,
+            Electricity_480V1Ph_60HzOutletConnectionPoint,
+            Electricity_480V1Ph_60HzOutletConnectionPoint,
             Electricity_480V_60HzOutletConnectionPoint,
         ),
         "575": (
@@ -395,6 +546,9 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
             Electricity_347V_60HzOutletConnectionPoint,
             Electricity_347V_60HzOutletConnectionPoint,
             Electricity_347V_60HzOutletConnectionPoint,
+            Electricity_600V1Ph_60HzOutletConnectionPoint,
+            Electricity_600V1Ph_60HzOutletConnectionPoint,
+            Electricity_600V1Ph_60HzOutletConnectionPoint,
             Electricity_575V_60HzOutletConnectionPoint,
         ),
         "600": (
@@ -402,6 +556,9 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
             Electricity_347V_60HzOutletConnectionPoint,
             Electricity_347V_60HzOutletConnectionPoint,
             Electricity_347V_60HzOutletConnectionPoint,
+            Electricity_600V1Ph_60HzOutletConnectionPoint,
+            Electricity_600V1Ph_60HzOutletConnectionPoint,
+            Electricity_600V1Ph_60HzOutletConnectionPoint,
             Electricity_575V_60HzOutletConnectionPoint,
         ),
     }
@@ -416,6 +573,9 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
             _electricalOutletA,
             _electricalOutletB,
             _electricalOutletC,
+            _electricalOutletAB,
+            _electricalOutletBC,
+            _electricalOutletCA,
             _electricalOutlet,
         ) = self._cross_ref[str(voltage)]
 
@@ -424,17 +584,33 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
         self.electricalInlet = _electricalInlet(
             self, label=f"{self.label}.electricalInlet"
         )
-        self.electricalOutletA = _electricalOutletA(
-            self, label=f"{self.label}.electricalOutletA"
+        self.electricalOutletA = (
+            _electricalOutletA(self, label=f"{self.label}.electricalOutletA")
+            + ElectricalPhaseIdentifier.A
         )
-        self.electricalOutletB = _electricalOutletB(
-            self, label=f"{self.label}.electricalOutletB"
+        self.electricalOutletB = (
+            _electricalOutletB(self, label=f"{self.label}.electricalOutletB")
+            + ElectricalPhaseIdentifier.B
         )
-        self.electricalOutletC = _electricalOutletC(
-            self, label=f"{self.label}.electricalOutletC"
+        self.electricalOutletC = (
+            _electricalOutletC(self, label=f"{self.label}.electricalOutletC")
+            + ElectricalPhaseIdentifier.C
         )
-        self.electricalOutlet = _electricalOutlet(
-            self, label=f"{self.label}.electricalOutletABC"
+        self.electricalOutletAB = (
+            _electricalOutletAB(self, label=f"{self.label}.electricalOutletAB")
+            + ElectricalPhaseIdentifier.AB
+        )
+        self.electricalOutletBC = (
+            _electricalOutletBC(self, label=f"{self.label}.electricalOutletBC")
+            + ElectricalPhaseIdentifier.BC
+        )
+        self.electricalOutletCA = (
+            _electricalOutletCA(self, label=f"{self.label}.electricalOutletCA")
+            + ElectricalPhaseIdentifier.CA
+        )
+        self.electricalOutlet = (
+            _electricalOutlet(self, label=f"{self.label}.electricalOutletABC")
+            + ElectricalPhaseIdentifier.ABC
         )
 
 

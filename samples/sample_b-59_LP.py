@@ -87,7 +87,7 @@ mixedAir = AirConnection(
     label="MIXED-AIR", comment="Where return air and outside air mix"
 )
 
-# Relationships between Equipments
+# Relationships between Equipment
 rtu["OAD-1"] >> mixedAir
 rtu["RF-1"] >> mixedAir
 mixedAir >> rtu["SF-1"].airInlet
@@ -106,8 +106,8 @@ supply_duct = AirConnection(
     label="Supply Air Duct", comment="Air returns from zone here"
 )
 rtu["CWC-1"].airOutlet >> supply_duct
-rtu["DA-T"].hasMeasurementLocation = supply_duct
-rtu["RA-T"].hasMeasurementLocation = rtu["RF-1"].airOutlet
+rtu["DA-T"] % supply_duct
+rtu["RA-T"] % rtu["RF-1"].airOutlet
 
 bldg = Building(label="B59 Building")
 roof = Roof(label="Roof of building")
@@ -128,7 +128,7 @@ rtu_zone.airInlet.mapsTo = supply_duct
 rtu_zone.airOutlet.mapsTo = return_plenum
 
 rtu.hasPhysicalLocation = roof
-rtu["ZN-T"].hasMeasurementLocation = floor1_hvacspace.ductAirOutlet
+rtu["ZN-T"] % floor1_hvacspace.ductAirOutlet
 rtu["ZN-T"].hasPhysicalLocation = office1
 rtu["DA-T"].hasPhysicalLocation = floor1
 rtu["RA-T"].hasPhysicalLocation = roof

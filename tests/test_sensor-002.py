@@ -2,7 +2,7 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import bind_model_namespace, dump
+from bob.core import UNIT, bind_model_namespace, dump
 from bob.sensor.pressure import AirDifferentialStaticPressureSensor
 from bob.space.hvac import HVACSpace
 from bob.space.physical import Building, MechanicalRoom, Room
@@ -29,9 +29,10 @@ def test_create_sensor_002(bob_fixture):
         label="TPD-01",
         comment="Static Pressure between Clean Room (+) and SAS (-)",
         hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
+        unit=UNIT.PA,
     )
-    tpd01.hasMeasurementLocationHigh = clean_room_hvac
-    tpd01.hasMeasurementLocationLow = SAS_hvac
+    tpd01["highPort"] % clean_room_hvac
+    tpd01["lowPort"] % SAS_hvac
     tpd01.hasPhysicalLocation = mechroom
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

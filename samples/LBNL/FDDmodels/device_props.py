@@ -51,7 +51,7 @@ _namespace = ex = bind_model_namespace(
 )
 
 # add properties to config?
-# Equipments DON'T have properties as default, but have a default config that you can optionally use.
+# Equipment DON'T have properties as default, but have a default config that you can optionally use.
 
 # ddahu_fan_config = {
 #     "sensors": {

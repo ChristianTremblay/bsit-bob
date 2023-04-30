@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bob"
+version = "0.72"
+authors = [
+    {name="Joel Bender", email="jjb5@cornell.edu"},
+    {name="Christian Tremblay", email="christian.tremblay@servisys.com"},
+]
+description = "Bob the SI-WG Builder. Tool for building RDF graphs of HVAC systems"
+readme = "README.md"
+license = {text = "MIT"}
+dependencies = [
+    "rdflib",
+    "importlib-metadata",
+    "brickschema"
+]
+
+[project.optional-dependencies]
+test = ["pytest", "pyshacl", "ontoenv"]
+lint = [ "black", "flake8", "isort"]
+cov = ["pytest < 5.0.0", "pytest-cov[all]"]
+
+[tool.setuptools]
+packages = [
+    "bob",
+    ]

@@ -12,6 +12,7 @@ from ..core import (
     QUANTITYKIND,
     S223,
     UNIT,
+    Equipment,
     ExternalReference,
     Light,
     Medium,
@@ -25,14 +26,14 @@ _namespace = BOB
 class DaylightSensor(Sensor):
     _class_iri = S223.Sensor
     # measuresMedium: Medium = Light
-    observesProperty: PropertyReference  # visible light level -- units?
+    observes: PropertyReference  # visible light level -- units?
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = DaylightDetected(
+        self.observes = DaylightDetected(
             # isObservedBy=self,
             label=f"{self.label}.Daylight",
             ofMedium=Light.Visible,

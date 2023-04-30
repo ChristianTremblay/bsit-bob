@@ -264,25 +264,25 @@ return_duct >> rf.airInlet
 rf.airOutlet >> acc_4sides_duct.returnDuctInlet
 
 # Localise sensors
-te1.hasMeasurementLocation = acc_4sides_duct.supplyDuctOutlet
+te1 % acc_4sides_duct.supplyDuctOutlet
 te1.hasPhysicalLocation = mechroom
-ha1.hasMeasurementLocation = acc_4sides_duct.supplyDuctOutlet
+ha1 % acc_4sides_duct.supplyDuctOutlet
 ha1.hasPhysicalLocation = mechroom
-ta1.hasMeasurementLocation = supply_duct
+ta1 * upply_duct
 ta1.hasPhysicalLocation = mechroom
-tpd1.hasMeasurementLocationHigh = filters.airInlet
-tpd1.hasMeasurementLocationLow = filters.airOutlet
+tpd1["highPort"] % filters.airInlet
+tpd1["lowPort"] % filters.airOutlet
 tpd1.hasPhysicalLocation = mechroom
-tpd2.hasMeasurementLocationHigh = supply_duct
-tpd2.hasMeasurementLocationLow = enclos_elephants_hvac
+tpd2["highPort"] % supply_duct
+tpd2["lowPort"] % enclos_elephants_hvac
 tpd2.hasPhysicalLocation = mechroom
-co2_1.hasMeasurementLocation = enclos_girafe_hvac.ductAirOutlet
+co2_1 % enclos_girafe_hvac.ductAirOutlet
 co2_1.hasPhysicalLocation = enclos_elephants
-co2_2.hasMeasurementLocation = enclos_elephants_hvac.ductAirOutlet
+co2_2 % enclos_elephants_hvac.ductAirOutlet
 co2_2.hasPhysicalLocation = enclos_elephants
-hr1.hasMeasurementLocation = return_duct
+hr1 % return_duct
 hr1.hasPhysicalLocation = mechroom
-tr1.hasMeasurementLocation = return_duct
+tr1 % return_duct
 tr1.hasPhysicalLocation = mechroom
 
 

@@ -10,6 +10,7 @@ from ..core import (
     UNIT,
     Air,
     Electricity,
+    Equipment,
     LocationReference,
     Medium,
     Node,
@@ -24,8 +25,8 @@ _namespace = BOB
 
 
 class VoltageSensor(Sensor):
-    _class_iri = S223.Sensor
-    observesProperty: PropertyReference  # Temperature
+    _class_iri = P223.VoltageSensor
+    observes: PropertyReference
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
 
@@ -33,20 +34,23 @@ class VoltageSensor(Sensor):
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         if "ofMedium" not in _property_kwargs:
-            raise ValueError("You must provide ofMedium when defining a voltage sensor")
+            # raise ValueError(
+            #    "You must provide ofMedium when defining a Voltage Sensor"
+            # )
+            _property_kwargs["ofMedium"] = Electricity
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = Volts(
+        self.observes = Volts(
             # isObservedBy=self,
             label=f"{self.label}.Voltage",
             **_property_kwargs,
         )
 
 
-class CurrentAnalogSensor(Sensor):
+class CurrentSensor(Sensor):
     _class_iri = S223.Sensor
-    observesProperty: PropertyReference  # Temperature
+    observes: PropertyReference
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
 
@@ -54,29 +58,31 @@ class CurrentAnalogSensor(Sensor):
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         if "ofMedium" not in _property_kwargs:
-            raise ValueError("You must provide ofMedium when defining a current sensor")
+            _property_kwargs["ofMedium"] = Electricity
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = Amps(
+        self.observes = Amps(
             # isObservedBy=self,
             label=f"{self.label}.Amps",
             **_property_kwargs,
         )
 
 
-class CurrentBinarySensor(Sensor):
+class DryContactSensor(Sensor):
     _class_iri = S223.Sensor
-    observesProperty: PropertyReference  # Electrical Current
-    hasMeasurementLocation: LocationReference
+    observes: PropertyReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
+        if "ofMedium" not in _property_kwargs:
+            _property_kwargs["ofMedium"] = Electricity
+
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = OnOffStatus(
+        self.observes = OnOffStatus(
             # isObservedBy=self,
-            label=f"{self.label}.CurrentBinarySensor",
+            label=f"{self.label}.Amps",
             **_property_kwargs,
         )
