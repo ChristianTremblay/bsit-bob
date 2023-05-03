@@ -261,13 +261,13 @@ function highlightFilter(filter) {
                             >
                                 <option selected>Select a Node by ID</option>
                                 
-                                    <option value="http://data.ashrae.org/standard223/1.0/data/sample-function-block-003">http://data.ashrae.org/standard223/1.0/data/sample-function-block-003</option>
-                                
-                                    <option value="http://data.ashrae.org/standard223/1.0/model/all">http://data.ashrae.org/standard223/1.0/model/all</option>
-                                
                                     <option value="urn:ex/sample-function-block-003/00001">urn:ex/sample-function-block-003/00001</option>
                                 
+                                    <option value="http://data.ashrae.org/standard223/1.0/data/sample-function-block-003">http://data.ashrae.org/standard223/1.0/data/sample-function-block-003</option>
+                                
                                     <option value="urn:ex/sample-function-block-003/00002">urn:ex/sample-function-block-003/00002</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/model/all">http://data.ashrae.org/standard223/1.0/model/all</option>
                                 
                                     <option value="http://data.ashrae.org/standard223/1.0/sample/sample-function-block-003">http://data.ashrae.org/standard223/1.0/sample/sample-function-block-003</option>
                                 
@@ -491,8 +491,8 @@ function highlightFilter(filter) {
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": null, "id": "http://data.ashrae.org/standard223/1.0/data/sample-function-block-003", "label": "sample-function-block-003", "shape": "dot", "size": 15, "title": "Namespaces : owl\nTypes: owl:Ontology"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/model/all", "label": "http://data.ashrae.org/standard223/1.0/model/all", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"color": null, "id": "urn:ex/sample-function-block-003/00001", "label": "f", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/proposal-to-standard223#Producer, p223\nTypes: s223:FunctionBlock, p223:Producer"}, {"color": null, "id": "urn:ex/sample-function-block-003/00002", "label": "urn:ex/sample-function-block-003/00002", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Parameter\nValue : 5.6"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/sample/sample-function-block-003", "label": "http://data.ashrae.org/standard223/1.0/sample/sample-function-block-003", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}]);
-                  edges = new vis.DataSet([{"from": "http://data.ashrae.org/standard223/1.0/data/sample-function-block-003", "title": "http://www.w3.org/2002/07/owl#imports", "to": "http://data.ashrae.org/standard223/1.0/model/all"}, {"from": "http://data.ashrae.org/standard223/1.0/data/sample-function-block-003", "title": "http://www.w3.org/2000/01/rdf-schema#isDefinedBy", "to": "http://data.ashrae.org/standard223/1.0/sample/sample-function-block-003"}, {"from": "urn:ex/sample-function-block-003/00001", "title": "http://data.ashrae.org/standard223#hasParameter", "to": "urn:ex/sample-function-block-003/00002"}]);
+                  nodes = new vis.DataSet([{"color": null, "id": "urn:ex/sample-function-block-003/00001", "label": "f", "shape": "dot", "size": 15, "title": "Namespaces : s223, p223, http://data.ashrae.org/standard223#FunctionBlock\nTypes: s223:FunctionBlock, p223:Producer"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/data/sample-function-block-003", "label": "sample-function-block-003", "shape": "dot", "size": 15, "title": "Namespaces : owl, http://www.w3.org/2002/07/owl#Ontology\nTypes: owl:Ontology"}, {"color": null, "id": "urn:ex/sample-function-block-003/00002", "label": "urn:ex/sample-function-block-003/00002", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#Parameter\nTypes: s223:Parameter\nValue : 5.6"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/model/all", "label": "http://data.ashrae.org/standard223/1.0/model/all", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/sample/sample-function-block-003", "label": "http://data.ashrae.org/standard223/1.0/sample/sample-function-block-003", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}]);
+                  edges = new vis.DataSet([{"from": "http://data.ashrae.org/standard223/1.0/data/sample-function-block-003", "title": "http://www.w3.org/2002/07/owl#imports", "to": "http://data.ashrae.org/standard223/1.0/model/all"}, {"from": "http://data.ashrae.org/standard223/1.0/data/sample-function-block-003", "title": "http://www.w3.org/2000/01/rdf-schema#isDefinedBy", "to": "http://data.ashrae.org/standard223/1.0/sample/sample-function-block-003"}, {"from": "urn:ex/sample-function-block-003/00001", "title": "urn:ex/sample-function-block-003/offset", "to": "urn:ex/sample-function-block-003/00002"}]);
 
                   nodeColors = {};
                   allNodes = nodes.get({ returnType: "Object" });
