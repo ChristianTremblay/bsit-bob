@@ -15,15 +15,15 @@ url_pattern = re.compile(
 )
 
 
-class BACnetDevice(NetworkProfile):
-    _class_iri: URIRef = BACNET.Device
-    _namespace = BACNET
-    deviceId: XSD.integer
-    deviceName: Literal
-    networkNumber: XSD.integer
-    address: XSD.integer
-    vendorId: XSD.integer
-    isNetworkProfileOf: Controller
+# class BACnetDevice(NetworkProfile):
+#     _class_iri: URIRef = BACNET.Device
+#     _namespace = BACNET
+#     deviceId: XSD.integer
+#     deviceName: Literal
+#     networkNumber: XSD.integer
+#     address: XSD.integer
+#     vendorId: XSD.integer
+#     isNetworkProfileOf: Controller
 
 
 class BACnetReference(ExternalReference):
@@ -40,16 +40,16 @@ class BACnetReference(ExternalReference):
     propertyArrayIndex: XSD.nonNegativeInteger
     deviceIdentifier: Literal
 
-    objectType: URIRef
-    objectInstance: XSD.integer
-    objectOf: BACnetDevice
-    objectName: Literal
-    description: Literal
+    # objectType: URIRef
+    # objectInstance: XSD.integer
+    # objectOf: BACnetDevice
+    # objectName: Literal
+    # description: Literal
 
-    deviceName: Literal
-    networkNumber: XSD.nonNegativeInteger
-    address: Literal
-    vendorId: XSD.nonNegativeInteger
+    # deviceName: Literal
+    # networkNumber: XSD.nonNegativeInteger
+    # address: Literal
+    # vendorId: XSD.nonNegativeInteger
 
     def __init__(self, arg: str = "", **kwargs) -> None:
         logging.debug("BACnetReference.__init__ %r %r", arg, kwargs)
