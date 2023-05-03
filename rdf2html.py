@@ -152,7 +152,7 @@ class Node:
         elif "p223:Producer" in self.types or "s223:FunctionBlock" in self.types:
             return "FunctionBlock"
         elif "s223:DomainSpace" in self.types or "s223:PhysicalSpace" in self.types:
-            return "FunctionBlock"
+            return "DomainSpace"
         else:
             return "Default"
 
