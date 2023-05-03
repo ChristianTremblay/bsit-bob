@@ -240,6 +240,12 @@ function highlightFilter(filter) {
              
 
              
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
 
              
         </style>
@@ -261,23 +267,39 @@ function highlightFilter(filter) {
                             >
                                 <option selected>Select a Node by ID</option>
                                 
-                                    <option value="urn:ex/sample002/00006">urn:ex/sample002/00006</option>
-                                
-                                    <option value="http://data.ashrae.org/standard223/1.0/data/sample002">http://data.ashrae.org/standard223/1.0/data/sample002</option>
-                                
                                     <option value="urn:ex/sample002/00005">urn:ex/sample002/00005</option>
                                 
-                                    <option value="http://data.ashrae.org/standard223/1.0/sample/sample002">http://data.ashrae.org/standard223/1.0/sample/sample002</option>
-                                
-                                    <option value="urn:ex/sample002/00002">urn:ex/sample002/00002</option>
-                                
-                                    <option value="urn:ex/sample002/00003">urn:ex/sample002/00003</option>
+                                    <option value="http://data.ashrae.org/standard223/1.0/data/sample002">http://data.ashrae.org/standard223/1.0/data/sample002</option>
                                 
                                     <option value="http://data.ashrae.org/standard223/1.0/model/all">http://data.ashrae.org/standard223/1.0/model/all</option>
                                 
                                     <option value="urn:ex/sample002/00004">urn:ex/sample002/00004</option>
                                 
+                                    <option value="urn:ex/sample002/00003">urn:ex/sample002/00003</option>
+                                
+                                    <option value="urn:ex/sample002/00006">urn:ex/sample002/00006</option>
+                                
                                     <option value="urn:ex/sample002/00001">urn:ex/sample002/00001</option>
+                                
+                                    <option value="urn:ex/sample002/00002">urn:ex/sample002/00002</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/sample/sample002">http://data.ashrae.org/standard223/1.0/sample/sample002</option>
+                                
+                                    <option value="bob:legend/Equipment">bob:legend/Equipment</option>
+                                
+                                    <option value="bob:legend/Connection">bob:legend/Connection</option>
+                                
+                                    <option value="bob:legend/InletConnectionPoint">bob:legend/InletConnectionPoint</option>
+                                
+                                    <option value="bob:legend/OutletConnectionPoint">bob:legend/OutletConnectionPoint</option>
+                                
+                                    <option value="bob:legend/FunctionBlock">bob:legend/FunctionBlock</option>
+                                
+                                    <option value="bob:legend/DomainSpace">bob:legend/DomainSpace</option>
+                                
+                                    <option value="bob:legend/qudt">bob:legend/qudt</option>
+                                
+                                    <option value="bob:legend/Default">bob:legend/Default</option>
                                 
                             </select>
                         </div>
@@ -334,6 +356,8 @@ function highlightFilter(filter) {
         </div>
 
         
+        
+            <div id="config"></div>
         
 
         <script type="text/javascript">
@@ -499,8 +523,8 @@ function highlightFilter(filter) {
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": null, "id": "urn:ex/sample002/00006", "label": "urn:ex/sample002/00006", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Property, s223\nTypes: s223:Property\nValue : 5"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/data/sample002", "label": "sample002", "shape": "dot", "size": 15, "title": "Namespaces : http://www.w3.org/2002/07/owl#Ontology, owl\nTypes: owl:Ontology"}, {"color": null, "id": "urn:ex/sample002/00005", "label": "urn:ex/sample002/00005", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Property, s223\nTypes: s223:Property\nValue : 4"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/sample/sample002", "label": "http://data.ashrae.org/standard223/1.0/sample/sample002", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"color": null, "id": "urn:ex/sample002/00002", "label": "urn:ex/sample002/00002", "shape": "dot", "size": 15, "title": "Namespaces : urn:ex/sample002/Test\nTypes: "}, {"color": null, "id": "urn:ex/sample002/00003", "label": "urn:ex/sample002/00003", "shape": "dot", "size": 15, "title": "Namespaces : urn:ex/sample002/Test\nTypes: "}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/model/all", "label": "http://data.ashrae.org/standard223/1.0/model/all", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"color": null, "id": "urn:ex/sample002/00004", "label": "urn:ex/sample002/00004", "shape": "dot", "size": 15, "title": "Namespaces : urn:ex/sample002/Snork\nTypes: "}, {"color": null, "id": "urn:ex/sample002/00001", "label": "urn:ex/sample002/00001", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}]);
-                  edges = new vis.DataSet([{"from": "http://data.ashrae.org/standard223/1.0/data/sample002", "title": "http://www.w3.org/2000/01/rdf-schema#isDefinedBy", "to": "http://data.ashrae.org/standard223/1.0/sample/sample002"}, {"from": "http://data.ashrae.org/standard223/1.0/data/sample002", "title": "http://www.w3.org/2002/07/owl#imports", "to": "http://data.ashrae.org/standard223/1.0/model/all"}, {"from": "urn:ex/sample002/00001", "title": "urn:ex/sample002/test", "to": "urn:ex/sample002/00002"}, {"from": "urn:ex/sample002/00004", "title": "urn:ex/sample002/test", "to": "urn:ex/sample002/00003"}]);
+                  nodes = new vis.DataSet([{"borderWidth": null, "group": 0, "id": "urn:ex/sample002/00005", "label": "urn:ex/sample002/00005", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Property\nValue : 4"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223/1.0/data/sample002", "label": "sample002", "shape": "dot", "size": 15, "title": "Namespaces : owl\nTypes: owl:Ontology"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223/1.0/model/all", "label": "http://data.ashrae.org/standard223/1.0/model/all", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample002/00004", "label": "urn:ex/sample002/00004", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample002/00003", "label": "urn:ex/sample002/00003", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample002/00006", "label": "urn:ex/sample002/00006", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Property, s223\nTypes: s223:Property\nValue : 5"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample002/00001", "label": "urn:ex/sample002/00001", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample002/00002", "label": "urn:ex/sample002/00002", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223/1.0/sample/sample002", "label": "http://data.ashrae.org/standard223/1.0/sample/sample002", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "font": {"size": 20}, "group": 1, "id": "bob:legend/Equipment", "label": "Legend / Equipment", "physics": false, "shape": "square", "size": 20, "widthConstraint": 500, "x": 2000, "y": "-900px"}, {"borderWidth": null, "font": {"size": 20}, "group": 2, "id": "bob:legend/Connection", "label": "Legend / Connection", "physics": false, "shape": "diamond", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-800px"}, {"borderWidth": null, "font": {"size": 20}, "group": 3, "id": "bob:legend/InletConnectionPoint", "label": "Legend / InletConnectionPoint", "physics": false, "shape": "triangle", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-700px"}, {"borderWidth": null, "font": {"size": 20}, "group": 4, "id": "bob:legend/OutletConnectionPoint", "label": "Legend / OutletConnectionPoint", "physics": false, "shape": "triangleDown", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": null, "font": {"size": 20}, "group": 4, "id": "bob:legend/FunctionBlock", "label": "Legend / FunctionBlock|Producer", "physics": false, "shape": "star", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": 2, "font": {"size": 20}, "group": 4, "id": "bob:legend/DomainSpace", "label": "Legend / DomainSpace", "physics": false, "shape": "box", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": null, "font": {"size": 20}, "group": 5, "id": "bob:legend/qudt", "label": "Legend / qudt", "physics": false, "shape": "star", "size": 10, "widthConstraint": 500, "x": 2000, "y": "-500px"}, {"borderWidth": null, "font": {"size": 20}, "group": 0, "id": "bob:legend/Default", "label": "Legend / Default", "physics": false, "shape": "dot", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-1000px"}]);
+                  edges = new vis.DataSet([{"from": "http://data.ashrae.org/standard223/1.0/data/sample002", "title": "http://www.w3.org/2002/07/owl#imports", "to": "http://data.ashrae.org/standard223/1.0/model/all"}, {"from": "urn:ex/sample002/00004", "title": "urn:ex/sample002/test", "to": "urn:ex/sample002/00003"}, {"from": "urn:ex/sample002/00001", "title": "urn:ex/sample002/test", "to": "urn:ex/sample002/00002"}, {"from": "http://data.ashrae.org/standard223/1.0/data/sample002", "title": "http://www.w3.org/2000/01/rdf-schema#isDefinedBy", "to": "http://data.ashrae.org/standard223/1.0/sample/sample002"}]);
 
                   nodeColors = {};
                   allNodes = nodes.get({ returnType: "Object" });
@@ -513,7 +537,7 @@ function highlightFilter(filter) {
 
                   var options = {
     "configure": {
-        "enabled": false
+        "enabled": true
     },
     "edges": {
         "color": {
@@ -544,6 +568,10 @@ function highlightFilter(filter) {
                   
 
 
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
                   
 
                   network = new vis.Network(container, data, options);

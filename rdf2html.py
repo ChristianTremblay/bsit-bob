@@ -18,6 +18,81 @@ def parse_rdf(ttl_file):
 
 
 class Node:
+    groups = {
+        "Equipment": {
+            "size": 20,
+            "color": "green",
+            "shape": "square",
+            "group_int": 1,
+            "borderWidth": None,
+            "uri": "bob:legend/Equipment",
+            "label": "Legend / Equipment",
+        },
+        "Connection": {
+            "size": 15,
+            "color": "purple",
+            "shape": "diamond",
+            "group_int": 2,
+            "borderWidth": None,
+            "uri": "bob:legend/Connection",
+            "label": "Legend / Connection",
+        },
+        "InletConnectionPoint": {
+            "size": 15,
+            "color": "purple",
+            "shape": "triangle",
+            "group_int": 3,
+            "borderWidth": None,
+            "uri": "bob:legend/InletConnectionPoint",
+            "label": "Legend / InletConnectionPoint",
+        },
+        "OutletConnectionPoint": {
+            "size": 15,
+            "color": "#9be0b6",
+            "shape": "triangleDown",
+            "group_int": 4,
+            "borderWidth": None,
+            "uri": "bob:legend/OutletConnectionPoint",
+            "label": "Legend / OutletConnectionPoint",
+        },
+        "FunctionBlock": {
+            "size": 15,
+            "color": "#9be0b6",
+            "shape": "star",
+            "group_int": 4,
+            "borderWidth": None,
+            "uri": "bob:legend/FunctionBlock",
+            "label": "Legend / FunctionBlock|Producer",
+        },
+        "DomainSpace": {
+            "size": 15,
+            "color": "#9be0b6",
+            "shape": "box",
+            "group_int": 4,
+            "borderWidth": 2,
+            "uri": "bob:legend/DomainSpace",
+            "label": "Legend / DomainSpace",
+        },
+        "qudt": {
+            "size": 10,
+            "color": "#e3a1dd",
+            "shape": "star",
+            "group_int": 5,
+            "borderWidth": None,
+            "uri": "bob:legend/qudt",
+            "label": "Legend / qudt",
+        },
+        "Default": {
+            "size": 15,
+            "color": None,
+            "shape": "dot",
+            "group_int": 0,
+            "borderWidth": None,
+            "uri": "bob:legend/Default",
+            "label": "Legend / Default",
+        },
+    }
+
     def __init__(self, s, p=None, o=None):
         self.ns = set()
         self.types = set()
@@ -28,6 +103,12 @@ class Node:
         self.value = None
         self.medium = set()
         self.uri = str(s)
+        self.quantityKind = set()
+        self.enumerationKind = set()
+        self.domain = set()
+        self.unit = set()
+        self.bacnet = {}
+
         if p and o:
             if "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" in p:
                 self.ns.add(str(o))
@@ -48,55 +129,52 @@ class Node:
             pass
 
     @property
-    def size(self):
+    def group_name(self):
         if "s223:Equipment" in self.types:
-            return 20
+            return "Equipment"
         elif "s223:Connection" in self.types:
-            return 15
+            return "Connection"
         elif "s223" in self.types:
-            return 10
-        elif "s223:InletConnectionPoint" in self.types:
-            return 15
-        elif "s223:OutletConnectionPoint" in self.types:
-            return 15
-        elif "unit" in self.ns:
-            return 10
+            return "s223"
+        elif (
+            "s223:InletConnectionPoint" in self.types
+            or "s223:FunctionInput" in self.types
+            or "p223:ProducerInput" in self.types
+            or "s223:BidirectionalConnectionPoint" in self.types
+        ):
+            return "InletConnectionPoint"
+        elif (
+            "s223:OutletConnectionPoint" in self.types
+            or "s223:FunctionOutput" in self.types
+            or "p223:ProducerOutput" in self.types
+        ):
+            return "OutletConnectionPoint"
+        elif "p223:Producer" in self.types or "s223:FunctionBlock" in self.types:
+            return "FunctionBlock"
+        elif "s223:DomainSpace" in self.types or "s223:PhysicalSpace" in self.types:
+            return "FunctionBlock"
         else:
-            return 15
+            return "Default"
 
     @property
     def group(self):
-        return self.uri
+        return self.groups[self.group_name]["group_int"]
+
+    @property
+    def size(self):
+        return self.groups[self.group_name]["size"]
 
     @property
     def color(self):
-        if "unit" in self.ns:
-            return "#e3a1dd"
-        elif "s223:Equipment" in self.types:
-            return "green"
-        elif "s223:Connection" in self.types:
-            return "purple"
-        elif "s223:InletConnectionPoint" in self.types:
-            return "#2e754a"
-        elif "s223:OutletConnectionPoint" in self.types:
-            return "#9be0b6"
-        else:
-            return None
+        return self.groups[self.group_name]["color"]
 
     @property
     def shape(self):
-        if "unit" in self.ns:
-            return "star"
-        elif "s223:Equipment" in self.types:
-            return "square"
-        elif "s223:Connection" in self.types:
-            return "diamond"
-        elif "s223:InletConnectionPoint" in self.types:
-            return "triangle"
-        elif "s223:OutletConnectionPoint" in self.types:
-            return "triangleDown"
-        else:
-            return "dot"
+        return self.groups[self.group_name]["shape"]
+
+    @property
+    def borderWidth(self):
+        return self.groups[self.group_name]["borderWidth"]
 
     @property
     def title(self):
@@ -113,6 +191,21 @@ class Node:
         if self.medium:
             _m = ", ".join(self.medium)
             _bubble += f"\nMedium : {_m}"
+        if self.quantityKind:
+            _q = ", ".join(self.quantityKind)
+            _bubble += f"\nQuantityKind : {_q}"
+        if self.enumerationKind:
+            _k = ", ".join(self.enumerationKind)
+            _bubble += f"\nEnumerationKind : {_k}"
+        if self.domain:
+            _d = ", ".join(self.domain)
+            _bubble += f"\nDomain : {_d}"
+        if self.unit:
+            _u = ", ".join(self.unit)
+            _bubble += f"\nUnit : {_u}"
+        if self.bacnet:
+            for k, v in self.bacnet.items():
+                _bubble += f"\n{k} : {v}"
 
         return _bubble
 
@@ -126,9 +219,35 @@ class Node:
         elif "hasValue" in p:
             self.value = str(o)
         elif "hasAspect" in p:
-            self.aspects.add(str(o))
-        elif "hasMedium" in p or "ofSubstance" in p:
+            self.aspects.add(prefix(str(o))[1])
+        elif "hasMedium" in p or "ofSubstance" in p or "ofMedium" in p:
             self.medium.add(prefix(str(o))[1])
+        elif "hasQuantityKind" in p:
+            self.quantityKind.add(prefix(str(o))[1])
+        elif "hasEnumerationKind" in p:
+            self.enumerationKind.add(prefix(str(o))[1])
+        elif "hasDomain" in p:
+            self.domain.add(prefix(str(o))[1])
+        elif "qudt/unit" in p or "vocab/unit" in p:
+            self.unit.add(prefix(str(o))[1])
+        elif "http://data.ashrae.org/bacnet/2020#objectInstance" in p:
+            self.bacnet["objectinstance"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#objectType" in p:
+            self.bacnet["object_type"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#objectName" in p:
+            self.bacnet["object_name"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#description" in p:
+            self.bacnet["description"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#address" in p:
+            self.bacnet["address"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#deviceName" in p:
+            self.bacnet["deviceName"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#deviceId" in p:
+            self.bacnet["deviceId"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#vendorId" in p:
+            self.bacnet["vendorId"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#networkNumber" in p:
+            self.bacnet["networkNumber"] = str(o)
 
 
 def prepare_nodes(g):
@@ -148,9 +267,46 @@ def prepare_nodes(g):
             and "hasValue" not in p
             and "hasAspect" not in p
             and "hasMedium" not in p
+            and "hasQuantityKind" not in p
+            and "ofMedium" not in p
             and "ofSubstance" not in p
+            and "hasEnumerationKind" not in p
+            and "hasDomain" not in p
+            and "vocab/unit" not in p
+            and "qudt/unit" not in p
+            and "2020#objectInstance" not in p
+            and "2020#objectType" not in p
+            and "2020#objectName" not in p
+            and "2020#description" not in p
+            and "2020#address" not in p
+            and "2020#deviceName" not in p
+            and "2020#deviceId" not in p
+            and "2020#vendorId" not in p
+            and "2020#networkNumber" not in p
         ):
             nodes[o] = Node(o)
+
+
+def make_legend(g):
+    # Add Legend Nodes
+    step = 100
+    x = 2000
+    y = -1000
+    for k, v in Node.groups.items():
+        g.add_node(
+            v["uri"],
+            group=v["group_int"],
+            label=v["label"],
+            size=v["size"],
+            borderWidth=v["borderWidth"],
+            # 'fixed': True, # So that we can move the legend nodes around to arrange them better
+            physics=False,
+            x=x,
+            y=f"{y + v['group_int']*step}px",
+            shape=v["shape"],
+            widthConstraint=500,
+            font={"size": 20},
+        )
 
 
 def prefix(full):
@@ -166,6 +322,11 @@ def prefix(full):
         ("s223", "http://data.ashrae.org/standard223#"),
         ("unit", "http://qudt.org/vocab/unit/"),
         ("xsd", "http://www.w3.org/2001/XMLSchema#"),
+        ("rec", "https://w3id.org/rec/core/"),
+        ("bacnet", "http://data.ashrae.org/bacnet/2020#"),
+        ("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#"),
+        ("ref", "https://brickschema.org/schema/Brick/ref#"),
+        ("brick", "https://brickschema.org/schema/Brick#"),
     ]
     for each in _prefixes:
         _p, _f = each
@@ -185,7 +346,14 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
     for k, v in nodes.items():
         # print(f"Adding to viz : {v.uri}")
         visual_graph.add_node(
-            v.uri, v.label, title=v.title, size=v.size, color=v.color, shape=v.shape
+            v.uri,
+            v.label,
+            title=v.title,
+            size=v.size,
+            color=v.color,
+            shape=v.shape,
+            group=v.group,
+            borderWidth=v.borderWidth,
         )
 
     for s, p, o in g:
@@ -195,7 +363,10 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
             # print(f"Problem adding edge to {s} | {p} | {o} : {error}")
             continue  # we don't want thoses nodes (aspects, medium, label, etc.)
 
+    make_legend(visual_graph)
+
     visual_graph.toggle_physics(True)
+    visual_graph.show_buttons()
     html_filename = f"{ttl_file.split('.ttl')[0]}.html"
     if show:
         visual_graph.show(html_filename, notebook=False)
