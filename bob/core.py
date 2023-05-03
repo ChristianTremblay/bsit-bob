@@ -29,7 +29,7 @@ from typing import (
 
 from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
 
-from .multimethods import all_subclasses, multimethod, new_class
+from .multimethods import multimethod, new_class
 
 T = TypeVar("T")
 NodeMap = Dict[str, Union[type, str]]
@@ -393,7 +393,7 @@ class Node(metaclass=NodeMetaclass):
 
         if not self._resolved:
             self._resolve_annotations()
-        logging.debug(f"    - continue Node.__init__")
+        logging.debug("    - continue Node.__init__")
 
         if _node_iri is not None:
             if not isinstance(_node_iri, URIRef):
@@ -462,7 +462,7 @@ class Node(metaclass=NodeMetaclass):
         """
         logging.debug(f"Node._resolve_annotations {cls}")
         if cls is Node:
-            logging.debug(f"    - nothing to resolve here")
+            logging.debug("    - nothing to resolve here")
             cls._resolved = True
             return
 
@@ -573,7 +573,7 @@ class Node(metaclass=NodeMetaclass):
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
 
             elif attr_origin in (Any, Dict, Set, Union):
-                logging.debug(f"    - inspection not supported")
+                logging.debug("    - inspection not supported")
 
             elif inspect.isclass(attr_type):
                 cls._nodes[attr] = attr_type
@@ -726,7 +726,7 @@ class Node(metaclass=NodeMetaclass):
                     logging.debug(f"    - construct {attr_type} from: {value!r}")
                     value = attr_type(value)
                 except TypeError:
-                    logging.debug(f"    - why is this trapped?")
+                    logging.debug("    - why is this trapped?")
                     value = attr_type(_node_iri=value)
                 logging.debug("    - new value: %r", value)
 

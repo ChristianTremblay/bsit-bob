@@ -1,0 +1,690 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00040">urn:ex/sample_LPtest/00040</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00043">urn:ex/sample_LPtest/00043</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00041">urn:ex/sample_LPtest/00041</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00045">urn:ex/sample_LPtest/00045</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00005">urn:ex/sample_LPtest/00005</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00007">urn:ex/sample_LPtest/00007</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00042">urn:ex/sample_LPtest/00042</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00054">urn:ex/sample_LPtest/00054</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00056">urn:ex/sample_LPtest/00056</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00059">urn:ex/sample_LPtest/00059</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00058">urn:ex/sample_LPtest/00058</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00046">urn:ex/sample_LPtest/00046</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00048">urn:ex/sample_LPtest/00048</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00035">urn:ex/sample_LPtest/00035</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00013">urn:ex/sample_LPtest/00013</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00016">urn:ex/sample_LPtest/00016</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/data/sample_LPtest">http://data.ashrae.org/standard223/1.0/data/sample_LPtest</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/sample/sample_LPtest">http://data.ashrae.org/standard223/1.0/sample/sample_LPtest</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00049">urn:ex/sample_LPtest/00049</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00050">urn:ex/sample_LPtest/00050</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00029">urn:ex/sample_LPtest/00029</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/rtu">urn:ex/sample_LPtest/rtu</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00004">urn:ex/sample_LPtest/00004</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00063">urn:ex/sample_LPtest/00063</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00025">urn:ex/sample_LPtest/00025</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00003">urn:ex/sample_LPtest/00003</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00057">urn:ex/sample_LPtest/00057</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00038">urn:ex/sample_LPtest/00038</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00034">urn:ex/sample_LPtest/00034</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00033">urn:ex/sample_LPtest/00033</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00028">urn:ex/sample_LPtest/00028</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00018">urn:ex/sample_LPtest/00018</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Direction-Inlet">http://data.ashrae.org/standard223#Direction-Inlet</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00026">urn:ex/sample_LPtest/00026</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00052">urn:ex/sample_LPtest/00052</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00021">urn:ex/sample_LPtest/00021</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00001">urn:ex/sample_LPtest/00001</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00019">urn:ex/sample_LPtest/00019</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00015">urn:ex/sample_LPtest/00015</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00037">urn:ex/sample_LPtest/00037</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00024">urn:ex/sample_LPtest/00024</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00030">urn:ex/sample_LPtest/00030</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00047">urn:ex/sample_LPtest/00047</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00022">urn:ex/sample_LPtest/00022</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00032">urn:ex/sample_LPtest/00032</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Direction-Outlet">http://data.ashrae.org/standard223#Direction-Outlet</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00031">urn:ex/sample_LPtest/00031</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00053">urn:ex/sample_LPtest/00053</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00044">urn:ex/sample_LPtest/00044</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00006">urn:ex/sample_LPtest/00006</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00039">urn:ex/sample_LPtest/00039</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00010">urn:ex/sample_LPtest/00010</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00012">urn:ex/sample_LPtest/00012</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00051">urn:ex/sample_LPtest/00051</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00014">urn:ex/sample_LPtest/00014</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00023">urn:ex/sample_LPtest/00023</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00061">urn:ex/sample_LPtest/00061</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00009">urn:ex/sample_LPtest/00009</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Supply">http://data.ashrae.org/standard223#Role-Supply</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00062">urn:ex/sample_LPtest/00062</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00055">urn:ex/sample_LPtest/00055</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00008">urn:ex/sample_LPtest/00008</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00020">urn:ex/sample_LPtest/00020</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00011">urn:ex/sample_LPtest/00011</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00002">urn:ex/sample_LPtest/00002</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00027">urn:ex/sample_LPtest/00027</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00036">urn:ex/sample_LPtest/00036</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00060">urn:ex/sample_LPtest/00060</option>
+                                
+                                    <option value="urn:ex/sample_LPtest/00017">urn:ex/sample_LPtest/00017</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/model/all">http://data.ashrae.org/standard223/1.0/model/all</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+              <div id="filter-menu" class="card-header">
+                <div class="row no-gutters">
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'item')"
+                            id="select-item"
+                        >
+                        <option value="">Select a network item</option>
+                        <option value="edge">edge</option>
+                        <option value="node">node</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'property')"
+                            id="select-property"
+                        >
+                        <option value="">Select a property...</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            id="select-value"
+                        >
+                        <option value="">Select value(s)...</option>
+                    </select>
+                  </div>
+                  <div class="col-1 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="highlightFilter(filter);">Filter</button>
+                  </div>
+                  <div class="col-2 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="clearFilter(true)">Reset Selection</button>
+                  </div>
+                </div>
+              </div>
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+                  // explicitly using onItemAdd and this function as we need to save multiple values
+                  let updateValueFilter = function() {
+                      return function () {
+                      filter['value'].push(arguments[0])
+                      }
+                  }
+
+                  let valueControl = new TomSelect("#select-value",{
+                      maxItems: null,
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: updateValueFilter()
+                  });
+
+                  let addValues = function() {
+                      return function () {
+                          // clear the current value options and add the selected attribute values
+                          // tom-select handles duplicates
+                          let selectedProperty = arguments[0];
+                          valueControl.clear();
+                          valueControl.clearOptions();
+                          filter['value'] = []
+                          if (filter['item'] === 'node') {
+                              for (let each in allNodes) {
+                                  valueControl.addOption({
+                                      id:allNodes[each][selectedProperty],
+                                      title:allNodes[each][selectedProperty]
+                                  })
+                              }
+                          }
+                          else if (filter['item'] === 'edge') {
+                              for (let each in allEdges) {
+                                  valueControl.addOption({
+                                      id:allEdges[each][selectedProperty],
+                                      title:allEdges[each][selectedProperty]
+                                  })
+                              }
+                          }
+                      }
+                  };
+
+                  let propControl = new TomSelect("#select-property",{
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addValues()
+                  });
+
+                  let addProperties = function() {
+                      return function () {
+                          // loops through the selected network item and adds the attributes to dropdown
+                          // tom-select handles duplicates
+                          clearFilter(false)
+                          if (arguments[0] === 'edge') {
+                              for (let each in allEdges) {
+                                  if (allEdges.hasOwnProperty(each)) {
+                                      for (let eachProp in allEdges[each]) {
+                                          if (allEdges[each].hasOwnProperty(eachProp)) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                          else if (arguments[0] === 'node') {
+                              for (let each in allNodes) {
+                                  if (allNodes.hasOwnProperty(each)) {
+                                      for (let eachProp in allNodes[each]) {
+                                          if (allNodes[each].hasOwnProperty(eachProp)
+                                              && (eachProp !== 'hidden' && eachProp !== 'savedLabel'
+                                                  && eachProp !== 'hiddenLabel')) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  };
+
+                  let itemControl = new TomSelect("#select-item",{
+                      create: false,
+                      sortField:{
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addProperties()
+                  });
+
+                  function clearFilter(reset) {
+                      // utility function to clear all the selected filter options
+                      // if reset is set to true, the existing filter will be removed
+                      // else, only the dropdown options are cleared
+                      propControl.clear();
+                      propControl.clearOptions();
+                      valueControl.clear();
+                      valueControl.clearOptions();
+                      filter = {
+                          item : '',
+                          property : '',
+                          value : []
+                      }
+                      if (reset) {
+                          itemControl.clear();
+                          filterHighlight({nodes: []})
+                      }
+                  }
+
+                  function updateFilter(value, key) {
+                      // key could be 'item' or 'property' and value is as selected in dropdown
+                      filter[key] = value
+                  }
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": null, "id": "urn:ex/sample_LPtest/00040", "label": "rtu.chilled_water_coil", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device, s223:CoolingCoil"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00043", "label": "rtu.chilled_water_coil.chilledWaterInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Water-ChilledWater"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00041", "label": "rtu.chilled_water_coil.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "purple", "id": "urn:ex/sample_LPtest/00045", "label": "rtu.chilled_air", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00005", "label": "rtu.return_fan", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Connectable, s223\nTypes: s223:Connectable, s223:Device, s223:Fan"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00007", "label": "rtu.return_fan.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : s223\nTypes: s223:OutletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00042", "label": "rtu.chilled_water_coil.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : s223\nTypes: s223:ConnectionPoint, s223:OutletConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00054", "label": "rtu.iso_damper", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device, s223:Damper"}, {"color": null, "id": "urn:ex/sample_LPtest/00056", "label": "urn:ex/sample_LPtest/00056", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Property"}, {"color": "purple", "id": "urn:ex/sample_LPtest/00059", "label": "urn:ex/sample_LPtest/00059", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00058", "label": "rtu.iso_damper.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#OutletConnectionPoint, s223\nTypes: s223:OutletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00046", "label": "rtu.final_filter", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00048", "label": "rtu.final_filter.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : s223\nTypes: s223:OutletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00035", "label": "rtu.bypass_damper", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device, s223:Damper"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00013", "label": "rtu.exhaust_air_damper.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#ConnectionPoint, s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00016", "label": "urn:ex/sample_LPtest/00016", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223/1.0/extension/g36#AnalogOut\nTypes: s223:Property"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/data/sample_LPtest", "label": "sample_LPtest", "shape": "dot", "size": 15, "title": "Namespaces : owl\nTypes: owl:Ontology"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/sample/sample_LPtest", "label": "http://data.ashrae.org/standard223/1.0/sample/sample_LPtest", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"color": null, "id": "urn:ex/sample_LPtest/00049", "label": "rtu.supply_fan", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device, s223:Fan"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00050", "label": "rtu.supply_fan.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00029", "label": "rtu.outside_air_flow_station.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#ConnectionPoint, s223\nTypes: s223:ConnectionPoint, s223:OutletConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/rtu", "label": "rtu", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:System"}, {"color": null, "id": "urn:ex/sample_LPtest/00004", "label": "rtu.exhaustAirOutlet", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:OutletSystemConnectionPoint, s223:SystemConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00063", "label": "rtu.MA_sensor.connection", "shape": "triangle", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#ConnectionPoint, s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00025", "label": "rtu.outside_air_damper.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : s223\nTypes: s223:OutletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00003", "label": "rtu.supplyAirOutlet", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#SystemConnectionPoint, s223\nTypes: s223:OutletSystemConnectionPoint, s223:SystemConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00057", "label": "rtu.iso_damper.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#ConnectionPoint, s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00038", "label": "rtu.bypass_damper.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "purple", "id": "urn:ex/sample_LPtest/00034", "label": "rtu.pre_filtered_air", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nMedium : s223:Medium-Air"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00033", "label": "rtu.pre_filter.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#ConnectionPoint, s223\nTypes: s223:ConnectionPoint, s223:OutletConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00028", "label": "rtu.outside_air_flow_station.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint, s223:Medium-Air\nMedium : s223:Medium-Air"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00018", "label": "rtu.mixed_air_damper.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint, s223:Direction-Inlet\nMedium : s223:Medium-Air"}, {"color": null, "id": "http://data.ashrae.org/standard223#Direction-Inlet", "label": "http://data.ashrae.org/standard223#Direction-Inlet", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Direction-Inlet"}, {"color": null, "id": "urn:ex/sample_LPtest/00026", "label": "rtu.outside_air_flow_station", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00052", "label": "rtu.supply_fan.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Electricity"}, {"color": null, "id": "urn:ex/sample_LPtest/00021", "label": "rtu.outside_air_damper", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device, s223:Damper"}, {"color": null, "id": "urn:ex/sample_LPtest/00001", "label": "rtu.returnAirInlet", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletSystemConnectionPoint, s223:SystemConnectionPoint, s223:Direction-Inlet\nMedium : s223:Medium-Air"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00019", "label": "rtu.mixed_air_damper.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : s223\nTypes: s223:OutletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00015", "label": "rtu.mixed_air_damper", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device, s223:Damper"}, {"color": null, "id": "urn:ex/sample_LPtest/00037", "label": "urn:ex/sample_LPtest/00037", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Property"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00024", "label": "rtu.outside_air_damper.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#ConnectionPoint, s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "purple", "id": "urn:ex/sample_LPtest/00030", "label": "urn:ex/sample_LPtest/00030", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00047", "label": "rtu.final_filter.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00022", "label": "urn:ex/sample_LPtest/00022", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Property, s223\nTypes: s223:Property"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00032", "label": "rtu.pre_filter.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint, s223:Medium-Air\nMedium : s223:Medium-Air"}, {"color": null, "id": "http://data.ashrae.org/standard223#Direction-Outlet", "label": "http://data.ashrae.org/standard223#Direction-Outlet", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Direction-Outlet"}, {"color": null, "id": "urn:ex/sample_LPtest/00031", "label": "rtu.pre_filter", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device"}, {"color": "purple", "id": "urn:ex/sample_LPtest/00053", "label": "urn:ex/sample_LPtest/00053", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00044", "label": "rtu.chilled_water_coil.chilledWaterOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : s223\nTypes: s223:OutletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Water-ChilledWater"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00006", "label": "rtu.return_fan.airInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00039", "label": "rtu.bypass_damper.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : s223\nTypes: s223:OutletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00010", "label": "rtu.exhaust_air_damper", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device, s223:Damper"}, {"color": null, "id": "urn:ex/sample_LPtest/00012", "label": "urn:ex/sample_LPtest/00012", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Property"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00051", "label": "rtu.supply_fan.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#ConnectionPoint, s223\nTypes: s223:ConnectionPoint, s223:OutletConnectionPoint\nMedium : s223:Medium-Air"}, {"color": "#9be0b6", "id": "urn:ex/sample_LPtest/00014", "label": "rtu.exhaust_air_damper.airOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : s223\nTypes: s223:OutletConnectionPoint, s223:ConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00023", "label": "urn:ex/sample_LPtest/00023", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Property"}, {"color": null, "id": "urn:ex/sample_LPtest/00061", "label": "rtu.MA_sensor", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connectable, s223:Device"}, {"color": "purple", "id": "urn:ex/sample_LPtest/00009", "label": "rtu.return_air", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nMedium : s223:Medium-Air"}, {"color": null, "id": "http://data.ashrae.org/standard223#Role-Supply", "label": "http://data.ashrae.org/standard223#Role-Supply", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Role-Supply"}, {"color": null, "id": "urn:ex/sample_LPtest/00062", "label": "urn:ex/sample_LPtest/00062", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223/1.0/extension/g36#AnalogIn, s223\nTypes: s223:Property"}, {"color": null, "id": "urn:ex/sample_LPtest/00055", "label": "urn:ex/sample_LPtest/00055", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Property, s223\nTypes: s223:Property"}, {"color": "#2e754a", "id": "urn:ex/sample_LPtest/00008", "label": "rtu.return_fan.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : s223\nTypes: s223:InletConnectionPoint, s223:ConnectionPoint, s223:Medium-Electricity\nMedium : s223:Medium-Electricity"}, {"color": "purple", "id": "urn:ex/sample_LPtest/00020", "label": "rtu.mixed_air", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00011", "label": "urn:ex/sample_LPtest/00011", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Property"}, {"color": null, "id": "urn:ex/sample_LPtest/00002", "label": "rtu.outsideAirInlet", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:SystemConnectionPoint, s223:InletSystemConnectionPoint\nMedium : s223:Medium-Air"}, {"color": null, "id": "urn:ex/sample_LPtest/00027", "label": "urn:ex/sample_LPtest/00027", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Property"}, {"color": null, "id": "urn:ex/sample_LPtest/00036", "label": "urn:ex/sample_LPtest/00036", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Property"}, {"color": null, "id": "urn:ex/sample_LPtest/00060", "label": "urn:ex/sample_LPtest/00060", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Segment"}, {"color": null, "id": "urn:ex/sample_LPtest/00017", "label": "urn:ex/sample_LPtest/00017", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Property, s223\nTypes: s223:Property"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/model/all", "label": "http://data.ashrae.org/standard223/1.0/model/all", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}]);
+                  edges = new vis.DataSet([{"from": "urn:ex/sample_LPtest/00040", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_LPtest/00043"}, {"from": "urn:ex/sample_LPtest/00045", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_LPtest/00040"}, {"from": "urn:ex/sample_LPtest/00005", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_LPtest/00007"}, {"from": "urn:ex/sample_LPtest/00054", "title": "http://data.ashrae.org/standard223#feedback", "to": "urn:ex/sample_LPtest/00056"}, {"from": "urn:ex/sample_LPtest/00059", "title": "http://data.ashrae.org/standard223#connectsTo", "to": "urn:ex/sample_LPtest/00054"}, {"from": "urn:ex/sample_LPtest/00046", "title": "http://data.ashrae.org/proposal_to_standard223#airOutlet", "to": "urn:ex/sample_LPtest/00048"}, {"from": "urn:ex/sample_LPtest/00035", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_LPtest/00045"}, {"from": "http://data.ashrae.org/standard223/1.0/data/sample_LPtest", "title": "http://www.w3.org/2000/01/rdf-schema#isDefinedBy", "to": "http://data.ashrae.org/standard223/1.0/sample/sample_LPtest"}, {"from": "urn:ex/sample_LPtest/00049", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_LPtest/00050"}, {"from": "urn:ex/sample_LPtest/rtu", "title": "urn:ex/sample_LPtest/exhaustAirOutlet", "to": "urn:ex/sample_LPtest/00004"}, {"from": "urn:ex/sample_LPtest/00038", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00034"}, {"from": "urn:ex/sample_LPtest/00018", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00028", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00026"}, {"from": "urn:ex/sample_LPtest/00033", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00034"}, {"from": "urn:ex/sample_LPtest/00034", "title": "http://data.ashrae.org/standard223#connectsTo", "to": "urn:ex/sample_LPtest/00040"}, {"from": "urn:ex/sample_LPtest/00021", "title": "http://data.ashrae.org/standard223#connectedTo", "to": "urn:ex/sample_LPtest/00026"}, {"from": "urn:ex/sample_LPtest/00001", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00059", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_LPtest/00049"}, {"from": "urn:ex/sample_LPtest/00019", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00015"}, {"from": "urn:ex/sample_LPtest/00035", "title": "http://data.ashrae.org/standard223#feedback", "to": "urn:ex/sample_LPtest/00037"}, {"from": "urn:ex/sample_LPtest/00057", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00054"}, {"from": "urn:ex/sample_LPtest/00025", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00021"}, {"from": "urn:ex/sample_LPtest/00030", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_LPtest/00021"}, {"from": "urn:ex/sample_LPtest/00042", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00003", "title": "http://data.ashrae.org/standard223#mapsTo", "to": "urn:ex/sample_LPtest/00058"}, {"from": "urn:ex/sample_LPtest/00031", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_LPtest/00033"}, {"from": "urn:ex/sample_LPtest/00053", "title": "http://data.ashrae.org/standard223#connectsTo", "to": "urn:ex/sample_LPtest/00049"}, {"from": "urn:ex/sample_LPtest/00040", "title": "http://data.ashrae.org/standard223#chilledWaterOutlet", "to": "urn:ex/sample_LPtest/00044"}, {"from": "urn:ex/sample_LPtest/00057", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00005", "title": "http://data.ashrae.org/standard223#airInlet", "to": "urn:ex/sample_LPtest/00006"}, {"from": "urn:ex/sample_LPtest/00047", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00046"}, {"from": "urn:ex/sample_LPtest/00045", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_LPtest/00039"}, {"from": "urn:ex/sample_LPtest/00010", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00012"}, {"from": "urn:ex/sample_LPtest/00040", "title": "http://data.ashrae.org/standard223#airInlet", "to": "urn:ex/sample_LPtest/00041"}, {"from": "urn:ex/sample_LPtest/00028", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00030"}, {"from": "urn:ex/sample_LPtest/rtu", "title": "urn:ex/sample_LPtest/supplyAirOutlet", "to": "urn:ex/sample_LPtest/00003"}, {"from": "urn:ex/sample_LPtest/00046", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_LPtest/00053"}, {"from": "urn:ex/sample_LPtest/00042", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00040"}, {"from": "urn:ex/sample_LPtest/00035", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_LPtest/00034"}, {"from": "urn:ex/sample_LPtest/00010", "title": "http://data.ashrae.org/standard223#airOutlet", "to": "urn:ex/sample_LPtest/00014"}, {"from": "urn:ex/sample_LPtest/00021", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00023"}, {"from": "urn:ex/sample_LPtest/00042", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00045"}, {"from": "urn:ex/sample_LPtest/00003", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00063", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00061"}, {"from": "urn:ex/sample_LPtest/00001", "title": "http://data.ashrae.org/standard223#mapsTo", "to": "urn:ex/sample_LPtest/00006"}, {"from": "urn:ex/sample_LPtest/00010", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_LPtest/00009"}, {"from": "urn:ex/sample_LPtest/00058", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00049", "title": "http://data.ashrae.org/standard223#hasRole", "to": "http://data.ashrae.org/standard223#Role-Supply"}, {"from": "urn:ex/sample_LPtest/00052", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00049"}, {"from": "urn:ex/sample_LPtest/00026", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_LPtest/00030"}, {"from": "urn:ex/sample_LPtest/00031", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_LPtest/00032"}, {"from": "urn:ex/sample_LPtest/00013", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00061", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00062"}, {"from": "urn:ex/sample_LPtest/00044", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00005", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_LPtest/00009"}, {"from": "urn:ex/sample_LPtest/00063", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00038", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00050", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00053"}, {"from": "urn:ex/sample_LPtest/00032", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00020"}, {"from": "urn:ex/sample_LPtest/00054", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00055"}, {"from": "urn:ex/sample_LPtest/00031", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_LPtest/00034"}, {"from": "urn:ex/sample_LPtest/00010", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00011"}, {"from": "urn:ex/sample_LPtest/00002", "title": "http://data.ashrae.org/standard223#mapsTo", "to": "urn:ex/sample_LPtest/00024"}, {"from": "urn:ex/sample_LPtest/00025", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00030"}, {"from": "urn:ex/sample_LPtest/00026", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00027"}, {"from": "urn:ex/sample_LPtest/00035", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_LPtest/00039"}, {"from": "urn:ex/sample_LPtest/00043", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00035", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00036"}, {"from": "urn:ex/sample_LPtest/00015", "title": "http://data.ashrae.org/standard223#airInlet", "to": "urn:ex/sample_LPtest/00018"}, {"from": "urn:ex/sample_LPtest/00046", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_LPtest/00045"}, {"from": "urn:ex/sample_LPtest/00021", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00022"}, {"from": "urn:ex/sample_LPtest/00034", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_LPtest/00041"}, {"from": "urn:ex/sample_LPtest/00020", "title": "http://data.ashrae.org/standard223#connectsTo", "to": "urn:ex/sample_LPtest/00031"}, {"from": "urn:ex/sample_LPtest/00045", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_LPtest/00047"}, {"from": "urn:ex/sample_LPtest/00026", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_LPtest/00029"}, {"from": "urn:ex/sample_LPtest/00021", "title": "http://data.ashrae.org/standard223#airInlet", "to": "urn:ex/sample_LPtest/00024"}, {"from": "urn:ex/sample_LPtest/00060", "title": "http://data.ashrae.org/standard223#lnx", "to": "urn:ex/sample_LPtest/00063"}, {"from": "urn:ex/sample_LPtest/00013", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00010"}, {"from": "urn:ex/sample_LPtest/00019", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00029", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00020"}, {"from": "urn:ex/sample_LPtest/00035", "title": "http://data.ashrae.org/standard223#airInlet", "to": "urn:ex/sample_LPtest/00038"}, {"from": "urn:ex/sample_LPtest/00048", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00053"}, {"from": "urn:ex/sample_LPtest/rtu", "title": "http://data.ashrae.org/standard223#hasSystemConnectionPoint", "to": "urn:ex/sample_LPtest/00001"}, {"from": "urn:ex/sample_LPtest/00008", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00015", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00016"}, {"from": "urn:ex/sample_LPtest/00005", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_LPtest/00008"}, {"from": "urn:ex/sample_LPtest/00024", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00013", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00009"}, {"from": "urn:ex/sample_LPtest/00028", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00014", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00006", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00032", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/rtu", "title": "urn:ex/sample_LPtest/outsideAirInlet", "to": "urn:ex/sample_LPtest/00002"}, {"from": "http://data.ashrae.org/standard223/1.0/data/sample_LPtest", "title": "http://www.w3.org/2002/07/owl#imports", "to": "http://data.ashrae.org/standard223/1.0/model/all"}, {"from": "urn:ex/sample_LPtest/00007", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00004", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00046", "title": "http://data.ashrae.org/standard223#connectedTo", "to": "urn:ex/sample_LPtest/00049"}, {"from": "urn:ex/sample_LPtest/00051", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00049"}, {"from": "urn:ex/sample_LPtest/00048", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00025", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00057", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00059"}, {"from": "urn:ex/sample_LPtest/00058", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_LPtest/00054"}, {"from": "urn:ex/sample_LPtest/00059", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_LPtest/00051"}, {"from": "urn:ex/sample_LPtest/00007", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_LPtest/00009"}, {"from": "urn:ex/sample_LPtest/00051", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00015", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_LPtest/00017"}, {"from": "urn:ex/sample_LPtest/00029", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00033", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00002", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00039", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Outlet"}, {"from": "urn:ex/sample_LPtest/00004", "title": "http://data.ashrae.org/standard223#mapsTo", "to": "urn:ex/sample_LPtest/00014"}, {"from": "urn:ex/sample_LPtest/00020", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_LPtest/00026"}, {"from": "urn:ex/sample_LPtest/00052", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00050", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00047", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}, {"from": "urn:ex/sample_LPtest/00054", "title": "http://data.ashrae.org/standard223#connectedFrom", "to": "urn:ex/sample_LPtest/00049"}, {"from": "urn:ex/sample_LPtest/00041", "title": "http://data.ashrae.org/standard223#hasDirection", "to": "http://data.ashrae.org/standard223#Direction-Inlet"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
