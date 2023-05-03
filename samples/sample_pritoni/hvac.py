@@ -82,9 +82,14 @@ plenum = AirConnection(
 outdoor >> hd.ahu["OADPR"].airInlet  # >> mixedAir
 hd.ahu["OADPR"]["damper"] >> mixedAir
 hd.ahu["MADPR"]["damper"] >> mixedAir
-mixedAir >> hd.ahu["FILTER"] >> hd.ahu["HTGCOIL"] >> hd.ahu["CLGCOIL"] >> hd.ahu[
-    "SF"
-] >> supplyAir
+(
+    mixedAir
+    >> hd.ahu["FILTER"]
+    >> hd.ahu["HTGCOIL"]
+    >> hd.ahu["CLGCOIL"]
+    >> hd.ahu["SF"]
+    >> supplyAir
+)
 hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"].airInlet
 hd.ahu["RF"].airOutlet >> returnExhaust >> hd.ahu["EADPR"]["damper"].airInlet
 hd.ahu["EADPR"]["damper"] >> outdoor

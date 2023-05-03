@@ -1,0 +1,909 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 600px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00069">urn:ex/sample_electrical_entry/00069</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00088">urn:ex/sample_electrical_entry/00088</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00016">urn:ex/sample_electrical_entry/00016</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00017">urn:ex/sample_electrical_entry/00017</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00101">urn:ex/sample_electrical_entry/00101</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00100">urn:ex/sample_electrical_entry/00100</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00102">urn:ex/sample_electrical_entry/00102</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00059">urn:ex/sample_electrical_entry/00059</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00105">urn:ex/sample_electrical_entry/00105</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00060">urn:ex/sample_electrical_entry/00060</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/KiloW-HR">http://qudt.org/vocab/unit/KiloW-HR</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00078">urn:ex/sample_electrical_entry/00078</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00075">urn:ex/sample_electrical_entry/00075</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00110">urn:ex/sample_electrical_entry/00110</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00098">urn:ex/sample_electrical_entry/00098</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/V">http://qudt.org/vocab/unit/V</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00039">urn:ex/sample_electrical_entry/00039</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00041">urn:ex/sample_electrical_entry/00041</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00001">urn:ex/sample_electrical_entry/00001</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00002">urn:ex/sample_electrical_entry/00002</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00053">urn:ex/sample_electrical_entry/00053</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00009">urn:ex/sample_electrical_entry/00009</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00036">urn:ex/sample_electrical_entry/00036</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00057">urn:ex/sample_electrical_entry/00057</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00068">urn:ex/sample_electrical_entry/00068</option>
+                                
+                                    <option value="http://qudt.org/vocab/quantitykind/ElectricPower">http://qudt.org/vocab/quantitykind/ElectricPower</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00031">urn:ex/sample_electrical_entry/00031</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00061">urn:ex/sample_electrical_entry/00061</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00089">urn:ex/sample_electrical_entry/00089</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00034">urn:ex/sample_electrical_entry/00034</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00011">urn:ex/sample_electrical_entry/00011</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00037">urn:ex/sample_electrical_entry/00037</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00058">urn:ex/sample_electrical_entry/00058</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00077">urn:ex/sample_electrical_entry/00077</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00091">urn:ex/sample_electrical_entry/00091</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00072">urn:ex/sample_electrical_entry/00072</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00040">urn:ex/sample_electrical_entry/00040</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00055">urn:ex/sample_electrical_entry/00055</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00063">urn:ex/sample_electrical_entry/00063</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00087">urn:ex/sample_electrical_entry/00087</option>
+                                
+                                    <option value="http://qudt.org/vocab/quantitykind/Energy">http://qudt.org/vocab/quantitykind/Energy</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00006">urn:ex/sample_electrical_entry/00006</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00095">urn:ex/sample_electrical_entry/00095</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00070">urn:ex/sample_electrical_entry/00070</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/data/sample_electrical_entry">http://data.ashrae.org/standard223/1.0/data/sample_electrical_entry</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00086">urn:ex/sample_electrical_entry/00086</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00042">urn:ex/sample_electrical_entry/00042</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00065">urn:ex/sample_electrical_entry/00065</option>
+                                
+                                    <option value="http://qudt.org/vocab/quantitykind/Voltage">http://qudt.org/vocab/quantitykind/Voltage</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00090">urn:ex/sample_electrical_entry/00090</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00049">urn:ex/sample_electrical_entry/00049</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00050">urn:ex/sample_electrical_entry/00050</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00096">urn:ex/sample_electrical_entry/00096</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00066">urn:ex/sample_electrical_entry/00066</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00020">urn:ex/sample_electrical_entry/00020</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00104">urn:ex/sample_electrical_entry/00104</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00062">urn:ex/sample_electrical_entry/00062</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00097">urn:ex/sample_electrical_entry/00097</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00008">urn:ex/sample_electrical_entry/00008</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00052">urn:ex/sample_electrical_entry/00052</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00092">urn:ex/sample_electrical_entry/00092</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00038">urn:ex/sample_electrical_entry/00038</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00005">urn:ex/sample_electrical_entry/00005</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00019">urn:ex/sample_electrical_entry/00019</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00054">urn:ex/sample_electrical_entry/00054</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/model/all">http://data.ashrae.org/standard223/1.0/model/all</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00033">urn:ex/sample_electrical_entry/00033</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00046">urn:ex/sample_electrical_entry/00046</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00025">urn:ex/sample_electrical_entry/00025</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/A">http://qudt.org/vocab/unit/A</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00043">urn:ex/sample_electrical_entry/00043</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00012">urn:ex/sample_electrical_entry/00012</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00015">urn:ex/sample_electrical_entry/00015</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00076">urn:ex/sample_electrical_entry/00076</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00064">urn:ex/sample_electrical_entry/00064</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00084">urn:ex/sample_electrical_entry/00084</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00018">urn:ex/sample_electrical_entry/00018</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00099">urn:ex/sample_electrical_entry/00099</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00024">urn:ex/sample_electrical_entry/00024</option>
+                                
+                                    <option value="http://qudt.org/vocab/quantitykind/ReactivePower">http://qudt.org/vocab/quantitykind/ReactivePower</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00048">urn:ex/sample_electrical_entry/00048</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00106">urn:ex/sample_electrical_entry/00106</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00013">urn:ex/sample_electrical_entry/00013</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00056">urn:ex/sample_electrical_entry/00056</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00023">urn:ex/sample_electrical_entry/00023</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00022">urn:ex/sample_electrical_entry/00022</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00047">urn:ex/sample_electrical_entry/00047</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00045">urn:ex/sample_electrical_entry/00045</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00085">urn:ex/sample_electrical_entry/00085</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00030">urn:ex/sample_electrical_entry/00030</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00073">urn:ex/sample_electrical_entry/00073</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/KiloW">http://qudt.org/vocab/unit/KiloW</option>
+                                
+                                    <option value="http://qudt.org/vocab/quantitykind/ElectricCurrent">http://qudt.org/vocab/quantitykind/ElectricCurrent</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00067">urn:ex/sample_electrical_entry/00067</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00093">urn:ex/sample_electrical_entry/00093</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00003">urn:ex/sample_electrical_entry/00003</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00010">urn:ex/sample_electrical_entry/00010</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00071">urn:ex/sample_electrical_entry/00071</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00028">urn:ex/sample_electrical_entry/00028</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00074">urn:ex/sample_electrical_entry/00074</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00007">urn:ex/sample_electrical_entry/00007</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00035">urn:ex/sample_electrical_entry/00035</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00014">urn:ex/sample_electrical_entry/00014</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00079">urn:ex/sample_electrical_entry/00079</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00032">urn:ex/sample_electrical_entry/00032</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00082">urn:ex/sample_electrical_entry/00082</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00004">urn:ex/sample_electrical_entry/00004</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00094">urn:ex/sample_electrical_entry/00094</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/KiloV-A_Reactive-HR">http://qudt.org/vocab/unit/KiloV-A_Reactive-HR</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#AC-575V-60Hz">http://data.ashrae.org/standard223#AC-575V-60Hz</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/KiloV-A">http://qudt.org/vocab/unit/KiloV-A</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00044">urn:ex/sample_electrical_entry/00044</option>
+                                
+                                    <option value="http://qudt.org/vocab/quantitykind/ApparentPower">http://qudt.org/vocab/quantitykind/ApparentPower</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00108">urn:ex/sample_electrical_entry/00108</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/UNITLESS">http://qudt.org/vocab/unit/UNITLESS</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00029">urn:ex/sample_electrical_entry/00029</option>
+                                
+                                    <option value="http://qudt.org/vocab/quantitykind/Frequency">http://qudt.org/vocab/quantitykind/Frequency</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00103">urn:ex/sample_electrical_entry/00103</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00051">urn:ex/sample_electrical_entry/00051</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00107">urn:ex/sample_electrical_entry/00107</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00021">urn:ex/sample_electrical_entry/00021</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00080">urn:ex/sample_electrical_entry/00080</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00083">urn:ex/sample_electrical_entry/00083</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00109">urn:ex/sample_electrical_entry/00109</option>
+                                
+                                    <option value="http://qudt.org/vocab/quantitykind/PowerFactor">http://qudt.org/vocab/quantitykind/PowerFactor</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00026">urn:ex/sample_electrical_entry/00026</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00027">urn:ex/sample_electrical_entry/00027</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/KiloV-A_Reactive">http://qudt.org/vocab/unit/KiloV-A_Reactive</option>
+                                
+                                    <option value="urn:ex/sample_electrical_entry/00081">urn:ex/sample_electrical_entry/00081</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/sample/sample_electrical_entry">http://data.ashrae.org/standard223/1.0/sample/sample_electrical_entry</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/KiloV-A-HR">http://qudt.org/vocab/unit/KiloV-A-HR</option>
+                                
+                                    <option value="http://qudt.org/vocab/unit/HZ">http://qudt.org/vocab/unit/HZ</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+              <div id="filter-menu" class="card-header">
+                <div class="row no-gutters">
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'item')"
+                            id="select-item"
+                        >
+                        <option value="">Select a network item</option>
+                        <option value="edge">edge</option>
+                        <option value="node">node</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'property')"
+                            id="select-property"
+                        >
+                        <option value="">Select a property...</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            id="select-value"
+                        >
+                        <option value="">Select value(s)...</option>
+                    </select>
+                  </div>
+                  <div class="col-1 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="highlightFilter(filter);">Filter</button>
+                  </div>
+                  <div class="col-2 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="clearFilter(true)">Reset Selection</button>
+                  </div>
+                </div>
+              </div>
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+                  // explicitly using onItemAdd and this function as we need to save multiple values
+                  let updateValueFilter = function() {
+                      return function () {
+                      filter['value'].push(arguments[0])
+                      }
+                  }
+
+                  let valueControl = new TomSelect("#select-value",{
+                      maxItems: null,
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: updateValueFilter()
+                  });
+
+                  let addValues = function() {
+                      return function () {
+                          // clear the current value options and add the selected attribute values
+                          // tom-select handles duplicates
+                          let selectedProperty = arguments[0];
+                          valueControl.clear();
+                          valueControl.clearOptions();
+                          filter['value'] = []
+                          if (filter['item'] === 'node') {
+                              for (let each in allNodes) {
+                                  valueControl.addOption({
+                                      id:allNodes[each][selectedProperty],
+                                      title:allNodes[each][selectedProperty]
+                                  })
+                              }
+                          }
+                          else if (filter['item'] === 'edge') {
+                              for (let each in allEdges) {
+                                  valueControl.addOption({
+                                      id:allEdges[each][selectedProperty],
+                                      title:allEdges[each][selectedProperty]
+                                  })
+                              }
+                          }
+                      }
+                  };
+
+                  let propControl = new TomSelect("#select-property",{
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addValues()
+                  });
+
+                  let addProperties = function() {
+                      return function () {
+                          // loops through the selected network item and adds the attributes to dropdown
+                          // tom-select handles duplicates
+                          clearFilter(false)
+                          if (arguments[0] === 'edge') {
+                              for (let each in allEdges) {
+                                  if (allEdges.hasOwnProperty(each)) {
+                                      for (let eachProp in allEdges[each]) {
+                                          if (allEdges[each].hasOwnProperty(eachProp)) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                          else if (arguments[0] === 'node') {
+                              for (let each in allNodes) {
+                                  if (allNodes.hasOwnProperty(each)) {
+                                      for (let eachProp in allNodes[each]) {
+                                          if (allNodes[each].hasOwnProperty(eachProp)
+                                              && (eachProp !== 'hidden' && eachProp !== 'savedLabel'
+                                                  && eachProp !== 'hiddenLabel')) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  };
+
+                  let itemControl = new TomSelect("#select-item",{
+                      create: false,
+                      sortField:{
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addProperties()
+                  });
+
+                  function clearFilter(reset) {
+                      // utility function to clear all the selected filter options
+                      // if reset is set to true, the existing filter will be removed
+                      // else, only the dropdown options are cleared
+                      propControl.clear();
+                      propControl.clearOptions();
+                      valueControl.clear();
+                      valueControl.clearOptions();
+                      filter = {
+                          item : '',
+                          property : '',
+                          value : []
+                      }
+                      if (reset) {
+                          itemControl.clear();
+                          filterHighlight({nodes: []})
+                      }
+                  }
+
+                  function updateFilter(value, key) {
+                      // key could be 'item' or 'property' and value is as selected in dropdown
+                      filter[key] = value
+                  }
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": null, "id": "urn:ex/sample_electrical_entry/00069", "label": "kW_B", "shape": "dot", "size": 15, "title": "Namespaces : bob, http://data.ashrae.org/standard223#Property, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricPower\nComment : Real Power Phase B\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00088", "label": "kVA_max_demand", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#ElectricApparentPower\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricApparentPower\nComment : Total Apparent Power Maximum Demand\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00016", "label": "CB#2", "shape": "square", "size": 20, "title": "Namespaces : bob, s223, p223\nTypes: s223:Equipment, bob:ThreePolesCircuitBreaker, p223:ElectricalCircuitBreaker\nComment : Fans, AHU"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00017", "label": "Current rating of breaker", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nValue : 40.0"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00101", "label": "VoltageBN", "shape": "square", "size": 20, "title": "Namespaces : s223, p223, http://data.ashrae.org/proposal-to-standard223#VoltageSensor\nTypes: s223:Equipment, p223:VoltageSensor, s223:Sensor\nComment : Voltage reading B-N"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00100", "label": "VoltageAN.Voltage", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#Volts\nTypes: s223:QuantifiableProperty, bob:Volts, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00102", "label": "VoltageBN.Voltage", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, bob:Volts, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, s223:ElectricalPhaseIdentifier-B\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00059", "label": "Building Meter", "shape": "square", "size": 20, "title": "Namespaces : s223, p223\nTypes: s223:Equipment, p223:ElectricalMeter\nComment : Building Electrical Meter (M3)"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00105", "label": "CurrentPhaseA", "shape": "square", "size": 20, "title": "Namespaces : s223\nTypes: s223:Equipment, s223:Sensor\nComment : Current reading of phase A"}, {"color": "#e3a1dd", "id": "urn:ex/sample_electrical_entry/00060", "label": "energy", "shape": "star", "size": 10, "title": "Namespaces : bob, s223, unit\nTypes: unit:KiloW-HR, s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricEnergy\nComment : Real Energy Consumption\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/KiloW-HR", "label": "http://qudt.org/vocab/unit/KiloW-HR", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:KiloW-HR"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00078", "label": "kVA_B", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricApparentPower\nComment : Apparent Power Phase B\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00075", "label": "kVAh", "shape": "dot", "size": 15, "title": "Namespaces : bob, http://data.ashrae.org/standard223#Property, s223\nTypes: s223:QuantifiableProperty, bob:ElectricApparentEnergy, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nComment : Apparent Energy Consumption\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00110", "label": "CurrentPhaseC.Amps", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223#ObservableProperty\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C"}, {"color": "#e3a1dd", "id": "urn:ex/sample_electrical_entry/00098", "label": "VoltageBC.Voltage", "shape": "star", "size": 10, "title": "Namespaces : bob, s223, unit\nTypes: s223:QuantifiableProperty, bob:Volts, s223:ObservableProperty, unit:V, s223:Property, s223:QuantifiableObservableProperty\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-BC"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/V", "label": "http://qudt.org/vocab/unit/V", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:V"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00039", "label": "MainBreaker", "shape": "square", "size": 20, "title": "Namespaces : bob, s223, p223\nTypes: s223:Equipment, bob:TwoPolesMainCircuitBreaker, p223:ElectricalCircuitBreaker\nComment : Main breaker of panel"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00041", "label": "MainBreaker.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:InletConnectionPoint, bob:Electricity_120V_240V_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-AB\nMedium : s223:AC-120V-240V-60Hz"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00001", "label": "Main Entry Panel", "shape": "square", "size": 20, "title": "Namespaces : s223, p223\nTypes: s223:Equipment, p223:ElectricalDistributionPanel\nComment : Main Entry Panel of Building at 575V"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00002", "label": "MainBreaker", "shape": "square", "size": 20, "title": "Namespaces : bob, s223, p223\nTypes: s223:Equipment, bob:ThreePolesMainCircuitBreaker, p223:ElectricalCircuitBreaker\nComment : Main breaker of panel"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00053", "label": "My Panel.electricalBusA", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection, s223:AC-120V-60Hz\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A\nMedium : s223:AC-120V-60Hz"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00009", "label": "MainBreaker.electricalOutletBC", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_600V1Ph_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-BC\nMedium : s223:AC-600V1Ph-60Hz"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00036", "label": "TX-1.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:InletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nMedium : s223:AC-575V-60Hz"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00057", "label": "urn:ex/sample_electrical_entry/00057", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nMedium : s223:AC-575V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00068", "label": "kW_A", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, quantitykind\nTypes: s223:QuantifiableProperty, quantitykind:ElectricPower, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricPower\nComment : Real Power Phase A\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A"}, {"color": null, "id": "http://qudt.org/vocab/quantitykind/ElectricPower", "label": "http://qudt.org/vocab/quantitykind/ElectricPower", "shape": "dot", "size": 15, "title": "Namespaces : quantitykind\nTypes: quantitykind:ElectricPower"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00031", "label": "Main Entry Panel.electricalBusAB", "shape": "diamond", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#Connection\nTypes: s223:Connection\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-AB\nMedium : s223:AC-600V1Ph-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00061", "label": "kW_total", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, quantitykind\nTypes: s223:QuantifiableProperty, quantitykind:ElectricPower, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricPower\nComment : Total Real Power\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00089", "label": "kWh_A", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableObservableProperty\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricEnergy\nComment : Real Energy Consumption Phase A\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00034", "label": "Main Entry Panel.electricalBusABC", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC\nMedium : s223:AC-575V-60Hz"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00011", "label": "MainBreaker.electricalOutletABC", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC\nMedium : s223:AC-575V-60Hz"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00037", "label": "TX-1.electricalOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_120V_240V_60HzConnectionPoint\nMedium : s223:AC-120V-240V-60Hz"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00058", "label": "urn:ex/sample_electrical_entry/00058", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nMedium : s223:AC-120V-240V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00077", "label": "kVA_A", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricApparentPower\nComment : Apparent Power Phase A\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00091", "label": "kWh_C", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#ElectricEnergy\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricEnergy\nComment : Real Energy Consumption Phase C\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00072", "label": "power_factor_B", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, bob:PowerFactor, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nComment : Power Factor Phase B\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00040", "label": "Current rating of breaker", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableProperty\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nValue : 200.0"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00055", "label": "My Panel.electricalBusAB", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection, s223:AC-240V-60Hz\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-AB\nMedium : s223:AC-240V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00063", "label": "kVA_total", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableObservableProperty\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricApparentPower\nComment : Total Apparent Power\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00087", "label": "kVAR_max_demand", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223/si-builder#ElectricReactivePower, s223, bob\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, bob:ElectricReactivePower, s223:Property, s223:QuantifiableObservableProperty\nComment : Total Reactive Power Maximum Demand\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": null, "id": "http://qudt.org/vocab/quantitykind/Energy", "label": "http://qudt.org/vocab/quantitykind/Energy", "shape": "dot", "size": 15, "title": "Namespaces : quantitykind\nTypes: quantitykind:Energy"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00006", "label": "MainBreaker.electricalOutletB", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_347V_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B\nMedium : s223:AC-347V-60Hz"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00095", "label": "VoltageAC", "shape": "square", "size": 20, "title": "Namespaces : s223, http://data.ashrae.org/standard223#Equipment, p223\nTypes: s223:Equipment, p223:VoltageSensor, s223:Sensor\nComment : Voltage reading C-A"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00070", "label": "kW_C", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, s223:ElectricalPhaseIdentifier-C, bob:ElectricPower\nComment : Real Power Phase C\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/data/sample_electrical_entry", "label": "sample_electrical_entry", "shape": "dot", "size": 15, "title": "Namespaces : http://www.w3.org/2002/07/owl#Ontology, owl\nTypes: owl:Ontology"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00086", "label": "kW_max_demand", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223/si-builder#ElectricPower, s223, bob\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricPower\nComment : Total Real Power Maximum Demand\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00042", "label": "MainBreaker.electricalOutlet_LineA_Neutral", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:ElectricalPhaseIdentifier-A, bob:Electricity_120V_60HzConnectionPoint, s223:OutletConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A\nMedium : s223:AC-120V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00065", "label": "voltage_ll_avg", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, quantitykind\nTypes: s223:QuantifiableProperty, quantitykind:Voltage, bob:Volts, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nComment : Voltage L-L Average\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC, http://data.ashrae.org/proposal-to-standard223#Dimensioned-LineLineVoltage"}, {"color": null, "id": "http://qudt.org/vocab/quantitykind/Voltage", "label": "http://qudt.org/vocab/quantitykind/Voltage", "shape": "dot", "size": 15, "title": "Namespaces : quantitykind\nTypes: quantitykind:Voltage"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00090", "label": "kWh_B", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricEnergy, s223:ElectricalPhaseIdentifier-B\nComment : Real Energy Consumption Phase B\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00049", "label": "CB#2", "shape": "square", "size": 20, "title": "Namespaces : bob, s223, p223\nTypes: s223:Equipment, bob:TwoPolesCircuitBreaker, p223:ElectricalCircuitBreaker\nComment : Heater"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00050", "label": "Current rating of breaker", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nValue : 20.0"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00096", "label": "VoltageAC.Voltage", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, bob:Volts, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-CA"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00066", "label": "voltage_ln_avg", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, quantitykind\nTypes: s223:QuantifiableProperty, quantitykind:Voltage, bob:Volts, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nComment : Voltage L-N Average\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC, http://data.ashrae.org/proposal-to-standard223#Dimensioned-LineNeutralVoltage"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00020", "label": "CB#3", "shape": "square", "size": 20, "title": "Namespaces : bob, s223, p223\nTypes: s223:Equipment, bob:ThreePolesCircuitBreaker, p223:ElectricalCircuitBreaker\nComment : Feeds Transformer to get 120/240"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00104", "label": "VoltageCN.Voltage", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableObservableProperty\nTypes: s223:QuantifiableProperty, bob:Volts, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00062", "label": "kVAR_total", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ElectricalPhaseIdentifier-ABC, s223:ObservableProperty, bob:ElectricReactivePower, s223:Property, s223:QuantifiableObservableProperty\nComment : Total Reactive Power\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00097", "label": "VoltageBC", "shape": "square", "size": 20, "title": "Namespaces : s223, http://data.ashrae.org/standard223#Equipment, p223\nTypes: s223:Equipment, p223:VoltageSensor, s223:Sensor\nComment : Voltage reading B-C"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00008", "label": "MainBreaker.electricalOutletAB", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:ElectricalPhaseIdentifier-AB, s223:OutletConnectionPoint, bob:Electricity_600V1Ph_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-AB\nMedium : s223:AC-600V1Ph-60Hz"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00052", "label": "CB#2.electricalOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: bob:Electricity_240V_60HzConnectionPoint, s223:OutletConnectionPoint\nMedium : s223:AC-240V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00092", "label": "max_power", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableProperty\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricPower\nComment : Maximum Power of Equipment\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00038", "label": "My Panel", "shape": "square", "size": 20, "title": "Namespaces : s223, p223\nTypes: s223:Equipment, p223:ElectricalDistributionPanel\nComment : Description of my panel"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00005", "label": "MainBreaker.electricalOutletA", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#Electricity_347V_60HzConnectionPoint\nTypes: s223:OutletConnectionPoint, bob:Electricity_347V_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A\nMedium : s223:AC-347V-60Hz"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00019", "label": "CB#2.electricalOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nMedium : s223:AC-575V-60Hz"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00054", "label": "My Panel.electricalBusB", "shape": "diamond", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#Connection\nTypes: s223:Connection\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B\nMedium : s223:AC-120V-60Hz"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/model/all", "label": "http://data.ashrae.org/standard223/1.0/model/all", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00033", "label": "Main Entry Panel.electricalBusCA", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-CA\nMedium : s223:AC-600V1Ph-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00046", "label": "Current rating of breaker", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nValue : 15.0"}, {"color": "#e3a1dd", "id": "urn:ex/sample_electrical_entry/00025", "label": "Current rating of breaker", "shape": "star", "size": 10, "title": "Namespaces : bob, s223, unit\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, unit:A, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nValue : 15.0"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/A", "label": "http://qudt.org/vocab/unit/A", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:A"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00043", "label": "MainBreaker.electricalOutlet_LineB_Neutral", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_120V_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B\nMedium : s223:AC-120V-60Hz"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00012", "label": "CB#1", "shape": "square", "size": 20, "title": "Namespaces : bob, s223, p223, http://data.ashrae.org/standard223/si-builder#SinglePoleCircuitBreaker\nTypes: s223:Equipment, bob:SinglePoleCircuitBreaker, p223:ElectricalCircuitBreaker\nComment : Lights"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00015", "label": "CB#1.electricalOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_347V_60HzConnectionPoint\nMedium : s223:AC-347V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00076", "label": "kVARh", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, quantitykind\nTypes: s223:QuantifiableProperty, bob:ElectricReactiveEnergy, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, quantitykind:Energy\nComment : Reactive Energy Consumption\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00064", "label": "power_factor", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, bob:PowerFactor, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nComment : Total Power Factor"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00084", "label": "kVAR_present_demand", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223/si-builder#ElectricReactivePower, s223, bob\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, bob:ElectricReactivePower, s223:Property, s223:QuantifiableObservableProperty\nComment : Total Reactive Power Present Demand\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00018", "label": "CB#2.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:InletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nMedium : s223:AC-575V-60Hz"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00099", "label": "VoltageAN", "shape": "square", "size": 20, "title": "Namespaces : s223, p223\nTypes: s223:Equipment, p223:VoltageSensor, s223:Sensor\nComment : Voltage reading A-N"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00024", "label": "CB#4", "shape": "square", "size": 20, "title": "Namespaces : bob, s223, p223\nTypes: s223:Equipment, bob:ThreePolesCircuitBreaker, p223:ElectricalCircuitBreaker\nComment : Used for Meter"}, {"color": null, "id": "http://qudt.org/vocab/quantitykind/ReactivePower", "label": "http://qudt.org/vocab/quantitykind/ReactivePower", "shape": "dot", "size": 15, "title": "Namespaces : quantitykind\nTypes: quantitykind:ReactivePower"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00048", "label": "CB#1.electricalOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223/si-builder#Electricity_120V_60HzConnectionPoint, s223, bob\nTypes: bob:Electricity_120V_60HzConnectionPoint, s223:OutletConnectionPoint\nMedium : s223:AC-120V-60Hz"}, {"color": "#e3a1dd", "id": "urn:ex/sample_electrical_entry/00106", "label": "CurrentPhaseA.Amps", "shape": "star", "size": 10, "title": "Namespaces : bob, s223, unit\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, unit:A, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A"}, {"color": "#e3a1dd", "id": "urn:ex/sample_electrical_entry/00013", "label": "Current rating of breaker", "shape": "star", "size": 10, "title": "Namespaces : bob, s223, unit\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, unit:A, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nValue : 15.0"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00056", "label": "Hydro-Qu\u00c3\u00a9bec", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nComment : 600V\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC\nMedium : s223:AC-575V-60Hz"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00023", "label": "CB#3.electricalOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nMedium : s223:AC-575V-60Hz"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00022", "label": "CB#3.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#Electricity_575V_60HzConnectionPoint\nTypes: s223:InletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nMedium : s223:AC-575V-60Hz"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00047", "label": "CB#1.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:InletConnectionPoint, bob:Electricity_120V_60HzConnectionPoint\nMedium : s223:AC-120V-60Hz"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00045", "label": "CB#1", "shape": "square", "size": 20, "title": "Namespaces : bob, s223, p223\nTypes: s223:Equipment, bob:SinglePoleCircuitBreaker, p223:ElectricalCircuitBreaker\nComment : Lights"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00085", "label": "kVA_present_demand", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricApparentPower\nComment : Total Apparent Power Present Demand\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00030", "label": "Main Entry Panel.electricalBusC", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C\nMedium : s223:AC-347V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00073", "label": "power_factor_C", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, bob:PowerFactor, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nComment : Power Factor Phase C\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/KiloW", "label": "http://qudt.org/vocab/unit/KiloW", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:KiloW"}, {"color": null, "id": "http://qudt.org/vocab/quantitykind/ElectricCurrent", "label": "http://qudt.org/vocab/quantitykind/ElectricCurrent", "shape": "dot", "size": 15, "title": "Namespaces : quantitykind\nTypes: quantitykind:ElectricCurrent"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00067", "label": "current_avg", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ElectricalPhaseIdentifier-ABC, bob:Volts, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nComment : Current Average\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00093", "label": "VoltageAB", "shape": "square", "size": 20, "title": "Namespaces : s223, p223\nTypes: s223:Equipment, p223:VoltageSensor, s223:Sensor\nComment : Voltage reading A-B"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00003", "label": "Current rating of breaker", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, quantitykind\nTypes: s223:QuantifiableProperty, quantitykind:ElectricCurrent, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nValue : 400.0"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00010", "label": "MainBreaker.electricalOutletCA", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:ElectricalPhaseIdentifier-CA, s223:OutletConnectionPoint, bob:Electricity_600V1Ph_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-CA\nMedium : s223:AC-600V1Ph-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00071", "label": "power_factor_A", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, bob:PowerFactor, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nComment : Power Factor Phase A\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00028", "label": "Main Entry Panel.electricalBusA", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:ElectricalPhaseIdentifier-A, s223:Connection\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A\nMedium : s223:AC-347V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00074", "label": "frequency", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, bob:Frequency, s223:QuantifiableObservableProperty\nComment : Frequency\nAspects : http://data.ashrae.org/proposal-to-standard223#Dimensioned-NominalFrequency"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00007", "label": "MainBreaker.electricalOutletC", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_347V_60HzConnectionPoint\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C\nMedium : s223:AC-347V-60Hz"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00035", "label": "TX-1", "shape": "square", "size": 20, "title": "Namespaces : s223, p223\nTypes: s223:Equipment, p223:ElectricalTransformer"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00014", "label": "CB#1.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:InletConnectionPoint, bob:Electricity_347V_60HzConnectionPoint\nMedium : s223:AC-347V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00079", "label": "kVA_C", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricApparentPower\nComment : Apparent Power Phase C\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00032", "label": "Main Entry Panel.electricalBusBC", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection, s223:ElectricalPhaseIdentifier-BC\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-BC\nMedium : s223:AC-600V1Ph-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00082", "label": "kVAR_C", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, bob:ElectricReactivePower, s223:Property, s223:QuantifiableObservableProperty\nComment : Reactive Power Phase C\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-C"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00004", "label": "MainBreaker.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:InletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nMedium : s223:AC-575V-60Hz"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00094", "label": "VoltageAB.Voltage", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableObservableProperty\nTypes: s223:QuantifiableProperty, bob:Volts, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-AB"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/KiloV-A_Reactive-HR", "label": "http://qudt.org/vocab/unit/KiloV-A_Reactive-HR", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:KiloV-A_Reactive-HR"}, {"color": null, "id": "http://data.ashrae.org/standard223#AC-575V-60Hz", "label": "http://data.ashrae.org/standard223#AC-575V-60Hz", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:AC-575V-60Hz"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/KiloV-A", "label": "http://qudt.org/vocab/unit/KiloV-A", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:KiloV-A"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00044", "label": "MainBreaker.electricalOutlet_LineA_LineB", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: bob:Electricity_240V_60HzConnectionPoint, s223:OutletConnectionPoint, s223:AC-240V-60Hz\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-AB\nMedium : s223:AC-240V-60Hz"}, {"color": null, "id": "http://qudt.org/vocab/quantitykind/ApparentPower", "label": "http://qudt.org/vocab/quantitykind/ApparentPower", "shape": "dot", "size": 15, "title": "Namespaces : quantitykind\nTypes: quantitykind:ApparentPower"}, {"color": "#e3a1dd", "id": "urn:ex/sample_electrical_entry/00108", "label": "CurrentPhaseB.Amps", "shape": "star", "size": 10, "title": "Namespaces : bob, s223, unit\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, unit:A, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/UNITLESS", "label": "http://qudt.org/vocab/unit/UNITLESS", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:UNITLESS"}, {"color": "purple", "id": "urn:ex/sample_electrical_entry/00029", "label": "Main Entry Panel.electricalBusB", "shape": "diamond", "size": 15, "title": "Namespaces : s223\nTypes: s223:Connection, s223:AC-347V-60Hz\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B\nMedium : s223:AC-347V-60Hz"}, {"color": null, "id": "http://qudt.org/vocab/quantitykind/Frequency", "label": "http://qudt.org/vocab/quantitykind/Frequency", "shape": "dot", "size": 15, "title": "Namespaces : quantitykind\nTypes: quantitykind:Frequency"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00103", "label": "VoltageCN", "shape": "square", "size": 20, "title": "Namespaces : s223, http://data.ashrae.org/standard223#Equipment, p223\nTypes: s223:Equipment, p223:VoltageSensor, s223:Sensor\nComment : Voltage reading C-N"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00051", "label": "CB#2.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223\nTypes: bob:Electricity_240V_60HzConnectionPoint, s223:InletConnectionPoint\nMedium : s223:AC-240V-60Hz"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00107", "label": "CurrentPhaseB", "shape": "square", "size": 20, "title": "Namespaces : s223\nTypes: s223:Equipment, s223:Sensor\nComment : Current reading of phase B"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00021", "label": "Current rating of breaker", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:Amps\nValue : 100.0"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00080", "label": "kVAR_A", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223/si-builder#ElectricReactivePower, s223, bob\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, bob:ElectricReactivePower, s223:Property, s223:QuantifiableObservableProperty\nComment : Reactive Power Phase A\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-A"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00083", "label": "kW_present_demand", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ElectricalPhaseIdentifier-ABC, s223:ObservableProperty, s223:Property, s223:QuantifiableObservableProperty, bob:ElectricPower\nComment : Total Real Power Present Demand\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-ABC"}, {"color": "green", "id": "urn:ex/sample_electrical_entry/00109", "label": "CurrentPhaseC", "shape": "square", "size": 20, "title": "Namespaces : s223\nTypes: s223:Equipment, s223:Sensor\nComment : Current reading of phase C"}, {"color": null, "id": "http://qudt.org/vocab/quantitykind/PowerFactor", "label": "http://qudt.org/vocab/quantitykind/PowerFactor", "shape": "dot", "size": 15, "title": "Namespaces : quantitykind\nTypes: quantitykind:PowerFactor"}, {"color": "#2e754a", "id": "urn:ex/sample_electrical_entry/00026", "label": "CB#4.electricalInlet", "shape": "triangle", "size": 15, "title": "Namespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#Electricity_575V_60HzConnectionPoint\nTypes: s223:InletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nMedium : s223:AC-575V-60Hz"}, {"color": "#9be0b6", "id": "urn:ex/sample_electrical_entry/00027", "label": "CB#4.electricalOutlet", "shape": "triangleDown", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:Electricity_575V_60HzConnectionPoint\nMedium : s223:AC-575V-60Hz"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/KiloV-A_Reactive", "label": "http://qudt.org/vocab/unit/KiloV-A_Reactive", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:KiloV-A_Reactive"}, {"color": null, "id": "urn:ex/sample_electrical_entry/00081", "label": "kVAR_B", "shape": "dot", "size": 15, "title": "Namespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:ObservableProperty, bob:ElectricReactivePower, s223:Property, s223:QuantifiableObservableProperty\nComment : Reactive Power Phase B\nAspects : http://data.ashrae.org/standard223#ElectricalPhaseIdentifier-B"}, {"color": null, "id": "http://data.ashrae.org/standard223/1.0/sample/sample_electrical_entry", "label": "http://data.ashrae.org/standard223/1.0/sample/sample_electrical_entry", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/KiloV-A-HR", "label": "http://qudt.org/vocab/unit/KiloV-A-HR", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:KiloV-A-HR"}, {"color": "#e3a1dd", "id": "http://qudt.org/vocab/unit/HZ", "label": "http://qudt.org/vocab/unit/HZ", "shape": "star", "size": 10, "title": "Namespaces : unit\nTypes: unit:HZ"}]);
+                  edges = new vis.DataSet([{"from": "urn:ex/sample_electrical_entry/00016", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00017"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00105"}, {"from": "urn:ex/sample_electrical_entry/00060", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW-HR"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00078"}, {"from": "urn:ex/sample_electrical_entry/00098", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00039", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00041"}, {"from": "urn:ex/sample_electrical_entry/00001", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00002"}, {"from": "urn:ex/sample_electrical_entry/00009", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00002"}, {"from": "urn:ex/sample_electrical_entry/00036", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00057"}, {"from": "urn:ex/sample_electrical_entry/00068", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricPower"}, {"from": "urn:ex/sample_electrical_entry/00101", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00102"}, {"from": "urn:ex/sample_electrical_entry/00061", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricPower"}, {"from": "urn:ex/sample_electrical_entry/00034", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00011"}, {"from": "urn:ex/sample_electrical_entry/00037", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00058"}, {"from": "urn:ex/sample_electrical_entry/00091", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Energy"}, {"from": "urn:ex/sample_electrical_entry/00065", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00049", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00050"}, {"from": "urn:ex/sample_electrical_entry/00070", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricPower"}, {"from": "urn:ex/sample_electrical_entry/00066", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00020", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00034"}, {"from": "urn:ex/sample_electrical_entry/00049", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00052"}, {"from": "urn:ex/sample_electrical_entry/00060", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Energy"}, {"from": "urn:ex/sample_electrical_entry/00008", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00002"}, {"from": "urn:ex/sample_electrical_entry/00008", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00031"}, {"from": "urn:ex/sample_electrical_entry/00016", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00019"}, {"from": "http://data.ashrae.org/standard223/1.0/data/sample_electrical_entry", "title": "http://www.w3.org/2002/07/owl#imports", "to": "http://data.ashrae.org/standard223/1.0/model/all"}, {"from": "urn:ex/sample_electrical_entry/00025", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00043", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00039"}, {"from": "urn:ex/sample_electrical_entry/00076", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Energy"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00097"}, {"from": "urn:ex/sample_electrical_entry/00018", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00034"}, {"from": "urn:ex/sample_electrical_entry/00099", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00024"}, {"from": "urn:ex/sample_electrical_entry/00084", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ReactivePower"}, {"from": "urn:ex/sample_electrical_entry/00106", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00013", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00023", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00057"}, {"from": "urn:ex/sample_electrical_entry/00047", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00045"}, {"from": "urn:ex/sample_electrical_entry/00045", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00046"}, {"from": "urn:ex/sample_electrical_entry/00016", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00034"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00064"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00085"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00030"}, {"from": "urn:ex/sample_electrical_entry/00055", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_electrical_entry/00039"}, {"from": "urn:ex/sample_electrical_entry/00092", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW"}, {"from": "urn:ex/sample_electrical_entry/00025", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00018", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00102", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00093", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00024"}, {"from": "urn:ex/sample_electrical_entry/00003", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00018", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00016"}, {"from": "urn:ex/sample_electrical_entry/00023", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00020"}, {"from": "urn:ex/sample_electrical_entry/00106", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00072"}, {"from": "urn:ex/sample_electrical_entry/00013", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00049", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00055"}, {"from": "urn:ex/sample_electrical_entry/00069", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW"}, {"from": "urn:ex/sample_electrical_entry/00007", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00030"}, {"from": "urn:ex/sample_electrical_entry/00035", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00037"}, {"from": "urn:ex/sample_electrical_entry/00067", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00079"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00060"}, {"from": "urn:ex/sample_electrical_entry/00098", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00034", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00022"}, {"from": "urn:ex/sample_electrical_entry/00004", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00002"}, {"from": "urn:ex/sample_electrical_entry/00076", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A_Reactive-HR"}, {"from": "urn:ex/sample_electrical_entry/00090", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Energy"}, {"from": "urn:ex/sample_electrical_entry/00032", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00009"}, {"from": "urn:ex/sample_electrical_entry/00100", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00090", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW-HR"}, {"from": "urn:ex/sample_electrical_entry/00014", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00028"}, {"from": "urn:ex/sample_electrical_entry/00094", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00085", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A"}, {"from": "urn:ex/sample_electrical_entry/00024", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00025"}, {"from": "urn:ex/sample_electrical_entry/00058", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00041"}, {"from": "urn:ex/sample_electrical_entry/00092", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricPower"}, {"from": "urn:ex/sample_electrical_entry/00078", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ApparentPower"}, {"from": "urn:ex/sample_electrical_entry/00108", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00020", "title": "http://data.ashrae.org/standard223#connectedTo", "to": "urn:ex/sample_electrical_entry/00035"}, {"from": "urn:ex/sample_electrical_entry/00104", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00108", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00038", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00049"}, {"from": "urn:ex/sample_electrical_entry/00110", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00071", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/UNITLESS"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00066"}, {"from": "urn:ex/sample_electrical_entry/00074", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Frequency"}, {"from": "urn:ex/sample_electrical_entry/00044", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00055"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00099"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00034"}, {"from": "urn:ex/sample_electrical_entry/00010", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00033"}, {"from": "urn:ex/sample_electrical_entry/00049", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00051"}, {"from": "urn:ex/sample_electrical_entry/00087", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ReactivePower"}, {"from": "urn:ex/sample_electrical_entry/00044", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00039"}, {"from": "urn:ex/sample_electrical_entry/00036", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00086"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00091"}, {"from": "urn:ex/sample_electrical_entry/00055", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00051"}, {"from": "urn:ex/sample_electrical_entry/00107", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00004"}, {"from": "urn:ex/sample_electrical_entry/00091", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW-HR"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00074"}, {"from": "urn:ex/sample_electrical_entry/00056", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00004"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00056"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00109"}, {"from": "urn:ex/sample_electrical_entry/00011", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00035", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00058"}, {"from": "urn:ex/sample_electrical_entry/00080", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ReactivePower"}, {"from": "urn:ex/sample_electrical_entry/00045", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00053"}, {"from": "urn:ex/sample_electrical_entry/00097", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00024"}, {"from": "urn:ex/sample_electrical_entry/00086", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricPower"}, {"from": "urn:ex/sample_electrical_entry/00028", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00005"}, {"from": "urn:ex/sample_electrical_entry/00070", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00007"}, {"from": "urn:ex/sample_electrical_entry/00102", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00073", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/PowerFactor"}, {"from": "urn:ex/sample_electrical_entry/00067", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00103"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00006"}, {"from": "urn:ex/sample_electrical_entry/00020", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00022"}, {"from": "urn:ex/sample_electrical_entry/00106", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00042", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00039"}, {"from": "urn:ex/sample_electrical_entry/00094", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00017", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00058", "title": "http://data.ashrae.org/standard223#connectsTo", "to": "urn:ex/sample_electrical_entry/00039"}, {"from": "urn:ex/sample_electrical_entry/00027", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00024"}, {"from": "urn:ex/sample_electrical_entry/00107", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00108"}, {"from": "urn:ex/sample_electrical_entry/00047", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00053"}, {"from": "urn:ex/sample_electrical_entry/00014", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00012"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00083"}, {"from": "urn:ex/sample_electrical_entry/00084", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A_Reactive"}, {"from": "urn:ex/sample_electrical_entry/00057", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_electrical_entry/00020"}, {"from": "urn:ex/sample_electrical_entry/00105", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00106"}, {"from": "urn:ex/sample_electrical_entry/00001", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00020"}, {"from": "urn:ex/sample_electrical_entry/00039", "title": "http://data.ashrae.org/standard223#connectedFrom", "to": "urn:ex/sample_electrical_entry/00035"}, {"from": "urn:ex/sample_electrical_entry/00023", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00077"}, {"from": "urn:ex/sample_electrical_entry/00039", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00053"}, {"from": "urn:ex/sample_electrical_entry/00001", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00012"}, {"from": "urn:ex/sample_electrical_entry/00010", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00002"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00087"}, {"from": "urn:ex/sample_electrical_entry/00105", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00004"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00095"}, {"from": "urn:ex/sample_electrical_entry/00110", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00001", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00024"}, {"from": "urn:ex/sample_electrical_entry/00033", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_electrical_entry/00002"}, {"from": "urn:ex/sample_electrical_entry/00079", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00101"}, {"from": "urn:ex/sample_electrical_entry/00096", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00075", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Energy"}, {"from": "urn:ex/sample_electrical_entry/00036", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00035"}, {"from": "urn:ex/sample_electrical_entry/00029", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_electrical_entry/00002"}, {"from": "urn:ex/sample_electrical_entry/00004", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00012", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00013"}, {"from": "urn:ex/sample_electrical_entry/00081", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ReactivePower"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00093"}, {"from": "urn:ex/sample_electrical_entry/00003", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "http://data.ashrae.org/standard223/1.0/data/sample_electrical_entry", "title": "http://www.w3.org/2000/01/rdf-schema#isDefinedBy", "to": "http://data.ashrae.org/standard223/1.0/sample/sample_electrical_entry"}, {"from": "urn:ex/sample_electrical_entry/00029", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00006"}, {"from": "urn:ex/sample_electrical_entry/00057", "title": "http://data.ashrae.org/standard223#connectsTo", "to": "urn:ex/sample_electrical_entry/00035"}, {"from": "urn:ex/sample_electrical_entry/00064", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/UNITLESS"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00028"}, {"from": "urn:ex/sample_electrical_entry/00095", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00096"}, {"from": "urn:ex/sample_electrical_entry/00012", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00028"}, {"from": "urn:ex/sample_electrical_entry/00077", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A"}, {"from": "urn:ex/sample_electrical_entry/00101", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00024"}, {"from": "urn:ex/sample_electrical_entry/00072", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/UNITLESS"}, {"from": "urn:ex/sample_electrical_entry/00079", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ApparentPower"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00076"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00082"}, {"from": "urn:ex/sample_electrical_entry/00038", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00039"}, {"from": "urn:ex/sample_electrical_entry/00012", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00015"}, {"from": "urn:ex/sample_electrical_entry/00027", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00062", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A_Reactive"}, {"from": "urn:ex/sample_electrical_entry/00054", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00043"}, {"from": "urn:ex/sample_electrical_entry/00048", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00045"}, {"from": "urn:ex/sample_electrical_entry/00005", "title": "http://data.ashrae.org/standard223#isConnectionPointOf", "to": "urn:ex/sample_electrical_entry/00002"}, {"from": "urn:ex/sample_electrical_entry/00103", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00024"}, {"from": "urn:ex/sample_electrical_entry/00056", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00096", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00088"}, {"from": "urn:ex/sample_electrical_entry/00087", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A_Reactive"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00003"}, {"from": "urn:ex/sample_electrical_entry/00054", "title": "http://data.ashrae.org/standard223#connectsFrom", "to": "urn:ex/sample_electrical_entry/00039"}, {"from": "urn:ex/sample_electrical_entry/00095", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00024"}, {"from": "urn:ex/sample_electrical_entry/00086", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW"}, {"from": "urn:ex/sample_electrical_entry/00080", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A_Reactive"}, {"from": "urn:ex/sample_electrical_entry/00088", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00062"}, {"from": "urn:ex/sample_electrical_entry/00062", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ReactivePower"}, {"from": "urn:ex/sample_electrical_entry/00050", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00077", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ApparentPower"}, {"from": "urn:ex/sample_electrical_entry/00094", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00017", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00032"}, {"from": "urn:ex/sample_electrical_entry/00085", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ApparentPower"}, {"from": "urn:ex/sample_electrical_entry/00024", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00034"}, {"from": "urn:ex/sample_electrical_entry/00021", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00103", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00104"}, {"from": "urn:ex/sample_electrical_entry/00024", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00026"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00090"}, {"from": "urn:ex/sample_electrical_entry/00021", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00069"}, {"from": "urn:ex/sample_electrical_entry/00053", "title": "http://data.ashrae.org/standard223#connectsAt", "to": "urn:ex/sample_electrical_entry/00042"}, {"from": "urn:ex/sample_electrical_entry/00082", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ReactivePower"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#connectedThrough", "to": "urn:ex/sample_electrical_entry/00031"}, {"from": "urn:ex/sample_electrical_entry/00082", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A_Reactive"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00080"}, {"from": "urn:ex/sample_electrical_entry/00022", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00050", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00108", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00100", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00001", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00016"}, {"from": "urn:ex/sample_electrical_entry/00088", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ApparentPower"}, {"from": "urn:ex/sample_electrical_entry/00064", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/PowerFactor"}, {"from": "urn:ex/sample_electrical_entry/00097", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00098"}, {"from": "urn:ex/sample_electrical_entry/00109", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00110"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00092"}, {"from": "urn:ex/sample_electrical_entry/00104", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00038", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00045"}, {"from": "urn:ex/sample_electrical_entry/00002", "title": "http://data.ashrae.org/standard223#hasConnectionPoint", "to": "urn:ex/sample_electrical_entry/00011"}, {"from": "urn:ex/sample_electrical_entry/00040", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00039", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00040"}, {"from": "urn:ex/sample_electrical_entry/00072", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/PowerFactor"}, {"from": "urn:ex/sample_electrical_entry/00040", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#contains", "to": "urn:ex/sample_electrical_entry/00107"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00068"}, {"from": "urn:ex/sample_electrical_entry/00071", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/PowerFactor"}, {"from": "urn:ex/sample_electrical_entry/00102", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00065", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00075"}, {"from": "urn:ex/sample_electrical_entry/00066", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/V"}, {"from": "urn:ex/sample_electrical_entry/00098", "title": "http://data.ashrae.org/standard223#ofMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00109", "title": "http://data.ashrae.org/proposal-to-standard223#hasObservationLocation", "to": "urn:ex/sample_electrical_entry/00004"}, {"from": "urn:ex/sample_electrical_entry/00063", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00089"}, {"from": "urn:ex/sample_electrical_entry/00100", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00081", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A_Reactive"}, {"from": "urn:ex/sample_electrical_entry/00075", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A-HR"}, {"from": "urn:ex/sample_electrical_entry/00073", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/UNITLESS"}, {"from": "urn:ex/sample_electrical_entry/00089", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW-HR"}, {"from": "urn:ex/sample_electrical_entry/00099", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00100"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00081"}, {"from": "urn:ex/sample_electrical_entry/00096", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00063"}, {"from": "urn:ex/sample_electrical_entry/00034", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00065"}, {"from": "urn:ex/sample_electrical_entry/00104", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Voltage"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00073"}, {"from": "urn:ex/sample_electrical_entry/00020", "title": "http://data.ashrae.org/standard223/si-builder#currentRating", "to": "urn:ex/sample_electrical_entry/00021"}, {"from": "urn:ex/sample_electrical_entry/00069", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricPower"}, {"from": "urn:ex/sample_electrical_entry/00078", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloV-A"}, {"from": "urn:ex/sample_electrical_entry/00063", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ApparentPower"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00067"}, {"from": "urn:ex/sample_electrical_entry/00019", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00026", "title": "http://data.ashrae.org/standard223#connectsThrough", "to": "urn:ex/sample_electrical_entry/00034"}, {"from": "urn:ex/sample_electrical_entry/00093", "title": "http://data.ashrae.org/standard223#observes", "to": "urn:ex/sample_electrical_entry/00094"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00070"}, {"from": "urn:ex/sample_electrical_entry/00068", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00084"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00061"}, {"from": "urn:ex/sample_electrical_entry/00083", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW"}, {"from": "urn:ex/sample_electrical_entry/00089", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/Energy"}, {"from": "urn:ex/sample_electrical_entry/00026", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00074", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/HZ"}, {"from": "urn:ex/sample_electrical_entry/00059", "title": "http://data.ashrae.org/standard223#hasProperty", "to": "urn:ex/sample_electrical_entry/00071"}, {"from": "urn:ex/sample_electrical_entry/00046", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/A"}, {"from": "urn:ex/sample_electrical_entry/00046", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}, {"from": "urn:ex/sample_electrical_entry/00061", "title": "http://qudt.org/schema/qudt/unit", "to": "http://qudt.org/vocab/unit/KiloW"}, {"from": "urn:ex/sample_electrical_entry/00083", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricPower"}, {"from": "urn:ex/sample_electrical_entry/00057", "title": "http://data.ashrae.org/standard223#hasMedium", "to": "http://data.ashrae.org/standard223#AC-575V-60Hz"}, {"from": "urn:ex/sample_electrical_entry/00110", "title": "http://qudt.org/schema/qudt/hasQuantityKind", "to": "http://qudt.org/vocab/quantitykind/ElectricCurrent"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

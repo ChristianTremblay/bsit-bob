@@ -28,5 +28,6 @@ def bob_fixture(request):
     params["samples_ttl_directory"] = os.path.join(os.getcwd(), "samples", "ttl")
     params["g36_directory"] = os.path.join(os.getcwd(), "G36")
     params["g36_ttl_directory"] = os.path.join(os.getcwd(), "G36", "ttl")
+    params["root_directory"] = os.path.join(os.getcwd())
     yield params
     # teardown
