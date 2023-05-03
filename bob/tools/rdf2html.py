@@ -1,5 +1,6 @@
 import os
 import re
+import subprocess
 
 import click
 import pyvis
@@ -401,30 +402,25 @@ def clear() -> None:
     g = Graph()
 
 
-@click.command()
-@click.option("-v", "--view", default=False)
-@click.argument("folder", type=click.Path(), required=False)
-def convert_all(folder=None, file=None, view=False):
-    if file:
-        to_html(file, show=view)
-    if folder:
-        _convert_all(folder)
-
-
-def _convert_all(folder):
+def convert_all(folder):
     files = find_ttl_files(folder)
     for each in files:
         p = os.path.normpath(each)
         print(f"Processing {p}")
-        to_html(p)
+        subprocess.run(
+            ["rdf2html.exe", p]
+        )  # using run assure nothing is kept in memory so new graphs are created for each file
         clear()
 
 
 @click.command()
-@click.argument("file")
-def process(folder=None, file=None, view=False):
-    if file:
-        to_html(file, show=view)
+@click.argument("source", type=click.Path())
+@click.option("-v", "--view", default=False)
+def process(source=None, view=False):
+    if os.path.isfile(source):
+        to_html(source, show=view)
+    else:
+        convert_all(source)
 
 
 if __name__ == "__main__":
