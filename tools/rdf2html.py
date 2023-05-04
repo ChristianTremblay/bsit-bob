@@ -184,26 +184,26 @@ class Node:
         _bubble = f"Namespaces : {_n}\nTypes: {_t}"
         if self.comment:
             _bubble += f"\nComment : {self.comment}"
-        if self.value:
-            _bubble += f"\nValue : {self.value}"
         if self.aspects:
             _a = ", ".join(self.aspects)
             _bubble += f"\nAspects : {_a}"
         if self.medium:
             _m = ", ".join(self.medium)
             _bubble += f"\nMedium : {_m}"
-        if self.quantityKind:
-            _q = ", ".join(self.quantityKind)
-            _bubble += f"\nQuantityKind : {_q}"
         if self.enumerationKind:
             _k = ", ".join(self.enumerationKind)
             _bubble += f"\nEnumerationKind : {_k}"
         if self.domain:
             _d = ", ".join(self.domain)
             _bubble += f"\nDomain : {_d}"
+        if self.value:
+            _bubble += f"\nValue : {self.value}"
         if self.unit:
             _u = ", ".join(self.unit)
             _bubble += f"\nUnit : {_u}"
+        if self.quantityKind:
+            _q = ", ".join(self.quantityKind)
+            _bubble += f"\nQuantityKind : {_q}"
         if self.bacnet:
             for k, v in self.bacnet.items():
                 _bubble += f"\n{k} : {v}"
@@ -231,24 +231,26 @@ class Node:
             self.domain.add(prefix(str(o))[1])
         elif "qudt/unit" in p or "vocab/unit" in p:
             self.unit.add(prefix(str(o))[1])
-        elif "http://data.ashrae.org/bacnet/2020#objectInstance" in p:
-            self.bacnet["objectinstance"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#objectType" in p:
+        elif "http://data.ashrae.org/bacnet/2020#object-identifier" in p:
+            self.bacnet["object-identifier"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#object-type" in p:
             self.bacnet["object_type"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#objectName" in p:
-            self.bacnet["object_name"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#object-name" in p:
+            self.bacnet["object-name"] = str(o)
         elif "http://data.ashrae.org/bacnet/2020#description" in p:
             self.bacnet["description"] = str(o)
         elif "http://data.ashrae.org/bacnet/2020#address" in p:
             self.bacnet["address"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#deviceName" in p:
-            self.bacnet["deviceName"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#deviceId" in p:
-            self.bacnet["deviceId"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#vendorId" in p:
-            self.bacnet["vendorId"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#networkNumber" in p:
-            self.bacnet["networkNumber"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#device-name" in p:
+            self.bacnet["device-name"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#device-identifier" in p:
+            self.bacnet["device-identifier"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#vendor-identifier" in p:
+            self.bacnet["vendor-identifier"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#vendor-name" in p:
+            self.bacnet["vendor-name"] = str(o)
+        elif "http://data.ashrae.org/bacnet/2020#network-number" in p:
+            self.bacnet["network-number"] = str(o)
 
 
 def prepare_nodes(g):
@@ -275,15 +277,16 @@ def prepare_nodes(g):
             and "hasDomain" not in p
             and "vocab/unit" not in p
             and "qudt/unit" not in p
-            and "2020#objectInstance" not in p
-            and "2020#objectType" not in p
-            and "2020#objectName" not in p
+            and "2020#object-identifier" not in p
+            and "2020#object-type" not in p
+            and "2020#object-name" not in p
             and "2020#description" not in p
             and "2020#address" not in p
-            and "2020#deviceName" not in p
-            and "2020#deviceId" not in p
-            and "2020#vendorId" not in p
-            and "2020#networkNumber" not in p
+            and "2020#device-name" not in p
+            and "2020#device-identifier" not in p
+            and "2020#vendor-identifier" not in p
+            and "2020#vendor-name" not in p
+            and "2020#network-number" not in p
         ):
             nodes[o] = Node(o)
 
