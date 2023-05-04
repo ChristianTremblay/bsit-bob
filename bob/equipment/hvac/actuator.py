@@ -23,6 +23,8 @@ from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     Electricity_24V_60HzInletConnectionPoint,
     Electricity_120V_60HzInletConnectionPoint,
+)
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     ModulationSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,

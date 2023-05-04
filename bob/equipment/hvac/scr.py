@@ -8,6 +8,8 @@ from bob.properties.electricity import Amps, ElectricPowerkW
 from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
+)
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
 )
 from ...core import BOB, P223, S223, Equipment

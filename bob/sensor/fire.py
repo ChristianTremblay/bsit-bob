@@ -2,7 +2,7 @@ from typing import Any
 
 from rdflib import URIRef
 
-from ..connections.electricity import OnOffSignalOutletConnectionPoint
+from ..connections.controlsignal import OnOffSignalOutletConnectionPoint
 from ..core import (
     BOB,
     P223,

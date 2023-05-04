@@ -22,7 +22,7 @@ from bob.properties.states import (
 )
 from bob.property import ActuatableProperty
 
-from ...connections.electricity import (
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalInletConnectionPoint,
 )

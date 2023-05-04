@@ -9,6 +9,8 @@ from bob.properties.states import OnOffCommand
 from ...connections.electricity import (
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
+)
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
 )
 from ...core import BOB, P223, S223, Equipment

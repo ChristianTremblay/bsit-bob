@@ -8,6 +8,8 @@ from bob.properties.network import Mbit_per_seconds
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
     Electricity_120V_60HzInletConnectionPoint,
+)
+from ...connections.network import (
     EthernetBidirectionalConnectionPoint,
 )
 from ...core import (

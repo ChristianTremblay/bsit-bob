@@ -15,10 +15,14 @@ from ...connections.electricity import (
     ElectricalOutletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
-    EthernetBidirectionalConnectionPoint,
+)
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
+)
+from ...connections.network import (
     RS485BidirectionalConnectionPoint,
+    EthernetBidirectionalConnectionPoint,
 )
 from ...core import (
     BOB,
@@ -114,9 +118,10 @@ class VFD(_VFD):
 
         # Feed the controller
         self.executes = self["controller_function_block"]
-        self["speed_ref_voltage_sensor"].observedProperty >> self[
-            "controller_function_block"
-        ].speed_ref
+        (
+            self["speed_ref_voltage_sensor"].observedProperty
+            >> self["controller_function_block"].speed_ref
+        )
         self["controller_function_block"].amps_load << self.amps
         self["controller_function_block"].volts_load << self.volts
 

@@ -9,6 +9,7 @@ from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.property import ActuatableProperty
 
 from ...connections.electricity import *
+from ...connections.controlsignal import OnOffSignalOutletConnectionPoint
 from ...core import (
     BOB,
     P223,

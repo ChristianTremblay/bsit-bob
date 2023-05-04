@@ -6,8 +6,6 @@ import physical_spaces as ps
 from bob.connections.electricity import (
     Electricity_120V_60HzInletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
-    EthernetBidirectionalConnectionPoint,
 )
 from bob.core import UNIT, Role, bind_model_namespace, dump
 from bob.equipment.architectural import Window

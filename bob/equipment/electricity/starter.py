@@ -7,6 +7,10 @@ from bob.properties.ratio import Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import *
+from ...connections.controlsignal import (
+    OnOffSignalOutletConnectionPoint,
+    OnOffSignalInletConnectionPoint,
+)
 from ...core import (
     BOB,
     P223,

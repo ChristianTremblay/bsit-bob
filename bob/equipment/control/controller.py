@@ -10,6 +10,8 @@ from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import (
     Electricity_24V_60HzInletConnectionPoint,
+)
+from ...connections.network import (
     RS485BidirectionalConnectionPoint,
 )
 from ...core import (

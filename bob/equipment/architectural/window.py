@@ -1,5 +1,5 @@
 from bob.connections.air import AirBidirectionalConnectionPoint
-from bob.connections.electricity import OnOffSignalOutletConnectionPoint
+from bob.connections.controlsignal import OnOffSignalOutletConnectionPoint
 from bob.connections.light import LightVisibleOutletConnectionPoint
 from bob.core import BOB, P223, S223, Equipment, PropertyReference
 

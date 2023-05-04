@@ -6,8 +6,8 @@ from bob.connections.electricity import (
     Electricity_120V_60HzInletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
     Electricity_575V_60HzOutletConnectionPoint,
-    EthernetBidirectionalConnectionPoint,
 )
+from bob.connections.network import EthernetBidirectionalConnectionPoint
 from bob.core import UNIT, Role, bind_model_namespace, data_graph, dump, schema_graph
 from bob.equipment.architectural import Window
 from bob.equipment.electricity.starter import MotorStarter

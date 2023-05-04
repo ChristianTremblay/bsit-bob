@@ -7,6 +7,8 @@ from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     Electricity_575V_60HzInletConnectionPoint,
+)
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
 )

@@ -92,7 +92,7 @@ def generate(title, details, class_name, medium):
     details = details
     class_name = class_name
     medium = medium
-    print(template)
+    # print(template)
     return template
 
 
