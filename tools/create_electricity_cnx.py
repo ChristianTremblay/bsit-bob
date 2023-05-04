@@ -6,27 +6,17 @@ medium = None
 header = """
 from rdflib import Literal, URIRef
 
-from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum, ProtocolEnum
-from bob.properties.network import Mbit_per_seconds
-
 from ..core import (
     BOB,
-    P223,
     S223,
-    BidirectionalConnectionPoint,
-    BidirectionalSystemConnectionPoint,
     Connection,
     ConnectionPoint,
     Electricity,
     InletConnectionPoint,
     InletSystemConnectionPoint,
-    InletZoneConnectionPoint,
-    Medium,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
-    OutletZoneConnectionPoint,
     SystemConnectionPoint,
-    enum,
 )
 
 _namespace = BOB
