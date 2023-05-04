@@ -6,7 +6,15 @@ import lighting_devices as ld
 from rdflib import URIRef
 
 from bob.core import bind_model_namespace, dump
-from bob.bacnet import Device, DeviceObject, AnalogInputObject, AnalogValueObject, BinaryInputObject, BinaryOutputObject, ScheduleObject
+from bob.bacnet import (
+    Device,
+    DeviceObject,
+    AnalogInputObject,
+    AnalogValueObject,
+    BinaryInputObject,
+    BinaryOutputObject,
+    ScheduleObject,
+)
 from bob.externalreference.bacnet import BACnetReference
 
 model_name = Path(__file__).stem
