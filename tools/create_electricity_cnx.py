@@ -35,7 +35,48 @@ from ..core import (
     SystemConnectionPoint,
 )
 
-_namespace = BOB
+_namespace = S223
+
+# === Generic
+# Undefined Electrical
+
+
+class ElectricalConnection(Connection):
+    hasMedium = Electricity
+    _class_iri = S223.Connection
+
+
+class ElectricalConnectionPoint(ConnectionPoint):
+    hasMedium = Electricity
+
+
+class ElectricalInletConnectionPoint(
+    InletConnectionPoint, ElectricalConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class ElectricalOutletConnectionPoint(
+    OutletConnectionPoint, ElectricalConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class ElectricalSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium = Electricity
+
+
+class ElectricalSystemInletConnectionPoint(
+    ElectricalSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class ElectricalSystemOutletConnectionPoint(
+    ElectricalSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
+
 """
 
 
