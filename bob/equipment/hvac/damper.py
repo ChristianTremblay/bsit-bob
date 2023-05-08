@@ -21,8 +21,8 @@ from ...connections.air import (
 )
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    Electricity_24V_60HzInletConnectionPoint,
-    Electricity_120V_60HzInletConnectionPoint,
+    Electricity_24V_1Ph_60HzInletConnectionPoint,
+    Electricity_120V_1Ph_60HzInletConnectionPoint,
 )
 from ...connections.light import (
     LightOutletConnectionPoint,

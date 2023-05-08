@@ -29,8 +29,8 @@ _namespace = BOB
 
 switch_template = {
     "cp": {
-        "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_120V_60HzOutletConnectionPoint,
+        "electricalInlet": Electricity_120V_1Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_120V_1Ph_60HzOutletConnectionPoint,
     },
     "properties": {
         ("amps", Amps): {},
@@ -62,16 +62,16 @@ class SinglePoleSwitch(Switch):
 
     _cross_ref = {
         "120": (
-            Electricity_120V_60HzInletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzInletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
         ),
         "277": (
-            Electricity_277V_60HzInletConnectionPoint,
-            Electricity_277V_60HzOutletConnectionPoint,
+            Electricity_277V_1Ph_60HzInletConnectionPoint,
+            Electricity_277V_1Ph_60HzOutletConnectionPoint,
         ),
         "347": (
-            Electricity_347V_60HzInletConnectionPoint,
-            Electricity_347V_60HzOutletConnectionPoint,
+            Electricity_347V_1Ph_60HzInletConnectionPoint,
+            Electricity_347V_1Ph_60HzOutletConnectionPoint,
         ),
     }
 

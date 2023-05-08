@@ -9,7 +9,7 @@ from bob.properties import Nm, Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import (
-    Electricity_24V_60HzInletConnectionPoint,
+    Electricity_24V_1Ph_60HzInletConnectionPoint,
 )
 from ...connections.network import (
     RS485BidirectionalConnectionPoint,
@@ -40,7 +40,7 @@ controller_template = {
 
 controller_template_example = {
     "cp": {
-        "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_24V_1Ph_60HzInletConnectionPoint,
         "bacnet_mstp": RS485BidirectionalConnectionPoint,
         "zone_temperature_sensor": AnalogInput,
         "airflow_sensor": AnalogInput,
@@ -58,7 +58,7 @@ class Controller(Equipment):
 
     _class_iri: URIRef = S223.Controller
     _attr_uriref = {"hasNetworkProfile": P223.hasNetworkProfile}
-    # electricalInlet: Electricity_24V_60HzInletConnectionPoint
+    # electricalInlet: Electricity_24V_1Ph_60HzInletConnectionPoint
     # executes: FunctionBlock
     hasNetworkProfile: NetworkProfile
 

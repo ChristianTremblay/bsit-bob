@@ -7,47 +7,7 @@ from bob.properties import ElectricPowerkW
 from bob.properties.electricity import Amps
 from bob.property import QuantifiableObservableProperty
 
-from ...connections.electricity import (
-    ElectricalConnection,
-    ElectricalConnectionPoint,
-    ElectricalInletConnectionPoint,
-    ElectricalOutletConnectionPoint,
-    ElectricalSystemConnectionPoint,
-    Electricity,
-    Electricity_120V_208V_240V_60HzInletConnectionPoint,
-    Electricity_120V_60HzConnection,
-    Electricity_120V_60HzInletConnectionPoint,
-    Electricity_120V_60HzOutletConnectionPoint,
-    Electricity_120V_240V_60HzConnection,
-    Electricity_120V_240V_60HzInletConnectionPoint,
-    Electricity_208V1Ph_60HzConnection,
-    Electricity_208V1Ph_60HzInletConnectionPoint,
-    Electricity_208V1Ph_60HzOutletConnectionPoint,
-    Electricity_208V_60HzConnection,
-    Electricity_208V_60HzInletConnectionPoint,
-    Electricity_208V_60HzOutletConnectionPoint,
-    Electricity_240V3Ph_60HzConnection,
-    Electricity_240V3Ph_60HzInletConnectionPoint,
-    Electricity_240V3Ph_60HzOutletConnectionPoint,
-    Electricity_240V_60HzConnection,
-    Electricity_240V_60HzInletConnectionPoint,
-    Electricity_240V_60HzOutletConnectionPoint,
-    Electricity_277V_60HzInletConnectionPoint,
-    Electricity_277V_60HzOutletConnectionPoint,
-    Electricity_347V_60HzConnection,
-    Electricity_347V_60HzInletConnectionPoint,
-    Electricity_347V_60HzOutletConnectionPoint,
-    Electricity_480V1Ph_60HzInletConnectionPoint,
-    Electricity_480V1Ph_60HzOutletConnectionPoint,
-    Electricity_480V_60HzInletConnectionPoint,
-    Electricity_480V_60HzOutletConnectionPoint,
-    Electricity_575V_60HzConnection,
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
-    Electricity_600V1Ph_60HzConnection,
-    Electricity_600V1Ph_60HzInletConnectionPoint,
-    Electricity_600V1Ph_60HzOutletConnectionPoint,
-)
+from ...connections.electricity import *
 from ...core import BOB, P223, QUANTITYKIND, UNIT, Equipment
 
 _namespace = BOB
@@ -81,14 +41,14 @@ class SinglePhaseDistributionPanel(Equipment):
     # Bus Bar
     _cross_ref = {
         "120_240": (
-            Electricity_120V_60HzConnection,
-            Electricity_120V_60HzConnection,
-            Electricity_240V_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_240V_1Ph_60HzConnection,
         ),
         "240": (
-            Electricity_120V_60HzConnection,
-            Electricity_120V_60HzConnection,
-            Electricity_240V_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_240V_1Ph_60HzConnection,
         ),
     }
 
@@ -144,40 +104,40 @@ class ThreePhaseDistributionPanel(Equipment):
     # Bus Bar
     _cross_ref = {
         "HighLeg": (
-            Electricity_120V_60HzConnection,
-            Electricity_120V_60HzConnection,
-            Electricity_208V1Ph_60HzConnection,
-            Electricity_240V_60HzConnection,
-            Electricity_240V_60HzConnection,
-            Electricity_240V_60HzConnection,
-            Electricity_240V3Ph_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_208V_1Ph_60HzConnection,
+            Electricity_240V_1Ph_60HzConnection,
+            Electricity_240V_1Ph_60HzConnection,
+            Electricity_240V_1Ph_60HzConnection,
+            Electricity_240V_3Ph_60HzConnection,
         ),
         "208": (
-            Electricity_120V_60HzConnection,
-            Electricity_120V_60HzConnection,
-            Electricity_120V_60HzConnection,
-            Electricity_208V1Ph_60HzConnection,
-            Electricity_208V1Ph_60HzConnection,
-            Electricity_208V1Ph_60HzConnection,
-            Electricity_208V_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_120V_1Ph_60HzConnection,
+            Electricity_208V_1Ph_60HzConnection,
+            Electricity_208V_1Ph_60HzConnection,
+            Electricity_208V_1Ph_60HzConnection,
+            Electricity_208V_1Ph_60HzConnection,
         ),
         "575": (
-            (Electricity_347V_60HzConnection),
-            (Electricity_347V_60HzConnection),
-            (Electricity_347V_60HzConnection),
-            Electricity_600V1Ph_60HzConnection,
-            (Electricity_600V1Ph_60HzConnection),
-            (Electricity_600V1Ph_60HzConnection),
-            (Electricity_575V_60HzConnection),
+            (Electricity_347V_1Ph_60HzConnection),
+            (Electricity_347V_1Ph_60HzConnection),
+            (Electricity_347V_1Ph_60HzConnection),
+            Electricity_600V_1Ph_60HzConnection,
+            (Electricity_600V_1Ph_60HzConnection),
+            (Electricity_600V_1Ph_60HzConnection),
+            (Electricity_600V_3Ph_60HzConnection),
         ),
         "600": (
-            (Electricity_347V_60HzConnection),
-            (Electricity_347V_60HzConnection),
-            (Electricity_347V_60HzConnection),
-            Electricity_600V1Ph_60HzConnection,
-            (Electricity_600V1Ph_60HzConnection),
-            (Electricity_600V1Ph_60HzConnection),
-            (Electricity_575V_60HzConnection),
+            (Electricity_347V_1Ph_60HzConnection),
+            (Electricity_347V_1Ph_60HzConnection),
+            (Electricity_347V_1Ph_60HzConnection),
+            Electricity_600V_1Ph_60HzConnection,
+            (Electricity_600V_1Ph_60HzConnection),
+            (Electricity_600V_1Ph_60HzConnection),
+            (Electricity_600V_3Ph_60HzConnection),
         ),
     }
 
@@ -271,20 +231,20 @@ class SinglePoleCircuitBreaker(CircuitBreaker):
 
     _cross_ref = {
         "120": (
-            Electricity_120V_60HzInletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzInletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
         ),
         "208": (
-            Electricity_208V1Ph_60HzInletConnectionPoint,
-            Electricity_208V1Ph_60HzOutletConnectionPoint,
+            Electricity_208V_1Ph_60HzInletConnectionPoint,
+            Electricity_208V_1Ph_60HzOutletConnectionPoint,
         ),
         "277": (
-            Electricity_277V_60HzInletConnectionPoint,
-            Electricity_277V_60HzOutletConnectionPoint,
+            Electricity_277V_1Ph_60HzInletConnectionPoint,
+            Electricity_277V_1Ph_60HzOutletConnectionPoint,
         ),
         "347": (
-            Electricity_347V_60HzInletConnectionPoint,
-            Electricity_347V_60HzOutletConnectionPoint,
+            Electricity_347V_1Ph_60HzInletConnectionPoint,
+            Electricity_347V_1Ph_60HzOutletConnectionPoint,
         ),
     }
 
@@ -315,9 +275,9 @@ class TandemSinglePoleCircuitBreaker(CircuitBreaker):
 
     _cross_ref = {
         "120": (
-            Electricity_120V_60HzInletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzInletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
         ),
     }
 
@@ -354,20 +314,20 @@ class TwoPolesCircuitBreaker(CircuitBreaker):
 
     _cross_ref = {
         "208": (
-            Electricity_208V1Ph_60HzInletConnectionPoint,
-            Electricity_208V1Ph_60HzOutletConnectionPoint,
+            Electricity_208V_1Ph_60HzInletConnectionPoint,
+            Electricity_208V_1Ph_60HzOutletConnectionPoint,
         ),
         "240": (
-            Electricity_240V_60HzInletConnectionPoint,
-            Electricity_240V_60HzOutletConnectionPoint,
+            Electricity_240V_1Ph_60HzInletConnectionPoint,
+            Electricity_240V_1Ph_60HzOutletConnectionPoint,
         ),
         "480": (
-            Electricity_480V1Ph_60HzInletConnectionPoint,
-            Electricity_480V1Ph_60HzOutletConnectionPoint,
+            Electricity_480V_1Ph_60HzInletConnectionPoint,
+            Electricity_480V_1Ph_60HzOutletConnectionPoint,
         ),
         "600": (
-            Electricity_600V1Ph_60HzInletConnectionPoint,
-            Electricity_600V1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_1Ph_60HzInletConnectionPoint,
+            Electricity_600V_1Ph_60HzOutletConnectionPoint,
         ),
     }
 
@@ -400,16 +360,16 @@ class TwoPolesMainCircuitBreaker(CircuitBreaker):
     # _cross_ref will map the right voltages to input and bus bars
     _cross_ref = {
         "120_240": (
-            Electricity_120V_240V_60HzInletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_240V_60HzOutletConnectionPoint,
+            Electricity_240V_120V_1Ph_60HzInletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_240V_1Ph_60HzOutletConnectionPoint,
         ),
         "240": (
-            Electricity_240V_60HzInletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_240V_60HzOutletConnectionPoint,
+            Electricity_240V_1Ph_60HzInletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_240V_1Ph_60HzOutletConnectionPoint,
         ),
     }
 
@@ -458,24 +418,24 @@ class ThreePolesCircuitBreaker(CircuitBreaker):
 
     _cross_ref = {
         "208": (
-            Electricity_208V_60HzInletConnectionPoint,
-            Electricity_208V_60HzOutletConnectionPoint,
+            Electricity_208V_3Ph_60HzInletConnectionPoint,
+            Electricity_208V_3Ph_60HzOutletConnectionPoint,
         ),
         "240": (
-            Electricity_240V3Ph_60HzInletConnectionPoint,
-            Electricity_240V3Ph_60HzOutletConnectionPoint,
+            Electricity_240V_3Ph_60HzInletConnectionPoint,
+            Electricity_240V_3Ph_60HzOutletConnectionPoint,
         ),
         "480": (
-            Electricity_480V_60HzInletConnectionPoint,
-            Electricity_480V_60HzOutletConnectionPoint,
+            Electricity_480V_3Ph_60HzInletConnectionPoint,
+            Electricity_480V_3Ph_60HzOutletConnectionPoint,
         ),
         "575": (
-            Electricity_575V_60HzInletConnectionPoint,
-            Electricity_575V_60HzOutletConnectionPoint,
+            Electricity_600V_3Ph_60HzInletConnectionPoint,
+            Electricity_600V_3Ph_60HzOutletConnectionPoint,
         ),
         "600": (
-            Electricity_575V_60HzInletConnectionPoint,
-            Electricity_575V_60HzOutletConnectionPoint,
+            Electricity_600V_3Ph_60HzInletConnectionPoint,
+            Electricity_600V_3Ph_60HzOutletConnectionPoint,
         ),
     }
 
@@ -512,54 +472,54 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
     # _cross_ref will map the right voltages to input and bus bars
     _cross_ref = {
         "HighLeg": (
-            Electricity_120V_208V_240V_60HzInletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_208V1Ph_60HzOutletConnectionPoint,
-            Electricity_240V_60HzOutletConnectionPoint,
-            Electricity_240V_60HzOutletConnectionPoint,
-            Electricity_240V_60HzOutletConnectionPoint,
-            Electricity_240V3Ph_60HzOutletConnectionPoint,
+            Electricity_240V_208V_120V_3Ph_60HzInletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_208V_1Ph_60HzOutletConnectionPoint,
+            Electricity_240V_1Ph_60HzOutletConnectionPoint,
+            Electricity_240V_1Ph_60HzOutletConnectionPoint,
+            Electricity_240V_1Ph_60HzOutletConnectionPoint,
+            Electricity_240V_3Ph_60HzOutletConnectionPoint,
         ),
         "208": (
-            Electricity_208V_60HzInletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_120V_60HzOutletConnectionPoint,
-            Electricity_208V1Ph_60HzOutletConnectionPoint,
-            Electricity_208V1Ph_60HzOutletConnectionPoint,
-            Electricity_208V1Ph_60HzOutletConnectionPoint,
-            Electricity_208V_60HzOutletConnectionPoint,
+            Electricity_208V_3Ph_60HzInletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_120V_1Ph_60HzOutletConnectionPoint,
+            Electricity_208V_1Ph_60HzOutletConnectionPoint,
+            Electricity_208V_1Ph_60HzOutletConnectionPoint,
+            Electricity_208V_1Ph_60HzOutletConnectionPoint,
+            Electricity_208V_3Ph_60HzOutletConnectionPoint,
         ),
         "480": (
-            Electricity_480V_60HzInletConnectionPoint,
-            Electricity_277V_60HzOutletConnectionPoint,
-            Electricity_277V_60HzOutletConnectionPoint,
-            Electricity_277V_60HzOutletConnectionPoint,
-            Electricity_480V1Ph_60HzOutletConnectionPoint,
-            Electricity_480V1Ph_60HzOutletConnectionPoint,
-            Electricity_480V1Ph_60HzOutletConnectionPoint,
-            Electricity_480V_60HzOutletConnectionPoint,
+            Electricity_480V_3Ph_60HzInletConnectionPoint,
+            Electricity_277V_1Ph_60HzOutletConnectionPoint,
+            Electricity_277V_1Ph_60HzOutletConnectionPoint,
+            Electricity_277V_1Ph_60HzOutletConnectionPoint,
+            Electricity_480V_1Ph_60HzOutletConnectionPoint,
+            Electricity_480V_1Ph_60HzOutletConnectionPoint,
+            Electricity_480V_1Ph_60HzOutletConnectionPoint,
+            Electricity_480V_3Ph_60HzOutletConnectionPoint,
         ),
         "575": (
-            Electricity_575V_60HzInletConnectionPoint,
-            Electricity_347V_60HzOutletConnectionPoint,
-            Electricity_347V_60HzOutletConnectionPoint,
-            Electricity_347V_60HzOutletConnectionPoint,
-            Electricity_600V1Ph_60HzOutletConnectionPoint,
-            Electricity_600V1Ph_60HzOutletConnectionPoint,
-            Electricity_600V1Ph_60HzOutletConnectionPoint,
-            Electricity_575V_60HzOutletConnectionPoint,
+            Electricity_600V_3Ph_60HzInletConnectionPoint,
+            Electricity_347V_1Ph_60HzOutletConnectionPoint,
+            Electricity_347V_1Ph_60HzOutletConnectionPoint,
+            Electricity_347V_1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_3Ph_60HzOutletConnectionPoint,
         ),
         "600": (
-            Electricity_575V_60HzInletConnectionPoint,
-            Electricity_347V_60HzOutletConnectionPoint,
-            Electricity_347V_60HzOutletConnectionPoint,
-            Electricity_347V_60HzOutletConnectionPoint,
-            Electricity_600V1Ph_60HzOutletConnectionPoint,
-            Electricity_600V1Ph_60HzOutletConnectionPoint,
-            Electricity_600V1Ph_60HzOutletConnectionPoint,
-            Electricity_575V_60HzOutletConnectionPoint,
+            Electricity_600V_3Ph_60HzInletConnectionPoint,
+            Electricity_347V_1Ph_60HzOutletConnectionPoint,
+            Electricity_347V_1Ph_60HzOutletConnectionPoint,
+            Electricity_347V_1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_1Ph_60HzOutletConnectionPoint,
+            Electricity_600V_3Ph_60HzOutletConnectionPoint,
         ),
     }
 
