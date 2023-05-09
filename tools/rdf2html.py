@@ -181,9 +181,9 @@ class Node:
 
         for k, v in self.properties.items():
             try:
-                if v is not None and v != {None}:
-                    _v = ", ".join(v)
-                    _bubble += f"\n{k} : {_v}"
+                if v:
+                    _v = ", ".join(str(v))
+                    _bubble += f"\n{k} : {str(_v)}"
             except TypeError as error:
                 print(f"Error processing {k,v}")
 
@@ -203,11 +203,11 @@ class Node:
         for k, v in propgraph_labels.items():
             for each in v:
                 if each in p:
-                    if each in self.properties.keys():
-                        self.properties[each].add(format_value())
+                    if k in self.properties.keys():
+                        self.properties[k].add(format_value())
                     else:
                         print(f"adding direct node prop : {k} | {v} | {each}")
-                        setattr(self, each, format_value())
+                        setattr(self, k, format_value())
         for k, v in bacnet_labels.items():
             if v in p:
                 self.properties["bacnet"][v].add(format_value())
