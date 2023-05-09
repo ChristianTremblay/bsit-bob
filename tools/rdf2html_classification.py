@@ -18,8 +18,6 @@ s223_types = {
 }
 
 propgraph_labels = {
-    "label": ["label"],
-    "comment": ["comment"],
     "value": ["hasValue"],
     "direction": ["hasDirection"],
     "aspects": ["hasAspects"],
@@ -58,15 +56,16 @@ skip_edges = [
     "hasDomain",
     "vocab/unit",
     "qudt/unit",
-    "2020#objectInstance",
-    "2020#objectType",
-    "2020#objectName",
+    "2020#object-identifier",
+    "2020#object-type",
+    "2020#object-name",
     "2020#description",
     "2020#address",
-    "2020#deviceName",
-    "2020#deviceId",
-    "2020#vendorId",
-    "2020#networkNumber",
+    "2020#device-name",
+    "2020#device-identifier",
+    "2020#vendor-identifier",
+    "2020#vendor-name",
+    "2020#network-number",
 ]
 
 

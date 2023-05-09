@@ -118,6 +118,7 @@ class Node:
         self.properties["domain"] = set()
         self.properties["unit"] = set()
         self.properties["bacnet"] = {}
+        self.properties["direction"] = set()
 
         if p and o:
             if "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" in p:
@@ -182,8 +183,8 @@ class Node:
         for k, v in self.properties.items():
             try:
                 if v:
-                    _v = ", ".join(str(v))
-                    _bubble += f"\n{k} : {str(_v)}"
+                    _v = ", ".join(v)
+                    _bubble += f"\n{k} : {_v}"
             except TypeError as error:
                 print(f"Error processing {k,v}")
 
@@ -194,23 +195,32 @@ class Node:
         return _bubble
 
     def add_info(self, s, p, o):
-        def format_value():
-            if isinstance(o, Literal):
-                _v = str(o)
+        def format_value(_o):
+            if isinstance(_o, Literal):
+                _v = str(_o)
             else:
-                _v = prefix(str(o))[1]
+                _v = prefix(str(_o))[1]
+            # print(_o, _v)
+            return _v
+
+        if "label" in p:
+            self.label = str(o)
+        elif "comment" in p:
+            self.comment = str(o)
+        elif "ns#type" in p:
+            self.namespace_and_type(o)
 
         for k, v in propgraph_labels.items():
             for each in v:
                 if each in p:
                     if k in self.properties.keys():
-                        self.properties[k].add(format_value())
+                        self.properties[k].add(format_value(o))
                     else:
-                        print(f"adding direct node prop : {k} | {v} | {each}")
-                        setattr(self, k, format_value())
+                        # print(f"adding direct node prop : {k} | {v} | {each}")
+                        setattr(self, k, format_value(o))
         for k, v in bacnet_labels.items():
             if v in p:
-                self.properties["bacnet"][v].add(format_value())
+                self.properties["bacnet"][k] = format_value(o)
 
 
 def prepare_nodes(g):
