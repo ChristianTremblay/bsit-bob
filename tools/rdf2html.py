@@ -11,6 +11,8 @@ from .rdf2html_classification import (
     is_wanted_node,
     propgraph_labels,
     s223_types,
+    EdgesConfig,
+    skip_edges,
 )
 
 g = Graph()
@@ -232,7 +234,7 @@ def prepare_nodes(g):
         else:
             # print(f"Modifying {s} -> {nodes[s].uri}")
             nodes[s].add_info(s, p, o)
-        if o not in nodes.keys() and is_wanted_node(p):
+        if o not in nodes.keys() and is_wanted_node(prefix(p)[1]):
             nodes[o] = Node(o)
 
 
@@ -281,6 +283,7 @@ def prefix(full):
         _p, _f = each
         if _f in full:
             return (_p, full.replace(_f, f"{_p}:"))
+    return (full, full)
 
 
 def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
@@ -306,8 +309,14 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
         )
 
     for s, p, o in g:
+        # TODO : if not s223 namespace : dashes
         try:
-            visual_graph.add_edge(str(s), str(o), title=str(p))
+            _prefix, title = prefix(str(p))
+            if title in skip_edges:
+                continue
+            _config = EdgesConfig(_prefix, title)
+            _dashes = False if _prefix == "s223" else True
+            visual_graph.add_edge(str(s), str(o), **_config.args)
         except AssertionError as error:
             # print(f"Problem adding edge to {s} | {p} | {o} : {error}")
             continue  # we don't want thoses nodes (aspects, medium, label, etc.)

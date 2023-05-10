@@ -20,7 +20,7 @@ s223_types = {
 propgraph_labels = {
     "value": ["hasValue"],
     "direction": ["hasDirection"],
-    "aspects": ["hasAspects"],
+    "aspects": ["hasAspect"],
     "medium": ["hasMedium", "ofSubstance", "ofMedium"],
     "quantityKind": ["hasQuantityKind"],
     "enumerationKind": ["hasEnumerationKind"],
@@ -42,30 +42,31 @@ bacnet_labels = {
 }
 
 skip_edges = [
-    "label",
-    "comment",
-    "hasDirection",
-    "ns#type",
-    "hasValue",
-    "hasAspect",
-    "hasMedium",
-    "hasQuantityKind",
-    "ofMedium",
-    "ofSubstance",
-    "hasEnumerationKind",
-    "hasDomain",
-    "vocab/unit",
-    "qudt/unit",
-    "2020#object-identifier",
-    "2020#object-type",
-    "2020#object-name",
-    "2020#description",
-    "2020#address",
-    "2020#device-name",
-    "2020#device-identifier",
-    "2020#vendor-identifier",
-    "2020#vendor-name",
-    "2020#network-number",
+    "rdfs:label",
+    "rdfs:comment",
+    "s223:hasDirection",
+    "rdf:type",
+    "s223:hasValue",
+    "s223:hasAspect",
+    "s223:hasMedium",
+    "qudt:hasQuantityKind",
+    "s223:ofMedium",
+    "s223:ofSubstance",
+    "s223:hasEnumerationKind",
+    "s223:hasDomain",
+    # "vocab/unit",
+    "qudt:unit",
+    "bacnet:object-identifier",
+    "bacnet:object-type",
+    "bacnet:object-name",
+    "bacnet:description",
+    "bacnet:address",
+    "bacnet:device-name",
+    "bacnet:device-identifier",
+    "bacnet:vendor-identifier",
+    "bacnet:vendor-name",
+    "bacnet:network-number",
+    "s223:isConnectionPointOf",
 ]
 
 
@@ -74,3 +75,23 @@ def is_wanted_node(predicate):
         if each in predicate:
             return False
     return True
+
+
+class EdgesConfig:
+    """
+    The contains relationship edge is made wider to emphasize on containment
+    Any relatioship not in s223 namespace is dashed (ex. bob)
+    """
+
+    def __init__(self, predicate, title):
+        self.dashes = False
+        self.width = 1
+        self.title = title
+        if "s223" not in predicate:
+            self.dashes = True
+        if "s223:contains" in title:
+            self.width = 8
+
+    @property
+    def args(self):
+        return {"title": self.title, "dashes": self.dashes, "width": self.width}
