@@ -365,7 +365,7 @@ def convert_all(folder):
         p = os.path.normpath(each)
         print(f"Processing {p}")
         subprocess.run(
-            ["rdf2html.exe", p]
+            ["rdf2html", p]
         )  # using run assure nothing is kept in memory so new graphs are created for each file
         clear()
 
