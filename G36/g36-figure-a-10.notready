@@ -17,8 +17,15 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import (
+    Electricity_120V_1Ph_60HzConnection,
+    Electricity_120V_1Ph_60HzInletConnectionPoint,
+    Electricity_120V_1Ph_60HzOutletConnectionPoint,
+)
+from bob.connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalInletConnectionPoint,
+)
+from bob.connections.network import (
     RS485BidirectionalConnectionPoint,
 )
 from bob.connections.water import (
@@ -60,7 +67,8 @@ from bob.property import QuantifiableObservableProperty
 from bob.sensor.fire import SmokeDetectionSensor
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
-from bob.sensor.motion import IntrusionSensor, OccupancySensor
+from bob.sensor.motion import  OccupancySensor
+from bob.sensor.security import IntrusionSensor
 from bob.sensor.pressure import DifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace
