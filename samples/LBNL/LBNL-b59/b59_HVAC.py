@@ -328,7 +328,7 @@ class LoopPressureSensor(DifferentialSensor):
 
     def __setattr__(self, attr: str, value: Any) -> None:
         if attr in ["hasObservationLocationReturn", "hasObservationLocationSupply"]:
-            self._data_graph.add((self.node, S223.hasMeasurementLocation, value.node))
+            self._data_graph.add((self.node, S223.hasObservationLocation, value.node))
         else:
             super().__setattr__(attr, value)
 
