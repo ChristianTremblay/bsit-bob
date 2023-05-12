@@ -23,11 +23,10 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex1:00001 a s223:Equipment,
-        s223:OccupancySensor,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "Motion Sensor" ;
-    s223:observesProperty ex1:00002 .
+    s223:observes ex1:00002 .
 
 ex1:00002 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -38,13 +37,31 @@ ex1:00002 a s223:EnumerableProperty,
     s223:ofMedium s223:Medium-Occupant .
 
 ex1:00003 a s223:Equipment,
-        s223:OccupancySensor,
-        s223:OccupantCounter,
+        s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "People Counter" ;
-    s223:observesProperty ex1:00004 .
+    s223:contains ex1:00007 ;
+    s223:hasProperty ex1:00004 ;
+    s223:observes ex1:00005 ;
+    s223:occupantCount ex1:00004 .
 
 ex1:00004 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Count ;
+    qudt:hasQuantityKind quantitykind:Dimensionless ;
+    qudt:unit unit:NUM .
+
+ex1:00005 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    rdfs:label "People Counter.OccupantMotion" ;
+    s223:hasEnumerationKind p223:EnumerationKind-MotionNoMotion ;
+    s223:ofMedium s223:Medium-Occupant .
+
+ex1:00006 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -53,4 +70,20 @@ ex1:00004 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Occupant ;
     qudt:hasQuantityKind quantitykind:Dimensionless ;
     qudt:unit unit:NUM .
+
+ex1:00007 a p223:Producer,
+        bob:Causality ;
+    rdfs:label "countProducer" ;
+    s223:hasInput ex1:00008 ;
+    s223:hasOutput ex1:00009 ;
+    bob:cause_input ex1:00008 ;
+    bob:effect_output ex1:00009 .
+
+ex1:00008 a p223:ProducerInput ;
+    rdfs:label "countProducer.cause_input" ;
+    s223:uses ex1:00005 .
+
+ex1:00009 a p223:ProducerOutput ;
+    rdfs:label "countProducer.effect_output" ;
+    s223:produces ex1:00004 .
 

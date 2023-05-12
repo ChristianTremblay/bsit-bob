@@ -1,9 +1,3 @@
-from ..connections.electricity import (
-    ModulationSignalSystemInletConnectionPoint,
-    ModulationSignalSystemOutletConnectionPoint,
-    OnOffSignalSystemInletConnectionPoint,
-    OnOffSignalSystemOutletConnectionPoint,
-)
 from ..core import G36, Node, PropertyReference, bind_namespace
 from ..properties import OccupancyStatus, Schedule
 from ..property import ObservableProperty, QuantifiableObservableProperty

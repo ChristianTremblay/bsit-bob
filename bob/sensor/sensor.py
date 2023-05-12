@@ -13,8 +13,8 @@ from ..core import (
     UNIT,
     Connection,
     ConnectionPoint,
-    Equipment,
     DomainSpace,
+    Equipment,
     ExternalReference,
     LocationReference,
     Medium,
@@ -23,6 +23,7 @@ from ..core import (
     PropertyReference,
     Segment,
     Substance,
+    _Sensor,
     logging,
 )
 from ..multimethods import multimethod
@@ -44,12 +45,14 @@ def split_kwargs(given_kwargs):
         "hasQuantityKind",
         "hasSetpoint",
         "hasValue",
+        "hasAspect",
         "ofMedium",
         "ofSubstance",
         "unit",
     ]
     property_kwargs = {}
     sensor_kwargs = {}
+
     for k, v in given_kwargs.items():
         if v is None:
             continue
@@ -78,96 +81,53 @@ def define_sensors(config):
     return sensors
 
 
-class Sensor(Equipment):
+class Sensor(_Sensor):
     """
-    A Sensor provides a value for an ObservableProperty which may or may not
-    be quantifiable. For example, it might just sense an alarm state, or
-    occupancy. But usually it will produce a number, in which case it is
-    associated with a QuantifiableObservableProperty.
-
-    A sensor can have only one measurement (observesProperty)
+    An equipment meant to observe a property
     """
 
     _class_iri: URIRef = S223.Sensor
-    hasMeasurementLocation: LocationReference
     hasMeasurementPrecision: QuantifiableProperty
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
     hasMinRange: QuantifiableProperty
-    # measuresMedium: Medium
-    # measuresSubstance: Substance  # When substance measured different than medium (ex. Gas)
-    observesProperty: PropertyReference  ### restrict to MeasuredProperty
+    _hasObservationLocation: LocationReference
+    observes: PropertyReference
 
-    def __gt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(self, other)
-        return self
+    def __init__(self, **kwargs: Any) -> None:
+        _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
+        super().__init__(**_sensor_kwargs)
 
-    def __lt__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(other, self)
-        return self
+    @property
+    def observedProperty(self):
+        """
+        When accessing the property, it feels ackward to use sensor.observes
+        The terms fit for assignation...but for retrieval, feel unnatural
+        So let's try this shortcut
+        """
+        return self.observes
 
-    def __matmul__(self, other: Node) -> Any:
-        """contains multimethod"""
-        contains_mm(self, other)
-        return self
+    def add_hasObservationLocation(self, node: Node) -> None:
+        # For now, make that a secret, or we end up with s223.hasObservationLocation + p223.hasObservationLocation
+        self._hasObservationLocation = node
 
-
-@multimethod
-def contains_mm(parent_equipment: Equipment, child_equipment: Sensor) -> None:
-    """Equipment > Equipment"""
-    logging.info(f"Equipment {parent_equipment} contains Equipment {child_equipment}")
-    parent_equipment._data_graph.add(
-        (parent_equipment._node_iri, S223.contains, child_equipment._node_iri)
-    )
-    if INCLUDE_INVERSE:
-        parent_equipment._data_graph.add(
-            (child_equipment._node_iri, S223.isContainedIn, parent_equipment._node_iri)
+        # link the two together
+        self._data_graph.add(
+            (self._node_iri, P223.hasObservationLocation, node._node_iri)
         )
+        if INCLUDE_INVERSE:
+            node.isObservationLocationOf = self
 
+    def __mod__(self, other: Node) -> Node:
+        """This sensor measurementLocation taken from some other node."""
+        logging.debug(f"Container.__mod__ {self} % {other}")
 
-@multimethod
-def contains_mm(parent_equipment: Sensor, child_equipment: ExternalReference) -> None:
-    """Equipment > Equipment"""
-    logging.info(f"Equipment {parent_equipment} contains Equipment {child_equipment}")
-    parent_equipment._data_graph.add(
-        (
-            parent_equipment.observesProperty._node_iri,
-            S223.hasExternalReference,
-            child_equipment._node_iri,
-        )
-    )
-    if INCLUDE_INVERSE:
-        parent_equipment._data_graph.add(
-            (
-                child_equipment._node_iri,
-                S223.isExternalReferenceOf,
-                parent_equipment.observesProperty._node_iri,
-            )
-        )
-
-
-class DifferentialSensor(Sensor):
-    "Differential sensor"
-    _class_iri: URIRef = S223.DifferentialSensor
-    hasMeasurementLocationHigh: LocationReference
-    hasMeasurementLocationLow: LocationReference
+        self.add_hasObservationLocation(other)
+        return self
 
 
 class VirtualSensor(Sensor):
     "Virtal Sensor"
     _class_iri: URIRef = S223.VirtualSensor
-    # hasMeasurementLocation: # maxCount = 0
+    # hasObservationLocation: # maxCount = 0
     hasFunctionInput: Property
-
-
-# class MeasuredProperty(ObservableProperty):
-#    _class_iri: URIRef = None
-#    isObservedBy: Sensor
-
-
-# class QuantifiableMeasuredProperty(QuantifiableObservableProperty, MeasuredProperty):
-#    _class_iri: URIRef = None
-# hasQuantityKind inherited from QuantifiableProperty
-# isObservedBy inherited from MeasuredProperty

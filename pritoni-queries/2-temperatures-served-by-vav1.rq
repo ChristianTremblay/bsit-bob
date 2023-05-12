@@ -9,9 +9,9 @@ WHERE {
     WHERE {
         ?system s223:servesZone ?zone .
         ?zone s223:contains ?ds .
-        ?sensor s223:hasMeasurementLocation ?ds .
+        ?sensor s223:hasObservationLocation ?ds .
         ?sensor a/rdfs:subClassOf* s223:Sensor .
-        ?sensor s223:observesProperty ?t .
+        ?sensor s223:observes ?t .
         ?t qudt:hasQuantityKind qudtqk:Temperature .
         ?t s223:hasValue ?value .
         ?t qudt:unit ?unit .

@@ -4,7 +4,8 @@ from bob.core import bind_model_namespace, dump
 from bob.space.hvac import *
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 # HVAC Spaces
 openoffice_hvac = HVACSpace(

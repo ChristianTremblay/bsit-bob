@@ -3,7 +3,7 @@
 
 @prefix bacnet: <http://data.ashrae.org/bacnet/2020#> .
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix functions: <urn:ex/functions/> .
+@prefix functions: <urn:sample_pritoni/functions/> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
@@ -24,49 +24,69 @@
   rdfs:label "sample_pritoni_model-schema" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
+bacnet:AnalogInputObject a rdfs:Class ;
+    rdfs:label "bob.bacnet.AnalogInputObject" ;
+    rdfs:subClassOf bacnet:Object .
+
+bacnet:AnalogValueObject a rdfs:Class ;
+    rdfs:label "bob.bacnet.AnalogValueObject" ;
+    rdfs:subClassOf bacnet:Object .
+
+bacnet:BinaryInputObject a rdfs:Class ;
+    rdfs:label "bob.bacnet.BinaryInputObject" ;
+    rdfs:subClassOf bacnet:Object .
+
+bacnet:BinaryOutputObject a rdfs:Class ;
+    rdfs:label "bob.bacnet.BinaryOutputObject" ;
+    rdfs:subClassOf bacnet:Object .
+
 bacnet:Device a rdfs:Class ;
-    rdfs:label "bob.externalreference.bacnet.BACnetDevice" ;
-    rdfs:subClassOf p223:NetworkProfile .
+    rdfs:label "bob.bacnet.Device" ;
+    rdfs:subClassOf s223:Controller,
+        s223:Equipment .
+
+bacnet:DeviceObject a rdfs:Class ;
+    rdfs:label "bob.bacnet.DeviceObject" ;
+    rdfs:subClassOf bacnet:Object .
 
 bacnet:DeviceObjectPropertyReference a rdfs:Class ;
     rdfs:label "bob.externalreference.bacnet.BACnetReference" ;
     rdfs:subClassOf ref:ExternalReference .
 
-bacnet:address a rdf:Property .
+bacnet:Object a rdfs:Class ;
+    rdfs:label "bob.bacnet.Object" .
+
+bacnet:ScheduleObject a rdfs:Class ;
+    rdfs:label "bob.bacnet.ScheduleObject" ;
+    rdfs:subClassOf bacnet:Object .
 
 bacnet:description a rdf:Property .
 
-bacnet:deviceId a rdf:Property .
+bacnet:device-identifier a rdf:Property .
 
-bacnet:deviceName a rdf:Property .
-
-bacnet:isNetworkProfileOf a rdf:Property .
-
-bacnet:networkNumber a rdf:Property .
-
-bacnet:object-instance a rdf:Property .
+bacnet:object-identifier a rdf:Property .
 
 bacnet:object-name a rdf:Property .
 
 bacnet:object-type a rdf:Property .
 
-bacnet:objectOf a rdf:Property .
-
 bacnet:property-array-index a rdf:Property .
 
 bacnet:property-identifier a rdf:Property .
 
-bacnet:vendorId a rdf:Property .
+bacnet:system-status a rdf:Property .
+
+bacnet:vendor-identifier a rdf:Property .
+
+bacnet:vendor-name a rdf:Property .
 
 bob:airInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
-        s223:hasZoneConnectionPoint,
-        bob:hasSystemConnectionPoint .
+        s223:hasZoneConnectionPoint .
 
 bob:airOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
-        s223:hasZoneConnectionPoint,
-        bob:hasSystemConnectionPoint .
+        s223:hasZoneConnectionPoint .
 
 bob:airTransfer a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -74,11 +94,18 @@ bob:airTransfer a rdf:Property ;
 bob:air_change_per_hour a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
+bob:alarm a rdf:Property .
+
 bob:alarmOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
 bob:alarmStatus a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+
+bob:amps a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:amps_load a rdf:Property .
 
 bob:breakDetection a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -94,6 +121,8 @@ bob:capacityLimit a rdf:Property ;
 
 bob:capacityLimitInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:cause_input a rdf:Property .
 
 bob:chilledWaterEntering a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -133,14 +162,23 @@ bob:delay a rdf:Property ;
 bob:differentialPressure a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
+bob:differential_output a rdf:Property .
+
+bob:differential_static_pressure a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
 bob:doors a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:drive_running a rdf:Property .
 
 bob:ductAirInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
 bob:ductAirOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:effect_output a rdf:Property .
 
 bob:electricalInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -155,17 +193,18 @@ bob:exhaustAirOutlet a rdf:Property ;
 bob:flowCoefficient a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
+bob:frequency_load a rdf:Property .
+
 bob:hasMaxRange a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:hasMeasurementLocationHigh a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-bob:hasMeasurementLocationLow a rdf:Property ;
+bob:hasObservationLocation a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
 bob:hasPower a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+
+bob:high_input a rdf:Property .
 
 bob:hotWaterEntering a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -200,6 +239,8 @@ bob:is_closed a rdf:Property ;
 bob:is_open a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
+bob:kW_load a rdf:Property .
+
 bob:lightInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
@@ -208,6 +249,8 @@ bob:lightOutlet a rdf:Property ;
 
 bob:linkageInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:low_input a rdf:Property .
 
 bob:manufacturer a rdf:Property .
 
@@ -273,6 +316,8 @@ bob:radiantHeating a rdf:Property ;
 bob:returnAirInlet a rdf:Property ;
     rdfs:subPropertyOf bob:hasSystemConnectionPoint .
 
+bob:rpm a rdf:Property .
+
 bob:setpointReset a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
@@ -285,6 +330,10 @@ bob:shadeCommand a rdf:Property ;
 bob:shadeStatus a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
+bob:speed_ref a rdf:Property .
+
+bob:speed_ref_percent a rdf:Property .
+
 bob:supplyAirOutlet a rdf:Property ;
     rdfs:subPropertyOf bob:hasSystemConnectionPoint .
 
@@ -293,6 +342,11 @@ bob:temperature a rdf:Property ;
 
 bob:temperature_setpoint a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
+
+bob:volts a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:volts_load a rdf:Property .
 
 bob:waterInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -328,48 +382,6 @@ p223:ActiveInactive-Unknown a p223:ActiveInactive-Unknown,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind .
-
-p223:Actuator a rdfs:Class ;
-    rdfs:label "bob.equipment._Actuator" ;
-    rdfs:comment """
-    This version of an actuator is meant to be the opposite of a sensor
-    It relates properties to an action
-    It can be located with hasActuationLocation (mirror of hasMeasurementLocation)
-
-    This way, the model can illutrate the link between a property and something else (like
-    a connection point)
-    example :
-
-
-    __|___|__|___|___|__
-    |  Supply Fan      |------------s223:hasProperty--------(flow)
-    |  s223:Equipment  |------------s223:hasProperty--------(OnOffCommand) <-> A
-    |  s223:Fan        |------------s223:hasProperty--------(rotation) <-> B
-    |                  |------------s223:hasProperty--------(status)
-    |__________________|------------s223:hasConnectionPoint----(AirOutlet) <-> C
-            |                               ____________________
-            |___________s223:contains_______|  OnOff Actuator  |---s223:isCommandedBy----------(OnOffCommand) <-> A
-                                            |  P223:Actuator   |---p223:actuatesProperty ------(rotation) <-> B
-                                            |__________________|---p223:hasActuationLocation---(AirOutlet) <-> C
-
-
-    This shows that the actuator is `commandedBy` the property "OnOffCommand". This actuation takes place at the air outlet of the fan.
-    The actuator "actuates" the speed_ratio of the fan which is a property of the fan representing the fact that it can be stopped (speed_ratio
-    of 0%) or run at a speed which is >0% to 100%.
-
-    The speed ratio property is not a property that is meant to be observed. It is an intrinsic property of a fan, it is the fact that it can run.
-    It represents the core function of the fan.
-
-    A damper would have a shaft_position(?) property, a pump would also have something similar to speed_ratio. All Equipments should have one main "function"
-    property.
-
-    A sensor could be used to observe the "status" of the fan. We shall resist to relate the actuator to the status. The actuator do
-    not actuate the status, it actuates the rotation of the fan and if we observe it, the status should be On.
-
-    An actuator should not have CP. Its role is to represent the relaiton between properties and action.
-
-    """ ;
-    rdfs:subClassOf s223:Equipment .
 
 p223:Air-CompressedAir a p223:Air-CompressedAir,
         s223:EnumerationKind,
@@ -443,12 +455,12 @@ p223:Analog-Unknown a p223:Analog-Unknown,
         s223:EnumerationKind .
 
 p223:AnalogInput a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ModulationSignalInletConnectionPoint" ;
+    rdfs:label "bob.connections.controlsignal.ModulationSignalInletConnectionPoint" ;
     rdfs:subClassOf s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint .
 
 p223:AnalogOutput a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ModulationSignalOutletConnectionPoint" ;
+    rdfs:label "bob.connections.controlsignal.ModulationSignalOutletConnectionPoint" ;
     rdfs:subClassOf s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint .
 
@@ -477,12 +489,12 @@ p223:Binary-StartStop a p223:Binary-StartStop,
         s223:EnumerationKind .
 
 p223:BinaryInput a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.OnOffSignalInletConnectionPoint" ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalInletConnectionPoint" ;
     rdfs:subClassOf s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint .
 
 p223:BinaryOutput a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.OnOffSignalOutletConnectionPoint" ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalOutletConnectionPoint" ;
     rdfs:subClassOf s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint .
 
@@ -491,6 +503,80 @@ p223:Boiler a rdfs:Class ;
         "bob.equipment.hvac.boiler.HotWaterBoiler" ;
     rdfs:subClassOf p223:Boiler,
         s223:Equipment .
+
+p223:CurrentRelay a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.switch.CurrentRelay" ;
+    rdfs:comment """
+    Current detection Equipment that gives a OnOff status by the action
+    of a dry contact when electricity is detected.
+
+    This serves as motor status sensor
+
+    """ ;
+    rdfs:subClassOf s223:Equipment .
+
+p223:Dimensioned-ABLineLineVoltage a p223:Dimensioned-ABLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-ANLineNeutralVoltage a p223:Dimensioned-ANLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-BCLineLineVoltage a p223:Dimensioned-BCLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-BNLineNeutralVoltage a p223:Dimensioned-BNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-CALineLineVoltage a p223:Dimensioned-CALineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-CNLineNeutralVoltage a p223:Dimensioned-CNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-LineLineVoltage a p223:Dimensioned-LineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-LineNeutralVoltage a p223:Dimensioned-LineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-NominalFrequency a p223:Dimensioned-NominalFrequency,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -541,69 +627,6 @@ p223:ElectricalSwitch a rdfs:Class ;
 p223:ElectricalTransformer a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.distribution.Transformer" ;
     rdfs:subClassOf s223:Equipment .
-
-p223:Electricity-12V-DC a p223:Electricity-12V-DC,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
-
-p223:Electricity-24V-60Hz a p223:Electricity-24V-60Hz,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
-
-p223:Electricity-24V-DC a p223:Electricity-24V-DC,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
-
-p223:Electricity-48V-DC a p223:Electricity-48V-DC,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
-
-p223:Electricity-5V-DC a p223:Electricity-5V-DC,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
-
-p223:Electricity-Ethernet a p223:Electricity-Ethernet,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
-
-p223:Electricity-ModulationSignal a p223:Electricity-ModulationSignal,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
-
-p223:Electricity-OnOffSignal a p223:Electricity-OnOffSignal,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
-
-p223:Electricity-RS485 a p223:Electricity-RS485,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Medium,
-        s223:Medium-Electricity .
 
 p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind,
@@ -809,15 +832,6 @@ p223:MotorStarter a rdfs:Class ;
     """ ;
     rdfs:subClassOf s223:Equipment .
 
-p223:NetworkProfile a rdfs:Class ;
-    rdfs:label "bob.externalreference.NetworkProfile" ;
-    rdfs:comment """
-    A s223:Controller can be represented by a Network Controller
-    (like a BACnet or a Lonworks Equipment).
-    This class will be a higher class that will serve to relate
-    the s223:Controller to the said bacnet:Device or other.
-    """ .
-
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -897,14 +911,15 @@ p223:NormalFault-Normal a p223:NormalFault-Normal,
         s223:EnumerationKind .
 
 p223:OccupancyFunction a rdfs:Class ;
-    rdfs:label "bob.functions.occupancy.OccupancyFunction" ;
+    rdfs:label "bob.producer.occupancy.OccupancyFunction" ;
     rdfs:comment """
     This function takes the the occupancy as detected by a sensor (inStatus,
     perhaps from a motion sensor), the occupancy schedule (inSchedule with
     an external reference to a BACnet Schedule Object) and outputs
     "occupied" if the space/room/zone should be considered occupied.
     """ ;
-    rdfs:subClassOf s223:FunctionBlock .
+    rdfs:subClassOf p223:Producer,
+        s223:FunctionBlock .
 
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
@@ -953,6 +968,26 @@ p223:Position-Unknown a p223:Position-Unknown,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-Position,
         s223:EnumerationKind .
+
+p223:Producer a rdfs:Class ;
+    rdfs:label "bob.core._Producer",
+        "bob.producer.Producer" ;
+    rdfs:comment """
+    Producers are black boxes representing causality.
+    Their inputs are causes and they produce an effect on a property
+    It is very similar to a function, but it is meant to show the relation
+    between an input and an output of something not-driven by an algorithm.
+    A common example would be a relay. You feed it voltage and the relay contact
+    is actuated.
+    """,
+        "Placeholder to prevent circular reference" ;
+    rdfs:subClassOf p223:Producer .
+
+p223:ProducerInput a rdfs:Class ;
+    rdfs:label "bob.producer.ProducerInput" .
+
+p223:ProducerOutput a rdfs:Class ;
+    rdfs:label "bob.producer.ProducerOutput" .
 
 p223:Protocol-BACnet a p223:Protocol-BACnet,
         s223:EnumerationKind,
@@ -1020,6 +1055,22 @@ p223:RunningNotRunning-Unknown a p223:RunningNotRunning-Unknown,
     rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
         s223:EnumerationKind .
 
+p223:Signal-Communication a p223:Signal-Communication,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+p223:Signal-OnOffSignal a p223:Signal-OnOffSignal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
 p223:Substance-CH4 a p223:Substance-CH4,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -1061,6 +1112,11 @@ p223:TrueFalse-True a p223:TrueFalse-True,
         rdfs:Class ;
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
+
+p223:VoltageSensor a rdfs:Class ;
+    rdfs:label "bob.sensor.electricity.VoltageSensor" ;
+    rdfs:subClassOf s223:Equipment,
+        s223:Sensor .
 
 p223:Water-CondensedWater a p223:Water-CondensedWater,
         s223:EnumerationKind,
@@ -1128,12 +1184,14 @@ p223:YesNo-Yes a p223:YesNo-Yes,
         s223:EnumerationKind .
 
 g36:AnalogInput a rdfs:Class ;
-    rdfs:label "bob.functions.G36AnalogInput" ;
-    rdfs:subClassOf s223:FunctionInput .
+    rdfs:label "bob.producer.G36AnalogInput" ;
+    rdfs:subClassOf p223:ProducerInput,
+        s223:FunctionInput .
 
 g36:AnalogOutput a rdfs:Class ;
-    rdfs:label "bob.functions.G36AnalogOutput" ;
-    rdfs:subClassOf s223:FunctionOutput .
+    rdfs:label "bob.producer.G36AnalogOutput" ;
+    rdfs:subClassOf p223:ProducerOutput,
+        s223:FunctionOutput .
 
 g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
         g36:EnumerationKind-G36AlarmLevels,
@@ -1184,6 +1242,15 @@ bob:Area a rdfs:Class ;
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty .
 
+bob:Causality a rdfs:Class ;
+    rdfs:label "bob.producer.causality.Causality" ;
+    rdfs:comment """
+    Simple causality black box. Its goal is to express a
+    simple relation between the output and the input.
+    It tells : this input, causes an effect on that output.
+    """ ;
+    rdfs:subClassOf p223:Producer .
+
 bob:ChilledWaterConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.water.ChilledWaterConnectionPoint" .
 
@@ -1196,6 +1263,14 @@ bob:DaylightDetected a rdfs:Class ;
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property .
+
+bob:Differential a rdfs:Class ;
+    rdfs:label "bob.producer.causality.Differential" ;
+    rdfs:comment """
+    This causality block goals explain that the output is the result
+    of substracting high input and low input.
+    """ ;
+    rdfs:subClassOf p223:Producer .
 
 bob:DifferentialStaticPressure a rdfs:Class ;
     rdfs:label "bob.properties.force.DifferentialStaticPressure" ;
@@ -1266,34 +1341,10 @@ bob:ElectricReactivePower a rdfs:Class ;
 
 bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
     rdfs:label "bob.equipment.hvac.damper.ElectricalActuatedProportionalDamper" ;
-    rdfs:subClassOf s223:System .
-
-bob:ElectricalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ElectricalConnectionPoint" .
-
-bob:Electricity_120V_240V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_120V_240V_60HzConnectionPoint" .
-
-bob:Electricity_120V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_120V_60HzConnectionPoint" .
-
-bob:Electricity_240V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_240V_60HzConnectionPoint" .
-
-bob:Electricity_24V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_24V_60HzConnectionPoint" .
-
-bob:Electricity_347V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_347V_60HzConnectionPoint" .
-
-bob:Electricity_575V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_575V_60HzConnectionPoint" .
-
-bob:Electricity_575V_60HzSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_575V_60HzSystemConnectionPoint" .
+    rdfs:subClassOf s223:Equipment .
 
 bob:EthernetConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.EthernetConnectionPoint" .
+    rdfs:label "bob.connections.network.EthernetConnectionPoint" .
 
 bob:Flow a rdfs:Class ;
     rdfs:label "bob.properties.flow.Flow" ;
@@ -1321,11 +1372,11 @@ bob:HotWaterConnectionPoint a rdfs:Class ;
 
 bob:InletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
-        "bob.connections.electricity.Electricity_575V_60HzSystemInletConnectionPoint",
+        "bob.connections.electricity.Electricity_600V_3Ph_60HzSystemInletConnectionPoint",
         "bob.connections.water.WaterInletSystemConnectionPoint",
         "bob.core.InletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:Electricity_575V_60HzSystemConnectionPoint,
+    rdfs:subClassOf s223:Electricity_600V_3Ph_60HzSystemConnectionPoint,
+        bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:WaterSystemConnectionPoint .
 
@@ -1346,7 +1397,7 @@ bob:Mbit_per_seconds a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:ModulationSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ModulationSignalConnectionPoint" .
+    rdfs:label "bob.connections.controlsignal.ModulationSignalConnectionPoint" .
 
 bob:Nm a rdfs:Class ;
     rdfs:label "bob.properties.force.Nm" ;
@@ -1356,7 +1407,7 @@ bob:Nm a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:OnOffSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.OnOffSignalConnectionPoint" .
+    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" .
 
 bob:OutletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
@@ -1407,12 +1458,17 @@ bob:RPM a rdfs:Class ;
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty .
 
+bob:RS485ConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.network.RS485ConnectionPoint" .
+
 bob:SinglePoleCircuitBreaker a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.distribution.SinglePoleCircuitBreaker" ;
     rdfs:comment """
     One inlet and one outlet
     hasMaxRange = current max of breaker
     A rule could check inlet and outlet are same class
+
+    208V single pole available in the High Leg Configuration
     """ ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
         s223:Equipment .
@@ -1438,11 +1494,8 @@ bob:ThreePolesCircuitBreaker a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.distribution.ThreePolesCircuitBreaker" ;
     rdfs:comment """
     One electrical Inlet because when plugin the breaker
-    in the panel, you get no choice. Both poles are connected
-    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
-    The electrical Outlet is a little different. You could potentially
-    use only 1 pole (347V heating or light for example)
-    So 3 choices are possible pole A, pole B or pole A-B
+    in the panel, you get no choice. Three poles are connected
+    at the same time. Electricity is fed from 3 bus bars
     """ ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
         s223:Equipment .
@@ -1478,9 +1531,7 @@ bob:TwoPolesCircuitBreaker a rdfs:Class ;
     One electrical Inlet because when plugin the breaker
     in the panel, you get no choice. Both poles are connected
     at the same time. Electricity is fed from 2 bus bar (2 x 120V)
-    The electrical Outlet is a little different. You could potentially
-    use only 1 pole (347V heating or light for example)
-    So 3 choices are possible pole A, pole B or pole A-B
+    Could also use 208V instead of 240V...
     """ ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
         s223:Equipment .
@@ -1499,6 +1550,11 @@ bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
 bob:TwoWayActuatedProportionalValve a rdfs:Class ;
     rdfs:label "bob.equipment.hvac.valve.TwoWayActuatedProportionalValve" ;
     rdfs:subClassOf s223:System .
+
+bob:VFDFunctionBlock a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.vfd.VFD_FB" ;
+    rdfs:subClassOf p223:Producer,
+        s223:FunctionBlock .
 
 bob:Volts a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Volts" ;
@@ -1565,25 +1621,19 @@ functions:Average a rdfs:Class ;
     rdfs:comment """
     y = (u1 + u2) / 2.0
     """ ;
-    rdfs:subClassOf s223:FunctionBlock .
+    rdfs:subClassOf p223:Producer,
+        s223:FunctionBlock .
 
 p223:VLAN a rdf:Property .
-
-p223:actuatesProperty a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
 
 p223:data_rate a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-p223:hasActuationLocation a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+p223:hasNetworkProfile a rdf:Property .
 
 p223:hasProtocol a rdf:Property .
 
 p223:hasSignalType a rdf:Property .
-
-p223:isCommandedBy a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
 
 qudt:hasQuantityKind a rdf:Property .
 

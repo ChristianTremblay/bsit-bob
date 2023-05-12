@@ -1,0 +1,895 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 600px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="urn:ex/sample005/00107">urn:ex/sample005/00107</option>
+                                
+                                    <option value="urn:ex/sample005/00081">urn:ex/sample005/00081</option>
+                                
+                                    <option value="urn:ex/sample005/00030">urn:ex/sample005/00030</option>
+                                
+                                    <option value="urn:ex/sample005/00087">urn:ex/sample005/00087</option>
+                                
+                                    <option value="urn:ex/sample005/00089">urn:ex/sample005/00089</option>
+                                
+                                    <option value="urn:ex/sample005/00044">urn:ex/sample005/00044</option>
+                                
+                                    <option value="urn:ex/sample005/00015">urn:ex/sample005/00015</option>
+                                
+                                    <option value="urn:ex/sample005/00028">urn:ex/sample005/00028</option>
+                                
+                                    <option value="urn:ex/sample005/00046">urn:ex/sample005/00046</option>
+                                
+                                    <option value="urn:ex/sample005/00055">urn:ex/sample005/00055</option>
+                                
+                                    <option value="urn:ex/sample005/00039">urn:ex/sample005/00039</option>
+                                
+                                    <option value="urn:ex/sample005/00037">urn:ex/sample005/00037</option>
+                                
+                                    <option value="urn:ex/sample005/00005">urn:ex/sample005/00005</option>
+                                
+                                    <option value="urn:ex/sample005/00048">urn:ex/sample005/00048</option>
+                                
+                                    <option value="urn:ex/sample005/00060">urn:ex/sample005/00060</option>
+                                
+                                    <option value="urn:ex/sample005/00029">urn:ex/sample005/00029</option>
+                                
+                                    <option value="urn:ex/sample005/00067">urn:ex/sample005/00067</option>
+                                
+                                    <option value="urn:ex/sample005/00101">urn:ex/sample005/00101</option>
+                                
+                                    <option value="urn:ex/sample005/00073">urn:ex/sample005/00073</option>
+                                
+                                    <option value="urn:ex/sample005/00097">urn:ex/sample005/00097</option>
+                                
+                                    <option value="urn:ex/sample005/00012">urn:ex/sample005/00012</option>
+                                
+                                    <option value="urn:ex/sample005/00086">urn:ex/sample005/00086</option>
+                                
+                                    <option value="urn:ex/sample005/00053">urn:ex/sample005/00053</option>
+                                
+                                    <option value="urn:ex/sample005/00106">urn:ex/sample005/00106</option>
+                                
+                                    <option value="urn:ex/sample005/00103">urn:ex/sample005/00103</option>
+                                
+                                    <option value="urn:ex/sample005/00041">urn:ex/sample005/00041</option>
+                                
+                                    <option value="urn:ex/sample005/00065">urn:ex/sample005/00065</option>
+                                
+                                    <option value="urn:ex/sample005/00002">urn:ex/sample005/00002</option>
+                                
+                                    <option value="urn:ex/sample005/00098">urn:ex/sample005/00098</option>
+                                
+                                    <option value="urn:ex/sample005/00072">urn:ex/sample005/00072</option>
+                                
+                                    <option value="urn:ex/sample005/00014">urn:ex/sample005/00014</option>
+                                
+                                    <option value="urn:ex/sample005/00108">urn:ex/sample005/00108</option>
+                                
+                                    <option value="urn:ex/sample005/00043">urn:ex/sample005/00043</option>
+                                
+                                    <option value="urn:ex/sample005/00027">urn:ex/sample005/00027</option>
+                                
+                                    <option value="urn:ex/sample005/00054">urn:ex/sample005/00054</option>
+                                
+                                    <option value="urn:ex/sample005/00007">urn:ex/sample005/00007</option>
+                                
+                                    <option value="urn:ex/sample005/00099">urn:ex/sample005/00099</option>
+                                
+                                    <option value="urn:ex/sample005/00069">urn:ex/sample005/00069</option>
+                                
+                                    <option value="urn:ex/sample005/00070">urn:ex/sample005/00070</option>
+                                
+                                    <option value="urn:ex/sample005/00075">urn:ex/sample005/00075</option>
+                                
+                                    <option value="urn:ex/sample005/00057">urn:ex/sample005/00057</option>
+                                
+                                    <option value="urn:ex/sample005/00058">urn:ex/sample005/00058</option>
+                                
+                                    <option value="urn:ex/sample005/00085">urn:ex/sample005/00085</option>
+                                
+                                    <option value="urn:ex/sample005/00084">urn:ex/sample005/00084</option>
+                                
+                                    <option value="urn:ex/sample005/00011">urn:ex/sample005/00011</option>
+                                
+                                    <option value="urn:ex/sample005/00093">urn:ex/sample005/00093</option>
+                                
+                                    <option value="urn:ex/sample005/00095">urn:ex/sample005/00095</option>
+                                
+                                    <option value="urn:ex/sample005/00076">urn:ex/sample005/00076</option>
+                                
+                                    <option value="urn:ex/sample005/00035">urn:ex/sample005/00035</option>
+                                
+                                    <option value="urn:ex/sample005/00020">urn:ex/sample005/00020</option>
+                                
+                                    <option value="urn:ex/sample005/00062">urn:ex/sample005/00062</option>
+                                
+                                    <option value="urn:ex/sample005/00052">urn:ex/sample005/00052</option>
+                                
+                                    <option value="urn:ex/sample005/00071">urn:ex/sample005/00071</option>
+                                
+                                    <option value="urn:ex/sample005/00102">urn:ex/sample005/00102</option>
+                                
+                                    <option value="urn:ex/sample005/00079">urn:ex/sample005/00079</option>
+                                
+                                    <option value="urn:ex/sample005/00100">urn:ex/sample005/00100</option>
+                                
+                                    <option value="urn:ex/sample005/00006">urn:ex/sample005/00006</option>
+                                
+                                    <option value="urn:ex/sample005/00064">urn:ex/sample005/00064</option>
+                                
+                                    <option value="urn:ex/sample005/00096">urn:ex/sample005/00096</option>
+                                
+                                    <option value="urn:ex/sample005/00082">urn:ex/sample005/00082</option>
+                                
+                                    <option value="urn:ex/sample005/00078">urn:ex/sample005/00078</option>
+                                
+                                    <option value="urn:ex/sample005/00009">urn:ex/sample005/00009</option>
+                                
+                                    <option value="urn:ex/sample005/00088">urn:ex/sample005/00088</option>
+                                
+                                    <option value="urn:ex/sample005/00042">urn:ex/sample005/00042</option>
+                                
+                                    <option value="urn:ex/sample005/00001">urn:ex/sample005/00001</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/data/sample005">http://data.ashrae.org/standard223/1.0/data/sample005</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/sample/sample005">http://data.ashrae.org/standard223/1.0/sample/sample005</option>
+                                
+                                    <option value="urn:ex/sample005/00031">urn:ex/sample005/00031</option>
+                                
+                                    <option value="urn:ex/sample005/00022">urn:ex/sample005/00022</option>
+                                
+                                    <option value="urn:ex/sample005/00066">urn:ex/sample005/00066</option>
+                                
+                                    <option value="urn:ex/sample005/00063">urn:ex/sample005/00063</option>
+                                
+                                    <option value="urn:ex/sample005/00056">urn:ex/sample005/00056</option>
+                                
+                                    <option value="urn:ex/sample005/00004">urn:ex/sample005/00004</option>
+                                
+                                    <option value="urn:ex/sample005/00010">urn:ex/sample005/00010</option>
+                                
+                                    <option value="urn:ex/sample005/00013">urn:ex/sample005/00013</option>
+                                
+                                    <option value="urn:ex/sample005/00080">urn:ex/sample005/00080</option>
+                                
+                                    <option value="urn:ex/sample005/00024">urn:ex/sample005/00024</option>
+                                
+                                    <option value="urn:ex/sample005/00036">urn:ex/sample005/00036</option>
+                                
+                                    <option value="urn:ex/sample005/00068">urn:ex/sample005/00068</option>
+                                
+                                    <option value="urn:ex/sample005/00023">urn:ex/sample005/00023</option>
+                                
+                                    <option value="urn:ex/sample005/00061">urn:ex/sample005/00061</option>
+                                
+                                    <option value="urn:ex/sample005/00083">urn:ex/sample005/00083</option>
+                                
+                                    <option value="urn:ex/sample005/00038">urn:ex/sample005/00038</option>
+                                
+                                    <option value="urn:ex/sample005/00026">urn:ex/sample005/00026</option>
+                                
+                                    <option value="urn:ex/sample005/00047">urn:ex/sample005/00047</option>
+                                
+                                    <option value="urn:ex/sample005/00018">urn:ex/sample005/00018</option>
+                                
+                                    <option value="urn:ex/sample005/00104">urn:ex/sample005/00104</option>
+                                
+                                    <option value="urn:ex/sample005/00045">urn:ex/sample005/00045</option>
+                                
+                                    <option value="urn:ex/sample005/00008">urn:ex/sample005/00008</option>
+                                
+                                    <option value="urn:ex/sample005/00105">urn:ex/sample005/00105</option>
+                                
+                                    <option value="urn:ex/sample005/00025">urn:ex/sample005/00025</option>
+                                
+                                    <option value="urn:ex/sample005/00034">urn:ex/sample005/00034</option>
+                                
+                                    <option value="urn:ex/sample005/00074">urn:ex/sample005/00074</option>
+                                
+                                    <option value="urn:ex/sample005/00092">urn:ex/sample005/00092</option>
+                                
+                                    <option value="urn:ex/sample005/00017">urn:ex/sample005/00017</option>
+                                
+                                    <option value="urn:ex/sample005/00094">urn:ex/sample005/00094</option>
+                                
+                                    <option value="urn:ex/sample005/00077">urn:ex/sample005/00077</option>
+                                
+                                    <option value="urn:ex/sample005/00021">urn:ex/sample005/00021</option>
+                                
+                                    <option value="urn:ex/sample005/00032">urn:ex/sample005/00032</option>
+                                
+                                    <option value="urn:ex/sample005/00040">urn:ex/sample005/00040</option>
+                                
+                                    <option value="urn:ex/sample005/00016">urn:ex/sample005/00016</option>
+                                
+                                    <option value="urn:ex/sample005/00091">urn:ex/sample005/00091</option>
+                                
+                                    <option value="urn:ex/sample005/00090">urn:ex/sample005/00090</option>
+                                
+                                    <option value="urn:ex/sample005/00033">urn:ex/sample005/00033</option>
+                                
+                                    <option value="urn:ex/sample005/00019">urn:ex/sample005/00019</option>
+                                
+                                    <option value="urn:ex/sample005/00049">urn:ex/sample005/00049</option>
+                                
+                                    <option value="urn:ex/sample005/00059">urn:ex/sample005/00059</option>
+                                
+                                    <option value="urn:ex/sample005/00050">urn:ex/sample005/00050</option>
+                                
+                                    <option value="urn:ex/sample005/00051">urn:ex/sample005/00051</option>
+                                
+                                    <option value="urn:ex/sample005/00003">urn:ex/sample005/00003</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/model/all">http://data.ashrae.org/standard223/1.0/model/all</option>
+                                
+                                    <option value="bob:legend/Equipment">bob:legend/Equipment</option>
+                                
+                                    <option value="bob:legend/Connection">bob:legend/Connection</option>
+                                
+                                    <option value="bob:legend/InletConnectionPoint">bob:legend/InletConnectionPoint</option>
+                                
+                                    <option value="bob:legend/OutletConnectionPoint">bob:legend/OutletConnectionPoint</option>
+                                
+                                    <option value="bob:legend/FunctionBlock">bob:legend/FunctionBlock</option>
+                                
+                                    <option value="bob:legend/DomainSpace">bob:legend/DomainSpace</option>
+                                
+                                    <option value="bob:legend/qudt">bob:legend/qudt</option>
+                                
+                                    <option value="bob:legend/Default">bob:legend/Default</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+              <div id="filter-menu" class="card-header">
+                <div class="row no-gutters">
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'item')"
+                            id="select-item"
+                        >
+                        <option value="">Select a network item</option>
+                        <option value="edge">edge</option>
+                        <option value="node">node</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'property')"
+                            id="select-property"
+                        >
+                        <option value="">Select a property...</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            id="select-value"
+                        >
+                        <option value="">Select value(s)...</option>
+                    </select>
+                  </div>
+                  <div class="col-1 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="highlightFilter(filter);">Filter</button>
+                  </div>
+                  <div class="col-2 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="clearFilter(true)">Reset Selection</button>
+                  </div>
+                </div>
+              </div>
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+                  // explicitly using onItemAdd and this function as we need to save multiple values
+                  let updateValueFilter = function() {
+                      return function () {
+                      filter['value'].push(arguments[0])
+                      }
+                  }
+
+                  let valueControl = new TomSelect("#select-value",{
+                      maxItems: null,
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: updateValueFilter()
+                  });
+
+                  let addValues = function() {
+                      return function () {
+                          // clear the current value options and add the selected attribute values
+                          // tom-select handles duplicates
+                          let selectedProperty = arguments[0];
+                          valueControl.clear();
+                          valueControl.clearOptions();
+                          filter['value'] = []
+                          if (filter['item'] === 'node') {
+                              for (let each in allNodes) {
+                                  valueControl.addOption({
+                                      id:allNodes[each][selectedProperty],
+                                      title:allNodes[each][selectedProperty]
+                                  })
+                              }
+                          }
+                          else if (filter['item'] === 'edge') {
+                              for (let each in allEdges) {
+                                  valueControl.addOption({
+                                      id:allEdges[each][selectedProperty],
+                                      title:allEdges[each][selectedProperty]
+                                  })
+                              }
+                          }
+                      }
+                  };
+
+                  let propControl = new TomSelect("#select-property",{
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addValues()
+                  });
+
+                  let addProperties = function() {
+                      return function () {
+                          // loops through the selected network item and adds the attributes to dropdown
+                          // tom-select handles duplicates
+                          clearFilter(false)
+                          if (arguments[0] === 'edge') {
+                              for (let each in allEdges) {
+                                  if (allEdges.hasOwnProperty(each)) {
+                                      for (let eachProp in allEdges[each]) {
+                                          if (allEdges[each].hasOwnProperty(eachProp)) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                          else if (arguments[0] === 'node') {
+                              for (let each in allNodes) {
+                                  if (allNodes.hasOwnProperty(each)) {
+                                      for (let eachProp in allNodes[each]) {
+                                          if (allNodes[each].hasOwnProperty(eachProp)
+                                              && (eachProp !== 'hidden' && eachProp !== 'savedLabel'
+                                                  && eachProp !== 'hiddenLabel')) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  };
+
+                  let itemControl = new TomSelect("#select-item",{
+                      create: false,
+                      sortField:{
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addProperties()
+                  });
+
+                  function clearFilter(reset) {
+                      // utility function to clear all the selected filter options
+                      // if reset is set to true, the existing filter will be removed
+                      // else, only the dropdown options are cleared
+                      propControl.clear();
+                      propControl.clearOptions();
+                      valueControl.clear();
+                      valueControl.clearOptions();
+                      filter = {
+                          item : '',
+                          property : '',
+                          value : []
+                      }
+                      if (reset) {
+                          itemControl.clear();
+                          filterHighlight({nodes: []})
+                      }
+                  }
+
+                  function updateFilter(value, key) {
+                      // key could be 'item' or 'property' and value is as selected in dropdown
+                      filter[key] = value
+                  }
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": null, "group": 2, "id": "urn:ex/sample005/00107", "label": "SupplyAir", "shape": "diamond", "size": 15, "title": "URI : urn:ex/sample005/00107\nNamespaces : s223, http://data.ashrae.org/standard223#Connection\nTypes: s223:Connection\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00081", "label": "is_closed", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00081\nNamespaces : http://data.ashrae.org/standard223#ObservableProperty, s223\nTypes: s223:EnumeratedObservableProperty, s223:ObservableProperty, s223:Property, s223:EnumerableProperty\nenumerationKind : s223:EnumerationKind-OnOff"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00030", "label": "actuator.feedback_signal", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00030\nNamespaces : http://data.ashrae.org/standard223#OutletConnectionPoint, s223, p223, bob\nTypes: bob:ModulationSignalConnectionPoint, p223:AnalogOutput, s223:OutletConnectionPoint\nmedium : s223:Signal-Modulated"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00087", "label": "feedbackProducer", "shape": "star", "size": 15, "title": "URI : urn:ex/sample005/00087\nNamespaces : bob, p223\nTypes: p223:Producer, bob:Causality"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00089", "label": "feedbackProducer.effect_output", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00089\nNamespaces : p223\nTypes: p223:ProducerOutput"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00044", "label": "feedbackProducer.cause_input", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00044\nNamespaces : http://data.ashrae.org/proposal-to-standard223#ProducerInput, p223\nTypes: p223:ProducerInput"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00015", "label": "Space-2.airTransfer", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00015\nNamespaces : bob, s223\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint, s223:Medium-Air\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00028", "label": "actuator", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00028\nNamespaces : s223\nTypes: s223:Equipment"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00046", "label": "auxiliary_switch_open_producer", "shape": "star", "size": 15, "title": "URI : urn:ex/sample005/00046\nNamespaces : bob, p223\nTypes: p223:Producer, bob:Causality"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00055", "label": "damper.linkageInlet", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00055\nNamespaces : s223, p223\nTypes: p223:MechanicalConnectionPoint, s223:InletConnectionPoint\nmedium : p223:Medium-MechanicalCoupling"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00039", "label": "torque", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00039\nNamespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableObservableProperty\nTypes: s223:QuantifiableProperty, s223:QuantifiableObservableProperty, bob:Nm, s223:Property, s223:ObservableProperty\nquantityKind : quantitykind:Torque\nunit : unit:N-M"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00037", "label": "is_closed", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00037\nNamespaces : s223, http://data.ashrae.org/standard223#EnumeratedObservableProperty\nTypes: s223:EnumeratedObservableProperty, s223:ObservableProperty, s223:Property, s223:EnumerableProperty\nenumerationKind : s223:EnumerationKind-OnOff"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00005", "label": "Space-1.ductAirInlet", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00005\nNamespaces : bob, s223\nTypes: bob:AirConnectionPoint, s223:InletConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00048", "label": "auxiliary_switch_open_producer.effect_output", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00048\nNamespaces : p223\nTypes: p223:ProducerOutput"}, {"borderWidth": null, "group": 2, "id": "urn:ex/sample005/00060", "label": "urn:ex/sample005/00060", "shape": "diamond", "size": 15, "title": "URI : urn:ex/sample005/00060\nNamespaces : s223\nTypes: s223:Connection\nmedium : p223:Medium-MechanicalCoupling"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00029", "label": "actuator.linkageOutlet", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00029\nNamespaces : s223, p223\nTypes: p223:MechanicalConnectionPoint, s223:OutletConnectionPoint\nmedium : p223:Medium-MechanicalCoupling"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00067", "label": "DA-T", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00067\nNamespaces : s223\nTypes: s223:Equipment, s223:Sensor\nComment : Discharge Air Temperature"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00101", "label": "damper.airOutlet", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00101\nNamespaces : bob, s223\nTypes: bob:AirConnectionPoint, s223:OutletConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00073", "label": "actuator.linkageOutlet", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00073\nNamespaces : http://data.ashrae.org/proposal-to-standard223#MechanicalConnectionPoint, s223, p223\nTypes: p223:MechanicalConnectionPoint, s223:OutletConnectionPoint\nmedium : p223:Medium-MechanicalCoupling"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00097", "label": "position_sensor.Position", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00097\nNamespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableObservableProperty\nTypes: bob:Percent, s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, s223:ObservableProperty\nquantityKind : quantitykind:DimensionlessRatio\nunit : unit:PERCENT"}, {"borderWidth": 2, "group": 4, "id": "urn:ex/sample005/00012", "label": "Space-2", "shape": "box", "size": 15, "title": "URI : urn:ex/sample005/00012\nNamespaces : s223, p223\nTypes: p223:HVACSpace, s223:DomainSpace\nmedium : s223:Medium-Air\ndomain : s223:Domain-HVAC"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00086", "label": "positionProducer.effect_output", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00086\nNamespaces : p223, http://data.ashrae.org/proposal-to-standard223#ProducerOutput\nTypes: p223:ProducerOutput"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00053", "label": "position_sensor.Position", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00053\nNamespaces : http://data.ashrae.org/standard223#ObservableProperty, s223, bob\nTypes: bob:Percent, s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, s223:ObservableProperty\nquantityKind : quantitykind:DimensionlessRatio\nunit : unit:PERCENT"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00106", "label": "Zone-2.VAV.airOutlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00106\nNamespaces : http://data.ashrae.org/standard223/si-builder#AirSystemConnectionPoint, bob\nTypes: bob:AirSystemConnectionPoint, bob:OutletSystemConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00103", "label": "ACTDPR.airOutlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00103\nNamespaces : bob\nTypes: bob:AirSystemConnectionPoint, bob:OutletSystemConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00041", "label": "positionProducer.cause_input", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00041\nNamespaces : p223\nTypes: p223:ProducerInput"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00065", "label": "SA-F", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00065\nNamespaces : s223\nTypes: s223:Equipment, s223:Sensor\nComment : Air Flow"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00002", "label": "Zone-1.airInlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00002\nNamespaces : bob, http://data.ashrae.org/standard223/si-builder#InletZoneConnectionPoint\nTypes: bob:InletZoneConnectionPoint, bob:ZoneConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00098", "label": "damper", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00098\nNamespaces : s223\nTypes: s223:Damper, s223:Equipment"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00072", "label": "actuator", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00072\nNamespaces : s223\nTypes: s223:Equipment"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00014", "label": "Space-2.ductAirOutlet", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00014\nNamespaces : bob, s223\nTypes: bob:AirConnectionPoint, s223:OutletConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 2, "id": "urn:ex/sample005/00108", "label": "ReturnAir", "shape": "diamond", "size": 15, "title": "URI : urn:ex/sample005/00108\nNamespaces : s223\nTypes: s223:Connection\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00043", "label": "feedbackProducer", "shape": "star", "size": 15, "title": "URI : urn:ex/sample005/00043\nNamespaces : bob, p223\nTypes: p223:Producer, bob:Causality"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00027", "label": "ACTDPR", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00027\nNamespaces : bob, s223\nTypes: s223:System, bob:ElectricalActuatedProportionalDamper\nComment : VAV Box Damper"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00054", "label": "damper", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00054\nNamespaces : s223\nTypes: s223:Damper, s223:Equipment"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00007", "label": "Space-1.airTransfer", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00007\nNamespaces : bob, s223\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint, s223:Medium-Air\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00099", "label": "damper.linkageInlet", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00099\nNamespaces : http://data.ashrae.org/proposal-to-standard223#MechanicalConnectionPoint, s223, p223\nTypes: p223:MechanicalConnectionPoint, s223:InletConnectionPoint\nmedium : p223:Medium-MechanicalCoupling"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00069", "label": "ZN-T", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00069\nNamespaces : s223\nTypes: s223:Equipment, s223:Sensor\nComment : Temperature of space"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00070", "label": "ZN-T.Temperature", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00070\nNamespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, s223:ObservableProperty, bob:Temperature\nmedium : s223:Medium-Air\nquantityKind : quantitykind:Temperature\nunit : unit:DEG_C"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00075", "label": "actuator.open_auxswitch_signal", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00075\nNamespaces : bob, s223, p223\nTypes: bob:OnOffSignalConnectionPoint, s223:OutletConnectionPoint, p223:BinaryOutput\nmedium : p223:Signal-OnOffSignal"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00057", "label": "damper.airOutlet", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00057\nNamespaces : bob, s223\nTypes: bob:AirConnectionPoint, s223:OutletConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00058", "label": "ACTDPR.airInlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00058\nNamespaces : http://data.ashrae.org/standard223/si-builder#AirSystemConnectionPoint, bob\nTypes: bob:AirSystemConnectionPoint, bob:InletSystemConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00085", "label": "positionProducer.cause_input", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00085\nNamespaces : p223\nTypes: p223:ProducerInput"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00084", "label": "positionProducer", "shape": "star", "size": 15, "title": "URI : urn:ex/sample005/00084\nNamespaces : bob, p223\nTypes: p223:Producer, bob:Causality"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00011", "label": "Space-1.radiantCooling", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00011\nNamespaces : bob, s223\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00093", "label": "auxiliary_switch_close_producer", "shape": "star", "size": 15, "title": "URI : urn:ex/sample005/00093\nNamespaces : bob, p223\nTypes: p223:Producer, bob:Causality"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00095", "label": "auxiliary_switch_close_producer.effect_output", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00095\nNamespaces : p223\nTypes: p223:ProducerOutput"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00076", "label": "actuator.close_auxswitch_signal", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00076\nNamespaces : http://data.ashrae.org/standard223#OutletConnectionPoint, s223, p223, bob\nTypes: bob:OnOffSignalConnectionPoint, s223:OutletConnectionPoint, p223:BinaryOutput\nmedium : p223:Signal-OnOffSignal"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00035", "label": "position_feedback", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00035\nNamespaces : bob, s223\nTypes: bob:Percent, s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, s223:ObservableProperty\nquantityKind : quantitykind:DimensionlessRatio\nunit : unit:PERCENT"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00020", "label": "Zone-1.VAV", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00020\nNamespaces : s223\nTypes: s223:System, s223:VAV\nComment : VAV Description"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00062", "label": "Zone-1.VAV.airOutlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00062\nNamespaces : bob\nTypes: bob:AirSystemConnectionPoint, bob:OutletSystemConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00052", "label": "position_sensor", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00052\nNamespaces : s223\nTypes: s223:Equipment, s223:Sensor"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00071", "label": "ACTDPR", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00071\nNamespaces : bob, s223\nTypes: s223:System, bob:ElectricalActuatedProportionalDamper\nComment : VAV Box Damper"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00102", "label": "ACTDPR.airInlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00102\nNamespaces : bob\nTypes: bob:AirSystemConnectionPoint, bob:InletSystemConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00079", "label": "position_feedback", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00079\nNamespaces : bob, s223, quantitykind\nTypes: bob:Percent, s223:QuantifiableObservableProperty, s223:QuantifiableProperty, s223:Property, s223:ObservableProperty, quantitykind:DimensionlessRatio\nquantityKind : quantitykind:DimensionlessRatio\nunit : unit:PERCENT"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00100", "label": "damper.airInlet", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00100\nNamespaces : bob, s223\nTypes: bob:AirConnectionPoint, s223:InletConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00006", "label": "Space-1.ductAirOutlet", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00006\nNamespaces : bob, s223\nTypes: s223:OutletConnectionPoint, bob:AirConnectionPoint, s223:Medium-Air\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00064", "label": "Zone-2.VAV", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00064\nNamespaces : http://data.ashrae.org/standard223#System, s223\nTypes: s223:System, s223:VAV\nComment : VAV Description"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00096", "label": "position_sensor", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00096\nNamespaces : s223\nTypes: s223:Equipment, s223:Sensor"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00082", "label": "command", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00082\nNamespaces : bob, s223, http://data.ashrae.org/standard223#QuantifiableActuatableProperty\nTypes: s223:QuantifiableActuatableProperty, bob:PercentCommand, s223:QuantifiableProperty, s223:Property, s223:ActuatableProperty\nquantityKind : quantitykind:DimensionlessRatio\nunit : unit:PERCENT"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00078", "label": "actuator.proportional_signal", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00078\nNamespaces : bob, s223, p223\nTypes: p223:AnalogInput, bob:ModulationSignalConnectionPoint, s223:InletConnectionPoint\nmedium : s223:Signal-Modulated"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00009", "label": "Space-1.windows", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00009\nNamespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#AirConnectionPoint\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00088", "label": "feedbackProducer.cause_input", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00088\nNamespaces : p223\nTypes: p223:ProducerInput"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00042", "label": "positionProducer.effect_output", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00042\nNamespaces : p223\nTypes: p223:ProducerOutput"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00001", "label": "Zone-1", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00001\nNamespaces : s223, p223\nTypes: s223:Zone, p223:HVACZone, s223:Domain-HVAC\ndomain : s223:Domain-HVAC"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223/1.0/data/sample005", "label": "sample005", "shape": "dot", "size": 15, "title": "URI : http://data.ashrae.org/standard223/1.0/data/sample005\nNamespaces : http://data.ashrae.org/standard223/1.0/sample/sample005, owl\nTypes: http://data.ashrae.org/standard223/1.0/sample/sample005, owl:Ontology"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223/1.0/sample/sample005", "label": "http://data.ashrae.org/standard223/1.0/sample/sample005", "shape": "dot", "size": 15, "title": "URI : http://data.ashrae.org/standard223/1.0/sample/sample005\nNamespaces : http://data.ashrae.org/standard223/1.0/sample/sample005\nTypes: http://data.ashrae.org/standard223/1.0/sample/sample005"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00031", "label": "actuator.open_auxswitch_signal", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00031\nNamespaces : bob, s223, p223\nTypes: bob:OnOffSignalConnectionPoint, s223:OutletConnectionPoint, p223:BinaryOutput\nmedium : p223:Signal-OnOffSignal"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00022", "label": "SA-F.Flow", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00022\nNamespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#Flow\nTypes: s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, s223:ObservableProperty, bob:Flow\nmedium : s223:Medium-Air\nquantityKind : quantitykind:VolumeFlowRate\nunit : unit:L-PER-SEC"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00066", "label": "SA-F.Flow", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00066\nNamespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, s223:ObservableProperty, bob:Flow\nmedium : s223:Medium-Air\nquantityKind : quantitykind:VolumeFlowRate\nunit : unit:L-PER-SEC"}, {"borderWidth": null, "group": 2, "id": "urn:ex/sample005/00063", "label": "urn:ex/sample005/00063", "shape": "diamond", "size": 15, "title": "URI : urn:ex/sample005/00063\nNamespaces : s223\nTypes: s223:Connection\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00056", "label": "damper.airInlet", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00056\nNamespaces : bob, s223\nTypes: bob:AirConnectionPoint, s223:InletConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": 2, "group": 4, "id": "urn:ex/sample005/00004", "label": "Space-1", "shape": "box", "size": 15, "title": "URI : urn:ex/sample005/00004\nNamespaces : s223, p223\nTypes: s223:DomainSpace, p223:HVACSpace\nmedium : s223:Medium-Air\ndomain : s223:Domain-HVAC"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00010", "label": "Space-1.radiantHeating", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00010\nNamespaces : bob, s223\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00013", "label": "Space-2.ductAirInlet", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00013\nNamespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#AirConnectionPoint\nTypes: bob:AirConnectionPoint, s223:InletConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00080", "label": "is_open", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00080\nNamespaces : s223\nTypes: s223:EnumerableProperty, s223:EnumeratedObservableProperty, s223:Property, s223:EnumerationKind-OnOff, s223:ObservableProperty\nenumerationKind : s223:EnumerationKind-OnOff"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00024", "label": "DA-T.Temperature", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00024\nNamespaces : bob, s223, quantitykind\nTypes: s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, quantitykind:Temperature, s223:ObservableProperty, bob:Temperature\nmedium : s223:Medium-Air\nquantityKind : quantitykind:Temperature\nunit : unit:DEG_C"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00036", "label": "is_open", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00036\nNamespaces : s223, http://data.ashrae.org/standard223#Property\nTypes: s223:EnumeratedObservableProperty, s223:ObservableProperty, s223:Property, s223:EnumerableProperty\nenumerationKind : s223:EnumerationKind-OnOff"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00068", "label": "DA-T.Temperature", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00068\nNamespaces : bob, s223\nTypes: s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, s223:ObservableProperty, bob:Temperature\nmedium : s223:Medium-Air\nquantityKind : quantitykind:Temperature\nunit : unit:DEG_C"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00023", "label": "DA-T", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00023\nNamespaces : s223\nTypes: s223:Equipment, s223:Sensor\nComment : Discharge Air Temperature"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00061", "label": "Zone-1.VAV.airInlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00061\nNamespaces : bob\nTypes: bob:AirSystemConnectionPoint, bob:InletSystemConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00083", "label": "torque", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00083\nNamespaces : bob, unit, s223\nTypes: s223:QuantifiableObservableProperty, s223:QuantifiableProperty, bob:Nm, s223:Property, unit:N-M, s223:ObservableProperty\nquantityKind : quantitykind:Torque\nunit : unit:N-M"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00038", "label": "command", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00038\nNamespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#PercentCommand\nTypes: s223:QuantifiableActuatableProperty, bob:PercentCommand, s223:QuantifiableProperty, s223:Property, s223:ActuatableProperty\nquantityKind : quantitykind:DimensionlessRatio\nunit : unit:PERCENT"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00026", "label": "ZN-T.Temperature", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00026\nNamespaces : http://data.ashrae.org/standard223#ObservableProperty, s223, bob\nTypes: s223:QuantifiableProperty, s223:QuantifiableObservableProperty, s223:Property, s223:ObservableProperty, bob:Temperature\nmedium : s223:Medium-Air\nquantityKind : quantitykind:Temperature\nunit : unit:DEG_C"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00047", "label": "auxiliary_switch_open_producer.cause_input", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00047\nNamespaces : p223\nTypes: p223:ProducerInput"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00018", "label": "Space-2.radiantHeating", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00018\nNamespaces : bob, s223, http://data.ashrae.org/standard223#BidirectionalConnectionPoint\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 2, "id": "urn:ex/sample005/00104", "label": "urn:ex/sample005/00104", "shape": "diamond", "size": 15, "title": "URI : urn:ex/sample005/00104\nNamespaces : s223, p223\nTypes: p223:Medium-MechanicalCoupling, s223:Connection\nmedium : p223:Medium-MechanicalCoupling"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00045", "label": "feedbackProducer.effect_output", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00045\nNamespaces : p223\nTypes: p223:ProducerOutput"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00008", "label": "Space-1.doors", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00008\nNamespaces : bob, s223\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00105", "label": "Zone-2.VAV.airInlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00105\nNamespaces : bob\nTypes: bob:InletSystemConnectionPoint, bob:AirSystemConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00025", "label": "ZN-T", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00025\nNamespaces : s223\nTypes: s223:Equipment, s223:Sensor\nComment : Temperature of space"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00034", "label": "actuator.proportional_signal", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00034\nNamespaces : bob, s223, p223\nTypes: p223:AnalogInput, s223:Signal-Modulated, bob:ModulationSignalConnectionPoint, s223:InletConnectionPoint\nmedium : s223:Signal-Modulated"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00074", "label": "actuator.feedback_signal", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00074\nNamespaces : bob, s223, p223\nTypes: p223:AnalogOutput, s223:OutletConnectionPoint, bob:ModulationSignalConnectionPoint\nmedium : s223:Signal-Modulated"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00092", "label": "auxiliary_switch_open_producer.effect_output", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00092\nNamespaces : p223\nTypes: p223:ProducerOutput"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00017", "label": "Space-2.windows", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00017\nNamespaces : bob, s223\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint, s223:Medium-Air\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00094", "label": "auxiliary_switch_close_producer.cause_input", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00094\nNamespaces : p223\nTypes: p223:ProducerInput"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00077", "label": "actuator.electricalInlet", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00077\nNamespaces : s223\nTypes: s223:InletConnectionPoint, s223:Electricity_24V_1Ph_60HzConnectionPoint\nmedium : s223:AC-24V-1Ph-60Hz"}, {"borderWidth": null, "group": 1, "id": "urn:ex/sample005/00021", "label": "SA-F", "shape": "square", "size": 20, "title": "URI : urn:ex/sample005/00021\nNamespaces : s223, http://data.ashrae.org/standard223#Sensor\nTypes: s223:Equipment, s223:Sensor\nComment : Air Flow"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00032", "label": "actuator.close_auxswitch_signal", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00032\nNamespaces : bob, http://data.ashrae.org/proposal-to-standard223#BinaryOutput, s223, p223\nTypes: bob:OnOffSignalConnectionPoint, s223:OutletConnectionPoint, p223:BinaryOutput\nmedium : p223:Signal-OnOffSignal"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00040", "label": "positionProducer", "shape": "star", "size": 15, "title": "URI : urn:ex/sample005/00040\nNamespaces : bob, p223\nTypes: p223:Producer, bob:Causality"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00016", "label": "Space-2.doors", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00016\nNamespaces : bob, s223\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint, s223:Medium-Air\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00091", "label": "auxiliary_switch_open_producer.cause_input", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00091\nNamespaces : p223\nTypes: p223:ProducerInput"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00090", "label": "auxiliary_switch_open_producer", "shape": "star", "size": 15, "title": "URI : urn:ex/sample005/00090\nNamespaces : bob, p223\nTypes: p223:Producer, bob:Causality"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00033", "label": "actuator.electricalInlet", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00033\nNamespaces : s223\nTypes: s223:InletConnectionPoint, s223:Electricity_24V_1Ph_60HzConnectionPoint\nmedium : s223:AC-24V-1Ph-60Hz"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00019", "label": "Space-2.radiantCooling", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00019\nNamespaces : bob, s223, http://data.ashrae.org/standard223/si-builder#AirConnectionPoint\nTypes: s223:BidirectionalConnectionPoint, bob:AirConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00049", "label": "auxiliary_switch_close_producer", "shape": "star", "size": 15, "title": "URI : urn:ex/sample005/00049\nNamespaces : bob, p223\nTypes: p223:Producer, bob:Causality"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00059", "label": "ACTDPR.airOutlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00059\nNamespaces : bob\nTypes: bob:AirSystemConnectionPoint, bob:OutletSystemConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 3, "id": "urn:ex/sample005/00050", "label": "auxiliary_switch_close_producer.cause_input", "shape": "triangle", "size": 15, "title": "URI : urn:ex/sample005/00050\nNamespaces : p223\nTypes: p223:ProducerInput"}, {"borderWidth": null, "group": 4, "id": "urn:ex/sample005/00051", "label": "auxiliary_switch_close_producer.effect_output", "shape": "triangleDown", "size": 15, "title": "URI : urn:ex/sample005/00051\nNamespaces : p223, http://data.ashrae.org/proposal-to-standard223#ProducerOutput\nTypes: p223:ProducerOutput"}, {"borderWidth": null, "group": 0, "id": "urn:ex/sample005/00003", "label": "Zone-1.airOutlet", "shape": "dot", "size": 15, "title": "URI : urn:ex/sample005/00003\nNamespaces : bob, http://data.ashrae.org/standard223/si-builder#ZoneConnectionPoint\nTypes: bob:OutletZoneConnectionPoint, bob:ZoneConnectionPoint\nmedium : s223:Medium-Air"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223/1.0/model/all", "label": "http://data.ashrae.org/standard223/1.0/model/all", "shape": "dot", "size": 15, "title": "URI : http://data.ashrae.org/standard223/1.0/model/all\nNamespaces : http://data.ashrae.org/standard223/1.0/model/all\nTypes: http://data.ashrae.org/standard223/1.0/model/all"}, {"borderWidth": null, "font": {"size": 20}, "group": 1, "id": "bob:legend/Equipment", "label": "Legend / Equipment", "physics": false, "shape": "square", "size": 20, "widthConstraint": 500, "x": 2000, "y": "-900px"}, {"borderWidth": null, "font": {"size": 20}, "group": 2, "id": "bob:legend/Connection", "label": "Legend / Connection", "physics": false, "shape": "diamond", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-800px"}, {"borderWidth": null, "font": {"size": 20}, "group": 3, "id": "bob:legend/InletConnectionPoint", "label": "Legend / InletConnectionPoint", "physics": false, "shape": "triangle", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-700px"}, {"borderWidth": null, "font": {"size": 20}, "group": 4, "id": "bob:legend/OutletConnectionPoint", "label": "Legend / OutletConnectionPoint", "physics": false, "shape": "triangleDown", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": null, "font": {"size": 20}, "group": 4, "id": "bob:legend/FunctionBlock", "label": "Legend / FunctionBlock|Producer", "physics": false, "shape": "star", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": 2, "font": {"size": 20}, "group": 4, "id": "bob:legend/DomainSpace", "label": "Legend / DomainSpace", "physics": false, "shape": "box", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": null, "font": {"size": 20}, "group": 5, "id": "bob:legend/qudt", "label": "Legend / qudt", "physics": false, "shape": "star", "size": 10, "widthConstraint": 500, "x": 2000, "y": "-500px"}, {"borderWidth": null, "font": {"size": 20}, "group": 0, "id": "bob:legend/Default", "label": "Legend / Default", "physics": false, "shape": "dot", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-1000px"}]);
+                  edges = new vis.DataSet([{"dashes": false, "from": "urn:ex/sample005/00087", "title": "s223:hasOutput", "to": "urn:ex/sample005/00089", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:contains", "to": "urn:ex/sample005/00046", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00060", "title": "s223:connectsAt", "to": "urn:ex/sample005/00029", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00067", "title": "p223:hasObservationLocation", "to": "urn:ex/sample005/00101", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00012", "title": "bob:airTransfer", "to": "urn:ex/sample005/00015", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00103", "title": "bob:mapsTo", "to": "urn:ex/sample005/00101", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00098", "title": "s223:connectedFrom", "to": "urn:ex/sample005/00072", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00014", "title": "s223:connectsThrough", "to": "urn:ex/sample005/00108", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00043", "title": "s223:hasInput", "to": "urn:ex/sample005/00044", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00027", "title": "s223:contains", "to": "urn:ex/sample005/00054", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00072", "title": "bob:position", "to": "urn:ex/sample005/00097", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00054", "title": "s223:connectedThrough", "to": "urn:ex/sample005/00107", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00069", "title": "s223:observes", "to": "urn:ex/sample005/00070", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00075", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00084", "title": "s223:hasOutput", "to": "urn:ex/sample005/00086", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00027", "title": "bob:position", "to": "urn:ex/sample005/00053", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00093", "title": "bob:effect_output", "to": "urn:ex/sample005/00095", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00020", "title": "bob:airOutlet", "to": "urn:ex/sample005/00062", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00052", "title": "p223:hasObservationLocation", "to": "urn:ex/sample005/00029", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00071", "title": "bob:airInlet", "to": "urn:ex/sample005/00102", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00078", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00087", "title": "s223:hasInput", "to": "urn:ex/sample005/00088", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00042", "title": "s223:produces", "to": "urn:ex/sample005/00053", "width": 1}, {"dashes": true, "from": "http://data.ashrae.org/standard223/1.0/data/sample005", "title": "rdfs:isDefinedBy", "to": "http://data.ashrae.org/standard223/1.0/sample/sample005", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00065", "title": "s223:observes", "to": "urn:ex/sample005/00066", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00054", "title": "s223:connectedThrough", "to": "urn:ex/sample005/00063", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00107", "title": "s223:connectsAt", "to": "urn:ex/sample005/00056", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00004", "title": "bob:radiantHeating", "to": "urn:ex/sample005/00010", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00096", "title": "p223:hasObservationLocation", "to": "urn:ex/sample005/00073", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00107", "title": "s223:connectsTo", "to": "urn:ex/sample005/00098", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00004", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00007", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00067", "title": "s223:observes", "to": "urn:ex/sample005/00068", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00020", "title": "bob:airInlet", "to": "urn:ex/sample005/00061", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00047", "title": "s223:uses", "to": "urn:ex/sample005/00053", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00086", "title": "s223:produces", "to": "urn:ex/sample005/00097", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00043", "title": "bob:effect_output", "to": "urn:ex/sample005/00045", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00004", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00011", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00064", "title": "bob:hasSystemConnectionPoint", "to": "urn:ex/sample005/00105", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00027", "title": "bob:is_closed", "to": "urn:ex/sample005/00037", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00012", "title": "bob:ductAirOutlet", "to": "urn:ex/sample005/00014", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:contains", "to": "urn:ex/sample005/00043", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00064", "title": "bob:airOutlet", "to": "urn:ex/sample005/00106", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00098", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00101", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00046", "title": "bob:cause_input", "to": "urn:ex/sample005/00047", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00092", "title": "s223:produces", "to": "urn:ex/sample005/00080", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasProperty", "to": "urn:ex/sample005/00080", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00004", "title": "s223:connectedThrough", "to": "urn:ex/sample005/00108", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00071", "title": "bob:command", "to": "urn:ex/sample005/00082", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00071", "title": "bob:is_open", "to": "urn:ex/sample005/00080", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:connectedThrough", "to": "urn:ex/sample005/00060", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00052", "title": "s223:observes", "to": "urn:ex/sample005/00053", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00054", "title": "s223:connectedTo", "to": "urn:ex/sample005/00004", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00094", "title": "s223:uses", "to": "urn:ex/sample005/00097", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00057", "title": "s223:connectsThrough", "to": "urn:ex/sample005/00063", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:connectedThrough", "to": "urn:ex/sample005/00104", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00023", "title": "p223:hasObservationLocation", "to": "urn:ex/sample005/00057", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasProperty", "to": "urn:ex/sample005/00082", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00020", "title": "s223:contains", "to": "urn:ex/sample005/00023", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00085", "title": "s223:uses", "to": "urn:ex/sample005/00082", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00108", "title": "s223:connectsAt", "to": "urn:ex/sample005/00006", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:contains", "to": "urn:ex/sample005/00040", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00001", "title": "bob:hasZoneConnectionPoint", "to": "urn:ex/sample005/00002", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00098", "title": "bob:linkageInlet", "to": "urn:ex/sample005/00099", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00073", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:contains", "to": "urn:ex/sample005/00093", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00027", "title": "bob:hasSystemConnectionPoint", "to": "urn:ex/sample005/00058", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00027", "title": "bob:command", "to": "urn:ex/sample005/00038", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00060", "title": "s223:connectsTo", "to": "urn:ex/sample005/00054", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:contains", "to": "urn:ex/sample005/00090", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00033", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00004", "title": "bob:doors", "to": "urn:ex/sample005/00008", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasProperty", "to": "urn:ex/sample005/00038", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00004", "title": "bob:ductAirOutlet", "to": "urn:ex/sample005/00006", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00054", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00057", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00102", "title": "bob:mapsTo", "to": "urn:ex/sample005/00100", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00106", "title": "bob:mapsTo", "to": "urn:ex/sample005/00103", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00012", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00019", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00021", "title": "p223:hasObservationLocation", "to": "urn:ex/sample005/00057", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:contains", "to": "urn:ex/sample005/00049", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00105", "title": "bob:mapsTo", "to": "urn:ex/sample005/00102", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00001", "title": "s223:contains", "to": "urn:ex/sample005/00012", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00040", "title": "bob:effect_output", "to": "urn:ex/sample005/00042", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00064", "title": "s223:contains", "to": "urn:ex/sample005/00065", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00062", "title": "bob:mapsTo", "to": "urn:ex/sample005/00059", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00108", "title": "s223:connectsFrom", "to": "urn:ex/sample005/00012", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00031", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00100", "title": "s223:connectsThrough", "to": "urn:ex/sample005/00107", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00060", "title": "s223:connectsAt", "to": "urn:ex/sample005/00055", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00004", "title": "bob:windows", "to": "urn:ex/sample005/00009", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasProperty", "to": "urn:ex/sample005/00039", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00045", "title": "s223:produces", "to": "urn:ex/sample005/00035", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00091", "title": "s223:uses", "to": "urn:ex/sample005/00097", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00071", "title": "bob:position", "to": "urn:ex/sample005/00097", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00054", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00055", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00048", "title": "s223:produces", "to": "urn:ex/sample005/00036", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00090", "title": "bob:cause_input", "to": "urn:ex/sample005/00091", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:contains", "to": "urn:ex/sample005/00084", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00028", "title": "bob:position", "to": "urn:ex/sample005/00053", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00093", "title": "bob:cause_input", "to": "urn:ex/sample005/00094", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00004", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00005", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00012", "title": "bob:radiantHeating", "to": "urn:ex/sample005/00018", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00054", "title": "bob:position", "to": "urn:ex/sample005/00053", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00104", "title": "s223:connectsTo", "to": "urn:ex/sample005/00098", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00098", "title": "bob:position", "to": "urn:ex/sample005/00097", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00044", "title": "s223:uses", "to": "urn:ex/sample005/00053", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00071", "title": "bob:airOutlet", "to": "urn:ex/sample005/00103", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00027", "title": "bob:is_open", "to": "urn:ex/sample005/00036", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:contains", "to": "urn:ex/sample005/00052", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00073", "title": "s223:connectsThrough", "to": "urn:ex/sample005/00104", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00051", "title": "s223:produces", "to": "urn:ex/sample005/00037", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00020", "title": "s223:hasMember", "to": "urn:ex/sample005/00027", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00046", "title": "bob:effect_output", "to": "urn:ex/sample005/00048", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00021", "title": "s223:observes", "to": "urn:ex/sample005/00022", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00099", "title": "s223:connectsThrough", "to": "urn:ex/sample005/00104", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00020", "title": "s223:contains", "to": "urn:ex/sample005/00025", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00077", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasProperty", "to": "urn:ex/sample005/00083", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:connectedTo", "to": "urn:ex/sample005/00054", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00001", "title": "s223:contains", "to": "urn:ex/sample005/00004", "width": 8}, {"dashes": true, "from": "urn:ex/sample005/00084", "title": "bob:cause_input", "to": "urn:ex/sample005/00085", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00049", "title": "bob:effect_output", "to": "urn:ex/sample005/00051", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00063", "title": "s223:connectsAt", "to": "urn:ex/sample005/00005", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00098", "title": "bob:airInlet", "to": "urn:ex/sample005/00100", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00065", "title": "p223:hasObservationLocation", "to": "urn:ex/sample005/00101", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00096", "title": "s223:observes", "to": "urn:ex/sample005/00097", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00059", "title": "bob:mapsTo", "to": "urn:ex/sample005/00057", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00023", "title": "s223:observes", "to": "urn:ex/sample005/00024", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00064", "title": "s223:contains", "to": "urn:ex/sample005/00069", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00063", "title": "s223:connectsTo", "to": "urn:ex/sample005/00004", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00095", "title": "s223:produces", "to": "urn:ex/sample005/00081", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00012", "title": "bob:ductAirInlet", "to": "urn:ex/sample005/00013", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00061", "title": "bob:mapsTo", "to": "urn:ex/sample005/00058", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00020", "title": "s223:contains", "to": "urn:ex/sample005/00021", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00088", "title": "s223:uses", "to": "urn:ex/sample005/00097", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00049", "title": "bob:cause_input", "to": "urn:ex/sample005/00050", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00090", "title": "bob:effect_output", "to": "urn:ex/sample005/00092", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00050", "title": "s223:uses", "to": "urn:ex/sample005/00053", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00001", "title": "bob:airOutlet", "to": "urn:ex/sample005/00003", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00012", "title": "bob:doors", "to": "urn:ex/sample005/00016", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:contains", "to": "urn:ex/sample005/00087", "width": 8}, {"dashes": true, "from": "http://data.ashrae.org/standard223/1.0/data/sample005", "title": "owl:imports", "to": "http://data.ashrae.org/standard223/1.0/model/all", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00058", "title": "bob:mapsTo", "to": "urn:ex/sample005/00056", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasProperty", "to": "urn:ex/sample005/00079", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasProperty", "to": "urn:ex/sample005/00036", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00054", "title": "bob:airInlet", "to": "urn:ex/sample005/00056", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00012", "title": "bob:windows", "to": "urn:ex/sample005/00017", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00041", "title": "s223:uses", "to": "urn:ex/sample005/00038", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00064", "title": "s223:contains", "to": "urn:ex/sample005/00067", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00064", "title": "s223:hasMember", "to": "urn:ex/sample005/00071", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00030", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00025", "title": "s223:observes", "to": "urn:ex/sample005/00026", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00032", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00027", "title": "bob:airOutlet", "to": "urn:ex/sample005/00059", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasProperty", "to": "urn:ex/sample005/00037", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasProperty", "to": "urn:ex/sample005/00035", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00071", "title": "s223:contains", "to": "urn:ex/sample005/00072", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00071", "title": "s223:contains", "to": "urn:ex/sample005/00098", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasProperty", "to": "urn:ex/sample005/00081", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00071", "title": "bob:is_closed", "to": "urn:ex/sample005/00081", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00034", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00074", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00076", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00028", "title": "s223:hasConnectionPoint", "to": "urn:ex/sample005/00029", "width": 1}, {"dashes": true, "from": "urn:ex/sample005/00040", "title": "bob:cause_input", "to": "urn:ex/sample005/00041", "width": 1}, {"dashes": false, "from": "urn:ex/sample005/00072", "title": "s223:contains", "to": "urn:ex/sample005/00096", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00027", "title": "s223:contains", "to": "urn:ex/sample005/00028", "width": 8}, {"dashes": false, "from": "urn:ex/sample005/00089", "title": "s223:produces", "to": "urn:ex/sample005/00079", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

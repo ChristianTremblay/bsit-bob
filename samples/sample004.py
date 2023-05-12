@@ -19,8 +19,9 @@ domain_space = HVACSpace(label="Domain_Space")
 zone > domain_space
 
 # reference the connections
-zone.airInlet.mapsTo = domain_space.ductAirInlet
-zone.airOutlet.mapsTo = domain_space.ductAirOutlet
+# TODO : System don't have CP anymore Make VAV an equipment
+# zone.airInlet.mapsTo = domain_space.ductAirInlet
+# zone.airOutlet.mapsTo = domain_space.ductAirOutlet
 
 # there is a VAV box
 vav_template = {
@@ -31,7 +32,7 @@ vav_template = {
 vav = VAV(config=vav_template)
 
 # connect the output of the VAV box to the input of the Zone
-vav.airOutlet >> zone.airInlet
+# vav.airOutlet >> zone.airInlet
 
 # dump the result
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

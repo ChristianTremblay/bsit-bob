@@ -20,14 +20,14 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import (
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
+    Electricity_600V_3Ph_60HzInletConnectionPoint,
+    Electricity_600V_3Ph_60HzOutletConnectionPoint,
 )
 from bob.core import (
     HVAC,
     Air,
-    Equipment,
     DomainSpace,
+    Equipment,
     Junction,
     System,
     bind_model_namespace,
@@ -80,21 +80,21 @@ class DDAHU(System):
 
     def assemble(self):
         # ddahu = DDAHU(config = ddahu_template, label = 'ddahu')
-        self["oa_dat"].hasMeasurementLocation = self["oa_damper"].airInlet
-        self["oa_humd"].hasMeasurementLocation = self["oa_damper"].airInlet
-        self["oa_cfm"].hasMeasurementLocation = self["oa_damper"].airInlet
+        self["oa_dat"] % self["oa_damper"].airInlet
+        self["oa_humd"] % self["oa_damper"].airInlet
+        self["oa_cfm"] % self["oa_damper"].airInlet
 
         self.outsideAirInlet.mapsTo = self["oa_damper"].airInlet
 
         mixed_air = AirConnection(label=self.label + ".mixed_air")
         self["oa_damper"] >> mixed_air
-        self["ma_temp"].hasMeasurementLocation = mixed_air
+        self["ma_temp"] % mixed_air
 
         self.returnAirInlet.mapsTo = self["return_air_fan"].airInlet
 
-        self["re_dat"].hasMeasurementLocation = self["return_air_fan"].airInlet
-        self["re_humd"].hasMeasurementLocation = self["return_air_fan"].airInlet
-        self["re_cfm"].hasMeasurementLocation = self["return_air_fan"].airInlet
+        self["re_dat"] % self["return_air_fan"].airInlet
+        self["re_humd"] % self["return_air_fan"].airInlet
+        self["re_cfm"] % self["return_air_fan"].airInlet
 
         self["return_air_fan"] >> [self["recirc_damper"], self["exhaust_damper"]]
 
@@ -114,8 +114,8 @@ class ddahu_fan(Fan):
 
     def assemble(self):
         self["vfd"] >> self
-        self["TPD1"].hasMeasurementLocationHigh = self.airOutlet
-        self["TPD1"].hasMeasurementLocationLow = self.airInlet
+        self["TPD1"]["highPort"] % self.airOutlet
+        self["TPD1"]["lowPort"] % self.airInlet
 
 
 # in_filter, coil, supply_fan,  airdiff pressure on fan?
@@ -131,11 +131,11 @@ class HotColdDeck(System):
         self.airInlet.mapsTo = self["in_filter"].airInlet
         self.airOutlet.mapsTo = self["supply_fan"].airOutlet
         self["in_filter"] >> self["coil"] >> self["supply_fan"]
-        self["temp"].observesProperty.hasSetpoint = self.temp_sp
-        self["dat"].hasMeasurementLocation = self["coil"].airOutlet
-        self["humd"].hasMeasurementLocation = self["supply_fan"].airOutlet
-        self["cfm"].hasMeasurementLocation = self["supply_fan"].airOutlet
-        self["temp"].hasMeasurementLocation = self["supply_fan"].airOutlet
+        self["temp"].observedProperty.hasSetpoint = self.temp_sp
+        self["dat"] % self["coil"].airOutlet
+        self["humd"] % self["supply_fan"].airOutlet
+        self["cfm"] % self["supply_fan"].airOutlet
+        self["temp"] % self["supply_fan"].airOutlet
 
 
 # this feels wrong, but not sure what else would be right
@@ -161,18 +161,18 @@ class ddahu_VAV(System):
         super().__init__(**kwargs)
 
     def assemble(self):
-        self["hot_dmp"]["vav_dp"].hasMeasurementLocation = self["hot_dmp"].airInlet
-        self["hot_dmp"]["vav_cfm"].hasMeasurementLocation = self["hot_dmp"].airInlet
-        self["hot_dmp"]["vav_eat"].hasMeasurementLocation = self["hot_dmp"].airInlet
+        self["hot_dmp"]["vav_dp"] % self["hot_dmp"].airInlet
+        self["hot_dmp"]["vav_cfm"] % self["hot_dmp"].airInlet
+        self["hot_dmp"]["vav_eat"] % self["hot_dmp"].airInlet
 
-        self["cold_dmp"]["vav_dp"].hasMeasurementLocation = self["cold_dmp"].airInlet
-        self["cold_dmp"]["vav_cfm"].hasMeasurementLocation = self["cold_dmp"].airInlet
-        self["cold_dmp"]["vav_eat"].hasMeasurementLocation = self["cold_dmp"].airInlet
+        self["cold_dmp"]["vav_dp"] % self["cold_dmp"].airInlet
+        self["cold_dmp"]["vav_cfm"] % self["cold_dmp"].airInlet
+        self["cold_dmp"]["vav_eat"] % self["cold_dmp"].airInlet
 
         self.hotAirInlet.mapsTo = self["hot_dmp"].airInlet
         self.coldAirInlet.mapsTo = self["cold_dmp"].airInlet
 
-        self["vav_eat"].hasMeasurementLocation = self["mb"].airOutlet
+        self["vav_eat"] % self["mb"].airOutlet
 
         self["hot_dmp"] >> self["mb"].hotAirInlet
         self["cold_dmp"] >> self["mb"].coldAirInlet
@@ -187,20 +187,20 @@ class HVAC_rooms(DomainSpace):
     def __init__(self, ext_ref_dict=None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         rm_temp = AirTemperatureSensor(label="rm_temp")
-        rm_temp.hasMeasurementLocation = self
+        rm_temp % self
         rm_temp.hasExternalReference = TimeSeriesReference()
 
 
 # add properties to config?
-# Equipments DON'T have properties as default, but have a default config that you can optionally use.
+# Equipment DON'T have properties as default, but have a default config that you can optionally use.
 
 # should separate units from electric power.
 vfd_template = {
     "params": {
         "label": "MyVFD",
         "comment": "A VFD for a Big Fan",
-        "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
+        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
         "W": ElectricPowerW(hasExternalReference=TimeSeriesReference()),
         "speed_reference": Percent(hasExternalReference=TimeSeriesReference()),
     },
@@ -211,7 +211,7 @@ fan_template = {
     "params": {
         "label": "MyFan",
         "comment": "A Big Fan",
-        "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
     },  # Fans also have % Speed and On/Off status
     "sensors": {
         ("TPD1", AirDifferentialPressureSensor): {

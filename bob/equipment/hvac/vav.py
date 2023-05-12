@@ -12,7 +12,6 @@ from ...connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from ...connections.electricity import Electricity_575V_60HzSystemInletConnectionPoint
 from ...core import BOB, P223, S223, UNIT, Equipment, PropertyReference, System
 from ...equipment.hvac.coil import HotWaterCoil
 from ...equipment.hvac.damper import Damper, ElectricalActuatedProportionalDamper
@@ -83,10 +82,10 @@ vav_withreheat_template = {
 }
 
 
-class VAV(System):
+class VAV(Equipment):
     _class_iri = S223.VAV
-    airInlet: AirInletSystemConnectionPoint
-    airOutlet: AirOutletSystemConnectionPoint
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     damper: ElectricalActuatedProportionalDamper
 
     def __init__(self, config: Dict = {}, **kwargs) -> None:
@@ -94,14 +93,14 @@ class VAV(System):
         super().__init__(config, **kwargs)
 
         self.damper = ElectricalActuatedProportionalDamper(label=self.label + ".damper")
-        self.airInlet.mapsTo = self.damper.airInlet
-        self.airOutlet.mapsTo = self.damper.airOutlet
+        self.damper.airInlet.mapsTo = self.airInlet
+        self.damper.airOutlet.mapsTo = self.airOutlet
 
 
-class VAV_Simple(System):
+class VAV_Simple(Equipment):
     _class_iri = S223.VAV
-    airInlet: AirInletSystemConnectionPoint
-    airOutlet: AirOutletSystemConnectionPoint
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     airFlow: PropertyReference
     occupancyStatus: PropertyReference
     damperPosition: PropertyReference
@@ -112,19 +111,19 @@ class VAV_Simple(System):
         super().__init__(config, **kwargs)
         self.airInlet.mapsTo = self["ACTDPR"].airInlet
         self.airOutlet.mapsTo = self["ACTDPR"].airOutlet
-        self.zoneTemperature = self["ZN-T"].observesProperty
+        # self.zoneTemperature = self["ZN-T"].observedProperty
         # self.damperPosition = self['DPR'].position
-        # self.airFlow = self['SA-F'].observesProperty
+        # self.airFlow = self['SA-F'].observedProperty
 
-        self["SA-F"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
-        self["DA-T"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
+        self["SA-F"] % self["ACTDPR"]["damper"].airOutlet
+        self["DA-T"] % self["ACTDPR"]["damper"].airOutlet
 
 
-class VAV_Dual(System):
+class VAV_Dual(Equipment):
     _class_iri = S223.VAV
-    airInlet: AirInletSystemConnectionPoint
-    plenumInlet: AirInletSystemConnectionPoint
-    airOutlet: AirOutletSystemConnectionPoint
+    airInlet: AirInletConnectionPoint
+    plenumInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     supplyAirFlow: PropertyReference
     occupancyStatus: PropertyReference
     damperPosition: PropertyReference
@@ -135,18 +134,18 @@ class VAV_Dual(System):
         super().__init__(config, **kwargs)
         self.airInlet.mapsTo = self["ACTDPR"]["damper"].airInlet
         self.airOutlet.mapsTo = self["ACTDPR"]["damper"].airOutlet
-        self.zoneTemperature = self["ZN-T"].observesProperty
+        self.zoneTemperature = self["ZN-T"].observedProperty
         # self.damperPosition = self['DPR'].position
-        # self.airFlow = self['SA-F'].observesProperty
+        # self.airFlow = self['SA-F'].observedProperty
 
-        self["SA-F"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
-        self["DA-T"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
+        self["SA-F"] % self["ACTDPR"]["damper"].airOutlet
+        self["DA-T"] % self["ACTDPR"]["damper"].airOutlet
 
 
-class VAV_Reheat(System):
+class VAV_Reheat(Equipment):
     _class_iri = S223.VAV
-    airInlet: AirInletSystemConnectionPoint
-    airOutlet: AirOutletSystemConnectionPoint
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     airFlow: PropertyReference
     occupancyStatus: PropertyReference
     damperPosition: PropertyReference
@@ -157,9 +156,9 @@ class VAV_Reheat(System):
         self.airInlet.mapsTo = self["ACTDPR"]["damper"].airInlet
         self.airOutlet.mapsTo = self["ACTDPR"]["damper"].airOutlet
         # self.damperPosition = self['DPR'].position
-        # self.airFlow = self['SA-F'].observesProperty
+        # self.airFlow = self['SA-F'].observedProperty
 
-        self["SA-F"].hasMeasurementLocation = self["ACTDPR"]["damper"].airOutlet
-        self["DA-T"].hasMeasurementLocation = self["HWC"].airOutlet
+        self["SA-F"] % self["ACTDPR"]["damper"].airOutlet
+        self["DA-T"] % self["HWC"].airOutlet
 
         self["DPR"]["damper"] >> self["HWC"]

@@ -5,7 +5,8 @@ from bob.properties import OccupancyStatus
 from bob.space.light import LightingSpace, LightingZone
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
 # Light Spaces

@@ -22,7 +22,7 @@ from bob.properties.states import (
 )
 from bob.property import ActuatableProperty
 
-from ...connections.electricity import (
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalInletConnectionPoint,
 )
@@ -61,7 +61,7 @@ class Valve(Equipment):
 
     _class_iri: URIRef = S223.Valve
     linkageInlet: MechanicalInletConnectionPoint
-    position: Percent
+    position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
     is_open: PropertyReference
@@ -146,8 +146,8 @@ class TwoWayActuatedValve(System):
         self["is_open"] = self["valve"]["is_open"] = self["actuator"]["is_open"]
         self["is_closed"] = self["valve"]["is_closed"] = self["actuator"]["is_closed"]
         self["actuator"].linkageOutlet >> self["valve"].linkageInlet
-        self["position"] = self["valve"]["position"] = self["actuator"]["position"]
-        self["position_feedback"] = self["actuator"]["position_sensor"].observesProperty
+        self.position = self["valve"].position = self["actuator"].position
+        self["position_feedback"] = self["actuator"]["position_sensor"].observedProperty
         self.waterInlet.mapsTo = self["valve"].waterInlet
         self.waterOutlet.mapsTo = self["valve"].waterOutlet
 
@@ -208,7 +208,7 @@ class ThreeWayActuatedValve(System):
         self["is_closed"] = self["valve"]["is_closed"] = self["actuator"]["is_closed"]
         self["actuator"].linkageOutlet >> self["valve"].linkageInlet
         self["position"] = self["valve"]["position"] = self["actuator"]["position"]
-        self["position_feedback"] = self["actuator"]["position_sensor"].observesProperty
+        self["position_feedback"] = self["actuator"]["position_sensor"].observedProperty
 
 
 class ThreeWayMixingSystem(ThreeWayActuatedValve):

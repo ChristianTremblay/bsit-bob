@@ -12,6 +12,7 @@ from ..core import (
     UNIT,
     Air,
     EnumerationKind,
+    Equipment,
     Medium,
     Node,
     PropertyReference,
@@ -39,7 +40,9 @@ class GasConcentrationSetpoint(Setpoint):
 class GasConcentrationSensor(Sensor):
     _class_iri = S223.Sensor
     hasQuantityKind: URIRef = QUANTITYKIND.DimensionlessRatio
-    observesProperty: PropertyReference  # GasConcentration
+    observes: PropertyReference  # GasConcentration
+    hasMinRange: PropertyReference
+    hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
@@ -51,7 +54,7 @@ class GasConcentrationSensor(Sensor):
 
         super().__init__(**_sensor_kwargs)
 
-        self.observesProperty = GasConcentration(
+        self.observes = GasConcentration(
             # isObservedBy=self,
             label=f"{self.label}.GasConcentration",  # needs more focus
             **_property_kwargs,
@@ -65,6 +68,7 @@ class CO2Sensor(GasConcentrationSensor):
     hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs):
+        # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
         super().__init__(ofSubstance=Substance.CO2, **kwargs)
 
 
@@ -75,6 +79,7 @@ class COSensor(GasConcentrationSensor):
     hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs):
+        # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
         super().__init__(ofSubstance=Substance.CO, **kwargs)
 
 
@@ -85,6 +90,7 @@ class NO2Sensor(GasConcentrationSensor):
     hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs):
+        # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
         super().__init__(ofSubstance=Substance.NO2, **kwargs)
 
 
@@ -95,4 +101,5 @@ class CH4Sensor(GasConcentrationSensor):
     hasMaxRange: PropertyReference
 
     def __init__(self, **kwargs):
+        # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
         super().__init__(ofSubstance=Substance.CH4, **kwargs)

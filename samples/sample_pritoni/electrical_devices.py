@@ -8,13 +8,14 @@ from bob.equipment.electricity.switch import DimmableSwitch, TimerSwitch
 from bob.properties.time import Hour
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
 mainentry_panel_config = {
     "params": {
         "label": "Main Entry Panel",
-        "comment": "Main Entry Panel of Building at 575V",
+        "comment": "Main Entry Panel of Building at 600V_3Ph",
         "voltage": "575",
     },
     "sensors": {},
@@ -131,28 +132,28 @@ distribution_panel_config = {
     },
     # other properties could go there... ?
 }
-# Electrical Equipments
+# Electrical Equipment
 main_panel = ThreePhaseDistributionPanel(config=mainentry_panel_config)
 transformer_120_240 = Transformer(
     label="TX-1",
-    electricalInlet=Electricity_575V_60HzInletConnectionPoint,
-    electricalOutlet=Electricity_120V_240V_60HzOutletConnectionPoint,
+    electricalInlet=Electricity_600V_3Ph_60HzInletConnectionPoint,
+    electricalOutlet=Electricity_240V_120V_1Ph_60HzOutletConnectionPoint,
 )
 
 dist_panel = SinglePhaseDistributionPanel(config=distribution_panel_config)
-# hq = Electricity_120V_240V_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
-hq_600 = Electricity_575V_60HzConnection(label="Hydro-Québec", comment="600V")
+# hq = Electricity_240V_120V_1Ph_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
+hq_600 = Electricity_600V_3Ph_60HzConnection(label="Hydro-Québec", comment="600V")
 hq_600 >> main_panel["MainBreaker"]
 main_panel["CB#3"] >> transformer_120_240 >> dist_panel["MainBreaker"]
 
 
 # We need a trough so light breakers will be connected to multiple loads
-dist_panel_cb1 = Electricity_120V_60HzConnection(label="DISTPANEL-CB1")
-dist_panel_cb3 = Electricity_120V_60HzConnection(label="DISTPANEL-CB3")
-dist_panel_cb4 = Electricity_120V_60HzConnection(label="DISTPANEL-CB4")
-dist_panel_cb5 = Electricity_120V_60HzConnection(label="DISTPANEL-CB5")
-dist_panel_cb6 = Electricity_120V_60HzConnection(label="DISTPANEL-CB6")
-dist_panel_cb7 = Electricity_120V_60HzConnection(label="DISTPANEL-CB7")
+dist_panel_cb1 = Electricity_120V_1Ph_60HzConnection(label="DISTPANEL-CB1")
+dist_panel_cb3 = Electricity_120V_1Ph_60HzConnection(label="DISTPANEL-CB3")
+dist_panel_cb4 = Electricity_120V_1Ph_60HzConnection(label="DISTPANEL-CB4")
+dist_panel_cb5 = Electricity_120V_1Ph_60HzConnection(label="DISTPANEL-CB5")
+dist_panel_cb6 = Electricity_120V_1Ph_60HzConnection(label="DISTPANEL-CB6")
+dist_panel_cb7 = Electricity_120V_1Ph_60HzConnection(label="DISTPANEL-CB7")
 dist_panel["CB#1"] >> dist_panel_cb1
 dist_panel["CB#3"] >> dist_panel_cb3
 dist_panel["CB#4"] >> dist_panel_cb4
@@ -169,19 +170,19 @@ openofficeNorth_luminaire_1_dimmer = DimmableSwitch(
 return_fan_electrical_meter = ThreePhaseElectricalMeter(
     label="RF Meter",
     comment="Return Fan Electrical Meter (M1)",
-    medium=Electricity.AC575V_60Hz,
+    medium=Electricity.AC600V_3Ph_60Hz,
 )
 
 supply_fan_electrical_meter = ThreePhaseElectricalMeter(
     label="SF Meter",
     comment="Supply Fan Electrical Meter (M2)",
-    medium=Electricity.AC575V_60Hz,
+    medium=Electricity.AC600V_3Ph_60Hz,
 )
 
 building_electrical_meter = ThreePhaseElectricalMeter(
     label="Building Meter",
     comment="Building Electrical Meter (M3)",
-    medium=Electricity.AC575V_60Hz,
+    medium=Electricity.AC600V_3Ph_60Hz,
 )
 
 if __name__ == "__main__":

@@ -10,7 +10,8 @@ from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.temperature import Temperature
 
 model_name = Path(__file__).stem
-_namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
 # Comment
@@ -81,28 +82,33 @@ plenum = AirConnection(
 outdoor >> hd.ahu["OADPR"].airInlet  # >> mixedAir
 hd.ahu["OADPR"]["damper"] >> mixedAir
 hd.ahu["MADPR"]["damper"] >> mixedAir
-mixedAir >> hd.ahu["FILTER"] >> hd.ahu["HTGCOIL"] >> hd.ahu["CLGCOIL"] >> hd.ahu[
-    "SF"
-] >> supplyAir
+(
+    mixedAir
+    >> hd.ahu["FILTER"]
+    >> hd.ahu["HTGCOIL"]
+    >> hd.ahu["CLGCOIL"]
+    >> hd.ahu["SF"]
+    >> supplyAir
+)
 hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"].airInlet
 hd.ahu["RF"].airOutlet >> returnExhaust >> hd.ahu["EADPR"]["damper"].airInlet
 hd.ahu["EADPR"]["damper"] >> outdoor
 returnExhaust >> hd.ahu["MADPR"].airInlet
 
 # AHU Sensors
-hd.ahu["OA-T"].hasMeasurementLocation = outdoor
-hd.ahu["TPD1"].hasMeasurementLocationHigh = hd.ahu["FILTER"].airInlet
-hd.ahu["MA-T"].hasMeasurementLocation = hd.ahu["FILTER"].airInlet
-hd.ahu["TPD1"].hasMeasurementLocationLow = hd.ahu["FILTER"].airOutlet
-hd.ahu["HC-T"].hasMeasurementLocation = hd.ahu["HTGCOIL"].airOutlet
-hd.ahu["DA-T"].hasMeasurementLocation = hd.ahu["CLGCOIL"].airOutlet
-hd.ahu["TPD2"].hasMeasurementLocationHigh = hd.ahu["SF"].airOutlet
-hd.ahu["TPD2"].hasMeasurementLocationLow = plenum
-hd.ahu["TPD3"].hasMeasurementLocationHigh = hd.ahu["RF"].airOutlet
-hd.ahu["TPD3"].hasMeasurementLocationLow = plenum
+hd.ahu["OA-T"] % outdoor
+hd.ahu["TPD1"]["highPort"] % hd.ahu["FILTER"].airInlet
+hd.ahu["MA-T"] % hd.ahu["FILTER"].airInlet
+hd.ahu["TPD1"]["lowPort"] % hd.ahu["FILTER"].airOutlet
+hd.ahu["HC-T"] % hd.ahu["HTGCOIL"].airOutlet
+hd.ahu["DA-T"] % hd.ahu["CLGCOIL"].airOutlet
+hd.ahu["TPD2"]["highPort"] % hd.ahu["SF"].airOutlet
+hd.ahu["TPD2"]["lowPort"] % plenum
+hd.ahu["TPD3"]["highPort"] % hd.ahu["RF"].airOutlet
+hd.ahu["TPD3"]["lowPort"] % plenum
 
-hd.ahu["RF"]["vfd"].drive_running = OnOffStatus(label="VFD DriveRunning")
-hd.ahu["RF"]["vfd"].run_command = OnOffCommand(label="Run Command")
+hd.ahu["RF_VFD"].drive_running = OnOffStatus(label="VFD DriveRunning")
+hd.ahu["RF_VFD"].run_command = OnOffCommand(label="Run Command")
 
 hd.boiler.hotWaterLeaving >> hd.hot_water_pump.waterInlet
 hd.hot_water_pump.waterOutlet >> hd.ahu["HTGCOIL"].hotWaterInlet
@@ -132,17 +138,16 @@ hd.bathroom_exhaust_fan.airOutlet >> outdoor
 
 
 # VAV Boxes
-# Relationships between Equipments and positioning sensors
+# Relationships between Equipment and positioning sensors
 supplyAir >> hd.vav1["VAV1_damper"].airInlet
 hd.vav1.hasPhysicalLocation = ps.private_office
 hd.vav1["VAV1_damper"]["damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
 
 # vav1 >> hs.hvac_zone_1
 hd.vav1["VAV1_HeatingCoil"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
-
-hd.vav1["VAV1_SA-F"].hasMeasurementLocation = hd.vav1["VAV1_damper"]["damper"].airInlet
-hd.vav1["VAV1_DA-T"].hasMeasurementLocation = hd.vav1["VAV1_HeatingCoil"].airOutlet
-hd.vav1["VAV1_ZN-T"].hasMeasurementLocation = hs.openoffice_hvac
+hd.vav1["VAV1_SA-F"] % hd.vav1["VAV1_damper"]["damper"].airInlet
+hd.vav1["VAV1_DA-T"] % hd.vav1["VAV1_HeatingCoil"].airOutlet
+hd.vav1["VAV1_ZN-T"] % hs.openoffice_hvac
 hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
 
 
@@ -152,10 +157,9 @@ hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
 
 # vav2 >> hs.hvac_zone_2
 hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
-
-hd.vav2["VAV2_SA-F"].hasMeasurementLocation = hd.vav2["VAV2_damper"]["damper"].airInlet
-hd.vav2["VAV2_DA-T"].hasMeasurementLocation = hd.vav2["VAV2_HeatingCoil"].airOutlet
-hd.vav2["VAV2_ZN-T"].hasMeasurementLocation = hs.corridorSouth_hvac
+hd.vav2["VAV2_SA-F"] % hd.vav2["VAV2_damper"]["damper"].airInlet
+hd.vav2["VAV2_DA-T"] % hd.vav2["VAV2_HeatingCoil"].airOutlet
+hd.vav2["VAV2_ZN-T"] % hs.corridorSouth_hvac
 hd.vav2["VAV2_ZN-T"].hasPhysicalLocation = ps.corridor
 
 hs.hvac_zone_1.airInlet.mapsTo = hs.privateoffice_hvac.ductAirInlet
@@ -173,7 +177,7 @@ hd.ahu.outsideAirInlet.mapsTo = hd.ahu["OADPR"].airInlet
 hd.ahu.returnAirInlet.mapsTo = hd.ahu["MADPR"].airInlet
 hd.ahu.supplyAirOutlet.mapsTo = hd.ahu["SF"].airOutlet
 hd.ahu.exhaustAirOutlet.mapsTo = hd.ahu["EADPR"].airOutlet
-hd.ahu.electricalInlet.mapsTo = hd.ahu["SF"]["starter"].electricalInlet
+hd.ahu.electricalInlet.mapsTo = hd.ahu["SF_Starter"].electricalInlet
 
 if __name__ == "__main__":
     dump()

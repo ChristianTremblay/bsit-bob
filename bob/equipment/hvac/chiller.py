@@ -6,7 +6,9 @@ from bob.properties.states import NormalAlarmStatus
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    Electricity_575V_60HzInletConnectionPoint,
+    Electricity_600V_3Ph_60HzInletConnectionPoint,
+)
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
 )
@@ -25,7 +27,7 @@ from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
 _namespace = BOB
 
 chiller_template = {
-    "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
+    "cp": {"electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint},
     "properties": {
         ("kW", ElectricPowerkW): {},
     },

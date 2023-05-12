@@ -23,7 +23,7 @@ from bob.core import (
 from bob.equipment.hvac.coil import ElectricalHeatingCoil
 from bob.equipment.hvac.fan import Fan
 from bob.equipment.lighting.light import Luminaire
-from bob.sensor.motion import OccupancySensor
+from bob.sensor.motion import OccupantMotionSensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.light import LightingSpace
@@ -49,8 +49,8 @@ big_garage > lighting_space_back
 light_1 = Luminaire(label="Ballast #1, space #1")
 light_2 = Luminaire(label="Ballast #2, space #2")
 
-movement_1 = OccupancySensor(label="Movement Sensor Space #1")
-movement_2 = OccupancySensor(label="Movement Sensor Space #2")
+movement_1 = OccupantMotionSensor(label="Movement Sensor Space #1")
+movement_2 = OccupantMotionSensor(label="Movement Sensor Space #2")
 
 # HVAC
 fan = Fan(label="Fan", electricalInlet=ElectricalInletConnectionPoint)
@@ -63,16 +63,16 @@ heating_coil.airOutlet >> garage_hvac.ductAirInlet
 dat = AirTemperatureSensor(label="Discharge Air temperature sensor", unit=UNIT.DEG_C)
 znt = AirTemperatureSensor(label="Zone Air temperature sensor", unit=UNIT.DEG_C)
 
-dat.hasMeasurementLocation = heating_coil.airOutlet
-znt.hasMeasurementLocation = garage_hvac
+dat % heating_coil.airOutlet
+znt % garage_hvac
 dat.hasPhysicalLocation = big_garage
 znt.hasPhysicalLocation = big_garage
 
 # LIGHTS
 light_1.lightOutlet >> lighting_space_entry.lightInlet
 light_2.lightOutlet >> lighting_space_back.lightInlet
-movement_1.hasMeasurementLocation = lighting_space_entry
-movement_2.hasMeasurementLocation = lighting_space_back
+movement_1 % lighting_space_entry
+movement_2 % lighting_space_back
 movement_1.hasPhysicalLocation = big_garage
 movement_2.hasPhysicalLocation = big_garage
 
@@ -81,7 +81,7 @@ fancoil = System(label="Fan coil")
 fc_airInlet = AirInletSystemConnectionPoint(fancoil, label="Fan coil air inlet")
 fc_airOutlet = AirOutletSystemConnectionPoint(fancoil, label="Fan coil air outlet")
 ###TODO:  the occupancy status of the fan coil should be the movement property
-#         movement_1.observesProperty
+#         movement_1.observedProperty
 # fc_occupancy = SystemConnectionPoint(
 #     fancoil, label="Occupancy Inlet", hasDirection=S223["Direction-Inlet"]
 # )

@@ -5,11 +5,13 @@ from rdflib import URIRef
 from bob.core import BOB, P223, S223, UNIT, Equipment, Property, PropertyReference
 from bob.properties.states import OnOffStatus
 
-from ...connections.electricity import (
+from ...connections.controlsignal import (
     ModulationSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
     OnOffSignalSystemConnectionPoint,
+)
+from ...connections.network import (
     RS485BidirectionalConnectionPoint,
 )
 from ...sensor.humidity import AirHumiditySensor
@@ -71,7 +73,7 @@ class MechanicalOnOffThermostat(Thermostat):
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.temperature = self["temperature_sensor"].observesProperty
+        self.temperature = self["temperature_sensor"].observedProperty
 
 
 MechanicalModulatingThermostat_template = {
@@ -173,6 +175,7 @@ HighStaticPressureStat_template = {
         ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": UNIT.PA}
     },
 }
+
 
 # Pressure
 class HighStaticPressureStat(Pressurestat):

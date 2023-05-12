@@ -14,3 +14,9 @@ def test_create_g36(bob_fixture):
             print("Making TTL")
             print(filename.path)
             assert not subprocess.call(["python", filename.path])
+
+
+def test_create_html(bob_fixture):
+    samples_folder = bob_fixture["g36_directory"]
+    job = os.path.join(samples_folder, "ttl")
+    assert not subprocess.call(["rdf2html", job])

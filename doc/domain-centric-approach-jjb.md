@@ -3,7 +3,7 @@
 #### 2022-03-12
 
 Over the last weeks, Strike Team Bravo has been trying to get to a consensus on
-modeling the relationships between Equipments that provide domain specific services
+modeling the relationships between Equipment that provide domain specific services
 to the topological model of the rooms in a facility called a **connection**.
 
 One of the starting point for the modeling effort when it first changed from
@@ -31,7 +31,7 @@ introduced into the model in the Container clause:
 
 > This clause is the top level of the hierarchical structure of the portion of
 > the model that represents the concept of a physical connection between
-> Equipments. Examples of physical things that are represented by a connection are
+> Equipment. Examples of physical things that are represented by a connection are
 > ducts, pipes, and wires.
 
 At this point "Equipment" stopped being an abstract concept to a physical thing
@@ -42,7 +42,7 @@ The next change was to make a distinction between a room and a portion of a
 room specific to a particular service, so earlier concepts of "enclosure" and
 "space" were renamed to **physical space** and **domain space**.
 
-Now the debate is to (1) maintain the connection between the Equipments providing
+Now the debate is to (1) maintain the connection between the Equipment providing
 a service and the domain space receiving the service, or (2) tighten the
 restriction a connection to being between physical things and introduce a new
 relationship for referring to a domain space.
@@ -103,7 +103,7 @@ To keep track of the domain in which the entities are, the additional
 This approach creates a change of layer for any entity related to a room by
 mixing multiple domain connection points on the same entity.
 
-Physical Spaces in this approach are very similar to Equipments. In fact, an
+Physical Spaces in this approach are very similar to Equipment. In fact, an
 entity, connectable, with connection points in different domains it is in s223
 everywhere else known as a Equipment.
 
@@ -165,7 +165,7 @@ maintenance team eventually) to use the `hasPhysicalLocation` to relate things
 to the physical space and answer the questions like:
 _"Where is the discharge air temperature sensor located ?"_.
 
-The domain-centric approach allows to locate Equipments and sensors easily using
+The domain-centric approach allows to locate Equipment and sensors easily using
 this predicate when this information is available. 
 
 It's also important to note that this information (`hasPhysicalLocation`) will
@@ -175,7 +175,7 @@ model to add this information without touching everyone else part. This also
 allow simultaneous work from different teams.
 
 The cross-domain approach also uses `hasPhysicalLocation` but not for sensors
-installed in rooms where `hasMeasurementLocation` must be used to find them.
+installed in rooms where `hasObservationLocation` must be used to find them.
 
 # Going back to definitions
 
@@ -257,7 +257,7 @@ larger than the smallest physical space that encloses it.
 
 ## Finding entities
 
-`hasPhysicalLocation` is a perfect fit for any Equipments, sensors, system, when
+`hasPhysicalLocation` is a perfect fit for any Equipment, sensors, system, when
 required, to be able to specify the location inside a building for those
 entities. When provided, it provides a direct relationshiip to query to find
 the location of something in a building.
@@ -269,19 +269,19 @@ the location of something in a building.
 > room temperature sensor is connected to the physical space, the light
 > occupancy sensor too. To find the domain where the measure is taken and stay
 > on the same layer of interest, we need to use `servesDomainSpace` predicate.
-> But the return air temperature is still using `hasMeasurementLocation` on a
+> But the return air temperature is still using `hasObservationLocation` on a
 > connection point which is not findable by the physical space. This means that
 > different set of queries will be needed to find sensors in one system. 
 
 ## Sensors
 
-Sensors are subclasses of Equipments but are special in the way that the medium
+Sensors are subclasses of Equipment but are special in the way that the medium
 will not typically pass through them. They are used to make a measurement at a
 certain point in the flow of the medium.
 
 Knowing where this measurement takes places is important. This is why typical
 sensors are associated with connection points or connections using
-`hasMeasurementLocation`.  The physical location of a sensor is not as important
+`hasObservationLocation`.  The physical location of a sensor is not as important
 to a domain specialist, it would be more important for maintenance and repair to
 help locate the sensor in the "real world" rather than in the "schematic".
 
@@ -292,7 +292,7 @@ help locate the sensor in the "real world" rather than in the "schematic".
 ## Sensors in rooms
 
 In a domain-centric approach, when a sensor measures a property of space,
-`hasMeasurementLocation` is connected to the domain space. The domain space
+`hasObservationLocation` is connected to the domain space. The domain space
 connection points are defined by compatible medium (ex. HVAC domain space uses
 medium Air). In this case, the temperature sensor measures the temperature of
 the air inside this space. 
@@ -322,7 +322,7 @@ the same domain.
 
 For any sensors in the model, 
 
-- You need to know where a measurement is taken : `hasMeasurementLocation`
+- You need to know where a measurement is taken : `hasObservationLocation`
 - You need to know where a sensor is physically : `hasPhysicalLocation` <- a clear jump to another domain
 
 > It can also be noted that even if `hasPhysicalLocation` is not defined for a

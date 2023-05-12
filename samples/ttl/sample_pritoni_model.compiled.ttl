@@ -56,7 +56,7 @@ p223:Actuator a rdfs:Class ;
     rdfs:comment """
     This version of an actuator is meant to be the opposite of a sensor
     It relates properties to an action
-    It can be located with hasActuationLocation (mirror of hasMeasurementLocation)
+    It can be located with hasActuationLocation (mirror of hasObservationLocation)
 
     This way, the model can illutrate the link between a property and something else (like
     a connection point)
@@ -995,26 +995,26 @@ bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
 bob:ElectricalConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.electricity.ElectricalConnectionPoint" .
 
-bob:Electricity_120V_240V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_120V_240V_60HzConnectionPoint" .
+bob:Electricity_240V_120V_1Ph_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_240V_120V_1Ph_60HzConnectionPoint" .
 
-bob:Electricity_120V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_120V_60HzConnectionPoint" .
+bob:Electricity_120V_1Ph_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_120V_1Ph_60HzConnectionPoint" .
 
-bob:Electricity_240V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_240V_60HzConnectionPoint" .
+bob:Electricity_240V_1Ph_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_240V_1Ph_60HzConnectionPoint" .
 
-bob:Electricity_24V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_24V_60HzConnectionPoint" .
+bob:Electricity_24V_1Ph_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_24V_1Ph_60HzConnectionPoint" .
 
-bob:Electricity_347V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_347V_60HzConnectionPoint" .
+bob:Electricity_347V_1Ph_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_347V_1Ph_60HzConnectionPoint" .
 
-bob:Electricity_575V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_575V_60HzConnectionPoint" .
+bob:Electricity_600V_3Ph_60HzConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_600V_3Ph_60HzConnectionPoint" .
 
-bob:Electricity_575V_60HzSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_575V_60HzSystemConnectionPoint" .
+bob:Electricity_600V_3Ph_60HzSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.electricity.Electricity_600V_3Ph_60HzSystemConnectionPoint" .
 
 bob:EthernetConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.electricity.EthernetConnectionPoint" .
@@ -1045,11 +1045,11 @@ bob:HotWaterConnectionPoint a rdfs:Class ;
 
 bob:InletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
-        "bob.connections.electricity.Electricity_575V_60HzSystemInletConnectionPoint",
+        "bob.connections.electricity.Electricity_600V_3Ph_60HzSystemInletConnectionPoint",
         "bob.connections.water.WaterInletSystemConnectionPoint",
         "bob.core.InletSystemConnectionPoint" ;
     rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:Electricity_575V_60HzSystemConnectionPoint,
+        bob:Electricity_600V_3Ph_60HzSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:WaterSystemConnectionPoint .
 
@@ -1448,10 +1448,10 @@ bob:flowCoefficient a rdf:Property ;
 bob:hasMaxRange a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:hasMeasurementLocationHigh a rdf:Property ;
+bob:hasObservationLocationHigh a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:hasMeasurementLocationLow a rdf:Property ;
+bob:hasObservationLocationLow a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
 bob:hasPower a rdf:Property ;
@@ -1637,7 +1637,7 @@ electrical_devices:00001 a p223:ElectricalDistributionPanel,
         electrical_devices:00033,
         electrical_devices:00037,
         electrical_devices:00041 ;
-    rdfs:comment "Main Entry Panel of Building at 575V" .
+    rdfs:comment "Main Entry Panel of Building at 600V_3Ph" .
 
 electrical_devices:00045 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusA" ;
@@ -1653,7 +1653,7 @@ electrical_devices:00047 a s223:Connection ;
 
 electrical_devices:00048 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusABC" ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 electrical_devices:00052 a p223:ElectricalDistributionPanel,
         s223:Equipment ;
@@ -2005,7 +2005,7 @@ lighting_devices:00013 a s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "O4" ;
-    s223:hasMeasurementLocation lighting_spaces:00021 ;
+    s223:hasObservationLocation lighting_spaces:00021 ;
     s223:hasPhysicalLocation physical_spaces:00012 ;
     s223:observesProperty lighting_devices:00014 ;
     rdfs:comment "Occupancy sensor for kitchenette luminaires 11 & 12 (O4)" .
@@ -2015,7 +2015,7 @@ lighting_devices:00028 a s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "O3" ;
-    s223:hasMeasurementLocation lighting_spaces:00017 ;
+    s223:hasObservationLocation lighting_spaces:00017 ;
     s223:hasPhysicalLocation physical_spaces:00010 ;
     s223:observesProperty lighting_devices:00029 ;
     rdfs:comment "Occupancy sensor for Private Office (O3)" .
@@ -2025,7 +2025,7 @@ lighting_devices:00043 a s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "O5" ;
-    s223:hasMeasurementLocation lighting_spaces:00013 ;
+    s223:hasObservationLocation lighting_spaces:00013 ;
     s223:hasPhysicalLocation physical_spaces:00014 ;
     s223:observesProperty lighting_devices:00044 ;
     rdfs:comment "Occupancy sensor for Corridor (O5)" .
@@ -2035,7 +2035,7 @@ lighting_devices:00059 a s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "O2" ;
-    s223:hasMeasurementLocation lighting_spaces:00009 ;
+    s223:hasObservationLocation lighting_spaces:00009 ;
     s223:hasPhysicalLocation physical_spaces:00008 ;
     s223:observesProperty lighting_devices:00060 ;
     rdfs:comment "Occupancy sensor for Bathroom (O2)" .
@@ -2045,7 +2045,7 @@ lighting_devices:00088 a s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "O1" ;
-    s223:hasMeasurementLocation hvac_spaces:00002 ;
+    s223:hasObservationLocation hvac_spaces:00002 ;
     s223:hasPhysicalLocation physical_spaces:00006 ;
     s223:observesProperty lighting_devices:00089 ;
     rdfs:comment "Occupancy sensor for OpenOffice (O1)" .
@@ -2053,7 +2053,7 @@ lighting_devices:00088 a s223:Equipment,
 lighting_devices:00090 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "D1" ;
-    s223:hasMeasurementLocation lighting_spaces:00001 ;
+    s223:hasObservationLocation lighting_spaces:00001 ;
     s223:hasPhysicalLocation physical_spaces:00006 ;
     s223:observesProperty lighting_devices:00091 ;
     rdfs:comment "Daylight sensor installed in open office (D1)" .
@@ -2179,157 +2179,157 @@ bacnet_references:00013 a bacnet:DeviceObjectPropertyReference,
     bacnet:property-identifier bacnet:PropertyIdentifier-present-value .
 
 electrical_devices:00005 a s223:OutletConnectionPoint,
-        bob:Electricity_347V_60HzConnectionPoint ;
+        bob:Electricity_347V_1Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletA" ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00006 a s223:OutletConnectionPoint,
-        bob:Electricity_347V_60HzConnectionPoint ;
+        bob:Electricity_347V_1Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletB" ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00007 a s223:OutletConnectionPoint,
-        bob:Electricity_347V_60HzConnectionPoint ;
+        bob:Electricity_347V_1Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletC" ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00008 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletABC" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00011 a s223:InletConnectionPoint,
-        bob:Electricity_347V_60HzConnectionPoint ;
+        bob:Electricity_347V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00009 .
 
 electrical_devices:00012 a s223:OutletConnectionPoint,
-        bob:Electricity_347V_60HzConnectionPoint ;
+        bob:Electricity_347V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#1.electricalOutlet" ;
     s223:hasMedium s223:Electricity-347V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00009 .
 
 electrical_devices:00015 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00013 .
 
 electrical_devices:00019 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#3.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00017 .
 
 electrical_devices:00023 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#4.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00021 .
 
 electrical_devices:00027 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#5.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00025 .
 
 electrical_devices:00028 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#5.electricalOutlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00025 .
 
 electrical_devices:00031 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#6.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00029 .
 
 electrical_devices:00035 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#7.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00033 .
 
 electrical_devices:00039 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#8.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00037 .
 
 electrical_devices:00043 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#9.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00041 .
 
 electrical_devices:00056 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineA_Neutral" ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00053 .
 
 electrical_devices:00057 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineB_Neutral" ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00053 .
 
 electrical_devices:00058 a s223:OutletConnectionPoint,
-        bob:Electricity_240V_60HzConnectionPoint ;
+        bob:Electricity_240V_1Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineA_LineB" ;
     s223:hasMedium s223:Electricity-240V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00053 .
 
 electrical_devices:00061 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00059 .
 
 electrical_devices:00065 a s223:InletConnectionPoint,
-        bob:Electricity_240V_60HzConnectionPoint ;
+        bob:Electricity_240V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
     s223:hasMedium s223:Electricity-240V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00063 .
 
 electrical_devices:00066 a s223:OutletConnectionPoint,
-        bob:Electricity_240V_60HzConnectionPoint ;
+        bob:Electricity_240V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#2.electricalOutlet" ;
     s223:hasMedium s223:Electricity-240V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00063 .
 
 electrical_devices:00069 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#3.electricalInlet" ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00067 .
 
 electrical_devices:00073 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#4.electricalInlet" ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00071 .
 
 electrical_devices:00077 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#5.electricalInlet" ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00075 .
 
 electrical_devices:00081 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#6.electricalInlet" ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00079 .
 
 electrical_devices:00085 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#7.electricalInlet" ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00083 .
@@ -2714,7 +2714,7 @@ electrical_devices:00144 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAB.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -2730,7 +2730,7 @@ electrical_devices:00146 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAC.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -2746,7 +2746,7 @@ electrical_devices:00148 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageBC.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -2762,7 +2762,7 @@ electrical_devices:00150 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -2778,7 +2778,7 @@ electrical_devices:00152 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageBN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -2794,7 +2794,7 @@ electrical_devices:00154 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageCN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -2810,7 +2810,7 @@ electrical_devices:00156 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseA.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
@@ -2826,7 +2826,7 @@ electrical_devices:00158 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseB.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
@@ -2842,7 +2842,7 @@ electrical_devices:00160 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseC.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
@@ -3188,7 +3188,7 @@ electrical_devices:00196 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAB.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -3204,7 +3204,7 @@ electrical_devices:00198 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAC.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -3220,7 +3220,7 @@ electrical_devices:00200 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageBC.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -3236,7 +3236,7 @@ electrical_devices:00202 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -3252,7 +3252,7 @@ electrical_devices:00204 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageBN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -3268,7 +3268,7 @@ electrical_devices:00206 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageCN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
@@ -3284,7 +3284,7 @@ electrical_devices:00208 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseA.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
@@ -3300,7 +3300,7 @@ electrical_devices:00210 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseB.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
@@ -3316,7 +3316,7 @@ electrical_devices:00212 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseC.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
@@ -3653,7 +3653,7 @@ electrical_devices:00246 a s223:ObservableProperty,
 electrical_devices:00247 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAB" ;
-    s223:hasMeasurementLocation electrical_devices:00025 ;
+    s223:hasObservationLocation electrical_devices:00025 ;
     s223:observesProperty electrical_devices:00248 ;
     rdfs:comment "Voltage reading A-B" .
 
@@ -3663,14 +3663,14 @@ electrical_devices:00248 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAB.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
 electrical_devices:00249 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAC" ;
-    s223:hasMeasurementLocation electrical_devices:00025 ;
+    s223:hasObservationLocation electrical_devices:00025 ;
     s223:observesProperty electrical_devices:00250 ;
     rdfs:comment "Voltage reading A-C" .
 
@@ -3680,14 +3680,14 @@ electrical_devices:00250 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAC.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
 electrical_devices:00251 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBC" ;
-    s223:hasMeasurementLocation electrical_devices:00025 ;
+    s223:hasObservationLocation electrical_devices:00025 ;
     s223:observesProperty electrical_devices:00252 ;
     rdfs:comment "Voltage reading B-C" .
 
@@ -3697,14 +3697,14 @@ electrical_devices:00252 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageBC.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
 electrical_devices:00253 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAN" ;
-    s223:hasMeasurementLocation electrical_devices:00025 ;
+    s223:hasObservationLocation electrical_devices:00025 ;
     s223:observesProperty electrical_devices:00254 ;
     rdfs:comment "Voltage reading A-N" .
 
@@ -3714,14 +3714,14 @@ electrical_devices:00254 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageAN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
 electrical_devices:00255 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBN" ;
-    s223:hasMeasurementLocation electrical_devices:00025 ;
+    s223:hasObservationLocation electrical_devices:00025 ;
     s223:observesProperty electrical_devices:00256 ;
     rdfs:comment "Voltage reading B-N" .
 
@@ -3731,14 +3731,14 @@ electrical_devices:00256 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageBN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
 electrical_devices:00257 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageCN" ;
-    s223:hasMeasurementLocation electrical_devices:00025 ;
+    s223:hasObservationLocation electrical_devices:00025 ;
     s223:observesProperty electrical_devices:00258 ;
     rdfs:comment "Voltage reading C-N" .
 
@@ -3748,14 +3748,14 @@ electrical_devices:00258 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "VoltageCN.Voltage" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:unit unit:V .
 
 electrical_devices:00259 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "CurrentPhaseA" ;
-    s223:hasMeasurementLocation electrical_devices:00004 ;
+    s223:hasObservationLocation electrical_devices:00004 ;
     s223:observesProperty electrical_devices:00260 ;
     rdfs:comment "Current reading of phase A" .
 
@@ -3765,14 +3765,14 @@ electrical_devices:00260 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseA.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
 electrical_devices:00261 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "CurrentPhaseB" ;
-    s223:hasMeasurementLocation electrical_devices:00004 ;
+    s223:hasObservationLocation electrical_devices:00004 ;
     s223:observesProperty electrical_devices:00262 ;
     rdfs:comment "Current reading of phase B" .
 
@@ -3782,14 +3782,14 @@ electrical_devices:00262 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseB.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
 electrical_devices:00263 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "CurrentPhaseC" ;
-    s223:hasMeasurementLocation electrical_devices:00004 ;
+    s223:hasObservationLocation electrical_devices:00004 ;
     s223:observesProperty electrical_devices:00264 ;
     rdfs:comment "Current reading of phase C" .
 
@@ -3799,7 +3799,7 @@ electrical_devices:00264 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "CurrentPhaseC.Amps" ;
-    s223:ofMedium s223:Electricity-575V-60Hz ;
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:unit unit:A .
 
@@ -3847,7 +3847,7 @@ functions:00030 a s223:EnumerableProperty,
 hvac_devices:00002 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "OA-T" ;
-    s223:hasMeasurementLocation hvac:00004 ;
+    s223:hasObservationLocation hvac:00004 ;
     s223:observesProperty hvac_devices:00003 ;
     rdfs:comment "Oudoor air temperature (S3)" .
 
@@ -3865,8 +3865,8 @@ hvac_devices:00004 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "TPD1" ;
     s223:observesProperty hvac_devices:00005 ;
-    bob:hasMeasurementLocationHigh hvac_devices:00079 ;
-    bob:hasMeasurementLocationLow hvac_devices:00080 ;
+    bob:hasObservationLocationHigh hvac_devices:00079 ;
+    bob:hasObservationLocationLow hvac_devices:00080 ;
     rdfs:comment "Filter Differential Pressure Sensor (S5)" .
 
 hvac_devices:00005 a s223:ObservableProperty,
@@ -3882,7 +3882,7 @@ hvac_devices:00005 a s223:ObservableProperty,
 hvac_devices:00006 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "HC-T" ;
-    s223:hasMeasurementLocation hvac_devices:00075 ;
+    s223:hasObservationLocation hvac_devices:00075 ;
     s223:observesProperty hvac_devices:00007 ;
     rdfs:comment "Air temperature after heating coil (S6)" .
 
@@ -3899,7 +3899,7 @@ hvac_devices:00007 a s223:ObservableProperty,
 hvac_devices:00008 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "MA-T" ;
-    s223:hasMeasurementLocation hvac_devices:00079 ;
+    s223:hasObservationLocation hvac_devices:00079 ;
     s223:observesProperty hvac_devices:00009 ;
     rdfs:comment "Return Air temperature (S4)" .
 
@@ -3916,7 +3916,7 @@ hvac_devices:00009 a s223:ObservableProperty,
 hvac_devices:00010 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "DA-T" ;
-    s223:hasMeasurementLocation hvac_devices:00070 ;
+    s223:hasObservationLocation hvac_devices:00070 ;
     s223:observesProperty hvac_devices:00011 ;
     rdfs:comment "Discharge Air temperature after cooling coil (S7)" .
 
@@ -3940,8 +3940,8 @@ hvac_devices:00014 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "TPD2" ;
     s223:observesProperty hvac_devices:00015 ;
-    bob:hasMeasurementLocationHigh hvac_devices:00047 ;
-    bob:hasMeasurementLocationLow hvac:00010 ;
+    bob:hasObservationLocationHigh hvac_devices:00047 ;
+    bob:hasObservationLocationLow hvac:00010 ;
     rdfs:comment "Supply Duct Static Pressure (S8)" .
 
 hvac_devices:00015 a s223:ObservableProperty,
@@ -3958,8 +3958,8 @@ hvac_devices:00016 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "TPD3" ;
     s223:observesProperty hvac_devices:00017 ;
-    bob:hasMeasurementLocationHigh hvac_devices:00020 ;
-    bob:hasMeasurementLocationLow hvac:00010 ;
+    bob:hasObservationLocationHigh hvac_devices:00020 ;
+    bob:hasObservationLocationLow hvac:00010 ;
     rdfs:comment "Return Duct Static Pressure (S1)" .
 
 hvac_devices:00017 a s223:ObservableProperty,
@@ -4192,7 +4192,7 @@ hvac_devices:00064 a s223:ObservableProperty,
 hvac_devices:00065 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "starter.current_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00062 ;
+    s223:hasObservationLocation hvac_devices:00062 ;
     s223:observesProperty hvac_devices:00066 .
 
 hvac_devices:00081 a s223:System,
@@ -4209,7 +4209,7 @@ hvac_devices:00081 a s223:System,
     rdfs:comment "Outdoor air damper (A3)" .
 
 hvac_devices:00087 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
+        bob:Electricity_24V_1Ph_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00082 .
@@ -4261,7 +4261,7 @@ hvac_devices:00098 a p223:Actuator,
 hvac_devices:00099 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00083 ;
+    s223:hasObservationLocation hvac_devices:00083 ;
     s223:observesProperty hvac_devices:00089 .
 
 hvac_devices:00107 a s223:System,
@@ -4278,7 +4278,7 @@ hvac_devices:00107 a s223:System,
     rdfs:comment "Mixed Air Damper (A2)" .
 
 hvac_devices:00113 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
+        bob:Electricity_24V_1Ph_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00108 .
@@ -4330,7 +4330,7 @@ hvac_devices:00124 a p223:Actuator,
 hvac_devices:00125 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00109 ;
+    s223:hasObservationLocation hvac_devices:00109 ;
     s223:observesProperty hvac_devices:00115 .
 
 hvac_devices:00133 a s223:System,
@@ -4347,7 +4347,7 @@ hvac_devices:00133 a s223:System,
     rdfs:comment "Exhaust Air Damper (A1)" .
 
 hvac_devices:00139 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
+        bob:Electricity_24V_1Ph_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00134 .
@@ -4399,11 +4399,11 @@ hvac_devices:00150 a p223:Actuator,
 hvac_devices:00151 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00135 ;
+    s223:hasObservationLocation hvac_devices:00135 ;
     s223:observesProperty hvac_devices:00141 .
 
 hvac_devices:00170 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
+        bob:Electricity_24V_1Ph_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00165 .
@@ -4455,11 +4455,11 @@ hvac_devices:00181 a p223:Actuator,
 hvac_devices:00182 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00166 ;
+    s223:hasObservationLocation hvac_devices:00166 ;
     s223:observesProperty hvac_devices:00172 .
 
 hvac_devices:00196 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
+        bob:Electricity_24V_1Ph_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00191 .
@@ -4511,7 +4511,7 @@ hvac_devices:00207 a p223:Actuator,
 hvac_devices:00208 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00192 ;
+    s223:hasObservationLocation hvac_devices:00192 ;
     s223:observesProperty hvac_devices:00198 .
 
 hvac_devices:00225 a s223:ObservableProperty,
@@ -4591,7 +4591,7 @@ hvac_devices:00243 a s223:ObservableProperty,
 hvac_devices:00244 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "starter.current_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00241 ;
+    s223:hasObservationLocation hvac_devices:00241 ;
     s223:observesProperty hvac_devices:00245 .
 
 hvac_devices:00255 a s223:ObservableProperty,
@@ -4661,7 +4661,7 @@ hvac_devices:00268 a s223:ObservableProperty,
 hvac_devices:00269 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "starter.current_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00266 ;
+    s223:hasObservationLocation hvac_devices:00266 ;
     s223:observesProperty hvac_devices:00270 .
 
 hvac_devices:00276 a s223:ActuatableProperty,
@@ -4749,7 +4749,7 @@ hvac_devices:00284 a s223:ObservableProperty,
 hvac_devices:00294 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VAV1_SA-F" ;
-    s223:hasMeasurementLocation hvac_devices:00321 ;
+    s223:hasObservationLocation hvac_devices:00321 ;
     s223:observesProperty hvac_devices:00295 ;
     rdfs:comment "Air flow used to control damper (S9)" .
 
@@ -4766,7 +4766,7 @@ hvac_devices:00295 a s223:ObservableProperty,
 hvac_devices:00296 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VAV1_DA-T" ;
-    s223:hasMeasurementLocation hvac_devices:00328 ;
+    s223:hasObservationLocation hvac_devices:00328 ;
     s223:observesProperty hvac_devices:00297 ;
     rdfs:comment "Air supplied to zone by VAV 1, AKA discharge air temperature (S10)" .
 
@@ -4784,7 +4784,7 @@ hvac_devices:00297 a s223:ObservableProperty,
 hvac_devices:00298 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VAV1_ZN-T" ;
-    s223:hasMeasurementLocation hvac_spaces:00002 ;
+    s223:hasObservationLocation hvac_spaces:00002 ;
     s223:hasPhysicalLocation physical_spaces:00006 ;
     s223:observesProperty hvac_devices:00299 ;
     rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
@@ -4815,7 +4815,7 @@ hvac_devices:00300 a s223:System,
     rdfs:comment "VAV Box 1 Air Damper (actuator:Ax)" .
 
 hvac_devices:00306 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
+        bob:Electricity_24V_1Ph_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00301 .
@@ -4867,13 +4867,13 @@ hvac_devices:00317 a p223:Actuator,
 hvac_devices:00318 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00302 ;
+    s223:hasObservationLocation hvac_devices:00302 ;
     s223:observesProperty hvac_devices:00308 .
 
 hvac_devices:00334 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VAV2_SA-F" ;
-    s223:hasMeasurementLocation hvac_devices:00361 ;
+    s223:hasObservationLocation hvac_devices:00361 ;
     s223:observesProperty hvac_devices:00335 ;
     rdfs:comment "Air flow used to control damper (S11)" .
 
@@ -4890,7 +4890,7 @@ hvac_devices:00335 a s223:ObservableProperty,
 hvac_devices:00336 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VAV2_DA-T" ;
-    s223:hasMeasurementLocation hvac_devices:00368 ;
+    s223:hasObservationLocation hvac_devices:00368 ;
     s223:observesProperty hvac_devices:00337 ;
     rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature (S12)" .
 
@@ -4908,7 +4908,7 @@ hvac_devices:00337 a s223:ObservableProperty,
 hvac_devices:00338 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "VAV2_ZN-T" ;
-    s223:hasMeasurementLocation hvac_spaces:00029 ;
+    s223:hasObservationLocation hvac_spaces:00029 ;
     s223:hasPhysicalLocation physical_spaces:00014 ;
     s223:observesProperty hvac_devices:00339 ;
     rdfs:comment "Zone Air Temperature Sensor, which is a thermostats..." .
@@ -4939,7 +4939,7 @@ hvac_devices:00340 a s223:System,
     rdfs:comment "VAV Box 2 Air Damper (actuator:A6)" .
 
 hvac_devices:00346 a s223:InletConnectionPoint,
-        bob:Electricity_24V_60HzConnectionPoint ;
+        bob:Electricity_24V_1Ph_60HzConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium p223:Electricity-24V-60Hz ;
     s223:isConnectionPointOf hvac_devices:00341 .
@@ -4991,7 +4991,7 @@ hvac_devices:00357 a p223:Actuator,
 hvac_devices:00358 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasMeasurementLocation hvac_devices:00342 ;
+    s223:hasObservationLocation hvac_devices:00342 ;
     s223:observesProperty hvac_devices:00348 .
 
 hvac_spaces:00056 a p223:HVACZone,
@@ -5149,10 +5149,10 @@ electrical_devices:00014 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00016 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#2.electricalOutlet" ;
     s223:connectsThrough electricity:00001 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00013 .
 
 electrical_devices:00018 a s223:ObservableProperty,
@@ -5166,10 +5166,10 @@ electrical_devices:00018 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00020 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#3.electricalOutlet" ;
     s223:connectsThrough electrical_devices:00091 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00017 .
 
 electrical_devices:00022 a s223:ObservableProperty,
@@ -5183,10 +5183,10 @@ electrical_devices:00022 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00024 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#4.electricalOutlet" ;
     s223:connectsThrough electricity:00002 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00021 .
 
 electrical_devices:00026 a s223:ObservableProperty,
@@ -5210,10 +5210,10 @@ electrical_devices:00030 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00032 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#6.electricalOutlet" ;
     s223:connectsThrough electricity:00003 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00029 .
 
 electrical_devices:00034 a s223:ObservableProperty,
@@ -5227,10 +5227,10 @@ electrical_devices:00034 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00036 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#7.electricalOutlet" ;
     s223:connectsThrough electricity:00004 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00033 .
 
 electrical_devices:00038 a s223:ObservableProperty,
@@ -5244,10 +5244,10 @@ electrical_devices:00038 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00040 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#8.electricalOutlet" ;
     s223:connectsThrough electricity:00005 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00037 .
 
 electrical_devices:00042 a s223:ObservableProperty,
@@ -5261,21 +5261,21 @@ electrical_devices:00042 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00044 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "CB#9.electricalOutlet" ;
     s223:connectsThrough electricity:00006 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00041 .
 
 electrical_devices:00050 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "TX-1.electricalInlet" ;
     s223:connectsThrough electrical_devices:00091 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00049 .
 
 electrical_devices:00051 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_240V_60HzConnectionPoint ;
+        bob:Electricity_240V_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "TX-1.electricalOutlet" ;
     s223:connectsThrough electrical_devices:00092 ;
     s223:hasMedium s223:Electricity-120V-240V-60Hz ;
@@ -5292,7 +5292,7 @@ electrical_devices:00054 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00055 a s223:InletConnectionPoint,
-        bob:Electricity_120V_240V_60HzConnectionPoint ;
+        bob:Electricity_240V_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
     s223:connectsThrough electrical_devices:00092 ;
     s223:hasMedium s223:Electricity-120V-240V-60Hz ;
@@ -5309,7 +5309,7 @@ electrical_devices:00060 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00062 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#1.electricalOutlet" ;
     s223:connectsThrough electrical_devices:00093 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -5336,7 +5336,7 @@ electrical_devices:00068 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00070 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#3.electricalOutlet" ;
     s223:connectsThrough electrical_devices:00094 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -5353,7 +5353,7 @@ electrical_devices:00072 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00074 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#4.electricalOutlet" ;
     s223:connectsThrough electrical_devices:00095 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -5370,7 +5370,7 @@ electrical_devices:00076 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00078 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#5.electricalOutlet" ;
     s223:connectsThrough electrical_devices:00096 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -5387,7 +5387,7 @@ electrical_devices:00080 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00082 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#6.electricalOutlet" ;
     s223:connectsThrough electrical_devices:00097 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -5404,7 +5404,7 @@ electrical_devices:00084 a s223:ObservableProperty,
     qudt:unit unit:A .
 
 electrical_devices:00086 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "CB#7.electricalOutlet" ;
     s223:connectsThrough electrical_devices:00098 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -5414,32 +5414,32 @@ electrical_devices:00090 a s223:Connection ;
     rdfs:label "Hydro-Québec" ;
     s223:connectsAt electrical_devices:00004 ;
     s223:connectsTo electrical_devices:00002 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     rdfs:comment "600V" .
 
 electrical_devices:00100 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Bathroom Timer Switch.electricalInlet" ;
     s223:connectsThrough electrical_devices:00097 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00099 .
 
 electrical_devices:00101 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Bathroom Timer Switch.electricalOutlet" ;
     s223:connectsThrough electricity:00008 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00099 .
 
 electrical_devices:00105 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Dimmer1.electricalInlet" ;
     s223:connectsThrough electrical_devices:00093 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
     s223:isConnectionPointOf electrical_devices:00104 .
 
 electrical_devices:00106 a s223:OutletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Dimmer1.electricalOutlet" ;
     s223:connectsThrough electricity:00007 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -5548,24 +5548,24 @@ hvac_devices:00011 a s223:ObservableProperty,
     qudt:unit unit:DEG_F .
 
 hvac_devices:00021 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "RF.electricalInlet" ;
     s223:connectsThrough hvac_devices:00044 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00018 .
 
 hvac_devices:00032 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "vfd.electricalInlet" ;
     s223:connectsThrough electricity:00002 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00031 .
 
 hvac_devices:00033 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "vfd.electricalOutlet" ;
     s223:connectsThrough hvac_devices:00044 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00031 .
 
 hvac_devices:00034 a s223:BidirectionalConnectionPoint,
@@ -5592,10 +5592,10 @@ hvac_devices:00042 a s223:ActuatableProperty,
     ref:hasExternalReference bacnet_references:00010 .
 
 hvac_devices:00048 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "SF.electricalInlet" ;
     s223:connectsThrough hvac_devices:00067 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00045 .
 
 hvac_devices:00059 a p223:BinaryOutput,
@@ -5793,10 +5793,10 @@ hvac_devices:00162 a bob:AirSystemConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     bob:mapsTo hvac_devices:00157 .
 
-hvac_devices:00163 a bob:Electricity_575V_60HzSystemConnectionPoint,
+hvac_devices:00163 a bob:Electricity_600V_3Ph_60HzSystemConnectionPoint,
         bob:InletSystemConnectionPoint ;
     rdfs:label "AHU.electricalInlet" ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     bob:mapsTo hvac_devices:00061 .
 
 hvac_devices:00167 a p223:AnalogOutput,
@@ -5945,17 +5945,17 @@ hvac_devices:00223 a p223:AnalogInput,
     s223:isConnectionPointOf hvac_devices:00216 .
 
 hvac_devices:00224 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "Chiller.electricalInlet" ;
     s223:connectsThrough electricity:00003 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00216 .
 
 hvac_devices:00229 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "ChilledWaterPump.electricalInlet" ;
     s223:connectsThrough hvac_devices:00246 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00226 .
 
 hvac_devices:00238 a p223:BinaryOutput,
@@ -5973,10 +5973,10 @@ hvac_devices:00239 a p223:BinaryInput,
     s223:isConnectionPointOf hvac_devices:00237 .
 
 hvac_devices:00240 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "starter.electricalInlet" ;
     s223:connectsThrough electricity:00006 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00237 .
 
 hvac_devices:00242 a s223:ActuatableProperty,
@@ -5987,10 +5987,10 @@ hvac_devices:00242 a s223:ActuatableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 hvac_devices:00254 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "HotWaterPump.electricalInlet" ;
     s223:connectsThrough hvac_devices:00271 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00251 .
 
 hvac_devices:00263 a p223:BinaryOutput,
@@ -6008,10 +6008,10 @@ hvac_devices:00264 a p223:BinaryInput,
     s223:isConnectionPointOf hvac_devices:00262 .
 
 hvac_devices:00265 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "starter.electricalInlet" ;
     s223:connectsThrough electricity:00005 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00262 .
 
 hvac_devices:00267 a s223:ActuatableProperty,
@@ -6022,7 +6022,7 @@ hvac_devices:00267 a s223:ActuatableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 hvac_devices:00275 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "ExhaustFan.electricalInlet" ;
     s223:connectsThrough electricity:00008 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6416,7 +6416,7 @@ lighting_devices:00003 a s223:ActuatableProperty,
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00006 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire11.electricalInlet" ;
     s223:connectsThrough electrical_devices:00094 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6446,7 +6446,7 @@ lighting_devices:00009 a s223:ActuatableProperty,
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00012 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire12.electricalInlet" ;
     s223:connectsThrough electrical_devices:00094 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6482,7 +6482,7 @@ lighting_devices:00018 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00021 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire7.electricalInlet" ;
     s223:connectsThrough electrical_devices:00096 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6512,7 +6512,7 @@ lighting_devices:00024 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00027 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire8.electricalInlet" ;
     s223:connectsThrough electrical_devices:00096 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6550,7 +6550,7 @@ lighting_devices:00033 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00036 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire9.electricalInlet" ;
     s223:connectsThrough electrical_devices:00095 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6580,7 +6580,7 @@ lighting_devices:00039 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00042 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire10.electricalInlet" ;
     s223:connectsThrough electrical_devices:00095 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6618,7 +6618,7 @@ lighting_devices:00048 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00051 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire5.electricalInlet" ;
     s223:connectsThrough electrical_devices:00095 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6648,7 +6648,7 @@ lighting_devices:00054 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00057 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire6.electricalInlet" ;
     s223:connectsThrough electrical_devices:00095 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6697,7 +6697,7 @@ lighting_devices:00065 a s223:ActuatableProperty,
     ref:hasExternalReference bacnet_references:00012 .
 
 lighting_devices:00067 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire1.electricalInlet" ;
     s223:connectsThrough electricity:00007 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6727,7 +6727,7 @@ lighting_devices:00070 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00073 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire2.electricalInlet" ;
     s223:connectsThrough electrical_devices:00093 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6757,7 +6757,7 @@ lighting_devices:00076 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00079 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire3.electricalInlet" ;
     s223:connectsThrough electrical_devices:00093 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6787,7 +6787,7 @@ lighting_devices:00082 a s223:ObservableProperty,
     qudt:unit unit:W .
 
 lighting_devices:00085 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Luminaire4.electricalInlet" ;
     s223:connectsThrough electrical_devices:00093 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6832,7 +6832,7 @@ lighting_spaces:00023 a s223:InletConnectionPoint,
     s223:isConnectionPointOf lighting_spaces:00021 .
 
 network_devices:00002 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Simple Switch.electricalInlet" ;
     s223:connectsThrough electrical_devices:00098 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -6929,7 +6929,7 @@ network_devices:00018 a s223:ObservableProperty,
     qudt:unit unit:MegaBIT-PER-SEC .
 
 network_devices:00021 a s223:InletConnectionPoint,
-        bob:Electricity_120V_60HzConnectionPoint ;
+        bob:Electricity_120V_1Ph_60HzConnectionPoint ;
     rdfs:label "Firewall.electricalInlet" ;
     s223:connectsThrough electrical_devices:00098 ;
     s223:hasMedium s223:Electricity-120V-60Hz ;
@@ -7111,17 +7111,17 @@ hvac_devices:00049 a s223:ActuatableProperty,
     qudt:unit unit:PERCENT .
 
 hvac_devices:00061 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "starter.electricalInlet" ;
     s223:connectsThrough electricity:00001 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00058 .
 
 hvac_devices:00062 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "starter.electricalOutlet" ;
     s223:connectsThrough hvac_devices:00067 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00058 .
 
 hvac_devices:00066 a s223:EnumerableProperty,
@@ -7130,7 +7130,7 @@ hvac_devices:00066 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "starter.current_sensor.CurrentBinarySensor" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:ofMedium s223:Electricity-575V-60Hz .
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz .
 
 hvac_devices:00069 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
@@ -7310,10 +7310,10 @@ hvac_devices:00236 a s223:ActuatableProperty,
     qudt:unit unit:PERCENT .
 
 hvac_devices:00241 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "starter.electricalOutlet" ;
     s223:connectsThrough hvac_devices:00246 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00237 .
 
 hvac_devices:00245 a s223:EnumerableProperty,
@@ -7322,7 +7322,7 @@ hvac_devices:00245 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "starter.current_sensor.CurrentBinarySensor" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:ofMedium s223:Electricity-575V-60Hz .
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz .
 
 hvac_devices:00248 a s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
@@ -7369,10 +7369,10 @@ hvac_devices:00261 a s223:ActuatableProperty,
     qudt:unit unit:PERCENT .
 
 hvac_devices:00266 a s223:OutletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "starter.electricalOutlet" ;
     s223:connectsThrough hvac_devices:00271 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00262 .
 
 hvac_devices:00270 a s223:EnumerableProperty,
@@ -7381,7 +7381,7 @@ hvac_devices:00270 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "starter.current_sensor.CurrentBinarySensor" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:ofMedium s223:Electricity-575V-60Hz .
+    s223:ofMedium s223:Electricity-600V_3Ph-60Hz .
 
 hvac_devices:00273 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
@@ -7802,7 +7802,7 @@ electrical_devices:00091 a s223:Connection ;
         electrical_devices:00050 ;
     s223:connectsFrom electrical_devices:00017 ;
     s223:connectsTo electrical_devices:00049 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 electrical_devices:00092 a s223:Connection ;
     s223:connectsAt electrical_devices:00051,
@@ -7824,42 +7824,42 @@ electricity:00001 a s223:Connection ;
         hvac_devices:00061 ;
     s223:connectsFrom electrical_devices:00013 ;
     s223:connectsTo hvac_devices:00058 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 electricity:00002 a s223:Connection ;
     s223:connectsAt electrical_devices:00024,
         hvac_devices:00032 ;
     s223:connectsFrom electrical_devices:00021 ;
     s223:connectsTo hvac_devices:00031 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 electricity:00003 a s223:Connection ;
     s223:connectsAt electrical_devices:00032,
         hvac_devices:00224 ;
     s223:connectsFrom electrical_devices:00029 ;
     s223:connectsTo hvac_devices:00216 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 electricity:00004 a s223:Connection ;
     s223:connectsAt electrical_devices:00036,
         hvac_devices:00250 ;
     s223:connectsFrom electrical_devices:00033 ;
     s223:connectsTo hvac_devices:00247 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 electricity:00005 a s223:Connection ;
     s223:connectsAt electrical_devices:00040,
         hvac_devices:00265 ;
     s223:connectsFrom electrical_devices:00037 ;
     s223:connectsTo hvac_devices:00262 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 electricity:00006 a s223:Connection ;
     s223:connectsAt electrical_devices:00044,
         hvac_devices:00240 ;
     s223:connectsFrom electrical_devices:00041 ;
     s223:connectsTo hvac_devices:00237 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 electricity:00007 a s223:Connection ;
     s223:connectsAt electrical_devices:00106,
@@ -8022,14 +8022,14 @@ hvac_devices:00044 a s223:Connection ;
         hvac_devices:00033 ;
     s223:connectsFrom hvac_devices:00031 ;
     s223:connectsTo hvac_devices:00018 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 hvac_devices:00067 a s223:Connection ;
     s223:connectsAt hvac_devices:00048,
         hvac_devices:00062 ;
     s223:connectsFrom hvac_devices:00058 ;
     s223:connectsTo hvac_devices:00045 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 hvac_devices:00070 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
@@ -8197,14 +8197,14 @@ hvac_devices:00246 a s223:Connection ;
         hvac_devices:00241 ;
     s223:connectsFrom hvac_devices:00237 ;
     s223:connectsTo hvac_devices:00226 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 hvac_devices:00271 a s223:Connection ;
     s223:connectsAt hvac_devices:00254,
         hvac_devices:00266 ;
     s223:connectsFrom hvac_devices:00262 ;
     s223:connectsTo hvac_devices:00251 ;
-    s223:hasMedium s223:Electricity-575V-60Hz .
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz .
 
 hvac_devices:00302 a p223:MechanicalConnectionPoint,
         s223:OutletConnectionPoint ;
@@ -8528,10 +8528,10 @@ bacnet_references:00011 a bacnet:DeviceObjectPropertyReference,
     bacnet:objectOf bacnet_references:00001 .
 
 electrical_devices:00004 a s223:InletConnectionPoint,
-        bob:Electricity_575V_60HzConnectionPoint ;
+        bob:Electricity_600V_3Ph_60HzConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
     s223:connectsThrough electrical_devices:00090 ;
-    s223:hasMedium s223:Electricity-575V-60Hz ;
+    s223:hasMedium s223:Electricity-600V_3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00013 a p223:ElectricalCircuitBreaker,

@@ -3,13 +3,15 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from bob.functions import FunctionBlock
 from bob.multimethods import multimethod
+from bob.producer import FunctionBlock
 from bob.properties import Nm, Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import (
-    Electricity_24V_60HzInletConnectionPoint,
+    Electricity_24V_1Ph_60HzInletConnectionPoint,
+)
+from ...connections.network import (
     RS485BidirectionalConnectionPoint,
 )
 from ...core import (
@@ -29,10 +31,16 @@ from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 
 _namespace = P223
 
-
+# empty, because other equipments can be defined as controller
+# and I don't want them to inherit from example properties
 controller_template = {
+    "cp": {},
+    "properties": {},
+}
+
+controller_template_example = {
     "cp": {
-        "electricalInlet": Electricity_24V_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_24V_1Ph_60HzInletConnectionPoint,
         "bacnet_mstp": RS485BidirectionalConnectionPoint,
         "zone_temperature_sensor": AnalogInput,
         "airflow_sensor": AnalogInput,
@@ -44,13 +52,13 @@ controller_template = {
 
 class Controller(Equipment):
     """
-    A controller executes function blocks and connect to other Equipments
+    A controller executes function blocks and connect to other Equipment
     through different connection points (AI, AO, BI, BO)
     """
 
-    _class_iri: URIRef = P223.Controller
+    _class_iri: URIRef = S223.Controller
     _attr_uriref = {"hasNetworkProfile": P223.hasNetworkProfile}
-    # electricalInlet: Electricity_24V_60HzInletConnectionPoint
+    # electricalInlet: Electricity_24V_1Ph_60HzInletConnectionPoint
     # executes: FunctionBlock
     hasNetworkProfile: NetworkProfile
 

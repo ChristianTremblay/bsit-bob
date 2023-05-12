@@ -13,16 +13,14 @@ from bob.property import ActuatableProperty
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
     AirInletConnectionPoint,
-    AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
     CompressedAirConnectionPoint,
     CompressedAirInletConnectionPoint,
 )
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    Electricity_24V_60HzInletConnectionPoint,
-    Electricity_120V_60HzInletConnectionPoint,
+    Electricity_24V_1Ph_60HzInletConnectionPoint,
+    Electricity_120V_1Ph_60HzInletConnectionPoint,
 )
 from ...connections.light import (
     LightOutletConnectionPoint,
@@ -39,7 +37,7 @@ from ...core import (
     logging,
     template_update,
 )
-from ...functions import AnalogInput, AnalogOutput
+from ...producer import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
 from .actuator import (
     BaseActuator,
@@ -91,10 +89,10 @@ actuated_damper_template = {
 }
 
 
-class DamperAndActuator(System):
+class DamperAndActuator(Equipment):
     _class_iri = None
-    airInlet: AirInletSystemConnectionPoint
-    airOutlet: AirOutletSystemConnectionPoint
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
@@ -106,13 +104,13 @@ class DamperAndActuator(System):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self.command = self["damper"]["command"] = self["actuator"]["command"]
-        self["is_open"] = self["damper"]["is_open"] = self["actuator"]["is_open"]
-        self["is_closed"] = self["damper"]["is_closed"] = self["actuator"]["is_closed"]
+        self.is_open = self["damper"]["is_open"] = self["actuator"]["is_open"]
+        self.is_closed = self["damper"]["is_closed"] = self["actuator"]["is_closed"]
         self["actuator"].linkageOutlet >> self["damper"].linkageInlet
-        self["position"] = self["damper"]["position"] = self["actuator"]["position"]
-        self["position_feedback"] = self["actuator"]["position_sensor"].observesProperty
-        self.airInlet.mapsTo = self["damper"].airInlet
-        self.airOutlet.mapsTo = self["damper"].airOutlet
+        self.position = self["damper"].position = self["actuator"].position
+        self.position_feedback = self["actuator"]["position_sensor"].observedProperty
+        self["damper"].airInlet.mapsTo = self.airInlet
+        self["damper"].airOutlet.mapsTo = self.airOutlet
 
 
 electrical_actuated_proportional_damper_template = {

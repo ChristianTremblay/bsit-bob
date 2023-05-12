@@ -2,7 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex32: <urn:ex/test_system-007/> .
+@prefix ex33: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -22,13 +22,13 @@
   rdfs:label "test_sensor-001" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex32:00001 a s223:Equipment,
+ex33:00001 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "ats1" ;
-    s223:observesProperty ex32:00002 ;
+    s223:observes ex33:00002 ;
     rdfs:comment "Supply Air Temperature Sensor" .
 
-ex32:00002 a s223:ObservableProperty,
+ex33:00002 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -38,13 +38,13 @@ ex32:00002 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C .
 
-ex32:00003 a s223:Equipment,
+ex33:00003 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "ats2" ;
-    s223:observesProperty ex32:00004 ;
+    s223:observes ex33:00004 ;
     rdfs:comment "Supply Air Temperature Sensor" .
 
-ex32:00004 a s223:ObservableProperty,
+ex33:00004 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -53,25 +53,25 @@ ex32:00004 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C ;
-    ref:hasExternalReference ex32:00005 .
+    ref:hasExternalReference ex33:00005 .
 
-ex32:00005 a ref:ExternalReference ;
+ex33:00005 a ref:ExternalReference ;
     rdfs:label "ats2.Temperature.ExternalReference" ;
     s223:hasRef "bacnet://570005/analog-input,10084/present-value" .
 
-ex32:00006 a s223:Equipment,
+ex33:00006 a s223:Equipment,
+        s223:HumiditySensor,
         s223:Sensor ;
     rdfs:label "ahs1" ;
-    s223:observesProperty ex32:00007 ;
-    bob:hasQuantityKind quantitykind:RelativeHumidity ;
+    s223:observes ex33:00007 ;
     rdfs:comment "Zone Humidity Sensor with a value of 20" .
 
-ex32:00007 a s223:ObservableProperty,
+ex33:00007 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
-    rdfs:label "ahs1.Measure" ;
+    rdfs:label "ahs1.Humidity" ;
     s223:hasValue 20.0 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;

@@ -1,5 +1,5 @@
 """
-Figure A-3 | Parallel Fan-Powered Terminal Unit, Constant Volume Fan
+Figure A-2 | VAV Simple + Reheat Coil
 """
 
 from __future__ import annotations
@@ -17,11 +17,15 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import (
-    Electricity_120V_60HzConnection,
-    Electricity_120V_60HzInletConnectionPoint,
-    Electricity_120V_60HzOutletConnectionPoint,
+    Electricity_120V_1Ph_60HzConnection,
+    Electricity_120V_1Ph_60HzInletConnectionPoint,
+    Electricity_120V_1Ph_60HzOutletConnectionPoint,
+)
+from bob.connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalInletConnectionPoint,
+)
+from bob.connections.network import (
     RS485BidirectionalConnectionPoint,
 )
 from bob.connections.water import (
@@ -49,17 +53,17 @@ from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.gas import GasMonitor
 from bob.equipment.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve
-from bob.functions import (
+from bob.producer import (
     AnalogInput,
     AnalogOutput,
     BinaryInput,
     BinaryOutput,
     FunctionBlock,
 )
-from bob.functions.g36 import G36Sequence
-from bob.functions.occupancy import OccupancyFunction
+from bob.producer.g36 import G36Sequence
+from bob.producer.occupancy import OccupancyFunction
 from bob.properties import Flow, PercentCommand, Temperature, temperature
-from bob.properties.states import OccupancyStatus, OnOffCommand, OnOffStatus
+from bob.properties.states import OccupancyStatus
 from bob.properties.volume import Gallons
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
@@ -130,14 +134,12 @@ vav_system_template = {
         ("ZN-WINDOW-SWITCH", IntrusionSensor): {},
     },
     "properties": {
+        ("occupancy", OccupancyStatus): {},
         ("zoneTemperature", Temperature): {"unit": UNIT.DEG_C},
         ("supplyAirTemperature", Temperature): {"unit": UNIT.DEG_C},
-        ("occupancy", OccupancyStatus): {},
         ("damperPosition", PercentCommand): {},
         ("valvePosition", PercentCommand): {},
         ("airFlow", Flow): {"unit": UNIT.L_PER_SEC},
-        ("fanStatus", OnOffStatus): {},
-        ("fanCommand", OnOffCommand): {},
     },
     "equipment": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
@@ -150,42 +152,35 @@ vav_system_template = {
         },
         ("HTG-COIL", HotWaterCoil): {"comment": "Hot Water Coil"},
         ("HTG-VLV", TwoWayActuatedProportionalValve): {"config": valve2w_template},
-        ("FAN", Fan): {"electricalInlet": Electricity_120V_60HzInletConnectionPoint},
-        ("FAN-STARTER", MotorStarter): {
-            "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
-            "electricalOutlet": Electricity_120V_60HzOutletConnectionPoint,
-        },
     },
 }
 
 
-class VAV_FIGA3(System):
+class VAV_FIGA2(System):
     """
     This is a clone of VAV found in from bob.equipment.hvac.vav VAV_Simple
     """
 
-    supplyAirInlet: AirInletSystemConnectionPoint
-    plenumAirInlet: AirInletSystemConnectionPoint
+    airInlet: AirInletSystemConnectionPoint
     airOutlet: AirOutletSystemConnectionPoint
 
     def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.supplyAirInlet.mapsTo = self["DPR"].airInlet
-        self.plenumAirInlet.mapsTo = self["HTG-COIL"].airInlet
-        self.airOutlet.mapsTo = self["DPR"].airOutlet
 
-        self.airFlow = self["SA-F"].observesProperty
+        self.airInlet.mapsTo = self["DPR"].airInlet
+        self.airOutlet.mapsTo = self["HTG-COIL"].airOutlet
+
+        self.airFlow = self["SA-F"].observedProperty
         self.zoneTemperature = self["ZONE-THERMOSTAT"][
             "temperature_sensor"
-        ].observesProperty
-        self.supplyAirTemperature = self["DA-T"].observesProperty
+        ].observedProperty
+        self.supplyAirTemperature = self["DA-T"].observedProperty
         self.damperPosition = self["DPR"]["actuator"].command
         self.valvePosition = self["HTG-VLV"]["actuator"].command
-        self.fanStatus = self["FAN-STARTER"].onOffStatus
-        self.fanCommand = self["FAN-STARTER"].onOffCommand
 
-        self["SA-F"].hasMeasurementLocation = self["DPR"].airInlet
+        self["SA-F"] % self["DPR"].airInlet
+        self["DA-T"] % self["HTG-COIL"].airOutlet
 
 
 supply_air = AirConnection(label="SA_In", comment="Supply Air for VAV")
@@ -201,26 +196,27 @@ hvac_space.occupancy = OccupancyStatus()
 
 window = Window(label="Window")
 window.indoor >> hvac_space.windows
-vav = VAV_FIGA3(config=vav_system_template)
-supply_air >> vav["DPR"] >> discharge_air
-plenum >> vav["HTG-COIL"].airInlet
-vav["HTG-COIL"] >> vav["FAN"] >> discharge_air >> hvac_space.ductAirInlet
-vav["FAN-STARTER"] >> vav["FAN"]
+vav = VAV_FIGA2(config=vav_system_template)
+
+# supply_air >> vav["DPR"] >> vav["HTG-COIL"] >> discharge_air >> hvac_space.ductAirInlet
+supply_air >> vav["DPR"] >> vav["HTG-COIL"]
+vav["HTG-COIL"].airOutlet >> discharge_air >> hvac_space.ductAirInlet
+
 hws >> vav["HTG-COIL"]
 vav["HTG-COIL"] >> vav["HTG-VLV"] >> hwr
 
-vav["ZONE-THERMOSTAT"]["temperature_sensor"].hasMeasurementLocation = hvac_space
-vav["ZN-CO2"]["CO2"].hasMeasurementLocation = hvac_space
-vav["ZN-WINDOW-SWITCH"].hasMeasurementLocation = window
-vav["ZN-OCC-SENSOR"].hasMeasurementLocation = hvac_space
-vav["DA-T"].hasMeasurementLocation = discharge_air
+vav["ZONE-THERMOSTAT"]["temperature_sensor"] % hvac_space
+vav["ZN-CO2"]["CO2"] % hvac_space
+vav["ZN-WINDOW-SWITCH"] % window
+vav["ZN-OCC-SENSOR"] % hvac_space
+
 
 # Not sure if it's really required...but I think readings should be in space
-hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observesProperty
-hvac_space.co2 = vav["ZN-CO2"]["CO2"].observesProperty
-hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observesProperty
+hvac_space.temperature = vav["ZONE-THERMOSTAT"]["temperature_sensor"].observedProperty
+hvac_space.co2 = vav["ZN-CO2"]["CO2"].observedProperty
+hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observedProperty
 
-# Now that space is full of Equipments and connections...
+# Now that space is full of Equipment and connections...
 # Zone are meant for control, let's define the control side of the thing
 # temperature, co2, etc of zone.... could be the result of a function block
 # making calculation from multiple hvac space readings...
@@ -238,40 +234,38 @@ occupancy = OccupancyFunction(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
-occupancy.uses(vav["ZN-OCC-SENSOR"].observesProperty, BinaryInput, "occupancy-sensor")
+occupancy.uses(vav["ZN-OCC-SENSOR"].observedProperty, BinaryInput, "occupancy-sensor")
 occupancy.uses(
-    vav["ZONE-THERMOSTAT"]["local_override"].observesProperty,
+    vav["ZONE-THERMOSTAT"]["local_override"].observedProperty,
     BinaryInput,
     "local-override",
 )
 occupancy.hasOccupancyStatus = OccupancyStatus()
 occupancy.produces(occupancy.hasOccupancyStatus)
 occupancy.produces(hvac_space.occupancy)
+vav.occupancy = hvac_space.occupancy
 
 
 # TODO : Complete
 sequence = "Lorem ipsum of sequence"
 
-# g36fig_a_3 = G36_FigA3(label="G36_FIG_A_3", comment=sequence)
 # g36fig_a_2 = G36_FigA2(label="G36_FIG_A_2", comment=sequence)
-g36fig_a_3 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
-# zoneSetpointAdj = AnalogInput(label='Zone Setpoint Adjust', function_block=g36fig_a_3)
-# LocalOverride = BinaryInput(label='Local Override', function_block=g36fig_a_3)
-# zoneTemp = AnalogInput(label='Zone Temp', function_block=g36fig_a_3)
-# zoneCO2 = AnalogInput(label='Zone CO2', function_block=g36fig_a_3)
-# zonewindowSwitch = BinaryInput(label='Zone Window Switch', function_block=g36fig_a_3)
-# zoneOccupancySensor = BinaryInput(label='Zone Occupancy Sensor', function_block=g36fig_a_3)
+g36fig_a_2 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
+# zoneSetpointAdj = AnalogIn(label='Zone Setpoint Adjust', function_block=g36fig_a_2)
+# LocalOverride = BinaryIn(label='Local Override', function_block=g36fig_a_2)
+# zoneTemp = AnalogIn(label='Zone Temp', function_block=g36fig_a_2)
+# zoneCO2 = AnalogIn(label='Zone CO2', function_block=g36fig_a_2)
+# zonewindowSwitch = BinaryIn(label='Zone Window Switch', function_block=g36fig_a_2)
+# zoneOccupancySensor = BinaryIn(label='Zone Occupancy Sensor', function_block=g36fig_a_2)
 
-g36fig_a_3.uses(vav.airFlow, AnalogInput, "supplyAirFlow")
-g36fig_a_3.uses(hvac_zone.temperature_setpoint, AnalogInput, "zoneTemperatureSetpoint")
-g36fig_a_3.uses(hvac_zone.temperature, AnalogInput, "zoneTemperature")
-g36fig_a_3.uses(vav["supplyAirTemperature"], AnalogInput, "supplyAirTemprature")
-g36fig_a_3.uses(hvac_zone.co2, AnalogInput, "zoneCO2")
-g36fig_a_3.uses(hvac_zone.windows_switch, BinaryInput, "window-switch")
-g36fig_a_3.uses(vav["fanStatus"], BinaryInput, "fanStatus")
-g36fig_a_3.uses(occupancy.hasOccupancyStatus, BinaryInput, "occupancy-status")
-g36fig_a_3.produces(vav["damperPosition"], AnalogOutput, "damperPosition")
-g36fig_a_3.produces(vav["valvePosition"], AnalogOutput, "valvePosition")
-g36fig_a_3.produces(vav["fanCommand"], BinaryOutput, "fanCommand")
+g36fig_a_2.uses(vav.airFlow, AnalogInput, "supplyAirFlow")
+g36fig_a_2.uses(hvac_zone.temperature_setpoint, AnalogInput, "zoneTemperatureSetpoint")
+g36fig_a_2.uses(hvac_zone.temperature, AnalogInput, "zoneTemperature")
+g36fig_a_2.uses(vav["supplyAirTemperature"], AnalogInput, "supplyAirTemprature")
+g36fig_a_2.uses(hvac_zone.co2, AnalogInput, "zoneCO2")
+g36fig_a_2.uses(hvac_zone.windows_switch, BinaryInput, "window-switch")
+g36fig_a_2.uses(occupancy.hasOccupancyStatus, BinaryInput, "occupancy-status")
+g36fig_a_2.produces(vav["damperPosition"], AnalogOutput, "damperPosition")
+g36fig_a_2.produces(vav["valvePosition"], AnalogOutput, "valvePosition")
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

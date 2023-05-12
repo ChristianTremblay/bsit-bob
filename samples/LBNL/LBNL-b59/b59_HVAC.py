@@ -88,14 +88,14 @@ class RTUChilledWaterCoil(ChilledWaterCoil):
     Compressor1Cooling: ActuatableProperty  # not sure what more information the cooling commands should have
     Compressor2Cooling: ActuatableProperty
 
-    # diagram has sensors, but this is not in haystack... Not sure if I want to do the below. Sensors are shown in the diagram so I am including them, like the other Equipments
+    # diagram has sensors, but this is not in haystack... Not sure if I want to do the below. Sensors are shown in the diagram so I am including them, like the other Equipment
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         ts1 = WaterTemperatureSensor(label=self.label + ".in_temperature_sensor")
         ts2 = WaterTemperatureSensor(label=self.label + ".out_temperature_sensor")
 
-        ts1.hasMeasurementLocation = self.chilledWaterInlet
-        ts2.hasMeasurementLocation = self.chilledWaterOutlet
+        ts1 % self.chilledWaterInlet
+        ts2 % self.chilledWaterOutlet
 
 
 # class AirStaticPressureSensor(Equipment):
@@ -105,7 +105,7 @@ class RTUChilledWaterCoil(ChilledWaterCoil):
 #     pressure.hasQuantityKind = quantitykind.StaticPressure #QUDT doesn't seem to have differential pressure quantity kind
 #     pressure.unit = qudt.IN_H2O
 #     #check what unit
-#     hasMeasurementLocation: Node # FOR DIFFERENTIAL PRESSURE, should probably maybe make a new sensor that measures connection points around Equipment
+#     hasObservationLocation: Node # FOR DIFFERENTIAL PRESSURE, should probably maybe make a new sensor that measures connection points around Equipment
 class RooftopUnit(System):
     node_type = None  # missing some of the points in the haystack model that are not attached to equipment or shown in the diagram. (duct heat gain, outside air flow, economizer enable status, outside air temperature)
     returnAirInlet: AirInletSystemConnectionPoint
@@ -125,7 +125,7 @@ class RooftopUnit(System):
 
         self.sensor = AirTemperatureSensor(label=self.label + ".MA_temp_sensor")
         self > self.sensor
-        self.sensor.hasMeasurementLocation = mixed_air  # This seems weird, but I kind of like it. You're measuring the mixed air connection
+        self.sensor % mixed_air  # This seems weird, but I kind of like it. You're measuring the mixed air connection
 
         return_fan = RTUFan(label=self.label + ".return_fan")
         self > return_fan
@@ -135,13 +135,13 @@ class RooftopUnit(System):
         return_fan >> return_air
         ra_temp = AirTemperatureSensor(label=self.label + ".RA_temp_sensor")
         self > ra_temp
-        ra_temp.hasMeasurementLocation = return_air
+        ra_temp % return_air
 
         ra_pres = AirStaticPressureSensor(
             label=self.label + ".RA_static_pressure", unit=qudt.PA
         )
         self > ra_pres
-        ra_pres.hasMeasurementLocation = return_air
+        ra_pres % return_air
 
         # making backdraft damper (exhaust damper) and connecting it
         ea_damper = RTUDamper(label=self.label + ".exhaust_air_damper")
@@ -166,7 +166,7 @@ class RooftopUnit(System):
             label=self.label + "PF_differential_pressure", unit=qudt.PA
         )  # Do I need a different pressure sensor
         self > pf_press
-        pf_press.hasMeasurementLocation = pre_filter
+        pf_press % pre_filter
 
         # filter has one connection, making new air to connect to bypass and coil
         pre_filtered_air = AirConnection(label=self.label + ".pre_filtered_air")
@@ -190,7 +190,7 @@ class RooftopUnit(System):
             label=self.label + ".FF_differential_pressure", unit=qudt.PA
         )
         self > ff_press
-        ff_press.hasMeasurementLocation = final_filter
+        ff_press % final_filter
 
         supply_fan = RTUFan(label=self.label + ".supply_fan")
         self > supply_fan
@@ -202,10 +202,10 @@ class RooftopUnit(System):
             label=self.label + ".SA_static_pressure", unit=qudt.PA
         )
         self > sa_press
-        sa_press.hasMeasurementLocation = supply_air
+        sa_press % supply_air
         sa_temp = AirTemperatureSensor(label=self.label + ".SA_temperature")
         self > sa_temp
-        sa_temp.hasMeasurementLocation = supply_air
+        sa_temp % supply_air
 
         self.iso_damper = Damper(label=self.label + ".iso_damper")
         self > self.iso_damper
@@ -286,7 +286,7 @@ class UFTZone(
         super().__init__(**kwargs)
         self.temperature.unit = qudt.DEG_F
         # temperature_sensor = TemperatureSensor(label = self.label + '.temperature_sensor') #this will be for cerc temploggers.
-        # temperature_sensor.hasMeasurementLocation = self  #not sure if I even wan't it to measure zone or space
+        # temperature_sensor % self  #not sure if I even wan't it to measure zone or space
         # print(self)
         # self.space = DomainSpace(label=self.label + ".space")
         # self.space.hasDomain = HVAC
@@ -323,12 +323,12 @@ class LoopPressureSensor(DifferentialSensor):
     node_type: URIRef = s223.Sensor
     pressure = Pressure
     # check what unit
-    hasMeasurementLocationReturn: Node
-    hasMeasurementLocationSupply: Node
+    hasObservationLocationReturn: Node
+    hasObservationLocationSupply: Node
 
     def __setattr__(self, attr: str, value: Any) -> None:
-        if attr in ["hasMeasurementLocationReturn", "hasMeasurementLocationSupply"]:
-            self._data_graph.add((self.node, s223.hasMeasurementLocation, value.node))
+        if attr in ["hasObservationLocationReturn", "hasObservationLocationSupply"]:
+            self._data_graph.add((self.node, S223.hasObservationLocation, value.node))
         else:
             super().__setattr__(attr, value)
 
@@ -351,7 +351,7 @@ class CoolingPump(Equipment):
 
 class CoolingWaterSystem(
     System
-):  # my Equipments using cool water will be connected to a junction at CWSupply
+):  # my Equipment using cool water will be connected to a junction at CWSupply
     node_type = None
     CWSupply: ChilledWaterOutletSystemConnectionPoint
     # not including BTU meters
@@ -370,13 +370,13 @@ class CoolingWaterSystem(
         cwsupply = Junction(label="Chilled Water Supply")
         cwsupply << ex1.coolingOutlet
         self.CWSupply.mapsTo = cwsupply
-        tws_ts.hasMeasurementLocation = ex1.coolingInlet
+        tws_ts % ex1.coolingInlet
         # cws = ChilledWaterConnection(label = self.label + '.CWS')
         # ex1.coolingOutlet>>cws
         cws_ts = WaterTemperatureSensor(label=self.label + ".CWS_Temp")
         self > cws_ts
-        # cws_ts.hasMeasurementLocation = cws
-        cws_ts.hasMeasurementLocation = ex1.coolingOutlet
+        # cws_ts % cws
+        cws_ts % ex1.coolingOutlet
         # have to use segments and junctions here, this shows different modeling decision between right and left side of Cooling Water Control Schematic
         cwr = Segment(label=self.label + ".CWR")
         makeup = Segment(label=self.label + ".MakeUp")
@@ -398,15 +398,15 @@ class CoolingWaterSystem(
         cwgp1.waterOutlet >> pump_out
         cwgp2.waterOutlet >> pump_out
         EX1_cwr_ts = WaterTemperatureSensor(label=self.label + ".EX-1_CWR_Temp")
-        EX1_cwr_ts.hasMeasurementLocation = pump_out
+        EX1_cwr_ts % pump_out
         self > EX1_cwr_ts
         ps = LoopPressureSensor(label=self.label + ".CW_Loop_Diff_Pressure")
-        ps.hasMeasurementLocationSupply = ex1.coolingInlet
-        ps.hasMeasurementLocationReturn = cwr
+        ps.hasObservationLocationSupply = ex1.coolingInlet
+        ps.hasObservationLocationReturn = cwr
         # not sure how to do loop differential pressure, two measurement locations?
         pump_out >> ex1.heatingInlet
         EX1_TWR_ts = WaterTemperatureSensor(label=self.label + ".EX-1_TWR_Temp")
-        EX1_TWR_ts.hasMeasurementLocation = ex1.heatingOutlet
+        EX1_TWR_ts % ex1.heatingOutlet
         self.to_cooling_towers.mapsTo = ex1.heatingOutlet
         jret = Junction(label=self.label + ".CWR_Inlet")
         jret.link_to(cwr)
@@ -473,7 +473,7 @@ class CoolingTowerSystem(System):
             jout << ct_dict[ct].waterOutlet
             jin >> ct_dict[ct].waterInlet
             ts = AirTemperatureSensor(label=ct_dict[ct].label + ".TWS_Temp")
-            ts.hasMeasurementLocation = ct_dict[ct].waterOutlet
+            ts % ct_dict[ct].waterOutlet
 
 
 class SSFSystem(System):
@@ -565,4 +565,4 @@ class Illuminance(QuantifiableObservableProperty):
 class Daylight_Sensor(Equipment):
     node_type: URIRef = s223.Sensor
     illuminance = Illuminance
-    hasMeasurementLocation: Node
+    hasObservationLocation: Node

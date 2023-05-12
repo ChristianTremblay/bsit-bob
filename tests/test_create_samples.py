@@ -21,3 +21,9 @@ def test_build_pritoni_samples(bob_fixture):
     samples_ttl_folder = bob_fixture["samples_ttl_directory"]
     filename = os.path.join(samples_folder, "sample_pritoni_model.py")
     assert not subprocess.call(["python", filename])
+
+
+def test_create_html(bob_fixture):
+    samples_folder = bob_fixture["samples_directory"]
+    job = os.path.join(samples_folder, "create_html.py")
+    assert not subprocess.call(["python", job])

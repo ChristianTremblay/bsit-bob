@@ -33,17 +33,17 @@ It's a System. Let's use servesZone to find space then lookup for Zone Temperatu
 ```
 match path=(d:VAV {label:"VAVBox1"})-[:servesZone]-(z)-[:contains]-(s:HVACSpace)
 WITH s
-MATCH (s)<-[:hasMeasurementLocation]-(t:Sensor)
+MATCH (s)<-[:hasObservationLocation]-(t:Sensor)
 WITH t
-MATCH path=(t)-[:observesProperty]-()-[:hasExternalReference]-(bacnet) return path
+MATCH path=(t)-[:observes]-()-[:hasExternalReference]-(bacnet) return path
 ```
 
 ```
 match path=(d:VAV {label:"VAVBox1"})-[:servesZone]-(z)-[:contains]-(s:HVACSpace)
 WITH s
-MATCH (s)<-[:hasMeasurementLocation]-(t:Sensor)
+MATCH (s)<-[:hasObservationLocation]-(t:Sensor)
 WITH t
-MATCH (t)-[:observesProperty]-(temp) return temp.hasValue
+MATCH (t)-[:observes]-(temp) return temp.hasValue
 ```
 
 
@@ -67,7 +67,7 @@ There is a controller somewhere that give the occupancy status.
 
 ## 6. What occupancy sensors are available in a particular zone?
 ```
-match (:Zone)-[:contains]-()<-[:hasMeasurementLocation]-(os:MovementSensor) return count(os)
+match (:Zone)-[:contains]-()<-[:hasObservationLocation]-(os:MovementSensor) return count(os)
 ```
 
 ## REQUEST TO FOLLOW AIR

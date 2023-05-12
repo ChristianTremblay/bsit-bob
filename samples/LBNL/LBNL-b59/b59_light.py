@@ -44,7 +44,7 @@ lighting_sens_df = pd.read_csv("~/Desktop/223p/LP/b59_lighting_sensors.csv")
 lsens = {}
 for i, sn in enumerate(lighting_sens_df["Sensor Name"]):
     lsens[sn] = Daylight_Sensor(label=sn)
-    lsens[sn].hasMeasurementLocation = lighting_zones[
+    lsens[sn] % lighting_zones[
         lighting_sens_df.Location[i]
     ]  # making the zone the measurement location of the Sensor
     lighting_zones[lighting_sens_df.Location[i]].add_property(lsens[sn].illuminance)

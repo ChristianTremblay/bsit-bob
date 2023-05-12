@@ -1,0 +1,867 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 600px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#DayOfWeek-Weekend">http://data.ashrae.org/standard223#DayOfWeek-Weekend</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Medium-Light">http://data.ashrae.org/standard223#Medium-Light</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus">http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-Role">http://data.ashrae.org/standard223#EnumerationKind-Role</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind">http://data.ashrae.org/standard223#EnumerationKind</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Cooling">http://data.ashrae.org/standard223#Role-Cooling</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#ThreeSpeedSetting-High">http://data.ashrae.org/standard223#ThreeSpeedSetting-High</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingMode-Auto">http://data.ashrae.org/standard223#HVACOperatingMode-Auto</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#ThreeSpeedSetting-Off">http://data.ashrae.org/standard223#ThreeSpeedSetting-Off</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting">http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#OccupancyStatus-Occupied">http://data.ashrae.org/standard223#OccupancyStatus-Occupied</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Exhaust">http://data.ashrae.org/standard223#Role-Exhaust</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-Medium">http://data.ashrae.org/standard223#EnumerationKind-Medium</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Concept">http://data.ashrae.org/standard223#Concept</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-DayOfWeek">http://data.ashrae.org/standard223#EnumerationKind-DayOfWeek</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-HVAC">http://data.ashrae.org/standard223#Domain-HVAC</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#RunStatus-On">http://data.ashrae.org/standard223#RunStatus-On</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Light-Infrared">http://data.ashrae.org/standard223#Light-Infrared</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-Effectiveness">http://data.ashrae.org/standard223#EnumerationKind-Effectiveness</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Plumbing">http://data.ashrae.org/standard223#Domain-Plumbing</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-Substance">http://data.ashrae.org/standard223#EnumerationKind-Substance</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#OccupancyStatus-Unoccupied">http://data.ashrae.org/standard223#OccupancyStatus-Unoccupied</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Discharge">http://data.ashrae.org/standard223#Role-Discharge</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Medium-Water">http://data.ashrae.org/standard223#Medium-Water</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#PositionStatus-Open">http://data.ashrae.org/standard223#PositionStatus-Open</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode">http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-Direction">http://data.ashrae.org/standard223#EnumerationKind-Direction</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Weekday-Friday">http://data.ashrae.org/standard223#Weekday-Friday</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingStatus-Heating">http://data.ashrae.org/standard223#HVACOperatingStatus-Heating</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Medium-Glycol">http://data.ashrae.org/standard223#Medium-Glycol</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Secondary">http://data.ashrae.org/standard223#Role-Secondary</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Weekend-Sunday">http://data.ashrae.org/standard223#Weekend-Sunday</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-RunStatus">http://data.ashrae.org/standard223#EnumerationKind-RunStatus</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingStatus-Off">http://data.ashrae.org/standard223#HVACOperatingStatus-Off</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingMode-FanOnly">http://data.ashrae.org/standard223#HVACOperatingMode-FanOnly</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/vocab/enumeration">http://data.ashrae.org/standard223/1.0/vocab/enumeration</option>
+                                
+                                    <option value="http://www.w3.org/ns/shacl#">http://www.w3.org/ns/shacl#</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#DayOfWeek-Weekday">http://data.ashrae.org/standard223#DayOfWeek-Weekday</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-Domain">http://data.ashrae.org/standard223#EnumerationKind-Domain</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingStatus-Ventilating">http://data.ashrae.org/standard223#HVACOperatingStatus-Ventilating</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-PositionStatus">http://data.ashrae.org/standard223#EnumerationKind-PositionStatus</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Water-ChilledWater">http://data.ashrae.org/standard223#Water-ChilledWater</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus">http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-ConveyanceSystems">http://data.ashrae.org/standard223#Domain-ConveyanceSystems</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Medium-Air">http://data.ashrae.org/standard223#Medium-Air</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Particulate-PM10.0">http://data.ashrae.org/standard223#Particulate-PM10.0</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Primary">http://data.ashrae.org/standard223#Role-Primary</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#ThreeSpeedSetting-Medium">http://data.ashrae.org/standard223#ThreeSpeedSetting-Medium</option>
+                                
+                                    <option value="n9c5ad20435944d4496e89100850b5d3fb2">n9c5ad20435944d4496e89100850b5d3fb2</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#hasRole">http://data.ashrae.org/standard223#hasRole</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Direction-Inlet">http://data.ashrae.org/standard223#Direction-Inlet</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Particulate-PM1.0">http://data.ashrae.org/standard223#Particulate-PM1.0</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Electrical">http://data.ashrae.org/standard223#Domain-Electrical</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Heating">http://data.ashrae.org/standard223#Role-Heating</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Return">http://data.ashrae.org/standard223#Role-Return</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Supply">http://data.ashrae.org/standard223#Role-Supply</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Substance-Soot">http://data.ashrae.org/standard223#Substance-Soot</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#RunStatus-Unknown">http://data.ashrae.org/standard223#RunStatus-Unknown</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Medium-Electricity">http://data.ashrae.org/standard223#Medium-Electricity</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingMode-HeatOnly">http://data.ashrae.org/standard223#HVACOperatingMode-HeatOnly</option>
+                                
+                                    <option value="n9c5ad20435944d4496e89100850b5d3fb1">n9c5ad20435944d4496e89100850b5d3fb1</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Generator">http://data.ashrae.org/standard223#Role-Generator</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Recirculating">http://data.ashrae.org/standard223#Role-Recirculating</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Fire">http://data.ashrae.org/standard223#Domain-Fire</option>
+                                
+                                    <option value="Created with TopBraid Composer">Created with TopBraid Composer</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Substance-Particulate">http://data.ashrae.org/standard223#Substance-Particulate</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Lighting">http://data.ashrae.org/standard223#Domain-Lighting</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingMode-Off">http://data.ashrae.org/standard223#HVACOperatingMode-Off</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#ThreeSpeedSetting-Low">http://data.ashrae.org/standard223#ThreeSpeedSetting-Low</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Networking">http://data.ashrae.org/standard223#Domain-Networking</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingStatus-Dehumidifying">http://data.ashrae.org/standard223#HVACOperatingStatus-Dehumidifying</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Weekday-Wednesday">http://data.ashrae.org/standard223#Weekday-Wednesday</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Substance-CO2">http://data.ashrae.org/standard223#Substance-CO2</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingMode-CoolOnly">http://data.ashrae.org/standard223#HVACOperatingMode-CoolOnly</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Weekday-Monday">http://data.ashrae.org/standard223#Weekday-Monday</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Direction-Outlet">http://data.ashrae.org/standard223#Direction-Outlet</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Substance-CO">http://data.ashrae.org/standard223#Substance-CO</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Water-HotWater">http://data.ashrae.org/standard223#Water-HotWater</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Light-Visible">http://data.ashrae.org/standard223#Light-Visible</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#RunStatus-Off">http://data.ashrae.org/standard223#RunStatus-Off</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Weekday-Tuesday">http://data.ashrae.org/standard223#Weekday-Tuesday</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Refrigeration">http://data.ashrae.org/standard223#Domain-Refrigeration</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#HVACOperatingStatus-Cooling">http://data.ashrae.org/standard223#HVACOperatingStatus-Cooling</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Security">http://data.ashrae.org/standard223#Domain-Security</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Occupancy">http://data.ashrae.org/standard223#Domain-Occupancy</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#PositionStatus-Closed">http://data.ashrae.org/standard223#PositionStatus-Closed</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Particulate-PM2.5">http://data.ashrae.org/standard223#Particulate-PM2.5</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Weekend-Saturday">http://data.ashrae.org/standard223#Weekend-Saturday</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Direction-Bidirectional">http://data.ashrae.org/standard223#Direction-Bidirectional</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Effectiveness-Active">http://data.ashrae.org/standard223#Effectiveness-Active</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223/1.0/model/all">http://data.ashrae.org/standard223/1.0/model/all</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#OccupancyStatus-Unknown">http://data.ashrae.org/standard223#OccupancyStatus-Unknown</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#PositionStatus-Unknown">http://data.ashrae.org/standard223#PositionStatus-Unknown</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Weekday-Thursday">http://data.ashrae.org/standard223#Weekday-Thursday</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Domain-Physical">http://data.ashrae.org/standard223#Domain-Physical</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#Role-Load">http://data.ashrae.org/standard223#Role-Load</option>
+                                
+                                    <option value="http://data.ashrae.org/standard223#SetpointAspect">http://data.ashrae.org/standard223#SetpointAspect</option>
+                                
+                                    <option value="bob:legend/Equipment">bob:legend/Equipment</option>
+                                
+                                    <option value="bob:legend/Connection">bob:legend/Connection</option>
+                                
+                                    <option value="bob:legend/InletConnectionPoint">bob:legend/InletConnectionPoint</option>
+                                
+                                    <option value="bob:legend/OutletConnectionPoint">bob:legend/OutletConnectionPoint</option>
+                                
+                                    <option value="bob:legend/FunctionBlock">bob:legend/FunctionBlock</option>
+                                
+                                    <option value="bob:legend/DomainSpace">bob:legend/DomainSpace</option>
+                                
+                                    <option value="bob:legend/qudt">bob:legend/qudt</option>
+                                
+                                    <option value="bob:legend/Default">bob:legend/Default</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+              <div id="filter-menu" class="card-header">
+                <div class="row no-gutters">
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'item')"
+                            id="select-item"
+                        >
+                        <option value="">Select a network item</option>
+                        <option value="edge">edge</option>
+                        <option value="node">node</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'property')"
+                            id="select-property"
+                        >
+                        <option value="">Select a property...</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            id="select-value"
+                        >
+                        <option value="">Select value(s)...</option>
+                    </select>
+                  </div>
+                  <div class="col-1 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="highlightFilter(filter);">Filter</button>
+                  </div>
+                  <div class="col-2 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="clearFilter(true)">Reset Selection</button>
+                  </div>
+                </div>
+              </div>
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+                  // explicitly using onItemAdd and this function as we need to save multiple values
+                  let updateValueFilter = function() {
+                      return function () {
+                      filter['value'].push(arguments[0])
+                      }
+                  }
+
+                  let valueControl = new TomSelect("#select-value",{
+                      maxItems: null,
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: updateValueFilter()
+                  });
+
+                  let addValues = function() {
+                      return function () {
+                          // clear the current value options and add the selected attribute values
+                          // tom-select handles duplicates
+                          let selectedProperty = arguments[0];
+                          valueControl.clear();
+                          valueControl.clearOptions();
+                          filter['value'] = []
+                          if (filter['item'] === 'node') {
+                              for (let each in allNodes) {
+                                  valueControl.addOption({
+                                      id:allNodes[each][selectedProperty],
+                                      title:allNodes[each][selectedProperty]
+                                  })
+                              }
+                          }
+                          else if (filter['item'] === 'edge') {
+                              for (let each in allEdges) {
+                                  valueControl.addOption({
+                                      id:allEdges[each][selectedProperty],
+                                      title:allEdges[each][selectedProperty]
+                                  })
+                              }
+                          }
+                      }
+                  };
+
+                  let propControl = new TomSelect("#select-property",{
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addValues()
+                  });
+
+                  let addProperties = function() {
+                      return function () {
+                          // loops through the selected network item and adds the attributes to dropdown
+                          // tom-select handles duplicates
+                          clearFilter(false)
+                          if (arguments[0] === 'edge') {
+                              for (let each in allEdges) {
+                                  if (allEdges.hasOwnProperty(each)) {
+                                      for (let eachProp in allEdges[each]) {
+                                          if (allEdges[each].hasOwnProperty(eachProp)) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                          else if (arguments[0] === 'node') {
+                              for (let each in allNodes) {
+                                  if (allNodes.hasOwnProperty(each)) {
+                                      for (let eachProp in allNodes[each]) {
+                                          if (allNodes[each].hasOwnProperty(eachProp)
+                                              && (eachProp !== 'hidden' && eachProp !== 'savedLabel'
+                                                  && eachProp !== 'hiddenLabel')) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  };
+
+                  let itemControl = new TomSelect("#select-item",{
+                      create: false,
+                      sortField:{
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addProperties()
+                  });
+
+                  function clearFilter(reset) {
+                      // utility function to clear all the selected filter options
+                      // if reset is set to true, the existing filter will be removed
+                      // else, only the dropdown options are cleared
+                      propControl.clear();
+                      propControl.clearOptions();
+                      valueControl.clear();
+                      valueControl.clearOptions();
+                      filter = {
+                          item : '',
+                          property : '',
+                          value : []
+                      }
+                      if (reset) {
+                          itemControl.clear();
+                          filterHighlight({nodes: []})
+                      }
+                  }
+
+                  function updateFilter(value, key) {
+                      // key could be 'item' or 'property' and value is as selected in dropdown
+                      filter[key] = value
+                  }
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#DayOfWeek-Weekend", "label": "Day of week-Weekend", "shape": "dot", "size": 15, "title": "Namespaces : http://www.w3.org/ns/shacl#NodeShape, s223\nTypes: s223:Class, s223:DayOfWeek-Weekend"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Medium-Light", "label": "Medium-Light", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Class, s223\nTypes: s223:Class, s223:Medium-Light"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus", "label": "HVAC system/equipment operating status. What the system is currently doing.", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Class, s223:EnumerationKind-HVACOperatingStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-Role", "label": "Role", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Class, s223:EnumerationKind-Role, s223:EnumerationKind"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind", "label": "Enumeration kind", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Class, s223:EnumerationKind"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Cooling", "label": "Role-Cooling", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#ThreeSpeedSetting-High", "label": "High", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-ThreeSpeedSetting"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingMode-Auto", "label": "Auto", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode, s223\nTypes: s223:EnumerationKind-HVACOperatingMode"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#ThreeSpeedSetting-Off", "label": "Off", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-ThreeSpeedSetting"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting", "label": "Three speed setting", "shape": "dot", "size": 15, "title": "Namespaces : http://www.w3.org/ns/shacl#NodeShape, s223\nTypes: s223:Class, s223:EnumerationKind-ThreeSpeedSetting"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#OccupancyStatus-Occupied", "label": "Occupied", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus, s223\nTypes: s223:EnumerationKind-OccupancyStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Exhaust", "label": "Role-Exhaust", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-Medium", "label": "Medium", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Medium, s223\nTypes: s223:Class, s223:EnumerationKind-Medium"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Concept", "label": "http://data.ashrae.org/standard223#Concept", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Concept"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-DayOfWeek", "label": "Day of Week", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Class, s223:EnumerationKind-DayOfWeek"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-HVAC", "label": "Domain-HVAC", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Domain, s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#RunStatus-On", "label": "On", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-RunStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Light-Infrared", "label": "Light-Infrared", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Medium-Light, s223\nTypes: s223:Medium-Light"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-Effectiveness", "label": "Effectiveness", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Class, s223:EnumerationKind-Effectiveness"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Plumbing", "label": "Domain-Plumbing", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-Substance", "label": "Substance", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Class, s223\nTypes: s223:Class, s223:EnumerationKind-Substance"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#OccupancyStatus-Unoccupied", "label": "Unoccupied", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-OccupancyStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Discharge", "label": "Role-Discharge", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Medium-Water", "label": "Medium-Water", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Medium-Water, s223\nTypes: s223:Class, s223:Medium-Water"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#PositionStatus-Open", "label": "Open", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-PositionStatus, s223\nTypes: s223:EnumerationKind-PositionStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode", "label": "HVAC system/equipment operating mode. The policy under which the system is operating.", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Class, s223:EnumerationKind-HVACOperatingMode"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-Direction", "label": "Direction", "shape": "dot", "size": 15, "title": "Namespaces : http://www.w3.org/ns/shacl#NodeShape, s223\nTypes: s223:Class, s223:EnumerationKind-Direction\nComment : This class has enumerated instances of Bidirectional, Inlet and Outlet used to qualify ConnectionPoints."}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Weekday-Friday", "label": "Friday", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:DayOfWeek-Weekday"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingStatus-Heating", "label": "Heating", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus, s223\nTypes: s223:EnumerationKind-HVACOperatingStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Medium-Glycol", "label": "Medium-Glycol", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Medium, s223\nTypes: s223:EnumerationKind-Medium"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Secondary", "label": "Role-Secondary", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-Role\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Weekend-Sunday", "label": "Sunday", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:DayOfWeek-Weekend"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-RunStatus", "label": "Run status", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-RunStatus\nTypes: s223:Class, s223:EnumerationKind-RunStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingStatus-Off", "label": "Off", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-HVACOperatingStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingMode-FanOnly", "label": "FanOnly", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-HVACOperatingMode"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223/1.0/vocab/enumeration", "label": "http://data.ashrae.org/standard223/1.0/vocab/enumeration", "shape": "dot", "size": 15, "title": "Namespaces : owl\nTypes: owl:Ontology"}, {"borderWidth": null, "group": 0, "id": "http://www.w3.org/ns/shacl#", "label": "http://www.w3.org/ns/shacl#", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#DayOfWeek-Weekday", "label": "Weekday", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#DayOfWeek-Weekday, s223\nTypes: s223:DayOfWeek-Weekday, s223:Class"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-Domain", "label": "EnumerationKind Domain", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Domain, s223\nTypes: s223:Class, s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingStatus-Ventilating", "label": "Ventilating", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-HVACOperatingStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-PositionStatus", "label": "Position status", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-PositionStatus, s223\nTypes: s223:Class, s223:EnumerationKind-PositionStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Water-ChilledWater", "label": "Water-Chilled water", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Medium-Water"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus", "label": "Occupancy status", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Class, s223:EnumerationKind-OccupancyStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-ConveyanceSystems", "label": "Domain-ConveyanceSystems", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Medium-Air", "label": "Medium-Air", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Medium, s223\nTypes: s223:EnumerationKind-Medium"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Particulate-PM10.0", "label": "Particulate-PM10.0", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Substance-Particulate, s223\nTypes: s223:Substance-Particulate"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Primary", "label": "Role-Primary", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-Role\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#ThreeSpeedSetting-Medium", "label": "Medium", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-ThreeSpeedSetting"}, {"borderWidth": null, "group": 0, "id": "n9c5ad20435944d4496e89100850b5d3fb2", "label": "n9c5ad20435944d4496e89100850b5d3fb2", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:hasRole"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#hasRole", "label": "http://data.ashrae.org/standard223#hasRole", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:hasRole"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Direction-Inlet", "label": "Direction-Inlet", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Direction\nComment : One member of the enumerated valid values to characterize the hasDirection property. It is an instance of the Direction class."}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Particulate-PM1.0", "label": "Particulate-PM1.0", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Substance-Particulate, s223\nTypes: s223:Substance-Particulate"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Electrical", "label": "Domain-Electrical", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Domain, s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Heating", "label": "Role-Heating", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-Role\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Return", "label": "Role-Return", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-Role\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Supply", "label": "Role-Supply", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-Role\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Substance-Soot", "label": "Substance-Soot", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Substance, s223\nTypes: s223:EnumerationKind-Substance"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#RunStatus-Unknown", "label": "Unknown", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-RunStatus\nTypes: s223:EnumerationKind-RunStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Medium-Electricity", "label": "Electricity", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Medium-Electricity, s223\nTypes: s223:Class, s223:Medium-Electricity"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingMode-HeatOnly", "label": "HeatOnly", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode, s223\nTypes: s223:EnumerationKind-HVACOperatingMode"}, {"borderWidth": null, "group": 0, "id": "n9c5ad20435944d4496e89100850b5d3fb1", "label": "n9c5ad20435944d4496e89100850b5d3fb1", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Generator", "label": "Role-Generator", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Recirculating", "label": "Role-Recirculating", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-Role\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Fire", "label": "Domain-Fire", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "Created with TopBraid Composer", "label": "Created with TopBraid Composer", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Substance-Particulate", "label": "Particulate", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Class, s223:EnumerationKind-Substance, s223:Substance-Particulate"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Lighting", "label": "Domain-Lighting", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Domain, s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingMode-Off", "label": "Off", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode, s223\nTypes: s223:EnumerationKind-HVACOperatingMode"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#ThreeSpeedSetting-Low", "label": "Low", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-ThreeSpeedSetting"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Networking", "label": "Domain-Networking", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Domain, s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingStatus-Dehumidifying", "label": "Dehumidifying", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-HVACOperatingStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Weekday-Wednesday", "label": "Wednesday", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#DayOfWeek-Weekday, s223\nTypes: s223:DayOfWeek-Weekday"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Substance-CO2", "label": "Substance-CO2", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Substance, s223\nTypes: s223:EnumerationKind-Substance"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingMode-CoolOnly", "label": "CoolOnly", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode, s223\nTypes: s223:EnumerationKind-HVACOperatingMode"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Weekday-Monday", "label": "Monday", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:DayOfWeek-Weekday"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Direction-Outlet", "label": "Direction-Outlet", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Direction\nComment : One member of the enumerated valid values to characterize the hasDirection property. It is an instance of the Direction class."}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Substance-CO", "label": "Substance-CO", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Substance, s223\nTypes: s223:EnumerationKind-Substance"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Water-HotWater", "label": "Water-Hot water", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Medium-Water"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Light-Visible", "label": "Light-Visible", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:Medium-Light"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#RunStatus-Off", "label": "Off", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-RunStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Weekday-Tuesday", "label": "Tuesday", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:DayOfWeek-Weekday"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Refrigeration", "label": "Domain-Refrigeration", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#HVACOperatingStatus-Cooling", "label": "Cooling", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-HVACOperatingStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Security", "label": "Domain-Security", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Occupancy", "label": "Domain-Occupancy", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#PositionStatus-Closed", "label": "Closed", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-PositionStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Particulate-PM2.5", "label": "Particulate-PM2.5", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#Substance-Particulate, s223\nTypes: s223:Substance-Particulate"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Weekend-Saturday", "label": "Saturday", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:DayOfWeek-Weekend"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Direction-Bidirectional", "label": "Direction-Bidirectional", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Direction\nComment : One of the  set of enumeration values for the hasDirection property used to characterize the direction of flow associated with an instance of a ConnectionPoint. The value Bidirectional indicates that the direction of flow is not fixed in one direction. It depends on the status of some other part of the system, such as a valve position, that is expected to change during operation"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Effectiveness-Active", "label": "Active", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:EnumerationKind-Effectiveness"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223/1.0/model/all", "label": "http://data.ashrae.org/standard223/1.0/model/all", "shape": "dot", "size": 15, "title": "Namespaces : \nTypes: "}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#OccupancyStatus-Unknown", "label": "Unknown", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus, s223\nTypes: s223:EnumerationKind-OccupancyStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#PositionStatus-Unknown", "label": "Unknown", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-PositionStatus, s223\nTypes: s223:EnumerationKind-PositionStatus"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Weekday-Thursday", "label": "Thursday", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#DayOfWeek-Weekday, s223\nTypes: s223:DayOfWeek-Weekday"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Domain-Physical", "label": "Domain-Physical", "shape": "dot", "size": 15, "title": "Namespaces : http://data.ashrae.org/standard223#EnumerationKind-Domain, s223\nTypes: s223:EnumerationKind-Domain"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#Role-Load", "label": "Role-Load", "shape": "dot", "size": 15, "title": "Namespaces : s223, http://data.ashrae.org/standard223#EnumerationKind-Role\nTypes: s223:EnumerationKind-Role"}, {"borderWidth": null, "group": 0, "id": "http://data.ashrae.org/standard223#SetpointAspect", "label": "http://data.ashrae.org/standard223#SetpointAspect", "shape": "dot", "size": 15, "title": "Namespaces : s223\nTypes: s223:SetpointAspect"}, {"borderWidth": null, "font": {"size": 20}, "group": 1, "id": "bob:legend/Equipment", "label": "Legend / Equipment", "physics": false, "shape": "square", "size": 20, "widthConstraint": 500, "x": 2000, "y": "-900px"}, {"borderWidth": null, "font": {"size": 20}, "group": 2, "id": "bob:legend/Connection", "label": "Legend / Connection", "physics": false, "shape": "diamond", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-800px"}, {"borderWidth": null, "font": {"size": 20}, "group": 3, "id": "bob:legend/InletConnectionPoint", "label": "Legend / InletConnectionPoint", "physics": false, "shape": "triangle", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-700px"}, {"borderWidth": null, "font": {"size": 20}, "group": 4, "id": "bob:legend/OutletConnectionPoint", "label": "Legend / OutletConnectionPoint", "physics": false, "shape": "triangleDown", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": null, "font": {"size": 20}, "group": 4, "id": "bob:legend/FunctionBlock", "label": "Legend / FunctionBlock|Producer", "physics": false, "shape": "star", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": 2, "font": {"size": 20}, "group": 4, "id": "bob:legend/DomainSpace", "label": "Legend / DomainSpace", "physics": false, "shape": "box", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-600px"}, {"borderWidth": null, "font": {"size": 20}, "group": 5, "id": "bob:legend/qudt", "label": "Legend / qudt", "physics": false, "shape": "star", "size": 10, "widthConstraint": 500, "x": 2000, "y": "-500px"}, {"borderWidth": null, "font": {"size": 20}, "group": 0, "id": "bob:legend/Default", "label": "Legend / Default", "physics": false, "shape": "dot", "size": 15, "widthConstraint": 500, "x": 2000, "y": "-1000px"}]);
+                  edges = new vis.DataSet([{"from": "http://data.ashrae.org/standard223#EnumerationKind-Role", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingMode-Auto", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode"}, {"from": "http://data.ashrae.org/standard223#OccupancyStatus-Occupied", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Medium", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Medium"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#Concept"}, {"from": "http://data.ashrae.org/standard223#DayOfWeek-Weekend", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind-DayOfWeek"}, {"from": "http://data.ashrae.org/standard223#Domain-HVAC", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#Light-Infrared", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Medium-Light"}, {"from": "http://data.ashrae.org/standard223#Role-Exhaust", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#Medium-Water", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Medium-Water"}, {"from": "http://data.ashrae.org/standard223#PositionStatus-Open", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-PositionStatus"}, {"from": "http://data.ashrae.org/standard223#Domain-Plumbing", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingStatus-Heating", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus"}, {"from": "http://data.ashrae.org/standard223#Medium-Glycol", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Medium"}, {"from": "http://data.ashrae.org/standard223#Role-Secondary", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-RunStatus", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-RunStatus"}, {"from": "http://data.ashrae.org/standard223/1.0/vocab/enumeration", "title": "http://www.w3.org/2002/07/owl#imports", "to": "http://www.w3.org/ns/shacl#"}, {"from": "http://data.ashrae.org/standard223#DayOfWeek-Weekday", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekday"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Domain", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#Medium-Water", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind-Medium"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-PositionStatus", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-PositionStatus"}, {"from": "http://data.ashrae.org/standard223#DayOfWeek-Weekday", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind-DayOfWeek"}, {"from": "http://data.ashrae.org/standard223#Medium-Air", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Medium"}, {"from": "http://data.ashrae.org/standard223#Particulate-PM10.0", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Substance-Particulate"}, {"from": "http://data.ashrae.org/standard223#Role-Primary", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "n9c5ad20435944d4496e89100850b5d3fb2", "title": "http://www.w3.org/ns/shacl#path", "to": "http://data.ashrae.org/standard223#hasRole"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#RunStatus-On", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-RunStatus"}, {"from": "http://data.ashrae.org/standard223#Domain-ConveyanceSystems", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-RunStatus", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#Particulate-PM1.0", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Substance-Particulate"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingStatus-Off", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode"}, {"from": "n9c5ad20435944d4496e89100850b5d3fb2", "title": "http://www.w3.org/ns/shacl#class", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#Domain-Electrical", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#Role-Heating", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#Role-Return", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#Role-Supply", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#Substance-Soot", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Substance"}, {"from": "http://data.ashrae.org/standard223#RunStatus-Unknown", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-RunStatus"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#Medium-Electricity", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Medium-Electricity"}, {"from": "http://data.ashrae.org/standard223#ThreeSpeedSetting-Medium", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingMode-HeatOnly", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-DayOfWeek", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Effectiveness", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Effectiveness"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Domain", "title": "http://www.w3.org/ns/shacl#property", "to": "n9c5ad20435944d4496e89100850b5d3fb1"}, {"from": "http://data.ashrae.org/standard223#Weekday-Friday", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekday"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Domain", "title": "http://www.w3.org/ns/shacl#property", "to": "n9c5ad20435944d4496e89100850b5d3fb2"}, {"from": "http://data.ashrae.org/standard223#Role-Recirculating", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#DayOfWeek-Weekend", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekend"}, {"from": "http://data.ashrae.org/standard223/1.0/vocab/enumeration", "title": "http://www.w3.org/2002/07/owl#versionInfo", "to": "Created with TopBraid Composer"}, {"from": "http://data.ashrae.org/standard223#Medium-Light", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Medium-Light"}, {"from": "http://data.ashrae.org/standard223#Substance-Particulate", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind-Substance"}, {"from": "http://data.ashrae.org/standard223#Domain-Lighting", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Direction", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Direction"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingMode-Off", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-DayOfWeek", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-DayOfWeek"}, {"from": "http://data.ashrae.org/standard223#Domain-Networking", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#Weekend-Sunday", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekend"}, {"from": "http://data.ashrae.org/standard223#Weekday-Wednesday", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekday"}, {"from": "http://data.ashrae.org/standard223#Medium-Electricity", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind-Medium"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#Substance-CO2", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Substance"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingMode-CoolOnly", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode"}, {"from": "http://data.ashrae.org/standard223#Substance-CO", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Substance"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingMode-FanOnly", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingMode"}, {"from": "http://data.ashrae.org/standard223#Water-HotWater", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Medium-Water"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Role", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#Medium-Light", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind-Medium"}, {"from": "http://data.ashrae.org/standard223#Weekday-Monday", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekday"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting"}, {"from": "http://data.ashrae.org/standard223#Water-ChilledWater", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Medium-Water"}, {"from": "http://data.ashrae.org/standard223#ThreeSpeedSetting-Off", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Substance", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Substance"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Substance", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingStatus-Ventilating", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Medium", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingStatus-Dehumidifying", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus"}, {"from": "http://data.ashrae.org/standard223#Particulate-PM2.5", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Substance-Particulate"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-PositionStatus", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#Light-Visible", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Medium-Light"}, {"from": "http://data.ashrae.org/standard223#Role-Cooling", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#Direction-Inlet", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Direction"}, {"from": "http://data.ashrae.org/standard223#Domain-Security", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#Domain-Fire", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus"}, {"from": "http://data.ashrae.org/standard223#OccupancyStatus-Unoccupied", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus"}, {"from": "http://data.ashrae.org/standard223#Domain-Refrigeration", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223/1.0/vocab/enumeration", "title": "http://www.w3.org/2002/07/owl#imports", "to": "http://data.ashrae.org/standard223/1.0/model/all"}, {"from": "http://data.ashrae.org/standard223#OccupancyStatus-Unknown", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus"}, {"from": "http://data.ashrae.org/standard223#Weekend-Saturday", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekend"}, {"from": "http://data.ashrae.org/standard223#PositionStatus-Unknown", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-PositionStatus"}, {"from": "http://data.ashrae.org/standard223#Weekday-Thursday", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekday"}, {"from": "n9c5ad20435944d4496e89100850b5d3fb1", "title": "http://www.w3.org/ns/shacl#path", "to": "http://data.ashrae.org/standard223#hasRole"}, {"from": "http://data.ashrae.org/standard223#Role-Discharge", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#ThreeSpeedSetting-High", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting"}, {"from": "http://data.ashrae.org/standard223#Substance-Particulate", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#Substance-Particulate"}, {"from": "n9c5ad20435944d4496e89100850b5d3fb1", "title": "http://www.w3.org/ns/shacl#class", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#Domain-Physical", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#Effectiveness-Active", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Effectiveness"}, {"from": "http://data.ashrae.org/standard223#Role-Load", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#HVACOperatingStatus-Cooling", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus"}, {"from": "http://data.ashrae.org/standard223#ThreeSpeedSetting-Low", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-ThreeSpeedSetting"}, {"from": "http://data.ashrae.org/standard223#PositionStatus-Closed", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-PositionStatus"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-HVACOperatingStatus"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Direction", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#Domain-Occupancy", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Domain"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Effectiveness", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#Direction-Bidirectional", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Direction"}, {"from": "http://data.ashrae.org/standard223#RunStatus-Off", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-RunStatus"}, {"from": "http://data.ashrae.org/standard223#Role-Generator", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Role"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-OccupancyStatus", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#SetpointAspect"}, {"from": "http://data.ashrae.org/standard223#EnumerationKind-Domain", "title": "http://www.w3.org/2000/01/rdf-schema#subClassOf", "to": "http://data.ashrae.org/standard223#EnumerationKind"}, {"from": "http://data.ashrae.org/standard223#Direction-Outlet", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#EnumerationKind-Direction"}, {"from": "http://data.ashrae.org/standard223#Weekday-Tuesday", "title": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "to": "http://data.ashrae.org/standard223#DayOfWeek-Weekday"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

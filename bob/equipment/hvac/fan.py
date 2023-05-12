@@ -9,8 +9,8 @@ from bob.properties.ratio import Percent, PercentCommand
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
+    Electricity_600V_3Ph_60HzInletConnectionPoint,
+    Electricity_600V_3Ph_60HzOutletConnectionPoint,
 )
 from ...core import (
     BOB,
@@ -31,7 +31,7 @@ from ..electricity.vfd import VFD
 _namespace = BOB
 
 fan_template = {
-    "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
+    "cp": {"electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint},
     "properties": {
         ("speedRatio", PercentCommand): {},
         ("staticPressure", Pressure): {"unit": UNIT.PA},
@@ -90,8 +90,8 @@ starter_addon_template = {
         ("starter", MotorStarter): {
             "config": {
                 "cp": {
-                    "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
-                    "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
+                    "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+                    "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
                 }
             },
         }
@@ -117,7 +117,7 @@ class FanWithStarter(Fan):
 
         super().__init__(_config, **kwargs)
         self.onOffCommand = self["starter"]["onOffCommand"]
-        self.onOffStatus = self["starter"]["starter.current_sensor"].observesProperty
+        self.onOffStatus = self["starter"]["starter.current_sensor"].observes
         self["starter"].actuatesProperty = self["speedRatio"]
         self["starter"].electricalOutlet >> self.electricalInlet
 

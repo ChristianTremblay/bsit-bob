@@ -7,8 +7,8 @@ from bob.equipment.electricity.vfd import VFD
 from bob.properties.ratio import PercentCommand
 
 from ...connections.electricity import (
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
+    Electricity_600V_3Ph_60HzInletConnectionPoint,
+    Electricity_600V_3Ph_60HzOutletConnectionPoint,
 )
 from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
 from ...core import (
@@ -33,7 +33,7 @@ from ...properties import (
 _namespace = BOB
 
 pump_template = {
-    "cp": {"electricalInlet": Electricity_575V_60HzInletConnectionPoint},
+    "cp": {"electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint},
     "properties": {
         ("head_pressure", Pressure): {"unit": UNIT.PSI},
         ("amps", Amps): {},
@@ -65,8 +65,8 @@ starter_addon_template = {
         ("starter", MotorStarter): {
             "config": {
                 "cp": {
-                    "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
-                    "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
+                    "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+                    "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
                 }
             },
         }
@@ -92,7 +92,7 @@ class PumpWithStarter(Pump):
 
         super().__init__(_config, **kwargs)
         self.onOffCommand = self["starter"]["onOffCommand"]
-        self.onOffStatus = self["starter"]["starter.current_sensor"].observesProperty
+        self.onOffStatus = self["starter"]["starter.current_sensor"].observes
         self["starter"].actuatesProperty = self["speedRatio"]
         self["starter"].electricalOutlet >> self.electricalInlet
 
