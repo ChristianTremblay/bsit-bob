@@ -1,9 +1,11 @@
 # Controller
-from ...connections.electricity import (
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint as AnalogInput,
 )
-from ...connections.electricity import (
+from ...connections.controlsignal import (
     ModulationSignalOutletConnectionPoint as AnalogOutput,
 )
-from ...connections.electricity import OnOffSignalInletConnectionPoint as BinaryInput
-from ...connections.electricity import OnOffSignalOutletConnectionPoint as BinaryOutput
+from ...connections.controlsignal import OnOffSignalInletConnectionPoint as BinaryInput
+from ...connections.controlsignal import (
+    OnOffSignalOutletConnectionPoint as BinaryOutput,
+)

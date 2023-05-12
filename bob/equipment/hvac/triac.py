@@ -7,8 +7,10 @@ from bob.properties.electricity import Amps, ElectricPowerkW
 from bob.properties.states import OnOffCommand
 
 from ...connections.electricity import (
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
+    Electricity_600V_3Ph_60HzInletConnectionPoint,
+    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+)
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
 )
 from ...core import BOB, P223, S223, Equipment
@@ -18,8 +20,8 @@ _namespace = BOB
 # TRIAC
 Triac_template = {
     "cp": {
-        "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
+        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
         "onOffSignalInlet": ModulationSignalInletConnectionPoint,
     },
     "properties": {

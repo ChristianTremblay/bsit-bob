@@ -4,7 +4,14 @@ import subprocess
 
 import click
 import pyvis
-from rdflib import Graph
+from rdflib import Graph, Literal
+
+from .rdf2html_classification import (
+    bacnet_labels,
+    is_wanted_node,
+    propgraph_labels,
+    s223_types,
+)
 
 g = Graph()
 nodes = {}
@@ -12,7 +19,8 @@ nodes = {}
 
 def parse_rdf(ttl_file):
     global g
-    with open(ttl_file, "r") as ttl:
+    assert os.path.exists(ttl_file)
+    with open(os.path.abspath(ttl_file), "r") as ttl:
         lines = ttl.read()
     graph = g.parse(data=lines, format="turtle")
     return graph
@@ -97,18 +105,20 @@ class Node:
     def __init__(self, s, p=None, o=None):
         self.ns = set()
         self.types = set()
-        self.aspects = set()
-        self.uri = None
         self.label = None
         self.comment = None
         self.value = None
-        self.medium = set()
         self.uri = str(s)
-        self.quantityKind = set()
-        self.enumerationKind = set()
-        self.domain = set()
-        self.unit = set()
-        self.bacnet = {}
+
+        self.properties = {}
+        self.properties["aspects"] = set()
+        self.properties["medium"] = set()
+        self.properties["quantityKind"] = set()
+        self.properties["enumerationKind"] = set()
+        self.properties["domain"] = set()
+        self.properties["unit"] = set()
+        self.properties["bacnet"] = {}
+        self.properties["direction"] = set()
 
         if p and o:
             if "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" in p:
@@ -131,31 +141,11 @@ class Node:
 
     @property
     def group_name(self):
-        if "s223:Equipment" in self.types:
-            return "Equipment"
-        elif "s223:Connection" in self.types:
-            return "Connection"
-        elif "s223" in self.types:
-            return "s223"
-        elif (
-            "s223:InletConnectionPoint" in self.types
-            or "s223:FunctionInput" in self.types
-            or "p223:ProducerInput" in self.types
-            or "s223:BidirectionalConnectionPoint" in self.types
-        ):
-            return "InletConnectionPoint"
-        elif (
-            "s223:OutletConnectionPoint" in self.types
-            or "s223:FunctionOutput" in self.types
-            or "p223:ProducerOutput" in self.types
-        ):
-            return "OutletConnectionPoint"
-        elif "p223:Producer" in self.types or "s223:FunctionBlock" in self.types:
-            return "FunctionBlock"
-        elif "s223:DomainSpace" in self.types or "s223:PhysicalSpace" in self.types:
-            return "DomainSpace"
-        else:
-            return "Default"
+        for k, v in s223_types.items():
+            for each in v:
+                if each in self.types:
+                    return k
+        return "Default"
 
     @property
     def group(self):
@@ -179,76 +169,58 @@ class Node:
 
     @property
     def title(self):
+        _bubble = ""
         _n = ", ".join(self.ns)
         _t = ", ".join(self.types)
-        _bubble = f"Namespaces : {_n}\nTypes: {_t}"
+        if self.uri:
+            _bubble += f"URI : {self.uri}\n"
+        _bubble += f"Namespaces : {_n}\nTypes: {_t}"
         if self.comment:
             _bubble += f"\nComment : {self.comment}"
         if self.value:
             _bubble += f"\nValue : {self.value}"
-        if self.aspects:
-            _a = ", ".join(self.aspects)
-            _bubble += f"\nAspects : {_a}"
-        if self.medium:
-            _m = ", ".join(self.medium)
-            _bubble += f"\nMedium : {_m}"
-        if self.quantityKind:
-            _q = ", ".join(self.quantityKind)
-            _bubble += f"\nQuantityKind : {_q}"
-        if self.enumerationKind:
-            _k = ", ".join(self.enumerationKind)
-            _bubble += f"\nEnumerationKind : {_k}"
-        if self.domain:
-            _d = ", ".join(self.domain)
-            _bubble += f"\nDomain : {_d}"
-        if self.unit:
-            _u = ", ".join(self.unit)
-            _bubble += f"\nUnit : {_u}"
-        if self.bacnet:
-            for k, v in self.bacnet.items():
+
+        for k, v in self.properties.items():
+            try:
+                if v:
+                    _v = ", ".join(v)
+                    _bubble += f"\n{k} : {_v}"
+            except TypeError as error:
+                print(f"Error processing {k,v}")
+
+        if self.properties["bacnet"]:
+            for k, v in self.properties["bacnet"].items():
                 _bubble += f"\n{k} : {v}"
 
         return _bubble
 
     def add_info(self, s, p, o):
+        def format_value(_o):
+            if isinstance(_o, Literal):
+                _v = str(_o)
+            else:
+                _v = prefix(str(_o))[1]
+            # print(_o, _v)
+            return _v
+
         if "label" in p:
             self.label = str(o)
         elif "comment" in p:
-            self.comment = o
+            self.comment = str(o)
         elif "ns#type" in p:
             self.namespace_and_type(o)
-        elif "hasValue" in p:
-            self.value = str(o)
-        elif "hasAspect" in p:
-            self.aspects.add(prefix(str(o))[1])
-        elif "hasMedium" in p or "ofSubstance" in p or "ofMedium" in p:
-            self.medium.add(prefix(str(o))[1])
-        elif "hasQuantityKind" in p:
-            self.quantityKind.add(prefix(str(o))[1])
-        elif "hasEnumerationKind" in p:
-            self.enumerationKind.add(prefix(str(o))[1])
-        elif "hasDomain" in p:
-            self.domain.add(prefix(str(o))[1])
-        elif "qudt/unit" in p or "vocab/unit" in p:
-            self.unit.add(prefix(str(o))[1])
-        elif "http://data.ashrae.org/bacnet/2020#objectInstance" in p:
-            self.bacnet["objectinstance"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#objectType" in p:
-            self.bacnet["object_type"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#objectName" in p:
-            self.bacnet["object_name"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#description" in p:
-            self.bacnet["description"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#address" in p:
-            self.bacnet["address"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#deviceName" in p:
-            self.bacnet["deviceName"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#deviceId" in p:
-            self.bacnet["deviceId"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#vendorId" in p:
-            self.bacnet["vendorId"] = str(o)
-        elif "http://data.ashrae.org/bacnet/2020#networkNumber" in p:
-            self.bacnet["networkNumber"] = str(o)
+
+        for k, v in propgraph_labels.items():
+            for each in v:
+                if each in p:
+                    if k in self.properties.keys():
+                        self.properties[k].add(format_value(o))
+                    else:
+                        # print(f"adding direct node prop : {k} | {v} | {each}")
+                        setattr(self, k, format_value(o))
+        for k, v in bacnet_labels.items():
+            if v in p:
+                self.properties["bacnet"][k] = format_value(o)
 
 
 def prepare_nodes(g):
@@ -260,31 +232,7 @@ def prepare_nodes(g):
         else:
             # print(f"Modifying {s} -> {nodes[s].uri}")
             nodes[s].add_info(s, p, o)
-        if (
-            o not in nodes.keys()
-            and "label" not in p
-            and "comment" not in p
-            and "ns#type" not in p
-            and "hasValue" not in p
-            and "hasAspect" not in p
-            and "hasMedium" not in p
-            and "hasQuantityKind" not in p
-            and "ofMedium" not in p
-            and "ofSubstance" not in p
-            and "hasEnumerationKind" not in p
-            and "hasDomain" not in p
-            and "vocab/unit" not in p
-            and "qudt/unit" not in p
-            and "2020#objectInstance" not in p
-            and "2020#objectType" not in p
-            and "2020#objectName" not in p
-            and "2020#description" not in p
-            and "2020#address" not in p
-            and "2020#deviceName" not in p
-            and "2020#deviceId" not in p
-            and "2020#vendorId" not in p
-            and "2020#networkNumber" not in p
-        ):
+        if o not in nodes.keys() and is_wanted_node(p):
             nodes[o] = Node(o)
 
 

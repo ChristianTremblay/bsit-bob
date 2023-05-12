@@ -17,9 +17,9 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import (
-    Electricity_120V_60HzConnection,
-    Electricity_120V_60HzInletConnectionPoint,
-    Electricity_120V_60HzOutletConnectionPoint,
+    Electricity_120V_1Ph_60HzConnection,
+    Electricity_120V_1Ph_60HzInletConnectionPoint,
+    Electricity_120V_1Ph_60HzOutletConnectionPoint,
     ModulationSignalInletConnectionPoint,
     OnOffSignalInletConnectionPoint,
     RS485BidirectionalConnectionPoint,
@@ -150,10 +150,12 @@ vav_system_template = {
         },
         ("HTG-COIL", HotWaterCoil): {"comment": "Hot Water Coil"},
         ("HTG-VLV", TwoWayActuatedProportionalValve): {"config": valve2w_template},
-        ("FAN", Fan): {"electricalInlet": Electricity_120V_60HzInletConnectionPoint},
+        ("FAN", Fan): {
+            "electricalInlet": Electricity_120V_1Ph_60HzInletConnectionPoint
+        },
         ("FAN-STARTER", MotorStarter): {
-            "electricalInlet": Electricity_120V_60HzInletConnectionPoint,
-            "electricalOutlet": Electricity_120V_60HzOutletConnectionPoint,
+            "electricalInlet": Electricity_120V_1Ph_60HzInletConnectionPoint,
+            "electricalOutlet": Electricity_120V_1Ph_60HzOutletConnectionPoint,
         },
     },
 }

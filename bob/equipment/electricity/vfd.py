@@ -13,12 +13,16 @@ from bob.sensor.motion import PositionSensor
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
-    EthernetBidirectionalConnectionPoint,
+    Electricity_600V_3Ph_60HzInletConnectionPoint,
+    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+)
+from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
+)
+from ...connections.network import (
     RS485BidirectionalConnectionPoint,
+    EthernetBidirectionalConnectionPoint,
 )
 from ...core import (
     BOB,
@@ -64,8 +68,8 @@ class VFD_FB(FunctionBlock):
 
 vfd_template = {
     "cp": {
-        "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_575V_60HzOutletConnectionPoint,
+        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
         "ethernet_port": EthernetBidirectionalConnectionPoint,
         "mstp_port": RS485BidirectionalConnectionPoint,
         "speedrefInlet": ModulationSignalInletConnectionPoint,
@@ -114,9 +118,10 @@ class VFD(_VFD):
 
         # Feed the controller
         self.executes = self["controller_function_block"]
-        self["speed_ref_voltage_sensor"].observedProperty >> self[
-            "controller_function_block"
-        ].speed_ref
+        (
+            self["speed_ref_voltage_sensor"].observedProperty
+            >> self["controller_function_block"].speed_ref
+        )
         self["controller_function_block"].amps_load << self.amps
         self["controller_function_block"].volts_load << self.volts
 

@@ -3,7 +3,7 @@ from typing import Any
 from rdflib import URIRef
 
 from bob import core
-from bob.connections.electricity import OnOffSignalOutletConnectionPoint
+from bob.connections.controlsignal import OnOffSignalOutletConnectionPoint
 from bob.producer.causality import Causality
 from bob.properties.ratio import Percent
 from bob.properties.states import DaylightDetected, OnOffStatus

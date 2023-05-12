@@ -46,7 +46,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 mainentry_panel_config = {
     "params": {
         "label": "Main Entry Panel",
-        "comment": "Main Entry Panel of Building at 575V",
+        "comment": "Main Entry Panel of Building at 600V_3Ph",
         "voltage": "575",
     },
     "sensors": {},
@@ -116,13 +116,13 @@ def test_electrical_entry():
     main_panel = ThreePhaseDistributionPanel(config=mainentry_panel_config)
     transformer_120_240 = Transformer(
         label="TX-1",
-        electricalInlet=Electricity_575V_60HzInletConnectionPoint,
-        electricalOutlet=Electricity_120V_240V_60HzOutletConnectionPoint,
+        electricalInlet=Electricity_600V_3Ph_60HzInletConnectionPoint,
+        electricalOutlet=Electricity_240V_120V_1Ph_60HzOutletConnectionPoint,
     )
 
     dist_panel = SinglePhaseDistributionPanel(config=distribution_panel_config)
-    # hq = Electricity_120V_240V_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
-    hq_600 = Electricity_575V_60HzConnection(label="Hydro-Québec", comment="600V")
+    # hq = Electricity_240V_120V_1Ph_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
+    hq_600 = Electricity_600V_3Ph_60HzConnection(label="Hydro-Québec", comment="600V")
     hq_600 + ElectricalPhaseIdentifier.ABC
     hq_600 >> main_panel["MainBreaker"]
     main_panel["CB#3"] >> transformer_120_240 >> dist_panel["MainBreaker"]
@@ -130,7 +130,7 @@ def test_electrical_entry():
     building_electrical_meter = ThreePhaseElectricalMeter(
         label="Building Meter",
         comment="Building Electrical Meter (M3)",
-        medium=Electricity.AC575V_60Hz,
+        medium=Electricity.AC600V_3Ph_60Hz,
     )
     # building_electrical_meter.hasPhysicalLocation = ps.bldg
     building_electrical_meter.set_voltage_measurement_location(main_panel["CB#4"])

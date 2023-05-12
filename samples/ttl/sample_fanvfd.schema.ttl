@@ -47,17 +47,8 @@ bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
     rdfs:label "bob.equipment.hvac.damper.ElectricalActuatedProportionalDamper" ;
     rdfs:subClassOf s223:System .
 
-bob:Electricity_24V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_24V_60HzConnectionPoint" .
-
-bob:Electricity_575V_60HzConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_575V_60HzConnectionPoint" .
-
-bob:Electricity_575V_60HzSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.Electricity_575V_60HzSystemConnectionPoint" .
-
 bob:EthernetConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.EthernetConnectionPoint" .
+    rdfs:label "bob.connections.network.EthernetConnectionPoint" .
 
 bob:Flow a rdfs:Class ;
     rdfs:label "bob.properties.flow.Flow" ;
@@ -85,14 +76,14 @@ bob:HotWaterConnectionPoint a rdfs:Class ;
 
 bob:InletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
-        "bob.connections.electricity.Electricity_575V_60HzSystemInletConnectionPoint",
+        "bob.connections.electricity.Electricity_600V_3Ph_60HzSystemInletConnectionPoint",
         "bob.core.InletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:Electricity_575V_60HzSystemConnectionPoint,
+    rdfs:subClassOf s223:Electricity_600V_3Ph_60HzSystemConnectionPoint,
+        bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint .
 
 bob:ModulationSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ModulationSignalConnectionPoint" .
+    rdfs:label "bob.connections.controlsignal.ModulationSignalConnectionPoint" .
 
 bob:Nm a rdfs:Class ;
     rdfs:label "bob.properties.force.Nm" ;
@@ -102,7 +93,7 @@ bob:Nm a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:OnOffSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.OnOffSignalConnectionPoint" .
+    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" .
 
 bob:OutletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
@@ -146,7 +137,7 @@ bob:RPM a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:RS485ConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.RS485ConnectionPoint" .
+    rdfs:label "bob.connections.network.RS485ConnectionPoint" .
 
 bob:Temperature a rdfs:Class ;
     rdfs:label "bob.properties.temperature.Temperature" ;
@@ -377,12 +368,12 @@ p223:Analog-Unknown a p223:Analog-Unknown,
         s223:EnumerationKind .
 
 p223:AnalogInput a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ModulationSignalInletConnectionPoint" ;
+    rdfs:label "bob.connections.controlsignal.ModulationSignalInletConnectionPoint" ;
     rdfs:subClassOf s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint .
 
 p223:AnalogOutput a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.ModulationSignalOutletConnectionPoint" ;
+    rdfs:label "bob.connections.controlsignal.ModulationSignalOutletConnectionPoint" ;
     rdfs:subClassOf s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint .
 
@@ -411,12 +402,12 @@ p223:Binary-StartStop a p223:Binary-StartStop,
         s223:EnumerationKind .
 
 p223:BinaryInput a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.OnOffSignalInletConnectionPoint" ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalInletConnectionPoint" ;
     rdfs:subClassOf s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint .
 
 p223:BinaryOutput a rdfs:Class ;
-    rdfs:label "bob.connections.electricity.OnOffSignalOutletConnectionPoint" ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalOutletConnectionPoint" ;
     rdfs:subClassOf s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint .
 

@@ -6,7 +6,7 @@ from bob.properties.electricity import ElectricPower
 
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    Electricity_120V_60HzInletConnectionPoint,
+    Electricity_120V_1Ph_60HzInletConnectionPoint,
 )
 from ...connections.light import LightVisibleOutletConnectionPoint
 from ...core import BOB, P223, S223, Equipment

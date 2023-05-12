@@ -3,11 +3,11 @@ from pathlib import Path
 from header import sample_header
 
 from bob.connections.electricity import (
-    Electricity_120V_60HzInletConnectionPoint,
-    Electricity_575V_60HzInletConnectionPoint,
-    Electricity_575V_60HzOutletConnectionPoint,
-    EthernetBidirectionalConnectionPoint,
+    Electricity_120V_1Ph_60HzInletConnectionPoint,
+    Electricity_600V_3Ph_60HzInletConnectionPoint,
+    Electricity_600V_3Ph_60HzOutletConnectionPoint,
 )
+from bob.connections.network import EthernetBidirectionalConnectionPoint
 from bob.core import UNIT, Role, bind_model_namespace, data_graph, dump, schema_graph
 from bob.equipment.architectural import Window
 from bob.equipment.electricity.starter import MotorStarter
@@ -70,7 +70,7 @@ ahu_template = {
     "equipment": {
         ("RF", Fan): {
             "comment": "Return Air Fan",
-            "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
+            "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
             "hasRole": Role.Return,
         },
         ("RF_VFD", VFD): {
@@ -78,7 +78,7 @@ ahu_template = {
         },
         ("SF", Fan): {
             "comment": "Supply Air Fan",
-            "electricalInlet": Electricity_575V_60HzInletConnectionPoint,
+            "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
             "hasRole": Role.Supply,
         },
         ("SF_Starter", MotorStarter): {
