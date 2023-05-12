@@ -37,110 +37,165 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 bacnet_references:00001 a bacnet:Device,
-        p223:NetworkProfile ;
+        s223:Controller,
+        s223:Equipment ;
     rdfs:label "CGM-2-004" ;
-    bacnet:address 4 ;
-    bacnet:deviceId 5204 ;
-    bacnet:deviceName "CGM-2-004" ;
-    bacnet:networkNumber 2 ;
-    bacnet:vendorId 5 ;
+    bacnet:hasObject bacnet_references:00002,
+        bacnet_references:00007,
+        bacnet_references:00008,
+        bacnet_references:00009,
+        bacnet_references:00012,
+        bacnet_references:00013,
+        bacnet_references:00014 ;
     rdfs:comment "AHU Controller" .
 
-bacnet_references:00002 a bacnet:Device,
-        p223:NetworkProfile ;
-    rdfs:label "CVM-2-005" ;
-    bacnet:address 5 ;
-    bacnet:deviceId 5205 ;
-    bacnet:deviceName "CVM-2-005" ;
-    bacnet:networkNumber 2 ;
-    bacnet:vendorId 5 ;
-    rdfs:comment "VAV for Zone 1" .
+bacnet_references:00002 a bacnet:DeviceObject,
+        bacnet:Object ;
+    bacnet:object-identifier "device,5204" ;
+    bacnet:object-name "CGM-2-004" ;
+    bacnet:object-type bacnet:ObjectType.device ;
+    bacnet:vendor-identifier "5"^^xsd:nonNegativeInteger ;
+    bacnet:vendor-name "Unknown" .
 
 bacnet_references:00003 a bacnet:Device,
-        p223:NetworkProfile ;
+        s223:Controller,
+        s223:Equipment ;
+    rdfs:label "CVM-2-005" ;
+    bacnet:hasObject bacnet_references:00004,
+        bacnet_references:00010 ;
+    rdfs:comment "VAV for Zone 1" .
+
+bacnet_references:00004 a bacnet:DeviceObject,
+        bacnet:Object ;
+    bacnet:object-identifier "device,5205" ;
+    bacnet:object-name "CVM-2-005" ;
+    bacnet:object-type bacnet:ObjectType.device ;
+    bacnet:vendor-identifier "5"^^xsd:nonNegativeInteger ;
+    bacnet:vendor-name "Unknown" .
+
+bacnet_references:00005 a bacnet:Device,
+        s223:Controller,
+        s223:Equipment ;
     rdfs:label "CVM-2-006" ;
-    bacnet:address 6 ;
-    bacnet:deviceId 5206 ;
-    bacnet:deviceName "CVM-2-006" ;
-    bacnet:networkNumber 2 ;
-    bacnet:vendorId 5 ;
+    bacnet:hasObject bacnet_references:00006,
+        bacnet_references:00011 ;
     rdfs:comment "VAV for Zone 2" .
 
-bacnet_references:00004 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
+bacnet_references:00006 a bacnet:DeviceObject,
+        bacnet:Object ;
+    bacnet:object-identifier "device,5206" ;
+    bacnet:object-name "CVM-2-006" ;
+    bacnet:object-type bacnet:ObjectType.device ;
+    bacnet:vendor-identifier "5"^^xsd:nonNegativeInteger ;
+    bacnet:vendor-name "Unknown" .
+
+bacnet_references:00007 a bacnet:AnalogInputObject,
+        bacnet:Object ;
     bacnet:description "Return Air Temeprature" ;
-    bacnet:objectInstance 1209 ;
-    bacnet:objectName "RA-T" ;
-    bacnet:objectOf bacnet_references:00001 ;
-    bacnet:objectType <analog-input> .
+    bacnet:object-identifier "analog-input,1209" ;
+    bacnet:object-name "RA-T" ;
+    bacnet:object-type bacnet:ObjectType.analog-input .
 
-bacnet_references:00005 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
+bacnet_references:00008 a bacnet:AnalogValueObject,
+        bacnet:Object ;
     bacnet:description "Discharge Air Temp Average" ;
-    bacnet:objectInstance 321 ;
-    bacnet:objectName "DAT-AVG" ;
-    bacnet:objectOf bacnet_references:00001 ;
-    bacnet:objectType <analog-value> .
+    bacnet:object-identifier "analog-value,321" ;
+    bacnet:object-name "DAT-AVG" ;
+    bacnet:object-type bacnet:ObjectType.analog-value .
 
-bacnet_references:00006 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
+bacnet_references:00009 a bacnet:AnalogInputObject,
+        bacnet:Object ;
     bacnet:description "Discharge Air Temperature" ;
-    bacnet:objectInstance 1210 ;
-    bacnet:objectName "DA-T" ;
-    bacnet:objectOf bacnet_references:00001 ;
-    bacnet:objectType <analog-input> .
+    bacnet:object-identifier "analog-input,1210" ;
+    bacnet:object-name "DA-T" ;
+    bacnet:object-type bacnet:ObjectType.analog-input .
 
-bacnet_references:00007 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
+bacnet_references:00010 a bacnet:AnalogInputObject,
+        bacnet:Object ;
     bacnet:description "Zone 1 Temperature" ;
-    bacnet:objectInstance 1002 ;
-    bacnet:objectName "ZN1-T" ;
-    bacnet:objectOf bacnet_references:00002 ;
-    bacnet:objectType <analog-input> .
+    bacnet:object-identifier "analog-input,1001" ;
+    bacnet:object-name "ZN1-T" ;
+    bacnet:object-type bacnet:ObjectType.analog-input .
 
-bacnet_references:00008 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
+bacnet_references:00011 a bacnet:AnalogInputObject,
+        bacnet:Object ;
     bacnet:description "Zone 2 Temperature" ;
-    bacnet:objectInstance 1002 ;
-    bacnet:objectName "ZN2-T" ;
-    bacnet:objectOf bacnet_references:00003 ;
-    bacnet:objectType <analog-input> .
+    bacnet:object-identifier "analog-input,1002" ;
+    bacnet:object-name "ZN2-T" ;
+    bacnet:object-type bacnet:ObjectType.analog-input .
 
-bacnet_references:00009 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
+bacnet_references:00012 a bacnet:BinaryInputObject,
+        bacnet:Object ;
     bacnet:description "Return Fan Status from VFD drive running" ;
-    bacnet:objectInstance 5021 ;
-    bacnet:objectName "RF-S" ;
-    bacnet:objectOf bacnet_references:00001 ;
-    bacnet:objectType <binary-input> .
+    bacnet:object-identifier "binary-input,5021" ;
+    bacnet:object-name "RF-S" ;
+    bacnet:object-type bacnet:ObjectType.binary-input .
 
-bacnet_references:00010 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
+bacnet_references:00013 a bacnet:BinaryOutputObject,
+        bacnet:Object ;
     bacnet:description "Return Fan Command from VFD run command" ;
-    bacnet:objectInstance 12345 ;
-    bacnet:objectName "RF-C" ;
-    bacnet:objectOf bacnet_references:00001 ;
-    bacnet:objectType <binary-output> .
+    bacnet:object-identifier "binary-output,12345" ;
+    bacnet:object-name "RF-C" ;
+    bacnet:object-type bacnet:ObjectType.binary-output .
 
-bacnet_references:00011 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
+bacnet_references:00014 a bacnet:Object,
+        bacnet:ScheduleObject ;
     bacnet:description "Building Occupancy Schedule" ;
-    bacnet:objectInstance 1 ;
-    bacnet:objectName "OCC-SCHEDULE" ;
-    bacnet:objectOf bacnet_references:00001 ;
-    bacnet:objectType <schedule> .
+    bacnet:object-identifier "schedule,1" ;
+    bacnet:object-name "OCC-SCHEDULE" ;
+    bacnet:object-type bacnet:ObjectType.schedule .
 
-bacnet_references:00012 a bacnet:DeviceObjectPropertyReference,
+bacnet_references:00015 a ref:ExternalReference ;
+    rdfs:label "VAV1_ZN-T.Temperature.ExternalReference" ;
+    s223:hasRef bacnet_references:00010 .
+
+bacnet_references:00016 a ref:ExternalReference ;
+    rdfs:label "VAV2_ZN-T.Temperature.ExternalReference" ;
+    s223:hasRef bacnet_references:00011 .
+
+bacnet_references:00017 a ref:ExternalReference ;
+    rdfs:label "drive_running.ExternalReference" ;
+    s223:hasRef bacnet_references:00012 .
+
+bacnet_references:00018 a ref:ExternalReference ;
+    rdfs:label "run_command.ExternalReference" ;
+    s223:hasRef bacnet_references:00013 .
+
+bacnet_references:00019 a bacnet:DeviceObjectPropertyReference,
         ref:ExternalReference ;
     bacnet:device-identifier "device,2" ;
     bacnet:object-identifier "analog-input,1" ;
     bacnet:property-identifier bacnet:PropertyIdentifier.present-value .
 
-bacnet_references:00013 a bacnet:DeviceObjectPropertyReference,
+bacnet_references:00020 a bacnet:DeviceObjectPropertyReference,
         ref:ExternalReference ;
     bacnet:device-identifier "device,2" ;
     bacnet:object-identifier "binary-input,1" ;
     bacnet:property-identifier bacnet:PropertyIdentifier.present-value .
+
+bacnet_references:00021 a ref:ExternalReference ;
+    rdfs:label "DA-T-AVG.ExternalReference" ;
+    s223:hasRef bacnet_references:00008 .
+
+bacnet_references:00022 a ref:ExternalReference ;
+    rdfs:label "Bathroom Occ Schedule.ExternalReference" ;
+    s223:hasRef bacnet_references:00014 .
+
+bacnet_references:00023 a ref:ExternalReference ;
+    rdfs:label "Corridor Occ Schedule.ExternalReference" ;
+    s223:hasRef bacnet_references:00014 .
+
+bacnet_references:00024 a ref:ExternalReference ;
+    rdfs:label "Kitchenette Occ Schedule.ExternalReference" ;
+    s223:hasRef bacnet_references:00014 .
+
+bacnet_references:00025 a ref:ExternalReference ;
+    rdfs:label "Open Office Occ Schedule.ExternalReference" ;
+    s223:hasRef bacnet_references:00014 .
+
+bacnet_references:00026 a ref:ExternalReference ;
+    rdfs:label "Private Office Occ Schedule.ExternalReference" ;
+    s223:hasRef bacnet_references:00014 .
 
 electrical_devices:00001 a p223:ElectricalDistributionPanel,
         s223:Equipment ;
@@ -3101,7 +3156,7 @@ functions:00005 a s223:ObservableProperty,
     s223:hasValue 0.0 ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_C ;
-    ref:hasExternalReference bacnet_references:00005 .
+    ref:hasExternalReference bacnet_references:00021 .
 
 functions:00006 a p223:OccupancyFunction,
         p223:Producer,
@@ -3136,7 +3191,7 @@ functions:00010 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Open Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00025 .
 
 functions:00011 a p223:OccupancyFunction,
         p223:Producer,
@@ -3170,7 +3225,7 @@ functions:00015 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Kitchenette Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00024 .
 
 functions:00016 a p223:OccupancyFunction,
         p223:Producer,
@@ -3204,7 +3259,7 @@ functions:00020 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Private Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00026 .
 
 functions:00021 a p223:OccupancyFunction,
         p223:Producer,
@@ -3238,7 +3293,7 @@ functions:00025 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Bathroom Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00022 .
 
 functions:00026 a p223:OccupancyFunction,
         p223:Producer,
@@ -3272,7 +3327,7 @@ functions:00030 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Corridor Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00011 .
+    ref:hasExternalReference bacnet_references:00023 .
 
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;
@@ -4120,7 +4175,7 @@ hvac_devices:00069 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    ref:hasExternalReference bacnet_references:00009 .
+    ref:hasExternalReference bacnet_references:00017 .
 
 hvac_devices:00070 a s223:ActuatableProperty,
         s223:EnumerableProperty,
@@ -4128,7 +4183,7 @@ hvac_devices:00070 a s223:ActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    ref:hasExternalReference bacnet_references:00010 .
+    ref:hasExternalReference bacnet_references:00018 .
 
 hvac_devices:00071 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -6826,7 +6881,7 @@ hvac_devices:00405 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_F ;
-    ref:hasExternalReference bacnet_references:00007 .
+    ref:hasExternalReference bacnet_references:00015 .
 
 hvac_devices:00406 a s223:System,
         bob:ElectricalActuatedProportionalDamper ;
@@ -7457,7 +7512,7 @@ hvac_devices:00487 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:unit unit:DEG_F ;
-    ref:hasExternalReference bacnet_references:00008 .
+    ref:hasExternalReference bacnet_references:00016 .
 
 hvac_devices:00488 a s223:System,
         bob:ElectricalActuatedProportionalDamper ;
@@ -9092,7 +9147,7 @@ lighting_devices:00061 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off ;
-    ref:hasExternalReference bacnet_references:00013 .
+    ref:hasExternalReference bacnet_references:00020 .
 
 lighting_devices:00062 a s223:ActuatableProperty,
         s223:EnumerableProperty,
@@ -9138,7 +9193,7 @@ lighting_devices:00065 a s223:ActuatableProperty,
     s223:hasValue 0.0 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:unit unit:PERCENT ;
-    ref:hasExternalReference bacnet_references:00012 .
+    ref:hasExternalReference bacnet_references:00019 .
 
 lighting_devices:00066 a s223:OutletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
