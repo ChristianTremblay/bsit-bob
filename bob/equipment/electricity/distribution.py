@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import Literal
 
-from bob.enum import ElectricalPhaseIdentifier
+from bob.enum import ElectricalPhaseIdentifier, Dimensioned
 from bob.properties import ElectricPowerkW
 from bob.properties.electricity import Amps
 from bob.property import QuantifiableObservableProperty
@@ -218,6 +218,7 @@ class CircuitBreaker(Equipment):
         super().__init__(config, **kwargs)
 
         self.currentRating = Amps(amps, label="Current rating of breaker")
+        self.currentRating + Dimensioned.Nominal
 
 
 class SinglePoleCircuitBreaker(CircuitBreaker):

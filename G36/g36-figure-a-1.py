@@ -18,6 +18,8 @@ from bob.connections.air import (
 )
 from bob.connections.electricity import (
     Electricity_24V_1Ph_60HzInletConnectionPoint,
+)
+from bob.connections.network import (
     RS485BidirectionalConnectionPoint,
 )
 from bob.core import (
@@ -150,14 +152,14 @@ class VAV_FIGA1(System):
     def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["DPR"].airInlet
-        self.airOutlet.mapsTo = self["DPR"].airOutlet
+        # self.airInlet.mapsTo = self["DPR"].airInlet
+        # self.airOutlet.mapsTo = self["DPR"].airOutlet
 
         self.airFlow = self["SA-F"].observedProperty
-        self["zoneTemperature"].mapsTo = self["ZONE-THERMOSTAT"][
-            "temperature_sensor"
-        ].observedProperty
-        self["damperPosition"].mapsTo = self["DPR"]["position"]
+        # self["zoneTemperature"].mapsTo = self["ZONE-THERMOSTAT"][
+        #    "temperature_sensor"
+        # ].observedProperty
+        # self["damperPosition"].mapsTo = self["DPR"]["position"]
 
         self["SA-F"] % self["DPR"].airInlet
         self["DA-T"] % self["DPR"].airOutlet
@@ -182,8 +184,8 @@ vav["ZONE-THERMOSTAT"]["temperature_sensor"] % hvac_space
 vav["ZONE-THERMOSTAT"].mstp << controller.bacnet_mstp
 vav["ZN-CO2"]["CO2"] % hvac_space
 # vav['ZN-CO2'] << controller.zone_co2_sensor
-vav["ZN-WINDOW-SWITCH"] % window
-vav["ZN-WINDOW-SWITCH"].onoff_contact >> controller.window_switch
+# vav["ZN-WINDOW-SWITCH"] % window
+####vav["ZN-WINDOW-SWITCH"].onoff_contact >> controller.window_switch
 vav["ZN-OCC-SENSOR"] % hvac_space
 # vav['ZN-OCC-SENSOR'] << controller['occupancy_sensor'] not ready yet
 
@@ -199,13 +201,13 @@ hvac_space.window_switch = vav["ZN-WINDOW-SWITCH"].observedProperty
 # This will also make easier the relationship in G36Sequence later
 hvac_zone = HVACZone(label="HVACZone", comment="Contains HVACSpace")
 hvac_zone > hvac_space
-hvac_zone.airInlet.mapsTo = hvac_space.ductAirInlet
+# hvac_zone.airInlet.mapsTo = hvac_space.ductAirInlet
 hvac_zone.temperature = hvac_space.temperature
 hvac_zone.temperature_setpoint = vav["ZONE-THERMOSTAT"]["temperature_setpoint"]
 hvac_zone.co2 = hvac_space.co2
 hvac_zone.windows_switch = hvac_space.window_switch
 
-vav.serves_zone(hvac_zone)
+# vav.serves_zone(hvac_zone)
 hvac_zone.add_property(hvac_space.occupancy)
 
 # Occupancy.... we need a function block
