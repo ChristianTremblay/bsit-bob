@@ -13,9 +13,7 @@ from bob.property import ActuatableProperty
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
     AirInletConnectionPoint,
-    AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
     CompressedAirConnectionPoint,
     CompressedAirInletConnectionPoint,
 )
@@ -91,10 +89,10 @@ actuated_damper_template = {
 }
 
 
-class DamperAndActuator(System):
+class DamperAndActuator(Equipment):
     _class_iri = None
-    airInlet: AirInletSystemConnectionPoint
-    airOutlet: AirOutletSystemConnectionPoint
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
@@ -111,8 +109,8 @@ class DamperAndActuator(System):
         self["actuator"].linkageOutlet >> self["damper"].linkageInlet
         self.position = self["damper"].position = self["actuator"].position
         self.position_feedback = self["actuator"]["position_sensor"].observedProperty
-        self.airInlet.mapsTo = self["damper"].airInlet
-        self.airOutlet.mapsTo = self["damper"].airOutlet
+        self["damper"].airInlet.mapsTo = self.airInlet
+        self["damper"].airOutlet.mapsTo = self.airOutlet
 
 
 electrical_actuated_proportional_damper_template = {
