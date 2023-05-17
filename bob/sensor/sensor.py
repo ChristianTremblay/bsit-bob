@@ -108,12 +108,12 @@ class Sensor(_Sensor):
         return self.observes
 
     def add_hasObservationLocation(self, node: Node) -> None:
-        # For now, make that a secret, or we end up with s223.hasObservationLocation + p223.hasObservationLocation
+        # For now, make that a secret, or we end up with s223.hasObservationLocation
         self._hasObservationLocation = node
 
         # link the two together
         self._data_graph.add(
-            (self._node_iri, P223.hasObservationLocation, node._node_iri)
+            (self._node_iri, S223.hasObservationLocation, node._node_iri)
         )
         if INCLUDE_INVERSE:
             node.isObservationLocationOf = self
