@@ -49,6 +49,7 @@ class UltraFineParticulateSensor(ParticulateSensor):
     _class_iri = S223.Sensor
     "PM 1.0 Count"
     comment = "Ultra Fine Particulate Sensor"
+
     # measuresSubstance: Substance = PM1_0
     def __init__(self, **kwargs):
         super().__init__(ofSubstance=Particulate.PM1_0, **kwargs)
@@ -58,6 +59,7 @@ class FineParticulateSensor(ParticulateSensor):
     _class_iri = S223.Sensor
     "PM 2.5 Count"
     comment = "Fine Particulate Sensor"
+
     # measuresSubstance: Substance = PM2_5
     def __init__(self, **kwargs):
         super().__init__(ofSubstance=Particulate.PM2_5, **kwargs)
@@ -67,6 +69,7 @@ class CoarseParticulateSensor(ParticulateSensor):
     _class_iri = S223.Sensor
     "PM 10 Count"
     comment = "Coarse Particulate Sensor"
+
     # measuresSubstance: Substance = PM10_0
     def __init__(self, **kwargs):
         super().__init__(ofSubstance=Particulate.PM10_0, **kwargs)

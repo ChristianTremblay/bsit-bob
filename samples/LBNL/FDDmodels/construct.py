@@ -121,17 +121,17 @@ if args.rdfs or args.owlrl or args.both:
 
 # clean out most of the useless triples
 if args.clean:
-    for (s, p, o) in g.triples((None, RDF.type, RDFS.Resource)):
+    for s, p, o in g.triples((None, RDF.type, RDFS.Resource)):
         g.remove((s, p, o))
-    for (s, p, o) in g.triples((None, RDF.type, RDFS.Datatype)):
+    for s, p, o in g.triples((None, RDF.type, RDFS.Datatype)):
         g.remove((s, p, o))
-    for (s, p, o) in g.triples((None, RDF.type, OWL.Thing)):
+    for s, p, o in g.triples((None, RDF.type, OWL.Thing)):
         g.remove((s, p, o))
-    for (s, p, o) in g.triples((OWL.Nothing, None, None)):
+    for s, p, o in g.triples((OWL.Nothing, None, None)):
         g.remove((s, p, o))
-    for (s, p, o) in g.triples((OWL.Thing, None, None)):
+    for s, p, o in g.triples((OWL.Thing, None, None)):
         g.remove((s, p, o))
-    for (s, p, o) in g.triples((None, OWL.sameAs, None)):
+    for s, p, o in g.triples((None, OWL.sameAs, None)):
         if s == o:
             g.remove((s, p, o))
 

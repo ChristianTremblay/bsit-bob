@@ -23,6 +23,7 @@ from ..core import (
 
 _namespace = BOB
 
+
 # === Light
 class LightConnectionPoint(ConnectionPoint):
     hasMedium: Medium = Light
