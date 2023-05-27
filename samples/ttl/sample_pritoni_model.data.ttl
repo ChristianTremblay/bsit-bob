@@ -3181,11 +3181,15 @@ functions:00006 a p223:OccupancyFunction,
         s223:FunctionBlock ;
     rdfs:label "Open Office Occ Control" ;
     s223:hasInput functions:00007,
-        functions:00008 ;
-    s223:hasOutput functions:00009 ;
-    bob:inSchedule functions:00008 ;
+        functions:00008,
+        functions:00009,
+        functions:00010 ;
+    s223:hasOutput functions:00011 ;
+    bob:inLocalOverride functions:00009 ;
+    bob:inOccSensor functions:00008 ;
+    bob:inSchedule functions:00010 ;
     bob:inStatus functions:00007 ;
-    bob:outStatus functions:00009 ;
+    bob:outStatus functions:00011 ;
     rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
 
 functions:00007 a p223:ProducerInput,
@@ -3195,153 +3199,209 @@ functions:00007 a p223:ProducerInput,
 
 functions:00008 a p223:ProducerInput,
         s223:FunctionInput ;
-    rdfs:label "Open Office Occ Control.inSchedule" ;
-    s223:uses functions:00010 .
+    rdfs:label "Open Office Occ Control.inOccSensor" .
 
-functions:00009 a p223:ProducerOutput,
+functions:00009 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Open Office Occ Control.inLocalOverride" .
+
+functions:00010 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Open Office Occ Control.inSchedule" ;
+    s223:uses functions:00012 .
+
+functions:00011 a p223:ProducerOutput,
         s223:FunctionOutput ;
     rdfs:label "Open Office Occ Control.outStatus" ;
     s223:produces hvac_spaces:00001,
         lighting_spaces:00004,
         lighting_spaces:00008 .
 
-functions:00010 a s223:EnumerableProperty,
+functions:00012 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Open Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     ref:hasExternalReference bacnet_references:00025 .
 
-functions:00011 a p223:OccupancyFunction,
+functions:00013 a p223:OccupancyFunction,
         p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Kitchenette Occ Control" ;
-    s223:hasInput functions:00012,
-        functions:00013 ;
-    s223:hasOutput functions:00014 ;
-    bob:inSchedule functions:00013 ;
-    bob:inStatus functions:00012 ;
-    bob:outStatus functions:00014 ;
+    s223:hasInput functions:00014,
+        functions:00015,
+        functions:00016,
+        functions:00017 ;
+    s223:hasOutput functions:00018 ;
+    bob:inLocalOverride functions:00016 ;
+    bob:inOccSensor functions:00015 ;
+    bob:inSchedule functions:00017 ;
+    bob:inStatus functions:00014 ;
+    bob:outStatus functions:00018 ;
     rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
 
-functions:00012 a p223:ProducerInput,
+functions:00014 a p223:ProducerInput,
         s223:FunctionInput ;
     rdfs:label "Kitchenette Occ Control.inStatus" ;
     s223:uses lighting_devices:00014 .
 
-functions:00013 a p223:ProducerInput,
+functions:00015 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Kitchenette Occ Control.inOccSensor" .
+
+functions:00016 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Kitchenette Occ Control.inLocalOverride" .
+
+functions:00017 a p223:ProducerInput,
         s223:FunctionInput ;
     rdfs:label "Kitchenette Occ Control.inSchedule" ;
-    s223:uses functions:00015 .
+    s223:uses functions:00019 .
 
-functions:00014 a p223:ProducerOutput,
+functions:00018 a p223:ProducerOutput,
         s223:FunctionOutput ;
     rdfs:label "Kitchenette Occ Control.outStatus" ;
     s223:produces hvac_spaces:00059,
         lighting_spaces:00024 .
 
-functions:00015 a s223:EnumerableProperty,
+functions:00019 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Kitchenette Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     ref:hasExternalReference bacnet_references:00024 .
 
-functions:00016 a p223:OccupancyFunction,
+functions:00020 a p223:OccupancyFunction,
         p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Private Office Occ Control" ;
-    s223:hasInput functions:00017,
-        functions:00018 ;
-    s223:hasOutput functions:00019 ;
-    bob:inSchedule functions:00018 ;
-    bob:inStatus functions:00017 ;
-    bob:outStatus functions:00019 ;
+    s223:hasInput functions:00021,
+        functions:00022,
+        functions:00023,
+        functions:00024 ;
+    s223:hasOutput functions:00025 ;
+    bob:inLocalOverride functions:00023 ;
+    bob:inOccSensor functions:00022 ;
+    bob:inSchedule functions:00024 ;
+    bob:inStatus functions:00021 ;
+    bob:outStatus functions:00025 ;
     rdfs:comment "Deal with OccupancySpace3...probably not required but it's defined" .
 
-functions:00017 a p223:ProducerInput,
+functions:00021 a p223:ProducerInput,
         s223:FunctionInput ;
     rdfs:label "Private Office Occ Control.inStatus" ;
     s223:uses lighting_devices:00029 .
 
-functions:00018 a p223:ProducerInput,
+functions:00022 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Private Office Occ Control.inOccSensor" .
+
+functions:00023 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Private Office Occ Control.inLocalOverride" .
+
+functions:00024 a p223:ProducerInput,
         s223:FunctionInput ;
     rdfs:label "Private Office Occ Control.inSchedule" ;
-    s223:uses functions:00020 .
+    s223:uses functions:00026 .
 
-functions:00019 a p223:ProducerOutput,
+functions:00025 a p223:ProducerOutput,
         s223:FunctionOutput ;
     rdfs:label "Private Office Occ Control.outStatus" ;
     s223:produces hvac_spaces:00037,
         lighting_spaces:00020 .
 
-functions:00020 a s223:EnumerableProperty,
+functions:00026 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Private Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     ref:hasExternalReference bacnet_references:00026 .
 
-functions:00021 a p223:OccupancyFunction,
+functions:00027 a p223:OccupancyFunction,
         p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Bathroom Occ Control" ;
-    s223:hasInput functions:00022,
-        functions:00023 ;
-    s223:hasOutput functions:00024 ;
-    bob:inSchedule functions:00023 ;
-    bob:inStatus functions:00022 ;
-    bob:outStatus functions:00024 ;
+    s223:hasInput functions:00028,
+        functions:00029,
+        functions:00030,
+        functions:00031 ;
+    s223:hasOutput functions:00032 ;
+    bob:inLocalOverride functions:00030 ;
+    bob:inOccSensor functions:00029 ;
+    bob:inSchedule functions:00031 ;
+    bob:inStatus functions:00028 ;
+    bob:outStatus functions:00032 ;
     rdfs:comment "Light space O2" .
 
-functions:00022 a p223:ProducerInput,
+functions:00028 a p223:ProducerInput,
         s223:FunctionInput ;
     rdfs:label "Bathroom Occ Control.inStatus" ;
     s223:uses lighting_devices:00060 .
 
-functions:00023 a p223:ProducerInput,
+functions:00029 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Bathroom Occ Control.inOccSensor" .
+
+functions:00030 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Bathroom Occ Control.inLocalOverride" .
+
+functions:00031 a p223:ProducerInput,
         s223:FunctionInput ;
     rdfs:label "Bathroom Occ Control.inSchedule" ;
-    s223:uses functions:00025 .
+    s223:uses functions:00033 .
 
-functions:00024 a p223:ProducerOutput,
+functions:00032 a p223:ProducerOutput,
         s223:FunctionOutput ;
     rdfs:label "Bathroom Occ Control.outStatus" ;
     s223:produces hvac_spaces:00010,
         lighting_spaces:00012 .
 
-functions:00025 a s223:EnumerableProperty,
+functions:00033 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Bathroom Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     ref:hasExternalReference bacnet_references:00022 .
 
-functions:00026 a p223:OccupancyFunction,
+functions:00034 a p223:OccupancyFunction,
         p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Corridor Occ Control" ;
-    s223:hasInput functions:00027,
-        functions:00028 ;
-    s223:hasOutput functions:00029 ;
-    bob:inSchedule functions:00028 ;
-    bob:inStatus functions:00027 ;
-    bob:outStatus functions:00029 ;
+    s223:hasInput functions:00035,
+        functions:00036,
+        functions:00037,
+        functions:00038 ;
+    s223:hasOutput functions:00039 ;
+    bob:inLocalOverride functions:00037 ;
+    bob:inOccSensor functions:00036 ;
+    bob:inSchedule functions:00038 ;
+    bob:inStatus functions:00035 ;
+    bob:outStatus functions:00039 ;
     rdfs:comment "Corridor Light space, O5" .
 
-functions:00027 a p223:ProducerInput,
+functions:00035 a p223:ProducerInput,
         s223:FunctionInput ;
     rdfs:label "Corridor Occ Control.inStatus" ;
     s223:uses lighting_devices:00044 .
 
-functions:00028 a p223:ProducerInput,
+functions:00036 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Corridor Occ Control.inOccSensor" .
+
+functions:00037 a p223:ProducerInput,
+        s223:FunctionInput ;
+    rdfs:label "Corridor Occ Control.inLocalOverride" .
+
+functions:00038 a p223:ProducerInput,
         s223:FunctionInput ;
     rdfs:label "Corridor Occ Control.inSchedule" ;
-    s223:uses functions:00030 .
+    s223:uses functions:00040 .
 
-functions:00029 a p223:ProducerOutput,
+functions:00039 a p223:ProducerOutput,
         s223:FunctionOutput ;
     rdfs:label "Corridor Occ Control.outStatus" ;
     s223:produces hvac_spaces:00019,
         lighting_spaces:00016 .
 
-functions:00030 a s223:EnumerableProperty,
+functions:00040 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Corridor Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
@@ -4876,10 +4936,12 @@ hvac_devices:00148 a p223:Producer,
 
 hvac_devices:00149 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00142 ;
     s223:uses hvac_devices:00146 .
 
 hvac_devices:00150 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00137 ;
     s223:produces hvac_devices:00161 .
 
 hvac_devices:00151 a p223:Producer,
@@ -4896,6 +4958,7 @@ hvac_devices:00152 a p223:ProducerInput ;
 
 hvac_devices:00153 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00138 ;
     s223:produces hvac_devices:00143 .
 
 hvac_devices:00154 a p223:Producer,
@@ -4912,6 +4975,7 @@ hvac_devices:00155 a p223:ProducerInput ;
 
 hvac_devices:00156 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00139 ;
     s223:produces hvac_devices:00144 .
 
 hvac_devices:00157 a p223:Producer,
@@ -4928,6 +4992,7 @@ hvac_devices:00158 a p223:ProducerInput ;
 
 hvac_devices:00159 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00140 ;
     s223:produces hvac_devices:00145 .
 
 hvac_devices:00160 a s223:Equipment,
@@ -5132,10 +5197,12 @@ hvac_devices:00182 a p223:Producer,
 
 hvac_devices:00183 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00176 ;
     s223:uses hvac_devices:00180 .
 
 hvac_devices:00184 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00171 ;
     s223:produces hvac_devices:00195 .
 
 hvac_devices:00185 a p223:Producer,
@@ -5152,6 +5219,7 @@ hvac_devices:00186 a p223:ProducerInput ;
 
 hvac_devices:00187 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00172 ;
     s223:produces hvac_devices:00177 .
 
 hvac_devices:00188 a p223:Producer,
@@ -5168,6 +5236,7 @@ hvac_devices:00189 a p223:ProducerInput ;
 
 hvac_devices:00190 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00173 ;
     s223:produces hvac_devices:00178 .
 
 hvac_devices:00191 a p223:Producer,
@@ -5184,6 +5253,7 @@ hvac_devices:00192 a p223:ProducerInput ;
 
 hvac_devices:00193 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00174 ;
     s223:produces hvac_devices:00179 .
 
 hvac_devices:00194 a s223:Equipment,
@@ -5386,10 +5456,12 @@ hvac_devices:00216 a p223:Producer,
 
 hvac_devices:00217 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00210 ;
     s223:uses hvac_devices:00214 .
 
 hvac_devices:00218 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00205 ;
     s223:produces hvac_devices:00229 .
 
 hvac_devices:00219 a p223:Producer,
@@ -5406,6 +5478,7 @@ hvac_devices:00220 a p223:ProducerInput ;
 
 hvac_devices:00221 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00206 ;
     s223:produces hvac_devices:00211 .
 
 hvac_devices:00222 a p223:Producer,
@@ -5422,6 +5495,7 @@ hvac_devices:00223 a p223:ProducerInput ;
 
 hvac_devices:00224 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00207 ;
     s223:produces hvac_devices:00212 .
 
 hvac_devices:00225 a p223:Producer,
@@ -5438,6 +5512,7 @@ hvac_devices:00226 a p223:ProducerInput ;
 
 hvac_devices:00227 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00208 ;
     s223:produces hvac_devices:00213 .
 
 hvac_devices:00228 a s223:Equipment,
@@ -5670,10 +5745,12 @@ hvac_devices:00255 a p223:Producer,
 
 hvac_devices:00256 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00249 ;
     s223:uses hvac_devices:00253 .
 
 hvac_devices:00257 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00244 ;
     s223:produces hvac_devices:00268 .
 
 hvac_devices:00258 a p223:Producer,
@@ -5690,6 +5767,7 @@ hvac_devices:00259 a p223:ProducerInput ;
 
 hvac_devices:00260 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00245 ;
     s223:produces hvac_devices:00250 .
 
 hvac_devices:00261 a p223:Producer,
@@ -5706,6 +5784,7 @@ hvac_devices:00262 a p223:ProducerInput ;
 
 hvac_devices:00263 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00246 ;
     s223:produces hvac_devices:00251 .
 
 hvac_devices:00264 a p223:Producer,
@@ -5722,6 +5801,7 @@ hvac_devices:00265 a p223:ProducerInput ;
 
 hvac_devices:00266 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00247 ;
     s223:produces hvac_devices:00252 .
 
 hvac_devices:00267 a s223:Equipment,
@@ -5922,10 +6002,12 @@ hvac_devices:00289 a p223:Producer,
 
 hvac_devices:00290 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00283 ;
     s223:uses hvac_devices:00287 .
 
 hvac_devices:00291 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00278 ;
     s223:produces hvac_devices:00302 .
 
 hvac_devices:00292 a p223:Producer,
@@ -5942,6 +6024,7 @@ hvac_devices:00293 a p223:ProducerInput ;
 
 hvac_devices:00294 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00279 ;
     s223:produces hvac_devices:00284 .
 
 hvac_devices:00295 a p223:Producer,
@@ -5958,6 +6041,7 @@ hvac_devices:00296 a p223:ProducerInput ;
 
 hvac_devices:00297 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00280 ;
     s223:produces hvac_devices:00285 .
 
 hvac_devices:00298 a p223:Producer,
@@ -5974,6 +6058,7 @@ hvac_devices:00299 a p223:ProducerInput ;
 
 hvac_devices:00300 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00281 ;
     s223:produces hvac_devices:00286 .
 
 hvac_devices:00301 a s223:Equipment,
@@ -7063,10 +7148,12 @@ hvac_devices:00423 a p223:Producer,
 
 hvac_devices:00424 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00417 ;
     s223:uses hvac_devices:00421 .
 
 hvac_devices:00425 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00412 ;
     s223:produces hvac_devices:00436 .
 
 hvac_devices:00426 a p223:Producer,
@@ -7083,6 +7170,7 @@ hvac_devices:00427 a p223:ProducerInput ;
 
 hvac_devices:00428 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00413 ;
     s223:produces hvac_devices:00418 .
 
 hvac_devices:00429 a p223:Producer,
@@ -7099,6 +7187,7 @@ hvac_devices:00430 a p223:ProducerInput ;
 
 hvac_devices:00431 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00414 ;
     s223:produces hvac_devices:00419 .
 
 hvac_devices:00432 a p223:Producer,
@@ -7115,6 +7204,7 @@ hvac_devices:00433 a p223:ProducerInput ;
 
 hvac_devices:00434 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00415 ;
     s223:produces hvac_devices:00420 .
 
 hvac_devices:00435 a s223:Equipment,
@@ -7363,10 +7453,12 @@ hvac_devices:00462 a p223:Producer,
 
 hvac_devices:00463 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00456 ;
     s223:uses hvac_devices:00460 .
 
 hvac_devices:00464 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00451 ;
     s223:produces hvac_devices:00475 .
 
 hvac_devices:00465 a p223:Producer,
@@ -7383,6 +7475,7 @@ hvac_devices:00466 a p223:ProducerInput ;
 
 hvac_devices:00467 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00452 ;
     s223:produces hvac_devices:00457 .
 
 hvac_devices:00468 a p223:Producer,
@@ -7399,6 +7492,7 @@ hvac_devices:00469 a p223:ProducerInput ;
 
 hvac_devices:00470 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00453 ;
     s223:produces hvac_devices:00458 .
 
 hvac_devices:00471 a p223:Producer,
@@ -7415,6 +7509,7 @@ hvac_devices:00472 a p223:ProducerInput ;
 
 hvac_devices:00473 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00454 ;
     s223:produces hvac_devices:00459 .
 
 hvac_devices:00474 a s223:Equipment,
@@ -7703,10 +7798,12 @@ hvac_devices:00505 a p223:Producer,
 
 hvac_devices:00506 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00499 ;
     s223:uses hvac_devices:00503 .
 
 hvac_devices:00507 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00494 ;
     s223:produces hvac_devices:00518 .
 
 hvac_devices:00508 a p223:Producer,
@@ -7723,6 +7820,7 @@ hvac_devices:00509 a p223:ProducerInput ;
 
 hvac_devices:00510 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00495 ;
     s223:produces hvac_devices:00500 .
 
 hvac_devices:00511 a p223:Producer,
@@ -7739,6 +7837,7 @@ hvac_devices:00512 a p223:ProducerInput ;
 
 hvac_devices:00513 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00496 ;
     s223:produces hvac_devices:00501 .
 
 hvac_devices:00514 a p223:Producer,
@@ -7755,6 +7854,7 @@ hvac_devices:00515 a p223:ProducerInput ;
 
 hvac_devices:00516 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00497 ;
     s223:produces hvac_devices:00502 .
 
 hvac_devices:00517 a s223:Equipment,
@@ -8000,10 +8100,12 @@ hvac_devices:00544 a p223:Producer,
 
 hvac_devices:00545 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
+    s223:hasCauseLocation hvac_devices:00538 ;
     s223:uses hvac_devices:00542 .
 
 hvac_devices:00546 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00533 ;
     s223:produces hvac_devices:00557 .
 
 hvac_devices:00547 a p223:Producer,
@@ -8020,6 +8122,7 @@ hvac_devices:00548 a p223:ProducerInput ;
 
 hvac_devices:00549 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00534 ;
     s223:produces hvac_devices:00539 .
 
 hvac_devices:00550 a p223:Producer,
@@ -8036,6 +8139,7 @@ hvac_devices:00551 a p223:ProducerInput ;
 
 hvac_devices:00552 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00535 ;
     s223:produces hvac_devices:00540 .
 
 hvac_devices:00553 a p223:Producer,
@@ -8052,6 +8156,7 @@ hvac_devices:00554 a p223:ProducerInput ;
 
 hvac_devices:00555 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:hasEffectLocation hvac_devices:00536 ;
     s223:produces hvac_devices:00541 .
 
 hvac_devices:00556 a s223:Equipment,
