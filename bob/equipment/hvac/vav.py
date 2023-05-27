@@ -1,3 +1,4 @@
+import logging
 from typing import Any, Dict
 
 from attr import set_run_validators
@@ -12,7 +13,16 @@ from ...connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from ...core import BOB, P223, S223, UNIT, Equipment, PropertyReference, System
+from ...core import (
+    BOB,
+    P223,
+    S223,
+    UNIT,
+    Equipment,
+    PropertyReference,
+    System,
+    template_update,
+)
 from ...equipment.hvac.coil import HotWaterCoil
 from ...equipment.hvac.damper import Damper, ElectricalActuatedProportionalDamper
 from ...equipment.hvac.fan import Fan
@@ -35,7 +45,7 @@ vav_system_template = {
         },
     },
     "equipment": {
-        ("ACTDPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"}
+        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"}
     },
 }
 
@@ -53,7 +63,7 @@ vav_dual_template = {
         },
     },
     "equipment": {
-        ("ACTDPR", ElectricalActuatedProportionalDamper): {
+        ("DPR", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box Damper with its actuator"
         },
         ("HTGCOIL", HotWaterCoil): {"comment": "Hot Water Coil"},
@@ -76,7 +86,7 @@ vav_withreheat_template = {
         },
     },
     "equipment": {
-        ("ACTDPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
+        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
         ("HWC", HotWaterCoil): {"comment": "VAV Hot Water Coil"},
     },
 }
@@ -106,17 +116,23 @@ class VAV_Simple(Equipment):
     damperPosition: PropertyReference
     zoneTemperature: PropertyReference
 
-    def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["ACTDPR"].airInlet
-        self.airOutlet.mapsTo = self["ACTDPR"].airOutlet
-        # self.zoneTemperature = self["ZN-T"].observedProperty
-        # self.damperPosition = self['DPR'].position
-        # self.airFlow = self['SA-F'].observedProperty
+    def __init__(self, config: Dict = None, **kwargs) -> None:
+        _config = template_update(vav_system_template, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        logging.debug(f"VAV_Simple.__init__ {_config} {kwargs}")
+        super().__init__(_config, **kwargs)
 
-        self["SA-F"] % self["ACTDPR"]["damper"].airOutlet
-        self["DA-T"] % self["ACTDPR"]["damper"].airOutlet
+        # Mapping internal
+        self["DPR"].airInlet.mapsTo = self.airInlet
+        self["DPR"].airOutlet.mapsTo = self.airOutlet
+
+        # Equivalence
+        self.damperPosition = self["DPR"].position
+        self.zoneTemperature = self["ZN-T"].observedProperty
+        self.airFlow = self["SA-F"].observedProperty
+
+        self["SA-F"] % self["DPR"]["damper"].airOutlet
+        self["DA-T"] % self["DPR"]["damper"].airOutlet
 
 
 class VAV_Dual(Equipment):
@@ -132,14 +148,14 @@ class VAV_Dual(Equipment):
     def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["ACTDPR"]["damper"].airInlet
-        self.airOutlet.mapsTo = self["ACTDPR"]["damper"].airOutlet
+        self.airInlet.mapsTo = self["DPR"]["damper"].airInlet
+        self.airOutlet.mapsTo = self["DPR"]["damper"].airOutlet
         self.zoneTemperature = self["ZN-T"].observedProperty
         # self.damperPosition = self['DPR'].position
         # self.airFlow = self['SA-F'].observedProperty
 
-        self["SA-F"] % self["ACTDPR"]["damper"].airOutlet
-        self["DA-T"] % self["ACTDPR"]["damper"].airOutlet
+        self["SA-F"] % self["DPR"]["damper"].airOutlet
+        self["DA-T"] % self["DPR"]["damper"].airOutlet
 
 
 class VAV_Reheat(Equipment):
@@ -153,12 +169,12 @@ class VAV_Reheat(Equipment):
     def __init__(self, config: Dict = vav_withreheat_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["ACTDPR"]["damper"].airInlet
-        self.airOutlet.mapsTo = self["ACTDPR"]["damper"].airOutlet
+        self.airInlet.mapsTo = self["DPR"]["damper"].airInlet
+        self.airOutlet.mapsTo = self["DPR"]["damper"].airOutlet
         # self.damperPosition = self['DPR'].position
         # self.airFlow = self['SA-F'].observedProperty
 
-        self["SA-F"] % self["ACTDPR"]["damper"].airOutlet
+        self["SA-F"] % self["DPR"]["damper"].airOutlet
         self["DA-T"] % self["HWC"].airOutlet
 
         self["DPR"]["damper"] >> self["HWC"]
