@@ -39,7 +39,6 @@ class GasConcentrationSetpoint(Setpoint):
 
 class GasConcentrationSensor(Sensor):
     _class_iri = S223.Sensor
-    hasQuantityKind: URIRef = QUANTITYKIND.DimensionlessRatio
     observes: PropertyReference  # GasConcentration
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference
