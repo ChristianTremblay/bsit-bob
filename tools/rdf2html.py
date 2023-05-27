@@ -84,15 +84,15 @@ class Node:
             "uri": "bob:legend/DomainSpace",
             "label": "Legend / DomainSpace",
         },
-        "qudt": {
-            "size": 10,
-            "color": "#e3a1dd",
-            "shape": "star",
-            "group_int": 5,
-            "borderWidth": None,
-            "uri": "bob:legend/qudt",
-            "label": "Legend / qudt",
-        },
+        #        "qudt": {
+        #            "size": 10,
+        #            "color": "#e3a1dd",
+        #            "shape": "star",
+        #            "group_int": 5,
+        #            "borderWidth": None,
+        #            "uri": "bob:legend/qudt",
+        #            "label": "Legend / qudt",
+        #        },
         "Default": {
             "size": 15,
             "color": None,
@@ -174,19 +174,24 @@ class Node:
         _bubble = ""
         _n = ", ".join(self.ns)
         _t = ", ".join(self.types)
+        _bubble += f"Label : {self.label}"
+        _bubble += f"\n======="
         if self.uri:
-            _bubble += f"URI : {self.uri}\n"
-        _bubble += f"Namespaces : {_n}\nTypes: {_t}"
+            _bubble += f"\nURI : {self.uri}"
+        _bubble += f"\nNamespaces : {_n}\nTypes: {_t}"
         if self.comment:
+            _bubble += f"\n=======\n"
             _bubble += f"\nComment : {self.comment}"
+            _bubble += f"\n======="
         if self.value:
             _bubble += f"\nValue : {self.value}"
-
+        if self.properties.values():
+            _bubble += f"\n======="
         for k, v in self.properties.items():
             try:
                 if v:
                     _v = ", ".join(v)
-                    _bubble += f"\n{k} : {_v}"
+                    _bubble += f"\n  - {k} : {_v}"
             except TypeError as error:
                 print(f"Error processing {k,v}")
 
