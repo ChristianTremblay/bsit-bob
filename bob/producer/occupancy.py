@@ -16,5 +16,7 @@ class OccupancyFunction(FunctionBlock):
     _class_iri = P223.OccupancyFunction
 
     inStatus: FunctionInput
+    inOccSensor: FunctionInput
+    inLocalOverride: FunctionInput
     inSchedule: FunctionInput
     outStatus: FunctionOutput
