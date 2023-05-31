@@ -100,7 +100,7 @@ def connect_mm(controller: Controller, function_block: FunctionBlock) -> None:
 
 @multimethod
 def connect_mm(controller: Controller, network_Equipment: NetworkProfile) -> None:
-    """Controller >> FucntionBlock"""
+    """Controller >> NetworkProfile"""
     logging.info(f"connect from {controller} to {network_Equipment}")
 
     data_graph.add(
