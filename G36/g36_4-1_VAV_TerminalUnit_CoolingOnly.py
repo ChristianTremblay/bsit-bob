@@ -16,12 +16,8 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.connections.electricity import (
-    Electricity_24V_1Ph_60HzInletConnectionPoint,
-)
-from bob.connections.network import (
-    RS485BidirectionalConnectionPoint,
-)
+from bob.connections.electricity import Electricity_24V_1Ph_60HzInletConnectionPoint
+from bob.connections.network import RS485BidirectionalConnectionPoint
 from bob.core import (
     G36,
     QUANTITYKIND,
@@ -47,11 +43,11 @@ from bob.producer import (
     G36BinaryInput,
     G36BinaryOutput,
 )
-from bob.producer.g36 import VAV_CoolingOnly_template, G36VAVCoolingOnly
+from bob.producer.g36 import G36VAVCoolingOnly, VAV_CoolingOnly_template
 from bob.producer.occupancy import OccupancyFunction
 from bob.properties import Flow, PercentCommand, Temperature, temperature
-from bob.properties.states import OccupancyStatus
 from bob.properties.ratio import Percent
+from bob.properties.states import OccupancyStatus
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
@@ -92,10 +88,16 @@ co2Sensor_template = {
         ("CO2", CO2Sensor): {
             "hasExternalReference": "bacnet://",
             "hasMinRange": QuantifiableObservableProperty(
-                0, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
+                0,
+                hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                unit=UNIT.PPM,
+                label="Minimum Range",
             ),
             "hasMaxRange": QuantifiableObservableProperty(
-                2000, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
+                2000,
+                hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                unit=UNIT.PPM,
+                label="Maximum Range",
             ),
         }
     },
