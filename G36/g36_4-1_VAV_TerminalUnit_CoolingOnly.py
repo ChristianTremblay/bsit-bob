@@ -36,13 +36,6 @@ from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.equipment.hvac.gas import GasMonitor
 from bob.equipment.hvac.stats import NetworkRoomSensor, NetworkThermostat
 from bob.equipment.hvac.vav import VAV_Simple
-from bob.producer import (
-    FunctionBlock,
-    G36AnalogInput,
-    G36AnalogOutput,
-    G36BinaryInput,
-    G36BinaryOutput,
-)
 from bob.producer.g36 import G36VAVCoolingOnly, VAV_CoolingOnly_template
 from bob.producer.occupancy import OccupancyFunction
 from bob.properties import Flow, PercentCommand, Temperature, temperature
@@ -204,7 +197,7 @@ g36fig_a_1 = G36VAVCoolingOnly(label="Bob G36 VAV Cooling Only", comment=sequenc
 # uses will create a connector node named supplyAirFlow and connect it to property
 # G36AnalogInput refer to the notion of AI in the context of G36
 # We could have used FunctionInput or FunctionOutput
-g36fig_a_1.dischargeAirFlow << vav.airFlow
+g36fig_a_1.supplyAirFlow << vav.airFlow
 # g36fig_a_1.uses(
 #    hvac_zone.temperature_setpoint, G36AnalogInput, "zoneTemperatureSetpoint"
 # )

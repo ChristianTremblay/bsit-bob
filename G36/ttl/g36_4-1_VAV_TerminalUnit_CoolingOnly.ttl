@@ -807,9 +807,9 @@ exg3601:00098 a p223:Producer,
     s223:hasOutput exg3601:00099 ;
     g36:ahuSupplyAirTemp exg3601:00108 ;
     g36:boxDamperPosition exg3601:00099 ;
-    g36:dischargeAirFlow exg3601:00100 ;
     g36:effectiveOccupancy exg3601:00107 ;
     g36:localOverride exg3601:00102 ;
+    g36:supplyAirFlow exg3601:00100 ;
     g36:zoneCO2 exg3601:00106 ;
     g36:zoneOccupancySensor exg3601:00103 ;
     g36:zoneSetpointAdj exg3601:00105 ;
@@ -818,39 +818,47 @@ exg3601:00098 a p223:Producer,
     rdfs:comment "Lorem ipsum of sequence" .
 
 exg3601:00099 a p223:ProducerOutput,
-        s223:FunctionOutput ;
+        s223:FunctionOutput,
+        g36:AnalogOutput ;
     rdfs:label "Bob G36 VAV Cooling Only.boxDamperPosition" ;
     s223:produces exg3601:00054 .
 
 exg3601:00100 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "Bob G36 VAV Cooling Only.dischargeAirFlow" ;
+        s223:FunctionInput,
+        g36:AnalogInput ;
+    rdfs:label "Bob G36 VAV Cooling Only.supplyAirFlow" ;
     s223:uses exg3601:00032 .
 
 exg3601:00101 a p223:ProducerInput,
-        s223:FunctionInput ;
+        s223:FunctionInput,
+        g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneTemperature" ;
     s223:uses exg3601:00079 .
 
 exg3601:00102 a p223:ProducerInput,
-        s223:FunctionInput ;
+        s223:FunctionInput,
+        g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.localOverride" .
 
 exg3601:00103 a p223:ProducerInput,
-        s223:FunctionInput ;
+        s223:FunctionInput,
+        g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneOccupancySensor" .
 
 exg3601:00104 a p223:ProducerInput,
-        s223:FunctionInput ;
+        s223:FunctionInput,
+        g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zonewindowSwitch" ;
     s223:uses exg3601:00040 .
 
 exg3601:00105 a p223:ProducerInput,
-        s223:FunctionInput ;
+        s223:FunctionInput,
+        g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneSetpointAdj" .
 
 exg3601:00106 a p223:ProducerInput,
-        s223:FunctionInput ;
+        s223:FunctionInput,
+        g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneCO2" ;
     s223:uses exg3601:00085 .
 
