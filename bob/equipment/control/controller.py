@@ -91,10 +91,10 @@ def connect_mm(controller: Controller, function_block: FunctionBlock) -> None:
     """Controller >> FucntionBlock"""
     logging.info(f"connect from {controller} to {function_block}")
 
-    data_graph.add((controller._node_iri, P223.executes, function_block._node_iri))
+    data_graph.add((controller._node_iri, S223.executes, function_block._node_iri))
     if INCLUDE_INVERSE:
         data_graph.add(
-            (function_block._node_iri, P223.isExecutedBy, controller._node_iri)
+            (function_block._node_iri, S223.isExecutedBy, controller._node_iri)
         )
 
 
