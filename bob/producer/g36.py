@@ -33,6 +33,9 @@ from . import (
     FunctionBlock,
     FunctionInput,
     FunctionOutput,
+    G36AnalogInput,
+    G36AnalogOutput,
+    G36DigitalInput,
 )
 
 _namespace = G36
@@ -76,14 +79,14 @@ class G36VAVCoolingOnly(G36Sequence):
     # From table in section 4.1
     # Defined as Function Input and Output as we will connect
     # to existing properties in the model
-    boxDamperPosition: FunctionOutput
-    dischargeAirFlow: FunctionInput
-    zoneTemperature: FunctionInput
-    localOverride: FunctionInput
-    zoneOccupancySensor: FunctionInput
-    zonewindowSwitch: FunctionInput
-    zoneSetpointAdj: FunctionInput
-    zoneCO2: FunctionInput
+    boxDamperPosition: G36AnalogOutput
+    supplyAirFlow: G36AnalogInput
+    zoneTemperature: G36AnalogInput
+    localOverride: G36DigitalInput
+    zoneOccupancySensor: G36DigitalInput
+    zonewindowSwitch: G36DigitalInput
+    zoneSetpointAdj: G36AnalogInput
+    zoneCO2: G36AnalogInput
     effectiveOccupancy: FunctionInput
     ahuSupplyAirTemp: FunctionInput
 
@@ -137,14 +140,14 @@ class G36ZoneFromDomainSpace(DomainSpace):
 
 VAV_CoolingOnly_template = {
     "cp": {
-        "boxDamperPosition": FunctionOutput,
-        "dischargeAirFlow": FunctionInput,
-        "zoneTemperature": FunctionInput,
-        "localOverride": FunctionInput,
-        "zoneOccupancySensor": FunctionInput,
-        "zonewindowSwitch": FunctionInput,
-        "zoneSetpointAdj": FunctionInput,
-        "zoneCO2": FunctionInput,
+        "boxDamperPosition": G36AnalogOutput,
+        "supplyAirFlow": G36AnalogInput,
+        "zoneTemperature": G36AnalogInput,
+        "localOverride": G36DigitalInput,
+        "zoneOccupancySensor": G36DigitalInput,
+        "zonewindowSwitch": G36DigitalInput,
+        "zoneSetpointAdj": G36AnalogInput,
+        "zoneCO2": G36AnalogInput,
         "effectiveOccupancy": FunctionInput,
         "ahuSupplyAirTemp": FunctionInput,
     },
