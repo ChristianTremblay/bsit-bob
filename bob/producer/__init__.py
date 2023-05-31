@@ -217,12 +217,12 @@ class G36AnalogOutput(FunctionOutput):
     _class_iri: URIRef = G36.AnalogOutput
 
 
-class G36BinaryInput(FunctionInput):
-    _class_iri: URIRef = G36.BinaryInput
+class G36DigitalInput(FunctionInput):
+    _class_iri: URIRef = G36.DigitalInput
 
 
-class G36BinaryOutput(FunctionOutput):
-    _class_iri: URIRef = G36.BinaryOutput
+class G36DigitalOutput(FunctionOutput):
+    _class_iri: URIRef = G36.DigitalOutput
 
 
 class Parameter(Node):
