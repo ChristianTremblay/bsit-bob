@@ -19,7 +19,7 @@ s223_types = {
 
 propgraph_labels = {
     "value": ["hasValue"],
-    "range": ["hasMinRange", "hasMaxRange"],
+    # "range": ["hasMinRange", "hasMaxRange"],
     "direction": ["hasDirection"],
     "aspects": ["hasAspect"],
     "medium": ["hasMedium", "ofSubstance", "ofMedium", "hasSignalType"],
@@ -68,10 +68,11 @@ skip_edges = [
     "bacnet:vendor-name",
     "bacnet:network-number",
     "s223:isConnectionPointOf",
-    "s223:hasRef",
+    # "s223:hasRef",
     "p223:hasSignalType",
-    "s223:hasMinRange",
-    "s223:hasMaxRange",
+    # "s223:hasMinRange",
+    # "s223:hasMaxRange",
+    "bob:",
 ]
 
 
