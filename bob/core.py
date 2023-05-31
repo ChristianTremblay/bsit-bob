@@ -827,6 +827,8 @@ class ExternalReference(Node):
     """
 
     _class_iri: URIRef = REF.ExternalReference
+    _attr_uriref = {"hasRef": REF.hasRef}
+
     hasRef: ExternalReferenceValue
 
     def __init__(
@@ -883,6 +885,7 @@ class Property(Node):
                 )
             external_reference = kwargs.pop("hasExternalReference")
 
+        # Retrieve aspects so we can add them after the creation
         aspects = []
         if "hasAspect" in kwargs:
             _aspects = kwargs.pop("hasAspect")
@@ -891,8 +894,10 @@ class Property(Node):
             else:
                 aspects.append(_aspects)
 
+        # Create the property
         super().__init__(**kwargs)
 
+        # Add aspects
         for each in aspects:
             self + each
 
