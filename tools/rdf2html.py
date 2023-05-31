@@ -7,11 +7,11 @@ import pyvis
 from rdflib import Graph, Literal
 
 from .rdf2html_classification import (
+    EdgesConfig,
     bacnet_labels,
     is_wanted_node,
     propgraph_labels,
     s223_types,
-    EdgesConfig,
     skip_edges,
 )
 
@@ -113,14 +113,10 @@ class Node:
         self.uri = str(s)
 
         self.properties = {}
-        self.properties["aspects"] = set()
-        self.properties["medium"] = set()
-        self.properties["quantityKind"] = set()
-        self.properties["enumerationKind"] = set()
-        self.properties["domain"] = set()
-        self.properties["unit"] = set()
+        for k, v in propgraph_labels.items():
+            self.properties[k] = set()
+
         self.properties["bacnet"] = {}
-        self.properties["direction"] = set()
 
         if p and o:
             if "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" in p:
@@ -297,11 +293,13 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
     prepare_nodes(g)
 
     visual_graph = pyvis.network.Network(
-        select_menu=True, filter_menu=True, cdn_resources="remote"
+        select_menu=True, filter_menu=True, cdn_resources="remote", directed=True
     )
 
     for k, v in nodes.items():
         # print(f"Adding to viz : {v.uri}")
+        if v.group == 2:
+            v.label = "Connection" if not v.label else v.label
         visual_graph.add_node(
             v.uri,
             v.label,
@@ -330,6 +328,7 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
 
     visual_graph.toggle_physics(True)
     visual_graph.show_buttons()
+    visual_graph.set_edge_smooth("dynamic")
     html_filename = f"{ttl_file.split('.ttl')[0]}.html"
     if show:
         visual_graph.show(html_filename, notebook=False)
