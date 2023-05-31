@@ -23,6 +23,7 @@ from ..core import (
     Property,
     _Producer,
     data_graph,
+    template_update,
 )
 from ..equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
@@ -37,6 +38,7 @@ _namespace = S223
 
 class ProducerInput(Node):
     _class_iri: URIRef = P223.ProducerInput
+    hasCauseLocation: LocationReference
 
     def __init__(self, function_block: Producer, **kwargs: Any) -> None:
         logging.info(
@@ -215,12 +217,12 @@ class G36AnalogOutput(FunctionOutput):
     _class_iri: URIRef = G36.AnalogOutput
 
 
-class G36BinaryInput(FunctionInput):
-    _class_iri: URIRef = G36.BinaryInput
+class G36DigitalInput(FunctionInput):
+    _class_iri: URIRef = G36.DigitalInput
 
 
-class G36BinaryOutput(FunctionOutput):
-    _class_iri: URIRef = G36.BinaryOutput
+class G36DigitalOutput(FunctionOutput):
+    _class_iri: URIRef = G36.DigitalOutput
 
 
 class Parameter(Node):
@@ -310,7 +312,10 @@ class Producer(_Producer):
     _class_iri: URIRef = P223.Producer
     # _connectors: Dict[str, Connector]
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+
         logging.debug(f"Producer.__init__ {kwargs}")
 
         # resolve annotations if necessary
@@ -328,7 +333,7 @@ class Producer(_Producer):
         logging.debug(f"    - remaining kwargs: {kwargs}")
 
         # continue with initialization
-        super().__init__(**kwargs)
+        super().__init__(_config, **kwargs)
 
         # instantiate and associate all of the connectors
         self._connectors = {}
@@ -387,7 +392,9 @@ class FunctionBlock(Producer):
     # _connectors: Dict[str, Connector]
     _parameters: Dict[str, Parameter]
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
         logging.debug(f"FunctionBlock.__init__ {kwargs}")
 
         # pull out the parameters and constants
@@ -395,7 +402,7 @@ class FunctionBlock(Producer):
         parameter_inits: Dict[str, Any] = {}
 
         # continue with initialization
-        super().__init__(**kwargs)
+        super().__init__(_config, **kwargs)
 
         # instantiate and associate all of the connectors and parameters
         self._parameters = {}

@@ -827,6 +827,8 @@ class ExternalReference(Node):
     """
 
     _class_iri: URIRef = REF.ExternalReference
+    _attr_uriref = {"hasRef": REF.hasRef}
+
     hasRef: ExternalReferenceValue
 
     def __init__(
@@ -883,6 +885,7 @@ class Property(Node):
                 )
             external_reference = kwargs.pop("hasExternalReference")
 
+        # Retrieve aspects so we can add them after the creation
         aspects = []
         if "hasAspect" in kwargs:
             _aspects = kwargs.pop("hasAspect")
@@ -891,8 +894,10 @@ class Property(Node):
             else:
                 aspects.append(_aspects)
 
+        # Create the property
         super().__init__(**kwargs)
 
+        # Add aspects
         for each in aspects:
             self + each
 
@@ -3200,9 +3205,83 @@ class _Sensor(Equipment):
     _class_iri: URIRef = None
 
 
-class _Producer(Node):
+class _Producer(Container, Node):
     "Placeholder to prevent circular reference"
     _class_iri: URIRef = P223.Producer
+
+    def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
+        logging.debug(f"Producer.__init__ {config} {args} {kwargs}")
+
+        # if there are "params" in the configuation, use those as defaults for
+        # kwargs and allow them to be overriden by additional kwargs
+        # if config and "params" in config:
+        #     kwargs = {**config["params"], **kwargs}
+
+        # When passing kwargs to create an instance of a class, some datatype
+        # are not yet visible in the chain of creation. This lead to
+        # ex. TypeError: unexpected keyword argument: waterInlet
+        # By removing properties and connection points from kwargs and explicitly
+        # putting them in config, it should be better
+        _config = dict(config.items())
+        for attr_name, attr_value in kwargs.copy().items():
+            if inspect.isclass(attr_value):
+                # if issubclass(attr_value, Property):
+                #    config["properties"] = (
+                #        {**config["properties"], **{attr_name: kwargs.pop(attr_name)}}
+                #        if "properties" in config.keys()
+                #        else {attr_name: kwargs.pop(attr_name)}
+                #    )
+                if issubclass(attr_value, ConnectionPoint):
+                    # Beware here... _Producer are function Block so...FB in and out only....
+                    _config["cp"] = (
+                        {**_config["cp"], **{attr_name: kwargs.pop(attr_name)}}
+                        if "cp" in _config.keys()
+                        else {attr_name: kwargs.pop(attr_name)}
+                    )
+
+        super().__init__(*args, **kwargs)
+
+        if _config:
+            for group_name, group_items in _config.items():
+                if group_name == "params":
+                    continue
+                if group_name == "cp":
+                    for thing_name, thing_class in group_items.items():
+                        setattr(
+                            self,
+                            thing_name,
+                            thing_class(self, label=f"{self.label}.{thing_name}"),
+                        )
+                    continue
+                things = []
+                for (thing_name, thing_class), thing_kwargs in group_items.items():
+                    if thing_name in self:
+                        raise ValueError(f"label already used: {self[thing_name]}")
+                    thing = thing_class(label=thing_name, **thing_kwargs)
+
+                    if isinstance(thing, (_Producer)):
+                        self > thing
+                    if isinstance(thing, Property):
+                        self[thing_name] = thing
+                        self.add_property(thing)
+
+                    things.append(thing)
+
+                setattr(self, "_" + group_name, things)
+
+
+@multimethod
+def contains_mm(producer: _Producer, sub_producer: _Producer) -> None:
+    """Producer > Producer"""
+    logging.info(f"producer {producer} contains producer {sub_producer}")
+
+    producer._data_graph.add(
+        (producer._node_iri, S223.contains, sub_producer._node_iri)
+    )
+    if INCLUDE_INVERSE:
+        producer._data_graph.add(
+            (sub_producer._node_iri, S223.isContainedIn, producer._node_iri)
+        )
 
 
 class DomainSpace(Connectable):

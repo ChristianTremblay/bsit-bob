@@ -1,5 +1,5 @@
 """
-Figure A-1 | VAV Terminal Unit with Reheat
+g36_4-1_VAV_TerminalUnit_CoolingOnly
 """
 
 from __future__ import annotations
@@ -16,12 +16,8 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.connections.electricity import (
-    Electricity_24V_1Ph_60HzInletConnectionPoint,
-)
-from bob.connections.network import (
-    RS485BidirectionalConnectionPoint,
-)
+from bob.connections.electricity import Electricity_24V_1Ph_60HzInletConnectionPoint
+from bob.connections.network import RS485BidirectionalConnectionPoint
 from bob.core import (
     G36,
     QUANTITYKIND,
@@ -39,16 +35,11 @@ from bob.equipment.control.controller import Controller
 from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.equipment.hvac.gas import GasMonitor
 from bob.equipment.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.producer import (
-    FunctionBlock,
-    G36AnalogInput,
-    G36AnalogOutput,
-    G36BinaryInput,
-    G36BinaryOutput,
-)
-from bob.producer.g36 import G36Figure_A_1, G36Sequence
+from bob.equipment.hvac.vav import VAV_Simple
+from bob.producer.g36 import G36VAVCoolingOnly, VAV_CoolingOnly_template
 from bob.producer.occupancy import OccupancyFunction
 from bob.properties import Flow, PercentCommand, Temperature, temperature
+from bob.properties.ratio import Percent
 from bob.properties.states import OccupancyStatus
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
@@ -74,10 +65,12 @@ controller_template = {
         "damper_output": AnalogOutput,
         "bacnet_mstp": RS485BidirectionalConnectionPoint,
     },
-    "properties": {("occupancy", FunctionBlock): {}, ("g36_figa1", FunctionBlock): {}},
+    "properties": {},
 }
 
-controller = Controller(label="Controller for G36 Fig A-1", config=controller_template)
+controller = Controller(
+    label="Controller for G36 VAV Cooling Only", config=controller_template
+)
 
 co2Sensor_template = {
     "params": {
@@ -88,10 +81,16 @@ co2Sensor_template = {
         ("CO2", CO2Sensor): {
             "hasExternalReference": "bacnet://",
             "hasMinRange": QuantifiableObservableProperty(
-                0, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
+                0,
+                hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                unit=UNIT.PPM,
+                label="Minimum Range",
             ),
             "hasMaxRange": QuantifiableObservableProperty(
-                2000, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
+                2000,
+                hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
+                unit=UNIT.PPM,
+                label="Maximum Range",
             ),
         }
     },
@@ -112,7 +111,7 @@ Thermostat_template = {
 
 
 vav_system_template = {
-    "params": {"label": "VAV_FIG.A1", "comment": "VAV with Airflow + Damper"},
+    "params": {"label": "VAV_CoolingOnly", "comment": "VAV with Airflow + Damper"},
     "sensors": {
         ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
@@ -121,11 +120,6 @@ vav_system_template = {
         },
         ("ZN-OCC-SENSOR", OccupantMotionSensor): {},
         ("ZN-WINDOW-SWITCH", IntrusionSensor): {},
-    },
-    "properties": {
-        ("zoneTemperature", Temperature): {"unit": UNIT.DEG_C},
-        ("damperPosition", PercentCommand): {},
-        ("airFlow", Flow): {"unit": UNIT["L-PER-SEC"]},
     },
     "equipment": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
@@ -139,42 +133,15 @@ vav_system_template = {
     },
 }
 
-
-class VAV_FIGA1(System):
-    """
-    This is a clone of VAV found in from bob.equipment.hvac.vav VAV_Simple
-    """
-
-    airInlet: AirInletSystemConnectionPoint
-    airOutlet: AirOutletSystemConnectionPoint
-    occupancyStatus: PropertyReference
-
-    def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
-        # self.airInlet.mapsTo = self["DPR"].airInlet
-        # self.airOutlet.mapsTo = self["DPR"].airOutlet
-
-        self.airFlow = self["SA-F"].observedProperty
-        # self["zoneTemperature"].mapsTo = self["ZONE-THERMOSTAT"][
-        #    "temperature_sensor"
-        # ].observedProperty
-        # self["damperPosition"].mapsTo = self["DPR"]["position"]
-
-        self["SA-F"] % self["DPR"].airInlet
-        self["DA-T"] % self["DPR"].airOutlet
-        # properties are not initialized?
-
-
 supply_air = AirConnection(label="SA_In", comment="Supply Air for VAV")
 discharge_air = AirConnection(label="SA_Out", comment="Supply Air from VAV")
 hvac_space = HVACSpace(label="space", comment="Where sensors TS, CO2, WS and OCC are")
 # We'll need this property
-hvac_space.occupancy = OccupancyStatus()
+hvac_space.occupancy = OccupancyStatus(label="Occupancy Status of Domain Space")
 
 window = Window(label="Window")
 window.indoor >> hvac_space.windows
-vav = VAV_FIGA1(config=vav_system_template)
+vav = VAV_Simple(config=vav_system_template)
 supply_air >> vav["DPR"].airInlet
 
 vav["DPR"].airOutlet >> discharge_air >> hvac_space.ductAirInlet
@@ -215,45 +182,33 @@ occupancy = OccupancyFunction(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
 )
-occupancy.uses(
-    vav["ZN-OCC-SENSOR"].observedProperty, G36BinaryInput, "occupancy-sensor"
-)
-occupancy.uses(
-    vav["ZONE-THERMOSTAT"]["local_override"].observedProperty,
-    G36BinaryInput,
-    "local-override",
-)
-occupancy.hasOccupancyStatus = OccupancyStatus()
-# Here, no need to specify G36AnalogOutput, or other... it is just a FunctionOutput
-occupancy.produces(occupancy.hasOccupancyStatus)
-occupancy.produces(hvac_space.occupancy)
+occupancy.inOccSensor << vav["ZN-OCC-SENSOR"].observedProperty
+occupancy.inLocalOverride << vav["ZONE-THERMOSTAT"]["local_override"].observedProperty
+occupancy.outStatus >> hvac_space.occupancy
+
 
 # TODO : Complete
 sequence = "Lorem ipsum of sequence"
 
-g36fig_a_1 = FunctionBlock(label="G36_FIG_A_1", comment=sequence)
+# my_VAV_CoolingOnly_template['functions']['occupancyControl'] = occupancy
+# my_VAV_CoolingOnly_template['cp']['boxDamperPosition'] = occupancy
+g36fig_a_1 = G36VAVCoolingOnly(label="Bob G36 VAV Cooling Only", comment=sequence)
 
 # uses will create a connector node named supplyAirFlow and connect it to property
 # G36AnalogInput refer to the notion of AI in the context of G36
 # We could have used FunctionInput or FunctionOutput
-g36fig_a_1.uses(vav.airFlow, G36AnalogInput, "supplyAirFlow")
-g36fig_a_1.uses(
-    hvac_zone.temperature_setpoint, G36AnalogInput, "zoneTemperatureSetpoint"
-)
-g36fig_a_1.uses(hvac_zone.temperature, G36AnalogInput, "zoneTemperature")
-g36fig_a_1.uses(hvac_zone.co2, G36AnalogInput, "zoneTemperature")
-g36fig_a_1.uses(hvac_zone.windows_switch, G36BinaryInput, "window-switch")
-g36fig_a_1.produces(
-    vav["DPR"]["actuator"]["command"], G36AnalogOutput, "damperPosition"
-)
-
+g36fig_a_1.supplyAirFlow << vav.airFlow
+# g36fig_a_1.uses(
+#    hvac_zone.temperature_setpoint, G36AnalogInput, "zoneTemperatureSetpoint"
+# )
+g36fig_a_1.zoneTemperature << hvac_zone.temperature
+g36fig_a_1.zoneCO2 << hvac_zone.co2
+g36fig_a_1.zonewindowSwitch << hvac_zone.windows_switch
+g36fig_a_1.boxDamperPosition >> vav["DPR"]["actuator"]["command"]
+g36fig_a_1.effectiveOccupancy << hvac_space.occupancy
 # controller executes
 controller >> occupancy
 controller >> g36fig_a_1
-
-# relationship between a FB output and a Controller output
-g36fig_a_1.damperPosition >> controller.damper_output
-
 controller.damper_output.hasSignalType = AnalogSignalTypeEnum.VDC_0_10
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

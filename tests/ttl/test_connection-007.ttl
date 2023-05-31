@@ -2,7 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex33: <urn:ex/test_system-007/> .
+@prefix ex32: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -23,561 +23,561 @@
   rdfs:label "test_connection-007" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex33:00001 a s223:PhysicalSpace,
+ex32:00001 a s223:PhysicalSpace,
         rec:Building ;
     rdfs:label "My Building" ;
-    s223:contains ex33:00002,
-        ex33:00003 .
+    s223:contains ex32:00002,
+        ex32:00003 .
 
-ex33:00002 a s223:PhysicalSpace,
+ex32:00002 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "Floor1" ;
-    s223:contains ex33:00004,
-        ex33:00005,
-        ex33:00006 ;
-    s223:isContainedIn ex33:00001 .
+    s223:contains ex32:00004,
+        ex32:00005,
+        ex32:00006 ;
+    s223:isContainedIn ex32:00001 .
 
-ex33:00003 a s223:PhysicalSpace,
+ex32:00003 a s223:PhysicalSpace,
         rec:Floor ;
     rdfs:label "basement" ;
-    s223:contains ex33:00007 ;
-    s223:isContainedIn ex33:00001 .
+    s223:contains ex32:00007 ;
+    s223:isContainedIn ex32:00001 .
 
-ex33:00004 a s223:PhysicalSpace,
+ex32:00004 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 1" ;
-    s223:encloses ex33:00008 ;
-    s223:isContainedIn ex33:00002 .
+    s223:encloses ex32:00008 ;
+    s223:isContainedIn ex32:00002 .
 
-ex33:00005 a s223:PhysicalSpace,
+ex32:00005 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 2" ;
-    s223:encloses ex33:00016 ;
-    s223:isContainedIn ex33:00002 .
+    s223:encloses ex32:00016 ;
+    s223:isContainedIn ex32:00002 .
 
-ex33:00006 a s223:PhysicalSpace,
+ex32:00006 a s223:PhysicalSpace,
         rec:Office,
         rec:Room ;
     rdfs:label "Office 3" ;
-    s223:encloses ex33:00024 ;
-    s223:isContainedIn ex33:00002 .
+    s223:encloses ex32:00024 ;
+    s223:isContainedIn ex32:00002 .
 
-ex33:00007 a s223:PhysicalSpace,
+ex32:00007 a s223:PhysicalSpace,
         rec:MechanicalRoom,
         rec:Room ;
     rdfs:label "Mechanical Room" ;
-    s223:isContainedIn ex33:00003 .
+    s223:isContainedIn ex32:00003 .
 
-ex33:00008 a p223:HVACSpace,
+ex32:00008 a p223:HVACSpace,
         s223:DomainSpace ;
     rdfs:label "Office 1" ;
-    s223:connectedThrough ex33:00065 ;
-    s223:hasConnectionPoint ex33:00009,
-        ex33:00010,
-        ex33:00011,
-        ex33:00012,
-        ex33:00013,
-        ex33:00014,
-        ex33:00015 ;
+    s223:connectedThrough ex32:00065 ;
+    s223:hasConnectionPoint ex32:00009,
+        ex32:00010,
+        ex32:00011,
+        ex32:00012,
+        ex32:00013,
+        ex32:00014,
+        ex32:00015 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isContainedIn ex33:00032 ;
-    s223:isEnclosedIn ex33:00004 ;
-    bob:airTransfer ex33:00011 ;
-    bob:doors ex33:00012 ;
-    bob:ductAirInlet ex33:00009 ;
-    bob:ductAirOutlet ex33:00010 ;
-    bob:radiantCooling ex33:00015 ;
-    bob:radiantHeating ex33:00014 ;
-    bob:windows ex33:00013 .
+    s223:isContainedIn ex32:00032 ;
+    s223:isEnclosedIn ex32:00004 ;
+    bob:airTransfer ex32:00011 ;
+    bob:doors ex32:00012 ;
+    bob:ductAirInlet ex32:00009 ;
+    bob:ductAirOutlet ex32:00010 ;
+    bob:radiantCooling ex32:00015 ;
+    bob:radiantHeating ex32:00014 ;
+    bob:windows ex32:00013 .
 
-ex33:00009 a s223:InletConnectionPoint,
+ex32:00009 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.ductAirInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 ;
-    s223:lnx ex33:00063 .
+    s223:isConnectionPointOf ex32:00008 ;
+    s223:lnx ex32:00063 .
 
-ex33:00010 a s223:OutletConnectionPoint,
+ex32:00010 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.ductAirOutlet" ;
-    s223:connectsThrough ex33:00065 ;
+    s223:connectsThrough ex32:00065 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex32:00008 .
 
-ex33:00011 a s223:BidirectionalConnectionPoint,
+ex32:00011 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.airTransfer" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex32:00008 .
 
-ex33:00012 a s223:BidirectionalConnectionPoint,
+ex32:00012 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.doors" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex32:00008 .
 
-ex33:00013 a s223:BidirectionalConnectionPoint,
+ex32:00013 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.windows" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex32:00008 .
 
-ex33:00014 a s223:BidirectionalConnectionPoint,
+ex32:00014 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.radiantHeating" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex32:00008 .
 
-ex33:00015 a s223:BidirectionalConnectionPoint,
+ex32:00015 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.radiantCooling" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex32:00008 .
 
-ex33:00016 a p223:HVACSpace,
+ex32:00016 a p223:HVACSpace,
         s223:DomainSpace ;
     rdfs:label "Office 2" ;
-    s223:connectedThrough ex33:00065 ;
-    s223:hasConnectionPoint ex33:00017,
-        ex33:00018,
-        ex33:00019,
-        ex33:00020,
-        ex33:00021,
-        ex33:00022,
-        ex33:00023 ;
+    s223:connectedThrough ex32:00065 ;
+    s223:hasConnectionPoint ex32:00017,
+        ex32:00018,
+        ex32:00019,
+        ex32:00020,
+        ex32:00021,
+        ex32:00022,
+        ex32:00023 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isContainedIn ex33:00032 ;
-    s223:isEnclosedIn ex33:00005 ;
-    bob:airTransfer ex33:00019 ;
-    bob:doors ex33:00020 ;
-    bob:ductAirInlet ex33:00017 ;
-    bob:ductAirOutlet ex33:00018 ;
-    bob:radiantCooling ex33:00023 ;
-    bob:radiantHeating ex33:00022 ;
-    bob:windows ex33:00021 .
+    s223:isContainedIn ex32:00032 ;
+    s223:isEnclosedIn ex32:00005 ;
+    bob:airTransfer ex32:00019 ;
+    bob:doors ex32:00020 ;
+    bob:ductAirInlet ex32:00017 ;
+    bob:ductAirOutlet ex32:00018 ;
+    bob:radiantCooling ex32:00023 ;
+    bob:radiantHeating ex32:00022 ;
+    bob:windows ex32:00021 .
 
-ex33:00017 a s223:InletConnectionPoint,
+ex32:00017 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.ductAirInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 ;
-    s223:lnx ex33:00064 .
+    s223:isConnectionPointOf ex32:00016 ;
+    s223:lnx ex32:00064 .
 
-ex33:00018 a s223:OutletConnectionPoint,
+ex32:00018 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.ductAirOutlet" ;
-    s223:connectsThrough ex33:00065 ;
+    s223:connectsThrough ex32:00065 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex32:00016 .
 
-ex33:00019 a s223:BidirectionalConnectionPoint,
+ex32:00019 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.airTransfer" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex32:00016 .
 
-ex33:00020 a s223:BidirectionalConnectionPoint,
+ex32:00020 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.doors" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex32:00016 .
 
-ex33:00021 a s223:BidirectionalConnectionPoint,
+ex32:00021 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.windows" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex32:00016 .
 
-ex33:00022 a s223:BidirectionalConnectionPoint,
+ex32:00022 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.radiantHeating" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex32:00016 .
 
-ex33:00023 a s223:BidirectionalConnectionPoint,
+ex32:00023 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.radiantCooling" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex32:00016 .
 
-ex33:00024 a p223:HVACSpace,
+ex32:00024 a p223:HVACSpace,
         s223:DomainSpace ;
     rdfs:label "Office 3" ;
-    s223:hasConnectionPoint ex33:00025,
-        ex33:00026,
-        ex33:00027,
-        ex33:00028,
-        ex33:00029,
-        ex33:00030,
-        ex33:00031 ;
+    s223:hasConnectionPoint ex32:00025,
+        ex32:00026,
+        ex32:00027,
+        ex32:00028,
+        ex32:00029,
+        ex32:00030,
+        ex32:00031 ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isEnclosedIn ex33:00006 ;
-    bob:airTransfer ex33:00027 ;
-    bob:doors ex33:00028 ;
-    bob:ductAirInlet ex33:00025 ;
-    bob:ductAirOutlet ex33:00026 ;
-    bob:radiantCooling ex33:00031 ;
-    bob:radiantHeating ex33:00030 ;
-    bob:windows ex33:00029 .
+    s223:isEnclosedIn ex32:00006 ;
+    bob:airTransfer ex32:00027 ;
+    bob:doors ex32:00028 ;
+    bob:ductAirInlet ex32:00025 ;
+    bob:ductAirOutlet ex32:00026 ;
+    bob:radiantCooling ex32:00031 ;
+    bob:radiantHeating ex32:00030 ;
+    bob:windows ex32:00029 .
 
-ex33:00025 a s223:InletConnectionPoint,
+ex32:00025 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 3.ductAirInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00024 .
+    s223:isConnectionPointOf ex32:00024 .
 
-ex33:00026 a s223:OutletConnectionPoint,
+ex32:00026 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 3.ductAirOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00024 .
+    s223:isConnectionPointOf ex32:00024 .
 
-ex33:00027 a s223:BidirectionalConnectionPoint,
+ex32:00027 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 3.airTransfer" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00024 .
+    s223:isConnectionPointOf ex32:00024 .
 
-ex33:00028 a s223:BidirectionalConnectionPoint,
+ex32:00028 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 3.doors" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00024 .
+    s223:isConnectionPointOf ex32:00024 .
 
-ex33:00029 a s223:BidirectionalConnectionPoint,
+ex32:00029 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 3.windows" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00024 .
+    s223:isConnectionPointOf ex32:00024 .
 
-ex33:00030 a s223:BidirectionalConnectionPoint,
+ex32:00030 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 3.radiantHeating" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00024 .
+    s223:isConnectionPointOf ex32:00024 .
 
-ex33:00031 a s223:BidirectionalConnectionPoint,
+ex32:00031 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 3.radiantCooling" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00024 .
+    s223:isConnectionPointOf ex32:00024 .
 
-ex33:00032 a p223:HVACZone,
+ex32:00032 a p223:HVACZone,
         s223:Zone ;
     rdfs:label "Zone1" ;
-    s223:contains ex33:00008,
-        ex33:00016 ;
+    s223:contains ex32:00008,
+        ex32:00016 ;
     s223:hasDomain s223:Domain-HVAC ;
-    bob:airInlet ex33:00033 ;
-    bob:airOutlet ex33:00034 ;
-    bob:hasZoneConnectionPoint ex33:00033,
-        ex33:00034 .
+    bob:airInlet ex32:00033 ;
+    bob:airOutlet ex32:00034 ;
+    bob:hasZoneConnectionPoint ex32:00033,
+        ex32:00034 .
 
-ex33:00033 a bob:InletZoneConnectionPoint,
+ex32:00033 a bob:InletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "Zone1.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isZoneConnectionPointOf ex33:00032 ;
-    s223:mapsTo ex33:00061 .
+    s223:isZoneConnectionPointOf ex32:00032 ;
+    s223:mapsTo ex32:00061 .
 
-ex33:00034 a bob:OutletZoneConnectionPoint,
+ex32:00034 a bob:OutletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "Zone1.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isZoneConnectionPointOf ex33:00032 ;
-    s223:mapsTo ex33:00065 .
+    s223:isZoneConnectionPointOf ex32:00032 ;
+    s223:mapsTo ex32:00065 .
 
-ex33:00035 a s223:Equipment,
+ex32:00035 a s223:Equipment,
         s223:Fan ;
     rdfs:label "Supply Fan" ;
-    s223:hasConnectionPoint ex33:00036,
-        ex33:00037,
-        ex33:00038 ;
-    s223:hasPhysicalLocation ex33:00007 ;
-    s223:hasProperty ex33:00039,
-        ex33:00040,
-        ex33:00041,
-        ex33:00042,
-        ex33:00043,
-        ex33:00044,
-        ex33:00045,
-        ex33:00046,
-        ex33:00047 ;
-    bob:airInlet ex33:00036 ;
-    bob:airOutlet ex33:00037 .
+    s223:hasConnectionPoint ex32:00036,
+        ex32:00037,
+        ex32:00038 ;
+    s223:hasPhysicalLocation ex32:00007 ;
+    s223:hasProperty ex32:00039,
+        ex32:00040,
+        ex32:00041,
+        ex32:00042,
+        ex32:00043,
+        ex32:00044,
+        ex32:00045,
+        ex32:00046,
+        ex32:00047 ;
+    bob:airInlet ex32:00036 ;
+    bob:airOutlet ex32:00037 .
 
-ex33:00036 a s223:InletConnectionPoint,
+ex32:00036 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Supply Fan.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00035 .
+    s223:isConnectionPointOf ex32:00035 .
 
-ex33:00037 a s223:OutletConnectionPoint,
+ex32:00037 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Supply Fan.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00035 ;
-    s223:lnx ex33:00062 .
+    s223:isConnectionPointOf ex32:00035 ;
+    s223:lnx ex32:00062 .
 
-ex33:00038 a s223:Electricity_600V_3Ph_60HzConnectionPoint,
+ex32:00038 a s223:Electricity_600V_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Supply Fan.electricalInlet" ;
     s223:hasMedium s223:AC-600V-3Ph-60Hz ;
-    s223:isConnectionPointOf ex33:00035 .
+    s223:isConnectionPointOf ex32:00035 .
 
-ex33:00039 a s223:ActuatableProperty,
+ex32:00039 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speedRatio" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:hasUnit unit:PERCENT .
 
-ex33:00040 a s223:ObservableProperty,
+ex32:00040 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "staticPressure" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PA .
+    qudt:hasUnit unit:PA .
 
-ex33:00041 a s223:ObservableProperty,
+ex32:00041 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    qudt:hasUnit unit:A .
 
-ex33:00042 a s223:ObservableProperty,
+ex32:00042 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
-    qudt:unit unit:REV-PER-MIN .
+    qudt:hasUnit unit:REV-PER-MIN .
 
-ex33:00043 a s223:ObservableProperty,
+ex32:00043 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "cfm" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:unit unit:FT3-PER-MIN .
+    qudt:hasUnit unit:FT3-PER-MIN .
 
-ex33:00044 a s223:ObservableProperty,
+ex32:00044 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    qudt:hasUnit unit:HP .
 
-ex33:00045 a s223:ObservableProperty,
+ex32:00045 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:ElectricPower ;
-    qudt:unit unit:KiloW .
+    qudt:hasUnit unit:KiloW .
 
-ex33:00046 a s223:ObservableProperty,
+ex32:00046 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:PowerFactor ;
     rdfs:label "powerFactor" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    qudt:hasUnit unit:UNITLESS .
 
-ex33:00047 a s223:ObservableProperty,
+ex32:00047 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "efficiency" ;
-    s223:isPropertyOf ex33:00035 ;
+    s223:isPropertyOf ex32:00035 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:hasUnit unit:PERCENT .
 
-ex33:00048 a s223:Equipment,
+ex32:00048 a s223:Equipment,
         s223:Fan ;
     rdfs:label "Return Fan" ;
-    s223:connectedThrough ex33:00065 ;
-    s223:hasConnectionPoint ex33:00049,
-        ex33:00050,
-        ex33:00051 ;
-    s223:hasPhysicalLocation ex33:00007 ;
-    s223:hasProperty ex33:00052,
-        ex33:00053,
-        ex33:00054,
-        ex33:00055,
-        ex33:00056,
-        ex33:00057,
-        ex33:00058,
-        ex33:00059,
-        ex33:00060 ;
-    bob:airInlet ex33:00049 ;
-    bob:airOutlet ex33:00050 .
+    s223:connectedThrough ex32:00065 ;
+    s223:hasConnectionPoint ex32:00049,
+        ex32:00050,
+        ex32:00051 ;
+    s223:hasPhysicalLocation ex32:00007 ;
+    s223:hasProperty ex32:00052,
+        ex32:00053,
+        ex32:00054,
+        ex32:00055,
+        ex32:00056,
+        ex32:00057,
+        ex32:00058,
+        ex32:00059,
+        ex32:00060 ;
+    bob:airInlet ex32:00049 ;
+    bob:airOutlet ex32:00050 .
 
-ex33:00049 a s223:InletConnectionPoint,
+ex32:00049 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Return Fan.airInlet" ;
-    s223:connectsThrough ex33:00065 ;
+    s223:connectsThrough ex32:00065 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00048 .
+    s223:isConnectionPointOf ex32:00048 .
 
-ex33:00050 a s223:OutletConnectionPoint,
+ex32:00050 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Return Fan.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00048 .
+    s223:isConnectionPointOf ex32:00048 .
 
-ex33:00051 a s223:Electricity_600V_3Ph_60HzConnectionPoint,
+ex32:00051 a s223:Electricity_600V_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Return Fan.electricalInlet" ;
     s223:hasMedium s223:AC-600V-3Ph-60Hz ;
-    s223:isConnectionPointOf ex33:00048 .
+    s223:isConnectionPointOf ex32:00048 .
 
-ex33:00052 a s223:ActuatableProperty,
+ex32:00052 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speedRatio" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:hasUnit unit:PERCENT .
 
-ex33:00053 a s223:ObservableProperty,
+ex32:00053 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "staticPressure" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:unit unit:PA .
+    qudt:hasUnit unit:PA .
 
-ex33:00054 a s223:ObservableProperty,
+ex32:00054 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:unit unit:A .
+    qudt:hasUnit unit:A .
 
-ex33:00055 a s223:ObservableProperty,
+ex32:00055 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
-    qudt:unit unit:REV-PER-MIN .
+    qudt:hasUnit unit:REV-PER-MIN .
 
-ex33:00056 a s223:ObservableProperty,
+ex32:00056 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "cfm" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:unit unit:FT3-PER-MIN .
+    qudt:hasUnit unit:FT3-PER-MIN .
 
-ex33:00057 a s223:ObservableProperty,
+ex32:00057 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:Power ;
-    qudt:unit unit:HP .
+    qudt:hasUnit unit:HP .
 
-ex33:00058 a s223:ObservableProperty,
+ex32:00058 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:ElectricPower ;
-    qudt:unit unit:KiloW .
+    qudt:hasUnit unit:KiloW .
 
-ex33:00059 a s223:ObservableProperty,
+ex32:00059 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:PowerFactor ;
     rdfs:label "powerFactor" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:unit unit:UNITLESS .
+    qudt:hasUnit unit:UNITLESS .
 
-ex33:00060 a s223:ObservableProperty,
+ex32:00060 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "efficiency" ;
-    s223:isPropertyOf ex33:00048 ;
+    s223:isPropertyOf ex32:00048 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:hasUnit unit:PERCENT .
 
-ex33:00061 a s223:Junction ;
+ex32:00061 a s223:Junction ;
     rdfs:label "J1" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:lnx ex33:00062,
-        ex33:00063,
-        ex33:00064 .
+    s223:lnx ex32:00062,
+        ex32:00063,
+        ex32:00064 .
 
-ex33:00062 a s223:Segment ;
-    s223:lnx ex33:00037,
-        ex33:00061 .
+ex32:00062 a s223:Segment ;
+    s223:lnx ex32:00037,
+        ex32:00061 .
 
-ex33:00063 a s223:Segment ;
-    s223:lnx ex33:00009,
-        ex33:00061 .
+ex32:00063 a s223:Segment ;
+    s223:lnx ex32:00009,
+        ex32:00061 .
 
-ex33:00064 a s223:Segment ;
-    s223:lnx ex33:00017,
-        ex33:00061 .
+ex32:00064 a s223:Segment ;
+    s223:lnx ex32:00017,
+        ex32:00061 .
 
-ex33:00065 a s223:Connection ;
+ex32:00065 a s223:Connection ;
     rdfs:label "RETURN-AIR" ;
-    s223:connectsAt ex33:00010,
-        ex33:00018,
-        ex33:00049 ;
-    s223:connectsFrom ex33:00008,
-        ex33:00016 ;
-    s223:connectsTo ex33:00048 ;
+    s223:connectsAt ex32:00010,
+        ex32:00018,
+        ex32:00049 ;
+    s223:connectsFrom ex32:00008,
+        ex32:00016 ;
+    s223:connectsTo ex32:00048 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Air returns from zone here" .
 

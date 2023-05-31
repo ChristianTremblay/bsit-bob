@@ -19,13 +19,14 @@ s223_types = {
 
 propgraph_labels = {
     "value": ["hasValue"],
+    # "range": ["hasMinRange", "hasMaxRange"],
     "direction": ["hasDirection"],
     "aspects": ["hasAspect"],
-    "medium": ["hasMedium", "ofSubstance", "ofMedium"],
+    "medium": ["hasMedium", "ofSubstance", "ofMedium", "hasSignalType"],
     "quantityKind": ["hasQuantityKind"],
     "enumerationKind": ["hasEnumerationKind"],
     "domain": ["hasDomain"],
-    "unit": ["qudt/unit", "vocab/unit"],
+    "unit": ["qudt/unit", "vocab/unit", "hasUnit"],
 }
 
 bacnet_labels = {
@@ -55,7 +56,7 @@ skip_edges = [
     "s223:hasEnumerationKind",
     "s223:hasDomain",
     # "vocab/unit",
-    "qudt:unit",
+    "qudt:hasUnit",
     "bacnet:object-identifier",
     "bacnet:object-type",
     "bacnet:object-name",
@@ -67,6 +68,11 @@ skip_edges = [
     "bacnet:vendor-name",
     "bacnet:network-number",
     "s223:isConnectionPointOf",
+    # "s223:hasRef",
+    "p223:hasSignalType",
+    # "s223:hasMinRange",
+    # "s223:hasMaxRange",
+    "bob:",
 ]
 
 

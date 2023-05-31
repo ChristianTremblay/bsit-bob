@@ -254,6 +254,7 @@ class UFT(System):  # Underfloor Fan Terminal Unit
     supplyAirOutlet: AirOutletSystemConnectionPoint
     staticPressure = Pressure
     airFlow = Flow
+
     # reheat valve command in hotWaterCoil2 in hvac.py. It is analog in there
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
@@ -452,7 +453,9 @@ class CoolingTowerSystem(System):
 
     def __init__(
         self, **kwargs: Any
-    ) -> None:  # Might be misunderstanding schematic, do I need to add more pumps or are those already represented in the cooling watersystem?
+    ) -> (
+        None
+    ):  # Might be misunderstanding schematic, do I need to add more pumps or are those already represented in the cooling watersystem?
         super().__init__(**kwargs)
         ct_dict = {}
         ct_dict[1] = self.ct1 = CoolingTower(label=self.label + ".Cooling_Tower_1")
@@ -467,9 +470,9 @@ class CoolingTowerSystem(System):
         self.waterOutlet.mapsTo = jout
         for ct in ct_dict:
             fan = CoolingTowerFan(label=ct_dict[ct].label + ".CT_Fan")
-            ct_dict[
-                ct
-            ].vaporOutlet >> fan.airInlet  # do I need to indicate that this system has an outlet point for this vapor
+            (
+                ct_dict[ct].vaporOutlet >> fan.airInlet
+            )  # do I need to indicate that this system has an outlet point for this vapor
             jout << ct_dict[ct].waterOutlet
             jin >> ct_dict[ct].waterInlet
             ts = AirTemperatureSensor(label=ct_dict[ct].label + ".TWS_Temp")

@@ -128,12 +128,14 @@ for floor in range(3, 5):
             r_mat[rtu].supplyAirOutlet >> plenum[floor][rtu].supplyInlet
             r_mat[rtu].returnAirInlet << ceiling_space[floor][rtu].returnOutlet
         else:
-            r_mat[rtu].supplyAirOutlet.mapsTo.connectsThrough >> plenum[floor][
-                rtu
-            ].supplyInlet
-            r_mat[rtu].returnAirInlet.mapsTo.connectsThrough << ceiling_space[floor][
-                rtu
-            ].returnOutlet
+            (
+                r_mat[rtu].supplyAirOutlet.mapsTo.connectsThrough
+                >> plenum[floor][rtu].supplyInlet
+            )
+            (
+                r_mat[rtu].returnAirInlet.mapsTo.connectsThrough
+                << ceiling_space[floor][rtu].returnOutlet
+            )
 
         r_mat[rtu] >> core_zones[floor][rtu]
 

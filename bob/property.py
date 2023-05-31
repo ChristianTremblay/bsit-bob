@@ -44,7 +44,7 @@ class QuantifiableProperty(Property):
     A property to be expressed as a quantity, it has units.
     """
 
-    _attr_uriref = {"unit": QUDT["unit"], "hasQuantityKind": QUDT["hasQuantityKind"]}
+    _attr_uriref = {"unit": QUDT["hasUnit"], "hasQuantityKind": QUDT["hasQuantityKind"]}
 
     _class_iri: URIRef = S223.QuantifiableProperty
     unit: URIRef

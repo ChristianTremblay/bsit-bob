@@ -103,7 +103,7 @@ exg3601:00012 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 0.0 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PPM .
+    qudt:hasUnit unit:PPM .
 
 exg3601:00013 a s223:ObservableProperty,
         s223:Property,
@@ -111,7 +111,7 @@ exg3601:00013 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     s223:hasValue 2000.0 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PPM .
+    qudt:hasUnit unit:PPM .
 
 exg3601:00014 a s223:Connection ;
     rdfs:label "SA_In" ;
@@ -269,7 +269,7 @@ exg3601:00030 a s223:System,
 exg3601:00031 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "SA-F" ;
-    p223:hasObservationLocation exg3601:00053 ;
+    s223:hasObservationLocation exg3601:00053 ;
     s223:observes exg3601:00032 ;
     rdfs:comment "Air Flow" .
 
@@ -281,12 +281,12 @@ exg3601:00032 a s223:ObservableProperty,
     rdfs:label "SA-F.Flow" ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:unit unit:L-PER-SEC .
+    qudt:hasUnit unit:L-PER-SEC .
 
 exg3601:00033 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "DA-T" ;
-    p223:hasObservationLocation exg3601:00054 ;
+    s223:hasObservationLocation exg3601:00054 ;
     s223:observes exg3601:00034 ;
     rdfs:comment "Discharge Air Temperature" .
 
@@ -298,13 +298,13 @@ exg3601:00034 a s223:ObservableProperty,
     rdfs:label "DA-T.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
+    qudt:hasUnit unit:DEG_C .
 
 exg3601:00035 a s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "ZN-OCC-SENSOR" ;
-    p223:hasObservationLocation exg3601:00016 ;
+    s223:hasObservationLocation exg3601:00016 ;
     s223:observes exg3601:00036 .
 
 exg3601:00036 a s223:EnumerableProperty,
@@ -335,7 +335,7 @@ exg3601:00039 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "zoneTemperature" ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C ;
+    qudt:hasUnit unit:DEG_C ;
     ref:hasExternalReference exg3601:00040 .
 
 exg3601:00040 a ref:ExternalReference ;
@@ -349,7 +349,7 @@ exg3601:00041 a s223:ActuatableProperty,
         bob:PercentCommand ;
     rdfs:label "damperPosition" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT ;
+    qudt:hasUnit unit:PERCENT ;
     ref:hasExternalReference exg3601:00042 .
 
 exg3601:00042 a ref:ExternalReference ;
@@ -363,7 +363,7 @@ exg3601:00043 a s223:ObservableProperty,
         bob:Flow ;
     rdfs:label "airFlow" ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:unit unit:L-PER-SEC ;
+    qudt:hasUnit unit:L-PER-SEC ;
     ref:hasExternalReference exg3601:00044 .
 
 exg3601:00044 a ref:ExternalReference ;
@@ -393,12 +393,12 @@ exg3601:00047 a s223:Property,
         s223:Setpoint ;
     rdfs:label "temperature_setpoint" ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
+    qudt:hasUnit unit:DEG_C .
 
 exg3601:00048 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "temperature_sensor" ;
-    p223:hasObservationLocation exg3601:00016 ;
+    s223:hasObservationLocation exg3601:00016 ;
     s223:observes exg3601:00049 .
 
 exg3601:00049 a s223:ObservableProperty,
@@ -409,7 +409,7 @@ exg3601:00049 a s223:ObservableProperty,
     rdfs:label "temperature_sensor.Temperature" ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:unit unit:DEG_C .
+    qudt:hasUnit unit:DEG_C .
 
 exg3601:00050 a s223:Equipment,
         s223:OccupantMotionSensor,
@@ -531,7 +531,7 @@ exg3601:00062 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:hasUnit unit:PERCENT .
 
 exg3601:00063 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -554,7 +554,7 @@ exg3601:00065 a s223:ActuatableProperty,
         bob:PercentCommand ;
     rdfs:label "command" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:hasUnit unit:PERCENT .
 
 exg3601:00066 a s223:ObservableProperty,
         s223:Property,
@@ -563,7 +563,7 @@ exg3601:00066 a s223:ObservableProperty,
         bob:Nm ;
     rdfs:label "torque" ;
     qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:unit unit:N-M .
+    qudt:hasUnit unit:N-M .
 
 exg3601:00067 a p223:Producer,
         bob:Causality ;
@@ -632,7 +632,7 @@ exg3601:00078 a p223:ProducerOutput ;
 exg3601:00079 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    p223:hasObservationLocation exg3601:00056 ;
+    s223:hasObservationLocation exg3601:00056 ;
     s223:observes exg3601:00080 .
 
 exg3601:00080 a s223:ObservableProperty,
@@ -642,7 +642,7 @@ exg3601:00080 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "position_sensor.Position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PERCENT .
+    qudt:hasUnit unit:PERCENT .
 
 exg3601:00081 a s223:Damper,
         s223:Equipment ;
@@ -705,6 +705,7 @@ exg3601:00088 a s223:Equipment,
     p223:hasObservationLocation exg3601:00016 ;
     s223:hasMaxRange exg3601:00013 ;
     s223:hasMinRange exg3601:00012 ;
+    s223:hasObservationLocation exg3601:00016 ;
     s223:observes exg3601:00089 ;
     bob:hasQuantityKind quantitykind:DimensionlessRatio .
 
@@ -717,7 +718,7 @@ exg3601:00089 a s223:ObservableProperty,
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance s223:Substance-CO2 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:unit unit:PPM ;
+    qudt:hasUnit unit:PPM ;
     ref:hasExternalReference exg3601:00090 .
 
 exg3601:00090 a ref:ExternalReference ;

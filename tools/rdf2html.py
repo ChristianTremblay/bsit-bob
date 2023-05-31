@@ -7,11 +7,11 @@ import pyvis
 from rdflib import Graph, Literal
 
 from .rdf2html_classification import (
+    EdgesConfig,
     bacnet_labels,
     is_wanted_node,
     propgraph_labels,
     s223_types,
-    EdgesConfig,
     skip_edges,
 )
 
@@ -84,15 +84,15 @@ class Node:
             "uri": "bob:legend/DomainSpace",
             "label": "Legend / DomainSpace",
         },
-        "qudt": {
-            "size": 10,
-            "color": "#e3a1dd",
-            "shape": "star",
-            "group_int": 5,
-            "borderWidth": None,
-            "uri": "bob:legend/qudt",
-            "label": "Legend / qudt",
-        },
+        #        "qudt": {
+        #            "size": 10,
+        #            "color": "#e3a1dd",
+        #            "shape": "star",
+        #            "group_int": 5,
+        #            "borderWidth": None,
+        #            "uri": "bob:legend/qudt",
+        #            "label": "Legend / qudt",
+        #        },
         "Default": {
             "size": 15,
             "color": None,
@@ -113,14 +113,10 @@ class Node:
         self.uri = str(s)
 
         self.properties = {}
-        self.properties["aspects"] = set()
-        self.properties["medium"] = set()
-        self.properties["quantityKind"] = set()
-        self.properties["enumerationKind"] = set()
-        self.properties["domain"] = set()
-        self.properties["unit"] = set()
+        for k, v in propgraph_labels.items():
+            self.properties[k] = set()
+
         self.properties["bacnet"] = {}
-        self.properties["direction"] = set()
 
         if p and o:
             if "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" in p:
@@ -174,19 +170,24 @@ class Node:
         _bubble = ""
         _n = ", ".join(self.ns)
         _t = ", ".join(self.types)
+        _bubble += f"Label : {self.label}"
+        _bubble += f"\n======="
         if self.uri:
-            _bubble += f"URI : {self.uri}\n"
-        _bubble += f"Namespaces : {_n}\nTypes: {_t}"
+            _bubble += f"\nURI : {self.uri}"
+        _bubble += f"\nNamespaces : {_n}\nTypes: {_t}"
         if self.comment:
+            _bubble += f"\n=======\n"
             _bubble += f"\nComment : {self.comment}"
+            _bubble += f"\n======="
         if self.value:
             _bubble += f"\nValue : {self.value}"
-
+        if self.properties.values():
+            _bubble += f"\n======="
         for k, v in self.properties.items():
             try:
                 if v:
                     _v = ", ".join(v)
-                    _bubble += f"\n{k} : {_v}"
+                    _bubble += f"\n  - {k} : {_v}"
             except TypeError as error:
                 print(f"Error processing {k,v}")
 
@@ -292,11 +293,13 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
     prepare_nodes(g)
 
     visual_graph = pyvis.network.Network(
-        select_menu=True, filter_menu=True, cdn_resources="remote"
+        select_menu=True, filter_menu=True, cdn_resources="remote", directed=True
     )
 
     for k, v in nodes.items():
         # print(f"Adding to viz : {v.uri}")
+        if v.group == 2:
+            v.label = "Connection" if not v.label else v.label
         visual_graph.add_node(
             v.uri,
             v.label,
@@ -325,6 +328,7 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
 
     visual_graph.toggle_physics(True)
     visual_graph.show_buttons()
+    visual_graph.set_edge_smooth("dynamic")
     html_filename = f"{ttl_file.split('.ttl')[0]}.html"
     if show:
         visual_graph.show(html_filename, notebook=False)

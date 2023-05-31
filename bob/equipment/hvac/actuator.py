@@ -135,23 +135,23 @@ class BaseActuator(Equipment):
         self["position_sensor"] % self.linkageOutlet
         self["positionProducer"].cause_input << self["command"]
         self["positionProducer"].effect_output >> self.position
-        self["positionProducer"].hasEffectLocation = self.linkageOutlet
+        self["positionProducer"].effect_output.hasEffectLocation = self.linkageOutlet
 
         self["feedbackProducer"].cause_input << self.position
         self["feedbackProducer"].effect_output >> self["position_feedback"]
-        self["feedbackProducer"].hasEffectLocation = self.feedback_signal
+        self["feedbackProducer"].effect_output.hasEffectLocation = self.feedback_signal
 
         self["auxiliary_switch_open_producer"].cause_input << self.position
         self["auxiliary_switch_open_producer"].effect_output >> self["is_open"]
         self[
             "auxiliary_switch_open_producer"
-        ].hasEffectLocation = self.open_auxswitch_signal
+        ].effect_output.hasEffectLocation = self.open_auxswitch_signal
 
         self["auxiliary_switch_close_producer"].cause_input << self.position
         self["auxiliary_switch_close_producer"].effect_output >> self["is_closed"]
         self[
             "auxiliary_switch_close_producer"
-        ].hasEffectLocation = self.close_auxswitch_signal
+        ].effect_output.hasEffectLocation = self.close_auxswitch_signal
 
 
 """
@@ -181,6 +181,7 @@ class ElectricalProportionalActuator(BaseActuator):
         _config = template_update(ElectricalProportionalActuator_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self["positionProducer"].cause_input.hasCauseLocation = self.proportional_signal
 
 
 """
@@ -210,6 +211,7 @@ class ElectricalOnOffActuator(BaseActuator):
         _config = template_update(ElectricalOnOffActuator_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self["positionProducer"].cause_input.hasCauseLocation = self.onoff_signal
 
 
 PneumaticProportionalActuator_template = {
@@ -244,6 +246,7 @@ class PneumaticProportionalActuator(BaseActuator):
         _config = template_update(PneumaticProportionalActuator_template, config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self["positionProducer"].cause_input.hasCauseLocation = self.compressedAirInlet
 
 
 class PneumaticOnOffActuator(BaseActuator):
@@ -256,3 +259,4 @@ class PneumaticOnOffActuator(BaseActuator):
             _config.update(config)
         kwargs = {**_config.get("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self["positionProducer"].cause_input.hasCauseLocation = self.compressedAirInlet
