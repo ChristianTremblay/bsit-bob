@@ -6,10 +6,8 @@ _namespace = P223
 
 
 class NiagaraORDReference(ExternalReference):
-    hasRef: Literal
     _class_iri = None
 
 
 class TimeSeriesReference(ExternalReference):
-    hasRef: Literal
     _class_iri = None

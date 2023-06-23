@@ -4,7 +4,7 @@ from typing import Any
 
 from rdflib import XSD, Literal, URIRef
 
-from ..core import Equipment, ExternalReference, Node, bind_namespace
+from ..core import S223, Equipment, ExternalReference, Node, bind_namespace
 from ..equipment.control.controller import Controller
 from . import NetworkProfile
 
@@ -26,14 +26,13 @@ url_pattern = re.compile(
 #     isNetworkProfileOf: Controller
 
 
-class BACnetReference(ExternalReference):
-    _class_iri: URIRef = BACNET.DeviceObjectPropertyReference
-    _namespace = BACNET
+class BACnetExternalReference(ExternalReference):
+    _class_iri = S223.BACnetExternalReference
     _attr_uriref = {
-        "objectIdentifier": BACNET["object-identifier"],
-        "propertyIdentifier": BACNET["property-identifier"],
-        "propertyArrayIndex": BACNET["property-array-index"],
-        "deviceIdentifier": BACNET["device-identifier"],
+        "objectIdentifier": S223["object-identifier"],
+        "propertyIdentifier": S223["property-identifier"],
+        "propertyArrayIndex": S223["property-array-index"],
+        "deviceIdentifier": S223["device-identifier"],
     }
     objectIdentifier: Literal
     propertyIdentifier: URIRef
@@ -52,7 +51,7 @@ class BACnetReference(ExternalReference):
     # vendorId: XSD.nonNegativeInteger
 
     def __init__(self, arg: str = "", **kwargs) -> None:
-        logging.debug("BACnetReference.__init__ %r %r", arg, kwargs)
+        logging.debug("BACnetExternalReference.__init__ %r %r", arg, kwargs)
 
         if arg:
             url_match = url_pattern.match(arg)

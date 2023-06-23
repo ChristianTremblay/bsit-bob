@@ -49,10 +49,6 @@ bacnet:DeviceObject a rdfs:Class ;
     rdfs:label "bob.bacnet.DeviceObject" ;
     rdfs:subClassOf bacnet:Object .
 
-bacnet:DeviceObjectPropertyReference a rdfs:Class ;
-    rdfs:label "bob.externalreference.bacnet.BACnetReference" ;
-    rdfs:subClassOf ref:ExternalReference .
-
 bacnet:Object a rdfs:Class ;
     rdfs:label "bob.bacnet.Object" .
 
@@ -62,17 +58,11 @@ bacnet:ScheduleObject a rdfs:Class ;
 
 bacnet:description a rdf:Property .
 
-bacnet:device-identifier a rdf:Property .
-
 bacnet:object-identifier a rdf:Property .
 
 bacnet:object-name a rdf:Property .
 
 bacnet:object-type a rdf:Property .
-
-bacnet:property-array-index a rdf:Property .
-
-bacnet:property-identifier a rdf:Property .
 
 bacnet:system-status a rdf:Property .
 
@@ -1581,14 +1571,6 @@ bob:ZoneConnectionPoint a rdfs:Class ;
     """ ;
     rdfs:subClassOf bob:ZoneConnectionPoint .
 
-ref:ExternalReference a rdfs:Class ;
-    rdfs:label "bob.core.ExternalReference" ;
-    rdfs:comment """
-    This will be subclassed by different specific datasources, this simplest
-    form uses hasRef as a literal, most likely a string.  Note that this is
-    currently from the Brick "ref" schema.
-    """ .
-
 rec:Bathroom a rdfs:Class ;
     rdfs:label "bob.space.physical.Bathroom" ;
     rdfs:subClassOf s223:PhysicalSpace,
@@ -1647,6 +1629,4 @@ rec:Area a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
 ref:hasExternalReference a rdf:Property .
-
-ref:hasRef a rdf:Property .
 
