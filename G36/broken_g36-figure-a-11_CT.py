@@ -37,7 +37,7 @@ from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.stats import HighStaticPressureStat
 from bob.equipment.hvac.valve import TwoWayValve
-from bob.externalreference.bacnet import BACnetDevice, BACnetReference
+from bob.externalreference.bacnet import BACnetDevice, BACnetExternalReference
 from bob.producer import InputConnector
 
 # from bob.equipment.hvac.g36 import AnalogIn, AnalogOut, BinaryIn, BinaryOut, G36Block
@@ -147,11 +147,11 @@ dpt2 = AirDifferentialStaticPressureSensor(
 )
 
 # BACnet Stuff
-dps["DPS.sensor"] @ BACnetReference("bacnet://2/binary-output,1")
-rat @ BACnetReference("bacnet://2/analog-input,1")
-dat @ BACnetReference("bacnet://2/analog-input,2")
-dpt1 @ BACnetReference("bacnet://2/analog-input,3")
-dpt2 @ BACnetReference("bacnet://2/analog-input,4")
+dps["DPS.sensor"] @ BACnetExternalReference("bacnet://2/binary-output,1")
+rat @ BACnetExternalReference("bacnet://2/analog-input,1")
+dat @ BACnetExternalReference("bacnet://2/analog-input,2")
+dpt1 @ BACnetExternalReference("bacnet://2/analog-input,3")
+dpt2 @ BACnetExternalReference("bacnet://2/analog-input,4")
 
 
 high_static = HighStaticController(

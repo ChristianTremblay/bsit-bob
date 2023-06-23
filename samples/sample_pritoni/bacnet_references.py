@@ -15,7 +15,7 @@ from bob.bacnet import (
     BinaryOutputObject,
     ScheduleObject,
 )
-from bob.externalreference.bacnet import BACnetReference
+from bob.externalreference.bacnet import BACnetExternalReference
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
@@ -136,27 +136,37 @@ pritoni_schedule = ScheduleObject(
 )
 CGM_2_004 > pritoni_schedule
 
-hd.vav1["VAV1_ZN-T"].observedProperty @ zn1_t
-hd.vav2["VAV2_ZN-T"].observedProperty @ zn2_t
+hd.vav1["VAV1_ZN-T"].observedProperty @ BACnetExternalReference(
+    "bacnet://5205/analog-input,1001"
+)
+hd.vav2["VAV2_ZN-T"].observedProperty @ BACnetExternalReference(
+    "bacnet://5206/analog-input,1002"
+)
 
-hd.ahu["RF_VFD"]["drive_running"] @ rf_vfd_status
-hd.ahu["RF_VFD"]["run_command"] @ rf_vfd_cmd
+hd.ahu["RF_VFD"]["drive_running"] @ BACnetExternalReference(
+    "bacnet://5204/binary-input,5021"
+)
+hd.ahu["RF_VFD"]["run_command"] @ BACnetExternalReference(
+    "bacnet://5204/binary-output,12345"
+)
 
 # A bulb with only one object
-ld.openofficeNorth_luminaire_1.brightnessRatio @ BACnetReference(
+ld.openofficeNorth_luminaire_1.brightnessRatio @ BACnetExternalReference(
     "bacnet://2/analog-input,1"
 )
-ld.openofficeNorth_luminaire_1.onOffStatus @ BACnetReference(
+ld.openofficeNorth_luminaire_1.onOffStatus @ BACnetExternalReference(
     "bacnet://2/binary-input,1"
 )
 
 fn.f_avg_temp @ dat_avg
 
-fn.bathroom_occ_control_schedule @ pritoni_schedule
-fn.corridor_occ_control_schedule @ pritoni_schedule
-fn.kitchenette_occ_control_schedule @ pritoni_schedule
-fn.open_office_occ_control_schedule @ pritoni_schedule
-fn.private_office_occ_control_schedule @ pritoni_schedule
+pritoni_schedule_reference = BACnetExternalReference("bacnet://5204/schedule,1")
+
+fn.bathroom_occ_control_schedule @ pritoni_schedule_reference
+fn.corridor_occ_control_schedule @ pritoni_schedule_reference
+fn.kitchenette_occ_control_schedule @ pritoni_schedule_reference
+fn.open_office_occ_control_schedule @ pritoni_schedule_reference
+fn.private_office_occ_control_schedule @ pritoni_schedule_reference
 
 if __name__ == "__main__":
     dump()

@@ -9,6 +9,7 @@ import inspect
 import io
 import itertools
 import logging
+import warnings
 import os
 import re
 import sys
@@ -805,8 +806,23 @@ class Node(metaclass=NodeMetaclass):
 
 
 class ExternalReferenceValue:
+    """
+    This class is actually a mapping function that returns a URIRef or literal
+    and is used like:
+
+        class X:
+            someProperty: ExternalReferenceValue
+
+        x = X(someProperty=12)
+
+    The current REF schema (see Brick) doesn't have a subclass of ExternalReference
+    that has a shape that can point to a literal.
+    """
+
     def __new__(cls, value):
         logging.debug(f"ExternalReferenceValue.__new__ {cls!r} {value!r}")
+        raise RuntimeError("needs technical assistance")
+
         if isinstance(value, Literal):
             pass
         elif isinstance(value, URIRef):
@@ -821,15 +837,8 @@ class ExternalReferenceValue:
 
 class ExternalReference(Node):
     """
-    This will be subclassed by different specific datasources, this simplest
-    form uses hasRef as a literal, most likely a string.  Note that this is
-    currently from the Brick "ref" schema.
+    This will be subclassed by different specific datasources.
     """
-
-    _class_iri: URIRef = REF.ExternalReference
-    _attr_uriref = {"hasRef": REF.hasRef}
-
-    hasRef: ExternalReferenceValue
 
     def __init__(
         self,
@@ -837,12 +846,13 @@ class ExternalReference(Node):
         **kwargs: Any,
     ):
         logging.debug(f"ExternalReference.__init__ {arg!r} {kwargs}")
-        if arg is not None:
-            if "hasRef" in kwargs:
-                raise RuntimeError("initialization conflict")
-            kwargs["hasRef"] = arg
+        if self.__class__ is ExternalReference:
+            warnings.warn("ExternalReference is an abstract base class")
 
         super().__init__(**kwargs)
+
+        if arg:
+            self._data_graph.add((self._node_iri, RDFS.comment, Literal(str(arg))))
 
 
 class Property(Node):
@@ -919,7 +929,7 @@ class Property(Node):
         """Add an additional external reference to a property."""
         if not isinstance(external_reference, self._external_reference_class):
             external_reference = self._external_reference_class(
-                external_reference,
+                comment=external_reference,
             )
             if hasattr(self, "label"):
                 external_reference.label = self.label + ".ExternalReference"
@@ -928,8 +938,6 @@ class Property(Node):
         self._data_graph.add(
             (self._node_iri, REF.hasExternalReference, external_reference._node_iri)
         )
-        if INCLUDE_INVERSE:
-            external_reference.isExternalReferenceOf = self
 
     def add_aspect(self, aspect: EnumerationKind) -> Node:
         """

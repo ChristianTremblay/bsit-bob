@@ -145,57 +145,51 @@ bacnet_references:00014 a bacnet:Object,
     bacnet:object-name "OCC-SCHEDULE" ;
     bacnet:object-type bacnet:ObjectType.schedule .
 
-bacnet_references:00015 a ref:ExternalReference ;
-    rdfs:label "VAV1_ZN-T.Temperature.ExternalReference" ;
-    ref:hasRef bacnet_references:00010 .
+bacnet_references:00015 a s223:BACnetExternalReference,
+        s223:ExternalReference ;
+    s223:device-identifier "device,5205" ;
+    s223:object-identifier "analog-input,1001" ;
+    s223:property-identifier bacnet:PropertyIdentifier.present-value .
 
-bacnet_references:00016 a ref:ExternalReference ;
-    rdfs:label "VAV2_ZN-T.Temperature.ExternalReference" ;
-    ref:hasRef bacnet_references:00011 .
+bacnet_references:00016 a s223:BACnetExternalReference,
+        s223:ExternalReference ;
+    s223:device-identifier "device,5206" ;
+    s223:object-identifier "analog-input,1002" ;
+    s223:property-identifier bacnet:PropertyIdentifier.present-value .
 
-bacnet_references:00017 a ref:ExternalReference ;
-    rdfs:label "drive_running.ExternalReference" ;
-    ref:hasRef bacnet_references:00012 .
+bacnet_references:00017 a s223:BACnetExternalReference,
+        s223:ExternalReference ;
+    s223:device-identifier "device,5204" ;
+    s223:object-identifier "binary-input,5021" ;
+    s223:property-identifier bacnet:PropertyIdentifier.present-value .
 
-bacnet_references:00018 a ref:ExternalReference ;
-    rdfs:label "run_command.ExternalReference" ;
-    ref:hasRef bacnet_references:00013 .
+bacnet_references:00018 a s223:BACnetExternalReference,
+        s223:ExternalReference ;
+    s223:device-identifier "device,5204" ;
+    s223:object-identifier "binary-output,12345" ;
+    s223:property-identifier bacnet:PropertyIdentifier.present-value .
 
-bacnet_references:00019 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
-    bacnet:device-identifier "device,2" ;
-    bacnet:object-identifier "analog-input,1" ;
-    bacnet:property-identifier bacnet:PropertyIdentifier.present-value .
+bacnet_references:00019 a s223:BACnetExternalReference,
+        s223:ExternalReference ;
+    s223:device-identifier "device,2" ;
+    s223:object-identifier "analog-input,1" ;
+    s223:property-identifier bacnet:PropertyIdentifier.present-value .
 
-bacnet_references:00020 a bacnet:DeviceObjectPropertyReference,
-        ref:ExternalReference ;
-    bacnet:device-identifier "device,2" ;
-    bacnet:object-identifier "binary-input,1" ;
-    bacnet:property-identifier bacnet:PropertyIdentifier.present-value .
+bacnet_references:00020 a s223:BACnetExternalReference,
+        s223:ExternalReference ;
+    s223:device-identifier "device,2" ;
+    s223:object-identifier "binary-input,1" ;
+    s223:property-identifier bacnet:PropertyIdentifier.present-value .
 
-bacnet_references:00021 a ref:ExternalReference ;
+bacnet_references:00021 a s223:ExternalReference ;
     rdfs:label "DA-T-AVG.ExternalReference" ;
-    ref:hasRef bacnet_references:00008 .
+    rdfs:comment "<AnalogValueObject at urn:sample_pritoni/bacnet_references/00008>" .
 
-bacnet_references:00022 a ref:ExternalReference ;
-    rdfs:label "Bathroom Occ Schedule.ExternalReference" ;
-    ref:hasRef bacnet_references:00014 .
-
-bacnet_references:00023 a ref:ExternalReference ;
-    rdfs:label "Corridor Occ Schedule.ExternalReference" ;
-    ref:hasRef bacnet_references:00014 .
-
-bacnet_references:00024 a ref:ExternalReference ;
-    rdfs:label "Kitchenette Occ Schedule.ExternalReference" ;
-    ref:hasRef bacnet_references:00014 .
-
-bacnet_references:00025 a ref:ExternalReference ;
-    rdfs:label "Open Office Occ Schedule.ExternalReference" ;
-    ref:hasRef bacnet_references:00014 .
-
-bacnet_references:00026 a ref:ExternalReference ;
-    rdfs:label "Private Office Occ Schedule.ExternalReference" ;
-    ref:hasRef bacnet_references:00014 .
+bacnet_references:00022 a s223:BACnetExternalReference,
+        s223:ExternalReference ;
+    s223:device-identifier "device,5204" ;
+    s223:object-identifier "schedule,1" ;
+    s223:property-identifier bacnet:PropertyIdentifier.present-value .
 
 electrical_devices:00001 a p223:ElectricalDistributionPanel,
         s223:Equipment ;
@@ -3221,7 +3215,7 @@ functions:00012 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Open Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00025 .
+    ref:hasExternalReference bacnet_references:00022 .
 
 functions:00013 a p223:OccupancyFunction,
         p223:Producer,
@@ -3267,7 +3261,7 @@ functions:00019 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Kitchenette Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00024 .
+    ref:hasExternalReference bacnet_references:00022 .
 
 functions:00020 a p223:OccupancyFunction,
         p223:Producer,
@@ -3313,7 +3307,7 @@ functions:00026 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Private Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00026 .
+    ref:hasExternalReference bacnet_references:00022 .
 
 functions:00027 a p223:OccupancyFunction,
         p223:Producer,
@@ -3405,7 +3399,7 @@ functions:00040 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Corridor Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00023 .
+    ref:hasExternalReference bacnet_references:00022 .
 
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;

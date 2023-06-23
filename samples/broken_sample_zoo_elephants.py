@@ -54,7 +54,7 @@ from bob.space.physical import (
     Room,
 )
 
-# from bob.externalreference.BACNET import BACnetReference, NiagaraORDReference
+# from bob.externalreference.BACNET import BACnetExternalReference, NiagaraORDReference
 
 
 model_name = Path(__file__).stem
@@ -185,7 +185,7 @@ te1 = AirTemperatureSensor(
     label="TE-1",
     comment="Outdoor air preheated by exhanger",
     unit=UNIT.DEG_C,
-    # hasExternalReference=BACnetReference("bacnet://345/analog-value,1/present-value"),
+    # hasExternalReference=BACnetExternalReference("bacnet://345/analog-value,1/present-value"),
 )
 ha1 = AirHumiditySensor(label="HA-1")
 tpd1 = AirDifferentialStaticPressureSensor(

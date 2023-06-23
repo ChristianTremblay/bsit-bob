@@ -2,8 +2,6 @@ from rdflib import URIRef
 
 from ..core import P223, S223, Node
 
-_namespace = P223
-
 
 class NetworkProfile(Node):
     """
