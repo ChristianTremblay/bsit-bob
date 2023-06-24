@@ -29,10 +29,10 @@ url_pattern = re.compile(
 class BACnetExternalReference(ExternalReference):
     _class_iri = S223.BACnetExternalReference
     _attr_uriref = {
-        "objectIdentifier": S223["object-identifier"],
-        "propertyIdentifier": S223["property-identifier"],
-        "propertyArrayIndex": S223["property-array-index"],
-        "deviceIdentifier": S223["device-identifier"],
+        "objectIdentifier": BACNET["object-identifier"],
+        "propertyIdentifier": BACNET["property-identifier"],
+        "propertyArrayIndex": BACNET["property-array-index"],
+        "deviceIdentifier": BACNET["device-identifier"],
     }
     objectIdentifier: Literal
     propertyIdentifier: URIRef
