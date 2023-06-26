@@ -5,7 +5,6 @@
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -699,11 +698,11 @@ exg3601:00085 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:GasConcentration ;
     rdfs:label "CO2.GasConcentration" ;
+    s223:hasExternalReference exg3601:00086 ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance s223:Substance-CO2 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PPM ;
-    ref:hasExternalReference exg3601:00086 .
+    qudt:hasUnit unit:PPM .
 
 exg3601:00086 a s223:ExternalReference ;
     rdfs:label "CO2.GasConcentration.ExternalReference" ;

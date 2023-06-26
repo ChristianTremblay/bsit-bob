@@ -22,7 +22,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rec: <https://w3id.org/rec/core/> .
-@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -3165,10 +3164,10 @@ functions:00005 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "DA-T-AVG" ;
+    s223:hasExternalReference bacnet_references:00021 ;
     s223:hasValue 0.0 ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:hasUnit unit:DEG_C ;
-    ref:hasExternalReference bacnet_references:00021 .
+    qudt:hasUnit unit:DEG_C .
 
 functions:00006 a p223:OccupancyFunction,
         p223:Producer,
@@ -3215,7 +3214,7 @@ functions:00012 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Open Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00022 .
+    s223:hasExternalReference bacnet_references:00022 .
 
 functions:00013 a p223:OccupancyFunction,
         p223:Producer,
@@ -3261,7 +3260,7 @@ functions:00019 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Kitchenette Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00022 .
+    s223:hasExternalReference bacnet_references:00022 .
 
 functions:00020 a p223:OccupancyFunction,
         p223:Producer,
@@ -3307,7 +3306,7 @@ functions:00026 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Private Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00022 .
+    s223:hasExternalReference bacnet_references:00022 .
 
 functions:00027 a p223:OccupancyFunction,
         p223:Producer,
@@ -3353,7 +3352,7 @@ functions:00033 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Bathroom Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00022 .
+    s223:hasExternalReference bacnet_references:00022 .
 
 functions:00034 a p223:OccupancyFunction,
         p223:Producer,
@@ -3399,7 +3398,7 @@ functions:00040 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Corridor Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
-    ref:hasExternalReference bacnet_references:00022 .
+    s223:hasExternalReference bacnet_references:00022 .
 
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;
@@ -4247,7 +4246,7 @@ hvac_devices:00069 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    ref:hasExternalReference bacnet_references:00017 .
+    s223:hasExternalReference bacnet_references:00017 .
 
 hvac_devices:00070 a s223:ActuatableProperty,
         s223:EnumerableProperty,
@@ -4255,7 +4254,7 @@ hvac_devices:00070 a s223:ActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    ref:hasExternalReference bacnet_references:00018 .
+    s223:hasExternalReference bacnet_references:00018 .
 
 hvac_devices:00071 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -6992,11 +6991,11 @@ hvac_devices:00407 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "VAV1_ZN-T.Temperature" ;
+    s223:hasExternalReference bacnet_references:00015 ;
     s223:hasValue 69.7 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:hasUnit unit:DEG_F ;
-    ref:hasExternalReference bacnet_references:00015 .
+    qudt:hasUnit unit:DEG_F .
 
 hvac_devices:00408 a s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
@@ -7639,11 +7638,11 @@ hvac_devices:00489 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "VAV2_ZN-T.Temperature" ;
+    s223:hasExternalReference bacnet_references:00016 ;
     s223:hasValue 73.2 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:hasUnit unit:DEG_F ;
-    ref:hasExternalReference bacnet_references:00016 .
+    qudt:hasUnit unit:DEG_F .
 
 hvac_devices:00490 a s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
@@ -9281,8 +9280,8 @@ lighting_devices:00061 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasValue s223:OnOff-Off ;
-    ref:hasExternalReference bacnet_references:00020 .
+    s223:hasExternalReference bacnet_references:00020 ;
+    s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00062 a s223:ActuatableProperty,
         s223:EnumerableProperty,
@@ -9325,10 +9324,10 @@ lighting_devices:00065 a s223:ActuatableProperty,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
+    s223:hasExternalReference bacnet_references:00019 ;
     s223:hasValue 0.0 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT ;
-    ref:hasExternalReference bacnet_references:00019 .
+    qudt:hasUnit unit:PERCENT .
 
 lighting_devices:00066 a s223:OutletConnectionPoint,
         bob:LightVisibleConnectionPoint ;

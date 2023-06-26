@@ -4,9 +4,7 @@
 #   Project Metadata
 #
 
-__version__ = "0.75"
-__author__ = "Joel Bender"
-__email__ = "jjb5@cornell.edu"
+__version__ = "0.76"
 
 # core classes for S223 models
 # basic pieces for all Bob models

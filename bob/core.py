@@ -188,8 +188,6 @@ enum = bind_namespace(
 )
 BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")
 
-REF = bind_namespace("ref", "https://brickschema.org/schema/Brick/ref#")
-
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
 model_namespace = None
@@ -861,8 +859,6 @@ class Property(Node):
     an abstract base class.
     """
 
-    _attr_uriref = {"hasExternalReference": REF.hasExternalReference}
-
     ofMedium: Medium
     ofSubstance: Substance
     hasValue: Literal
@@ -936,7 +932,7 @@ class Property(Node):
 
         # link the two together
         self._data_graph.add(
-            (self._node_iri, REF.hasExternalReference, external_reference._node_iri)
+            (self._node_iri, S223.hasExternalReference, external_reference._node_iri)
         )
 
     def add_aspect(self, aspect: EnumerationKind) -> Node:
