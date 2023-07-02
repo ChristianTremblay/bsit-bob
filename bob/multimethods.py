@@ -16,6 +16,10 @@ from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union, get_o
 __all__ = ["multimethod"]
 
 
+# logging
+_log = logging.getLogger("multimethods")
+_log.addHandler(logging.NullHandler())
+
 # Maps function.__name__ -> _MultiMethod object.
 _multi_registry: Dict[str, _MultiMethod] = {}
 
@@ -77,10 +81,10 @@ class _MultiMethod:
         return method(*args)
 
     def register_function(self, func: Callable[..., Any]) -> None:
-        logging.debug("(%s)register_function: %r", self.name, func)
+        _log.debug("(%s)register_function: %r", self.name, func)
 
         if self.typemap:
-            logging.warning("forcing repopulatation: %r", self)
+            _log.warning("forcing repopulatation: %r", self)
 
             # clear out the existing map for now
             self.types = set()
@@ -99,7 +103,7 @@ class _MultiMethod:
         self.funcs.append(func)
 
     def populate_typemap(self):
-        logging.debug("(%s)populate_typemap", self.name)
+        _log.debug("(%s)populate_typemap", self.name)
 
         # clear out the existing map
         self.types = set()
@@ -160,7 +164,7 @@ class _MultiMethod:
 
         # if there are any existing invocations, see if they might change
         for types_tuple, method in self.invocations:
-            logging.debug("    - make sure %s still calls %r", types_tuple, method)
+            _log.debug("    - make sure %s still calls %r", types_tuple, method)
 
             if types_tuple not in self.typemap:
                 raise RuntimeError(
@@ -174,7 +178,7 @@ class _MultiMethod:
 
 def multimethod(func: Callable[..., Any]) -> _MultiMethod:
     """Function Decorator"""
-    logging.debug("multimethod %r", func)
+    _log.debug("multimethod %r", func)
 
     name = func.__name__
     mm = _multi_registry.get(name)
@@ -196,7 +200,7 @@ def all_subclasses(cls: type) -> List[type]:
 
 
 def new_class(cls: type) -> None:
-    logging.debug("new_class %r", cls.__name__)
+    _log.debug("new_class %r", cls.__name__)
 
     # check to see if the new type is a subclass of an existing type
     for fn_name, mm in _multi_registry.items():
@@ -204,7 +208,7 @@ def new_class(cls: type) -> None:
         for mm_type in mm.types:
             if inspect.isclass(mm_type):
                 if issubclass(cls, mm_type):
-                    logging.debug(
+                    _log.debug(
                         "    - %s ding: %r is a subclass of %r", fn_name, cls, mm_type
                     )
                     ding = True
@@ -215,7 +219,7 @@ def new_class(cls: type) -> None:
             if mm_origin is list:
                 mm_subtype = mm_type.__args__[0]  # type: ignore[attr-defined]
                 if issubclass(cls, mm_subtype):
-                    logging.debug(
+                    _log.debug(
                         "    - %s ding: %r is a subclass of %r",
                         fn_name,
                         cls,

@@ -29,6 +29,10 @@ from ...core import (
 from ...externalreference import NetworkProfile
 from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = P223
 
 # empty, because other equipments can be defined as controller
@@ -65,12 +69,12 @@ class Controller(Equipment):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(controller_template, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"Controller.__init__ {_config} {kwargs}")
+        _log.debug(f"Controller.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
 
     def executes(self, function_block: FunctionBlock):
-        logging.debug(
+        _log.debug(
             f"Controller {self._node_iri} executes  {function_block._node_iri}"
         )
         data_graph.add((self._node_iri, S223.executes, function_block._node_iri))
@@ -88,8 +92,8 @@ class Controller(Equipment):
 
 @multimethod
 def connect_mm(controller: Controller, function_block: FunctionBlock) -> None:
-    """Controller >> FucntionBlock"""
-    logging.info(f"connect from {controller} to {function_block}")
+    """Controller >> FunctionBlock"""
+    _log.info(f"connect from {controller} to {function_block}")
 
     data_graph.add((controller._node_iri, S223.executes, function_block._node_iri))
     if INCLUDE_INVERSE:
@@ -101,7 +105,7 @@ def connect_mm(controller: Controller, function_block: FunctionBlock) -> None:
 @multimethod
 def connect_mm(controller: Controller, network_Equipment: NetworkProfile) -> None:
     """Controller >> NetworkProfile"""
-    logging.info(f"connect from {controller} to {network_Equipment}")
+    _log.info(f"connect from {controller} to {network_Equipment}")
 
     data_graph.add(
         (controller._node_iri, P223.hasNetworkProfile, network_Equipment._node_iri)

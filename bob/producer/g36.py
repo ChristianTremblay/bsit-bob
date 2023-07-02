@@ -38,6 +38,10 @@ from . import (
     G36DigitalInput,
 )
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = G36
 
 
@@ -104,7 +108,7 @@ class G36VAVCoolingOnly(G36Sequence):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update({}, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"Fan.__init__ {_config} {kwargs}")
+        _log.debug(f"Fan.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
 

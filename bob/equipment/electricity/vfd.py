@@ -49,6 +49,10 @@ from ...properties import (
     Temperature,
 )
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 
@@ -108,7 +112,7 @@ class VFD(_VFD):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(vfd_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"VFD.__init__ {_config} {kwargs}")
+        _log.debug(f"VFD.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
         self["current_sensor"] % self.electricalOutlet
         self.amps = self["current_sensor"].observedProperty

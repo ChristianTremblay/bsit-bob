@@ -8,6 +8,10 @@ from ..core import S223, Equipment, ExternalReference, Node, bind_namespace
 from ..equipment.control.controller import Controller
 from . import NetworkProfile
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
 
 url_pattern = re.compile(
@@ -51,7 +55,7 @@ class BACnetExternalReference(ExternalReference):
     # vendorId: XSD.nonNegativeInteger
 
     def __init__(self, arg: str = "", **kwargs) -> None:
-        logging.debug("BACnetExternalReference.__init__ %r %r", arg, kwargs)
+        _log.debug("BACnetExternalReference.__init__ %r %r", arg, kwargs)
 
         if arg:
             url_match = url_pattern.match(arg)

@@ -25,6 +25,10 @@ from ...core import (
 )
 from .switch import CurrentRelay
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 electric_starter_template = {
@@ -60,7 +64,7 @@ class MotorStarter(_MotorStarter):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electric_starter_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"MotorStarter.__init__ {_config} {kwargs}")
+        _log.debug(f"MotorStarter.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
         if self["currentRelay"]:

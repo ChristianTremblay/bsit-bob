@@ -50,6 +50,10 @@ from ...core import (
 from ...properties import Gallons, Percent
 from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 
@@ -169,7 +173,7 @@ class TwoWayActuatedProportionalValve(TwoWayActuatedValve):
             electrical_actuated_proportional_2w_valve_template, config
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"TwoWayActuatedProportionalValve.__init__ {_config} {kwargs}")
+        _log.debug(f"TwoWayActuatedProportionalValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
 
@@ -253,7 +257,7 @@ class ThreeWayMixingActuatedProportionalValve(ThreeWayMixingSystem):
             {"equipment": {("actuator", ElectricalProportionalActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
-        logging.debug(
+        _log.debug(
             f"ThreeWayMixingActuatedProportionalValve.__init__ {_config} {kwargs}"
         )
         super().__init__(_config, **kwargs)
@@ -267,7 +271,7 @@ class ThreeWayMixingActuatedOnOffValve(ThreeWayValveMixing):
             {"equipment": {("actuator", ElectricalOnOffActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
-        logging.debug(f"ThreeWayMixingActuatedOnOffValve.__init__ {_config} {kwargs}")
+        _log.debug(f"ThreeWayMixingActuatedOnOffValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
 
@@ -279,7 +283,7 @@ class ThreeWayDivertingActuatedProportionalValve(ThreeWayDivertingSystem):
             {"equipment": {("actuator", ElectricalProportionalActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
-        logging.debug(
+        _log.debug(
             f"ThreeWayDivertingActuatedProportionalValve.__init__ {_config} {kwargs}"
         )
         super().__init__(_config, **kwargs)
@@ -293,7 +297,7 @@ class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
             {"equipment": {("actuator", ElectricalOnOffActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
-        logging.debug(
+        _log.debug(
             f"ThreeWayDivertingActuatedOnOffValve.__init__ {_config} {kwargs}"
         )
         super().__init__(_config, **kwargs)

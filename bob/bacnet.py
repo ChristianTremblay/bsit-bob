@@ -13,8 +13,11 @@ from .core import Equipment, ExternalReference, Node, bind_namespace, INCLUDE_IN
 from .equipment.control.controller import Controller
 from .multimethods import multimethod, new_class
 
-BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
+# logging
+_log = logging.getLogger(__name__)
 
+# namespace
+BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
 _namespace = BACNET
 
 
@@ -39,7 +42,7 @@ class Object(Node):
 @multimethod
 def contains_mm(device_: Device, object_: Object) -> None:
     """Device > Object"""
-    logging.info(f"device {device_} contains object {object_}")
+    _log.info(f"device {device_} contains object {object_}")
 
     device_._data_graph.add((device_._node_iri, BACNET.hasObject, object_._node_iri))
     if INCLUDE_INVERSE:
@@ -51,7 +54,7 @@ def contains_mm(device_: Device, object_: Object) -> None:
 @multimethod
 def contains_mm(device_: Device, object_list: List[Object]) -> None:
     """Device > Object"""
-    logging.info(f"device {device_} contains object list {object_list}")
+    _log.info(f"device {device_} contains object list {object_list}")
 
     for object_ in object_list:
         contains_mm(device_, object_)

@@ -30,6 +30,10 @@ from ...properties import (
     Pressure,
 )
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 pump_template = {
@@ -55,7 +59,7 @@ class Pump(Equipment):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(pump_template, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"Fan.__init__ {_config} {kwargs}")
+        _log.debug(f"Fan.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
 
@@ -88,7 +92,7 @@ class PumpWithStarter(Pump):
             config=config,
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"PumpWithStarter.__init__ {_config} {kwargs}")
+        _log.debug(f"PumpWithStarter.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
         self.onOffCommand = self["starter"]["onOffCommand"]
@@ -116,7 +120,7 @@ class PumpWithVFD(Pump):
             config=config,
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"PumpWithVFD.__init__ {_config} {kwargs}")
+        _log.debug(f"PumpWithVFD.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
         self.onOffCommand = self["vfd"]["run_command"]
         self.onOffStatus = self["vfd"]["drive_running"]

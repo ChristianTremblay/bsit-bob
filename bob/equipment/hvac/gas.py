@@ -25,6 +25,10 @@ from ...sensor.gas import (
     NO2Sensor,
 )
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 gasmonitor_template = {
