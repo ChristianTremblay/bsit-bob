@@ -21,8 +21,8 @@ from ...connections.air import (
 )
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    Electricity_24V_1Ph_60HzInletConnectionPoint,
-    Electricity_120V_1Ph_60HzInletConnectionPoint,
+    Electricity_24VLN_1Ph_60HzInletConnectionPoint,
+    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
 )
 from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
@@ -160,7 +160,7 @@ ELECTRICAL PROPORTIONAL DAMPER/VALVE ACTUATOR
 
 ElectricalProportionalActuator_template = {
     "cp": {
-        "electricalInlet": Electricity_24V_1Ph_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_24VLN_1Ph_60HzInletConnectionPoint,
         "proportional_signal": ModulationSignalInletConnectionPoint,
     },
     "properties": {
@@ -189,7 +189,7 @@ ELECTRICAL ON/OFF DAMPER/VALVE ACTUATOR
 """
 ElectricalOnOffActuator_template = {
     "cp": {
-        "electricalInlet": Electricity_24V_1Ph_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_24VLN_1Ph_60HzInletConnectionPoint,
         "onoff_signal": OnOffSignalInletConnectionPoint,
     },
     "properties": {

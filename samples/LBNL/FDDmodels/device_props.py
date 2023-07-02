@@ -16,8 +16,8 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import (
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from bob.core import *
 from bob.equipment.archives.coolingcoil import ChilledWaterCoil2
@@ -64,7 +64,7 @@ _namespace = ex = bind_model_namespace(
 #     "params": {
 #         "label": "MyFan",
 #         "comment": "A Big Fan",
-#         "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+#         "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 #         # "amps": 10,
 #         # "rpm": 1770,
 #         "powerFactor": 1.4,
@@ -81,8 +81,8 @@ _namespace = ex = bind_model_namespace(
 #     "params": {
 #         "label": "MyVFD",
 #         "comment": "A VFD for a Big Fan",
-#         "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
-#         "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
+#         "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+#         "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 #         # "amps": 10,
 #         # "hp": 10,
 #     },

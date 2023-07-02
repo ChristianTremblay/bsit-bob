@@ -12,7 +12,7 @@ def parse_rdf(ttl_file):
     return graph
 
 
-g = parse_rdf("VOCAB_SP223_enumeration-v1.0.ttl")
+g = parse_rdf("VOCAB_SP223_electricity-v1.0.ttl")
 
 title = None
 details = None

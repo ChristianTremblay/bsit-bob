@@ -6,8 +6,8 @@ from bob.properties import PercentCommand
 from bob.properties.electricity import Amps, ElectricPowerkW
 
 from ...connections.electricity import (
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
@@ -19,8 +19,8 @@ _namespace = BOB
 # SCR
 SCR_template = {
     "cp": {
-        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
+        "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         "modulationSignal": ModulationSignalInletConnectionPoint,
     },
     "properties": {

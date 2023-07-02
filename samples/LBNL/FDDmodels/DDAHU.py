@@ -20,8 +20,8 @@ from bob.connections.air import (
     AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import (
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from bob.core import (
     HVAC,
@@ -199,8 +199,8 @@ vfd_template = {
     "params": {
         "label": "MyVFD",
         "comment": "A VFD for a Big Fan",
-        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
+        "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         "W": ElectricPowerW(hasExternalReference=TimeSeriesReference()),
         "speed_reference": Percent(hasExternalReference=TimeSeriesReference()),
     },
@@ -211,7 +211,7 @@ fan_template = {
     "params": {
         "label": "MyFan",
         "comment": "A Big Fan",
-        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
     },  # Fans also have % Speed and On/Off status
     "sensors": {
         ("TPD1", AirDifferentialPressureSensor): {

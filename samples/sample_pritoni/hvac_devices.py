@@ -4,8 +4,8 @@ import hvac_spaces as hs
 import physical_spaces as ps
 
 from bob.connections.electricity import (
-    Electricity_120V_1Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
+    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
 from bob.core import UNIT, Role, bind_model_namespace, dump
 from bob.equipment.architectural import Window
@@ -70,7 +70,7 @@ ahu_template = {
     "equipment": {
         ("RF", Fan): {
             "comment": "Return Air Fan",
-            "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+            "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
             "hasRole": Role.Return,
         },
         ("RF_VFD", VFD): {
@@ -78,7 +78,7 @@ ahu_template = {
         },
         ("SF", Fan): {
             "comment": "Supply Air Fan",
-            "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+            "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
             "hasRole": Role.Supply,
         },
         ("SF_Starter", MotorStarter): {
@@ -171,7 +171,7 @@ hot_water_pump_starter >> hot_water_pump
 
 exhaustfan_template = {
     "cp": {
-        "electricalInlet": Electricity_120V_1Ph_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_120VLN_1Ph_60HzInletConnectionPoint,
     },
     "params": {
         "hasRole": Role.Exhaust,

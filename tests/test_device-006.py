@@ -4,8 +4,8 @@ from header import ttl_test_header
 from rdflib import Literal
 
 from bob.connections.electricity import (
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from bob.core import bind_model_namespace, dump
 from bob.equipment.electricity.vfd import VFD
@@ -30,8 +30,8 @@ def test_create_vfd_from_template(bob_fixture):
     vfd_template = {
         "params": {"label": "MyVFD", "comment": "A VFD for a Big Fan"},
         "cp": {
-            "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
-            "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
+            "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+            "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         },
     }
     v = VFD(config=vfd_template)
