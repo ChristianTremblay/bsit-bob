@@ -117,15 +117,6 @@ class PneumaticValve(Valve):
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 
 
-# ======
-# Systems definition
-#
-# Below are associations of valve + actuators with different configuration
-# to be used in models
-#
-# ======
-
-
 class TwoWayActuatedValve(System):
     """
     This base class allow the creation of SystemConnectionPoints
@@ -144,6 +135,7 @@ class TwoWayActuatedValve(System):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update({}, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
+        _log.debug(f"TwoWayActuatedValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
         self.command = self["valve"]["command"] = self["actuator"]["command"]
@@ -192,6 +184,7 @@ class TwoWayActuatedOnOffValve(TwoWayActuatedValve):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electrical_actuated_onoff_2w_valve_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
+        _log.debug(f"TwoWayActuatedOnOffValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
 
@@ -297,7 +290,5 @@ class ThreeWayDivertingActuatedOnOffValve(ThreeWayValveDiverting):
             {"equipment": {("actuator", ElectricalOnOffActuator): {}}}, config
         )
         kwargs = {**_config.get("params", {}), **kwargs}
-        _log.debug(
-            f"ThreeWayDivertingActuatedOnOffValve.__init__ {_config} {kwargs}"
-        )
+        _log.debug(f"ThreeWayDivertingActuatedOnOffValve.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)

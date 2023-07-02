@@ -47,8 +47,14 @@ try:
 except ImportError:
     _dotenv_import_error = True
 
-# create a root logger
+# create a package logger, turn off propagation
 bob_logger = logging.getLogger("bob")
+bob_logger.propagate = False
+
+# set the level if it hasn't already been set so that child loggers can
+# have handlers attached and have their effective level default to DEBUG
+if bob_logger.level == 0:
+    bob_logger.setLevel(logging.DEBUG)
 
 # logging
 _log_level = os.getenv("BOB_LOG", None)
@@ -58,23 +64,27 @@ if _log_level:
     except ValueError:
         _numeric_level = getattr(logging, _log_level.upper(), None)
     if not isinstance(_numeric_level, int):
-        raise ValueError(f"Invalid log level: {_log_level}")
+        raise ValueError(f"invalid log level: {_log_level}")
 
+    # create a file or stream handler
     _log_filename = os.getenv("BOB_LOG_FILENAME", None)
     if _log_filename:
-        hdlr = logging.FileHandler(_log_filename)
+        _handler = logging.FileHandler(_log_filename)
     else:
-        hdlr = logging.StreamHandler()
-    hdlr.setLevel(_numeric_level)
-    hdlr.setFormatter(logging.Formatter(logging.BASIC_FORMAT, None))
-    bob_logger.addHandler(hdlr)
+        _handler = logging.StreamHandler()
+    _handler.setLevel(_numeric_level)
+    _handler.setFormatter(logging.Formatter(logging.BASIC_FORMAT, None))
+
+    # add the handler and set the level
+    bob_logger.addHandler(_handler)
+    bob_logger.setLevel(_numeric_level)
 else:
     # add a null handler:
     # https://docs.python.org/3/howto/logging.html#configuring-logging-for-a-library
     bob_logger.addHandler(logging.NullHandler())
 
 # create a module logger
-_log = logging.getLogger("bob.core")
+_log = logging.getLogger(__name__)
 
 if _dotenv_import_error:
     _log.warning("install python-dotenv to use your .env file")
