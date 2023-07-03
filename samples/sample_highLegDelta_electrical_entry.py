@@ -3,8 +3,8 @@ from typing import Any
 from bob.enum import CtxAttribute, ElectricalPhaseIdentifier
 from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
 from bob.connections.electricity import (
-    Electricity_240V_208V_120V_3Ph_60HzOutletConnectionPoint,
-    Electricity_240V_208V_120V_3Ph_60HzConnection,
+    Electricity_240VLL_208VLN_120VLN_3Ph_60HzOutletConnectionPoint,
+    Electricity_240VLL_208VLN_120VLN_3Ph_60HzConnection,
 )
 
 from header import sample_header
@@ -94,7 +94,9 @@ def test_electrical_entry():
     main_panel = ThreePhaseDistributionPanel(config=mainentry_panel_config)
 
     transformer_120_208_240_connection = (
-        Electricity_240V_208V_120V_3Ph_60HzConnection(label="HighLegDeltaTransfoOutput")
+        Electricity_240VLL_208VLN_120VLN_3Ph_60HzConnection(
+            label="HighLegDeltaTransfoOutput"
+        )
         + ElectricalPhaseIdentifier.ABC
     )
 

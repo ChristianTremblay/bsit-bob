@@ -4,8 +4,8 @@ from header import g36_header
 
 from bob.connections.air import AirConnection
 from bob.connections.electricity import (
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
     EthernetBidirectionalConnectionPoint,
     EthernetBidirectionalSystemConnectionPoint,
     ModulationSignalInletConnectionPoint,
@@ -57,7 +57,7 @@ fan_template = {
     "params": {
         "label": "Fan",
         "comment": "Fan driven by VFD",
-        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
     },
     "sensors": {},
     "equipment": {},
@@ -67,8 +67,8 @@ vfd_template = {
     "params": {
         "label": "VFD",
         "comment": "VFD for Fan",
-        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
+        "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         "drive_running": 0,
         "run_command": 0,
         "speed_reference": 0,

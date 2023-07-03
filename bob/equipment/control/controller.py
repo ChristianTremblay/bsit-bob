@@ -8,12 +8,8 @@ from bob.producer import FunctionBlock
 from bob.properties import Nm, Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 
-from ...connections.electricity import (
-    Electricity_24V_1Ph_60HzInletConnectionPoint,
-)
-from ...connections.network import (
-    RS485BidirectionalConnectionPoint,
-)
+from ...connections.electricity import Electricity_24VLN_1Ph_60HzInletConnectionPoint
+from ...connections.network import RS485BidirectionalConnectionPoint
 from ...core import (
     BOB,
     INCLUDE_INVERSE,
@@ -44,7 +40,7 @@ controller_template = {
 
 controller_template_example = {
     "cp": {
-        "electricalInlet": Electricity_24V_1Ph_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_24VLN_1Ph_60HzInletConnectionPoint,
         "bacnet_mstp": RS485BidirectionalConnectionPoint,
         "zone_temperature_sensor": AnalogInput,
         "airflow_sensor": AnalogInput,
@@ -62,7 +58,7 @@ class Controller(Equipment):
 
     _class_iri: URIRef = S223.Controller
     _attr_uriref = {"hasNetworkProfile": P223.hasNetworkProfile}
-    # electricalInlet: Electricity_24V_1Ph_60HzInletConnectionPoint
+    # electricalInlet: Electricity_24VLN_1Ph_60HzInletConnectionPoint
     # executes: FunctionBlock
     hasNetworkProfile: NetworkProfile
 
@@ -74,9 +70,7 @@ class Controller(Equipment):
         super().__init__(_config, **kwargs)
 
     def executes(self, function_block: FunctionBlock):
-        _log.debug(
-            f"Controller {self._node_iri} executes  {function_block._node_iri}"
-        )
+        _log.debug(f"Controller {self._node_iri} executes  {function_block._node_iri}")
         data_graph.add((self._node_iri, S223.executes, function_block._node_iri))
 
     def __rshift__(self, other: Any) -> Any:

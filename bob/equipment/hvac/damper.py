@@ -19,8 +19,8 @@ from ...connections.air import (
 )
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    Electricity_24V_1Ph_60HzInletConnectionPoint,
-    Electricity_120V_1Ph_60HzInletConnectionPoint,
+    Electricity_24VLN_1Ph_60HzInletConnectionPoint,
+    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
 )
 from ...connections.light import (
     LightOutletConnectionPoint,
@@ -139,9 +139,7 @@ class ElectricalActuatedProportionalDamper(DamperAndActuator):
             electrical_actuated_proportional_damper_template, config
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
-        _log.debug(
-            f"ElectricalActuatedProportionalDamper.__init__ {_config} {kwargs}"
-        )
+        _log.debug(f"ElectricalActuatedProportionalDamper.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
 

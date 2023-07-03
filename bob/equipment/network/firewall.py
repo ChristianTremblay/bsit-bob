@@ -7,7 +7,7 @@ from bob.properties.network import Mbit_per_seconds
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
-    Electricity_120V_1Ph_60HzInletConnectionPoint,
+    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
 )
 from ...connections.network import (
     EthernetBidirectionalConnectionPoint,
@@ -36,7 +36,7 @@ _namespace = BOB
 
 ethernet_firewall_template = {
     "cp": {
-        "electricalInlet": Electricity_120V_1Ph_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_120VLN_1Ph_60HzInletConnectionPoint,
     },
     "properties": {},
 }

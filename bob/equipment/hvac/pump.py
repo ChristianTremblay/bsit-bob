@@ -7,8 +7,8 @@ from bob.equipment.electricity.vfd import VFD
 from bob.properties.ratio import PercentCommand
 
 from ...connections.electricity import (
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
 from ...core import (
@@ -37,7 +37,7 @@ _log = logging.getLogger(__name__)
 _namespace = BOB
 
 pump_template = {
-    "cp": {"electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint},
+    "cp": {"electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint},
     "properties": {
         ("head_pressure", Pressure): {"unit": UNIT.PSI},
         ("amps", Amps): {},
@@ -69,8 +69,8 @@ starter_addon_template = {
         ("starter", MotorStarter): {
             "config": {
                 "cp": {
-                    "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
-                    "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
+                    "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+                    "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
                 }
             },
         }

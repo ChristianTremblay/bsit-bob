@@ -116,13 +116,13 @@ def test_electrical_entry():
     main_panel = ThreePhaseDistributionPanel(config=mainentry_panel_config)
     transformer_120_240 = Transformer(
         label="TX-1",
-        electricalInlet=Electricity_600V_3Ph_60HzInletConnectionPoint,
-        electricalOutlet=Electricity_240V_120V_1Ph_60HzOutletConnectionPoint,
+        electricalInlet=Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+        electricalOutlet=Electricity_240VLL_120VLN_1Ph_60HzOutletConnectionPoint,
     )
 
     dist_panel = SinglePhaseDistributionPanel(config=distribution_panel_config)
-    # hq = Electricity_240V_120V_1Ph_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
-    hq_600 = Electricity_600V_3Ph_60HzConnection(label="Hydro-Québec", comment="600V")
+    # hq = Electricity_240VLL_120VLN_1Ph_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
+    hq_600 = Electricity_600VLL_3Ph_60HzConnection(label="Hydro-Québec", comment="600V")
     hq_600 + ElectricalPhaseIdentifier.ABC
     hq_600 >> main_panel["MainBreaker"]
     main_panel["CB#3"] >> transformer_120_240 >> dist_panel["MainBreaker"]
@@ -130,7 +130,7 @@ def test_electrical_entry():
     building_electrical_meter = ThreePhaseElectricalMeter(
         label="Building Meter",
         comment="Building Electrical Meter (M3)",
-        medium=Electricity.AC600V_3Ph_60Hz,
+        medium=Electricity.AC600VLL_3Ph_60Hz,
     )
     # building_electrical_meter.hasPhysicalLocation = ps.bldg
     building_electrical_meter.set_voltage_measurement_location(main_panel["CB#4"])

@@ -16,7 +16,7 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.connections.electricity import Electricity_24V_1Ph_60HzInletConnectionPoint
+from bob.connections.electricity import Electricity_24VLN_1Ph_60HzInletConnectionPoint
 from bob.connections.network import RS485BidirectionalConnectionPoint
 from bob.core import (
     G36,
@@ -56,7 +56,7 @@ _namespace = bind_model_namespace(
 
 controller_template = {
     "cp": {
-        "electricalInlet": Electricity_24V_1Ph_60HzInletConnectionPoint,
+        "electricalInlet": Electricity_24VLN_1Ph_60HzInletConnectionPoint,
         "zone_temperature_sensor": AnalogInput,
         "zone_co2_sensor": AnalogInput,
         "airflow_sensor": AnalogInput,

@@ -13,8 +13,8 @@ from bob.sensor.motion import PositionSensor
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
@@ -72,8 +72,8 @@ class VFD_FB(FunctionBlock):
 
 vfd_template = {
     "cp": {
-        "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
+        "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         "ethernet_port": EthernetBidirectionalConnectionPoint,
         "mstp_port": RS485BidirectionalConnectionPoint,
         "speedrefInlet": ModulationSignalInletConnectionPoint,

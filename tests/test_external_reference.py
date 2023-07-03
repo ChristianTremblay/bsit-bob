@@ -10,6 +10,8 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_external_reference(bob_fixture):
-    ref1 = BACnetExternalReference("bacnet://12345/analog-value,1/present-value", label="ref1")
+    ref1 = BACnetExternalReference(
+        "bacnet://12345/analog-value,1/present-value", label="ref1"
+    )
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

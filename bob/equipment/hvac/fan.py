@@ -9,8 +9,8 @@ from bob.properties.ratio import Percent, PercentCommand
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from ...core import (
     BOB,
@@ -35,7 +35,7 @@ _log = logging.getLogger(__name__)
 _namespace = BOB
 
 fan_template = {
-    "cp": {"electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint},
+    "cp": {"electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint},
     "properties": {
         ("speedRatio", PercentCommand): {},
         ("staticPressure", Pressure): {"unit": UNIT.PA},
@@ -94,8 +94,8 @@ starter_addon_template = {
         ("starter", MotorStarter): {
             "config": {
                 "cp": {
-                    "electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint,
-                    "electricalOutlet": Electricity_600V_3Ph_60HzOutletConnectionPoint,
+                    "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+                    "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
                 }
             },
         }

@@ -12,8 +12,8 @@ from ...connections.air import (
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
-    Electricity_240V_1Ph_60HzInletConnectionPoint,
-    Electricity_600V_3Ph_60HzInletConnectionPoint,
+    Electricity_240VLL_1Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
 from ...connections.water import (
     ChilledWaterInletConnectionPoint,
@@ -82,7 +82,7 @@ class HotWaterCoil(Coil):
 
 # Electrical Coil
 electricalheating_template = {
-    "cp": {"electricalInlet": Electricity_600V_3Ph_60HzInletConnectionPoint},
+    "cp": {"electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint},
     "properties": {
         ("amps", Amps): {},
         ("kW", ElectricPowerkW): {},
@@ -103,7 +103,7 @@ class ElectricalHeatingCoil(Coil):
 
 # Electrical Coil
 electricalradiant_template = {
-    "cp": {"electricalInlet": Electricity_240V_1Ph_60HzInletConnectionPoint},
+    "cp": {"electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint},
     "properties": {
         ("amps", Amps): {},
         ("kW", ElectricPowerkW): {},

@@ -237,9 +237,7 @@ class Parameter(Node):
     hasValue: Literal
 
     def __init__(self, value: Any = None, **kwargs: Any):
-        _log.debug(
-            f"Parameter({self.__class__.__name__}).__init__ {value!r} {kwargs}"
-        )
+        _log.debug(f"Parameter({self.__class__.__name__}).__init__ {value!r} {kwargs}")
 
         init_value = None
         if value is None:
@@ -269,9 +267,7 @@ class Constant(Node):
     hasValue: Literal
 
     def __init__(self, value: Any = None, **kwargs: Any):
-        _log.debug(
-            f"Constant({self.__class__.__name__}).__init__ {value!r} {kwargs}"
-        )
+        _log.debug(f"Constant({self.__class__.__name__}).__init__ {value!r} {kwargs}")
 
         init_value = None
         if value is None:
