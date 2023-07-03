@@ -8,7 +8,7 @@ _namespace = BOB
 
 class Setpoint(QuantifiableProperty):
     _class_iri: URIRef = S223.Setpoint
-    hasApsect: EnumerationKind
+    hasAspect: EnumerationKind
     hasDeadband: Literal
     hasValue: Literal
     hasQuantityKind: URIRef

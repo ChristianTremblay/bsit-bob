@@ -96,7 +96,7 @@ class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
 # There could be 2 subclasses of setpoint ?
 class Setpoint(QuantifiableProperty):
     _class_iri: URIRef = S223.Setpoint
-    hasApsect: EnumerationKind
+    hasAspect: EnumerationKind
     hasDeadband: Literal
     hasValue: Literal
 
