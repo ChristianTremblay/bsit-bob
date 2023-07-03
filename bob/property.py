@@ -17,6 +17,10 @@ from .core import (
     logging,
 )
 
+# create a module logger
+_log = logging.getLogger(__name__)
+
+# default namespace
 _namespace = S223
 
 
@@ -51,7 +55,7 @@ class QuantifiableProperty(Property):
     hasQuantityKind: URIRef
 
     def __init__(self, value: Any = None, **kwargs: Any) -> None:
-        logging.debug(f"QuantifiableProperty.__init__ {value!r} {kwargs}")
+        _log.debug(f"QuantifiableProperty.__init__ {value!r} {kwargs}")
         init_value = None
         if value is None:
             if "hasValue" in kwargs:
@@ -130,7 +134,7 @@ class EnumerableProperty(Property):
     hasEnumerationKind: EnumerationKind
 
     def __init__(self, value: Any = None, **kwargs: Any) -> None:
-        logging.debug(f"EnumerableProperty.__init__ {value!r} {kwargs}")
+        _log.debug(f"EnumerableProperty.__init__ {value!r} {kwargs}")
 
         init_value = None
         if value is None:

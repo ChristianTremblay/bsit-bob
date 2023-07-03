@@ -27,6 +27,10 @@ from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus
 from ...property import QuantifiableObservableProperty
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 ethernet_switch_template = {

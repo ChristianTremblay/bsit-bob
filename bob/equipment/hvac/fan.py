@@ -28,6 +28,10 @@ from ...property import QuantifiableObservableProperty
 from ..electricity.starter import MotorStarter
 from ..electricity.vfd import VFD
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 fan_template = {
@@ -80,7 +84,7 @@ class Fan(Equipment):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(fan_template, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"Fan.__init__ {_config} {kwargs}")
+        _log.debug(f"Fan.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
 
@@ -113,9 +117,9 @@ class FanWithStarter(Fan):
             config=config,
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"FanWithStarter.__init__ {_config} {kwargs}")
-
+        _log.debug(f"FanWithStarter.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
+
         self.onOffCommand = self["starter"]["onOffCommand"]
         self.onOffStatus = self["starter"]["starter.current_sensor"].observes
         self["starter"].actuatesProperty = self["speedRatio"]
@@ -141,8 +145,9 @@ class FanWithVFD(Fan):
             config=config,
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"FanWithVFD.__init__ {_config} {kwargs}")
+        _log.debug(f"FanWithVFD.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
+
         self.onOffCommand = self["vfd"]["run_command"]
         self.onOffStatus = self["vfd"]["drive_running"]
         self["vfd"].actuatesProperty = self["speedRatio"]

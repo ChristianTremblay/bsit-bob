@@ -47,6 +47,10 @@ from .actuator import (
     PneumaticProportionalActuator,
 )
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 
@@ -135,9 +139,7 @@ class ElectricalActuatedProportionalDamper(DamperAndActuator):
             electrical_actuated_proportional_damper_template, config
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(
-            f"ElectricalActuatedProportionalDamper.__init__ {_config} {kwargs}"
-        )
+        _log.debug(f"ElectricalActuatedProportionalDamper.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
 

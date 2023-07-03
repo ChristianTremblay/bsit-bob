@@ -33,6 +33,10 @@ from ..property import (
     QuantifiableProperty,
 )
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = S223
 
 
@@ -91,7 +95,7 @@ class Sensor(_Sensor):
     hasMeasurementUncertainty: QuantifiableProperty
     hasMaxRange: QuantifiableProperty
     hasMinRange: QuantifiableProperty
-    _hasObservationLocation: LocationReference
+    hasObservationLocation: LocationReference
     observes: PropertyReference
 
     def __init__(self, **kwargs: Any) -> None:
@@ -109,7 +113,7 @@ class Sensor(_Sensor):
 
     def add_hasObservationLocation(self, node: Node) -> None:
         # For now, make that a secret, or we end up with s223.hasObservationLocation
-        self._hasObservationLocation = node
+        # self._hasObservationLocation = node
 
         # link the two together
         self._data_graph.add(
@@ -120,7 +124,7 @@ class Sensor(_Sensor):
 
     def __mod__(self, other: Node) -> Node:
         """This sensor measurementLocation taken from some other node."""
-        logging.debug(f"Container.__mod__ {self} % {other}")
+        _log.debug(f"Container.__mod__ {self} % {other}")
 
         self.add_hasObservationLocation(other)
         return self

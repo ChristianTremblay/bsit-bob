@@ -1,7 +1,7 @@
 """
 Function Blocks
 
-This is a facade for ASHRAE 231 Controls Description Language
+This is a placeholder for ASHRAE 231 Controls Description Language
 """
 
 from __future__ import annotations
@@ -13,6 +13,7 @@ from typing import Any, AnyStr, Dict
 from rdflib import Literal, URIRef  # type: ignore
 
 from ..core import (
+    BOB,
     G36,
     INCLUDE_INVERSE,
     P223,
@@ -28,7 +29,11 @@ from ..core import (
 from ..equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
 
-_namespace = S223
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
+_namespace = BOB
 
 
 #
@@ -41,7 +46,7 @@ class ProducerInput(Node):
     hasCauseLocation: LocationReference
 
     def __init__(self, function_block: Producer, **kwargs: Any) -> None:
-        logging.info(
+        _log.debug(
             f"ProducerInput({self.__class__.__name__}).__init__ {function_block} {kwargs}"
         )
 
@@ -65,7 +70,7 @@ class ProducerOutput(Node):
     hasEffectLocation: LocationReference
 
     def __init__(self, function_block: Producer, **kwargs: Any) -> None:
-        logging.info(
+        _log.debug(
             f"ProducerOutput({self.__class__.__name__}).__init__ {function_block} {kwargs}"
         )
 
@@ -94,7 +99,7 @@ class ProducerOutput(Node):
 
     def __mod__(self, other: Node) -> Node:
         """This producer output has effect location on other node."""
-        logging.debug(f"Container.__mod__ {self} % {other}")
+        _log.debug(f"Container.__mod__ {self} % {other}")
 
         self.add_hasEffectLocation(other)
         return self
@@ -113,7 +118,7 @@ def connect_mm(
     output_connector: ProducerOutput, input_connector: ProducerInput
 ) -> None:
     """ProducerOutput >> ProducerInput"""
-    logging.info(f"connect from {output_connector} to {input_connector}")
+    _log.info(f"connect from {output_connector} to {input_connector}")
 
     data_graph.add(
         (output_connector._node_iri, S223.connect, input_connector._node_iri)
@@ -123,7 +128,7 @@ def connect_mm(
 @multimethod
 def connect_mm(prop: Property, input_connector: ProducerInput) -> None:
     """Property >> ProducerInput"""
-    logging.info(f"connect from {prop} to {input_connector}")
+    _log.info(f"connect from {prop} to {input_connector}")
 
     data_graph.add((input_connector._node_iri, S223.uses, prop._node_iri))
 
@@ -131,7 +136,7 @@ def connect_mm(prop: Property, input_connector: ProducerInput) -> None:
 @multimethod
 def connect_mm(output_connector: ProducerOutput, prop: Property) -> None:
     """ProducerOutput >> Property"""
-    logging.info(f"connect from {output_connector} to {prop}")
+    _log.info(f"connect from {output_connector} to {prop}")
 
     data_graph.add((output_connector._node_iri, S223.produces, prop._node_iri))
 
@@ -141,7 +146,7 @@ def connect_mm(
     output_connector: FunctionOutput, input_connector: FunctionInput
 ) -> None:
     """ProducerOutput >> ProducerInput"""
-    logging.info(f"connect from {output_connector} to {input_connector}")
+    _log.info(f"connect from {output_connector} to {input_connector}")
 
     data_graph.add(
         (output_connector._node_iri, S223.connect, input_connector._node_iri)
@@ -151,7 +156,7 @@ def connect_mm(
 @multimethod
 def connect_mm(prop: Property, input_connector: FunctionInput) -> None:
     """Property >> ProducerInput"""
-    logging.info(f"connect from {prop} to {input_connector}")
+    _log.info(f"connect from {prop} to {input_connector}")
 
     data_graph.add((input_connector._node_iri, S223.uses, prop._node_iri))
 
@@ -159,7 +164,7 @@ def connect_mm(prop: Property, input_connector: FunctionInput) -> None:
 @multimethod
 def connect_mm(output_connector: FunctionOutput, prop: Property) -> None:
     """ProducerOutput >> Property"""
-    logging.info(f"connect from {output_connector} to {prop}")
+    _log.info(f"connect from {output_connector} to {prop}")
 
     data_graph.add((output_connector._node_iri, S223.produces, prop._node_iri))
 
@@ -167,7 +172,7 @@ def connect_mm(output_connector: FunctionOutput, prop: Property) -> None:
 @multimethod
 def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
     """ProducerOutput >> Property"""
-    logging.info(f"connect from {output_connector} to {cp}")
+    _log.info(f"connect from {output_connector} to {cp}")
 
     data_graph.add((cp._node_iri, P223.hasProducerOutput, output_connector._node_iri))
 
@@ -175,7 +180,7 @@ def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
 @multimethod
 def connect_mm(output_connector: FunctionOutput, cp: BinaryOutput) -> None:
     """ProducerOutput >> Controller connection point"""
-    logging.info(f"connect from {output_connector} to {cp}")
+    _log.info(f"connect from {output_connector} to {cp}")
 
     data_graph.add((cp._node_iri, P223.hasProducerOutput, output_connector._node_iri))
 
@@ -183,7 +188,7 @@ def connect_mm(output_connector: FunctionOutput, cp: BinaryOutput) -> None:
 @multimethod
 def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
     """ProducerOutput >> Controller connection point"""
-    logging.info(f"connect from {output_connector} to {cp}")
+    _log.info(f"connect from {output_connector} to {cp}")
 
     data_graph.add((cp._node_iri, P223.hasProducerOutput, output_connector._node_iri))
 
@@ -191,7 +196,7 @@ def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
 @multimethod
 def connect_mm(input_connector: FunctionInput, cp: BinaryInput) -> None:
     """ProducerInput >> Controller connection point"""
-    logging.info(f"connect from {input_connector} to {cp}")
+    _log.info(f"connect from {input_connector} to {cp}")
 
     data_graph.add((cp._node_iri, P223.isInputOf, input_connector._node_iri))
 
@@ -199,7 +204,7 @@ def connect_mm(input_connector: FunctionInput, cp: BinaryInput) -> None:
 @multimethod
 def connect_mm(input_connector: FunctionInput, cp: AnalogInput) -> None:
     """ProducerOutput >> Controller connection point"""
-    logging.info(f"connect from {input_connector} to {cp}")
+    _log.info(f"connect from {input_connector} to {cp}")
 
     data_graph.add((cp._node_iri, P223.isInputOf, input_connector._node_iri))
 
@@ -232,9 +237,7 @@ class Parameter(Node):
     hasValue: Literal
 
     def __init__(self, value: Any = None, **kwargs: Any):
-        logging.debug(
-            f"Parameter({self.__class__.__name__}).__init__ {value!r} {kwargs}"
-        )
+        _log.debug(f"Parameter({self.__class__.__name__}).__init__ {value!r} {kwargs}")
 
         init_value = None
         if value is None:
@@ -264,9 +267,7 @@ class Constant(Node):
     hasValue: Literal
 
     def __init__(self, value: Any = None, **kwargs: Any):
-        logging.debug(
-            f"Constant({self.__class__.__name__}).__init__ {value!r} {kwargs}"
-        )
+        _log.debug(f"Constant({self.__class__.__name__}).__init__ {value!r} {kwargs}")
 
         init_value = None
         if value is None:
@@ -316,12 +317,12 @@ class Producer(_Producer):
         _config = template_update({}, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
 
-        logging.debug(f"Producer.__init__ {kwargs}")
+        _log.debug(f"Producer.__init__ {kwargs}")
 
         # resolve annotations if necessary
         if not self._resolved:
             self._resolve_annotations()
-        logging.debug(f"    - continue Producer.__init__")
+        _log.debug(f"    - continue Producer.__init__")
 
         # pull out the parameters and constants
         connector_inits: Dict[str, Any] = {}
@@ -329,8 +330,8 @@ class Producer(_Producer):
             if inspect.isclass(attr_type) and (attr_name in kwargs):
                 if issubclass(attr_type, (ProducerInput, ProducerOutput)):
                     connector_inits[attr_name] = kwargs.pop(attr_name)
-        logging.debug(f"    - connector_inits: {connector_inits}")
-        logging.debug(f"    - remaining kwargs: {kwargs}")
+        _log.debug(f"    - connector_inits: {connector_inits}")
+        _log.debug(f"    - remaining kwargs: {kwargs}")
 
         # continue with initialization
         super().__init__(_config, **kwargs)
@@ -345,10 +346,10 @@ class Producer(_Producer):
                 # build an instance of this connector
                 attr_element = attr_type(self, label=self.label + "." + attr_name)
                 self._connectors[attr_name] = attr_element
-                logging.debug(f"    - connector {attr_name}: {attr_element}")
+                _log.debug(f"    - connector {attr_name}: {attr_element}")
 
                 if attr_name in connector_inits:
-                    logging.debug(f"        - init: {connector_inits[attr_name]}")
+                    _log.debug(f"        - init: {connector_inits[attr_name]}")
                     if issubclass(attr_type, ProducerInput):
                         connector_inits[attr_name] >> attr_element
                     if issubclass(attr_type, ProducerOutput):
@@ -395,7 +396,7 @@ class FunctionBlock(Producer):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update({}, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"FunctionBlock.__init__ {kwargs}")
+        _log.debug(f"FunctionBlock.__init__ {kwargs}")
 
         # pull out the parameters and constants
 
@@ -418,7 +419,7 @@ class FunctionBlock(Producer):
                     setattr(self, attr_name, attr_element)
 
                 self._parameters[attr_name] = attr_element
-                logging.debug(f"    - parameter {attr_name}: {attr_element}")
+                _log.debug(f"    - parameter {attr_name}: {attr_element}")
 
                 data_graph.add(
                     (self._node_iri, S223.hasParameter, attr_element._node_iri)
@@ -426,7 +427,7 @@ class FunctionBlock(Producer):
 
                 # give it a value or override the value
                 if attr_name in parameter_inits:
-                    logging.debug(f"        - init: {parameter_inits[attr_name]}")
+                    _log.debug(f"        - init: {parameter_inits[attr_name]}")
                     attr_element.hasValue = parameter_inits[attr_name]
 
             elif issubclass(attr_type, Constant):
@@ -437,7 +438,7 @@ class FunctionBlock(Producer):
                     setattr(self, attr_name, attr_element)
 
                 self._parameters[attr_name] = attr_element
-                logging.debug(f"    - constant {attr_name}: {attr_element}")
+                _log.debug(f"    - constant {attr_name}: {attr_element}")
 
                 data_graph.add(
                     (self._node_iri, S223.hasConstant, attr_element._node_iri)
@@ -445,7 +446,7 @@ class FunctionBlock(Producer):
 
                 # give it a value (might fail if annotation provided value)
                 if attr_name in parameter_inits:
-                    logging.debug(f"        - init: {parameter_inits[attr_name]}")
+                    _log.debug(f"        - init: {parameter_inits[attr_name]}")
                     attr_element.hasValue = parameter_inits[attr_name]
 
     def uses(

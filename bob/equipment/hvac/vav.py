@@ -29,6 +29,10 @@ from ...equipment.hvac.fan import Fan
 from ...equipment.hvac.valve import TwoWayActuatedProportionalValve
 from ...sensor.flow import AirFlowSensor
 
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
 _namespace = BOB
 
 vav_system_template = {
@@ -119,7 +123,7 @@ class VAV_Simple(Equipment):
     def __init__(self, config: Dict = None, **kwargs) -> None:
         _config = template_update(vav_system_template, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        logging.debug(f"VAV_Simple.__init__ {_config} {kwargs}")
+        _log.debug(f"VAV_Simple.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
         # Mapping internal
