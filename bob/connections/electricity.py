@@ -1499,6 +1499,47 @@ class Electricity_240VLN_1Ph_50HzSystemOutletConnectionPoint(
     _class_iri = BOB.OutletSystemConnectionPoint
 
 
+# === AC-24VLN-1Ph-50Hz
+# 1 phase
+
+
+class Electricity_24VLN_1Ph_50HzConnection(Connection):
+    hasMedium = Electricity.AC24VLN_1Ph_50Hz
+    _class_iri = S223.Connection
+
+
+class Electricity_24VLN_1Ph_50HzConnectionPoint(ConnectionPoint):
+    hasMedium = Electricity.AC24VLN_1Ph_50Hz
+
+
+class Electricity_24VLN_1Ph_50HzInletConnectionPoint(
+    InletConnectionPoint, Electricity_24VLN_1Ph_50HzConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class Electricity_24VLN_1Ph_50HzOutletConnectionPoint(
+    OutletConnectionPoint, Electricity_24VLN_1Ph_50HzConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class Electricity_24VLN_1Ph_50HzSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium = Electricity.AC24VLN_1Ph_50Hz
+
+
+class Electricity_24VLN_1Ph_50HzSystemInletConnectionPoint(
+    Electricity_24VLN_1Ph_50HzSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class Electricity_24VLN_1Ph_50HzSystemOutletConnectionPoint(
+    Electricity_24VLN_1Ph_50HzSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
+
+
 # === AC-24VLN-1Ph-60Hz
 # 1 phase
 

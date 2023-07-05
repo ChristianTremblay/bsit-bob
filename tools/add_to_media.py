@@ -37,6 +37,7 @@ Electricity.AC240VLL_208VLN_120VLN_3Ph_60Hz = Electricity.AC(
 Electricity.AC240VLL_3Ph_50Hz = Electricity.AC("240VLL-3Ph-50Hz")
 Electricity.AC240VLL_3Ph_60Hz = Electricity.AC("240VLL-3Ph-60Hz")
 Electricity.AC240VLN_1Ph_50Hz = Electricity.AC("240VLN-1Ph-50Hz")
+Electricity.AC24VLN_1Ph_50Hz = Electricity.AC("24VLN-1Ph-50Hz")
 Electricity.AC24VLN_1Ph_60Hz = Electricity.AC("24VLN-1Ph-60Hz")
 Electricity.AC277VLN_1Ph_60Hz = Electricity.AC("277VLN-1Ph-60Hz")
 Electricity.AC3000VLL_1730VLN_1Ph_60Hz = Electricity.AC("3000VLL-1730VLN-1Ph-60Hz")
