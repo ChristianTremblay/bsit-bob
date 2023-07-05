@@ -33,10 +33,15 @@ test_python:
     - pip install rdflib
     - pip install pyvis
     - pytest
+    
+generate_html:
+  script:
+    - rdf2html samples/ttl
+    - rdf2html G36/ttl
   artifacts:
     paths:
       - samples/ttl/*.html
-      - g36/ttl/*.html
+      - G36/ttl/*.html
 
 #    - cd tests
 #    - bash no-barf.sh
