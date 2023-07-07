@@ -1,7 +1,7 @@
 """
-Function Blocks
+Producers
 
-This is a placeholder for ASHRAE 231 Controls Description Language
+This is an adaptation of the S223 Function Blocks
 """
 
 from __future__ import annotations
@@ -14,26 +14,113 @@ from rdflib import Literal, URIRef  # type: ignore
 
 from ..core import (
     BOB,
+    Container,
+    data_graph,
+    Equipment,
     G36,
     INCLUDE_INVERSE,
-    P223,
-    S223,
-    Container,
     LocationReference,
     Node,
+    P223,
     Property,
     _Producer,
-    data_graph,
+    S223,
     template_update,
 )
 from ..equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
+from ..functions import (
+    FunctionBlock,
+    FunctionInput,
+    FunctionOutput,
+    Parameter,
+    Constant,
+)
 
 # logging
 _log = logging.getLogger(__name__)
 
 # namespace
 _namespace = BOB
+
+
+class old_Producer(Container, Node):
+    "Placeholder to prevent circular reference"
+    _class_iri: URIRef = P223.Producer
+
+    def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
+        _log.debug(f"Producer.__init__ {config} {args} {kwargs}")
+
+        # if there are "params" in the configuation, use those as defaults for
+        # kwargs and allow them to be overriden by additional kwargs
+        # if config and "params" in config:
+        #     kwargs = {**config["params"], **kwargs}
+
+        # When passing kwargs to create an instance of a class, some datatype
+        # are not yet visible in the chain of creation. This lead to
+        # ex. TypeError: unexpected keyword argument: waterInlet
+        # By removing properties and connection points from kwargs and explicitly
+        # putting them in config, it should be better
+        _config = dict(config.items())
+        for attr_name, attr_value in kwargs.copy().items():
+            if inspect.isclass(attr_value):
+                # if issubclass(attr_value, Property):
+                #    config["properties"] = (
+                #        {**config["properties"], **{attr_name: kwargs.pop(attr_name)}}
+                #        if "properties" in config.keys()
+                #        else {attr_name: kwargs.pop(attr_name)}
+                #    )
+                if issubclass(attr_value, ConnectionPoint):
+                    # Beware here... _Producer are function Block so...FB in and out only....
+                    _config["cp"] = (
+                        {**_config["cp"], **{attr_name: kwargs.pop(attr_name)}}
+                        if "cp" in _config.keys()
+                        else {attr_name: kwargs.pop(attr_name)}
+                    )
+
+        super().__init__(*args, **kwargs)
+
+        if _config:
+            for group_name, group_items in _config.items():
+                if group_name == "params":
+                    continue
+                if group_name == "cp":
+                    for thing_name, thing_class in group_items.items():
+                        setattr(
+                            self,
+                            thing_name,
+                            thing_class(self, label=f"{self.label}.{thing_name}"),
+                        )
+                    continue
+                things = []
+                for (thing_name, thing_class), thing_kwargs in group_items.items():
+                    if thing_name in self:
+                        raise ValueError(f"label already used: {self[thing_name]}")
+                    thing = thing_class(label=thing_name, **thing_kwargs)
+
+                    if isinstance(thing, (_Producer)):
+                        self > thing
+                    if isinstance(thing, Property):
+                        self[thing_name] = thing
+                        self.add_property(thing)
+
+                    things.append(thing)
+
+                setattr(self, "_" + group_name, things)
+
+
+@multimethod
+def contains_mm(producer: Producer, sub_producer: _Producer) -> None:
+    """Producer > Producer"""
+    _log.info(f"producer {producer} contains producer {sub_producer}")
+
+    producer._data_graph.add(
+        (producer._node_iri, S223.contains, sub_producer._node_iri)
+    )
+    if INCLUDE_INVERSE:
+        producer._data_graph.add(
+            (sub_producer._node_iri, S223.isContainedIn, producer._node_iri)
+        )
 
 
 #
@@ -105,14 +192,6 @@ class ProducerOutput(Node):
         return self
 
 
-class FunctionInput(ProducerInput):
-    _class_iri: URIRef = S223.FunctionInput
-
-
-class FunctionOutput(ProducerOutput):
-    _class_iri: URIRef = S223.FunctionOutput
-
-
 @multimethod
 def connect_mm(
     output_connector: ProducerOutput, input_connector: ProducerInput
@@ -142,35 +221,7 @@ def connect_mm(output_connector: ProducerOutput, prop: Property) -> None:
 
 
 @multimethod
-def connect_mm(
-    output_connector: FunctionOutput, input_connector: FunctionInput
-) -> None:
-    """ProducerOutput >> ProducerInput"""
-    _log.info(f"connect from {output_connector} to {input_connector}")
-
-    data_graph.add(
-        (output_connector._node_iri, S223.connect, input_connector._node_iri)
-    )
-
-
-@multimethod
-def connect_mm(prop: Property, input_connector: FunctionInput) -> None:
-    """Property >> ProducerInput"""
-    _log.info(f"connect from {prop} to {input_connector}")
-
-    data_graph.add((input_connector._node_iri, S223.uses, prop._node_iri))
-
-
-@multimethod
-def connect_mm(output_connector: FunctionOutput, prop: Property) -> None:
-    """ProducerOutput >> Property"""
-    _log.info(f"connect from {output_connector} to {prop}")
-
-    data_graph.add((output_connector._node_iri, S223.produces, prop._node_iri))
-
-
-@multimethod
-def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
+def connect_mm(output_connector: ProducerOutput, cp: AnalogOutput) -> None:
     """ProducerOutput >> Property"""
     _log.info(f"connect from {output_connector} to {cp}")
 
@@ -178,7 +229,7 @@ def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
 
 
 @multimethod
-def connect_mm(output_connector: FunctionOutput, cp: BinaryOutput) -> None:
+def connect_mm(output_connector: ProducerOutput, cp: BinaryOutput) -> None:
     """ProducerOutput >> Controller connection point"""
     _log.info(f"connect from {output_connector} to {cp}")
 
@@ -186,27 +237,11 @@ def connect_mm(output_connector: FunctionOutput, cp: BinaryOutput) -> None:
 
 
 @multimethod
-def connect_mm(output_connector: FunctionOutput, cp: AnalogOutput) -> None:
+def connect_mm(output_connector: ProducerOutput, cp: AnalogOutput) -> None:
     """ProducerOutput >> Controller connection point"""
     _log.info(f"connect from {output_connector} to {cp}")
 
     data_graph.add((cp._node_iri, P223.hasProducerOutput, output_connector._node_iri))
-
-
-@multimethod
-def connect_mm(input_connector: FunctionInput, cp: BinaryInput) -> None:
-    """ProducerInput >> Controller connection point"""
-    _log.info(f"connect from {input_connector} to {cp}")
-
-    data_graph.add((cp._node_iri, P223.isInputOf, input_connector._node_iri))
-
-
-@multimethod
-def connect_mm(input_connector: FunctionInput, cp: AnalogInput) -> None:
-    """ProducerOutput >> Controller connection point"""
-    _log.info(f"connect from {input_connector} to {cp}")
-
-    data_graph.add((cp._node_iri, P223.isInputOf, input_connector._node_iri))
 
 
 #
@@ -228,63 +263,6 @@ class G36DigitalInput(FunctionInput):
 
 class G36DigitalOutput(FunctionOutput):
     _class_iri: URIRef = G36.DigitalOutput
-
-
-class Parameter(Node):
-    _class_iri: URIRef = S223.Parameter
-    _volatile = ("hasValue",)
-
-    hasValue: Literal
-
-    def __init__(self, value: Any = None, **kwargs: Any):
-        _log.debug(f"Parameter({self.__class__.__name__}).__init__ {value!r} {kwargs}")
-
-        init_value = None
-        if value is None:
-            if "hasValue" in kwargs:
-                init_value = kwargs.pop("hasValue")
-        elif "hasValue" in kwargs:
-            raise RuntimeError("initialization conflict")
-        else:
-            init_value = value
-
-        super().__init__(**kwargs)
-
-        # if there is an initial value, link to it
-        if init_value is not None:
-            if not isinstance(init_value, Literal):
-                init_value = Literal(init_value)
-            self.hasValue = init_value
-
-
-class Constant(Node):
-    """
-    Very similar to a Parameter, but a Constant does not have a volatile value.
-    """
-
-    _class_iri: URIRef = S223.Constant
-
-    hasValue: Literal
-
-    def __init__(self, value: Any = None, **kwargs: Any):
-        _log.debug(f"Constant({self.__class__.__name__}).__init__ {value!r} {kwargs}")
-
-        init_value = None
-        if value is None:
-            if "hasValue" in kwargs:
-                init_value = kwargs.pop("hasValue")
-        elif "hasValue" in kwargs:
-            raise RuntimeError("initialization conflict")
-        else:
-            init_value = value
-
-        super().__init__(**kwargs)
-
-        # if there is an initial value, link to it
-        if init_value is not None:
-            if not isinstance(init_value, Literal):
-                init_value = Literal(init_value)
-            self.hasValue = init_value
 
 
 class AnalogConstant(Constant):
@@ -311,7 +289,6 @@ class Producer(_Producer):
     """
 
     _class_iri: URIRef = P223.Producer
-    # _connectors: Dict[str, Connector]
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update({}, config=config)
@@ -324,7 +301,7 @@ class Producer(_Producer):
             self._resolve_annotations()
         _log.debug(f"    - continue Producer.__init__")
 
-        # pull out the parameters and constants
+        # pull out the inputs and outputs
         connector_inits: Dict[str, Any] = {}
         for attr_name, attr_type in self._nodes.items():
             if inspect.isclass(attr_type) and (attr_name in kwargs):
@@ -334,7 +311,8 @@ class Producer(_Producer):
         _log.debug(f"    - remaining kwargs: {kwargs}")
 
         # continue with initialization
-        super().__init__(_config, **kwargs)
+        # super().__init__(_config, **kwargs)
+        super().__init__(**kwargs)
 
         # instantiate and associate all of the connectors
         self._connectors = {}
@@ -357,6 +335,34 @@ class Producer(_Producer):
 
                 setattr(self, attr_name, attr_element)
 
+        if _config:
+            for group_name, group_items in _config.items():
+                if group_name == "params":
+                    continue
+                if group_name == "cp":
+                    for thing_name, thing_class in group_items.items():
+                        setattr(
+                            self,
+                            thing_name,
+                            thing_class(self, label=f"{self.label}.{thing_name}"),
+                        )
+                    continue
+                things = []
+                for (thing_name, thing_class), thing_kwargs in group_items.items():
+                    if thing_name in self:
+                        raise ValueError(f"label already used: {self[thing_name]}")
+                    thing = thing_class(label=thing_name, **thing_kwargs)
+
+                    if isinstance(thing, Producer):
+                        self > thing
+                    if isinstance(thing, Property):
+                        self[thing_name] = thing
+                        self.add_property(thing)
+
+                    things.append(thing)
+
+                setattr(self, "_" + group_name, things)
+
     def uses(
         self,
         prop: Property,
@@ -378,93 +384,27 @@ class Producer(_Producer):
         connector >> prop
 
 
-# TODO : at some point their will be a clash where no label was given...
+@multimethod
+def contains_mm(producer: Producer, sub_producer: Producer) -> None:
+    """Producer > Producer"""
+    _log.info(f"producer {producer} contains producer {sub_producer}")
+
+    producer._data_graph.add(
+        (producer._node_iri, S223.contains, sub_producer._node_iri)
+    )
+    if INCLUDE_INVERSE:
+        producer._data_graph.add(
+            (sub_producer._node_iri, S223.isContainedIn, producer._node_iri)
+        )
 
 
-class FunctionBlock(Producer):
-    """
-    Function blocks are black boxes representing a sequence or an
-    algorithm. Function blocks have inputs and produce outputs that are
-    related to observable and actuatable properties.
-    Functions are executed by a s223:contoller
-    """
+@multimethod
+def contains_mm(equipment: Equipment, producer: Producer) -> None:
+    """Equipment > Producer"""
+    _log.info(f"equipment {equipment} contains producer {producer}")
 
-    _class_iri: URIRef = S223.FunctionBlock
-    # _connectors: Dict[str, Connector]
-    _parameters: Dict[str, Parameter]
-
-    def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update({}, config=config)
-        kwargs = {**_config.pop("params", {}), **kwargs}
-        _log.debug(f"FunctionBlock.__init__ {kwargs}")
-
-        # pull out the parameters and constants
-
-        parameter_inits: Dict[str, Any] = {}
-
-        # continue with initialization
-        super().__init__(_config, **kwargs)
-
-        # instantiate and associate all of the connectors and parameters
-        self._parameters = {}
-        for attr_name, attr_type in self._nodes.items():
-            if not inspect.isclass(attr_type):
-                continue
-
-            if issubclass(attr_type, Parameter):
-                # check if an instance was already created
-                attr_element = getattr(self, attr_name, None)
-                if not attr_element:
-                    attr_element = attr_type(label=self.label + "." + attr_name)
-                    setattr(self, attr_name, attr_element)
-
-                self._parameters[attr_name] = attr_element
-                _log.debug(f"    - parameter {attr_name}: {attr_element}")
-
-                data_graph.add(
-                    (self._node_iri, S223.hasParameter, attr_element._node_iri)
-                )
-
-                # give it a value or override the value
-                if attr_name in parameter_inits:
-                    _log.debug(f"        - init: {parameter_inits[attr_name]}")
-                    attr_element.hasValue = parameter_inits[attr_name]
-
-            elif issubclass(attr_type, Constant):
-                # check if an instance was already created
-                attr_element = getattr(self, attr_name, None)
-                if not attr_element:
-                    attr_element = attr_type(label=self.label + "." + attr_name)
-                    setattr(self, attr_name, attr_element)
-
-                self._parameters[attr_name] = attr_element
-                _log.debug(f"    - constant {attr_name}: {attr_element}")
-
-                data_graph.add(
-                    (self._node_iri, S223.hasConstant, attr_element._node_iri)
-                )
-
-                # give it a value (might fail if annotation provided value)
-                if attr_name in parameter_inits:
-                    _log.debug(f"        - init: {parameter_inits[attr_name]}")
-                    attr_element.hasValue = parameter_inits[attr_name]
-
-    def uses(
-        self,
-        prop: Property,
-        klass: FunctionInput = FunctionInput,
-        label: AnyStr = "input",
-    ) -> None:
-        connector = klass(self, label=f"{self.label}.{label}")
-        setattr(self, label, connector)
-        prop >> connector
-
-    def produces(
-        self,
-        prop: Property,
-        klass: FunctionOutput = FunctionOutput,
-        label: AnyStr = "output",
-    ) -> None:
-        connector = klass(self, label=f"{self.label}.{label}")
-        setattr(self, label, connector)
-        connector >> prop
+    producer._data_graph.add((equipment._node_iri, S223.contains, producer._node_iri))
+    if INCLUDE_INVERSE:
+        producer._data_graph.add(
+            (producer._node_iri, S223.isContainedIn, equipment._node_iri)
+        )

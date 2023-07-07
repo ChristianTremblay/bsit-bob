@@ -3129,8 +3129,7 @@ electricity:00008 a s223:Connection ;
     s223:connectsTo hvac_devices:00378 ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz .
 
-functions:00001 a p223:Producer,
-        s223:FunctionBlock,
+functions:00001 a s223:FunctionBlock,
         functions:Average ;
     rdfs:label "FB-1" ;
     s223:hasInput functions:00002,
@@ -3141,19 +3140,16 @@ functions:00001 a p223:Producer,
     functions:u2 functions:00003 ;
     functions:y functions:00004 .
 
-functions:00002 a p223:ProducerInput,
-        s223:FunctionInput,
+functions:00002 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "FB-1.u1" ;
     s223:uses hvac_devices:00019 .
 
-functions:00003 a p223:ProducerInput,
-        s223:FunctionInput,
+functions:00003 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "FB-1.u2" .
 
-functions:00004 a p223:ProducerOutput,
-        s223:FunctionOutput,
+functions:00004 a s223:FunctionOutput,
         g36:AnalogOutput ;
     rdfs:label "FB-1.y" ;
     s223:produces functions:00005 .
@@ -3170,7 +3166,6 @@ functions:00005 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 functions:00006 a p223:OccupancyFunction,
-        p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Open Office Occ Control" ;
     s223:hasInput functions:00007,
@@ -3185,26 +3180,21 @@ functions:00006 a p223:OccupancyFunction,
     bob:outStatus functions:00011 ;
     rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
 
-functions:00007 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00007 a s223:FunctionInput ;
     rdfs:label "Open Office Occ Control.inStatus" ;
     s223:uses lighting_devices:00089 .
 
-functions:00008 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00008 a s223:FunctionInput ;
     rdfs:label "Open Office Occ Control.inOccSensor" .
 
-functions:00009 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00009 a s223:FunctionInput ;
     rdfs:label "Open Office Occ Control.inLocalOverride" .
 
-functions:00010 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00010 a s223:FunctionInput ;
     rdfs:label "Open Office Occ Control.inSchedule" ;
     s223:uses functions:00012 .
 
-functions:00011 a p223:ProducerOutput,
-        s223:FunctionOutput ;
+functions:00011 a s223:FunctionOutput ;
     rdfs:label "Open Office Occ Control.outStatus" ;
     s223:produces hvac_spaces:00001,
         lighting_spaces:00004,
@@ -3217,7 +3207,6 @@ functions:00012 a s223:EnumerableProperty,
     s223:hasExternalReference bacnet_references:00022 .
 
 functions:00013 a p223:OccupancyFunction,
-        p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Kitchenette Occ Control" ;
     s223:hasInput functions:00014,
@@ -3232,26 +3221,21 @@ functions:00013 a p223:OccupancyFunction,
     bob:outStatus functions:00018 ;
     rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
 
-functions:00014 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00014 a s223:FunctionInput ;
     rdfs:label "Kitchenette Occ Control.inStatus" ;
     s223:uses lighting_devices:00014 .
 
-functions:00015 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00015 a s223:FunctionInput ;
     rdfs:label "Kitchenette Occ Control.inOccSensor" .
 
-functions:00016 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00016 a s223:FunctionInput ;
     rdfs:label "Kitchenette Occ Control.inLocalOverride" .
 
-functions:00017 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00017 a s223:FunctionInput ;
     rdfs:label "Kitchenette Occ Control.inSchedule" ;
     s223:uses functions:00019 .
 
-functions:00018 a p223:ProducerOutput,
-        s223:FunctionOutput ;
+functions:00018 a s223:FunctionOutput ;
     rdfs:label "Kitchenette Occ Control.outStatus" ;
     s223:produces hvac_spaces:00059,
         lighting_spaces:00024 .
@@ -3263,7 +3247,6 @@ functions:00019 a s223:EnumerableProperty,
     s223:hasExternalReference bacnet_references:00022 .
 
 functions:00020 a p223:OccupancyFunction,
-        p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Private Office Occ Control" ;
     s223:hasInput functions:00021,
@@ -3278,26 +3261,21 @@ functions:00020 a p223:OccupancyFunction,
     bob:outStatus functions:00025 ;
     rdfs:comment "Deal with OccupancySpace3...probably not required but it's defined" .
 
-functions:00021 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00021 a s223:FunctionInput ;
     rdfs:label "Private Office Occ Control.inStatus" ;
     s223:uses lighting_devices:00029 .
 
-functions:00022 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00022 a s223:FunctionInput ;
     rdfs:label "Private Office Occ Control.inOccSensor" .
 
-functions:00023 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00023 a s223:FunctionInput ;
     rdfs:label "Private Office Occ Control.inLocalOverride" .
 
-functions:00024 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00024 a s223:FunctionInput ;
     rdfs:label "Private Office Occ Control.inSchedule" ;
     s223:uses functions:00026 .
 
-functions:00025 a p223:ProducerOutput,
-        s223:FunctionOutput ;
+functions:00025 a s223:FunctionOutput ;
     rdfs:label "Private Office Occ Control.outStatus" ;
     s223:produces hvac_spaces:00037,
         lighting_spaces:00020 .
@@ -3309,7 +3287,6 @@ functions:00026 a s223:EnumerableProperty,
     s223:hasExternalReference bacnet_references:00022 .
 
 functions:00027 a p223:OccupancyFunction,
-        p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Bathroom Occ Control" ;
     s223:hasInput functions:00028,
@@ -3324,26 +3301,21 @@ functions:00027 a p223:OccupancyFunction,
     bob:outStatus functions:00032 ;
     rdfs:comment "Light space O2" .
 
-functions:00028 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00028 a s223:FunctionInput ;
     rdfs:label "Bathroom Occ Control.inStatus" ;
     s223:uses lighting_devices:00060 .
 
-functions:00029 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00029 a s223:FunctionInput ;
     rdfs:label "Bathroom Occ Control.inOccSensor" .
 
-functions:00030 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00030 a s223:FunctionInput ;
     rdfs:label "Bathroom Occ Control.inLocalOverride" .
 
-functions:00031 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00031 a s223:FunctionInput ;
     rdfs:label "Bathroom Occ Control.inSchedule" ;
     s223:uses functions:00033 .
 
-functions:00032 a p223:ProducerOutput,
-        s223:FunctionOutput ;
+functions:00032 a s223:FunctionOutput ;
     rdfs:label "Bathroom Occ Control.outStatus" ;
     s223:produces hvac_spaces:00010,
         lighting_spaces:00012 .
@@ -3355,7 +3327,6 @@ functions:00033 a s223:EnumerableProperty,
     s223:hasExternalReference bacnet_references:00022 .
 
 functions:00034 a p223:OccupancyFunction,
-        p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "Corridor Occ Control" ;
     s223:hasInput functions:00035,
@@ -3370,26 +3341,21 @@ functions:00034 a p223:OccupancyFunction,
     bob:outStatus functions:00039 ;
     rdfs:comment "Corridor Light space, O5" .
 
-functions:00035 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00035 a s223:FunctionInput ;
     rdfs:label "Corridor Occ Control.inStatus" ;
     s223:uses lighting_devices:00044 .
 
-functions:00036 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00036 a s223:FunctionInput ;
     rdfs:label "Corridor Occ Control.inOccSensor" .
 
-functions:00037 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00037 a s223:FunctionInput ;
     rdfs:label "Corridor Occ Control.inLocalOverride" .
 
-functions:00038 a p223:ProducerInput,
-        s223:FunctionInput ;
+functions:00038 a s223:FunctionInput ;
     rdfs:label "Corridor Occ Control.inSchedule" ;
     s223:uses functions:00040 .
 
-functions:00039 a p223:ProducerOutput,
-        s223:FunctionOutput ;
+functions:00039 a s223:FunctionOutput ;
     rdfs:label "Corridor Occ Control.outStatus" ;
     s223:produces hvac_spaces:00019,
         lighting_spaces:00016 .
@@ -4116,8 +4082,7 @@ hvac_devices:00055 a s223:Controller,
     s223:contains hvac_devices:00072,
         hvac_devices:00075,
         hvac_devices:00077,
-        hvac_devices:00079,
-        hvac_devices:00081 ;
+        hvac_devices:00079 ;
     s223:hasConnectionPoint hvac_devices:00056,
         hvac_devices:00057,
         hvac_devices:00058,
@@ -4329,10 +4294,9 @@ hvac_devices:00080 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-hvac_devices:00081 a p223:Producer,
-        s223:FunctionBlock,
+hvac_devices:00081 a s223:FunctionBlock,
         bob:VFDFunctionBlock ;
-    rdfs:label "controller_function_block" ;
+    rdfs:label "RF_VFD.function_block" ;
     s223:hasInput hvac_devices:00082,
         hvac_devices:00083,
         hvac_devices:00084 ;
@@ -4352,55 +4316,40 @@ hvac_devices:00081 a p223:Producer,
     bob:speed_ref_percent hvac_devices:00090 ;
     bob:volts_load hvac_devices:00084 .
 
-hvac_devices:00082 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.speed_ref" ;
+hvac_devices:00082 a s223:FunctionInput ;
+    rdfs:label "RF_VFD.function_block.speed_ref" ;
     s223:uses hvac_devices:00080 .
 
-hvac_devices:00083 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.amps_load" ;
+hvac_devices:00083 a s223:FunctionInput ;
+    rdfs:label "RF_VFD.function_block.amps_load" ;
     s223:uses hvac_devices:00076 .
 
-hvac_devices:00084 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.volts_load" ;
+hvac_devices:00084 a s223:FunctionInput ;
+    rdfs:label "RF_VFD.function_block.volts_load" ;
     s223:uses hvac_devices:00078 .
 
-hvac_devices:00085 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.frequency_load" ;
-    p223:hasEffectLocation hvac_devices:00057 ;
-    s223:produces hvac_devices:00065 ;
-    bob:hasEffectLocation hvac_devices:00057 .
+hvac_devices:00085 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.frequency_load" ;
+    s223:produces hvac_devices:00065 .
 
-hvac_devices:00086 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.kW_load" ;
+hvac_devices:00086 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.kW_load" ;
     s223:produces hvac_devices:00064 .
 
-hvac_devices:00087 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.alarm" ;
-    p223:hasEffectLocation hvac_devices:00062 ;
-    s223:produces hvac_devices:00071 ;
-    bob:hasEffectLocation hvac_devices:00062 .
+hvac_devices:00087 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.alarm" ;
+    s223:produces hvac_devices:00071 .
 
-hvac_devices:00088 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.rpm" ;
+hvac_devices:00088 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.rpm" ;
     s223:produces hvac_devices:00067 .
 
-hvac_devices:00089 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.drive_running" ;
-    p223:hasEffectLocation hvac_devices:00061 ;
-    s223:produces hvac_devices:00069 ;
-    bob:hasEffectLocation hvac_devices:00061 .
+hvac_devices:00089 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.drive_running" ;
+    s223:produces hvac_devices:00069 .
 
-hvac_devices:00090 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.speed_ref_percent" ;
+hvac_devices:00090 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.speed_ref_percent" ;
     s223:produces hvac_devices:00066 .
 
 hvac_devices:00091 a s223:Equipment,

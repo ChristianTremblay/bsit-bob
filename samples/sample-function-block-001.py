@@ -18,8 +18,7 @@ class Sample(FunctionBlock):
     y: G36AnalogOutput
 
     def eval(self):
-        global x, y
-        y = x * 10 + 12
+        self.y = self.x * 10 + 12
 
 
 f = Sample(label="f")

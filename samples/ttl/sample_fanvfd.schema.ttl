@@ -147,8 +147,7 @@ bob:Temperature a rdfs:Class ;
 
 bob:VFDFunctionBlock a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.vfd.VFD_FB" ;
-    rdfs:subClassOf p223:Producer,
-        s223:FunctionBlock .
+    rdfs:subClassOf s223:FunctionBlock .
 
 bob:Volts a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Volts" ;
@@ -797,8 +796,7 @@ p223:Position-Unknown a p223:Position-Unknown,
         s223:EnumerationKind .
 
 p223:Producer a rdfs:Class ;
-    rdfs:label "bob.core._Producer",
-        "bob.producer.Producer" ;
+    rdfs:label "bob.producer.Producer" ;
     rdfs:comment """
     Producers are black boxes representing causality.
     Their inputs are causes and they produce an effect on a property
@@ -806,9 +804,7 @@ p223:Producer a rdfs:Class ;
     between an input and an output of something not-driven by an algorithm.
     A common example would be a relay. You feed it voltage and the relay contact
     is actuated.
-    """,
-        "Placeholder to prevent circular reference" ;
-    rdfs:subClassOf p223:Producer .
+    """ .
 
 p223:ProducerInput a rdfs:Class ;
     rdfs:label "bob.producer.ProducerInput" .
