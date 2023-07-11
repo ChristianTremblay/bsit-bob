@@ -9,10 +9,10 @@ import inspect
 import io
 import itertools
 import logging
-import warnings
 import os
 import re
 import sys
+import warnings
 from collections import Counter, defaultdict
 from typing import (
     Any,
@@ -3106,7 +3106,7 @@ class Equipment(Container, Connectable):
     _class_iri: URIRef = S223.Equipment
     # hasContextualRoleShape: Any
     # hasPropertyShape: Any
-    hasRole: Role
+    # hasRole: Set # set of enumerationKind
     hasPhysicalLocation: PhysicalSpace
 
     def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
@@ -3139,6 +3139,7 @@ class Equipment(Container, Connectable):
                     )
 
         super().__init__(*args, **kwargs)
+        self.hasRole = set()
 
         if _config:
             for group_name, group_items in _config.items():
@@ -3167,6 +3168,23 @@ class Equipment(Container, Connectable):
                     things.append(thing)
 
                 setattr(self, "_" + group_name, things)
+
+    def add_role(self, role: EnumerationKind) -> Node:
+        """
+        Add a role to an equipment
+        """
+        self.hasRole.add(role)
+        self._data_graph.add((self._node_iri, S223.hasRole, role._node_iri))
+        if INCLUDE_INVERSE:
+            role.isRoleOf = self
+        return self
+
+    def __add__(self, role: EnumerationKind) -> Node:
+        """
+        Add a role to an equipment
+        """
+        self.add_role(role)
+        return self
 
 
 @multimethod
@@ -3220,6 +3238,18 @@ def contains_mm(parent_equipment: Equipment, child_producer: _Producer) -> None:
     if INCLUDE_INVERSE:
         parent_equipment._data_graph.add(
             (child_producer._node_iri, S223.isContainedIn, parent_equipment._node_iri)
+        )
+
+
+@multimethod
+def connect_mm(equipment: Equipment, function_block: _Producer) -> None:
+    """Controller >> FunctionBlock"""
+    _log.info(f"connect from {equipment} to {function_block}")
+    equipment + Role.Controller
+    data_graph.add((equipment._node_iri, S223.executes, function_block._node_iri))
+    if INCLUDE_INVERSE:
+        data_graph.add(
+            (function_block._node_iri, S223.isExecutedBy, equipment._node_iri)
         )
 
 
