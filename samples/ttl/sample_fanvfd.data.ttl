@@ -492,8 +492,7 @@ sample_fanvfd:00055 a s223:Controller,
     s223:contains sample_fanvfd:00072,
         sample_fanvfd:00075,
         sample_fanvfd:00077,
-        sample_fanvfd:00079,
-        sample_fanvfd:00081 ;
+        sample_fanvfd:00079 ;
     s223:hasConnectionPoint sample_fanvfd:00056,
         sample_fanvfd:00057,
         sample_fanvfd:00058,
@@ -701,10 +700,9 @@ sample_fanvfd:00080 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-sample_fanvfd:00081 a p223:Producer,
-        s223:FunctionBlock,
+sample_fanvfd:00081 a s223:FunctionBlock,
         bob:VFDFunctionBlock ;
-    rdfs:label "controller_function_block" ;
+    rdfs:label "RF_VFD.function_block" ;
     s223:hasInput sample_fanvfd:00082,
         sample_fanvfd:00083,
         sample_fanvfd:00084 ;
@@ -724,55 +722,40 @@ sample_fanvfd:00081 a p223:Producer,
     bob:speed_ref_percent sample_fanvfd:00090 ;
     bob:volts_load sample_fanvfd:00084 .
 
-sample_fanvfd:00082 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.speed_ref" ;
+sample_fanvfd:00082 a s223:FunctionInput ;
+    rdfs:label "RF_VFD.function_block.speed_ref" ;
     s223:uses sample_fanvfd:00080 .
 
-sample_fanvfd:00083 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.amps_load" ;
+sample_fanvfd:00083 a s223:FunctionInput ;
+    rdfs:label "RF_VFD.function_block.amps_load" ;
     s223:uses sample_fanvfd:00076 .
 
-sample_fanvfd:00084 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.volts_load" ;
+sample_fanvfd:00084 a s223:FunctionInput ;
+    rdfs:label "RF_VFD.function_block.volts_load" ;
     s223:uses sample_fanvfd:00078 .
 
-sample_fanvfd:00085 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.frequency_load" ;
-    p223:hasEffectLocation sample_fanvfd:00057 ;
-    s223:produces sample_fanvfd:00065 ;
-    bob:hasEffectLocation sample_fanvfd:00057 .
+sample_fanvfd:00085 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.frequency_load" ;
+    s223:produces sample_fanvfd:00065 .
 
-sample_fanvfd:00086 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.kW_load" ;
+sample_fanvfd:00086 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.kW_load" ;
     s223:produces sample_fanvfd:00064 .
 
-sample_fanvfd:00087 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.alarm" ;
-    p223:hasEffectLocation sample_fanvfd:00062 ;
-    s223:produces sample_fanvfd:00071 ;
-    bob:hasEffectLocation sample_fanvfd:00062 .
+sample_fanvfd:00087 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.alarm" ;
+    s223:produces sample_fanvfd:00071 .
 
-sample_fanvfd:00088 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.rpm" ;
+sample_fanvfd:00088 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.rpm" ;
     s223:produces sample_fanvfd:00067 .
 
-sample_fanvfd:00089 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.drive_running" ;
-    p223:hasEffectLocation sample_fanvfd:00061 ;
-    s223:produces sample_fanvfd:00069 ;
-    bob:hasEffectLocation sample_fanvfd:00061 .
+sample_fanvfd:00089 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.drive_running" ;
+    s223:produces sample_fanvfd:00069 .
 
-sample_fanvfd:00090 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.speed_ref_percent" ;
+sample_fanvfd:00090 a s223:FunctionOutput ;
+    rdfs:label "RF_VFD.function_block.speed_ref_percent" ;
     s223:produces sample_fanvfd:00066 .
 
 sample_fanvfd:00091 a s223:Equipment,
