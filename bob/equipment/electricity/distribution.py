@@ -169,13 +169,13 @@ class ThreePhaseDistributionPanel(Equipment):
             label=f"{self.label}.electricalBusABC"
         )
 
-        self.electricalBusA + ElectricalPhaseIdentifier.A
-        self.electricalBusB + ElectricalPhaseIdentifier.B
-        self.electricalBusC + ElectricalPhaseIdentifier.C
-        self.electricalBusAB + ElectricalPhaseIdentifier.AB
-        self.electricalBusBC + ElectricalPhaseIdentifier.BC
-        self.electricalBusCA + ElectricalPhaseIdentifier.CA
-        self.electricalBusABC + ElectricalPhaseIdentifier.ABC
+        self.electricalBusA += ElectricalPhaseIdentifier.A
+        self.electricalBusB += ElectricalPhaseIdentifier.B
+        self.electricalBusC += ElectricalPhaseIdentifier.C
+        self.electricalBusAB += ElectricalPhaseIdentifier.AB
+        self.electricalBusBC += ElectricalPhaseIdentifier.BC
+        self.electricalBusCA += ElectricalPhaseIdentifier.CA
+        self.electricalBusABC += ElectricalPhaseIdentifier.ABC
 
         for lit, circuit_breaker in self._contents.items():
             print(circuit_breaker)
@@ -218,8 +218,7 @@ class CircuitBreaker(Equipment):
 
         super().__init__(config, **kwargs)
 
-        self.currentRating = Amps(amps, label="Current rating of breaker")
-        self.currentRating + Dimensioned.Nominal
+        self.currentRating = Amps(amps, label="Current rating of breaker") + Dimensioned.Nominal
 
 
 class SinglePoleCircuitBreaker(CircuitBreaker):
