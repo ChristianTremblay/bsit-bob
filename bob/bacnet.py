@@ -26,7 +26,7 @@ class Device(Controller):
     _namespace = BACNET
 
 
-class Object(Node):
+class Object(ExternalReference):
     _attr_uriref = {
         "objectIdentifier": BACNET["object-identifier"],
         "objectName": BACNET["object-name"],
