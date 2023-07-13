@@ -65,16 +65,17 @@ class SinglePhaseDistributionPanel(Equipment):
 
         self.electricalBusA = (
             _electricalBusA(label=f"{self.label}.electricalBusA")
-            + ElectricalPhaseIdentifier.A
         )
         self.electricalBusB = (
             _electricalBusB(label=f"{self.label}.electricalBusB")
-            + ElectricalPhaseIdentifier.B
         )
         self.electricalBusAB = (
             _electricalBusAB(label=f"{self.label}.electricalBusAB")
-            + ElectricalPhaseIdentifier.AB
         )
+
+        self.electricalBusA += ElectricalPhaseIdentifier.A
+        self.electricalBusB += ElectricalPhaseIdentifier.B
+        self.electricalBusAB += ElectricalPhaseIdentifier.AB
 
         for _lit, circuit_breaker in self._contents.items():
             if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
@@ -218,7 +219,7 @@ class CircuitBreaker(Equipment):
 
         super().__init__(config, **kwargs)
 
-        self.currentRating = Amps(amps, label="Current rating of breaker") + Dimensioned.Nominal
+        self.currentRating = Amps(amps, label="Current rating of breaker",hasAspect=Dimensioned.Nominal) 
 
 
 class SinglePoleCircuitBreaker(CircuitBreaker):
@@ -390,24 +391,26 @@ class TwoPolesMainCircuitBreaker(CircuitBreaker):
 
         self.electricalInlet = (
             _electricalInlet(self, label=f"{self.label}.electricalInlet")
-            + ElectricalPhaseIdentifier.AB
         )
         self.electricalOutletA = (
             _electricalOutletA(
                 self, label=f"{self.label}.electricalOutlet_LineA_Neutral"
             )
-            + ElectricalPhaseIdentifier.A
         )
         self.electricalOutletB = (
             _electricalOutletB(
                 self, label=f"{self.label}.electricalOutlet_LineB_Neutral"
             )
-            + ElectricalPhaseIdentifier.B
         )
+
         self.electricalOutlet = (
             _electricalOutlet(self, label=f"{self.label}.electricalOutlet_LineA_LineB")
-            + ElectricalPhaseIdentifier.AB
         )
+
+        self.electricalInlet += ElectricalPhaseIdentifier.AB
+        self.electricalOutletA += ElectricalPhaseIdentifier.A
+        self.electricalOutletB += ElectricalPhaseIdentifier.B
+        self.electricalOutlet += ElectricalPhaseIdentifier.AB
 
 
 class ThreePolesCircuitBreaker(CircuitBreaker):
@@ -547,32 +550,33 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
         )
         self.electricalOutletA = (
             _electricalOutletA(self, label=f"{self.label}.electricalOutletA")
-            + ElectricalPhaseIdentifier.A
         )
         self.electricalOutletB = (
             _electricalOutletB(self, label=f"{self.label}.electricalOutletB")
-            + ElectricalPhaseIdentifier.B
         )
         self.electricalOutletC = (
             _electricalOutletC(self, label=f"{self.label}.electricalOutletC")
-            + ElectricalPhaseIdentifier.C
         )
         self.electricalOutletAB = (
             _electricalOutletAB(self, label=f"{self.label}.electricalOutletAB")
-            + ElectricalPhaseIdentifier.AB
         )
         self.electricalOutletBC = (
             _electricalOutletBC(self, label=f"{self.label}.electricalOutletBC")
-            + ElectricalPhaseIdentifier.BC
         )
         self.electricalOutletCA = (
             _electricalOutletCA(self, label=f"{self.label}.electricalOutletCA")
-            + ElectricalPhaseIdentifier.CA
         )
         self.electricalOutlet = (
             _electricalOutlet(self, label=f"{self.label}.electricalOutletABC")
-            + ElectricalPhaseIdentifier.ABC
         )
+
+        self.electricalOutletA += ElectricalPhaseIdentifier.B
+        self.electricalOutletB += ElectricalPhaseIdentifier.C
+        self.electricalOutletC += ElectricalPhaseIdentifier.C
+        self.electricalOutletAB += ElectricalPhaseIdentifier.AB
+        self.electricalOutletBC += ElectricalPhaseIdentifier.BC
+        self.electricalOutletCA += ElectricalPhaseIdentifier.CA
+        self.electricalOutlet += ElectricalPhaseIdentifier.ABC
 
 
 # Define breaker in template
