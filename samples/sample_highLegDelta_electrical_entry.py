@@ -97,8 +97,8 @@ def test_electrical_entry():
         Electricity_240VLL_208VLN_120VLN_3Ph_60HzConnection(
             label="HighLegDeltaTransfoOutput"
         )
-        + ElectricalPhaseIdentifier.ABC
     )
+    transformer_120_208_240_connection += ElectricalPhaseIdentifier.ABC
 
     transformer_120_208_240_connection >> main_panel["MainBreaker"]
 
