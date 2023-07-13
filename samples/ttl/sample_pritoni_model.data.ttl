@@ -180,9 +180,12 @@ bacnet_references:00020 a s223:BACnetExternalReference,
     bacnet:object-identifier "binary-input,1" ;
     bacnet:property-identifier bacnet:PropertyIdentifier.present-value .
 
-bacnet_references:00021 a s223:ExternalReference ;
-    rdfs:label "DA-T-AVG.ExternalReference" ;
-    rdfs:comment "<AnalogValueObject at urn:sample_pritoni/bacnet_references/00008>" .
+bacnet_references:00021 a s223:BACnetExternalReference,
+        s223:ExternalReference ;
+    rdfs:label "dev_5204.DAT-AVG" ;
+    bacnet:device-identifier "device,5204" ;
+    bacnet:object-identifier "analog-value,321" ;
+    bacnet:property-identifier bacnet:PropertyIdentifier.present-value .
 
 bacnet_references:00022 a s223:BACnetExternalReference,
         s223:ExternalReference ;
@@ -251,56 +254,56 @@ electrical_devices:00005 a s223:Electricity_347VLN_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletA" ;
     s223:connectsThrough electrical_devices:00048 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-A ;
     s223:hasMedium s223:AC-347VLN-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-B ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00006 a s223:Electricity_347VLN_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletB" ;
     s223:connectsThrough electrical_devices:00049 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-B ;
     s223:hasMedium s223:AC-347VLN-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-C ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00007 a s223:Electricity_347VLN_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletC" ;
     s223:connectsThrough electrical_devices:00050 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-C ;
     s223:hasMedium s223:AC-347VLN-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-C ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00008 a s223:Electricity_600VLL_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletAB" ;
     s223:connectsThrough electrical_devices:00051 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-AB ;
     s223:hasMedium s223:AC-600VLL-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-AB ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00009 a s223:Electricity_600VLL_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletBC" ;
     s223:connectsThrough electrical_devices:00052 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-BC ;
     s223:hasMedium s223:AC-600VLL-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-BC ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00010 a s223:Electricity_600VLL_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletCA" ;
     s223:connectsThrough electrical_devices:00053 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-CA ;
     s223:hasMedium s223:AC-600VLL-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-CA ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00011 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletABC" ;
     s223:connectsThrough electrical_devices:00054 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-ABC ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-ABC ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
 electrical_devices:00012 a p223:ElectricalCircuitBreaker,
@@ -775,32 +778,32 @@ electrical_devices:00061 a s223:Electricity_240VLL_120VLN_1Ph_60HzConnectionPoin
         s223:InletConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
     s223:connectsThrough electrical_devices:00098 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-AB ;
     s223:hasMedium s223:AC-240VLL-120VLN-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-AB ;
     s223:isConnectionPointOf electrical_devices:00059 .
 
 electrical_devices:00062 a s223:Electricity_120VLN_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineA_Neutral" ;
     s223:connectsThrough electrical_devices:00093 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-A ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-A ;
     s223:isConnectionPointOf electrical_devices:00059 .
 
 electrical_devices:00063 a s223:Electricity_120VLN_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineB_Neutral" ;
     s223:connectsThrough electrical_devices:00094 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-B ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-B ;
     s223:isConnectionPointOf electrical_devices:00059 .
 
 electrical_devices:00064 a s223:Electricity_240VLL_1Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutlet_LineA_LineB" ;
     s223:connectsThrough electrical_devices:00095 ;
-    s223:hasAspect s223:ElectricalPhaseIdentifier-AB ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
+    s223:hasRole s223:ElectricalPhaseIdentifier-AB ;
     s223:isConnectionPointOf electrical_devices:00059 .
 
 electrical_devices:00065 a p223:ElectricalCircuitBreaker,
