@@ -814,6 +814,13 @@ class Node(metaclass=NodeMetaclass):
         connect_mm(other, self)
         return self
 
+    def __iadd__(self, other: Any) -> Any:
+        """Add something (aspect, role...) to the node
+        prop += aspect
+        """
+        add_mm(self, other)
+        return self
+
     def __repr__(self) -> str:
         label = getattr(self, "label", "")
         if label:
@@ -891,8 +898,8 @@ class Property(Node):
     ofMedium: Medium
     ofSubstance: Substance
     hasValue: Literal
-    hasExternalReference: ExternalReference
-    hasAspect: EnumerationKind
+    #hasExternalReference: set() see below
+    #hasAspect: set() see below
 
     # override this for a specialize subclass
     _external_reference_class: type = ExternalReference
@@ -931,10 +938,12 @@ class Property(Node):
 
         # Create the property
         super().__init__(**kwargs)
+        self.hasAspect = set()
+        self.hasExternalReference = set()
 
         # Add aspects
         for each in aspects:
-            self + each
+            self += each
 
         # if there is an initial value, link to it
         if init_value is not None:
@@ -946,12 +955,20 @@ class Property(Node):
         if external_reference is not None:
             if isinstance(external_reference, list):
                 for ref in external_reference:
-                    self.add_external_reference(ref)
+                    self @ ref
+            elif isinstance(external_reference, ExternalReference):
+                self @ external_reference                
             else:
-                self.add_external_reference(external_reference)
+                pass # nope...not doing it
+    
+    def __matmul__(self, other: Any) -> Any:
+        """Add an external refernce to the node
+        property @ ref
+        """
+        reference_mm(self, other)
+        return self
 
-    def add_external_reference(self, external_reference: ExternalReference) -> None:
-        """Add an additional external reference to a property."""
+    def add_external_reference(self, external_reference):
         if not isinstance(external_reference, self._external_reference_class):
             external_reference = self._external_reference_class(
                 comment=external_reference,
@@ -963,30 +980,24 @@ class Property(Node):
         self._data_graph.add(
             (self._node_iri, S223.hasExternalReference, external_reference._node_iri)
         )
+        self.hasExternalReference.add(external_reference)
+   
+@multimethod
+def add_mm(prop: Property, aspect: EnumerationKind) -> None:
+    """
+    Add a role to an equipment
+    """
+    _log.info(f"add aspect {aspect} to {prop}")
+    prop.hasAspect.add(aspect)
+    prop._data_graph.add((prop._node_iri, S223.hasAspect, aspect._node_iri))
+    if INCLUDE_INVERSE:
+        aspect.isAspectOf = prop
 
-    def add_aspect(self, aspect: EnumerationKind) -> Node:
-        """
-        Add an aspect to a property
-        """
-        self._data_graph.add((self._node_iri, S223.hasAspect, aspect._node_iri))
-        if INCLUDE_INVERSE:
-            aspect.isAspectOf = self
-        return self
-
-    def __matmul__(self, external_reference: ExternalReference) -> Node:
-        """
-        This property is at some external reference.
-        """
-        self.add_external_reference(external_reference)
-        return self
-
-    def __add__(self, aspect: EnumerationKind) -> Node:
-        """
-        Add aspect to property
-        """
-        self.add_aspect(aspect)
-        return self
-
+@multimethod
+def reference_mm(prop: Property, external_reference: ExternalReference) -> None:
+    """Add an additional external reference to a property."""
+    _log.info(f"add external reference {external_reference} to {prop}")
+    prop.add_external_reference(external_reference)
 
 class PropertyReference:
     def __new__(cls, property):
@@ -1388,27 +1399,21 @@ class Connection(Node, metaclass=ConnectionMetaclass):
 
     _class_iri: URIRef = S223.Connection
     hasMedium: Medium
-    hasAspect: EnumerationKind
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-
-    def add_aspect(self, aspect: EnumerationKind) -> Node:
-        """
-        Add an aspect to a connection
-        """
-        self._data_graph.add((self._node_iri, S223.hasAspect, aspect._node_iri))
-        if INCLUDE_INVERSE:
-            aspect.isAspectOf = self
-        return self
-
-    def __add__(self, aspect: EnumerationKind) -> Node:
-        """
-        Add aspect to property
-        """
-        self.add_aspect(aspect)
-        return self
-
+        self.hasAspect = set()
+    
+@multimethod
+def add_mm(from_connection: Connection, aspect: EnumerationKind) -> None:
+    """
+    Add a role to a connection point
+    """
+    _log.info(f"add aspect {aspect} to {from_connection}")
+    from_connection.hasAspect.add(aspect)
+    from_connection._data_graph.add((from_connection._node_iri, S223.hasAspect, aspect._node_iri))
+    if INCLUDE_INVERSE:
+        aspect.isRoleOf = from_connection
 
 class Connectable(Node):
     """
@@ -1604,6 +1609,7 @@ class ConnectionPoint(Node):
             raise RuntimeError("ConnectionPoint is an abstract base class")
 
         super().__init__(**kwargs)
+        self.hasRole = set()
 
         self._data_graph.add((thing._node_iri, S223.hasConnectionPoint, self._node_iri))
         self.isConnectionPointOf = thing
@@ -1629,21 +1635,16 @@ class ConnectionPoint(Node):
         # link the segment back
         segment.link_to(self)
 
-    def add_aspect(self, aspect: EnumerationKind) -> Node:
-        """
-        Add an aspect to a connection
-        """
-        self._data_graph.add((self._node_iri, S223.hasAspect, aspect._node_iri))
-        if INCLUDE_INVERSE:
-            aspect.isAspectOf = self
-        return self
-
-    def __add__(self, aspect: EnumerationKind) -> Node:
-        """
-        Add aspect to property
-        """
-        self.add_aspect(aspect)
-        return self
+@multimethod
+def add_mm(from_connection_point: ConnectionPoint, role: EnumerationKind) -> None:
+    """
+    Add a role to a connection point
+    """
+    _log.info(f"add role {role} to {from_connection_point}")
+    from_connection_point.hasRole.add(role)
+    from_connection_point._data_graph.add((from_connection_point._node_iri, S223.hasRole, role._node_iri))
+    if INCLUDE_INVERSE:
+        role.isRoleOf = from_connection_point
 
 
 @multimethod
@@ -3122,6 +3123,7 @@ class Equipment(Container, Connectable):
         # ex. TypeError: unexpected keyword argument: waterInlet
         # By removing properties and connection points from kwargs and explicitly
         # putting them in config, it should be better
+        _role = kwargs.pop("hasRole",None)
         _config = dict(config.items())
         for attr_name, attr_value in kwargs.copy().items():
             if inspect.isclass(attr_value):
@@ -3140,6 +3142,8 @@ class Equipment(Container, Connectable):
 
         super().__init__(*args, **kwargs)
         self.hasRole = set()
+        if _role:
+            self += _role
 
         if _config:
             for group_name, group_items in _config.items():
@@ -3169,23 +3173,25 @@ class Equipment(Container, Connectable):
 
                 setattr(self, "_" + group_name, things)
 
-    def add_role(self, role: EnumerationKind) -> Node:
+
+
+    def __iadd__(self, role: EnumerationKind) -> Node:
         """
         Add a role to an equipment
         """
-        self.hasRole.add(role)
-        self._data_graph.add((self._node_iri, S223.hasRole, role._node_iri))
-        if INCLUDE_INVERSE:
-            role.isRoleOf = self
+        add_mm(self, role)
         return self
 
-    def __add__(self, role: EnumerationKind) -> Node:
-        """
-        Add a role to an equipment
-        """
-        self.add_role(role)
-        return self
-
+@multimethod
+def add_mm(equipment: Equipment, role: EnumerationKind) -> None:
+    """
+    Add a role to an equipment
+    """
+    _log.info(f"add role {role} to {equipment}")
+    equipment.hasRole.add(role)
+    equipment._data_graph.add((equipment._node_iri, S223.hasRole, role._node_iri))
+    if INCLUDE_INVERSE:
+        role.isRoleOf = equipment
 
 @multimethod
 def contains_mm(system: System, equipment: Equipment) -> None:
@@ -3245,7 +3251,7 @@ def contains_mm(parent_equipment: Equipment, child_producer: _Producer) -> None:
 def connect_mm(equipment: Equipment, function_block: _Producer) -> None:
     """Controller >> FunctionBlock"""
     _log.info(f"connect from {equipment} to {function_block}")
-    equipment + Role.Controller
+    equipment += Role.Controller
     data_graph.add((equipment._node_iri, S223.executes, function_block._node_iri))
     if INCLUDE_INVERSE:
         data_graph.add(
