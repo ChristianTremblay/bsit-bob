@@ -23,7 +23,7 @@ def test_create_gas_monitor(bob_fixture):
         },
         "sensors": {
             ("CO2_sensor", CO2Sensor): {
-                "hasExternalReference": "bacnet://",
+                #"hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
                     hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
@@ -39,7 +39,7 @@ def test_create_gas_monitor(bob_fixture):
             },
             ("Temperature_sensor", AirTemperatureSensor): {
                 "unit": UNIT.DEG_C,
-                "hasExternalReference": "bacnet://",
+                #"hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
                     hasQuantityKind=QUANTITYKIND.Temperature,
@@ -67,7 +67,7 @@ def test_create_gas_monitor(bob_fixture):
         },
         "sensors": {
             ("CO_sensor", COSensor): {
-                "hasExternalReference": "bacnet://",
+                #"hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
                     hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
@@ -82,7 +82,7 @@ def test_create_gas_monitor(bob_fixture):
                 ),
             },
             ("NO2_sensor", NO2Sensor): {
-                "hasExternalReference": "bacnet://",
+                #"hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
                     hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
@@ -109,7 +109,7 @@ def test_create_gas_monitor(bob_fixture):
         },
         "sensors": {
             ("CO2_sensor", CO2Sensor): {
-                "hasExternalReference": "bacnet://",
+                #"hasExternalReference": "bacnet://",
                 "hasMinRange": QuantifiableObservableProperty(
                     0,
                     hasQuantityKind=QUANTITYKIND.DimensionlessRatio,
