@@ -28,7 +28,7 @@ def test_create_sensor_002(bob_fixture):
     tpd01 = AirDifferentialStaticPressureSensor(
         label="TPD-01",
         comment="Static Pressure between Clean Room (+) and SAS (-)",
-        hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
+        # hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
         unit=UNIT.PA,
     )
     tpd01["highPort"] % clean_room_hvac

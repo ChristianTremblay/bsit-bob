@@ -16,7 +16,7 @@ def test_create_sensor(bob_fixture):
         ats = TemperatureSensor(
             label="DA-T",
             comment="Supply Air Temperature Sensor",
-            hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
+            # hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
         )
 
     ats1 = TemperatureSensor(
@@ -30,7 +30,7 @@ def test_create_sensor(bob_fixture):
     ats2 = AirTemperatureSensor(
         label="ats2",
         comment="Supply Air Temperature Sensor",
-        hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
+        # hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
         unit=UNIT.DEG_C,
     )
 

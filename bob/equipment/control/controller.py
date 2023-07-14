@@ -22,6 +22,7 @@ from ...core import (
     logging,
     template_update,
 )
+from ...enum import Role
 from ...externalreference import NetworkProfile
 from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 
@@ -82,18 +83,6 @@ class Controller(Equipment):
         """Build a connection to this thing from another thing."""
         connect_mm(other, self)
         return self
-
-
-@multimethod
-def connect_mm(controller: Controller, function_block: FunctionBlock) -> None:
-    """Controller >> FunctionBlock"""
-    _log.info(f"connect from {controller} to {function_block}")
-
-    data_graph.add((controller._node_iri, S223.executes, function_block._node_iri))
-    if INCLUDE_INVERSE:
-        data_graph.add(
-            (function_block._node_iri, S223.isExecutedBy, controller._node_iri)
-        )
 
 
 @multimethod

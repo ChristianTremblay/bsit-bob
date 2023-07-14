@@ -123,7 +123,7 @@ def test_electrical_entry():
     dist_panel = SinglePhaseDistributionPanel(config=distribution_panel_config)
     # hq = Electricity_240VLL_120VLN_1Ph_60HzConnection(label='Hydro-Québec', comment="That would be for a home...")
     hq_600 = Electricity_600VLL_3Ph_60HzConnection(label="Hydro-Québec", comment="600V")
-    hq_600 + ElectricalPhaseIdentifier.ABC
+    hq_600 += ElectricalPhaseIdentifier.ABC
     hq_600 >> main_panel["MainBreaker"]
     main_panel["CB#3"] >> transformer_120_240 >> dist_panel["MainBreaker"]
 

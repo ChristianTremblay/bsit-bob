@@ -167,6 +167,7 @@ Domain.Security = Security = Domain("Security")
 # ===================
 # ROLES FLAVOURS
 # ===================
+Role.Controller = Controller = Role("Controller")
 Role.Cooling = Cooling = Role("Cooling")
 Role.Discharge = Discharge = Role("Discharge")
 Role.Exhaust = Exhaust = Role("Exhaust")

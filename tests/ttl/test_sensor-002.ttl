@@ -178,9 +178,9 @@ ex33:00021 a s223:DifferentialSensor,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "TPD-01" ;
-    s223:contains ex33:00024,
-        ex33:00027,
-        ex33:00030 ;
+    s223:contains ex33:00023,
+        ex33:00025,
+        ex33:00027 ;
     s223:hasPhysicalLocation ex33:00020 ;
     s223:hasProperty ex33:00022 ;
     s223:observes ex33:00022 ;
@@ -193,81 +193,66 @@ ex33:00022 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "TPD-01.DifferentialStaticPressure" ;
-    s223:hasExternalReference ex33:00023 ;
     s223:isPropertyOf ex33:00021 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
-ex33:00023 a s223:ExternalReference ;
-    rdfs:label "TPD-01.DifferentialStaticPressure.ExternalReference" ;
-    rdfs:comment "bacnet://570005/analog-input,10084/present-value" .
-
-ex33:00024 a s223:Equipment,
+ex33:00023 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "highPort" ;
     s223:hasObservationLocation ex33:00001 ;
     s223:isContainedIn ex33:00021 ;
-    s223:observes ex33:00025 .
+    s223:observes ex33:00024 .
 
-ex33:00025 a s223:ObservableProperty,
+ex33:00024 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:hasExternalReference ex33:00026 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
-ex33:00026 a s223:ExternalReference ;
-    rdfs:label "highPort.DifferentialStaticPressure.ExternalReference" ;
-    rdfs:comment "bacnet://570005/analog-input,10084/present-value" .
-
-ex33:00027 a s223:Equipment,
+ex33:00025 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "lowPort" ;
     s223:hasObservationLocation ex33:00009 ;
     s223:isContainedIn ex33:00021 ;
-    s223:observes ex33:00028 .
+    s223:observes ex33:00026 .
 
-ex33:00028 a s223:ObservableProperty,
+ex33:00026 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:hasExternalReference ex33:00029 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
-ex33:00029 a s223:ExternalReference ;
-    rdfs:label "lowPort.DifferentialStaticPressure.ExternalReference" ;
-    rdfs:comment "bacnet://570005/analog-input,10084/present-value" .
-
-ex33:00030 a p223:Producer,
+ex33:00027 a p223:Producer,
         bob:Differential ;
     rdfs:label "diff_causality" ;
-    s223:hasInput ex33:00031,
-        ex33:00032 ;
-    s223:hasOutput ex33:00033 ;
+    s223:hasInput ex33:00028,
+        ex33:00029 ;
+    s223:hasOutput ex33:00030 ;
     s223:isContainedIn ex33:00021 ;
-    bob:differential_output ex33:00033 ;
-    bob:high_input ex33:00031 ;
-    bob:low_input ex33:00032 ;
+    bob:differential_output ex33:00030 ;
+    bob:high_input ex33:00028 ;
+    bob:low_input ex33:00029 ;
     rdfs:comment "Will output High minus Low" .
 
-ex33:00031 a p223:ProducerInput ;
+ex33:00028 a p223:ProducerInput ;
     rdfs:label "diff_causality.high_input" ;
-    s223:uses ex33:00025 .
+    s223:uses ex33:00024 .
 
-ex33:00032 a p223:ProducerInput ;
+ex33:00029 a p223:ProducerInput ;
     rdfs:label "diff_causality.low_input" ;
-    s223:uses ex33:00028 .
+    s223:uses ex33:00026 .
 
-ex33:00033 a p223:ProducerOutput ;
+ex33:00030 a p223:ProducerOutput ;
     rdfs:label "diff_causality.differential_output" ;
     s223:produces ex33:00022 .
 

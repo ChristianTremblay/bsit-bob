@@ -137,30 +137,32 @@ pritoni_schedule = ScheduleObject(
 CGM_2_004 > pritoni_schedule
 
 hd.vav1["VAV1_ZN-T"].observedProperty @ BACnetExternalReference(
-    "bacnet://5205/analog-input,1001"
+    "bacnet://5205/analog-input,1001/present-value"
 )
 hd.vav2["VAV2_ZN-T"].observedProperty @ BACnetExternalReference(
-    "bacnet://5206/analog-input,1002"
+    "bacnet://5206/analog-input,1002/present-value"
 )
 
 hd.ahu["RF_VFD"]["drive_running"] @ BACnetExternalReference(
-    "bacnet://5204/binary-input,5021"
+    "bacnet://5204/binary-input,5021/present-value"
 )
 hd.ahu["RF_VFD"]["run_command"] @ BACnetExternalReference(
-    "bacnet://5204/binary-output,12345"
+    "bacnet://5204/binary-output,12345/present-value"
 )
 
 # A bulb with only one object
 ld.openofficeNorth_luminaire_1.brightnessRatio @ BACnetExternalReference(
-    "bacnet://2/analog-input,1"
+    "bacnet://2/analog-input,1/present-value"
 )
 ld.openofficeNorth_luminaire_1.onOffStatus @ BACnetExternalReference(
-    "bacnet://2/binary-input,1"
+    "bacnet://2/binary-input,1/present-value"
 )
 
-fn.f_avg_temp @ dat_avg
+fn.f_avg_temp @ dat_avg.present_value
 
-pritoni_schedule_reference = BACnetExternalReference("bacnet://5204/schedule,1")
+pritoni_schedule_reference = BACnetExternalReference(
+    "bacnet://5204/schedule,1/present-value"
+)
 
 fn.bathroom_occ_control_schedule @ pritoni_schedule_reference
 fn.corridor_occ_control_schedule @ pritoni_schedule_reference

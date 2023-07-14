@@ -13,12 +13,10 @@
 exg3601:00001 a s223:Controller,
         s223:Equipment ;
     rdfs:label "Controller for G36 VAV Cooling Only" ;
-    s223:connectedThrough exg3601:00087,
-        exg3601:00088 ;
+    s223:connectedThrough exg3601:00086,
+        exg3601:00087 ;
     s223:connectedTo exg3601:00044,
         exg3601:00075 ;
-    s223:executes exg3601:00092,
-        exg3601:00098 ;
     s223:hasConnectionPoint exg3601:00002,
         exg3601:00003,
         exg3601:00004,
@@ -74,14 +72,14 @@ exg3601:00008 a p223:AnalogOutput,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.damper_output" ;
     p223:hasSignalType p223:Analog-0-10VDC ;
-    s223:connectsThrough exg3601:00087 ;
+    s223:connectsThrough exg3601:00086 ;
     s223:hasMedium s223:Signal-Modulated ;
     s223:isConnectionPointOf exg3601:00001 .
 
 exg3601:00009 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.bacnet_mstp" ;
-    s223:connectsThrough exg3601:00088 ;
+    s223:connectsThrough exg3601:00087 ;
     s223:hasMedium s223:Communication-EIA-485 ;
     s223:isConnectionPointOf exg3601:00001 .
 
@@ -386,7 +384,7 @@ exg3601:00044 a s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedFrom exg3601:00001 ;
     s223:connectedThrough exg3601:00074,
-        exg3601:00087 ;
+        exg3601:00086 ;
     s223:connectedTo exg3601:00070 ;
     s223:contains exg3601:00056,
         exg3601:00059,
@@ -445,7 +443,7 @@ exg3601:00050 a p223:AnalogInput,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
     p223:hasSignalType p223:Analog-0-10VDC ;
-    s223:connectsThrough exg3601:00087 ;
+    s223:connectsThrough exg3601:00086 ;
     s223:hasMedium s223:Signal-Modulated ;
     s223:isConnectionPointOf exg3601:00044 .
 
@@ -619,7 +617,7 @@ exg3601:00075 a p223:NetworkRoomSensor,
         s223:Equipment ;
     rdfs:label "ZONE-THERMOSTAT" ;
     s223:connectedFrom exg3601:00001 ;
-    s223:connectedThrough exg3601:00088 ;
+    s223:connectedThrough exg3601:00087 ;
     s223:contains exg3601:00078,
         exg3601:00080 ;
     s223:hasConnectionPoint exg3601:00076 ;
@@ -629,7 +627,7 @@ exg3601:00075 a p223:NetworkRoomSensor,
 exg3601:00076 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "ZONE-THERMOSTAT.mstp" ;
-    s223:connectsThrough exg3601:00088 ;
+    s223:connectsThrough exg3601:00087 ;
     s223:hasMedium s223:Communication-EIA-485 ;
     s223:isConnectionPointOf exg3601:00075 .
 
@@ -698,31 +696,26 @@ exg3601:00085 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:GasConcentration ;
     rdfs:label "CO2.GasConcentration" ;
-    s223:hasExternalReference exg3601:00086 ;
     s223:ofMedium s223:Medium-Air ;
     s223:ofSubstance s223:Substance-CO2 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
-exg3601:00086 a s223:ExternalReference ;
-    rdfs:label "CO2.GasConcentration.ExternalReference" ;
-    rdfs:comment "bacnet://" .
-
-exg3601:00087 a s223:Connection ;
+exg3601:00086 a s223:Connection ;
     s223:connectsAt exg3601:00008,
         exg3601:00050 ;
     s223:connectsFrom exg3601:00001 ;
     s223:connectsTo exg3601:00044 ;
     s223:hasMedium s223:Signal-Modulated .
 
-exg3601:00088 a s223:Connection ;
+exg3601:00087 a s223:Connection ;
     s223:connectsAt exg3601:00009,
         exg3601:00076 ;
     s223:connectsFrom exg3601:00001 ;
     s223:connectsTo exg3601:00075 ;
     s223:hasMedium s223:Communication-EIA-485 .
 
-exg3601:00089 a p223:HVACZone,
+exg3601:00088 a p223:HVACZone,
         s223:Zone ;
     rdfs:label "HVACZone" ;
     s223:contains exg3601:00014 ;
@@ -731,125 +724,125 @@ exg3601:00089 a p223:HVACZone,
         exg3601:00077,
         exg3601:00079,
         exg3601:00085 ;
-    bob:airInlet exg3601:00090 ;
-    bob:airOutlet exg3601:00091 ;
+    bob:airInlet exg3601:00089 ;
+    bob:airOutlet exg3601:00090 ;
     bob:co2 exg3601:00085 ;
-    bob:hasZoneConnectionPoint exg3601:00090,
-        exg3601:00091 ;
+    bob:hasZoneConnectionPoint exg3601:00089,
+        exg3601:00090 ;
     bob:temperature exg3601:00079 ;
     bob:temperature_setpoint exg3601:00077 ;
     rdfs:comment "Contains HVACSpace" .
 
-exg3601:00090 a bob:InletZoneConnectionPoint,
+exg3601:00089 a bob:InletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "HVACZone.airInlet" ;
     s223:hasMedium s223:Medium-Air .
 
-exg3601:00091 a bob:OutletZoneConnectionPoint,
+exg3601:00090 a bob:OutletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "HVACZone.airOutlet" ;
     s223:hasMedium s223:Medium-Air .
 
-exg3601:00092 a p223:OccupancyFunction,
+exg3601:00091 a p223:OccupancyFunction,
         s223:FunctionBlock ;
     rdfs:label "OccControl" ;
-    s223:hasInput exg3601:00093,
+    s223:hasInput exg3601:00092,
+        exg3601:00093,
         exg3601:00094,
-        exg3601:00095,
-        exg3601:00096 ;
-    s223:hasOutput exg3601:00097 ;
-    bob:inLocalOverride exg3601:00095 ;
-    bob:inOccSensor exg3601:00094 ;
-    bob:inSchedule exg3601:00096 ;
-    bob:inStatus exg3601:00093 ;
-    bob:outStatus exg3601:00097 ;
+        exg3601:00095 ;
+    s223:hasOutput exg3601:00096 ;
+    bob:inLocalOverride exg3601:00094 ;
+    bob:inOccSensor exg3601:00093 ;
+    bob:inSchedule exg3601:00095 ;
+    bob:inStatus exg3601:00092 ;
+    bob:outStatus exg3601:00096 ;
     rdfs:comment "This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED" .
 
-exg3601:00093 a s223:FunctionInput ;
+exg3601:00092 a s223:FunctionInput ;
     rdfs:label "OccControl.inStatus" .
 
-exg3601:00094 a s223:FunctionInput ;
+exg3601:00093 a s223:FunctionInput ;
     rdfs:label "OccControl.inOccSensor" ;
     s223:uses exg3601:00038 .
 
-exg3601:00095 a s223:FunctionInput ;
+exg3601:00094 a s223:FunctionInput ;
     rdfs:label "OccControl.inLocalOverride" ;
     s223:uses exg3601:00081 .
 
-exg3601:00096 a s223:FunctionInput ;
+exg3601:00095 a s223:FunctionInput ;
     rdfs:label "OccControl.inSchedule" .
 
-exg3601:00097 a s223:FunctionOutput ;
+exg3601:00096 a s223:FunctionOutput ;
     rdfs:label "OccControl.outStatus" ;
     s223:produces exg3601:00022 .
 
-exg3601:00098 a s223:FunctionBlock,
+exg3601:00097 a s223:FunctionBlock,
         g36:FunctionBlock,
         g36:VAVCoolingOnly ;
     rdfs:label "Bob G36 VAV Cooling Only" ;
-    s223:hasInput exg3601:00100,
+    s223:hasInput exg3601:00099,
+        exg3601:00100,
         exg3601:00101,
         exg3601:00102,
         exg3601:00103,
         exg3601:00104,
         exg3601:00105,
         exg3601:00106,
-        exg3601:00107,
-        exg3601:00108 ;
-    s223:hasOutput exg3601:00099 ;
-    g36:ahuSupplyAirTemp exg3601:00108 ;
-    g36:boxDamperPosition exg3601:00099 ;
-    g36:effectiveOccupancy exg3601:00107 ;
-    g36:localOverride exg3601:00102 ;
-    g36:supplyAirFlow exg3601:00100 ;
-    g36:zoneCO2 exg3601:00106 ;
-    g36:zoneOccupancySensor exg3601:00103 ;
-    g36:zoneSetpointAdj exg3601:00105 ;
-    g36:zoneTemperature exg3601:00101 ;
-    g36:zonewindowSwitch exg3601:00104 ;
+        exg3601:00107 ;
+    s223:hasOutput exg3601:00098 ;
+    g36:ahuSupplyAirTemp exg3601:00107 ;
+    g36:boxDamperPosition exg3601:00098 ;
+    g36:effectiveOccupancy exg3601:00106 ;
+    g36:localOverride exg3601:00101 ;
+    g36:supplyAirFlow exg3601:00099 ;
+    g36:zoneCO2 exg3601:00105 ;
+    g36:zoneOccupancySensor exg3601:00102 ;
+    g36:zoneSetpointAdj exg3601:00104 ;
+    g36:zoneTemperature exg3601:00100 ;
+    g36:zonewindowSwitch exg3601:00103 ;
     rdfs:comment "Lorem ipsum of sequence" .
 
-exg3601:00099 a s223:FunctionOutput,
+exg3601:00098 a s223:FunctionOutput,
         g36:AnalogOutput ;
     rdfs:label "Bob G36 VAV Cooling Only.boxDamperPosition" ;
     s223:produces exg3601:00054 .
 
-exg3601:00100 a s223:FunctionInput,
+exg3601:00099 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.supplyAirFlow" ;
     s223:uses exg3601:00032 .
 
-exg3601:00101 a s223:FunctionInput,
+exg3601:00100 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneTemperature" ;
     s223:uses exg3601:00079 .
 
-exg3601:00102 a s223:FunctionInput,
+exg3601:00101 a s223:FunctionInput,
         g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.localOverride" .
 
-exg3601:00103 a s223:FunctionInput,
+exg3601:00102 a s223:FunctionInput,
         g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneOccupancySensor" .
 
-exg3601:00104 a s223:FunctionInput,
+exg3601:00103 a s223:FunctionInput,
         g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zonewindowSwitch" ;
     s223:uses exg3601:00040 .
 
-exg3601:00105 a s223:FunctionInput,
+exg3601:00104 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneSetpointAdj" .
 
-exg3601:00106 a s223:FunctionInput,
+exg3601:00105 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneCO2" ;
     s223:uses exg3601:00085 .
 
-exg3601:00107 a s223:FunctionInput ;
+exg3601:00106 a s223:FunctionInput ;
     rdfs:label "Bob G36 VAV Cooling Only.effectiveOccupancy" ;
     s223:uses exg3601:00022 .
 
-exg3601:00108 a s223:FunctionInput ;
+exg3601:00107 a s223:FunctionInput ;
     rdfs:label "Bob G36 VAV Cooling Only.ahuSupplyAirTemp" .
 

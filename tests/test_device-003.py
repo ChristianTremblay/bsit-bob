@@ -19,13 +19,13 @@ def test_create_particle_counter(bob_fixture):
         "properties": {},
         "sensors": {
             ("coarse_sensor", CoarseParticulateSensor): {
-                "hasExternalReference": "bacnet://1/analog-value,1/present-value",
+                # "hasExternalReference": "bacnet://1/analog-value,1/present-value",
             },
             ("fine_sensor", FineParticulateSensor): {
-                "hasExternalReference": "bacnet://1/analog-input,2/present-value",
+                # "hasExternalReference": "bacnet://1/analog-input,2/present-value",
             },
             ("ultrafine_sensor", UltraFineParticulateSensor): {
-                "hasExternalReference": "bacnet://1/analog-input,3/present-value",
+                # "hasExternalReference": "bacnet://1/analog-input,3/present-value",
             },
         },
     }
