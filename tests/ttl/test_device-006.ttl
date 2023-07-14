@@ -29,8 +29,7 @@ ex33:00001 a s223:Controller,
     s223:contains ex33:00018,
         ex33:00021,
         ex33:00023,
-        ex33:00025,
-        ex33:00027 ;
+        ex33:00025 ;
     s223:hasConnectionPoint ex33:00002,
         ex33:00003,
         ex33:00004,
@@ -250,10 +249,9 @@ ex33:00026 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-ex33:00027 a p223:Producer,
-        s223:FunctionBlock,
+ex33:00027 a s223:FunctionBlock,
         bob:VFDFunctionBlock ;
-    rdfs:label "controller_function_block" ;
+    rdfs:label "MyVFD.function_block" ;
     s223:hasInput ex33:00028,
         ex33:00029,
         ex33:00030 ;
@@ -263,7 +261,6 @@ ex33:00027 a p223:Producer,
         ex33:00034,
         ex33:00035,
         ex33:00036 ;
-    s223:isContainedIn ex33:00001 ;
     bob:alarm ex33:00033 ;
     bob:amps_load ex33:00029 ;
     bob:drive_running ex33:00035 ;
@@ -274,54 +271,39 @@ ex33:00027 a p223:Producer,
     bob:speed_ref_percent ex33:00036 ;
     bob:volts_load ex33:00030 .
 
-ex33:00028 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.speed_ref" ;
+ex33:00028 a s223:FunctionInput ;
+    rdfs:label "MyVFD.function_block.speed_ref" ;
     s223:uses ex33:00026 .
 
-ex33:00029 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.amps_load" ;
+ex33:00029 a s223:FunctionInput ;
+    rdfs:label "MyVFD.function_block.amps_load" ;
     s223:uses ex33:00022 .
 
-ex33:00030 a p223:ProducerInput,
-        s223:FunctionInput ;
-    rdfs:label "controller_function_block.volts_load" ;
+ex33:00030 a s223:FunctionInput ;
+    rdfs:label "MyVFD.function_block.volts_load" ;
     s223:uses ex33:00024 .
 
-ex33:00031 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.frequency_load" ;
-    p223:hasEffectLocation ex33:00003 ;
-    s223:produces ex33:00011 ;
-    bob:hasEffectLocation ex33:00003 .
+ex33:00031 a s223:FunctionOutput ;
+    rdfs:label "MyVFD.function_block.frequency_load" ;
+    s223:produces ex33:00011 .
 
-ex33:00032 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.kW_load" ;
+ex33:00032 a s223:FunctionOutput ;
+    rdfs:label "MyVFD.function_block.kW_load" ;
     s223:produces ex33:00010 .
 
-ex33:00033 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.alarm" ;
-    p223:hasEffectLocation ex33:00008 ;
-    s223:produces ex33:00017 ;
-    bob:hasEffectLocation ex33:00008 .
+ex33:00033 a s223:FunctionOutput ;
+    rdfs:label "MyVFD.function_block.alarm" ;
+    s223:produces ex33:00017 .
 
-ex33:00034 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.rpm" ;
+ex33:00034 a s223:FunctionOutput ;
+    rdfs:label "MyVFD.function_block.rpm" ;
     s223:produces ex33:00013 .
 
-ex33:00035 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.drive_running" ;
-    p223:hasEffectLocation ex33:00007 ;
-    s223:produces ex33:00015 ;
-    bob:hasEffectLocation ex33:00007 .
+ex33:00035 a s223:FunctionOutput ;
+    rdfs:label "MyVFD.function_block.drive_running" ;
+    s223:produces ex33:00015 .
 
-ex33:00036 a p223:ProducerOutput,
-        s223:FunctionOutput ;
-    rdfs:label "controller_function_block.speed_ref_percent" ;
+ex33:00036 a s223:FunctionOutput ;
+    rdfs:label "MyVFD.function_block.speed_ref_percent" ;
     s223:produces ex33:00012 .
 

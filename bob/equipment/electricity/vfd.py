@@ -99,7 +99,7 @@ vfd_template = {
         ("current_sensor", CurrentSensor): {},
         ("voltage_sensor", VoltageSensor): {},
         ("speed_ref_voltage_sensor", VoltageSensor): {},
-        ("controller_function_block", VFD_FB): {},
+        # ("controller_function_block", VFD_FB): {},
     },
 }
 
@@ -120,25 +120,30 @@ class VFD(_VFD):
         self.volts = self["voltage_sensor"].observedProperty
         self["speed_ref_voltage_sensor"] % self.speedrefInlet
 
+        # build a function block
+        controller_function_block = self["controller_function_block"] = VFD_FB(
+            label=self.label + ".function_block"
+        )
+
         # Feed the controller
-        self.executes = self["controller_function_block"]
+        self.executes = controller_function_block
         (
             self["speed_ref_voltage_sensor"].observedProperty
-            >> self["controller_function_block"].speed_ref
+            >> controller_function_block.speed_ref
         )
-        self["controller_function_block"].amps_load << self.amps
-        self["controller_function_block"].volts_load << self.volts
+        controller_function_block.amps_load << self.amps
+        controller_function_block.volts_load << self.volts
 
         # Controlle rmkaes its job
-        self["controller_function_block"].frequency_load >> self["frequency"]
-        self["controller_function_block"].frequency_load % self.electricalOutlet
-        self["controller_function_block"].kW_load >> self["kW"]
-        self["controller_function_block"].rpm >> self["rpm"]
-        self["controller_function_block"].alarm >> self["alarm_status"]
-        self["controller_function_block"].alarm % self.alarm_dry_contact
-        self["controller_function_block"].drive_running >> self["drive_running"]
-        self["controller_function_block"].drive_running % self.drive_running_dry_contact
-        self["controller_function_block"].speed_ref_percent >> self["speed_reference"]
+        controller_function_block.frequency_load >> self["frequency"]
+        # controller_function_block.frequency_load % self.electricalOutlet -- hasEffectLocation
+        controller_function_block.kW_load >> self["kW"]
+        controller_function_block.rpm >> self["rpm"]
+        controller_function_block.alarm >> self["alarm_status"]
+        # controller_function_block.alarm % self.alarm_dry_contact -- hasEffectLocation
+        controller_function_block.drive_running >> self["drive_running"]
+        # controller_function_block.drive_running % self.drive_running_dry_contact -- hasEffectLocation
+        controller_function_block.speed_ref_percent >> self["speed_reference"]
         # No controller ... simple causality
         # in fact motor temp is the result of a calculation... but this shows a possibility
         self["motor_temp_effect"].cause_input << self["rpm"]

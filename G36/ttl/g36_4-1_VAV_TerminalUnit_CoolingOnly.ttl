@@ -17,8 +17,6 @@ exg3601:00001 a s223:Controller,
         exg3601:00087 ;
     s223:connectedTo exg3601:00044,
         exg3601:00075 ;
-    s223:executes exg3601:00091,
-        exg3601:00097 ;
     s223:hasConnectionPoint exg3601:00002,
         exg3601:00003,
         exg3601:00004,
@@ -26,8 +24,7 @@ exg3601:00001 a s223:Controller,
         exg3601:00006,
         exg3601:00007,
         exg3601:00008,
-        exg3601:00009 ;
-    s223:hasRole s223:Role-Controller .
+        exg3601:00009 .
 
 exg3601:00002 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
@@ -747,7 +744,6 @@ exg3601:00090 a bob:OutletZoneConnectionPoint,
     s223:hasMedium s223:Medium-Air .
 
 exg3601:00091 a p223:OccupancyFunction,
-        p223:Producer,
         s223:FunctionBlock ;
     rdfs:label "OccControl" ;
     s223:hasInput exg3601:00092,
@@ -762,31 +758,25 @@ exg3601:00091 a p223:OccupancyFunction,
     bob:outStatus exg3601:00096 ;
     rdfs:comment "This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED" .
 
-exg3601:00092 a p223:ProducerInput,
-        s223:FunctionInput ;
+exg3601:00092 a s223:FunctionInput ;
     rdfs:label "OccControl.inStatus" .
 
-exg3601:00093 a p223:ProducerInput,
-        s223:FunctionInput ;
+exg3601:00093 a s223:FunctionInput ;
     rdfs:label "OccControl.inOccSensor" ;
     s223:uses exg3601:00038 .
 
-exg3601:00094 a p223:ProducerInput,
-        s223:FunctionInput ;
+exg3601:00094 a s223:FunctionInput ;
     rdfs:label "OccControl.inLocalOverride" ;
     s223:uses exg3601:00081 .
 
-exg3601:00095 a p223:ProducerInput,
-        s223:FunctionInput ;
+exg3601:00095 a s223:FunctionInput ;
     rdfs:label "OccControl.inSchedule" .
 
-exg3601:00096 a p223:ProducerOutput,
-        s223:FunctionOutput ;
+exg3601:00096 a s223:FunctionOutput ;
     rdfs:label "OccControl.outStatus" ;
     s223:produces exg3601:00022 .
 
-exg3601:00097 a p223:Producer,
-        s223:FunctionBlock,
+exg3601:00097 a s223:FunctionBlock,
         g36:FunctionBlock,
         g36:VAVCoolingOnly ;
     rdfs:label "Bob G36 VAV Cooling Only" ;
@@ -812,57 +802,47 @@ exg3601:00097 a p223:Producer,
     g36:zonewindowSwitch exg3601:00103 ;
     rdfs:comment "Lorem ipsum of sequence" .
 
-exg3601:00098 a p223:ProducerOutput,
-        s223:FunctionOutput,
+exg3601:00098 a s223:FunctionOutput,
         g36:AnalogOutput ;
     rdfs:label "Bob G36 VAV Cooling Only.boxDamperPosition" ;
     s223:produces exg3601:00054 .
 
-exg3601:00099 a p223:ProducerInput,
-        s223:FunctionInput,
+exg3601:00099 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.supplyAirFlow" ;
     s223:uses exg3601:00032 .
 
-exg3601:00100 a p223:ProducerInput,
-        s223:FunctionInput,
+exg3601:00100 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneTemperature" ;
     s223:uses exg3601:00079 .
 
-exg3601:00101 a p223:ProducerInput,
-        s223:FunctionInput,
+exg3601:00101 a s223:FunctionInput,
         g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.localOverride" .
 
-exg3601:00102 a p223:ProducerInput,
-        s223:FunctionInput,
+exg3601:00102 a s223:FunctionInput,
         g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneOccupancySensor" .
 
-exg3601:00103 a p223:ProducerInput,
-        s223:FunctionInput,
+exg3601:00103 a s223:FunctionInput,
         g36:DigitalInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zonewindowSwitch" ;
     s223:uses exg3601:00040 .
 
-exg3601:00104 a p223:ProducerInput,
-        s223:FunctionInput,
+exg3601:00104 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneSetpointAdj" .
 
-exg3601:00105 a p223:ProducerInput,
-        s223:FunctionInput,
+exg3601:00105 a s223:FunctionInput,
         g36:AnalogInput ;
     rdfs:label "Bob G36 VAV Cooling Only.zoneCO2" ;
     s223:uses exg3601:00085 .
 
-exg3601:00106 a p223:ProducerInput,
-        s223:FunctionInput ;
+exg3601:00106 a s223:FunctionInput ;
     rdfs:label "Bob G36 VAV Cooling Only.effectiveOccupancy" ;
     s223:uses exg3601:00022 .
 
-exg3601:00107 a p223:ProducerInput,
-        s223:FunctionInput ;
+exg3601:00107 a s223:FunctionInput ;
     rdfs:label "Bob G36 VAV Cooling Only.ahuSupplyAirTemp" .
 

@@ -922,8 +922,7 @@ p223:OccupancyFunction a rdfs:Class ;
     an external reference to a BACnet Schedule Object) and outputs
     "occupied" if the space/room/zone should be considered occupied.
     """ ;
-    rdfs:subClassOf p223:Producer,
-        s223:FunctionBlock .
+    rdfs:subClassOf s223:FunctionBlock .
 
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
@@ -974,8 +973,7 @@ p223:Position-Unknown a p223:Position-Unknown,
         s223:EnumerationKind .
 
 p223:Producer a rdfs:Class ;
-    rdfs:label "bob.core._Producer",
-        "bob.producer.Producer" ;
+    rdfs:label "bob.producer.Producer" ;
     rdfs:comment """
     Producers are black boxes representing causality.
     Their inputs are causes and they produce an effect on a property
@@ -983,9 +981,7 @@ p223:Producer a rdfs:Class ;
     between an input and an output of something not-driven by an algorithm.
     A common example would be a relay. You feed it voltage and the relay contact
     is actuated.
-    """,
-        "Placeholder to prevent circular reference" ;
-    rdfs:subClassOf p223:Producer .
+    """ .
 
 p223:ProducerInput a rdfs:Class ;
     rdfs:label "bob.producer.ProducerInput" .
@@ -1189,13 +1185,11 @@ p223:YesNo-Yes a p223:YesNo-Yes,
 
 g36:AnalogInput a rdfs:Class ;
     rdfs:label "bob.producer.G36AnalogInput" ;
-    rdfs:subClassOf p223:ProducerInput,
-        s223:FunctionInput .
+    rdfs:subClassOf s223:FunctionInput .
 
 g36:AnalogOutput a rdfs:Class ;
     rdfs:label "bob.producer.G36AnalogOutput" ;
-    rdfs:subClassOf p223:ProducerOutput,
-        s223:FunctionOutput .
+    rdfs:subClassOf s223:FunctionOutput .
 
 g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
         g36:EnumerationKind-G36AlarmLevels,
@@ -1557,8 +1551,7 @@ bob:TwoWayActuatedProportionalValve a rdfs:Class ;
 
 bob:VFDFunctionBlock a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.vfd.VFD_FB" ;
-    rdfs:subClassOf p223:Producer,
-        s223:FunctionBlock .
+    rdfs:subClassOf s223:FunctionBlock .
 
 bob:Volts a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Volts" ;
@@ -1617,8 +1610,7 @@ functions:Average a rdfs:Class ;
     rdfs:comment """
     y = (u1 + u2) / 2.0
     """ ;
-    rdfs:subClassOf p223:Producer,
-        s223:FunctionBlock .
+    rdfs:subClassOf s223:FunctionBlock .
 
 p223:VLAN a rdf:Property .
 

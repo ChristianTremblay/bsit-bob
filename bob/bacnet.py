@@ -28,6 +28,7 @@ class Device(Controller):
     _device_object = Node
     _bacnet_objects = set()
 
+
 class Object(Node):
     _attr_uriref = {
         "objectIdentifier": BACNET["object-identifier"],
@@ -41,8 +42,10 @@ class Object(Node):
     description: Literal
     ext_ref_args: list
 
-    def create_external_reference_url(self, bacnet_device, propertyIdentifier="present-value"):
-        _dev_instance = bacnet_device._device_object.objectIdentifier.split(',')[1]
+    def create_external_reference_url(
+        self, bacnet_device, propertyIdentifier="present-value"
+    ):
+        _dev_instance = bacnet_device._device_object.objectIdentifier.split(",")[1]
         _label = f"dev_{_dev_instance}.{self.objectName}"
         _url = f"bacnet://{_dev_instance}/{self.objectIdentifier}/{propertyIdentifier}"
         self.ext_ref_args = [_label, _url]
@@ -52,6 +55,7 @@ class Object(Node):
         "Creates the present_value on demand to be used as external reference for a property"
         _label, _url = self.ext_ref_args
         return BACnetExternalReference(_url, label=_label)
+
 
 @multimethod
 def contains_mm(device_: Device, object_: Object) -> None:

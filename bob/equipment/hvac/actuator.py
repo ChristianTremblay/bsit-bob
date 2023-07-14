@@ -130,6 +130,7 @@ class BaseActuator(Equipment):
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(BasicActuator_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
+        print(f"\n\n---------- BaseActuator\n    {_config = }\n    {kwargs = }\n\n")
         super().__init__(_config, **kwargs)
         self.position = self["position_sensor"].observedProperty
         self["position_sensor"] % self.linkageOutlet

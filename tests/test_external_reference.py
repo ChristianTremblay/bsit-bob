@@ -20,25 +20,24 @@ model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-
-
-
 def test_create_external_reference(bob_fixture):
     ref1 = BACnetExternalReference(
         "bacnet://12345/analog-value,1/present-value", label="ref1"
     )
 
-    #dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
+    # dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
+
 
 def test_add_external_reference_to_property(bob_fixture):
-    prop = Property(label='fake prop')
+    prop = Property(label="fake prop")
     ref1 = BACnetExternalReference(
         "bacnet://12345/analog-value,1/present-value", label="ref1"
     )
     prop @ ref1
 
+
 def test_add_external_reference_to_temperature_property(bob_fixture):
-    prop = Temperature(label='fake temp',unit=UNIT.DEG_C)
+    prop = Temperature(label="fake temp", unit=UNIT.DEG_C)
     ref1 = BACnetExternalReference(
         "bacnet://12345/analog-value,1/present-value", label="ref1"
     )
@@ -65,7 +64,7 @@ def test_a_bacnet_object_as_external_reference(bob_fixture):
         description="Return Air Temeprature",
     )
     CGM_2_004 > rat
-    prop = Temperature(label='fake temp',unit=UNIT.DEG_C)
+    prop = Temperature(label="fake temp", unit=UNIT.DEG_C)
     prop @ rat.present_value
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

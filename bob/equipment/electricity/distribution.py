@@ -63,15 +63,9 @@ class SinglePhaseDistributionPanel(Equipment):
 
         super().__init__(config, **kwargs)
 
-        self.electricalBusA = (
-            _electricalBusA(label=f"{self.label}.electricalBusA")
-        )
-        self.electricalBusB = (
-            _electricalBusB(label=f"{self.label}.electricalBusB")
-        )
-        self.electricalBusAB = (
-            _electricalBusAB(label=f"{self.label}.electricalBusAB")
-        )
+        self.electricalBusA = _electricalBusA(label=f"{self.label}.electricalBusA")
+        self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
+        self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
 
         self.electricalBusA += ElectricalPhaseIdentifier.A
         self.electricalBusB += ElectricalPhaseIdentifier.B
@@ -219,7 +213,9 @@ class CircuitBreaker(Equipment):
 
         super().__init__(config, **kwargs)
 
-        self.currentRating = Amps(amps, label="Current rating of breaker",hasAspect=Dimensioned.Nominal) 
+        self.currentRating = Amps(
+            amps, label="Current rating of breaker", hasAspect=Dimensioned.Nominal
+        )
 
 
 class SinglePoleCircuitBreaker(CircuitBreaker):
@@ -389,22 +385,18 @@ class TwoPolesMainCircuitBreaker(CircuitBreaker):
 
         super().__init__(**kwargs)
 
-        self.electricalInlet = (
-            _electricalInlet(self, label=f"{self.label}.electricalInlet")
+        self.electricalInlet = _electricalInlet(
+            self, label=f"{self.label}.electricalInlet"
         )
-        self.electricalOutletA = (
-            _electricalOutletA(
-                self, label=f"{self.label}.electricalOutlet_LineA_Neutral"
-            )
+        self.electricalOutletA = _electricalOutletA(
+            self, label=f"{self.label}.electricalOutlet_LineA_Neutral"
         )
-        self.electricalOutletB = (
-            _electricalOutletB(
-                self, label=f"{self.label}.electricalOutlet_LineB_Neutral"
-            )
+        self.electricalOutletB = _electricalOutletB(
+            self, label=f"{self.label}.electricalOutlet_LineB_Neutral"
         )
 
-        self.electricalOutlet = (
-            _electricalOutlet(self, label=f"{self.label}.electricalOutlet_LineA_LineB")
+        self.electricalOutlet = _electricalOutlet(
+            self, label=f"{self.label}.electricalOutlet_LineA_LineB"
         )
 
         self.electricalInlet += ElectricalPhaseIdentifier.AB
@@ -548,26 +540,26 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
         self.electricalInlet = _electricalInlet(
             self, label=f"{self.label}.electricalInlet"
         )
-        self.electricalOutletA = (
-            _electricalOutletA(self, label=f"{self.label}.electricalOutletA")
+        self.electricalOutletA = _electricalOutletA(
+            self, label=f"{self.label}.electricalOutletA"
         )
-        self.electricalOutletB = (
-            _electricalOutletB(self, label=f"{self.label}.electricalOutletB")
+        self.electricalOutletB = _electricalOutletB(
+            self, label=f"{self.label}.electricalOutletB"
         )
-        self.electricalOutletC = (
-            _electricalOutletC(self, label=f"{self.label}.electricalOutletC")
+        self.electricalOutletC = _electricalOutletC(
+            self, label=f"{self.label}.electricalOutletC"
         )
-        self.electricalOutletAB = (
-            _electricalOutletAB(self, label=f"{self.label}.electricalOutletAB")
+        self.electricalOutletAB = _electricalOutletAB(
+            self, label=f"{self.label}.electricalOutletAB"
         )
-        self.electricalOutletBC = (
-            _electricalOutletBC(self, label=f"{self.label}.electricalOutletBC")
+        self.electricalOutletBC = _electricalOutletBC(
+            self, label=f"{self.label}.electricalOutletBC"
         )
-        self.electricalOutletCA = (
-            _electricalOutletCA(self, label=f"{self.label}.electricalOutletCA")
+        self.electricalOutletCA = _electricalOutletCA(
+            self, label=f"{self.label}.electricalOutletCA"
         )
-        self.electricalOutlet = (
-            _electricalOutlet(self, label=f"{self.label}.electricalOutletABC")
+        self.electricalOutlet = _electricalOutlet(
+            self, label=f"{self.label}.electricalOutletABC"
         )
 
         self.electricalOutletA += ElectricalPhaseIdentifier.B

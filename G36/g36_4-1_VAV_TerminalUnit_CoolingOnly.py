@@ -207,8 +207,8 @@ g36fig_a_1.zonewindowSwitch << hvac_zone.windows_switch
 g36fig_a_1.boxDamperPosition >> vav["DPR"]["actuator"]["command"]
 g36fig_a_1.effectiveOccupancy << hvac_space.occupancy
 # controller executes
-controller >> occupancy
-controller >> g36fig_a_1
+# controller >> occupancy
+# controller >> g36fig_a_1
 controller.damper_output.hasSignalType = AnalogSignalTypeEnum.VDC_0_10
 
 dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))
