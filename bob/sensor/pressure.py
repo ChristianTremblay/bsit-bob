@@ -31,7 +31,7 @@ _namespace = BOB  #
 class PressureSensor(Sensor):
     _class_iri = S223.Sensor
     observes: PropertyReference  # Temperature
-    hasObservationLocation: LocationReference
+    # hasObservationLocation: LocationReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
