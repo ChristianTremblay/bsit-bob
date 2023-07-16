@@ -35,35 +35,35 @@ ahu_template = {
     "params": {"label": "AHU", "comment": "AHU delivering air to 2 VAV boxes"},
     "sensors": {
         ("OA-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
             "comment": "Oudoor air temperature (S3)",
         },
         ("TPD1", AirDifferentialStaticPressureSensor): {
-            "unit": UNIT.PA,
+            "hasUnit": UNIT.PA,
             "comment": "Filter Differential Pressure Sensor (S5)",
         },
         ("HC-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
             "comment": "Air temperature after heating coil (S6)",
         },
         ("MA-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_F,
+            "hasUnit": UNIT.DEG_F,
             "comment": "Return Air temperature (S4)",
         },
         ("DA-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_F,
+            "hasUnit": UNIT.DEG_F,
             "comment": "Discharge Air temperature after cooling coil (S7)",
         },
         ("RA-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_F,
+            "hasUnit": UNIT.DEG_F,
             "comment": "Return Air temperature (S2)",
         },
         ("TPD2", AirDifferentialStaticPressureSensor): {
-            "unit": UNIT.PA,
+            "hasUnit": UNIT.PA,
             "comment": "Supply Duct Static Pressure (S8)",
         },
         ("TPD3", AirDifferentialStaticPressureSensor): {
-            "unit": UNIT.PA,
+            "hasUnit": UNIT.PA,
             "comment": "Return Duct Static Pressure (S1)",
         },
     },

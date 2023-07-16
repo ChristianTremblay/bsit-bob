@@ -34,7 +34,7 @@ _namespace = BOB
 class GasConcentrationSetpoint(Setpoint):
     _class_iri = S223.Setpoint
     hasQuantityKind: URIRef = QUANTITYKIND.DimensionlessRatio
-    unit: URIRef = UNIT.PPM
+    hasUnit: URIRef = UNIT.PPM
 
 
 class GasConcentrationSensor(Sensor):

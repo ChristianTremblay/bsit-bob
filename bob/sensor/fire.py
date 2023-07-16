@@ -31,9 +31,9 @@ class SmokeDetectionSensor(Sensor):
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
-        if "unit" not in _property_kwargs:
+        if "hasUnit" not in _property_kwargs:
             raise ValueError(
-                "You must provide units when defining a smoke detection sensor"
+                "You must provide hasUnit when defining a smoke detection sensor"
             )
         if "ofMedium" not in _property_kwargs:
             raise ValueError(

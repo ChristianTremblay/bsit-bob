@@ -23,7 +23,7 @@ def test_create_properties(bob_fixture):
 
     from bob.core import QUDT
 
-    p4 = QuantifiableProperty(4.5, unit=QUDT.DEG_F)
+    p4 = QuantifiableProperty(4.5, hasUnit=QUDT.DEG_F)
 
     p6 = ObservableProperty("green", label="color")
 

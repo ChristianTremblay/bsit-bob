@@ -27,7 +27,7 @@ _namespace = BOB
 class FlowSetpoint(Setpoint):
     _class_iri = S223.Setpoint
     hasQuantityKind: URIRef = QUANTITYKIND.VolumeFlowRate
-    unit: URIRef
+    hasUnit: URIRef
 
 
 class FlowSensor(Sensor):
@@ -49,7 +49,7 @@ class FlowSensor(Sensor):
 class AirFlowSensor(FlowSensor):
     _class_iri = S223.Sensor
 
-    # typical unit : unit=UNIT["FT3-PER-MIN"]
+    # typical unit : hasUnit=UNIT["FT3-PER-MIN"]
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Air, **kwargs)
 
@@ -57,6 +57,6 @@ class AirFlowSensor(FlowSensor):
 class WaterFlowSensor(FlowSensor):
     _class_iri = S223.Sensor
 
-    # typical unit : unit=UNIT["GAL_UK-PER-MIN"]
+    # typical unit : hasUnit=UNIT["GAL_UK-PER-MIN"]
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Water, **kwargs)

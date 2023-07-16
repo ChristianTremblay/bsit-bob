@@ -8,6 +8,6 @@ _namespace = BOB
 
 class Temperature(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.Temperature
-    unit: URIRef
+    hasUnit: URIRef
     ofMedium: Medium  # set from the sensor
     # isObservedBy: Sensor

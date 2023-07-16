@@ -43,11 +43,11 @@ gasmonitor_template = {
             #   "ofSubstance": Substance.CO,
             #                 ("hasMinRange", QuantifiableObservableProperty): {
             #                     "hasQuantityKind": QUANTITYKIND.DimensionlessRatio,
-            #                     "unit": UNIT.PPM,
+            #                     "hasUnit": UNIT.PPM,
             #                 },
             #                 ("hasMaxRange", QuantifiableObservableProperty): {
             #                     "hasQuantityKind": QUANTITYKIND.DimensionlessRatio,
-            #                     "unit": UNIT.PPM,
+            #                     "hasUnit": UNIT.PPM,
             #                 },
             # },
         },
@@ -56,10 +56,10 @@ gasmonitor_template = {
             # "properties": {
             # "ofSubstance": Substance.NO2,
             #             "hasMinRange": QuantifiableObservableProperty(
-            #                 0, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
+            #                 0, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, hasUnit=UNIT.PPM
             #             ),
             #             "hasMaxRange": QuantifiableObservableProperty(
-            #                 100, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, unit=UNIT.PPM
+            #                 100, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, hasUnit=UNIT.PPM
             #             ),
             #    },
         },

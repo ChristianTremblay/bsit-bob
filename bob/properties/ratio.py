@@ -8,27 +8,27 @@ _namespace = BOB
 
 class Percent(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.DimensionlessRatio
-    unit = UNIT.PERCENT
+    hasUnit = UNIT.PERCENT
 
 
 class PercentCommand(QuantifiableActuatableProperty):
     hasQuantityKind = QUANTITYKIND.DimensionlessRatio
-    unit = UNIT.PERCENT
+    hasUnit = UNIT.PERCENT
 
 
 class RPM(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.AngularVelocity
-    unit = UNIT["REV-PER-MIN"]
+    hasUnit = UNIT["REV-PER-MIN"]
 
 
 class RelativeHumidity(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.RelativeHumidity
-    unit = UNIT.PERCENT_RH
+    hasUnit = UNIT.PERCENT_RH
     ofMedium: Medium = Air
 
 
 class GasConcentration(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.DimensionlessRatio
-    unit = UNIT.PPM
+    hasUnit = UNIT.PPM
     ofMedium: Medium = Air
     ofSubstance: Substance

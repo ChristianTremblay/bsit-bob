@@ -10,12 +10,12 @@ _namespace = BOB
 
 class HP(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.Power
-    unit = UNIT.HP
+    hasUnit = UNIT.HP
 
 
 class Nm(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.Torque
-    unit = UNIT["N-M"]
+    hasUnit = UNIT["N-M"]
 
 
 class Pressure(QuantifiableObservableProperty):
@@ -24,5 +24,4 @@ class Pressure(QuantifiableObservableProperty):
 
 class DifferentialStaticPressure(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.ForcePerArea
-    unit: URIRef
     ofMedium: Medium  # set from the sensor

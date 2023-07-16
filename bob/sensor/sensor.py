@@ -52,7 +52,7 @@ def split_kwargs(given_kwargs):
         "hasAspect",
         "ofMedium",
         "ofSubstance",
-        "unit",
+        "hasUnit",
     ]
     property_kwargs = {}
     sensor_kwargs = {}

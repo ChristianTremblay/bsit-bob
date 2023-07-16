@@ -31,7 +31,7 @@ _namespace = BOB
 class HumiditySetpoint(Setpoint):
     _class_iri = S223.Setpoint
     hasQuantityKind: URIRef = QUANTITYKIND.RelativeHumidity
-    unit: URIRef = UNIT.PERCENT_RH
+    hasUnit: URIRef = UNIT.PERCENT_RH
 
 
 class HumiditySensor(Sensor):

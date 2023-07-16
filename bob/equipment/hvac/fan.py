@@ -38,10 +38,10 @@ fan_template = {
     "cp": {"electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint},
     "properties": {
         ("speedRatio", PercentCommand): {},
-        ("staticPressure", Pressure): {"unit": UNIT.PA},
+        ("staticPressure", Pressure): {"hasUnit": UNIT.PA},
         ("amps", Amps): {},
         ("rpm", RPM): {},
-        ("cfm", Flow): {"unit": UNIT["FT3-PER-MIN"]},
+        ("cfm", Flow): {"hasUnit": UNIT["FT3-PER-MIN"]},
         ("hp", HP): {},
         ("kW", ElectricPowerkW): {},
         ("powerFactor", PowerFactor): {},

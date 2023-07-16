@@ -12,24 +12,24 @@ _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 # Define the building Physical Spaces
 bldg = Building(
     label="Pritoni Building",
-    Area=Area(1060, unit=UNIT.FT2, label="Pritoni Building.Area"),
+    Area=Area(1060, hasUnit=UNIT.FT2, label="Pritoni Building.Area"),
 )
 roof = Roof(label="Roof of building")
 floor1 = Floor(label="Floor1")
 openoffice = Office(
-    label="Open office", Area=Area(600, unit=UNIT.FT2, label="Open office.Area")
+    label="Open office", Area=Area(600, hasUnit=UNIT.FT2, label="Open office.Area")
 )
 bathroom = Bathroom(
-    label="Bathroom", Area=Area(75, unit=UNIT.FT2, label="Bathroom.Area")
+    label="Bathroom", Area=Area(75, hasUnit=UNIT.FT2, label="Bathroom.Area")
 )
 private_office = Office(
-    label="Private office", Area=Area(150, unit=UNIT.FT2, label="Private office.Area")
+    label="Private office", Area=Area(150, hasUnit=UNIT.FT2, label="Private office.Area")
 )
 kitchenette = Room(
-    label="Kitchenette", Area=Area(120, unit=UNIT.FT2, label="Kitchenette.Area")
+    label="Kitchenette", Area=Area(120, hasUnit=UNIT.FT2, label="Kitchenette.Area")
 )
 corridor = Corridor(
-    label="Corridor", Area=Area(115, unit=UNIT.FT2, label="Corridor.Area")
+    label="Corridor", Area=Area(115, hasUnit=UNIT.FT2, label="Corridor.Area")
 )
 
 if __name__ == "__main__":

@@ -48,10 +48,10 @@ class QuantifiableProperty(Property):
     A property to be expressed as a quantity, it has units.
     """
 
-    _attr_uriref = {"unit": QUDT["hasUnit"], "hasQuantityKind": QUDT["hasQuantityKind"]}
+    _attr_uriref = {"hasUnit": QUDT["hasUnit"], "hasQuantityKind": QUDT["hasQuantityKind"]}
 
     _class_iri: URIRef = S223.QuantifiableProperty
-    unit: URIRef
+    hasUnit: URIRef
     hasQuantityKind: URIRef
 
     def __init__(self, value: Any = None, **kwargs: Any) -> None:

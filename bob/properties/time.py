@@ -6,13 +6,17 @@ from ..property import QuantifiableActuatableProperty, QuantifiableObservablePro
 _namespace = BOB
 
 
-class Hour(QuantifiableObservableProperty):
-    _class_iri = P223.Hour
+class DifferentialTime(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.Time
-    unit: URIRef = UNIT.HR
 
 
-class Minute(QuantifiableObservableProperty):
-    _class_iri = P223.Minute
-    hasQuantityKind = QUANTITYKIND.Time
-    unit: URIRef = UNIT.MIN
+class Hour(DifferentialTime):
+    hasUnit: URIRef = UNIT.HR
+
+
+class Minute(DifferentialTime):
+    hasUnit: URIRef = UNIT.MIN
+
+
+class Second(DifferentialTime):
+    hasUnit: URIRef = UNIT.SEC

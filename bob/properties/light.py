@@ -9,9 +9,9 @@ _namespace = BOB
 
 class Brightness(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.Illuminance
-    unit = UNIT.LUX
+    hasUnit = UNIT.LUX
 
 
 class RelativeLuminousFlux(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.RelativeLuminousFlux
-    unit = UNIT.PERCENT
+    hasUnit = UNIT.PERCENT

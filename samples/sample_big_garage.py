@@ -49,8 +49,8 @@ garage_hvac.ductAirOutlet >> fan.airInlet
 fan.airOutlet >> heating_coil.airInlet
 heating_coil.airOutlet >> garage_hvac.ductAirInlet
 
-dat = AirTemperatureSensor(label="Discharge Air temperature sensor", unit=UNIT.DEG_C)
-znt = AirTemperatureSensor(label="Zone Air temperature sensor", unit=UNIT.DEG_C)
+dat = AirTemperatureSensor(label="Discharge Air temperature sensor", hasUnit=UNIT.DEG_C)
+znt = AirTemperatureSensor(label="Zone Air temperature sensor", hasUnit=UNIT.DEG_C)
 
 dat % heating_coil.airOutlet
 znt % garage_hvac

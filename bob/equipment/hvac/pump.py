@@ -39,7 +39,7 @@ _namespace = BOB
 pump_template = {
     "cp": {"electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint},
     "properties": {
-        ("head_pressure", Pressure): {"unit": UNIT.PSI},
+        ("head_pressure", Pressure): {"hasUnit": UNIT.PSI},
         ("amps", Amps): {},
         ("rpm", RPM): {},
         ("hp", HP): {},

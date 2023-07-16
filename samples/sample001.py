@@ -25,13 +25,13 @@ class SampleEquipment2(Equipment):
 
 # individual pieces
 d1 = SampleEquipment(label="Test Equipment 1")
-temp = TemperatureProperty(75.5, unit=UNIT.DEG_F, label="temp")
+temp = TemperatureProperty(75.5, hasUnit=UNIT.DEG_F, label="temp")
 
 d1.add_property(temp)
 
 # auto build value
 d2 = SampleEquipment(label="Test Equipment 2")
-d2.add_property(TemperatureProperty(90.5, unit=UNIT.DEG_F, label="temp"))
+d2.add_property(TemperatureProperty(90.5, hasUnit=UNIT.DEG_F, label="temp"))
 
 # named property, kwarg value
 d3 = SampleEquipment2(label="Test Equipment 3", hasTemp=100.5)
