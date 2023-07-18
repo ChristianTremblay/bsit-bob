@@ -184,26 +184,26 @@ aircomp.compressedAirOutlet >> acc_4sides_damper["actuator"].compressedAirInlet
 te1 = AirTemperatureSensor(
     label="TE-1",
     comment="Outdoor air preheated by exhanger",
-    unit=UNIT.DEG_C,
+    hasUnit=UNIT.DEG_C,
     # hasExternalReference=BACnetExternalReference("bacnet://345/analog-value,1/present-value"),
 )
 ha1 = AirHumiditySensor(label="HA-1")
 tpd1 = AirDifferentialStaticPressureSensor(
-    label="TPD-1", comment="Filters differential pressure", unit=UNIT.PA
+    label="TPD-1", comment="Filters differential pressure", hasUnit=UNIT.PA
 )
 taec1 = WaterTemperatureSensor(
-    label="TAEC-1", comment="Water temperature feeding coil", unit=UNIT.DEG_C
+    label="TAEC-1", comment="Water temperature feeding coil", hasUnit=UNIT.DEG_C
 )
 tbl1 = Equipment(label="TBL-1", comment="Freeze Thermostat")
 ta1 = AirTemperatureSensor(
     label="TA-1",
     comment="Discharge Air Temperature Sensor",
-    unit=UNIT.DEG_C,
+    hasUnit=UNIT.DEG_C,
 )
 fs1 = Equipment(label="FS-1", comment="Air flow switch for humidifier")
 hlh1 = Equipment(label="HLH-1", comment="Humidity High Level Stat")
 tpd2 = AirDifferentialStaticPressureSensor(
-    label="TPD-2", comment="Static Discharge Air Pressure Sensor", unit=UNIT.PA
+    label="TPD-2", comment="Static Discharge Air Pressure Sensor", hasUnit=UNIT.PA
 )
 co2_1 = CO2Sensor(label="CO2-1", comment="Return Air CO2 Sensor (Elephants)")
 co2_2 = CO2Sensor(label="CO2-2", comment="Return Air CO2 Sensor (Girafes)")
@@ -211,7 +211,7 @@ hr1 = AirHumiditySensor(label="HR-1", comment="Return Air Humidity Sensor")
 tr1 = AirTemperatureSensor(
     label="TR-1",
     comment="Return Air Temperature Sensor",
-    unit=UNIT.DEG_C,
+    hasUnit=UNIT.DEG_C,
 )
 
 # Connections

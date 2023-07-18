@@ -24,7 +24,7 @@ _namespace = BOB
 class TemperatureSetpoint(Setpoint):
     _class_iri = S223.Setpoint
     hasQuantityKind: URIRef = QUANTITYKIND.Temperature
-    unit: URIRef
+    hasUnit: URIRef
 
 
 class TemperatureSensor(Sensor):
@@ -34,9 +34,9 @@ class TemperatureSensor(Sensor):
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
-        if "unit" not in _property_kwargs:
+        if "hasUnit" not in _property_kwargs:
             raise ValueError(
-                "You must provide units when defining a temperature sensor"
+                "You must provide hasUnit when defining a temperature sensor"
             )
         if "ofMedium" not in _property_kwargs:
             raise ValueError(

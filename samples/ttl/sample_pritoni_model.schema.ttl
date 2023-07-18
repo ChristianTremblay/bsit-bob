@@ -766,13 +766,6 @@ p223:HandOffAuto-Off a p223:HandOffAuto-Off,
     rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
         s223:EnumerationKind .
 
-p223:Hour a rdfs:Class ;
-    rdfs:label "bob.properties.time.Hour" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
 p223:LeftRight-Left a p223:LeftRight-Left,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -1277,6 +1270,13 @@ bob:DifferentialStaticPressure a rdfs:Class ;
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty .
 
+bob:DifferentialTime a rdfs:Class ;
+    rdfs:label "bob.properties.time.DifferentialTime" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
 bob:DimmableSwitch a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.switch.DimmableSwitch" ;
     rdfs:comment """
@@ -1367,6 +1367,14 @@ bob:HP a rdfs:Class ;
 
 bob:HotWaterConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.water.HotWaterConnectionPoint" .
+
+bob:Hour a rdfs:Class ;
+    rdfs:label "bob.properties.time.Hour" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:DifferentialTime .
 
 bob:InletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",

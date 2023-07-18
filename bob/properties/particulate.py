@@ -8,6 +8,6 @@ _namespace = P223
 
 class ParticulateCount(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.NumberDensity
-    unit = UNIT["NUM-PER-M3"]
+    hasUnit = UNIT["NUM-PER-M3"]
     ofMedium: Medium
     ofSubstance: Substance

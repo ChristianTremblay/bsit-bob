@@ -53,13 +53,13 @@ class OutdoorAir(DomainSpace):
 
 
 class Pressure(QuantifiableObservableProperty):
-    hasQuantityKind: URIRef = quantitykind.PRESSURE
-    unit: URIRef = qudt.PSI
+    hasQuantityKind: URIRef = QUANTITYKIND.PRESSURE
+    hasUnit: URIRef = qudt.PSI
 
 
 class SpeedSetpoint(QuantifiableActuatableProperty):
-    hasQuantityKind: URIRef = quantitykind.Speed
-    unit: URIRef = qudt.PERCENT
+    hasQuantityKind: URIRef = QUANTITYKIND.Speed
+    hasUnit: URIRef = qudt.PERCENT
 
 
 class RTUFan(Fan):
@@ -72,7 +72,7 @@ class RTUFan(Fan):
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.airFlow.unit = unit.FT3_PER_MIN
+        self.airFlow.hasUnit = UNIT.FT3_PER_MIN
 
 
 class RTUDamper(Damper):
@@ -102,8 +102,8 @@ class RTUChilledWaterCoil(ChilledWaterCoil):
 # should have just made a sensor class probs #WILL NEED TO HANDLE DIFFERENTIAL PRESSURE DIFFERENTLY
 #     node_type: URIRef = s223.Sensor
 #     pressure = QuantifiableObservableProperty  #AnalogIn This results in the turtle file having temperature listed as a property and listed plainly.
-#     pressure.hasQuantityKind = quantitykind.StaticPressure #QUDT doesn't seem to have differential pressure quantity kind
-#     pressure.unit = qudt.IN_H2O
+#     pressure.hasQuantityKind = QUANTITYKIND.StaticPressure #QUDT doesn't seem to have differential pressure quantity kind
+#     pressure.hasUnit = UNIT.IN_H2O
 #     #check what unit
 #     hasObservationLocation: Node # FOR DIFFERENTIAL PRESSURE, should probably maybe make a new sensor that measures connection points around Equipment
 class RooftopUnit(System):
@@ -138,7 +138,7 @@ class RooftopUnit(System):
         ra_temp % return_air
 
         ra_pres = AirStaticPressureSensor(
-            label=self.label + ".RA_static_pressure", unit=qudt.PA
+            label=self.label + ".RA_static_pressure", hasUnit=qudt.PA
         )
         self > ra_pres
         ra_pres % return_air
@@ -163,7 +163,7 @@ class RooftopUnit(System):
         pre_filter = Filter(label=self.label + ".pre_filter")
         self > pre_filter
         pf_press = AirStaticPressureSensor(
-            label=self.label + "PF_differential_pressure", unit=qudt.PA
+            label=self.label + "PF_differential_pressure", hasUnit=qudt.PA
         )  # Do I need a different pressure sensor
         self > pf_press
         pf_press % pre_filter
@@ -187,7 +187,7 @@ class RooftopUnit(System):
         final_filter = Filter(label=self.label + ".final_filter")
         self > final_filter
         ff_press = AirStaticPressureSensor(
-            label=self.label + ".FF_differential_pressure", unit=qudt.PA
+            label=self.label + ".FF_differential_pressure", hasUnit=qudt.PA
         )
         self > ff_press
         ff_press % final_filter
@@ -199,7 +199,7 @@ class RooftopUnit(System):
 
         supply_air = AirConnection(label=self.label + ".supply_air")
         sa_press = AirStaticPressureSensor(
-            label=self.label + ".SA_static_pressure", unit=qudt.PA
+            label=self.label + ".SA_static_pressure", hasUnit=qudt.PA
         )
         self > sa_press
         sa_press % supply_air
@@ -258,7 +258,7 @@ class UFT(System):  # Underfloor Fan Terminal Unit
     # reheat valve command in hotWaterCoil2 in hvac.py. It is analog in there
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.airFlow.unit = qudt.FT3_PER_MIN
+        self.airFlow.hasUnit = UNIT.FT3_PER_MIN
         supply_fan = UFT_Fan(label=self.label + ".supply_fan")
         self > supply_fan
         supply_fan.hasRole = Supply
@@ -285,7 +285,7 @@ class UFTZone(
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.temperature.unit = qudt.DEG_F
+        self.temperature.hasUnit = UNIT.DEG_F
         # temperature_sensor = TemperatureSensor(label = self.label + '.temperature_sensor') #this will be for cerc temploggers.
         # temperature_sensor % self  #not sure if I even wan't it to measure zone or space
         # print(self)
@@ -303,8 +303,8 @@ class UFTZone(
 
 class CO2Concentration(QuantifiableObservableProperty):
     node_type = None
-    unit = qudt.PPM
-    hasQuantityKind = quantitykind.Concentration
+    hasUnit = qudt.PPM
+    hasQuantityKind = QUANTITYKIND.Concentration
 
 
 # attempt to add water, all from diagram, needs checks/incomplete
@@ -347,7 +347,7 @@ class CoolingPump(Equipment):
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.airFlow.unit = unit.FT3_PER_MIN
+        self.airFlow.hasUnit = UNIT.FT3_PER_MIN
 
 
 class CoolingWaterSystem(
@@ -521,8 +521,8 @@ class Lighting_Zone(Zone):
 
 class Area(QuantifiableObservableProperty):
     node_type = None
-    unit = qudt.FT2
-    hasQuantityKind = quantitykind.Area
+    hasUnit = qudt.FT2
+    hasQuantityKind = QUANTITYKIND.Area
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -530,10 +530,8 @@ class Area(QuantifiableObservableProperty):
 
 class Wattage(QuantifiableObservableProperty):
     node_type = None
-    hasQuantityKind = (
-        quantitykind.ElectricPower
-    )  # QUDT doesn't seem to have differential pressure quantity kind
-    unit = qudt.W
+    hasQuantityKind = QUANTITYKIND.ElectricPower
+    hasUnit = qudt.W
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -556,10 +554,8 @@ class Zone_Lighting(System):
 
 class Illuminance(QuantifiableObservableProperty):
     node_type = None
-    hasQuantityKind = (
-        quantitykind.Illuminance
-    )  # QUDT doesn't seem to have differential pressure quantity kind
-    unit = qudt.FC
+    hasQuantityKind = QUANTITYKIND.Illuminance
+    hasUnit = qudt.FC
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)

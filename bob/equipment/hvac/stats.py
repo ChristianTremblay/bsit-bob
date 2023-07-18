@@ -52,9 +52,9 @@ MechanicalOnOffThermostat_template = {
         "coolingOutput": OnOffSignalOutletConnectionPoint,
         "fanOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
+        ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
     },
 }
@@ -83,9 +83,9 @@ MechanicalModulatingThermostat_template = {
         "coolingOutput": ModulationSignalOutletConnectionPoint,
         "fanOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
+        ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
     },
 }
@@ -115,9 +115,9 @@ NetworkThermostat_template = {
         "heatingOutput": OnOffSignalOutletConnectionPoint,
         "coolingOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
+        ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
     },
 }
@@ -140,9 +140,9 @@ class NetworkThermostat(Thermostat):
 
 NetworkRoomSensor_template = {
     "cp": {"mstp": RS485BidirectionalConnectionPoint},
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"unit": UNIT.DEG_C}},
+    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
     "sensors": {
-        ("temperature_sensor", AirTemperatureSensor): {"unit": UNIT.DEG_C},
+        ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
     },
 }
@@ -172,7 +172,7 @@ HighStaticPressureStat_template = {
     },
     "properties": {("onOffStatus", OnOffStatus): {}},
     "sensors": {
-        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": UNIT.PA}
+        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"hasUnit": UNIT.PA}
     },
 }
 
@@ -191,7 +191,7 @@ flowswitch_template = {
     "cp": {"signalOutput": OnOffSignalOutletConnectionPoint},
     "properties": {("onOffStatus", OnOffStatus): {}},
     "sensors": {
-        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"unit": UNIT.PA}
+        ("pressure_sensor", AirDifferentialStaticPressureSensor): {"hasUnit": UNIT.PA}
     },
 }
 

@@ -124,7 +124,7 @@ class RooftopUnit(System):
 
         # ALTERNATIVELY
         pre_filtered = Segment()
-        sensor = TemperatureSensor(label=self.label + ".MA_sensor", unit=UNIT.DEG_C)
+        sensor = TemperatureSensor(label=self.label + ".MA_sensor", hasUnit=UNIT.DEG_C)
         pre_filtered.link_to(sensor.connection)
 
 

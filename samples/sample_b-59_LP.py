@@ -50,15 +50,15 @@ config = {
     "sensors": {
         ("DA-T", AirTemperatureSensor): {
             "comment": "Supply Air Temperature sensor",
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
         },
         ("RA-T", AirTemperatureSensor): {
             "comment": "Return Air Temperature sensor",
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
         },
         ("ZN-T", AirTemperatureSensor): {
             "comment": "Zone Air Temperature sensor",
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
         },
     },
     "equipment": {

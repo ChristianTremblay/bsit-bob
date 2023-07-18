@@ -19,11 +19,11 @@ class Air_Change_Per_Hour(QuantifiableObservableProperty):
 
     _class_iri = P223.AirChangePerHour
     hasQuantityKind = QUANTITYKIND.Dimensionless
-    unit = UNIT.UNITLESS
+    hasUnit = UNIT.UNITLESS
 
 
 class Count(QuantifiableObservableProperty):
     _class_iri = BOB.Count
     hasQuantityKind = QUANTITYKIND.Dimensionless
-    unit = UNIT["NUM"]
+    hasUnit = UNIT["NUM"]
     ofMedium: Medium

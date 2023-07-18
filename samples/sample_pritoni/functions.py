@@ -34,7 +34,7 @@ f = Average(label="FB-1", comment="Compute DA-T Avg")
 hd.ahu["DA-T"].observedProperty >> f.u1
 
 # line up the output to a special property
-f_avg_temp = Temperature(label="DA-T-AVG", hasValue=0, unit=UNIT.DEG_C)
+f_avg_temp = Temperature(label="DA-T-AVG", hasValue=0, hasUnit=UNIT.DEG_C)
 f.y >> f_avg_temp
 
 

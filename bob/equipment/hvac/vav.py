@@ -38,13 +38,13 @@ _namespace = BOB
 vav_system_template = {
     "params": {"label": "VAV", "comment": "VAV Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"hasUnit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
         },
         ("ZN-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
             "comment": "Temperature of space",
         },
     },
@@ -56,13 +56,13 @@ vav_system_template = {
 vav_dual_template = {
     "params": {"label": "VAV", "comment": "VAV Dual Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"hasUnit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
         },
         ("ZN-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
             "comment": "Temperature of space",
         },
     },
@@ -79,13 +79,13 @@ vav_dual_template = {
 vav_withreheat_template = {
     "params": {"label": "VAV", "comment": "VAV Description"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {"unit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
+        ("SA-F", AirFlowSensor): {"hasUnit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
             "comment": "Discharge Air Temperature",
         },
         ("ZN-T", AirTemperatureSensor): {
-            "unit": UNIT.DEG_C,
+            "hasUnit": UNIT.DEG_C,
             "comment": "Temperature of space",
         },
     },

@@ -20,8 +20,8 @@ from bob.core import (
     bind_model_namespace,
     dump,
     p223,
-    quantitykind,
-    unit,
+    QUANTITYKIND,
+    UNIT,
 )
 from bob.equipment.archives.coolingcoil import ChilledWaterCoil, ChilledWaterCoil2
 from bob.equipment.archives.heatingcoil import HotWaterCoil2

@@ -12,7 +12,7 @@ class Setpoint(QuantifiableProperty):
     hasDeadband: Literal
     hasValue: Literal
     hasQuantityKind: URIRef
-    unit: URIRef
+    hasUnit: URIRef
 
     def __init__(self, **kwargs):
         _properties = {}

@@ -42,7 +42,7 @@ electric_starter_template = {
     "properties": {
         # ("actuatesProperty", PercentCommand): {},
         ("onOffCommand", OnOffCommand): {},
-        ("powerRating", ElectricPower): {"unit": UNIT["HP_Electric"]},
+        ("powerRating", ElectricPower): {"hasUnit": UNIT["HP_Electric"]},
     },
 }
 

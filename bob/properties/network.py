@@ -8,9 +8,9 @@ _namespace = BOB
 
 class Mbit_per_seconds(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.DataRate
-    unit = UNIT["MegaBIT-PER-SEC"]
+    hasUnit = UNIT["MegaBIT-PER-SEC"]
 
 
 class Kbit_per_seconds(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.DataRate
-    unit = UNIT["KiloBIT-PER-SEC"]
+    hasUnit = UNIT["KiloBIT-PER-SEC"]

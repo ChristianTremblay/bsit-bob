@@ -25,7 +25,7 @@ kitchenette_luminaire_11 = Luminaire(
     comment="Luminaire in kitchenette #11",
     hasPhysicalLocation=ps.kitchenette,
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(15, unit=UNIT.W),
+    electricalPower=ElectricPower(15, hasUnit=UNIT.W),
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
 )
@@ -34,7 +34,7 @@ kitchenette_luminaire_12 = Luminaire(
     comment="Luminaire in kitchenette #12",
     hasPhysicalLocation=ps.kitchenette,
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(15, unit=UNIT.W),
+    electricalPower=ElectricPower(15, hasUnit=UNIT.W),
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
 )
@@ -55,7 +55,7 @@ privateoffice_luminaire_7 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(20, unit=UNIT.W),
+    electricalPower=ElectricPower(20, hasUnit=UNIT.W),
 )
 privateoffice_luminaire_8 = Luminaire(
     label="Luminaire8",
@@ -64,7 +64,7 @@ privateoffice_luminaire_8 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(20, unit=UNIT.W),
+    electricalPower=ElectricPower(20, hasUnit=UNIT.W),
 )
 privateoffice_movement = OccupantMotionSensor(
     label="O3",
@@ -88,7 +88,7 @@ corridor_luminaire_9 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(15, unit=UNIT.W),
+    electricalPower=ElectricPower(15, hasUnit=UNIT.W),
 )
 corridor_luminaire_10 = Luminaire(
     label="Luminaire10",
@@ -97,7 +97,7 @@ corridor_luminaire_10 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(15, unit=UNIT.W),
+    electricalPower=ElectricPower(15, hasUnit=UNIT.W),
 )
 corridor_movement = OccupantMotionSensor(
     label="O5",
@@ -116,7 +116,7 @@ bathroom_luminaire_5 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(10, unit=UNIT.W),
+    electricalPower=ElectricPower(10, hasUnit=UNIT.W),
 )
 bathroom_luminaire_6 = Luminaire(
     label="Luminaire6",
@@ -125,7 +125,7 @@ bathroom_luminaire_6 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(10, unit=UNIT.W),
+    electricalPower=ElectricPower(10, hasUnit=UNIT.W),
 )
 bathroom_light_conn = LightVisibleConnection(
     label="LightHub_5_6", comment="Needed to connect multiple luminaires to space"
@@ -147,7 +147,7 @@ openofficeNorth_luminaire_1 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(40, unit=UNIT.W),
+    electricalPower=ElectricPower(40, hasUnit=UNIT.W),
 )
 openofficeNorth_luminaire_2 = Luminaire(
     label="Luminaire2",
@@ -156,7 +156,7 @@ openofficeNorth_luminaire_2 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(40, unit=UNIT.W),
+    electricalPower=ElectricPower(40, hasUnit=UNIT.W),
 )
 openofficeSouth_luminaire_3 = Luminaire(
     label="Luminaire3",
@@ -165,7 +165,7 @@ openofficeSouth_luminaire_3 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(40, unit=UNIT.W),
+    electricalPower=ElectricPower(40, hasUnit=UNIT.W),
 )
 openofficeSouth_luminaire_4 = Luminaire(
     label="Luminaire4",
@@ -174,7 +174,7 @@ openofficeSouth_luminaire_4 = Luminaire(
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    electricalPower=ElectricPower(40, unit=UNIT.W),
+    electricalPower=ElectricPower(40, hasUnit=UNIT.W),
 )
 openofficeNorth_light_conn = LightVisibleConnection(
     label="LightHub_1_2", comment="Needed to connect multiple luminaires to space"

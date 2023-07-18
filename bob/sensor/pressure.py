@@ -31,13 +31,13 @@ _namespace = BOB  #
 class PressureSensor(Sensor):
     _class_iri = S223.Sensor
     observes: PropertyReference  # Temperature
-    hasObservationLocation: LocationReference
+    # hasObservationLocation: LocationReference
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
-        if "unit" not in _property_kwargs:
-            raise ValueError("You must provide units when defining a pressure sensor")
+        if "hasUnit" not in _property_kwargs:
+            raise ValueError("You must provide hasUnit when defining a pressure sensor")
         if "ofMedium" not in _property_kwargs:
             raise ValueError(
                 "You must provide ofMedium when defining a pressure sensor"
@@ -55,7 +55,7 @@ class PressureSensor(Sensor):
 class DifferentialStaticPressureSetpoint(Setpoint):
     _class_iri = S223.Sensor
     hasQuantityKind: URIRef = QUANTITYKIND.ForcePerArea
-    unit: URIRef
+    hasUnit: URIRef
 
 
 class DifferentialStaticPressureSensor(Sensor):

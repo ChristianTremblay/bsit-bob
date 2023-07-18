@@ -8,5 +8,5 @@ _namespace = BOB
 
 class Gallons(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.LiquidVolume
-    unit = UNIT.GAL_US
+    hasUnit = UNIT.GAL_US
     measuresMedium: Medium  # set from the sensor
