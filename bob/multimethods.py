@@ -43,6 +43,8 @@ class _MultiMethod:
         self.argc = -1
 
     def __call__(self, *args: Any) -> Any:
+        _log.debug("(%s)__call__: %r", self.name, args)
+
         # if the typemap is empty it hasn't been populated yet
         if not self.typemap:
             self.populate_typemap()
@@ -54,6 +56,7 @@ class _MultiMethod:
             raise RuntimeError(f"too many parameters, expecting {self.argc}")
         elif len(types) < self.argc:
             types.extend([type(None)] * (self.argc - len(types)))
+        _log.debug("    - types: %r", types)
 
         if list in types:
             for i, arg_type in enumerate(types):
@@ -71,6 +74,8 @@ class _MultiMethod:
                     types[i] = List[next(iter(top_mro))]  # type: ignore[index,misc]
 
         types_tuple = tuple(types)
+        _log.debug("    - types_tuple: %r", types_tuple)
+
         method = self.typemap.get(types_tuple, None)
         if not method:
             raise TypeError("no match %r: %s" % (self.name, types))

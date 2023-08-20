@@ -2,7 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex33: <urn:ex/test_system-007/> .
+@prefix ex27: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -22,188 +22,188 @@
   rdfs:label "test_device-006" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex33:00001 a s223:Controller,
+ex27:00001 a s223:Controller,
         s223:Equipment,
         s223:VFD ;
     rdfs:label "MyVFD" ;
-    s223:contains ex33:00018,
-        ex33:00021,
-        ex33:00023,
-        ex33:00025 ;
-    s223:hasConnectionPoint ex33:00002,
-        ex33:00003,
-        ex33:00004,
-        ex33:00005,
-        ex33:00006,
-        ex33:00007,
-        ex33:00008 ;
-    s223:hasProperty ex33:00009,
-        ex33:00010,
-        ex33:00011,
-        ex33:00012,
-        ex33:00013,
-        ex33:00014,
-        ex33:00015,
-        ex33:00016,
-        ex33:00017 ;
-    bob:amps ex33:00022 ;
-    bob:volts ex33:00024 ;
+    s223:contains ex27:00018,
+        ex27:00021,
+        ex27:00023,
+        ex27:00025 ;
+    s223:hasConnectionPoint ex27:00002,
+        ex27:00003,
+        ex27:00004,
+        ex27:00005,
+        ex27:00006,
+        ex27:00007,
+        ex27:00008 ;
+    s223:hasProperty ex27:00009,
+        ex27:00010,
+        ex27:00011,
+        ex27:00012,
+        ex27:00013,
+        ex27:00014,
+        ex27:00015,
+        ex27:00016,
+        ex27:00017 ;
+    bob:amps ex27:00022 ;
+    bob:volts ex27:00024 ;
     rdfs:comment "A VFD for a Big Fan" .
 
-ex33:00002 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+ex27:00002 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MyVFD.electricalInlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00003 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+ex27:00003 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MyVFD.electricalOutlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00004 a s223:BidirectionalConnectionPoint,
+ex27:00004 a s223:BidirectionalConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "MyVFD.ethernet_port" ;
     s223:hasMedium s223:Communication-Ethernet ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00005 a s223:BidirectionalConnectionPoint,
+ex27:00005 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "MyVFD.mstp_port" ;
     s223:hasMedium s223:Communication-EIA-485 ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00006 a p223:AnalogInput,
+ex27:00006 a p223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "MyVFD.speedrefInlet" ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00007 a p223:BinaryOutput,
+ex27:00007 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "MyVFD.drive_running_dry_contact" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00008 a p223:BinaryOutput,
+ex27:00008 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "MyVFD.alarm_dry_contact" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00009 a s223:ObservableProperty,
+ex27:00009 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf ex33:00001 ;
+    s223:isPropertyOf ex27:00001 ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:hasUnit unit:HP .
 
-ex33:00010 a s223:ObservableProperty,
+ex27:00010 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf ex33:00001 ;
+    s223:isPropertyOf ex27:00001 ;
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-ex33:00011 a s223:ObservableProperty,
+ex27:00011 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Frequency ;
     rdfs:label "frequency" ;
-    s223:isPropertyOf ex33:00001 ;
+    s223:isPropertyOf ex27:00001 ;
     qudt:hasQuantityKind quantitykind:Frequency ;
     qudt:hasUnit unit:HZ .
 
-ex33:00012 a s223:ActuatableProperty,
+ex27:00012 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speed_reference" ;
-    s223:isPropertyOf ex33:00001 ;
+    s223:isPropertyOf ex27:00001 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex33:00013 a s223:ObservableProperty,
+ex27:00013 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf ex33:00001 ;
+    s223:isPropertyOf ex27:00001 ;
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
-ex33:00014 a s223:ObservableProperty,
+ex27:00014 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "motor_temp" ;
-    s223:isPropertyOf ex33:00001 ;
+    s223:isPropertyOf ex27:00001 ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-ex33:00015 a s223:EnumerableProperty,
+ex27:00015 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf ex33:00001 .
+    s223:isPropertyOf ex27:00001 .
 
-ex33:00016 a s223:ActuatableProperty,
+ex27:00016 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf ex33:00001 .
+    s223:isPropertyOf ex27:00001 .
 
-ex33:00017 a s223:EnumerableProperty,
+ex27:00017 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasEnumerationKind p223:EnumerationKind-NormalAlarm ;
-    s223:isPropertyOf ex33:00001 .
+    s223:isPropertyOf ex27:00001 .
 
-ex33:00018 a p223:Producer,
+ex27:00018 a p223:Producer,
         bob:Causality ;
     rdfs:label "motor_temp_effect" ;
-    s223:hasInput ex33:00019 ;
-    s223:hasOutput ex33:00020 ;
-    s223:isContainedIn ex33:00001 ;
-    bob:cause_input ex33:00019 ;
-    bob:effect_output ex33:00020 .
+    s223:hasInput ex27:00019 ;
+    s223:hasOutput ex27:00020 ;
+    s223:isContainedIn ex27:00001 ;
+    bob:cause_input ex27:00019 ;
+    bob:effect_output ex27:00020 .
 
-ex33:00019 a p223:ProducerInput ;
+ex27:00019 a p223:ProducerInput ;
     rdfs:label "motor_temp_effect.cause_input" ;
-    s223:uses ex33:00013 .
+    s223:uses ex27:00013 .
 
-ex33:00020 a p223:ProducerOutput ;
+ex27:00020 a p223:ProducerOutput ;
     rdfs:label "motor_temp_effect.effect_output" ;
-    s223:produces ex33:00014 .
+    s223:produces ex27:00014 .
 
-ex33:00021 a s223:Equipment,
+ex27:00021 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "current_sensor" ;
-    s223:hasObservationLocation ex33:00003 ;
-    s223:isContainedIn ex33:00001 ;
-    s223:observes ex33:00022 .
+    s223:hasObservationLocation ex27:00003 ;
+    s223:isContainedIn ex27:00001 ;
+    s223:observes ex27:00022 .
 
-ex33:00022 a s223:ObservableProperty,
+ex27:00022 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -213,15 +213,15 @@ ex33:00022 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-ex33:00023 a p223:VoltageSensor,
+ex27:00023 a p223:VoltageSensor,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "voltage_sensor" ;
-    s223:hasObservationLocation ex33:00003 ;
-    s223:isContainedIn ex33:00001 ;
-    s223:observes ex33:00024 .
+    s223:hasObservationLocation ex27:00003 ;
+    s223:isContainedIn ex27:00001 ;
+    s223:observes ex27:00024 .
 
-ex33:00024 a s223:ObservableProperty,
+ex27:00024 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -231,15 +231,15 @@ ex33:00024 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-ex33:00025 a p223:VoltageSensor,
+ex27:00025 a p223:VoltageSensor,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "speed_ref_voltage_sensor" ;
-    s223:hasObservationLocation ex33:00006 ;
-    s223:isContainedIn ex33:00001 ;
-    s223:observes ex33:00026 .
+    s223:hasObservationLocation ex27:00006 ;
+    s223:isContainedIn ex27:00001 ;
+    s223:observes ex27:00026 .
 
-ex33:00026 a s223:ObservableProperty,
+ex27:00026 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -249,61 +249,61 @@ ex33:00026 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-ex33:00027 a s223:FunctionBlock,
+ex27:00027 a s223:FunctionBlock,
         bob:VFDFunctionBlock ;
     rdfs:label "MyVFD.function_block" ;
-    s223:hasInput ex33:00028,
-        ex33:00029,
-        ex33:00030 ;
-    s223:hasOutput ex33:00031,
-        ex33:00032,
-        ex33:00033,
-        ex33:00034,
-        ex33:00035,
-        ex33:00036 ;
-    bob:alarm ex33:00033 ;
-    bob:amps_load ex33:00029 ;
-    bob:drive_running ex33:00035 ;
-    bob:frequency_load ex33:00031 ;
-    bob:kW_load ex33:00032 ;
-    bob:rpm ex33:00034 ;
-    bob:speed_ref ex33:00028 ;
-    bob:speed_ref_percent ex33:00036 ;
-    bob:volts_load ex33:00030 .
+    s223:hasInput ex27:00028,
+        ex27:00029,
+        ex27:00030 ;
+    s223:hasOutput ex27:00031,
+        ex27:00032,
+        ex27:00033,
+        ex27:00034,
+        ex27:00035,
+        ex27:00036 ;
+    bob:alarm ex27:00033 ;
+    bob:amps_load ex27:00029 ;
+    bob:drive_running ex27:00035 ;
+    bob:frequency_load ex27:00031 ;
+    bob:kW_load ex27:00032 ;
+    bob:rpm ex27:00034 ;
+    bob:speed_ref ex27:00028 ;
+    bob:speed_ref_percent ex27:00036 ;
+    bob:volts_load ex27:00030 .
 
-ex33:00028 a s223:FunctionInput ;
+ex27:00028 a s223:FunctionInput ;
     rdfs:label "MyVFD.function_block.speed_ref" ;
-    s223:uses ex33:00026 .
+    s223:uses ex27:00026 .
 
-ex33:00029 a s223:FunctionInput ;
+ex27:00029 a s223:FunctionInput ;
     rdfs:label "MyVFD.function_block.amps_load" ;
-    s223:uses ex33:00022 .
+    s223:uses ex27:00022 .
 
-ex33:00030 a s223:FunctionInput ;
+ex27:00030 a s223:FunctionInput ;
     rdfs:label "MyVFD.function_block.volts_load" ;
-    s223:uses ex33:00024 .
+    s223:uses ex27:00024 .
 
-ex33:00031 a s223:FunctionOutput ;
+ex27:00031 a s223:FunctionOutput ;
     rdfs:label "MyVFD.function_block.frequency_load" ;
-    s223:produces ex33:00011 .
+    s223:produces ex27:00011 .
 
-ex33:00032 a s223:FunctionOutput ;
+ex27:00032 a s223:FunctionOutput ;
     rdfs:label "MyVFD.function_block.kW_load" ;
-    s223:produces ex33:00010 .
+    s223:produces ex27:00010 .
 
-ex33:00033 a s223:FunctionOutput ;
+ex27:00033 a s223:FunctionOutput ;
     rdfs:label "MyVFD.function_block.alarm" ;
-    s223:produces ex33:00017 .
+    s223:produces ex27:00017 .
 
-ex33:00034 a s223:FunctionOutput ;
+ex27:00034 a s223:FunctionOutput ;
     rdfs:label "MyVFD.function_block.rpm" ;
-    s223:produces ex33:00013 .
+    s223:produces ex27:00013 .
 
-ex33:00035 a s223:FunctionOutput ;
+ex27:00035 a s223:FunctionOutput ;
     rdfs:label "MyVFD.function_block.drive_running" ;
-    s223:produces ex33:00015 .
+    s223:produces ex27:00015 .
 
-ex33:00036 a s223:FunctionOutput ;
+ex27:00036 a s223:FunctionOutput ;
     rdfs:label "MyVFD.function_block.speed_ref_percent" ;
-    s223:produces ex33:00012 .
+    s223:produces ex27:00012 .
 

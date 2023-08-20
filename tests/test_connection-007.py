@@ -50,21 +50,21 @@ def test_junction_or_connection(bob_fixture):
         hasPhysicalLocation=mechroom,
     )
 
-    # Here we make it a junction but it would be better to be a Simple Connection... it's for test purposes
-    supply_duct = Junction(label="J1", hasMedium=Air)
-    supply_duct.link_to(sf.airOutlet)
-    supply_duct >> office1_hvac.ductAirInlet
-    supply_duct >> office2_hvac.ductAirInlet
+    supply_plenum = AirConnection(
+        label="SUPPLY-AIR", comment="Air supplies zone here"
+    )
+    sf.airOutlet >> supply_plenum
+    supply_plenum >> office1_hvac.ductAirInlet
+    supply_plenum >> office2_hvac.ductAirInlet
+
     return_plenum = AirConnection(
         label="RETURN-AIR", comment="Air returns from zone here"
     )
-    # return_plenum = Junction(label="J1", hasMedium=Air)
-    # return_plenum.link_to(_returnAir.airInlet)
     office1_hvac.ductAirOutlet >> return_plenum
     office2_hvac.ductAirOutlet >> return_plenum
     return_plenum >> rf.airInlet
 
     # and the zone ?
-    zone1.airInlet.mapsTo = supply_duct
-    zone1.airOutlet.mapsTo = return_plenum
+    # zone1.airInlet.mapsTo = supply_duct
+    # zone1.airOutlet.mapsTo = return_plenum
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))

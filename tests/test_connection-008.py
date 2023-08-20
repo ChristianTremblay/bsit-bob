@@ -8,7 +8,7 @@ from bob.connections.light import (
     LightVisibleConnection,
     LightVisibleOutletConnectionPoint,
 )
-from bob.core import P223, Air, Equipment, Junction, bind_model_namespace, dump, enum
+from bob.core import P223, Air, Equipment, bind_model_namespace, dump, enum
 from bob.equipment.hvac.fan import Fan
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, MechanicalRoom, Office
