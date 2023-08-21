@@ -428,14 +428,12 @@ class Node(metaclass=NodeMetaclass):
         if _node_iri is not None:
             if not isinstance(_node_iri, URIRef):
                 raise TypeError(f"URIRef expected: {_node_iri}")
-            super().__setattr__("_node_iri", _node_iri)
         elif model_namespace:
             _next_node[model_namespace] += 1
-            super().__setattr__(
-                "_node_iri", model_namespace[f"{_next_node[model_namespace]:05d}"]
-            )
+            _node_iri = model_namespace[f"{_next_node[model_namespace]:05d}"]
         else:
-            super().__setattr__("_node_iri", BNode())
+            _node_iri = BNode()
+        super().__setattr__("_node_iri", _node_iri)
 
         if hasattr(self, "_class_iri"):
             if self._class_iri is not None:
@@ -898,8 +896,8 @@ class Property(Node):
     ofMedium: Medium
     ofSubstance: Substance
     hasValue: Literal
-    #hasExternalReference: set() see below
-    #hasAspect: set() see below
+    # hasExternalReference: set() see below
+    # hasAspect: set() see below
 
     # override this for a specialize subclass
     _external_reference_class: type = ExternalReference
@@ -957,10 +955,10 @@ class Property(Node):
                 for ref in external_reference:
                     self @ ref
             elif isinstance(external_reference, ExternalReference):
-                self @ external_reference                
+                self @ external_reference
             else:
-                pass # nope...not doing it
-    
+                pass  # nope...not doing it
+
     def __matmul__(self, other: Any) -> Any:
         """Add an external refernce to the node
         property @ ref
@@ -981,7 +979,8 @@ class Property(Node):
             (self._node_iri, S223.hasExternalReference, external_reference._node_iri)
         )
         self.hasExternalReference.add(external_reference)
-   
+
+
 @multimethod
 def add_mm(prop: Property, aspect: EnumerationKind) -> None:
     """
@@ -993,11 +992,13 @@ def add_mm(prop: Property, aspect: EnumerationKind) -> None:
     if INCLUDE_INVERSE:
         aspect.isAspectOf = prop
 
+
 @multimethod
 def reference_mm(prop: Property, external_reference: ExternalReference) -> None:
     """Add an additional external reference to a property."""
     _log.info(f"add external reference {external_reference} to {prop}")
     prop.add_external_reference(external_reference)
+
 
 class PropertyReference:
     def __new__(cls, property):
@@ -1268,7 +1269,8 @@ class Connection(Node, metaclass=ConnectionMetaclass):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.hasAspect = set()
-    
+
+
 @multimethod
 def add_mm(from_connection: Connection, aspect: EnumerationKind) -> None:
     """
@@ -1276,9 +1278,12 @@ def add_mm(from_connection: Connection, aspect: EnumerationKind) -> None:
     """
     _log.info(f"add aspect {aspect} to {from_connection}")
     from_connection.hasAspect.add(aspect)
-    from_connection._data_graph.add((from_connection._node_iri, S223.hasAspect, aspect._node_iri))
+    from_connection._data_graph.add(
+        (from_connection._node_iri, S223.hasAspect, aspect._node_iri)
+    )
     if INCLUDE_INVERSE:
         aspect.isRoleOf = from_connection
+
 
 class Connectable(Node):
     """
@@ -1459,6 +1464,7 @@ class ConnectionPoint(Node):
     mapsTo: ConnectionPoint
     connectsThrough: Connection
     isConnectionPointOf: Connectable
+    mappedFrom: Node
 
     def __init__(self, thing: Connectable, **kwargs: Any) -> None:
         # abstract base class
@@ -1491,6 +1497,7 @@ class ConnectionPoint(Node):
             raise RuntimeError("other connection point connected")
 
         self.mapsTo = other
+        other.mappedFrom = self
 
 
 @multimethod
@@ -1500,7 +1507,9 @@ def add_mm(from_connection_point: ConnectionPoint, role: EnumerationKind) -> Non
     """
     _log.info(f"add role {role} to {from_connection_point}")
     from_connection_point.hasRole.add(role)
-    from_connection_point._data_graph.add((from_connection_point._node_iri, S223.hasRole, role._node_iri))
+    from_connection_point._data_graph.add(
+        (from_connection_point._node_iri, S223.hasRole, role._node_iri)
+    )
     if INCLUDE_INVERSE:
         role.isRoleOf = from_connection_point
 
@@ -1578,8 +1587,15 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         raise TypeError("connection point direction")
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
-    # if connection_point.mapsTo:
-    #     raise RuntimeError("connection point already mapped")
+    if connection_point.mapsTo:
+        if not connection_point.mapsTo.connectsThrough:
+            raise RuntimeError(
+                f"connect the mapped connection point: {connection_point.mapsTo}"
+            )
+        if connection_point.mapsTo.connectsThrough is not connection:
+            raise RuntimeError(
+                f"connection point connection mismatch: {connection_point.mapsTo.connectsThrough}"
+            )
 
     # check medium
     if CONNECTION_HAS_MEDIUM:
@@ -1620,6 +1636,11 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         )
     )
 
+    # follow down the chain recursively
+    if mapped_connection_point := connection_point.mappedFrom:
+        _log.debug(f"    - continue mapped connection point {mapped_connection_point}")
+        connect_mm(mapped_connection_point, connection)
+
 
 @multimethod
 def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:
@@ -1630,8 +1651,15 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
         raise TypeError("connection point direction")
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
-    # if connection_point.mapsTo:
-    #     raise RuntimeError("connection point already mapped")
+    if connection_point.mapsTo:
+        if not connection_point.mapsTo.connectsThrough:
+            raise RuntimeError(
+                f"connect the mapped connection point: {connection_point.mapsTo}"
+            )
+        if connection_point.mapsTo.connectsThrough is not connection:
+            raise RuntimeError(
+                f"connection point connection mismatch: {connection_point.mapsTo.connectsThrough}"
+            )
 
     # check medium
     if CONNECTION_HAS_MEDIUM:
@@ -1671,6 +1699,11 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
             connection_point.isConnectionPointOf._node_iri,
         )
     )
+
+    # follow down the chain recursively
+    if mapped_connection_point := connection_point.mappedFrom:
+        _log.debug(f"    - continue mapped connection point {mapped_connection_point}")
+        connect_mm(connection, mapped_connection_point)
 
 
 @multimethod
@@ -2226,6 +2259,7 @@ class SystemConnectionPoint(Node):
             raise TypeError("ConnectionPoint expected")
 
         self.mapsTo = other
+        other.mappedFrom = self
 
 
 @multimethod
@@ -2606,6 +2640,7 @@ class ZoneConnectionPoint(Node):
             raise TypeError("ConnectionPoint expected")
 
         self.mapsTo = other
+        other.mappedFrom = self
 
 
 @multimethod
@@ -2774,8 +2809,12 @@ class Junction(Connectable):
         if junction_medium:
             if not other_medium:
                 other.hasMedium = junction_medium
-            elif (junction_medium not in other_medium._children) or (other_medium not in junction_medium._children):
-                raise RuntimeError(f"incompatiable medium: {junction_medium} or {other_medium}")
+            elif (junction_medium not in other_medium._children) or (
+                other_medium not in junction_medium._children
+            ):
+                raise RuntimeError(
+                    f"incompatiable medium: {junction_medium} or {other_medium}"
+                )
         else:
             junction.hasMedium = other_medium
 
@@ -2784,6 +2823,7 @@ class Junction(Connectable):
         _log.debug(f"    - new connection point: {connection_point}")
 
         connection_point.mapsTo = other
+        other.mappedFrom = connection_point
 
 
 @multimethod
@@ -2806,7 +2846,9 @@ def connect_mm(connectable: Connectable, junction: Junction) -> None:
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
         if junction_medium:
-            if (junction_medium not in medium._children) or (medium not in junction_medium._children):
+            if (junction_medium not in medium._children) or (
+                medium not in junction_medium._children
+            ):
                 continue
         from_out[medium].add(connection_point)
 
@@ -2914,7 +2956,9 @@ def connect_mm(junction: Junction, connectable: Connectable) -> None:
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
         if junction_medium:
-            if (junction_medium not in medium._children) or (medium not in junction_medium._children):
+            if (junction_medium not in medium._children) or (
+                medium not in junction_medium._children
+            ):
                 continue
         to_in[medium].add(connection_point)
 
@@ -2923,7 +2967,9 @@ def connect_mm(junction: Junction, connectable: Connectable) -> None:
     to_types: Set[Medium]
     to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
     if not to_types:
-        raise RuntimeError(f"no candidate destinations from {junction} to {connectable}")
+        raise RuntimeError(
+            f"no candidate destinations from {junction} to {connectable}"
+        )
 
     if not from_types:
         if len(to_types) > 1:
@@ -2977,7 +3023,9 @@ def connect_mm(from_connection_point: ConnectionPoint, junction: Junction) -> No
     # get the medium of the junction if it has one
     junction_medium = getattr(junction, "hasMedium", None)
     if junction_medium:
-        if (junction_medium not in medium._children) or (medium not in junction_medium._children):
+        if (junction_medium not in medium._children) or (
+            medium not in junction_medium._children
+        ):
             raise RuntimeError(f"incompatible medium: {medium}, {junction_medium}")
 
     # build a dict of inlet connection points that are not already connected
@@ -3040,7 +3088,9 @@ def connect_mm(junction: Junction, to_connection_point: ConnectionPoint) -> None
     # get the medium of the junction if it has one
     junction_medium = getattr(junction, "hasMedium", None)
     if junction_medium:
-        if (junction_medium not in medium._children) or (medium not in junction_medium._children):
+        if (junction_medium not in medium._children) or (
+            medium not in junction_medium._children
+        ):
             raise RuntimeError(f"incompatible medium: {medium}, {junction_medium}")
 
     # build a dict of outlet connection points that are not already connected
@@ -3171,14 +3221,13 @@ class Equipment(Container, Connectable):
 
                 setattr(self, "_" + group_name, things)
 
-
-
     def __iadd__(self, role: EnumerationKind) -> Node:
         """
         Add a role to an equipment
         """
         add_mm(self, role)
         return self
+
 
 @multimethod
 def add_mm(equipment: Equipment, role: EnumerationKind) -> None:
@@ -3190,6 +3239,7 @@ def add_mm(equipment: Equipment, role: EnumerationKind) -> None:
     equipment._data_graph.add((equipment._node_iri, S223.hasRole, role._node_iri))
     if INCLUDE_INVERSE:
         role.isRoleOf = equipment
+
 
 @multimethod
 def contains_mm(system: System, equipment: Equipment) -> None:

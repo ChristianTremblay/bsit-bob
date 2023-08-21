@@ -80,8 +80,8 @@ plenum = AirConnection(
 
 # AHU
 outdoor >> hd.ahu["OADPR"].airInlet  # >> mixedAir
-hd.ahu["OADPR"]["damper"] >> mixedAir
-hd.ahu["MADPR"]["damper"] >> mixedAir
+hd.ahu["OADPR"].airOutlet >> mixedAir
+hd.ahu["MADPR"].airOutlet >> mixedAir
 (
     mixedAir
     >> hd.ahu["FILTER"]
@@ -91,8 +91,8 @@ hd.ahu["MADPR"]["damper"] >> mixedAir
     >> supplyAir
 )
 hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"].airInlet
-hd.ahu["RF"].airOutlet >> returnExhaust >> hd.ahu["EADPR"]["damper"].airInlet
-hd.ahu["EADPR"]["damper"] >> outdoor
+hd.ahu["RF"].airOutlet >> returnExhaust >> hd.ahu["EADPR"].airInlet
+hd.ahu["EADPR"].airOutlet >> outdoor
 returnExhaust >> hd.ahu["MADPR"].airInlet
 
 # AHU Sensors
@@ -141,11 +141,11 @@ hd.bathroom_exhaust_fan.airOutlet >> outdoor
 # Relationships between Equipment and positioning sensors
 supplyAir >> hd.vav1["VAV1_damper"].airInlet
 hd.vav1.hasPhysicalLocation = ps.private_office
-hd.vav1["VAV1_damper"]["damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
+hd.vav1["VAV1_damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
 
 # vav1 >> hs.hvac_zone_1
 hd.vav1["VAV1_HeatingCoil"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
-hd.vav1["VAV1_SA-F"] % hd.vav1["VAV1_damper"]["damper"].airInlet
+hd.vav1["VAV1_SA-F"] % hd.vav1["VAV1_damper"].airInlet
 hd.vav1["VAV1_DA-T"] % hd.vav1["VAV1_HeatingCoil"].airOutlet
 hd.vav1["VAV1_ZN-T"] % hs.openoffice_hvac
 hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
@@ -157,7 +157,7 @@ hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
 
 # vav2 >> hs.hvac_zone_2
 hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
-hd.vav2["VAV2_SA-F"] % hd.vav2["VAV2_damper"]["damper"].airInlet
+hd.vav2["VAV2_SA-F"] % hd.vav2["VAV2_damper"].airInlet
 hd.vav2["VAV2_DA-T"] % hd.vav2["VAV2_HeatingCoil"].airOutlet
 hd.vav2["VAV2_ZN-T"] % hs.corridorSouth_hvac
 hd.vav2["VAV2_ZN-T"].hasPhysicalLocation = ps.corridor

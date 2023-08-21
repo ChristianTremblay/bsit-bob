@@ -103,16 +103,16 @@ exg3601:00011 a s223:ObservableProperty,
 
 exg3601:00012 a s223:Connection ;
     rdfs:label "SA_In" ;
-    s223:connectsAt exg3601:00042 ;
-    s223:connectsTo exg3601:00041 ;
+    s223:connectsAt exg3601:00029 ;
+    s223:connectsTo exg3601:00028 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Supply Air for VAV" .
 
 exg3601:00013 a s223:Connection ;
     rdfs:label "SA_Out" ;
     s223:connectsAt exg3601:00015,
-        exg3601:00043 ;
-    s223:connectsFrom exg3601:00041 ;
+        exg3601:00030 ;
+    s223:connectsFrom exg3601:00028 ;
     s223:connectsTo exg3601:00014 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Supply Air from VAV" .
@@ -239,6 +239,8 @@ exg3601:00027 a s223:Connection ;
 exg3601:00028 a s223:Equipment,
         s223:VAV ;
     rdfs:label "VAV_CoolingOnly" ;
+    s223:connectedThrough exg3601:00012,
+        exg3601:00013 ;
     s223:contains exg3601:00031,
         exg3601:00033,
         exg3601:00035,
@@ -259,12 +261,14 @@ exg3601:00028 a s223:Equipment,
 exg3601:00029 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAV_CoolingOnly.airInlet" ;
+    s223:connectsThrough exg3601:00012 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00028 .
 
 exg3601:00030 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAV_CoolingOnly.airOutlet" ;
+    s223:connectsThrough exg3601:00013 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00028 .
 
@@ -349,8 +353,6 @@ exg3601:00040 a s223:EnumerableProperty,
 exg3601:00041 a s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "DPR" ;
-    s223:connectedThrough exg3601:00012,
-        exg3601:00013 ;
     s223:contains exg3601:00044,
         exg3601:00070 ;
     s223:hasConnectionPoint exg3601:00042,
@@ -367,7 +369,6 @@ exg3601:00041 a s223:Equipment,
 exg3601:00042 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airInlet" ;
-    s223:connectsThrough exg3601:00012 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00041 ;
     s223:mapsTo exg3601:00029 .
@@ -375,7 +376,6 @@ exg3601:00042 a s223:InletConnectionPoint,
 exg3601:00043 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airOutlet" ;
-    s223:connectsThrough exg3601:00013 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00041 ;
     s223:mapsTo exg3601:00030 .
