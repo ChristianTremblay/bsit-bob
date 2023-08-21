@@ -1516,15 +1516,15 @@ def connect_mm(
         raise TypeError(f"connection point direction: {from_connection_point}")
     if from_connection_point.connectsThrough:
         raise RuntimeError("outlet connection point already connected")
-    if from_connection_point.mapsTo:
-        raise RuntimeError("outlet connection point already mapped")
+    # if from_connection_point.mapsTo:
+    #     raise RuntimeError("outlet connection point already mapped")
 
     if isinstance(to_connection_point, OutletConnectionPoint):
         raise TypeError("connection point direction: {to_connection_point}")
     if to_connection_point.connectsThrough:
         raise RuntimeError("inlet connection point already connected")
-    if to_connection_point.mapsTo:
-        raise RuntimeError("inlet connection point already mapped")
+    # if to_connection_point.mapsTo:
+    #     raise RuntimeError("inlet connection point already mapped")
 
     # check medium
     if not (from_medium := getattr(from_connection_point, "hasMedium", None)):
@@ -1578,8 +1578,8 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         raise TypeError("connection point direction")
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
-    if connection_point.mapsTo:
-        raise RuntimeError("connection point already mapped")
+    # if connection_point.mapsTo:
+    #     raise RuntimeError("connection point already mapped")
 
     # check medium
     if CONNECTION_HAS_MEDIUM:
@@ -1630,8 +1630,8 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
         raise TypeError("connection point direction")
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
-    if connection_point.mapsTo:
-        raise RuntimeError("connection point already mapped")
+    # if connection_point.mapsTo:
+    #     raise RuntimeError("connection point already mapped")
 
     # check medium
     if CONNECTION_HAS_MEDIUM:
@@ -2012,8 +2012,8 @@ def connect_mm(
         raise TypeError("connection point direction")
     if connection_point.connectsThrough:
         raise RuntimeError("connection point already connected")
-    if connection_point.mapsTo:
-        raise RuntimeError("connection point already mapped")
+    # if connection_point.mapsTo:
+    #     raise RuntimeError("connection point already mapped")
 
     to_connection_point = system_connection_point.mapsTo
     if not to_connection_point:

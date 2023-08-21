@@ -1,31 +1,13 @@
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-
-from pathlib import Path
-from typing import Any
-
-from header import sample_header
-from rdflib import RDF, RDFS, XSD, BNode, Literal, Namespace, URIRef
-
-from bob.connections.air import *
+"""
+B59
+"""
+from bob.connections.air import AirConnection
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import (
-    QUANTITYKIND,
-    S223,
     UNIT,
-    Junction,
-    Node,
-    Segment,
-    System,
-    Zone,
     bind_model_namespace,
-    bind_namespace,
     dump,
-    enum,
-    get_datagraph,
 )
-from bob.enum import Exhaust, Supply
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.coil import ChilledWaterCoil
 from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
@@ -34,7 +16,7 @@ from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
 
-# from header import g36_header
+from header import sample_header
 
 # model_name = Path(__file__).stem
 model_name = "B59"
