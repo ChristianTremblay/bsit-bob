@@ -1464,7 +1464,6 @@ class ConnectionPoint(Node):
     mapsTo: ConnectionPoint
     connectsThrough: Connection
     isConnectionPointOf: Connectable
-    mappedFrom: Node
 
     def __init__(self, thing: Connectable, **kwargs: Any) -> None:
         # abstract base class
@@ -1497,7 +1496,6 @@ class ConnectionPoint(Node):
             raise RuntimeError("other connection point connected")
 
         self.mapsTo = other
-        other.mappedFrom = self
 
 
 @multimethod
@@ -1636,11 +1634,6 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         )
     )
 
-    # follow down the chain recursively
-    if mapped_connection_point := connection_point.mappedFrom:
-        _log.debug(f"    - continue mapped connection point {mapped_connection_point}")
-        connect_mm(mapped_connection_point, connection)
-
 
 @multimethod
 def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> None:
@@ -1699,11 +1692,6 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
             connection_point.isConnectionPointOf._node_iri,
         )
     )
-
-    # follow down the chain recursively
-    if mapped_connection_point := connection_point.mappedFrom:
-        _log.debug(f"    - continue mapped connection point {mapped_connection_point}")
-        connect_mm(connection, mapped_connection_point)
 
 
 @multimethod
@@ -2259,7 +2247,6 @@ class SystemConnectionPoint(Node):
             raise TypeError("ConnectionPoint expected")
 
         self.mapsTo = other
-        other.mappedFrom = self
 
 
 @multimethod
@@ -2640,7 +2627,6 @@ class ZoneConnectionPoint(Node):
             raise TypeError("ConnectionPoint expected")
 
         self.mapsTo = other
-        other.mappedFrom = self
 
 
 @multimethod
@@ -2823,7 +2809,6 @@ class Junction(Connectable):
         _log.debug(f"    - new connection point: {connection_point}")
 
         connection_point.mapsTo = other
-        other.mappedFrom = connection_point
 
 
 @multimethod
@@ -3244,7 +3229,7 @@ def add_mm(equipment: Equipment, role: EnumerationKind) -> None:
 @multimethod
 def contains_mm(system: System, equipment: Equipment) -> None:
     """System > Equipment"""
-    _log.info(f"system {system} contains Equipment {equipment}")
+    _log.info(f"system {system} contains equipment {equipment}")
 
     system._data_graph.add((system._node_iri, S223.contains, equipment._node_iri))
     if INCLUDE_INVERSE:
@@ -3254,9 +3239,20 @@ def contains_mm(system: System, equipment: Equipment) -> None:
 
 
 @multimethod
+def contains_mm(system: System, equipment_list: List[Node]) -> None:
+    """System > List[Equipment]"""
+    _log.info(f"system {system} contains equipment {equipment}")
+
+    for equipment in equipment_list:
+        if not isinstance(equipment, (Equipment, System)):
+            raise RuntimeError(f"equipment or system expected: {equipment}")
+        contains_mm(system, equipment)
+
+
+@multimethod
 def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None:
     """Equipment > Equipment"""
-    _log.info(f"equipment {parent_equipment} contains Equipment {child_equipment}")
+    _log.info(f"equipment {parent_equipment} contains equipment {child_equipment}")
 
     parent_equipment._data_graph.add(
         (parent_equipment._node_iri, S223.contains, child_equipment._node_iri)
@@ -3265,6 +3261,17 @@ def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None
         parent_equipment._data_graph.add(
             (child_equipment._node_iri, S223.isContainedIn, parent_equipment._node_iri)
         )
+
+
+@multimethod
+def contains_mm(parent_equipment: Equipment, equipment_list: List[Equipment]) -> None:
+    """Equipment > List[Equipment]"""
+    _log.info(f"equipment {parent_equipment} contains other equipment {equipment_list}")
+
+    for child_equipment in equipment_list:
+        if not isinstance(child_equipment, Equipment):
+            raise RuntimeError(f"equipment expected: {child_equipment}")
+        contains_mm(parent_equipment, child_equipment)
 
 
 class _Sensor(Equipment):
