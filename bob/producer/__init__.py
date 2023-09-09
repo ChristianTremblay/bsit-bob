@@ -33,8 +33,6 @@ from ..functions import (
     FunctionBlock,
     FunctionInput,
     FunctionOutput,
-    Parameter,
-    Constant,
 )
 
 # logging
@@ -263,14 +261,6 @@ class G36DigitalInput(FunctionInput):
 
 class G36DigitalOutput(FunctionOutput):
     _class_iri: URIRef = G36.DigitalOutput
-
-
-class AnalogConstant(Constant):
-    _class_iri: URIRef = None
-
-
-class BinaryConstant(Constant):
-    _class_iri: URIRef = None
 
 
 #

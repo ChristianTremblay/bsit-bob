@@ -7,14 +7,14 @@ from pathlib import Path
 from header import sample_header
 
 from bob.core import EX, Property, bind_model_namespace, dump
-from bob.producer import FunctionBlock, Parameter
+from bob.producer import FunctionBlock, FunctionInput
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class Sample(FunctionBlock):
-    offset: Parameter = 7.8
+    offset: FunctionInput = 7.8
 
 
 f = Sample(label="f")

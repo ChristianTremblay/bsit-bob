@@ -113,7 +113,9 @@ class VFD(_VFD):
         _config = template_update(vfd_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"VFD.__init__ {_config} {kwargs}")
+
         super().__init__(_config, **kwargs)
+
         self["current_sensor"] % self.electricalOutlet
         self.amps = self["current_sensor"].observedProperty
         self["voltage_sensor"] % self.electricalOutlet
@@ -122,29 +124,18 @@ class VFD(_VFD):
 
         # build a function block
         controller_function_block = self["controller_function_block"] = VFD_FB(
-            label=self.label + ".function_block"
+            speed_ref=self["speed_ref_voltage_sensor"].observedProperty,
+            amps_load=self.amps,
+            volts_load=self.volts,
+            frequency_load=self["frequency"],
+            kW_load=self["kW"],
+            alarm=self["alarm_status"],
+            rpm=self["rpm"],
+            drive_running=self["drive_running"],
+            speed_ref_percent=self["speed_reference"],
+            label=self.label + ".function_block",
         )
 
-        # Feed the controller
-        self.executes = controller_function_block
-        (
-            self["speed_ref_voltage_sensor"].observedProperty
-            >> controller_function_block.speed_ref
-        )
-        controller_function_block.amps_load << self.amps
-        controller_function_block.volts_load << self.volts
-
-        # Controlle rmkaes its job
-        controller_function_block.frequency_load >> self["frequency"]
-        # controller_function_block.frequency_load % self.electricalOutlet -- hasEffectLocation
-        controller_function_block.kW_load >> self["kW"]
-        controller_function_block.rpm >> self["rpm"]
-        controller_function_block.alarm >> self["alarm_status"]
-        # controller_function_block.alarm % self.alarm_dry_contact -- hasEffectLocation
-        controller_function_block.drive_running >> self["drive_running"]
-        # controller_function_block.drive_running % self.drive_running_dry_contact -- hasEffectLocation
-        controller_function_block.speed_ref_percent >> self["speed_reference"]
-        # No controller ... simple causality
         # in fact motor temp is the result of a calculation... but this shows a possibility
         self["motor_temp_effect"].cause_input << self["rpm"]
         self["motor_temp_effect"].effect_output >> self["motor_temp"]

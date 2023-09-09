@@ -21,15 +21,10 @@ class Sample(FunctionBlock):
         self.y = self.x * 10 + 12
 
 
-f = Sample(label="f")
+xp = Property(1.2, label="x")
+yp = Property(3.4, label="y")
 
-x = Property(1.2, label="x")
-y = Property(3.4, label="y")
-
-x >> f.x
-# f.x.uses = x
-f.y >> y
-# f.y.produces = y
+f = Sample(label="f", x=xp, y=yp)
 
 # dump the result
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

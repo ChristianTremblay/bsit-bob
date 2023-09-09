@@ -102,7 +102,9 @@ Thermostat_template = {
         "comment": "Zone Thermostat with setpoint adj and local override",
     },
     "cp": {"mstp": RS485BidirectionalConnectionPoint},
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
+    "properties": {
+        ("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}
+    },
     "sensors": {
         ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("local_override", OccupantMotionSensor): {},
@@ -181,10 +183,10 @@ hvac_zone.add_property(hvac_space.occupancy)
 occupancy = OccupancyFunction(
     label="OccControl",
     comment="This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED",
+    inOccSensor=vav["ZN-OCC-SENSOR"].observedProperty,
+    inLocalOverride=vav["ZONE-THERMOSTAT"]["local_override"].observedProperty,
+    outStatus=hvac_space.occupancy,
 )
-occupancy.inOccSensor << vav["ZN-OCC-SENSOR"].observedProperty
-occupancy.inLocalOverride << vav["ZONE-THERMOSTAT"]["local_override"].observedProperty
-occupancy.outStatus >> hvac_space.occupancy
 
 
 # TODO : Complete
@@ -192,20 +194,20 @@ sequence = "Lorem ipsum of sequence"
 
 # my_VAV_CoolingOnly_template['functions']['occupancyControl'] = occupancy
 # my_VAV_CoolingOnly_template['cp']['boxDamperPosition'] = occupancy
-g36fig_a_1 = G36VAVCoolingOnly(label="Bob G36 VAV Cooling Only", comment=sequence)
+g36fig_a_1 = G36VAVCoolingOnly(
+    label="Bob G36 VAV Cooling Only",
+    comment=sequence,
+    supplyAirFlow=vav.airFlow,
+    zoneTemperature=hvac_zone.temperature,
+    zoneCO2=hvac_zone.co2,
+    zonewindowSwitch=hvac_zone.windows_switch,
+    boxDamperPosition=vav["DPR"]["actuator"]["command"],
+    effectiveOccupancy=hvac_space.occupancy,
+)
 
 # uses will create a connector node named supplyAirFlow and connect it to property
 # G36AnalogInput refer to the notion of AI in the context of G36
 # We could have used FunctionInput or FunctionOutput
-g36fig_a_1.supplyAirFlow << vav.airFlow
-# g36fig_a_1.uses(
-#    hvac_zone.temperature_setpoint, G36AnalogInput, "zoneTemperatureSetpoint"
-# )
-g36fig_a_1.zoneTemperature << hvac_zone.temperature
-g36fig_a_1.zoneCO2 << hvac_zone.co2
-g36fig_a_1.zonewindowSwitch << hvac_zone.windows_switch
-g36fig_a_1.boxDamperPosition >> vav["DPR"]["actuator"]["command"]
-g36fig_a_1.effectiveOccupancy << hvac_space.occupancy
 # controller executes
 # controller >> occupancy
 # controller >> g36fig_a_1

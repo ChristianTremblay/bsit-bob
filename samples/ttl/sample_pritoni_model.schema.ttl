@@ -91,7 +91,8 @@ bob:airTransfer a rdf:Property ;
 bob:air_change_per_hour a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:alarm a rdf:Property .
+bob:alarm a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:alarmOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -102,7 +103,8 @@ bob:alarmStatus a rdf:Property ;
 bob:amps a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:amps_load a rdf:Property .
+bob:amps_load a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:breakDetection a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -167,7 +169,8 @@ bob:differential_static_pressure a rdf:Property ;
 bob:doors a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
-bob:drive_running a rdf:Property .
+bob:drive_running a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:ductAirInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -190,7 +193,8 @@ bob:exhaustAirOutlet a rdf:Property ;
 bob:flowCoefficient a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:frequency_load a rdf:Property .
+bob:frequency_load a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:hasCauseLocation a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -221,13 +225,17 @@ bob:hotWaterOutlet a rdf:Property ;
 bob:humidity a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:inLocalOverride a rdf:Property .
+bob:inLocalOverride a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
-bob:inOccSensor a rdf:Property .
+bob:inOccSensor a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
-bob:inSchedule a rdf:Property .
+bob:inSchedule a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
-bob:inStatus a rdf:Property .
+bob:inStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:indoor a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -243,7 +251,8 @@ bob:is_closed a rdf:Property ;
 bob:is_open a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:kW_load a rdf:Property .
+bob:kW_load a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:lightInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -294,7 +303,8 @@ bob:openCloseCommand a rdf:Property ;
 bob:openCloseStatus a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:outStatus a rdf:Property .
+bob:outStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:outdoor a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -320,7 +330,8 @@ bob:radiantHeating a rdf:Property ;
 bob:returnAirInlet a rdf:Property ;
     rdfs:subPropertyOf bob:hasSystemConnectionPoint .
 
-bob:rpm a rdf:Property .
+bob:rpm a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:setpointReset a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -334,9 +345,11 @@ bob:shadeCommand a rdf:Property ;
 bob:shadeStatus a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:speed_ref a rdf:Property .
+bob:speed_ref a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
-bob:speed_ref_percent a rdf:Property .
+bob:speed_ref_percent a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:supplyAirOutlet a rdf:Property ;
     rdfs:subPropertyOf bob:hasSystemConnectionPoint .
@@ -350,7 +363,8 @@ bob:temperature_setpoint a rdf:Property ;
 bob:volts a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-bob:volts_load a rdf:Property .
+bob:volts_load a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 bob:waterInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -363,11 +377,14 @@ bob:waterOutlet a rdf:Property ;
 bob:windows a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
-functions:u1 a rdf:Property .
+functions:u1 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
-functions:u2 a rdf:Property .
+functions:u2 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
-functions:y a rdf:Property .
+functions:y a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
 p223:ActiveInactive-Active a p223:ActiveInactive-Active,
         s223:EnumerationKind,
@@ -1178,11 +1195,8 @@ p223:YesNo-Yes a p223:YesNo-Yes,
 
 g36:AnalogInput a rdfs:Class ;
     rdfs:label "bob.producer.G36AnalogInput" ;
-    rdfs:subClassOf s223:FunctionInput .
-
-g36:AnalogOutput a rdfs:Class ;
-    rdfs:label "bob.producer.G36AnalogOutput" ;
-    rdfs:subClassOf s223:FunctionOutput .
+    rdfs:subClassOf s223:FunctionInput,
+        s223:Property .
 
 g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
         g36:EnumerationKind-G36AlarmLevels,
