@@ -1498,6 +1498,7 @@ class ConnectionPoint(Node):
         self.mapsTo = other
 
 
+
 @multimethod
 def add_mm(from_connection_point: ConnectionPoint, role: EnumerationKind) -> None:
     """
