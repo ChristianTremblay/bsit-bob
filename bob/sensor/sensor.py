@@ -21,7 +21,6 @@ from ..core import (
     Node,
     Property,
     PropertyReference,
-    Segment,
     Substance,
     _Sensor,
     logging,

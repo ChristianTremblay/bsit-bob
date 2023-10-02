@@ -144,9 +144,10 @@ hvac_space.occupancy = OccupancyStatus(label="Occupancy Status of Domain Space")
 window = Window(label="Window")
 window.indoor >> hvac_space.windows
 vav = VAV_Simple(config=vav_system_template)
-supply_air >> vav["DPR"].airInlet
 
-vav["DPR"].airOutlet >> discharge_air >> hvac_space.ductAirInlet
+supply_air >> vav.airInlet
+vav.airOutlet >> discharge_air >> hvac_space.ductAirInlet
+
 vav["DPR"]["actuator"].proportional_signal << controller.damper_output
 vav["DPR"]["actuator"].proportional_signal.hasSignalType = AnalogSignalTypeEnum.VDC_0_10
 vav["ZONE-THERMOSTAT"]["temperature_sensor"] % hvac_space

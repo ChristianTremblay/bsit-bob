@@ -1,7 +1,6 @@
 import logging
 from typing import Any, Dict
 
-# from attr import set_run_validators
 from rdflib import URIRef
 
 from bob.properties import Flow, PercentCommand

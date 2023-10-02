@@ -46,7 +46,7 @@ ex1:00003 a bob:OutletZoneConnectionPoint,
 ex1:00004 a p223:HVACSpace,
         s223:DomainSpace ;
     rdfs:label "Space-1" ;
-    s223:connectedFrom ex1:00058 ;
+    s223:connectedFrom ex1:00020 ;
     s223:connectedThrough ex1:00063,
         ex1:00108 ;
     s223:hasConnectionPoint ex1:00005,
@@ -177,7 +177,9 @@ ex1:00019 a s223:BidirectionalConnectionPoint,
 ex1:00020 a s223:Equipment,
         s223:VAV ;
     rdfs:label "Zone-1.VAV" ;
-    s223:connectedThrough ex1:00107 ;
+    s223:connectedThrough ex1:00063,
+        ex1:00107 ;
+    s223:connectedTo ex1:00004 ;
     s223:contains ex1:00023,
         ex1:00025,
         ex1:00027,
@@ -201,6 +203,7 @@ ex1:00021 a s223:InletConnectionPoint,
 ex1:00022 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Zone-1.VAV.airOutlet" ;
+    s223:connectsThrough ex1:00063 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00020 .
 
@@ -476,9 +479,7 @@ ex1:00058 a s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
     s223:connectedFrom ex1:00032 ;
-    s223:connectedThrough ex1:00062,
-        ex1:00063 ;
-    s223:connectedTo ex1:00004 ;
+    s223:connectedThrough ex1:00062 ;
     s223:hasConnectionPoint ex1:00059,
         ex1:00060,
         ex1:00061 ;
@@ -504,7 +505,6 @@ ex1:00060 a s223:InletConnectionPoint,
 ex1:00061 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
-    s223:connectsThrough ex1:00063 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00058 ;
     s223:mapsTo ex1:00031 .
@@ -518,8 +518,8 @@ ex1:00062 a s223:Connection ;
 
 ex1:00063 a s223:Connection ;
     s223:connectsAt ex1:00005,
-        ex1:00061 ;
-    s223:connectsFrom ex1:00058 ;
+        ex1:00022 ;
+    s223:connectsFrom ex1:00020 ;
     s223:connectsTo ex1:00004 ;
     s223:hasMedium s223:Medium-Air .
 

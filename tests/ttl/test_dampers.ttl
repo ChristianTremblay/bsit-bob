@@ -2,7 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex33: <urn:ex/test_system-007/> .
+@prefix ex27: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -22,224 +22,224 @@
   rdfs:label "test_dampers" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex33:00001 a s223:Equipment,
+ex27:00001 a s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "Electrical Proportional Actuated Damper" ;
-    s223:contains ex33:00004,
-        ex33:00030 ;
-    s223:hasConnectionPoint ex33:00002,
-        ex33:00003 ;
-    bob:airInlet ex33:00002 ;
-    bob:airOutlet ex33:00003 ;
-    bob:command ex33:00014 ;
-    bob:is_closed ex33:00013 ;
-    bob:is_open ex33:00012 ;
-    bob:position ex33:00029 ;
-    bob:position_feedback ex33:00029 .
+    s223:contains ex27:00004,
+        ex27:00030 ;
+    s223:hasConnectionPoint ex27:00002,
+        ex27:00003 ;
+    bob:airInlet ex27:00002 ;
+    bob:airOutlet ex27:00003 ;
+    bob:command ex27:00014 ;
+    bob:is_closed ex27:00013 ;
+    bob:is_open ex27:00012 ;
+    bob:position ex27:00029 ;
+    bob:position_feedback ex27:00029 .
 
-ex33:00002 a s223:InletConnectionPoint,
+ex27:00002 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Proportional Actuated Damper.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00003 a s223:OutletConnectionPoint,
+ex27:00003 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Proportional Actuated Damper.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00004 a s223:Equipment ;
+ex27:00004 a s223:Equipment ;
     rdfs:label "actuator" ;
-    s223:connectedThrough ex33:00034 ;
-    s223:connectedTo ex33:00030 ;
-    s223:contains ex33:00016,
-        ex33:00019,
-        ex33:00022,
-        ex33:00025,
-        ex33:00028 ;
-    s223:hasConnectionPoint ex33:00005,
-        ex33:00006,
-        ex33:00007,
-        ex33:00008,
-        ex33:00009,
-        ex33:00010 ;
-    s223:hasProperty ex33:00011,
-        ex33:00012,
-        ex33:00013,
-        ex33:00014,
-        ex33:00015 ;
-    s223:isContainedIn ex33:00001 ;
-    bob:position ex33:00029 .
+    s223:connectedThrough ex27:00034 ;
+    s223:connectedTo ex27:00030 ;
+    s223:contains ex27:00016,
+        ex27:00019,
+        ex27:00022,
+        ex27:00025,
+        ex27:00028 ;
+    s223:hasConnectionPoint ex27:00005,
+        ex27:00006,
+        ex27:00007,
+        ex27:00008,
+        ex27:00009,
+        ex27:00010 ;
+    s223:hasProperty ex27:00011,
+        ex27:00012,
+        ex27:00013,
+        ex27:00014,
+        ex27:00015 ;
+    s223:isContainedIn ex27:00001 ;
+    bob:position ex27:00029 .
 
-ex33:00005 a p223:MechanicalConnectionPoint,
+ex27:00005 a p223:MechanicalConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
-    s223:connectsThrough ex33:00034 ;
+    s223:connectsThrough ex27:00034 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00006 a p223:AnalogOutput,
+ex27:00006 a p223:AnalogOutput,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00007 a p223:BinaryOutput,
+ex27:00007 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00008 a p223:BinaryOutput,
+ex27:00008 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00009 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+ex27:00009 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00010 a p223:AnalogInput,
+ex27:00010 a p223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00011 a s223:ObservableProperty,
+ex27:00011 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
-    s223:isPropertyOf ex33:00004 ;
+    s223:isPropertyOf ex27:00004 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex33:00012 a s223:EnumerableProperty,
+ex27:00012 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf ex33:00004 .
+    s223:isPropertyOf ex27:00004 .
 
-ex33:00013 a s223:EnumerableProperty,
+ex27:00013 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf ex33:00004 .
+    s223:isPropertyOf ex27:00004 .
 
-ex33:00014 a s223:ActuatableProperty,
+ex27:00014 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "command" ;
-    s223:isPropertyOf ex33:00004 ;
+    s223:isPropertyOf ex27:00004 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex33:00015 a s223:ObservableProperty,
+ex27:00015 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Nm ;
     rdfs:label "torque" ;
-    s223:isPropertyOf ex33:00004 ;
+    s223:isPropertyOf ex27:00004 ;
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:hasUnit unit:N-M .
 
-ex33:00016 a p223:Producer,
+ex27:00016 a p223:Producer,
         bob:Causality ;
     rdfs:label "positionProducer" ;
-    s223:hasInput ex33:00017 ;
-    s223:hasOutput ex33:00018 ;
-    s223:isContainedIn ex33:00004 ;
-    bob:cause_input ex33:00017 ;
-    bob:effect_output ex33:00018 .
+    s223:hasInput ex27:00017 ;
+    s223:hasOutput ex27:00018 ;
+    s223:isContainedIn ex27:00004 ;
+    bob:cause_input ex27:00017 ;
+    bob:effect_output ex27:00018 .
 
-ex33:00017 a p223:ProducerInput ;
+ex27:00017 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
-    s223:uses ex33:00014 ;
-    bob:hasCauseLocation ex33:00010 .
+    s223:uses ex27:00014 ;
+    bob:hasCauseLocation ex27:00010 .
 
-ex33:00018 a p223:ProducerOutput ;
+ex27:00018 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
-    s223:produces ex33:00029 ;
-    bob:hasEffectLocation ex33:00005 .
+    s223:produces ex27:00029 ;
+    bob:hasEffectLocation ex27:00005 .
 
-ex33:00019 a p223:Producer,
+ex27:00019 a p223:Producer,
         bob:Causality ;
     rdfs:label "feedbackProducer" ;
-    s223:hasInput ex33:00020 ;
-    s223:hasOutput ex33:00021 ;
-    s223:isContainedIn ex33:00004 ;
-    bob:cause_input ex33:00020 ;
-    bob:effect_output ex33:00021 .
+    s223:hasInput ex27:00020 ;
+    s223:hasOutput ex27:00021 ;
+    s223:isContainedIn ex27:00004 ;
+    bob:cause_input ex27:00020 ;
+    bob:effect_output ex27:00021 .
 
-ex33:00020 a p223:ProducerInput ;
+ex27:00020 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
-    s223:uses ex33:00029 .
+    s223:uses ex27:00029 .
 
-ex33:00021 a p223:ProducerOutput ;
+ex27:00021 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
-    s223:produces ex33:00011 ;
-    bob:hasEffectLocation ex33:00006 .
+    s223:produces ex27:00011 ;
+    bob:hasEffectLocation ex27:00006 .
 
-ex33:00022 a p223:Producer,
+ex27:00022 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_open_producer" ;
-    s223:hasInput ex33:00023 ;
-    s223:hasOutput ex33:00024 ;
-    s223:isContainedIn ex33:00004 ;
-    bob:cause_input ex33:00023 ;
-    bob:effect_output ex33:00024 .
+    s223:hasInput ex27:00023 ;
+    s223:hasOutput ex27:00024 ;
+    s223:isContainedIn ex27:00004 ;
+    bob:cause_input ex27:00023 ;
+    bob:effect_output ex27:00024 .
 
-ex33:00023 a p223:ProducerInput ;
+ex27:00023 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
-    s223:uses ex33:00029 .
+    s223:uses ex27:00029 .
 
-ex33:00024 a p223:ProducerOutput ;
+ex27:00024 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
-    s223:produces ex33:00012 ;
-    bob:hasEffectLocation ex33:00007 .
+    s223:produces ex27:00012 ;
+    bob:hasEffectLocation ex27:00007 .
 
-ex33:00025 a p223:Producer,
+ex27:00025 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_close_producer" ;
-    s223:hasInput ex33:00026 ;
-    s223:hasOutput ex33:00027 ;
-    s223:isContainedIn ex33:00004 ;
-    bob:cause_input ex33:00026 ;
-    bob:effect_output ex33:00027 .
+    s223:hasInput ex27:00026 ;
+    s223:hasOutput ex27:00027 ;
+    s223:isContainedIn ex27:00004 ;
+    bob:cause_input ex27:00026 ;
+    bob:effect_output ex27:00027 .
 
-ex33:00026 a p223:ProducerInput ;
+ex27:00026 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
-    s223:uses ex33:00029 .
+    s223:uses ex27:00029 .
 
-ex33:00027 a p223:ProducerOutput ;
+ex27:00027 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
-    s223:produces ex33:00013 ;
-    bob:hasEffectLocation ex33:00008 .
+    s223:produces ex27:00013 ;
+    bob:hasEffectLocation ex27:00008 .
 
-ex33:00028 a s223:Equipment,
+ex27:00028 a s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasObservationLocation ex33:00005 ;
-    s223:isContainedIn ex33:00004 ;
-    s223:observes ex33:00029 .
+    s223:hasObservationLocation ex27:00005 ;
+    s223:isContainedIn ex27:00004 ;
+    s223:observes ex27:00029 .
 
-ex33:00029 a s223:ObservableProperty,
+ex27:00029 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -248,45 +248,45 @@ ex33:00029 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex33:00030 a s223:Damper,
+ex27:00030 a s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
-    s223:connectedFrom ex33:00004 ;
-    s223:connectedThrough ex33:00034 ;
-    s223:hasConnectionPoint ex33:00031,
-        ex33:00032,
-        ex33:00033 ;
-    s223:isContainedIn ex33:00001 ;
-    bob:airInlet ex33:00032 ;
-    bob:airOutlet ex33:00033 ;
-    bob:linkageInlet ex33:00031 ;
-    bob:position ex33:00029 .
+    s223:connectedFrom ex27:00004 ;
+    s223:connectedThrough ex27:00034 ;
+    s223:hasConnectionPoint ex27:00031,
+        ex27:00032,
+        ex27:00033 ;
+    s223:isContainedIn ex27:00001 ;
+    bob:airInlet ex27:00032 ;
+    bob:airOutlet ex27:00033 ;
+    bob:linkageInlet ex27:00031 ;
+    bob:position ex27:00029 .
 
-ex33:00031 a p223:MechanicalConnectionPoint,
+ex27:00031 a p223:MechanicalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
-    s223:connectsThrough ex33:00034 ;
+    s223:connectsThrough ex27:00034 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf ex33:00030 .
+    s223:isConnectionPointOf ex27:00030 .
 
-ex33:00032 a s223:InletConnectionPoint,
+ex27:00032 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00030 ;
-    s223:mapsTo ex33:00002 .
+    s223:isConnectionPointOf ex27:00030 ;
+    s223:mapsTo ex27:00002 .
 
-ex33:00033 a s223:OutletConnectionPoint,
+ex27:00033 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00030 ;
-    s223:mapsTo ex33:00003 .
+    s223:isConnectionPointOf ex27:00030 ;
+    s223:mapsTo ex27:00003 .
 
-ex33:00034 a s223:Connection ;
-    s223:connectsAt ex33:00005,
-        ex33:00031 ;
-    s223:connectsFrom ex33:00004 ;
-    s223:connectsTo ex33:00030 ;
+ex27:00034 a s223:Connection ;
+    s223:connectsAt ex27:00005,
+        ex27:00031 ;
+    s223:connectsFrom ex27:00004 ;
+    s223:connectsTo ex27:00030 ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 

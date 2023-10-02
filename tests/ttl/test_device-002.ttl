@@ -2,7 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex33: <urn:ex/test_system-007/> .
+@prefix ex27: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -22,238 +22,238 @@
   rdfs:label "test_device-002" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex33:00001 a p223:Boiler,
+ex27:00001 a p223:Boiler,
         s223:Equipment ;
     rdfs:label "HWB-1" ;
-    s223:hasConnectionPoint ex33:00002,
-        ex33:00003 ;
-    bob:hotWaterEntering ex33:00003 ;
-    bob:hotWaterLeaving ex33:00002 ;
+    s223:hasConnectionPoint ex27:00002,
+        ex27:00003 ;
+    bob:hotWaterEntering ex27:00003 ;
+    bob:hotWaterLeaving ex27:00002 ;
     rdfs:comment "Hot Water Boiler" .
 
-ex33:00002 a s223:OutletConnectionPoint,
+ex27:00002 a s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-1.hotWaterLeaving" ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00003 a s223:InletConnectionPoint,
+ex27:00003 a s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-1.hotWaterEntering" ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf ex33:00001 .
+    s223:isConnectionPointOf ex27:00001 .
 
-ex33:00004 a p223:Boiler,
+ex27:00004 a p223:Boiler,
         s223:Equipment ;
     rdfs:label "Electrical Hot Water Boiler" ;
-    s223:hasConnectionPoint ex33:00005,
-        ex33:00006,
-        ex33:00007 ;
-    bob:electricalInlet ex33:00007 ;
-    bob:hotWaterEntering ex33:00006 ;
-    bob:hotWaterLeaving ex33:00005 .
+    s223:hasConnectionPoint ex27:00005,
+        ex27:00006,
+        ex27:00007 ;
+    bob:electricalInlet ex27:00007 ;
+    bob:hotWaterEntering ex27:00006 ;
+    bob:hotWaterLeaving ex27:00005 .
 
-ex33:00005 a s223:OutletConnectionPoint,
+ex27:00005 a s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.hotWaterLeaving" ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00006 a s223:InletConnectionPoint,
+ex27:00006 a s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.hotWaterEntering" ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00007 a s223:ElectricalConnectionPoint,
+ex27:00007 a s223:ElectricalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.electricalInlet" ;
     s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf ex33:00004 .
+    s223:isConnectionPointOf ex27:00004 .
 
-ex33:00008 a p223:Boiler,
+ex27:00008 a p223:Boiler,
         s223:Equipment ;
     rdfs:label "HWB-2" ;
-    s223:hasConnectionPoint ex33:00009,
-        ex33:00010,
-        ex33:00011,
-        ex33:00012,
-        ex33:00013,
-        ex33:00014,
-        ex33:00015 ;
-    bob:combustionAirInlet ex33:00013 ;
-    bob:combustionAirOutlet ex33:00014 ;
-    bob:condensedWaterOutlet ex33:00015 ;
-    bob:electricalInlet ex33:00011 ;
-    bob:hotWaterEntering ex33:00010 ;
-    bob:hotWaterLeaving ex33:00009 ;
-    bob:naturalGasInlet ex33:00012 ;
+    s223:hasConnectionPoint ex27:00009,
+        ex27:00010,
+        ex27:00011,
+        ex27:00012,
+        ex27:00013,
+        ex27:00014,
+        ex27:00015 ;
+    bob:combustionAirInlet ex27:00013 ;
+    bob:combustionAirOutlet ex27:00014 ;
+    bob:condensedWaterOutlet ex27:00015 ;
+    bob:electricalInlet ex27:00011 ;
+    bob:hotWaterEntering ex27:00010 ;
+    bob:hotWaterLeaving ex27:00009 ;
+    bob:naturalGasInlet ex27:00012 ;
     rdfs:comment "Natural Gas Hot Water Boiler" .
 
-ex33:00009 a s223:OutletConnectionPoint,
+ex27:00009 a s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-2.hotWaterLeaving" ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex27:00008 .
 
-ex33:00010 a s223:InletConnectionPoint,
+ex27:00010 a s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-2.hotWaterEntering" ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex27:00008 .
 
-ex33:00011 a s223:ElectricalConnectionPoint,
+ex27:00011 a s223:ElectricalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "HWB-2.electricalInlet" ;
     s223:hasMedium s223:Medium-Electricity ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex27:00008 .
 
-ex33:00012 a s223:InletConnectionPoint,
+ex27:00012 a s223:InletConnectionPoint,
         bob:NaturalGasConnectionPoint ;
     rdfs:label "HWB-2.naturalGasInlet" ;
     s223:hasMedium s223:Medium-NaturalGas ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex27:00008 .
 
-ex33:00013 a s223:InletConnectionPoint,
+ex27:00013 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HWB-2.combustionAirInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex27:00008 .
 
-ex33:00014 a s223:OutletConnectionPoint,
+ex27:00014 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HWB-2.combustionAirOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex27:00008 .
 
-ex33:00015 a s223:OutletConnectionPoint,
+ex27:00015 a s223:OutletConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "HWB-2.condensedWaterOutlet" ;
     s223:hasMedium s223:Medium-Water ;
-    s223:isConnectionPointOf ex33:00008 .
+    s223:isConnectionPointOf ex27:00008 .
 
-ex33:00016 a s223:Coil,
+ex27:00016 a s223:Coil,
         s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Hot Water Coil" ;
-    s223:hasConnectionPoint ex33:00017,
-        ex33:00018,
-        ex33:00019,
-        ex33:00020 ;
-    bob:airInlet ex33:00017 ;
-    bob:airOutlet ex33:00018 ;
-    bob:hotWaterInlet ex33:00019 ;
-    bob:hotWaterOutlet ex33:00020 .
+    s223:hasConnectionPoint ex27:00017,
+        ex27:00018,
+        ex27:00019,
+        ex27:00020 ;
+    bob:airInlet ex27:00017 ;
+    bob:airOutlet ex27:00018 ;
+    bob:hotWaterInlet ex27:00019 ;
+    bob:hotWaterOutlet ex27:00020 .
 
-ex33:00017 a s223:InletConnectionPoint,
+ex27:00017 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Hot Water Coil.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex27:00016 .
 
-ex33:00018 a s223:OutletConnectionPoint,
+ex27:00018 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Hot Water Coil.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex27:00016 .
 
-ex33:00019 a s223:InletConnectionPoint,
+ex27:00019 a s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Hot Water Coil.hotWaterInlet" ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex27:00016 .
 
-ex33:00020 a s223:OutletConnectionPoint,
+ex27:00020 a s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Hot Water Coil.hotWaterOutlet" ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf ex33:00016 .
+    s223:isConnectionPointOf ex27:00016 .
 
-ex33:00021 a s223:Coil,
+ex27:00021 a s223:Coil,
         s223:CoolingCoil,
         s223:Equipment ;
     rdfs:label "Chilled Water Coil" ;
-    s223:hasConnectionPoint ex33:00022,
-        ex33:00023,
-        ex33:00024,
-        ex33:00025 ;
-    bob:airInlet ex33:00022 ;
-    bob:airOutlet ex33:00023 ;
-    bob:chilledWaterInlet ex33:00024 ;
-    bob:chilledWaterOutlet ex33:00025 .
+    s223:hasConnectionPoint ex27:00022,
+        ex27:00023,
+        ex27:00024,
+        ex27:00025 ;
+    bob:airInlet ex27:00022 ;
+    bob:airOutlet ex27:00023 ;
+    bob:chilledWaterInlet ex27:00024 ;
+    bob:chilledWaterOutlet ex27:00025 .
 
-ex33:00022 a s223:InletConnectionPoint,
+ex27:00022 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Chilled Water Coil.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00021 .
+    s223:isConnectionPointOf ex27:00021 .
 
-ex33:00023 a s223:OutletConnectionPoint,
+ex27:00023 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Chilled Water Coil.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00021 .
+    s223:isConnectionPointOf ex27:00021 .
 
-ex33:00024 a s223:InletConnectionPoint,
+ex27:00024 a s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chilled Water Coil.chilledWaterInlet" ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:isConnectionPointOf ex33:00021 .
+    s223:isConnectionPointOf ex27:00021 .
 
-ex33:00025 a s223:OutletConnectionPoint,
+ex27:00025 a s223:OutletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chilled Water Coil.chilledWaterOutlet" ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:isConnectionPointOf ex33:00021 .
+    s223:isConnectionPointOf ex27:00021 .
 
-ex33:00026 a s223:Coil,
+ex27:00026 a s223:Coil,
         s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Electrical Heating Coil" ;
-    s223:hasConnectionPoint ex33:00027,
-        ex33:00028,
-        ex33:00029 ;
-    s223:hasProperty ex33:00030,
-        ex33:00031 ;
-    bob:airInlet ex33:00027 ;
-    bob:airOutlet ex33:00028 .
+    s223:hasConnectionPoint ex27:00027,
+        ex27:00028,
+        ex27:00029 ;
+    s223:hasProperty ex27:00030,
+        ex27:00031 ;
+    bob:airInlet ex27:00027 ;
+    bob:airOutlet ex27:00028 .
 
-ex33:00027 a s223:InletConnectionPoint,
+ex27:00027 a s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00026 .
+    s223:isConnectionPointOf ex27:00026 .
 
-ex33:00028 a s223:OutletConnectionPoint,
+ex27:00028 a s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex33:00026 .
+    s223:isConnectionPointOf ex27:00026 .
 
-ex33:00029 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+ex27:00029 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Heating Coil.electricalInlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf ex33:00026 .
+    s223:isConnectionPointOf ex27:00026 .
 
-ex33:00030 a s223:ObservableProperty,
+ex27:00030 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf ex33:00026 ;
+    s223:isPropertyOf ex27:00026 ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-ex33:00031 a s223:ObservableProperty,
+ex27:00031 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf ex33:00026 ;
+    s223:isPropertyOf ex27:00026 ;
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
