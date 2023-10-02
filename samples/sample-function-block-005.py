@@ -17,7 +17,7 @@ class Sample(FunctionBlock):
     offset: FunctionInput = 1.2
 
 
-f = Sample(label="f")
+f = Sample(label="f", offset=4.5)
 
 # dump the result
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

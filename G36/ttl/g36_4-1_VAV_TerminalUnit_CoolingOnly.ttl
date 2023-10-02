@@ -193,8 +193,6 @@ exg3601:00021 a s223:BidirectionalConnectionPoint,
 
 exg3601:00022 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
-        s223:FunctionOutput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "Occupancy Status of Domain Space" ;
@@ -277,8 +275,7 @@ exg3601:00031 a s223:Equipment,
     s223:observes exg3601:00032 ;
     rdfs:comment "Air Flow" .
 
-exg3601:00032 a s223:FunctionInput,
-        s223:ObservableProperty,
+exg3601:00032 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -330,7 +327,6 @@ exg3601:00037 a s223:Equipment,
 
 exg3601:00038 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "ZN-OCC-SENSOR.OccupantMotion" ;
@@ -345,7 +341,6 @@ exg3601:00039 a p223:IntrusionSensor,
 
 exg3601:00040 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "ZN-WINDOW-SWITCH.intrusion_status" ;
@@ -476,7 +471,6 @@ exg3601:00053 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 exg3601:00054 a s223:ActuatableProperty,
-        s223:FunctionOutput,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -650,8 +644,7 @@ exg3601:00078 a s223:Equipment,
     s223:hasObservationLocation exg3601:00014 ;
     s223:observes exg3601:00079 .
 
-exg3601:00079 a s223:FunctionInput,
-        s223:ObservableProperty,
+exg3601:00079 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -669,7 +662,6 @@ exg3601:00080 a s223:Equipment,
 
 exg3601:00081 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "local_override.OccupantMotion" ;
@@ -698,8 +690,7 @@ exg3601:00084 a s223:Equipment,
     s223:hasObservationLocation exg3601:00014 ;
     s223:observes exg3601:00085 .
 
-exg3601:00085 a s223:FunctionInput,
-        s223:ObservableProperty,
+exg3601:00085 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -756,31 +747,14 @@ exg3601:00091 a p223:OccupancyFunction,
         s223:FunctionBlock ;
     rdfs:label "OccControl" ;
     s223:hasInput exg3601:00038,
-        exg3601:00081,
-        exg3601:00092,
-        exg3601:00093 ;
+        exg3601:00081 ;
     s223:hasOutput exg3601:00022 ;
-    s223:hasProperty exg3601:00022,
-        exg3601:00038,
-        exg3601:00081,
-        exg3601:00092,
-        exg3601:00093 ;
     bob:inLocalOverride exg3601:00081 ;
     bob:inOccSensor exg3601:00038 ;
-    bob:inSchedule exg3601:00093 ;
-    bob:inStatus exg3601:00092 ;
     bob:outStatus exg3601:00022 ;
     rdfs:comment "This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED" .
 
-exg3601:00092 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "OccControl.inStatus" .
-
-exg3601:00093 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "OccControl.inSchedule" .
-
-exg3601:00094 a s223:FunctionBlock,
+exg3601:00092 a s223:FunctionBlock,
         g36:FunctionBlock,
         g36:VAVCoolingOnly ;
     rdfs:label "Bob G36 VAV Cooling Only" ;
@@ -788,50 +762,13 @@ exg3601:00094 a s223:FunctionBlock,
         exg3601:00032,
         exg3601:00040,
         exg3601:00079,
-        exg3601:00085,
-        exg3601:00095,
-        exg3601:00096,
-        exg3601:00097,
-        exg3601:00098 ;
+        exg3601:00085 ;
     s223:hasOutput exg3601:00054 ;
-    s223:hasProperty exg3601:00022,
-        exg3601:00032,
-        exg3601:00040,
-        exg3601:00054,
-        exg3601:00079,
-        exg3601:00085,
-        exg3601:00095,
-        exg3601:00096,
-        exg3601:00097,
-        exg3601:00098 ;
-    g36:ahuSupplyAirTemp exg3601:00098 ;
     g36:boxDamperPosition exg3601:00054 ;
     g36:effectiveOccupancy exg3601:00022 ;
-    g36:localOverride exg3601:00095 ;
     g36:supplyAirFlow exg3601:00032 ;
     g36:zoneCO2 exg3601:00085 ;
-    g36:zoneOccupancySensor exg3601:00096 ;
-    g36:zoneSetpointAdj exg3601:00097 ;
     g36:zoneTemperature exg3601:00079 ;
     g36:zonewindowSwitch exg3601:00040 ;
     rdfs:comment "Lorem ipsum of sequence" .
-
-exg3601:00095 a s223:FunctionInput,
-        s223:Property,
-        g36:DigitalInput ;
-    rdfs:label "Bob G36 VAV Cooling Only.localOverride" .
-
-exg3601:00096 a s223:FunctionInput,
-        s223:Property,
-        g36:DigitalInput ;
-    rdfs:label "Bob G36 VAV Cooling Only.zoneOccupancySensor" .
-
-exg3601:00097 a s223:FunctionInput,
-        s223:Property,
-        g36:AnalogInput ;
-    rdfs:label "Bob G36 VAV Cooling Only.zoneSetpointAdj" .
-
-exg3601:00098 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Bob G36 VAV Cooling Only.ahuSupplyAirTemp" .
 

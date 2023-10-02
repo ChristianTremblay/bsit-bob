@@ -7,7 +7,6 @@
 @prefix electrical_devices: <urn:sample_pritoni/electrical_devices/> .
 @prefix electricity: <urn:sample_pritoni/electricity/> .
 @prefix functions: <urn:sample_pritoni/functions/> .
-@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix hvac: <urn:sample_pritoni/hvac/> .
 @prefix hvac_devices: <urn:sample_pritoni/hvac_devices/> .
 @prefix hvac_spaces: <urn:sample_pritoni/hvac_spaces/> .
@@ -3133,8 +3132,7 @@ electricity:00008 a s223:Connection ;
     s223:connectsTo hvac_devices:00369 ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz .
 
-functions:00001 a s223:FunctionOutput,
-        s223:ObservableProperty,
+functions:00001 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -3148,196 +3146,96 @@ functions:00001 a s223:FunctionOutput,
 functions:00002 a s223:FunctionBlock,
         functions:Average ;
     rdfs:label "FB-1" ;
-    s223:hasInput functions:00003,
-        hvac_devices:00019 ;
+    s223:hasInput hvac_devices:00019 ;
     s223:hasOutput functions:00001 ;
-    s223:hasProperty functions:00001,
-        functions:00003,
-        hvac_devices:00019 ;
     rdfs:comment "Compute DA-T Avg" ;
     functions:u1 hvac_devices:00019 ;
-    functions:u2 functions:00003 ;
     functions:y functions:00001 .
 
-functions:00003 a s223:FunctionInput,
-        s223:Property,
-        g36:AnalogInput ;
-    rdfs:label "FB-1.u2" .
-
-functions:00004 a s223:EnumerableProperty,
-        s223:FunctionInput,
+functions:00003 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Open Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasExternalReference bacnet_references:00022 .
 
-functions:00005 a p223:OccupancyFunction,
+functions:00004 a p223:OccupancyFunction,
         s223:FunctionBlock ;
     rdfs:label "Open Office Occ Control" ;
-    s223:hasInput functions:00004,
-        functions:00006,
-        functions:00007,
+    s223:hasInput functions:00003,
         lighting_devices:00089 ;
     s223:hasOutput lighting_spaces:00004 ;
-    s223:hasProperty functions:00004,
-        functions:00006,
-        functions:00007,
-        lighting_devices:00089,
-        lighting_spaces:00004 ;
-    bob:inLocalOverride functions:00007 ;
-    bob:inOccSensor functions:00006 ;
-    bob:inSchedule functions:00004 ;
+    bob:inSchedule functions:00003 ;
     bob:inStatus lighting_devices:00089 ;
     bob:outStatus lighting_spaces:00004 ;
     rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
 
-functions:00006 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Open Office Occ Control.inOccSensor" .
-
-functions:00007 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Open Office Occ Control.inLocalOverride" .
-
-functions:00008 a s223:EnumerableProperty,
-        s223:FunctionInput,
+functions:00005 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Kitchenette Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasExternalReference bacnet_references:00022 .
 
-functions:00009 a p223:OccupancyFunction,
+functions:00006 a p223:OccupancyFunction,
         s223:FunctionBlock ;
     rdfs:label "Kitchenette Occ Control" ;
-    s223:hasInput functions:00008,
-        functions:00010,
-        functions:00011,
+    s223:hasInput functions:00005,
         lighting_devices:00014 ;
     s223:hasOutput lighting_spaces:00024 ;
-    s223:hasProperty functions:00008,
-        functions:00010,
-        functions:00011,
-        lighting_devices:00014,
-        lighting_spaces:00024 ;
-    bob:inLocalOverride functions:00011 ;
-    bob:inOccSensor functions:00010 ;
-    bob:inSchedule functions:00008 ;
+    bob:inSchedule functions:00005 ;
     bob:inStatus lighting_devices:00014 ;
     bob:outStatus lighting_spaces:00024 ;
     rdfs:comment "Occupancy sensor drives LightingZone1 and LightingZone2" .
 
-functions:00010 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Kitchenette Occ Control.inOccSensor" .
-
-functions:00011 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Kitchenette Occ Control.inLocalOverride" .
-
-functions:00012 a s223:EnumerableProperty,
-        s223:FunctionInput,
+functions:00007 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Private Office Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasExternalReference bacnet_references:00022 .
 
-functions:00013 a p223:OccupancyFunction,
+functions:00008 a p223:OccupancyFunction,
         s223:FunctionBlock ;
     rdfs:label "Private Office Occ Control" ;
-    s223:hasInput functions:00012,
-        functions:00014,
-        functions:00015,
+    s223:hasInput functions:00007,
         lighting_devices:00029 ;
     s223:hasOutput lighting_spaces:00016 ;
-    s223:hasProperty functions:00012,
-        functions:00014,
-        functions:00015,
-        lighting_devices:00029,
-        lighting_spaces:00016 ;
-    bob:inLocalOverride functions:00015 ;
-    bob:inOccSensor functions:00014 ;
-    bob:inSchedule functions:00012 ;
+    bob:inSchedule functions:00007 ;
     bob:inStatus lighting_devices:00029 ;
     bob:outStatus lighting_spaces:00016 ;
     rdfs:comment "Deal with OccupancySpace3...probably not required but it's defined" .
 
-functions:00014 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Private Office Occ Control.inOccSensor" .
-
-functions:00015 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Private Office Occ Control.inLocalOverride" .
-
-functions:00016 a s223:EnumerableProperty,
-        s223:FunctionInput,
+functions:00009 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Bathroom Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasExternalReference bacnet_references:00022 .
 
-functions:00017 a p223:OccupancyFunction,
+functions:00010 a p223:OccupancyFunction,
         s223:FunctionBlock ;
     rdfs:label "Bathroom Occ Control" ;
-    s223:hasInput functions:00016,
-        functions:00018,
-        functions:00019,
+    s223:hasInput functions:00009,
         lighting_devices:00060 ;
     s223:hasOutput lighting_spaces:00012 ;
-    s223:hasProperty functions:00016,
-        functions:00018,
-        functions:00019,
-        lighting_devices:00060,
-        lighting_spaces:00012 ;
-    bob:inLocalOverride functions:00019 ;
-    bob:inOccSensor functions:00018 ;
-    bob:inSchedule functions:00016 ;
+    bob:inSchedule functions:00009 ;
     bob:inStatus lighting_devices:00060 ;
     bob:outStatus lighting_spaces:00012 ;
     rdfs:comment "Light space O2" .
 
-functions:00018 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Bathroom Occ Control.inOccSensor" .
-
-functions:00019 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Bathroom Occ Control.inLocalOverride" .
-
-functions:00020 a s223:EnumerableProperty,
-        s223:FunctionInput,
+functions:00011 a s223:EnumerableProperty,
         s223:Property ;
     rdfs:label "Corridor Occ Schedule" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasExternalReference bacnet_references:00022 .
 
-functions:00021 a p223:OccupancyFunction,
+functions:00012 a p223:OccupancyFunction,
         s223:FunctionBlock ;
     rdfs:label "Corridor Occ Control" ;
-    s223:hasInput functions:00020,
-        functions:00022,
-        functions:00023,
+    s223:hasInput functions:00011,
         lighting_devices:00044 ;
     s223:hasOutput lighting_spaces:00016 ;
-    s223:hasProperty functions:00020,
-        functions:00022,
-        functions:00023,
-        lighting_devices:00044,
-        lighting_spaces:00016 ;
-    bob:inLocalOverride functions:00023 ;
-    bob:inOccSensor functions:00022 ;
-    bob:inSchedule functions:00020 ;
+    bob:inSchedule functions:00011 ;
     bob:inStatus lighting_devices:00044 ;
     bob:outStatus lighting_spaces:00016 ;
     rdfs:comment "Corridor Light space, O5" .
-
-functions:00022 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Corridor Occ Control.inOccSensor" .
-
-functions:00023 a s223:FunctionInput,
-        s223:Property ;
-    rdfs:label "Corridor Occ Control.inLocalOverride" .
 
 hvac:00001 a s223:Connection ;
     rdfs:label "CorridorNorthDoors" ;
@@ -3733,8 +3631,7 @@ hvac_devices:00018 a s223:Equipment,
     s223:observes hvac_devices:00019 ;
     rdfs:comment "Discharge Air temperature after cooling coil (S7)" .
 
-hvac_devices:00019 a s223:FunctionInput,
-        s223:ObservableProperty,
+hvac_devices:00019 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4134,8 +4031,7 @@ hvac_devices:00063 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:hasUnit unit:HP .
 
-hvac_devices:00064 a s223:FunctionOutput,
-        s223:ObservableProperty,
+hvac_devices:00064 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4145,8 +4041,7 @@ hvac_devices:00064 a s223:FunctionOutput,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-hvac_devices:00065 a s223:FunctionOutput,
-        s223:ObservableProperty,
+hvac_devices:00065 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4156,7 +4051,6 @@ hvac_devices:00065 a s223:FunctionOutput,
     qudt:hasUnit unit:HZ .
 
 hvac_devices:00066 a s223:ActuatableProperty,
-        s223:FunctionOutput,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -4165,8 +4059,7 @@ hvac_devices:00066 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:00067 a s223:FunctionOutput,
-        s223:ObservableProperty,
+hvac_devices:00067 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4185,7 +4078,6 @@ hvac_devices:00068 a s223:ObservableProperty,
 
 hvac_devices:00069 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionOutput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
@@ -4202,7 +4094,6 @@ hvac_devices:00070 a s223:ActuatableProperty,
 
 hvac_devices:00071 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionOutput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
@@ -4230,8 +4121,7 @@ hvac_devices:00075 a s223:Equipment,
     s223:hasObservationLocation hvac_devices:00057 ;
     s223:observes hvac_devices:00076 .
 
-hvac_devices:00076 a s223:FunctionInput,
-        s223:ObservableProperty,
+hvac_devices:00076 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4248,8 +4138,7 @@ hvac_devices:00077 a p223:VoltageSensor,
     s223:hasObservationLocation hvac_devices:00057 ;
     s223:observes hvac_devices:00078 .
 
-hvac_devices:00078 a s223:FunctionInput,
-        s223:ObservableProperty,
+hvac_devices:00078 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4266,8 +4155,7 @@ hvac_devices:00079 a p223:VoltageSensor,
     s223:hasObservationLocation hvac_devices:00060 ;
     s223:observes hvac_devices:00080 .
 
-hvac_devices:00080 a s223:FunctionInput,
-        s223:ObservableProperty,
+hvac_devices:00080 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4289,15 +4177,6 @@ hvac_devices:00081 a s223:FunctionBlock,
         hvac_devices:00067,
         hvac_devices:00069,
         hvac_devices:00071 ;
-    s223:hasProperty hvac_devices:00064,
-        hvac_devices:00065,
-        hvac_devices:00066,
-        hvac_devices:00067,
-        hvac_devices:00069,
-        hvac_devices:00071,
-        hvac_devices:00076,
-        hvac_devices:00078,
-        hvac_devices:00080 ;
     bob:alarm hvac_devices:00071 ;
     bob:amps_load hvac_devices:00076 ;
     bob:drive_running hvac_devices:00069 ;
@@ -8757,7 +8636,6 @@ lighting_devices:00013 a s223:Equipment,
 
 lighting_devices:00014 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "O4.OccupantMotion" ;
@@ -8892,7 +8770,6 @@ lighting_devices:00028 a s223:Equipment,
 
 lighting_devices:00029 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "O3.OccupantMotion" ;
@@ -9029,7 +8906,6 @@ lighting_devices:00043 a s223:Equipment,
 
 lighting_devices:00044 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "O5.OccupantMotion" ;
@@ -9177,7 +9053,6 @@ lighting_devices:00059 a s223:Equipment,
 
 lighting_devices:00060 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "O2.OccupantMotion" ;
@@ -9447,7 +9322,6 @@ lighting_devices:00088 a s223:Equipment,
 
 lighting_devices:00089 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionInput,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "O1.OccupantMotion" ;
@@ -9513,7 +9387,6 @@ lighting_spaces:00003 a s223:InletConnectionPoint,
 
 lighting_spaces:00004 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionOutput,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
@@ -9582,7 +9455,6 @@ lighting_spaces:00011 a s223:InletConnectionPoint,
 
 lighting_spaces:00012 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionOutput,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
@@ -9617,7 +9489,6 @@ lighting_spaces:00015 a s223:InletConnectionPoint,
 
 lighting_spaces:00016 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionOutput,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
@@ -9686,7 +9557,6 @@ lighting_spaces:00023 a s223:InletConnectionPoint,
 
 lighting_spaces:00024 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
-        s223:FunctionOutput,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
