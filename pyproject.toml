@@ -1,10 +1,6 @@
-[build-system]
-requires = ["setuptools", "setuptools_scm"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "bob"
-version = "0.80"
+version = "0.82"
 authors = [
     {name="Joel Bender", email="jjb5@cornell.edu"},
     {name="Christian Tremblay", email="christian.tremblay@servisys.com"},
@@ -14,22 +10,18 @@ readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
     "rdflib",
-    "importlib-metadata",
-    "brickschema"
 ]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["bob*"]
+namespaces = false
 
 [project.optional-dependencies]
 test = ["pytest", "pyshacl", "ontoenv", "pyvis", "click"]
-lint = [ "black", "flake8", "isort"]
+lint = ["black", "flake8", "isort"]
 cov = ["pytest < 5.0.0", "pytest-cov[all]"]
 
-[tool.setuptools_scm]
-# write_to = "bob/_version.py"
-
-[tool.setuptools]
-packages = [
-    "bob",
-    "tools",
-    ]
-[project.scripts]
-rdf2html = "tools.rdf2html:process"

@@ -27,94 +27,91 @@ class Average(FunctionBlock):
     y: G36AnalogOutput
 
 
-# make an instance
-f = Average(label="FB-1", comment="Compute DA-T Avg")
-
-# line up the input(s)
-hd.ahu["DA-T"].observedProperty >> f.u1
-
 # line up the output to a special property
 f_avg_temp = Temperature(label="DA-T-AVG", hasValue=0, hasUnit=UNIT.DEG_C)
-f.y >> f_avg_temp
 
+# make an instance
+f = Average(
+    label="FB-1",
+    comment="Compute DA-T Avg",
+    u1=hd.ahu["DA-T"].observedProperty,
+    y=f_avg_temp,
+)
 
 #
 #   Open Office
 #
 
+open_office_occ_control_schedule = Schedule(label="Open Office Occ Schedule")
+
 open_office_occ_control = OccupancyFunction(
     label="Open Office Occ Control",
     comment="Occupancy sensor drives LightingZone1 and LightingZone2",
+    inStatus=ld.openoffice_movement.observedProperty,
+    inSchedule=open_office_occ_control_schedule,
+    outStatus=ls.openofficeNorth_lightspace.occupancy,
 )
-open_office_occ_control_schedule = Schedule(label="Open Office Occ Schedule")
-
-ld.openoffice_movement.observedProperty >> open_office_occ_control.inStatus
-open_office_occ_control_schedule >> open_office_occ_control.inSchedule
-
-open_office_occ_control.outStatus >> ls.lighting_zone_1.occupancy
-open_office_occ_control.outStatus >> ls.lighting_zone_2.occupancy
-open_office_occ_control.outStatus >> hs.openoffice_hvac.occupancy
 
 #
 #   Kitchenette
 #
 
+kitchenette_occ_control_schedule = Schedule(label="Kitchenette Occ Schedule")
+
 kitchenette_occ_control = OccupancyFunction(
     label="Kitchenette Occ Control",
     comment="Occupancy sensor drives LightingZone1 and LightingZone2",
+    inStatus=ld.kitchenette_movement.observedProperty,
+    inSchedule=kitchenette_occ_control_schedule,
+    outStatus=ls.kitchenette_lightspace.occupancy,
 )
-kitchenette_occ_control_schedule = Schedule(label="Kitchenette Occ Schedule")
 
-ld.kitchenette_movement.observedProperty >> kitchenette_occ_control.inStatus
-kitchenette_occ_control_schedule >> kitchenette_occ_control.inSchedule
-
-kitchenette_occ_control.outStatus >> ls.lighting_zone_6.occupancy
-kitchenette_occ_control.outStatus >> hs.hvac_zone_2.occupancy
+### kitchenette_occ_control.outStatus >> hs.hvac_zone_2.occupancy
 
 #
 #   Private Office
 #
 
+private_office_occ_control_schedule = Schedule(label="Private Office Occ Schedule")
+
 private_office_occ_control = OccupancyFunction(
     label="Private Office Occ Control",
     comment="Deal with OccupancySpace3...probably not required but it's defined",
+    inStatus=ld.privateoffice_movement.observedProperty,
+    inSchedule=private_office_occ_control_schedule,
+    outStatus=ls.corridor_lightspace.occupancy,
 )
-private_office_occ_control_schedule = Schedule(label="Private Office Occ Schedule")
 
-ld.privateoffice_movement.observedProperty >> private_office_occ_control.inStatus
-private_office_occ_control_schedule >> private_office_occ_control.inSchedule
-
-private_office_occ_control.outStatus >> ls.lighting_zone_4.occupancy
-private_office_occ_control.outStatus >> hs.privateoffice_hvac.occupancy
+### private_office_occ_control.outStatus >> hs.privateoffice_hvac.occupancy
 
 #
 #   Bathroom
 #
 
+bathroom_occ_control_schedule = Schedule(label="Bathroom Occ Schedule")
+
 bathroom_occ_control = OccupancyFunction(
     label="Bathroom Occ Control",
     comment="Light space O2",
+    inStatus=ld.bathroom_movement.observedProperty,
+    inSchedule=bathroom_occ_control_schedule,
+    outStatus=ls.bathroom_lightspace.occupancy,
 )
-bathroom_occ_control_schedule = Schedule(label="Bathroom Occ Schedule")
 
-ld.bathroom_movement.observedProperty >> bathroom_occ_control.inStatus
-bathroom_occ_control_schedule >> bathroom_occ_control.inSchedule
-
-bathroom_occ_control.outStatus >> ls.lighting_zone_3.occupancy
-bathroom_occ_control.outStatus >> hs.bathroom_hvac.occupancy
+### bathroom_occ_control.outStatus >> hs.bathroom_hvac.occupancy
 
 #
 #   Corridor
 #
 
+corridor_occ_control_schedule = Schedule(label="Corridor Occ Schedule")
+
 corridor_occ_control = OccupancyFunction(
     label="Corridor Occ Control",
     comment="Corridor Light space, O5",
+    inStatus=ld.corridor_movement.observedProperty,
+    inSchedule=corridor_occ_control_schedule,
+    outStatus=ls.corridor_lightspace.occupancy,
 )
-corridor_occ_control_schedule = Schedule(label="Corridor Occ Schedule")
 
-ld.corridor_movement.observedProperty >> corridor_occ_control.inStatus
-corridor_occ_control_schedule >> corridor_occ_control.inSchedule
-
-corridor_occ_control.outStatus >> ls.lighting_zone_5.occupancy
-corridor_occ_control.outStatus >> hs.corridorNorth_hvac.occupancy
+### corridor_occ_control.outStatus >> hs.corridorNorth_hvac.occupancy
