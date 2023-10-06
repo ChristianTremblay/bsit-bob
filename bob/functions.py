@@ -36,45 +36,29 @@ _namespace = S223
 
 
 class FunctionInput(PropertyReference):
-    def __new__(cls, arg, **kwargs) -> Any:
+    def __new__(cls, arg: Any = None, **kwargs) -> Any:
         _log.debug(f"FunctionInput.__new__ {cls} {arg} {kwargs}")
+        if (arg is None) or (arg == ()):
+            return Property(**kwargs)
         if isinstance(arg, Property):
             return arg
-        elif isinstance(arg, FunctionBlock):
-            return object.__new__(cls)
-        elif isinstance(arg, (int, float, str, datetime)):
-            return Property(arg)
-        else:
-            raise TypeError(f"property expected: {arg}")
+        if isinstance(arg, (int, float, str, datetime)):
+            return Property(arg, **kwargs)
 
-    def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
-        _log.debug(
-            f"FunctionInput({self.__class__.__name__}).__init__ {function_block} {kwargs}"
-        )
-
-        super().__init__(**kwargs)
-
-        data_graph.add((function_block._node_iri, S223.hasInput, self._node_iri))
+        raise TypeError(f"property expected: {arg}")
 
 
 class FunctionOutput(PropertyReference):
-    def __new__(cls, arg, **kwargs) -> Any:
+    def __new__(cls, arg: Any = None, **kwargs) -> Any:
         _log.debug(f"FunctionOutput.__new__ {cls} {arg} {kwargs}")
+        if (arg is None) or (arg == ()):
+            return Property(**kwargs)
         if isinstance(arg, Property):
             return arg
-        elif isinstance(arg, FunctionBlock):
-            return object.__new__(cls)
-        else:
-            raise TypeError(f"property expected: {arg}")
+        if isinstance(arg, (int, float, str, datetime)):
+            return Property(arg, **kwargs)
 
-    def __init__(self, function_block: FunctionBlock, **kwargs: Any) -> None:
-        _log.debug(
-            f"FunctionOutput({self.__class__.__name__}).__init__ {function_block} {kwargs}"
-        )
-
-        super().__init__(**kwargs)
-
-        data_graph.add((function_block._node_iri, S223.hasOutput, self._node_iri))
+        raise TypeError(f"property expected: {arg}")
 
 
 #
@@ -124,31 +108,26 @@ class FunctionBlock(Node):
         for attr_name, attr_type in self._nodes.items():
             if not inspect.isclass(attr_type):
                 continue
+            if not issubclass(attr_type, (FunctionInput, FunctionOutput)):
+                continue
 
-            if issubclass(attr_type, (FunctionInput, FunctionOutput)):
-                # check if an instance was passed as a kwarg
-                attr_element = getattr(self, attr_name, None)
-                if attr_element is None:
-                    continue
-                    # attr_element = attr_type(self, label=self.label + "." + attr_name)
-                    # _log.debug(f"    - setting {attr_name}: {attr_element}")
-                    # setattr(self, attr_name, attr_element)
+            # check if an instance was passed as a kwarg, if it was then
+            # the attribute element will be a node and has its _node_iri
+            attr_element = getattr(self, attr_name, None)
+            if attr_element is None:
+                continue
 
-                # if this is used as a function input/output, make it so
-                if issubclass(attr_type, FunctionInput):
-                    data_graph.add(
-                        (self._node_iri, S223.hasInput, attr_element._node_iri)
-                    )
-                    # data_graph.add(
-                    #     (attr_element._node_iri, RDF.type, S223.FunctionInput)
-                    # )
-                elif issubclass(attr_type, FunctionOutput):
-                    data_graph.add(
-                        (self._node_iri, S223.hasOutput, attr_element._node_iri)
-                    )
-                    # data_graph.add(
-                    #     (attr_element._node_iri, RDF.type, S223.FunctionOutput)
-                    # )
+            # if this is used as a function input/output, make it so
+            if issubclass(attr_type, FunctionInput):
+                data_graph.add((self._node_iri, S223.hasInput, attr_element._node_iri))
+                # data_graph.add(
+                #     (attr_element._node_iri, RDF.type, S223.FunctionInput)
+                # )
+            elif issubclass(attr_type, FunctionOutput):
+                data_graph.add((self._node_iri, S223.hasOutput, attr_element._node_iri))
+                # data_graph.add(
+                #     (attr_element._node_iri, RDF.type, S223.FunctionOutput)
+                # )
 
     def __setattr__(self, attr: str, value: Any) -> None:
         """
@@ -163,22 +142,21 @@ class FunctionBlock(Node):
         if not attr_type:
             return
 
+        _log.debug(f"FunctionBlock.__setattr__ {attr} {value}")
+
         # get the element after it has been set, it will be an instance of
         # attr_type which might not be the value
         attr_element = vars(self).get(attr)
+        _log.debug("    - attr_element: %r", attr_element)
 
         # if this is used as a function input/output, make it so
         if issubclass(attr_type, FunctionInput):
-            data_graph.add(
-                (self._node_iri, S223.hasInput, attr_element._node_iri)
-            )
+            data_graph.add((self._node_iri, S223.hasInput, attr_element._node_iri))
             # data_graph.add(
             #     (attr_element._node_iri, RDF.type, S223.FunctionInput)
             # )
         elif issubclass(attr_type, FunctionOutput):
-            data_graph.add(
-                (self._node_iri, S223.hasOutput, attr_element._node_iri)
-            )
+            data_graph.add((self._node_iri, S223.hasOutput, attr_element._node_iri))
             # data_graph.add(
             #     (attr_element._node_iri, RDF.type, S223.FunctionOutput)
             # )

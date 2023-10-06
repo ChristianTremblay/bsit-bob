@@ -601,7 +601,7 @@ class Node(metaclass=NodeMetaclass):
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
 
             elif attr_origin in (Any, Dict, Set, Union):
-                _log.debug("    - inspection not supported")
+                raise RuntimeError(f"inspection not supported: {attr}, {attr_type}")
 
             elif inspect.isclass(attr_type):
                 cls._nodes[attr] = attr_type
@@ -944,7 +944,7 @@ class Property(Node):
             self += each
 
         # if there is an initial value, link to it
-        if init_value is not None:
+        if init_value is not None and init_value != ():
             if not isinstance(init_value, Literal):
                 init_value = Literal(init_value)
             self.hasValue = init_value
@@ -957,10 +957,10 @@ class Property(Node):
             elif isinstance(external_reference, ExternalReference):
                 self @ external_reference
             else:
-                pass  # nope...not doing it
+                raise TypeError(f"external reference expected: {external_reference}")
 
     def __matmul__(self, other: Any) -> Any:
-        """Add an external refernce to the node
+        """Add an external reference to the node
         property @ ref
         """
         reference_mm(self, other)
@@ -1496,7 +1496,6 @@ class ConnectionPoint(Node):
             raise RuntimeError("other connection point connected")
 
         self.mapsTo = other
-
 
 
 @multimethod

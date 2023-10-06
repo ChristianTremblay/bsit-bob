@@ -86,10 +86,17 @@ class BACnetExternalReference(ExternalReference):
 
             if isinstance(property_identifier, URIRef):
                 kwargs["propertyIdentifier"] = property_identifier
+            elif isinstance(property_identifier, int):
+                raise NotImplementedError("integer property identifiers")  # TODO
+                kwargs["propertyIdentifier"] = property_identifier
             elif isinstance(property_identifier, str):
-                kwargs["propertyIdentifier"] = BACNET[
-                    "PropertyIdentifier." + property_identifier
-                ]
+                if property_identifier.isdigit():
+                    raise NotImplementedError("integer property identifiers")  # TODO
+                    kwargs["propertyIdentifier"] = int(property_identifier)
+                else:
+                    kwargs["propertyIdentifier"] = BACNET[
+                        "PropertyIdentifier." + property_identifier
+                    ]
             elif property_identifier is None:
                 kwargs["propertyIdentifier"] = BACNET[
                     "PropertyIdentifier.present-value"
