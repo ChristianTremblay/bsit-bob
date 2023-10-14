@@ -79,7 +79,8 @@ co2Sensor_template = {
     },
     "sensors": {
         ("CO2", CO2Sensor): {
-            "hasExternalReference": "bacnet://",
+            # external references need the whole URL
+            # "hasExternalReference": "bacnet://",
             "hasMinRange": QuantifiableObservableProperty(
                 0,
                 hasQuantityKind=QUANTITYKIND.DimensionlessRatio,

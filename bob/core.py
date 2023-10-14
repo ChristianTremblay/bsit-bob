@@ -601,7 +601,11 @@ class Node(metaclass=NodeMetaclass):
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
 
             elif attr_origin in (Any, Dict, Set, Union):
-                raise RuntimeError(f"inspection not supported: {attr}, {attr_type}")
+                warnings.warn(f"class {cls}, attribute {attr}: inspection not supported {attr_type}")
+
+                cls._nodes[attr] = attr_type
+                cls._attr_uriref[attr] = attr_uriref
+                cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
 
             elif inspect.isclass(attr_type):
                 cls._nodes[attr] = attr_type
@@ -757,14 +761,14 @@ class Node(metaclass=NodeMetaclass):
                 _log.debug("    - new value: %r", value)
 
             # add the link(s)
-            ### can two different attributes have the same URIRef for calling
-            ### rather than set()?
             if isinstance(value, (URIRef, Literal)):
-                ### this is weird, why is hasValue special?
-                if attr == "hasValue":
+                # volatile attributes use set() so the old triple is removed
+                if attr in getattr(self, "_volatile", {}):
                     self._data_graph.set((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
                 else:
                     self._data_graph.add((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+
+            # if the value is a Node, link to it
             if isinstance(value, Node):
                 _log.debug(
                     "    - add (self, %r, %r)", self._attr_uriref[attr], value._node_iri

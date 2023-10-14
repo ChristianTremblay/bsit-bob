@@ -4,7 +4,7 @@
 #   Project Metadata
 #
 
-__version__ = "0.84"
+__version__ = "0.85"
 
 # core classes for S223 models
 # basic pieces for all Bob models
