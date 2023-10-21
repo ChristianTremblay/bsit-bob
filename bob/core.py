@@ -2579,18 +2579,6 @@ def connect_mm(zone: Zone, connection: Connection) -> None:
     connect_mm(connection_point, connection)
 
 
-@multimethod
-def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
-    """Zone > DomainSpace"""
-    _log.info(f"zone {zone} contains domain space {domain_space}")
-
-    zone._data_graph.add((zone._node_iri, S223.contains, domain_space._node_iri))
-    if INCLUDE_INVERSE:
-        zone._data_graph.add(
-            (domain_space._node_iri, S223.isContainedIn, zone._node_iri)
-        )
-
-
 class ZoneConnectionPoint(Node):
     """
     Zone Connection Point
@@ -2714,6 +2702,35 @@ def connect_mm(
         )
 
     connect_mm(from_connection_point, to_connection_point)
+
+
+class ZoneGroup(Container, Node):
+    """
+    A collection of zones.
+    """
+
+    _class_iri: URIRef = S223.ZoneGroup
+    # hasDomain: Domain
+
+    def __init__(self, **kwargs: Any) -> None:
+        _log.debug(f"Zone.__init__ {kwargs}")
+        super().__init__(**kwargs)
+
+        if MANDITORY_LABEL:
+            if "label" not in kwargs:
+                raise RuntimeError("no label")
+            if not kwargs["label"]:
+                raise RuntimeError("empty label")
+
+
+@multimethod
+def contains_mm(zone_group: ZoneGroup, zone: Zone) -> None:
+    """ZoneGroup > Zone"""
+    _log.info(f"zone group {zone_group} contains zone {zone}")
+
+    zone_group._data_graph.add(
+        (zone_group._node_iri, S223.hasZone, zone._node_iri)
+    )
 
 
 class PhysicalSpace(Container, Node):
@@ -3341,7 +3358,7 @@ def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
     """Zone > DomainSpace"""
     _log.info(f"zone {zone} contains domain space {domain_space}")
 
-    zone._data_graph.add((zone._node_iri, S223.contains, domain_space._node_iri))
+    zone._data_graph.add((zone._node_iri, S223.hasDomainSpace, domain_space._node_iri))
     if INCLUDE_INVERSE:
         zone._data_graph.add(
             (domain_space._node_iri, S223.isContainedIn, zone._node_iri)
