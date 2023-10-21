@@ -2585,6 +2585,10 @@ class ZoneConnectionPoint(Node):
     """
 
     _class_iri: URIRef = BOB.ZoneConnectionPoint
+    _attr_uriref: Dict[str, URIRef] = {
+        "mapsTo": BOB.mapsTo,
+        "isZoneConnectionPointOf": BOB.isZoneConnectionPointOf,
+    }
     hasMedium: Medium
 
     isZoneConnectionPointOf: Zone
