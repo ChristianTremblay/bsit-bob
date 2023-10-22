@@ -3337,11 +3337,11 @@ def contains_mm(parent_equipment: Equipment, child_producer: _Producer) -> None:
     _log.info(f"Equipment {parent_equipment} contains Producer {child_producer}")
 
     parent_equipment._data_graph.add(
-        (parent_equipment._node_iri, S223.contains, child_producer._node_iri)
+        (parent_equipment._node_iri, BOB.contains, child_producer._node_iri)
     )
     if INCLUDE_INVERSE:
         parent_equipment._data_graph.add(
-            (child_producer._node_iri, S223.isContainedIn, parent_equipment._node_iri)
+            (child_producer._node_iri, BOB.isContainedIn, parent_equipment._node_iri)
         )
 
 
