@@ -26,7 +26,7 @@ _namespace = BOB
 class HVACSpace(DomainSpace):
     _class_iri = P223.HVACSpace
     hasDomain = Domain.HVAC
-    hasMedium: Medium = Air
+    # hasMedium: Medium = Air
     # Connection points
     ductAirInlet: AirInletConnectionPoint
     ductAirOutlet: AirOutletConnectionPoint
