@@ -28,7 +28,7 @@ class TemperatureSetpoint(Setpoint):
 
 
 class TemperatureSensor(Sensor):
-    _class_iri = S223.Sensor
+    _class_iri = S223.TemperatureSensor
     observes: PropertyReference  # Temperature
 
     def __init__(self, **kwargs: Any) -> None:
@@ -53,14 +53,12 @@ class TemperatureSensor(Sensor):
 
 
 class AirTemperatureSensor(TemperatureSensor):
-    _class_iri = S223.Sensor
 
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Air, **kwargs)
 
 
 class WaterTemperatureSensor(TemperatureSensor):
-    _class_iri = S223.Sensor
 
     def __init__(self, **kwargs):
         super().__init__(ofMedium=Water, **kwargs)
