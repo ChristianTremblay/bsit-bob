@@ -187,12 +187,12 @@ logger.info("namespace_map: %r", namespace_map)
 qs = """
     SELECT ?resultSeverity ?sourceShape ?resultMessage ?focusNode ?value
     WHERE {
-        ?report rdf:type sh:ValidationReport .
-        ?report sh:result ?result .
-        ?result sh:focusNode ?focusNode .
-        ?result sh:resultMessage ?resultMessage .
-        ?result sh:resultSeverity ?resultSeverity .
-        ?result sh:sourceShape ?sourceShape .
+        ?report rdf:type sh:ValidationReport ;
+            sh:result ?result .
+        ?result sh:focusNode ?focusNode ;
+            sh:resultMessage ?resultMessage ;
+            sh:resultSeverity ?resultSeverity ;
+            sh:sourceShape ?sourceShape .
         OPTIONAL { ?result sh:value ?value } .
         }
     """
