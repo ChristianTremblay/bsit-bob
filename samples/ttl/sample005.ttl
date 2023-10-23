@@ -57,7 +57,6 @@ ex1:00004 a p223:HVACSpace,
         ex1:00010,
         ex1:00011 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
     bob:airTransfer ex1:00007 ;
     bob:doors ex1:00008 ;
     bob:ductAirInlet ex1:00005 ;
@@ -122,7 +121,6 @@ ex1:00012 a p223:HVACSpace,
         ex1:00018,
         ex1:00019 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
     bob:airTransfer ex1:00015 ;
     bob:doors ex1:00016 ;
     bob:ductAirInlet ex1:00013 ;
@@ -225,7 +223,9 @@ ex1:00024 a s223:ObservableProperty,
     qudt:hasUnit unit:L-PER-SEC .
 
 ex1:00025 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
     s223:hasObservationLocation ex1:00061 ;
     s223:observes ex1:00026 ;
@@ -242,8 +242,11 @@ ex1:00026 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 ex1:00027 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "ZN-T" ;
+    s223:hasObservationLocation ex1:00004 ;
     s223:observes ex1:00028 ;
     rdfs:comment "Temperature of space" .
 
@@ -291,11 +294,7 @@ ex1:00032 a s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00062 ;
     s223:connectedTo ex1:00058 ;
-    s223:contains ex1:00044,
-        ex1:00047,
-        ex1:00050,
-        ex1:00053,
-        ex1:00056 ;
+    s223:contains ex1:00056 ;
     s223:hasConnectionPoint ex1:00033,
         ex1:00034,
         ex1:00035,
@@ -307,6 +306,10 @@ ex1:00032 a s223:Equipment ;
         ex1:00041,
         ex1:00042,
         ex1:00043 ;
+    bob:contains ex1:00044,
+        ex1:00047,
+        ex1:00050,
+        ex1:00053 ;
     bob:position ex1:00057 .
 
 ex1:00033 a p223:MechanicalConnectionPoint,
@@ -571,7 +574,9 @@ ex1:00068 a s223:ObservableProperty,
     qudt:hasUnit unit:L-PER-SEC .
 
 ex1:00069 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
     s223:hasObservationLocation ex1:00105 ;
     s223:observes ex1:00070 ;
@@ -588,8 +593,11 @@ ex1:00070 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 ex1:00071 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "ZN-T" ;
+    s223:hasObservationLocation ex1:00012 ;
     s223:observes ex1:00072 ;
     rdfs:comment "Temperature of space" .
 
@@ -637,11 +645,7 @@ ex1:00076 a s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00106 ;
     s223:connectedTo ex1:00102 ;
-    s223:contains ex1:00088,
-        ex1:00091,
-        ex1:00094,
-        ex1:00097,
-        ex1:00100 ;
+    s223:contains ex1:00100 ;
     s223:hasConnectionPoint ex1:00077,
         ex1:00078,
         ex1:00079,
@@ -653,6 +657,10 @@ ex1:00076 a s223:Equipment ;
         ex1:00085,
         ex1:00086,
         ex1:00087 ;
+    bob:contains ex1:00088,
+        ex1:00091,
+        ex1:00094,
+        ex1:00097 ;
     bob:position ex1:00101 .
 
 ex1:00077 a p223:MechanicalConnectionPoint,

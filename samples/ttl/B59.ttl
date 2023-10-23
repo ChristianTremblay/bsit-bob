@@ -48,7 +48,9 @@ ex1:00001 a p223:AirHandlingUnit,
     rdfs:comment "Rooftop Unit" .
 
 ex1:00002 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
     s223:hasObservationLocation ex1:00115 ;
     s223:hasPhysicalLocation ex1:00118 ;
@@ -66,7 +68,9 @@ ex1:00003 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 ex1:00004 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "RA-T" ;
     s223:hasObservationLocation ex1:00023 ;
     s223:hasPhysicalLocation ex1:00117 ;
@@ -84,7 +88,9 @@ ex1:00005 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 ex1:00006 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "ZN-T" ;
     s223:hasObservationLocation ex1:00122 ;
     s223:hasPhysicalLocation ex1:00119 ;
@@ -382,11 +388,7 @@ ex1:00037 a s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00067 ;
     s223:connectedTo ex1:00063 ;
-    s223:contains ex1:00049,
-        ex1:00052,
-        ex1:00055,
-        ex1:00058,
-        ex1:00061 ;
+    s223:contains ex1:00061 ;
     s223:hasConnectionPoint ex1:00038,
         ex1:00039,
         ex1:00040,
@@ -398,6 +400,10 @@ ex1:00037 a s223:Equipment ;
         ex1:00046,
         ex1:00047,
         ex1:00048 ;
+    bob:contains ex1:00049,
+        ex1:00052,
+        ex1:00055,
+        ex1:00058 ;
     bob:position ex1:00062 .
 
 ex1:00038 a p223:MechanicalConnectionPoint,
@@ -639,11 +645,7 @@ ex1:00071 a s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00101 ;
     s223:connectedTo ex1:00097 ;
-    s223:contains ex1:00083,
-        ex1:00086,
-        ex1:00089,
-        ex1:00092,
-        ex1:00095 ;
+    s223:contains ex1:00095 ;
     s223:hasConnectionPoint ex1:00072,
         ex1:00073,
         ex1:00074,
@@ -655,6 +657,10 @@ ex1:00071 a s223:Equipment ;
         ex1:00080,
         ex1:00081,
         ex1:00082 ;
+    bob:contains ex1:00083,
+        ex1:00086,
+        ex1:00089,
+        ex1:00092 ;
     bob:position ex1:00096 .
 
 ex1:00072 a p223:MechanicalConnectionPoint,
@@ -1005,7 +1011,6 @@ ex1:00120 a p223:HVACSpace,
         ex1:00126,
         ex1:00127 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
     bob:airTransfer ex1:00123 ;
     bob:doors ex1:00124 ;
     bob:ductAirInlet ex1:00121 ;

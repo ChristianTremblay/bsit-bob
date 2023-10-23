@@ -131,7 +131,6 @@ exg3601:00014 a p223:HVACSpace,
         exg3601:00020,
         exg3601:00021 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
     s223:hasProperty exg3601:00022,
         exg3601:00079,
         exg3601:00085 ;
@@ -290,7 +289,9 @@ exg3601:00032 a s223:ObservableProperty,
     qudt:hasUnit unit:L-PER-SEC .
 
 exg3601:00033 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
     s223:hasObservationLocation exg3601:00073 ;
     s223:observes exg3601:00034 ;
@@ -307,7 +308,9 @@ exg3601:00034 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 exg3601:00035 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "ZN-T" ;
     s223:observes exg3601:00036 ;
     rdfs:comment "Temperature of space" .
@@ -334,7 +337,7 @@ exg3601:00038 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "ZN-OCC-SENSOR.OccupantMotion" ;
-    s223:hasEnumerationKind p223:EnumerationKind-MotionNoMotion ;
+    s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
 exg3601:00039 a p223:IntrusionSensor,
@@ -386,11 +389,7 @@ exg3601:00044 a s223:Equipment ;
     s223:connectedThrough exg3601:00074,
         exg3601:00086 ;
     s223:connectedTo exg3601:00070 ;
-    s223:contains exg3601:00056,
-        exg3601:00059,
-        exg3601:00062,
-        exg3601:00065,
-        exg3601:00068 ;
+    s223:contains exg3601:00068 ;
     s223:hasConnectionPoint exg3601:00045,
         exg3601:00046,
         exg3601:00047,
@@ -402,6 +401,10 @@ exg3601:00044 a s223:Equipment ;
         exg3601:00053,
         exg3601:00054,
         exg3601:00055 ;
+    bob:contains exg3601:00056,
+        exg3601:00059,
+        exg3601:00062,
+        exg3601:00065 ;
     bob:position exg3601:00069 .
 
 exg3601:00045 a p223:MechanicalConnectionPoint,
@@ -639,7 +642,9 @@ exg3601:00077 a s223:Property,
     qudt:hasUnit unit:DEG_C .
 
 exg3601:00078 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "temperature_sensor" ;
     s223:hasObservationLocation exg3601:00014 ;
     s223:observes exg3601:00079 .
@@ -665,7 +670,7 @@ exg3601:00081 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "local_override.OccupantMotion" ;
-    s223:hasEnumerationKind p223:EnumerationKind-MotionNoMotion ;
+    s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
 exg3601:00082 a p223:GasMonitor,

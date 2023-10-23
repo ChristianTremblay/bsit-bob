@@ -11,24 +11,30 @@ from bob.core import (
     bind_model_namespace,
     dump,
 )
+from bob.connections.air import (
+    AirInletConnectionPoint,
+    AirOutletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TestEquipment(Equipment):
-    cp: InletConnectionPoint
+    cp: AirInletConnectionPoint
 
 
 class TestSystem(System):
-    cpI: InletSystemConnectionPoint
-    cpO: OutletSystemConnectionPoint
+    cpI: AirInletSystemConnectionPoint
+    cpO: AirOutletSystemConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        Equipment = TestEquipment(label=kwargs["label"] + "-d")
-        self.cpI.mapsTo = Equipment.cp
+        equipment = TestEquipment(label=kwargs["label"] + "-d")
+        self.cpI.mapsTo = equipment.cp
 
 
 # two independant systems

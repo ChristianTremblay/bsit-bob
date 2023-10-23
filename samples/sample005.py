@@ -23,9 +23,13 @@ vav1 = VAV_Simple(label="Zone-1.VAV")
 vav1.serves = zone1
 vav1.airOutlet >> hvacspace1.ductAirInlet
 
+vav1["ZN-T"].hasObservationLocation = hvacspace1
+
 # create Zone-2 and its VAV connected together
 vav2 = VAV_Simple(label="Zone-2.VAV")
 vav2.serves = zone1
+
+vav2["ZN-T"].hasObservationLocation = hvacspace2
 
 # common supply connection shared
 supply_air = AirConnection(label="SupplyAir")

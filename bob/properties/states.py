@@ -14,7 +14,7 @@ from ..core import (
     Substance,
 )
 from ..enum import (
-    MotionNoMotionEnum,
+    MotionEnum,
     NormalAlarmEnum,
     OccupancyStatus,
     OnOffEnum,
@@ -82,8 +82,8 @@ class OccupancyStatus(EnumeratedObservableProperty):
 
 class Motion(EnumeratedObservableProperty):
     _class_iri: URIRef = S223.EnumeratedObservableProperty
-    hasEnumerationKind = MotionNoMotionEnum
-    hasValue: MotionNoMotionEnum
+    hasEnumerationKind = MotionEnum
+    hasValue: MotionEnum
 
 
 class SmokePresence(EnumeratedObservableProperty):

@@ -34,7 +34,6 @@ ex27:00001 a p223:HVACSpace,
         ex27:00007,
         ex27:00008 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
     s223:isEnclosedIn ex27:00018 ;
     bob:airTransfer ex27:00004 ;
     bob:doors ex27:00005 ;
@@ -97,7 +96,6 @@ ex27:00009 a p223:HVACSpace,
         ex27:00015,
         ex27:00016 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
     s223:isEnclosedIn ex27:00019 ;
     bob:airTransfer ex27:00012 ;
     bob:doors ex27:00013 ;
@@ -179,11 +177,11 @@ ex27:00021 a s223:DifferentialSensor,
         s223:Sensor ;
     rdfs:label "TPD-01" ;
     s223:contains ex27:00023,
-        ex27:00025,
-        ex27:00027 ;
+        ex27:00025 ;
     s223:hasPhysicalLocation ex27:00020 ;
     s223:hasProperty ex27:00022 ;
     s223:observes ex27:00022 ;
+    bob:contains ex27:00027 ;
     bob:differential_static_pressure ex27:00022 ;
     rdfs:comment "Static Pressure between Clean Room (+) and SAS (-)" .
 
@@ -238,9 +236,9 @@ ex27:00027 a p223:Producer,
     s223:hasInput ex27:00028,
         ex27:00029 ;
     s223:hasOutput ex27:00030 ;
-    s223:isContainedIn ex27:00021 ;
     bob:differential_output ex27:00030 ;
     bob:high_input ex27:00028 ;
+    bob:isContainedIn ex27:00021 ;
     bob:low_input ex27:00029 ;
     rdfs:comment "Will output High minus Low" .
 

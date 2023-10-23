@@ -209,7 +209,7 @@ HVACOperatingMode = EnumerationKind("HVACOperatingMode")
 HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
 LeftRightEnum = EnumerationKind("LeftRight", _alt_namespace=P223)
 ManualAutoEnum = EnumerationKind("ManualAuto", _alt_namespace=P223)
-MotionNoMotionEnum = EnumerationKind("MotionNoMotion", _alt_namespace=P223)
+# MotionNoMotionEnum = EnumerationKind("MotionNoMotion", _alt_namespace=P223)
 NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE BELOW
 NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
 NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
@@ -310,8 +310,9 @@ ManualAutoEnum.Manual = ManualAutoEnum("Manual", _alt_namespace=P223)
 ManualAutoEnum.Auto = ManualAutoEnum("Auto", _alt_namespace=P223)
 
 #
-MotionNoMotionEnum.Motion = MotionNoMotionEnum("Motion", _alt_namespace=P223)
-MotionNoMotionEnum.NoMotion = MotionNoMotionEnum("NoMotion", _alt_namespace=P223)
+MotionEnum = Occupancy("Motion")
+MotionTrue = MotionEnum("Motion-True")
+MotionFalse = MotionEnum("Motion-False")
 
 # This is a test example... do we want to fill 223 with
 # that kind of enums ?

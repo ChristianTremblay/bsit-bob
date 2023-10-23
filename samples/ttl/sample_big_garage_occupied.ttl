@@ -50,7 +50,6 @@ ex1:00003 a p223:HVACSpace,
         ex1:00009,
         ex1:00010 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:hasMedium s223:Medium-Air ;
     bob:airTransfer ex1:00006 ;
     bob:doors ex1:00007 ;
     bob:ductAirInlet ex1:00004 ;
@@ -196,7 +195,7 @@ ex1:00022 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "Movement Sensor Space #1.OccupantMotion" ;
-    s223:hasEnumerationKind p223:EnumerationKind-MotionNoMotion ;
+    s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
 ex1:00023 a s223:Equipment,
@@ -212,7 +211,7 @@ ex1:00024 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "Movement Sensor Space #2.OccupantMotion" ;
-    s223:hasEnumerationKind p223:EnumerationKind-MotionNoMotion ;
+    s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
 ex1:00025 a s223:Equipment,
@@ -416,7 +415,9 @@ ex1:00046 a s223:Connection ;
     s223:hasMedium s223:Medium-Air .
 
 ex1:00047 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "Discharge Air temperature sensor" ;
     s223:hasObservationLocation ex1:00040 ;
     s223:hasPhysicalLocation ex1:00001 ;
@@ -433,7 +434,9 @@ ex1:00048 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 ex1:00049 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "Zone Air temperature sensor" ;
     s223:hasObservationLocation ex1:00003 ;
     s223:hasPhysicalLocation ex1:00001 ;

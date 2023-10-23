@@ -26,8 +26,7 @@ ex27:00001 a s223:Controller,
         s223:Equipment,
         s223:VFD ;
     rdfs:label "MyVFD" ;
-    s223:contains ex27:00018,
-        ex27:00021,
+    s223:contains ex27:00021,
         ex27:00023,
         ex27:00025 ;
     s223:hasConnectionPoint ex27:00002,
@@ -47,6 +46,7 @@ ex27:00001 a s223:Controller,
         ex27:00016,
         ex27:00017 ;
     bob:amps ex27:00022 ;
+    bob:contains ex27:00018 ;
     bob:volts ex27:00024 ;
     rdfs:comment "A VFD for a Big Fan" .
 
@@ -184,9 +184,9 @@ ex27:00018 a p223:Producer,
     rdfs:label "motor_temp_effect" ;
     s223:hasInput ex27:00019 ;
     s223:hasOutput ex27:00020 ;
-    s223:isContainedIn ex27:00001 ;
     bob:cause_input ex27:00019 ;
-    bob:effect_output ex27:00020 .
+    bob:effect_output ex27:00020 ;
+    bob:isContainedIn ex27:00001 .
 
 ex27:00019 a p223:ProducerInput ;
     rdfs:label "motor_temp_effect.cause_input" ;

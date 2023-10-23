@@ -4,13 +4,15 @@ from header import sample_header
 
 from bob.core import (
     Equipment,
-    InletConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletConnectionPoint,
-    OutletSystemConnectionPoint,
     System,
     bind_model_namespace,
     dump,
+)
+from bob.connections.air import (
+    AirInletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
+    AirOutletSystemConnectionPoint,
 )
 
 model_name = Path(__file__).stem
@@ -18,13 +20,13 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TestSystem(System):
-    cpIn: InletSystemConnectionPoint
-    cpOut: OutletSystemConnectionPoint
+    cpIn: AirInletSystemConnectionPoint
+    cpOut: AirOutletSystemConnectionPoint
 
 
 class TestEquipment(Equipment):
-    cpIn: InletConnectionPoint
-    cpOut: OutletConnectionPoint
+    cpIn: AirInletConnectionPoint
+    cpOut: AirOutletConnectionPoint
 
 
 # make a system and a Equipment

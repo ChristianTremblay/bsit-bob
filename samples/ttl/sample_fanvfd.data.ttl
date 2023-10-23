@@ -56,7 +56,9 @@ sample_fanvfd:00001 a p223:AirHandlingUnit,
     rdfs:comment "AHU delivering air to 2 VAV boxes" .
 
 sample_fanvfd:00002 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "OA-T" ;
     s223:observes sample_fanvfd:00003 ;
     rdfs:comment "Oudoor air temperature (S3)" .
@@ -76,10 +78,10 @@ sample_fanvfd:00004 a s223:DifferentialSensor,
         s223:Sensor ;
     rdfs:label "TPD1" ;
     s223:contains sample_fanvfd:00006,
-        sample_fanvfd:00008,
-        sample_fanvfd:00010 ;
+        sample_fanvfd:00008 ;
     s223:hasProperty sample_fanvfd:00005 ;
     s223:observes sample_fanvfd:00005 ;
+    bob:contains sample_fanvfd:00010 ;
     bob:differential_static_pressure sample_fanvfd:00005 ;
     rdfs:comment "Filter Differential Pressure Sensor (S5)" .
 
@@ -147,7 +149,9 @@ sample_fanvfd:00013 a p223:ProducerOutput ;
     s223:produces sample_fanvfd:00005 .
 
 sample_fanvfd:00014 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "HC-T" ;
     s223:observes sample_fanvfd:00015 ;
     rdfs:comment "Air temperature after heating coil (S6)" .
@@ -163,7 +167,9 @@ sample_fanvfd:00015 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 sample_fanvfd:00016 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "MA-T" ;
     s223:observes sample_fanvfd:00017 ;
     rdfs:comment "Return Air temperature (S4)" .
@@ -179,7 +185,9 @@ sample_fanvfd:00017 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_F .
 
 sample_fanvfd:00018 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
     s223:observes sample_fanvfd:00019 ;
     rdfs:comment "Discharge Air temperature after cooling coil (S7)" .
@@ -195,7 +203,9 @@ sample_fanvfd:00019 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_F .
 
 sample_fanvfd:00020 a s223:Equipment,
-        s223:Sensor ;
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
     rdfs:label "RA-T" ;
     s223:observes sample_fanvfd:00021 ;
     rdfs:comment "Return Air temperature (S2)" .
@@ -215,10 +225,10 @@ sample_fanvfd:00022 a s223:DifferentialSensor,
         s223:Sensor ;
     rdfs:label "TPD2" ;
     s223:contains sample_fanvfd:00024,
-        sample_fanvfd:00026,
-        sample_fanvfd:00028 ;
+        sample_fanvfd:00026 ;
     s223:hasProperty sample_fanvfd:00023 ;
     s223:observes sample_fanvfd:00023 ;
+    bob:contains sample_fanvfd:00028 ;
     bob:differential_static_pressure sample_fanvfd:00023 ;
     rdfs:comment "Supply Duct Static Pressure (S8)" .
 
@@ -290,10 +300,10 @@ sample_fanvfd:00032 a s223:DifferentialSensor,
         s223:Sensor ;
     rdfs:label "TPD3" ;
     s223:contains sample_fanvfd:00034,
-        sample_fanvfd:00036,
-        sample_fanvfd:00038 ;
+        sample_fanvfd:00036 ;
     s223:hasProperty sample_fanvfd:00033 ;
     s223:observes sample_fanvfd:00033 ;
+    bob:contains sample_fanvfd:00038 ;
     bob:differential_static_pressure sample_fanvfd:00033 ;
     rdfs:comment "Return Duct Static Pressure (S1)" .
 
@@ -489,8 +499,7 @@ sample_fanvfd:00055 a s223:Controller,
     rdfs:label "RF_VFD" ;
     s223:connectedThrough sample_fanvfd:00232 ;
     s223:connectedTo sample_fanvfd:00042 ;
-    s223:contains sample_fanvfd:00072,
-        sample_fanvfd:00075,
+    s223:contains sample_fanvfd:00075,
         sample_fanvfd:00077,
         sample_fanvfd:00079 ;
     s223:hasConnectionPoint sample_fanvfd:00056,
@@ -510,6 +519,7 @@ sample_fanvfd:00055 a s223:Controller,
         sample_fanvfd:00070,
         sample_fanvfd:00071 ;
     bob:amps sample_fanvfd:00076 ;
+    bob:contains sample_fanvfd:00072 ;
     bob:volts sample_fanvfd:00078 ;
     rdfs:comment "Return Air Fan VFD" .
 
@@ -892,11 +902,11 @@ sample_fanvfd:00099 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
 sample_fanvfd:00100 a p223:CurrentRelay,
         s223:Equipment ;
     rdfs:label "currentRelay" ;
-    s223:contains sample_fanvfd:00104,
-        sample_fanvfd:00106 ;
+    s223:contains sample_fanvfd:00104 ;
     s223:hasConnectionPoint sample_fanvfd:00101 ;
     s223:hasProperty sample_fanvfd:00102,
-        sample_fanvfd:00103 .
+        sample_fanvfd:00103 ;
+    bob:contains sample_fanvfd:00106 .
 
 sample_fanvfd:00101 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
@@ -1098,11 +1108,7 @@ sample_fanvfd:00127 a s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough sample_fanvfd:00157 ;
     s223:connectedTo sample_fanvfd:00153 ;
-    s223:contains sample_fanvfd:00139,
-        sample_fanvfd:00142,
-        sample_fanvfd:00145,
-        sample_fanvfd:00148,
-        sample_fanvfd:00151 ;
+    s223:contains sample_fanvfd:00151 ;
     s223:hasConnectionPoint sample_fanvfd:00128,
         sample_fanvfd:00129,
         sample_fanvfd:00130,
@@ -1114,6 +1120,10 @@ sample_fanvfd:00127 a s223:Equipment ;
         sample_fanvfd:00136,
         sample_fanvfd:00137,
         sample_fanvfd:00138 ;
+    bob:contains sample_fanvfd:00139,
+        sample_fanvfd:00142,
+        sample_fanvfd:00145,
+        sample_fanvfd:00148 ;
     bob:position sample_fanvfd:00152 .
 
 sample_fanvfd:00128 a p223:MechanicalConnectionPoint,
@@ -1355,11 +1365,7 @@ sample_fanvfd:00161 a s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough sample_fanvfd:00191 ;
     s223:connectedTo sample_fanvfd:00187 ;
-    s223:contains sample_fanvfd:00173,
-        sample_fanvfd:00176,
-        sample_fanvfd:00179,
-        sample_fanvfd:00182,
-        sample_fanvfd:00185 ;
+    s223:contains sample_fanvfd:00185 ;
     s223:hasConnectionPoint sample_fanvfd:00162,
         sample_fanvfd:00163,
         sample_fanvfd:00164,
@@ -1371,6 +1377,10 @@ sample_fanvfd:00161 a s223:Equipment ;
         sample_fanvfd:00170,
         sample_fanvfd:00171,
         sample_fanvfd:00172 ;
+    bob:contains sample_fanvfd:00173,
+        sample_fanvfd:00176,
+        sample_fanvfd:00179,
+        sample_fanvfd:00182 ;
     bob:position sample_fanvfd:00186 .
 
 sample_fanvfd:00162 a p223:MechanicalConnectionPoint,
@@ -1612,11 +1622,7 @@ sample_fanvfd:00195 a s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough sample_fanvfd:00225 ;
     s223:connectedTo sample_fanvfd:00221 ;
-    s223:contains sample_fanvfd:00207,
-        sample_fanvfd:00210,
-        sample_fanvfd:00213,
-        sample_fanvfd:00216,
-        sample_fanvfd:00219 ;
+    s223:contains sample_fanvfd:00219 ;
     s223:hasConnectionPoint sample_fanvfd:00196,
         sample_fanvfd:00197,
         sample_fanvfd:00198,
@@ -1628,6 +1634,10 @@ sample_fanvfd:00195 a s223:Equipment ;
         sample_fanvfd:00204,
         sample_fanvfd:00205,
         sample_fanvfd:00206 ;
+    bob:contains sample_fanvfd:00207,
+        sample_fanvfd:00210,
+        sample_fanvfd:00213,
+        sample_fanvfd:00216 ;
     bob:position sample_fanvfd:00220 .
 
 sample_fanvfd:00196 a p223:MechanicalConnectionPoint,

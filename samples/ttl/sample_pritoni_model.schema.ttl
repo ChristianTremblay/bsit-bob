@@ -681,11 +681,6 @@ p223:EnumerationKind-ManualAuto a p223:EnumerationKind-ManualAuto,
         rdfs:Class ;
     rdfs:subClassOf s223:EnumerationKind .
 
-p223:EnumerationKind-MotionNoMotion a p223:EnumerationKind-MotionNoMotion,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf s223:EnumerationKind .
-
 p223:EnumerationKind-NiagaraStatus a p223:EnumerationKind-NiagaraStatus,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -825,18 +820,6 @@ p223:Medium-MechanicalCoupling a p223:Medium-MechanicalCoupling,
         rdfs:Class ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Medium .
-
-p223:MotionNoMotion-Motion a p223:MotionNoMotion-Motion,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf p223:EnumerationKind-MotionNoMotion,
-        s223:EnumerationKind .
-
-p223:MotionNoMotion-NoMotion a p223:MotionNoMotion-NoMotion,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:subClassOf p223:EnumerationKind-MotionNoMotion,
-        s223:EnumerationKind .
 
 p223:MotorStarter a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.starter.MotorStarter" ;
@@ -1229,6 +1212,12 @@ bob:AirConnectionPoint a rdfs:Class ;
 
 bob:AirSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirSystemConnectionPoint" .
+
+bob:AirTemperatureSensor a rdfs:Class ;
+    rdfs:label "bob.sensor.temperature.AirTemperatureSensor" ;
+    rdfs:subClassOf s223:Equipment,
+        s223:Sensor,
+        s223:TemperatureSensor .
 
 bob:Amps a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Amps" ;

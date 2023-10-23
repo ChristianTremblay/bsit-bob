@@ -22,30 +22,93 @@
   rdfs:label "sample014_Motion" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex1:00001 a s223:Equipment,
+ex1:00001 a p223:HVACSpace,
+        s223:DomainSpace ;
+    rdfs:label "Room 101" ;
+    s223:hasConnectionPoint ex1:00002,
+        ex1:00003,
+        ex1:00004,
+        ex1:00005,
+        ex1:00006,
+        ex1:00007,
+        ex1:00008 ;
+    s223:hasDomain s223:Domain-HVAC ;
+    bob:airTransfer ex1:00004 ;
+    bob:doors ex1:00005 ;
+    bob:ductAirInlet ex1:00002 ;
+    bob:ductAirOutlet ex1:00003 ;
+    bob:radiantCooling ex1:00008 ;
+    bob:radiantHeating ex1:00007 ;
+    bob:windows ex1:00006 .
+
+ex1:00002 a s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "Room 101.ductAirInlet" ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00001 .
+
+ex1:00003 a s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "Room 101.ductAirOutlet" ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00001 .
+
+ex1:00004 a s223:BidirectionalConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "Room 101.airTransfer" ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00001 .
+
+ex1:00005 a s223:BidirectionalConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "Room 101.doors" ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00001 .
+
+ex1:00006 a s223:BidirectionalConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "Room 101.windows" ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00001 .
+
+ex1:00007 a s223:BidirectionalConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "Room 101.radiantHeating" ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00001 .
+
+ex1:00008 a s223:BidirectionalConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "Room 101.radiantCooling" ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00001 .
+
+ex1:00009 a s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "Motion Sensor" ;
-    s223:observes ex1:00002 .
+    s223:hasObservationLocation ex1:00001 ;
+    s223:observes ex1:00010 .
 
-ex1:00002 a s223:EnumerableProperty,
+ex1:00010 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "Motion Sensor.OccupantMotion" ;
-    s223:hasEnumerationKind p223:EnumerationKind-MotionNoMotion ;
+    s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
-ex1:00003 a s223:Equipment,
+ex1:00011 a s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "People Counter" ;
-    s223:contains ex1:00007 ;
-    s223:hasProperty ex1:00004 ;
-    s223:observes ex1:00005 ;
-    s223:occupantCount ex1:00004 .
+    s223:hasObservationLocation ex1:00001 ;
+    s223:hasProperty ex1:00012 ;
+    s223:observes ex1:00013 ;
+    s223:occupantCount ex1:00012 ;
+    bob:contains ex1:00015 .
 
-ex1:00004 a s223:ObservableProperty,
+ex1:00012 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -53,15 +116,15 @@ ex1:00004 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Dimensionless ;
     qudt:hasUnit unit:NUM .
 
-ex1:00005 a s223:EnumerableProperty,
+ex1:00013 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "People Counter.OccupantMotion" ;
-    s223:hasEnumerationKind p223:EnumerationKind-MotionNoMotion ;
+    s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
-ex1:00006 a s223:ObservableProperty,
+ex1:00014 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -71,19 +134,19 @@ ex1:00006 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Dimensionless ;
     qudt:hasUnit unit:NUM .
 
-ex1:00007 a p223:Producer,
+ex1:00015 a p223:Producer,
         bob:Causality ;
     rdfs:label "countProducer" ;
-    s223:hasInput ex1:00008 ;
-    s223:hasOutput ex1:00009 ;
-    bob:cause_input ex1:00008 ;
-    bob:effect_output ex1:00009 .
+    s223:hasInput ex1:00016 ;
+    s223:hasOutput ex1:00017 ;
+    bob:cause_input ex1:00016 ;
+    bob:effect_output ex1:00017 .
 
-ex1:00008 a p223:ProducerInput ;
+ex1:00016 a p223:ProducerInput ;
     rdfs:label "countProducer.cause_input" ;
-    s223:uses ex1:00005 .
+    s223:uses ex1:00013 .
 
-ex1:00009 a p223:ProducerOutput ;
+ex1:00017 a p223:ProducerOutput ;
     rdfs:label "countProducer.effect_output" ;
-    s223:produces ex1:00004 .
+    s223:produces ex1:00012 .
 
