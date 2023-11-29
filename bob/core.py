@@ -89,6 +89,24 @@ _log = logging.getLogger(__name__)
 if _dotenv_import_error:
     _log.warning("install python-dotenv to use your .env file")
 
+# options
+MANDITORY_LABEL = os.getenv("MANDITORY_LABEL", "True") == "True"
+
+# include inverse relations
+INCLUDE_INVERSE = os.getenv("INCLUDE_INVERSE", "False") == "True"
+
+# connection requires hasMedium
+CONNECTION_HAS_MEDIUM = os.getenv("CONNECTION_HAS_MEDIUM", "True") == "True"
+
+#
+#
+#
+
+# globals
+data_graph = None
+schema_graph = None
+
+
 # include/exclude predicates
 include_predicates: Set[str] = set(os.getenv("BOB_INCLUDE", "").split())
 exclude_predicates: Set[str] = set(os.getenv("BOB_EXCLUDE", "").split())
@@ -111,19 +129,6 @@ if include_predicates.intersection(exclude_predicates):
 _log.debug(f"include_predicates {include_predicates}")
 _log.debug(f"exclude_predicates {exclude_predicates}")
 
-# options
-MANDITORY_LABEL = os.getenv("MANDITORY_LABEL", "True") == "True"
-
-# include inverse relations
-INCLUDE_INVERSE = os.getenv("INCLUDE_INVERSE", "False") == "True"
-
-# connection requires hasMedium
-CONNECTION_HAS_MEDIUM = os.getenv("CONNECTION_HAS_MEDIUM", "True") == "True"
-
-# globals
-data_graph = None
-schema_graph = None
-
 
 class DataGraph(Graph):
     def add(self, triple: Tuple[Any, Any, Any]) -> None:
@@ -144,6 +149,7 @@ class DataGraph(Graph):
                 break
             if test_name in exclude_predicates:
                 return
+
         # passes the tests
         super().add(triple)
 
@@ -601,7 +607,9 @@ class Node(metaclass=NodeMetaclass):
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
 
             elif attr_origin in (Any, Dict, Set, Union):
-                warnings.warn(f"class {cls}, attribute {attr}: inspection not supported {attr_type}")
+                warnings.warn(
+                    f"class {cls}, attribute {attr}: inspection not supported {attr_type}"
+                )
 
                 cls._nodes[attr] = attr_type
                 cls._attr_uriref[attr] = attr_uriref
@@ -2732,9 +2740,7 @@ def contains_mm(zone_group: ZoneGroup, zone: Zone) -> None:
     """ZoneGroup > Zone"""
     _log.info(f"zone group {zone_group} contains zone {zone}")
 
-    zone_group._data_graph.add(
-        (zone_group._node_iri, S223.hasZone, zone._node_iri)
-    )
+    zone_group._data_graph.add((zone_group._node_iri, S223.hasZone, zone._node_iri))
 
 
 class PhysicalSpace(Container, Node):
