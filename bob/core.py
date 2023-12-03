@@ -1123,13 +1123,13 @@ class EnumerationKind(Node):
             (self._node_iri, RDFS.subClassOf, _namespace["EnumerationKind"])
         )
 
-        _log.debug("     - len(schema_graph): %r", len(schema_graph))
-
         self._name = name
         self._parent = None
         self._children = set([self])
 
     def __call__(self, name, _alt_namespace=None) -> EnumerationKind:
+        _log.debug("EnumerationKind.__call__ %r", name)
+
         if _alt_namespace:
             new_child = EnumerationKind(
                 name, _node_iri=_alt_namespace[self._name + "-" + name]
@@ -1138,6 +1138,7 @@ class EnumerationKind(Node):
             new_child = EnumerationKind(
                 name, _node_iri=_namespace[self._name + "-" + name]
             )
+        _log.debug("    - new_child: %r", new_child)
 
         new_child._parent = self
 
