@@ -2805,6 +2805,8 @@ class Junction(Connectable):
         _log.debug(f"Junction.__init__ {kwargs}")
         super().__init__(**kwargs)
 
+        self._data_graph.add((self._node_iri, RDF.type, S223.Connectable))
+
     def maps_to(self, other: ConnectionPoint) -> None:
         """
         Maps a junction to a connection point of enclosing equipment by
@@ -3206,6 +3208,9 @@ class Equipment(Container, Connectable):
 
         super().__init__(*args, **kwargs)
 
+        # instances of equipment are connectable
+        self._data_graph.add((self._node_iri, RDF.type, S223.Connectable))
+
         self.hasRole = set()
         if _role:
             self += _role
@@ -3362,6 +3367,12 @@ class DomainSpace(Connectable):
     _class_iri: URIRef = S223.DomainSpace
     hasDomain: Domain
     hasMedium: Medium
+
+    def __init__(self, **kwargs: Any) -> None:
+        _log.debug(f"DomainSpace.__init__ {kwargs}")
+        super().__init__(**kwargs)
+
+        self._data_graph.add((self._node_iri, RDF.type, S223.Connectable))
 
 
 @multimethod

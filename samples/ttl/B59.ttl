@@ -47,7 +47,8 @@ ex1:00001 a p223:AirHandlingUnit,
     bob:supplyAirOutlet ex1:00109 ;
     rdfs:comment "Rooftop Unit" .
 
-ex1:00002 a s223:Equipment,
+ex1:00002 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
@@ -67,7 +68,8 @@ ex1:00003 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex1:00004 a s223:Equipment,
+ex1:00004 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
@@ -87,7 +89,8 @@ ex1:00005 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex1:00006 a s223:Equipment,
+ex1:00006 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
@@ -107,7 +110,8 @@ ex1:00007 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex1:00008 a s223:Equipment,
+ex1:00008 a s223:Connectable,
+        s223:Equipment,
         s223:Fan ;
     rdfs:label "SF-1" ;
     s223:connectedThrough ex1:00112,
@@ -231,7 +235,8 @@ ex1:00020 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex1:00021 a s223:Equipment,
+ex1:00021 a s223:Connectable,
+        s223:Equipment,
         s223:Fan ;
     rdfs:label "RF-1" ;
     s223:connectedThrough ex1:00112,
@@ -354,7 +359,8 @@ ex1:00033 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex1:00034 a s223:Equipment,
+ex1:00034 a s223:Connectable,
+        s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "OAD-1" ;
     s223:connectedThrough ex1:00112 ;
@@ -384,7 +390,8 @@ ex1:00036 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00034 .
 
-ex1:00037 a s223:Equipment ;
+ex1:00037 a s223:Connectable,
+        s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00067 ;
     s223:connectedTo ex1:00063 ;
@@ -557,7 +564,8 @@ ex1:00060 a p223:ProducerOutput ;
     s223:produces ex1:00046 ;
     bob:hasEffectLocation ex1:00041 .
 
-ex1:00061 a s223:Equipment,
+ex1:00061 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation ex1:00038 ;
@@ -572,7 +580,8 @@ ex1:00062 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex1:00063 a s223:Damper,
+ex1:00063 a s223:Connectable,
+        s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
     s223:connectedFrom ex1:00037 ;
@@ -613,7 +622,8 @@ ex1:00067 a s223:Connection ;
     s223:connectsTo ex1:00063 ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 
-ex1:00068 a s223:Equipment,
+ex1:00068 a s223:Connectable,
+        s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "RAD-1" ;
     s223:contains ex1:00071,
@@ -641,7 +651,8 @@ ex1:00070 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00068 .
 
-ex1:00071 a s223:Equipment ;
+ex1:00071 a s223:Connectable,
+        s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00101 ;
     s223:connectedTo ex1:00097 ;
@@ -814,7 +825,8 @@ ex1:00094 a p223:ProducerOutput ;
     s223:produces ex1:00080 ;
     bob:hasEffectLocation ex1:00075 .
 
-ex1:00095 a s223:Equipment,
+ex1:00095 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation ex1:00072 ;
@@ -829,7 +841,8 @@ ex1:00096 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex1:00097 a s223:Damper,
+ex1:00097 a s223:Connectable,
+        s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
     s223:connectedFrom ex1:00071 ;
@@ -871,6 +884,7 @@ ex1:00101 a s223:Connection ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 
 ex1:00102 a s223:Coil,
+        s223:Connectable,
         s223:CoolingCoil,
         s223:Equipment ;
     rdfs:label "CWC-1" ;
@@ -999,6 +1013,7 @@ ex1:00119 a s223:PhysicalSpace,
     rdfs:label "Director Office" .
 
 ex1:00120 a p223:HVACSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "HVAC Space for floor 1" ;
     s223:connectedThrough ex1:00114,

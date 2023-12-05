@@ -44,6 +44,7 @@ ex1:00003 a bob:OutletZoneConnectionPoint,
     s223:hasMedium s223:Medium-Air .
 
 ex1:00004 a p223:HVACSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Space-1" ;
     s223:connectedFrom ex1:00020 ;
@@ -110,6 +111,7 @@ ex1:00011 a s223:BidirectionalConnectionPoint,
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00012 a p223:HVACSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Space-2" ;
     s223:connectedThrough ex1:00108 ;
@@ -172,7 +174,8 @@ ex1:00019 a s223:BidirectionalConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00012 .
 
-ex1:00020 a s223:Equipment,
+ex1:00020 a s223:Connectable,
+        s223:Equipment,
         s223:VAV ;
     rdfs:label "Zone-1.VAV" ;
     s223:connectedThrough ex1:00063,
@@ -205,7 +208,8 @@ ex1:00022 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00020 .
 
-ex1:00023 a s223:Equipment,
+ex1:00023 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor ;
     rdfs:label "SA-F" ;
     s223:hasObservationLocation ex1:00061 ;
@@ -222,7 +226,8 @@ ex1:00024 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:L-PER-SEC .
 
-ex1:00025 a s223:Equipment,
+ex1:00025 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
@@ -241,7 +246,8 @@ ex1:00026 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex1:00027 a s223:Equipment,
+ex1:00027 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
@@ -260,7 +266,8 @@ ex1:00028 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex1:00029 a s223:Equipment,
+ex1:00029 a s223:Connectable,
+        s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "DPR" ;
     s223:contains ex1:00032,
@@ -290,7 +297,8 @@ ex1:00031 a s223:OutletConnectionPoint,
     s223:isConnectionPointOf ex1:00029 ;
     s223:mapsTo ex1:00022 .
 
-ex1:00032 a s223:Equipment ;
+ex1:00032 a s223:Connectable,
+        s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00062 ;
     s223:connectedTo ex1:00058 ;
@@ -463,7 +471,8 @@ ex1:00055 a p223:ProducerOutput ;
     s223:produces ex1:00041 ;
     bob:hasEffectLocation ex1:00036 .
 
-ex1:00056 a s223:Equipment,
+ex1:00056 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation ex1:00033 ;
@@ -478,7 +487,8 @@ ex1:00057 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex1:00058 a s223:Damper,
+ex1:00058 a s223:Connectable,
+        s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
     s223:connectedFrom ex1:00032 ;
@@ -526,7 +536,8 @@ ex1:00063 a s223:Connection ;
     s223:connectsTo ex1:00004 ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00064 a s223:Equipment,
+ex1:00064 a s223:Connectable,
+        s223:Equipment,
         s223:VAV ;
     rdfs:label "Zone-2.VAV" ;
     s223:connectedThrough ex1:00107 ;
@@ -556,7 +567,8 @@ ex1:00066 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00064 .
 
-ex1:00067 a s223:Equipment,
+ex1:00067 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor ;
     rdfs:label "SA-F" ;
     s223:hasObservationLocation ex1:00105 ;
@@ -573,7 +585,8 @@ ex1:00068 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:L-PER-SEC .
 
-ex1:00069 a s223:Equipment,
+ex1:00069 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
@@ -592,7 +605,8 @@ ex1:00070 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex1:00071 a s223:Equipment,
+ex1:00071 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
@@ -611,7 +625,8 @@ ex1:00072 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex1:00073 a s223:Equipment,
+ex1:00073 a s223:Connectable,
+        s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "DPR" ;
     s223:contains ex1:00076,
@@ -641,7 +656,8 @@ ex1:00075 a s223:OutletConnectionPoint,
     s223:isConnectionPointOf ex1:00073 ;
     s223:mapsTo ex1:00066 .
 
-ex1:00076 a s223:Equipment ;
+ex1:00076 a s223:Connectable,
+        s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00106 ;
     s223:connectedTo ex1:00102 ;
@@ -814,7 +830,8 @@ ex1:00099 a p223:ProducerOutput ;
     s223:produces ex1:00085 ;
     bob:hasEffectLocation ex1:00080 .
 
-ex1:00100 a s223:Equipment,
+ex1:00100 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation ex1:00077 ;
@@ -829,7 +846,8 @@ ex1:00101 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex1:00102 a s223:Damper,
+ex1:00102 a s223:Connectable,
+        s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
     s223:connectedFrom ex1:00076 ;

@@ -36,6 +36,7 @@ ex1:00002 a s223:PhysicalSpace,
     rdfs:label "Roof of building" .
 
 ex1:00003 a p223:HVACSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "My Big Garage" ;
     s223:connectedFrom ex1:00038 ;
@@ -103,6 +104,7 @@ ex1:00010 a s223:BidirectionalConnectionPoint,
     s223:isConnectionPointOf ex1:00003 .
 
 ex1:00011 a p223:LightingSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Light Space #1 near entry" ;
     s223:connectedFrom ex1:00017 ;
@@ -128,6 +130,7 @@ ex1:00013 a s223:InletConnectionPoint,
     s223:isConnectionPointOf ex1:00011 .
 
 ex1:00014 a p223:LightingSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Light Space #2 back of the garage" ;
     s223:connectedFrom ex1:00019 ;
@@ -152,7 +155,8 @@ ex1:00016 a s223:InletConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00014 .
 
-ex1:00017 a s223:Equipment,
+ex1:00017 a s223:Connectable,
+        s223:Equipment,
         s223:Luminaire ;
     rdfs:label "Ballast #1, space #1" ;
     s223:connectedThrough ex1:00051 ;
@@ -167,7 +171,8 @@ ex1:00018 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00017 .
 
-ex1:00019 a s223:Equipment,
+ex1:00019 a s223:Connectable,
+        s223:Equipment,
         s223:Luminaire ;
     rdfs:label "Ballast #2, space #2" ;
     s223:connectedThrough ex1:00052 ;
@@ -182,7 +187,8 @@ ex1:00020 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00019 .
 
-ex1:00021 a s223:Equipment,
+ex1:00021 a s223:Connectable,
+        s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #1" ;
@@ -198,7 +204,8 @@ ex1:00022 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
-ex1:00023 a s223:Equipment,
+ex1:00023 a s223:Connectable,
+        s223:Equipment,
         s223:OccupantMotionSensor,
         s223:Sensor ;
     rdfs:label "Movement Sensor Space #2" ;
@@ -214,7 +221,8 @@ ex1:00024 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
-ex1:00025 a s223:Equipment,
+ex1:00025 a s223:Connectable,
+        s223:Equipment,
         s223:Fan ;
     rdfs:label "Fan" ;
     s223:connectedFrom ex1:00003 ;
@@ -339,6 +347,7 @@ ex1:00037 a s223:ObservableProperty,
     qudt:hasUnit unit:PERCENT .
 
 ex1:00038 a s223:Coil,
+        s223:Connectable,
         s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Heating Coil" ;
@@ -414,7 +423,8 @@ ex1:00046 a s223:Connection ;
     s223:connectsTo ex1:00003 ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00047 a s223:Equipment,
+ex1:00047 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
@@ -433,7 +443,8 @@ ex1:00048 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex1:00049 a s223:Equipment,
+ex1:00049 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;

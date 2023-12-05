@@ -43,6 +43,7 @@ ex1:00003 a bob:OutletZoneConnectionPoint,
     s223:hasMedium s223:Medium-Air .
 
 ex1:00004 a p223:HVACSpace,
+        s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Domain_Space" ;
     s223:hasConnectionPoint ex1:00005,
@@ -103,7 +104,8 @@ ex1:00011 a s223:BidirectionalConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
-ex1:00012 a s223:Equipment,
+ex1:00012 a s223:Connectable,
+        s223:Equipment,
         s223:VAV ;
     rdfs:label "VAV1" ;
     s223:hasConnectionPoint ex1:00013,
@@ -125,7 +127,8 @@ ex1:00014 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00012 .
 
-ex1:00015 a s223:Equipment,
+ex1:00015 a s223:Connectable,
+        s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "VAV1.damper" ;
     s223:contains ex1:00018,
@@ -154,7 +157,8 @@ ex1:00017 a s223:OutletConnectionPoint,
     s223:isConnectionPointOf ex1:00015 ;
     s223:mapsTo ex1:00014 .
 
-ex1:00018 a s223:Equipment ;
+ex1:00018 a s223:Connectable,
+        s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex1:00048 ;
     s223:connectedTo ex1:00044 ;
@@ -327,7 +331,8 @@ ex1:00041 a p223:ProducerOutput ;
     s223:produces ex1:00027 ;
     bob:hasEffectLocation ex1:00022 .
 
-ex1:00042 a s223:Equipment,
+ex1:00042 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation ex1:00019 ;
@@ -342,7 +347,8 @@ ex1:00043 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex1:00044 a s223:Damper,
+ex1:00044 a s223:Connectable,
+        s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
     s223:connectedFrom ex1:00018 ;

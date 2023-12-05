@@ -22,7 +22,8 @@
   rdfs:label "test_dampers" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex27:00001 a s223:Equipment,
+ex27:00001 a s223:Connectable,
+        s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "Electrical Proportional Actuated Damper" ;
     s223:contains ex27:00004,
@@ -49,7 +50,8 @@ ex27:00003 a s223:OutletConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00001 .
 
-ex27:00004 a s223:Equipment ;
+ex27:00004 a s223:Connectable,
+        s223:Equipment ;
     rdfs:label "actuator" ;
     s223:connectedThrough ex27:00034 ;
     s223:connectedTo ex27:00030 ;
@@ -232,7 +234,8 @@ ex27:00027 a p223:ProducerOutput ;
     s223:produces ex27:00013 ;
     bob:hasEffectLocation ex27:00008 .
 
-ex27:00028 a s223:Equipment,
+ex27:00028 a s223:Connectable,
+        s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation ex27:00005 ;
@@ -248,7 +251,8 @@ ex27:00029 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-ex27:00030 a s223:Damper,
+ex27:00030 a s223:Connectable,
+        s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
     s223:connectedFrom ex27:00004 ;
