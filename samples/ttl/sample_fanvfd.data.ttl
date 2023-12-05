@@ -407,19 +407,22 @@ sample_fanvfd:00042 a s223:Connectable,
     bob:airOutlet sample_fanvfd:00044 ;
     rdfs:comment "Return Air Fan" .
 
-sample_fanvfd:00043 a s223:InletConnectionPoint,
+sample_fanvfd:00043 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "RF.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00042 .
 
-sample_fanvfd:00044 a s223:OutletConnectionPoint,
+sample_fanvfd:00044 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "RF.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00042 .
 
-sample_fanvfd:00045 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+sample_fanvfd:00045 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "RF.electricalInlet" ;
     s223:connectsThrough sample_fanvfd:00232 ;
@@ -539,13 +542,15 @@ sample_fanvfd:00055 a s223:Connectable,
     bob:volts sample_fanvfd:00078 ;
     rdfs:comment "Return Air Fan VFD" .
 
-sample_fanvfd:00056 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+sample_fanvfd:00056 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "RF_VFD.electricalInlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf sample_fanvfd:00055 .
 
-sample_fanvfd:00057 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+sample_fanvfd:00057 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "RF_VFD.electricalOutlet" ;
     s223:connectsThrough sample_fanvfd:00232 ;
@@ -553,18 +558,21 @@ sample_fanvfd:00057 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
     s223:isConnectionPointOf sample_fanvfd:00055 .
 
 sample_fanvfd:00058 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "RF_VFD.ethernet_port" ;
     s223:hasMedium s223:Communication-Ethernet ;
     s223:isConnectionPointOf sample_fanvfd:00055 .
 
 sample_fanvfd:00059 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "RF_VFD.mstp_port" ;
     s223:hasMedium s223:Communication-EIA-485 ;
     s223:isConnectionPointOf sample_fanvfd:00055 .
 
 sample_fanvfd:00060 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "RF_VFD.speedrefInlet" ;
@@ -572,6 +580,7 @@ sample_fanvfd:00060 a p223:AnalogInput,
     s223:isConnectionPointOf sample_fanvfd:00055 .
 
 sample_fanvfd:00061 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "RF_VFD.drive_running_dry_contact" ;
@@ -579,6 +588,7 @@ sample_fanvfd:00061 a p223:BinaryOutput,
     s223:isConnectionPointOf sample_fanvfd:00055 .
 
 sample_fanvfd:00062 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "RF_VFD.alarm_dry_contact" ;
@@ -774,19 +784,22 @@ sample_fanvfd:00082 a s223:Connectable,
     bob:airOutlet sample_fanvfd:00084 ;
     rdfs:comment "Supply Air Fan" .
 
-sample_fanvfd:00083 a s223:InletConnectionPoint,
+sample_fanvfd:00083 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00082 .
 
-sample_fanvfd:00084 a s223:OutletConnectionPoint,
+sample_fanvfd:00084 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00082 .
 
-sample_fanvfd:00085 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+sample_fanvfd:00085 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SF.electricalInlet" ;
     s223:connectsThrough sample_fanvfd:00231 ;
@@ -894,6 +907,7 @@ sample_fanvfd:00095 a p223:MotorStarter,
     rdfs:comment "Supply Air Fan Starter" .
 
 sample_fanvfd:00096 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "SF_Starter.outputSignal" ;
@@ -901,19 +915,22 @@ sample_fanvfd:00096 a p223:BinaryOutput,
     s223:isConnectionPointOf sample_fanvfd:00095 .
 
 sample_fanvfd:00097 a p223:BinaryInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "SF_Starter.inputSignal" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf sample_fanvfd:00095 .
 
-sample_fanvfd:00098 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+sample_fanvfd:00098 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SF_Starter.electricalInlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf sample_fanvfd:00095 .
 
-sample_fanvfd:00099 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+sample_fanvfd:00099 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "SF_Starter.electricalOutlet" ;
     s223:connectsThrough sample_fanvfd:00231 ;
@@ -931,6 +948,7 @@ sample_fanvfd:00100 a p223:CurrentRelay,
     bob:contains sample_fanvfd:00106 .
 
 sample_fanvfd:00101 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "currentRelay.dryContact" ;
@@ -1017,25 +1035,29 @@ sample_fanvfd:00111 a s223:Coil,
     bob:chilledWaterOutlet sample_fanvfd:00115 ;
     rdfs:comment "Cooling Coil" .
 
-sample_fanvfd:00112 a s223:InletConnectionPoint,
+sample_fanvfd:00112 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CLGCOIL.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00111 .
 
-sample_fanvfd:00113 a s223:OutletConnectionPoint,
+sample_fanvfd:00113 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CLGCOIL.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00111 .
 
-sample_fanvfd:00114 a s223:InletConnectionPoint,
+sample_fanvfd:00114 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLGCOIL.chilledWaterInlet" ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf sample_fanvfd:00111 .
 
-sample_fanvfd:00115 a s223:OutletConnectionPoint,
+sample_fanvfd:00115 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLGCOIL.chilledWaterOutlet" ;
     s223:hasMedium s223:Water-ChilledWater ;
@@ -1056,25 +1078,29 @@ sample_fanvfd:00116 a s223:Coil,
     bob:hotWaterOutlet sample_fanvfd:00120 ;
     rdfs:comment "Heating coil" .
 
-sample_fanvfd:00117 a s223:InletConnectionPoint,
+sample_fanvfd:00117 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HTGCOIL.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00116 .
 
-sample_fanvfd:00118 a s223:OutletConnectionPoint,
+sample_fanvfd:00118 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HTGCOIL.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00116 .
 
-sample_fanvfd:00119 a s223:InletConnectionPoint,
+sample_fanvfd:00119 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HTGCOIL.hotWaterInlet" ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf sample_fanvfd:00116 .
 
-sample_fanvfd:00120 a s223:OutletConnectionPoint,
+sample_fanvfd:00120 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HTGCOIL.hotWaterOutlet" ;
     s223:hasMedium s223:Water-HotWater ;
@@ -1090,13 +1116,15 @@ sample_fanvfd:00121 a p223:Filter,
     bob:airOutlet sample_fanvfd:00123 ;
     rdfs:comment "Filter" .
 
-sample_fanvfd:00122 a s223:InletConnectionPoint,
+sample_fanvfd:00122 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "FILTER.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00121 .
 
-sample_fanvfd:00123 a s223:OutletConnectionPoint,
+sample_fanvfd:00123 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "FILTER.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -1119,13 +1147,15 @@ sample_fanvfd:00124 a s223:Connectable,
     bob:position_feedback sample_fanvfd:00152 ;
     rdfs:comment "Outdoor air damper (A3)" .
 
-sample_fanvfd:00125 a s223:InletConnectionPoint,
+sample_fanvfd:00125 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OADPR.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00124 .
 
-sample_fanvfd:00126 a s223:OutletConnectionPoint,
+sample_fanvfd:00126 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OADPR.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -1155,6 +1185,7 @@ sample_fanvfd:00127 a s223:Connectable,
     bob:position sample_fanvfd:00152 .
 
 sample_fanvfd:00128 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
     s223:connectsThrough sample_fanvfd:00157 ;
@@ -1162,6 +1193,7 @@ sample_fanvfd:00128 a p223:MechanicalConnectionPoint,
     s223:isConnectionPointOf sample_fanvfd:00127 .
 
 sample_fanvfd:00129 a p223:AnalogOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
@@ -1169,6 +1201,7 @@ sample_fanvfd:00129 a p223:AnalogOutput,
     s223:isConnectionPointOf sample_fanvfd:00127 .
 
 sample_fanvfd:00130 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
@@ -1176,19 +1209,22 @@ sample_fanvfd:00130 a p223:BinaryOutput,
     s223:isConnectionPointOf sample_fanvfd:00127 .
 
 sample_fanvfd:00131 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf sample_fanvfd:00127 .
 
-sample_fanvfd:00132 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+sample_fanvfd:00132 a s223:ConnectionPoint,
+        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
     s223:isConnectionPointOf sample_fanvfd:00127 .
 
 sample_fanvfd:00133 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
@@ -1336,20 +1372,23 @@ sample_fanvfd:00153 a s223:Connectable,
     bob:position sample_fanvfd:00152 .
 
 sample_fanvfd:00154 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
     s223:connectsThrough sample_fanvfd:00157 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf sample_fanvfd:00153 .
 
-sample_fanvfd:00155 a s223:InletConnectionPoint,
+sample_fanvfd:00155 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00153 ;
     s223:mapsTo sample_fanvfd:00125 .
 
-sample_fanvfd:00156 a s223:OutletConnectionPoint,
+sample_fanvfd:00156 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -1380,13 +1419,15 @@ sample_fanvfd:00158 a s223:Connectable,
     bob:position_feedback sample_fanvfd:00186 ;
     rdfs:comment "Mixed Air Damper (A2)" .
 
-sample_fanvfd:00159 a s223:InletConnectionPoint,
+sample_fanvfd:00159 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "MADPR.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00158 .
 
-sample_fanvfd:00160 a s223:OutletConnectionPoint,
+sample_fanvfd:00160 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "MADPR.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -1416,6 +1457,7 @@ sample_fanvfd:00161 a s223:Connectable,
     bob:position sample_fanvfd:00186 .
 
 sample_fanvfd:00162 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
     s223:connectsThrough sample_fanvfd:00191 ;
@@ -1423,6 +1465,7 @@ sample_fanvfd:00162 a p223:MechanicalConnectionPoint,
     s223:isConnectionPointOf sample_fanvfd:00161 .
 
 sample_fanvfd:00163 a p223:AnalogOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
@@ -1430,6 +1473,7 @@ sample_fanvfd:00163 a p223:AnalogOutput,
     s223:isConnectionPointOf sample_fanvfd:00161 .
 
 sample_fanvfd:00164 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
@@ -1437,19 +1481,22 @@ sample_fanvfd:00164 a p223:BinaryOutput,
     s223:isConnectionPointOf sample_fanvfd:00161 .
 
 sample_fanvfd:00165 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf sample_fanvfd:00161 .
 
-sample_fanvfd:00166 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+sample_fanvfd:00166 a s223:ConnectionPoint,
+        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
     s223:isConnectionPointOf sample_fanvfd:00161 .
 
 sample_fanvfd:00167 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
@@ -1597,20 +1644,23 @@ sample_fanvfd:00187 a s223:Connectable,
     bob:position sample_fanvfd:00186 .
 
 sample_fanvfd:00188 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
     s223:connectsThrough sample_fanvfd:00191 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf sample_fanvfd:00187 .
 
-sample_fanvfd:00189 a s223:InletConnectionPoint,
+sample_fanvfd:00189 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00187 ;
     s223:mapsTo sample_fanvfd:00159 .
 
-sample_fanvfd:00190 a s223:OutletConnectionPoint,
+sample_fanvfd:00190 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -1641,13 +1691,15 @@ sample_fanvfd:00192 a s223:Connectable,
     bob:position_feedback sample_fanvfd:00220 ;
     rdfs:comment "Exhaust Air Damper (A1)" .
 
-sample_fanvfd:00193 a s223:InletConnectionPoint,
+sample_fanvfd:00193 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EADPR.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00192 .
 
-sample_fanvfd:00194 a s223:OutletConnectionPoint,
+sample_fanvfd:00194 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EADPR.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -1677,6 +1729,7 @@ sample_fanvfd:00195 a s223:Connectable,
     bob:position sample_fanvfd:00220 .
 
 sample_fanvfd:00196 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
     s223:connectsThrough sample_fanvfd:00225 ;
@@ -1684,6 +1737,7 @@ sample_fanvfd:00196 a p223:MechanicalConnectionPoint,
     s223:isConnectionPointOf sample_fanvfd:00195 .
 
 sample_fanvfd:00197 a p223:AnalogOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
@@ -1691,6 +1745,7 @@ sample_fanvfd:00197 a p223:AnalogOutput,
     s223:isConnectionPointOf sample_fanvfd:00195 .
 
 sample_fanvfd:00198 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
@@ -1698,19 +1753,22 @@ sample_fanvfd:00198 a p223:BinaryOutput,
     s223:isConnectionPointOf sample_fanvfd:00195 .
 
 sample_fanvfd:00199 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf sample_fanvfd:00195 .
 
-sample_fanvfd:00200 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+sample_fanvfd:00200 a s223:ConnectionPoint,
+        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
     s223:isConnectionPointOf sample_fanvfd:00195 .
 
 sample_fanvfd:00201 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
@@ -1858,20 +1916,23 @@ sample_fanvfd:00221 a s223:Connectable,
     bob:position sample_fanvfd:00220 .
 
 sample_fanvfd:00222 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
     s223:connectsThrough sample_fanvfd:00225 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf sample_fanvfd:00221 .
 
-sample_fanvfd:00223 a s223:InletConnectionPoint,
+sample_fanvfd:00223 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00221 ;
     s223:mapsTo sample_fanvfd:00193 .
 
-sample_fanvfd:00224 a s223:OutletConnectionPoint,
+sample_fanvfd:00224 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -1886,27 +1947,32 @@ sample_fanvfd:00225 a s223:Connection ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 
 sample_fanvfd:00226 a bob:AirSystemConnectionPoint,
-        bob:InletSystemConnectionPoint ;
+        bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "AHU.outsideAirInlet" ;
     s223:hasMedium s223:Medium-Air .
 
 sample_fanvfd:00227 a bob:AirSystemConnectionPoint,
-        bob:InletSystemConnectionPoint ;
+        bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "AHU.returnAirInlet" ;
     s223:hasMedium s223:Medium-Air .
 
 sample_fanvfd:00228 a bob:AirSystemConnectionPoint,
-        bob:OutletSystemConnectionPoint ;
+        bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "AHU.supplyAirOutlet" ;
     s223:hasMedium s223:Medium-Air .
 
 sample_fanvfd:00229 a bob:AirSystemConnectionPoint,
-        bob:OutletSystemConnectionPoint ;
+        bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "AHU.exhaustAirOutlet" ;
     s223:hasMedium s223:Medium-Air .
 
 sample_fanvfd:00230 a s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
-        bob:InletSystemConnectionPoint ;
+        bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "AHU.electricalInlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 

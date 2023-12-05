@@ -27,10 +27,12 @@ ex1:00001 a s223:System,
     ex1:cpIn ex1:00002 ;
     ex1:cpOut ex1:00003 .
 
-ex1:00002 a bob:InletSystemConnectionPoint ;
+ex1:00002 a bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "s1.cpIn" .
 
-ex1:00003 a bob:OutletSystemConnectionPoint ;
+ex1:00003 a bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "s1.cpOut" .
 
 ex1:00004 a s223:Connectable,
@@ -42,11 +44,13 @@ ex1:00004 a s223:Connectable,
     ex1:cpIn ex1:00005 ;
     ex1:cpOut ex1:00006 .
 
-ex1:00005 a s223:InletConnectionPoint ;
+ex1:00005 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "d1.cpIn" ;
     s223:isConnectionPointOf ex1:00004 .
 
-ex1:00006 a s223:OutletConnectionPoint ;
+ex1:00006 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "d1.cpOut" ;
     s223:isConnectionPointOf ex1:00004 .
 
@@ -59,11 +63,13 @@ ex1:00007 a s223:System,
     ex1:cpIn ex1:00008 ;
     ex1:cpOut ex1:00009 .
 
-ex1:00008 a bob:InletSystemConnectionPoint ;
+ex1:00008 a bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "s2.cpIn" ;
     bob:mapsTo ex1:00011 .
 
-ex1:00009 a bob:OutletSystemConnectionPoint ;
+ex1:00009 a bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "s2.cpOut" ;
     bob:mapsTo ex1:00012 .
 
@@ -76,11 +82,13 @@ ex1:00010 a s223:Connectable,
     ex1:cpIn ex1:00011 ;
     ex1:cpOut ex1:00012 .
 
-ex1:00011 a s223:InletConnectionPoint ;
+ex1:00011 a s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
     rdfs:label "d2.cpIn" ;
     s223:isConnectionPointOf ex1:00010 .
 
-ex1:00012 a s223:OutletConnectionPoint ;
+ex1:00012 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
     rdfs:label "d2.cpOut" ;
     s223:isConnectionPointOf ex1:00010 .
 

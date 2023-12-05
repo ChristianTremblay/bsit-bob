@@ -28,7 +28,8 @@ ex27:00001 a s223:Connectable,
     s223:hasConnectionPoint ex27:00002 ;
     ex24:cOut ex27:00002 .
 
-ex27:00002 a s223:OutletConnectionPoint,
+ex27:00002 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "a.cOut" ;
     s223:connectsThrough ex27:00009 ;
@@ -41,7 +42,8 @@ ex27:00003 a s223:System,
     bob:hasSystemConnectionPoint ex27:00004 ;
     ex24:cOut ex27:00004 .
 
-ex27:00004 a bob:OutletSystemConnectionPoint ;
+ex27:00004 a bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "x.cOut" ;
     bob:isSystemConnectionPointOf ex27:00003 ;
     bob:mapsTo ex27:00002 .
@@ -55,7 +57,8 @@ ex27:00005 a s223:Connectable,
     s223:hasConnectionPoint ex27:00006 ;
     ex24:cIn ex27:00006 .
 
-ex27:00006 a s223:InletConnectionPoint,
+ex27:00006 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "b.cIn" ;
     s223:connectsThrough ex27:00009 ;
@@ -68,7 +71,8 @@ ex27:00007 a s223:System,
     bob:hasSystemConnectionPoint ex27:00008 ;
     ex24:cIn ex27:00008 .
 
-ex27:00008 a bob:InletSystemConnectionPoint ;
+ex27:00008 a bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint ;
     rdfs:label "y.cIn" ;
     bob:isSystemConnectionPointOf ex27:00007 ;
     bob:mapsTo ex27:00006 .

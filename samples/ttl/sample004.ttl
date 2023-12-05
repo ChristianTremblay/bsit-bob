@@ -62,43 +62,50 @@ ex1:00004 a p223:HVACSpace,
     bob:radiantHeating ex1:00010 ;
     bob:windows ex1:00009 .
 
-ex1:00005 a s223:InletConnectionPoint,
+ex1:00005 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Domain_Space.ductAirInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
-ex1:00006 a s223:OutletConnectionPoint,
+ex1:00006 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Domain_Space.ductAirOutlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00007 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Domain_Space.airTransfer" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00008 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Domain_Space.doors" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00009 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Domain_Space.windows" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00010 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Domain_Space.radiantHeating" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00011 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Domain_Space.radiantCooling" ;
     s223:hasMedium s223:Medium-Air ;
@@ -115,13 +122,15 @@ ex1:00012 a s223:Connectable,
     bob:damper ex1:00015 ;
     rdfs:comment "A VAV Box as a system" .
 
-ex1:00013 a s223:InletConnectionPoint,
+ex1:00013 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAV1.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00012 .
 
-ex1:00014 a s223:OutletConnectionPoint,
+ex1:00014 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAV1.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -143,14 +152,16 @@ ex1:00015 a s223:Connectable,
     bob:position ex1:00043 ;
     bob:position_feedback ex1:00043 .
 
-ex1:00016 a s223:InletConnectionPoint,
+ex1:00016 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAV1.damper.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00015 ;
     s223:mapsTo ex1:00013 .
 
-ex1:00017 a s223:OutletConnectionPoint,
+ex1:00017 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAV1.damper.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -181,6 +192,7 @@ ex1:00018 a s223:Connectable,
     bob:position ex1:00043 .
 
 ex1:00019 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
     s223:connectsThrough ex1:00048 ;
@@ -188,6 +200,7 @@ ex1:00019 a p223:MechanicalConnectionPoint,
     s223:isConnectionPointOf ex1:00018 .
 
 ex1:00020 a p223:AnalogOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
@@ -195,6 +208,7 @@ ex1:00020 a p223:AnalogOutput,
     s223:isConnectionPointOf ex1:00018 .
 
 ex1:00021 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
@@ -202,19 +216,22 @@ ex1:00021 a p223:BinaryOutput,
     s223:isConnectionPointOf ex1:00018 .
 
 ex1:00022 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf ex1:00018 .
 
-ex1:00023 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+ex1:00023 a s223:ConnectionPoint,
+        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00018 .
 
 ex1:00024 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
@@ -362,20 +379,23 @@ ex1:00044 a s223:Connectable,
     bob:position ex1:00043 .
 
 ex1:00045 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
     s223:connectsThrough ex1:00048 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex1:00044 .
 
-ex1:00046 a s223:InletConnectionPoint,
+ex1:00046 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00044 ;
     s223:mapsTo ex1:00016 .
 
-ex1:00047 a s223:OutletConnectionPoint,
+ex1:00047 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;

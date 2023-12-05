@@ -1303,7 +1303,7 @@ class Connectable(Node):
     A type of thing that can have connection points.
     """
 
-    _class_iri: URIRef = None
+    _class_iri: URIRef = S223.Connectable
     _connection_points: Dict[str, ConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
@@ -1471,7 +1471,7 @@ class ConnectionPoint(Node):
     Connection Point
     """
 
-    _class_iri: URIRef = None
+    _class_iri: URIRef = S223.ConnectionPoint
     hasMedium: Medium
 
     mapsTo: ConnectionPoint
@@ -2219,7 +2219,7 @@ class SystemConnectionPoint(Node):
     System Connection Point
     """
 
-    _class_iri: URIRef = None
+    _class_iri: URIRef = BOB.SystemConnectionPoint
     _attr_uriref: Dict[str, URIRef] = {
         "mapsTo": BOB.mapsTo,
         "isSystemConnectionPointOf": BOB.isSystemConnectionPointOf,
@@ -2234,7 +2234,7 @@ class SystemConnectionPoint(Node):
     def __init__(self, system: System, **kwargs: Any) -> None:
         _log.debug(f"SystemConnectionPoint.__init__ {system} {kwargs}")
         # abstract base class
-        if self.__class__ is ConnectionPoint:
+        if self.__class__ is SystemConnectionPoint:
             raise RuntimeError("SystemConnectionPoint is an abstract base class")
 
         super().__init__(**kwargs)
@@ -2805,8 +2805,6 @@ class Junction(Connectable):
         _log.debug(f"Junction.__init__ {kwargs}")
         super().__init__(**kwargs)
 
-        self._data_graph.add((self._node_iri, RDF.type, S223.Connectable))
-
     def maps_to(self, other: ConnectionPoint) -> None:
         """
         Maps a junction to a connection point of enclosing equipment by
@@ -3208,9 +3206,6 @@ class Equipment(Container, Connectable):
 
         super().__init__(*args, **kwargs)
 
-        # instances of equipment are connectable
-        self._data_graph.add((self._node_iri, RDF.type, S223.Connectable))
-
         self.hasRole = set()
         if _role:
             self += _role
@@ -3371,8 +3366,6 @@ class DomainSpace(Connectable):
     def __init__(self, **kwargs: Any) -> None:
         _log.debug(f"DomainSpace.__init__ {kwargs}")
         super().__init__(**kwargs)
-
-        self._data_graph.add((self._node_iri, RDF.type, S223.Connectable))
 
 
 @multimethod

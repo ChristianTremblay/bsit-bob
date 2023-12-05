@@ -41,7 +41,8 @@ bacnet:BinaryOutputObject a rdfs:Class ;
 
 bacnet:Device a rdfs:Class ;
     rdfs:label "bob.bacnet.Device" ;
-    rdfs:subClassOf s223:Controller,
+    rdfs:subClassOf s223:Connectable,
+        s223:Controller,
         s223:Equipment .
 
 bacnet:DeviceObject a rdfs:Class ;
@@ -479,12 +480,14 @@ p223:Analog-Unknown a p223:Analog-Unknown,
 
 p223:AnalogInput a rdfs:Class ;
     rdfs:label "bob.connections.controlsignal.ModulationSignalInletConnectionPoint" ;
-    rdfs:subClassOf s223:InletConnectionPoint,
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint .
 
 p223:AnalogOutput a rdfs:Class ;
     rdfs:label "bob.connections.controlsignal.ModulationSignalOutletConnectionPoint" ;
-    rdfs:subClassOf s223:OutletConnectionPoint,
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint .
 
 p223:Binary-DryContact a p223:Binary-DryContact,
@@ -513,18 +516,21 @@ p223:Binary-StartStop a p223:Binary-StartStop,
 
 p223:BinaryInput a rdfs:Class ;
     rdfs:label "bob.connections.controlsignal.OnOffSignalInletConnectionPoint" ;
-    rdfs:subClassOf s223:InletConnectionPoint,
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint .
 
 p223:BinaryOutput a rdfs:Class ;
     rdfs:label "bob.connections.controlsignal.OnOffSignalOutletConnectionPoint" ;
-    rdfs:subClassOf s223:OutletConnectionPoint,
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint .
 
 p223:Boiler a rdfs:Class ;
     rdfs:label "bob.equipment.hvac.boiler.ElectricalHotWaterBoiler",
         "bob.equipment.hvac.boiler.HotWaterBoiler" ;
     rdfs:subClassOf p223:Boiler,
+        s223:Connectable,
         s223:Equipment .
 
 p223:CurrentRelay a rdfs:Class ;
@@ -536,7 +542,8 @@ p223:CurrentRelay a rdfs:Class ;
     This serves as motor status sensor
 
     """ ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:Dimensioned-ABLineLineVoltage a p223:Dimensioned-ABLineLineVoltage,
         s223:EnumerationKind,
@@ -621,12 +628,14 @@ p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
 
 p223:ElectricalCircuitBreaker a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.distribution.CircuitBreaker" ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:ElectricalDistributionPanel a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.distribution.SinglePhaseDistributionPanel",
         "bob.equipment.electricity.distribution.ThreePhaseDistributionPanel" ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:ElectricalMeter a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.meter.ThreePhaseElectricalMeter" ;
@@ -641,15 +650,18 @@ p223:ElectricalMeter a rdfs:Class ;
     by square bracket requests.
 
     """ ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:ElectricalSwitch a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.switch.Switch" ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:ElectricalTransformer a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.distribution.Transformer" ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind,
@@ -741,22 +753,26 @@ p223:EthernetFirewall a rdfs:Class ;
     rdfs:comment """
     An Ethernet Firewall with wan and lan ports
     """ ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:EthernetSwitch a rdfs:Class ;
     rdfs:label "bob.equipment.network.switch.EthernetSwitch" ;
     rdfs:comment """
     An Ethernet Switch
     """ ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:Filter a rdfs:Class ;
     rdfs:label "bob.equipment.hvac.filter.Filter" ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:HVACSpace a rdfs:Class ;
     rdfs:label "bob.space.hvac.HVACSpace" ;
-    rdfs:subClassOf s223:DomainSpace .
+    rdfs:subClassOf s223:Connectable,
+        s223:DomainSpace .
 
 p223:HVACZone a rdfs:Class ;
     rdfs:label "bob.space.hvac.HVACZone" ;
@@ -794,7 +810,8 @@ p223:LeftRight-Right a p223:LeftRight-Right,
 
 p223:LightingSpace a rdfs:Class ;
     rdfs:label "bob.space.light.LightingSpace" ;
-    rdfs:subClassOf s223:DomainSpace .
+    rdfs:subClassOf s223:Connectable,
+        s223:DomainSpace .
 
 p223:LightingZone a rdfs:Class ;
     rdfs:label "bob.space.light.LightingZone" ;
@@ -813,7 +830,8 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
         s223:EnumerationKind .
 
 p223:MechanicalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.mechanical.MechanicalConnectionPoint" .
+    rdfs:label "bob.connections.mechanical.MechanicalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 p223:Medium-MechanicalCoupling a p223:Medium-MechanicalCoupling,
         s223:EnumerationKind,
@@ -829,7 +847,8 @@ p223:MotorStarter a rdfs:Class ;
     Equipment like a fan or a pump
 
     """ ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
@@ -1110,7 +1129,8 @@ p223:TrueFalse-True a p223:TrueFalse-True,
 
 p223:VoltageSensor a rdfs:Class ;
     rdfs:label "bob.sensor.electricity.VoltageSensor" ;
-    rdfs:subClassOf s223:Equipment,
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
         s223:Sensor .
 
 p223:Water-CondensedWater a p223:Water-CondensedWater,
@@ -1164,7 +1184,8 @@ p223:Water-Steam a p223:Water-Steam,
 
 p223:Window a rdfs:Class ;
     rdfs:label "bob.equipment.architectural.window.Window" ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:YesNo-No a p223:YesNo-No,
         s223:EnumerationKind,
@@ -1208,14 +1229,17 @@ g36:EnumerationKind-Level4 a s223:EnumerationKind,
     rdfs:subClassOf s223:EnumerationKind .
 
 bob:AirConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirConnectionPoint" .
+    rdfs:label "bob.connections.air.AirConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:AirSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirSystemConnectionPoint" .
+    rdfs:label "bob.connections.air.AirSystemConnectionPoint" ;
+    rdfs:subClassOf bob:SystemConnectionPoint .
 
 bob:AirTemperatureSensor a rdfs:Class ;
     rdfs:label "bob.sensor.temperature.AirTemperatureSensor" ;
-    rdfs:subClassOf s223:Equipment,
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor .
 
@@ -1243,10 +1267,12 @@ bob:Causality a rdfs:Class ;
     rdfs:subClassOf p223:Producer .
 
 bob:ChilledWaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.ChilledWaterConnectionPoint" .
+    rdfs:label "bob.connections.water.ChilledWaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:CondensedWaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.CondensedWaterConnectionPoint" .
+    rdfs:label "bob.connections.water.CondensedWaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:DaylightDetected a rdfs:Class ;
     rdfs:label "bob.properties.states.DaylightDetected" ;
@@ -1284,6 +1310,7 @@ bob:DimmableSwitch a rdfs:Class ;
 
     """ ;
     rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
         s223:Equipment,
         bob:SinglePoleSwitch .
 
@@ -1339,10 +1366,12 @@ bob:ElectricReactivePower a rdfs:Class ;
 
 bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
     rdfs:label "bob.equipment.hvac.damper.ElectricalActuatedProportionalDamper" ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 bob:EthernetConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.network.EthernetConnectionPoint" .
+    rdfs:label "bob.connections.network.EthernetConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:Flow a rdfs:Class ;
     rdfs:label "bob.properties.flow.Flow" ;
@@ -1366,7 +1395,8 @@ bob:HP a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:HotWaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.HotWaterConnectionPoint" .
+    rdfs:label "bob.connections.water.HotWaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:Hour a rdfs:Class ;
     rdfs:label "bob.properties.time.Hour" ;
@@ -1384,6 +1414,7 @@ bob:InletSystemConnectionPoint a rdfs:Class ;
     rdfs:subClassOf s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
         bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint,
         bob:WaterSystemConnectionPoint .
 
 bob:InletZoneConnectionPoint a rdfs:Class ;
@@ -1393,7 +1424,8 @@ bob:InletZoneConnectionPoint a rdfs:Class ;
         bob:ZoneConnectionPoint .
 
 bob:LightVisibleConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.light.LightVisibleConnectionPoint" .
+    rdfs:label "bob.connections.light.LightVisibleConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:Mbit_per_seconds a rdfs:Class ;
     rdfs:label "bob.properties.network.Mbit_per_seconds" ;
@@ -1403,7 +1435,8 @@ bob:Mbit_per_seconds a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:ModulationSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.controlsignal.ModulationSignalConnectionPoint" .
+    rdfs:label "bob.connections.controlsignal.ModulationSignalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:Nm a rdfs:Class ;
     rdfs:label "bob.properties.force.Nm" ;
@@ -1413,7 +1446,8 @@ bob:Nm a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:OnOffSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" .
+    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:OutletSystemConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
@@ -1421,6 +1455,7 @@ bob:OutletSystemConnectionPoint a rdfs:Class ;
         "bob.core.OutletSystemConnectionPoint" ;
     rdfs:subClassOf bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint,
         bob:WaterSystemConnectionPoint .
 
 bob:OutletZoneConnectionPoint a rdfs:Class ;
@@ -1465,7 +1500,8 @@ bob:RPM a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:RS485ConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.network.RS485ConnectionPoint" .
+    rdfs:label "bob.connections.network.RS485ConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:SinglePoleCircuitBreaker a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.distribution.SinglePoleCircuitBreaker" ;
@@ -1477,6 +1513,7 @@ bob:SinglePoleCircuitBreaker a rdfs:Class ;
     208V single pole available in the High Leg Configuration
     """ ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
         s223:Equipment .
 
 bob:SinglePoleSwitch a rdfs:Class ;
@@ -1487,7 +1524,14 @@ bob:SinglePoleSwitch a rdfs:Class ;
     A rule could check inlet and outlet are same class
     """ ;
     rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
         s223:Equipment .
+
+bob:SystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.core.SystemConnectionPoint" ;
+    rdfs:comment """
+    System Connection Point
+    """ .
 
 bob:Temperature a rdfs:Class ;
     rdfs:label "bob.properties.temperature.Temperature" ;
@@ -1504,6 +1548,7 @@ bob:ThreePolesCircuitBreaker a rdfs:Class ;
     at the same time. Electricity is fed from 3 bus bars
     """ ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
         s223:Equipment .
 
 bob:ThreePolesMainCircuitBreaker a rdfs:Class ;
@@ -1519,6 +1564,7 @@ bob:ThreePolesMainCircuitBreaker a rdfs:Class ;
 
     """ ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
         s223:Equipment .
 
 bob:TimerSwitch a rdfs:Class ;
@@ -1528,6 +1574,7 @@ bob:TimerSwitch a rdfs:Class ;
     Typically used for exhaust fan in bathrooms for example
     """ ;
     rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
         s223:Equipment,
         bob:SinglePoleSwitch .
 
@@ -1540,6 +1587,7 @@ bob:TwoPolesCircuitBreaker a rdfs:Class ;
     Could also use 208V instead of 240V...
     """ ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
         s223:Equipment .
 
 bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
@@ -1551,6 +1599,7 @@ bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
     to AB. It is really a modeling trick.
     """ ;
     rdfs:subClassOf p223:ElectricalCircuitBreaker,
+        s223:Connectable,
         s223:Equipment .
 
 bob:TwoWayActuatedProportionalValve a rdfs:Class ;
@@ -1569,10 +1618,12 @@ bob:Volts a rdfs:Class ;
         s223:QuantifiableProperty .
 
 bob:WaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.WaterConnectionPoint" .
+    rdfs:label "bob.connections.water.WaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:WaterSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.WaterSystemConnectionPoint" .
+    rdfs:label "bob.connections.water.WaterSystemConnectionPoint" ;
+    rdfs:subClassOf bob:SystemConnectionPoint .
 
 bob:ZoneConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirZoneConnectionPoint",

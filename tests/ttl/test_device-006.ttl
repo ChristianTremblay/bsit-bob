@@ -51,31 +51,36 @@ ex27:00001 a s223:Connectable,
     bob:volts ex27:00024 ;
     rdfs:comment "A VFD for a Big Fan" .
 
-ex27:00002 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+ex27:00002 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MyVFD.electricalInlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex27:00001 .
 
-ex27:00003 a s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+ex27:00003 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MyVFD.electricalOutlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex27:00001 .
 
 ex27:00004 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "MyVFD.ethernet_port" ;
     s223:hasMedium s223:Communication-Ethernet ;
     s223:isConnectionPointOf ex27:00001 .
 
 ex27:00005 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "MyVFD.mstp_port" ;
     s223:hasMedium s223:Communication-EIA-485 ;
     s223:isConnectionPointOf ex27:00001 .
 
 ex27:00006 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "MyVFD.speedrefInlet" ;
@@ -83,6 +88,7 @@ ex27:00006 a p223:AnalogInput,
     s223:isConnectionPointOf ex27:00001 .
 
 ex27:00007 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "MyVFD.drive_running_dry_contact" ;
@@ -90,6 +96,7 @@ ex27:00007 a p223:BinaryOutput,
     s223:isConnectionPointOf ex27:00001 .
 
 ex27:00008 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "MyVFD.alarm_dry_contact" ;

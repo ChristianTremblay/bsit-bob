@@ -27,13 +27,15 @@ exg3601:00001 a s223:Connectable,
         exg3601:00008,
         exg3601:00009 .
 
-exg3601:00002 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+exg3601:00002 a s223:ConnectionPoint,
+        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.electricalInlet" ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
     s223:isConnectionPointOf exg3601:00001 .
 
 exg3601:00003 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.zone_temperature_sensor" ;
@@ -41,6 +43,7 @@ exg3601:00003 a p223:AnalogInput,
     s223:isConnectionPointOf exg3601:00001 .
 
 exg3601:00004 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.zone_co2_sensor" ;
@@ -48,6 +51,7 @@ exg3601:00004 a p223:AnalogInput,
     s223:isConnectionPointOf exg3601:00001 .
 
 exg3601:00005 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.airflow_sensor" ;
@@ -55,6 +59,7 @@ exg3601:00005 a p223:AnalogInput,
     s223:isConnectionPointOf exg3601:00001 .
 
 exg3601:00006 a p223:BinaryInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.window_switch" ;
@@ -62,6 +67,7 @@ exg3601:00006 a p223:BinaryInput,
     s223:isConnectionPointOf exg3601:00001 .
 
 exg3601:00007 a p223:BinaryInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.occupancy_sensor" ;
@@ -69,6 +75,7 @@ exg3601:00007 a p223:BinaryInput,
     s223:isConnectionPointOf exg3601:00001 .
 
 exg3601:00008 a p223:AnalogOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.damper_output" ;
@@ -78,6 +85,7 @@ exg3601:00008 a p223:AnalogOutput,
     s223:isConnectionPointOf exg3601:00001 .
 
 exg3601:00009 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.bacnet_mstp" ;
     s223:connectsThrough exg3601:00087 ;
@@ -148,32 +156,37 @@ exg3601:00014 a p223:HVACSpace,
     bob:windows exg3601:00019 ;
     rdfs:comment "Where sensors TS, CO2, WS and OCC are" .
 
-exg3601:00015 a s223:InletConnectionPoint,
+exg3601:00015 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "space.ductAirInlet" ;
     s223:connectsThrough exg3601:00013 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00014 .
 
-exg3601:00016 a s223:OutletConnectionPoint,
+exg3601:00016 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "space.ductAirOutlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00014 .
 
 exg3601:00017 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "space.airTransfer" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00014 .
 
 exg3601:00018 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "space.doors" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00014 .
 
 exg3601:00019 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "space.windows" ;
     s223:connectsThrough exg3601:00027 ;
@@ -181,12 +194,14 @@ exg3601:00019 a s223:BidirectionalConnectionPoint,
     s223:isConnectionPointOf exg3601:00014 .
 
 exg3601:00020 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "space.radiantHeating" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00014 .
 
 exg3601:00021 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "space.radiantCooling" ;
     s223:hasMedium s223:Medium-Air ;
@@ -213,6 +228,7 @@ exg3601:00023 a p223:Window,
     bob:outdoor exg3601:00025 .
 
 exg3601:00024 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Window.indoor" ;
     s223:connectsThrough exg3601:00027 ;
@@ -220,12 +236,14 @@ exg3601:00024 a s223:BidirectionalConnectionPoint,
     s223:isConnectionPointOf exg3601:00023 .
 
 exg3601:00025 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Window.outdoor" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00023 .
 
-exg3601:00026 a s223:OutletConnectionPoint,
+exg3601:00026 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Window.naturalLight" ;
     s223:hasMedium s223:Light-Visible ;
@@ -261,14 +279,16 @@ exg3601:00028 a s223:Connectable,
     bob:zoneTemperature exg3601:00036 ;
     rdfs:comment "VAV with Airflow + Damper" .
 
-exg3601:00029 a s223:InletConnectionPoint,
+exg3601:00029 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAV_CoolingOnly.airInlet" ;
     s223:connectsThrough exg3601:00012 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00028 .
 
-exg3601:00030 a s223:OutletConnectionPoint,
+exg3601:00030 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAV_CoolingOnly.airOutlet" ;
     s223:connectsThrough exg3601:00013 ;
@@ -379,14 +399,16 @@ exg3601:00041 a s223:Connectable,
     bob:position_feedback exg3601:00069 ;
     rdfs:comment "VAV Box Damper with electrical actuator" .
 
-exg3601:00042 a s223:InletConnectionPoint,
+exg3601:00042 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00041 ;
     s223:mapsTo exg3601:00029 .
 
-exg3601:00043 a s223:OutletConnectionPoint,
+exg3601:00043 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -419,6 +441,7 @@ exg3601:00044 a s223:Connectable,
     bob:position exg3601:00069 .
 
 exg3601:00045 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
     s223:connectsThrough exg3601:00074 ;
@@ -426,6 +449,7 @@ exg3601:00045 a p223:MechanicalConnectionPoint,
     s223:isConnectionPointOf exg3601:00044 .
 
 exg3601:00046 a p223:AnalogOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
@@ -433,6 +457,7 @@ exg3601:00046 a p223:AnalogOutput,
     s223:isConnectionPointOf exg3601:00044 .
 
 exg3601:00047 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
@@ -440,19 +465,22 @@ exg3601:00047 a p223:BinaryOutput,
     s223:isConnectionPointOf exg3601:00044 .
 
 exg3601:00048 a p223:BinaryOutput,
+        s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf exg3601:00044 .
 
-exg3601:00049 a s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+exg3601:00049 a s223:ConnectionPoint,
+        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
     s223:isConnectionPointOf exg3601:00044 .
 
 exg3601:00050 a p223:AnalogInput,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
@@ -602,20 +630,23 @@ exg3601:00070 a s223:Connectable,
     bob:position exg3601:00069 .
 
 exg3601:00071 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
     s223:connectsThrough exg3601:00074 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf exg3601:00070 .
 
-exg3601:00072 a s223:InletConnectionPoint,
+exg3601:00072 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf exg3601:00070 ;
     s223:mapsTo exg3601:00042 .
 
-exg3601:00073 a s223:OutletConnectionPoint,
+exg3601:00073 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:hasMedium s223:Medium-Air ;
@@ -642,6 +673,7 @@ exg3601:00075 a p223:NetworkRoomSensor,
     rdfs:comment "Zone Thermostat with setpoint adj and local override" .
 
 exg3601:00076 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "ZONE-THERMOSTAT.mstp" ;
     s223:connectsThrough exg3601:00087 ;
@@ -698,7 +730,8 @@ exg3601:00082 a p223:GasMonitor,
     bob:airInletSupply exg3601:00083 ;
     rdfs:comment "CO2 of space" .
 
-exg3601:00083 a s223:InletConnectionPoint,
+exg3601:00083 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "ZN-CO2.airInletSupply" ;
     s223:hasMedium s223:Medium-Air ;

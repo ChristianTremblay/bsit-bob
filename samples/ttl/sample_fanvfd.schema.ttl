@@ -20,124 +20,6 @@
   rdfs:label "sample_fanvfd-schema" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-bob:DifferentialStaticPressure a rdfs:Class ;
-    rdfs:label "bob.properties.force.DifferentialStaticPressure" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ElectricPower a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricPower" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ElectricPowerkW a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricPowerkW" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower .
-
-bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
-    rdfs:label "bob.equipment.hvac.damper.ElectricalActuatedProportionalDamper" ;
-    rdfs:subClassOf s223:Equipment .
-
-bob:EthernetConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.network.EthernetConnectionPoint" .
-
-bob:Flow a rdfs:Class ;
-    rdfs:label "bob.properties.flow.Flow" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:Frequency a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.Frequency" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:HP a rdfs:Class ;
-    rdfs:label "bob.properties.force.HP" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:HotWaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.HotWaterConnectionPoint" .
-
-bob:InletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
-        "bob.connections.electricity.Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint",
-        "bob.core.InletSystemConnectionPoint" ;
-    rdfs:subClassOf s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
-        bob:AirSystemConnectionPoint,
-        bob:InletSystemConnectionPoint .
-
-bob:ModulationSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.controlsignal.ModulationSignalConnectionPoint" .
-
-bob:Nm a rdfs:Class ;
-    rdfs:label "bob.properties.force.Nm" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:OnOffSignalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" .
-
-bob:OutletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
-        "bob.core.OutletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:OutletSystemConnectionPoint .
-
-bob:Percent a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.Percent" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:PercentCommand a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.PercentCommand" ;
-    rdfs:subClassOf s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty .
-
-bob:PowerFactor a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.PowerFactor" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:Pressure a rdfs:Class ;
-    rdfs:label "bob.properties.force.Pressure" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:RPM a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.RPM" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:RS485ConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.network.RS485ConnectionPoint" .
-
 bob:Temperature a rdfs:Class ;
     rdfs:label "bob.properties.temperature.Temperature" ;
     rdfs:subClassOf s223:ObservableProperty,
@@ -377,12 +259,14 @@ p223:Analog-Unknown a p223:Analog-Unknown,
 
 p223:AnalogInput a rdfs:Class ;
     rdfs:label "bob.connections.controlsignal.ModulationSignalInletConnectionPoint" ;
-    rdfs:subClassOf s223:InletConnectionPoint,
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint .
 
 p223:AnalogOutput a rdfs:Class ;
     rdfs:label "bob.connections.controlsignal.ModulationSignalOutletConnectionPoint" ;
-    rdfs:subClassOf s223:OutletConnectionPoint,
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint .
 
 p223:Binary-DryContact a p223:Binary-DryContact,
@@ -411,12 +295,14 @@ p223:Binary-StartStop a p223:Binary-StartStop,
 
 p223:BinaryInput a rdfs:Class ;
     rdfs:label "bob.connections.controlsignal.OnOffSignalInletConnectionPoint" ;
-    rdfs:subClassOf s223:InletConnectionPoint,
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint .
 
 p223:BinaryOutput a rdfs:Class ;
     rdfs:label "bob.connections.controlsignal.OnOffSignalOutletConnectionPoint" ;
-    rdfs:subClassOf s223:OutletConnectionPoint,
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint .
 
 p223:CurrentRelay a rdfs:Class ;
@@ -428,7 +314,8 @@ p223:CurrentRelay a rdfs:Class ;
     This serves as motor status sensor
 
     """ ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:Dimensioned-ABLineLineVoltage a p223:Dimensioned-ABLineLineVoltage,
         s223:EnumerationKind,
@@ -598,7 +485,8 @@ p223:EnumerationKind-YesNo a p223:EnumerationKind-YesNo,
 
 p223:Filter a rdfs:Class ;
     rdfs:label "bob.equipment.hvac.filter.Filter" ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
         s223:EnumerationKind,
@@ -643,7 +531,8 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
         s223:EnumerationKind .
 
 p223:MechanicalConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.mechanical.MechanicalConnectionPoint" .
+    rdfs:label "bob.connections.mechanical.MechanicalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 p223:Medium-MechanicalCoupling a p223:Medium-MechanicalCoupling,
         s223:EnumerationKind,
@@ -659,7 +548,8 @@ p223:MotorStarter a rdfs:Class ;
     Equipment like a fan or a pump
 
     """ ;
-    rdfs:subClassOf s223:Equipment .
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
 
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
@@ -930,7 +820,8 @@ p223:TrueFalse-True a p223:TrueFalse-True,
 
 p223:VoltageSensor a rdfs:Class ;
     rdfs:label "bob.sensor.electricity.VoltageSensor" ;
-    rdfs:subClassOf s223:Equipment,
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
         s223:Sensor .
 
 p223:Water-CondensedWater a p223:Water-CondensedWater,
@@ -1024,14 +915,17 @@ g36:EnumerationKind-Level4 a s223:EnumerationKind,
     rdfs:subClassOf s223:EnumerationKind .
 
 bob:AirConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirConnectionPoint" .
+    rdfs:label "bob.connections.air.AirConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:AirSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirSystemConnectionPoint" .
+    rdfs:label "bob.connections.air.AirSystemConnectionPoint" ;
+    rdfs:subClassOf bob:SystemConnectionPoint .
 
 bob:AirTemperatureSensor a rdfs:Class ;
     rdfs:label "bob.sensor.temperature.AirTemperatureSensor" ;
-    rdfs:subClassOf s223:Equipment,
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor .
 
@@ -1052,7 +946,8 @@ bob:Causality a rdfs:Class ;
     rdfs:subClassOf p223:Producer .
 
 bob:ChilledWaterConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.water.ChilledWaterConnectionPoint" .
+    rdfs:label "bob.connections.water.ChilledWaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
 
 bob:Differential a rdfs:Class ;
     rdfs:label "bob.producer.causality.Differential" ;
@@ -1061,6 +956,138 @@ bob:Differential a rdfs:Class ;
     of substracting high input and low input.
     """ ;
     rdfs:subClassOf p223:Producer .
+
+bob:DifferentialStaticPressure a rdfs:Class ;
+    rdfs:label "bob.properties.force.DifferentialStaticPressure" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ElectricPower a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricPower" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ElectricPowerkW a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricPowerkW" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower .
+
+bob:ElectricalActuatedProportionalDamper a rdfs:Class ;
+    rdfs:label "bob.equipment.hvac.damper.ElectricalActuatedProportionalDamper" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
+
+bob:EthernetConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.network.EthernetConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
+
+bob:Flow a rdfs:Class ;
+    rdfs:label "bob.properties.flow.Flow" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Frequency a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.Frequency" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:HP a rdfs:Class ;
+    rdfs:label "bob.properties.force.HP" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:HotWaterConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.water.HotWaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
+
+bob:InletSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
+        "bob.connections.electricity.Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint",
+        "bob.core.InletSystemConnectionPoint" ;
+    rdfs:subClassOf s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
+        bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint .
+
+bob:ModulationSignalConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.controlsignal.ModulationSignalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
+
+bob:Nm a rdfs:Class ;
+    rdfs:label "bob.properties.force.Nm" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:OnOffSignalConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
+
+bob:OutletSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
+        "bob.core.OutletSystemConnectionPoint" ;
+    rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint .
+
+bob:Percent a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.Percent" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:PercentCommand a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.PercentCommand" ;
+    rdfs:subClassOf s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty .
+
+bob:PowerFactor a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.PowerFactor" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Pressure a rdfs:Class ;
+    rdfs:label "bob.properties.force.Pressure" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:RPM a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.RPM" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:RS485ConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.network.RS485ConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
+
+bob:SystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.core.SystemConnectionPoint" ;
+    rdfs:comment """
+    System Connection Point
+    """ .
 
 p223:VLAN a rdf:Property .
 
