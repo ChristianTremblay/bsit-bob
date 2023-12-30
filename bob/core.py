@@ -28,7 +28,7 @@ from typing import (
     get_origin,
 )
 
-from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
+from rdflib import RDF, RDFS, SH, XSD, BNode, Graph, Literal, Namespace, URIRef
 
 from .multimethods import multimethod, new_class
 
@@ -165,8 +165,8 @@ class SchemaGraph(Graph):
         subj, pred, obj = triple
 
         # exclude the schema content in the S223 namespace by default
-        if subj.startswith(S223):
-            return
+        # if subj.startswith(S223):
+        #     return
 
         # passes the tests
         super().add(triple)
@@ -569,6 +569,36 @@ class Node(metaclass=NodeMetaclass):
         # save a reference to the namespace in the class
         cls._namespace = _namespace  # type: ignore[attr-defined]
 
+        # give the class an IRI if it doesn't have one
+        if "_class_iri" not in vars(cls):
+            cls._class_iri = _namespace[cls.__name__]  # type: ignore[attr-defined]
+            _log.debug(f"    - class given IRI: {cls._class_iri!r}")
+
+        # this is a class, and a subclass of the super classes
+        if cls._class_iri is not None:
+            cls._schema_graph.add((cls._class_iri, RDF.type, RDFS.Class))
+
+            # some documentation is nice
+            if cls.__doc__:
+                cls._schema_graph.add(
+                    (cls._class_iri, RDFS.comment, Literal(cls.__doc__))
+                )
+            cls._schema_graph.add(
+                (
+                    cls._class_iri,
+                    RDFS.label,
+                    Literal(cls.__module__ + "." + cls.__name__),
+                )
+            )
+
+            for supercls in cls.__mro__[1:]:
+                if issubclass(supercls, Node):
+                    _class_iri = vars(supercls).get("_class_iri")
+                    if _class_iri is not None:
+                        cls._schema_graph.add(
+                            (cls._class_iri, RDFS.subClassOf, supercls._class_iri)
+                        )
+
         attr_annotations = vars(cls).get("__annotations__", {})
         for attr, attr_annotation in attr_annotations.items():
             if attr.startswith("_") or attr == "node_type":
@@ -598,6 +628,17 @@ class Node(metaclass=NodeMetaclass):
             attr_uriref = cls._attr_uriref.get(attr, _namespace[attr])
             _log.debug(f"        - attr_uriref: {attr_uriref!r}")
 
+            # create a property restriction for the attribute
+            if cls._class_iri is not None:
+                sh_property = BNode()
+                cls._schema_graph.add((sh_property, RDF.type, SH.PropertyShape))
+                cls._schema_graph.add((sh_property, SH.path, attr_uriref))
+
+                cls._schema_graph.add((cls._class_iri, RDF.type, SH.NodeShape))
+                cls._schema_graph.add((cls._class_iri, SH.property, sh_property))
+            else:
+                sh_property = None
+
             if isinstance(attr_type, URIRef):
                 if not attr_type.startswith(XSD):
                     raise ValueError(f"datatype URI expected for {attr}: {attr_type}")
@@ -605,6 +646,8 @@ class Node(metaclass=NodeMetaclass):
                 cls._datatypes[attr] = attr_type
                 cls._attr_uriref[attr] = attr_uriref
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
+                if sh_property:
+                    cls._schema_graph.add((sh_property, SH.datatype, attr_type))
 
             elif attr_origin in (Any, Dict, Set, Union):
                 warnings.warn(
@@ -647,7 +690,7 @@ class Node(metaclass=NodeMetaclass):
                         (
                             attr_uriref,
                             RDFS.subPropertyOf,
-                            S223.hasZoneConnectionPoint,
+                            BOB.hasZoneConnectionPoint,
                         )
                     )
 
@@ -655,6 +698,8 @@ class Node(metaclass=NodeMetaclass):
                 cls._nodes[attr] = attr_type
                 cls._attr_uriref[attr] = attr_uriref
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
+                if sh_property:
+                    cls._schema_graph.add((sh_property, SH["class"], attr_type._class_iri))
 
             else:
                 raise ValueError(f"unknown annotation for {attr}: {attr_type}")
@@ -670,36 +715,6 @@ class Node(metaclass=NodeMetaclass):
 
                 cls._nodes[attr] = attr_value
                 cls._attr_uriref[attr] = attr_uriref
-
-        # give the class an IRI if it doesn't have one
-        if "_class_iri" not in vars(cls):
-            cls._class_iri = _namespace[cls.__name__]  # type: ignore[attr-defined]
-            _log.debug(f"    - class given IRI: {cls._class_iri!r}")
-
-        # this is a class, and a subclass of the super classes
-        if cls._class_iri is not None:
-            cls._schema_graph.add((cls._class_iri, RDF.type, RDFS.Class))
-
-            # some documentation is nice
-            if cls.__doc__:
-                cls._schema_graph.add(
-                    (cls._class_iri, RDFS.comment, Literal(cls.__doc__))
-                )
-            cls._schema_graph.add(
-                (
-                    cls._class_iri,
-                    RDFS.label,
-                    Literal(cls.__module__ + "." + cls.__name__),
-                )
-            )
-
-            for supercls in cls.__mro__[1:]:
-                if issubclass(supercls, Node):
-                    _class_iri = vars(supercls).get("_class_iri")
-                    if _class_iri is not None:
-                        cls._schema_graph.add(
-                            (cls._class_iri, RDFS.subClassOf, supercls._class_iri)
-                        )
 
         cls._resolved = True
         _log.debug(f"    - resolved {cls}")
@@ -1108,6 +1123,10 @@ class EnumerationKind(Node):
     def __init__(self, name, *args, **kwargs) -> None:
         _log.debug("EnumerationKind.__init__ %r", name)
 
+        # give it a default label that matches the name
+        if "label" not in kwargs:
+            kwargs["label"] = name
+
         if "_alt_namespace" in kwargs:
             _ns = kwargs.pop("_alt_namespace")
             kwargs["_node_iri"] = _ns["EnumerationKind" + "-" + name]
@@ -1127,16 +1146,20 @@ class EnumerationKind(Node):
         self._parent = None
         self._children = set([self])
 
-    def __call__(self, name, _alt_namespace=None) -> EnumerationKind:
+    def __call__(self, name, _alt_namespace=None, **kwargs) -> EnumerationKind:
         _log.debug("EnumerationKind.__call__ %r", name)
+
+        # give it a default label that matches the name
+        if "label" not in kwargs:
+            kwargs["label"] = name
 
         if _alt_namespace:
             new_child = EnumerationKind(
-                name, _node_iri=_alt_namespace[self._name + "-" + name]
+                name, _node_iri=_alt_namespace[self._name + "-" + name], **kwargs
             )
         else:
             new_child = EnumerationKind(
-                name, _node_iri=_namespace[self._name + "-" + name]
+                name, _node_iri=_namespace[self._name + "-" + name], **kwargs
             )
         _log.debug("    - new_child: %r", new_child)
 

@@ -8,7 +8,15 @@ from bob.connections import (
     ChilledWaterConnection,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import Domain, DomainSpace, Zone, bind_model_namespace, dump
+from bob.core import (
+    bind_model_namespace,
+    data_graph,
+    schema_graph,
+    dump,
+    Domain,
+    DomainSpace,
+    Zone,
+)
 from bob.equipment.hvac import ChilledWaterCoil, Fan
 from bob.space.hvac import HVACSpace
 
@@ -51,4 +59,9 @@ zone.supplyAir.maps_to(scp)
 # output of the coil goes to the zone
 # coil1 >> zone
 
-dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(
+    data_graph,
+    filename=f"samples/ttl/{model_name}.data.ttl",
+    header=sample_header(model_name),
+)
+dump(schema_graph, filename=f"samples/ttl/{model_name}.schema.ttl")
