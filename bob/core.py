@@ -92,7 +92,10 @@ if _dotenv_import_error:
 # options
 MANDITORY_LABEL = os.getenv("MANDITORY_LABEL", "True") == "True"
 
-# include inverse relations
+# include cnx by default
+INCLUDE_CNX = os.getenv("INCLUDE_CNX", "True") == "True"
+
+# other inverse relations excluded by default
 INCLUDE_INVERSE = os.getenv("INCLUDE_INVERSE", "False") == "True"
 
 # connection requires hasMedium
@@ -649,7 +652,7 @@ class Node(metaclass=NodeMetaclass):
                 if sh_property:
                     cls._schema_graph.add((sh_property, SH.datatype, attr_type))
 
-            elif attr_origin in (Any, Dict, Set, Union):
+            elif attr_origin in (Any, Dict, Set, List, Union, list, set, dict):
                 warnings.warn(
                     f"class {cls}, attribute {attr}: inspection not supported {attr_type}"
                 )
@@ -699,7 +702,9 @@ class Node(metaclass=NodeMetaclass):
                 cls._attr_uriref[attr] = attr_uriref
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
                 if sh_property:
-                    cls._schema_graph.add((sh_property, SH["class"], attr_type._class_iri))
+                    cls._schema_graph.add(
+                        (sh_property, SH["class"], attr_type._class_iri)
+                    )
 
             else:
                 raise ValueError(f"unknown annotation for {attr}: {attr_type}")
@@ -1180,8 +1185,13 @@ class System(Container):
     """
 
     _class_iri: URIRef = S223.System
+    _attr_uriref: Dict[str, URIRef] = {
+        "hasSystemConnectionPoint": BOB.hasSystemConnectionPoint,
+    }
+
     hasPhysicalLocation: PhysicalSpace
     hasDomain: Domain
+    hasSystemConnectionPoint: List[SystemConnectionPoint]
 
     _system_connection_points: Dict[str, SystemConnectionPoint]
     _serves_zones: Dict[str, Zone]
@@ -1195,6 +1205,7 @@ class System(Container):
         #     kwargs = {**config["params"], **kwargs}
 
         super().__init__(*args, **kwargs)
+
         if config:
             for group_name, group_items in config.items():
                 if group_name == "params":
@@ -1510,6 +1521,10 @@ class ConnectionPoint(Node):
         self.hasRole = set()
 
         self._data_graph.add((thing._node_iri, S223.hasConnectionPoint, self._node_iri))
+        if INCLUDE_CNX:
+            self._data_graph.add((thing._node_iri, S223.cnx, self._node_iri))
+            self._data_graph.add((self._node_iri, S223.cnx, thing._node_iri))
+
         self.isConnectionPointOf = thing
 
         # this is one of the connection points of the Equipment
@@ -1655,6 +1670,14 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
     connection_point._data_graph.add(
         (connection._node_iri, S223.connectsAt, connection_point._node_iri)
     )
+    if INCLUDE_CNX:
+        connection_point._data_graph.add(
+            (connection._node_iri, S223.cnx, connection_point._node_iri)
+        )
+        connection_point._data_graph.add(
+            (connection_point._node_iri, S223.cnx, connection._node_iri)
+        )
+
     connection_point._data_graph.add(
         (
             connection_point.isConnectionPointOf._node_iri,
@@ -1721,6 +1744,14 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
     connection._data_graph.add(
         (connection._node_iri, S223.connectsAt, connection_point._node_iri)
     )
+    if INCLUDE_CNX:
+        connection._data_graph.add(
+            (connection._node_iri, S223.cnx, connection_point._node_iri)
+        )
+        connection._data_graph.add(
+            (connection_point._node_iri, S223.cnx, connection._node_iri)
+        )
+
     connection._data_graph.add(
         (
             connection._node_iri,
@@ -2251,7 +2282,7 @@ class SystemConnectionPoint(Node):
     hasMedium: Medium
     mapsTo: Node  # Union[Junction, ConnectionPoint]
 
-    connectsThrough: Connection
+    # connectsThrough: Connection
     isSystemConnectionPointOf: System
 
     def __init__(self, system: System, **kwargs: Any) -> None:
@@ -2448,8 +2479,14 @@ class Zone(Container, Node):
     """
 
     _class_iri: URIRef = S223.Zone
-    _zone_connection_points: Dict[str, ZoneConnectionPoint]
+    _attr_uriref: Dict[str, URIRef] = {
+        "hasZoneConnectionPoint": BOB.hasZoneConnectionPoint,
+    }
+
     hasDomain: Domain
+    hasZoneConnectionPoint: List[ZoneConnectionPoint]
+
+    _zone_connection_points: Dict[str, ZoneConnectionPoint]
 
     def __init__(self, **kwargs: Any) -> None:
         _log.debug(f"Zone.__init__ {kwargs}")
@@ -2845,7 +2882,7 @@ class Junction(Connectable):
         other_medium = getattr(other, "hasMedium", None)
 
         if (not junction_medium) and (not other_medium):
-            raise RuntimeError(f"medium required: {self} or {connection_point}")
+            raise RuntimeError(f"medium required: {self} or {other}")
 
         if junction_medium:
             if not other_medium:
@@ -2857,7 +2894,7 @@ class Junction(Connectable):
                     f"incompatiable medium: {junction_medium} or {other_medium}"
                 )
         else:
-            junction.hasMedium = other_medium
+            self.hasMedium = other_medium
 
         # make a connection point matching the other
         connection_point = other.__class__(self)
@@ -3296,7 +3333,7 @@ def contains_mm(system: System, equipment: Equipment) -> None:
 @multimethod
 def contains_mm(system: System, equipment_list: List[Node]) -> None:
     """System > List[Equipment]"""
-    _log.info(f"system {system} contains equipment {equipment}")
+    _log.info(f"system {system} contains equipment list {equipment_list}")
 
     for equipment in equipment_list:
         if not isinstance(equipment, (Equipment, System)):
