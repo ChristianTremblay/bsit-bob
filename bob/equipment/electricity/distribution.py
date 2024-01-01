@@ -173,9 +173,7 @@ class ThreePhaseDistributionPanel(Equipment):
         self.electricalBusABC += ElectricalPhaseIdentifier.ABC
 
         for lit, circuit_breaker in self._contents.items():
-            print(circuit_breaker)
             if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
-                print("connections")
                 circuit_breaker.electricalOutletA >> self.electricalBusA
                 circuit_breaker.electricalOutletB >> self.electricalBusB
                 circuit_breaker.electricalOutletC >> self.electricalBusC
