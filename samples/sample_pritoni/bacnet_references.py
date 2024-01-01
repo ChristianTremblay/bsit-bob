@@ -158,7 +158,7 @@ ld.openofficeNorth_luminaire_1.onOffStatus @ BACnetExternalReference(
     "bacnet://2/binary-input,1/present-value"
 )
 
-fn.f_avg_temp @ dat_avg.present_value
+fn.f_avg_temp @ dat_avg.presentValue
 
 pritoni_schedule_reference = BACnetExternalReference(
     "bacnet://5204/schedule,1/present-value"

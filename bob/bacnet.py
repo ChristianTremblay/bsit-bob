@@ -3,6 +3,9 @@ This module contains just enough of the BACnet object model to help build
 example models.  A complete description of BACnet objects and properties is
 beyond the scope of this project.
 """
+
+from __future__ import annotations
+
 import logging
 import re
 from typing import Any, List
@@ -25,8 +28,10 @@ _namespace = BACNET
 class Device(Controller):
     _class_iri: URIRef = BACNET.Device
     _namespace = BACNET
-    _device_object = Node
-    _bacnet_objects = set()
+    _device_object: DeviceObject  # reference to a device's DeviceObject
+    _bacnet_objects = set()  # references to all objects
+
+    deviceInstance: Literal
 
 
 class Object(Node):
@@ -36,37 +41,55 @@ class Object(Node):
         "objectType": BACNET["object-type"],
         "description": BACNET["description"],
     }
+    _device: Device
+
     objectIdentifier: Literal
     objectName: Literal
     objectType: URIRef
     description: Literal
-    ext_ref_args: list
 
-    def create_external_reference_url(
-        self, bacnet_device, propertyIdentifier="present-value"
-    ):
-        _dev_instance = bacnet_device._device_object.objectIdentifier.split(",")[1]
-        _label = f"dev_{_dev_instance}.{self.objectName}"
-        _url = f"bacnet://{_dev_instance}/{self.objectIdentifier}/{propertyIdentifier}"
-        self.ext_ref_args = [_label, _url]
+    _device: Device  # reference from an object to its device
+    _present_value: BACnetExternalReference
 
     @property
-    def present_value(self):
-        "Creates the present_value on demand to be used as external reference for a property"
-        _label, _url = self.ext_ref_args
-        return BACnetExternalReference(_url, label=_label)
+    def presentValue(self) -> BACnetExternalReference:
+        """
+        Creates the present-value reference on demand to be used for a property.
+        Cache it in case there are multiple references.
+        """
+        if getattr(self, "_present_value", None) is None:
+            self._present_value = BACnetExternalReference(
+                f"bacnet://{self._device.deviceInstance}/{self.objectIdentifier}/present-value"
+            )
 
+        return self._present_value
 
 @multimethod
 def contains_mm(device_: Device, object_: Object) -> None:
     """Device > Object"""
     _log.info(f"device {device_} contains object {object_}")
+
+    # link the object to the device and vice versa
+    object_._device = device_
+    device_._bacnet_objects.add(object_)
+
+    # the device instance number should match the object instance of the
+    # device object
     if isinstance(object_, DeviceObject):
+        if getattr(device_, "_device_object", None) is not None:
+            raise ValueError(f"device already has a Device Object: {device_}")
         device_._device_object = object_
-    else:
-        device_._bacnet_objects.add(object_)
-        object_.create_external_reference_url(device_)
+
+        device_instance = int(object_.objectIdentifier.split(",")[1])
+        if device_.deviceInstance is not None:
+            if (device_.deviceInstance != device_instance):
+                raise ValueError(f"device instance mismatch: {device_}")
+        else:
+            device_.deviceInstance = device_instance
+
+    # add it to the graph
     device_._data_graph.add((device_._node_iri, BACNET.hasObject, object_._node_iri))
+
     if INCLUDE_INVERSE:
         device_._data_graph.add(
             (object_._node_iri, BACNET.isObjectOf, device_._node_iri)
@@ -75,7 +98,7 @@ def contains_mm(device_: Device, object_: Object) -> None:
 
 @multimethod
 def contains_mm(device_: Device, object_list: List[Object]) -> None:
-    """Device > Object"""
+    """Device > [ Object, ... ]"""
     _log.info(f"device {device_} contains object list {object_list}")
 
     for object_ in object_list:
