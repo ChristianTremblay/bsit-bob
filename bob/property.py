@@ -6,9 +6,10 @@ from rdflib import Literal  # type: ignore
 from rdflib import RDF, RDFS, XSD, BNode, Graph, Namespace, URIRef
 
 from .core import (
+    BOB,
+    S223,
     QUANTITYKIND,
     QUDT,
-    S223,
     UNIT,
     EnumerationKind,
     ExternalReference,
@@ -40,6 +41,8 @@ class ObservableProperty(Property):
     """
 
     _class_iri: URIRef = S223.ObservableProperty
+    _attr_uriref = {"isObservedBy": BOB.isObservedBy}
+
     isObservedBy: Node
 
 
@@ -48,7 +51,10 @@ class QuantifiableProperty(Property):
     A property to be expressed as a quantity, it has units.
     """
 
-    _attr_uriref = {"hasUnit": QUDT["hasUnit"], "hasQuantityKind": QUDT["hasQuantityKind"]}
+    _attr_uriref = {
+        "hasUnit": QUDT["hasUnit"],
+        "hasQuantityKind": QUDT["hasQuantityKind"],
+    }
 
     _class_iri: URIRef = S223.QuantifiableProperty
     hasUnit: URIRef
