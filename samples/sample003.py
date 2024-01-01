@@ -13,6 +13,7 @@ from bob.core import (
     data_graph,
     schema_graph,
     dump,
+    S223,
     Domain,
     DomainSpace,
     Zone,
@@ -44,20 +45,19 @@ c >> coil1.chilledWaterInlet
 f = Fan(label="F", electricalInlet=ElectricalInletConnectionPoint)
 f >> coil1.airInlet
 
-# there is a zone
+# there is a zone and a space
 zone = HVACZone(label="Zone-1")
-
-# there is a space that is the destination of the air
 space = HVACSpace(label="Space")
-scp = AirInletConnectionPoint(space, label="scp")
 
 # the zone contains the space, and the air input into the zone is
 # mapped to the space connection point
 zone > space
-zone.supplyAir.maps_to(scp)
+zone.supplyAir.maps_to(space.ductAirInlet)
 
-# output of the coil goes to the zone
-# coil1 >> zone
+for s, p, o in data_graph:
+    if p == S223.cnx:
+        if (o, p, s) not in data_graph:
+            print(f"missing {o} -> {s}")
 
 dump(
     data_graph,

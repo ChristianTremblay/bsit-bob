@@ -22,6 +22,7 @@
 
 ex27:00001 a s223:Connection ;
     rdfs:label "Sun" ;
+    s223:cnx ex27:00003 ;
     s223:connectsAt ex27:00003 ;
     s223:connectsFrom ex27:00002 ;
     s223:hasMedium s223:Light-Visible .
@@ -30,6 +31,8 @@ ex27:00002 a p223:Light,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "WL" ;
+    s223:cnx ex27:00003,
+        ex27:00004 ;
     s223:connectedThrough ex27:00001 ;
     s223:hasConnectionPoint ex27:00003,
         ex27:00004 ;
@@ -40,6 +43,8 @@ ex27:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "WL.lightOutlet" ;
+    s223:cnx ex27:00001,
+        ex27:00002 ;
     s223:connectsThrough ex27:00001 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex27:00002 .
@@ -48,6 +53,7 @@ ex27:00004 a s223:ConnectionPoint,
         s223:ElectricalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "WL.electricalInlet" ;
+    s223:cnx ex27:00002 ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex27:00002 .
 

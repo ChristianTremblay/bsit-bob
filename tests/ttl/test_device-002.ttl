@@ -26,6 +26,8 @@ ex27:00001 a p223:Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "HWB-1" ;
+    s223:cnx ex27:00002,
+        ex27:00003 ;
     s223:hasConnectionPoint ex27:00002,
         ex27:00003 ;
     bob:hotWaterEntering ex27:00003 ;
@@ -36,6 +38,7 @@ ex27:00002 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-1.hotWaterLeaving" ;
+    s223:cnx ex27:00001 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex27:00001 .
 
@@ -43,6 +46,7 @@ ex27:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-1.hotWaterEntering" ;
+    s223:cnx ex27:00001 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex27:00001 .
 
@@ -50,6 +54,9 @@ ex27:00004 a p223:Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "Electrical Hot Water Boiler" ;
+    s223:cnx ex27:00005,
+        ex27:00006,
+        ex27:00007 ;
     s223:hasConnectionPoint ex27:00005,
         ex27:00006,
         ex27:00007 ;
@@ -61,6 +68,7 @@ ex27:00005 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.hotWaterLeaving" ;
+    s223:cnx ex27:00004 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex27:00004 .
 
@@ -68,6 +76,7 @@ ex27:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.hotWaterEntering" ;
+    s223:cnx ex27:00004 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex27:00004 .
 
@@ -75,6 +84,7 @@ ex27:00007 a s223:ConnectionPoint,
         s223:ElectricalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.electricalInlet" ;
+    s223:cnx ex27:00004 ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex27:00004 .
 
@@ -82,6 +92,13 @@ ex27:00008 a p223:Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "HWB-2" ;
+    s223:cnx ex27:00009,
+        ex27:00010,
+        ex27:00011,
+        ex27:00012,
+        ex27:00013,
+        ex27:00014,
+        ex27:00015 ;
     s223:hasConnectionPoint ex27:00009,
         ex27:00010,
         ex27:00011,
@@ -102,6 +119,7 @@ ex27:00009 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-2.hotWaterLeaving" ;
+    s223:cnx ex27:00008 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex27:00008 .
 
@@ -109,6 +127,7 @@ ex27:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-2.hotWaterEntering" ;
+    s223:cnx ex27:00008 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex27:00008 .
 
@@ -116,6 +135,7 @@ ex27:00011 a s223:ConnectionPoint,
         s223:ElectricalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "HWB-2.electricalInlet" ;
+    s223:cnx ex27:00008 ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex27:00008 .
 
@@ -123,6 +143,7 @@ ex27:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:NaturalGasConnectionPoint ;
     rdfs:label "HWB-2.naturalGasInlet" ;
+    s223:cnx ex27:00008 ;
     s223:hasMedium s223:Medium-NaturalGas ;
     s223:isConnectionPointOf ex27:00008 .
 
@@ -130,6 +151,7 @@ ex27:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HWB-2.combustionAirInlet" ;
+    s223:cnx ex27:00008 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00008 .
 
@@ -137,6 +159,7 @@ ex27:00014 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HWB-2.combustionAirOutlet" ;
+    s223:cnx ex27:00008 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00008 .
 
@@ -144,6 +167,7 @@ ex27:00015 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "HWB-2.condensedWaterOutlet" ;
+    s223:cnx ex27:00008 ;
     s223:hasMedium s223:Medium-Water ;
     s223:isConnectionPointOf ex27:00008 .
 
@@ -152,6 +176,10 @@ ex27:00016 a s223:Coil,
         s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Hot Water Coil" ;
+    s223:cnx ex27:00017,
+        ex27:00018,
+        ex27:00019,
+        ex27:00020 ;
     s223:hasConnectionPoint ex27:00017,
         ex27:00018,
         ex27:00019,
@@ -165,6 +193,7 @@ ex27:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Hot Water Coil.airInlet" ;
+    s223:cnx ex27:00016 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00016 .
 
@@ -172,6 +201,7 @@ ex27:00018 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Hot Water Coil.airOutlet" ;
+    s223:cnx ex27:00016 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00016 .
 
@@ -179,6 +209,7 @@ ex27:00019 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Hot Water Coil.hotWaterInlet" ;
+    s223:cnx ex27:00016 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex27:00016 .
 
@@ -186,6 +217,7 @@ ex27:00020 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Hot Water Coil.hotWaterOutlet" ;
+    s223:cnx ex27:00016 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex27:00016 .
 
@@ -194,6 +226,10 @@ ex27:00021 a s223:Coil,
         s223:CoolingCoil,
         s223:Equipment ;
     rdfs:label "Chilled Water Coil" ;
+    s223:cnx ex27:00022,
+        ex27:00023,
+        ex27:00024,
+        ex27:00025 ;
     s223:hasConnectionPoint ex27:00022,
         ex27:00023,
         ex27:00024,
@@ -207,6 +243,7 @@ ex27:00022 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Chilled Water Coil.airInlet" ;
+    s223:cnx ex27:00021 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00021 .
 
@@ -214,6 +251,7 @@ ex27:00023 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Chilled Water Coil.airOutlet" ;
+    s223:cnx ex27:00021 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00021 .
 
@@ -221,6 +259,7 @@ ex27:00024 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chilled Water Coil.chilledWaterInlet" ;
+    s223:cnx ex27:00021 ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex27:00021 .
 
@@ -228,6 +267,7 @@ ex27:00025 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chilled Water Coil.chilledWaterOutlet" ;
+    s223:cnx ex27:00021 ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex27:00021 .
 
@@ -236,6 +276,9 @@ ex27:00026 a s223:Coil,
         s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Electrical Heating Coil" ;
+    s223:cnx ex27:00027,
+        ex27:00028,
+        ex27:00029 ;
     s223:hasConnectionPoint ex27:00027,
         ex27:00028,
         ex27:00029 ;
@@ -248,6 +291,7 @@ ex27:00027 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airInlet" ;
+    s223:cnx ex27:00026 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00026 .
 
@@ -255,6 +299,7 @@ ex27:00028 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airOutlet" ;
+    s223:cnx ex27:00026 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00026 .
 
@@ -262,6 +307,7 @@ ex27:00029 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Electrical Heating Coil.electricalInlet" ;
+    s223:cnx ex27:00026 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex27:00026 .
 

@@ -26,6 +26,8 @@ ex27:00001 a s223:Connectable,
         s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "Electrical Proportional Actuated Damper" ;
+    s223:cnx ex27:00002,
+        ex27:00003 ;
     s223:contains ex27:00004,
         ex27:00030 ;
     s223:hasConnectionPoint ex27:00002,
@@ -42,6 +44,7 @@ ex27:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Proportional Actuated Damper.airInlet" ;
+    s223:cnx ex27:00001 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00001 .
 
@@ -49,12 +52,19 @@ ex27:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Proportional Actuated Damper.airOutlet" ;
+    s223:cnx ex27:00001 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00001 .
 
 ex27:00004 a s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
+    s223:cnx ex27:00005,
+        ex27:00006,
+        ex27:00007,
+        ex27:00008,
+        ex27:00009,
+        ex27:00010 ;
     s223:connectedThrough ex27:00034 ;
     s223:connectedTo ex27:00030 ;
     s223:contains ex27:00028 ;
@@ -80,6 +90,8 @@ ex27:00005 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
+    s223:cnx ex27:00004,
+        ex27:00034 ;
     s223:connectsThrough ex27:00034 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex27:00004 .
@@ -89,6 +101,7 @@ ex27:00006 a p223:AnalogOutput,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
+    s223:cnx ex27:00004 ;
     s223:hasMedium s223:Signal-Modulated ;
     s223:isConnectionPointOf ex27:00004 .
 
@@ -97,6 +110,7 @@ ex27:00007 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
+    s223:cnx ex27:00004 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf ex27:00004 .
 
@@ -105,6 +119,7 @@ ex27:00008 a p223:BinaryOutput,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
+    s223:cnx ex27:00004 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf ex27:00004 .
 
@@ -112,6 +127,7 @@ ex27:00009 a s223:ConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
+    s223:cnx ex27:00004 ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
     s223:isConnectionPointOf ex27:00004 .
 
@@ -120,6 +136,7 @@ ex27:00010 a p223:AnalogInput,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
+    s223:cnx ex27:00004 ;
     s223:hasMedium s223:Signal-Modulated ;
     s223:isConnectionPointOf ex27:00004 .
 
@@ -263,6 +280,9 @@ ex27:00030 a s223:Connectable,
         s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
+    s223:cnx ex27:00031,
+        ex27:00032,
+        ex27:00033 ;
     s223:connectedFrom ex27:00004 ;
     s223:connectedThrough ex27:00034 ;
     s223:hasConnectionPoint ex27:00031,
@@ -278,6 +298,8 @@ ex27:00031 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
+    s223:cnx ex27:00030,
+        ex27:00034 ;
     s223:connectsThrough ex27:00034 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf ex27:00030 .
@@ -286,6 +308,7 @@ ex27:00032 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
+    s223:cnx ex27:00030 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00030 ;
     s223:mapsTo ex27:00002 .
@@ -294,11 +317,14 @@ ex27:00033 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
+    s223:cnx ex27:00030 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00030 ;
     s223:mapsTo ex27:00003 .
 
 ex27:00034 a s223:Connection ;
+    s223:cnx ex27:00005,
+        ex27:00031 ;
     s223:connectsAt ex27:00005,
         ex27:00031 ;
     s223:connectsFrom ex27:00004 ;

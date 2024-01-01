@@ -23,6 +23,7 @@ ex27:00001 a s223:Connectable,
         s223:Equipment,
         ex23:A ;
     rdfs:label "a" ;
+    s223:cnx ex27:00002 ;
     s223:connectedThrough ex27:00009 ;
     s223:connectedTo ex27:00005 ;
     s223:hasConnectionPoint ex27:00002 ;
@@ -32,6 +33,8 @@ ex27:00002 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "a.cOut" ;
+    s223:cnx ex27:00001,
+        ex27:00009 ;
     s223:connectsThrough ex27:00009 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00001 .
@@ -52,6 +55,7 @@ ex27:00005 a s223:Connectable,
         s223:Equipment,
         ex23:B ;
     rdfs:label "b" ;
+    s223:cnx ex27:00006 ;
     s223:connectedFrom ex27:00001 ;
     s223:connectedThrough ex27:00009 ;
     s223:hasConnectionPoint ex27:00006 ;
@@ -61,6 +65,8 @@ ex27:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "b.cIn" ;
+    s223:cnx ex27:00005,
+        ex27:00009 ;
     s223:connectsThrough ex27:00009 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00005 .
@@ -78,6 +84,8 @@ ex27:00008 a bob:InletSystemConnectionPoint,
     bob:mapsTo ex27:00006 .
 
 ex27:00009 a s223:Connection ;
+    s223:cnx ex27:00002,
+        ex27:00006 ;
     s223:connectsAt ex27:00002,
         ex27:00006 ;
     s223:connectsFrom ex27:00001 ;

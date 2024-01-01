@@ -28,6 +28,8 @@ ex27:00001 a p223:ParticleCounter,
     rdfs:label "PM-1" ;
     p223:airInlet ex27:00002 ;
     p223:airOutlet ex27:00003 ;
+    s223:cnx ex27:00002,
+        ex27:00003 ;
     s223:contains ex27:00004,
         ex27:00006,
         ex27:00008 ;
@@ -39,6 +41,7 @@ ex27:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "PM-1.airInlet" ;
+    s223:cnx ex27:00001 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00001 .
 
@@ -46,6 +49,7 @@ ex27:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "PM-1.airOutlet" ;
+    s223:cnx ex27:00001 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex27:00001 .
 

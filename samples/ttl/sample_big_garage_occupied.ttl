@@ -39,6 +39,13 @@ ex1:00003 a p223:HVACSpace,
         s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "My Big Garage" ;
+    s223:cnx ex1:00004,
+        ex1:00005,
+        ex1:00006,
+        ex1:00007,
+        ex1:00008,
+        ex1:00009,
+        ex1:00010 ;
     s223:connectedFrom ex1:00038 ;
     s223:connectedThrough ex1:00044,
         ex1:00046 ;
@@ -63,6 +70,8 @@ ex1:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.ductAirInlet" ;
+    s223:cnx ex1:00003,
+        ex1:00046 ;
     s223:connectsThrough ex1:00046 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
@@ -71,6 +80,8 @@ ex1:00005 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.ductAirOutlet" ;
+    s223:cnx ex1:00003,
+        ex1:00044 ;
     s223:connectsThrough ex1:00044 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
@@ -79,6 +90,7 @@ ex1:00006 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.airTransfer" ;
+    s223:cnx ex1:00003 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 
@@ -86,6 +98,7 @@ ex1:00007 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.doors" ;
+    s223:cnx ex1:00003 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 
@@ -93,6 +106,7 @@ ex1:00008 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.windows" ;
+    s223:cnx ex1:00003 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 
@@ -100,6 +114,7 @@ ex1:00009 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.radiantHeating" ;
+    s223:cnx ex1:00003 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 
@@ -107,6 +122,7 @@ ex1:00010 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "My Big Garage.radiantCooling" ;
+    s223:cnx ex1:00003 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00003 .
 
@@ -114,6 +130,8 @@ ex1:00011 a p223:LightingSpace,
         s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Light Space #1 near entry" ;
+    s223:cnx ex1:00012,
+        ex1:00013 ;
     s223:connectedFrom ex1:00017 ;
     s223:connectedThrough ex1:00051 ;
     s223:hasConnectionPoint ex1:00012,
@@ -127,6 +145,8 @@ ex1:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Light Space #1 near entry.lightInlet" ;
+    s223:cnx ex1:00011,
+        ex1:00051 ;
     s223:connectsThrough ex1:00051 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00011 .
@@ -135,6 +155,7 @@ ex1:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Light Space #1 near entry.naturalLightInlet" ;
+    s223:cnx ex1:00011 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00011 .
 
@@ -142,6 +163,8 @@ ex1:00014 a p223:LightingSpace,
         s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "Light Space #2 back of the garage" ;
+    s223:cnx ex1:00015,
+        ex1:00016 ;
     s223:connectedFrom ex1:00019 ;
     s223:connectedThrough ex1:00052 ;
     s223:hasConnectionPoint ex1:00015,
@@ -155,6 +178,8 @@ ex1:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Light Space #2 back of the garage.lightInlet" ;
+    s223:cnx ex1:00014,
+        ex1:00052 ;
     s223:connectsThrough ex1:00052 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00014 .
@@ -163,6 +188,7 @@ ex1:00016 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Light Space #2 back of the garage.naturalLightInlet" ;
+    s223:cnx ex1:00014 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00014 .
 
@@ -170,6 +196,7 @@ ex1:00017 a s223:Connectable,
         s223:Equipment,
         s223:Luminaire ;
     rdfs:label "Ballast #1, space #1" ;
+    s223:cnx ex1:00018 ;
     s223:connectedThrough ex1:00051 ;
     s223:connectedTo ex1:00011 ;
     s223:hasConnectionPoint ex1:00018 ;
@@ -179,6 +206,8 @@ ex1:00018 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Ballast #1, space #1.lightOutlet" ;
+    s223:cnx ex1:00017,
+        ex1:00051 ;
     s223:connectsThrough ex1:00051 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00017 .
@@ -187,6 +216,7 @@ ex1:00019 a s223:Connectable,
         s223:Equipment,
         s223:Luminaire ;
     rdfs:label "Ballast #2, space #2" ;
+    s223:cnx ex1:00020 ;
     s223:connectedThrough ex1:00052 ;
     s223:connectedTo ex1:00014 ;
     s223:hasConnectionPoint ex1:00020 ;
@@ -196,6 +226,8 @@ ex1:00020 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Ballast #2, space #2.lightOutlet" ;
+    s223:cnx ex1:00019,
+        ex1:00052 ;
     s223:connectsThrough ex1:00052 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex1:00019 .
@@ -238,6 +270,9 @@ ex1:00025 a s223:Connectable,
         s223:Equipment,
         s223:Fan ;
     rdfs:label "Fan" ;
+    s223:cnx ex1:00026,
+        ex1:00027,
+        ex1:00028 ;
     s223:connectedFrom ex1:00003 ;
     s223:connectedThrough ex1:00044,
         ex1:00045 ;
@@ -261,6 +296,8 @@ ex1:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Fan.airInlet" ;
+    s223:cnx ex1:00025,
+        ex1:00044 ;
     s223:connectsThrough ex1:00044 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00025 .
@@ -269,6 +306,8 @@ ex1:00027 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Fan.airOutlet" ;
+    s223:cnx ex1:00025,
+        ex1:00045 ;
     s223:connectsThrough ex1:00045 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00025 .
@@ -277,6 +316,7 @@ ex1:00028 a s223:ConnectionPoint,
         s223:ElectricalConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Fan.electricalInlet" ;
+    s223:cnx ex1:00025 ;
     s223:hasMedium s223:Medium-Electricity ;
     s223:isConnectionPointOf ex1:00025 .
 
@@ -367,6 +407,9 @@ ex1:00038 a s223:Coil,
         s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Heating Coil" ;
+    s223:cnx ex1:00039,
+        ex1:00040,
+        ex1:00041 ;
     s223:connectedFrom ex1:00025 ;
     s223:connectedThrough ex1:00045,
         ex1:00046 ;
@@ -383,6 +426,8 @@ ex1:00039 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Heating Coil.airInlet" ;
+    s223:cnx ex1:00038,
+        ex1:00045 ;
     s223:connectsThrough ex1:00045 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00038 .
@@ -391,6 +436,8 @@ ex1:00040 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Heating Coil.airOutlet" ;
+    s223:cnx ex1:00038,
+        ex1:00046 ;
     s223:connectsThrough ex1:00046 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00038 .
@@ -399,6 +446,7 @@ ex1:00041 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Heating Coil.electricalInlet" ;
+    s223:cnx ex1:00038 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex1:00038 .
 
@@ -422,6 +470,8 @@ ex1:00043 a s223:ObservableProperty,
     qudt:hasUnit unit:KiloW .
 
 ex1:00044 a s223:Connection ;
+    s223:cnx ex1:00005,
+        ex1:00026 ;
     s223:connectsAt ex1:00005,
         ex1:00026 ;
     s223:connectsFrom ex1:00003 ;
@@ -429,6 +479,8 @@ ex1:00044 a s223:Connection ;
     s223:hasMedium s223:Medium-Air .
 
 ex1:00045 a s223:Connection ;
+    s223:cnx ex1:00027,
+        ex1:00039 ;
     s223:connectsAt ex1:00027,
         ex1:00039 ;
     s223:connectsFrom ex1:00025 ;
@@ -436,6 +488,8 @@ ex1:00045 a s223:Connection ;
     s223:hasMedium s223:Medium-Air .
 
 ex1:00046 a s223:Connection ;
+    s223:cnx ex1:00004,
+        ex1:00040 ;
     s223:connectsAt ex1:00004,
         ex1:00040 ;
     s223:connectsFrom ex1:00038 ;
@@ -483,6 +537,8 @@ ex1:00050 a s223:ObservableProperty,
     qudt:hasUnit unit:DEG_C .
 
 ex1:00051 a s223:Connection ;
+    s223:cnx ex1:00012,
+        ex1:00018 ;
     s223:connectsAt ex1:00012,
         ex1:00018 ;
     s223:connectsFrom ex1:00017 ;
@@ -490,6 +546,8 @@ ex1:00051 a s223:Connection ;
     s223:hasMedium s223:Light-Visible .
 
 ex1:00052 a s223:Connection ;
+    s223:cnx ex1:00015,
+        ex1:00020 ;
     s223:connectsAt ex1:00015,
         ex1:00020 ;
     s223:connectsFrom ex1:00019 ;
