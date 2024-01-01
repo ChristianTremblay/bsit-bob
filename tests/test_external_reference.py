@@ -65,6 +65,6 @@ def test_a_bacnet_object_as_external_reference(bob_fixture):
     )
     CGM_2_004 > rat
     prop = Temperature(label="fake temp", hasUnit=UNIT.DEG_C)
-    prop @ rat.present_value
+    prop @ rat.presentValue
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
