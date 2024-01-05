@@ -46,7 +46,7 @@ class HVACSpace(DomainSpace):
     co2: GasConcentration
     co: GasConcentration
     no2: GasConcentration
-    air_change_per_hour: Air_Change_Per_Hour
+    airChangePerHour: AirChangePerHour
 
 
 class HVACZone(Zone):

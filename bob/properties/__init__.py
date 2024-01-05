@@ -16,7 +16,7 @@ from .flow import Flow
 from .force import HP, DifferentialStaticPressure, Nm, Pressure
 from .light import Brightness, RelativeLuminousFlux
 from .particulate import ParticulateCount
-from .rate import Air_Change_Per_Hour, Count
+from .rate import AirChangePerHour, Count
 from .ratio import RPM, GasConcentration, Percent, PercentCommand, RelativeHumidity
 from .setpoint import Setpoint
 from .states import (

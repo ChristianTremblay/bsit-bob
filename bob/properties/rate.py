@@ -6,7 +6,7 @@ from ..property import QuantifiableActuatableProperty, QuantifiableObservablePro
 _namespace = BOB
 
 
-class Air_Change_Per_Hour(QuantifiableObservableProperty):
+class AirChangePerHour(QuantifiableObservableProperty):
     """
     airflow / volume * 1hour
 
