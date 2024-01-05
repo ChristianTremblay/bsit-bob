@@ -9,7 +9,7 @@ from bob.connections.air import (
     AirOutletZoneConnectionPoint,
 )
 from bob.properties import (
-    Air_Change_Per_Hour,
+    AirChangePerHour,
     GasConcentration,
     OccupancyStatus,
     RelativeHumidity,
