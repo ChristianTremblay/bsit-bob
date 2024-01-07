@@ -1,54 +1,53 @@
+"""
+Physical Space subclasses, see also Real Estate Core.
+"""
 from rdflib import URIRef
 
-from ..core import QUANTITYKIND, S223, UNIT, PhysicalSpace, bind_namespace
+from ..core import BOB, QUANTITYKIND, S223, UNIT, PhysicalSpace, bind_namespace
 from ..properties.physical import Area, Length
 
-"""
-This is a hack, Real Estate Core has many namespaces, and some of the physical
-spaces defined in this module are not in REC or BOT.
-"""
-_namespace = bind_namespace("rec", "https://w3id.org/rec/core/")
+_namespace = BOB
 
 
 class Site(PhysicalSpace):
-    Area: Area
+    area: Area
 
 
 class Building(PhysicalSpace):
-    Area: Area
+    area: Area
 
 
 class Roof(PhysicalSpace):
-    Area: Area
+    area: Area
 
 
 class Floor(PhysicalSpace):
-    Area: Area
+    area: Area
 
 
 class Basement(Floor):
-    Area: Area
+    area: Area
 
 
 class Room(PhysicalSpace):
-    Area: Area
+    area: Area
 
 
 class Hall(Room):
-    Area: Area
+    area: Area
 
 
 class Corridor(Room):
-    Area: Area
+    area: Area
 
 
 class Bathroom(Room):
-    Area: Area
+    area: Area
 
 
 class Office(Room):
-    Area: Area
+    area: Area
 
 
 class MechanicalRoom(Room):
-    Area: Area
+    area: Area
