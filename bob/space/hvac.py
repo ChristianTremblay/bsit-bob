@@ -14,7 +14,6 @@ from bob.properties import (
     OccupancyStatus,
     RelativeHumidity,
     Temperature,
-    temperature,
 )
 from bob.property import Setpoint
 
