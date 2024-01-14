@@ -1,0 +1,2715 @@
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix ex1: <urn:ex/sample008/> .
+@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
+@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+
+bob:hasSystemConnectionPoint a rdf:Property .
+
+bob:isSystemConnectionPointOf a rdf:Property .
+
+bob:mapsTo a rdf:Property .
+
+ex1:TestEquipment a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "__main__.TestEquipment" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path ex1:cp ] .
+
+ex1:TestSystem a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "__main__.TestSystem" ;
+    rdfs:subClassOf s223:System ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path ex1:cpI ],
+        [ a sh:PropertyShape ;
+            sh:path ex1:cpO ] .
+
+ex1:cp a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+ex1:cpI a rdf:Property ;
+    rdfs:subPropertyOf bob:hasSystemConnectionPoint .
+
+ex1:cpO a rdf:Property ;
+    rdfs:subPropertyOf bob:hasSystemConnectionPoint .
+
+p223:ActiveInactive-Active a p223:ActiveInactive-Active,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Active" ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+
+p223:ActiveInactive-Inactive a p223:ActiveInactive-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Inactive" ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+
+p223:ActiveInactive-Unknown a p223:ActiveInactive-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+
+p223:Air-CompressedAir a p223:Air-CompressedAir,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CompressedAir" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Air .
+
+p223:Analog-0-10VDC a p223:Analog-0-10VDC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "0-10VDC" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-4-20mA a p223:Analog-4-20mA,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "4-20mA" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC10kType2 a p223:Analog-NTC10kType2,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NTC10kType2" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC10kType3 a p223:Analog-NTC10kType3,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NTC10kType3" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC2250Type2 a p223:Analog-NTC2250Type2,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NTC2250Type2" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Nickel1kRTD a p223:Analog-Nickel1kRTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Nickel1kRTD" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Platinum1kRTD a p223:Analog-Platinum1kRTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Platinum1kRTD" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-RTD a p223:Analog-RTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "RTD" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Resistive a p223:Analog-Resistive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Resistive" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Unknown a p223:Analog-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Binary-DryContact a p223:Binary-DryContact,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DryContact" ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-Incremental a p223:Binary-Incremental,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Incremental" ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-Pulse a p223:Binary-Pulse,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Pulse" ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-StartStop a p223:Binary-StartStop,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "StartStop" ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Dimensioned-ABLineLineVoltage a p223:Dimensioned-ABLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ABLineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-ANLineNeutralVoltage a p223:Dimensioned-ANLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ANLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-BCLineLineVoltage a p223:Dimensioned-BCLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BCLineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-BNLineNeutralVoltage a p223:Dimensioned-BNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BNLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-CALineLineVoltage a p223:Dimensioned-CALineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CALineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-CNLineNeutralVoltage a p223:Dimensioned-CNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CNLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-LineLineVoltage a p223:Dimensioned-LineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "LineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-LineNeutralVoltage a p223:Dimensioned-LineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "LineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-NominalFrequency a p223:Dimensioned-NominalFrequency,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NominalFrequency" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Effectiveness-Active a p223:Effectiveness-Active,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Active" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+
+p223:Effectiveness-Inactive a p223:Effectiveness-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Inactive" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+
+p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+
+p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ActiveInactive" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Analog a p223:EnumerationKind-Analog,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Analog" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Binary a p223:EnumerationKind-Binary,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Binary" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-HandOffAuto a p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "HandOffAuto" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-LeftRight a p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "LeftRight" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-ManualAuto a p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ManualAuto" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-NiagaraStatus a p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NiagaraStatus" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-NormalAlarm a p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NormalAlarm" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-NormalFault a p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NormalFault" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-OpenClose a p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "OpenClose" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-OverriddenAuto a p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "OverriddenAuto" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Position a p223:EnumerationKind-Position,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Position" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Protocol a p223:EnumerationKind-Protocol,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Protocol" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-RunningNotRunning a p223:EnumerationKind-RunningNotRunning,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "RunningNotRunning" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-TopBottom a p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "TopBottom" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-TrueFalse a p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "TrueFalse" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-YesNo a p223:EnumerationKind-YesNo,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "YesNo" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Auto" ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+
+p223:HandOffAuto-Hand a p223:HandOffAuto-Hand,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Hand" ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+
+p223:HandOffAuto-Off a p223:HandOffAuto-Off,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Off" ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+
+p223:LeftRight-Left a p223:LeftRight-Left,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Left" ;
+    rdfs:subClassOf p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind .
+
+p223:LeftRight-Right a p223:LeftRight-Right,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Right" ;
+    rdfs:subClassOf p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind .
+
+p223:ManualAuto-Auto a p223:ManualAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Auto" ;
+    rdfs:subClassOf p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind .
+
+p223:ManualAuto-Manual a p223:ManualAuto-Manual,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Manual" ;
+    rdfs:subClassOf p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "alarm" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-disabled a p223:NiagaraStatus-disabled,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "disabled" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-down a p223:NiagaraStatus-down,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "down" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-fault a p223:NiagaraStatus-fault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "fault" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-null a p223:NiagaraStatus-null,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "null" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-ok a p223:NiagaraStatus-ok,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ok" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-overridden a p223:NiagaraStatus-overridden,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "overridden" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-stale a p223:NiagaraStatus-stale,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "stale" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-unackedAlarm a p223:NiagaraStatus-unackedAlarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "unackedAlarm" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NormalAlarm-Alarm a p223:NormalAlarm-Alarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Alarm" ;
+    rdfs:subClassOf p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind .
+
+p223:NormalAlarm-Normal a p223:NormalAlarm-Normal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Normal" ;
+    rdfs:subClassOf p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind .
+
+p223:NormalFault-Fault a p223:NormalFault-Fault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Fault" ;
+    rdfs:subClassOf p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind .
+
+p223:NormalFault-Normal a p223:NormalFault-Normal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Normal" ;
+    rdfs:subClassOf p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind .
+
+p223:OpenClose-Close a p223:OpenClose-Close,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Close" ;
+    rdfs:subClassOf p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind .
+
+p223:OpenClose-Open a p223:OpenClose-Open,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Open" ;
+    rdfs:subClassOf p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind .
+
+p223:OverriddenAuto-Auto a p223:OverriddenAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Auto" ;
+    rdfs:subClassOf p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind .
+
+p223:OverriddenAuto-Overridden a p223:OverriddenAuto-Overridden,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Overridden" ;
+    rdfs:subClassOf p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind .
+
+p223:Position-Close a p223:Position-Close,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Close" ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Position-Moving a p223:Position-Moving,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Moving" ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Position-Open a p223:Position-Open,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Open" ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Position-Unknown a p223:Position-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet a p223:Protocol-BACnet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BACnet" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_IP a p223:Protocol-BACnet_IP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BACnet_IP" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_MSTP a p223:Protocol-BACnet_MSTP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BACnet_MSTP" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_SC a p223:Protocol-BACnet_SC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BACnet_SC" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Lonworks a p223:Protocol-Lonworks,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Lonworks" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus a p223:Protocol-Modbus,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Modbus" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus_RTU a p223:Protocol-Modbus_RTU,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Modbus_RTU" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Modbus_TCP" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:RunningNotRunning-NotRunning a p223:RunningNotRunning-NotRunning,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NotRunning" ;
+    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
+        s223:EnumerationKind .
+
+p223:RunningNotRunning-Running a p223:RunningNotRunning-Running,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Running" ;
+    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
+        s223:EnumerationKind .
+
+p223:RunningNotRunning-Unknown a p223:RunningNotRunning-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
+        s223:EnumerationKind .
+
+p223:Signal-Communication a p223:Signal-Communication,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Communication" ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+p223:Signal-OnOffSignal a p223:Signal-OnOffSignal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "OnOffSignal" ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+p223:Substance-CH4 a p223:Substance-CH4,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CH4" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+p223:Substance-NO2 a p223:Substance-NO2,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NO2" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+p223:Substance-Smoke a p223:Substance-Smoke,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Smoke" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+p223:TopBottom-Bottom a p223:TopBottom-Bottom,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Bottom" ;
+    rdfs:subClassOf p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind .
+
+p223:TopBottom-Top a p223:TopBottom-Top,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Top" ;
+    rdfs:subClassOf p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind .
+
+p223:TrueFalse-False a p223:TrueFalse-False,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "False" ;
+    rdfs:subClassOf p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind .
+
+p223:TrueFalse-True a p223:TrueFalse-True,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "True" ;
+    rdfs:subClassOf p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind .
+
+p223:Water-CondensedWater a p223:Water-CondensedWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CondensedWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DomesticHotWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-DomesticWater a p223:Water-DomesticWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DomesticWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-GlycoledWater a p223:Water-GlycoledWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "GlycoledWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-MixedWater a p223:Water-MixedWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "MixedWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-PotableWater a p223:Water-PotableWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "PotableWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-Steam a p223:Water-Steam,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Steam" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:YesNo-No a p223:YesNo-No,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "No" ;
+    rdfs:subClassOf p223:EnumerationKind-YesNo,
+        s223:EnumerationKind .
+
+p223:YesNo-Yes a p223:YesNo-Yes,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Yes" ;
+    rdfs:subClassOf p223:EnumerationKind-YesNo,
+        s223:EnumerationKind .
+
+s223:AC-10000VLL-1Ph-60Hz a s223:AC-10000VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "10000VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-10000VLL-3Ph-60Hz a s223:AC-10000VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "10000VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-10000VLL-5770VLN-1Ph-60Hz a s223:AC-10000VLL-5770VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "10000VLL-5770VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-10000VLL-5770VLN-3Ph-60Hz a s223:AC-10000VLL-5770VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "10000VLL-5770VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-110VLN-1Ph-50Hz a s223:AC-110VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "110VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-120VLN-1Ph-60Hz a s223:AC-120VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "120VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-127VLN-1Ph-50Hz a s223:AC-127VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "127VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-139VLN-1Ph-50Hz a s223:AC-139VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "139VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-1730VLN-1Ph-60Hz a s223:AC-1730VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "1730VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-1900VLN-1Ph-60Hz a s223:AC-1900VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "1900VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-190VLL-110VLN-1Ph-50Hz a s223:AC-190VLL-110VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "190VLL-110VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-190VLL-110VLN-3Ph-50Hz a s223:AC-190VLL-110VLN-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "190VLL-110VLN-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-190VLL-1Ph-50Hz a s223:AC-190VLL-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "190VLL-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-190VLL-3Ph-50Hz a s223:AC-190VLL-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "190VLL-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-208VLL-120VLN-1Ph-60Hz a s223:AC-208VLL-120VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "208VLL-120VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-208VLL-120VLN-3Ph-60Hz a s223:AC-208VLL-120VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "208VLL-120VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-208VLL-1Ph-60Hz a s223:AC-208VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "208VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-208VLL-3Ph-60Hz a s223:AC-208VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "208VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-219VLN-1Ph-60Hz a s223:AC-219VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "219VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-220VLL-127VLN-1Ph-50Hz a s223:AC-220VLL-127VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "220VLL-127VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-220VLL-127VLN-3Ph-50Hz a s223:AC-220VLL-127VLN-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "220VLL-127VLN-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-220VLL-1Ph-50Hz a s223:AC-220VLL-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "220VLL-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-220VLL-3Ph-50Hz a s223:AC-220VLL-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "220VLL-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-231VLN-1Ph-50Hz a s223:AC-231VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "231VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-2400VLN-1Ph-60Hz a s223:AC-2400VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "2400VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-120VLN-1Ph-60Hz a s223:AC-240VLL-120VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-120VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-139VLN-1Ph-50Hz a s223:AC-240VLL-139VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-139VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-139VLN-3Ph-50Hz a s223:AC-240VLL-139VLN-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-139VLN-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-1Ph-50Hz a s223:AC-240VLL-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-1Ph-60Hz a s223:AC-240VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-208VLN-120VLN-1Ph-60Hz a s223:AC-240VLL-208VLN-120VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-208VLN-120VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-208VLN-120VLN-3Ph-60Hz a s223:AC-240VLL-208VLN-120VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-208VLN-120VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-3Ph-50Hz a s223:AC-240VLL-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLL-3Ph-60Hz a s223:AC-240VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-240VLN-1Ph-50Hz a s223:AC-240VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "240VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-24VLN-1Ph-50Hz a s223:AC-24VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "24VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-24VLN-1Ph-60Hz a s223:AC-24VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "24VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-277VLN-1Ph-60Hz a s223:AC-277VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "277VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3000VLL-1730VLN-1Ph-60Hz a s223:AC-3000VLL-1730VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3000VLL-1730VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3000VLL-1730VLN-3Ph-60Hz a s223:AC-3000VLL-1730VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3000VLL-1730VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3000VLL-1Ph-60Hz a s223:AC-3000VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3000VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3000VLL-3Ph-60Hz a s223:AC-3000VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3000VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3300VLL-1900VLN-1Ph-60Hz a s223:AC-3300VLL-1900VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3300VLL-1900VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3300VLL-1900VLN-3Ph-60Hz a s223:AC-3300VLL-1900VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3300VLL-1900VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3300VLL-1Ph-60Hz a s223:AC-3300VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3300VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3300VLL-3Ph-60Hz a s223:AC-3300VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3300VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3460VLN-1Ph-60Hz a s223:AC-3460VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3460VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-347VLN-1Ph-60Hz a s223:AC-347VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "347VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-380VLL-1Ph-60Hz a s223:AC-380VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "380VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-380VLL-219VLN-1Ph-60Hz a s223:AC-380VLL-219VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "380VLL-219VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-380VLL-219VLN-3Ph-60Hz a s223:AC-380VLL-219VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "380VLL-219VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-380VLL-3Ph-60Hz a s223:AC-380VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "380VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-3810VLN-1Ph-60Hz a s223:AC-3810VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "3810VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-400VLL-1Ph-50Hz a s223:AC-400VLL-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "400VLL-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-400VLL-231VLN-1Ph-50Hz a s223:AC-400VLL-231VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "400VLL-231VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-400VLL-231VLN-3Ph-50Hz a s223:AC-400VLL-231VLN-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "400VLL-231VLN-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-400VLL-3Ph-50Hz a s223:AC-400VLL-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "400VLL-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-415VLL-1Ph-50Hz a s223:AC-415VLL-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "415VLL-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-415VLL-240VLN-1Ph-50Hz a s223:AC-415VLL-240VLN-1Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "415VLL-240VLN-1Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-415VLL-240VLN-3Ph-50Hz a s223:AC-415VLL-240VLN-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "415VLL-240VLN-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-415VLL-3Ph-50Hz a s223:AC-415VLL-3Ph-50Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "415VLL-3Ph-50Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-4160VLL-1Ph-60Hz a s223:AC-4160VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "4160VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-4160VLL-2400VLN-1Ph-60Hz a s223:AC-4160VLL-2400VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "4160VLL-2400VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-4160VLL-2400VLN-3Ph-60Hz a s223:AC-4160VLL-2400VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "4160VLL-2400VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-4160VLL-3Ph-60Hz a s223:AC-4160VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "4160VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-480VLL-1Ph-60Hz a s223:AC-480VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "480VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-480VLL-277VLN-1Ph-60Hz a s223:AC-480VLL-277VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "480VLL-277VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-480VLL-277VLN-3Ph-60Hz a s223:AC-480VLL-277VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "480VLL-277VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-480VLL-3Ph-60Hz a s223:AC-480VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "480VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-5770VLN-1Ph-60Hz a s223:AC-5770VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "5770VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-6000VLL-1Ph-60Hz a s223:AC-6000VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6000VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-6000VLL-3460VLN-1Ph-60Hz a s223:AC-6000VLL-3460VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6000VLL-3460VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-6000VLL-3460VLN-3Ph-60Hz a s223:AC-6000VLL-3460VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6000VLL-3460VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-6000VLL-3Ph-60Hz a s223:AC-6000VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6000VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-600VLL-1Ph-60Hz a s223:AC-600VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "600VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-600VLL-347VLN-1Ph-60Hz a s223:AC-600VLL-347VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "600VLL-347VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-600VLL-347VLN-3Ph-60Hz a s223:AC-600VLL-347VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "600VLL-347VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-600VLL-3Ph-60Hz a s223:AC-600VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "600VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-6600VLL-1Ph-60Hz a s223:AC-6600VLL-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6600VLL-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-6600VLL-3810VLN-1Ph-60Hz a s223:AC-6600VLL-3810VLN-1Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6600VLL-3810VLN-1Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-6600VLL-3810VLN-3Ph-60Hz a s223:AC-6600VLL-3810VLN-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6600VLL-3810VLN-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:AC-6600VLL-3Ph-60Hz a s223:AC-6600VLL-3Ph-60Hz,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6600VLL-3Ph-60Hz" ;
+    rdfs:subClassOf s223:Electricity-AC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Attribute-CatalogNumber a s223:Attribute-CatalogNumber,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CatalogNumber" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Attribute-DayOfWeek a s223:Attribute-DayOfWeek,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DayOfWeek" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Attribute-Effectiveness a s223:Attribute-Effectiveness,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Effectiveness" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Attribute-ElectricalPhaseIdentifier a s223:Attribute-ElectricalPhaseIdentifier,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ElectricalPhaseIdentifier" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Attribute-Face a s223:Attribute-Face,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Face" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Attribute-Manufacturer a s223:Attribute-Manufacturer,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Manufacturer" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Attribute-Model a s223:Attribute-Model,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Model" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Attribute-SerialNumber a s223:Attribute-SerialNumber,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "SerialNumber" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Attribute-Year a s223:Attribute-Year,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Year" ;
+    rdfs:subClassOf s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Communication-EIA-485 a s223:Communication-EIA-485,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "EIA-485" ;
+    rdfs:subClassOf p223:Signal-Communication,
+        s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Communication-Ethernet a s223:Communication-Ethernet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Ethernet" ;
+    rdfs:subClassOf p223:Signal-Communication,
+        s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Communication-IEC14908 a s223:Communication-IEC14908,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "IEC14908" ;
+    rdfs:subClassOf p223:Signal-Communication,
+        s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Connectable a rdfs:Class ;
+    rdfs:label "bob.core.Connectable" ;
+    rdfs:comment """
+    A type of thing that can have connection points.
+    """ .
+
+s223:ConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.ConnectionPoint" ;
+    rdfs:comment """
+    Connection Point
+    """ ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path s223:isConnectionPointOf ],
+        [ a sh:PropertyShape ;
+            sh:path s223:mapsTo ],
+        [ a sh:PropertyShape ;
+            sh:path s223:connectsThrough ] .
+
+s223:Context-Attribute a s223:Context-Attribute,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Attribute" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Context-Dimensioned a s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Dimensioned" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Context-Dimensionless a s223:Context-Dimensionless,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Dimensionless" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:DC-12V a s223:DC-12V,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "12V" ;
+    rdfs:subClassOf s223:Electricity-DC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:DC-24V a s223:DC-24V,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "24V" ;
+    rdfs:subClassOf s223:Electricity-DC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:DC-380V a s223:DC-380V,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "380V" ;
+    rdfs:subClassOf s223:Electricity-DC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:DC-48V a s223:DC-48V,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "48V" ;
+    rdfs:subClassOf s223:Electricity-DC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:DC-5V a s223:DC-5V,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "5V" ;
+    rdfs:subClassOf s223:Electricity-DC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:DC-6V a s223:DC-6V,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "6V" ;
+    rdfs:subClassOf s223:Electricity-DC,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Dimensioned-Delta a s223:Dimensioned-Delta,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Delta" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-DryBulb a s223:Dimensioned-DryBulb,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DryBulb" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Efficiency a s223:Dimensioned-Efficiency,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Efficiency" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Latent a s223:Dimensioned-Latent,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Latent" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Loss a s223:Dimensioned-Loss,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Loss" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Maximum a s223:Dimensioned-Maximum,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Maximum" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Minimum a s223:Dimensioned-Minimum,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Minimum" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Nominal a s223:Dimensioned-Nominal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Nominal" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-NumberOfElectricalPhases a s223:Dimensioned-NumberOfElectricalPhases,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NumberOfElectricalPhases" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-PhaseAngle a s223:Dimensioned-PhaseAngle,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "PhaseAngle" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-PowerFactor a s223:Dimensioned-PowerFactor,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "PowerFactor" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Rated a s223:Dimensioned-Rated,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Rated" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Sensible a s223:Dimensioned-Sensible,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Sensible" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-ServiceFactor a s223:Dimensioned-ServiceFactor,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ServiceFactor" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-StandardConditions a s223:Dimensioned-StandardConditions,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "StandardConditions" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Standby a s223:Dimensioned-Standby,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Standby" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Startup a s223:Dimensioned-Startup,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Startup" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Threshold a s223:Dimensioned-Threshold,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Threshold" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Total a s223:Dimensioned-Total,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Total" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-Weight a s223:Dimensioned-Weight,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Weight" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Dimensioned-WetBulb a s223:Dimensioned-WetBulb,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "WetBulb" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Direction-Bidirectional a s223:Direction-Bidirectional,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Bidirectional" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:Direction-Inlet a s223:Direction-Inlet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Inlet" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:Direction-Outlet a s223:Direction-Outlet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Outlet" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:Domain-ConveyanceSystems a s223:Domain-ConveyanceSystems,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ConveyanceSystems" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Electrical a s223:Domain-Electrical,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Electrical" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Fire a s223:Domain-Fire,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Fire" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-HVAC a s223:Domain-HVAC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "HVAC" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Lighting a s223:Domain-Lighting,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Lighting" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Networking a s223:Domain-Networking,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Networking" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Occupancy a s223:Domain-Occupancy,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Occupancy" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Physical a s223:Domain-Physical,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Physical" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Plumbing a s223:Domain-Plumbing,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Plumbing" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Refrigeration a s223:Domain-Refrigeration,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Refrigeration" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:Domain-Security a s223:Domain-Security,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Security" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:EM-Light a s223:EM-Light,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Light" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:EM-Microwave a s223:EM-Microwave,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Microwave" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:EM-RF a s223:EM-RF,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "RF" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:ElectricalPhaseIdentifier-A a s223:ElectricalPhaseIdentifier-A,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "A" ;
+    rdfs:subClassOf s223:Attribute-ElectricalPhaseIdentifier,
+        s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:ElectricalPhaseIdentifier-AB a s223:ElectricalPhaseIdentifier-AB,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "AB" ;
+    rdfs:subClassOf s223:Attribute-ElectricalPhaseIdentifier,
+        s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:ElectricalPhaseIdentifier-ABC a s223:ElectricalPhaseIdentifier-ABC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ABC" ;
+    rdfs:subClassOf s223:Attribute-ElectricalPhaseIdentifier,
+        s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:ElectricalPhaseIdentifier-B a s223:ElectricalPhaseIdentifier-B,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "B" ;
+    rdfs:subClassOf s223:Attribute-ElectricalPhaseIdentifier,
+        s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:ElectricalPhaseIdentifier-BC a s223:ElectricalPhaseIdentifier-BC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BC" ;
+    rdfs:subClassOf s223:Attribute-ElectricalPhaseIdentifier,
+        s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:ElectricalPhaseIdentifier-C a s223:ElectricalPhaseIdentifier-C,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "C" ;
+    rdfs:subClassOf s223:Attribute-ElectricalPhaseIdentifier,
+        s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:ElectricalPhaseIdentifier-CA a s223:ElectricalPhaseIdentifier-CA,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CA" ;
+    rdfs:subClassOf s223:Attribute-ElectricalPhaseIdentifier,
+        s223:Context-Attribute,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+s223:Electricity-AC a s223:Electricity-AC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "AC" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Electricity-DC a s223:Electricity-DC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DC" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Electricity-Signal a s223:Electricity-Signal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Signal" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:EnumerationKind a rdfs:Class ;
+    rdfs:label "bob.core.EnumerationKind" .
+
+s223:EnumerationKind-Context a s223:EnumerationKind,
+        s223:EnumerationKind-Context,
+        rdfs:Class ;
+    rdfs:label "Context" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Direction a s223:EnumerationKind,
+        s223:EnumerationKind-Direction,
+        rdfs:Class ;
+    rdfs:label "Direction" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Domain a s223:EnumerationKind,
+        s223:EnumerationKind-Domain,
+        rdfs:Class ;
+    rdfs:label "Domain" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Effectiveness a s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness,
+        rdfs:Class ;
+    rdfs:label "Effectiveness" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-HVACOperatingMode a s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingMode,
+        rdfs:Class ;
+    rdfs:label "HVACOperatingMode" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-HVACOperatingStatus a s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingStatus,
+        rdfs:Class ;
+    rdfs:label "HVACOperatingStatus" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Medium a s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        rdfs:Class ;
+    rdfs:label "Medium" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-OccupancyStatus a s223:EnumerationKind,
+        s223:EnumerationKind-OccupancyStatus,
+        rdfs:Class ;
+    rdfs:label "OccupancyStatus" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-OnOff a s223:EnumerationKind,
+        s223:EnumerationKind-OnOff,
+        rdfs:Class ;
+    rdfs:label "OnOff" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Role a s223:EnumerationKind,
+        s223:EnumerationKind-Role,
+        rdfs:Class ;
+    rdfs:label "Role" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Substance a s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        rdfs:Class ;
+    rdfs:label "Substance" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-ThreeSpeedSetting a s223:EnumerationKind,
+        s223:EnumerationKind-ThreeSpeedSetting,
+        rdfs:Class ;
+    rdfs:label "ThreeSpeedSetting" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:Equipment a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.Equipment" ;
+    rdfs:comment """
+    A Equipment is normally a physical entity that one might buy from a vendor - a tangible object designed to accomplish a specific task.
+    """ ;
+    rdfs:subClassOf s223:Connectable ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasPhysicalLocation ] .
+
+s223:HVACOperatingMode-Auto a s223:EnumerationKind,
+        s223:HVACOperatingMode-Auto,
+        rdfs:Class ;
+    rdfs:label "Auto" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingMode .
+
+s223:HVACOperatingMode-CoolOnly a s223:EnumerationKind,
+        s223:HVACOperatingMode-CoolOnly,
+        rdfs:Class ;
+    rdfs:label "CoolOnly" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingMode .
+
+s223:HVACOperatingMode-FanOnly a s223:EnumerationKind,
+        s223:HVACOperatingMode-FanOnly,
+        rdfs:Class ;
+    rdfs:label "FanOnly" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingMode .
+
+s223:HVACOperatingMode-HeatOnly a s223:EnumerationKind,
+        s223:HVACOperatingMode-HeatOnly,
+        rdfs:Class ;
+    rdfs:label "HeatOnly" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingMode .
+
+s223:HVACOperatingMode-Off a s223:EnumerationKind,
+        s223:HVACOperatingMode-Off,
+        rdfs:Class ;
+    rdfs:label "Off" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingMode .
+
+s223:HVACOperatingStatus-Cooling a s223:EnumerationKind,
+        s223:HVACOperatingStatus-Cooling,
+        rdfs:Class ;
+    rdfs:label "Cooling" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingStatus .
+
+s223:HVACOperatingStatus-Dehumidifying a s223:EnumerationKind,
+        s223:HVACOperatingStatus-Dehumidifying,
+        rdfs:Class ;
+    rdfs:label "Dehumidifying" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingStatus .
+
+s223:HVACOperatingStatus-Heating a s223:EnumerationKind,
+        s223:HVACOperatingStatus-Heating,
+        rdfs:Class ;
+    rdfs:label "Heating" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingStatus .
+
+s223:HVACOperatingStatus-Off a s223:EnumerationKind,
+        s223:HVACOperatingStatus-Off,
+        rdfs:Class ;
+    rdfs:label "Off" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingStatus .
+
+s223:HVACOperatingStatus-Ventilating a s223:EnumerationKind,
+        s223:HVACOperatingStatus-Ventilating,
+        rdfs:Class ;
+    rdfs:label "Ventilating" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-HVACOperatingStatus .
+
+s223:InletConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirInletConnectionPoint",
+        "bob.core.InletConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint .
+
+s223:Light-Infrared a s223:EnumerationKind,
+        s223:Light-Infrared,
+        rdfs:Class ;
+    rdfs:label "Infrared" ;
+    rdfs:subClassOf s223:EM-Light,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:Light-Visible a s223:EnumerationKind,
+        s223:Light-Visible,
+        rdfs:Class ;
+    rdfs:label "Visible" ;
+    rdfs:subClassOf s223:EM-Light,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:Medium-Air a s223:EnumerationKind,
+        s223:Medium-Air,
+        rdfs:Class ;
+    rdfs:label "Air" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-EM a s223:EnumerationKind,
+        s223:Medium-EM,
+        rdfs:Class ;
+    rdfs:label "EM" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Electricity a s223:EnumerationKind,
+        s223:Medium-Electricity,
+        rdfs:Class ;
+    rdfs:label "Electricity" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Glycol a s223:EnumerationKind,
+        s223:Medium-Glycol,
+        rdfs:Class ;
+    rdfs:label "Glycol" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-NaturalGas a s223:EnumerationKind,
+        s223:Medium-NaturalGas,
+        rdfs:Class ;
+    rdfs:label "NaturalGas" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Occupant a s223:EnumerationKind,
+        s223:Medium-Occupant,
+        rdfs:Class ;
+    rdfs:label "Occupant" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Water a s223:EnumerationKind,
+        s223:Medium-Water,
+        rdfs:Class ;
+    rdfs:label "Water" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Modulated-0-10VDC a s223:EnumerationKind,
+        s223:Modulated-0-10VDC,
+        rdfs:Class ;
+    rdfs:label "0-10VDC" ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity,
+        s223:Signal-Modulated .
+
+s223:Modulated-4-20mA a s223:EnumerationKind,
+        s223:Modulated-4-20mA,
+        rdfs:Class ;
+    rdfs:label "4-20mA" ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity,
+        s223:Signal-Modulated .
+
+s223:Motion-Motion-False a s223:EnumerationKind,
+        s223:Motion-Motion-False,
+        rdfs:Class ;
+    rdfs:label "Motion-False" ;
+    rdfs:subClassOf s223:Domain-Occupancy,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Domain,
+        s223:Occupancy-Motion .
+
+s223:Motion-Motion-True a s223:EnumerationKind,
+        s223:Motion-Motion-True,
+        rdfs:Class ;
+    rdfs:label "Motion-True" ;
+    rdfs:subClassOf s223:Domain-Occupancy,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Domain,
+        s223:Occupancy-Motion .
+
+s223:Occupancy-Motion a s223:EnumerationKind,
+        s223:Occupancy-Motion,
+        rdfs:Class ;
+    rdfs:label "Motion" ;
+    rdfs:subClassOf s223:Domain-Occupancy,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Domain .
+
+s223:OccupancyStatus-Bypass a s223:EnumerationKind,
+        s223:OccupancyStatus-Bypass,
+        rdfs:Class ;
+    rdfs:label "Bypass" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-OccupancyStatus .
+
+s223:OccupancyStatus-Occupied a s223:EnumerationKind,
+        s223:OccupancyStatus-Occupied,
+        rdfs:Class ;
+    rdfs:label "Occupied" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-OccupancyStatus .
+
+s223:OccupancyStatus-Standby a s223:EnumerationKind,
+        s223:OccupancyStatus-Standby,
+        rdfs:Class ;
+    rdfs:label "Standby" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-OccupancyStatus .
+
+s223:OccupancyStatus-Unknown a s223:EnumerationKind,
+        s223:OccupancyStatus-Unknown,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-OccupancyStatus .
+
+s223:OccupancyStatus-Unoccupied a s223:EnumerationKind,
+        s223:OccupancyStatus-Unoccupied,
+        rdfs:Class ;
+    rdfs:label "Unoccupied" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-OccupancyStatus .
+
+s223:OnOff-Off a s223:EnumerationKind,
+        s223:OnOff-Off,
+        rdfs:Class ;
+    rdfs:label "Off" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-OnOff .
+
+s223:OnOff-On a s223:EnumerationKind,
+        s223:OnOff-On,
+        rdfs:Class ;
+    rdfs:label "On" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-OnOff .
+
+s223:OnOff-Unknown a s223:EnumerationKind,
+        s223:OnOff-Unknown,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-OnOff .
+
+s223:Particulate-PM1.0 a s223:EnumerationKind,
+        s223:Particulate-PM1.0,
+        rdfs:Class ;
+    rdfs:label "PM1.0" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Substance-Particulate .
+
+s223:Particulate-PM10.0 a s223:EnumerationKind,
+        s223:Particulate-PM10.0,
+        rdfs:Class ;
+    rdfs:label "PM10.0" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Substance-Particulate .
+
+s223:Particulate-PM2.5 a s223:EnumerationKind,
+        s223:Particulate-PM2.5,
+        rdfs:Class ;
+    rdfs:label "PM2.5" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Substance-Particulate .
+
+s223:Role-Controller a s223:EnumerationKind,
+        s223:Role-Controller,
+        rdfs:Class ;
+    rdfs:label "Controller" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Cooling a s223:EnumerationKind,
+        s223:Role-Cooling,
+        rdfs:Class ;
+    rdfs:label "Cooling" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Discharge a s223:EnumerationKind,
+        s223:Role-Discharge,
+        rdfs:Class ;
+    rdfs:label "Discharge" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Exhaust a s223:EnumerationKind,
+        s223:Role-Exhaust,
+        rdfs:Class ;
+    rdfs:label "Exhaust" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Generator a s223:EnumerationKind,
+        s223:Role-Generator,
+        rdfs:Class ;
+    rdfs:label "Generator" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Heating a s223:EnumerationKind,
+        s223:Role-Heating,
+        rdfs:Class ;
+    rdfs:label "Heating" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Load a s223:EnumerationKind,
+        s223:Role-Load,
+        rdfs:Class ;
+    rdfs:label "Load" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Primary a s223:EnumerationKind,
+        s223:Role-Primary,
+        rdfs:Class ;
+    rdfs:label "Primary" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Return a s223:EnumerationKind,
+        s223:Role-Return,
+        rdfs:Class ;
+    rdfs:label "Return" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Secondary a s223:EnumerationKind,
+        s223:Role-Secondary,
+        rdfs:Class ;
+    rdfs:label "Secondary" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Role-Supply a s223:EnumerationKind,
+        s223:Role-Supply,
+        rdfs:Class ;
+    rdfs:label "Supply" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
+s223:Signal-Modulated a s223:EnumerationKind,
+        s223:Signal-Modulated,
+        rdfs:Class ;
+    rdfs:label "Modulated" ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Signal-USB a s223:EnumerationKind,
+        s223:Signal-USB,
+        rdfs:Class ;
+    rdfs:label "USB" ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+s223:Substance-CO a s223:EnumerationKind,
+        s223:Substance-CO,
+        rdfs:Class ;
+    rdfs:label "CO" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+s223:Substance-CO2 a s223:EnumerationKind,
+        s223:Substance-CO2,
+        rdfs:Class ;
+    rdfs:label "CO2" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+s223:Substance-Particulate a s223:EnumerationKind,
+        s223:Substance-Particulate,
+        rdfs:Class ;
+    rdfs:label "Particulate" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+s223:Substance-Soot a s223:EnumerationKind,
+        s223:Substance-Soot,
+        rdfs:Class ;
+    rdfs:label "Soot" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+s223:System a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.System" ;
+    rdfs:comment """
+    System
+    """ ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:hasSystemConnectionPoint ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasPhysicalLocation ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ] .
+
+s223:ThreeSpeedSetting-High a s223:EnumerationKind,
+        s223:ThreeSpeedSetting-High,
+        rdfs:Class ;
+    rdfs:label "High" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-ThreeSpeedSetting .
+
+s223:ThreeSpeedSetting-Low a s223:EnumerationKind,
+        s223:ThreeSpeedSetting-Low,
+        rdfs:Class ;
+    rdfs:label "Low" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-ThreeSpeedSetting .
+
+s223:ThreeSpeedSetting-Medium a s223:EnumerationKind,
+        s223:ThreeSpeedSetting-Medium,
+        rdfs:Class ;
+    rdfs:label "Medium" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-ThreeSpeedSetting .
+
+s223:ThreeSpeedSetting-Off a s223:EnumerationKind,
+        s223:ThreeSpeedSetting-Off,
+        rdfs:Class ;
+    rdfs:label "Off" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-ThreeSpeedSetting .
+
+s223:Water-ChilledWater a s223:EnumerationKind,
+        s223:Water-ChilledWater,
+        rdfs:Class ;
+    rdfs:label "ChilledWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+s223:Water-HotWater a s223:EnumerationKind,
+        s223:Water-HotWater,
+        rdfs:Class ;
+    rdfs:label "HotWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
+        g36:EnumerationKind-G36AlarmLevels,
+        rdfs:Class ;
+    rdfs:label "G36AlarmLevels" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level1 a s223:EnumerationKind,
+        g36:EnumerationKind-Level1,
+        rdfs:Class ;
+    rdfs:label "Level1" ;
+    rdfs:comment "Life Safetey Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level2 a s223:EnumerationKind,
+        g36:EnumerationKind-Level2,
+        rdfs:Class ;
+    rdfs:label "Level2" ;
+    rdfs:comment "Critical Equipment Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level3 a s223:EnumerationKind,
+        g36:EnumerationKind-Level3,
+        rdfs:Class ;
+    rdfs:label "Level3" ;
+    rdfs:comment "Urgent Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level4 a s223:EnumerationKind,
+        g36:EnumerationKind-Level4,
+        rdfs:Class ;
+    rdfs:label "Level4" ;
+    rdfs:comment "Normal Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+bob:AirConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.air.AirConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:AirSystemConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.air.AirSystemConnectionPoint" ;
+    rdfs:subClassOf bob:SystemConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:InletSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
+        "bob.core.InletSystemConnectionPoint" ;
+    rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint .
+
+bob:OutletSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
+        "bob.core.OutletSystemConnectionPoint" ;
+    rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint .
+
+bob:SystemConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.SystemConnectionPoint" ;
+    rdfs:comment """
+    System Connection Point
+    """ ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path bob:isSystemConnectionPointOf ],
+        [ a sh:PropertyShape ;
+            sh:path bob:mapsTo ] .
+
+s223:connectsThrough a rdf:Property .
+
+s223:hasDomain a rdf:Property .
+
+s223:hasMedium a rdf:Property .
+
+s223:hasPhysicalLocation a rdf:Property .
+
+s223:isConnectionPointOf a rdf:Property .
+
+s223:mapsTo a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+

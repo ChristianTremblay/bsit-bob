@@ -1,17 +1,16 @@
 import logging
 from pathlib import Path
 
+from bob.core import bind_model_namespace, data_graph, schema_graph, dump
 from header import sample_header
 
-from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.core import (
     Equipment,
     InletSystemConnectionPoint,
     OutletSystemConnectionPoint,
     System,
-    bind_model_namespace,
-    dump,
 )
+from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -160,4 +159,9 @@ s3 = SystemIn1(label="s3")
 s1 >> s2 >> s3
 
 # dump the result
-dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(
+    data_graph,
+    filename=f"samples/ttl/{model_name}.data.ttl",
+    header=sample_header(model_name),
+)
+dump(schema_graph, filename=f"samples/ttl/{model_name}.schema.ttl")
