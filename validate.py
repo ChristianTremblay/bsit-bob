@@ -5,7 +5,11 @@ import argparse
 import logging
 import sys
 
-import ontoenv
+try:
+    import ontoenv
+except ModuleNotFoundError:
+    ontoenv = None
+
 import pyshacl
 from rdflib import RDF, SH, Graph, Namespace
 
@@ -37,12 +41,13 @@ parser.add_argument(
     help="load shacl graph(s)",
 )
 
-# option to use ontoenv to resolve dependencies
-parser.add_argument(
-    "--ontoenv",
-    action="store_true",
-    help="use ontoenv to resolve dependencies",
-)
+if ontoenv:
+    # option to use ontoenv to resolve dependencies
+    parser.add_argument(
+        "--ontoenv",
+        action="store_true",
+        help="use ontoenv to resolve dependencies",
+    )
 
 # option to save the report graph
 parser.add_argument(
@@ -135,7 +140,7 @@ if args.shacl is not None:
             shacl_graph.parse(fname, format="turtle")
 
 # use ontoenv to load dependencies
-if args.ontoenv:
+if ontoenv and args.ontoenv:
     env = ontoenv.OntoEnv()
     env.import_dependencies(shacl_graph)
 
