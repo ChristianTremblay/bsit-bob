@@ -1,3 +1,10 @@
+"""
+Build Dizzy
+
+Application that sucks in the Brick.ttl file and spits out a Bob module.
+"""
+import sys
+
 from collections import defaultdict
 from copy import deepcopy
 from textwrap import fill, indent
@@ -13,6 +20,17 @@ triple_quote = '"""\n'
 # globals
 subclass_map: Dict[URIRef, Set[URIRef]] = {}
 superclass_map: Dict[URIRef, Set[URIRef]] = {}
+
+# special things
+rec_alignment = {
+    REC.Space: ["_PhysicalSpace"],
+    REC.Information: ["_Node"],
+    REC.Collection: ["_Node"],
+    REC.BuildingElement: ["_Node"],
+    REC.Event: ["_Node"],
+    REC.Asset: ["_Node"],
+    REC.Agent: ["_Node"],
+}
 
 
 def register_dependency(cls, subcls):
@@ -73,27 +91,17 @@ def cname(uri):
     return str(uri).split("#")[-1].replace(".", "_")
 
 
+#
+#   __main__
+#
+
 g = Graph()
-g.parse(
-    "/home/joel/bacnet-si-wg/rec/Source/SHACL/RealEstateCore/rec.ttl", format="turtle"
-)
+g.parse(sys.argv[1], format="turtle")
 
 for s, _, o in g.triples((None, RDFS.subClassOf, None)):
     if (s not in REC) or (o not in REC):
         continue
     register_dependency(s, o)
-
-# special things
-rec_alignment = {
-    REC.Space: ["_PhysicalSpace"],
-    REC.Information: ["_Node"],
-    REC.Collection: ["_Node"],
-    REC.BuildingElement: ["_Node"],
-    REC.Event: ["_Node"],
-    REC.Asset: ["_Node"],
-    REC.Agent: ["_Node"],
-}
-
 
 # sort the dependancies
 sorted_deps = topological_sort()
@@ -152,7 +160,12 @@ Lofty - Real Estate Core Schema Classes for Bob
 """
 
 from rdflib import URIRef
-from bob.core import (bind_namespace, Node as _Node, Equipment as _Equipment, PhysicalSpace as _PhysicalSpace)
+from bob.core import (
+    bind_namespace,
+    Node as _Node,
+    Equipment as _Equipment,
+    PhysicalSpace as _PhysicalSpace
+)
 from bob.equipment.hvac.fan import Fan as _Fan
 
 _namespace = REC = bind_namespace("rec", "https://w3id.org/rec#")

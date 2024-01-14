@@ -1,3 +1,10 @@
+"""
+Build Dizzy
+
+Application that sucks in the Brick.ttl file and spits out a Bob module.
+"""
+import sys
+
 from collections import defaultdict
 from copy import deepcopy
 from textwrap import fill, indent
@@ -13,6 +20,17 @@ triple_quote = '"""\n'
 # globals
 subclass_map: Dict[URIRef, Set[URIRef]] = {}
 superclass_map: Dict[URIRef, Set[URIRef]] = {}
+
+# special things
+brick_alignment = {
+    BRICK.Air_Temperature_Sensor: ["_AirTemperatureSensor"],
+    BRICK.Class: ["_Node"],
+    BRICK.Entity: ["_Node"],
+    BRICK.Equipment: ["_Equipment"],
+    BRICK.Fan: ["_Fan"],
+    BRICK.Pump: ["_Pump"],
+    BRICK.Sensor: ["_Sensor"],
+}
 
 
 def register_dependency(cls, subcls):
@@ -70,24 +88,21 @@ def cname(uri):
     """
     Return the simplified version of the URI.
     """
-    return str(uri).split("#")[-1].replace(".", "_")
+    name = str(uri).split("#")[-1]
+    return name.replace(".", "_").replace("-", "")
 
+
+#
+#   __main__
+#
 
 g = Graph()
-g.parse("/home/joel/bacnet-si-wg/rec/Source/SHACL/Brick/Brick.ttl", format="turtle")
+g.parse(sys.argv[1], format="turtle")
 
 for s, _, o in g.triples((None, RDFS.subClassOf, None)):
     if (s not in BRICK) or (o not in BRICK):
         continue
     register_dependency(s, o)
-
-# special things
-brick_alignment = {
-    BRICK.Class: ["_Node"],
-    BRICK.Entity: ["_Node"],
-    BRICK.Fan: ["_Fan"],
-    BRICK.Equipment: ["_Equipment"],
-}
 
 
 # sort the dependancies
@@ -149,6 +164,9 @@ Dizzy - Brick Schema Classes for Bob
 from rdflib import URIRef
 from bob.core import bind_namespace, Node as _Node, Equipment as _Equipment
 from bob.equipment.hvac.fan import Fan as _Fan
+from bob.equipment.hvac.pump import Pump as _Pump
+from bob.sensor.sensor import Sensor as _Sensor
+from bob.sensor.temperature import AirTemperatureSensor as _AirTemperatureSensor
 
 _namespace = BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")
 
