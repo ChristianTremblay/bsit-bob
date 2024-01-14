@@ -1,0 +1,172 @@
+@prefix ex1: <urn:ex/sample002/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+
+ex1:Snork a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "__main__.Snork" ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path ex1:test ],
+        [ a sh:PropertyShape ;
+            sh:path ex1:temp ] .
+
+ex1:Test a rdfs:Class ;
+    rdfs:label "__main__.Test" .
+
+ex1:temp a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+ex1:test a rdf:Property .
+
+s223:Direction-Bidirectional a s223:Direction-Bidirectional,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Bidirectional" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:Direction-Inlet a s223:Direction-Inlet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Inlet" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:Direction-Outlet a s223:Direction-Outlet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Outlet" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:EM-Light a s223:EM-Light,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Light" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:EM-Microwave a s223:EM-Microwave,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Microwave" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:EM-RF a s223:EM-RF,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "RF" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:EnumerationKind a rdfs:Class ;
+    rdfs:label "bob.core.EnumerationKind" .
+
+s223:EnumerationKind-Direction a s223:EnumerationKind,
+        s223:EnumerationKind-Direction,
+        rdfs:Class ;
+    rdfs:label "Direction" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Domain a s223:EnumerationKind,
+        s223:EnumerationKind-Domain,
+        rdfs:Class ;
+    rdfs:label "Domain" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Medium a s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        rdfs:Class ;
+    rdfs:label "Medium" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Role a s223:EnumerationKind,
+        s223:EnumerationKind-Role,
+        rdfs:Class ;
+    rdfs:label "Role" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Substance a s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        rdfs:Class ;
+    rdfs:label "Substance" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:Medium-Air a s223:EnumerationKind,
+        s223:Medium-Air,
+        rdfs:Class ;
+    rdfs:label "Air" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-EM a s223:EnumerationKind,
+        s223:Medium-EM,
+        rdfs:Class ;
+    rdfs:label "EM" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Electricity a s223:EnumerationKind,
+        s223:Medium-Electricity,
+        rdfs:Class ;
+    rdfs:label "Electricity" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Glycol a s223:EnumerationKind,
+        s223:Medium-Glycol,
+        rdfs:Class ;
+    rdfs:label "Glycol" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-NaturalGas a s223:EnumerationKind,
+        s223:Medium-NaturalGas,
+        rdfs:Class ;
+    rdfs:label "NaturalGas" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Occupant a s223:EnumerationKind,
+        s223:Medium-Occupant,
+        rdfs:Class ;
+    rdfs:label "Occupant" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Water a s223:EnumerationKind,
+        s223:Medium-Water,
+        rdfs:Class ;
+    rdfs:label "Water" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Property a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.Property" ;
+    rdfs:comment """
+    An attribute, quality, or characteristic of a feature of interest.  This is
+    an abstract base class.
+    """ ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofSubstance ] .
+
+s223:hasValue a rdf:Property .
+
+s223:ofMedium a rdf:Property .
+
+s223:ofSubstance a rdf:Property .
+

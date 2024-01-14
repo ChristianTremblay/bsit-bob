@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from bob.core import bind_model_namespace, data_graph, schema_graph, dump
 from header import sample_header
 
 from bob.core import QUANTITYKIND, QUDT, UNIT, Equipment, bind_model_namespace, dump
@@ -38,7 +39,12 @@ d3 = SampleEquipment2(label="Test Equipment 3", hasTemp=100.5)
 
 # needs a unit to validate
 d3.hasTemp.hasQuantityKind = QUANTITYKIND.Temperature
-d3.hasTemp.unit = UNIT.DEG_F
+d3.hasTemp.hasUnit = UNIT.DEG_F
 
 # dump the result
-dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(
+    data_graph,
+    filename=f"samples/ttl/{model_name}.data.ttl",
+    header=sample_header(model_name),
+)
+dump(schema_graph, filename=f"samples/ttl/{model_name}.schema.ttl")

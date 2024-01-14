@@ -1,9 +1,10 @@
 from pathlib import Path
 
+from bob.core import bind_model_namespace, data_graph, schema_graph, dump
 from header import sample_header
 
+from bob.core import PhysicalSpace
 from bob.connections.air import AirConnection
-from bob.core import bind_model_namespace, dump
 from bob.equipment.hvac.vav import VAV_Simple
 from bob.space.hvac import HVACSpace, HVACZone
 
@@ -16,9 +17,13 @@ zone1 = HVACZone(label="Zone-1")
 
 hvacspace1 = HVACSpace(label="Space-1")
 hvacspace2 = HVACSpace(label="Space-2")
-
 zone1 > [hvacspace1, hvacspace2]
 
+# there is a room that contains both spaces
+room1 = PhysicalSpace(label="Room 191")
+room1 > [hvacspace1, hvacspace2]
+
+# make a VAV terminal unit
 vav1 = VAV_Simple(label="Zone-1.VAV")
 vav1.serves = zone1
 vav1.airOutlet >> hvacspace1.ductAirInlet
@@ -42,4 +47,9 @@ hvacspace1.ductAirOutlet >> return_air
 hvacspace2.ductAirOutlet >> return_air
 
 # dump the result
-dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(
+    data_graph,
+    filename=f"samples/ttl/{model_name}.data.ttl",
+    header=sample_header(model_name),
+)
+dump(schema_graph, filename=f"samples/ttl/{model_name}.schema.ttl")

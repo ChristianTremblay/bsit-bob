@@ -1,0 +1,240 @@
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix ex1: <urn:ex/sample001/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+
+bob:isObservedBy a rdf:Property .
+
+ex1:SampleEquipment a rdfs:Class ;
+    rdfs:label "__main__.SampleEquipment" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
+
+ex1:SampleEquipment2 a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "__main__.SampleEquipment2" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path ex1:hasTemp ] .
+
+ex1:TemperatureProperty a rdfs:Class ;
+    rdfs:label "__main__.TemperatureProperty" ;
+    rdfs:subClassOf s223:Property,
+        s223:QuantifiableProperty .
+
+ex1:hasTemp a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+qudt:hasQuantityKind a rdf:Property .
+
+qudt:hasUnit a rdf:Property .
+
+s223:Connectable a rdfs:Class ;
+    rdfs:label "bob.core.Connectable" ;
+    rdfs:comment """
+    A type of thing that can have connection points.
+    """ .
+
+s223:Direction-Bidirectional a s223:Direction-Bidirectional,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Bidirectional" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:Direction-Inlet a s223:Direction-Inlet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Inlet" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:Direction-Outlet a s223:Direction-Outlet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Outlet" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Direction .
+
+s223:EM-Light a s223:EM-Light,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Light" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:EM-Microwave a s223:EM-Microwave,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Microwave" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:EM-RF a s223:EM-RF,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "RF" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-EM .
+
+s223:EnumerationKind a rdfs:Class ;
+    rdfs:label "bob.core.EnumerationKind" .
+
+s223:EnumerationKind-Direction a s223:EnumerationKind,
+        s223:EnumerationKind-Direction,
+        rdfs:Class ;
+    rdfs:label "Direction" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Domain a s223:EnumerationKind,
+        s223:EnumerationKind-Domain,
+        rdfs:Class ;
+    rdfs:label "Domain" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Medium a s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        rdfs:Class ;
+    rdfs:label "Medium" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Role a s223:EnumerationKind,
+        s223:EnumerationKind-Role,
+        rdfs:Class ;
+    rdfs:label "Role" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:EnumerationKind-Substance a s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        rdfs:Class ;
+    rdfs:label "Substance" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+s223:Equipment a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.Equipment" ;
+    rdfs:comment """
+    A Equipment is normally a physical entity that one might buy from a vendor - a tangible object designed to accomplish a specific task.
+    """ ;
+    rdfs:subClassOf s223:Connectable ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasPhysicalLocation ] .
+
+s223:Medium-Air a s223:EnumerationKind,
+        s223:Medium-Air,
+        rdfs:Class ;
+    rdfs:label "Air" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-EM a s223:EnumerationKind,
+        s223:Medium-EM,
+        rdfs:Class ;
+    rdfs:label "EM" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Electricity a s223:EnumerationKind,
+        s223:Medium-Electricity,
+        rdfs:Class ;
+    rdfs:label "Electricity" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Glycol a s223:EnumerationKind,
+        s223:Medium-Glycol,
+        rdfs:Class ;
+    rdfs:label "Glycol" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-NaturalGas a s223:EnumerationKind,
+        s223:Medium-NaturalGas,
+        rdfs:Class ;
+    rdfs:label "NaturalGas" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Occupant a s223:EnumerationKind,
+        s223:Medium-Occupant,
+        rdfs:Class ;
+    rdfs:label "Occupant" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:Medium-Water a s223:EnumerationKind,
+        s223:Medium-Water,
+        rdfs:Class ;
+    rdfs:label "Water" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+s223:ObservableProperty a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.property.ObservableProperty" ;
+    rdfs:comment """
+    Such as the state of an alarm detector.
+    """ ;
+    rdfs:subClassOf s223:Property ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:isObservedBy ] .
+
+s223:Property a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.Property" ;
+    rdfs:comment """
+    An attribute, quality, or characteristic of a feature of interest.  This is
+    an abstract base class.
+    """ ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofSubstance ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasValue ] .
+
+s223:QuantifiableObservableProperty a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.property.QuantifiableObservableProperty" ;
+    rdfs:comment """
+    Such as a temperature reading.
+    """ ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasSetpoint ] .
+
+s223:QuantifiableProperty a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.property.QuantifiableProperty" ;
+    rdfs:comment """
+    A property to be expressed as a quantity, it has units.
+    """ ;
+    rdfs:subClassOf s223:Property ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasQuantityKind ] .
+
+s223:hasPhysicalLocation a rdf:Property .
+
+s223:hasSetpoint a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+s223:hasValue a rdf:Property .
+
+s223:ofMedium a rdf:Property .
+
+s223:ofSubstance a rdf:Property .
+

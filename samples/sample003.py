@@ -1,23 +1,21 @@
 from pathlib import Path
 
+from bob.core import bind_model_namespace, data_graph, schema_graph, dump
 from header import sample_header
 
+from bob.core import (
+    S223,
+    Domain,
+    DomainSpace,
+    Zone,
+    PhysicalSpace,
+)
 from bob.connections import (
     AirInletConnectionPoint,
     AirInletZoneConnectionPoint,
     ChilledWaterConnection,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import (
-    bind_model_namespace,
-    data_graph,
-    schema_graph,
-    dump,
-    S223,
-    Domain,
-    DomainSpace,
-    Zone,
-)
 from bob.equipment.hvac import ChilledWaterCoil, Fan
 from bob.space.hvac import HVACSpace
 
@@ -47,7 +45,11 @@ f >> coil1.airInlet
 
 # there is a zone and a space
 zone = HVACZone(label="Zone-1")
+room = PhysicalSpace(label="Room 191")
 space = HVACSpace(label="Space")
+
+# the room contains the space
+room > space
 
 # the zone contains the space, and the air input into the zone is
 # mapped to the space connection point
@@ -59,6 +61,7 @@ for s, p, o in data_graph:
         if (o, p, s) not in data_graph:
             print(f"missing {o} -> {s}")
 
+# dump the result
 dump(
     data_graph,
     filename=f"samples/ttl/{model_name}.data.ttl",

@@ -1,8 +1,9 @@
 from pathlib import Path
 
+from bob.core import bind_model_namespace, data_graph, schema_graph, dump
 from header import sample_header
 
-from bob.core import bind_model_namespace, dump
+from bob.core import PhysicalSpace
 from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.vav import VAV
 from bob.space.hvac import HVACSpace, HVACZone
@@ -11,12 +12,16 @@ model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
-# there is a zone that contains a space
+# there is a zone that contains the space
 zone = HVACZone(label="Zone")
 
-# create a space
+# there is a room that contains the space
+room = PhysicalSpace(label="Room 191")
+
+# create the space
 domain_space = HVACSpace(label="Domain_Space")
 zone > domain_space
+room > domain_space
 
 # reference the connections
 # TODO : System don't have CP anymore Make VAV an equipment
@@ -35,4 +40,9 @@ vav = VAV(config=vav_template)
 # vav.airOutlet >> zone.airInlet
 
 # dump the result
-dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(
+    data_graph,
+    filename=f"samples/ttl/{model_name}.data.ttl",
+    header=sample_header(model_name),
+)
+dump(schema_graph, filename=f"samples/ttl/{model_name}.schema.ttl")

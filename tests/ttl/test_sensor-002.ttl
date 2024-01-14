@@ -9,7 +9,6 @@
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -192,27 +191,27 @@ ex27:00016 a s223:BidirectionalConnectionPoint,
     s223:isConnectionPointOf ex27:00009 .
 
 ex27:00017 a s223:PhysicalSpace,
-        rec:Building ;
+        bob:Building ;
     rdfs:label "Clients's place" ;
     s223:contains ex27:00018,
         ex27:00019,
         ex27:00020 .
 
 ex27:00018 a s223:PhysicalSpace,
-        rec:Room ;
+        bob:Room ;
     rdfs:label "Clean Room #1" ;
     s223:encloses ex27:00001 ;
     s223:isContainedIn ex27:00017 .
 
 ex27:00019 a s223:PhysicalSpace,
-        rec:Room ;
+        bob:Room ;
     rdfs:label "SAS leading to Clean Room #1" ;
     s223:encloses ex27:00009 ;
     s223:isContainedIn ex27:00017 .
 
 ex27:00020 a s223:PhysicalSpace,
-        rec:MechanicalRoom,
-        rec:Room ;
+        bob:MechanicalRoom,
+        bob:Room ;
     rdfs:label "Mechanical room for Clean Room #1" ;
     s223:isContainedIn ex27:00017 .
 

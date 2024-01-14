@@ -7,7 +7,6 @@
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rec: <https://w3id.org/rec/core/> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -21,19 +20,19 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex27:00001 a s223:PhysicalSpace,
-        rec:Building ;
+        bob:Building ;
     rdfs:label "My Building" ;
     s223:contains ex27:00002,
         ex27:00003,
         ex27:00004 .
 
 ex27:00002 a s223:PhysicalSpace,
-        rec:Roof ;
+        bob:Roof ;
     rdfs:label "Roof of building" ;
     s223:isContainedIn ex27:00001 .
 
 ex27:00003 a s223:PhysicalSpace,
-        rec:Floor ;
+        bob:Floor ;
     rdfs:label "Floor1" ;
     s223:contains ex27:00005,
         ex27:00006,
@@ -41,36 +40,36 @@ ex27:00003 a s223:PhysicalSpace,
     s223:isContainedIn ex27:00001 .
 
 ex27:00004 a s223:PhysicalSpace,
-        rec:Floor ;
+        bob:Floor ;
     rdfs:label "Basement" ;
     s223:contains ex27:00008 ;
     s223:encloses ex27:00033 ;
     s223:isContainedIn ex27:00001 .
 
 ex27:00005 a s223:PhysicalSpace,
-        rec:Office,
-        rec:Room ;
+        bob:Office,
+        bob:Room ;
     rdfs:label "Office 1" ;
     s223:encloses ex27:00009 ;
     s223:isContainedIn ex27:00003 .
 
 ex27:00006 a s223:PhysicalSpace,
-        rec:Office,
-        rec:Room ;
+        bob:Office,
+        bob:Room ;
     rdfs:label "Office 2" ;
     s223:encloses ex27:00017 ;
     s223:isContainedIn ex27:00003 .
 
 ex27:00007 a s223:PhysicalSpace,
-        rec:Office,
-        rec:Room ;
+        bob:Office,
+        bob:Room ;
     rdfs:label "Office 3" ;
     s223:encloses ex27:00025 ;
     s223:isContainedIn ex27:00003 .
 
 ex27:00008 a s223:PhysicalSpace,
-        rec:Office,
-        rec:Room ;
+        bob:Office,
+        bob:Room ;
     rdfs:label "Joel's Office" ;
     s223:isContainedIn ex27:00004 .
 
