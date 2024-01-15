@@ -26,8 +26,10 @@ class SystemIn1(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        Equipment = EquipmentIn1(label=kwargs["label"] + "-d")
-        self.cp.mapsTo = Equipment.cp
+        equipment = EquipmentIn1(label=kwargs["label"] + "-d")
+
+        self > equipment
+        self.cp.mapsTo = equipment.cp
 
 
 class EquipmentIn2(Equipment):
@@ -42,9 +44,11 @@ class SystemIn2(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        Equipment = EquipmentIn2(label=kwargs["label"] + "-d")
-        self.cp1.mapsTo = Equipment.cp1
-        self.cp2.mapsTo = Equipment.cp2
+        equipment = EquipmentIn2(label=kwargs["label"] + "-d")
+
+        self > equipment
+        self.cp1.mapsTo = equipment.cp1
+        self.cp2.mapsTo = equipment.cp2
 
 
 class EquipmentOut1(Equipment):
@@ -57,8 +61,10 @@ class SystemOut1(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        Equipment = EquipmentOut1(label=kwargs["label"] + "-d")
-        self.cp.mapsTo = Equipment.cp
+        equipment = EquipmentOut1(label=kwargs["label"] + "-d")
+
+        self > equipment
+        self.cp.mapsTo = equipment.cp
 
 
 class EquipmentOut2(Equipment):
@@ -73,9 +79,11 @@ class SystemOut2(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        Equipment = EquipmentOut2(label=kwargs["label"] + "-d")
-        self.cp1.mapsTo = Equipment.cp1
-        self.cp2.mapsTo = Equipment.cp2
+        equipment = EquipmentOut2(label=kwargs["label"] + "-d")
+
+        self > equipment
+        self.cp1.mapsTo = equipment.cp1
+        self.cp2.mapsTo = equipment.cp2
 
 
 class EquipmentInOut(Equipment):
@@ -90,9 +98,11 @@ class SystemInOut(System):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-        Equipment = EquipmentInOut(label=kwargs["label"] + "-d")
-        self.cp1.mapsTo = Equipment.cp1
-        self.cp2.mapsTo = Equipment.cp2
+        equipment = EquipmentInOut(label=kwargs["label"] + "-d")
+
+        self > equipment
+        self.cp1.mapsTo = equipment.cp1
+        self.cp2.mapsTo = equipment.cp2
 
 
 # two independant systems

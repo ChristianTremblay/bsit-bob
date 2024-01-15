@@ -1,5 +1,5 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex1: <urn:ex/sample009/> .
+@prefix ex1: <urn:ex/sample012/> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -14,102 +14,30 @@ bob:isSystemConnectionPointOf a rdf:Property .
 
 bob:mapsTo a rdf:Property .
 
-ex1:EquipmentIn1 a rdfs:Class,
+ex1:TestEquipment a rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "__main__.EquipmentIn1" ;
+    rdfs:label "__main__.TestEquipment" ;
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp ] .
-
-ex1:EquipmentIn2 a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.EquipmentIn2" ;
-    rdfs:subClassOf s223:Connectable,
-        s223:Equipment ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
+            sh:path ex1:cpOut ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
+            sh:path ex1:cpIn ] .
 
-ex1:EquipmentInOut a rdfs:Class,
+ex1:TestSystem a rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "__main__.EquipmentInOut" ;
-    rdfs:subClassOf s223:Connectable,
-        s223:Equipment ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
-        [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
-
-ex1:EquipmentOut1 a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.EquipmentOut1" ;
-    rdfs:subClassOf s223:Connectable,
-        s223:Equipment ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp ] .
-
-ex1:EquipmentOut2 a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.EquipmentOut2" ;
-    rdfs:subClassOf s223:Connectable,
-        s223:Equipment ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
-        [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
-
-ex1:SystemIn1 a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.SystemIn1" ;
+    rdfs:label "__main__.TestSystem" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp ] .
-
-ex1:SystemIn2 a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.SystemIn2" ;
-    rdfs:subClassOf s223:System ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cpIn ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cpOut ] .
 
-ex1:SystemInOut a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.SystemInOut" ;
-    rdfs:subClassOf s223:System ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
-        [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
-
-ex1:SystemOut1 a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.SystemOut1" ;
-    rdfs:subClassOf s223:System ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp ] .
-
-ex1:SystemOut2 a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.SystemOut2" ;
-    rdfs:subClassOf s223:System ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
-        [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
-
-ex1:cp a rdf:Property ;
+ex1:cpIn a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
         bob:hasSystemConnectionPoint .
 
-ex1:cp1 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint,
-        bob:hasSystemConnectionPoint .
-
-ex1:cp2 a rdf:Property ;
+ex1:cpOut a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
         bob:hasSystemConnectionPoint .
 
@@ -1691,16 +1619,6 @@ s223:Connectable a rdfs:Class ;
     A type of thing that can have connection points.
     """ .
 
-s223:Connection a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.core.Connection" ;
-    rdfs:comment """
-    Generic connection object type, unrestricted.
-    """ ;
-    sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
-
 s223:ConnectionPoint a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.core.ConnectionPoint" ;
@@ -1708,14 +1626,14 @@ s223:ConnectionPoint a rdfs:Class,
     Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
             sh:path s223:mapsTo ],
+        [ a sh:PropertyShape ;
+            sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
 
 s223:Context-Attribute a s223:Context-Attribute,
         s223:EnumerationKind,
@@ -2663,10 +2581,10 @@ s223:System a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
+            sh:path bob:hasSystemConnectionPoint ],
         [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ] .
 
 s223:ThreeSpeedSetting-High a s223:EnumerationKind,
         s223:ThreeSpeedSetting-High,
@@ -2754,13 +2672,27 @@ bob:AirConnectionPoint a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ] .
 
+bob:AirSystemConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.air.AirSystemConnectionPoint" ;
+    rdfs:subClassOf bob:SystemConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
 bob:InletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.core.InletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:SystemConnectionPoint .
+    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
+        "bob.core.InletSystemConnectionPoint" ;
+    rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint .
 
 bob:OutletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.core.OutletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:SystemConnectionPoint .
+    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
+        "bob.core.OutletSystemConnectionPoint" ;
+    rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint .
 
 bob:SystemConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -2769,12 +2701,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
             sh:path bob:isSystemConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
+            sh:path bob:mapsTo ] .
 
 s223:connectsThrough a rdf:Property .
 

@@ -1276,10 +1276,10 @@ def contains_mm(system: System, subsystem: System) -> None:
 
 @multimethod
 def contains_mm(system: System, thing_list: List[Node]) -> None:
-    """System > List[Union[equipment,System]]"""
+    """System > List[Union[Equipment,System]]"""
     _log.info(f"system {system} hasMember list of things {thing_list}")
 
-    ###TODO: the signature should be thing_list: List[Union[equipment,System]]
+    ###TODO: the signature should be thing_list: List[Union[Equipment,System]]
 
     for thing in thing_list:
         if not isinstance(thing, (Equipment, System)):
@@ -3316,29 +3316,6 @@ def add_mm(equipment: Equipment, role: EnumerationKind) -> None:
     equipment._data_graph.add((equipment._node_iri, S223.hasRole, role._node_iri))
     if INCLUDE_INVERSE:
         role.isRoleOf = equipment
-
-
-@multimethod
-def contains_mm(system: System, equipment: Equipment) -> None:
-    """System > Equipment"""
-    _log.info(f"system {system} contains equipment {equipment}")
-
-    system._data_graph.add((system._node_iri, S223.contains, equipment._node_iri))
-    if INCLUDE_INVERSE:
-        system._data_graph.add(
-            (equipment._node_iri, S223.isContainedIn, system._node_iri)
-        )
-
-
-@multimethod
-def contains_mm(system: System, equipment_list: List[Node]) -> None:
-    """System > List[Equipment]"""
-    _log.info(f"system {system} contains equipment list {equipment_list}")
-
-    for equipment in equipment_list:
-        if not isinstance(equipment, (Equipment, System)):
-            raise RuntimeError(f"equipment or system expected: {equipment}")
-        contains_mm(system, equipment)
 
 
 @multimethod

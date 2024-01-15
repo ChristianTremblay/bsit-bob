@@ -27,9 +27,9 @@ ex1:TestSystem a rdfs:Class,
     rdfs:label "__main__.TestSystem" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpI ],
+            sh:path ex1:cpO ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpO ] .
+            sh:path ex1:cpI ] .
 
 ex1:cp a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -1625,14 +1625,14 @@ s223:ConnectionPoint a rdfs:Class,
     Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
+            sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ],
+            sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
 
 s223:Context-Attribute a s223:Context-Attribute,
         s223:EnumerationKind,
@@ -2571,12 +2571,12 @@ s223:System a rdfs:Class,
     System
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ] .
+            sh:path s223:hasDomain ],
+        [ a sh:PropertyShape ;
+            sh:path bob:hasSystemConnectionPoint ] .
 
 s223:ThreeSpeedSetting-High a s223:EnumerationKind,
         s223:ThreeSpeedSetting-High,
@@ -2693,12 +2693,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
+            sh:path bob:mapsTo ],
         [ a sh:PropertyShape ;
             sh:path bob:isSystemConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
 
 s223:connectsThrough a rdf:Property .
 
