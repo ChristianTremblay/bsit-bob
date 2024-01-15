@@ -1,8 +1,9 @@
 from pathlib import Path
 
+from bob.core import bind_model_namespace, data_graph, schema_graph, dump
 from header import sample_header
 
-from bob.core import DomainSpace, PhysicalSpace, bind_model_namespace, dump
+from bob.core import DomainSpace, PhysicalSpace
 from bob.enum import HVAC
 
 model_name = Path(__file__).stem
@@ -35,4 +36,9 @@ room_101_lighting = DomainSpace(label="building.1fl.lighting", hasDomain=HVAC)
 room_101_lighting < room_101
 
 # dump the result
-dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))
+dump(
+    data_graph,
+    filename=f"samples/ttl/{model_name}.data.ttl",
+    header=sample_header(model_name),
+)
+dump(schema_graph, filename=f"samples/ttl/{model_name}.schema.ttl")

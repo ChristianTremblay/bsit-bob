@@ -1627,9 +1627,9 @@ s223:ConnectionPoint a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ],
-        [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ],
+        [ a sh:PropertyShape ;
+            sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ] .
@@ -2571,12 +2571,12 @@ s223:System a rdfs:Class,
     System
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ],
+            sh:path bob:hasSystemConnectionPoint ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasDomain ],
         [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ] .
+            sh:path s223:hasPhysicalLocation ] .
 
 s223:ThreeSpeedSetting-High a s223:EnumerationKind,
         s223:ThreeSpeedSetting-High,
@@ -2693,12 +2693,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
             sh:path bob:isSystemConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
+            sh:path bob:mapsTo ] .
 
 s223:connectsThrough a rdf:Property .
 
