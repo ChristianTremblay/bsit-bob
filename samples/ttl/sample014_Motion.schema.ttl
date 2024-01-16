@@ -1,45 +1,77 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex1: <urn:ex/sample012/> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 
-bob:hasSystemConnectionPoint a rdf:Property .
-
-bob:isSystemConnectionPointOf a rdf:Property .
-
-bob:mapsTo a rdf:Property .
-
-ex1:TestEquipment a rdfs:Class,
+bob:Count a rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "__main__.TestEquipment" ;
-    rdfs:subClassOf s223:Connectable,
-        s223:Equipment ;
+    rdfs:label "bob.properties.rate.Count" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpOut ],
-        [ a sh:PropertyShape ;
-            sh:path ex1:cpIn ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
 
-ex1:TestSystem a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "__main__.TestSystem" ;
-    rdfs:subClassOf s223:System ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpIn ],
-        [ a sh:PropertyShape ;
-            sh:path ex1:cpOut ] .
+bob:airChangePerHour a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
 
-ex1:cpIn a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint,
-        bob:hasSystemConnectionPoint .
+bob:airTransfer a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 
-ex1:cpOut a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint,
-        bob:hasSystemConnectionPoint .
+bob:cause_input a rdf:Property .
+
+bob:co a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:co2 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:doors a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:ductAirInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:ductAirOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:effect_output a rdf:Property .
+
+bob:hasCauseLocation a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:hasEffectLocation a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:humidity a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:isObservedBy a rdf:Property .
+
+bob:no2 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:occupancy a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:radiantCooling a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:radiantHeating a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:temperature a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:windows a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 
 p223:ActiveInactive-Active a p223:ActiveInactive-Active,
         s223:EnumerationKind,
@@ -363,6 +395,40 @@ p223:EnumerationKind-YesNo a p223:EnumerationKind-YesNo,
     rdfs:label "YesNo" ;
     rdfs:subClassOf s223:EnumerationKind .
 
+p223:HVACSpace a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.hvac.HVACSpace" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:DomainSpace ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:humidity ],
+        [ a sh:PropertyShape ;
+            sh:path bob:windows ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantCooling ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airTransfer ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantHeating ] .
+
 p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -558,6 +624,29 @@ p223:Position-Unknown a p223:Position-Unknown,
     rdfs:label "Unknown" ;
     rdfs:subClassOf p223:EnumerationKind-Position,
         s223:EnumerationKind .
+
+p223:Producer a rdfs:Class ;
+    rdfs:label "bob.producer.Producer" ;
+    rdfs:comment """
+    Producers are black boxes representing causality.
+    Their inputs are causes and they produce an effect on a property
+    It is very similar to a function, but it is meant to show the relation
+    between an input and an output of something not-driven by an algorithm.
+    A common example would be a relay. You feed it voltage and the relay contact
+    is actuated.
+    """ .
+
+p223:ProducerInput a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.producer.ProducerInput" ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:hasCauseLocation ] .
+
+p223:ProducerOutput a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.producer.ProducerOutput" ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:hasEffectLocation ] .
 
 p223:Protocol-BACnet a p223:Protocol-BACnet,
         s223:EnumerationKind,
@@ -1583,6 +1672,13 @@ s223:Attribute-Year a s223:Attribute-Year,
         s223:EnumerationKind,
         s223:EnumerationKind-Context .
 
+s223:BidirectionalConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirBidirectionalConnectionPoint",
+        "bob.core.BidirectionalConnectionPoint" ;
+    rdfs:subClassOf s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
+        bob:AirConnectionPoint .
+
 s223:Communication-EIA-485 a s223:Communication-EIA-485,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -1626,14 +1722,14 @@ s223:ConnectionPoint a rdfs:Class,
     Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
+            sh:path s223:mapsTo ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ],
+            sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ],
-        [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ] .
+            sh:path s223:isConnectionPointOf ] .
 
 s223:Context-Attribute a s223:Context-Attribute,
         s223:EnumerationKind,
@@ -1976,6 +2072,22 @@ s223:Domain-Security a s223:Domain-Security,
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Domain .
 
+s223:DomainSpace a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.DomainSpace" ;
+    rdfs:comment """
+    A part of the physical world or a virtual world whose 3D spatial extent is
+    bounded actually or theoretically, and provides for certain functions
+    within the zone it is contained in.
+    """ ;
+    rdfs:subClassOf s223:Connectable ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ] .
+
 s223:EM-Light a s223:EM-Light,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -2086,6 +2198,31 @@ s223:Electricity-Signal a s223:Electricity-Signal,
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Medium,
         s223:Medium-Electricity .
+
+s223:EnumerableProperty a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.property.EnumerableProperty" ;
+    rdfs:comment """
+    A property to be expressed as an EnumerationKind.
+    """ ;
+    rdfs:subClassOf s223:Property ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasEnumerationKind ] .
+
+s223:EnumeratedObservableProperty a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.states.Motion",
+        "bob.property.EnumeratedObservableProperty" ;
+    rdfs:comment """
+    Such as a On-Off Status.
+    """ ;
+    rdfs:subClassOf s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasValue ] .
 
 s223:EnumerationKind a rdfs:Class ;
     rdfs:label "bob.core.EnumerationKind" .
@@ -2354,6 +2491,16 @@ s223:Motion-Motion-True a s223:EnumerationKind,
         s223:EnumerationKind-Domain,
         s223:Occupancy-Motion .
 
+s223:ObservableProperty a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.property.ObservableProperty" ;
+    rdfs:comment """
+    Such as the state of an alarm detector.
+    """ ;
+    rdfs:subClassOf s223:Property ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:isObservedBy ] .
+
 s223:Occupancy-Motion a s223:EnumerationKind,
         s223:Occupancy-Motion,
         rdfs:Class ;
@@ -2396,6 +2543,15 @@ s223:OccupancyStatus-Unoccupied a s223:EnumerationKind,
     rdfs:label "Unoccupied" ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-OccupancyStatus .
+
+s223:OccupantMotionSensor a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.sensor.motion.OccupantMotionSensor" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
+        s223:Sensor ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:observes ] .
 
 s223:OnOff-Off a s223:EnumerationKind,
         s223:OnOff-Off,
@@ -2448,6 +2604,46 @@ s223:Particulate-PM2.5 a s223:EnumerationKind,
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Substance-Particulate .
+
+s223:Property a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.Property" ;
+    rdfs:comment """
+    An attribute, quality, or characteristic of a feature of interest.  This is
+    an abstract base class.
+    """ ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofSubstance ] .
+
+s223:QuantifiableObservableProperty a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.property.QuantifiableObservableProperty" ;
+    rdfs:comment """
+    Such as a temperature reading.
+    """ ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasSetpoint ] .
+
+s223:QuantifiableProperty a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.property.QuantifiableProperty" ;
+    rdfs:comment """
+    A property to be expressed as a quantity, it has units.
+    """ ;
+    rdfs:subClassOf s223:Property ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasQuantityKind ] .
 
 s223:Role-Controller a s223:EnumerationKind,
         s223:Role-Controller,
@@ -2526,6 +2722,31 @@ s223:Role-Supply a s223:EnumerationKind,
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Role .
 
+s223:Sensor a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.sensor.motion.OccupancySensor",
+        "bob.sensor.motion.OccupantCounterSensor",
+        "bob.sensor.sensor.Sensor" ;
+    rdfs:comment """
+    An equipment meant to observe a property
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
+        s223:OccupantMotionSensor,
+        s223:Sensor ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMeasurementPrecision ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMeasurementUncertainty ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMaxRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasObservationLocation ] .
+
 s223:Signal-Modulated a s223:EnumerationKind,
         s223:Signal-Modulated,
         rdfs:Class ;
@@ -2571,20 +2792,6 @@ s223:Substance-Soot a s223:EnumerationKind,
     rdfs:label "Soot" ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance .
-
-s223:System a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.core.System" ;
-    rdfs:comment """
-    System
-    """ ;
-    sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ],
-        [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ] .
 
 s223:ThreeSpeedSetting-High a s223:EnumerationKind,
         s223:ThreeSpeedSetting-High,
@@ -2672,52 +2879,63 @@ bob:AirConnectionPoint a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ] .
 
-bob:AirSystemConnectionPoint a rdfs:Class,
+bob:Causality a rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "bob.connections.air.AirSystemConnectionPoint" ;
-    rdfs:subClassOf bob:SystemConnectionPoint ;
-    sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
-
-bob:InletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
-        "bob.core.InletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:InletSystemConnectionPoint,
-        bob:SystemConnectionPoint .
-
-bob:OutletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
-        "bob.core.OutletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:OutletSystemConnectionPoint,
-        bob:SystemConnectionPoint .
-
-bob:SystemConnectionPoint a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.core.SystemConnectionPoint" ;
+    rdfs:label "bob.producer.causality.Causality" ;
     rdfs:comment """
-    System Connection Point
+    Simple causality black box. Its goal is to express a
+    simple relation between the output and the input.
+    It tells : this input, causes an effect on that output.
     """ ;
+    rdfs:subClassOf p223:Producer ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
+            sh:path bob:effect_output ],
         [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
-        [ a sh:PropertyShape ;
-            sh:path bob:isSystemConnectionPointOf ] .
+            sh:path bob:cause_input ] .
+
+qudt:hasQuantityKind a rdf:Property .
+
+qudt:hasUnit a rdf:Property .
 
 s223:connectsThrough a rdf:Property .
 
 s223:hasDomain a rdf:Property .
 
+s223:hasEnumerationKind a rdf:Property .
+
+s223:hasMaxRange a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+s223:hasMeasurementPrecision a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+s223:hasMeasurementUncertainty a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
 s223:hasMedium a rdf:Property .
 
+s223:hasMinRange a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+s223:hasObservationLocation a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
 s223:hasPhysicalLocation a rdf:Property .
+
+s223:hasSetpoint a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+s223:hasValue a rdf:Property .
 
 s223:isConnectionPointOf a rdf:Property .
 
 s223:mapsTo a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
+
+s223:observes a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+s223:ofMedium a rdf:Property .
+
+s223:ofSubstance a rdf:Property .
 
