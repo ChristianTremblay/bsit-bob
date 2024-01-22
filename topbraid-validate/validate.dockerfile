@@ -13,7 +13,7 @@ COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
 COPY shacl-1.4.2/ shacl-1.4.2/
-COPY test_validation.py .
+COPY validate.py .
 
 COPY 223standard.ttl .
 

@@ -393,6 +393,7 @@ electrical_devices:00016 a p223:ElectricalCircuitBreaker,
     rdfs:label "CB#2" ;
     s223:cnx electrical_devices:00018,
         electrical_devices:00019 ;
+    s223:connected hvac_devices:00095 ;
     s223:connectedThrough electrical_devices:00054,
         electricity:00001 ;
     s223:connectedTo hvac_devices:00095 ;
@@ -440,6 +441,7 @@ electrical_devices:00020 a p223:ElectricalCircuitBreaker,
     rdfs:label "CB#3" ;
     s223:cnx electrical_devices:00022,
         electrical_devices:00023 ;
+    s223:connected electrical_devices:00055 ;
     s223:connectedThrough electrical_devices:00054,
         electrical_devices:00097 ;
     s223:connectedTo electrical_devices:00055 ;
@@ -487,6 +489,7 @@ electrical_devices:00024 a p223:ElectricalCircuitBreaker,
     rdfs:label "CB#4" ;
     s223:cnx electrical_devices:00026,
         electrical_devices:00027 ;
+    s223:connected hvac_devices:00055 ;
     s223:connectedThrough electrical_devices:00054,
         electricity:00002 ;
     s223:connectedTo hvac_devices:00055 ;
@@ -577,6 +580,7 @@ electrical_devices:00032 a p223:ElectricalCircuitBreaker,
     rdfs:label "CB#6" ;
     s223:cnx electrical_devices:00034,
         electrical_devices:00035 ;
+    s223:connected hvac_devices:00301 ;
     s223:connectedThrough electrical_devices:00054,
         electricity:00003 ;
     s223:connectedTo hvac_devices:00301 ;
@@ -624,6 +628,7 @@ electrical_devices:00036 a p223:ElectricalCircuitBreaker,
     rdfs:label "CB#7" ;
     s223:cnx electrical_devices:00038,
         electrical_devices:00039 ;
+    s223:connected hvac_devices:00338 ;
     s223:connectedThrough electrical_devices:00054,
         electricity:00004 ;
     s223:connectedTo hvac_devices:00338 ;
@@ -671,6 +676,7 @@ electrical_devices:00040 a p223:ElectricalCircuitBreaker,
     rdfs:label "CB#8" ;
     s223:cnx electrical_devices:00042,
         electrical_devices:00043 ;
+    s223:connected hvac_devices:00352 ;
     s223:connectedThrough electrical_devices:00054,
         electricity:00005 ;
     s223:connectedTo hvac_devices:00352 ;
@@ -718,6 +724,7 @@ electrical_devices:00044 a p223:ElectricalCircuitBreaker,
     rdfs:label "CB#9" ;
     s223:cnx electrical_devices:00046,
         electrical_devices:00047 ;
+    s223:connected hvac_devices:00321 ;
     s223:connectedThrough electrical_devices:00054,
         electricity:00006 ;
     s223:connectedTo hvac_devices:00321 ;
@@ -847,6 +854,8 @@ electrical_devices:00055 a p223:ElectricalTransformer,
     rdfs:label "TX-1" ;
     s223:cnx electrical_devices:00056,
         electrical_devices:00057 ;
+    s223:connected electrical_devices:00020,
+        electrical_devices:00059 ;
     s223:connectedFrom electrical_devices:00020 ;
     s223:connectedThrough electrical_devices:00097,
         electrical_devices:00098 ;
@@ -897,6 +906,7 @@ electrical_devices:00059 a p223:ElectricalCircuitBreaker,
         electrical_devices:00062,
         electrical_devices:00063,
         electrical_devices:00064 ;
+    s223:connected electrical_devices:00055 ;
     s223:connectedFrom electrical_devices:00055 ;
     s223:connectedThrough electrical_devices:00093,
         electrical_devices:00094,
@@ -1451,6 +1461,7 @@ electrical_devices:00105 a p223:ElectricalSwitch,
     s223:cnx electrical_devices:00106,
         electrical_devices:00107,
         electrical_devices:00108 ;
+    s223:connected hvac_devices:00369 ;
     s223:connectedThrough electrical_devices:00103,
         electricity:00008 ;
     s223:connectedTo hvac_devices:00369 ;
@@ -1536,6 +1547,7 @@ electrical_devices:00113 a p223:ElectricalSwitch,
     s223:cnx electrical_devices:00114,
         electrical_devices:00115,
         electrical_devices:00116 ;
+    s223:connected lighting_devices:00064 ;
     s223:connectedThrough electrical_devices:00099,
         electricity:00007 ;
     s223:connectedTo lighting_devices:00064 ;
@@ -4232,6 +4244,7 @@ hvac_devices:00042 a s223:Connectable,
     s223:cnx hvac_devices:00043,
         hvac_devices:00044,
         hvac_devices:00045 ;
+    s223:connected hvac_devices:00055 ;
     s223:connectedFrom hvac_devices:00055 ;
     s223:connectedThrough hvac:00007,
         hvac:00009,
@@ -4377,6 +4390,9 @@ hvac_devices:00055 a s223:Connectable,
         hvac_devices:00060,
         hvac_devices:00061,
         hvac_devices:00062 ;
+    s223:connected electrical_devices:00024,
+        hvac_devices:00042,
+        network_devices:00001 ;
     s223:connectedFrom electrical_devices:00024,
         network_devices:00001 ;
     s223:connectedThrough electricity:00002,
@@ -4647,6 +4663,8 @@ hvac_devices:00082 a s223:Connectable,
     s223:cnx hvac_devices:00083,
         hvac_devices:00084,
         hvac_devices:00085 ;
+    s223:connected hvac_devices:00095,
+        hvac_devices:00111 ;
     s223:connectedFrom hvac_devices:00095,
         hvac_devices:00111 ;
     s223:connectedThrough hvac:00008,
@@ -4790,6 +4808,8 @@ hvac_devices:00095 a p223:MotorStarter,
         hvac_devices:00097,
         hvac_devices:00098,
         hvac_devices:00099 ;
+    s223:connected electrical_devices:00016,
+        hvac_devices:00082 ;
     s223:connectedFrom electrical_devices:00016 ;
     s223:connectedThrough electricity:00001,
         hvac_devices:00231 ;
@@ -4938,6 +4958,10 @@ hvac_devices:00111 a s223:Coil,
         hvac_devices:00113,
         hvac_devices:00114,
         hvac_devices:00115 ;
+    s223:connected hvac_devices:00082,
+        hvac_devices:00116,
+        hvac_devices:00260,
+        hvac_devices:00311 ;
     s223:connectedFrom hvac_devices:00116,
         hvac_devices:00311 ;
     s223:connectedThrough hvac:00012,
@@ -5005,6 +5029,10 @@ hvac_devices:00116 a s223:Coil,
         hvac_devices:00118,
         hvac_devices:00119,
         hvac_devices:00120 ;
+    s223:connected hvac_devices:00111,
+        hvac_devices:00121,
+        hvac_devices:00294,
+        hvac_devices:00342 ;
     s223:connectedFrom hvac_devices:00121,
         hvac_devices:00342 ;
     s223:connectedThrough hvac:00011,
@@ -5069,6 +5097,7 @@ hvac_devices:00121 a p223:Filter,
     rdfs:label "FILTER" ;
     s223:cnx hvac_devices:00122,
         hvac_devices:00123 ;
+    s223:connected hvac_devices:00116 ;
     s223:connectedThrough hvac:00006,
         hvac:00011 ;
     s223:connectedTo hvac_devices:00116 ;
@@ -5148,6 +5177,7 @@ hvac_devices:00127 a s223:Connectable,
         hvac_devices:00131,
         hvac_devices:00132,
         hvac_devices:00133 ;
+    s223:connected hvac_devices:00153 ;
     s223:connectedThrough hvac_devices:00157 ;
     s223:connectedTo hvac_devices:00153 ;
     s223:contains hvac_devices:00151 ;
@@ -5355,6 +5385,7 @@ hvac_devices:00153 a s223:Connectable,
     s223:cnx hvac_devices:00154,
         hvac_devices:00155,
         hvac_devices:00156 ;
+    s223:connected hvac_devices:00127 ;
     s223:connectedFrom hvac_devices:00127 ;
     s223:connectedThrough hvac_devices:00157 ;
     s223:hasConnectionPoint hvac_devices:00154,
@@ -5452,6 +5483,7 @@ hvac_devices:00161 a s223:Connectable,
         hvac_devices:00165,
         hvac_devices:00166,
         hvac_devices:00167 ;
+    s223:connected hvac_devices:00187 ;
     s223:connectedThrough hvac_devices:00191 ;
     s223:connectedTo hvac_devices:00187 ;
     s223:contains hvac_devices:00185 ;
@@ -5659,6 +5691,7 @@ hvac_devices:00187 a s223:Connectable,
     s223:cnx hvac_devices:00188,
         hvac_devices:00189,
         hvac_devices:00190 ;
+    s223:connected hvac_devices:00161 ;
     s223:connectedFrom hvac_devices:00161 ;
     s223:connectedThrough hvac_devices:00191 ;
     s223:hasConnectionPoint hvac_devices:00188,
@@ -5756,6 +5789,7 @@ hvac_devices:00195 a s223:Connectable,
         hvac_devices:00199,
         hvac_devices:00200,
         hvac_devices:00201 ;
+    s223:connected hvac_devices:00221 ;
     s223:connectedThrough hvac_devices:00225 ;
     s223:connectedTo hvac_devices:00221 ;
     s223:contains hvac_devices:00219 ;
@@ -5963,6 +5997,7 @@ hvac_devices:00221 a s223:Connectable,
     s223:cnx hvac_devices:00222,
         hvac_devices:00223,
         hvac_devices:00224 ;
+    s223:connected hvac_devices:00195 ;
     s223:connectedFrom hvac_devices:00195 ;
     s223:connectedThrough hvac_devices:00225 ;
     s223:hasConnectionPoint hvac_devices:00222,
@@ -6084,6 +6119,7 @@ hvac_devices:00234 a s223:Connectable,
         hvac_devices:00238,
         hvac_devices:00239,
         hvac_devices:00240 ;
+    s223:connected hvac_devices:00260 ;
     s223:connectedThrough hvac_devices:00266 ;
     s223:connectedTo hvac_devices:00260 ;
     s223:contains hvac_devices:00258 ;
@@ -6291,6 +6327,9 @@ hvac_devices:00260 a s223:Connectable,
     s223:cnx hvac_devices:00261,
         hvac_devices:00262,
         hvac_devices:00263 ;
+    s223:connected hvac_devices:00111,
+        hvac_devices:00234,
+        hvac_devices:00301 ;
     s223:connectedFrom hvac_devices:00111,
         hvac_devices:00234 ;
     s223:connectedThrough hvac:00022,
@@ -6379,6 +6418,7 @@ hvac_devices:00268 a s223:Connectable,
         hvac_devices:00272,
         hvac_devices:00273,
         hvac_devices:00274 ;
+    s223:connected hvac_devices:00294 ;
     s223:connectedThrough hvac_devices:00300 ;
     s223:connectedTo hvac_devices:00294 ;
     s223:contains hvac_devices:00292 ;
@@ -6586,6 +6626,9 @@ hvac_devices:00294 a s223:Connectable,
     s223:cnx hvac_devices:00295,
         hvac_devices:00296,
         hvac_devices:00297 ;
+    s223:connected hvac_devices:00116,
+        hvac_devices:00268,
+        hvac_devices:00338 ;
     s223:connectedFrom hvac_devices:00116,
         hvac_devices:00268 ;
     s223:connectedThrough hvac:00018,
@@ -6665,6 +6708,9 @@ hvac_devices:00301 a s223:Chiller,
         hvac_devices:00307,
         hvac_devices:00308,
         hvac_devices:00309 ;
+    s223:connected electrical_devices:00032,
+        hvac_devices:00260,
+        hvac_devices:00311 ;
     s223:connectedFrom electrical_devices:00032,
         hvac_devices:00260 ;
     s223:connectedThrough electricity:00003,
@@ -6778,6 +6824,9 @@ hvac_devices:00311 a s223:Connectable,
     s223:cnx hvac_devices:00312,
         hvac_devices:00313,
         hvac_devices:00314 ;
+    s223:connected hvac_devices:00111,
+        hvac_devices:00301,
+        hvac_devices:00321 ;
     s223:connectedFrom hvac_devices:00301,
         hvac_devices:00321 ;
     s223:connectedThrough hvac:00020,
@@ -6889,6 +6938,8 @@ hvac_devices:00321 a p223:MotorStarter,
         hvac_devices:00323,
         hvac_devices:00324,
         hvac_devices:00325 ;
+    s223:connected electrical_devices:00044,
+        hvac_devices:00311 ;
     s223:connectedFrom electrical_devices:00044 ;
     s223:connectedThrough electricity:00006,
         hvac_devices:00337 ;
@@ -7043,6 +7094,9 @@ hvac_devices:00338 a p223:Boiler,
     s223:cnx hvac_devices:00339,
         hvac_devices:00340,
         hvac_devices:00341 ;
+    s223:connected electrical_devices:00036,
+        hvac_devices:00294,
+        hvac_devices:00342 ;
     s223:connectedFrom electrical_devices:00036,
         hvac_devices:00294 ;
     s223:connectedThrough electricity:00004,
@@ -7093,6 +7147,9 @@ hvac_devices:00342 a s223:Connectable,
     s223:cnx hvac_devices:00343,
         hvac_devices:00344,
         hvac_devices:00345 ;
+    s223:connected hvac_devices:00116,
+        hvac_devices:00338,
+        hvac_devices:00352 ;
     s223:connectedFrom hvac_devices:00338,
         hvac_devices:00352 ;
     s223:connectedThrough hvac:00016,
@@ -7204,6 +7261,8 @@ hvac_devices:00352 a p223:MotorStarter,
         hvac_devices:00354,
         hvac_devices:00355,
         hvac_devices:00356 ;
+    s223:connected electrical_devices:00040,
+        hvac_devices:00342 ;
     s223:connectedFrom electrical_devices:00040 ;
     s223:connectedThrough electricity:00005,
         hvac_devices:00368 ;
@@ -7358,6 +7417,8 @@ hvac_devices:00369 a s223:Connectable,
     s223:cnx hvac_devices:00370,
         hvac_devices:00371,
         hvac_devices:00372 ;
+    s223:connected electrical_devices:00105,
+        hvac_spaces:00011 ;
     s223:connectedFrom electrical_devices:00105,
         hvac_spaces:00011 ;
     s223:connectedThrough electricity:00008,
@@ -7694,6 +7755,7 @@ hvac_devices:00399 a s223:Connectable,
     rdfs:label "VAV1_damper" ;
     s223:cnx hvac_devices:00400,
         hvac_devices:00401 ;
+    s223:connected hvac_devices:00433 ;
     s223:connectedThrough hvac:00008,
         hvac:00025 ;
     s223:connectedTo hvac_devices:00433 ;
@@ -7739,6 +7801,7 @@ hvac_devices:00402 a s223:Connectable,
         hvac_devices:00406,
         hvac_devices:00407,
         hvac_devices:00408 ;
+    s223:connected hvac_devices:00428 ;
     s223:connectedThrough hvac_devices:00432 ;
     s223:connectedTo hvac_devices:00428 ;
     s223:contains hvac_devices:00426 ;
@@ -7946,6 +8009,7 @@ hvac_devices:00428 a s223:Connectable,
     s223:cnx hvac_devices:00429,
         hvac_devices:00430,
         hvac_devices:00431 ;
+    s223:connected hvac_devices:00402 ;
     s223:connectedFrom hvac_devices:00402 ;
     s223:connectedThrough hvac_devices:00432 ;
     s223:hasConnectionPoint hvac_devices:00429,
@@ -8002,6 +8066,8 @@ hvac_devices:00433 a s223:Coil,
         hvac_devices:00435,
         hvac_devices:00436,
         hvac_devices:00437 ;
+    s223:connected hvac_devices:00399,
+        hvac_spaces:00038 ;
     s223:connectedFrom hvac_devices:00399 ;
     s223:connectedThrough hvac:00025,
         hvac:00026 ;
@@ -8097,6 +8163,7 @@ hvac_devices:00441 a s223:Connectable,
         hvac_devices:00445,
         hvac_devices:00446,
         hvac_devices:00447 ;
+    s223:connected hvac_devices:00467 ;
     s223:connectedThrough hvac_devices:00471 ;
     s223:connectedTo hvac_devices:00467 ;
     s223:contains hvac_devices:00465 ;
@@ -8304,6 +8371,7 @@ hvac_devices:00467 a s223:Connectable,
     s223:cnx hvac_devices:00468,
         hvac_devices:00469,
         hvac_devices:00470 ;
+    s223:connected hvac_devices:00441 ;
     s223:connectedFrom hvac_devices:00441 ;
     s223:connectedThrough hvac_devices:00471 ;
     s223:hasConnectionPoint hvac_devices:00468,
@@ -8454,6 +8522,7 @@ hvac_devices:00481 a s223:Connectable,
     rdfs:label "VAV2_damper" ;
     s223:cnx hvac_devices:00482,
         hvac_devices:00483 ;
+    s223:connected hvac_devices:00515 ;
     s223:connectedThrough hvac:00008,
         hvac:00027 ;
     s223:connectedTo hvac_devices:00515 ;
@@ -8499,6 +8568,7 @@ hvac_devices:00484 a s223:Connectable,
         hvac_devices:00488,
         hvac_devices:00489,
         hvac_devices:00490 ;
+    s223:connected hvac_devices:00510 ;
     s223:connectedThrough hvac_devices:00514 ;
     s223:connectedTo hvac_devices:00510 ;
     s223:contains hvac_devices:00508 ;
@@ -8706,6 +8776,7 @@ hvac_devices:00510 a s223:Connectable,
     s223:cnx hvac_devices:00511,
         hvac_devices:00512,
         hvac_devices:00513 ;
+    s223:connected hvac_devices:00484 ;
     s223:connectedFrom hvac_devices:00484 ;
     s223:connectedThrough hvac_devices:00514 ;
     s223:hasConnectionPoint hvac_devices:00511,
@@ -8762,6 +8833,8 @@ hvac_devices:00515 a s223:Coil,
         hvac_devices:00517,
         hvac_devices:00518,
         hvac_devices:00519 ;
+    s223:connected hvac_devices:00481,
+        hvac_spaces:00047 ;
     s223:connectedFrom hvac_devices:00481 ;
     s223:connectedThrough hvac:00027,
         hvac:00028 ;
@@ -8857,6 +8930,7 @@ hvac_devices:00523 a s223:Connectable,
         hvac_devices:00527,
         hvac_devices:00528,
         hvac_devices:00529 ;
+    s223:connected hvac_devices:00549 ;
     s223:connectedThrough hvac_devices:00553 ;
     s223:connectedTo hvac_devices:00549 ;
     s223:contains hvac_devices:00547 ;
@@ -9064,6 +9138,7 @@ hvac_devices:00549 a s223:Connectable,
     s223:cnx hvac_devices:00550,
         hvac_devices:00551,
         hvac_devices:00552 ;
+    s223:connected hvac_devices:00523 ;
     s223:connectedFrom hvac_devices:00523 ;
     s223:connectedThrough hvac_devices:00553 ;
     s223:hasConnectionPoint hvac_devices:00550,
@@ -9229,6 +9304,7 @@ hvac_spaces:00011 a p223:HVACSpace,
         hvac_spaces:00016,
         hvac_spaces:00017,
         hvac_spaces:00018 ;
+    s223:connected hvac_devices:00369 ;
     s223:connectedThrough hvac:00001,
         hvac:00024 ;
     s223:connectedTo hvac_devices:00369 ;
@@ -9328,6 +9404,7 @@ hvac_spaces:00020 a p223:HVACSpace,
         hvac_spaces:00025,
         hvac_spaces:00026,
         hvac_spaces:00027 ;
+    s223:connected hvac_spaces:00029 ;
     s223:connectedFrom hvac_spaces:00029 ;
     s223:connectedThrough hvac:00001,
         hvac:00003 ;
@@ -9427,6 +9504,8 @@ hvac_spaces:00029 a p223:HVACSpace,
         hvac_spaces:00034,
         hvac_spaces:00035,
         hvac_spaces:00036 ;
+    s223:connected hvac_spaces:00020,
+        hvac_spaces:00047 ;
     s223:connectedFrom hvac_spaces:00047 ;
     s223:connectedThrough hvac:00002,
         hvac:00003 ;
@@ -9527,6 +9606,7 @@ hvac_spaces:00038 a p223:HVACSpace,
         hvac_spaces:00043,
         hvac_spaces:00044,
         hvac_spaces:00045 ;
+    s223:connected hvac_devices:00433 ;
     s223:connectedFrom hvac_devices:00433 ;
     s223:connectedThrough hvac:00001,
         hvac:00026 ;
@@ -9626,6 +9706,8 @@ hvac_spaces:00047 a p223:HVACSpace,
         hvac_spaces:00052,
         hvac_spaces:00053,
         hvac_spaces:00054 ;
+    s223:connected hvac_devices:00515,
+        hvac_spaces:00029 ;
     s223:connectedFrom hvac_devices:00515 ;
     s223:connectedThrough hvac:00002,
         hvac:00028 ;
@@ -10435,6 +10517,7 @@ lighting_devices:00064 a s223:Connectable,
     rdfs:label "Luminaire1" ;
     s223:cnx lighting_devices:00066,
         lighting_devices:00067 ;
+    s223:connected electrical_devices:00113 ;
     s223:connectedFrom electrical_devices:00113 ;
     s223:connectedThrough electricity:00007,
         lighting_devices:00086 ;
@@ -11065,6 +11148,8 @@ network_devices:00001 a p223:EthernetSwitch,
         network_devices:00008,
         network_devices:00009,
         network_devices:00010 ;
+    s223:connected hvac_devices:00055,
+        network_devices:00020 ;
     s223:connectedFrom network_devices:00020 ;
     s223:connectedThrough electrical_devices:00104,
         network_devices:00019,
@@ -11265,6 +11350,7 @@ network_devices:00020 a p223:EthernetFirewall,
         network_devices:00024,
         network_devices:00025,
         network_devices:00026 ;
+    s223:connected network_devices:00001 ;
     s223:connectedThrough electrical_devices:00104,
         electrical_devices:00277,
         network_devices:00032 ;

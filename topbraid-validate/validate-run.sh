@@ -7,4 +7,4 @@ docker run -it --rm \
     --volume /etc/passwd:/etc/passwd:ro \
     --mount src="$(pwd)",target=/data,type=bind \
     validate:latest \
-    python3 test_validation.py $@
+    python3 validate.py $@

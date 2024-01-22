@@ -1616,8 +1616,22 @@ def connect_mm(
     )
     from_connection_point._data_graph.add(
         (
+            from_connection_point.isConnectionPointOf._node_iri,
+            S223.connected,
+            to_connection_point.isConnectionPointOf._node_iri,
+        )
+    )
+    from_connection_point._data_graph.add(
+        (
             to_connection_point.isConnectionPointOf._node_iri,
             S223.connectedFrom,
+            from_connection_point.isConnectionPointOf._node_iri,
+        )
+    )
+    from_connection_point._data_graph.add(
+        (
+            to_connection_point.isConnectionPointOf._node_iri,
+            S223.connected,
             from_connection_point.isConnectionPointOf._node_iri,
         )
     )
@@ -1822,8 +1836,22 @@ def connect_mm(equipment: Equipment, connection_point: ConnectionPoint) -> None:
     )
     from_thing._data_graph.add(
         (
+            from_thing.isConnectionPointOf._node_iri,
+            S223.connected,
+            connection_point.isConnectionPointOf._node_iri,
+        )
+    )
+    from_thing._data_graph.add(
+        (
             connection_point.isConnectionPointOf._node_iri,
             S223.connectedFrom,
+            from_thing.isConnectionPointOf._node_iri,
+        )
+    )
+    from_thing._data_graph.add(
+        (
+            connection_point.isConnectionPointOf._node_iri,
+            S223.connected,
             from_thing.isConnectionPointOf._node_iri,
         )
     )
