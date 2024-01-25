@@ -321,11 +321,7 @@ s223:DifferentialSensor a s223:Class,
     rdfs:label "Differential sensor" ;
     rdfs:comment "A sensor that measures the difference of a quantity between any two points in the system." ;
     rdfs:subClassOf s223:AbstractSensor ;
-    sh:property [ rdfs:comment "A Differential Sensor must be defined in terms of the QuantityKind that is being measured." ;
-            sh:class qudt:QuantityKind ;
-            sh:minCount 1 ;
-            sh:path ( s223:observes qudt:hasQuantityKind ) ],
-        [ rdfs:comment "A Differential Sensor must have different values for hasObservationLocationHigh and hasObservationLocationLow." ;
+    sh:property [ rdfs:comment "A Differential Sensor must have different values for hasObservationLocationHigh and hasObservationLocationLow." ;
             sh:path s223:hasObservationLocationHigh ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure that the values of hasObservationLocationHigh and hasObservationLocationLow are distinct." ;
@@ -338,7 +334,11 @@ WHERE {
     $this s223:hasObservationLocationLow ?low .
 FILTER (?high = ?low) .
 }
-""" ] ] ;
+""" ] ],
+        [ rdfs:comment "A Differential Sensor must be defined in terms of the QuantityKind that is being measured." ;
+            sh:class qudt:QuantityKind ;
+            sh:minCount 1 ;
+            sh:path ( s223:observes qudt:hasQuantityKind ) ] ;
     sh:xone ( [ sh:property [ rdfs:comment "A DifferentialSensor must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasObservationLocationHigh." ;
                         sh:class s223:Connectable ;
                         sh:maxCount 1 ;
@@ -556,17 +556,7 @@ s223:Filter a s223:Class,
     rdfs:label "Filter" ;
     rdfs:comment "A device that removes contaminants from gases or liquids." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Filter shall have at least one inlet." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
-        [ rdfs:comment "A Filter shall have at least one outlet." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ],
-        [ rdfs:comment "A filter should have one common constituent between the inlet and outlet" ;
+    sh:property [ rdfs:comment "A filter should have one common constituent between the inlet and outlet" ;
             sh:path s223:hasConnectionPoint ;
             sh:severity sh:Warning ;
             sh:sparql [ a sh:SPARQLConstraint ;
@@ -592,7 +582,17 @@ FILTER (NOT EXISTS {
     } 
 } ) .
 }
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "A Filter shall have at least one inlet." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
+        [ rdfs:comment "A Filter shall have at least one outlet." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ] .
 
 s223:FlowSensor a s223:Class,
         sh:NodeShape ;
@@ -900,25 +900,7 @@ s223:Pump a s223:Class,
     rdfs:label "Pump" ;
     rdfs:comment "A machine for imparting energy to a fluid, drawing a fluid into itself through an entrance port, and forcing the fluid out through an exhaust port." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
-                    sh:node [ sh:or ( [ sh:property [ sh:class s223:Medium-Water ;
-                                                sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Medium-Refrigerant ;
-                                                sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Medium-Oil ;
-                                                sh:path s223:hasMedium ] ] ) ] ] ],
-        [ rdfs:comment "A Pump shall have at least one outlet using the medium Water, Oil or Refrigerant." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
-                    sh:node [ sh:or ( [ sh:property [ sh:class s223:Medium-Water ;
-                                                sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Medium-Refrigerant ;
-                                                sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Medium-Oil ;
-                                                sh:path s223:hasMedium ] ] ) ] ] ],
-        [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+    sh:property [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
             sh:path s223:hasConnectionPoint ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
@@ -938,7 +920,25 @@ WHERE {
   FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .
   FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .
 }
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
+                    sh:node [ sh:or ( [ sh:property [ sh:class s223:Medium-Water ;
+                                                sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Medium-Refrigerant ;
+                                                sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Medium-Oil ;
+                                                sh:path s223:hasMedium ] ] ) ] ] ],
+        [ rdfs:comment "A Pump shall have at least one outlet using the medium Water, Oil or Refrigerant." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
+                    sh:node [ sh:or ( [ sh:property [ sh:class s223:Medium-Water ;
+                                                sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Medium-Refrigerant ;
+                                                sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Medium-Oil ;
+                                                sh:path s223:hasMedium ] ] ) ] ] ] .
 
 s223:QuantifiableActuatableProperty a s223:Class,
         sh:NodeShape ;
@@ -14324,13 +14324,7 @@ s223:HeatExchanger a s223:Class,
     rdfs:label "Heat exchanger" ;
     rdfs:comment "A component intended to transfer heat from one medium to another while keeping the two media separate" ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A heat exchanger shall have at least 4 connection points." ;
-            sh:minCount 4 ;
-            sh:path s223:hasConnectionPoint ],
-        [ rdfs:comment "If the relation hasRole is present it must associate the HeatExchanger with a EnumerationKind-Role." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:path s223:hasRole ],
-        [ rdfs:comment "Heat Exchangers should have the same number of non-electrical inlet and outlet connection points." ;
+    sh:property [ rdfs:comment "Heat Exchangers should have the same number of non-electrical inlet and outlet connection points." ;
             sh:path s223:hasConnectionPoint ;
             sh:severity sh:Warning ;
             sh:sparql [ a sh:SPARQLConstraint ;
@@ -14366,7 +14360,13 @@ GROUP BY $this
 }
 FILTER (?incount != ?outcount)
 }
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "A heat exchanger shall have at least 4 connection points." ;
+            sh:minCount 4 ;
+            sh:path s223:hasConnectionPoint ],
+        [ rdfs:comment "If the relation hasRole is present it must associate the HeatExchanger with a EnumerationKind-Role." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:path s223:hasRole ] .
 
 s223:Junction a s223:Class,
         sh:NodeShape ;
@@ -28730,21 +28730,21 @@ s223:Medium-NaturalGas a s223:Class,
         s223:Medium-NaturalGas,
         sh:NodeShape ;
     rdfs:label "Medium-NaturalGas" ;
-    rdfs:comment "This class has enumerated subclasses of natural gas in various states." ;
+    rdfs:comment "This class has enumerated instances of natural gas in various states." ;
     rdfs:subClassOf s223:Substance-Medium .
 
 s223:Phase-Gas a s223:Class,
         s223:Phase-Gas,
         sh:NodeShape ;
     rdfs:label "Phase-Gas" ;
-    rdfs:comment "This class has enumerated subclasses of gas in various thermodynamic states." ;
+    rdfs:comment "This class has enumerated instances of gas in various thermodynamic states." ;
     rdfs:subClassOf s223:EnumerationKind-Phase .
 
 s223:Phase-Liquid a s223:Class,
         s223:Phase-Liquid,
         sh:NodeShape ;
     rdfs:label "Phase-Liquid" ;
-    rdfs:comment "This class has enumerated subclasses of liquid in various thermodynamic states." ;
+    rdfs:comment "This class has enumerated instances of liquid in various thermodynamic states." ;
     rdfs:subClassOf s223:EnumerationKind-Phase .
 
 s223:QuantifiableObservableProperty a s223:Class,
@@ -34275,7 +34275,7 @@ s223:Aspect-DayOfWeek a s223:Aspect-DayOfWeek,
         s223:Class,
         sh:NodeShape ;
     rdfs:label "Day of Week" ;
-    rdfs:comment "This class has enumerated subclasses of Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday. The Weekend and Weekday EnumerationKinds define subsets of this EnumerationKind for Mon-Fri and Sat,Sun, respectively" ;
+    rdfs:comment "This class has enumerated instances of Monday, Tuesday, Wednesday, Thursday, Friday, Saturday and Sunday. The Weekend and Weekday EnumerationKinds define subsets of this EnumerationKind for Mon-Fri and Sat,Sun, respectively" ;
     rdfs:subClassOf s223:EnumerationKind-Aspect .
 
 s223:Coil a s223:Class,
@@ -34416,7 +34416,7 @@ s223:Medium-Oil a s223:Class,
         s223:Medium-Oil,
         sh:NodeShape ;
     rdfs:label "Medium-Oil" ;
-    rdfs:comment "This class has enumerated subclasses of oil." ;
+    rdfs:comment "This class has enumerated instances of oil." ;
     rdfs:subClassOf s223:Substance-Medium .
 
 s223:ObservableProperty a s223:Class,
@@ -34454,7 +34454,7 @@ s223:Signal-Modulated a s223:Class,
         s223:Signal-Modulated,
         sh:NodeShape ;
     rdfs:label "Signal-Modulated" ;
-    rdfs:comment "This class has enumerated subclasses of electric signals at various voltage ranges." ;
+    rdfs:comment "This class has enumerated instances of electric signals at various voltage ranges." ;
     rdfs:subClassOf s223:Electricity-Signal .
 
 s223:Voltage-208V a s223:Class,
@@ -34515,7 +34515,7 @@ s223:Water-GlycolSolution a s223:Class,
             s223:ofSubstance s223:Medium-Water ;
             qudt:hasQuantityKind quantitykind:VolumeFraction ;
             qudt:hasUnit unit:PERCENT ] ;
-    rdfs:comment "This class has enumerated subclasses of water-glycol solutions in various concentrations." ;
+    rdfs:comment "This class has enumerated instances of water-glycol solutions in various concentrations." ;
     rdfs:subClassOf s223:Medium-Water ;
     sh:property [ rdfs:comment "One of the constituents of a Water-GlycolSolution must be Medium-Water." ;
             sh:path s223:hasConstituent ;
@@ -40690,28 +40690,28 @@ s223:EnumerationKind-Binary a s223:Class,
         s223:EnumerationKind-Binary,
         sh:NodeShape ;
     rdfs:label "EnumerationKind Binary" ;
-    rdfs:comment "This class has enumerated subclasses of True, False and Unknown used to describe the possible values of a binary property" ;
+    rdfs:comment "This class has enumerated instances of True, False and Unknown used to describe the possible values of a binary property" ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:EnumerationKind-Direction a s223:Class,
         s223:EnumerationKind-Direction,
         sh:NodeShape ;
     rdfs:label "Direction" ;
-    rdfs:comment "This class has enumerated subclasses of Bidirectional, Inlet and Outlet used to qualify ConnectionPoints." ;
+    rdfs:comment "This class has enumerated instances of Bidirectional, Inlet and Outlet used to qualify ConnectionPoints." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:EnumerationKind-OnOff a s223:Class,
         s223:EnumerationKind-OnOff,
         sh:NodeShape ;
     rdfs:label "OnOff enumeration" ;
-    rdfs:comment "This class has enumerated subclasses of states of either on or off." ;
+    rdfs:comment "This class has enumerated instances of states of either on or off." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:EnumerationKind-Position a s223:Class,
         s223:EnumerationKind-Position,
         sh:NodeShape ;
     rdfs:label "Position" ;
-    rdfs:comment "This class has enumerated subclasses of position such as closed or open." ;
+    rdfs:comment "This class has enumerated instances of position such as closed or open." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:EnumerationKind-RunStatus a s223:Class,
@@ -40865,21 +40865,21 @@ s223:Medium-EM a s223:Class,
         s223:Medium-EM,
         sh:NodeShape ;
     rdfs:label "Electromagnetic Wave" ;
-    rdfs:comment "This class has enumerated subclasses of electromagnetic energy at any frequency range." ;
+    rdfs:comment "This class has enumerated instances of electromagnetic energy at any frequency range." ;
     rdfs:subClassOf s223:Substance-Medium .
 
 s223:Occupancy-Motion a s223:Class,
         s223:Occupancy-Motion,
         sh:NodeShape ;
     rdfs:label "Occupancy Motion" ;
-    rdfs:comment "This class has enumerated subclasses indicating whether motion is detected or not." ;
+    rdfs:comment "This class has enumerated instances indicating whether motion is detected or not." ;
     rdfs:subClassOf s223:EnumerationKind-Occupancy .
 
 s223:Occupancy-Presence a s223:Class,
         s223:Occupancy-Presence,
         sh:NodeShape ;
     rdfs:label "Occupancy Presence" ;
-    rdfs:comment "This class has enumerated subclasses indicating whether physical presence is detected or not." ;
+    rdfs:comment "This class has enumerated instances indicating whether physical presence is detected or not." ;
     rdfs:subClassOf s223:EnumerationKind-Occupancy .
 
 s223:TerminalUnit a s223:Class,
@@ -43347,7 +43347,7 @@ s223:EnumerationKind-Speed a s223:Class,
         s223:EnumerationKind-Speed,
         sh:NodeShape ;
     rdfs:label "Speed" ;
-    rdfs:comment "This class has enumerated subclasses of speed settings of High, Medium, Low (plus Off)." ;
+    rdfs:comment "This class has enumerated instances of speed settings of High, Medium, Low (plus Off)." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:LineLineVoltage-10000V a s223:Class,
@@ -43501,7 +43501,7 @@ s223:Medium-Refrigerant a s223:Class,
         s223:Medium-Refrigerant,
         sh:NodeShape ;
     rdfs:label "Medium-Refrigerant" ;
-    rdfs:comment "This class has enumerated subclasses of commonly used refrigerants." ;
+    rdfs:comment "This class has enumerated instances of commonly used refrigerants." ;
     rdfs:subClassOf s223:Substance-Medium .
 
 s223:Numerical-DCVoltage a s223:Class,
@@ -43553,7 +43553,7 @@ s223:Substance-Particulate a s223:Class,
         s223:Substance-Particulate,
         sh:NodeShape ;
     rdfs:label "Particulate" ;
-    rdfs:comment "This class has enumerated subclasses of particulates in various size ranges." ;
+    rdfs:comment "This class has enumerated instances of particulates in various size ranges." ;
     rdfs:subClassOf s223:EnumerationKind-Substance .
 
 s223:Voltage-24V a s223:Class,
@@ -44779,35 +44779,35 @@ s223:Electricity-Signal a s223:Class,
         s223:Electricity-Signal,
         sh:NodeShape ;
     rdfs:label "Electricity Signal" ;
-    rdfs:comment "This class has enumerated subclasses of common communication protocols." ;
+    rdfs:comment "This class has enumerated instances of common communication protocols." ;
     rdfs:subClassOf s223:Medium-Electricity .
 
 s223:EnumerationKind-HVACOperatingMode a s223:Class,
         s223:EnumerationKind-HVACOperatingMode,
         sh:NodeShape ;
     rdfs:label "HVAC operating mode" ;
-    rdfs:comment "HVACOperatingMode has enumerated subclasses of the policy under which the HVAC system or equipment is operating." ;
+    rdfs:comment "HVACOperatingMode has enumerated instances of the policy under which the HVAC system or equipment is operating." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:EnumerationKind-HVACOperatingStatus a s223:Class,
         s223:EnumerationKind-HVACOperatingStatus,
         sh:NodeShape ;
     rdfs:label "HVAC operating status" ;
-    rdfs:comment "HVACOperatingStatus has enumerated subclasses of the HVAC system/equipment operating status." ;
+    rdfs:comment "HVACOperatingStatus has enumerated instances of the HVAC system/equipment operating status." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:EnumerationKind-Occupancy a s223:Class,
         s223:EnumerationKind-Occupancy,
         sh:NodeShape ;
     rdfs:label "Occupancy status" ;
-    rdfs:comment "This class has enumerated subclasses of occupancy status, i.e. the state of being used or occupied." ;
+    rdfs:comment "This class has enumerated instances of occupancy status, i.e. the state of being used or occupied." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:EnumerationKind-Phase a s223:Class,
         s223:EnumerationKind-Phase,
         sh:NodeShape ;
-    rdfs:label "EnumerationKind Phase" ;
-    rdfs:comment "This class has enumerated subclasses of thermodynamic phase, i.e. states of matter." ;
+    rdfs:label "EnumerationKind-Phase" ;
+    rdfs:comment "This class has enumerated instances of thermodynamic phase, i.e. states of matter." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:hasObservationLocation a rdf:Property ;
@@ -45932,10 +45932,10 @@ unit:W-PER-M2-K a qudt:DerivedUnit,
 s223:EnumerationKind-Numerical a s223:Class,
         s223:EnumerationKind-Numerical,
         sh:NodeShape ;
-    rdfs:label "EnumerationKind Numerical" ;
+    rdfs:label "EnumerationKind-Numerical" ;
     qudt:hasQuantityKind quantitykind:Unknown ;
     qudt:hasUnit unit:UNKNOWN ;
-    rdfs:comment "This class has enumerated subclasses of contexts often used with the s223:hasAspect relation for a s223:Property with a numerical value, unit and quantitykind." ;
+    rdfs:comment "This class has enumerated instances of contexts often used with the s223:hasAspect relation for a s223:Property with a numerical value, unit and quantitykind." ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:QuantifiableProperty .
 
@@ -45943,7 +45943,7 @@ s223:EnumerationKind-Substance a s223:Class,
         s223:EnumerationKind-Substance,
         sh:NodeShape ;
     rdfs:label "Substance" ;
-    rdfs:comment "This class has enumerated subclasses of the substances that are consumed, produced, transported, sensed, controlled or otherwise interacted with (e.g. water, air, etc.)." ;
+    rdfs:comment "This class has enumerated instances of the substances that are consumed, produced, transported, sensed, controlled or otherwise interacted with (e.g. water, air, etc.)." ;
     rdfs:subClassOf s223:EnumerationKind ;
     sh:property [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also has constituents." ;
             sh:path s223:hasConstituent ;
@@ -47359,7 +47359,6 @@ s223:Connection a s223:Class,
     rdfs:comment """A Connection is the modeling construct used to represent a physical thing (e.g., pipe, duct, or wire) that is used to convey some Medium (e.g., water, air, or electricity), or a virtual connection to convey electromagnetic radiation (e.g. light or wifi signal) between two connectable things. All Connections have two or more ConnectionPoints bound to either Equipment (see `s223:Equipment`), DomainSpace (see `s223:DomainSpace`), or Junction (see `s223:Junction`) See Figure 6-2. If the direction of flow is constrained, that constraint is indicated by using one or more InletConnectionPoints (see `s223:InletConnectionPoint`) to represent the inflow points and OutletConnectionPoints (see `s223:OutletConnectionPoint`) to represent the outflow points.
   
 A Connection may contain branches or intersections. These may be modeled using Junctions if it is necessary to identify a specific intersection. (see `s223:Junction`).
-
 ![Graphical Depiction of Connection.](figures/Figure_5-3_Connection.svg)
 """ ;
     rdfs:subClassOf s223:Concept ;
@@ -47508,7 +47507,7 @@ s223:EM-Light a s223:Class,
         s223:EM-Light,
         sh:NodeShape ;
     rdfs:label "EM-Light" ;
-    rdfs:comment "The EM-Light class has enumerated subclasses of what are considered visible or near-visible light." ;
+    rdfs:comment "The EM-Light class has enumerated instances of what are considered visible or near-visible light." ;
     rdfs:subClassOf s223:Medium-EM .
 
 s223:mapsTo a rdf:Property ;
@@ -50601,7 +50600,7 @@ s223:Substance-Medium a s223:Class,
         s223:Substance-Medium,
         sh:NodeShape ;
     rdfs:label "Medium" ;
-    rdfs:comment "This class has enumerated subclasses of a physical substance or anything that allows for the transfer of energy or information." ;
+    rdfs:comment "This class has enumerated instances of a physical substance or anything that allows for the transfer of energy or information." ;
     rdfs:subClassOf s223:EnumerationKind-Substance .
 
 quantitykind:AmountOfSubstancePerUnitMass a qudt:QuantityKind ;
@@ -52465,7 +52464,8 @@ s223:EnumerationKind a s223:Class,
   EnumerationKinds define the (closed) set of permissible values for a given purpose. 
   For example, the DayOfWeek EnumerationKind enumerates the days of the week and allows no other values.
   
-EnumerationKinds are arranged in a tree hierarchy, with the root class named EnumerationKind. Each subclass is named starting with its immediate superclass, followed by a hyphen and a name that is unique among the sibling superclasses. 
+EnumerationKinds are arranged in a tree hierarchy. 
+As you navigate down the tree each branch or leaf value is a more specific class of the EnumerationKind. 
 Certain validation constraints exist in the standard that evaluate compatibility of EnumerationKinds. 
 Two values are deemed compatible if they are the same or if one is a direct ancestor (or descendant) of the other.""" ;
     rdfs:subClassOf s223:Concept ;
@@ -52965,7 +52965,7 @@ s223:Medium-Air a s223:Class,
         s223:Medium-Air,
         sh:NodeShape ;
     rdfs:label "Medium-Air" ;
-    rdfs:comment "This class has enumerated subclasses of Air in various states." ;
+    rdfs:comment "This class has enumerated instances of Air in various states." ;
     rdfs:subClassOf s223:Substance-Medium .
 
 quantitykind:MassPerArea a qudt:QuantityKind ;
@@ -53096,14 +53096,14 @@ s223:EnumerationKind-Role a s223:Class,
         s223:EnumerationKind-Role,
         sh:NodeShape ;
     rdfs:label "Role" ;
-    rdfs:comment "This class has enumerated subclasses of roles played by entities, such as cooling, generator, relief, return." ;
+    rdfs:comment "This class has enumerated instances of roles played by entities, such as cooling, generator, relief, return." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 s223:Medium-Water a s223:Class,
         s223:Medium-Water,
         sh:NodeShape ;
     rdfs:label "Medium-Water" ;
-    rdfs:comment "This class has enumerated subclasses of water and aqueous solutions in various states." ;
+    rdfs:comment "This class has enumerated instances of water and aqueous solutions in various states." ;
     rdfs:subClassOf s223:Substance-Medium .
 
 quantitykind:PowerPerArea a qudt:QuantityKind ;
@@ -53621,7 +53621,7 @@ s223:Medium-Electricity a s223:Class,
         s223:Medium-Electricity,
         sh:NodeShape ;
     rdfs:label "Electricity" ;
-    rdfs:comment "This class has enumerated subclasses of all forms of electricity, including AC and DC." ;
+    rdfs:comment "This class has enumerated instances of all forms of electricity, including AC and DC." ;
     rdfs:subClassOf s223:Substance-Medium .
 
 quantitykind:SpecificEnergy a qudt:QuantityKind ;
@@ -56104,8 +56104,9 @@ FILTER NOT EXISTS {$this s223:mapsTo ?anything} .
 s223:EnumerationKind-Aspect a s223:Class,
         s223:EnumerationKind-Aspect,
         sh:NodeShape ;
-    rdfs:label "EnumerationKind Aspect" ;
-    rdfs:comment "This class has enumerated subclasses usually used to specify the context of a s223:Property." ;
+    rdfs:label "Enumeration Kind-Aspect",
+        "EnumerationKind-Aspect" ;
+    rdfs:comment "This class has enumerated instances to specify contexts used with the s223:hasAspect relation for a s223:Property with a non-numerical value." ;
     rdfs:subClassOf s223:EnumerationKind .
 
 <http://data.ashrae.org/standard223/1.0/validation/model> a owl:Ontology ;
@@ -56526,24 +56527,7 @@ s223:Equipment a s223:Class,
   The graphical depiction of Equipment used in this standard is a rounded cornered rectangle as show in Figure 5-1.
   ![Graphical Depiction of Equipment.](figures/Figure_5-1Graphical_Depiciton_of_Equipment.svg)""" ;
     rdfs:subClassOf s223:Connectable ;
-    sh:property [ a sh:PropertyShape ;
-            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:name "device contains shape" ;
-            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
-            sh:path s223:contains ],
-        [ rdfs:comment "If the relation commandedByProperty is present it must associate the Equipment with a ActuatableProperty." ;
-            sh:class s223:ActuatableProperty ;
-            sh:path s223:commandedByProperty ],
-        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a FunctionBlock." ;
-            sh:class s223:FunctionBlock ;
-            sh:path s223:executes ],
-        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
-            sh:class s223:PhysicalSpace ;
-            sh:path s223:hasPhysicalLocation ],
-        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:path s223:hasRole ],
-        [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
+    sh:property [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
             sh:path s223:connectedFrom ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Disallow contained equipment from having external incoming connections." ;
@@ -56596,7 +56580,24 @@ UNION
 ?type1 rdfs:subClassOf* ?type2 .
 }
 }
-""" ] ] ;
+""" ] ],
+        [ a sh:PropertyShape ;
+            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:name "device contains shape" ;
+            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
+            sh:path s223:contains ],
+        [ rdfs:comment "If the relation commandedByProperty is present it must associate the Equipment with a ActuatableProperty." ;
+            sh:class s223:ActuatableProperty ;
+            sh:path s223:commandedByProperty ],
+        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a FunctionBlock." ;
+            sh:class s223:FunctionBlock ;
+            sh:path s223:executes ],
+        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
+            sh:class s223:PhysicalSpace ;
+            sh:path s223:hasPhysicalLocation ],
+        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:path s223:hasRole ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "For equipment contained within another piece of equipment use the mapsTo relation to infer a Medium from the containing equipment." ;
             sh:construct """
@@ -56634,7 +56635,8 @@ s223:Numerical-Voltage a s223:Class,
     rdfs:label "Dimensioned Voltage" ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V ;
-    rdfs:comment "This class has enumerated instances of common voltages." ;
+    rdfs:comment "Does this fix the error?",
+        "This class has enumerated instances of common voltages." ;
     rdfs:subClassOf s223:EnumerationKind-Numerical ;
     sh:property [ rdfs:comment "A Numerical-Voltage must have a Quantity Kind of Voltage" ;
             sh:hasValue quantitykind:Voltage ;

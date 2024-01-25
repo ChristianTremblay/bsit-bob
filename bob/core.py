@@ -168,8 +168,8 @@ class SchemaGraph(Graph):
         subj, pred, obj = triple
 
         # exclude the schema content in the S223 namespace by default
-        # if subj.startswith(S223):
-        #     return
+        if subj.startswith(S223) and (not isinstance(obj, BNode)):
+            return
 
         # passes the tests
         super().add(triple)
@@ -3369,6 +3369,20 @@ def contains_mm(parent_equipment: Equipment, equipment_list: List[Equipment]) ->
         if not isinstance(child_equipment, Equipment):
             raise RuntimeError(f"equipment expected: {child_equipment}")
         contains_mm(parent_equipment, child_equipment)
+
+
+@multimethod
+def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None:
+    """Equipment > Junction"""
+    _log.info(f"equipment {parent_equipment} contains junction {child_junction}")
+
+    parent_equipment._data_graph.add(
+        (parent_equipment._node_iri, S223.contains, child_junction._node_iri)
+    )
+    if INCLUDE_INVERSE:
+        parent_equipment._data_graph.add(
+            (child_junction._node_iri, S223.isContainedIn, parent_equipment._node_iri)
+        )
 
 
 class _Sensor(Equipment):
