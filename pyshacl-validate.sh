@@ -3,7 +3,7 @@
 # give this script the name of the data and schema file pairs like
 # in samples and it will save the report and compiled TTL files
 
-python3 validate.py $1.data.ttl $1.schema.ttl \
+python3 pyshacl-validate.py $1.data.ttl $1.schema.ttl \
     ../223standard/models/*.ttl \
     ../223standard/vocab/*.ttl \
     ../223standard/validation/*.ttl \
