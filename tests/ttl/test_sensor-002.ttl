@@ -2,7 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
-@prefix ex27: <urn:ex/test_system-007/> .
+@prefix ex31: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -22,233 +22,233 @@
   rdfs:label "test_sensor-002" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex27:00001 a p223:HVACSpace,
+ex31:00001 a p223:HVACSpace,
         s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "CleanRoom HVAC Space" ;
-    s223:cnx ex27:00002,
-        ex27:00003,
-        ex27:00004,
-        ex27:00005,
-        ex27:00006,
-        ex27:00007,
-        ex27:00008 ;
-    s223:hasConnectionPoint ex27:00002,
-        ex27:00003,
-        ex27:00004,
-        ex27:00005,
-        ex27:00006,
-        ex27:00007,
-        ex27:00008 ;
+    s223:cnx ex31:00002,
+        ex31:00003,
+        ex31:00004,
+        ex31:00005,
+        ex31:00006,
+        ex31:00007,
+        ex31:00008 ;
+    s223:hasConnectionPoint ex31:00002,
+        ex31:00003,
+        ex31:00004,
+        ex31:00005,
+        ex31:00006,
+        ex31:00007,
+        ex31:00008 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:isEnclosedIn ex27:00018 ;
-    bob:airTransfer ex27:00004 ;
-    bob:doors ex27:00005 ;
-    bob:ductAirInlet ex27:00002 ;
-    bob:ductAirOutlet ex27:00003 ;
-    bob:radiantCooling ex27:00008 ;
-    bob:radiantHeating ex27:00007 ;
-    bob:windows ex27:00006 .
+    s223:isEnclosedIn ex31:00018 ;
+    bob:airTransfer ex31:00004 ;
+    bob:doors ex31:00005 ;
+    bob:ductAirInlet ex31:00002 ;
+    bob:ductAirOutlet ex31:00003 ;
+    bob:radiantCooling ex31:00008 ;
+    bob:radiantHeating ex31:00007 ;
+    bob:windows ex31:00006 .
 
-ex27:00002 a s223:ConnectionPoint,
+ex31:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.ductAirInlet" ;
-    s223:cnx ex27:00001 ;
+    s223:cnx ex31:00001 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00001 .
+    s223:isConnectionPointOf ex31:00001 .
 
-ex27:00003 a s223:ConnectionPoint,
+ex31:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.ductAirOutlet" ;
-    s223:cnx ex27:00001 ;
+    s223:cnx ex31:00001 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00001 .
+    s223:isConnectionPointOf ex31:00001 .
 
-ex27:00004 a s223:BidirectionalConnectionPoint,
+ex31:00004 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.airTransfer" ;
-    s223:cnx ex27:00001 ;
+    s223:cnx ex31:00001 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00001 .
+    s223:isConnectionPointOf ex31:00001 .
 
-ex27:00005 a s223:BidirectionalConnectionPoint,
+ex31:00005 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.doors" ;
-    s223:cnx ex27:00001 ;
+    s223:cnx ex31:00001 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00001 .
+    s223:isConnectionPointOf ex31:00001 .
 
-ex27:00006 a s223:BidirectionalConnectionPoint,
+ex31:00006 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.windows" ;
-    s223:cnx ex27:00001 ;
+    s223:cnx ex31:00001 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00001 .
+    s223:isConnectionPointOf ex31:00001 .
 
-ex27:00007 a s223:BidirectionalConnectionPoint,
+ex31:00007 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.radiantHeating" ;
-    s223:cnx ex27:00001 ;
+    s223:cnx ex31:00001 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00001 .
+    s223:isConnectionPointOf ex31:00001 .
 
-ex27:00008 a s223:BidirectionalConnectionPoint,
+ex31:00008 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CleanRoom HVAC Space.radiantCooling" ;
-    s223:cnx ex27:00001 ;
+    s223:cnx ex31:00001 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00001 .
+    s223:isConnectionPointOf ex31:00001 .
 
-ex27:00009 a p223:HVACSpace,
+ex31:00009 a p223:HVACSpace,
         s223:Connectable,
         s223:DomainSpace ;
     rdfs:label "SAS HVAC Space" ;
-    s223:cnx ex27:00010,
-        ex27:00011,
-        ex27:00012,
-        ex27:00013,
-        ex27:00014,
-        ex27:00015,
-        ex27:00016 ;
-    s223:hasConnectionPoint ex27:00010,
-        ex27:00011,
-        ex27:00012,
-        ex27:00013,
-        ex27:00014,
-        ex27:00015,
-        ex27:00016 ;
+    s223:cnx ex31:00010,
+        ex31:00011,
+        ex31:00012,
+        ex31:00013,
+        ex31:00014,
+        ex31:00015,
+        ex31:00016 ;
+    s223:hasConnectionPoint ex31:00010,
+        ex31:00011,
+        ex31:00012,
+        ex31:00013,
+        ex31:00014,
+        ex31:00015,
+        ex31:00016 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:isEnclosedIn ex27:00019 ;
-    bob:airTransfer ex27:00012 ;
-    bob:doors ex27:00013 ;
-    bob:ductAirInlet ex27:00010 ;
-    bob:ductAirOutlet ex27:00011 ;
-    bob:radiantCooling ex27:00016 ;
-    bob:radiantHeating ex27:00015 ;
-    bob:windows ex27:00014 .
+    s223:isEnclosedIn ex31:00019 ;
+    bob:airTransfer ex31:00012 ;
+    bob:doors ex31:00013 ;
+    bob:ductAirInlet ex31:00010 ;
+    bob:ductAirOutlet ex31:00011 ;
+    bob:radiantCooling ex31:00016 ;
+    bob:radiantHeating ex31:00015 ;
+    bob:windows ex31:00014 .
 
-ex27:00010 a s223:ConnectionPoint,
+ex31:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.ductAirInlet" ;
-    s223:cnx ex27:00009 ;
+    s223:cnx ex31:00009 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00009 .
+    s223:isConnectionPointOf ex31:00009 .
 
-ex27:00011 a s223:ConnectionPoint,
+ex31:00011 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.ductAirOutlet" ;
-    s223:cnx ex27:00009 ;
+    s223:cnx ex31:00009 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00009 .
+    s223:isConnectionPointOf ex31:00009 .
 
-ex27:00012 a s223:BidirectionalConnectionPoint,
+ex31:00012 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.airTransfer" ;
-    s223:cnx ex27:00009 ;
+    s223:cnx ex31:00009 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00009 .
+    s223:isConnectionPointOf ex31:00009 .
 
-ex27:00013 a s223:BidirectionalConnectionPoint,
+ex31:00013 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.doors" ;
-    s223:cnx ex27:00009 ;
+    s223:cnx ex31:00009 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00009 .
+    s223:isConnectionPointOf ex31:00009 .
 
-ex27:00014 a s223:BidirectionalConnectionPoint,
+ex31:00014 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.windows" ;
-    s223:cnx ex27:00009 ;
+    s223:cnx ex31:00009 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00009 .
+    s223:isConnectionPointOf ex31:00009 .
 
-ex27:00015 a s223:BidirectionalConnectionPoint,
+ex31:00015 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.radiantHeating" ;
-    s223:cnx ex27:00009 ;
+    s223:cnx ex31:00009 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00009 .
+    s223:isConnectionPointOf ex31:00009 .
 
-ex27:00016 a s223:BidirectionalConnectionPoint,
+ex31:00016 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SAS HVAC Space.radiantCooling" ;
-    s223:cnx ex27:00009 ;
+    s223:cnx ex31:00009 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex27:00009 .
+    s223:isConnectionPointOf ex31:00009 .
 
-ex27:00017 a s223:PhysicalSpace,
+ex31:00017 a s223:PhysicalSpace,
         bob:Building ;
     rdfs:label "Clients's place" ;
-    s223:contains ex27:00018,
-        ex27:00019,
-        ex27:00020 .
+    s223:contains ex31:00018,
+        ex31:00019,
+        ex31:00020 .
 
-ex27:00018 a s223:PhysicalSpace,
+ex31:00018 a s223:PhysicalSpace,
         bob:Room ;
     rdfs:label "Clean Room #1" ;
-    s223:encloses ex27:00001 ;
-    s223:isContainedIn ex27:00017 .
+    s223:encloses ex31:00001 ;
+    s223:isContainedIn ex31:00017 .
 
-ex27:00019 a s223:PhysicalSpace,
+ex31:00019 a s223:PhysicalSpace,
         bob:Room ;
     rdfs:label "SAS leading to Clean Room #1" ;
-    s223:encloses ex27:00009 ;
-    s223:isContainedIn ex27:00017 .
+    s223:encloses ex31:00009 ;
+    s223:isContainedIn ex31:00017 .
 
-ex27:00020 a s223:PhysicalSpace,
+ex31:00020 a s223:PhysicalSpace,
         bob:MechanicalRoom,
         bob:Room ;
     rdfs:label "Mechanical room for Clean Room #1" ;
-    s223:isContainedIn ex27:00017 .
+    s223:isContainedIn ex31:00017 .
 
-ex27:00021 a s223:Connectable,
+ex31:00021 a s223:Connectable,
         s223:DifferentialSensor,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "TPD-01" ;
-    s223:contains ex27:00023,
-        ex27:00025 ;
-    s223:hasPhysicalLocation ex27:00020 ;
-    s223:hasProperty ex27:00022 ;
-    s223:observes ex27:00022 ;
-    bob:contains ex27:00027 ;
-    bob:differential_static_pressure ex27:00022 ;
+    s223:contains ex31:00023,
+        ex31:00025 ;
+    s223:hasPhysicalLocation ex31:00020 ;
+    s223:hasProperty ex31:00022 ;
+    s223:observes ex31:00022 ;
+    bob:contains ex31:00027 ;
+    bob:differential_static_pressure ex31:00022 ;
     rdfs:comment "Static Pressure between Clean Room (+) and SAS (-)" .
 
-ex27:00022 a s223:ObservableProperty,
+ex31:00022 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "TPD-01.DifferentialStaticPressure" ;
-    s223:isPropertyOf ex27:00021 ;
+    s223:isPropertyOf ex31:00021 ;
     s223:ofMedium s223:Medium-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
-ex27:00023 a s223:Connectable,
+ex31:00023 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "highPort" ;
-    s223:hasObservationLocation ex27:00001 ;
-    s223:isContainedIn ex27:00021 ;
-    s223:observes ex27:00024 .
+    s223:hasObservationLocation ex31:00001 ;
+    s223:isContainedIn ex31:00021 ;
+    s223:observes ex31:00024 .
 
-ex27:00024 a s223:ObservableProperty,
+ex31:00024 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -258,15 +258,15 @@ ex27:00024 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
-ex27:00025 a s223:Connectable,
+ex31:00025 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "lowPort" ;
-    s223:hasObservationLocation ex27:00009 ;
-    s223:isContainedIn ex27:00021 ;
-    s223:observes ex27:00026 .
+    s223:hasObservationLocation ex31:00009 ;
+    s223:isContainedIn ex31:00021 ;
+    s223:observes ex31:00026 .
 
-ex27:00026 a s223:ObservableProperty,
+ex31:00026 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -276,27 +276,27 @@ ex27:00026 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
-ex27:00027 a p223:Producer,
+ex31:00027 a p223:Producer,
         bob:Differential ;
     rdfs:label "diff_causality" ;
-    s223:hasInput ex27:00028,
-        ex27:00029 ;
-    s223:hasOutput ex27:00030 ;
-    bob:differential_output ex27:00030 ;
-    bob:high_input ex27:00028 ;
-    bob:isContainedIn ex27:00021 ;
-    bob:low_input ex27:00029 ;
+    s223:hasInput ex31:00028,
+        ex31:00029 ;
+    s223:hasOutput ex31:00030 ;
+    bob:differential_output ex31:00030 ;
+    bob:high_input ex31:00028 ;
+    bob:isContainedIn ex31:00021 ;
+    bob:low_input ex31:00029 ;
     rdfs:comment "Will output High minus Low" .
 
-ex27:00028 a p223:ProducerInput ;
+ex31:00028 a p223:ProducerInput ;
     rdfs:label "diff_causality.high_input" ;
-    s223:uses ex27:00024 .
+    s223:uses ex31:00024 .
 
-ex27:00029 a p223:ProducerInput ;
+ex31:00029 a p223:ProducerInput ;
     rdfs:label "diff_causality.low_input" ;
-    s223:uses ex27:00026 .
+    s223:uses ex31:00026 .
 
-ex27:00030 a p223:ProducerOutput ;
+ex31:00030 a p223:ProducerOutput ;
     rdfs:label "diff_causality.differential_output" ;
-    s223:produces ex27:00022 .
+    s223:produces ex31:00022 .
 

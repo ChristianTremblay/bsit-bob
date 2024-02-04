@@ -3116,6 +3116,102 @@ def connect_mm(junction: Junction, connectable: Connectable) -> None:
 
 
 @multimethod
+def connect_mm(junction: Junction, to_things: List[Connectable]) -> None:
+    """Junction >> [Connectable]"""
+    _log.info(f"connect from {junction} to {to_things}")
+
+    # get the medium of the junction if it has one
+    junction_medium = getattr(junction, "hasMedium", None)
+    _log.debug(f"    - junction_medium: {junction_medium}")
+
+    # build a dict of outlet connection points that are not already connected
+    # organize them by medium
+    from_out = defaultdict(set)
+    for attr, connection_point in junction._connection_points.items():
+        if connection_point.connectsThrough:
+            continue
+        if not isinstance(connection_point, OutletConnectionPoint):
+            continue
+
+        medium = getattr(connection_point, "hasMedium", None)
+        from_out[medium].add(connection_point)
+
+    # filter them to a set where there is only one for that medium so it
+    # would be unambiguous to use it
+    from_types: Set[Medium]
+    from_types = set(medium for medium in from_out if len(from_out[medium]) == 1)
+    _log.debug(f"    - from_types: {from_types}")
+
+    to_types_list: List[Set[Medium]] = []
+
+    for to_thing in to_things:
+        # build a dict of inlet connection points that are not already connected
+        # organize them by medium
+        to_in = defaultdict(set)
+        for attr, connection_point in to_thing._connection_points.items():
+            if connection_point.connectsThrough:
+                continue
+            if not isinstance(connection_point, InletConnectionPoint):
+                continue
+
+            medium = getattr(connection_point, "hasMedium", None)
+            to_in[medium].add(connection_point)
+
+        # filter them to a set where there is only one for that medium so it
+        # would be unambiguous to use it
+        to_types: Set[Medium]
+        to_types = set(medium for medium in to_in if len(to_in[medium]) == 1)
+        if not to_types:
+            raise RuntimeError(f"no candidate destinations to {to_thing}")
+        _log.debug(f"    - to_types: {to_types}")
+        to_types_list.append(to_types)
+
+    if not from_types:
+        if len(to_types) > 1:
+            raise RuntimeError("too many possible connection point types")
+
+        # get the type without removing it
+        for medium in to_types:
+            break
+
+        connection_point = OutletConnectionPoint(junction, hasMedium=medium)
+        _log.debug(f"    - new outlet connection point: {connection_point}")
+
+        # lock down the junction to the medium
+        if not junction_medium:
+            junction.hasMedium = medium
+
+        # this is now available
+        from_types.add(medium)
+        from_out[medium].add(connection_point)
+
+    # find the common medium
+    common_types = from_types.intersection(*to_types_list)
+    if not common_types:
+        raise RuntimeError("no common connection types")
+    if len(common_types) > 1:
+        raise RuntimeError("too many common connection types")
+    medium = common_types.pop()
+    _log.debug(f"    - medium: {medium}")
+
+    # get from connection point
+    from_connection_point = from_out[medium].pop()
+
+    # create a connection
+    if CONNECTION_HAS_MEDIUM:
+        connection = Connection(hasMedium=medium)
+    else:
+        connection = Connection()
+
+    # connect the from thing
+    connect_mm(from_connection_point, connection)
+
+    # connect the to things
+    for to_thing in to_things:
+        connect_mm(connection, to_thing)
+
+
+@multimethod
 def connect_mm(from_connection_point: ConnectionPoint, junction: Junction) -> None:
     """ConnectionPoint >> Junction"""
     _log.info(f"connect from {from_connection_point} to {junction}")
