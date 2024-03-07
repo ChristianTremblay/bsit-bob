@@ -3278,7 +3278,7 @@ def connect_mm(from_connection_point: ConnectionPoint, junction: Junction) -> No
 
 @multimethod
 def connect_mm(junction: Junction, to_connection_point: ConnectionPoint) -> None:
-    """ConnectionPoint >> Junction"""
+    """Junction >> ConnectionPoint"""
     _log.info(f"connect from {junction} to {to_connection_point}")
 
     # get the medium of the connection point
