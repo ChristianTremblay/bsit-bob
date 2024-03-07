@@ -4,7 +4,7 @@ from rdflib import URIRef
 
 from bob.equipment.control.controller import Controller
 from bob.equipment.electricity import _VFD
-from bob.producer import FunctionBlock, FunctionInput, FunctionOutput
+from bob.producer import Function, FunctionInput, FunctionOutput
 from bob.producer.causality import Causality
 from bob.properties.electricity import Frequency, Volts
 from bob.sensor.electricity import CurrentSensor, VoltageSensor
@@ -56,8 +56,8 @@ _log = logging.getLogger(__name__)
 _namespace = BOB
 
 
-class VFD_FB(FunctionBlock):
-    _class_iri = BOB.VFDFunctionBlock
+class VFD_FB(Function):
+    _class_iri = BOB.VFDFunction
 
     speed_ref: FunctionInput
     amps_load: FunctionInput

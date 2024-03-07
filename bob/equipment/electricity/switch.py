@@ -1,6 +1,6 @@
 from typing import Dict
 
-from bob.producer import FunctionBlock
+from bob.producer import Function
 from bob.producer.causality import Causality
 from bob.properties.electricity import Amps
 from bob.properties.light import RelativeLuminousFlux

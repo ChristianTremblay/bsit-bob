@@ -1,5 +1,5 @@
 from ..core import BOB, P223, S223, PropertyReference
-from ..producer import FunctionBlock
+from ..producer import Function
 from ..properties import OccupancyStatus, PercentCommand, Schedule, Temperature
 
 _namespace = BOB
@@ -7,7 +7,7 @@ _namespace = BOB
 # WIP : For now, it won't be in hvacspace by default
 
 
-class IndoorAir(FunctionBlock):
+class IndoorAir(Function):
     # uses_input
     heating: PercentCommand
     cooling: PercentCommand

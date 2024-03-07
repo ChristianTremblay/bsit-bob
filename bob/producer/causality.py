@@ -45,7 +45,7 @@ class HandOffAutoMotorStarter(Producer):
 class VFDProducer(Producer):
     """
     Very simple implementation of a VFD Producer.
-    This is not FunctionBlock, only relating different input properties with output properties.
+    This is not Function, only relating different input properties with output properties.
     Any input causes an effect on all output in some way.
 
     NOTE : This is not the role of the producer to define in details the effects.

@@ -11,7 +11,10 @@ import argparse
 import sys
 
 from rdflib import OWL, RDF, RDFS, Graph, URIRef
-import owlrl
+try:
+    import owlrl
+except ImportError:
+    owlrl = None
 
 # build a parser for the command line arguments
 parser = argparse.ArgumentParser(
@@ -27,26 +30,27 @@ parser.add_argument(
     help="turtle files to load",
 )
 
-# add an option to run RDFS semantics
-parser.add_argument(
-    "--rdfs",
-    action="store_true",
-    help="run RDFS semantics",
-)
+if owlrl:
+    # add an option to run RDFS semantics
+    parser.add_argument(
+        "--rdfs",
+        action="store_true",
+        help="run RDFS semantics",
+    )
 
-# add an option to run OWLRL semantics
-parser.add_argument(
-    "--owlrl",
-    action="store_true",
-    help="run OWLRL semantics",
-)
+    # add an option to run OWLRL semantics
+    parser.add_argument(
+        "--owlrl",
+        action="store_true",
+        help="run OWLRL semantics",
+    )
 
-# add an option to run both RDFS and OWLRL semantics
-parser.add_argument(
-    "--both",
-    action="store_true",
-    help="run both RDFS and OWLRL semantics",
-)
+    # add an option to run both RDFS and OWLRL semantics
+    parser.add_argument(
+        "--both",
+        action="store_true",
+        help="run both RDFS and OWLRL semantics",
+    )
 
 # add an option to remove OWL imports
 parser.add_argument(
@@ -81,7 +85,7 @@ for fname in args.ttl[:-1]:
     g.parse(fname, format="turtle")
 
 # expand the graph
-if args.rdfs or args.owlrl or args.both:
+if owlrl and (args.rdfs or args.owlrl or args.both):
     if (args.rdfs and args.owlrl) or args.both:
         inferencer = owlrl.DeductiveClosure(owlrl.RDFS_OWLRL_Semantics)
     elif args.rdfs and not args.owlrl:

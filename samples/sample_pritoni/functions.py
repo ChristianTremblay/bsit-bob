@@ -6,7 +6,7 @@ import lighting_devices as ld
 import lighting_spaces as ls
 
 from bob.core import UNIT, bind_model_namespace, dump
-from bob.producer import FunctionBlock, G36AnalogInput, G36AnalogOutput
+from bob.producer import Function, G36AnalogInput, G36AnalogOutput
 from bob.producer.occupancy import OccupancyFunction
 from bob.properties import Temperature
 from bob.properties.states import OccupancyStatus, Schedule
@@ -17,7 +17,7 @@ global_ns = Path(__file__).parent.stem
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
-class Average(FunctionBlock):
+class Average(Function):
     """
     y = (u1 + u2) / 2.0
     """

@@ -30,7 +30,7 @@ from ..core import (
 from ..equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from ..multimethods import multimethod
 from ..functions import (
-    FunctionBlock,
+    Function,
     FunctionInput,
     FunctionOutput,
 )

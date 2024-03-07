@@ -30,7 +30,7 @@ from . import (
     AnalogOutput,
     BinaryInput,
     BinaryOutput,
-    FunctionBlock,
+    Function,
     FunctionInput,
     FunctionOutput,
     G36AnalogInput,
@@ -45,7 +45,7 @@ _log = logging.getLogger(__name__)
 _namespace = G36
 
 
-class G36Sequence(FunctionBlock):
+class G36Sequence(Function):
     """
     This function is a subclass of a Function Block kept
     in the namespace of G36.
@@ -58,23 +58,23 @@ class G36Sequence(FunctionBlock):
     Comment of this block is the description of the sequence.
     """
 
-    _class_iri = G36.FunctionBlock
+    _class_iri = G36.Function
 
 
 class G36ZoneTemperatureControl(G36Sequence):
-    _class_iri = G36.FunctionBlock
+    _class_iri = G36.Function
 
 
 class G36AirFlowControl(G36Sequence):
-    _class_iri = G36.FunctionBlock
+    _class_iri = G36.Function
 
 
 class G36OccupancyControl(G36Sequence):
-    _class_iri = G36.FunctionBlock
+    _class_iri = G36.Function
 
 
 class G36VentilationAndCO2Control(G36Sequence):
-    _class_iri = G36.FunctionBlock
+    _class_iri = G36.Function
 
 
 # g36_4-1_VAV_TerminalUnit_CoolingOnly
@@ -127,7 +127,7 @@ class G36VAVCoolingOnly0(G36Sequence):
     def __init__(self, comment=None, **kwargs):
         super().__init__(comment=comment, **kwargs)
 
-    _class_iri = G36.FunctionBlock
+    _class_iri = G36.Function
 
 
 class G36ZoneGroup(Zone):

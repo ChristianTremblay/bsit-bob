@@ -4,7 +4,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from bob.multimethods import multimethod
-from bob.producer import FunctionBlock
+from bob.producer import Function
 from bob.properties import Nm, Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 
@@ -60,7 +60,7 @@ class Controller(Equipment):
     _class_iri: URIRef = S223.Controller
     _attr_uriref = {"hasNetworkProfile": P223.hasNetworkProfile}
     # electricalInlet: Electricity_24VLN_1Ph_60HzInletConnectionPoint
-    # executes: FunctionBlock
+    # executes: Function
     hasNetworkProfile: NetworkProfile
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -70,7 +70,7 @@ class Controller(Equipment):
 
         super().__init__(_config, **kwargs)
 
-    def executes(self, function_block: FunctionBlock):
+    def executes(self, function_block: Function):
         _log.debug(f"Controller {self._node_iri} executes  {function_block._node_iri}")
         data_graph.add((self._node_iri, S223.executes, function_block._node_iri))
 

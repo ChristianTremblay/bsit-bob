@@ -82,7 +82,7 @@ class G36DigitalOutput(FunctionOutput):
     _class_iri: URIRef = G36.DigitalOutput
 
 
-class FunctionBlock(Node):
+class Function(Node):
     """
     Function blocks are black boxes representing a sequence or an
     algorithm. Function blocks use inputs and produce outputs that are
@@ -90,16 +90,16 @@ class FunctionBlock(Node):
     Functions are executed by a s223:Contoller.
     """
 
-    _class_iri: URIRef = S223.FunctionBlock
+    _class_iri: URIRef = S223.Function
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update({}, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        _log.debug(f"FunctionBlock.__init__ {kwargs}")
+        _log.debug(f"Function.__init__ {kwargs}")
 
         if not self._resolved:
             self._resolve_annotations()
-        _log.debug("    - continue FunctionBlock.__init__")
+        _log.debug("    - continue Function.__init__")
 
         # super().__init__(_config, **kwargs)
         super().__init__(**kwargs)
@@ -142,7 +142,7 @@ class FunctionBlock(Node):
         if not attr_type:
             return
 
-        _log.debug(f"FunctionBlock.__setattr__ {attr} {value}")
+        _log.debug(f"Function.__setattr__ {attr} {value}")
 
         # get the element after it has been set, it will be an instance of
         # attr_type which might not be the value
