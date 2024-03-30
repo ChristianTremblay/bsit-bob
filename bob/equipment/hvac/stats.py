@@ -22,7 +22,7 @@ _namespace = BOB
 
 
 class Thermostat(Equipment):
-    _class_iri = P223.Thermostat
+    _class_iri = S223.Thermostat
     temperature: PropertyReference
     setpoint: PropertyReference
     differential: PropertyReference
@@ -38,7 +38,7 @@ class Pressurestat(Equipment):
 
 
 class Humidistat(Equipment):
-    _class_iri = P223.Humidistat
+    _class_iri = S223.Humidistat
     humidity: PropertyReference
     setpoint: PropertyReference
     differential: PropertyReference
