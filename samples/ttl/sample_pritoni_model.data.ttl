@@ -102,6 +102,7 @@ bacnet_references:00007 a bacnet:AnalogInputObject,
 bacnet_references:00008 a bacnet:AnalogValueObject,
         bacnet:Object ;
     bacnet:description "Discharge Air Temp Average" ;
+    bacnet:hasProperty bacnet_references:00021 ;
     bacnet:object-identifier "analog-value,321" ;
     bacnet:object-name "DAT-AVG" ;
     bacnet:object-type bacnet:ObjectType.analog-value .
@@ -212,8 +213,8 @@ electrical_devices:00001 a p223:ElectricalDistributionPanel,
         electrical_devices:00044 ;
     rdfs:comment "Main Entry Panel of Building at 600V_3Ph" .
 
-electrical_devices:00002 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00002 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesMainCircuitBreaker ;
     rdfs:label "MainBreaker" ;
@@ -343,8 +344,8 @@ electrical_devices:00011 a s223:ConnectionPoint,
     s223:hasRole s223:ElectricalPhaseIdentifier-ABC ;
     s223:isConnectionPointOf electrical_devices:00002 .
 
-electrical_devices:00012 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00012 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#1" ;
@@ -386,8 +387,8 @@ electrical_devices:00015 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-347VLN-1Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00012 .
 
-electrical_devices:00016 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00016 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#2" ;
@@ -434,8 +435,8 @@ electrical_devices:00019 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00016 .
 
-electrical_devices:00020 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00020 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#3" ;
@@ -482,8 +483,8 @@ electrical_devices:00023 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00020 .
 
-electrical_devices:00024 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00024 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#4" ;
@@ -530,8 +531,8 @@ electrical_devices:00027 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00024 .
 
-electrical_devices:00028 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00028 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#5" ;
@@ -573,8 +574,8 @@ electrical_devices:00031 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00028 .
 
-electrical_devices:00032 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00032 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#6" ;
@@ -621,8 +622,8 @@ electrical_devices:00035 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00032 .
 
-electrical_devices:00036 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00036 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#7" ;
@@ -669,8 +670,8 @@ electrical_devices:00039 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00036 .
 
-electrical_devices:00040 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00040 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#8" ;
@@ -717,8 +718,8 @@ electrical_devices:00043 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00040 .
 
-electrical_devices:00044 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00044 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#9" ;
@@ -848,8 +849,8 @@ electrical_devices:00054 a s223:Connection ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-ABC ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 
-electrical_devices:00055 a p223:ElectricalTransformer,
-        s223:Connectable,
+electrical_devices:00055 a s223:Connectable,
+        s223:ElectricTransformer,
         s223:Equipment ;
     rdfs:label "TX-1" ;
     s223:cnx electrical_devices:00056,
@@ -897,8 +898,8 @@ electrical_devices:00058 a p223:ElectricalDistributionPanel,
         electrical_devices:00089 ;
     rdfs:comment "Description of my panel" .
 
-electrical_devices:00059 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00059 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:TwoPolesMainCircuitBreaker ;
     rdfs:label "MainBreaker" ;
@@ -975,8 +976,8 @@ electrical_devices:00064 a s223:ConnectionPoint,
     s223:hasRole s223:ElectricalPhaseIdentifier-AB ;
     s223:isConnectionPointOf electrical_devices:00059 .
 
-electrical_devices:00065 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00065 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#1" ;
@@ -1021,8 +1022,8 @@ electrical_devices:00068 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00065 .
 
-electrical_devices:00069 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00069 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:TwoPolesCircuitBreaker ;
     rdfs:label "CB#2" ;
@@ -1064,8 +1065,8 @@ electrical_devices:00072 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00069 .
 
-electrical_devices:00073 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00073 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#3" ;
@@ -1110,8 +1111,8 @@ electrical_devices:00076 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00073 .
 
-electrical_devices:00077 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00077 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#4" ;
@@ -1156,8 +1157,8 @@ electrical_devices:00080 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00077 .
 
-electrical_devices:00081 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00081 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#5" ;
@@ -1202,8 +1203,8 @@ electrical_devices:00084 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00081 .
 
-electrical_devices:00085 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00085 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#6" ;
@@ -1248,8 +1249,8 @@ electrical_devices:00088 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:isConnectionPointOf electrical_devices:00085 .
 
-electrical_devices:00089 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+electrical_devices:00089 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#7" ;
@@ -1624,8 +1625,8 @@ electrical_devices:00120 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-electrical_devices:00121 a p223:ElectricalMeter,
-        s223:Connectable,
+electrical_devices:00121 a s223:Connectable,
+        s223:ElectricMeter,
         s223:Equipment ;
     rdfs:label "RF Meter" ;
     s223:contains electrical_devices:00155,
@@ -2037,8 +2038,7 @@ electrical_devices:00154 a s223:ObservableProperty,
     qudt:hasUnit unit:KiloW ;
     rdfs:comment "Maximum Power of Equipment" .
 
-electrical_devices:00155 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00155 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAB" ;
@@ -2057,8 +2057,7 @@ electrical_devices:00156 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00157 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00157 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAC" ;
@@ -2077,8 +2076,7 @@ electrical_devices:00158 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00159 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00159 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBC" ;
@@ -2097,8 +2095,7 @@ electrical_devices:00160 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00161 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00161 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAN" ;
@@ -2117,8 +2114,7 @@ electrical_devices:00162 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00163 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00163 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBN" ;
@@ -2137,8 +2133,7 @@ electrical_devices:00164 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00165 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00165 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageCN" ;
@@ -2214,8 +2209,8 @@ electrical_devices:00172 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-electrical_devices:00173 a p223:ElectricalMeter,
-        s223:Connectable,
+electrical_devices:00173 a s223:Connectable,
+        s223:ElectricMeter,
         s223:Equipment ;
     rdfs:label "SF Meter" ;
     s223:contains electrical_devices:00207,
@@ -2627,8 +2622,7 @@ electrical_devices:00206 a s223:ObservableProperty,
     qudt:hasUnit unit:KiloW ;
     rdfs:comment "Maximum Power of Equipment" .
 
-electrical_devices:00207 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00207 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAB" ;
@@ -2647,8 +2641,7 @@ electrical_devices:00208 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00209 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00209 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAC" ;
@@ -2667,8 +2660,7 @@ electrical_devices:00210 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00211 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00211 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBC" ;
@@ -2687,8 +2679,7 @@ electrical_devices:00212 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00213 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00213 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAN" ;
@@ -2707,8 +2698,7 @@ electrical_devices:00214 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00215 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00215 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBN" ;
@@ -2727,8 +2717,7 @@ electrical_devices:00216 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00217 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00217 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageCN" ;
@@ -2804,8 +2793,8 @@ electrical_devices:00224 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-electrical_devices:00225 a p223:ElectricalMeter,
-        s223:Connectable,
+electrical_devices:00225 a s223:Connectable,
+        s223:ElectricMeter,
         s223:Equipment ;
     rdfs:label "Building Meter" ;
     s223:contains electrical_devices:00259,
@@ -3217,8 +3206,7 @@ electrical_devices:00258 a s223:ObservableProperty,
     qudt:hasUnit unit:KiloW ;
     rdfs:comment "Maximum Power of Equipment" .
 
-electrical_devices:00259 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00259 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAB" ;
@@ -3237,8 +3225,7 @@ electrical_devices:00260 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00261 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00261 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAC" ;
@@ -3257,8 +3244,7 @@ electrical_devices:00262 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00263 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00263 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBC" ;
@@ -3277,8 +3263,7 @@ electrical_devices:00264 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00265 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00265 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAN" ;
@@ -3297,8 +3282,7 @@ electrical_devices:00266 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00267 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00267 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBN" ;
@@ -3317,8 +3301,7 @@ electrical_devices:00268 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-electrical_devices:00269 a p223:VoltageSensor,
-        s223:Connectable,
+electrical_devices:00269 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageCN" ;
@@ -3863,7 +3846,7 @@ hvac:00028 a s223:Connection ;
     s223:connectsTo hvac_spaces:00047 ;
     s223:hasMedium s223:Medium-Air .
 
-hvac_devices:00001 a p223:AirHandlingUnit,
+hvac_devices:00001 a s223:AirHandlingUnit,
         s223:System ;
     rdfs:label "AHU" ;
     s223:hasMember hvac_devices:00002,
@@ -4381,7 +4364,8 @@ hvac_devices:00054 a s223:ObservableProperty,
 hvac_devices:00055 a s223:Connectable,
         s223:Controller,
         s223:Equipment,
-        s223:VFD ;
+        s223:VFD,
+        s223:VariableFrequencyDrive ;
     rdfs:label "RF_VFD" ;
     s223:cnx hvac_devices:00056,
         hvac_devices:00057,
@@ -4598,8 +4582,7 @@ hvac_devices:00076 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:00077 a p223:VoltageSensor,
-        s223:Connectable,
+hvac_devices:00077 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "voltage_sensor" ;
@@ -4616,8 +4599,7 @@ hvac_devices:00078 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-hvac_devices:00079 a p223:VoltageSensor,
-        s223:Connectable,
+hvac_devices:00079 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "speed_ref_voltage_sensor" ;
@@ -5091,9 +5073,9 @@ hvac_devices:00120 a s223:ConnectionPoint,
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf hvac_devices:00116 .
 
-hvac_devices:00121 a p223:Filter,
-        s223:Connectable,
-        s223:Equipment ;
+hvac_devices:00121 a s223:Connectable,
+        s223:Equipment,
+        s223:Filter ;
     rdfs:label "FILTER" ;
     s223:cnx hvac_devices:00122,
         hvac_devices:00123 ;
@@ -5168,7 +5150,8 @@ hvac_devices:00126 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf hvac_devices:00124 .
 
-hvac_devices:00127 a s223:Connectable,
+hvac_devices:00127 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00128,
@@ -5474,7 +5457,8 @@ hvac_devices:00160 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf hvac_devices:00158 .
 
-hvac_devices:00161 a s223:Connectable,
+hvac_devices:00161 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00162,
@@ -5780,7 +5764,8 @@ hvac_devices:00194 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf hvac_devices:00192 .
 
-hvac_devices:00195 a s223:Connectable,
+hvac_devices:00195 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00196,
@@ -6110,7 +6095,8 @@ hvac_devices:00233 a s223:System,
     bob:waterInlet hvac_devices:00264 ;
     bob:waterOutlet hvac_devices:00265 .
 
-hvac_devices:00234 a s223:Connectable,
+hvac_devices:00234 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00235,
@@ -6409,7 +6395,8 @@ hvac_devices:00267 a s223:System,
     bob:waterInlet hvac_devices:00298 ;
     bob:waterOutlet hvac_devices:00299 .
 
-hvac_devices:00268 a s223:Connectable,
+hvac_devices:00268 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00269,
@@ -7087,7 +7074,7 @@ hvac_devices:00337 a s223:Connection ;
     s223:connectsTo hvac_devices:00311 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 
-hvac_devices:00338 a p223:Boiler,
+hvac_devices:00338 a s223:Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "Boiler" ;
@@ -7554,9 +7541,9 @@ hvac_devices:00381 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:00382 a p223:Window,
-        s223:Connectable,
-        s223:Equipment ;
+hvac_devices:00382 a s223:Connectable,
+        s223:Equipment,
+        s223:Window ;
     rdfs:label "Window_West" ;
     s223:cnx hvac_devices:00383,
         hvac_devices:00384,
@@ -7603,9 +7590,9 @@ hvac_devices:00385 a s223:ConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf hvac_devices:00382 .
 
-hvac_devices:00386 a p223:Window,
-        s223:Connectable,
-        s223:Equipment ;
+hvac_devices:00386 a s223:Connectable,
+        s223:Equipment,
+        s223:Window ;
     rdfs:label "Window_East" ;
     s223:cnx hvac_devices:00387,
         hvac_devices:00388,
@@ -7654,7 +7641,7 @@ hvac_devices:00389 a s223:ConnectionPoint,
 
 hvac_devices:00390 a s223:Connectable,
         s223:Equipment,
-        s223:VAV ;
+        s223:TerminalUnit ;
     rdfs:label "VAVBox1System" ;
     s223:cnx hvac_devices:00391,
         hvac_devices:00392 ;
@@ -7792,7 +7779,8 @@ hvac_devices:00401 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf hvac_devices:00399 .
 
-hvac_devices:00402 a s223:Connectable,
+hvac_devices:00402 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00403,
@@ -8154,7 +8142,8 @@ hvac_devices:00440 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00438 ;
     s223:mapsTo hvac_devices:00392 .
 
-hvac_devices:00441 a s223:Connectable,
+hvac_devices:00441 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00442,
@@ -8421,7 +8410,7 @@ hvac_devices:00471 a s223:Connection ;
 
 hvac_devices:00472 a s223:Connectable,
         s223:Equipment,
-        s223:VAV ;
+        s223:TerminalUnit ;
     rdfs:label "VAVBox2System" ;
     s223:cnx hvac_devices:00473,
         hvac_devices:00474 ;
@@ -8559,7 +8548,8 @@ hvac_devices:00483 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf hvac_devices:00481 .
 
-hvac_devices:00484 a s223:Connectable,
+hvac_devices:00484 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00485,
@@ -8921,7 +8911,8 @@ hvac_devices:00522 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00520 ;
     s223:mapsTo hvac_devices:00474 .
 
-hvac_devices:00523 a s223:Connectable,
+hvac_devices:00523 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx hvac_devices:00524,
@@ -9192,9 +9183,9 @@ hvac_spaces:00001 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-hvac_spaces:00002 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+hvac_spaces:00002 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "HVACSpace1" ;
     s223:cnx hvac_spaces:00003,
         hvac_spaces:00004,
@@ -9293,9 +9284,9 @@ hvac_spaces:00010 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-hvac_spaces:00011 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+hvac_spaces:00011 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "HVACSpace2" ;
     s223:cnx hvac_spaces:00012,
         hvac_spaces:00013,
@@ -9393,9 +9384,9 @@ hvac_spaces:00019 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-hvac_spaces:00020 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+hvac_spaces:00020 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "HVACSpace4" ;
     s223:cnx hvac_spaces:00021,
         hvac_spaces:00022,
@@ -9493,9 +9484,9 @@ hvac_spaces:00028 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-hvac_spaces:00029 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+hvac_spaces:00029 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "HVACSpace5" ;
     s223:cnx hvac_spaces:00030,
         hvac_spaces:00031,
@@ -9595,9 +9586,9 @@ hvac_spaces:00037 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-hvac_spaces:00038 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+hvac_spaces:00038 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "HVACSpace3" ;
     s223:cnx hvac_spaces:00039,
         hvac_spaces:00040,
@@ -9695,9 +9686,9 @@ hvac_spaces:00046 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-hvac_spaces:00047 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+hvac_spaces:00047 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "HVACSpace6" ;
     s223:cnx hvac_spaces:00048,
         hvac_spaces:00049,
@@ -9797,8 +9788,8 @@ hvac_spaces:00055 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-hvac_spaces:00056 a p223:HVACZone,
-        s223:Zone ;
+hvac_spaces:00056 a s223:Zone,
+        bob:HVACZone ;
     rdfs:label "HVACZone1" ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasDomainSpace hvac_spaces:00002,
@@ -9831,8 +9822,8 @@ hvac_spaces:00059 a s223:EnumerableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-hvac_spaces:00060 a p223:HVACZone,
-        s223:Zone ;
+hvac_spaces:00060 a s223:Zone,
+        bob:HVACZone ;
     rdfs:label "HVACZone2" ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasDomainSpace hvac_spaces:00029,
@@ -10832,9 +10823,9 @@ lighting_devices:00092 a s223:Connection ;
     s223:hasMedium s223:Light-Visible ;
     rdfs:comment "2 windows contribute and light is brought to 2 light spaces" .
 
-lighting_spaces:00001 a p223:LightingSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+lighting_spaces:00001 a s223:Connectable,
+        s223:DomainSpace,
+        bob:LightingSpace ;
     rdfs:label "LightingSpace1" ;
     s223:cnx lighting_spaces:00002,
         lighting_spaces:00003 ;
@@ -10877,9 +10868,9 @@ lighting_spaces:00004 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasValue s223:OccupancyStatus-Unoccupied .
 
-lighting_spaces:00005 a p223:LightingSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+lighting_spaces:00005 a s223:Connectable,
+        s223:DomainSpace,
+        bob:LightingSpace ;
     rdfs:label "LightingSpace2" ;
     s223:cnx lighting_spaces:00006,
         lighting_spaces:00007 ;
@@ -10919,9 +10910,9 @@ lighting_spaces:00008 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasValue s223:OccupancyStatus-Unoccupied .
 
-lighting_spaces:00009 a p223:LightingSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+lighting_spaces:00009 a s223:Connectable,
+        s223:DomainSpace,
+        bob:LightingSpace ;
     rdfs:label "LightingSpace3" ;
     s223:cnx lighting_spaces:00010,
         lighting_spaces:00011 ;
@@ -10961,9 +10952,9 @@ lighting_spaces:00012 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasValue s223:OccupancyStatus-Unoccupied .
 
-lighting_spaces:00013 a p223:LightingSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+lighting_spaces:00013 a s223:Connectable,
+        s223:DomainSpace,
+        bob:LightingSpace ;
     rdfs:label "LightingSpace5" ;
     s223:cnx lighting_spaces:00014,
         lighting_spaces:00015 ;
@@ -11003,9 +10994,9 @@ lighting_spaces:00016 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasValue s223:OccupancyStatus-Unoccupied .
 
-lighting_spaces:00017 a p223:LightingSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+lighting_spaces:00017 a s223:Connectable,
+        s223:DomainSpace,
+        bob:LightingSpace ;
     rdfs:label "LightingSpace4" ;
     s223:cnx lighting_spaces:00018,
         lighting_spaces:00019 ;
@@ -11045,9 +11036,9 @@ lighting_spaces:00020 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasValue s223:OccupancyStatus-Unoccupied .
 
-lighting_spaces:00021 a p223:LightingSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+lighting_spaces:00021 a s223:Connectable,
+        s223:DomainSpace,
+        bob:LightingSpace ;
     rdfs:label "LightingSpace6" ;
     s223:cnx lighting_spaces:00022,
         lighting_spaces:00023 ;
@@ -11087,57 +11078,57 @@ lighting_spaces:00024 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus ;
     s223:hasValue s223:OccupancyStatus-Unoccupied .
 
-lighting_spaces:00025 a p223:LightingZone,
-        s223:Zone ;
+lighting_spaces:00025 a s223:Zone,
+        bob:LightingZone ;
     rdfs:label "LightingZone1" ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasDomainSpace lighting_spaces:00001 ;
     bob:occupancy lighting_spaces:00004 ;
     rdfs:comment "Contains OpenOffice Space North" .
 
-lighting_spaces:00026 a p223:LightingZone,
-        s223:Zone ;
+lighting_spaces:00026 a s223:Zone,
+        bob:LightingZone ;
     rdfs:label "LightingZone2" ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasDomainSpace lighting_spaces:00005 ;
     bob:occupancy lighting_spaces:00008 ;
     rdfs:comment "Contains OpenOffice Space South" .
 
-lighting_spaces:00027 a p223:LightingZone,
-        s223:Zone ;
+lighting_spaces:00027 a s223:Zone,
+        bob:LightingZone ;
     rdfs:label "LightingZone3" ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasDomainSpace lighting_spaces:00009 ;
     bob:occupancy lighting_spaces:00012 ;
     rdfs:comment "Contains Bathroom Light Space" .
 
-lighting_spaces:00028 a p223:LightingZone,
-        s223:Zone ;
+lighting_spaces:00028 a s223:Zone,
+        bob:LightingZone ;
     rdfs:label "LightingZone4" ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasDomainSpace lighting_spaces:00017 ;
     bob:occupancy lighting_spaces:00020 ;
     rdfs:comment "Contains Private Office Light Space" .
 
-lighting_spaces:00029 a p223:LightingZone,
-        s223:Zone ;
+lighting_spaces:00029 a s223:Zone,
+        bob:LightingZone ;
     rdfs:label "LightingZone5" ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasDomainSpace lighting_spaces:00013 ;
     bob:occupancy lighting_spaces:00016 ;
     rdfs:comment "Contains Corridor Light Space" .
 
-lighting_spaces:00030 a p223:LightingZone,
-        s223:Zone ;
+lighting_spaces:00030 a s223:Zone,
+        bob:LightingZone ;
     rdfs:label "LightingZone6" ;
     s223:hasDomain s223:Domain-Lighting ;
     s223:hasDomainSpace lighting_spaces:00021 ;
     bob:occupancy lighting_spaces:00024 ;
     rdfs:comment "Contains Kitchenette Light Space" .
 
-network_devices:00001 a p223:EthernetSwitch,
-        s223:Connectable,
-        s223:Equipment ;
+network_devices:00001 a s223:Connectable,
+        s223:Equipment,
+        s223:EthernetSwitch ;
     rdfs:label "Simple Switch" ;
     s223:cnx network_devices:00002,
         network_devices:00003,

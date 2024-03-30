@@ -149,9 +149,9 @@ exg3601:00013 a s223:Connection ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Supply Air from VAV" .
 
-exg3601:00014 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+exg3601:00014 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "space" ;
     s223:cnx exg3601:00015,
         exg3601:00016,
@@ -254,9 +254,9 @@ exg3601:00022 a s223:EnumerableProperty,
     rdfs:label "Occupancy Status of Domain Space" ;
     s223:hasEnumerationKind s223:EnumerationKind-OccupancyStatus .
 
-exg3601:00023 a p223:Window,
-        s223:Connectable,
-        s223:Equipment ;
+exg3601:00023 a s223:Connectable,
+        s223:Equipment,
+        s223:Window ;
     rdfs:label "Window" ;
     s223:cnx exg3601:00024,
         exg3601:00025,
@@ -308,7 +308,7 @@ exg3601:00027 a s223:Connection ;
 
 exg3601:00028 a s223:Connectable,
         s223:Equipment,
-        s223:VAV ;
+        s223:SingleDuctTerminal ;
     rdfs:label "VAV_CoolingOnly" ;
     s223:cnx exg3601:00029,
         exg3601:00030 ;
@@ -424,8 +424,7 @@ exg3601:00038 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
-exg3601:00039 a p223:IntrusionSensor,
-        s223:Connectable,
+exg3601:00039 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "ZN-WINDOW-SWITCH" ;
@@ -475,7 +474,8 @@ exg3601:00043 a s223:ConnectionPoint,
     s223:isConnectionPointOf exg3601:00041 ;
     s223:mapsTo exg3601:00030 .
 
-exg3601:00044 a s223:Connectable,
+exg3601:00044 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx exg3601:00045,
@@ -867,8 +867,8 @@ exg3601:00087 a s223:Connection ;
     s223:connectsTo exg3601:00075 ;
     s223:hasMedium s223:Communication-EIA-485 .
 
-exg3601:00088 a p223:HVACZone,
-        s223:Zone ;
+exg3601:00088 a s223:Zone,
+        bob:HVACZone ;
     rdfs:label "HVACZone" ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasDomainSpace exg3601:00014 ;

@@ -1,18 +1,29 @@
 from pathlib import Path
 from typing import Any
-from bob.enum import CtxAttribute, ElectricalPhaseIdentifier
-from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
 
 from header import sample_header
 
 from bob.connections.air import *
-from bob.connections.electricity import *
+from bob.connections.electricity import (
+    Electricity_240VLL_120VLN_1Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzConnection,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+)
 from bob.connections.light import LightVisibleConnection
 from bob.connections.occupancy import (
     OccupancyInletSystemConnectionPoint,
     OccupancyOutletSystemConnectionPoint,
 )
-from bob.core import P223, QUANTITYKIND, UNIT, bind_model_namespace, dump, get_datagraph
+from bob.core import (
+    P223,
+    QUANTITYKIND,
+    UNIT,
+    Electricity,
+    bind_model_namespace,
+    dump,
+    get_datagraph,
+)
+from bob.enum import CtxAttribute, ElectricalPhaseIdentifier
 from bob.equipment.architectural import Window
 from bob.equipment.electricity.distribution import (
     SinglePhaseDistributionPanel,
@@ -24,6 +35,7 @@ from bob.equipment.electricity.distribution import (
     TwoPolesCircuitBreaker,
     TwoPolesMainCircuitBreaker,
 )
+from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper

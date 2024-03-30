@@ -25,7 +25,7 @@ _namespace = BOB
 
 
 class VoltageSensor(Sensor):
-    _class_iri = P223.VoltageSensor
+    _class_iri = S223.Sensor
     observes: PropertyReference
     hasMinRange: PropertyReference
     hasMaxRange: PropertyReference

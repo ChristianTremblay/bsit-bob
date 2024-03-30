@@ -30,7 +30,7 @@ _namespace = BOB
 
 
 class ParticulateSensor(Sensor):
-    _class_iri = S223.Sensor
+    _class_iri = S223.ParticulateSensor
     observes: PropertyReference  # ParticulateCount
 
     def __init__(self, **kwargs: Any) -> None:
@@ -46,7 +46,7 @@ class ParticulateSensor(Sensor):
 
 
 class UltraFineParticulateSensor(ParticulateSensor):
-    _class_iri = S223.Sensor
+    _class_iri = S223.ParticulateSensor
     "PM 1.0 Count"
     comment = "Ultra Fine Particulate Sensor"
 
@@ -56,7 +56,7 @@ class UltraFineParticulateSensor(ParticulateSensor):
 
 
 class FineParticulateSensor(ParticulateSensor):
-    _class_iri = S223.Sensor
+    _class_iri = S223.ParticulateSensor
     "PM 2.5 Count"
     comment = "Fine Particulate Sensor"
 
@@ -66,7 +66,7 @@ class FineParticulateSensor(ParticulateSensor):
 
 
 class CoarseParticulateSensor(ParticulateSensor):
-    _class_iri = S223.Sensor
+    _class_iri = S223.ParticulateSensor
     "PM 10 Count"
     comment = "Coarse Particulate Sensor"
 

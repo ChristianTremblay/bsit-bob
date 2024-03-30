@@ -1,17 +1,17 @@
 """
 Performs validation of the model/schema and data files in the 223P repository
 """
-import os
-import sys
+import argparse
 import glob
 import logging
-import tempfile
+import os
 import subprocess
-import argparse
-
+import sys
+import tempfile
 from pathlib import Path
-from rdflib import Graph, Literal, OWL, SH, Namespace
 from typing import Optional
+
+from rdflib import OWL, SH, Graph, Literal, Namespace
 
 # logging
 logger = logging.getLogger(__name__)
@@ -183,7 +183,7 @@ def test_data_validation(data_file_name: str, schema_file_name: Optional[str] = 
 
     # save the report as text
     with open(data_file_root + ".report.txt", "w") as report_file:
-        report_file.write('\n'.join(report_lines) + '\n')
+        report_file.write("\n".join(report_lines) + "\n")
 
     if 0:
         # check if there are any sh:resultSeverity sh:Violation predicate/object pairs

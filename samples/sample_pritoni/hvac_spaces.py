@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from bob.core import bind_model_namespace, dump
-from bob.space.hvac import *
+from bob.space.hvac import HVACSpace, HVACZone, OccupancyStatus
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem

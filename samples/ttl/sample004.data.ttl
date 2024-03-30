@@ -22,8 +22,8 @@
   rdfs:label "sample004" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex1:00001 a p223:HVACZone,
-        s223:Zone ;
+ex1:00001 a s223:Zone,
+        bob:HVACZone ;
     rdfs:label "Zone" ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasDomainSpace ex1:00005 ;
@@ -46,9 +46,9 @@ ex1:00004 a s223:PhysicalSpace ;
     rdfs:label "Room 191" ;
     s223:encloses ex1:00005 .
 
-ex1:00005 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+ex1:00005 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "Domain_Space" ;
     s223:cnx ex1:00006,
         ex1:00007,
@@ -131,7 +131,7 @@ ex1:00012 a s223:BidirectionalConnectionPoint,
 
 ex1:00013 a s223:Connectable,
         s223:Equipment,
-        s223:VAV ;
+        s223:TerminalUnit ;
     rdfs:label "VAV1" ;
     s223:cnx ex1:00014,
         ex1:00015 ;
@@ -194,7 +194,8 @@ ex1:00018 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex1:00016 ;
     s223:mapsTo ex1:00015 .
 
-ex1:00019 a s223:Connectable,
+ex1:00019 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx ex1:00020,

@@ -95,8 +95,8 @@ actuated_damper_template = {
 
 class DamperAndActuator(Equipment):
     _class_iri = None
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
+    airInlet: AirInletConnectionPoint  # will be defined as equal to damper
+    airOutlet: AirOutletConnectionPoint  # will be defined as equal to damper
     position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
@@ -113,8 +113,8 @@ class DamperAndActuator(Equipment):
         self["actuator"].linkageOutlet >> self["damper"].linkageInlet
         self.position = self["damper"].position = self["actuator"].position
         self.position_feedback = self["actuator"]["position_sensor"].observedProperty
-        self["damper"].airInlet.mapsTo = self.airInlet
-        self["damper"].airOutlet.mapsTo = self.airOutlet
+        self["damper"].airInlet.maps_to(self.airInlet)
+        self["damper"].airOutlet.maps_to(self.airOutlet)
 
 
 electrical_actuated_proportional_damper_template = {

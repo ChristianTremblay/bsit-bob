@@ -3,6 +3,7 @@ import os
 import sys
 
 import pytest
+
 print("======================", sys.path)
 
 from bob.core import clear

@@ -110,7 +110,7 @@ class G36VAVCoolingOnly(G36Sequence):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"Fan.__init__ {_config} {kwargs}")
 
-        super().__init__(_config, **kwargs)
+        super().__init__(**kwargs)
 
 
 class G36Figure_A_3(G36VAVCoolingOnly):

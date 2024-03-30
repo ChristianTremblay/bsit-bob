@@ -15,8 +15,7 @@ from bob.properties.electricity import (
 )
 from bob.sensor.electricity import CurrentSensor, VoltageSensor
 
-from ...connections.electricity import *
-from ...core import BOB, P223, S223, UNIT, Equipment, Node, template_update
+from ...core import BOB, P223, S223, UNIT, Equipment, Node, template_update, URIRef
 
 _namespace = BOB
 
@@ -243,7 +242,7 @@ class ThreePhaseElectricalMeter(Equipment):
 
     """
 
-    _class_iri: URIRef = P223.ElectricalMeter
+    _class_iri: URIRef = S223.ElectricMeter
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(three_phase_electricalmeter_template, config)

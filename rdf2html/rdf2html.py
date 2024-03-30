@@ -66,14 +66,14 @@ class Node:
             "uri": "bob:legend/OutletConnectionPoint",
             "label": "Legend / OutletConnectionPoint",
         },
-        "FunctionBlock": {
+        "Function": {
             "size": 15,
             "color": "#9be0b6",
             "shape": "star",
             "group_int": 4,
             "borderWidth": None,
-            "uri": "bob:legend/FunctionBlock",
-            "label": "Legend / FunctionBlock|Producer",
+            "uri": "bob:legend/Function",
+            "label": "Legend / Function|Producer",
         },
         "DomainSpace": {
             "size": 15,

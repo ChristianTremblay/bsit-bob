@@ -52,7 +52,9 @@ MechanicalOnOffThermostat_template = {
         "coolingOutput": OnOffSignalOutletConnectionPoint,
         "fanOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
+    "properties": {
+        ("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}
+    },
     "sensors": {
         ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
@@ -83,7 +85,9 @@ MechanicalModulatingThermostat_template = {
         "coolingOutput": ModulationSignalOutletConnectionPoint,
         "fanOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
+    "properties": {
+        ("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}
+    },
     "sensors": {
         ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
@@ -115,7 +119,9 @@ NetworkThermostat_template = {
         "heatingOutput": OnOffSignalOutletConnectionPoint,
         "coolingOutput": OnOffSignalOutletConnectionPoint,
     },
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
+    "properties": {
+        ("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}
+    },
     "sensors": {
         ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},
@@ -140,7 +146,9 @@ class NetworkThermostat(Thermostat):
 
 NetworkRoomSensor_template = {
     "cp": {"mstp": RS485BidirectionalConnectionPoint},
-    "properties": {("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}},
+    "properties": {
+        ("temperature_setpoint", TemperatureSetpoint): {"hasUnit": UNIT.DEG_C}
+    },
     "sensors": {
         ("temperature_sensor", AirTemperatureSensor): {"hasUnit": UNIT.DEG_C},
         ("humidity_sensor", AirHumiditySensor): {},

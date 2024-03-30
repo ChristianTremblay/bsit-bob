@@ -3,14 +3,15 @@ from pathlib import Path
 import lighting_spaces as ls
 import physical_spaces as ps
 
-from bob.connections.light import *
+from bob.connections.light import LightVisibleConnection
+from bob.connections.electricity import Electricity_120VLN_1Ph_60HzInletConnectionPoint
 from bob.core import UNIT, bind_model_namespace, dump
 from bob.equipment.electricity.switch import DimmableSwitch
-from bob.equipment.lighting.light import *
+from bob.equipment.lighting.light import Luminaire
 from bob.externalreference.bacnet import BACnetExternalReference
 from bob.properties.electricity import ElectricPower
 from bob.properties.light import RelativeLuminousFlux
-from bob.properties.states import OnOffCommand
+from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.light import DaylightSensor
 from bob.sensor.motion import OccupantMotionSensor
 

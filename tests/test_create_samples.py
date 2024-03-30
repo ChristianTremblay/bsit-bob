@@ -23,6 +23,13 @@ def test_build_pritoni_samples(bob_fixture):
     assert not subprocess.call(["python", filename])
 
 
+def test_build_IBAL_samples(bob_fixture):
+    samples_folder = os.path.join(bob_fixture["samples_directory"], "sample_IBAL")
+    samples_ttl_folder = bob_fixture["samples_ttl_directory"]
+    filename = os.path.join(samples_folder, "sample_IBAL_model.py")
+    assert not subprocess.call(["python", filename])
+
+
 def test_create_html(bob_fixture):
     samples_folder = bob_fixture["samples_directory"]
     job = os.path.join(samples_folder, "create_html.py")

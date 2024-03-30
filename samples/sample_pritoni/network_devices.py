@@ -5,7 +5,6 @@ import hvac_devices as hd
 import lighting_devices as ld
 import physical_spaces as ps
 
-from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
 from bob.equipment.network.firewall import EthernetFirewall, internet
 from bob.equipment.network.switch import EthernetSwitch

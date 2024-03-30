@@ -33,8 +33,8 @@ ex1:00001 a p223:ElectricalDistributionPanel,
         ex1:00024 ;
     rdfs:comment "Main Entry Panel of Building at 600V_3Ph" .
 
-ex1:00002 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00002 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesMainCircuitBreaker ;
     rdfs:label "MainBreaker" ;
@@ -164,8 +164,8 @@ ex1:00011 a s223:ConnectionPoint,
     s223:hasRole s223:ElectricalPhaseIdentifier-ABC ;
     s223:isConnectionPointOf ex1:00002 .
 
-ex1:00012 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00012 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#1" ;
@@ -207,8 +207,8 @@ ex1:00015 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-347VLN-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00012 .
 
-ex1:00016 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00016 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#2" ;
@@ -250,8 +250,8 @@ ex1:00019 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex1:00016 .
 
-ex1:00020 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00020 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#3" ;
@@ -298,8 +298,8 @@ ex1:00023 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex1:00020 .
 
-ex1:00024 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00024 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#4" ;
@@ -409,8 +409,8 @@ ex1:00034 a s223:Connection ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-ABC ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 
-ex1:00035 a p223:ElectricalTransformer,
-        s223:Connectable,
+ex1:00035 a s223:Connectable,
+        s223:ElectricTransformer,
         s223:Equipment ;
     rdfs:label "TX-1" ;
     s223:cnx ex1:00036,
@@ -453,8 +453,8 @@ ex1:00038 a p223:ElectricalDistributionPanel,
         ex1:00049 ;
     rdfs:comment "Description of my panel" .
 
-ex1:00039 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00039 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:TwoPolesMainCircuitBreaker ;
     rdfs:label "MainBreaker" ;
@@ -531,8 +531,8 @@ ex1:00044 a s223:ConnectionPoint,
     s223:hasRole s223:ElectricalPhaseIdentifier-AB ;
     s223:isConnectionPointOf ex1:00039 .
 
-ex1:00045 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00045 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#1" ;
@@ -574,8 +574,8 @@ ex1:00048 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00045 .
 
-ex1:00049 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00049 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:TwoPolesCircuitBreaker ;
     rdfs:label "CB#2" ;
@@ -674,8 +674,8 @@ ex1:00058 a s223:Connection ;
     s223:connectsTo ex1:00039 ;
     s223:hasMedium s223:AC-240VLL-120VLN-1Ph-60Hz .
 
-ex1:00059 a p223:ElectricalMeter,
-        s223:Connectable,
+ex1:00059 a s223:Connectable,
+        s223:ElectricMeter,
         s223:Equipment ;
     rdfs:label "Building Meter" ;
     s223:contains ex1:00093,
@@ -1086,8 +1086,7 @@ ex1:00092 a s223:ObservableProperty,
     qudt:hasUnit unit:KiloW ;
     rdfs:comment "Maximum Power of Equipment" .
 
-ex1:00093 a p223:VoltageSensor,
-        s223:Connectable,
+ex1:00093 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAB" ;
@@ -1106,8 +1105,7 @@ ex1:00094 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-ex1:00095 a p223:VoltageSensor,
-        s223:Connectable,
+ex1:00095 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAC" ;
@@ -1126,8 +1124,7 @@ ex1:00096 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-ex1:00097 a p223:VoltageSensor,
-        s223:Connectable,
+ex1:00097 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBC" ;
@@ -1146,8 +1143,7 @@ ex1:00098 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-ex1:00099 a p223:VoltageSensor,
-        s223:Connectable,
+ex1:00099 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageAN" ;
@@ -1166,8 +1162,7 @@ ex1:00100 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-ex1:00101 a p223:VoltageSensor,
-        s223:Connectable,
+ex1:00101 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageBN" ;
@@ -1186,8 +1181,7 @@ ex1:00102 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-ex1:00103 a p223:VoltageSensor,
-        s223:Connectable,
+ex1:00103 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "VoltageCN" ;

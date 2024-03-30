@@ -1,8 +1,22 @@
 from pathlib import Path
 
-from bob.connections.electricity import *
-from bob.core import bind_model_namespace, dump
-from bob.equipment.electricity.distribution import *
+from bob.connections.electricity import (
+    Electricity_120VLN_1Ph_60HzConnection,
+    Electricity_240VLL_120VLN_1Ph_60HzOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzConnection,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+)
+from bob.core import Electricity, bind_model_namespace, dump
+from bob.equipment.electricity.distribution import (
+    SinglePhaseDistributionPanel,
+    SinglePoleCircuitBreaker,
+    ThreePhaseDistributionPanel,
+    ThreePolesCircuitBreaker,
+    ThreePolesMainCircuitBreaker,
+    Transformer,
+    TwoPolesCircuitBreaker,
+    TwoPolesMainCircuitBreaker,
+)
 from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
 from bob.equipment.electricity.switch import DimmableSwitch, TimerSwitch
 from bob.properties.time import Hour

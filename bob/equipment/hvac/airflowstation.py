@@ -8,7 +8,7 @@ _namespace = BOB
 
 
 class AirFlowMonitor(Equipment):
-    _class_iri = P223.AirFlowMonitor
+    _class_iri = S223.FlowSensor
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     flowSensor: Sensor

@@ -23,7 +23,7 @@ _namespace = BOB
 
 
 class HVACSpace(DomainSpace):
-    _class_iri = P223.HVACSpace
+    _class_iri = BOB.HVACSpace
     hasDomain = Domain.HVAC
     # hasMedium: Medium = Air
     # Connection points
@@ -41,6 +41,7 @@ class HVACSpace(DomainSpace):
     # Properties
     occupancy: OccupancyStatus
     temperature: Temperature
+    temperature_setpoint: Setpoint
     humidity: RelativeHumidity
     co2: GasConcentration
     co: GasConcentration
@@ -49,7 +50,7 @@ class HVACSpace(DomainSpace):
 
 
 class HVACZone(Zone):
-    _class_iri = P223.HVACZone
+    _class_iri = BOB.HVACZone
     hasDomain = Domain.HVAC
 
     # Connection points

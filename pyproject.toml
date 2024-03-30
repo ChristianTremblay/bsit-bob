@@ -17,7 +17,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["bob*"]
+include = ["bob*", "rdf2html"]
 namespaces = false
 
 [project.optional-dependencies]
@@ -25,3 +25,5 @@ test = ["pytest", "pyshacl", "ontoenv", "pyvis", "click"]
 lint = ["black", "flake8", "isort"]
 cov = ["pytest < 5.0.0", "pytest-cov[all]"]
 
+[project.scripts]
+rdf2html = "rdf2html.rdf2html:process"

@@ -11,6 +11,7 @@ import argparse
 import sys
 
 from rdflib import OWL, RDF, RDFS, Graph, URIRef
+
 try:
     import owlrl
 except ImportError:

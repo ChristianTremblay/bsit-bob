@@ -1115,6 +1115,10 @@ class Container(Node):
         contains_mm(other, self)
         return self
 
+    def content(self):
+        for k, v in self._contents.items():
+            print(k, v)
+
 
 #
 #   Enumerations
