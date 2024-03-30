@@ -12,7 +12,14 @@ from typing import Any, List
 
 from rdflib import XSD, Literal, URIRef
 
-from .core import Equipment, ExternalReference, Node, bind_namespace, INCLUDE_INVERSE
+from .core import (
+    INCLUDE_INVERSE,
+    ConnectionPoint,
+    Equipment,
+    ExternalReference,
+    Node,
+    bind_namespace,
+)
 from .equipment.control.controller import Controller
 from .externalreference.bacnet import BACnetExternalReference
 from .multimethods import multimethod, new_class
@@ -61,8 +68,26 @@ class Object(Node):
             self._present_value = BACnetExternalReference(
                 f"bacnet://{self._device.deviceInstance}/{self.objectIdentifier}/present-value"
             )
-
+            self._data_graph.add(
+                (self._node_iri, BACNET.hasProperty, self._present_value._node_iri)
+            )
         return self._present_value
+
+    @property
+    def relinquishDefault(self) -> BACnetExternalReference:
+        """
+        Creates the relinquish-default reference on demand to be used for a property.
+        Cache it in case there are multiple references.
+        """
+        if getattr(self, "_relinquish_default", None) is None:
+            self._relinquish_default = BACnetExternalReference(
+                f"bacnet://{self._device.deviceInstance}/{self.objectIdentifier}/relinquish-default"
+            )
+            self._data_graph.add(
+                (self._node_iri, BACNET.hasProperty, self._relinquish_default._node_iri)
+            )
+        return self._relinquish_default
+
 
 @multimethod
 def contains_mm(device_: Device, object_: Object) -> None:
@@ -82,7 +107,7 @@ def contains_mm(device_: Device, object_: Object) -> None:
 
         device_instance = int(object_.objectIdentifier.split(",")[1])
         if device_.deviceInstance is not None:
-            if (device_.deviceInstance != device_instance):
+            if device_.deviceInstance != device_instance:
                 raise ValueError(f"device instance mismatch: {device_}")
         else:
             device_.deviceInstance = device_instance
@@ -103,6 +128,36 @@ def contains_mm(device_: Device, object_list: List[Object]) -> None:
 
     for object_ in object_list:
         contains_mm(device_, object_)
+
+
+@multimethod
+def connect_mm(object_: Object, cp_: ConnectionPoint) -> None:
+    """Object >> CP"""
+    _log.info(f"object {object_} mapsTo {cp_}")
+
+    # add it to the graph
+    object_._data_graph.add((object_._node_iri, BACNET.mapsTo, cp_._node_iri))
+
+    # if INCLUDE_INVERSE:
+    #    object_._data_graph.add(
+    #        (object_._node_iri, BACNET.isObjectOf, device_._node_iri)
+    #    )
+
+
+@multimethod
+def connect_mm(object1_: Object, object2_: Object) -> None:
+    """Object >> Object"""
+    _log.info(f"object {object1_} mapsTo {object2_}")
+
+    # add it to the graph
+    object1_._data_graph.add(
+        (object1_._node_iri, BACNET.PeerToPeer, object2_._node_iri)
+    )
+
+    # if INCLUDE_INVERSE:
+    #    object_._data_graph.add(
+    #        (object_._node_iri, BACNET.isObjectOf, device_._node_iri)
+    #    )
 
 
 class DeviceObject(Object):

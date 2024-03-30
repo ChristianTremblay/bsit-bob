@@ -26,18 +26,18 @@ class SteamPipe(Equipment):
 
 
 class Humidifier(Equipment):
-    _class_iri = P223.Humidifier
+    _class_iri = S223.Humidifier
     steamOutlet: SteamOutletConnectionPoint
     waterInlet: WaterInletConnectionPoint
 
 
 class ElectricalHumidifier(Humidifier):
-    _class_iri = P223.Humidifier
+    _class_iri = S223.Humidifier
     powerInlet: ElectricalInletConnectionPoint
     modulation = PercentCommand
 
 
 class NaturalGasHumidifier(Humidifier):
-    _class_iri = P223.Humidifier
+    _class_iri = S223.Humidifier
     naturalGasInlet: NaturalGasInletConnectionPoint
     modulation = PercentCommand

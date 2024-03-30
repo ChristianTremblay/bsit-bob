@@ -8,12 +8,13 @@ from bob.properties.ratio import PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.property import ActuatableProperty
 
-from ...connections.electricity import *
+from ...connections import electricity as elec_cnx
 from ...connections.controlsignal import OnOffSignalOutletConnectionPoint
 from ...core import (
     BOB,
     P223,
     S223,
+    Electricity,
     Equipment,
     Node,
     PropertyReference,
@@ -29,8 +30,8 @@ _namespace = BOB
 
 switch_template = {
     "cp": {
-        "electricalInlet": Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_120VLN_1Ph_60HzOutletConnectionPoint,
+        "electricalInlet": elec_cnx.Electricity_120VLN_1Ph_60HzInletConnectionPoint,
+        "electricalOutlet": elec_cnx.Electricity_120VLN_1Ph_60HzOutletConnectionPoint,
     },
     "properties": {
         ("amps", Amps): {},
@@ -62,16 +63,16 @@ class SinglePoleSwitch(Switch):
 
     _cross_ref = {
         "120": (
-            Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-            Electricity_120VLN_1Ph_60HzOutletConnectionPoint,
+            elec_cnx.Electricity_120VLN_1Ph_60HzInletConnectionPoint,
+            elec_cnx.Electricity_120VLN_1Ph_60HzOutletConnectionPoint,
         ),
         "277": (
-            Electricity_277VLN_1Ph_60HzInletConnectionPoint,
-            Electricity_277VLN_1Ph_60HzOutletConnectionPoint,
+            elec_cnx.Electricity_277VLN_1Ph_60HzInletConnectionPoint,
+            elec_cnx.Electricity_277VLN_1Ph_60HzOutletConnectionPoint,
         ),
         "347": (
-            Electricity_347VLN_1Ph_60HzInletConnectionPoint,
-            Electricity_347VLN_1Ph_60HzOutletConnectionPoint,
+            elec_cnx.Electricity_347VLN_1Ph_60HzInletConnectionPoint,
+            elec_cnx.Electricity_347VLN_1Ph_60HzOutletConnectionPoint,
         ),
     }
 

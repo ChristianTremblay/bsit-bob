@@ -50,9 +50,7 @@ def test_junction_or_connection(bob_fixture):
         hasPhysicalLocation=mechroom,
     )
 
-    supply_plenum = AirConnection(
-        label="SUPPLY-AIR", comment="Air supplies zone here"
-    )
+    supply_plenum = AirConnection(label="SUPPLY-AIR", comment="Air supplies zone here")
     sf.airOutlet >> supply_plenum
     supply_plenum >> office1_hvac.ductAirInlet
     supply_plenum >> office2_hvac.ductAirInlet

@@ -5,7 +5,7 @@ from header import sample_header
 
 from bob.core import PhysicalSpace
 from bob.connections.air import AirConnection
-from bob.equipment.hvac.vav import VAV_Simple
+from bob.equipment.hvac.vav import VAV_Simple, VAV_Reheat
 from bob.space.hvac import HVACSpace, HVACZone
 
 model_name = Path(__file__).stem
@@ -31,7 +31,7 @@ vav1.airOutlet >> hvacspace1.ductAirInlet
 vav1["ZN-T"].hasObservationLocation = hvacspace1
 
 # create Zone-2 and its VAV connected together
-vav2 = VAV_Simple(label="Zone-2.VAV")
+vav2 = VAV_Reheat(label="Zone-2.VAV")
 vav2.serves = zone1
 
 vav2["ZN-T"].hasObservationLocation = hvacspace2

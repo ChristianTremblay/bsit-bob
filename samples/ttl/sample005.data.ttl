@@ -22,8 +22,8 @@
   rdfs:label "sample005" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex1:00001 a p223:HVACZone,
-        s223:Zone ;
+ex1:00001 a s223:Zone,
+        bob:HVACZone ;
     rdfs:label "Zone-1" ;
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasDomainSpace ex1:00004,
@@ -43,9 +43,9 @@ ex1:00003 a bob:OutletZoneConnectionPoint,
     rdfs:label "Zone-1.airOutlet" ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00004 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+ex1:00004 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "Space-1" ;
     s223:cnx ex1:00005,
         ex1:00006,
@@ -57,7 +57,7 @@ ex1:00004 a p223:HVACSpace,
     s223:connected ex1:00021 ;
     s223:connectedFrom ex1:00021 ;
     s223:connectedThrough ex1:00064,
-        ex1:00109 ;
+        ex1:00115 ;
     s223:hasConnectionPoint ex1:00005,
         ex1:00006,
         ex1:00007,
@@ -89,8 +89,8 @@ ex1:00006 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Space-1.ductAirOutlet" ;
     s223:cnx ex1:00004,
-        ex1:00109 ;
-    s223:connectsThrough ex1:00109 ;
+        ex1:00115 ;
+    s223:connectsThrough ex1:00115 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
@@ -134,9 +134,9 @@ ex1:00011 a s223:BidirectionalConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
-ex1:00012 a p223:HVACSpace,
-        s223:Connectable,
-        s223:DomainSpace ;
+ex1:00012 a s223:Connectable,
+        s223:DomainSpace,
+        bob:HVACSpace ;
     rdfs:label "Space-2" ;
     s223:cnx ex1:00013,
         ex1:00014,
@@ -145,7 +145,7 @@ ex1:00012 a p223:HVACSpace,
         ex1:00017,
         ex1:00018,
         ex1:00019 ;
-    s223:connectedThrough ex1:00109 ;
+    s223:connectedThrough ex1:00115 ;
     s223:hasConnectionPoint ex1:00013,
         ex1:00014,
         ex1:00015,
@@ -175,8 +175,8 @@ ex1:00014 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Space-2.ductAirOutlet" ;
     s223:cnx ex1:00012,
-        ex1:00109 ;
-    s223:connectsThrough ex1:00109 ;
+        ex1:00115 ;
+    s223:connectsThrough ex1:00115 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00012 .
 
@@ -227,13 +227,13 @@ ex1:00020 a s223:PhysicalSpace ;
 
 ex1:00021 a s223:Connectable,
         s223:Equipment,
-        s223:VAV ;
+        s223:SingleDuctTerminal ;
     rdfs:label "Zone-1.VAV" ;
     s223:cnx ex1:00022,
         ex1:00023 ;
     s223:connected ex1:00004 ;
     s223:connectedThrough ex1:00064,
-        ex1:00108 ;
+        ex1:00114 ;
     s223:connectedTo ex1:00004 ;
     s223:contains ex1:00024,
         ex1:00026,
@@ -253,8 +253,8 @@ ex1:00022 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Zone-1.VAV.airInlet" ;
     s223:cnx ex1:00021,
-        ex1:00108 ;
-    s223:connectsThrough ex1:00108 ;
+        ex1:00114 ;
+    s223:connectsThrough ex1:00114 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00021 .
 
@@ -343,7 +343,7 @@ ex1:00030 a s223:Connectable,
     bob:is_open ex1:00041 ;
     bob:position ex1:00058 ;
     bob:position_feedback ex1:00058 ;
-    rdfs:comment "VAV Box Damper" .
+    rdfs:comment "VAV Box Damper including a damper actuator (electrical proportional)" .
 
 ex1:00031 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
@@ -363,7 +363,8 @@ ex1:00032 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex1:00030 ;
     s223:mapsTo ex1:00023 .
 
-ex1:00033 a s223:Connectable,
+ex1:00033 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx ex1:00034,
@@ -639,22 +640,22 @@ ex1:00064 a s223:Connection ;
 
 ex1:00065 a s223:Connectable,
         s223:Equipment,
-        s223:VAV ;
+        s223:SingleDuctTerminal ;
     rdfs:label "Zone-2.VAV" ;
     s223:cnx ex1:00066,
         ex1:00067 ;
-    s223:connectedThrough ex1:00108 ;
+    s223:connectedThrough ex1:00114 ;
     s223:contains ex1:00068,
         ex1:00070,
         ex1:00072,
-        ex1:00074 ;
+        ex1:00074,
+        ex1:00108 ;
     s223:hasConnectionPoint ex1:00066,
         ex1:00067 ;
     bob:airFlow ex1:00069 ;
     bob:airInlet ex1:00066 ;
     bob:airOutlet ex1:00067 ;
     bob:damperPosition ex1:00102 ;
-    bob:zoneTemperature ex1:00073 ;
     rdfs:comment "VAV Description" .
 
 ex1:00066 a s223:ConnectionPoint,
@@ -662,8 +663,8 @@ ex1:00066 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Zone-2.VAV.airInlet" ;
     s223:cnx ex1:00065,
-        ex1:00108 ;
-    s223:connectsThrough ex1:00108 ;
+        ex1:00114 ;
+    s223:connectsThrough ex1:00114 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex1:00065 .
 
@@ -699,7 +700,7 @@ ex1:00070 a s223:Connectable,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
-    s223:hasObservationLocation ex1:00106 ;
+    s223:hasObservationLocation ex1:00110 ;
     s223:observes ex1:00071 ;
     rdfs:comment "Discharge Air Temperature" .
 
@@ -739,6 +740,9 @@ ex1:00074 a s223:Connectable,
     rdfs:label "DPR" ;
     s223:cnx ex1:00075,
         ex1:00076 ;
+    s223:connected ex1:00108 ;
+    s223:connectedThrough ex1:00113 ;
+    s223:connectedTo ex1:00108 ;
     s223:contains ex1:00077,
         ex1:00103 ;
     s223:hasConnectionPoint ex1:00075,
@@ -765,12 +769,14 @@ ex1:00076 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airOutlet" ;
-    s223:cnx ex1:00074 ;
+    s223:cnx ex1:00074,
+        ex1:00113 ;
+    s223:connectsThrough ex1:00113 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex1:00074 ;
-    s223:mapsTo ex1:00067 .
+    s223:isConnectionPointOf ex1:00074 .
 
-ex1:00077 a s223:Connectable,
+ex1:00077 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx ex1:00078,
@@ -1035,7 +1041,73 @@ ex1:00107 a s223:Connection ;
     s223:connectsTo ex1:00103 ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 
-ex1:00108 a s223:Connection ;
+ex1:00108 a s223:Coil,
+        s223:Connectable,
+        s223:Equipment,
+        s223:HeatingCoil ;
+    rdfs:label "REHEAT" ;
+    s223:cnx ex1:00109,
+        ex1:00110,
+        ex1:00111,
+        ex1:00112 ;
+    s223:connected ex1:00074 ;
+    s223:connectedFrom ex1:00074 ;
+    s223:connectedThrough ex1:00113 ;
+    s223:hasConnectionPoint ex1:00109,
+        ex1:00110,
+        ex1:00111,
+        ex1:00112 ;
+    bob:airInlet ex1:00109 ;
+    bob:airOutlet ex1:00110 ;
+    bob:hotWaterInlet ex1:00111 ;
+    bob:hotWaterOutlet ex1:00112 ;
+    rdfs:comment "VAV Hot Water Coil" .
+
+ex1:00109 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "REHEAT.airInlet" ;
+    s223:cnx ex1:00108,
+        ex1:00113 ;
+    s223:connectsThrough ex1:00113 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00108 .
+
+ex1:00110 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "REHEAT.airOutlet" ;
+    s223:cnx ex1:00108 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf ex1:00108 ;
+    s223:mapsTo ex1:00067 .
+
+ex1:00111 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:HotWaterConnectionPoint ;
+    rdfs:label "REHEAT.hotWaterInlet" ;
+    s223:cnx ex1:00108 ;
+    s223:hasMedium s223:Water-HotWater ;
+    s223:isConnectionPointOf ex1:00108 .
+
+ex1:00112 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:HotWaterConnectionPoint ;
+    rdfs:label "REHEAT.hotWaterOutlet" ;
+    s223:cnx ex1:00108 ;
+    s223:hasMedium s223:Water-HotWater ;
+    s223:isConnectionPointOf ex1:00108 .
+
+ex1:00113 a s223:Connection ;
+    s223:cnx ex1:00076,
+        ex1:00109 ;
+    s223:connectsAt ex1:00076,
+        ex1:00109 ;
+    s223:connectsFrom ex1:00074 ;
+    s223:connectsTo ex1:00108 ;
+    s223:hasMedium s223:Medium-Air .
+
+ex1:00114 a s223:Connection ;
     rdfs:label "SupplyAir" ;
     s223:cnx ex1:00022,
         ex1:00066 ;
@@ -1045,7 +1117,7 @@ ex1:00108 a s223:Connection ;
         ex1:00065 ;
     s223:hasMedium s223:Medium-Air .
 
-ex1:00109 a s223:Connection ;
+ex1:00115 a s223:Connection ;
     rdfs:label "ReturnAir" ;
     s223:cnx ex1:00006,
         ex1:00014 ;

@@ -23,7 +23,8 @@ bathroom = Bathroom(
     label="Bathroom", area=Area(75, hasUnit=UNIT.FT2, label="Bathroom.area")
 )
 private_office = Office(
-    label="Private office", area=Area(150, hasUnit=UNIT.FT2, label="Private office.area")
+    label="Private office",
+    area=Area(150, hasUnit=UNIT.FT2, label="Private office.area"),
 )
 kitchenette = Room(
     label="Kitchenette", area=Area(120, hasUnit=UNIT.FT2, label="Kitchenette.area")

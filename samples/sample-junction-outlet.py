@@ -1,10 +1,16 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, data_graph, schema_graph, dump
 from header import sample_header
 
-from bob.core import Equipment, Junction
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from bob.core import (
+    Equipment,
+    Junction,
+    bind_model_namespace,
+    data_graph,
+    dump,
+    schema_graph,
+)
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -13,19 +19,24 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 class Thing1(Equipment):
     ocp: AirOutletConnectionPoint
 
+
 equip1 = Thing1(label="equip1")
 
 #
 
+
 class Thing2(Equipment):
     icp: AirInletConnectionPoint
+
 
 equip2 = Thing2(label="equip2")
 
 #
 
+
 class ChildThing1(Equipment):
     ocp: AirOutletConnectionPoint
+
 
 equip1a = ChildThing1(label="equip1a")
 equip1b = ChildThing1(label="equip1b")

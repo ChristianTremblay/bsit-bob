@@ -83,6 +83,12 @@ mainentry_panel_config = {
             "bus_bar": "C",
             "voltage": "208",
         },
+        ("CB#5", SinglePoleCircuitBreaker): {
+            "comment": "High Leg Neutral, second breaker",
+            "amps": 15,
+            "bus_bar": "C",
+            "voltage": "208",
+        },
     },
     # other properties could go there... ?
 }

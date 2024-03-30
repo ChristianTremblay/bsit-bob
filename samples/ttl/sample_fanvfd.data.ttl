@@ -22,7 +22,7 @@
   rdfs:label "sample_fanvfd-data" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-sample_fanvfd:00001 a p223:AirHandlingUnit,
+sample_fanvfd:00001 a s223:AirHandlingUnit,
         s223:System ;
     rdfs:label "AHU" ;
     s223:hasMember sample_fanvfd:00002,
@@ -522,7 +522,8 @@ sample_fanvfd:00054 a s223:ObservableProperty,
 sample_fanvfd:00055 a s223:Connectable,
         s223:Controller,
         s223:Equipment,
-        s223:VFD ;
+        s223:VFD,
+        s223:VariableFrequencyDrive ;
     rdfs:label "RF_VFD" ;
     s223:cnx sample_fanvfd:00056,
         sample_fanvfd:00057,
@@ -727,8 +728,7 @@ sample_fanvfd:00076 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_fanvfd:00077 a p223:VoltageSensor,
-        s223:Connectable,
+sample_fanvfd:00077 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "voltage_sensor" ;
@@ -745,8 +745,7 @@ sample_fanvfd:00078 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-sample_fanvfd:00079 a p223:VoltageSensor,
-        s223:Connectable,
+sample_fanvfd:00079 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "speed_ref_voltage_sensor" ;
@@ -1166,9 +1165,9 @@ sample_fanvfd:00120 a s223:ConnectionPoint,
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf sample_fanvfd:00116 .
 
-sample_fanvfd:00121 a p223:Filter,
-        s223:Connectable,
-        s223:Equipment ;
+sample_fanvfd:00121 a s223:Connectable,
+        s223:Equipment,
+        s223:Filter ;
     rdfs:label "FILTER" ;
     s223:cnx sample_fanvfd:00122,
         sample_fanvfd:00123 ;
@@ -1229,7 +1228,8 @@ sample_fanvfd:00126 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00124 .
 
-sample_fanvfd:00127 a s223:Connectable,
+sample_fanvfd:00127 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx sample_fanvfd:00128,
@@ -1529,7 +1529,8 @@ sample_fanvfd:00160 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00158 .
 
-sample_fanvfd:00161 a s223:Connectable,
+sample_fanvfd:00161 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx sample_fanvfd:00162,
@@ -1829,7 +1830,8 @@ sample_fanvfd:00194 a s223:ConnectionPoint,
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf sample_fanvfd:00192 .
 
-sample_fanvfd:00195 a s223:Connectable,
+sample_fanvfd:00195 a s223:Actuator,
+        s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
     s223:cnx sample_fanvfd:00196,

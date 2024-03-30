@@ -13,7 +13,7 @@ s223_types = {
         "s223:FunctionOutput",
         "p223:ProducerOutput",
     ],
-    "FunctionBlock": ["p223:Producer", "s223:FunctionBlock"],
+    "Function": ["p223:Producer", "s223:Function"],
     "DomainSpace": ["s223:DomainSpace", "s223:PhysicalSpace"],
 }
 

@@ -7,7 +7,7 @@ _namespace = BOB
 
 
 class Window(Equipment):
-    _class_iri = P223.Window
+    _class_iri = S223.Window
     indoor: AirBidirectionalConnectionPoint
     outdoor: AirBidirectionalConnectionPoint
     naturalLight: LightVisibleOutletConnectionPoint

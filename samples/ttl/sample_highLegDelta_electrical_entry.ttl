@@ -30,11 +30,12 @@ ex1:00001 a p223:ElectricalDistributionPanel,
         ex1:00012,
         ex1:00016,
         ex1:00020,
-        ex1:00024 ;
+        ex1:00024,
+        ex1:00028 ;
     rdfs:comment "Main Entry Panel of Building using High Leg Delta Configuration" .
 
-ex1:00002 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00002 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesMainCircuitBreaker ;
     rdfs:label "MainBreaker" ;
@@ -46,14 +47,14 @@ ex1:00002 a p223:ElectricalCircuitBreaker,
         ex1:00009,
         ex1:00010,
         ex1:00011 ;
-    s223:connectedThrough ex1:00028,
-        ex1:00029,
-        ex1:00030,
-        ex1:00031,
-        ex1:00032,
+    s223:connectedThrough ex1:00032,
         ex1:00033,
         ex1:00034,
-        ex1:00035 ;
+        ex1:00035,
+        ex1:00036,
+        ex1:00037,
+        ex1:00038,
+        ex1:00039 ;
     s223:hasConnectionPoint ex1:00004,
         ex1:00005,
         ex1:00006,
@@ -82,8 +83,8 @@ ex1:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "MainBreaker.electricalInlet" ;
     s223:cnx ex1:00002,
-        ex1:00035 ;
-    s223:connectsThrough ex1:00035 ;
+        ex1:00039 ;
+    s223:connectsThrough ex1:00039 ;
     s223:hasMedium s223:AC-240VLL-208VLN-120VLN-3Ph-60Hz ;
     s223:isConnectionPointOf ex1:00002 .
 
@@ -92,8 +93,8 @@ ex1:00005 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletA" ;
     s223:cnx ex1:00002,
-        ex1:00028 ;
-    s223:connectsThrough ex1:00028 ;
+        ex1:00032 ;
+    s223:connectsThrough ex1:00032 ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:hasRole s223:ElectricalPhaseIdentifier-B ;
     s223:isConnectionPointOf ex1:00002 .
@@ -103,8 +104,8 @@ ex1:00006 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletB" ;
     s223:cnx ex1:00002,
-        ex1:00029 ;
-    s223:connectsThrough ex1:00029 ;
+        ex1:00033 ;
+    s223:connectsThrough ex1:00033 ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:hasRole s223:ElectricalPhaseIdentifier-C ;
     s223:isConnectionPointOf ex1:00002 .
@@ -114,8 +115,8 @@ ex1:00007 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletC" ;
     s223:cnx ex1:00002,
-        ex1:00030 ;
-    s223:connectsThrough ex1:00030 ;
+        ex1:00034 ;
+    s223:connectsThrough ex1:00034 ;
     s223:hasMedium s223:AC-208VLL-1Ph-60Hz ;
     s223:hasRole s223:ElectricalPhaseIdentifier-C ;
     s223:isConnectionPointOf ex1:00002 .
@@ -125,8 +126,8 @@ ex1:00008 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletAB" ;
     s223:cnx ex1:00002,
-        ex1:00031 ;
-    s223:connectsThrough ex1:00031 ;
+        ex1:00035 ;
+    s223:connectsThrough ex1:00035 ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
     s223:hasRole s223:ElectricalPhaseIdentifier-AB ;
     s223:isConnectionPointOf ex1:00002 .
@@ -136,8 +137,8 @@ ex1:00009 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletBC" ;
     s223:cnx ex1:00002,
-        ex1:00032 ;
-    s223:connectsThrough ex1:00032 ;
+        ex1:00036 ;
+    s223:connectsThrough ex1:00036 ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
     s223:hasRole s223:ElectricalPhaseIdentifier-BC ;
     s223:isConnectionPointOf ex1:00002 .
@@ -147,8 +148,8 @@ ex1:00010 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletCA" ;
     s223:cnx ex1:00002,
-        ex1:00033 ;
-    s223:connectsThrough ex1:00033 ;
+        ex1:00037 ;
+    s223:connectsThrough ex1:00037 ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
     s223:hasRole s223:ElectricalPhaseIdentifier-CA ;
     s223:isConnectionPointOf ex1:00002 .
@@ -158,20 +159,20 @@ ex1:00011 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "MainBreaker.electricalOutletABC" ;
     s223:cnx ex1:00002,
-        ex1:00034 ;
-    s223:connectsThrough ex1:00034 ;
+        ex1:00038 ;
+    s223:connectsThrough ex1:00038 ;
     s223:hasMedium s223:AC-240VLL-3Ph-60Hz ;
     s223:hasRole s223:ElectricalPhaseIdentifier-ABC ;
     s223:isConnectionPointOf ex1:00002 .
 
-ex1:00012 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00012 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#1" ;
     s223:cnx ex1:00014,
         ex1:00015 ;
-    s223:connectedThrough ex1:00028 ;
+    s223:connectedThrough ex1:00032 ;
     s223:hasConnectionPoint ex1:00014,
         ex1:00015 ;
     s223:hasProperty ex1:00013 ;
@@ -194,8 +195,8 @@ ex1:00014 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#1.electricalInlet" ;
     s223:cnx ex1:00012,
-        ex1:00028 ;
-    s223:connectsThrough ex1:00028 ;
+        ex1:00032 ;
+    s223:connectsThrough ex1:00032 ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00012 .
 
@@ -207,14 +208,14 @@ ex1:00015 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00012 .
 
-ex1:00016 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00016 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:ThreePolesCircuitBreaker ;
     rdfs:label "CB#2" ;
     s223:cnx ex1:00018,
         ex1:00019 ;
-    s223:connectedThrough ex1:00034 ;
+    s223:connectedThrough ex1:00038 ;
     s223:hasConnectionPoint ex1:00018,
         ex1:00019 ;
     s223:hasProperty ex1:00017 ;
@@ -237,8 +238,8 @@ ex1:00018 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#2.electricalInlet" ;
     s223:cnx ex1:00016,
-        ex1:00034 ;
-    s223:connectsThrough ex1:00034 ;
+        ex1:00038 ;
+    s223:connectsThrough ex1:00038 ;
     s223:hasMedium s223:AC-240VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex1:00016 .
 
@@ -250,14 +251,14 @@ ex1:00019 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-240VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex1:00016 .
 
-ex1:00020 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00020 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:TwoPolesCircuitBreaker ;
     rdfs:label "CB#3" ;
     s223:cnx ex1:00022,
         ex1:00023 ;
-    s223:connectedThrough ex1:00031 ;
+    s223:connectedThrough ex1:00035 ;
     s223:hasConnectionPoint ex1:00022,
         ex1:00023 ;
     s223:hasProperty ex1:00021 ;
@@ -280,8 +281,8 @@ ex1:00022 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#3.electricalInlet" ;
     s223:cnx ex1:00020,
-        ex1:00031 ;
-    s223:connectsThrough ex1:00031 ;
+        ex1:00035 ;
+    s223:connectsThrough ex1:00035 ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00020 .
 
@@ -293,14 +294,14 @@ ex1:00023 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00020 .
 
-ex1:00024 a p223:ElectricalCircuitBreaker,
-        s223:Connectable,
+ex1:00024 a s223:Connectable,
+        s223:ElectricBreaker,
         s223:Equipment,
         bob:SinglePoleCircuitBreaker ;
     rdfs:label "CB#4" ;
     s223:cnx ex1:00026,
         ex1:00027 ;
-    s223:connectedThrough ex1:00030 ;
+    s223:connectedThrough ex1:00034 ;
     s223:hasConnectionPoint ex1:00026,
         ex1:00027 ;
     s223:hasProperty ex1:00025 ;
@@ -323,8 +324,8 @@ ex1:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "CB#4.electricalInlet" ;
     s223:cnx ex1:00024,
-        ex1:00030 ;
-    s223:connectsThrough ex1:00030 ;
+        ex1:00034 ;
+    s223:connectsThrough ex1:00034 ;
     s223:hasMedium s223:AC-208VLL-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00024 .
 
@@ -336,7 +337,50 @@ ex1:00027 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-208VLL-1Ph-60Hz ;
     s223:isConnectionPointOf ex1:00024 .
 
-ex1:00028 a s223:Connection ;
+ex1:00028 a s223:Connectable,
+        s223:ElectricBreaker,
+        s223:Equipment,
+        bob:SinglePoleCircuitBreaker ;
+    rdfs:label "CB#5" ;
+    s223:cnx ex1:00030,
+        ex1:00031 ;
+    s223:connectedThrough ex1:00034 ;
+    s223:hasConnectionPoint ex1:00030,
+        ex1:00031 ;
+    s223:hasProperty ex1:00029 ;
+    bob:currentRating ex1:00029 ;
+    rdfs:comment "High Leg Neutral, second breaker" .
+
+ex1:00029 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Amps ;
+    rdfs:label "Current rating of breaker" ;
+    s223:hasAspect s223:Dimensioned-Nominal ;
+    s223:hasValue 15.0 ;
+    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
+    qudt:hasUnit unit:A .
+
+ex1:00030 a s223:ConnectionPoint,
+        s223:Electricity_208VLL_1Ph_60HzConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "CB#5.electricalInlet" ;
+    s223:cnx ex1:00028,
+        ex1:00034 ;
+    s223:connectsThrough ex1:00034 ;
+    s223:hasMedium s223:AC-208VLL-1Ph-60Hz ;
+    s223:isConnectionPointOf ex1:00028 .
+
+ex1:00031 a s223:ConnectionPoint,
+        s223:Electricity_208VLL_1Ph_60HzConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "CB#5.electricalOutlet" ;
+    s223:cnx ex1:00028 ;
+    s223:hasMedium s223:AC-208VLL-1Ph-60Hz ;
+    s223:isConnectionPointOf ex1:00028 .
+
+ex1:00032 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusA" ;
     s223:cnx ex1:00005,
         ex1:00014 ;
@@ -347,7 +391,7 @@ ex1:00028 a s223:Connection ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-A ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz .
 
-ex1:00029 a s223:Connection ;
+ex1:00033 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusB" ;
     s223:cnx ex1:00006 ;
     s223:connectsAt ex1:00006 ;
@@ -355,18 +399,21 @@ ex1:00029 a s223:Connection ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-B ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz .
 
-ex1:00030 a s223:Connection ;
+ex1:00034 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusC" ;
     s223:cnx ex1:00007,
-        ex1:00026 ;
+        ex1:00026,
+        ex1:00030 ;
     s223:connectsAt ex1:00007,
-        ex1:00026 ;
+        ex1:00026,
+        ex1:00030 ;
     s223:connectsFrom ex1:00002 ;
-    s223:connectsTo ex1:00024 ;
+    s223:connectsTo ex1:00024,
+        ex1:00028 ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-C ;
     s223:hasMedium s223:AC-208VLL-1Ph-60Hz .
 
-ex1:00031 a s223:Connection ;
+ex1:00035 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusAB" ;
     s223:cnx ex1:00008,
         ex1:00022 ;
@@ -377,7 +424,7 @@ ex1:00031 a s223:Connection ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-AB ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz .
 
-ex1:00032 a s223:Connection ;
+ex1:00036 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusBC" ;
     s223:cnx ex1:00009 ;
     s223:connectsAt ex1:00009 ;
@@ -385,7 +432,7 @@ ex1:00032 a s223:Connection ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-BC ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz .
 
-ex1:00033 a s223:Connection ;
+ex1:00037 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusCA" ;
     s223:cnx ex1:00010 ;
     s223:connectsAt ex1:00010 ;
@@ -393,7 +440,7 @@ ex1:00033 a s223:Connection ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-CA ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz .
 
-ex1:00034 a s223:Connection ;
+ex1:00038 a s223:Connection ;
     rdfs:label "Main Entry Panel.electricalBusABC" ;
     s223:cnx ex1:00011,
         ex1:00018 ;
@@ -404,7 +451,7 @@ ex1:00034 a s223:Connection ;
     s223:hasAspect s223:ElectricalPhaseIdentifier-ABC ;
     s223:hasMedium s223:AC-240VLL-3Ph-60Hz .
 
-ex1:00035 a s223:Connection ;
+ex1:00039 a s223:Connection ;
     rdfs:label "HighLegDeltaTransfoOutput" ;
     s223:cnx ex1:00004 ;
     s223:connectsAt ex1:00004 ;

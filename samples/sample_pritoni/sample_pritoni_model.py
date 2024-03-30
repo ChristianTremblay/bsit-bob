@@ -1,31 +1,3 @@
-from pathlib import Path
-from typing import Any
-
-from header import sample_header
-
-from bob.connections.air import *
-from bob.connections.electricity import *
-from bob.connections.light import LightVisibleConnection
-from bob.core import bind_model_namespace, data_graph, dump, schema_graph
-from bob.equipment.architectural import Window
-from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipment.hvac.fan import Fan
-from bob.equipment.hvac.filter import Filter
-from bob.equipment.hvac.vav import VAV
-from bob.equipment.lighting.light import Luminaire
-from bob.property import QuantifiableObservableProperty
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.temperature import AirTemperatureSensor
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.light import LightingSpace, LightingZone
-from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
-
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
-_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
-
 import physical_spaces as ps  # isort: skip
 import hvac_devices as hd  # isort: skip
 import hvac_spaces as hs  # isort: skip
@@ -40,6 +12,17 @@ import electricity  # isort: skip
 import functions  # isort: skip
 import bacnet_references  # isort: skip
 import fake_values  # isort: skip
+
+from pathlib import Path
+from typing import Any
+from header import sample_header
+
+from bob.core import bind_model_namespace, data_graph, dump, schema_graph
+
+model_name = Path(__file__).stem
+global_ns = Path(__file__).parent.stem
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+
 
 # Relations between Physical spaces and Domain spaces
 ps.bldg > ps.roof

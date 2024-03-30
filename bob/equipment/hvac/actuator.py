@@ -120,7 +120,7 @@ BasicActuator_template = {
 
 
 class BaseActuator(Equipment):
-    _class_iri = S223.Equipment
+    _class_iri = S223.Actuator
     command: Union[PercentCommand, OnOffCommand]
     position: PropertyReference
     position_feedback: Union[Percent, OpenCloseEnum]
@@ -175,7 +175,7 @@ ElectricalProportionalActuator_template = {
 
 
 class ElectricalProportionalActuator(BaseActuator):
-    _class_iri = S223.Equipment
+    _class_iri = S223.Actuator
     command: PercentCommand
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -205,7 +205,7 @@ ElectricalOnOffActuator_template = {
 
 
 class ElectricalOnOffActuator(BaseActuator):
-    _class_iri = S223.Equipment
+    _class_iri = S223.Actuator
     command: OnOffCommand
 
     def __init__(self, config: Dict = {}, **kwargs):
@@ -240,7 +240,7 @@ PneumaticOnOffActuator_template = {
 
 
 class PneumaticProportionalActuator(BaseActuator):
-    _class_iri = S223.Equipment
+    _class_iri = S223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -251,7 +251,7 @@ class PneumaticProportionalActuator(BaseActuator):
 
 
 class PneumaticOnOffActuator(BaseActuator):
-    _class_iri = S223.Equipment
+    _class_iri = S223.Actuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):

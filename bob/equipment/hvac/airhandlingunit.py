@@ -33,12 +33,88 @@ fan_coil_template = {
 
 
 class AirHandlingUnit(System):
-    _class_iri = P223.AirHandlingUnit
+    """
+        This is treated as a system.
+        We will add multiple devices inside using a template
+
+        example from pritoni (2024-01-06)
+        ahu_template = {
+        "params": {"label": "AHU", "comment": "AHU delivering air to 2 VAV boxes"},
+        "sensors": {
+            ("OA-T", AirTemperatureSensor): {
+                "hasUnit": UNIT.DEG_C,
+                "comment": "Oudoor air temperature (S3)",
+            },
+            ("TPD1", AirDifferentialStaticPressureSensor): {
+                "hasUnit": UNIT.PA,
+                "comment": "Filter Differential Pressure Sensor (S5)",
+            },
+            ("HC-T", AirTemperatureSensor): {
+                "hasUnit": UNIT.DEG_C,
+                "comment": "Air temperature after heating coil (S6)",
+            },
+            ("MA-T", AirTemperatureSensor): {
+                "hasUnit": UNIT.DEG_F,
+                "comment": "Return Air temperature (S4)",
+            },
+            ("DA-T", AirTemperatureSensor): {
+                "hasUnit": UNIT.DEG_F,
+                "comment": "Discharge Air temperature after cooling coil (S7)",
+            },
+            ("RA-T", AirTemperatureSensor): {
+                "hasUnit": UNIT.DEG_F,
+                "comment": "Return Air temperature (S2)",
+            },
+            ("TPD2", AirDifferentialStaticPressureSensor): {
+                "hasUnit": UNIT.PA,
+                "comment": "Supply Duct Static Pressure (S8)",
+            },
+            ("TPD3", AirDifferentialStaticPressureSensor): {
+                "hasUnit": UNIT.PA,
+                "comment": "Return Duct Static Pressure (S1)",
+            },
+        },
+        "equipment": {
+            ("RF", Fan): {
+                "comment": "Return Air Fan",
+                "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+                "hasRole": Role.Return,
+            },
+            ("RF_VFD", VFD): {
+                "comment": "Return Air Fan VFD",
+            },
+            ("SF", Fan): {
+                "comment": "Supply Air Fan",
+                "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+                "hasRole": Role.Supply,
+            },
+            ("SF_Starter", MotorStarter): {
+                "comment": "Supply Air Fan Starter",
+            },
+            ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
+            ("HTGCOIL", HotWaterCoil): {"comment": "Heating coil"},
+            ("FILTER", Filter): {"comment": "Filter"},
+            ("OADPR", ElectricalActuatedProportionalDamper): {
+                "comment": "Outdoor air damper (A3)"
+            },
+            ("MADPR", ElectricalActuatedProportionalDamper): {
+                "comment": "Mixed Air Damper (A2)"
+            },
+            ("EADPR", ElectricalActuatedProportionalDamper): {
+                "comment": "Exhaust Air Damper (A1)"
+            },
+        },
+    }
+
+    """
+
+    _class_iri = S223.AirHandlingUnit
     outsideAirInlet: AirInletSystemConnectionPoint
     returnAirInlet: AirInletSystemConnectionPoint
     supplyAirOutlet: AirOutletSystemConnectionPoint
     exhaustAirOutlet: AirOutletSystemConnectionPoint
     electricalInlet: Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint
+    # The system connection points are now a Bob thing only, there is no such thing in 223P anymore
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(ahu_template, config)
@@ -48,7 +124,7 @@ class AirHandlingUnit(System):
 
 
 class FanCoil(System):
-    _class_iri = P223.Fancoil
+    _class_iri = S223.FanCoilUnit
     returnAirInlet: AirInletSystemConnectionPoint
     supplyAirOutlet: AirOutletSystemConnectionPoint
     exhaustAirOutlet: AirOutletSystemConnectionPoint

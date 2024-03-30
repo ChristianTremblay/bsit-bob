@@ -6,7 +6,6 @@ import lighting_devices as ld
 import network_devices as nd
 import physical_spaces as ps
 
-from bob.connections.electricity import *
 from bob.core import bind_model_namespace, dump
 
 model_name = Path(__file__).stem

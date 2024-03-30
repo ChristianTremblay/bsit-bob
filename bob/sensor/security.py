@@ -21,7 +21,7 @@ _namespace = S223
 
 
 class IntrusionSensor(Sensor):
-    _class_iri = P223.IntrusionSensor
+    _class_iri = S223.Sensor
     observes: PropertyReference  # OnOffStatus
 
     def __init__(self, **kwargs: Any) -> None:

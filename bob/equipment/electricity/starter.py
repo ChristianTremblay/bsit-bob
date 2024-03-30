@@ -6,7 +6,7 @@ from bob.properties.electricity import ElectricPower
 from bob.properties.ratio import Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 
-from ...connections.electricity import *
+from ...connections import electricity as elec_cnx
 from ...connections.controlsignal import (
     OnOffSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
@@ -33,8 +33,8 @@ _namespace = BOB
 
 electric_starter_template = {
     "cp": {
-        "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
-        "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
+        "electricalInlet": elec_cnx.Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": elec_cnx.Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
     },
     "sensors": {
         ("currentRelay", CurrentRelay): {},

@@ -129,8 +129,8 @@ class Sensor(_Sensor):
         return self
 
 
-class VirtualSensor(Sensor):
-    "Virtal Sensor"
-    _class_iri: URIRef = S223.VirtualSensor
-    # hasObservationLocation: # maxCount = 0
-    hasFunctionInput: Property
+# class VirtualSensor(Sensor):
+#    "Virtal Sensor"
+#    _class_iri: URIRef = S223.VirtualSensor
+#    # hasObservationLocation: # maxCount = 0
+#    hasFunctionInput: Property

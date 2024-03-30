@@ -6,7 +6,7 @@ _namespace = BOB
 
 
 class Door(Equipment):
-    _class_iri = P223.Door
+    _class_iri = S223.Door
     door: AirBidirectionalConnectionPoint
     naturalLight: LightVisibleOutletConnectionPoint
 

@@ -24,7 +24,7 @@ compressor_template = {
 
 
 class AirCompressor(Equipment):
-    _class_iri: URIRef = P223.AirCompressor
+    _class_iri: URIRef = S223.Compressor
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 
     onOffStatus: OnOffStatus

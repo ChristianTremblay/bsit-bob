@@ -105,7 +105,7 @@ vfd_template = {
 
 
 class VFD(_VFD):
-    _class_iri: URIRef = S223.VFD
+    _class_iri: URIRef = S223.VariableFrequencyDrive
     amps: PropertyReference
     volts: PropertyReference
 

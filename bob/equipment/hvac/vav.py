@@ -22,7 +22,7 @@ from ...core import (
     System,
     template_update,
 )
-from ...equipment.hvac.coil import HotWaterCoil
+from ...equipment.hvac.coil import ElectricalHeatingCoil, HotWaterCoil
 from ...equipment.hvac.damper import Damper, ElectricalActuatedProportionalDamper
 from ...equipment.hvac.fan import Fan
 from ...equipment.hvac.valve import TwoWayActuatedProportionalValve
@@ -48,7 +48,9 @@ vav_system_template = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"}
+        ("DPR", ElectricalActuatedProportionalDamper): {
+            "comment": "VAV Box Damper including a damper actuator (electrical proportional)"
+        }
     },
 }
 
@@ -90,13 +92,32 @@ vav_withreheat_template = {
     },
     "equipment": {
         ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
-        ("HWC", HotWaterCoil): {"comment": "VAV Hot Water Coil"},
+        ("REHEAT", HotWaterCoil): {"comment": "VAV Hot Water Coil"},
+    },
+}
+
+vav_withelectricreheat_template = {
+    "params": {"label": "VAV", "comment": "VAV Description"},
+    "sensors": {
+        ("SA-F", AirFlowSensor): {"hasUnit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
+        ("DA-T", AirTemperatureSensor): {
+            "hasUnit": UNIT.DEG_C,
+            "comment": "Discharge Air Temperature",
+        },
+        ("ZN-T", AirTemperatureSensor): {
+            "hasUnit": UNIT.DEG_C,
+            "comment": "Temperature of space",
+        },
+    },
+    "equipment": {
+        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
+        ("REHEAT", ElectricalHeatingCoil): {"comment": "VAV Electrical Heating Coil"},
     },
 }
 
 
 class VAV(Equipment):
-    _class_iri = S223.VAV
+    _class_iri = S223.TerminalUnit
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     damper: ElectricalActuatedProportionalDamper
@@ -111,7 +132,7 @@ class VAV(Equipment):
 
 
 class VAV_Simple(Equipment):
-    _class_iri = S223.VAV
+    _class_iri = S223.SingleDuctTerminal
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     airFlow: PropertyReference
@@ -125,9 +146,9 @@ class VAV_Simple(Equipment):
         _log.debug(f"VAV_Simple.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
 
-        # Mapping internal
-        self["DPR"].airInlet.mapsTo = self.airInlet
-        self["DPR"].airOutlet.mapsTo = self.airOutlet
+        # Mapping internal of the group composed of damper and actuator
+        self["DPR"].airInlet.maps_to(self.airInlet)
+        self["DPR"].airOutlet.maps_to(self.airOutlet)
 
         # Equivalence
         self.damperPosition = self["DPR"].position
@@ -139,7 +160,7 @@ class VAV_Simple(Equipment):
 
 
 class VAV_Dual(Equipment):
-    _class_iri = S223.VAV
+    _class_iri = S223.DualDuctTerminal
     airInlet: AirInletConnectionPoint
     plenumInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
@@ -151,8 +172,8 @@ class VAV_Dual(Equipment):
     def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["DPR"]["damper"].airInlet
-        self.airOutlet.mapsTo = self["DPR"]["damper"].airOutlet
+        self["DPR"]["damper"].airInlet.maps_to(self.airInlet)
+        self["DPR"]["damper"].airOutlet.maps_to(self.airOutlet)
         self.zoneTemperature = self["ZN-T"].observedProperty
         # self.damperPosition = self['DPR'].position
         # self.airFlow = self['SA-F'].observedProperty
@@ -161,23 +182,38 @@ class VAV_Dual(Equipment):
         self["DA-T"] % self["DPR"]["damper"].airOutlet
 
 
+# Cannot inherit from VAV_Simple for now because DA-T will not point to the same thing and DRP connected to reheat, etc...
 class VAV_Reheat(Equipment):
-    _class_iri = S223.VAV
+    _class_iri = S223.SingleDuctTerminal
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
     airFlow: PropertyReference
     occupancyStatus: PropertyReference
     damperPosition: PropertyReference
+    supplyAirTemperature: PropertyReference
 
-    def __init__(self, config: Dict = vav_withreheat_template, **kwargs) -> None:
-        kwargs = {**config.get("params", {}), **kwargs}
-        super().__init__(config, **kwargs)
-        self.airInlet.mapsTo = self["DPR"]["damper"].airInlet
-        self.airOutlet.mapsTo = self["DPR"]["damper"].airOutlet
-        # self.damperPosition = self['DPR'].position
-        # self.airFlow = self['SA-F'].observedProperty
+    def __init__(self, config: Dict = None, reheat_type="water", **kwargs) -> None:
+        if "water" in reheat_type.lower():
+            template = vav_withreheat_template
+        elif "elec" in reheat_type.lower():
+            template = vav_withelectricreheat_template
+        else:
+            raise ValueError("Please provide reheat_type as water or electrical")
+        _config = template_update(template, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _log.debug(f"VAV_Simple.__init__ {_config} {kwargs}")
+        super().__init__(_config, **kwargs)
+
+        # Mapping internal of the group composed of damper and actuator
+        self["DPR"].airInlet.maps_to(self.airInlet)
+        self["REHEAT"].airOutlet.maps_to(self.airOutlet)
+
+        # Equivalence
+        self.damperPosition = self["DPR"].position
+        self.zoneTemperature = self["ZN-T"].observedProperty
+        self.airFlow = self["SA-F"].observedProperty
 
         self["SA-F"] % self["DPR"]["damper"].airOutlet
-        self["DA-T"] % self["HWC"].airOutlet
+        self["DA-T"] % self["REHEAT"].airOutlet
 
-        self["DPR"]["damper"] >> self["HWC"]
+        self["DPR"] >> self["REHEAT"]

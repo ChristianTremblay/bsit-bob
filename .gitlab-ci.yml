@@ -23,15 +23,15 @@ before_script:
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
+  - pip install .
+  - pip install pytest
+  - pip install pyshacl
+  - pip install ontoenv
+  - pip install rdflib
+  - pip install pyvis
 
 test_python:
   script:
-    - pip install .
-    - pip install pytest
-    - pip install pyshacl
-    - pip install ontoenv
-    - pip install rdflib
-    - pip install pyvis
     - pytest
     
 generate_html:
