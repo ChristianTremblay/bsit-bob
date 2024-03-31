@@ -2,7 +2,8 @@ from pathlib import Path
 
 # import functions as fn
 import hvac_devices as hd
-#import hvac_spaces as hs
+
+# import hvac_spaces as hs
 
 # import lighting_devices as ld
 from rdflib import URIRef
@@ -92,7 +93,7 @@ hd.vav1["REHEAT"]["modulation"] @ heater_command.presentValue
 hd.vav1["DPR"].position_feedback @ damper_feedback.presentValue
 hd.vav1["supplyAirTemperature"] @ vav1_sat.presentValue
 hd.vav1.airFlow @ vav1_flow.presentValue
-#hs.zone1_hvac.temperature_setpoint @ zone1_temp_sp.presentValue
+# hs.zone1_hvac.temperature_setpoint @ zone1_temp_sp.presentValue
 
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
 from pathlib import Path
 
 
-
 from bob.connections.electricity import (
     Electricity_120VLN_1Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
@@ -77,11 +76,12 @@ vav1_config = {
     },
 }
 
+
 class BACnetVAV(VAV_Reheat, Device):
     pass
 
-vav1 = BACnetVAV(config=vav1_config)
 
+vav1 = BACnetVAV(config=vav1_config)
 
 
 if __name__ == "__main__":

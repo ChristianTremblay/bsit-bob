@@ -36,5 +36,5 @@ f = LessThan(
     u2=zone_setpoint,
     y=heating_command,
 )
-f.y >> hd.vav1['REHEAT']['modulation']
+f.y >> hd.vav1["REHEAT"]["modulation"]
 hd.vav1.executes(f)
