@@ -24,7 +24,7 @@ from bob.equipment.hvac.damper import (
     ElectricalActuatedProportionalDamper,
     GravityDamper,
 )
-from bob.equipment.hvac.fan import Fan, FanWithStarter, FanWithVFD
+from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor

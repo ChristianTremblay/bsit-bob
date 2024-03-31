@@ -17,7 +17,7 @@ from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
 from bob.equipment.hvac.chiller import Chiller
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipment.hvac.fan import Fan, FanWithStarter, FanWithVFD
+from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
