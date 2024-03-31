@@ -20,11 +20,11 @@ from ...core import (
     ConnectionPoint,
     Equipment,
     PropertyReference,
-    template_update,
 )
 from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus
 from ...property import QuantifiableObservableProperty
+from ...template import configure_relations, template_update
 from ..electricity.starter import MotorStarter
 from ..electricity.vfd import VFD
 
@@ -47,6 +47,7 @@ fan_template = {
         ("powerFactor", PowerFactor): {},
         ("efficiency", Percent): {},
     },
+    "relations": [],
 }
 
 
@@ -87,6 +88,7 @@ class Fan(Equipment):
         _log.debug(f"Fan.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
+        configure_relations(self, _config.get("relations", []))
 
 
 starter_addon_template = {
@@ -101,54 +103,31 @@ starter_addon_template = {
         }
     },
     "properties": {("speedRatio", PercentCommand): {}},
+    "relations": [
+        ("self.onOffCommand", "=", 'self["starter"]["onOffCommand"]'),
+        (
+            "self.onOffStatus",
+            "=",
+            'self["starter"]["currentRelay"]["currentSensor"].observes',
+        ),
+        ('self["starter"].actuatesProperty', "=", 'self["speedRatio"]'),
+        ('self["starter"].electricalOutlet', ">>", "self.electricalInlet"),
+    ],
 }
 
 
-class FanWithStarter(Fan):
-    """
-    This fan is composed of a blower, an electrical motor and a starter
-    """
-
-    _class_iri: URIRef = S223.Fan
-
-    def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update(
-            bases=[fan_template, starter_addon_template],
-            config=config,
-        )
-        kwargs = {**_config.pop("params", {}), **kwargs}
-        _log.debug(f"FanWithStarter.__init__ {_config} {kwargs}")
-        super().__init__(_config, **kwargs)
-
-        self.onOffCommand = self["starter"]["onOffCommand"]
-        self.onOffStatus = self["starter"]["starter.current_sensor"].observes
-        self["starter"].actuatesProperty = self["speedRatio"]
-        self["starter"].electricalOutlet >> self.electricalInlet
+fan_with_starter_template = template_update(fan_template, starter_addon_template)
 
 
 VFD_addon_template = {
     "equipment": {("vfd", VFD): {}},
     "properties": {},
+    "relations": [
+        ("self.onOffCommand", "=", 'self["vfd"]["run_command"]'),
+        ("self.onOffStatus", "=", 'self["vfd"]["drive_running"]'),
+        ('self["vfd"].actuatesProperty', "=", 'self["speedRatio"]'),
+        ('self["vfd"].electricalOutlet', ">>", "self.electricalInlet"),
+    ],
 }
 
-
-class FanWithVFD(Fan):
-    """
-    This fan is composed of a blower, an electrical motor and a VFD
-    """
-
-    _class_iri: URIRef = S223.Fan
-
-    def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update(
-            bases=[fan_template, VFD_addon_template],
-            config=config,
-        )
-        kwargs = {**_config.pop("params", {}), **kwargs}
-        _log.debug(f"FanWithVFD.__init__ {_config} {kwargs}")
-        super().__init__(_config, **kwargs)
-
-        self.onOffCommand = self["vfd"]["run_command"]
-        self.onOffStatus = self["vfd"]["drive_running"]
-        self["vfd"].actuatesProperty = self["speedRatio"]
-        self["vfd"].electricalOutlet >> self.electricalInlet
+fan_with_vfd_template = template_update(fan_template, VFD_addon_template)
