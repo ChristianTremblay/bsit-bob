@@ -25,7 +25,8 @@ from ...connections.water import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment, PropertyReference, template_update
+from ...core import BOB, P223, S223, Equipment, PropertyReference
+from ...template import template_update
 
 _namespace = BOB
 

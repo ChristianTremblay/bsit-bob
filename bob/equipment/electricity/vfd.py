@@ -10,19 +10,19 @@ from bob.properties.electricity import Frequency, Volts
 from bob.sensor.electricity import CurrentSensor, VoltageSensor
 from bob.sensor.motion import PositionSensor
 
+from ...connections.controlsignal import (
+    ModulationSignalInletConnectionPoint,
+    OnOffSignalOutletConnectionPoint,
+)
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
-from ...connections.controlsignal import (
-    ModulationSignalInletConnectionPoint,
-    OnOffSignalOutletConnectionPoint,
-)
 from ...connections.network import (
-    RS485BidirectionalConnectionPoint,
     EthernetBidirectionalConnectionPoint,
+    RS485BidirectionalConnectionPoint,
 )
 from ...core import (
     BOB,
@@ -33,7 +33,6 @@ from ...core import (
     Property,
     PropertyReference,
     logging,
-    template_update,
 )
 from ...properties import (
     HP,
@@ -48,6 +47,7 @@ from ...properties import (
     PowerFactor,
     Temperature,
 )
+from ...template import template_update
 
 # logging
 _log = logging.getLogger(__name__)

@@ -12,21 +12,13 @@ from ...connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from ...core import (
-    BOB,
-    P223,
-    S223,
-    UNIT,
-    Equipment,
-    PropertyReference,
-    System,
-    template_update,
-)
+from ...core import BOB, P223, S223, UNIT, Equipment, PropertyReference, System
 from ...equipment.hvac.coil import ElectricalHeatingCoil, HotWaterCoil
 from ...equipment.hvac.damper import Damper, ElectricalActuatedProportionalDamper
 from ...equipment.hvac.fan import Fan
 from ...equipment.hvac.valve import TwoWayActuatedProportionalValve
 from ...sensor.flow import AirFlowSensor
+from ...template import template_update
 
 # logging
 _log = logging.getLogger(__name__)

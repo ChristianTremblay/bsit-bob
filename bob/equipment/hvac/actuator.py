@@ -19,30 +19,23 @@ from ...connections.air import (
     CompressedAirInletConnectionPoint,
     CompressedAirOutletConnectionPoint,
 )
-from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    Electricity_24VLN_1Ph_60HzInletConnectionPoint,
-    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-)
 from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     ModulationSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
 )
+from ...connections.electricity import (
+    ElectricalInletConnectionPoint,
+    Electricity_24VLN_1Ph_60HzInletConnectionPoint,
+    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
+)
 from ...connections.light import (
     LightOutletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from ...core import (
-    BOB,
-    P223,
-    S223,
-    Equipment,
-    Property,
-    PropertyReference,
-    template_update,
-)
+from ...core import BOB, P223, S223, Equipment, Property, PropertyReference
+from ...template import template_update
 from .. import _Actuator
 
 _namespace = BOB
@@ -123,9 +116,9 @@ class BaseActuator(Equipment):
     _class_iri = S223.Actuator
     command: Union[PercentCommand, OnOffCommand]
     position: PropertyReference
-    position_feedback: Union[Percent, OpenCloseEnum]
-    is_open: OnOffStatus
-    is_closed: OnOffStatus
+    # position_feedback: Union[Percent, OpenCloseEnum]
+    # is_open: OnOffStatus
+    # is_closed: OnOffStatus
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(BasicActuator_template, config)

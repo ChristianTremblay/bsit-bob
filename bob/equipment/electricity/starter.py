@@ -8,8 +8,8 @@ from bob.properties.states import OnOffCommand, OnOffStatus
 
 from ...connections import electricity as elec_cnx
 from ...connections.controlsignal import (
-    OnOffSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
+    OnOffSignalOutletConnectionPoint,
 )
 from ...core import (
     BOB,
@@ -21,8 +21,8 @@ from ...core import (
     Property,
     PropertyReference,
     logging,
-    template_update,
 )
+from ...template import template_update
 from .switch import CurrentRelay
 
 # logging
@@ -59,7 +59,7 @@ class MotorStarter(_MotorStarter):
     outputSignal: OnOffSignalOutletConnectionPoint
     inputSignal: OnOffSignalInletConnectionPoint
     onOffStatus: PropertyReference
-    onOffCommand: OnOffCommand  # this property could have `hasAspect` HandOffAutoEnum
+    # onOffCommand: OnOffCommand  # this property could have `hasAspect` HandOffAutoEnum
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electric_starter_template, config)

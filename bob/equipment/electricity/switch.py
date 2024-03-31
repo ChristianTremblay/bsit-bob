@@ -19,10 +19,10 @@ from ...core import (
     Node,
     PropertyReference,
     logging,
-    template_update,
 )
 from ...properties.time import Hour
 from ...sensor.electricity import CurrentSensor
+from ...template import template_update
 
 _namespace = BOB
 

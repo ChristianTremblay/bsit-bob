@@ -11,7 +11,8 @@ from ...connections.air import (
 from ...connections.electricity import (
     Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment, System, template_update
+from ...core import BOB, P223, S223, Equipment, System
+from ...template import template_update
 
 # logging
 _log = logging.getLogger(__name__)

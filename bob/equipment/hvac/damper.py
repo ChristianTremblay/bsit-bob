@@ -27,18 +27,10 @@ from ...connections.light import (
     LightVisibleOutletConnectionPoint,
 )
 from ...connections.mechanical import MechanicalCoupling, MechanicalInletConnectionPoint
-from ...core import (
-    BOB,
-    P223,
-    S223,
-    Equipment,
-    PropertyReference,
-    System,
-    logging,
-    template_update,
-)
+from ...core import BOB, P223, S223, Equipment, PropertyReference, System, logging
 from ...producer import AnalogInput, AnalogOutput
 from ...properties import Nm, Percent, PercentCommand
+from ...template import template_update
 from .actuator import (
     BaseActuator,
     ElectricalOnOffActuator,

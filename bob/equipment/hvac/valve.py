@@ -36,18 +36,9 @@ from ...connections.water import (
     WaterOutletConnectionPoint,
     WaterOutletSystemConnectionPoint,
 )
-from ...core import (
-    BOB,
-    P223,
-    S223,
-    Equipment,
-    Node,
-    PropertyReference,
-    System,
-    logging,
-    template_update,
-)
+from ...core import BOB, P223, S223, Equipment, Node, PropertyReference, System, logging
 from ...properties import Gallons, Percent
+from ...template import template_update
 from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
 # logging

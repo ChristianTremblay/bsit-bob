@@ -20,10 +20,10 @@ from ...core import (
     PropertyReference,
     data_graph,
     logging,
-    template_update,
 )
 from ...enum import Role
 from ...externalreference import NetworkProfile
+from ...template import template_update
 from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 
 # logging
