@@ -4,7 +4,6 @@ Bob the SI-WG Builder
 
 from __future__ import annotations
 
-import copy
 import inspect
 import io
 import itertools
@@ -3400,7 +3399,7 @@ class Equipment(Container, Connectable):
 
         if _config:
             for group_name, group_items in _config.items():
-                if group_name == "params":
+                if group_name in ("params", "relations"):
                     continue
                 if group_name == "cp":
                     for thing_name, thing_class in group_items.items():
@@ -3603,42 +3602,6 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
     _log.debug(f"    - from_thing: {from_thing}")
 
     connect_mm(from_thing, connection_point)
-
-
-def template_update(base: Dict = {}, config: Dict = None, bases: List = None):
-    """
-    This utility allows to preserve module templates from
-    undesired modification during creation of Equipment.
-
-    Usage :
-    _config = template_update(template, user_provided_config_dict)
-
-    """
-
-    def merge_dict(existing, new):
-        for k in new:
-            if k in existing:
-                if isinstance(existing[k], dict) and isinstance(new[k], dict):
-                    merge_dict(existing[k], new[k])
-                else:
-                    existing[k] = new[k]
-            else:
-                existing[k] = new[k]
-
-    if bases:
-        d1, d2 = bases
-        _d1 = copy.deepcopy(d1)
-        _d2 = copy.deepcopy(d2)
-        merge_dict(_d1, _d2)
-        if config:
-            merge_dict(_d1, config)
-        return _d1
-
-    else:
-        _d = copy.deepcopy(base)
-        if config:
-            merge_dict(_d, config)
-        return _d
 
 
 #
