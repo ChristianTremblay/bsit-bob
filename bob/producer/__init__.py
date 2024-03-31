@@ -14,26 +14,22 @@ from rdflib import Literal, URIRef  # type: ignore
 
 from ..core import (
     BOB,
-    Container,
-    data_graph,
-    Equipment,
     G36,
     INCLUDE_INVERSE,
+    P223,
+    S223,
+    Container,
+    Equipment,
     LocationReference,
     Node,
-    P223,
     Property,
     _Producer,
-    S223,
-    template_update,
+    data_graph,
 )
 from ..equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from ..functions import Function, FunctionInput, FunctionOutput
 from ..multimethods import multimethod
-from ..functions import (
-    Function,
-    FunctionInput,
-    FunctionOutput,
-)
+from ..template import template_update
 
 # logging
 _log = logging.getLogger(__name__)
