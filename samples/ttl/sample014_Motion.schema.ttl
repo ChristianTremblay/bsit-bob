@@ -25,35 +25,35 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:ductAirInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
-        [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:radiantCooling ],
-        [ a sh:PropertyShape ;
-            sh:path bob:windows ],
-        [ a sh:PropertyShape ;
-            sh:path bob:radiantHeating ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co2 ],
+            sh:path bob:temperature ],
         [ a sh:PropertyShape ;
             sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
             sh:path bob:airChangePerHour ],
         [ a sh:PropertyShape ;
-            sh:path bob:co ],
+            sh:path bob:co2 ],
         [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
+            sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
-            sh:path bob:doors ],
+            sh:path bob:radiantHeating ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantCooling ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:windows ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ],
         [ a sh:PropertyShape ;
             sh:path bob:ductAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:humidity ],
+            sh:path bob:doors ],
         [ a sh:PropertyShape ;
-            sh:path bob:occupancy ] .
+            sh:path bob:co ],
+        [ a sh:PropertyShape ;
+            sh:path bob:humidity ] .
 
 bob:airChangePerHour a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -928,21 +928,21 @@ qudt:hasQuantityKind a rdf:Property .
 qudt:hasUnit a rdf:Property .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ],
+            sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
+            sh:path s223:connectsThrough ] .
 
 s223:DomainSpace sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
+            sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
+            sh:path s223:hasDomain ] .
 
 s223:EnumerableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasEnumerationKind ] .
@@ -961,10 +961,10 @@ s223:OccupantMotionSensor sh:property [ a sh:PropertyShape ;
             sh:path s223:observes ] .
 
 s223:Property sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofSubstance ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasValue ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ] .
@@ -973,13 +973,11 @@ s223:QuantifiableObservableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasSetpoint ] .
 
 s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasQuantityKind ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:path qudt:hasQuantityKind ] .
 
 s223:Sensor sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasObservationLocation ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasMeasurementUncertainty ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMaxRange ],
@@ -987,6 +985,8 @@ s223:Sensor sh:property [ a sh:PropertyShape ;
             sh:path s223:observes ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasObservationLocation ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMeasurementPrecision ] .
 
