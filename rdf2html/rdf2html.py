@@ -273,6 +273,7 @@ def make_legend(g):
 def prefix(full):
     _prefixes = [
         ("bob", "http://data.ashrae.org/standard223/si-builder#"),
+        ("scratch", "http://data.ashrae.org/standard223/si-builder/prototype#"),
         ("ex1", "urn:ex/sample_highLegDelta_electrical_entry/"),
         ("owl", "http://www.w3.org/2002/07/owl#"),
         ("p223", "http://data.ashrae.org/proposal-to-standard223#"),

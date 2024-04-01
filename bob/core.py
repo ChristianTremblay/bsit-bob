@@ -204,7 +204,7 @@ P223 = bind_namespace("p223", "http://data.ashrae.org/proposal-to-standard223#")
 # This namespace is added so si-builder/scratch (aka Scratch), can provide its own schema
 # of classes which are opiniated examples assemblage of S223 classes
 SCRATCH = bind_namespace(
-    "scratch", "http://data.ashrae.org/standard223/si-builder/scratch#"
+    "scratch", "http://data.ashrae.org/standard223/si-builder/prototype#"
 )
 
 # This namespace is added so si-builder (aka Bob), can provide its own schema

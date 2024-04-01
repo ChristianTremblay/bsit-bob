@@ -28,6 +28,7 @@ from ...core import (
     BOB,
     P223,
     S223,
+    SCRATCH,
     ConnectionPoint,
     Equipment,
     Property,
@@ -53,11 +54,11 @@ from ...template import template_update
 _log = logging.getLogger(__name__)
 
 # namespace
-_namespace = BOB
+_namespace = SCRATCH
 
 
 class VFD_FB(Function):
-    _class_iri = BOB.VFDFunction
+    _class_iri = SCRATCH.VFDFunction
 
     speed_ref: FunctionInput
     amps_load: FunctionInput
