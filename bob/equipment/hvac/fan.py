@@ -91,6 +91,31 @@ class Fan(Equipment):
         configure_relations(self, _config.get("relations", []))
 
 
+system_fan_template = {
+    "equipment": {
+        ("fan", Fan): {
+            "config": {
+                "cp": {
+                    "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint
+                },
+                "properties": {
+                    ("speedRatio", PercentCommand): {},
+                    ("staticPressure", Pressure): {"hasUnit": UNIT.PA},
+                    ("amps", Amps): {},
+                    ("rpm", RPM): {},
+                    ("cfm", Flow): {"hasUnit": UNIT["FT3-PER-MIN"]},
+                    ("hp", HP): {},
+                    ("kW", ElectricPowerkW): {},
+                    ("powerFactor", PowerFactor): {},
+                    ("efficiency", Percent): {},
+                },
+                "relations": [],
+            }
+        }
+    }
+}
+
+
 starter_addon_template = {
     "equipment": {
         ("starter", MotorStarter): {
@@ -98,36 +123,36 @@ starter_addon_template = {
                 "cp": {
                     "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
                     "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
-                }
+                },
+                "properties": {("speedRatio", PercentCommand): {}},
             },
         }
     },
-    "properties": {("speedRatio", PercentCommand): {}},
     "relations": [
-        ("self.onOffCommand", "=", 'self["starter"]["onOffCommand"]'),
+        ("self['fan'].onOffCommand", "=", 'self["starter"]["onOffCommand"]'),
         (
-            "self.onOffStatus",
+            "self['fan'].onOffStatus",
             "=",
             'self["starter"]["currentRelay"]["currentSensor"].observes',
         ),
-        ('self["starter"].actuatesProperty', "=", 'self["speedRatio"]'),
-        ('self["starter"].electricalOutlet', ">>", "self.electricalInlet"),
+        ('self["starter"].actuatesProperty', "=", 'self["fan"]["speedRatio"]'),
+        ('self["starter"].electricalOutlet', ">>", "self['fan'].electricalInlet"),
     ],
 }
 
 
-fan_with_starter_template = template_update(fan_template, starter_addon_template)
+fan_with_starter_template = template_update(system_fan_template, starter_addon_template)
 
 
 VFD_addon_template = {
     "equipment": {("vfd", VFD): {}},
     "properties": {},
     "relations": [
-        ("self.onOffCommand", "=", 'self["vfd"]["run_command"]'),
-        ("self.onOffStatus", "=", 'self["vfd"]["drive_running"]'),
-        ('self["vfd"].actuatesProperty', "=", 'self["speedRatio"]'),
-        ('self["vfd"].electricalOutlet', ">>", "self.electricalInlet"),
+        ("self['fan'].onOffCommand", "=", 'self["vfd"]["run_command"]'),
+        ("self['fan'].onOffStatus", "=", 'self["vfd"]["drive_running"]'),
+        ('self["vfd"].actuatesProperty', "=", 'self["fan"]["speedRatio"]'),
+        ('self["vfd"].electricalOutlet', ">>", "self['fan'].electricalInlet"),
     ],
 }
 
-fan_with_vfd_template = template_update(fan_template, VFD_addon_template)
+fan_with_vfd_template = template_update(system_fan_template, VFD_addon_template)

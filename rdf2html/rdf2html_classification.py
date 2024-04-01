@@ -1,4 +1,5 @@
 s223_types = {
+    "System": ["s223:System"],
     "Equipment": ["s223:Equipment"],
     "Connection": ["s223:Connection"],
     #'s223': ["s223"],

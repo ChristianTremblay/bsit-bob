@@ -201,6 +201,12 @@ S223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
 # we can clearly establish that a new class is not yet part of the standard
 P223 = bind_namespace("p223", "http://data.ashrae.org/proposal-to-standard223#")
 
+# This namespace is added so si-builder/scratch (aka Scratch), can provide its own schema
+# of classes which are opiniated examples assemblage of S223 classes
+SCRATCH = bind_namespace(
+    "scratch", "http://data.ashrae.org/standard223/si-builder/scratch#"
+)
+
 # This namespace is added so si-builder (aka Bob), can provide its own schema
 # of classes which are assemblage of S223 classes
 BOB = bind_namespace("bob", "http://data.ashrae.org/standard223/si-builder#")
@@ -1211,7 +1217,7 @@ class System(Container):
 
         if config:
             for group_name, group_items in config.items():
-                if group_name == "params":
+                if group_name in ("params", "relations"):
                     continue
 
                 things = []

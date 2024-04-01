@@ -1,5 +1,5 @@
 import typing as t
-from bob.core import Equipment
+from bob.core import Equipment, System
 import re
 import copy
 
@@ -46,7 +46,7 @@ def get_instance(equipment: Equipment, blob: str):
         thing = getattr(equipment, _key)
         return (thing, _key)  # in case thing is None
     if "self[" in blob:
-        matches = re.findall(r'\["(.*?)"\]', blob)
+        matches = re.findall(r'\[["\'](.*?)["\']\]', blob)
         property_match = re.search(r"\.(?P<property>\w+)$", blob)
         thing = equipment[matches.pop(0)]
         for each in matches:
@@ -85,3 +85,11 @@ def configure_relations(
         elif operator == "%":
             source % target
         # no @ here as we are creating relation "inside" the equipment
+
+
+class SystemFromTemplate(System):
+    def __init__(self, config: t.Dict = None, **kwargs):
+        _config = template_update(config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _config.get("relations", []))

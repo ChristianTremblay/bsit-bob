@@ -30,6 +30,15 @@ def parse_rdf(ttl_file):
 
 class Node:
     groups = {
+        "System": {
+            "size": 40,
+            "color": "green",
+            "shape": "box",
+            "group_int": 1,
+            "borderWidth": None,
+            "uri": "bob:legend/System",
+            "label": "Legend / System",
+        },
         "Equipment": {
             "size": 20,
             "color": "green",

@@ -99,7 +99,7 @@ vfd_template = {
         ("current_sensor", CurrentSensor): {},
         ("voltage_sensor", VoltageSensor): {},
         ("speed_ref_voltage_sensor", VoltageSensor): {},
-        # ("controller_function_block", VFD_FB): {},
+        # ("vfd_controller_function", VFD_FB): {},
     },
 }
 
@@ -123,7 +123,7 @@ class VFD(_VFD):
         self["speed_ref_voltage_sensor"] % self.speedrefInlet
 
         # build a function block
-        controller_function_block = self["controller_function_block"] = VFD_FB(
+        vfd_controller_function = self["vfd_controller_function"] = VFD_FB(
             speed_ref=self["speed_ref_voltage_sensor"].observedProperty,
             amps_load=self.amps,
             volts_load=self.volts,
@@ -137,5 +137,6 @@ class VFD(_VFD):
         )
 
         # in fact motor temp is the result of a calculation... but this shows a possibility
+        self.executes(self["vfd_controller_function"])
         self["motor_temp_effect"].cause_input << self["rpm"]
         self["motor_temp_effect"].effect_output >> self["motor_temp"]
