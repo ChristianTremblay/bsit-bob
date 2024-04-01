@@ -10,6 +10,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix sample_fanvfd: <urn:ex/sample_fanvfd/> .
+@prefix scratch: <http://data.ashrae.org/standard223/si-builder/prototype#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -538,6 +539,7 @@ sample_fanvfd:00055 a s223:Connectable,
     s223:contains sample_fanvfd:00075,
         sample_fanvfd:00077,
         sample_fanvfd:00079 ;
+    s223:executes sample_fanvfd:00081 ;
     s223:hasConnectionPoint sample_fanvfd:00056,
         sample_fanvfd:00057,
         sample_fanvfd:00058,
@@ -554,9 +556,9 @@ sample_fanvfd:00055 a s223:Connectable,
         sample_fanvfd:00069,
         sample_fanvfd:00070,
         sample_fanvfd:00071 ;
-    bob:amps sample_fanvfd:00076 ;
     bob:contains sample_fanvfd:00072 ;
-    bob:volts sample_fanvfd:00078 ;
+    scratch:amps sample_fanvfd:00076 ;
+    scratch:volts sample_fanvfd:00078 ;
     rdfs:comment "Return Air Fan VFD" .
 
 sample_fanvfd:00056 a s223:ConnectionPoint,
@@ -763,7 +765,7 @@ sample_fanvfd:00080 a s223:ObservableProperty,
     qudt:hasUnit unit:V .
 
 sample_fanvfd:00081 a s223:Function,
-        bob:VFDFunction ;
+        scratch:VFDFunction ;
     rdfs:label "RF_VFD.function_block" ;
     s223:hasInput sample_fanvfd:00076,
         sample_fanvfd:00078,
@@ -774,15 +776,15 @@ sample_fanvfd:00081 a s223:Function,
         sample_fanvfd:00067,
         sample_fanvfd:00069,
         sample_fanvfd:00071 ;
-    bob:alarm sample_fanvfd:00071 ;
-    bob:amps_load sample_fanvfd:00076 ;
-    bob:drive_running sample_fanvfd:00069 ;
-    bob:frequency_load sample_fanvfd:00065 ;
-    bob:kW_load sample_fanvfd:00064 ;
-    bob:rpm sample_fanvfd:00067 ;
-    bob:speed_ref sample_fanvfd:00080 ;
-    bob:speed_ref_percent sample_fanvfd:00066 ;
-    bob:volts_load sample_fanvfd:00078 .
+    scratch:alarm sample_fanvfd:00071 ;
+    scratch:amps_load sample_fanvfd:00076 ;
+    scratch:drive_running sample_fanvfd:00069 ;
+    scratch:frequency_load sample_fanvfd:00065 ;
+    scratch:kW_load sample_fanvfd:00064 ;
+    scratch:rpm sample_fanvfd:00067 ;
+    scratch:speed_ref sample_fanvfd:00080 ;
+    scratch:speed_ref_percent sample_fanvfd:00066 ;
+    scratch:volts_load sample_fanvfd:00078 .
 
 sample_fanvfd:00082 a s223:Connectable,
         s223:Equipment,

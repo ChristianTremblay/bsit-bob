@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix ex: <http://example/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
@@ -10,6 +11,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix sample_templates_fan: <urn:ex/sample_templates_fan/> .
+@prefix scratch: <http://data.ashrae.org/standard223/si-builder/prototype#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -150,61 +152,64 @@ sample_templates_fan:00013 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_templates_fan:00014 a s223:Connectable,
+sample_templates_fan:00014 a s223:System,
+        ex:SystemFromTemplate ;
+    rdfs:label "Fan with Starter" ;
+    s223:hasMember sample_templates_fan:00015,
+        sample_templates_fan:00028 .
+
+sample_templates_fan:00015 a s223:Connectable,
         s223:Equipment,
         s223:Fan ;
-    rdfs:label "Fan with Starter" ;
-    s223:cnx sample_templates_fan:00015,
-        sample_templates_fan:00016,
-        sample_templates_fan:00017 ;
-    s223:connected sample_templates_fan:00027 ;
-    s223:connectedFrom sample_templates_fan:00027 ;
-    s223:connectedThrough sample_templates_fan:00043 ;
-    s223:contains sample_templates_fan:00027 ;
-    s223:hasConnectionPoint sample_templates_fan:00015,
-        sample_templates_fan:00016,
-        sample_templates_fan:00017 ;
-    s223:hasProperty sample_templates_fan:00018,
-        sample_templates_fan:00019,
+    rdfs:label "fan" ;
+    s223:cnx sample_templates_fan:00016,
+        sample_templates_fan:00017,
+        sample_templates_fan:00018 ;
+    s223:connected sample_templates_fan:00028 ;
+    s223:connectedFrom sample_templates_fan:00028 ;
+    s223:connectedThrough sample_templates_fan:00045 ;
+    s223:hasConnectionPoint sample_templates_fan:00016,
+        sample_templates_fan:00017,
+        sample_templates_fan:00018 ;
+    s223:hasProperty sample_templates_fan:00019,
         sample_templates_fan:00020,
         sample_templates_fan:00021,
         sample_templates_fan:00022,
         sample_templates_fan:00023,
         sample_templates_fan:00024,
         sample_templates_fan:00025,
-        sample_templates_fan:00026 ;
-    bob:airInlet sample_templates_fan:00015 ;
-    bob:airOutlet sample_templates_fan:00016 ;
-    bob:onOffCommand sample_templates_fan:00041 ;
-    bob:onOffStatus sample_templates_fan:00037 .
-
-sample_templates_fan:00015 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "Fan with Starter.airInlet" ;
-    s223:cnx sample_templates_fan:00014 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_templates_fan:00014 .
+        sample_templates_fan:00026,
+        sample_templates_fan:00027 ;
+    bob:airInlet sample_templates_fan:00016 ;
+    bob:airOutlet sample_templates_fan:00017 .
 
 sample_templates_fan:00016 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
+        s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
-    rdfs:label "Fan with Starter.airOutlet" ;
-    s223:cnx sample_templates_fan:00014 ;
+    rdfs:label "fan.airInlet" ;
+    s223:cnx sample_templates_fan:00015 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_templates_fan:00014 .
+    s223:isConnectionPointOf sample_templates_fan:00015 .
 
 sample_templates_fan:00017 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "fan.airOutlet" ;
+    s223:cnx sample_templates_fan:00015 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_templates_fan:00015 .
+
+sample_templates_fan:00018 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "Fan with Starter.electricalInlet" ;
-    s223:cnx sample_templates_fan:00014,
-        sample_templates_fan:00043 ;
-    s223:connectsThrough sample_templates_fan:00043 ;
+    rdfs:label "fan.electricalInlet" ;
+    s223:cnx sample_templates_fan:00015,
+        sample_templates_fan:00045 ;
+    s223:connectsThrough sample_templates_fan:00045 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_templates_fan:00014 .
+    s223:isConnectionPointOf sample_templates_fan:00015 .
 
-sample_templates_fan:00018 a s223:ActuatableProperty,
+sample_templates_fan:00019 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -213,7 +218,7 @@ sample_templates_fan:00018 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_templates_fan:00019 a s223:ObservableProperty,
+sample_templates_fan:00020 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -222,7 +227,7 @@ sample_templates_fan:00019 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:hasUnit unit:PA .
 
-sample_templates_fan:00020 a s223:ObservableProperty,
+sample_templates_fan:00021 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -231,7 +236,7 @@ sample_templates_fan:00020 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_templates_fan:00021 a s223:ObservableProperty,
+sample_templates_fan:00022 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -240,7 +245,7 @@ sample_templates_fan:00021 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
-sample_templates_fan:00022 a s223:ObservableProperty,
+sample_templates_fan:00023 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -249,7 +254,7 @@ sample_templates_fan:00022 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:FT3-PER-MIN .
 
-sample_templates_fan:00023 a s223:ObservableProperty,
+sample_templates_fan:00024 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -258,7 +263,7 @@ sample_templates_fan:00023 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:hasUnit unit:HP .
 
-sample_templates_fan:00024 a s223:ObservableProperty,
+sample_templates_fan:00025 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -268,7 +273,7 @@ sample_templates_fan:00024 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-sample_templates_fan:00025 a s223:ObservableProperty,
+sample_templates_fan:00026 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -277,7 +282,7 @@ sample_templates_fan:00025 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:hasUnit unit:UNITLESS .
 
-sample_templates_fan:00026 a s223:ObservableProperty,
+sample_templates_fan:00027 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -286,85 +291,86 @@ sample_templates_fan:00026 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_templates_fan:00027 a p223:MotorStarter,
+sample_templates_fan:00028 a p223:MotorStarter,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "starter" ;
-    s223:cnx sample_templates_fan:00028,
-        sample_templates_fan:00029,
+    s223:cnx sample_templates_fan:00029,
         sample_templates_fan:00030,
-        sample_templates_fan:00031 ;
-    s223:connected sample_templates_fan:00014 ;
-    s223:connectedThrough sample_templates_fan:00043 ;
-    s223:connectedTo sample_templates_fan:00014 ;
-    s223:contains sample_templates_fan:00032 ;
-    s223:hasConnectionPoint sample_templates_fan:00028,
-        sample_templates_fan:00029,
+        sample_templates_fan:00031,
+        sample_templates_fan:00032 ;
+    s223:connected sample_templates_fan:00015 ;
+    s223:connectedThrough sample_templates_fan:00045 ;
+    s223:connectedTo sample_templates_fan:00015 ;
+    s223:contains sample_templates_fan:00033 ;
+    s223:hasConnectionPoint sample_templates_fan:00029,
         sample_templates_fan:00030,
-        sample_templates_fan:00031 ;
-    s223:hasProperty sample_templates_fan:00041,
-        sample_templates_fan:00042 ;
-    bob:inputSignal sample_templates_fan:00029 ;
-    bob:onOffStatus sample_templates_fan:00035 ;
-    bob:outputSignal sample_templates_fan:00028 .
+        sample_templates_fan:00031,
+        sample_templates_fan:00032 ;
+    s223:hasProperty sample_templates_fan:00042,
+        sample_templates_fan:00043,
+        sample_templates_fan:00044 ;
+    bob:inputSignal sample_templates_fan:00030 ;
+    bob:onOffStatus sample_templates_fan:00036 ;
+    bob:outputSignal sample_templates_fan:00029 .
 
-sample_templates_fan:00028 a p223:BinaryOutput,
+sample_templates_fan:00029 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "starter.outputSignal" ;
-    s223:cnx sample_templates_fan:00027 ;
+    s223:cnx sample_templates_fan:00028 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_templates_fan:00027 .
+    s223:isConnectionPointOf sample_templates_fan:00028 .
 
-sample_templates_fan:00029 a p223:BinaryInput,
+sample_templates_fan:00030 a p223:BinaryInput,
         s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "starter.inputSignal" ;
-    s223:cnx sample_templates_fan:00027 ;
+    s223:cnx sample_templates_fan:00028 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_templates_fan:00027 .
-
-sample_templates_fan:00030 a s223:ConnectionPoint,
-        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "starter.electricalInlet" ;
-    s223:cnx sample_templates_fan:00027 ;
-    s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_templates_fan:00027 .
+    s223:isConnectionPointOf sample_templates_fan:00028 .
 
 sample_templates_fan:00031 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "starter.electricalInlet" ;
+    s223:cnx sample_templates_fan:00028 ;
+    s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
+    s223:isConnectionPointOf sample_templates_fan:00028 .
+
+sample_templates_fan:00032 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "starter.electricalOutlet" ;
-    s223:cnx sample_templates_fan:00027,
-        sample_templates_fan:00043 ;
-    s223:connectsThrough sample_templates_fan:00043 ;
+    s223:cnx sample_templates_fan:00028,
+        sample_templates_fan:00045 ;
+    s223:connectsThrough sample_templates_fan:00045 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_templates_fan:00027 .
+    s223:isConnectionPointOf sample_templates_fan:00028 .
 
-sample_templates_fan:00032 a p223:CurrentRelay,
+sample_templates_fan:00033 a p223:CurrentRelay,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "currentRelay" ;
-    s223:cnx sample_templates_fan:00033 ;
-    s223:contains sample_templates_fan:00036 ;
-    s223:hasConnectionPoint sample_templates_fan:00033 ;
-    s223:hasProperty sample_templates_fan:00034,
-        sample_templates_fan:00035 ;
-    bob:contains sample_templates_fan:00038 .
+    s223:cnx sample_templates_fan:00034 ;
+    s223:contains sample_templates_fan:00037 ;
+    s223:hasConnectionPoint sample_templates_fan:00034 ;
+    s223:hasProperty sample_templates_fan:00035,
+        sample_templates_fan:00036 ;
+    bob:contains sample_templates_fan:00039 .
 
-sample_templates_fan:00033 a p223:BinaryOutput,
+sample_templates_fan:00034 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "currentRelay.dryContact" ;
-    s223:cnx sample_templates_fan:00032 ;
+    s223:cnx sample_templates_fan:00033 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_templates_fan:00032 .
+    s223:isConnectionPointOf sample_templates_fan:00033 .
 
-sample_templates_fan:00034 a s223:ObservableProperty,
+sample_templates_fan:00035 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -373,21 +379,21 @@ sample_templates_fan:00034 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_templates_fan:00035 a s223:EnumerableProperty,
+sample_templates_fan:00036 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_templates_fan:00036 a s223:Connectable,
+sample_templates_fan:00037 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "currentSensor" ;
-    s223:hasObservationLocation sample_templates_fan:00031 ;
-    s223:observes sample_templates_fan:00037 .
+    s223:hasObservationLocation sample_templates_fan:00032 ;
+    s223:observes sample_templates_fan:00038 .
 
-sample_templates_fan:00037 a s223:ObservableProperty,
+sample_templates_fan:00038 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -397,30 +403,30 @@ sample_templates_fan:00037 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_templates_fan:00038 a p223:Producer,
+sample_templates_fan:00039 a p223:Producer,
         bob:Causality ;
     rdfs:label "statusProducer" ;
-    s223:hasInput sample_templates_fan:00039 ;
-    s223:hasOutput sample_templates_fan:00040 ;
-    bob:cause_input sample_templates_fan:00039 ;
-    bob:effect_output sample_templates_fan:00040 .
+    s223:hasInput sample_templates_fan:00040 ;
+    s223:hasOutput sample_templates_fan:00041 ;
+    bob:cause_input sample_templates_fan:00040 ;
+    bob:effect_output sample_templates_fan:00041 .
 
-sample_templates_fan:00039 a p223:ProducerInput ;
+sample_templates_fan:00040 a p223:ProducerInput ;
     rdfs:label "statusProducer.cause_input" ;
-    s223:uses sample_templates_fan:00037 .
+    s223:uses sample_templates_fan:00038 .
 
-sample_templates_fan:00040 a p223:ProducerOutput ;
+sample_templates_fan:00041 a p223:ProducerOutput ;
     rdfs:label "statusProducer.effect_output" ;
-    s223:produces sample_templates_fan:00035 .
+    s223:produces sample_templates_fan:00036 .
 
-sample_templates_fan:00041 a s223:ActuatableProperty,
+sample_templates_fan:00042 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_templates_fan:00042 a s223:ObservableProperty,
+sample_templates_fan:00043 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -429,70 +435,7 @@ sample_templates_fan:00042 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:HP_Electric .
 
-sample_templates_fan:00043 a s223:Connection ;
-    s223:cnx sample_templates_fan:00017,
-        sample_templates_fan:00031 ;
-    s223:connectsAt sample_templates_fan:00017,
-        sample_templates_fan:00031 ;
-    s223:connectsFrom sample_templates_fan:00027 ;
-    s223:connectsTo sample_templates_fan:00014 ;
-    s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
-
-sample_templates_fan:00044 a s223:Connectable,
-        s223:Equipment,
-        s223:Fan ;
-    rdfs:label "Fan with VFD" ;
-    s223:cnx sample_templates_fan:00045,
-        sample_templates_fan:00046,
-        sample_templates_fan:00047 ;
-    s223:connected sample_templates_fan:00057 ;
-    s223:connectedFrom sample_templates_fan:00057 ;
-    s223:connectedThrough sample_templates_fan:00084 ;
-    s223:contains sample_templates_fan:00057 ;
-    s223:hasConnectionPoint sample_templates_fan:00045,
-        sample_templates_fan:00046,
-        sample_templates_fan:00047 ;
-    s223:hasProperty sample_templates_fan:00048,
-        sample_templates_fan:00049,
-        sample_templates_fan:00050,
-        sample_templates_fan:00051,
-        sample_templates_fan:00052,
-        sample_templates_fan:00053,
-        sample_templates_fan:00054,
-        sample_templates_fan:00055,
-        sample_templates_fan:00056 ;
-    bob:airInlet sample_templates_fan:00045 ;
-    bob:airOutlet sample_templates_fan:00046 ;
-    bob:onOffCommand sample_templates_fan:00072 ;
-    bob:onOffStatus sample_templates_fan:00071 .
-
-sample_templates_fan:00045 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "Fan with VFD.airInlet" ;
-    s223:cnx sample_templates_fan:00044 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_templates_fan:00044 .
-
-sample_templates_fan:00046 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "Fan with VFD.airOutlet" ;
-    s223:cnx sample_templates_fan:00044 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_templates_fan:00044 .
-
-sample_templates_fan:00047 a s223:ConnectionPoint,
-        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "Fan with VFD.electricalInlet" ;
-    s223:cnx sample_templates_fan:00044,
-        sample_templates_fan:00084 ;
-    s223:connectsThrough sample_templates_fan:00084 ;
-    s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_templates_fan:00044 .
-
-sample_templates_fan:00048 a s223:ActuatableProperty,
+sample_templates_fan:00044 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -501,7 +444,82 @@ sample_templates_fan:00048 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_templates_fan:00049 a s223:ObservableProperty,
+sample_templates_fan:00045 a s223:Connection ;
+    s223:cnx sample_templates_fan:00018,
+        sample_templates_fan:00032 ;
+    s223:connectsAt sample_templates_fan:00018,
+        sample_templates_fan:00032 ;
+    s223:connectsFrom sample_templates_fan:00028 ;
+    s223:connectsTo sample_templates_fan:00015 ;
+    s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
+
+sample_templates_fan:00046 a s223:System,
+        ex:SystemFromTemplate ;
+    rdfs:label "Fan with VFD" ;
+    s223:hasMember sample_templates_fan:00047,
+        sample_templates_fan:00060 .
+
+sample_templates_fan:00047 a s223:Connectable,
+        s223:Equipment,
+        s223:Fan ;
+    rdfs:label "fan" ;
+    s223:cnx sample_templates_fan:00048,
+        sample_templates_fan:00049,
+        sample_templates_fan:00050 ;
+    s223:connected sample_templates_fan:00060 ;
+    s223:connectedFrom sample_templates_fan:00060 ;
+    s223:connectedThrough sample_templates_fan:00087 ;
+    s223:hasConnectionPoint sample_templates_fan:00048,
+        sample_templates_fan:00049,
+        sample_templates_fan:00050 ;
+    s223:hasProperty sample_templates_fan:00051,
+        sample_templates_fan:00052,
+        sample_templates_fan:00053,
+        sample_templates_fan:00054,
+        sample_templates_fan:00055,
+        sample_templates_fan:00056,
+        sample_templates_fan:00057,
+        sample_templates_fan:00058,
+        sample_templates_fan:00059 ;
+    bob:airInlet sample_templates_fan:00048 ;
+    bob:airOutlet sample_templates_fan:00049 .
+
+sample_templates_fan:00048 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "fan.airInlet" ;
+    s223:cnx sample_templates_fan:00047 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_templates_fan:00047 .
+
+sample_templates_fan:00049 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "fan.airOutlet" ;
+    s223:cnx sample_templates_fan:00047 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_templates_fan:00047 .
+
+sample_templates_fan:00050 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "fan.electricalInlet" ;
+    s223:cnx sample_templates_fan:00047,
+        sample_templates_fan:00087 ;
+    s223:connectsThrough sample_templates_fan:00087 ;
+    s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
+    s223:isConnectionPointOf sample_templates_fan:00047 .
+
+sample_templates_fan:00051 a s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        bob:PercentCommand ;
+    rdfs:label "speedRatio" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasUnit unit:PERCENT .
+
+sample_templates_fan:00052 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -510,7 +528,7 @@ sample_templates_fan:00049 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Pressure ;
     qudt:hasUnit unit:PA .
 
-sample_templates_fan:00050 a s223:ObservableProperty,
+sample_templates_fan:00053 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -519,7 +537,7 @@ sample_templates_fan:00050 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_templates_fan:00051 a s223:ObservableProperty,
+sample_templates_fan:00054 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -528,7 +546,7 @@ sample_templates_fan:00051 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
-sample_templates_fan:00052 a s223:ObservableProperty,
+sample_templates_fan:00055 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -537,7 +555,7 @@ sample_templates_fan:00052 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:FT3-PER-MIN .
 
-sample_templates_fan:00053 a s223:ObservableProperty,
+sample_templates_fan:00056 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -546,7 +564,7 @@ sample_templates_fan:00053 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:hasUnit unit:HP .
 
-sample_templates_fan:00054 a s223:ObservableProperty,
+sample_templates_fan:00057 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -556,7 +574,7 @@ sample_templates_fan:00054 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-sample_templates_fan:00055 a s223:ObservableProperty,
+sample_templates_fan:00058 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -565,7 +583,7 @@ sample_templates_fan:00055 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:PowerFactor ;
     qudt:hasUnit unit:UNITLESS .
 
-sample_templates_fan:00056 a s223:ObservableProperty,
+sample_templates_fan:00059 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -574,107 +592,108 @@ sample_templates_fan:00056 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_templates_fan:00057 a s223:Connectable,
+sample_templates_fan:00060 a s223:Connectable,
         s223:Controller,
         s223:Equipment,
         s223:VFD,
         s223:VariableFrequencyDrive ;
     rdfs:label "vfd" ;
-    s223:cnx sample_templates_fan:00058,
-        sample_templates_fan:00059,
-        sample_templates_fan:00060,
-        sample_templates_fan:00061,
+    s223:cnx sample_templates_fan:00061,
         sample_templates_fan:00062,
         sample_templates_fan:00063,
-        sample_templates_fan:00064 ;
-    s223:connected sample_templates_fan:00044 ;
-    s223:connectedThrough sample_templates_fan:00084 ;
-    s223:connectedTo sample_templates_fan:00044 ;
-    s223:contains sample_templates_fan:00077,
-        sample_templates_fan:00079,
-        sample_templates_fan:00081 ;
-    s223:hasConnectionPoint sample_templates_fan:00058,
-        sample_templates_fan:00059,
-        sample_templates_fan:00060,
-        sample_templates_fan:00061,
-        sample_templates_fan:00062,
-        sample_templates_fan:00063,
-        sample_templates_fan:00064 ;
-    s223:hasProperty sample_templates_fan:00065,
+        sample_templates_fan:00064,
+        sample_templates_fan:00065,
         sample_templates_fan:00066,
-        sample_templates_fan:00067,
-        sample_templates_fan:00068,
+        sample_templates_fan:00067 ;
+    s223:connected sample_templates_fan:00047 ;
+    s223:connectedThrough sample_templates_fan:00087 ;
+    s223:connectedTo sample_templates_fan:00047 ;
+    s223:contains sample_templates_fan:00080,
+        sample_templates_fan:00082,
+        sample_templates_fan:00084 ;
+    s223:executes sample_templates_fan:00086 ;
+    s223:hasConnectionPoint sample_templates_fan:00061,
+        sample_templates_fan:00062,
+        sample_templates_fan:00063,
+        sample_templates_fan:00064,
+        sample_templates_fan:00065,
+        sample_templates_fan:00066,
+        sample_templates_fan:00067 ;
+    s223:hasProperty sample_templates_fan:00068,
         sample_templates_fan:00069,
         sample_templates_fan:00070,
         sample_templates_fan:00071,
         sample_templates_fan:00072,
-        sample_templates_fan:00073 ;
-    bob:amps sample_templates_fan:00078 ;
-    bob:contains sample_templates_fan:00074 ;
-    bob:volts sample_templates_fan:00080 .
+        sample_templates_fan:00073,
+        sample_templates_fan:00074,
+        sample_templates_fan:00075,
+        sample_templates_fan:00076 ;
+    bob:contains sample_templates_fan:00077 ;
+    scratch:amps sample_templates_fan:00081 ;
+    scratch:volts sample_templates_fan:00083 .
 
-sample_templates_fan:00058 a s223:ConnectionPoint,
+sample_templates_fan:00061 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "vfd.electricalInlet" ;
-    s223:cnx sample_templates_fan:00057 ;
+    s223:cnx sample_templates_fan:00060 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_templates_fan:00057 .
+    s223:isConnectionPointOf sample_templates_fan:00060 .
 
-sample_templates_fan:00059 a s223:ConnectionPoint,
+sample_templates_fan:00062 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "vfd.electricalOutlet" ;
-    s223:cnx sample_templates_fan:00057,
-        sample_templates_fan:00084 ;
-    s223:connectsThrough sample_templates_fan:00084 ;
+    s223:cnx sample_templates_fan:00060,
+        sample_templates_fan:00087 ;
+    s223:connectsThrough sample_templates_fan:00087 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_templates_fan:00057 .
+    s223:isConnectionPointOf sample_templates_fan:00060 .
 
-sample_templates_fan:00060 a s223:BidirectionalConnectionPoint,
+sample_templates_fan:00063 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "vfd.ethernet_port" ;
-    s223:cnx sample_templates_fan:00057 ;
+    s223:cnx sample_templates_fan:00060 ;
     s223:hasMedium s223:Communication-Ethernet ;
-    s223:isConnectionPointOf sample_templates_fan:00057 .
+    s223:isConnectionPointOf sample_templates_fan:00060 .
 
-sample_templates_fan:00061 a s223:BidirectionalConnectionPoint,
+sample_templates_fan:00064 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "vfd.mstp_port" ;
-    s223:cnx sample_templates_fan:00057 ;
+    s223:cnx sample_templates_fan:00060 ;
     s223:hasMedium s223:Communication-EIA-485 ;
-    s223:isConnectionPointOf sample_templates_fan:00057 .
+    s223:isConnectionPointOf sample_templates_fan:00060 .
 
-sample_templates_fan:00062 a p223:AnalogInput,
+sample_templates_fan:00065 a p223:AnalogInput,
         s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "vfd.speedrefInlet" ;
-    s223:cnx sample_templates_fan:00057 ;
+    s223:cnx sample_templates_fan:00060 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf sample_templates_fan:00057 .
+    s223:isConnectionPointOf sample_templates_fan:00060 .
 
-sample_templates_fan:00063 a p223:BinaryOutput,
+sample_templates_fan:00066 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "vfd.drive_running_dry_contact" ;
-    s223:cnx sample_templates_fan:00057 ;
+    s223:cnx sample_templates_fan:00060 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_templates_fan:00057 .
+    s223:isConnectionPointOf sample_templates_fan:00060 .
 
-sample_templates_fan:00064 a p223:BinaryOutput,
+sample_templates_fan:00067 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "vfd.alarm_dry_contact" ;
-    s223:cnx sample_templates_fan:00057 ;
+    s223:cnx sample_templates_fan:00060 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_templates_fan:00057 .
+    s223:isConnectionPointOf sample_templates_fan:00060 .
 
-sample_templates_fan:00065 a s223:ObservableProperty,
+sample_templates_fan:00068 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -683,7 +702,7 @@ sample_templates_fan:00065 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:hasUnit unit:HP .
 
-sample_templates_fan:00066 a s223:ObservableProperty,
+sample_templates_fan:00069 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -693,7 +712,7 @@ sample_templates_fan:00066 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-sample_templates_fan:00067 a s223:ObservableProperty,
+sample_templates_fan:00070 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -702,7 +721,7 @@ sample_templates_fan:00067 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Frequency ;
     qudt:hasUnit unit:HZ .
 
-sample_templates_fan:00068 a s223:ActuatableProperty,
+sample_templates_fan:00071 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -711,7 +730,7 @@ sample_templates_fan:00068 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_templates_fan:00069 a s223:ObservableProperty,
+sample_templates_fan:00072 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -720,7 +739,7 @@ sample_templates_fan:00069 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
-sample_templates_fan:00070 a s223:ObservableProperty,
+sample_templates_fan:00073 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -728,51 +747,51 @@ sample_templates_fan:00070 a s223:ObservableProperty,
     rdfs:label "motor_temp" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-sample_templates_fan:00071 a s223:EnumerableProperty,
+sample_templates_fan:00074 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_templates_fan:00072 a s223:ActuatableProperty,
+sample_templates_fan:00075 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_templates_fan:00073 a s223:EnumerableProperty,
+sample_templates_fan:00076 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasEnumerationKind p223:EnumerationKind-NormalAlarm .
 
-sample_templates_fan:00074 a p223:Producer,
+sample_templates_fan:00077 a p223:Producer,
         bob:Causality ;
     rdfs:label "motor_temp_effect" ;
-    s223:hasInput sample_templates_fan:00075 ;
-    s223:hasOutput sample_templates_fan:00076 ;
-    bob:cause_input sample_templates_fan:00075 ;
-    bob:effect_output sample_templates_fan:00076 .
+    s223:hasInput sample_templates_fan:00078 ;
+    s223:hasOutput sample_templates_fan:00079 ;
+    bob:cause_input sample_templates_fan:00078 ;
+    bob:effect_output sample_templates_fan:00079 .
 
-sample_templates_fan:00075 a p223:ProducerInput ;
+sample_templates_fan:00078 a p223:ProducerInput ;
     rdfs:label "motor_temp_effect.cause_input" ;
-    s223:uses sample_templates_fan:00069 .
+    s223:uses sample_templates_fan:00072 .
 
-sample_templates_fan:00076 a p223:ProducerOutput ;
+sample_templates_fan:00079 a p223:ProducerOutput ;
     rdfs:label "motor_temp_effect.effect_output" ;
-    s223:produces sample_templates_fan:00070 .
+    s223:produces sample_templates_fan:00073 .
 
-sample_templates_fan:00077 a s223:Connectable,
+sample_templates_fan:00080 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "current_sensor" ;
-    s223:hasObservationLocation sample_templates_fan:00059 ;
-    s223:observes sample_templates_fan:00078 .
+    s223:hasObservationLocation sample_templates_fan:00062 ;
+    s223:observes sample_templates_fan:00081 .
 
-sample_templates_fan:00078 a s223:ObservableProperty,
+sample_templates_fan:00081 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -782,14 +801,14 @@ sample_templates_fan:00078 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_templates_fan:00079 a s223:Connectable,
+sample_templates_fan:00082 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "voltage_sensor" ;
-    s223:hasObservationLocation sample_templates_fan:00059 ;
-    s223:observes sample_templates_fan:00080 .
+    s223:hasObservationLocation sample_templates_fan:00062 ;
+    s223:observes sample_templates_fan:00083 .
 
-sample_templates_fan:00080 a s223:ObservableProperty,
+sample_templates_fan:00083 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -799,14 +818,14 @@ sample_templates_fan:00080 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-sample_templates_fan:00081 a s223:Connectable,
+sample_templates_fan:00084 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "speed_ref_voltage_sensor" ;
-    s223:hasObservationLocation sample_templates_fan:00062 ;
-    s223:observes sample_templates_fan:00082 .
+    s223:hasObservationLocation sample_templates_fan:00065 ;
+    s223:observes sample_templates_fan:00085 .
 
-sample_templates_fan:00082 a s223:ObservableProperty,
+sample_templates_fan:00085 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -816,34 +835,34 @@ sample_templates_fan:00082 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-sample_templates_fan:00083 a s223:Function,
-        bob:VFDFunction ;
+sample_templates_fan:00086 a s223:Function,
+        scratch:VFDFunction ;
     rdfs:label "vfd.function_block" ;
-    s223:hasInput sample_templates_fan:00078,
-        sample_templates_fan:00080,
-        sample_templates_fan:00082 ;
-    s223:hasOutput sample_templates_fan:00066,
-        sample_templates_fan:00067,
-        sample_templates_fan:00068,
-        sample_templates_fan:00069,
+    s223:hasInput sample_templates_fan:00081,
+        sample_templates_fan:00083,
+        sample_templates_fan:00085 ;
+    s223:hasOutput sample_templates_fan:00069,
+        sample_templates_fan:00070,
         sample_templates_fan:00071,
-        sample_templates_fan:00073 ;
-    bob:alarm sample_templates_fan:00073 ;
-    bob:amps_load sample_templates_fan:00078 ;
-    bob:drive_running sample_templates_fan:00071 ;
-    bob:frequency_load sample_templates_fan:00067 ;
-    bob:kW_load sample_templates_fan:00066 ;
-    bob:rpm sample_templates_fan:00069 ;
-    bob:speed_ref sample_templates_fan:00082 ;
-    bob:speed_ref_percent sample_templates_fan:00068 ;
-    bob:volts_load sample_templates_fan:00080 .
+        sample_templates_fan:00072,
+        sample_templates_fan:00074,
+        sample_templates_fan:00076 ;
+    scratch:alarm sample_templates_fan:00076 ;
+    scratch:amps_load sample_templates_fan:00081 ;
+    scratch:drive_running sample_templates_fan:00074 ;
+    scratch:frequency_load sample_templates_fan:00070 ;
+    scratch:kW_load sample_templates_fan:00069 ;
+    scratch:rpm sample_templates_fan:00072 ;
+    scratch:speed_ref sample_templates_fan:00085 ;
+    scratch:speed_ref_percent sample_templates_fan:00071 ;
+    scratch:volts_load sample_templates_fan:00083 .
 
-sample_templates_fan:00084 a s223:Connection ;
-    s223:cnx sample_templates_fan:00047,
-        sample_templates_fan:00059 ;
-    s223:connectsAt sample_templates_fan:00047,
-        sample_templates_fan:00059 ;
-    s223:connectsFrom sample_templates_fan:00057 ;
-    s223:connectsTo sample_templates_fan:00044 ;
+sample_templates_fan:00087 a s223:Connection ;
+    s223:cnx sample_templates_fan:00050,
+        sample_templates_fan:00062 ;
+    s223:connectsAt sample_templates_fan:00050,
+        sample_templates_fan:00062 ;
+    s223:connectsFrom sample_templates_fan:00060 ;
+    s223:connectsTo sample_templates_fan:00047 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 

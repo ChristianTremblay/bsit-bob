@@ -21,6 +21,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix scratch: <http://data.ashrae.org/standard223/si-builder/prototype#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -4386,6 +4387,7 @@ hvac_devices:00055 a s223:Connectable,
     s223:contains hvac_devices:00075,
         hvac_devices:00077,
         hvac_devices:00079 ;
+    s223:executes hvac_devices:00081 ;
     s223:hasConnectionPoint hvac_devices:00056,
         hvac_devices:00057,
         hvac_devices:00058,
@@ -4402,9 +4404,9 @@ hvac_devices:00055 a s223:Connectable,
         hvac_devices:00069,
         hvac_devices:00070,
         hvac_devices:00071 ;
-    bob:amps hvac_devices:00076 ;
     bob:contains hvac_devices:00072 ;
-    bob:volts hvac_devices:00078 ;
+    scratch:amps hvac_devices:00076 ;
+    scratch:volts hvac_devices:00078 ;
     rdfs:comment "Return Air Fan VFD" .
 
 hvac_devices:00056 a s223:ConnectionPoint,
@@ -4617,7 +4619,7 @@ hvac_devices:00080 a s223:ObservableProperty,
     qudt:hasUnit unit:V .
 
 hvac_devices:00081 a s223:Function,
-        bob:VFDFunction ;
+        scratch:VFDFunction ;
     rdfs:label "RF_VFD.function_block" ;
     s223:hasInput hvac_devices:00076,
         hvac_devices:00078,
@@ -4628,15 +4630,15 @@ hvac_devices:00081 a s223:Function,
         hvac_devices:00067,
         hvac_devices:00069,
         hvac_devices:00071 ;
-    bob:alarm hvac_devices:00071 ;
-    bob:amps_load hvac_devices:00076 ;
-    bob:drive_running hvac_devices:00069 ;
-    bob:frequency_load hvac_devices:00065 ;
-    bob:kW_load hvac_devices:00064 ;
-    bob:rpm hvac_devices:00067 ;
-    bob:speed_ref hvac_devices:00080 ;
-    bob:speed_ref_percent hvac_devices:00066 ;
-    bob:volts_load hvac_devices:00078 .
+    scratch:alarm hvac_devices:00071 ;
+    scratch:amps_load hvac_devices:00076 ;
+    scratch:drive_running hvac_devices:00069 ;
+    scratch:frequency_load hvac_devices:00065 ;
+    scratch:kW_load hvac_devices:00064 ;
+    scratch:rpm hvac_devices:00067 ;
+    scratch:speed_ref hvac_devices:00080 ;
+    scratch:speed_ref_percent hvac_devices:00066 ;
+    scratch:volts_load hvac_devices:00078 .
 
 hvac_devices:00082 a s223:Connectable,
         s223:Equipment,

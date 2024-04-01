@@ -10,6 +10,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix scratch: <http://data.ashrae.org/standard223/si-builder/prototype#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -38,6 +39,7 @@ ex31:00001 a s223:Connectable,
     s223:contains ex31:00021,
         ex31:00023,
         ex31:00025 ;
+    s223:executes ex31:00027 ;
     s223:hasConnectionPoint ex31:00002,
         ex31:00003,
         ex31:00004,
@@ -54,9 +56,9 @@ ex31:00001 a s223:Connectable,
         ex31:00015,
         ex31:00016,
         ex31:00017 ;
-    bob:amps ex31:00022 ;
     bob:contains ex31:00018 ;
-    bob:volts ex31:00024 ;
+    scratch:amps ex31:00022 ;
+    scratch:volts ex31:00024 ;
     rdfs:comment "A VFD for a Big Fan" .
 
 ex31:00002 a s223:ConnectionPoint,
@@ -274,7 +276,7 @@ ex31:00026 a s223:ObservableProperty,
     qudt:hasUnit unit:V .
 
 ex31:00027 a s223:Function,
-        bob:VFDFunction ;
+        scratch:VFDFunction ;
     rdfs:label "MyVFD.function_block" ;
     s223:hasInput ex31:00022,
         ex31:00024,
@@ -285,13 +287,13 @@ ex31:00027 a s223:Function,
         ex31:00013,
         ex31:00015,
         ex31:00017 ;
-    bob:alarm ex31:00017 ;
-    bob:amps_load ex31:00022 ;
-    bob:drive_running ex31:00015 ;
-    bob:frequency_load ex31:00011 ;
-    bob:kW_load ex31:00010 ;
-    bob:rpm ex31:00013 ;
-    bob:speed_ref ex31:00026 ;
-    bob:speed_ref_percent ex31:00012 ;
-    bob:volts_load ex31:00024 .
+    scratch:alarm ex31:00017 ;
+    scratch:amps_load ex31:00022 ;
+    scratch:drive_running ex31:00015 ;
+    scratch:frequency_load ex31:00011 ;
+    scratch:kW_load ex31:00010 ;
+    scratch:rpm ex31:00013 ;
+    scratch:speed_ref ex31:00026 ;
+    scratch:speed_ref_percent ex31:00012 ;
+    scratch:volts_load ex31:00024 .
 
