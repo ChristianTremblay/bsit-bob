@@ -9,7 +9,7 @@ from bob.connections.electricity import (
     Electricity_600VLL_3Ph_60HzOutletConnectionPoint)
 from bob.connections.network import (EthernetBidirectionalConnectionPoint,
                                      RS485BidirectionalConnectionPoint)
-from bob.equipment.electricity.vfd import VFD
+from bob.equipment.electricity.vfd import VFD as _BasicVFD
 from bob.producer import Function, FunctionInput, FunctionOutput
 from bob.producer.causality import Causality
 from bob.properties import (HP, RPM, Amps, ElectricPowerkW, NormalAlarmStatus,
@@ -78,13 +78,13 @@ vfd_600V_template = {
 }
 
 
-class VariableFrequencyDrive(VFD):
+class VFD(_BasicVFD):
     _class_iri: URIRef = SCRATCH.VariableFrequencyDrive
     amps: PropertyReference
     volts: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update(vfd_600V_template, config)
+        _config = template_update(vfd_600V_template, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"VFD.__init__ {_config} {kwargs}")
 
