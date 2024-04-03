@@ -1,0 +1,116 @@
+from typing import Dict
+from rdflib import URIRef
+
+from bob.connections.controlsignal import (
+    ModulationSignalInletConnectionPoint, OnOffSignalOutletConnectionPoint)
+from bob.connections.electricity import (
+    ElectricalInletConnectionPoint, ElectricalOutletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint)
+from bob.connections.network import (EthernetBidirectionalConnectionPoint,
+                                     RS485BidirectionalConnectionPoint)
+from bob.equipment.electricity.vfd import VFD
+from bob.producer import Function, FunctionInput, FunctionOutput
+from bob.producer.causality import Causality
+from bob.properties import (HP, RPM, Amps, ElectricPowerkW, NormalAlarmStatus,
+                            OnOffCommand, OnOffStatus, Percent, PercentCommand,
+                            PowerFactor, Temperature)
+from bob.properties.electricity import Frequency, Volts
+from bob.sensor.electricity import CurrentSensor, VoltageSensor
+from bob.template import template_update
+
+
+from bob.core import (BOB, P223, S223, SCRATCH, ConnectionPoint, Equipment,
+                     Property, PropertyReference, logging)
+
+# logging
+_log = logging.getLogger(__name__)
+
+# namespace
+_namespace = SCRATCH
+
+
+class VFD_FB(Function):
+    _class_iri = SCRATCH.VFDFunction
+
+    speed_ref: FunctionInput
+    amps_load: FunctionInput
+    volts_load: FunctionInput
+    frequency_load: FunctionOutput
+    kW_load: FunctionOutput
+    alarm: FunctionOutput
+    rpm: FunctionOutput
+    drive_running: FunctionOutput
+    speed_ref_percent: FunctionOutput
+
+
+vfd_600V_template = {
+    "cp": {
+        "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
+        "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
+        "ethernet_port": EthernetBidirectionalConnectionPoint,
+        "mstp_port": RS485BidirectionalConnectionPoint,
+        "speedrefInlet": ModulationSignalInletConnectionPoint,
+        "drive_running_dry_contact": OnOffSignalOutletConnectionPoint,
+        "alarm_dry_contact": OnOffSignalOutletConnectionPoint,
+    },
+    "properties": {
+        # ("actuatesProperty", PercentCommand): {},
+        # ("amps", PropertyReference): {},
+        # ("volts", PropertyReference): {},
+        ("hp", HP): {},
+        ("kW", ElectricPowerkW): {},
+        ("frequency", Frequency): {},
+        ("speed_reference", PercentCommand): {},
+        ("rpm", RPM): {},
+        ("motor_temp", Temperature): {},
+        ("drive_running", OnOffStatus): {},
+        ("run_command", OnOffCommand): {},
+        ("alarm_status", NormalAlarmStatus): {},
+    },
+    "parts": {
+        ("motor_temp_effect", Causality): {},
+        ("current_sensor", CurrentSensor): {},
+        ("voltage_sensor", VoltageSensor): {},
+        ("speed_ref_voltage_sensor", VoltageSensor): {},
+        # ("vfd_controller_function", VFD_FB): {},
+    },
+}
+
+
+class VariableFrequencyDrive(VFD):
+    _class_iri: URIRef = SCRATCH.VariableFrequencyDrive
+    amps: PropertyReference
+    volts: PropertyReference
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update(vfd_600V_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _log.debug(f"VFD.__init__ {_config} {kwargs}")
+
+        super().__init__(_config, **kwargs)
+
+        self["current_sensor"] % self.electricalOutlet
+        self.amps = self["current_sensor"].observedProperty
+        self["voltage_sensor"] % self.electricalOutlet
+        self.volts = self["voltage_sensor"].observedProperty
+        self["speed_ref_voltage_sensor"] % self.speedrefInlet
+
+        # build a function block
+        vfd_controller_function = self["vfd_controller_function"] = VFD_FB(
+            speed_ref=self["speed_ref_voltage_sensor"].observedProperty,
+            amps_load=self.amps,
+            volts_load=self.volts,
+            frequency_load=self["frequency"],
+            kW_load=self["kW"],
+            alarm=self["alarm_status"],
+            rpm=self["rpm"],
+            drive_running=self["drive_running"],
+            speed_ref_percent=self["speed_reference"],
+            label=self.label + ".function_block",
+        )
+
+        # in fact motor temp is the result of a calculation... but this shows a possibility
+        self.executes(self["vfd_controller_function"])
+        self["motor_temp_effect"].cause_input << self["rpm"]
+        self["motor_temp_effect"].effect_output >> self["motor_temp"]
