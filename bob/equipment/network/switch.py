@@ -5,8 +5,7 @@ from rdflib import URIRef
 
 from bob.properties.network import Mbit_per_seconds
 
-from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...connections.electricity import Electricity_120VLN_1Ph_60HzInletConnectionPoint
+from ...connections.electricity import ElectricalInletConnectionPoint
 from ...connections.network import EthernetBidirectionalConnectionPoint
 from ...core import (
     BOB,
@@ -31,7 +30,7 @@ _namespace = BOB
 
 ethernet_switch_template = {
     "cp": {
-        "electricalInlet": Electricity_120VLN_1Ph_60HzInletConnectionPoint,
+        "electricalInlet": ElectricalInletConnectionPoint,
     },
     "properties": {},
 }
