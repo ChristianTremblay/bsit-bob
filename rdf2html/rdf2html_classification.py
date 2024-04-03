@@ -23,6 +23,7 @@ propgraph_labels = {
     # "range": ["hasMinRange", "hasMaxRange"],
     "direction": ["hasDirection"],
     "aspects": ["hasAspect"],
+    "roles": ["hasRole"],
     "medium": ["hasMedium", "ofSubstance", "ofMedium", "hasSignalType"],
     "quantityKind": ["hasQuantityKind"],
     "enumerationKind": ["hasEnumerationKind"],
