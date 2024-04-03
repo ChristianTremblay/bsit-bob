@@ -3,14 +3,11 @@ from typing import Dict
 from bob.connections import electricity as elec_cnx
 from bob.connections.controlsignal import (OnOffSignalInletConnectionPoint,
                                            OnOffSignalOutletConnectionPoint)
-from bob.core import (BOB, P223, S223, SCRATCH, UNIT, Equipment, Node,
-                      Property, PropertyReference, logging)
-from bob.enum import HandOffAutoEnum
+from bob.core import (SCRATCH, UNIT, PropertyReference, logging)
 from bob.equipment.electricity.starter import MotorStarter as BasicMotorStarter
 from bob.equipment.electricity.switch import CurrentRelay
 from bob.properties.electricity import ElectricPower
-from bob.properties.ratio import Percent, PercentCommand
-from bob.properties.states import OnOffCommand, OnOffStatus
+from bob.properties.states import OnOffCommand
 from bob.template import template_update, configure_relations
 
 # logging

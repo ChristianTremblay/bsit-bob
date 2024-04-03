@@ -4,8 +4,6 @@ from typing import Dict
 from bob.properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from bob.properties.flow import Flow
 from bob.properties.ratio import Percent, PercentCommand
-from bob.properties.states import OnOffCommand, OnOffStatus
-from bob.property import QuantifiableObservableProperty
 
 
 from bob.template import configure_relations, template_update
@@ -17,13 +15,8 @@ from bob.connections.electricity import (
     Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from bob.core import (
-    BOB,
-    QUANTITYKIND,
-    S223,
     SCRATCH,
     UNIT,
-    ConnectionPoint,
-    Equipment,
     PropertyReference,
 )
 
