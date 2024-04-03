@@ -3,10 +3,10 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from bob.multimethods import multimethod
-from bob.producer import Function
-from bob.properties import Nm, Percent, PercentCommand
-from bob.properties.states import OnOffCommand, OnOffStatus
+from ...multimethods import multimethod
+from ...producer import Function
+from ...properties import Nm, Percent, PercentCommand
+from ...properties.states import OnOffCommand, OnOffStatus
 
 from ...connections.electricity import Electricity_24VLN_1Ph_60HzInletConnectionPoint
 from ...connections.network import RS485BidirectionalConnectionPoint
@@ -20,8 +20,9 @@ from ...core import (
     PropertyReference,
     data_graph,
     logging,
+    Role
 )
-from ...enum import Role
+
 from ...externalreference import NetworkProfile
 from ...template import template_update
 from . import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
@@ -69,6 +70,7 @@ class Controller(Equipment):
         _log.debug(f"Controller.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
+        self += Role.Controller
 
     def executes(self, function_block: Function):
         _log.debug(f"Controller {self._node_iri} executes  {function_block._node_iri}")
