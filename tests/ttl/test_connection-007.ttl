@@ -76,8 +76,8 @@ ex31:00008 a s223:Connectable,
         ex31:00013,
         ex31:00014,
         ex31:00015 ;
-    s223:connectedThrough ex31:00041,
-        ex31:00042 ;
+    s223:connectedThrough ex31:00043,
+        ex31:00044 ;
     s223:hasConnectionPoint ex31:00009,
         ex31:00010,
         ex31:00011,
@@ -101,8 +101,8 @@ ex31:00009 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.ductAirInlet" ;
     s223:cnx ex31:00008,
-        ex31:00041 ;
-    s223:connectsThrough ex31:00041 ;
+        ex31:00043 ;
+    s223:connectsThrough ex31:00043 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00008 .
 
@@ -111,8 +111,8 @@ ex31:00010 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 1.ductAirOutlet" ;
     s223:cnx ex31:00008,
-        ex31:00042 ;
-    s223:connectsThrough ex31:00042 ;
+        ex31:00044 ;
+    s223:connectsThrough ex31:00044 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00008 .
 
@@ -167,8 +167,8 @@ ex31:00016 a s223:Connectable,
         ex31:00021,
         ex31:00022,
         ex31:00023 ;
-    s223:connectedThrough ex31:00041,
-        ex31:00042 ;
+    s223:connectedThrough ex31:00043,
+        ex31:00044 ;
     s223:hasConnectionPoint ex31:00017,
         ex31:00018,
         ex31:00019,
@@ -192,8 +192,8 @@ ex31:00017 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.ductAirInlet" ;
     s223:cnx ex31:00016,
-        ex31:00041 ;
-    s223:connectsThrough ex31:00041 ;
+        ex31:00043 ;
+    s223:connectsThrough ex31:00043 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00016 .
 
@@ -202,8 +202,8 @@ ex31:00018 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Office 2.ductAirOutlet" ;
     s223:cnx ex31:00016,
-        ex31:00042 ;
-    s223:connectsThrough ex31:00042 ;
+        ex31:00044 ;
+    s223:connectsThrough ex31:00044 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00016 .
 
@@ -359,10 +359,12 @@ ex31:00035 a s223:Connectable,
         s223:Fan ;
     rdfs:label "Supply Fan" ;
     s223:cnx ex31:00036,
-        ex31:00037 ;
-    s223:connectedThrough ex31:00041 ;
+        ex31:00037,
+        ex31:00038 ;
+    s223:connectedThrough ex31:00043 ;
     s223:hasConnectionPoint ex31:00036,
-        ex31:00037 ;
+        ex31:00037,
+        ex31:00038 ;
     s223:hasPhysicalLocation ex31:00007 ;
     bob:airInlet ex31:00036 ;
     bob:airOutlet ex31:00037 .
@@ -380,43 +382,61 @@ ex31:00037 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Supply Fan.airOutlet" ;
     s223:cnx ex31:00035,
-        ex31:00041 ;
-    s223:connectsThrough ex31:00041 ;
+        ex31:00043 ;
+    s223:connectsThrough ex31:00043 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00035 .
 
-ex31:00038 a s223:Connectable,
+ex31:00038 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Supply Fan.electricalInlet" ;
+    s223:cnx ex31:00035 ;
+    s223:hasMedium s223:Medium-Electricity ;
+    s223:isConnectionPointOf ex31:00035 .
+
+ex31:00039 a s223:Connectable,
         s223:Equipment,
         s223:Fan ;
     rdfs:label "Return Fan" ;
-    s223:cnx ex31:00039,
-        ex31:00040 ;
-    s223:connectedThrough ex31:00042 ;
-    s223:hasConnectionPoint ex31:00039,
-        ex31:00040 ;
+    s223:cnx ex31:00040,
+        ex31:00041,
+        ex31:00042 ;
+    s223:connectedThrough ex31:00044 ;
+    s223:hasConnectionPoint ex31:00040,
+        ex31:00041,
+        ex31:00042 ;
     s223:hasPhysicalLocation ex31:00007 ;
-    bob:airInlet ex31:00039 ;
-    bob:airOutlet ex31:00040 .
+    bob:airInlet ex31:00040 ;
+    bob:airOutlet ex31:00041 .
 
-ex31:00039 a s223:ConnectionPoint,
+ex31:00040 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Return Fan.airInlet" ;
-    s223:cnx ex31:00038,
-        ex31:00042 ;
-    s223:connectsThrough ex31:00042 ;
+    s223:cnx ex31:00039,
+        ex31:00044 ;
+    s223:connectsThrough ex31:00044 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex31:00038 .
+    s223:isConnectionPointOf ex31:00039 .
 
-ex31:00040 a s223:ConnectionPoint,
+ex31:00041 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Return Fan.airOutlet" ;
-    s223:cnx ex31:00038 ;
+    s223:cnx ex31:00039 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf ex31:00038 .
+    s223:isConnectionPointOf ex31:00039 .
 
-ex31:00041 a s223:Connection ;
+ex31:00042 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "Return Fan.electricalInlet" ;
+    s223:cnx ex31:00039 ;
+    s223:hasMedium s223:Medium-Electricity ;
+    s223:isConnectionPointOf ex31:00039 .
+
+ex31:00043 a s223:Connection ;
     rdfs:label "SUPPLY-AIR" ;
     s223:cnx ex31:00009,
         ex31:00017,
@@ -430,17 +450,17 @@ ex31:00041 a s223:Connection ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Air supplies zone here" .
 
-ex31:00042 a s223:Connection ;
+ex31:00044 a s223:Connection ;
     rdfs:label "RETURN-AIR" ;
     s223:cnx ex31:00010,
         ex31:00018,
-        ex31:00039 ;
+        ex31:00040 ;
     s223:connectsAt ex31:00010,
         ex31:00018,
-        ex31:00039 ;
+        ex31:00040 ;
     s223:connectsFrom ex31:00008,
         ex31:00016 ;
-    s223:connectsTo ex31:00038 ;
+    s223:connectsTo ex31:00039 ;
     s223:hasMedium s223:Medium-Air ;
     rdfs:comment "Air returns from zone here" .
 

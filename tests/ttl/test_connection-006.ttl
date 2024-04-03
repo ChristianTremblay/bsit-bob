@@ -36,7 +36,7 @@ ex31:00002 a s223:Coil,
     s223:connected ex31:00007 ;
     s223:connectedFrom ex31:00007 ;
     s223:connectedThrough ex31:00001,
-        ex31:00010 ;
+        ex31:00011 ;
     s223:hasConnectionPoint ex31:00003,
         ex31:00004,
         ex31:00005,
@@ -51,8 +51,8 @@ ex31:00003 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
     s223:cnx ex31:00002,
-        ex31:00010 ;
-    s223:connectsThrough ex31:00010 ;
+        ex31:00011 ;
+    s223:connectsThrough ex31:00011 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00002 .
 
@@ -87,12 +87,14 @@ ex31:00007 a s223:Connectable,
         s223:Fan ;
     rdfs:label "F" ;
     s223:cnx ex31:00008,
-        ex31:00009 ;
+        ex31:00009,
+        ex31:00010 ;
     s223:connected ex31:00002 ;
-    s223:connectedThrough ex31:00010 ;
+    s223:connectedThrough ex31:00011 ;
     s223:connectedTo ex31:00002 ;
     s223:hasConnectionPoint ex31:00008,
-        ex31:00009 ;
+        ex31:00009,
+        ex31:00010 ;
     bob:airInlet ex31:00008 ;
     bob:airOutlet ex31:00009 .
 
@@ -109,12 +111,20 @@ ex31:00009 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "F.airOutlet" ;
     s223:cnx ex31:00007,
-        ex31:00010 ;
-    s223:connectsThrough ex31:00010 ;
+        ex31:00011 ;
+    s223:connectsThrough ex31:00011 ;
     s223:hasMedium s223:Medium-Air ;
     s223:isConnectionPointOf ex31:00007 .
 
-ex31:00010 a s223:Connection ;
+ex31:00010 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "F.electricalInlet" ;
+    s223:cnx ex31:00007 ;
+    s223:hasMedium s223:Medium-Electricity ;
+    s223:isConnectionPointOf ex31:00007 .
+
+ex31:00011 a s223:Connection ;
     s223:cnx ex31:00003,
         ex31:00009 ;
     s223:connectsAt ex31:00003,
