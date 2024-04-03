@@ -31,10 +31,10 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:mapsTo ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
         [ a sh:PropertyShape ;
             sh:path bob:isSystemConnectionPointOf ] .
 
@@ -68,9 +68,9 @@ ex1:EquipmentInOut a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:EquipmentOut1 a rdfs:Class,
         sh:NodeShape ;
@@ -86,9 +86,9 @@ ex1:EquipmentOut2 a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:SystemIn1 a rdfs:Class,
         sh:NodeShape ;
@@ -127,9 +127,9 @@ ex1:SystemOut2 a rdfs:Class,
     rdfs:label "__main__.SystemOut2" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:cp a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -900,10 +900,10 @@ s223:Equipment sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
 
 s223:System sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ],
         [ a sh:PropertyShape ;
             sh:path bob:hasSystemConnectionPoint ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ] .
+            sh:path s223:hasPhysicalLocation ] .
 

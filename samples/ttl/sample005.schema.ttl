@@ -966,10 +966,10 @@ bob:Flow a rdfs:Class,
             sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path bob:measuresMedium ] .
 
 bob:HVACSpace a rdfs:Class,
         sh:NodeShape ;
@@ -977,50 +977,50 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:windows ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
+            sh:path bob:ductAirInlet ],
         [ a sh:PropertyShape ;
             sh:path bob:no2 ],
         [ a sh:PropertyShape ;
+            sh:path bob:ductAirOutlet ],
+        [ a sh:PropertyShape ;
             sh:path bob:radiantHeating ],
-        [ a sh:PropertyShape ;
-            sh:path bob:ductAirInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:doors ],
-        [ a sh:PropertyShape ;
-            sh:path bob:humidity ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
             sh:path bob:co2 ],
         [ a sh:PropertyShape ;
-            sh:path bob:radiantCooling ],
+            sh:path bob:co ],
         [ a sh:PropertyShape ;
-            sh:path bob:ductAirOutlet ],
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
             sh:path bob:occupancy ],
         [ a sh:PropertyShape ;
-            sh:path bob:airChangePerHour ] .
+            sh:path bob:windows ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airTransfer ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantCooling ],
+        [ a sh:PropertyShape ;
+            sh:path bob:humidity ] .
 
 bob:HVACZone a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.space.hvac.HVACZone" ;
     rdfs:subClassOf s223:Zone ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
-        [ a sh:PropertyShape ;
             sh:path bob:occupancy ],
         [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
             sh:path bob:co2 ],
         [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
+            sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
             sh:path bob:airInlet ] .
 
@@ -1103,15 +1103,15 @@ bob:ZoneConnectionPoint a rdfs:Class,
     """ ;
     rdfs:subClassOf bob:ZoneConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
             sh:path bob:isZoneConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path bob:mapsTo ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
 
 p223:hasSignalType a rdf:Property .
 
@@ -1127,13 +1127,13 @@ s223:Actuator sh:property [ a sh:PropertyShape ;
             sh:path bob:command ] .
 
 s223:Coil sh:property [ a sh:PropertyShape ;
-            sh:path bob:modulation ],
+            sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
             sh:path bob:onOffCommand ],
         [ a sh:PropertyShape ;
             sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ] .
+            sh:path bob:modulation ] .
 
 s223:Connection sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
@@ -1145,36 +1145,36 @@ s223:Connection sh:property [ a sh:PropertyShape ;
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
             sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ] .
-
-s223:Damper sh:property [ a sh:PropertyShape ;
-            sh:path bob:is_open ],
-        [ a sh:PropertyShape ;
-            sh:path bob:position ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:is_closed ],
-        [ a sh:PropertyShape ;
-            sh:path bob:command ],
-        [ a sh:PropertyShape ;
-            sh:path bob:position_feedback ],
-        [ a sh:PropertyShape ;
-            sh:path bob:linkageInlet ] .
-
-s223:DomainSpace sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
+            sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ] .
+
+s223:Damper sh:property [ a sh:PropertyShape ;
+            sh:path bob:command ],
+        [ a sh:PropertyShape ;
+            sh:path bob:linkageInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:position_feedback ],
+        [ a sh:PropertyShape ;
+            sh:path bob:is_open ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:is_closed ],
+        [ a sh:PropertyShape ;
+            sh:path bob:position ] .
+
+s223:DomainSpace sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ] .
 
 s223:EnumerableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasEnumerationKind ] .
@@ -1187,21 +1187,21 @@ s223:Equipment sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
 
 s223:HeatingCoil sh:property [ a sh:PropertyShape ;
-            sh:path bob:hotWaterOutlet ],
+            sh:path bob:hotWaterInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:hotWaterInlet ] .
+            sh:path bob:hotWaterOutlet ] .
 
 s223:ObservableProperty sh:property [ a sh:PropertyShape ;
             sh:path bob:isObservedBy ] .
 
 s223:Property sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofSubstance ],
+        [ a sh:PropertyShape ;
             sh:path s223:hasValue ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ] .
+            sh:path s223:ofMedium ] .
 
 s223:QuantifiableObservableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasSetpoint ] .
@@ -1214,44 +1214,44 @@ s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
 s223:Sensor sh:property [ a sh:PropertyShape ;
             sh:path s223:observes ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasObservationLocation ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMaxRange ],
-        [ a sh:PropertyShape ;
             sh:path s223:observes ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMeasurementUncertainty ],
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasObservationLocation ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMeasurementPrecision ],
         [ a sh:PropertyShape ;
             sh:path s223:observes ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMinRange ] .
+            sh:path s223:hasMeasurementUncertainty ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMaxRange ] .
 
 s223:SingleDuctTerminal sh:property [ a sh:PropertyShape ;
-            sh:path bob:occupancyStatus ],
+            sh:path bob:airFlow ],
         [ a sh:PropertyShape ;
             sh:path bob:supplyAirTemperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
+            sh:path bob:airFlow ],
+        [ a sh:PropertyShape ;
+            sh:path bob:damperPosition ],
         [ a sh:PropertyShape ;
             sh:path bob:occupancyStatus ],
         [ a sh:PropertyShape ;
             sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:airFlow ],
-        [ a sh:PropertyShape ;
             sh:path bob:airInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airFlow ],
-        [ a sh:PropertyShape ;
-            sh:path bob:zoneTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:damperPosition ],
         [ a sh:PropertyShape ;
-            sh:path bob:damperPosition ] .
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancyStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:zoneTemperature ] .
 
 s223:TemperatureSensor sh:property [ a sh:PropertyShape ;
             sh:path s223:observes ] .
