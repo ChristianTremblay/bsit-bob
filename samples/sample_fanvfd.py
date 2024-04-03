@@ -10,8 +10,7 @@ from bob.connections.electricity import (
 from bob.connections.network import EthernetBidirectionalConnectionPoint
 from bob.core import UNIT, Role, bind_model_namespace, data_graph, dump, schema_graph
 from bob.equipment.architectural import Window
-from bob.equipment.electricity.starter import MotorStarter
-from bob.equipment.electricity.vfd import VFD
+
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
 from bob.equipment.hvac.chiller import Chiller
@@ -26,6 +25,10 @@ from bob.equipment.hvac.vav import VAV
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
+
+
+from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
+from bob.scratch.electricity.vfd import VFD
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

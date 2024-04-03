@@ -6,7 +6,7 @@ from bob.template import SystemFromTemplate
 from bob.scratch.hvac.fan import (
     Fan,
     system_600VFan_with_Starter_template,
-    #system_fan_with_vfd_600V_template,
+    system_600VFan_with_VFD_template,
 )
 
 model_name = Path(__file__).stem
@@ -16,7 +16,7 @@ f1 = Fan(label="Basic Fan")
 f2 = SystemFromTemplate(
     label="Fan with Starter", config=system_600VFan_with_Starter_template
 )
-#f3 = SystemFromTemplate(label="Fan with VFD", config=system_fan_with_vfd_600V_template)
+f3 = SystemFromTemplate(label="Fan with VFD", config=system_600VFan_with_VFD_template)
 
 dump(
     data_graph,

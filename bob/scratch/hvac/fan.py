@@ -28,7 +28,7 @@ from bob.core import (
 )
 
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
-from bob.scratch.electricity.vfd import VariableFrequencyDrive as VFD
+from bob.scratch.electricity.vfd import VFD
 from bob.equipment.hvac.fan import Fan as _BasicFan
 
 # logging
