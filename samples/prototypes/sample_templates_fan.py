@@ -3,6 +3,7 @@ from pathlib import Path
 from header import sample_header
 from bob.core import UNIT, Role, bind_model_namespace, data_graph, dump, schema_graph
 from bob.template import SystemFromTemplate
+from bob.equipment.hvac.fan import Fan as BasicFan
 from bob.scratch.hvac.fan import (
     Fan,
     system_600VFan_with_Starter_template,
@@ -18,6 +19,7 @@ f2 = SystemFromTemplate(
 )
 f3 = SystemFromTemplate(label="Fan with VFD", config=system_600VFan_with_VFD_template)
 
+f4 = BasicFan(label='A Bob Fan')
 dump(
     data_graph,
     filename=f"samples/ttl/{model_name}.data.ttl",
