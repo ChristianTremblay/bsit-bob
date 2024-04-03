@@ -2,16 +2,21 @@ from pathlib import Path
 
 from header import sample_header
 from bob.core import UNIT, Role, bind_model_namespace, data_graph, dump, schema_graph
-from bob.template import template_update, configure_relations
-from bob.equipment.hvac.fan import Fan, fan_with_starter_template, fan_with_vfd_template
 from bob.template import SystemFromTemplate
+from bob.scratch.hvac.fan import (
+    Fan,
+    system_600VFan_with_Starter_template,
+    #system_fan_with_vfd_600V_template,
+)
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
 f1 = Fan(label="Basic Fan")
-f2 = SystemFromTemplate(label="Fan with Starter", config=fan_with_starter_template)
-f3 = SystemFromTemplate(label="Fan with VFD", config=fan_with_vfd_template)
+f2 = SystemFromTemplate(
+    label="Fan with Starter", config=system_600VFan_with_Starter_template
+)
+#f3 = SystemFromTemplate(label="Fan with VFD", config=system_fan_with_vfd_600V_template)
 
 dump(
     data_graph,

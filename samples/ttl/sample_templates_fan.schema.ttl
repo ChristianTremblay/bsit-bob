@@ -23,145 +23,6 @@
   rdfs:label "sample_templates_fan-schema" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-bob:ElectricPower a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.properties.electricity.ElectricPower" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
-
-bob:ElectricPowerkW a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.ElectricPowerkW" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower .
-
-bob:EthernetConnectionPoint a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.connections.network.EthernetConnectionPoint" ;
-    rdfs:subClassOf s223:ConnectionPoint ;
-    sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path p223:hasProtocol ],
-        [ a sh:PropertyShape ;
-            sh:path p223:data_rate ],
-        [ a sh:PropertyShape ;
-            sh:path p223:VLAN ] .
-
-bob:Flow a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.properties.flow.Flow" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ] .
-
-bob:Frequency a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.Frequency" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:HP a rdfs:Class ;
-    rdfs:label "bob.properties.force.HP" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:ModulationSignalConnectionPoint a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.connections.controlsignal.ModulationSignalConnectionPoint" ;
-    rdfs:subClassOf s223:ConnectionPoint ;
-    sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path p223:hasSignalType ] .
-
-bob:OnOffSignalConnectionPoint a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" ;
-    rdfs:subClassOf s223:ConnectionPoint ;
-    sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path p223:hasSignalType ] .
-
-bob:Percent a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.Percent" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:PercentCommand a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.PercentCommand" ;
-    rdfs:subClassOf s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty .
-
-bob:PowerFactor a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.PowerFactor" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:Pressure a rdfs:Class ;
-    rdfs:label "bob.properties.force.Pressure" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:RPM a rdfs:Class ;
-    rdfs:label "bob.properties.ratio.RPM" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
-bob:RS485ConnectionPoint a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.connections.network.RS485ConnectionPoint" ;
-    rdfs:subClassOf s223:ConnectionPoint ;
-    sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path p223:hasProtocol ] .
-
-bob:Temperature a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.properties.temperature.Temperature" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
-
-bob:Volts a rdfs:Class ;
-    rdfs:label "bob.properties.electricity.Volts" ;
-    rdfs:subClassOf s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty .
-
 bob:airInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
@@ -180,21 +41,9 @@ bob:hasEffectLocation a rdf:Property ;
 
 bob:hasSystemConnectionPoint a rdf:Property .
 
-bob:inputSignal a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint .
-
 bob:isObservedBy a rdf:Property .
 
 bob:measuresMedium a rdf:Property .
-
-bob:onOffCommand a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-bob:onOffStatus a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-bob:outputSignal a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint .
 
 ex:SystemFromTemplate a rdfs:Class ;
     rdfs:label "bob.template.SystemFromTemplate" ;
@@ -298,12 +147,6 @@ p223:Analog-Unknown a p223:Analog-Unknown,
     rdfs:label "Unknown" ;
     rdfs:subClassOf p223:EnumerationKind-Analog,
         s223:EnumerationKind .
-
-p223:AnalogInput a rdfs:Class ;
-    rdfs:label "bob.connections.controlsignal.ModulationSignalInletConnectionPoint" ;
-    rdfs:subClassOf s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:ModulationSignalConnectionPoint .
 
 p223:Binary-DryContact a p223:Binary-DryContact,
         s223:EnumerationKind,
@@ -528,12 +371,6 @@ p223:EnumerationKind-Protocol a p223:EnumerationKind-Protocol,
     rdfs:label "Protocol" ;
     rdfs:subClassOf s223:EnumerationKind .
 
-p223:EnumerationKind-RunningNotRunning a p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "RunningNotRunning" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
 p223:EnumerationKind-TopBottom a p223:EnumerationKind-TopBottom,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -601,8 +438,7 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
     rdfs:subClassOf p223:EnumerationKind-ManualAuto,
         s223:EnumerationKind .
 
-p223:MotorStarter a rdfs:Class,
-        sh:NodeShape ;
+p223:MotorStarter a rdfs:Class ;
     rdfs:label "bob.equipment.electricity.starter.MotorStarter" ;
     rdfs:comment """
     Motor starter
@@ -611,13 +447,7 @@ p223:MotorStarter a rdfs:Class,
 
     """ ;
     rdfs:subClassOf s223:Connectable,
-        s223:Equipment ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path bob:inputSignal ],
-        [ a sh:PropertyShape ;
-            sh:path bob:outputSignal ],
-        [ a sh:PropertyShape ;
-            sh:path bob:onOffStatus ] .
+        s223:Equipment .
 
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
@@ -845,27 +675,6 @@ p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
     rdfs:subClassOf p223:EnumerationKind-Protocol,
         s223:EnumerationKind .
 
-p223:RunningNotRunning-NotRunning a p223:RunningNotRunning-NotRunning,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "NotRunning" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
-p223:RunningNotRunning-Running a p223:RunningNotRunning-Running,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "Running" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
-p223:RunningNotRunning-Unknown a p223:RunningNotRunning-Unknown,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "Unknown" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
 p223:Signal-Communication a p223:Signal-Communication,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -1066,14 +875,149 @@ bob:Causality a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path bob:effect_output ] .
 
-p223:VLAN a rdf:Property .
+bob:ElectricPower a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.electricity.ElectricPower" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
-p223:data_rate a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+bob:ElectricPowerkW a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricPowerkW" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower .
 
-p223:hasNetworkProfile a rdf:Property .
+bob:Flow a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.flow.Flow" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path bob:measuresMedium ] .
 
-p223:hasProtocol a rdf:Property .
+bob:HP a rdfs:Class ;
+    rdfs:label "bob.properties.force.HP" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:OnOffSignalConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path p223:hasSignalType ] .
+
+bob:Percent a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.Percent" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:PercentCommand a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.PercentCommand" ;
+    rdfs:subClassOf s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty .
+
+bob:PowerFactor a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.PowerFactor" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Pressure a rdfs:Class ;
+    rdfs:label "bob.properties.force.Pressure" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:RPM a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.RPM" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+scratch:Fan a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.hvac.fan.Fan" ;
+    rdfs:comment """
+    Prototype of a Fan based on the Bob Fan class
+    Fan speed is an important property
+    The intrinsic property I want to make `actuatedby` a starter or a VFD, I'd like it to be
+    a PercentCommand.
+    Because RPM, cfm, amps, etc... will all depend of this and I would not want having to make multiple
+    `actuatesProperty` relationships between the starter/vfd and the fan.
+    I only want 1 property.
+    Then if required, it'll be possible to calculate RPM, amps, cfm, etc, based on the `PercentCommand` actuated property
+
+    RPM of the fan, can be different from RPM of motor (ex. belt and pulley)
+    So here, speed_ratio != RPM because if a fan can deliver x RPM, the ratio of pulley can be changed and
+    giving 100% speed_ratio to a fan, may mean a different speed than RPM of fan.
+
+    A motor starter will give 0% or 100% of speed_ratio depending on being On or Off
+    A VFD will modulate this speed ratio from 0% to 100%.
+    Depending on the configuration of the drive, this ratio can represent 0-60Hz... or 20-50Hz
+    (if freq are configured different than 0-60Hz), etc...
+
+    Using speed_ratio will isolate the model from the real time data by providing an agnostic way
+    of actuating the fan.
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
+        s223:Fan ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:onOffStatus ] .
+
+scratch:MotorStarter_600VLL_3Ph_60Hz a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.electricity.starter.MotorStarter_600VLL_3Ph_60Hz" ;
+    rdfs:comment """
+    Motor starter
+    This Equipment provides command and status for an electrical
+    Equipment like a fan or a pump
+    This prototype is a 600V 3phases motor starter that implements 
+    onOffCommand and onOffStatus properties
+    status is given by a current relay that is connected to the electrical outlet, that read
+    current using its current sensor.
+
+    """ ;
+    rdfs:subClassOf p223:MotorStarter,
+        s223:Connectable,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:outputSignal ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:onOffStatus ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:inputSignal ] .
 
 p223:hasSignalType a rdf:Property .
 
@@ -1086,17 +1030,14 @@ s223:Connection sh:property [ a sh:PropertyShape ;
             sh:path s223:hasMedium ] .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ] .
-
-s223:Controller sh:property [ a sh:PropertyShape ;
-            sh:path p223:hasNetworkProfile ] .
 
 s223:EnumerableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasEnumerationKind ] .
@@ -1107,24 +1048,17 @@ s223:EnumeratedActuatableProperty sh:property [ a sh:PropertyShape ;
 
 s223:EnumeratedObservableProperty sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:hasValue ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
             sh:path s223:hasValue ] .
 
 s223:Equipment sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ],
+            sh:path s223:actuatesProperty ],
         [ a sh:PropertyShape ;
-            sh:path s223:actuatesProperty ] .
+            sh:path s223:hasPhysicalLocation ] .
 
 s223:Fan sh:property [ a sh:PropertyShape ;
-            sh:path bob:onOffStatus ],
+            sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:onOffCommand ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ] .
+            sh:path bob:airInlet ] .
 
 s223:ObservableProperty sh:property [ a sh:PropertyShape ;
             sh:path bob:isObservedBy ] .
@@ -1142,104 +1076,46 @@ s223:QuantifiableObservableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasSetpoint ] .
 
 s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasQuantityKind ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:path qudt:hasQuantityKind ] .
 
 s223:Sensor sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasMaxRange ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasMeasurementUncertainty ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMaxRange ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasObservationLocation ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasMaxRange ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMinRange ],
         [ a sh:PropertyShape ;
-            sh:path s223:observes ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasMinRange ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMinRange ],
-        [ a sh:PropertyShape ;
-            sh:path s223:observes ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMeasurementPrecision ],
         [ a sh:PropertyShape ;
-            sh:path s223:observes ] .
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasObservationLocation ] .
 
 s223:System sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasPhysicalLocation ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasDomain ],
         [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ] .
+            sh:path bob:hasSystemConnectionPoint ] .
 
-s223:VFD sh:property [ a sh:PropertyShape ;
-            sh:path s223:actuatesProperty ] .
+scratch:inputSignal a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 
-s223:VariableFrequencyDrive sh:property [ a sh:PropertyShape ;
-            sh:path scratch:amps ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:volts ] .
-
-scratch:VFDFunction a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.equipment.electricity.vfd.VFD_FB" ;
-    rdfs:subClassOf s223:Function ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path scratch:kW_load ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:speed_ref_percent ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:alarm ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:rpm ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:speed_ref ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:volts_load ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:frequency_load ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:amps_load ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:drive_running ] .
-
-scratch:alarm a rdf:Property ;
+scratch:onOffCommand a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-scratch:amps a rdf:Property ;
+scratch:onOffStatus a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
 
-scratch:amps_load a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-scratch:drive_running a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-scratch:frequency_load a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-scratch:kW_load a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-scratch:rpm a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-scratch:speed_ref a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-scratch:speed_ref_percent a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-scratch:volts a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
-
-scratch:volts_load a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+scratch:outputSignal a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
 
