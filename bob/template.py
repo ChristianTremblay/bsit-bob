@@ -40,39 +40,61 @@ def template_update(base: t.Dict = {}, config: t.Dict = None, bases: t.List = No
         return _d
 
 
-def get_instance(equipment: Equipment, blob: str):
-    if "self." in blob:
-        _key = blob.split(".")[1]
-        thing = getattr(equipment, _key)
-        return (thing, _key)  # in case thing is None
-    if "self[" in blob:
-        matches = re.findall(r'\[["\'](.*?)["\']\]', blob)
-        property_match = re.search(r"\.(?P<property>\w+)$", blob)
-        thing = equipment[matches.pop(0)]
+def get_instance(container: t.Union[Equipment, System], blob: str):
+    print('Looking for : ', container, blob)
+    if "[" in blob:
+        matches = re.findall(r'\[["\'](.*?)["\']\]', blob) # sub-equipment
+        property_match = re.search(r"\.(?P<property>\w+)$", blob) # property => .something
+        thing = container[matches.pop(0)]
+        
         for each in matches:
             thing = thing[each]
+        print('thing : ', thing, property_match)
         if property_match:
             property_name = property_match.group("property")
-            thing_property = getattr(thing, property_name)
-            return (thing_property, property_name)  # in case thing_property is None
+            #try:
+            #    
+            #    thing_property = getattr(thing, property_name)
+            #    if thing_property is None:
+            #        thing_property = thing # in case thing_property is None, we give the part before .something
+            #except AttributeError:
+            #    thing_property = None
+            #print(thing_property, property_name)
+            return (thing, property_name)  # in case thing_property is None
+        #print(thing, None)
         return (thing, None)
+    else:
+        _key = blob.split(".")[1]
+        thing = getattr(container, _key)
+        #print(thing, _key)
+        return (thing, _key)  # in case thing is None
 
 
 def configure_relations(
-    equipment: Equipment, relations: t.List[t.Tuple[str, str, str]]
+    container: t.Union[Equipment, System], relations: t.List[t.Tuple[str, str, str]]
 ):
     for relation in relations:
         _source, operator, _target = relation
-        source, source_key = get_instance(equipment, _source)
-        target, target_key = get_instance(equipment, _target)
+        source_element, source_key = get_instance(container, _source)
+        target_element, target_key = get_instance(container, _target)
+        
+        source = getattr(source_element, source_key, None)
+        if target_key is None:
+            target = target_element
+        else:
+            target = getattr(target_element, target_key, None)
+
+        if target is None:
+            raise AttributeError(f"Target {target_key} not found in {target_element}")
+
         if operator == "=":
             if source is None:
                 # print(equipment, source_key, target)
                 try:
-                    setattr(equipment, source_key, target)
+                    setattr(source_element, source_key, target)
                 except TypeError as error:
                     print(error)
-                    print("Equipment :", equipment)
+                    print("Container :", container)
                     print("Source :", source, source_key)
                     print("Target :", target, target_key)
 
@@ -84,12 +106,13 @@ def configure_relations(
             source << target
         elif operator == "%":
             source % target
-        # no @ here as we are creating relation "inside" the equipment
+        # no @ here as we are creating relation "inside" the equipment or system
 
 
 class SystemFromTemplate(System):
     def __init__(self, config: t.Dict = None, **kwargs):
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
-        configure_relations(self, _config.get("relations", []))
+        configure_relations(self, _relations)
