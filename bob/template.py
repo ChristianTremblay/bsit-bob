@@ -41,7 +41,7 @@ def template_update(base: t.Dict = {}, config: t.Dict = None, bases: t.List = No
 
 
 def get_instance(container: t.Union[Equipment, System], blob: str):
-    print('Looking for : ', container, blob)
+    #print('Looking for : ', container, blob)
     if "[" in blob:
         matches = re.findall(r'\[["\'](.*?)["\']\]', blob) # sub-equipment
         property_match = re.search(r"\.(?P<property>\w+)$", blob) # property => .something
@@ -49,7 +49,7 @@ def get_instance(container: t.Union[Equipment, System], blob: str):
         
         for each in matches:
             thing = thing[each]
-        print('thing : ', thing, property_match)
+        #print('thing : ', thing, property_match)
         if property_match:
             property_name = property_match.group("property")
             #try:
