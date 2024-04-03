@@ -68,9 +68,9 @@ ex1:EquipmentInOut a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:EquipmentOut1 a rdfs:Class,
         sh:NodeShape ;
@@ -86,9 +86,9 @@ ex1:EquipmentOut2 a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:SystemIn1 a rdfs:Class,
         sh:NodeShape ;
@@ -102,9 +102,9 @@ ex1:SystemIn2 a rdfs:Class,
     rdfs:label "__main__.SystemIn2" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:SystemInOut a rdfs:Class,
         sh:NodeShape ;
@@ -127,9 +127,9 @@ ex1:SystemOut2 a rdfs:Class,
     rdfs:label "__main__.SystemOut2" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:cp a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -475,12 +475,6 @@ p223:EnumerationKind-Protocol a p223:EnumerationKind-Protocol,
     rdfs:label "Protocol" ;
     rdfs:subClassOf s223:EnumerationKind .
 
-p223:EnumerationKind-RunningNotRunning a p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "RunningNotRunning" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
 p223:EnumerationKind-TopBottom a p223:EnumerationKind-TopBottom,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -751,27 +745,6 @@ p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
     rdfs:subClassOf p223:EnumerationKind-Protocol,
         s223:EnumerationKind .
 
-p223:RunningNotRunning-NotRunning a p223:RunningNotRunning-NotRunning,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "NotRunning" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
-p223:RunningNotRunning-Running a p223:RunningNotRunning-Running,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "Running" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
-p223:RunningNotRunning-Unknown a p223:RunningNotRunning-Unknown,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "Unknown" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
 p223:Signal-Communication a p223:Signal-Communication,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -930,7 +903,7 @@ s223:System sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasDomain ],
         [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ],
+            sh:path s223:hasPhysicalLocation ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ] .
+            sh:path bob:hasSystemConnectionPoint ] .
 

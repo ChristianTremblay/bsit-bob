@@ -25,33 +25,33 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airChangePerHour ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co ],
-        [ a sh:PropertyShape ;
-            sh:path bob:ductAirInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:windows ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airTransfer ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
+            sh:path bob:temperature ],
         [ a sh:PropertyShape ;
             sh:path bob:co2 ],
         [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
+            sh:path bob:co ],
         [ a sh:PropertyShape ;
-            sh:path bob:doors ],
-        [ a sh:PropertyShape ;
-            sh:path bob:occupancy ],
-        [ a sh:PropertyShape ;
-            sh:path bob:radiantHeating ],
+            sh:path bob:no2 ],
         [ a sh:PropertyShape ;
             sh:path bob:ductAirOutlet ],
         [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
             sh:path bob:radiantCooling ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantHeating ],
+        [ a sh:PropertyShape ;
+            sh:path bob:windows ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature_setpoint ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
             sh:path bob:humidity ] .
 
@@ -410,12 +410,6 @@ p223:EnumerationKind-Protocol a p223:EnumerationKind-Protocol,
     rdfs:label "Protocol" ;
     rdfs:subClassOf s223:EnumerationKind .
 
-p223:EnumerationKind-RunningNotRunning a p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "RunningNotRunning" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
 p223:EnumerationKind-TopBottom a p223:EnumerationKind-TopBottom,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -709,27 +703,6 @@ p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
     rdfs:subClassOf p223:EnumerationKind-Protocol,
         s223:EnumerationKind .
 
-p223:RunningNotRunning-NotRunning a p223:RunningNotRunning-NotRunning,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "NotRunning" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
-p223:RunningNotRunning-Running a p223:RunningNotRunning-Running,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "Running" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
-p223:RunningNotRunning-Unknown a p223:RunningNotRunning-Unknown,
-        s223:EnumerationKind,
-        rdfs:Class ;
-    rdfs:label "Unknown" ;
-    rdfs:subClassOf p223:EnumerationKind-RunningNotRunning,
-        s223:EnumerationKind .
-
 p223:Signal-Communication a p223:Signal-Communication,
         s223:EnumerationKind,
         rdfs:Class ;
@@ -919,9 +892,9 @@ bob:Causality a rdfs:Class,
     """ ;
     rdfs:subClassOf p223:Producer ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:cause_input ],
+            sh:path bob:effect_output ],
         [ a sh:PropertyShape ;
-            sh:path bob:effect_output ] .
+            sh:path bob:cause_input ] .
 
 qudt:hasQuantityKind a rdf:Property .
 
@@ -931,11 +904,11 @@ s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
+            sh:path s223:connectsThrough ],
+        [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ],
-        [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ] .
+            sh:path s223:mapsTo ] .
 
 s223:DomainSpace sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
@@ -962,31 +935,31 @@ s223:OccupantMotionSensor sh:property [ a sh:PropertyShape ;
 
 s223:Property sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasValue ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofSubstance ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasValue ] .
 
 s223:QuantifiableObservableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasSetpoint ] .
 
 s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
+            sh:path qudt:hasQuantityKind ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasQuantityKind ] .
+            sh:path qudt:hasUnit ] .
 
 s223:Sensor sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasMaxRange ],
+            sh:path s223:hasMeasurementPrecision ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
         [ a sh:PropertyShape ;
             sh:path s223:observes ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMeasurementUncertainty ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasObservationLocation ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMeasurementPrecision ],
+            sh:path s223:hasMeasurementUncertainty ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMinRange ] .
+            sh:path s223:hasMaxRange ] .
 

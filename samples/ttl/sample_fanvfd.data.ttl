@@ -35,25 +35,25 @@ sample_fanvfd:00001 a s223:AirHandlingUnit,
         sample_fanvfd:00022,
         sample_fanvfd:00032,
         sample_fanvfd:00042,
-        sample_fanvfd:00055,
-        sample_fanvfd:00082,
-        sample_fanvfd:00095,
-        sample_fanvfd:00111,
-        sample_fanvfd:00116,
-        sample_fanvfd:00121,
-        sample_fanvfd:00124,
-        sample_fanvfd:00158,
-        sample_fanvfd:00192 ;
-    bob:electricalInlet sample_fanvfd:00230 ;
-    bob:exhaustAirOutlet sample_fanvfd:00229 ;
-    bob:hasSystemConnectionPoint sample_fanvfd:00226,
-        sample_fanvfd:00227,
-        sample_fanvfd:00228,
-        sample_fanvfd:00229,
-        sample_fanvfd:00230 ;
-    bob:outsideAirInlet sample_fanvfd:00226 ;
-    bob:returnAirInlet sample_fanvfd:00227 ;
-    bob:supplyAirOutlet sample_fanvfd:00228 ;
+        sample_fanvfd:00046,
+        sample_fanvfd:00073,
+        sample_fanvfd:00077,
+        sample_fanvfd:00093,
+        sample_fanvfd:00098,
+        sample_fanvfd:00103,
+        sample_fanvfd:00106,
+        sample_fanvfd:00140,
+        sample_fanvfd:00174 ;
+    bob:electricalInlet sample_fanvfd:00212 ;
+    bob:exhaustAirOutlet sample_fanvfd:00211 ;
+    bob:hasSystemConnectionPoint sample_fanvfd:00208,
+        sample_fanvfd:00209,
+        sample_fanvfd:00210,
+        sample_fanvfd:00211,
+        sample_fanvfd:00212 ;
+    bob:outsideAirInlet sample_fanvfd:00208 ;
+    bob:returnAirInlet sample_fanvfd:00209 ;
+    bob:supplyAirOutlet sample_fanvfd:00210 ;
     rdfs:comment "AHU delivering air to 2 VAV boxes" .
 
 sample_fanvfd:00002 a s223:Connectable,
@@ -392,21 +392,12 @@ sample_fanvfd:00042 a s223:Connectable,
     s223:cnx sample_fanvfd:00043,
         sample_fanvfd:00044,
         sample_fanvfd:00045 ;
-    s223:connected sample_fanvfd:00055 ;
-    s223:connectedFrom sample_fanvfd:00055 ;
-    s223:connectedThrough sample_fanvfd:00232 ;
+    s223:connected sample_fanvfd:00046 ;
+    s223:connectedFrom sample_fanvfd:00046 ;
+    s223:connectedThrough sample_fanvfd:00214 ;
     s223:hasConnectionPoint sample_fanvfd:00043,
         sample_fanvfd:00044,
         sample_fanvfd:00045 ;
-    s223:hasProperty sample_fanvfd:00046,
-        sample_fanvfd:00047,
-        sample_fanvfd:00048,
-        sample_fanvfd:00049,
-        sample_fanvfd:00050,
-        sample_fanvfd:00051,
-        sample_fanvfd:00052,
-        sample_fanvfd:00053,
-        sample_fanvfd:00054 ;
     s223:hasRole s223:Role-Return ;
     bob:airInlet sample_fanvfd:00043 ;
     bob:airOutlet sample_fanvfd:00044 ;
@@ -433,205 +424,123 @@ sample_fanvfd:00045 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "RF.electricalInlet" ;
     s223:cnx sample_fanvfd:00042,
-        sample_fanvfd:00232 ;
-    s223:connectsThrough sample_fanvfd:00232 ;
+        sample_fanvfd:00214 ;
+    s223:connectsThrough sample_fanvfd:00214 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf sample_fanvfd:00042 .
 
-sample_fanvfd:00046 a s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty,
-        bob:PercentCommand ;
-    rdfs:label "speedRatio" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
+sample_fanvfd:00046 a s223:Connectable,
+        s223:Controller,
+        s223:Equipment,
+        s223:VariableFrequencyDrive,
+        scratch:VariableFrequencyDrive ;
+    rdfs:label "RF_VFD" ;
+    s223:cnx sample_fanvfd:00047,
+        sample_fanvfd:00048,
+        sample_fanvfd:00049,
+        sample_fanvfd:00050,
+        sample_fanvfd:00051,
+        sample_fanvfd:00052,
+        sample_fanvfd:00053 ;
+    s223:connected sample_fanvfd:00042 ;
+    s223:connectedThrough sample_fanvfd:00214 ;
+    s223:connectedTo sample_fanvfd:00042 ;
+    s223:contains sample_fanvfd:00066,
+        sample_fanvfd:00068,
+        sample_fanvfd:00070 ;
+    s223:executes sample_fanvfd:00072 ;
+    s223:hasConnectionPoint sample_fanvfd:00047,
+        sample_fanvfd:00048,
+        sample_fanvfd:00049,
+        sample_fanvfd:00050,
+        sample_fanvfd:00051,
+        sample_fanvfd:00052,
+        sample_fanvfd:00053 ;
+    s223:hasProperty sample_fanvfd:00054,
+        sample_fanvfd:00055,
+        sample_fanvfd:00056,
+        sample_fanvfd:00057,
+        sample_fanvfd:00058,
+        sample_fanvfd:00059,
+        sample_fanvfd:00060,
+        sample_fanvfd:00061,
+        sample_fanvfd:00062 ;
+    bob:contains sample_fanvfd:00063 ;
+    scratch:amps sample_fanvfd:00067 ;
+    scratch:volts sample_fanvfd:00069 ;
+    rdfs:comment "Return Air Fan VFD" .
 
-sample_fanvfd:00047 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Pressure ;
-    rdfs:label "staticPressure" ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:hasUnit unit:PA .
+sample_fanvfd:00047 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "RF_VFD.electricalInlet" ;
+    s223:cnx sample_fanvfd:00046 ;
+    s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
+    s223:isConnectionPointOf sample_fanvfd:00046 .
 
-sample_fanvfd:00048 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Amps ;
-    rdfs:label "amps" ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:hasUnit unit:A .
+sample_fanvfd:00048 a s223:ConnectionPoint,
+        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "RF_VFD.electricalOutlet" ;
+    s223:cnx sample_fanvfd:00046,
+        sample_fanvfd:00214 ;
+    s223:connectsThrough sample_fanvfd:00214 ;
+    s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
+    s223:isConnectionPointOf sample_fanvfd:00046 .
 
-sample_fanvfd:00049 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:RPM ;
-    rdfs:label "rpm" ;
-    qudt:hasQuantityKind quantitykind:AngularVelocity ;
-    qudt:hasUnit unit:REV-PER-MIN .
+sample_fanvfd:00049 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
+        bob:EthernetConnectionPoint ;
+    rdfs:label "RF_VFD.ethernet_port" ;
+    s223:cnx sample_fanvfd:00046 ;
+    s223:hasMedium s223:Communication-Ethernet ;
+    s223:isConnectionPointOf sample_fanvfd:00046 .
 
-sample_fanvfd:00050 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Flow ;
-    rdfs:label "cfm" ;
-    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:hasUnit unit:FT3-PER-MIN .
+sample_fanvfd:00050 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
+        bob:RS485ConnectionPoint ;
+    rdfs:label "RF_VFD.mstp_port" ;
+    s223:cnx sample_fanvfd:00046 ;
+    s223:hasMedium s223:Communication-EIA-485 ;
+    s223:isConnectionPointOf sample_fanvfd:00046 .
 
-sample_fanvfd:00051 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:HP ;
-    rdfs:label "hp" ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:hasUnit unit:HP .
+sample_fanvfd:00051 a p223:AnalogInput,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:ModulationSignalConnectionPoint ;
+    rdfs:label "RF_VFD.speedrefInlet" ;
+    s223:cnx sample_fanvfd:00046 ;
+    s223:hasMedium s223:Signal-Modulated ;
+    s223:isConnectionPointOf sample_fanvfd:00046 .
 
-sample_fanvfd:00052 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower,
-        bob:ElectricPowerkW ;
-    rdfs:label "kW" ;
-    qudt:hasQuantityKind quantitykind:ElectricPower ;
-    qudt:hasUnit unit:KiloW .
+sample_fanvfd:00052 a p223:BinaryOutput,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "RF_VFD.drive_running_dry_contact" ;
+    s223:cnx sample_fanvfd:00046 ;
+    s223:hasMedium p223:Signal-OnOffSignal ;
+    s223:isConnectionPointOf sample_fanvfd:00046 .
 
-sample_fanvfd:00053 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:PowerFactor ;
-    rdfs:label "powerFactor" ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:hasUnit unit:UNITLESS .
+sample_fanvfd:00053 a p223:BinaryOutput,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "RF_VFD.alarm_dry_contact" ;
+    s223:cnx sample_fanvfd:00046 ;
+    s223:hasMedium p223:Signal-OnOffSignal ;
+    s223:isConnectionPointOf sample_fanvfd:00046 .
 
 sample_fanvfd:00054 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
-        bob:Percent ;
-    rdfs:label "efficiency" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
-
-sample_fanvfd:00055 a s223:Connectable,
-        s223:Controller,
-        s223:Equipment,
-        s223:VFD,
-        s223:VariableFrequencyDrive ;
-    rdfs:label "RF_VFD" ;
-    s223:cnx sample_fanvfd:00056,
-        sample_fanvfd:00057,
-        sample_fanvfd:00058,
-        sample_fanvfd:00059,
-        sample_fanvfd:00060,
-        sample_fanvfd:00061,
-        sample_fanvfd:00062 ;
-    s223:connected sample_fanvfd:00042 ;
-    s223:connectedThrough sample_fanvfd:00232 ;
-    s223:connectedTo sample_fanvfd:00042 ;
-    s223:contains sample_fanvfd:00075,
-        sample_fanvfd:00077,
-        sample_fanvfd:00079 ;
-    s223:executes sample_fanvfd:00081 ;
-    s223:hasConnectionPoint sample_fanvfd:00056,
-        sample_fanvfd:00057,
-        sample_fanvfd:00058,
-        sample_fanvfd:00059,
-        sample_fanvfd:00060,
-        sample_fanvfd:00061,
-        sample_fanvfd:00062 ;
-    s223:hasProperty sample_fanvfd:00063,
-        sample_fanvfd:00064,
-        sample_fanvfd:00065,
-        sample_fanvfd:00066,
-        sample_fanvfd:00067,
-        sample_fanvfd:00068,
-        sample_fanvfd:00069,
-        sample_fanvfd:00070,
-        sample_fanvfd:00071 ;
-    bob:contains sample_fanvfd:00072 ;
-    scratch:amps sample_fanvfd:00076 ;
-    scratch:volts sample_fanvfd:00078 ;
-    rdfs:comment "Return Air Fan VFD" .
-
-sample_fanvfd:00056 a s223:ConnectionPoint,
-        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "RF_VFD.electricalInlet" ;
-    s223:cnx sample_fanvfd:00055 ;
-    s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_fanvfd:00055 .
-
-sample_fanvfd:00057 a s223:ConnectionPoint,
-        s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "RF_VFD.electricalOutlet" ;
-    s223:cnx sample_fanvfd:00055,
-        sample_fanvfd:00232 ;
-    s223:connectsThrough sample_fanvfd:00232 ;
-    s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_fanvfd:00055 .
-
-sample_fanvfd:00058 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint,
-        bob:EthernetConnectionPoint ;
-    rdfs:label "RF_VFD.ethernet_port" ;
-    s223:cnx sample_fanvfd:00055 ;
-    s223:hasMedium s223:Communication-Ethernet ;
-    s223:isConnectionPointOf sample_fanvfd:00055 .
-
-sample_fanvfd:00059 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint,
-        bob:RS485ConnectionPoint ;
-    rdfs:label "RF_VFD.mstp_port" ;
-    s223:cnx sample_fanvfd:00055 ;
-    s223:hasMedium s223:Communication-EIA-485 ;
-    s223:isConnectionPointOf sample_fanvfd:00055 .
-
-sample_fanvfd:00060 a p223:AnalogInput,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:ModulationSignalConnectionPoint ;
-    rdfs:label "RF_VFD.speedrefInlet" ;
-    s223:cnx sample_fanvfd:00055 ;
-    s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf sample_fanvfd:00055 .
-
-sample_fanvfd:00061 a p223:BinaryOutput,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:OnOffSignalConnectionPoint ;
-    rdfs:label "RF_VFD.drive_running_dry_contact" ;
-    s223:cnx sample_fanvfd:00055 ;
-    s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00055 .
-
-sample_fanvfd:00062 a p223:BinaryOutput,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:OnOffSignalConnectionPoint ;
-    rdfs:label "RF_VFD.alarm_dry_contact" ;
-    s223:cnx sample_fanvfd:00055 ;
-    s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00055 .
-
-sample_fanvfd:00063 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
     qudt:hasQuantityKind quantitykind:Power ;
     qudt:hasUnit unit:HP .
 
-sample_fanvfd:00064 a s223:ObservableProperty,
+sample_fanvfd:00055 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -641,7 +550,7 @@ sample_fanvfd:00064 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-sample_fanvfd:00065 a s223:ObservableProperty,
+sample_fanvfd:00056 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -650,7 +559,7 @@ sample_fanvfd:00065 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Frequency ;
     qudt:hasUnit unit:HZ .
 
-sample_fanvfd:00066 a s223:ActuatableProperty,
+sample_fanvfd:00057 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -659,7 +568,7 @@ sample_fanvfd:00066 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_fanvfd:00067 a s223:ObservableProperty,
+sample_fanvfd:00058 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -668,7 +577,7 @@ sample_fanvfd:00067 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
-sample_fanvfd:00068 a s223:ObservableProperty,
+sample_fanvfd:00059 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -676,51 +585,51 @@ sample_fanvfd:00068 a s223:ObservableProperty,
     rdfs:label "motor_temp" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-sample_fanvfd:00069 a s223:EnumerableProperty,
+sample_fanvfd:00060 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_fanvfd:00070 a s223:ActuatableProperty,
+sample_fanvfd:00061 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_fanvfd:00071 a s223:EnumerableProperty,
+sample_fanvfd:00062 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
     s223:hasEnumerationKind p223:EnumerationKind-NormalAlarm .
 
-sample_fanvfd:00072 a p223:Producer,
+sample_fanvfd:00063 a p223:Producer,
         bob:Causality ;
     rdfs:label "motor_temp_effect" ;
-    s223:hasInput sample_fanvfd:00073 ;
-    s223:hasOutput sample_fanvfd:00074 ;
-    bob:cause_input sample_fanvfd:00073 ;
-    bob:effect_output sample_fanvfd:00074 .
+    s223:hasInput sample_fanvfd:00064 ;
+    s223:hasOutput sample_fanvfd:00065 ;
+    bob:cause_input sample_fanvfd:00064 ;
+    bob:effect_output sample_fanvfd:00065 .
 
-sample_fanvfd:00073 a p223:ProducerInput ;
+sample_fanvfd:00064 a p223:ProducerInput ;
     rdfs:label "motor_temp_effect.cause_input" ;
-    s223:uses sample_fanvfd:00067 .
+    s223:uses sample_fanvfd:00058 .
 
-sample_fanvfd:00074 a p223:ProducerOutput ;
+sample_fanvfd:00065 a p223:ProducerOutput ;
     rdfs:label "motor_temp_effect.effect_output" ;
-    s223:produces sample_fanvfd:00068 .
+    s223:produces sample_fanvfd:00059 .
 
-sample_fanvfd:00075 a s223:Connectable,
+sample_fanvfd:00066 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "current_sensor" ;
-    s223:hasObservationLocation sample_fanvfd:00057 ;
-    s223:observes sample_fanvfd:00076 .
+    s223:hasObservationLocation sample_fanvfd:00048 ;
+    s223:observes sample_fanvfd:00067 .
 
-sample_fanvfd:00076 a s223:ObservableProperty,
+sample_fanvfd:00067 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -730,14 +639,14 @@ sample_fanvfd:00076 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_fanvfd:00077 a s223:Connectable,
+sample_fanvfd:00068 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "voltage_sensor" ;
-    s223:hasObservationLocation sample_fanvfd:00057 ;
-    s223:observes sample_fanvfd:00078 .
+    s223:hasObservationLocation sample_fanvfd:00048 ;
+    s223:observes sample_fanvfd:00069 .
 
-sample_fanvfd:00078 a s223:ObservableProperty,
+sample_fanvfd:00069 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -747,14 +656,14 @@ sample_fanvfd:00078 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-sample_fanvfd:00079 a s223:Connectable,
+sample_fanvfd:00070 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "speed_ref_voltage_sensor" ;
-    s223:hasObservationLocation sample_fanvfd:00060 ;
-    s223:observes sample_fanvfd:00080 .
+    s223:hasObservationLocation sample_fanvfd:00051 ;
+    s223:observes sample_fanvfd:00071 .
 
-sample_fanvfd:00080 a s223:ObservableProperty,
+sample_fanvfd:00071 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -764,243 +673,170 @@ sample_fanvfd:00080 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
-sample_fanvfd:00081 a s223:Function,
+sample_fanvfd:00072 a s223:Function,
         scratch:VFDFunction ;
     rdfs:label "RF_VFD.function_block" ;
-    s223:hasInput sample_fanvfd:00076,
-        sample_fanvfd:00078,
-        sample_fanvfd:00080 ;
-    s223:hasOutput sample_fanvfd:00064,
-        sample_fanvfd:00065,
-        sample_fanvfd:00066,
-        sample_fanvfd:00067,
+    s223:hasInput sample_fanvfd:00067,
         sample_fanvfd:00069,
         sample_fanvfd:00071 ;
-    scratch:alarm sample_fanvfd:00071 ;
-    scratch:amps_load sample_fanvfd:00076 ;
-    scratch:drive_running sample_fanvfd:00069 ;
-    scratch:frequency_load sample_fanvfd:00065 ;
-    scratch:kW_load sample_fanvfd:00064 ;
-    scratch:rpm sample_fanvfd:00067 ;
-    scratch:speed_ref sample_fanvfd:00080 ;
-    scratch:speed_ref_percent sample_fanvfd:00066 ;
-    scratch:volts_load sample_fanvfd:00078 .
+    s223:hasOutput sample_fanvfd:00055,
+        sample_fanvfd:00056,
+        sample_fanvfd:00057,
+        sample_fanvfd:00058,
+        sample_fanvfd:00060,
+        sample_fanvfd:00062 ;
+    scratch:alarm sample_fanvfd:00062 ;
+    scratch:amps_load sample_fanvfd:00067 ;
+    scratch:drive_running sample_fanvfd:00060 ;
+    scratch:frequency_load sample_fanvfd:00056 ;
+    scratch:kW_load sample_fanvfd:00055 ;
+    scratch:rpm sample_fanvfd:00058 ;
+    scratch:speed_ref sample_fanvfd:00071 ;
+    scratch:speed_ref_percent sample_fanvfd:00057 ;
+    scratch:volts_load sample_fanvfd:00069 .
 
-sample_fanvfd:00082 a s223:Connectable,
+sample_fanvfd:00073 a s223:Connectable,
         s223:Equipment,
         s223:Fan ;
     rdfs:label "SF" ;
-    s223:cnx sample_fanvfd:00083,
-        sample_fanvfd:00084,
-        sample_fanvfd:00085 ;
-    s223:connected sample_fanvfd:00095 ;
-    s223:connectedFrom sample_fanvfd:00095 ;
-    s223:connectedThrough sample_fanvfd:00231 ;
-    s223:hasConnectionPoint sample_fanvfd:00083,
-        sample_fanvfd:00084,
-        sample_fanvfd:00085 ;
-    s223:hasProperty sample_fanvfd:00086,
-        sample_fanvfd:00087,
-        sample_fanvfd:00088,
-        sample_fanvfd:00089,
-        sample_fanvfd:00090,
-        sample_fanvfd:00091,
-        sample_fanvfd:00092,
-        sample_fanvfd:00093,
-        sample_fanvfd:00094 ;
+    s223:cnx sample_fanvfd:00074,
+        sample_fanvfd:00075,
+        sample_fanvfd:00076 ;
+    s223:connected sample_fanvfd:00077 ;
+    s223:connectedFrom sample_fanvfd:00077 ;
+    s223:connectedThrough sample_fanvfd:00213 ;
+    s223:hasConnectionPoint sample_fanvfd:00074,
+        sample_fanvfd:00075,
+        sample_fanvfd:00076 ;
     s223:hasRole s223:Role-Supply ;
-    bob:airInlet sample_fanvfd:00083 ;
-    bob:airOutlet sample_fanvfd:00084 ;
+    bob:airInlet sample_fanvfd:00074 ;
+    bob:airOutlet sample_fanvfd:00075 ;
     rdfs:comment "Supply Air Fan" .
 
-sample_fanvfd:00083 a s223:ConnectionPoint,
+sample_fanvfd:00074 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF.airInlet" ;
-    s223:cnx sample_fanvfd:00082 ;
+    s223:cnx sample_fanvfd:00073 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00082 .
+    s223:isConnectionPointOf sample_fanvfd:00073 .
 
-sample_fanvfd:00084 a s223:ConnectionPoint,
+sample_fanvfd:00075 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF.airOutlet" ;
-    s223:cnx sample_fanvfd:00082 ;
+    s223:cnx sample_fanvfd:00073 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00082 .
+    s223:isConnectionPointOf sample_fanvfd:00073 .
 
-sample_fanvfd:00085 a s223:ConnectionPoint,
+sample_fanvfd:00076 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SF.electricalInlet" ;
-    s223:cnx sample_fanvfd:00082,
-        sample_fanvfd:00231 ;
-    s223:connectsThrough sample_fanvfd:00231 ;
+    s223:cnx sample_fanvfd:00073,
+        sample_fanvfd:00213 ;
+    s223:connectsThrough sample_fanvfd:00213 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_fanvfd:00082 .
+    s223:isConnectionPointOf sample_fanvfd:00073 .
 
-sample_fanvfd:00086 a s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty,
-        bob:PercentCommand ;
-    rdfs:label "speedRatio" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
-
-sample_fanvfd:00087 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Pressure ;
-    rdfs:label "staticPressure" ;
-    qudt:hasQuantityKind quantitykind:Pressure ;
-    qudt:hasUnit unit:PA .
-
-sample_fanvfd:00088 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Amps ;
-    rdfs:label "amps" ;
-    qudt:hasQuantityKind quantitykind:ElectricCurrent ;
-    qudt:hasUnit unit:A .
-
-sample_fanvfd:00089 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:RPM ;
-    rdfs:label "rpm" ;
-    qudt:hasQuantityKind quantitykind:AngularVelocity ;
-    qudt:hasUnit unit:REV-PER-MIN .
-
-sample_fanvfd:00090 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Flow ;
-    rdfs:label "cfm" ;
-    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:hasUnit unit:FT3-PER-MIN .
-
-sample_fanvfd:00091 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:HP ;
-    rdfs:label "hp" ;
-    qudt:hasQuantityKind quantitykind:Power ;
-    qudt:hasUnit unit:HP .
-
-sample_fanvfd:00092 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower,
-        bob:ElectricPowerkW ;
-    rdfs:label "kW" ;
-    qudt:hasQuantityKind quantitykind:ElectricPower ;
-    qudt:hasUnit unit:KiloW .
-
-sample_fanvfd:00093 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:PowerFactor ;
-    rdfs:label "powerFactor" ;
-    qudt:hasQuantityKind quantitykind:PowerFactor ;
-    qudt:hasUnit unit:UNITLESS .
-
-sample_fanvfd:00094 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Percent ;
-    rdfs:label "efficiency" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
-
-sample_fanvfd:00095 a p223:MotorStarter,
+sample_fanvfd:00077 a p223:MotorStarter,
         s223:Connectable,
-        s223:Equipment ;
+        s223:Equipment,
+        scratch:MotorStarter_600VLL_3Ph_60Hz ;
     rdfs:label "SF_Starter" ;
-    s223:cnx sample_fanvfd:00096,
-        sample_fanvfd:00097,
-        sample_fanvfd:00098,
-        sample_fanvfd:00099 ;
-    s223:connected sample_fanvfd:00082 ;
-    s223:connectedThrough sample_fanvfd:00231 ;
-    s223:connectedTo sample_fanvfd:00082 ;
-    s223:contains sample_fanvfd:00100 ;
-    s223:hasConnectionPoint sample_fanvfd:00096,
-        sample_fanvfd:00097,
-        sample_fanvfd:00098,
-        sample_fanvfd:00099 ;
-    s223:hasProperty sample_fanvfd:00109,
-        sample_fanvfd:00110 ;
-    bob:inputSignal sample_fanvfd:00097 ;
-    bob:onOffStatus sample_fanvfd:00103 ;
-    bob:outputSignal sample_fanvfd:00096 ;
+    s223:cnx sample_fanvfd:00078,
+        sample_fanvfd:00079,
+        sample_fanvfd:00080,
+        sample_fanvfd:00081 ;
+    s223:connected sample_fanvfd:00073 ;
+    s223:connectedThrough sample_fanvfd:00213 ;
+    s223:connectedTo sample_fanvfd:00073 ;
+    s223:contains sample_fanvfd:00084 ;
+    s223:hasConnectionPoint sample_fanvfd:00078,
+        sample_fanvfd:00079,
+        sample_fanvfd:00080,
+        sample_fanvfd:00081 ;
+    s223:hasProperty sample_fanvfd:00082,
+        sample_fanvfd:00083 ;
+    scratch:inputSignal sample_fanvfd:00079 ;
+    scratch:onOffStatus sample_fanvfd:00087 ;
+    scratch:outputSignal sample_fanvfd:00078 ;
     rdfs:comment "Supply Air Fan Starter" .
 
-sample_fanvfd:00096 a p223:BinaryOutput,
+sample_fanvfd:00078 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "SF_Starter.outputSignal" ;
-    s223:cnx sample_fanvfd:00095 ;
+    s223:cnx sample_fanvfd:00077 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00095 .
+    s223:isConnectionPointOf sample_fanvfd:00077 .
 
-sample_fanvfd:00097 a p223:BinaryInput,
+sample_fanvfd:00079 a p223:BinaryInput,
         s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "SF_Starter.inputSignal" ;
-    s223:cnx sample_fanvfd:00095 ;
+    s223:cnx sample_fanvfd:00077 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00095 .
+    s223:isConnectionPointOf sample_fanvfd:00077 .
 
-sample_fanvfd:00098 a s223:ConnectionPoint,
+sample_fanvfd:00080 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SF_Starter.electricalInlet" ;
-    s223:cnx sample_fanvfd:00095 ;
+    s223:cnx sample_fanvfd:00077 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_fanvfd:00095 .
+    s223:isConnectionPointOf sample_fanvfd:00077 .
 
-sample_fanvfd:00099 a s223:ConnectionPoint,
+sample_fanvfd:00081 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "SF_Starter.electricalOutlet" ;
-    s223:cnx sample_fanvfd:00095,
-        sample_fanvfd:00231 ;
-    s223:connectsThrough sample_fanvfd:00231 ;
+    s223:cnx sample_fanvfd:00077,
+        sample_fanvfd:00213 ;
+    s223:connectsThrough sample_fanvfd:00213 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_fanvfd:00095 .
+    s223:isConnectionPointOf sample_fanvfd:00077 .
 
-sample_fanvfd:00100 a p223:CurrentRelay,
+sample_fanvfd:00082 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
+        s223:Property ;
+    rdfs:label "onOffCommand" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+sample_fanvfd:00083 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower ;
+    rdfs:label "powerRating" ;
+    qudt:hasQuantityKind quantitykind:ElectricPower ;
+    qudt:hasUnit unit:HP_Electric .
+
+sample_fanvfd:00084 a p223:CurrentRelay,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "currentRelay" ;
-    s223:cnx sample_fanvfd:00101 ;
-    s223:contains sample_fanvfd:00104 ;
-    s223:hasConnectionPoint sample_fanvfd:00101 ;
-    s223:hasProperty sample_fanvfd:00102,
-        sample_fanvfd:00103 ;
-    bob:contains sample_fanvfd:00106 .
+    s223:cnx sample_fanvfd:00085 ;
+    s223:contains sample_fanvfd:00088 ;
+    s223:hasConnectionPoint sample_fanvfd:00085 ;
+    s223:hasProperty sample_fanvfd:00086,
+        sample_fanvfd:00087 ;
+    bob:contains sample_fanvfd:00090 .
 
-sample_fanvfd:00101 a p223:BinaryOutput,
+sample_fanvfd:00085 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "currentRelay.dryContact" ;
-    s223:cnx sample_fanvfd:00100 ;
+    s223:cnx sample_fanvfd:00084 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00100 .
+    s223:hasRole s223:EnumerationKind-RunStatus ;
+    s223:isConnectionPointOf sample_fanvfd:00084 .
 
-sample_fanvfd:00102 a s223:ObservableProperty,
+sample_fanvfd:00086 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -1009,21 +845,22 @@ sample_fanvfd:00102 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_fanvfd:00103 a s223:EnumerableProperty,
+sample_fanvfd:00087 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
+    s223:hasAspect s223:EnumerationKind-RunStatus ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_fanvfd:00104 a s223:Connectable,
+sample_fanvfd:00088 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "currentSensor" ;
-    s223:hasObservationLocation sample_fanvfd:00099 ;
-    s223:observes sample_fanvfd:00105 .
+    s223:hasObservationLocation sample_fanvfd:00081 ;
+    s223:observes sample_fanvfd:00089 .
 
-sample_fanvfd:00105 a s223:ObservableProperty,
+sample_fanvfd:00089 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -1033,312 +870,597 @@ sample_fanvfd:00105 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_fanvfd:00106 a p223:Producer,
+sample_fanvfd:00090 a p223:Producer,
         bob:Causality ;
     rdfs:label "statusProducer" ;
-    s223:hasInput sample_fanvfd:00107 ;
-    s223:hasOutput sample_fanvfd:00108 ;
-    bob:cause_input sample_fanvfd:00107 ;
-    bob:effect_output sample_fanvfd:00108 .
+    s223:hasInput sample_fanvfd:00091 ;
+    s223:hasOutput sample_fanvfd:00092 ;
+    bob:cause_input sample_fanvfd:00091 ;
+    bob:effect_output sample_fanvfd:00092 .
 
-sample_fanvfd:00107 a p223:ProducerInput ;
+sample_fanvfd:00091 a p223:ProducerInput ;
     rdfs:label "statusProducer.cause_input" ;
-    s223:uses sample_fanvfd:00105 .
+    s223:uses sample_fanvfd:00089 .
 
-sample_fanvfd:00108 a p223:ProducerOutput ;
+sample_fanvfd:00092 a p223:ProducerOutput ;
     rdfs:label "statusProducer.effect_output" ;
-    s223:produces sample_fanvfd:00103 .
+    s223:produces sample_fanvfd:00087 .
 
-sample_fanvfd:00109 a s223:ActuatableProperty,
-        s223:EnumerableProperty,
-        s223:EnumeratedActuatableProperty,
-        s223:Property ;
-    rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
-
-sample_fanvfd:00110 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower ;
-    rdfs:label "powerRating" ;
-    qudt:hasQuantityKind quantitykind:ElectricPower ;
-    qudt:hasUnit unit:HP_Electric .
-
-sample_fanvfd:00111 a s223:Coil,
+sample_fanvfd:00093 a s223:Coil,
         s223:Connectable,
         s223:CoolingCoil,
         s223:Equipment ;
     rdfs:label "CLGCOIL" ;
-    s223:cnx sample_fanvfd:00112,
-        sample_fanvfd:00113,
-        sample_fanvfd:00114,
-        sample_fanvfd:00115 ;
-    s223:hasConnectionPoint sample_fanvfd:00112,
-        sample_fanvfd:00113,
-        sample_fanvfd:00114,
-        sample_fanvfd:00115 ;
-    bob:airInlet sample_fanvfd:00112 ;
-    bob:airOutlet sample_fanvfd:00113 ;
-    bob:chilledWaterInlet sample_fanvfd:00114 ;
-    bob:chilledWaterOutlet sample_fanvfd:00115 ;
+    s223:cnx sample_fanvfd:00094,
+        sample_fanvfd:00095,
+        sample_fanvfd:00096,
+        sample_fanvfd:00097 ;
+    s223:hasConnectionPoint sample_fanvfd:00094,
+        sample_fanvfd:00095,
+        sample_fanvfd:00096,
+        sample_fanvfd:00097 ;
+    bob:airInlet sample_fanvfd:00094 ;
+    bob:airOutlet sample_fanvfd:00095 ;
+    bob:chilledWaterInlet sample_fanvfd:00096 ;
+    bob:chilledWaterOutlet sample_fanvfd:00097 ;
     rdfs:comment "Cooling Coil" .
 
-sample_fanvfd:00112 a s223:ConnectionPoint,
+sample_fanvfd:00094 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CLGCOIL.airInlet" ;
-    s223:cnx sample_fanvfd:00111 ;
+    s223:cnx sample_fanvfd:00093 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00111 .
+    s223:isConnectionPointOf sample_fanvfd:00093 .
 
-sample_fanvfd:00113 a s223:ConnectionPoint,
+sample_fanvfd:00095 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CLGCOIL.airOutlet" ;
-    s223:cnx sample_fanvfd:00111 ;
+    s223:cnx sample_fanvfd:00093 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00111 .
+    s223:isConnectionPointOf sample_fanvfd:00093 .
 
-sample_fanvfd:00114 a s223:ConnectionPoint,
+sample_fanvfd:00096 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLGCOIL.chilledWaterInlet" ;
-    s223:cnx sample_fanvfd:00111 ;
+    s223:cnx sample_fanvfd:00093 ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:isConnectionPointOf sample_fanvfd:00111 .
+    s223:isConnectionPointOf sample_fanvfd:00093 .
 
-sample_fanvfd:00115 a s223:ConnectionPoint,
+sample_fanvfd:00097 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLGCOIL.chilledWaterOutlet" ;
-    s223:cnx sample_fanvfd:00111 ;
+    s223:cnx sample_fanvfd:00093 ;
     s223:hasMedium s223:Water-ChilledWater ;
-    s223:isConnectionPointOf sample_fanvfd:00111 .
+    s223:isConnectionPointOf sample_fanvfd:00093 .
 
-sample_fanvfd:00116 a s223:Coil,
+sample_fanvfd:00098 a s223:Coil,
         s223:Connectable,
         s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "HTGCOIL" ;
-    s223:cnx sample_fanvfd:00117,
-        sample_fanvfd:00118,
-        sample_fanvfd:00119,
-        sample_fanvfd:00120 ;
-    s223:hasConnectionPoint sample_fanvfd:00117,
-        sample_fanvfd:00118,
-        sample_fanvfd:00119,
-        sample_fanvfd:00120 ;
-    bob:airInlet sample_fanvfd:00117 ;
-    bob:airOutlet sample_fanvfd:00118 ;
-    bob:hotWaterInlet sample_fanvfd:00119 ;
-    bob:hotWaterOutlet sample_fanvfd:00120 ;
+    s223:cnx sample_fanvfd:00099,
+        sample_fanvfd:00100,
+        sample_fanvfd:00101,
+        sample_fanvfd:00102 ;
+    s223:hasConnectionPoint sample_fanvfd:00099,
+        sample_fanvfd:00100,
+        sample_fanvfd:00101,
+        sample_fanvfd:00102 ;
+    bob:airInlet sample_fanvfd:00099 ;
+    bob:airOutlet sample_fanvfd:00100 ;
+    bob:hotWaterInlet sample_fanvfd:00101 ;
+    bob:hotWaterOutlet sample_fanvfd:00102 ;
     rdfs:comment "Heating coil" .
 
-sample_fanvfd:00117 a s223:ConnectionPoint,
+sample_fanvfd:00099 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HTGCOIL.airInlet" ;
-    s223:cnx sample_fanvfd:00116 ;
+    s223:cnx sample_fanvfd:00098 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00116 .
+    s223:isConnectionPointOf sample_fanvfd:00098 .
 
-sample_fanvfd:00118 a s223:ConnectionPoint,
+sample_fanvfd:00100 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HTGCOIL.airOutlet" ;
-    s223:cnx sample_fanvfd:00116 ;
+    s223:cnx sample_fanvfd:00098 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00116 .
+    s223:isConnectionPointOf sample_fanvfd:00098 .
 
-sample_fanvfd:00119 a s223:ConnectionPoint,
+sample_fanvfd:00101 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HTGCOIL.hotWaterInlet" ;
-    s223:cnx sample_fanvfd:00116 ;
+    s223:cnx sample_fanvfd:00098 ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf sample_fanvfd:00116 .
+    s223:isConnectionPointOf sample_fanvfd:00098 .
 
-sample_fanvfd:00120 a s223:ConnectionPoint,
+sample_fanvfd:00102 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HTGCOIL.hotWaterOutlet" ;
-    s223:cnx sample_fanvfd:00116 ;
+    s223:cnx sample_fanvfd:00098 ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isConnectionPointOf sample_fanvfd:00116 .
+    s223:isConnectionPointOf sample_fanvfd:00098 .
 
-sample_fanvfd:00121 a s223:Connectable,
+sample_fanvfd:00103 a s223:Connectable,
         s223:Equipment,
         s223:Filter ;
     rdfs:label "FILTER" ;
-    s223:cnx sample_fanvfd:00122,
-        sample_fanvfd:00123 ;
-    s223:hasConnectionPoint sample_fanvfd:00122,
-        sample_fanvfd:00123 ;
-    bob:airInlet sample_fanvfd:00122 ;
-    bob:airOutlet sample_fanvfd:00123 ;
+    s223:cnx sample_fanvfd:00104,
+        sample_fanvfd:00105 ;
+    s223:hasConnectionPoint sample_fanvfd:00104,
+        sample_fanvfd:00105 ;
+    bob:airInlet sample_fanvfd:00104 ;
+    bob:airOutlet sample_fanvfd:00105 ;
     rdfs:comment "Filter" .
 
-sample_fanvfd:00122 a s223:ConnectionPoint,
+sample_fanvfd:00104 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "FILTER.airInlet" ;
-    s223:cnx sample_fanvfd:00121 ;
+    s223:cnx sample_fanvfd:00103 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00121 .
+    s223:isConnectionPointOf sample_fanvfd:00103 .
 
-sample_fanvfd:00123 a s223:ConnectionPoint,
+sample_fanvfd:00105 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "FILTER.airOutlet" ;
-    s223:cnx sample_fanvfd:00121 ;
+    s223:cnx sample_fanvfd:00103 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00121 .
+    s223:isConnectionPointOf sample_fanvfd:00103 .
 
-sample_fanvfd:00124 a s223:Connectable,
+sample_fanvfd:00106 a s223:Connectable,
         s223:Equipment,
         bob:ElectricalActuatedProportionalDamper ;
     rdfs:label "OADPR" ;
-    s223:cnx sample_fanvfd:00125,
-        sample_fanvfd:00126 ;
-    s223:contains sample_fanvfd:00127,
-        sample_fanvfd:00153 ;
-    s223:hasConnectionPoint sample_fanvfd:00125,
-        sample_fanvfd:00126 ;
-    bob:airInlet sample_fanvfd:00125 ;
-    bob:airOutlet sample_fanvfd:00126 ;
-    bob:command sample_fanvfd:00137 ;
-    bob:is_closed sample_fanvfd:00136 ;
-    bob:is_open sample_fanvfd:00135 ;
-    bob:position sample_fanvfd:00152 ;
-    bob:position_feedback sample_fanvfd:00152 ;
+    s223:cnx sample_fanvfd:00107,
+        sample_fanvfd:00108 ;
+    s223:contains sample_fanvfd:00109,
+        sample_fanvfd:00135 ;
+    s223:hasConnectionPoint sample_fanvfd:00107,
+        sample_fanvfd:00108 ;
+    bob:airInlet sample_fanvfd:00107 ;
+    bob:airOutlet sample_fanvfd:00108 ;
+    bob:command sample_fanvfd:00119 ;
+    bob:is_closed sample_fanvfd:00118 ;
+    bob:is_open sample_fanvfd:00117 ;
+    bob:position sample_fanvfd:00134 ;
+    bob:position_feedback sample_fanvfd:00134 ;
     rdfs:comment "Outdoor air damper (A3)" .
 
-sample_fanvfd:00125 a s223:ConnectionPoint,
+sample_fanvfd:00107 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OADPR.airInlet" ;
-    s223:cnx sample_fanvfd:00124 ;
+    s223:cnx sample_fanvfd:00106 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00124 .
+    s223:isConnectionPointOf sample_fanvfd:00106 .
 
-sample_fanvfd:00126 a s223:ConnectionPoint,
+sample_fanvfd:00108 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OADPR.airOutlet" ;
-    s223:cnx sample_fanvfd:00124 ;
+    s223:cnx sample_fanvfd:00106 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00124 .
+    s223:isConnectionPointOf sample_fanvfd:00106 .
 
-sample_fanvfd:00127 a s223:Actuator,
+sample_fanvfd:00109 a s223:Actuator,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "actuator" ;
-    s223:cnx sample_fanvfd:00128,
-        sample_fanvfd:00129,
-        sample_fanvfd:00130,
-        sample_fanvfd:00131,
-        sample_fanvfd:00132,
-        sample_fanvfd:00133 ;
-    s223:connected sample_fanvfd:00153 ;
-    s223:connectedThrough sample_fanvfd:00157 ;
-    s223:connectedTo sample_fanvfd:00153 ;
-    s223:contains sample_fanvfd:00151 ;
-    s223:hasConnectionPoint sample_fanvfd:00128,
-        sample_fanvfd:00129,
-        sample_fanvfd:00130,
-        sample_fanvfd:00131,
-        sample_fanvfd:00132,
-        sample_fanvfd:00133 ;
-    s223:hasProperty sample_fanvfd:00134,
-        sample_fanvfd:00135,
-        sample_fanvfd:00136,
-        sample_fanvfd:00137,
-        sample_fanvfd:00138 ;
-    bob:contains sample_fanvfd:00139,
-        sample_fanvfd:00142,
-        sample_fanvfd:00145,
-        sample_fanvfd:00148 ;
-    bob:position sample_fanvfd:00152 .
+    s223:cnx sample_fanvfd:00110,
+        sample_fanvfd:00111,
+        sample_fanvfd:00112,
+        sample_fanvfd:00113,
+        sample_fanvfd:00114,
+        sample_fanvfd:00115 ;
+    s223:connected sample_fanvfd:00135 ;
+    s223:connectedThrough sample_fanvfd:00139 ;
+    s223:connectedTo sample_fanvfd:00135 ;
+    s223:contains sample_fanvfd:00133 ;
+    s223:hasConnectionPoint sample_fanvfd:00110,
+        sample_fanvfd:00111,
+        sample_fanvfd:00112,
+        sample_fanvfd:00113,
+        sample_fanvfd:00114,
+        sample_fanvfd:00115 ;
+    s223:hasProperty sample_fanvfd:00116,
+        sample_fanvfd:00117,
+        sample_fanvfd:00118,
+        sample_fanvfd:00119,
+        sample_fanvfd:00120 ;
+    bob:contains sample_fanvfd:00121,
+        sample_fanvfd:00124,
+        sample_fanvfd:00127,
+        sample_fanvfd:00130 ;
+    bob:position sample_fanvfd:00134 .
 
-sample_fanvfd:00128 a p223:MechanicalConnectionPoint,
+sample_fanvfd:00110 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "actuator.linkageOutlet" ;
-    s223:cnx sample_fanvfd:00127,
-        sample_fanvfd:00157 ;
-    s223:connectsThrough sample_fanvfd:00157 ;
+    s223:cnx sample_fanvfd:00109,
+        sample_fanvfd:00139 ;
+    s223:connectsThrough sample_fanvfd:00139 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_fanvfd:00127 .
+    s223:isConnectionPointOf sample_fanvfd:00109 .
 
-sample_fanvfd:00129 a p223:AnalogOutput,
+sample_fanvfd:00111 a p223:AnalogOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.feedback_signal" ;
-    s223:cnx sample_fanvfd:00127 ;
+    s223:cnx sample_fanvfd:00109 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf sample_fanvfd:00127 .
+    s223:isConnectionPointOf sample_fanvfd:00109 .
 
-sample_fanvfd:00130 a p223:BinaryOutput,
+sample_fanvfd:00112 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:cnx sample_fanvfd:00127 ;
+    s223:cnx sample_fanvfd:00109 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00127 .
+    s223:isConnectionPointOf sample_fanvfd:00109 .
 
-sample_fanvfd:00131 a p223:BinaryOutput,
+sample_fanvfd:00113 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:cnx sample_fanvfd:00127 ;
+    s223:cnx sample_fanvfd:00109 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00127 .
+    s223:isConnectionPointOf sample_fanvfd:00109 .
 
-sample_fanvfd:00132 a s223:ConnectionPoint,
+sample_fanvfd:00114 a s223:ConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
-    s223:cnx sample_fanvfd:00127 ;
+    s223:cnx sample_fanvfd:00109 ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
-    s223:isConnectionPointOf sample_fanvfd:00127 .
+    s223:isConnectionPointOf sample_fanvfd:00109 .
 
-sample_fanvfd:00133 a p223:AnalogInput,
+sample_fanvfd:00115 a p223:AnalogInput,
         s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
     rdfs:label "actuator.proportional_signal" ;
-    s223:cnx sample_fanvfd:00127 ;
+    s223:cnx sample_fanvfd:00109 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf sample_fanvfd:00127 .
+    s223:isConnectionPointOf sample_fanvfd:00109 .
+
+sample_fanvfd:00116 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
+    rdfs:label "position_feedback" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasUnit unit:PERCENT .
+
+sample_fanvfd:00117 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    rdfs:label "is_open" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+sample_fanvfd:00118 a s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    rdfs:label "is_closed" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+sample_fanvfd:00119 a s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        bob:PercentCommand ;
+    rdfs:label "command" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasUnit unit:PERCENT .
+
+sample_fanvfd:00120 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Nm ;
+    rdfs:label "torque" ;
+    qudt:hasQuantityKind quantitykind:Torque ;
+    qudt:hasUnit unit:N-M .
+
+sample_fanvfd:00121 a p223:Producer,
+        bob:Causality ;
+    rdfs:label "positionProducer" ;
+    s223:hasInput sample_fanvfd:00122 ;
+    s223:hasOutput sample_fanvfd:00123 ;
+    bob:cause_input sample_fanvfd:00122 ;
+    bob:effect_output sample_fanvfd:00123 .
+
+sample_fanvfd:00122 a p223:ProducerInput ;
+    rdfs:label "positionProducer.cause_input" ;
+    s223:uses sample_fanvfd:00119 ;
+    bob:hasCauseLocation sample_fanvfd:00115 .
+
+sample_fanvfd:00123 a p223:ProducerOutput ;
+    rdfs:label "positionProducer.effect_output" ;
+    s223:produces sample_fanvfd:00134 ;
+    bob:hasEffectLocation sample_fanvfd:00110 .
+
+sample_fanvfd:00124 a p223:Producer,
+        bob:Causality ;
+    rdfs:label "feedbackProducer" ;
+    s223:hasInput sample_fanvfd:00125 ;
+    s223:hasOutput sample_fanvfd:00126 ;
+    bob:cause_input sample_fanvfd:00125 ;
+    bob:effect_output sample_fanvfd:00126 .
+
+sample_fanvfd:00125 a p223:ProducerInput ;
+    rdfs:label "feedbackProducer.cause_input" ;
+    s223:uses sample_fanvfd:00134 .
+
+sample_fanvfd:00126 a p223:ProducerOutput ;
+    rdfs:label "feedbackProducer.effect_output" ;
+    s223:produces sample_fanvfd:00116 ;
+    bob:hasEffectLocation sample_fanvfd:00111 .
+
+sample_fanvfd:00127 a p223:Producer,
+        bob:Causality ;
+    rdfs:label "auxiliary_switch_open_producer" ;
+    s223:hasInput sample_fanvfd:00128 ;
+    s223:hasOutput sample_fanvfd:00129 ;
+    bob:cause_input sample_fanvfd:00128 ;
+    bob:effect_output sample_fanvfd:00129 .
+
+sample_fanvfd:00128 a p223:ProducerInput ;
+    rdfs:label "auxiliary_switch_open_producer.cause_input" ;
+    s223:uses sample_fanvfd:00134 .
+
+sample_fanvfd:00129 a p223:ProducerOutput ;
+    rdfs:label "auxiliary_switch_open_producer.effect_output" ;
+    s223:produces sample_fanvfd:00117 ;
+    bob:hasEffectLocation sample_fanvfd:00112 .
+
+sample_fanvfd:00130 a p223:Producer,
+        bob:Causality ;
+    rdfs:label "auxiliary_switch_close_producer" ;
+    s223:hasInput sample_fanvfd:00131 ;
+    s223:hasOutput sample_fanvfd:00132 ;
+    bob:cause_input sample_fanvfd:00131 ;
+    bob:effect_output sample_fanvfd:00132 .
+
+sample_fanvfd:00131 a p223:ProducerInput ;
+    rdfs:label "auxiliary_switch_close_producer.cause_input" ;
+    s223:uses sample_fanvfd:00134 .
+
+sample_fanvfd:00132 a p223:ProducerOutput ;
+    rdfs:label "auxiliary_switch_close_producer.effect_output" ;
+    s223:produces sample_fanvfd:00118 ;
+    bob:hasEffectLocation sample_fanvfd:00113 .
+
+sample_fanvfd:00133 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor ;
+    rdfs:label "position_sensor" ;
+    s223:hasObservationLocation sample_fanvfd:00110 ;
+    s223:observes sample_fanvfd:00134 .
 
 sample_fanvfd:00134 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
+    rdfs:label "position_sensor.Position" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasUnit unit:PERCENT .
+
+sample_fanvfd:00135 a s223:Connectable,
+        s223:Damper,
+        s223:Equipment ;
+    rdfs:label "damper" ;
+    s223:cnx sample_fanvfd:00136,
+        sample_fanvfd:00137,
+        sample_fanvfd:00138 ;
+    s223:connected sample_fanvfd:00109 ;
+    s223:connectedFrom sample_fanvfd:00109 ;
+    s223:connectedThrough sample_fanvfd:00139 ;
+    s223:hasConnectionPoint sample_fanvfd:00136,
+        sample_fanvfd:00137,
+        sample_fanvfd:00138 ;
+    bob:airInlet sample_fanvfd:00137 ;
+    bob:airOutlet sample_fanvfd:00138 ;
+    bob:linkageInlet sample_fanvfd:00136 ;
+    bob:position sample_fanvfd:00134 .
+
+sample_fanvfd:00136 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "damper.linkageInlet" ;
+    s223:cnx sample_fanvfd:00135,
+        sample_fanvfd:00139 ;
+    s223:connectsThrough sample_fanvfd:00139 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf sample_fanvfd:00135 .
+
+sample_fanvfd:00137 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airInlet" ;
+    s223:cnx sample_fanvfd:00135 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_fanvfd:00135 ;
+    s223:mapsTo sample_fanvfd:00107 .
+
+sample_fanvfd:00138 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airOutlet" ;
+    s223:cnx sample_fanvfd:00135 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_fanvfd:00135 ;
+    s223:mapsTo sample_fanvfd:00108 .
+
+sample_fanvfd:00139 a s223:Connection ;
+    s223:cnx sample_fanvfd:00110,
+        sample_fanvfd:00136 ;
+    s223:connectsAt sample_fanvfd:00110,
+        sample_fanvfd:00136 ;
+    s223:connectsFrom sample_fanvfd:00109 ;
+    s223:connectsTo sample_fanvfd:00135 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling .
+
+sample_fanvfd:00140 a s223:Connectable,
+        s223:Equipment,
+        bob:ElectricalActuatedProportionalDamper ;
+    rdfs:label "MADPR" ;
+    s223:cnx sample_fanvfd:00141,
+        sample_fanvfd:00142 ;
+    s223:contains sample_fanvfd:00143,
+        sample_fanvfd:00169 ;
+    s223:hasConnectionPoint sample_fanvfd:00141,
+        sample_fanvfd:00142 ;
+    bob:airInlet sample_fanvfd:00141 ;
+    bob:airOutlet sample_fanvfd:00142 ;
+    bob:command sample_fanvfd:00153 ;
+    bob:is_closed sample_fanvfd:00152 ;
+    bob:is_open sample_fanvfd:00151 ;
+    bob:position sample_fanvfd:00168 ;
+    bob:position_feedback sample_fanvfd:00168 ;
+    rdfs:comment "Mixed Air Damper (A2)" .
+
+sample_fanvfd:00141 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "MADPR.airInlet" ;
+    s223:cnx sample_fanvfd:00140 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_fanvfd:00140 .
+
+sample_fanvfd:00142 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "MADPR.airOutlet" ;
+    s223:cnx sample_fanvfd:00140 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_fanvfd:00140 .
+
+sample_fanvfd:00143 a s223:Actuator,
+        s223:Connectable,
+        s223:Equipment ;
+    rdfs:label "actuator" ;
+    s223:cnx sample_fanvfd:00144,
+        sample_fanvfd:00145,
+        sample_fanvfd:00146,
+        sample_fanvfd:00147,
+        sample_fanvfd:00148,
+        sample_fanvfd:00149 ;
+    s223:connected sample_fanvfd:00169 ;
+    s223:connectedThrough sample_fanvfd:00173 ;
+    s223:connectedTo sample_fanvfd:00169 ;
+    s223:contains sample_fanvfd:00167 ;
+    s223:hasConnectionPoint sample_fanvfd:00144,
+        sample_fanvfd:00145,
+        sample_fanvfd:00146,
+        sample_fanvfd:00147,
+        sample_fanvfd:00148,
+        sample_fanvfd:00149 ;
+    s223:hasProperty sample_fanvfd:00150,
+        sample_fanvfd:00151,
+        sample_fanvfd:00152,
+        sample_fanvfd:00153,
+        sample_fanvfd:00154 ;
+    bob:contains sample_fanvfd:00155,
+        sample_fanvfd:00158,
+        sample_fanvfd:00161,
+        sample_fanvfd:00164 ;
+    bob:position sample_fanvfd:00168 .
+
+sample_fanvfd:00144 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "actuator.linkageOutlet" ;
+    s223:cnx sample_fanvfd:00143,
+        sample_fanvfd:00173 ;
+    s223:connectsThrough sample_fanvfd:00173 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf sample_fanvfd:00143 .
+
+sample_fanvfd:00145 a p223:AnalogOutput,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:ModulationSignalConnectionPoint ;
+    rdfs:label "actuator.feedback_signal" ;
+    s223:cnx sample_fanvfd:00143 ;
+    s223:hasMedium s223:Signal-Modulated ;
+    s223:isConnectionPointOf sample_fanvfd:00143 .
+
+sample_fanvfd:00146 a p223:BinaryOutput,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "actuator.open_auxswitch_signal" ;
+    s223:cnx sample_fanvfd:00143 ;
+    s223:hasMedium p223:Signal-OnOffSignal ;
+    s223:isConnectionPointOf sample_fanvfd:00143 .
+
+sample_fanvfd:00147 a p223:BinaryOutput,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "actuator.close_auxswitch_signal" ;
+    s223:cnx sample_fanvfd:00143 ;
+    s223:hasMedium p223:Signal-OnOffSignal ;
+    s223:isConnectionPointOf sample_fanvfd:00143 .
+
+sample_fanvfd:00148 a s223:ConnectionPoint,
+        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "actuator.electricalInlet" ;
+    s223:cnx sample_fanvfd:00143 ;
+    s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
+    s223:isConnectionPointOf sample_fanvfd:00143 .
+
+sample_fanvfd:00149 a p223:AnalogInput,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:ModulationSignalConnectionPoint ;
+    rdfs:label "actuator.proportional_signal" ;
+    s223:cnx sample_fanvfd:00143 ;
+    s223:hasMedium s223:Signal-Modulated ;
+    s223:isConnectionPointOf sample_fanvfd:00143 .
+
+sample_fanvfd:00150 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
     rdfs:label "position_feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_fanvfd:00135 a s223:EnumerableProperty,
+sample_fanvfd:00151 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_fanvfd:00136 a s223:EnumerableProperty,
+sample_fanvfd:00152 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_fanvfd:00137 a s223:ActuatableProperty,
+sample_fanvfd:00153 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -1347,7 +1469,7 @@ sample_fanvfd:00137 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_fanvfd:00138 a s223:ObservableProperty,
+sample_fanvfd:00154 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -1356,290 +1478,290 @@ sample_fanvfd:00138 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:hasUnit unit:N-M .
 
-sample_fanvfd:00139 a p223:Producer,
+sample_fanvfd:00155 a p223:Producer,
         bob:Causality ;
     rdfs:label "positionProducer" ;
-    s223:hasInput sample_fanvfd:00140 ;
-    s223:hasOutput sample_fanvfd:00141 ;
-    bob:cause_input sample_fanvfd:00140 ;
-    bob:effect_output sample_fanvfd:00141 .
+    s223:hasInput sample_fanvfd:00156 ;
+    s223:hasOutput sample_fanvfd:00157 ;
+    bob:cause_input sample_fanvfd:00156 ;
+    bob:effect_output sample_fanvfd:00157 .
 
-sample_fanvfd:00140 a p223:ProducerInput ;
+sample_fanvfd:00156 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
-    s223:uses sample_fanvfd:00137 ;
-    bob:hasCauseLocation sample_fanvfd:00133 .
+    s223:uses sample_fanvfd:00153 ;
+    bob:hasCauseLocation sample_fanvfd:00149 .
 
-sample_fanvfd:00141 a p223:ProducerOutput ;
+sample_fanvfd:00157 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
-    s223:produces sample_fanvfd:00152 ;
-    bob:hasEffectLocation sample_fanvfd:00128 .
+    s223:produces sample_fanvfd:00168 ;
+    bob:hasEffectLocation sample_fanvfd:00144 .
 
-sample_fanvfd:00142 a p223:Producer,
+sample_fanvfd:00158 a p223:Producer,
         bob:Causality ;
     rdfs:label "feedbackProducer" ;
-    s223:hasInput sample_fanvfd:00143 ;
-    s223:hasOutput sample_fanvfd:00144 ;
-    bob:cause_input sample_fanvfd:00143 ;
-    bob:effect_output sample_fanvfd:00144 .
+    s223:hasInput sample_fanvfd:00159 ;
+    s223:hasOutput sample_fanvfd:00160 ;
+    bob:cause_input sample_fanvfd:00159 ;
+    bob:effect_output sample_fanvfd:00160 .
 
-sample_fanvfd:00143 a p223:ProducerInput ;
+sample_fanvfd:00159 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
-    s223:uses sample_fanvfd:00152 .
+    s223:uses sample_fanvfd:00168 .
 
-sample_fanvfd:00144 a p223:ProducerOutput ;
+sample_fanvfd:00160 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
-    s223:produces sample_fanvfd:00134 ;
-    bob:hasEffectLocation sample_fanvfd:00129 .
+    s223:produces sample_fanvfd:00150 ;
+    bob:hasEffectLocation sample_fanvfd:00145 .
 
-sample_fanvfd:00145 a p223:Producer,
+sample_fanvfd:00161 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_open_producer" ;
-    s223:hasInput sample_fanvfd:00146 ;
-    s223:hasOutput sample_fanvfd:00147 ;
-    bob:cause_input sample_fanvfd:00146 ;
-    bob:effect_output sample_fanvfd:00147 .
+    s223:hasInput sample_fanvfd:00162 ;
+    s223:hasOutput sample_fanvfd:00163 ;
+    bob:cause_input sample_fanvfd:00162 ;
+    bob:effect_output sample_fanvfd:00163 .
 
-sample_fanvfd:00146 a p223:ProducerInput ;
+sample_fanvfd:00162 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
-    s223:uses sample_fanvfd:00152 .
+    s223:uses sample_fanvfd:00168 .
 
-sample_fanvfd:00147 a p223:ProducerOutput ;
+sample_fanvfd:00163 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
-    s223:produces sample_fanvfd:00135 ;
-    bob:hasEffectLocation sample_fanvfd:00130 .
+    s223:produces sample_fanvfd:00151 ;
+    bob:hasEffectLocation sample_fanvfd:00146 .
 
-sample_fanvfd:00148 a p223:Producer,
+sample_fanvfd:00164 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_close_producer" ;
-    s223:hasInput sample_fanvfd:00149 ;
-    s223:hasOutput sample_fanvfd:00150 ;
-    bob:cause_input sample_fanvfd:00149 ;
-    bob:effect_output sample_fanvfd:00150 .
+    s223:hasInput sample_fanvfd:00165 ;
+    s223:hasOutput sample_fanvfd:00166 ;
+    bob:cause_input sample_fanvfd:00165 ;
+    bob:effect_output sample_fanvfd:00166 .
 
-sample_fanvfd:00149 a p223:ProducerInput ;
+sample_fanvfd:00165 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
-    s223:uses sample_fanvfd:00152 .
+    s223:uses sample_fanvfd:00168 .
 
-sample_fanvfd:00150 a p223:ProducerOutput ;
+sample_fanvfd:00166 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
-    s223:produces sample_fanvfd:00136 ;
-    bob:hasEffectLocation sample_fanvfd:00131 .
+    s223:produces sample_fanvfd:00152 ;
+    bob:hasEffectLocation sample_fanvfd:00147 .
 
-sample_fanvfd:00151 a s223:Connectable,
+sample_fanvfd:00167 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasObservationLocation sample_fanvfd:00128 ;
-    s223:observes sample_fanvfd:00152 .
-
-sample_fanvfd:00152 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Percent ;
-    rdfs:label "position_sensor.Position" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
-
-sample_fanvfd:00153 a s223:Connectable,
-        s223:Damper,
-        s223:Equipment ;
-    rdfs:label "damper" ;
-    s223:cnx sample_fanvfd:00154,
-        sample_fanvfd:00155,
-        sample_fanvfd:00156 ;
-    s223:connected sample_fanvfd:00127 ;
-    s223:connectedFrom sample_fanvfd:00127 ;
-    s223:connectedThrough sample_fanvfd:00157 ;
-    s223:hasConnectionPoint sample_fanvfd:00154,
-        sample_fanvfd:00155,
-        sample_fanvfd:00156 ;
-    bob:airInlet sample_fanvfd:00155 ;
-    bob:airOutlet sample_fanvfd:00156 ;
-    bob:linkageInlet sample_fanvfd:00154 ;
-    bob:position sample_fanvfd:00152 .
-
-sample_fanvfd:00154 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "damper.linkageInlet" ;
-    s223:cnx sample_fanvfd:00153,
-        sample_fanvfd:00157 ;
-    s223:connectsThrough sample_fanvfd:00157 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_fanvfd:00153 .
-
-sample_fanvfd:00155 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx sample_fanvfd:00153 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00153 ;
-    s223:mapsTo sample_fanvfd:00125 .
-
-sample_fanvfd:00156 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx sample_fanvfd:00153 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00153 ;
-    s223:mapsTo sample_fanvfd:00126 .
-
-sample_fanvfd:00157 a s223:Connection ;
-    s223:cnx sample_fanvfd:00128,
-        sample_fanvfd:00154 ;
-    s223:connectsAt sample_fanvfd:00128,
-        sample_fanvfd:00154 ;
-    s223:connectsFrom sample_fanvfd:00127 ;
-    s223:connectsTo sample_fanvfd:00153 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling .
-
-sample_fanvfd:00158 a s223:Connectable,
-        s223:Equipment,
-        bob:ElectricalActuatedProportionalDamper ;
-    rdfs:label "MADPR" ;
-    s223:cnx sample_fanvfd:00159,
-        sample_fanvfd:00160 ;
-    s223:contains sample_fanvfd:00161,
-        sample_fanvfd:00187 ;
-    s223:hasConnectionPoint sample_fanvfd:00159,
-        sample_fanvfd:00160 ;
-    bob:airInlet sample_fanvfd:00159 ;
-    bob:airOutlet sample_fanvfd:00160 ;
-    bob:command sample_fanvfd:00171 ;
-    bob:is_closed sample_fanvfd:00170 ;
-    bob:is_open sample_fanvfd:00169 ;
-    bob:position sample_fanvfd:00186 ;
-    bob:position_feedback sample_fanvfd:00186 ;
-    rdfs:comment "Mixed Air Damper (A2)" .
-
-sample_fanvfd:00159 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "MADPR.airInlet" ;
-    s223:cnx sample_fanvfd:00158 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00158 .
-
-sample_fanvfd:00160 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "MADPR.airOutlet" ;
-    s223:cnx sample_fanvfd:00158 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00158 .
-
-sample_fanvfd:00161 a s223:Actuator,
-        s223:Connectable,
-        s223:Equipment ;
-    rdfs:label "actuator" ;
-    s223:cnx sample_fanvfd:00162,
-        sample_fanvfd:00163,
-        sample_fanvfd:00164,
-        sample_fanvfd:00165,
-        sample_fanvfd:00166,
-        sample_fanvfd:00167 ;
-    s223:connected sample_fanvfd:00187 ;
-    s223:connectedThrough sample_fanvfd:00191 ;
-    s223:connectedTo sample_fanvfd:00187 ;
-    s223:contains sample_fanvfd:00185 ;
-    s223:hasConnectionPoint sample_fanvfd:00162,
-        sample_fanvfd:00163,
-        sample_fanvfd:00164,
-        sample_fanvfd:00165,
-        sample_fanvfd:00166,
-        sample_fanvfd:00167 ;
-    s223:hasProperty sample_fanvfd:00168,
-        sample_fanvfd:00169,
-        sample_fanvfd:00170,
-        sample_fanvfd:00171,
-        sample_fanvfd:00172 ;
-    bob:contains sample_fanvfd:00173,
-        sample_fanvfd:00176,
-        sample_fanvfd:00179,
-        sample_fanvfd:00182 ;
-    bob:position sample_fanvfd:00186 .
-
-sample_fanvfd:00162 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "actuator.linkageOutlet" ;
-    s223:cnx sample_fanvfd:00161,
-        sample_fanvfd:00191 ;
-    s223:connectsThrough sample_fanvfd:00191 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_fanvfd:00161 .
-
-sample_fanvfd:00163 a p223:AnalogOutput,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.feedback_signal" ;
-    s223:cnx sample_fanvfd:00161 ;
-    s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf sample_fanvfd:00161 .
-
-sample_fanvfd:00164 a p223:BinaryOutput,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:cnx sample_fanvfd:00161 ;
-    s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00161 .
-
-sample_fanvfd:00165 a p223:BinaryOutput,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:cnx sample_fanvfd:00161 ;
-    s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00161 .
-
-sample_fanvfd:00166 a s223:ConnectionPoint,
-        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "actuator.electricalInlet" ;
-    s223:cnx sample_fanvfd:00161 ;
-    s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
-    s223:isConnectionPointOf sample_fanvfd:00161 .
-
-sample_fanvfd:00167 a p223:AnalogInput,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.proportional_signal" ;
-    s223:cnx sample_fanvfd:00161 ;
-    s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf sample_fanvfd:00161 .
+    s223:hasObservationLocation sample_fanvfd:00144 ;
+    s223:observes sample_fanvfd:00168 .
 
 sample_fanvfd:00168 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
+    rdfs:label "position_sensor.Position" ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasUnit unit:PERCENT .
+
+sample_fanvfd:00169 a s223:Connectable,
+        s223:Damper,
+        s223:Equipment ;
+    rdfs:label "damper" ;
+    s223:cnx sample_fanvfd:00170,
+        sample_fanvfd:00171,
+        sample_fanvfd:00172 ;
+    s223:connected sample_fanvfd:00143 ;
+    s223:connectedFrom sample_fanvfd:00143 ;
+    s223:connectedThrough sample_fanvfd:00173 ;
+    s223:hasConnectionPoint sample_fanvfd:00170,
+        sample_fanvfd:00171,
+        sample_fanvfd:00172 ;
+    bob:airInlet sample_fanvfd:00171 ;
+    bob:airOutlet sample_fanvfd:00172 ;
+    bob:linkageInlet sample_fanvfd:00170 ;
+    bob:position sample_fanvfd:00168 .
+
+sample_fanvfd:00170 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "damper.linkageInlet" ;
+    s223:cnx sample_fanvfd:00169,
+        sample_fanvfd:00173 ;
+    s223:connectsThrough sample_fanvfd:00173 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf sample_fanvfd:00169 .
+
+sample_fanvfd:00171 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airInlet" ;
+    s223:cnx sample_fanvfd:00169 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_fanvfd:00169 ;
+    s223:mapsTo sample_fanvfd:00141 .
+
+sample_fanvfd:00172 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airOutlet" ;
+    s223:cnx sample_fanvfd:00169 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_fanvfd:00169 ;
+    s223:mapsTo sample_fanvfd:00142 .
+
+sample_fanvfd:00173 a s223:Connection ;
+    s223:cnx sample_fanvfd:00144,
+        sample_fanvfd:00170 ;
+    s223:connectsAt sample_fanvfd:00144,
+        sample_fanvfd:00170 ;
+    s223:connectsFrom sample_fanvfd:00143 ;
+    s223:connectsTo sample_fanvfd:00169 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling .
+
+sample_fanvfd:00174 a s223:Connectable,
+        s223:Equipment,
+        bob:ElectricalActuatedProportionalDamper ;
+    rdfs:label "EADPR" ;
+    s223:cnx sample_fanvfd:00175,
+        sample_fanvfd:00176 ;
+    s223:contains sample_fanvfd:00177,
+        sample_fanvfd:00203 ;
+    s223:hasConnectionPoint sample_fanvfd:00175,
+        sample_fanvfd:00176 ;
+    bob:airInlet sample_fanvfd:00175 ;
+    bob:airOutlet sample_fanvfd:00176 ;
+    bob:command sample_fanvfd:00187 ;
+    bob:is_closed sample_fanvfd:00186 ;
+    bob:is_open sample_fanvfd:00185 ;
+    bob:position sample_fanvfd:00202 ;
+    bob:position_feedback sample_fanvfd:00202 ;
+    rdfs:comment "Exhaust Air Damper (A1)" .
+
+sample_fanvfd:00175 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "EADPR.airInlet" ;
+    s223:cnx sample_fanvfd:00174 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_fanvfd:00174 .
+
+sample_fanvfd:00176 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "EADPR.airOutlet" ;
+    s223:cnx sample_fanvfd:00174 ;
+    s223:hasMedium s223:Medium-Air ;
+    s223:isConnectionPointOf sample_fanvfd:00174 .
+
+sample_fanvfd:00177 a s223:Actuator,
+        s223:Connectable,
+        s223:Equipment ;
+    rdfs:label "actuator" ;
+    s223:cnx sample_fanvfd:00178,
+        sample_fanvfd:00179,
+        sample_fanvfd:00180,
+        sample_fanvfd:00181,
+        sample_fanvfd:00182,
+        sample_fanvfd:00183 ;
+    s223:connected sample_fanvfd:00203 ;
+    s223:connectedThrough sample_fanvfd:00207 ;
+    s223:connectedTo sample_fanvfd:00203 ;
+    s223:contains sample_fanvfd:00201 ;
+    s223:hasConnectionPoint sample_fanvfd:00178,
+        sample_fanvfd:00179,
+        sample_fanvfd:00180,
+        sample_fanvfd:00181,
+        sample_fanvfd:00182,
+        sample_fanvfd:00183 ;
+    s223:hasProperty sample_fanvfd:00184,
+        sample_fanvfd:00185,
+        sample_fanvfd:00186,
+        sample_fanvfd:00187,
+        sample_fanvfd:00188 ;
+    bob:contains sample_fanvfd:00189,
+        sample_fanvfd:00192,
+        sample_fanvfd:00195,
+        sample_fanvfd:00198 ;
+    bob:position sample_fanvfd:00202 .
+
+sample_fanvfd:00178 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint ;
+    rdfs:label "actuator.linkageOutlet" ;
+    s223:cnx sample_fanvfd:00177,
+        sample_fanvfd:00207 ;
+    s223:connectsThrough sample_fanvfd:00207 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf sample_fanvfd:00177 .
+
+sample_fanvfd:00179 a p223:AnalogOutput,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:ModulationSignalConnectionPoint ;
+    rdfs:label "actuator.feedback_signal" ;
+    s223:cnx sample_fanvfd:00177 ;
+    s223:hasMedium s223:Signal-Modulated ;
+    s223:isConnectionPointOf sample_fanvfd:00177 .
+
+sample_fanvfd:00180 a p223:BinaryOutput,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "actuator.open_auxswitch_signal" ;
+    s223:cnx sample_fanvfd:00177 ;
+    s223:hasMedium p223:Signal-OnOffSignal ;
+    s223:isConnectionPointOf sample_fanvfd:00177 .
+
+sample_fanvfd:00181 a p223:BinaryOutput,
+        s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint ;
+    rdfs:label "actuator.close_auxswitch_signal" ;
+    s223:cnx sample_fanvfd:00177 ;
+    s223:hasMedium p223:Signal-OnOffSignal ;
+    s223:isConnectionPointOf sample_fanvfd:00177 .
+
+sample_fanvfd:00182 a s223:ConnectionPoint,
+        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "actuator.electricalInlet" ;
+    s223:cnx sample_fanvfd:00177 ;
+    s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
+    s223:isConnectionPointOf sample_fanvfd:00177 .
+
+sample_fanvfd:00183 a p223:AnalogInput,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:ModulationSignalConnectionPoint ;
+    rdfs:label "actuator.proportional_signal" ;
+    s223:cnx sample_fanvfd:00177 ;
+    s223:hasMedium s223:Signal-Modulated ;
+    s223:isConnectionPointOf sample_fanvfd:00177 .
+
+sample_fanvfd:00184 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Percent ;
     rdfs:label "position_feedback" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_fanvfd:00169 a s223:EnumerableProperty,
+sample_fanvfd:00185 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_fanvfd:00170 a s223:EnumerableProperty,
+sample_fanvfd:00186 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_fanvfd:00171 a s223:ActuatableProperty,
+sample_fanvfd:00187 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -1648,7 +1770,7 @@ sample_fanvfd:00171 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_fanvfd:00172 a s223:ObservableProperty,
+sample_fanvfd:00188 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -1657,492 +1779,191 @@ sample_fanvfd:00172 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:hasUnit unit:N-M .
 
-sample_fanvfd:00173 a p223:Producer,
+sample_fanvfd:00189 a p223:Producer,
         bob:Causality ;
     rdfs:label "positionProducer" ;
-    s223:hasInput sample_fanvfd:00174 ;
-    s223:hasOutput sample_fanvfd:00175 ;
-    bob:cause_input sample_fanvfd:00174 ;
-    bob:effect_output sample_fanvfd:00175 .
+    s223:hasInput sample_fanvfd:00190 ;
+    s223:hasOutput sample_fanvfd:00191 ;
+    bob:cause_input sample_fanvfd:00190 ;
+    bob:effect_output sample_fanvfd:00191 .
 
-sample_fanvfd:00174 a p223:ProducerInput ;
+sample_fanvfd:00190 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
-    s223:uses sample_fanvfd:00171 ;
-    bob:hasCauseLocation sample_fanvfd:00167 .
+    s223:uses sample_fanvfd:00187 ;
+    bob:hasCauseLocation sample_fanvfd:00183 .
 
-sample_fanvfd:00175 a p223:ProducerOutput ;
+sample_fanvfd:00191 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
-    s223:produces sample_fanvfd:00186 ;
-    bob:hasEffectLocation sample_fanvfd:00162 .
+    s223:produces sample_fanvfd:00202 ;
+    bob:hasEffectLocation sample_fanvfd:00178 .
 
-sample_fanvfd:00176 a p223:Producer,
+sample_fanvfd:00192 a p223:Producer,
         bob:Causality ;
     rdfs:label "feedbackProducer" ;
-    s223:hasInput sample_fanvfd:00177 ;
-    s223:hasOutput sample_fanvfd:00178 ;
-    bob:cause_input sample_fanvfd:00177 ;
-    bob:effect_output sample_fanvfd:00178 .
+    s223:hasInput sample_fanvfd:00193 ;
+    s223:hasOutput sample_fanvfd:00194 ;
+    bob:cause_input sample_fanvfd:00193 ;
+    bob:effect_output sample_fanvfd:00194 .
 
-sample_fanvfd:00177 a p223:ProducerInput ;
+sample_fanvfd:00193 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
-    s223:uses sample_fanvfd:00186 .
+    s223:uses sample_fanvfd:00202 .
 
-sample_fanvfd:00178 a p223:ProducerOutput ;
+sample_fanvfd:00194 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
-    s223:produces sample_fanvfd:00168 ;
-    bob:hasEffectLocation sample_fanvfd:00163 .
+    s223:produces sample_fanvfd:00184 ;
+    bob:hasEffectLocation sample_fanvfd:00179 .
 
-sample_fanvfd:00179 a p223:Producer,
+sample_fanvfd:00195 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_open_producer" ;
-    s223:hasInput sample_fanvfd:00180 ;
-    s223:hasOutput sample_fanvfd:00181 ;
-    bob:cause_input sample_fanvfd:00180 ;
-    bob:effect_output sample_fanvfd:00181 .
+    s223:hasInput sample_fanvfd:00196 ;
+    s223:hasOutput sample_fanvfd:00197 ;
+    bob:cause_input sample_fanvfd:00196 ;
+    bob:effect_output sample_fanvfd:00197 .
 
-sample_fanvfd:00180 a p223:ProducerInput ;
+sample_fanvfd:00196 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
-    s223:uses sample_fanvfd:00186 .
+    s223:uses sample_fanvfd:00202 .
 
-sample_fanvfd:00181 a p223:ProducerOutput ;
+sample_fanvfd:00197 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
-    s223:produces sample_fanvfd:00169 ;
-    bob:hasEffectLocation sample_fanvfd:00164 .
+    s223:produces sample_fanvfd:00185 ;
+    bob:hasEffectLocation sample_fanvfd:00180 .
 
-sample_fanvfd:00182 a p223:Producer,
+sample_fanvfd:00198 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_close_producer" ;
-    s223:hasInput sample_fanvfd:00183 ;
-    s223:hasOutput sample_fanvfd:00184 ;
-    bob:cause_input sample_fanvfd:00183 ;
-    bob:effect_output sample_fanvfd:00184 .
+    s223:hasInput sample_fanvfd:00199 ;
+    s223:hasOutput sample_fanvfd:00200 ;
+    bob:cause_input sample_fanvfd:00199 ;
+    bob:effect_output sample_fanvfd:00200 .
 
-sample_fanvfd:00183 a p223:ProducerInput ;
+sample_fanvfd:00199 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
-    s223:uses sample_fanvfd:00186 .
+    s223:uses sample_fanvfd:00202 .
 
-sample_fanvfd:00184 a p223:ProducerOutput ;
+sample_fanvfd:00200 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
-    s223:produces sample_fanvfd:00170 ;
-    bob:hasEffectLocation sample_fanvfd:00165 .
+    s223:produces sample_fanvfd:00186 ;
+    bob:hasEffectLocation sample_fanvfd:00181 .
 
-sample_fanvfd:00185 a s223:Connectable,
+sample_fanvfd:00201 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasObservationLocation sample_fanvfd:00162 ;
-    s223:observes sample_fanvfd:00186 .
-
-sample_fanvfd:00186 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Percent ;
-    rdfs:label "position_sensor.Position" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
-
-sample_fanvfd:00187 a s223:Connectable,
-        s223:Damper,
-        s223:Equipment ;
-    rdfs:label "damper" ;
-    s223:cnx sample_fanvfd:00188,
-        sample_fanvfd:00189,
-        sample_fanvfd:00190 ;
-    s223:connected sample_fanvfd:00161 ;
-    s223:connectedFrom sample_fanvfd:00161 ;
-    s223:connectedThrough sample_fanvfd:00191 ;
-    s223:hasConnectionPoint sample_fanvfd:00188,
-        sample_fanvfd:00189,
-        sample_fanvfd:00190 ;
-    bob:airInlet sample_fanvfd:00189 ;
-    bob:airOutlet sample_fanvfd:00190 ;
-    bob:linkageInlet sample_fanvfd:00188 ;
-    bob:position sample_fanvfd:00186 .
-
-sample_fanvfd:00188 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "damper.linkageInlet" ;
-    s223:cnx sample_fanvfd:00187,
-        sample_fanvfd:00191 ;
-    s223:connectsThrough sample_fanvfd:00191 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_fanvfd:00187 .
-
-sample_fanvfd:00189 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx sample_fanvfd:00187 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00187 ;
-    s223:mapsTo sample_fanvfd:00159 .
-
-sample_fanvfd:00190 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx sample_fanvfd:00187 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00187 ;
-    s223:mapsTo sample_fanvfd:00160 .
-
-sample_fanvfd:00191 a s223:Connection ;
-    s223:cnx sample_fanvfd:00162,
-        sample_fanvfd:00188 ;
-    s223:connectsAt sample_fanvfd:00162,
-        sample_fanvfd:00188 ;
-    s223:connectsFrom sample_fanvfd:00161 ;
-    s223:connectsTo sample_fanvfd:00187 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling .
-
-sample_fanvfd:00192 a s223:Connectable,
-        s223:Equipment,
-        bob:ElectricalActuatedProportionalDamper ;
-    rdfs:label "EADPR" ;
-    s223:cnx sample_fanvfd:00193,
-        sample_fanvfd:00194 ;
-    s223:contains sample_fanvfd:00195,
-        sample_fanvfd:00221 ;
-    s223:hasConnectionPoint sample_fanvfd:00193,
-        sample_fanvfd:00194 ;
-    bob:airInlet sample_fanvfd:00193 ;
-    bob:airOutlet sample_fanvfd:00194 ;
-    bob:command sample_fanvfd:00205 ;
-    bob:is_closed sample_fanvfd:00204 ;
-    bob:is_open sample_fanvfd:00203 ;
-    bob:position sample_fanvfd:00220 ;
-    bob:position_feedback sample_fanvfd:00220 ;
-    rdfs:comment "Exhaust Air Damper (A1)" .
-
-sample_fanvfd:00193 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "EADPR.airInlet" ;
-    s223:cnx sample_fanvfd:00192 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00192 .
-
-sample_fanvfd:00194 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "EADPR.airOutlet" ;
-    s223:cnx sample_fanvfd:00192 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00192 .
-
-sample_fanvfd:00195 a s223:Actuator,
-        s223:Connectable,
-        s223:Equipment ;
-    rdfs:label "actuator" ;
-    s223:cnx sample_fanvfd:00196,
-        sample_fanvfd:00197,
-        sample_fanvfd:00198,
-        sample_fanvfd:00199,
-        sample_fanvfd:00200,
-        sample_fanvfd:00201 ;
-    s223:connected sample_fanvfd:00221 ;
-    s223:connectedThrough sample_fanvfd:00225 ;
-    s223:connectedTo sample_fanvfd:00221 ;
-    s223:contains sample_fanvfd:00219 ;
-    s223:hasConnectionPoint sample_fanvfd:00196,
-        sample_fanvfd:00197,
-        sample_fanvfd:00198,
-        sample_fanvfd:00199,
-        sample_fanvfd:00200,
-        sample_fanvfd:00201 ;
-    s223:hasProperty sample_fanvfd:00202,
-        sample_fanvfd:00203,
-        sample_fanvfd:00204,
-        sample_fanvfd:00205,
-        sample_fanvfd:00206 ;
-    bob:contains sample_fanvfd:00207,
-        sample_fanvfd:00210,
-        sample_fanvfd:00213,
-        sample_fanvfd:00216 ;
-    bob:position sample_fanvfd:00220 .
-
-sample_fanvfd:00196 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint ;
-    rdfs:label "actuator.linkageOutlet" ;
-    s223:cnx sample_fanvfd:00195,
-        sample_fanvfd:00225 ;
-    s223:connectsThrough sample_fanvfd:00225 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_fanvfd:00195 .
-
-sample_fanvfd:00197 a p223:AnalogOutput,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.feedback_signal" ;
-    s223:cnx sample_fanvfd:00195 ;
-    s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf sample_fanvfd:00195 .
-
-sample_fanvfd:00198 a p223:BinaryOutput,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:cnx sample_fanvfd:00195 ;
-    s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00195 .
-
-sample_fanvfd:00199 a p223:BinaryOutput,
-        s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:cnx sample_fanvfd:00195 ;
-    s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf sample_fanvfd:00195 .
-
-sample_fanvfd:00200 a s223:ConnectionPoint,
-        s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "actuator.electricalInlet" ;
-    s223:cnx sample_fanvfd:00195 ;
-    s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
-    s223:isConnectionPointOf sample_fanvfd:00195 .
-
-sample_fanvfd:00201 a p223:AnalogInput,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.proportional_signal" ;
-    s223:cnx sample_fanvfd:00195 ;
-    s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf sample_fanvfd:00195 .
+    s223:hasObservationLocation sample_fanvfd:00178 ;
+    s223:observes sample_fanvfd:00202 .
 
 sample_fanvfd:00202 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
-    rdfs:label "position_feedback" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
-
-sample_fanvfd:00203 a s223:EnumerableProperty,
-        s223:EnumeratedObservableProperty,
-        s223:ObservableProperty,
-        s223:Property ;
-    rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
-
-sample_fanvfd:00204 a s223:EnumerableProperty,
-        s223:EnumeratedObservableProperty,
-        s223:ObservableProperty,
-        s223:Property ;
-    rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
-
-sample_fanvfd:00205 a s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty,
-        bob:PercentCommand ;
-    rdfs:label "command" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
-
-sample_fanvfd:00206 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Nm ;
-    rdfs:label "torque" ;
-    qudt:hasQuantityKind quantitykind:Torque ;
-    qudt:hasUnit unit:N-M .
-
-sample_fanvfd:00207 a p223:Producer,
-        bob:Causality ;
-    rdfs:label "positionProducer" ;
-    s223:hasInput sample_fanvfd:00208 ;
-    s223:hasOutput sample_fanvfd:00209 ;
-    bob:cause_input sample_fanvfd:00208 ;
-    bob:effect_output sample_fanvfd:00209 .
-
-sample_fanvfd:00208 a p223:ProducerInput ;
-    rdfs:label "positionProducer.cause_input" ;
-    s223:uses sample_fanvfd:00205 ;
-    bob:hasCauseLocation sample_fanvfd:00201 .
-
-sample_fanvfd:00209 a p223:ProducerOutput ;
-    rdfs:label "positionProducer.effect_output" ;
-    s223:produces sample_fanvfd:00220 ;
-    bob:hasEffectLocation sample_fanvfd:00196 .
-
-sample_fanvfd:00210 a p223:Producer,
-        bob:Causality ;
-    rdfs:label "feedbackProducer" ;
-    s223:hasInput sample_fanvfd:00211 ;
-    s223:hasOutput sample_fanvfd:00212 ;
-    bob:cause_input sample_fanvfd:00211 ;
-    bob:effect_output sample_fanvfd:00212 .
-
-sample_fanvfd:00211 a p223:ProducerInput ;
-    rdfs:label "feedbackProducer.cause_input" ;
-    s223:uses sample_fanvfd:00220 .
-
-sample_fanvfd:00212 a p223:ProducerOutput ;
-    rdfs:label "feedbackProducer.effect_output" ;
-    s223:produces sample_fanvfd:00202 ;
-    bob:hasEffectLocation sample_fanvfd:00197 .
-
-sample_fanvfd:00213 a p223:Producer,
-        bob:Causality ;
-    rdfs:label "auxiliary_switch_open_producer" ;
-    s223:hasInput sample_fanvfd:00214 ;
-    s223:hasOutput sample_fanvfd:00215 ;
-    bob:cause_input sample_fanvfd:00214 ;
-    bob:effect_output sample_fanvfd:00215 .
-
-sample_fanvfd:00214 a p223:ProducerInput ;
-    rdfs:label "auxiliary_switch_open_producer.cause_input" ;
-    s223:uses sample_fanvfd:00220 .
-
-sample_fanvfd:00215 a p223:ProducerOutput ;
-    rdfs:label "auxiliary_switch_open_producer.effect_output" ;
-    s223:produces sample_fanvfd:00203 ;
-    bob:hasEffectLocation sample_fanvfd:00198 .
-
-sample_fanvfd:00216 a p223:Producer,
-        bob:Causality ;
-    rdfs:label "auxiliary_switch_close_producer" ;
-    s223:hasInput sample_fanvfd:00217 ;
-    s223:hasOutput sample_fanvfd:00218 ;
-    bob:cause_input sample_fanvfd:00217 ;
-    bob:effect_output sample_fanvfd:00218 .
-
-sample_fanvfd:00217 a p223:ProducerInput ;
-    rdfs:label "auxiliary_switch_close_producer.cause_input" ;
-    s223:uses sample_fanvfd:00220 .
-
-sample_fanvfd:00218 a p223:ProducerOutput ;
-    rdfs:label "auxiliary_switch_close_producer.effect_output" ;
-    s223:produces sample_fanvfd:00204 ;
-    bob:hasEffectLocation sample_fanvfd:00199 .
-
-sample_fanvfd:00219 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor ;
-    rdfs:label "position_sensor" ;
-    s223:hasObservationLocation sample_fanvfd:00196 ;
-    s223:observes sample_fanvfd:00220 .
-
-sample_fanvfd:00220 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Percent ;
     rdfs:label "position_sensor.Position" ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_fanvfd:00221 a s223:Connectable,
+sample_fanvfd:00203 a s223:Connectable,
         s223:Damper,
         s223:Equipment ;
     rdfs:label "damper" ;
-    s223:cnx sample_fanvfd:00222,
-        sample_fanvfd:00223,
-        sample_fanvfd:00224 ;
-    s223:connected sample_fanvfd:00195 ;
-    s223:connectedFrom sample_fanvfd:00195 ;
-    s223:connectedThrough sample_fanvfd:00225 ;
-    s223:hasConnectionPoint sample_fanvfd:00222,
-        sample_fanvfd:00223,
-        sample_fanvfd:00224 ;
-    bob:airInlet sample_fanvfd:00223 ;
-    bob:airOutlet sample_fanvfd:00224 ;
-    bob:linkageInlet sample_fanvfd:00222 ;
-    bob:position sample_fanvfd:00220 .
+    s223:cnx sample_fanvfd:00204,
+        sample_fanvfd:00205,
+        sample_fanvfd:00206 ;
+    s223:connected sample_fanvfd:00177 ;
+    s223:connectedFrom sample_fanvfd:00177 ;
+    s223:connectedThrough sample_fanvfd:00207 ;
+    s223:hasConnectionPoint sample_fanvfd:00204,
+        sample_fanvfd:00205,
+        sample_fanvfd:00206 ;
+    bob:airInlet sample_fanvfd:00205 ;
+    bob:airOutlet sample_fanvfd:00206 ;
+    bob:linkageInlet sample_fanvfd:00204 ;
+    bob:position sample_fanvfd:00202 .
 
-sample_fanvfd:00222 a p223:MechanicalConnectionPoint,
+sample_fanvfd:00204 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
-    s223:cnx sample_fanvfd:00221,
-        sample_fanvfd:00225 ;
-    s223:connectsThrough sample_fanvfd:00225 ;
+    s223:cnx sample_fanvfd:00203,
+        sample_fanvfd:00207 ;
+    s223:connectsThrough sample_fanvfd:00207 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_fanvfd:00221 .
+    s223:isConnectionPointOf sample_fanvfd:00203 .
 
-sample_fanvfd:00223 a s223:ConnectionPoint,
+sample_fanvfd:00205 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
-    s223:cnx sample_fanvfd:00221 ;
+    s223:cnx sample_fanvfd:00203 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00221 ;
-    s223:mapsTo sample_fanvfd:00193 .
+    s223:isConnectionPointOf sample_fanvfd:00203 ;
+    s223:mapsTo sample_fanvfd:00175 .
 
-sample_fanvfd:00224 a s223:ConnectionPoint,
+sample_fanvfd:00206 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
-    s223:cnx sample_fanvfd:00221 ;
+    s223:cnx sample_fanvfd:00203 ;
     s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf sample_fanvfd:00221 ;
-    s223:mapsTo sample_fanvfd:00194 .
+    s223:isConnectionPointOf sample_fanvfd:00203 ;
+    s223:mapsTo sample_fanvfd:00176 .
 
-sample_fanvfd:00225 a s223:Connection ;
-    s223:cnx sample_fanvfd:00196,
-        sample_fanvfd:00222 ;
-    s223:connectsAt sample_fanvfd:00196,
-        sample_fanvfd:00222 ;
-    s223:connectsFrom sample_fanvfd:00195 ;
-    s223:connectsTo sample_fanvfd:00221 ;
+sample_fanvfd:00207 a s223:Connection ;
+    s223:cnx sample_fanvfd:00178,
+        sample_fanvfd:00204 ;
+    s223:connectsAt sample_fanvfd:00178,
+        sample_fanvfd:00204 ;
+    s223:connectsFrom sample_fanvfd:00177 ;
+    s223:connectsTo sample_fanvfd:00203 ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 
-sample_fanvfd:00226 a bob:AirSystemConnectionPoint,
+sample_fanvfd:00208 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU.outsideAirInlet" ;
     s223:hasMedium s223:Medium-Air .
 
-sample_fanvfd:00227 a bob:AirSystemConnectionPoint,
+sample_fanvfd:00209 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU.returnAirInlet" ;
     s223:hasMedium s223:Medium-Air .
 
-sample_fanvfd:00228 a bob:AirSystemConnectionPoint,
+sample_fanvfd:00210 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU.supplyAirOutlet" ;
     s223:hasMedium s223:Medium-Air .
 
-sample_fanvfd:00229 a bob:AirSystemConnectionPoint,
+sample_fanvfd:00211 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU.exhaustAirOutlet" ;
     s223:hasMedium s223:Medium-Air .
 
-sample_fanvfd:00230 a s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
+sample_fanvfd:00212 a s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU.electricalInlet" ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 
-sample_fanvfd:00231 a s223:Connection ;
-    s223:cnx sample_fanvfd:00085,
-        sample_fanvfd:00099 ;
-    s223:connectsAt sample_fanvfd:00085,
-        sample_fanvfd:00099 ;
-    s223:connectsFrom sample_fanvfd:00095 ;
-    s223:connectsTo sample_fanvfd:00082 ;
+sample_fanvfd:00213 a s223:Connection ;
+    s223:cnx sample_fanvfd:00076,
+        sample_fanvfd:00081 ;
+    s223:connectsAt sample_fanvfd:00076,
+        sample_fanvfd:00081 ;
+    s223:connectsFrom sample_fanvfd:00077 ;
+    s223:connectsTo sample_fanvfd:00073 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 
-sample_fanvfd:00232 a s223:Connection ;
+sample_fanvfd:00214 a s223:Connection ;
     s223:cnx sample_fanvfd:00045,
-        sample_fanvfd:00057 ;
+        sample_fanvfd:00048 ;
     s223:connectsAt sample_fanvfd:00045,
-        sample_fanvfd:00057 ;
-    s223:connectsFrom sample_fanvfd:00055 ;
+        sample_fanvfd:00048 ;
+    s223:connectsFrom sample_fanvfd:00046 ;
     s223:connectsTo sample_fanvfd:00042 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 
