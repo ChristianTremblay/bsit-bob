@@ -5,41 +5,30 @@ g36_4-1_VAV_TerminalUnit_CoolingOnly
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Dict
 
 from header import g36_header
 
 from bob.connections.air import (
     AirConnection,
-    AirInletConnectionPoint,
-    AirInletSystemConnectionPoint,
-    AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
 )
 from bob.connections.electricity import Electricity_24VLN_1Ph_60HzInletConnectionPoint
 from bob.connections.network import RS485BidirectionalConnectionPoint
 from bob.core import (
-    G36,
     QUANTITYKIND,
     UNIT,
-    Equipment,
-    PropertyReference,
-    System,
     bind_model_namespace,
     dump,
 )
 from bob.enum import AnalogSignalTypeEnum
 from bob.equipment.architectural import Window
-from bob.equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.equipment.control import AnalogInput, AnalogOutput, BinaryInput
 from bob.equipment.control.controller import Controller
-from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+
 from bob.equipment.hvac.gas import GasMonitor
-from bob.equipment.hvac.stats import NetworkRoomSensor, NetworkThermostat
-from bob.equipment.hvac.vav import VAV_Simple
-from bob.producer.g36 import G36VAVCoolingOnly, VAV_CoolingOnly_template
+from bob.equipment.hvac.stats import NetworkRoomSensor
+
+from bob.producer.g36 import G36VAVCoolingOnly
 from bob.producer.occupancy import OccupancyFunction
-from bob.properties import Flow, PercentCommand, Temperature, temperature
-from bob.properties.ratio import Percent
 from bob.properties.states import OccupancyStatus
 from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
@@ -48,6 +37,10 @@ from bob.sensor.motion import OccupantMotionSensor
 from bob.sensor.security import IntrusionSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace, HVACZone
+
+# Prototypes
+from bob.scratch.hvac.vav import VAV_Simple
+from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
