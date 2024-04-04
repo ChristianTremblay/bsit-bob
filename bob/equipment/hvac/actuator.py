@@ -1,42 +1,9 @@
-from typing import Dict, Union
+from typing import Dict
 import logging
-from rdflib import URIRef
 
-from ...connections.mechanical import MechanicalOutletConnectionPoint
-from ...enum import OpenCloseEnum
-from ...producer import Producer, ProducerInput, ProducerOutput
-from ...producer.causality import Causality
-from ...properties import Nm, Percent, PercentCommand
-from ...properties.states import OnOffCommand, OnOffStatus
-from ...sensor.motion import PositionSensor
-from ...sensor.sensor import Sensor
 
-from ...connections.air import (
-    AirBidirectionalConnectionPoint,
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-    CompressedAirConnectionPoint,
-    CompressedAirInletConnectionPoint,
-    CompressedAirOutletConnectionPoint,
-)
-from ...connections.controlsignal import (
-    ModulationSignalInletConnectionPoint,
-    ModulationSignalOutletConnectionPoint,
-    OnOffSignalInletConnectionPoint,
-    OnOffSignalOutletConnectionPoint,
-)
-from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    Electricity_24VLN_1Ph_60HzInletConnectionPoint,
-    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-)
-from ...connections.light import (
-    LightOutletConnectionPoint,
-    LightVisibleOutletConnectionPoint,
-)
-from ...core import BOB, P223, S223, Equipment, Property, PropertyReference
+from ...core import BOB, S223, Equipment, PropertyReference
 from ...template import template_update, configure_relations
-from .. import _Actuator
 
 # logging
 _log = logging.getLogger(__name__)

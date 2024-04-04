@@ -3,30 +3,17 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from ...equipment.electricity.vfd import VFD
-from ...properties.flow import Flow
-from ...properties.ratio import Percent, PercentCommand
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from ...core import (
     BOB,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    ConnectionPoint,
     Equipment,
-    PropertyReference,
 )
-from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
-from ...properties.states import OnOffCommand, OnOffStatus
-from ...property import QuantifiableObservableProperty
 from ...template import configure_relations, template_update
-from ..electricity.starter import MotorStarter
-from ..electricity.vfd import VFD
 
 # logging
 _log = logging.getLogger(__name__)
