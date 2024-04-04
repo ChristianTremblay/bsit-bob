@@ -16,7 +16,8 @@ from bob.connections import (
     ChilledWaterConnection,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.equipment.hvac import ChilledWaterCoil, Fan
+from bob.equipment.hvac.coil import ChilledWaterCoil
+from bob.equipment.hvac.fan import Fan
 from bob.space.hvac import HVACSpace
 
 model_name = Path(__file__).stem
