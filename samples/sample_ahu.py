@@ -9,15 +9,17 @@ from bob.core import UNIT, Role, bind_model_namespace, data_graph, dump, schema_
 
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipment.hvac.fan import Fan
+
+
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 from bob.sensor.temperature import AirTemperatureSensor
 
-
+# Prototypes
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
+from bob.scratch.hvac.fan import Fan
+from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
