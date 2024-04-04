@@ -1,4 +1,4 @@
-from bob.core import SCRATCH, P223, S223, Equipment, LocationReference, Property, PropertyReference
+from bob.core import SCRATCH, S223, Equipment, LocationReference, PropertyReference
 
 """
 Depending on the nature of equipment, some are considered s223:System, other

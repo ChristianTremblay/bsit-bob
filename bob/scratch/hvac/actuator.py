@@ -1,23 +1,14 @@
 from typing import Dict, Union
 
-from rdflib import URIRef
 
 from bob.connections.mechanical import MechanicalOutletConnectionPoint
-from bob.enum import OpenCloseEnum
-from bob.producer import Producer, ProducerInput, ProducerOutput
 from bob.producer.causality import Causality
 from bob.properties import Nm, Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.motion import PositionSensor
-from bob.sensor.sensor import Sensor
 
 from bob.connections.air import (
-    AirBidirectionalConnectionPoint,
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-    CompressedAirConnectionPoint,
     CompressedAirInletConnectionPoint,
-    CompressedAirOutletConnectionPoint,
 )
 from bob.connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
@@ -26,15 +17,9 @@ from bob.connections.controlsignal import (
     OnOffSignalOutletConnectionPoint,
 )
 from bob.connections.electricity import (
-    ElectricalInletConnectionPoint,
     Electricity_24VLN_1Ph_60HzInletConnectionPoint,
-    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
 )
-from bob.connections.light import (
-    LightOutletConnectionPoint,
-    LightVisibleOutletConnectionPoint,
-)
-from bob.core import SCRATCH, BOB, P223, S223, Equipment, Property, PropertyReference
+from bob.core import SCRATCH, PropertyReference
 from bob.template import template_update
 from bob.equipment.hvac.actuator import Actuator
 
@@ -168,7 +153,7 @@ ElectricalProportionalActuator_template = {
 
 
 class ElectricalProportionalActuator(BaseActuator):
-    #_class_iri = S223.Actuator
+    #_class_iri = SCRATCH.ElectricalProportionalActuator
     command: PercentCommand
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -198,7 +183,7 @@ ElectricalOnOffActuator_template = {
 
 
 class ElectricalOnOffActuator(BaseActuator):
-    #_class_iri = S223.Actuator
+    #_class_iri = SCRATCH.ElectricalOnOffActuator
     command: OnOffCommand
 
     def __init__(self, config: Dict = {}, **kwargs):
@@ -233,7 +218,7 @@ PneumaticOnOffActuator_template = {
 
 
 class PneumaticProportionalActuator(BaseActuator):
-    #_class_iri = S223.Actuator
+    #_class_iri = SCRATCH.PneumaticProportionalActuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -244,7 +229,7 @@ class PneumaticProportionalActuator(BaseActuator):
 
 
 class PneumaticOnOffActuator(BaseActuator):
-    #_class_iri = S223.Actuator
+    #_class_iri = SCRATCH.PneumaticOnOffActuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
