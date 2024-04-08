@@ -9,7 +9,7 @@ import logging
 from datetime import datetime
 from typing import Any, AnyStr, Dict
 
-from rdflib import Literal, URIRef, RDF  # type: ignore
+from rdflib import RDF, Literal, URIRef  # type: ignore
 
 from .core import (
     BOB,
@@ -23,10 +23,10 @@ from .core import (
     Property,
     PropertyReference,
     data_graph,
-    template_update,
 )
 from .equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
 from .multimethods import multimethod
+from .template import template_update
 
 # logging
 _log = logging.getLogger(__name__)

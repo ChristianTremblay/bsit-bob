@@ -1,13 +1,14 @@
 from typing import Dict
 
-from bob.producer import Function
-from bob.producer.causality import Causality
-from bob.properties.electricity import Amps
-from bob.properties.light import RelativeLuminousFlux
-from bob.properties.ratio import PercentCommand
-from bob.properties.states import OnOffCommand, OnOffStatus
-from bob.property import ActuatableProperty
+from ...producer import Function
+from ...producer.causality import Causality
+from ...properties.electricity import Amps
+from ...properties.light import RelativeLuminousFlux
+from ...properties.ratio import PercentCommand
+from ...properties.states import OnOffCommand, OnOffStatus
+from ...property import ActuatableProperty
 
+from ... enum import RunStatusEnum
 from ...connections import electricity as elec_cnx
 from ...connections.controlsignal import OnOffSignalOutletConnectionPoint
 from ...core import (
@@ -19,10 +20,10 @@ from ...core import (
     Node,
     PropertyReference,
     logging,
-    template_update,
 )
 from ...properties.time import Hour
 from ...sensor.electricity import CurrentSensor
+from ...template import template_update
 
 _namespace = BOB
 
@@ -127,6 +128,8 @@ class CurrentRelay(Equipment):
         status_producer.cause_input << sensor.observedProperty
         status_producer.effect_output >> self["onOffStatus"]
         self > status_producer
+        self["onOffStatus"] += RunStatusEnum
+        self.dryContact += RunStatusEnum
 
 
 class TimerSwitch(SinglePoleSwitch):

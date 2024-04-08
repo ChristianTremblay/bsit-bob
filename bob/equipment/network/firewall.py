@@ -6,9 +6,7 @@ from rdflib import URIRef
 from bob.properties.network import Mbit_per_seconds
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...connections.electricity import (
-    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-)
+from ...connections.electricity import Electricity_120VLN_1Ph_60HzInletConnectionPoint
 from ...connections.network import (
     EthernetBidirectionalConnectionPoint,
     EthernetConnection,
@@ -22,11 +20,11 @@ from ...core import (
     ConnectionPoint,
     Equipment,
     PropertyReference,
-    template_update,
 )
 from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus
 from ...property import QuantifiableObservableProperty
+from ...template import template_update
 
 # logging
 _log = logging.getLogger(__name__)

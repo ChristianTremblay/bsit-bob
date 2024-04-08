@@ -18,5 +18,5 @@ class _VFD(Controller):
     This is required here so actuatesProperty gets its namespace from S223
     """
 
-    _class_iri = S223.VFD
+    _class_iri = S223.VariableFrequencyDrive
     actuatesProperty: Property

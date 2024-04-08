@@ -11,15 +11,7 @@ from ...connections.electricity import (
     Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
 from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
-from ...core import (
-    BOB,
-    S223,
-    UNIT,
-    Equipment,
-    PropertyReference,
-    logging,
-    template_update,
-)
+from ...core import BOB, S223, UNIT, Equipment, PropertyReference, logging
 from ...properties import (
     HP,
     RPM,
@@ -29,6 +21,7 @@ from ...properties import (
     PowerFactor,
     Pressure,
 )
+from ...template import template_update
 
 # logging
 _log = logging.getLogger(__name__)

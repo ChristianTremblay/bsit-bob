@@ -1,7 +1,6 @@
 from pathlib import Path
 
 
-
 from bob.connections.electricity import (
     Electricity_120VLN_1Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
@@ -24,7 +23,7 @@ from bob.equipment.hvac.damper import (
     ElectricalActuatedProportionalDamper,
     GravityDamper,
 )
-from bob.equipment.hvac.fan import Fan, FanWithStarter, FanWithVFD
+from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
@@ -77,11 +76,12 @@ vav1_config = {
     },
 }
 
+
 class BACnetVAV(VAV_Reheat, Device):
     pass
 
-vav1 = BACnetVAV(config=vav1_config)
 
+vav1 = BACnetVAV(config=vav1_config)
 
 
 if __name__ == "__main__":

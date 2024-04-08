@@ -30,6 +30,15 @@ def parse_rdf(ttl_file):
 
 class Node:
     groups = {
+        "System": {
+            "size": 40,
+            "color": "green",
+            "shape": "box",
+            "group_int": 1,
+            "borderWidth": None,
+            "uri": "bob:legend/System",
+            "label": "Legend / System",
+        },
         "Equipment": {
             "size": 20,
             "color": "green",
@@ -264,6 +273,7 @@ def make_legend(g):
 def prefix(full):
     _prefixes = [
         ("bob", "http://data.ashrae.org/standard223/si-builder#"),
+        ("scratch", "http://data.ashrae.org/standard223/si-builder/prototype#"),
         ("ex1", "urn:ex/sample_highLegDelta_electrical_entry/"),
         ("owl", "http://www.w3.org/2002/07/owl#"),
         ("p223", "http://data.ashrae.org/proposal-to-standard223#"),

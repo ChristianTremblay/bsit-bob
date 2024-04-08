@@ -1,8 +1,6 @@
 import logging
 from typing import Any, Dict
-from ..sensor import split_kwargs
-from ..sensor.flow import FlowSetpoint
-from ..sensor.temperature import TemperatureSetpoint
+
 from ..core import (
     G36,
     UNIT,
@@ -11,20 +9,23 @@ from ..core import (
     Node,
     PropertyReference,
     Substance,
-    bind_namespace,
     Zone,
-    template_update,
+    bind_namespace,
 )
 from ..properties import (
+    Flow,
+    GasConcentration,
     OccupancyStatus,
+    OnOffStatus,
+    Percent,
     Schedule,
     Temperature,
-    Percent,
-    Flow,
-    OnOffStatus,
-    GasConcentration,
 )
 from ..property import ObservableProperty, QuantifiableObservableProperty
+from ..sensor import split_kwargs
+from ..sensor.flow import FlowSetpoint
+from ..sensor.temperature import TemperatureSetpoint
+from ..template import template_update
 from . import (
     AnalogInput,
     AnalogOutput,

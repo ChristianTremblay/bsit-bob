@@ -21,6 +21,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix scratch: <http://data.ashrae.org/standard223/si-builder/prototype#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -46,6 +47,7 @@ bacnet_references:00001 a bacnet:Device,
         bacnet_references:00012,
         bacnet_references:00013,
         bacnet_references:00014 ;
+    s223:hasRole s223:Role-Controller ;
     rdfs:comment "AHU Controller" .
 
 bacnet_references:00002 a bacnet:DeviceObject,
@@ -64,6 +66,7 @@ bacnet_references:00003 a bacnet:Device,
     bacnet:deviceInstance 5205 ;
     bacnet:hasObject bacnet_references:00004,
         bacnet_references:00010 ;
+    s223:hasRole s223:Role-Controller ;
     rdfs:comment "VAV for Zone 1" .
 
 bacnet_references:00004 a bacnet:DeviceObject,
@@ -82,6 +85,7 @@ bacnet_references:00005 a bacnet:Device,
     bacnet:deviceInstance 5206 ;
     bacnet:hasObject bacnet_references:00006,
         bacnet_references:00011 ;
+    s223:hasRole s223:Role-Controller ;
     rdfs:comment "VAV for Zone 2" .
 
 bacnet_references:00006 a bacnet:DeviceObject,
@@ -4222,7 +4226,8 @@ hvac_devices:00041 a p223:ProducerOutput ;
 
 hvac_devices:00042 a s223:Connectable,
         s223:Equipment,
-        s223:Fan ;
+        s223:Fan,
+        scratch:Fan ;
     rdfs:label "RF" ;
     s223:cnx hvac_devices:00043,
         hvac_devices:00044,
@@ -4364,8 +4369,8 @@ hvac_devices:00054 a s223:ObservableProperty,
 hvac_devices:00055 a s223:Connectable,
         s223:Controller,
         s223:Equipment,
-        s223:VFD,
-        s223:VariableFrequencyDrive ;
+        s223:VariableFrequencyDrive,
+        scratch:VariableFrequencyDrive ;
     rdfs:label "RF_VFD" ;
     s223:cnx hvac_devices:00056,
         hvac_devices:00057,
@@ -4386,6 +4391,7 @@ hvac_devices:00055 a s223:Connectable,
     s223:contains hvac_devices:00075,
         hvac_devices:00077,
         hvac_devices:00079 ;
+    s223:executes hvac_devices:00081 ;
     s223:hasConnectionPoint hvac_devices:00056,
         hvac_devices:00057,
         hvac_devices:00058,
@@ -4402,9 +4408,10 @@ hvac_devices:00055 a s223:Connectable,
         hvac_devices:00069,
         hvac_devices:00070,
         hvac_devices:00071 ;
-    bob:amps hvac_devices:00076 ;
+    s223:hasRole s223:Role-Controller ;
     bob:contains hvac_devices:00072 ;
-    bob:volts hvac_devices:00078 ;
+    scratch:amps hvac_devices:00076 ;
+    scratch:volts hvac_devices:00078 ;
     rdfs:comment "Return Air Fan VFD" .
 
 hvac_devices:00056 a s223:ConnectionPoint,
@@ -4617,7 +4624,7 @@ hvac_devices:00080 a s223:ObservableProperty,
     qudt:hasUnit unit:V .
 
 hvac_devices:00081 a s223:Function,
-        bob:VFDFunction ;
+        scratch:VFDFunction ;
     rdfs:label "RF_VFD.function_block" ;
     s223:hasInput hvac_devices:00076,
         hvac_devices:00078,
@@ -4628,19 +4635,20 @@ hvac_devices:00081 a s223:Function,
         hvac_devices:00067,
         hvac_devices:00069,
         hvac_devices:00071 ;
-    bob:alarm hvac_devices:00071 ;
-    bob:amps_load hvac_devices:00076 ;
-    bob:drive_running hvac_devices:00069 ;
-    bob:frequency_load hvac_devices:00065 ;
-    bob:kW_load hvac_devices:00064 ;
-    bob:rpm hvac_devices:00067 ;
-    bob:speed_ref hvac_devices:00080 ;
-    bob:speed_ref_percent hvac_devices:00066 ;
-    bob:volts_load hvac_devices:00078 .
+    scratch:alarm hvac_devices:00071 ;
+    scratch:amps_load hvac_devices:00076 ;
+    scratch:drive_running hvac_devices:00069 ;
+    scratch:frequency_load hvac_devices:00065 ;
+    scratch:kW_load hvac_devices:00064 ;
+    scratch:rpm hvac_devices:00067 ;
+    scratch:speed_ref hvac_devices:00080 ;
+    scratch:speed_ref_percent hvac_devices:00066 ;
+    scratch:volts_load hvac_devices:00078 .
 
 hvac_devices:00082 a s223:Connectable,
         s223:Equipment,
-        s223:Fan ;
+        s223:Fan,
+        scratch:Fan ;
     rdfs:label "SF" ;
     s223:cnx hvac_devices:00083,
         hvac_devices:00084,
@@ -4667,7 +4675,7 @@ hvac_devices:00082 a s223:Connectable,
     s223:hasRole s223:Role-Supply ;
     bob:airInlet hvac_devices:00083 ;
     bob:airOutlet hvac_devices:00084 ;
-    bob:onOffStatus hvac_devices:00103 ;
+    scratch:onOffStatus hvac_devices:00105 ;
     rdfs:comment "Supply Air Fan" .
 
 hvac_devices:00083 a s223:ConnectionPoint,
@@ -4784,7 +4792,8 @@ hvac_devices:00094 a s223:ObservableProperty,
 
 hvac_devices:00095 a p223:MotorStarter,
         s223:Connectable,
-        s223:Equipment ;
+        s223:Equipment,
+        scratch:MotorStarter_600VLL_3Ph_60Hz ;
     rdfs:label "SF_Starter" ;
     s223:cnx hvac_devices:00096,
         hvac_devices:00097,
@@ -4796,16 +4805,16 @@ hvac_devices:00095 a p223:MotorStarter,
     s223:connectedThrough electricity:00001,
         hvac_devices:00231 ;
     s223:connectedTo hvac_devices:00082 ;
-    s223:contains hvac_devices:00100 ;
+    s223:contains hvac_devices:00102 ;
     s223:hasConnectionPoint hvac_devices:00096,
         hvac_devices:00097,
         hvac_devices:00098,
         hvac_devices:00099 ;
-    s223:hasProperty hvac_devices:00109,
-        hvac_devices:00110 ;
-    bob:inputSignal hvac_devices:00097 ;
-    bob:onOffStatus hvac_devices:00103 ;
-    bob:outputSignal hvac_devices:00096 ;
+    s223:hasProperty hvac_devices:00100,
+        hvac_devices:00101 ;
+    scratch:inputSignal hvac_devices:00097 ;
+    scratch:onOffStatus hvac_devices:00105 ;
+    scratch:outputSignal hvac_devices:00096 ;
     rdfs:comment "Supply Air Fan Starter" .
 
 hvac_devices:00096 a p223:BinaryOutput,
@@ -4846,27 +4855,44 @@ hvac_devices:00099 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00095 .
 
-hvac_devices:00100 a p223:CurrentRelay,
+hvac_devices:00100 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
+        s223:Property ;
+    rdfs:label "onOffCommand" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+hvac_devices:00101 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower ;
+    rdfs:label "powerRating" ;
+    qudt:hasQuantityKind quantitykind:ElectricPower ;
+    qudt:hasUnit unit:HP_Electric .
+
+hvac_devices:00102 a p223:CurrentRelay,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "currentRelay" ;
-    s223:cnx hvac_devices:00101 ;
-    s223:contains hvac_devices:00104 ;
-    s223:hasConnectionPoint hvac_devices:00101 ;
-    s223:hasProperty hvac_devices:00102,
-        hvac_devices:00103 ;
-    bob:contains hvac_devices:00106 .
+    s223:cnx hvac_devices:00103 ;
+    s223:contains hvac_devices:00106 ;
+    s223:hasConnectionPoint hvac_devices:00103 ;
+    s223:hasProperty hvac_devices:00104,
+        hvac_devices:00105 ;
+    bob:contains hvac_devices:00108 .
 
-hvac_devices:00101 a p223:BinaryOutput,
+hvac_devices:00103 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "currentRelay.dryContact" ;
-    s223:cnx hvac_devices:00100 ;
+    s223:cnx hvac_devices:00102 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:00100 .
+    s223:hasRole s223:EnumerationKind-RunStatus ;
+    s223:isConnectionPointOf hvac_devices:00102 .
 
-hvac_devices:00102 a s223:ObservableProperty,
+hvac_devices:00104 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4875,21 +4901,22 @@ hvac_devices:00102 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:00103 a s223:EnumerableProperty,
+hvac_devices:00105 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
+    s223:hasAspect s223:EnumerationKind-RunStatus ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:00104 a s223:Connectable,
+hvac_devices:00106 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "currentSensor" ;
     s223:hasObservationLocation hvac_devices:00099 ;
-    s223:observes hvac_devices:00105 .
+    s223:observes hvac_devices:00107 .
 
-hvac_devices:00105 a s223:ObservableProperty,
+hvac_devices:00107 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -4899,37 +4926,21 @@ hvac_devices:00105 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:00106 a p223:Producer,
+hvac_devices:00108 a p223:Producer,
         bob:Causality ;
     rdfs:label "statusProducer" ;
-    s223:hasInput hvac_devices:00107 ;
-    s223:hasOutput hvac_devices:00108 ;
-    bob:cause_input hvac_devices:00107 ;
-    bob:effect_output hvac_devices:00108 .
+    s223:hasInput hvac_devices:00109 ;
+    s223:hasOutput hvac_devices:00110 ;
+    bob:cause_input hvac_devices:00109 ;
+    bob:effect_output hvac_devices:00110 .
 
-hvac_devices:00107 a p223:ProducerInput ;
+hvac_devices:00109 a p223:ProducerInput ;
     rdfs:label "statusProducer.cause_input" ;
-    s223:uses hvac_devices:00105 .
+    s223:uses hvac_devices:00107 .
 
-hvac_devices:00108 a p223:ProducerOutput ;
+hvac_devices:00110 a p223:ProducerOutput ;
     rdfs:label "statusProducer.effect_output" ;
-    s223:produces hvac_devices:00103 .
-
-hvac_devices:00109 a s223:ActuatableProperty,
-        s223:EnumerableProperty,
-        s223:EnumeratedActuatableProperty,
-        s223:Property ;
-    rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
-
-hvac_devices:00110 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower ;
-    rdfs:label "powerRating" ;
-    qudt:hasQuantityKind quantitykind:ElectricPower ;
-    qudt:hasUnit unit:HP_Electric .
+    s223:produces hvac_devices:00105 .
 
 hvac_devices:00111 a s223:Coil,
         s223:Connectable,
@@ -6919,7 +6930,8 @@ hvac_devices:00320 a s223:ObservableProperty,
 
 hvac_devices:00321 a p223:MotorStarter,
         s223:Connectable,
-        s223:Equipment ;
+        s223:Equipment,
+        scratch:MotorStarter_600VLL_3Ph_60Hz ;
     rdfs:label "ChilledWaterPumpStarter" ;
     s223:cnx hvac_devices:00322,
         hvac_devices:00323,
@@ -6931,16 +6943,16 @@ hvac_devices:00321 a p223:MotorStarter,
     s223:connectedThrough electricity:00006,
         hvac_devices:00337 ;
     s223:connectedTo hvac_devices:00311 ;
-    s223:contains hvac_devices:00326 ;
+    s223:contains hvac_devices:00328 ;
     s223:hasConnectionPoint hvac_devices:00322,
         hvac_devices:00323,
         hvac_devices:00324,
         hvac_devices:00325 ;
-    s223:hasProperty hvac_devices:00335,
-        hvac_devices:00336 ;
-    bob:inputSignal hvac_devices:00323 ;
-    bob:onOffStatus hvac_devices:00329 ;
-    bob:outputSignal hvac_devices:00322 .
+    s223:hasProperty hvac_devices:00326,
+        hvac_devices:00327 ;
+    scratch:inputSignal hvac_devices:00323 ;
+    scratch:onOffStatus hvac_devices:00331 ;
+    scratch:outputSignal hvac_devices:00322 .
 
 hvac_devices:00322 a p223:BinaryOutput,
         s223:ConnectionPoint,
@@ -6980,27 +6992,44 @@ hvac_devices:00325 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00321 .
 
-hvac_devices:00326 a p223:CurrentRelay,
+hvac_devices:00326 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
+        s223:Property ;
+    rdfs:label "onOffCommand" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+hvac_devices:00327 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower ;
+    rdfs:label "powerRating" ;
+    qudt:hasQuantityKind quantitykind:ElectricPower ;
+    qudt:hasUnit unit:HP_Electric .
+
+hvac_devices:00328 a p223:CurrentRelay,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "currentRelay" ;
-    s223:cnx hvac_devices:00327 ;
-    s223:contains hvac_devices:00330 ;
-    s223:hasConnectionPoint hvac_devices:00327 ;
-    s223:hasProperty hvac_devices:00328,
-        hvac_devices:00329 ;
-    bob:contains hvac_devices:00332 .
+    s223:cnx hvac_devices:00329 ;
+    s223:contains hvac_devices:00332 ;
+    s223:hasConnectionPoint hvac_devices:00329 ;
+    s223:hasProperty hvac_devices:00330,
+        hvac_devices:00331 ;
+    bob:contains hvac_devices:00334 .
 
-hvac_devices:00327 a p223:BinaryOutput,
+hvac_devices:00329 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "currentRelay.dryContact" ;
-    s223:cnx hvac_devices:00326 ;
+    s223:cnx hvac_devices:00328 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:00326 .
+    s223:hasRole s223:EnumerationKind-RunStatus ;
+    s223:isConnectionPointOf hvac_devices:00328 .
 
-hvac_devices:00328 a s223:ObservableProperty,
+hvac_devices:00330 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -7009,21 +7038,22 @@ hvac_devices:00328 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:00329 a s223:EnumerableProperty,
+hvac_devices:00331 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
+    s223:hasAspect s223:EnumerationKind-RunStatus ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:00330 a s223:Connectable,
+hvac_devices:00332 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "currentSensor" ;
     s223:hasObservationLocation hvac_devices:00325 ;
-    s223:observes hvac_devices:00331 .
+    s223:observes hvac_devices:00333 .
 
-hvac_devices:00331 a s223:ObservableProperty,
+hvac_devices:00333 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -7033,37 +7063,21 @@ hvac_devices:00331 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:00332 a p223:Producer,
+hvac_devices:00334 a p223:Producer,
         bob:Causality ;
     rdfs:label "statusProducer" ;
-    s223:hasInput hvac_devices:00333 ;
-    s223:hasOutput hvac_devices:00334 ;
-    bob:cause_input hvac_devices:00333 ;
-    bob:effect_output hvac_devices:00334 .
+    s223:hasInput hvac_devices:00335 ;
+    s223:hasOutput hvac_devices:00336 ;
+    bob:cause_input hvac_devices:00335 ;
+    bob:effect_output hvac_devices:00336 .
 
-hvac_devices:00333 a p223:ProducerInput ;
+hvac_devices:00335 a p223:ProducerInput ;
     rdfs:label "statusProducer.cause_input" ;
-    s223:uses hvac_devices:00331 .
+    s223:uses hvac_devices:00333 .
 
-hvac_devices:00334 a p223:ProducerOutput ;
+hvac_devices:00336 a p223:ProducerOutput ;
     rdfs:label "statusProducer.effect_output" ;
-    s223:produces hvac_devices:00329 .
-
-hvac_devices:00335 a s223:ActuatableProperty,
-        s223:EnumerableProperty,
-        s223:EnumeratedActuatableProperty,
-        s223:Property ;
-    rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
-
-hvac_devices:00336 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower ;
-    rdfs:label "powerRating" ;
-    qudt:hasQuantityKind quantitykind:ElectricPower ;
-    qudt:hasUnit unit:HP_Electric .
+    s223:produces hvac_devices:00331 .
 
 hvac_devices:00337 a s223:Connection ;
     s223:cnx hvac_devices:00314,
@@ -7242,7 +7256,8 @@ hvac_devices:00351 a s223:ObservableProperty,
 
 hvac_devices:00352 a p223:MotorStarter,
         s223:Connectable,
-        s223:Equipment ;
+        s223:Equipment,
+        scratch:MotorStarter_600VLL_3Ph_60Hz ;
     rdfs:label "HotWaterPumpStarter" ;
     s223:cnx hvac_devices:00353,
         hvac_devices:00354,
@@ -7254,16 +7269,16 @@ hvac_devices:00352 a p223:MotorStarter,
     s223:connectedThrough electricity:00005,
         hvac_devices:00368 ;
     s223:connectedTo hvac_devices:00342 ;
-    s223:contains hvac_devices:00357 ;
+    s223:contains hvac_devices:00359 ;
     s223:hasConnectionPoint hvac_devices:00353,
         hvac_devices:00354,
         hvac_devices:00355,
         hvac_devices:00356 ;
-    s223:hasProperty hvac_devices:00366,
-        hvac_devices:00367 ;
-    bob:inputSignal hvac_devices:00354 ;
-    bob:onOffStatus hvac_devices:00360 ;
-    bob:outputSignal hvac_devices:00353 .
+    s223:hasProperty hvac_devices:00357,
+        hvac_devices:00358 ;
+    scratch:inputSignal hvac_devices:00354 ;
+    scratch:onOffStatus hvac_devices:00362 ;
+    scratch:outputSignal hvac_devices:00353 .
 
 hvac_devices:00353 a p223:BinaryOutput,
         s223:ConnectionPoint,
@@ -7303,27 +7318,44 @@ hvac_devices:00356 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:00352 .
 
-hvac_devices:00357 a p223:CurrentRelay,
+hvac_devices:00357 a s223:ActuatableProperty,
+        s223:EnumerableProperty,
+        s223:EnumeratedActuatableProperty,
+        s223:Property ;
+    rdfs:label "onOffCommand" ;
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+hvac_devices:00358 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower ;
+    rdfs:label "powerRating" ;
+    qudt:hasQuantityKind quantitykind:ElectricPower ;
+    qudt:hasUnit unit:HP_Electric .
+
+hvac_devices:00359 a p223:CurrentRelay,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "currentRelay" ;
-    s223:cnx hvac_devices:00358 ;
-    s223:contains hvac_devices:00361 ;
-    s223:hasConnectionPoint hvac_devices:00358 ;
-    s223:hasProperty hvac_devices:00359,
-        hvac_devices:00360 ;
-    bob:contains hvac_devices:00363 .
+    s223:cnx hvac_devices:00360 ;
+    s223:contains hvac_devices:00363 ;
+    s223:hasConnectionPoint hvac_devices:00360 ;
+    s223:hasProperty hvac_devices:00361,
+        hvac_devices:00362 ;
+    bob:contains hvac_devices:00365 .
 
-hvac_devices:00358 a p223:BinaryOutput,
+hvac_devices:00360 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
     rdfs:label "currentRelay.dryContact" ;
-    s223:cnx hvac_devices:00357 ;
+    s223:cnx hvac_devices:00359 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:00357 .
+    s223:hasRole s223:EnumerationKind-RunStatus ;
+    s223:isConnectionPointOf hvac_devices:00359 .
 
-hvac_devices:00359 a s223:ObservableProperty,
+hvac_devices:00361 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -7332,21 +7364,22 @@ hvac_devices:00359 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:00360 a s223:EnumerableProperty,
+hvac_devices:00362 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
+    s223:hasAspect s223:EnumerationKind-RunStatus ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:00361 a s223:Connectable,
+hvac_devices:00363 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "currentSensor" ;
     s223:hasObservationLocation hvac_devices:00356 ;
-    s223:observes hvac_devices:00362 .
+    s223:observes hvac_devices:00364 .
 
-hvac_devices:00362 a s223:ObservableProperty,
+hvac_devices:00364 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -7356,37 +7389,21 @@ hvac_devices:00362 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:00363 a p223:Producer,
+hvac_devices:00365 a p223:Producer,
         bob:Causality ;
     rdfs:label "statusProducer" ;
-    s223:hasInput hvac_devices:00364 ;
-    s223:hasOutput hvac_devices:00365 ;
-    bob:cause_input hvac_devices:00364 ;
-    bob:effect_output hvac_devices:00365 .
+    s223:hasInput hvac_devices:00366 ;
+    s223:hasOutput hvac_devices:00367 ;
+    bob:cause_input hvac_devices:00366 ;
+    bob:effect_output hvac_devices:00367 .
 
-hvac_devices:00364 a p223:ProducerInput ;
+hvac_devices:00366 a p223:ProducerInput ;
     rdfs:label "statusProducer.cause_input" ;
-    s223:uses hvac_devices:00362 .
+    s223:uses hvac_devices:00364 .
 
-hvac_devices:00365 a p223:ProducerOutput ;
+hvac_devices:00367 a p223:ProducerOutput ;
     rdfs:label "statusProducer.effect_output" ;
-    s223:produces hvac_devices:00360 .
-
-hvac_devices:00366 a s223:ActuatableProperty,
-        s223:EnumerableProperty,
-        s223:EnumeratedActuatableProperty,
-        s223:Property ;
-    rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
-
-hvac_devices:00367 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:ElectricPower ;
-    rdfs:label "powerRating" ;
-    qudt:hasQuantityKind quantitykind:ElectricPower ;
-    qudt:hasUnit unit:HP_Electric .
+    s223:produces hvac_devices:00362 .
 
 hvac_devices:00368 a s223:Connection ;
     s223:cnx hvac_devices:00345,
@@ -7399,7 +7416,8 @@ hvac_devices:00368 a s223:Connection ;
 
 hvac_devices:00369 a s223:Connectable,
         s223:Equipment,
-        s223:Fan ;
+        s223:Fan,
+        scratch:Fan ;
     rdfs:label "ExhaustFan" ;
     s223:cnx hvac_devices:00370,
         hvac_devices:00371,

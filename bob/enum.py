@@ -219,7 +219,7 @@ OpenCloseEnum = EnumerationKind("OpenClose", _alt_namespace=P223)
 OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=P223)
 ProtocolEnum = EnumerationKind("Protocol", _alt_namespace=P223)
 PositionEnum = EnumerationKind("Position", _alt_namespace=P223)
-RunningNotRunningEnum = EnumerationKind("RunningNotRunning", _alt_namespace=P223)
+RunStatusEnum = EnumerationKind("RunStatus")
 ThreeSpeedSetting = EnumerationKind("ThreeSpeedSetting")
 TopBottomEnum = EnumerationKind("TopBottom", _alt_namespace=P223)
 TrueFalseEnum = EnumerationKind("TrueFalse", _alt_namespace=P223)
@@ -375,11 +375,9 @@ PositionEnum.Moving = PositionEnum("Moving", _alt_namespace=P223)
 PositionEnum.Unknown = PositionEnum("Unknown", _alt_namespace=P223)
 
 #
-RunningNotRunningEnum.Running = RunningNotRunningEnum("Running", _alt_namespace=P223)
-RunningNotRunningEnum.NotRunning = RunningNotRunningEnum(
-    "NotRunning", _alt_namespace=P223
-)
-RunningNotRunningEnum.Unknown = RunningNotRunningEnum("Unknown", _alt_namespace=P223)
+RunStatusEnum.On = RunStatusEnum("On")
+RunStatusEnum.Off = RunStatusEnum("Off")
+RunStatusEnum.Unknown = RunStatusEnum("Unknown")
 
 #
 ThreeSpeedSetting.High = ThreeSpeedSetting("High")

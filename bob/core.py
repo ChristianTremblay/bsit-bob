@@ -4,7 +4,6 @@ Bob the SI-WG Builder
 
 from __future__ import annotations
 
-import copy
 import inspect
 import io
 import itertools
@@ -201,6 +200,12 @@ S223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
 # This namespace is added so in the development of Bob, when new cases occurs
 # we can clearly establish that a new class is not yet part of the standard
 P223 = bind_namespace("p223", "http://data.ashrae.org/proposal-to-standard223#")
+
+# This namespace is added so si-builder/scratch (aka Scratch), can provide its own schema
+# of classes which are opiniated examples assemblage of S223 classes
+SCRATCH = bind_namespace(
+    "scratch", "http://data.ashrae.org/standard223/si-builder/prototype#"
+)
 
 # This namespace is added so si-builder (aka Bob), can provide its own schema
 # of classes which are assemblage of S223 classes
@@ -1212,7 +1217,7 @@ class System(Container):
 
         if config:
             for group_name, group_items in config.items():
-                if group_name == "params":
+                if group_name in ("params", "relations"):
                     continue
 
                 things = []
@@ -3400,7 +3405,7 @@ class Equipment(Container, Connectable):
 
         if _config:
             for group_name, group_items in _config.items():
-                if group_name == "params":
+                if group_name in ("params", "relations"):
                     continue
                 if group_name == "cp":
                     for thing_name, thing_class in group_items.items():
@@ -3603,42 +3608,6 @@ def connect_mm(domain_space: DomainSpace, connection_point: ConnectionPoint) -> 
     _log.debug(f"    - from_thing: {from_thing}")
 
     connect_mm(from_thing, connection_point)
-
-
-def template_update(base: Dict = {}, config: Dict = None, bases: List = None):
-    """
-    This utility allows to preserve module templates from
-    undesired modification during creation of Equipment.
-
-    Usage :
-    _config = template_update(template, user_provided_config_dict)
-
-    """
-
-    def merge_dict(existing, new):
-        for k in new:
-            if k in existing:
-                if isinstance(existing[k], dict) and isinstance(new[k], dict):
-                    merge_dict(existing[k], new[k])
-                else:
-                    existing[k] = new[k]
-            else:
-                existing[k] = new[k]
-
-    if bases:
-        d1, d2 = bases
-        _d1 = copy.deepcopy(d1)
-        _d2 = copy.deepcopy(d2)
-        merge_dict(_d1, _d2)
-        if config:
-            merge_dict(_d1, config)
-        return _d1
-
-    else:
-        _d = copy.deepcopy(base)
-        if config:
-            merge_dict(_d, config)
-        return _d
 
 
 #

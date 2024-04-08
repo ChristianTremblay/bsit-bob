@@ -1,15 +1,15 @@
 from typing import Dict
 
-from bob.enum import HandOffAutoEnum
-from bob.equipment.electricity import _MotorStarter
-from bob.properties.electricity import ElectricPower
-from bob.properties.ratio import Percent, PercentCommand
-from bob.properties.states import OnOffCommand, OnOffStatus
+from ...enum import HandOffAutoEnum
+from ...equipment.electricity import _MotorStarter
+from ...properties.electricity import ElectricPower
+from ...properties.ratio import Percent, PercentCommand
+from ...properties.states import OnOffCommand, OnOffStatus
 
 from ...connections import electricity as elec_cnx
 from ...connections.controlsignal import (
-    OnOffSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
+    OnOffSignalOutletConnectionPoint,
 )
 from ...core import (
     BOB,
@@ -21,8 +21,8 @@ from ...core import (
     Property,
     PropertyReference,
     logging,
-    template_update,
 )
+from ...template import template_update, configure_relations
 from .switch import CurrentRelay
 
 # logging
@@ -33,16 +33,12 @@ _namespace = BOB
 
 electric_starter_template = {
     "cp": {
-        "electricalInlet": elec_cnx.Electricity_600VLL_3Ph_60HzInletConnectionPoint,
-        "electricalOutlet": elec_cnx.Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
-    },
-    "sensors": {
-        ("currentRelay", CurrentRelay): {},
+        "electricalInlet": elec_cnx.InletConnectionPoint,
+        "electricalOutlet": elec_cnx.OutletConnectionPoint,
     },
     "properties": {
         # ("actuatesProperty", PercentCommand): {},
         ("onOffCommand", OnOffCommand): {},
-        ("powerRating", ElectricPower): {"hasUnit": UNIT["HP_Electric"]},
     },
 }
 
@@ -56,17 +52,12 @@ class MotorStarter(_MotorStarter):
     """
 
     _class_iri = P223.MotorStarter
-    outputSignal: OnOffSignalOutletConnectionPoint
-    inputSignal: OnOffSignalInletConnectionPoint
-    onOffStatus: PropertyReference
-    onOffCommand: OnOffCommand  # this property could have `hasAspect` HandOffAutoEnum
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electric_starter_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"MotorStarter.__init__ {_config} {kwargs}")
+        _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
+        configure_relations(self, _config.pop("relations", []))
 
-        if self["currentRelay"]:
-            self.onOffStatus = self["currentRelay"]["onOffStatus"]
-            self["currentRelay"]["currentSensor"] % self.electricalOutlet
