@@ -12,7 +12,7 @@ from bob.core import (
     bind_model_namespace,
     dump,
 )
-from bob.producer.g36 import VAV_CoolingOnly_template, G36VAVCoolingOnly
+from bob.producer.g36 import G36VAVCoolingOnly
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(

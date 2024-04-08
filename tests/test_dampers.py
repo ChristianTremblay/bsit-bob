@@ -3,19 +3,14 @@ from pathlib import Path
 from header import ttl_test_header
 
 from bob.core import Equipment, Property, bind_model_namespace, dump
-from bob.equipment.hvac.damper import (
-    ElectricalActuatedOnOffDamper,
-    ElectricalActuatedProportionalDamper,
-    PneumaticActuatedOnOffDamper,
-    PneumaticActuatedProportionalDamper,
-)
+from bob.equipment.hvac.damper import Damper
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_damper(bob_fixture):
-    d1 = ElectricalActuatedProportionalDamper(
+    d1 = Damper(
         label="Electrical Proportional Actuated Damper"
     )
 

@@ -1,9 +1,6 @@
 from pathlib import Path
-from typing import Any
-from bob.enum import CtxAttribute, ElectricalPhaseIdentifier
-from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
+from bob.enum import ElectricalPhaseIdentifier
 from bob.connections.electricity import (
-    Electricity_240VLL_208VLN_120VLN_3Ph_60HzOutletConnectionPoint,
     Electricity_240VLL_208VLN_120VLN_3Ph_60HzConnection,
 )
 
@@ -11,36 +8,14 @@ from header import sample_header
 
 from bob.connections.air import *
 from bob.connections.electricity import *
-from bob.connections.light import LightVisibleConnection
-from bob.connections.occupancy import (
-    OccupancyInletSystemConnectionPoint,
-    OccupancyOutletSystemConnectionPoint,
-)
-from bob.core import P223, QUANTITYKIND, UNIT, bind_model_namespace, dump, get_datagraph
-from bob.equipment.architectural import Window
+from bob.core import bind_model_namespace, dump
 from bob.equipment.electricity.distribution import (
-    SinglePhaseDistributionPanel,
     SinglePoleCircuitBreaker,
     ThreePhaseDistributionPanel,
     ThreePolesCircuitBreaker,
     ThreePolesMainCircuitBreaker,
-    Transformer,
     TwoPolesCircuitBreaker,
-    TwoPolesMainCircuitBreaker,
 )
-from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipment.hvac.fan import Fan
-from bob.equipment.hvac.filter import Filter
-from bob.equipment.hvac.vav import VAV
-from bob.equipment.lighting.light import Luminaire
-from bob.property import QuantifiableObservableProperty
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.temperature import AirTemperatureSensor
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.light import LightingSpace, LightingZone
-from bob.space.physical import Bathroom, Building, Corridor, Floor, Office, Roof, Room
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

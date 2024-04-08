@@ -1,12 +1,9 @@
 from typing import Dict
 
-from ...producer import Function
 from ...producer.causality import Causality
 from ...properties.electricity import Amps
-from ...properties.light import RelativeLuminousFlux
 from ...properties.ratio import PercentCommand
 from ...properties.states import OnOffCommand, OnOffStatus
-from ...property import ActuatableProperty
 
 from ... enum import RunStatusEnum
 from ...connections import electricity as elec_cnx
@@ -14,12 +11,8 @@ from ...connections.controlsignal import OnOffSignalOutletConnectionPoint
 from ...core import (
     BOB,
     P223,
-    S223,
     Electricity,
     Equipment,
-    Node,
-    PropertyReference,
-    logging,
 )
 from ...properties.time import Hour
 from ...sensor.electricity import CurrentSensor

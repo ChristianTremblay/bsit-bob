@@ -3,32 +3,23 @@ from pathlib import Path
 from header import sample_header
 
 from bob.connections.electricity import (
-    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
-    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
-from bob.connections.network import EthernetBidirectionalConnectionPoint
 from bob.core import UNIT, Role, bind_model_namespace, data_graph, dump, schema_graph
-from bob.equipment.architectural import Window
 
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
-from bob.equipment.hvac.chiller import Chiller
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
-from bob.equipment.hvac.fan import Fan
+
+
 from bob.equipment.hvac.filter import Filter
-from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
-from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve
-from bob.equipment.hvac.vav import VAV
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.pressure import DifferentialStaticPressure
-from bob.sensor.temperature import AirTemperatureSensor, Temperature
+from bob.sensor.temperature import AirTemperatureSensor
 
-
+# Prototypes
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
+from bob.scratch.hvac.fan import Fan
+from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")

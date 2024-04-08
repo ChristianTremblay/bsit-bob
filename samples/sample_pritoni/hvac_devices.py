@@ -14,13 +14,12 @@ from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
 from bob.equipment.hvac.chiller import Chiller
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
-from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+
 
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
-from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve
-from bob.equipment.hvac.vav import VAV
+
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
@@ -29,6 +28,9 @@ from bob.sensor.temperature import AirTemperatureSensor, Temperature
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
 from bob.scratch.hvac.fan import Fan
+from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.scratch.hvac.valve import TwoWayActuatedProportionalValve
+from bob.scratch.hvac.vav import VAV
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem

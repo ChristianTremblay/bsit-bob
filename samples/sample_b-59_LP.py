@@ -10,12 +10,13 @@ from bob.core import (
 )
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.coil import ChilledWaterCoil
-from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.equipment.hvac.fan import Fan
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
 
+# Prototypes
+from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
 from header import sample_header
 
 # model_name = Path(__file__).stem
