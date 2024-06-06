@@ -8,8 +8,8 @@ from bob.connections.light import (
 )
 from bob.properties.states import OccupancyStatus
 
-from ..core import BOB, P223, S223, Domain, DomainSpace, Light, PropertyReference, Zone
-
+from ..core import BOB, P223, S223, Domain, DomainSpace, PropertyReference, Zone
+from ..enum import Light
 _namespace = BOB
 
 

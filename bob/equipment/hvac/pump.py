@@ -10,7 +10,7 @@ from ...connections.electricity import (
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
-from ...connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
+from ...connections.liquid import WaterInletConnectionPoint, WaterOutletConnectionPoint
 from ...core import BOB, S223, UNIT, Equipment, PropertyReference, logging
 from ...properties import (
     HP,

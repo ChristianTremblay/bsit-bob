@@ -11,16 +11,14 @@ from ..core import (
     InletConnectionPoint,
     InletSystemConnectionPoint,
     InletZoneConnectionPoint,
-    Light,
     Medium,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     OutletZoneConnectionPoint,
     SystemConnectionPoint,
     ZoneConnectionPoint,
-    enum,
 )
-
+from ..enum import Light
 _namespace = BOB
 
 

@@ -33,10 +33,10 @@ def test_create_vfd_from_template(bob_fixture):
             "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
             "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         },
-        "properties":{
+        "properties": {
             ("rpm", RPM): {},
-            ("alarm_status", NormalAlarmStatus) : {},
-        }
+            ("alarm_status", NormalAlarmStatus): {},
+        },
     }
     v = VFD(config=vfd_template)
     assert type(v["rpm"]) is RPM

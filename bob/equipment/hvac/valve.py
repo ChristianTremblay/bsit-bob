@@ -1,4 +1,3 @@
-
 from rdflib import URIRef
 
 from ...connections.air import (
@@ -11,7 +10,7 @@ from ...connections.naturalgas import (
     NaturalGasOutletConnectionPoint,
 )
 
-from ...connections.water import (
+from ...connections.liquid import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
@@ -36,8 +35,6 @@ class Valve(Equipment):
     position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
-    is_open: PropertyReference
-    is_closed: PropertyReference
     flowCoefficient: Gallons
 
 
@@ -49,6 +46,8 @@ class TwoWayValve(Valve):
     _class_iri: URIRef = S223.TwoWayValve
     waterInlet: WaterInletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
+    is_open: PropertyReference
+    is_closed: PropertyReference
 
 
 class ThreeWayValveDiverting(Valve):

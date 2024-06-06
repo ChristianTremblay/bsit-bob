@@ -36,6 +36,7 @@ from bob.core import (
     bind_model_namespace,
     dump,
     p223,
+    QuantifiableObservableProperty,
 )
 from bob.equipment.archives.coolingcoil import ChilledWaterCoil2
 from bob.equipment.archives.heatingcoil import HotWaterCoil2
@@ -46,7 +47,6 @@ from bob.equipment.hvac.filter import Filter
 from bob.externalreference.timeseries import TimeSeriesReference
 from bob.properties.electricity import ElectricPowerW
 from bob.properties.ratio import PercentAngularVelocity
-from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.pressure import AirDifferentialPressureSensor, AirStaticPressureSensor

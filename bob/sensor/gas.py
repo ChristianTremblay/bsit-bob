@@ -10,16 +10,14 @@ from ..core import (
     QUANTITYKIND,
     S223,
     UNIT,
-    Air,
     EnumerationKind,
     Equipment,
-    Medium,
+    Constituent,
     Node,
     PropertyReference,
-    Substance,
+    Setpoint,
 )
 from ..properties import GasConcentration
-from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
 _namespace = BOB
@@ -45,6 +43,7 @@ class GasConcentrationSensor(Sensor):
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
+        print(f"{_sensor_kwargs = }, {_property_kwargs = }")
 
         if "ofSubstance" not in _property_kwargs:
             raise ValueError(
@@ -68,7 +67,7 @@ class CO2Sensor(GasConcentrationSensor):
 
     def __init__(self, **kwargs):
         # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
-        super().__init__(ofSubstance=Substance.CO2, **kwargs)
+        super().__init__(ofSubstance=Constituent.CO2, **kwargs)
 
 
 class COSensor(GasConcentrationSensor):
@@ -79,7 +78,7 @@ class COSensor(GasConcentrationSensor):
 
     def __init__(self, **kwargs):
         # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
-        super().__init__(ofSubstance=Substance.CO, **kwargs)
+        super().__init__(ofSubstance=Constituent.CO, **kwargs)
 
 
 class NO2Sensor(GasConcentrationSensor):
@@ -90,7 +89,7 @@ class NO2Sensor(GasConcentrationSensor):
 
     def __init__(self, **kwargs):
         # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
-        super().__init__(ofSubstance=Substance.NO2, **kwargs)
+        super().__init__(ofSubstance=Constituent.NO2, **kwargs)
 
 
 class CH4Sensor(GasConcentrationSensor):
@@ -101,4 +100,4 @@ class CH4Sensor(GasConcentrationSensor):
 
     def __init__(self, **kwargs):
         # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
-        super().__init__(ofSubstance=Substance.CH4, **kwargs)
+        super().__init__(ofSubstance=Constituent.CH4, **kwargs)

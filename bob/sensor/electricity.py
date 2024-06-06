@@ -8,17 +8,13 @@ from ..core import (
     QUANTITYKIND,
     S223,
     UNIT,
-    Air,
-    Electricity,
     Equipment,
     LocationReference,
-    Medium,
     Node,
     PropertyReference,
-    Water,
 )
+from ..enum import Electricity
 from ..properties import Amps, OnOffStatus, Volts
-from ..property import ObservableProperty, QuantifiableProperty
 from .sensor import Sensor, split_kwargs
 
 _namespace = BOB

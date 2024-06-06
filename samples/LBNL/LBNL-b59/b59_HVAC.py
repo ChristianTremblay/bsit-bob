@@ -6,7 +6,7 @@ import pandas as pd
 from header import lbnl_header
 
 from bob.connections.air import *
-from bob.connections.water import *
+from bob.connections.liquid import *
 from bob.core import *
 from bob.equipment.archives.coolingcoil import ChilledWaterCoil, ChilledWaterCoil2
 from bob.equipment.archives.heatingcoil import HotWaterCoil2
@@ -20,7 +20,6 @@ from bob.properties.flow import Flow
 from bob.properties.ratio import Percent
 from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.properties.temperature import Temperature
-from bob.property import *
 from bob.role import Exhaust, Return, Supply
 
 # from bob.properties.force import Pressure

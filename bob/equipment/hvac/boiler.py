@@ -3,7 +3,7 @@ from typing import Any
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import ElectricalInletConnectionPoint
 from ...connections.naturalgas import NaturalGasInletConnectionPoint
-from ...connections.water import (
+from ...connections.liquid import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
     WaterOutletConnectionPoint,

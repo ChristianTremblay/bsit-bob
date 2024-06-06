@@ -21,11 +21,19 @@ eth_switch_template = {
     "properties": {},
 }
 
-ethernet_switch = EthernetSwitch(label="Simple Switch", config=eth_switch_template, ports=8, data_rate=1000)
+ethernet_switch = EthernetSwitch(
+    label="Simple Switch", config=eth_switch_template, ports=8, data_rate=1000
+)
 
 ethernet_switch.port1 >> hd.ahu["RF_VFD"].ethernet_port
 
-firewall = EthernetFirewall(label="Firewall", config=eth_switch_template, wan_ports=1, lan_ports=4, data_rate=1000)
+firewall = EthernetFirewall(
+    label="Firewall",
+    config=eth_switch_template,
+    wan_ports=1,
+    lan_ports=4,
+    data_rate=1000,
+)
 
 internet >> firewall.wan_port0
 firewall.lan_port0 >> ethernet_switch.port0

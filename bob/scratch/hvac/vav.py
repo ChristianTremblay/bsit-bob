@@ -10,14 +10,16 @@ from bob.connections.air import (
 )
 from bob.core import SCRATCH, UNIT, Equipment, PropertyReference
 from bob.equipment.hvac.coil import ElectricalHeatingCoil, HotWaterCoil
-
+from bob.equipment.control.controller import Controller
 from bob.sensor.flow import AirFlowSensor
 from bob.template import template_update
 
 # Prototypes
-from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.scratch.hvac.damper import Damper, ElectricalActuatedProportionalDamper
+
 from bob.scratch.hvac.fan import Fan
 from bob.scratch.hvac.valve import TwoWayActuatedProportionalValve
+from bob.scratch.control.controller import VAVController
 
 # logging
 _log = logging.getLogger(__name__)
@@ -39,9 +41,7 @@ vav_system_template = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {
-            "comment": "VAV Box Damper including a damper actuator (electrical proportional)"
-        }
+        ("DPR", Damper): {"comment": "VAV Controller with damper"},
     },
 }
 
@@ -59,9 +59,8 @@ vav_dual_template = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {
-            "comment": "VAV Box Damper with its actuator"
-        },
+        ("DPR", Damper): {"comment": "VAV Controller with damper"},
+        ("VAVController", VAVController): {"comment": "VAV Controller with damper"},
         ("HTGCOIL", HotWaterCoil): {"comment": "Hot Water Coil"},
         ("HTGVLV", TwoWayActuatedProportionalValve): {"comment": "VAV Box Damper"},
         ("FAN", Fan): {"comment": "Fan"},
@@ -82,7 +81,8 @@ vav_withreheat_template = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
+        ("DPR", Damper): {"comment": "VAV Controller with damper"},
+        ("VAVController", VAVController): {"comment": "VAV Controller with damper"},
         ("REHEAT", HotWaterCoil): {"comment": "VAV Hot Water Coil"},
     },
 }
@@ -101,7 +101,8 @@ vav_withelectricreheat_template = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {"comment": "VAV Box Damper"},
+        ("DPR", Damper): {"comment": "Damper"},
+        ("VAVController", VAVController): {"comment": "VAV Controller with damper"},
         ("REHEAT", ElectricalHeatingCoil): {"comment": "VAV Electrical Heating Coil"},
     },
 }
@@ -142,12 +143,12 @@ class VAV_Simple(Equipment):
         self["DPR"].airOutlet.maps_to(self.airOutlet)
 
         # Equivalence
-        self.damperPosition = self["DPR"].position
+        #self.damperPosition = self["DPR"].position
         self.zoneTemperature = self["ZN-T"].observedProperty
         self.airFlow = self["SA-F"].observedProperty
 
-        self["SA-F"] % self["DPR"]["damper"].airOutlet
-        self["DA-T"] % self["DPR"]["damper"].airOutlet
+        self["SA-F"] % self["DPR"].airOutlet
+        self["DA-T"] % self["DPR"].airOutlet
 
 
 class VAV_Dual(Equipment):
@@ -163,14 +164,14 @@ class VAV_Dual(Equipment):
     def __init__(self, config: Dict = vav_system_template, **kwargs) -> None:
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self["DPR"]["damper"].airInlet.maps_to(self.airInlet)
-        self["DPR"]["damper"].airOutlet.maps_to(self.airOutlet)
+        self["DPR"].airInlet.maps_to(self.airInlet)
+        self["DPR"].airOutlet.maps_to(self.airOutlet)
         self.zoneTemperature = self["ZN-T"].observedProperty
         # self.damperPosition = self['DPR'].position
         # self.airFlow = self['SA-F'].observedProperty
 
-        self["SA-F"] % self["DPR"]["damper"].airOutlet
-        self["DA-T"] % self["DPR"]["damper"].airOutlet
+        self["SA-F"] % self["DPR"].airOutlet
+        self["DA-T"] % self["DPR"].airOutlet
 
 
 # Cannot inherit from VAV_Simple for now because DA-T will not point to the same thing and DRP connected to reheat, etc...
@@ -200,11 +201,12 @@ class VAV_Reheat(Equipment):
         self["REHEAT"].airOutlet.maps_to(self.airOutlet)
 
         # Equivalence
-        self.damperPosition = self["DPR"].position
+        #self['DPR'].damperPosition = self["DPR"].position
         self.zoneTemperature = self["ZN-T"].observedProperty
         self.airFlow = self["SA-F"].observedProperty
 
-        self["SA-F"] % self["DPR"]["damper"].airOutlet
+        self["SA-F"] % self["DPR"].airOutlet
         self["DA-T"] % self["REHEAT"].airOutlet
 
         self["DPR"] >> self["REHEAT"]
+        self['VAVController'] >> self['DPR']

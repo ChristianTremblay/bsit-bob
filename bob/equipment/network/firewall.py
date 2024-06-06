@@ -20,10 +20,10 @@ from ...core import (
     ConnectionPoint,
     Equipment,
     PropertyReference,
+    QuantifiableObservableProperty,
 )
 from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
 from ...properties.states import OnOffCommand, OnOffStatus
-from ...property import QuantifiableObservableProperty
 from ...template import template_update
 
 # logging

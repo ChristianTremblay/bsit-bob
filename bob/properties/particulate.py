@@ -1,7 +1,16 @@
 from rdflib import URIRef
-
-from ..core import BOB, P223, QUANTITYKIND, S223, UNIT, Medium, Substance
-from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
+from typing import Union
+from ..core import (
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
+    Medium,
+    Substance,
+    Constituent,
+    QuantifiableObservableProperty,
+)
 
 _namespace = P223
 

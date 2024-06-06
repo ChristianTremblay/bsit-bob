@@ -1,15 +1,13 @@
-from bob.core import SCRATCH, S223, Equipment, LocationReference, PropertyReference
+from bob.core import (
+    SCRATCH,
+    P223,
+    S223,
+    Equipment,
+    LocationReference,
+    Property,
+    PropertyReference,
+)
 
-"""
-Depending on the nature of equipment, some are considered s223:System, other
-s223:Equipment. 
-
-This lead to potential import issues when using the library as the user will
-have to know upfront if he's looking for a Equipment or a system. 
-
-By merging both modules into one, it'll be easier to find what we look for.
-
-"""
 _namespace = SCRATCH
 
 

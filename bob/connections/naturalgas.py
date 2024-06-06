@@ -8,12 +8,11 @@ from ..core import (
     ConnectionPoint,
     InletConnectionPoint,
     Medium,
-    NaturalGas,
     OutletConnectionPoint,
     SystemConnectionPoint,
     enum,
 )
-
+from ..enum import NaturalGas
 _namespace = BOB
 
 

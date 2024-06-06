@@ -8,12 +8,17 @@ from ..core import (
     UNIT,
     EnumerationKind,
     ExternalReference,
-    Light,
+    Substance,
     Medium,
     SchemaGraph,
-    Substance,
+    ActuatableProperty,
+    EnumerableProperty,
+    EnumeratedActuatableProperty,
+    EnumeratedObservableProperty,
+    ObservableProperty,
 )
 from ..enum import (
+    Light,
     MotionEnum,
     NormalAlarmEnum,
     OccupancyStatus,
@@ -21,13 +26,6 @@ from ..enum import (
     OpenCloseEnum,
     Smoke,
     YesNoEnum,
-)
-from ..property import (
-    ActuatableProperty,
-    EnumerableProperty,
-    EnumeratedActuatableProperty,
-    EnumeratedObservableProperty,
-    ObservableProperty,
 )
 
 _namespace = BOB

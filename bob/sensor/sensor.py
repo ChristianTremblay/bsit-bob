@@ -17,20 +17,14 @@ from ..core import (
     Equipment,
     ExternalReference,
     LocationReference,
-    Medium,
     Node,
     Property,
     PropertyReference,
-    Substance,
+    QuantifiableProperty,
     _Sensor,
     logging,
 )
 from ..multimethods import multimethod
-from ..property import (
-    ObservableProperty,
-    QuantifiableObservableProperty,
-    QuantifiableProperty,
-)
 
 # logging
 _log = logging.getLogger(__name__)
@@ -44,14 +38,15 @@ def split_kwargs(given_kwargs):
     # but that must be applied to the observed property, see
     # sorted(QuantifiableObservableProperty._attr_uriref.keys())
     property_attrs = [
+        "hasAspect",
         "hasExternalReference",
         "hasQuantityKind",
         "hasSetpoint",
+        "hasUnit",
         "hasValue",
-        "hasAspect",
+        "ofConstituent",
         "ofMedium",
         "ofSubstance",
-        "hasUnit",
     ]
     property_kwargs = {}
     sensor_kwargs = {}

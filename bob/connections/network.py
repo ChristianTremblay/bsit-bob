@@ -11,7 +11,6 @@ from ..core import (
     BidirectionalSystemConnectionPoint,
     Connection,
     ConnectionPoint,
-    Electricity,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     InletZoneConnectionPoint,
@@ -22,11 +21,11 @@ from ..core import (
     SystemConnectionPoint,
     enum,
 )
-
+from ..enum import PowerAndSignal, Electricity
 _namespace = BOB
 
 
-# === Networks
+# === Networks - RS485
 class RS485Connection(Connection):
     hasMedium = Electricity.RS485
     _class_iri = S223.Connection
@@ -55,7 +54,7 @@ class RS485BidirectionalSystemConnectionPoint(
     _class_iri = BOB.BidirectionalSystemConnectionPoint
 
 
-# === Networks
+# === Networks - Ethernet
 class EthernetConnection(Connection):
     hasMedium = Electricity.Ethernet
     _class_iri = S223.Connection
@@ -85,5 +84,37 @@ class EthernetSystemConnectionPoint(SystemConnectionPoint):
 
 class EthernetBidirectionalSystemConnectionPoint(
     EthernetSystemConnectionPoint, BidirectionalSystemConnectionPoint
+):
+    _class_iri = BOB.BidirectionalSystemConnectionPoint
+
+
+# === Networks - PoE
+class PoEConnection(Connection):
+    hasMedium = PowerAndSignal.PoE
+    _class_iri = S223.Connection
+
+
+class PoEConnectionPoint(ConnectionPoint):
+    _attr_uriref = {
+        "hasProtocol": P223.hasProtocol,
+        "data_rate": P223.data_rate,
+        "vlan": BOB.VLAN,
+    }
+    hasMedium = PowerAndSignal.PoE
+    hasProtocol: ProtocolEnum
+    data_rate: Mbit_per_seconds
+    vlan: Literal
+
+
+class PoEBidirectionalConnectionPoint(BidirectionalConnectionPoint, PoEConnectionPoint):
+    _class_iri = S223.BidirectionalConnectionPoint
+
+
+class PoESystemConnectionPoint(SystemConnectionPoint):
+    hasMedium = PowerAndSignal.PoE
+
+
+class PoEBidirectionalSystemConnectionPoint(
+    PoESystemConnectionPoint, BidirectionalSystemConnectionPoint
 ):
     _class_iri = BOB.BidirectionalSystemConnectionPoint

@@ -19,7 +19,7 @@ f2 = SystemFromTemplate(
 )
 f3 = SystemFromTemplate(label="Fan with VFD", config=system_600VFan_with_VFD_template)
 
-f4 = BasicFan(label='A Bob Fan')
+f4 = BasicFan(label="A Bob Fan")
 dump(
     data_graph,
     filename=f"samples/ttl/{model_name}.data.ttl",

@@ -1,7 +1,17 @@
 from rdflib import URIRef
 
-from ..core import BOB, P223, QUANTITYKIND, S223, UNIT, Air, Medium, Substance
-from ..property import QuantifiableActuatableProperty, QuantifiableObservableProperty
+from ..core import (
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
+    Medium,
+    Constituent,
+    QuantifiableActuatableProperty,
+    QuantifiableObservableProperty,
+)
+from ..enum import Air
 
 _namespace = BOB
 
@@ -31,4 +41,3 @@ class GasConcentration(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.DimensionlessRatio
     hasUnit = UNIT.PPM
     ofMedium: Medium = Air
-    ofSubstance: Substance

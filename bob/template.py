@@ -41,32 +41,34 @@ def template_update(base: t.Dict = {}, config: t.Dict = None, bases: t.List = No
 
 
 def get_instance(container: t.Union[Equipment, System], blob: str):
-    #print('Looking for : ', container, blob)
+    # print('Looking for : ', container, blob)
     if "[" in blob:
-        matches = re.findall(r'\[["\'](.*?)["\']\]', blob) # sub-equipment
-        property_match = re.search(r"\.(?P<property>\w+)$", blob) # property => .something
+        matches = re.findall(r'\[["\'](.*?)["\']\]', blob)  # sub-equipment
+        property_match = re.search(
+            r"\.(?P<property>\w+)$", blob
+        )  # property => .something
         thing = container[matches.pop(0)]
-        
+
         for each in matches:
             thing = thing[each]
-        #print('thing : ', thing, property_match)
+        # print('thing : ', thing, property_match)
         if property_match:
             property_name = property_match.group("property")
-            #try:
-            #    
+            # try:
+            #
             #    thing_property = getattr(thing, property_name)
             #    if thing_property is None:
             #        thing_property = thing # in case thing_property is None, we give the part before .something
-            #except AttributeError:
+            # except AttributeError:
             #    thing_property = None
-            #print(thing_property, property_name)
+            # print(thing_property, property_name)
             return (thing, property_name)  # in case thing_property is None
-        #print(thing, None)
+        # print(thing, None)
         return (thing, None)
     else:
         _key = blob.split(".")[1]
         thing = getattr(container, _key)
-        #print(thing, _key)
+        # print(thing, _key)
         return (thing, _key)  # in case thing is None
 
 
@@ -77,7 +79,7 @@ def configure_relations(
         _source, operator, _target = relation
         source_element, source_key = get_instance(container, _source)
         target_element, target_key = get_instance(container, _target)
-        
+
         source = getattr(source_element, source_key, None)
         if target_key is None:
             target = target_element

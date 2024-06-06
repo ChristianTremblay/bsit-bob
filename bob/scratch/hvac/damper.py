@@ -25,10 +25,10 @@ _namespace = SCRATCH
 
 
 class Damper(BaseDamper):
-    #_class_iri = S223.Damper
+    # _class_iri = S223.Damper
     linkageInlet: MechanicalInletConnectionPoint
-    #airInlet: AirInletConnectionPoint
-    #airOutlet: AirOutletConnectionPoint
+    # airInlet: AirInletConnectionPoint
+    # airOutlet: AirOutletConnectionPoint
     position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
@@ -66,14 +66,15 @@ class DamperAndActuator(Damper):
     You will see the use of mapsTo in the damper and actuator to link the connection points
 
     """
+
     _class_iri = SCRATCH.DamperAndActuator
-    #airInlet: AirInletConnectionPoint  # will be defined as equal to damper
-    #airOutlet: AirOutletConnectionPoint  # will be defined as equal to damper
-    #position: PropertyReference
-    #command: PropertyReference
-    #position_feedback: PropertyReference
-    #is_open: PropertyReference
-    #is_closed: PropertyReference
+    # airInlet: AirInletConnectionPoint  # will be defined as equal to damper
+    # airOutlet: AirOutletConnectionPoint  # will be defined as equal to damper
+    # position: PropertyReference
+    # command: PropertyReference
+    # position_feedback: PropertyReference
+    # is_open: PropertyReference
+    # is_closed: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update({}, config)

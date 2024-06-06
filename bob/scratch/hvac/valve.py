@@ -1,12 +1,15 @@
 from typing import Dict
 
 
-
-from bob.connections.water import (
+from bob.connections.liquid import (
     WaterInletSystemConnectionPoint,
     WaterOutletSystemConnectionPoint,
 )
-from bob.equipment.hvac.valve import TwoWayValve, ThreeWayValveMixing, ThreeWayValveDiverting  
+from bob.equipment.hvac.valve import (
+    TwoWayValve,
+    ThreeWayValveMixing,
+    ThreeWayValveDiverting,
+)
 from bob.core import SCRATCH, PropertyReference, System, logging
 from bob.template import template_update
 from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator

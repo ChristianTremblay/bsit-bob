@@ -4,6 +4,7 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex1: <urn:ex/sample012/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -31,13 +32,13 @@ ex1:00002 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "s1.cpIn" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 ex1:00003 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "s1.cpOut" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 ex1:00004 a s223:Connectable,
         s223:Equipment,
@@ -55,7 +56,7 @@ ex1:00005 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "d1.cpIn" ;
     s223:cnx ex1:00004 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00006 a s223:ConnectionPoint,
@@ -63,7 +64,7 @@ ex1:00006 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "d1.cpOut" ;
     s223:cnx ex1:00004 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00004 .
 
 ex1:00007 a s223:System,
@@ -79,14 +80,14 @@ ex1:00008 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "s2.cpIn" ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     bob:mapsTo ex1:00011 .
 
 ex1:00009 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "s2.cpOut" ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     bob:mapsTo ex1:00012 .
 
 ex1:00010 a s223:Connectable,
@@ -105,7 +106,7 @@ ex1:00011 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "d2.cpIn" ;
     s223:cnx ex1:00010 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00010 .
 
 ex1:00012 a s223:ConnectionPoint,
@@ -113,6 +114,6 @@ ex1:00012 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "d2.cpOut" ;
     s223:cnx ex1:00010 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00010 .
 

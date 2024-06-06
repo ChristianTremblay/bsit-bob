@@ -27,10 +27,8 @@ vfd_template = {
         "electricalInlet": ElectricalInletConnectionPoint,
         "electricalOutlet": ElectricalOutletConnectionPoint,
     },
-    "properties": {
-    },
-    "parts": {
-    },
+    "properties": {},
+    "parts": {},
 }
 
 
@@ -44,5 +42,3 @@ class VFD(_VFD):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-
-       

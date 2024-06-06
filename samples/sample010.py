@@ -15,7 +15,7 @@ from bob.connections.air import (
     AirOutletConnectionPoint,
     AirOutletSystemConnectionPoint,
 )
-from bob.connections.water import WaterInletConnectionPoint, WaterOutletConnectionPoint
+from bob.connections.liquid import WaterInletConnectionPoint, WaterOutletConnectionPoint
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

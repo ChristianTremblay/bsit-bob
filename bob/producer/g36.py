@@ -4,11 +4,9 @@ from typing import Any, Dict
 from ..core import (
     G36,
     UNIT,
-    Air,
     DomainSpace,
     Node,
     PropertyReference,
-    Substance,
     Zone,
     bind_namespace,
 )
@@ -21,7 +19,6 @@ from ..properties import (
     Schedule,
     Temperature,
 )
-from ..property import ObservableProperty, QuantifiableObservableProperty
 from ..sensor import split_kwargs
 from ..sensor.flow import FlowSetpoint
 from ..sensor.temperature import TemperatureSetpoint

@@ -22,11 +22,8 @@ _log = logging.getLogger(__name__)
 _namespace = BOB
 
 
-fan_template = {
-    "cp": {
-        "electricalInlet": ElectricalInletConnectionPoint
-    }
-}
+fan_template = {"cp": {"electricalInlet": ElectricalInletConnectionPoint}}
+
 
 class Fan(Equipment):
     """
@@ -34,7 +31,7 @@ class Fan(Equipment):
     """
 
     _class_iri: URIRef = S223.Fan
-    #electricalInlet: ElectricalInletConnectionPoint # needs to be in a template so other templates can override it.
+    # electricalInlet: ElectricalInletConnectionPoint # needs to be in a template so other templates can override it.
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
 
@@ -45,4 +42,3 @@ class Fan(Equipment):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-

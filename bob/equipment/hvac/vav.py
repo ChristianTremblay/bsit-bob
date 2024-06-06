@@ -17,18 +17,15 @@ _log = logging.getLogger(__name__)
 _namespace = BOB
 
 TerminalUnit_template = {
-    "equipment": {
-        ("damper", Damper): {
-            "comment": "VAV Box Damper including"
-        }
-    },
+    "equipment": {("damper", Damper): {"comment": "VAV Box Damper including"}},
 }
+
 
 class VAV(Equipment):
     _class_iri = S223.SingleDuctTerminal
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    #damper: Damper provided via template
+    # damper: Damper provided via template
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(TerminalUnit_template, config=config)
@@ -39,4 +36,3 @@ class VAV(Equipment):
         configure_relations(self, _relations)
         self["damper"].airInlet.mapsTo = self.airInlet
         self["damper"].airOutlet.mapsTo = self.airOutlet
-

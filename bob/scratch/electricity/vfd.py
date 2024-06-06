@@ -2,24 +2,36 @@ from typing import Dict
 from rdflib import URIRef
 
 from bob.connections.controlsignal import (
-    ModulationSignalInletConnectionPoint, OnOffSignalOutletConnectionPoint)
+    ModulationSignalInletConnectionPoint,
+    OnOffSignalOutletConnectionPoint,
+)
 from bob.connections.electricity import (
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
-    Electricity_600VLL_3Ph_60HzOutletConnectionPoint)
-from bob.connections.network import (EthernetBidirectionalConnectionPoint,
-                                     RS485BidirectionalConnectionPoint)
+    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
+)
+from bob.connections.network import (
+    EthernetBidirectionalConnectionPoint,
+    RS485BidirectionalConnectionPoint,
+)
 from bob.equipment.electricity.vfd import VFD as _BasicVFD
 from bob.producer import Function, FunctionInput, FunctionOutput
 from bob.producer.causality import Causality
-from bob.properties import (HP, RPM, ElectricPowerkW, NormalAlarmStatus,
-                            OnOffCommand, OnOffStatus, PercentCommand,
-                            Temperature)
+from bob.properties import (
+    HP,
+    RPM,
+    ElectricPowerkW,
+    NormalAlarmStatus,
+    OnOffCommand,
+    OnOffStatus,
+    PercentCommand,
+    Temperature,
+)
 from bob.properties.electricity import Frequency
 from bob.sensor.electricity import CurrentSensor, VoltageSensor
 from bob.template import template_update
 
 
-from bob.core import (SCRATCH, PropertyReference, logging)
+from bob.core import SCRATCH, PropertyReference, logging
 
 # logging
 _log = logging.getLogger(__name__)

@@ -5,13 +5,12 @@ from ...properties.electricity import Amps
 from ...properties.ratio import PercentCommand
 from ...properties.states import OnOffCommand, OnOffStatus
 
-from ... enum import RunStatusEnum
+from ...enum import Electricity, RunStatusEnum
 from ...connections import electricity as elec_cnx
 from ...connections.controlsignal import OnOffSignalOutletConnectionPoint
 from ...core import (
     BOB,
     P223,
-    Electricity,
     Equipment,
 )
 from ...properties.time import Hour

@@ -3,8 +3,14 @@ from typing import Any
 
 from rdflib import URIRef
 
-from ..core import BOB, P223, QUANTITYKIND, S223, UNIT
-from ..property import QuantifiableObservableProperty
+from ..core import (
+    BOB,
+    P223,
+    QUANTITYKIND,
+    S223,
+    UNIT,
+    QuantifiableObservableProperty,
+)
 
 _namespace = BOB
 

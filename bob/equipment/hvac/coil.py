@@ -17,7 +17,7 @@ from ...connections.electricity import (
     Electricity_240VLL_1Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
-from ...connections.water import (
+from ...connections.liquid import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
     HotWaterInletConnectionPoint,

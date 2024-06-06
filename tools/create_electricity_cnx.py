@@ -27,14 +27,13 @@ from ..core import (
     S223,
     Connection,
     ConnectionPoint,
-    Electricity,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     SystemConnectionPoint,
 )
-
+from ..enum import Electricity
 _namespace = S223
 
 # === Generic

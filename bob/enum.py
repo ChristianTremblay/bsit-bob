@@ -4,24 +4,64 @@ from .core import (
     G36,
     P223,
     S223,
-    Air,
     Domain,
-    Electricity,
     EnumerationKind,
-    Light,
     Role,
+    Medium,
     Substance,
-    Water,
+    Mix,
+    Constituent,
+    QUANTITYKIND,
+    UNIT,
 )
 
 _namespace = S223
 
-# ===================
-# MEDIA FLAVOURS
-# ===================
-# Air
-Air.CompressedAir = CompressedAir = Air("CompressedAir", _alt_namespace=P223)
+# ======================================
+# Things that are just Substances
+# ======================================
+#
+Substance.Particle = Particulate = Substance("Particulate")
+Particulate.PM1_0 = Particulate.PM1_0 = Particulate(
+    "PM1.0"
+)  # don't create PM1_0, not clear enough
+Particulate.PM2_5 = Particulate.PM2_5 = Particulate("PM2.5")
+Particulate.PM10_0 = Particulate.PM10_0 = Particulate("PM10.0")
+Substance.Soot = Soot = Substance("Soot")
+# ======================================
+# Media, Constituents & Mix
+# ======================================
+#
+Constituent.H2O = H2O = Constituent("H2O", label="H2O", _alt_namespace=P223)
+Constituent.Oil = Oil = Constituent("Oil", label="Oil", _alt_namespace=P223)
+Constituent.Smoke = Smoke = Constituent("Smoke", label="Smoke", _alt_namespace=P223)
+# Gases
+Constituent.Ar = Argon = Constituent("Ar", label="Argon", _alt_namespace=P223)
+Constituent.CO = CO = Constituent("CO", label="Carbon monoxyde", _alt_namespace=P223)
+Constituent.CO2 = CO2 = Constituent("CO2", label="Carbon dioxyde", _alt_namespace=P223)
+Constituent.NO2 = NO2 = Constituent("NO2", label="NO2", _alt_namespace=P223)
+Constituent.CH4 = CH4 = Constituent("CH4", label="CH4", _alt_namespace=P223)
+Constituent.NH3 = NH3 = Constituent("NH3", label="NH3", _alt_namespace=P223)
+Constituent.H2S = H2S = Constituent("H2S", label="H2S", _alt_namespace=P223)
+Constituent.O2 = O2 = Constituent("O2", label="O2", _alt_namespace=P223)
+Constituent.O3 = O3 = Constituent("O3", label="O3", _alt_namespace=P223)
+Constituent.SO2 = SO2 = Constituent("SO2", label="SO2", _alt_namespace=P223)
+Constituent.N = Nitrogen = Constituent("N", label="Nitrogen", _alt_namespace=P223)
+Constituent.VOC = VOC = Constituent("VOC", label="VOC", _alt_namespace=P223)
+Constituent.Radon = Radon = Constituent("Radon", label="Radon", _alt_namespace=P223)
+Constituent.R22 = R22 = Constituent("R22", label="R22", _alt_namespace=P223)
+Constituent.R134a = R134a = Constituent("R134a", label="R134a", _alt_namespace=P223)
+Constituent.R410a = R410a = Constituent("R410a", label="R410a", _alt_namespace=P223)
+Constituent.R32 = R32 = Constituent("R32", label="R32", _alt_namespace=P223)
 
+Constituent.Glycol = Glycol = Constituent("Glycol", label="Glycol", _alt_namespace=P223)
+
+# Electromagnetic
+EM = Constituent("Electro-Magnetic")  # electro-magnetic
+EM.Light = Light = EM("Light")
+EM.Microwave = Microwave = EM("Microwave")
+EM.RF = RF = EM("RF")
+EM.Electricity = Electricity = EM("Electricity")
 # Electricity
 Electricity.AC = Electricity("AC")
 Electricity.DC = Electricity("DC")
@@ -123,30 +163,94 @@ Electricity.Signal = Electricity("Signal")
 # Electricity.Control = Electricity.Signal("Control", _alt_namespace=P223)
 Electricity.OnOffSignal = Electricity.Signal("OnOffSignal", _alt_namespace=P223)
 Electricity.ModulatedSignal = Electricity.Signal("Modulated")
-Electricity.USB = Electricity.Signal("USB")
 Electricity.DC0_10 = Electricity.ModulatedSignal("0-10VDC")
 Electricity.MA4_20 = Electricity.ModulatedSignal("4-20mA")
-Electricity.Communication = Electricity.Signal("Communication", _alt_namespace=P223)
-Electricity.RS485 = Electricity.Communication("EIA-485")
-Electricity.Ethernet = Electricity.Communication("Ethernet")
-Electricity.IEC14908 = Electricity.Communication("IEC14908")
+# Electricity.Communication = Electricity.Signal("Communication", _alt_namespace=P223)
+Electricity.RS485 = Electricity.Signal("EIA485")
+Electricity.Ethernet = Electricity.Signal("Ethernet")
+Electricity.IEC14908 = Electricity.Signal("IEC14908")
+
+Mix.PowerAndSignal = PowerAndSignal = Mix("PowerAndSignal", _alt_namespace=P223)
+PowerAndSignal.PoE = PowerAndSignal("PoE", _alt_namespace=P223)
+PowerAndSignal.PoE.add_constituent(Electricity.DC48V)
+PowerAndSignal.PoE.add_constituent(Electricity.Ethernet)
+PowerAndSignal.USB = PowerAndSignal("USB", _alt_namespace=P223)
+PowerAndSignal.USB.add_constituent(Electricity.DC5V)
+# PowerAndSignal.USB.add_constituent(Electricity.Ethernet)
+
+# ===================
+# MEDIA FLAVOURS
+# ===================
+# Air
+Mix.Fluid = Fluid = Mix("Fluid", _alt_namespace=P223)
+
+Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas", _alt_namespace=P223)
+
+Fluid.Air = Air = Fluid("Air", _alt_namespace=P223)
+Air.CompressedAir = CompressedAir = Air("CompressedAir", _alt_namespace=P223)
 
 # Water
-Water.ChilledWater = ChilledWater = Water("ChilledWater")
+Fluid.Water = Water = Fluid("Water", _alt_namespace=P223)
+Water.add_constituent(Constituent.H2O)
+
+Water.ChilledWater = ChilledWater = Water("ChilledWater", _alt_namespace=P223)
+
 Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
-Water.HotWater = HotWater = Water("HotWater")
+
+Water.HotWater = HotWater = Water("HotWater", _alt_namespace=P223)
+
 Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
+
 Water.DomesticWater = DomesticWater = Water("DomesticWater", _alt_namespace=P223)
+
 Water.DomesticHotWater = DomesticHotWater = Water(
     "DomesticHotWater", _alt_namespace=P223
 )
+
 Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
-Water.GlycoledWater = GlycoledWater = Water("GlycoledWater", _alt_namespace=P223)
+
+Water.GlycolSolution = GlycolSolution = Water("GlycolSolution", _alt_namespace=P223)
+GlycolSolution.add_constituent(Constituent.Glycol)
+
+GlycolSolution.GlycolSolution_15Percent = GlycolSolution_15Percent = GlycolSolution(
+    "GlycolSolution-15Percent", _alt_namespace=P223
+)
+GlycolSolution_15Percent.add_constituent(
+    Constituent.H2O,
+    hasValue=85,
+    hasQuantityKind=QUANTITYKIND.VolumeFraction,
+    hasUnit=UNIT.PERCENT,
+)
+GlycolSolution_15Percent.add_constituent(
+    Constituent.Glycol,
+    hasValue=15,
+    hasQuantityKind=QUANTITYKIND.VolumeFraction,
+    hasUnit=UNIT.PERCENT,
+)
+
+GlycolSolution.GlycolSolution_30Percent = GlycolSolution_30Percent = GlycolSolution(
+    "GlycolSolution-30Percent", _alt_namespace=P223
+)
+GlycolSolution_30Percent.add_constituent(
+    Constituent.H2O,
+    hasValue=70,
+    hasQuantityKind=QUANTITYKIND.VolumeFraction,
+    hasUnit=UNIT.PERCENT,
+)
+GlycolSolution_30Percent.add_constituent(
+    Constituent.Glycol,
+    hasValue=30,
+    hasQuantityKind=QUANTITYKIND.VolumeFraction,
+    hasUnit=UNIT.PERCENT,
+)
+
 Water.Steam = Steam = Water("Steam", _alt_namespace=P223)
 
 # Light
 Light.Visible = Light("Visible")
 Light.Infrared = Light("Infrared")
+
+Occupant = Medium("Occupant")
 
 # ===================
 # DOMAINS FLAVOURS
@@ -164,6 +268,7 @@ Domain.Networking = Networking = Domain("Networking")
 Domain.Plumbing = Plumbing = Domain("Plumbing")
 Domain.Refrigeration = Refrigeration = Domain("Refrigeration")
 Domain.Security = Security = Domain("Security")
+
 # ===================
 # ROLES FLAVOURS
 # ===================
@@ -178,22 +283,6 @@ Role.Primary = Primary = Role("Primary")
 Role.Return = Return = Role("Return")
 Role.Secondary = Secondary = Role("Secondary")
 Role.Supply = Supply = Role("Supply")
-
-# ===================
-# SUBSTANCES FLAVOURS
-# ===================
-Substance.Smoke = Smoke = Substance("Smoke", _alt_namespace=P223)
-Substance.Particle = Particulate = Substance("Particulate")
-Substance.PM1_0 = Particulate.PM1_0 = Particulate(
-    "PM1.0"
-)  # don't create PM1_0, not clear enough
-Substance.PM2_5 = Particulate.PM2_5 = Particulate("PM2.5")
-Substance.PM10_0 = Particulate.PM10_0 = Particulate("PM10.0")
-Substance.CO = CO = Substance("CO")
-Substance.CO2 = CO2 = Substance("CO2")
-Substance.NO2 = NO2 = Substance("NO2", _alt_namespace=P223)
-Substance.CH4 = CH4 = Substance("CH4", _alt_namespace=P223)
-Substance.Soot = Soot = Substance("Soot")
 
 # ===================
 # Values Enumeration

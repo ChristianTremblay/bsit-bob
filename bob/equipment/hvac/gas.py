@@ -12,10 +12,9 @@ from ...core import (
     UNIT,
     Equipment,
     PropertyReference,
-    Substance,
     enum,
+    QuantifiableObservableProperty,
 )
-from ...property import QuantifiableObservableProperty
 from ...sensor import Sensor
 from ...sensor.gas import (
     CH4Sensor,
@@ -40,7 +39,7 @@ gasmonitor_template = {
         ("COSensor", COSensor): {
             "hasExternalReference": "bacnet://",
             # "properties": {
-            #   "ofSubstance": Substance.CO,
+            #   "ofSubstance": Constituent.CO,
             #                 ("hasMinRange", QuantifiableObservableProperty): {
             #                     "hasQuantityKind": QUANTITYKIND.DimensionlessRatio,
             #                     "hasUnit": UNIT.PPM,
@@ -54,7 +53,7 @@ gasmonitor_template = {
         ("NO2Sensor", NO2Sensor): {
             "hasExternalReference": "bacnet://",
             # "properties": {
-            # "ofSubstance": Substance.NO2,
+            # "ofSubstance": Constituent.NO2,
             #             "hasMinRange": QuantifiableObservableProperty(
             #                 0, hasQuantityKind=QUANTITYKIND.DimensionlessRatio, hasUnit=UNIT.PPM
             #             ),

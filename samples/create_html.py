@@ -24,7 +24,7 @@ def calc_hash(file):
 try:
     with open(hash_file, "rb") as f:
         existing_hash = pickle.load(f)
-except FileNotFoundError:
+except (EOFError, FileNotFoundError):
     existing_hash = {}
 new_hash_dict = {}
 
@@ -40,7 +40,7 @@ for filename in os.scandir(os.path.join(os.getcwd(), directory)):
             pass
         else:
             print("File is different")
-            subprocess.run(["python", "bob/tools/rdf2html.py", filename.path])
+            subprocess.run(["python", "bob/rdf2html/rdf2html.py", filename.path])
 
     with open(hash_file, "wb") as f:
         pickle.dump(new_hash_dict, f)

@@ -28,14 +28,14 @@ vav1 = VAV(label="Zone-1.VAV")
 vav1.serves = zone1
 vav1.airOutlet >> hvacspace1.ductAirInlet
 
-# No ZN-T in the Bob version 
+# No ZN-T in the Bob version
 # vav1["ZN-T"].hasObservationLocation = hvacspace1
 
 # create Zone-2 and its VAV connected together
 vav2 = VAV(label="Zone-2.VAV")
 vav2.serves = zone1
 
-# No ZN-T in the Bob version 
+# No ZN-T in the Bob version
 # vav2["ZN-T"].hasObservationLocation = hvacspace2
 
 # common supply connection shared
