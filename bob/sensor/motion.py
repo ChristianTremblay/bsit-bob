@@ -17,12 +17,11 @@ from ..core import (
     Equipment,
     ExternalReference,
     Medium,
-    Occupant,
     PropertyReference,
 )
 from ..properties import Count, Motion
 from .sensor import Sensor, split_kwargs
-
+from ..enum import Occupant
 _namespace = S223
 
 

@@ -1,10 +1,16 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, data_graph, schema_graph, dump
+from bob.core import (
+    bind_model_namespace,
+    data_graph,
+    schema_graph,
+    dump,
+    EnumeratedObservableProperty,
+    QuantifiableObservableProperty,
+    DomainSpace,
+    PhysicalSpace,
+)
 from header import sample_header
-
-from bob.core import DomainSpace, PhysicalSpace
-from bob.property import EnumeratedObservableProperty, QuantifiableObservableProperty
 
 from bob.enum import HVAC
 from bob.space.hvac import HVACSpace

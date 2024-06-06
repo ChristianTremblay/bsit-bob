@@ -10,9 +10,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 def test_create_damper(bob_fixture):
-    d1 = Damper(
-        label="Electrical Proportional Actuated Damper"
-    )
+    d1 = Damper(label="Electrical Proportional Actuated Damper")
 
     # d2 = ElectricalActuatedOnOffDamper(label="Electrical OnOff Actuated Damper")
 

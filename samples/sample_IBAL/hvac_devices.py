@@ -11,6 +11,7 @@ from bob.core import UNIT, Role, bind_model_namespace, dump
 from bob.equipment.architectural import Window
 
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
+from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
 from bob.equipment.hvac.chiller import Chiller
 from bob.equipment.hvac.coil import (
@@ -34,6 +35,7 @@ from bob.sensor.temperature import AirTemperatureSensor, Temperature
 # Prototypes
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
+from bob.scratch.control.controller import VAVController
 from bob.scratch.hvac.fan import Fan
 from bob.scratch.hvac.damper import (
     ElectricalActuatedProportionalDamper,
@@ -44,6 +46,7 @@ from bob.scratch.hvac.valve import (
     TwoWayActuatedProportionalValve,
 )
 from bob.scratch.hvac.vav import VAV_Reheat
+
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
@@ -252,9 +255,7 @@ vav1_config = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {
-            "comment": "VAV Box 1 Air Damper"
-        },
+        ("VAVController", VAVController): {},
         ("REHEAT", ElectricalHeatingCoil): {
             "comment": "VAV Box Electrical Heating Coil"
         },
@@ -284,9 +285,7 @@ vav2_config = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {
-            "comment": "VAV Box 2 Air Damper"
-        },
+        ("VAVController", VAVController): {},
         ("REHEAT", ElectricalHeatingCoil): {
             "comment": "VAV Box Electrical Heating Coil"
         },
@@ -316,9 +315,7 @@ vav3_config = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {
-            "comment": "VAV Box 3 Air Damper"
-        },
+        ("VAVController", VAVController): {},
         ("REHEAT", ElectricalHeatingCoil): {
             "comment": "VAV Box Electrical Heating Coil"
         },
@@ -348,9 +345,7 @@ vav4_config = {
         },
     },
     "equipment": {
-        ("DPR", ElectricalActuatedProportionalDamper): {
-            "comment": "VAV Box 4 Air Damper"
-        },
+        ("VAVController", VAVController): {},
         ("REHEAT", ElectricalHeatingCoil): {
             "comment": "VAV Box Electrical Heating Coil"
         },

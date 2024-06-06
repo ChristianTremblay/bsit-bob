@@ -67,7 +67,7 @@ bacnet_references:00003 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "VAV_DEVICE_1111.bacnet_mstp" ;
     s223:cnx bacnet_references:00001 ;
-    s223:hasMedium s223:Communication-EIA-485 ;
+    s223:hasMedium s223:Signal-EIA485 ;
     s223:isConnectionPointOf bacnet_references:00001 .
 
 bacnet_references:00004 a p223:AnalogOutput,
@@ -185,7 +185,7 @@ bacnet_references:00016 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "IBAL AHU Controller.bacnet_mstp" ;
     s223:cnx bacnet_references:00014 ;
-    s223:hasMedium s223:Communication-EIA-485 ;
+    s223:hasMedium s223:Signal-EIA485 ;
     s223:isConnectionPointOf bacnet_references:00014 .
 
 bacnet_references:00017 a p223:AnalogInput,
@@ -278,7 +278,7 @@ hvac:00001 a s223:Connection ;
         hvac_devices:00544,
         hvac_devices:00603 ;
     s223:connectsTo hvac_devices:00409 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "This is where we exhaust air of bathroom, and windows of OpenOffice are connected here to" .
 
 hvac:00002 a s223:Connection ;
@@ -292,7 +292,7 @@ hvac:00002 a s223:Connection ;
     s223:connectsFrom hvac_devices:00409,
         hvac_devices:00444 ;
     s223:connectsTo hvac_devices:00406 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Mix between return air and outdoor air" .
 
 hvac:00003 a s223:Connection ;
@@ -306,7 +306,7 @@ hvac:00003 a s223:Connection ;
     s223:connectsFrom hvac_devices:00747 ;
     s223:connectsTo hvac_devices:00444,
         hvac_devices:00479 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Mix between return air and exhaust air" .
 
 hvac:00004 a s223:Connection ;
@@ -320,7 +320,7 @@ hvac:00004 a s223:Connection ;
     s223:connectsFrom hvac_devices:00366 ;
     s223:connectsTo hvac_devices:00712,
         hvac_devices:00747 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Mix between return air and outdoor air" .
 
 hvac:00005 a s223:Connection ;
@@ -334,7 +334,7 @@ hvac:00005 a s223:Connection ;
     s223:connectsFrom hvac_devices:00712 ;
     s223:connectsTo hvac_devices:00092,
         hvac_devices:00259 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Supply Air Duct that feed AHU1 & 2" .
 
 hvac:00006 a s223:Connection ;
@@ -348,7 +348,7 @@ hvac:00006 a s223:Connection ;
     s223:connectsFrom hvac_devices:00092,
         hvac_devices:00127 ;
     s223:connectsTo hvac_devices:00089 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Mix between return air and outdoor air" .
 
 hvac:00007 a s223:Connection ;
@@ -362,7 +362,7 @@ hvac:00007 a s223:Connection ;
     s223:connectsFrom hvac_devices:00259,
         hvac_devices:00294 ;
     s223:connectsTo hvac_devices:00256 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Mix between return air and outdoor air" .
 
 hvac:00008 a s223:Connection ;
@@ -371,18 +371,18 @@ hvac:00008 a s223:Connection ;
         hvac_devices:00783,
         hvac_devices:00819,
         hvac_devices:01011,
-        hvac_devices:01069 ;
+        hvac_devices:01065 ;
     s223:connectsAt hvac_devices:00038,
         hvac_devices:00783,
         hvac_devices:00819,
         hvac_devices:01011,
-        hvac_devices:01069 ;
+        hvac_devices:01065 ;
     s223:connectsFrom hvac_devices:00036,
         hvac_devices:00817 ;
     s223:connectsTo hvac_devices:00782,
         hvac_devices:01010,
-        hvac_devices:01068 ;
-    s223:hasMedium s223:Medium-Air ;
+        hvac_devices:01064 ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Supply Air Duct that feed AHU1 & 2" .
 
 hvac:00009 a s223:Connection ;
@@ -390,19 +390,19 @@ hvac:00009 a s223:Connection ;
     s223:cnx hvac_devices:00205,
         hvac_devices:00784,
         hvac_devices:00818,
-        hvac_devices:01127,
-        hvac_devices:01185 ;
+        hvac_devices:01119,
+        hvac_devices:01173 ;
     s223:connectsAt hvac_devices:00205,
         hvac_devices:00784,
         hvac_devices:00818,
-        hvac_devices:01127,
-        hvac_devices:01185 ;
+        hvac_devices:01119,
+        hvac_devices:01173 ;
     s223:connectsFrom hvac_devices:00203,
         hvac_devices:00782 ;
     s223:connectsTo hvac_devices:00817,
-        hvac_devices:01126,
-        hvac_devices:01184 ;
-    s223:hasMedium s223:Medium-Air ;
+        hvac_devices:01118,
+        hvac_devices:01172 ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Supply Air Duct that feed AHU1 & 2" .
 
 hvac:00010 a s223:Connection ;
@@ -419,7 +419,7 @@ hvac:00010 a s223:Connection ;
         hvac_spaces:00012 ;
     s223:connectsTo hvac_devices:00127,
         hvac_devices:00607 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Return Air Duct after Zones 1 and 2" .
 
 hvac:00011 a s223:Connection ;
@@ -436,7 +436,7 @@ hvac:00011 a s223:Connection ;
         hvac_spaces:00030 ;
     s223:connectsTo hvac_devices:00294,
         hvac_devices:00642 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "Return Air Duct after Zones 3 and 4" .
 
 hvac:00012 a s223:Connection ;
@@ -453,7 +453,7 @@ hvac:00012 a s223:Connection ;
         hvac_devices:00887 ;
     s223:connectsTo hvac_devices:00489,
         hvac_devices:00852 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "before fan3" .
 
 hvac:00013 a s223:Connection ;
@@ -470,7 +470,7 @@ hvac:00013 a s223:Connection ;
         hvac_devices:00852 ;
     s223:connectsTo hvac_devices:00548,
         hvac_devices:00887 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     rdfs:comment "before fan4" .
 
 hvac:00014 a s223:Connection ;
@@ -480,7 +480,7 @@ hvac:00014 a s223:Connection ;
         hvac_devices:00408 ;
     s223:connectsFrom hvac_devices:00406 ;
     s223:connectsTo hvac_devices:00395 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00015 a s223:Connection ;
     s223:cnx hvac_devices:00397,
@@ -489,7 +489,7 @@ hvac:00015 a s223:Connection ;
         hvac_devices:00399 ;
     s223:connectsFrom hvac_devices:00395 ;
     s223:connectsTo hvac_devices:00398 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00016 a s223:Connection ;
     s223:cnx hvac_devices:00367,
@@ -498,7 +498,7 @@ hvac:00016 a s223:Connection ;
         hvac_devices:00400 ;
     s223:connectsFrom hvac_devices:00398 ;
     s223:connectsTo hvac_devices:00366 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00017 a s223:Connection ;
     s223:cnx hvac_devices:00082,
@@ -507,7 +507,7 @@ hvac:00017 a s223:Connection ;
         hvac_devices:00091 ;
     s223:connectsFrom hvac_devices:00089 ;
     s223:connectsTo hvac_devices:00081 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00018 a s223:Connection ;
     s223:cnx hvac_devices:00077,
@@ -516,7 +516,7 @@ hvac:00018 a s223:Connection ;
         hvac_devices:00083 ;
     s223:connectsFrom hvac_devices:00081 ;
     s223:connectsTo hvac_devices:00076 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00019 a s223:Connection ;
     s223:cnx hvac_devices:00037,
@@ -525,7 +525,7 @@ hvac:00019 a s223:Connection ;
         hvac_devices:00078 ;
     s223:connectsFrom hvac_devices:00076 ;
     s223:connectsTo hvac_devices:00036 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00020 a s223:Connection ;
     s223:cnx hvac_devices:01012,
@@ -534,16 +534,16 @@ hvac:00020 a s223:Connection ;
         hvac_spaces:00004 ;
     s223:connectsFrom hvac_devices:01010 ;
     s223:connectsTo hvac_spaces:00003 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00021 a s223:Connection ;
-    s223:cnx hvac_devices:01070,
+    s223:cnx hvac_devices:01066,
         hvac_spaces:00013 ;
-    s223:connectsAt hvac_devices:01070,
+    s223:connectsAt hvac_devices:01066,
         hvac_spaces:00013 ;
-    s223:connectsFrom hvac_devices:01068 ;
+    s223:connectsFrom hvac_devices:01064 ;
     s223:connectsTo hvac_spaces:00012 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00022 a s223:Connection ;
     s223:cnx hvac_devices:00491,
@@ -552,7 +552,7 @@ hvac:00022 a s223:Connection ;
         hvac_devices:00545 ;
     s223:connectsFrom hvac_devices:00489 ;
     s223:connectsTo hvac_devices:00544 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00023 a s223:Connection ;
     s223:cnx hvac_devices:00249,
@@ -561,7 +561,7 @@ hvac:00023 a s223:Connection ;
         hvac_devices:00258 ;
     s223:connectsFrom hvac_devices:00256 ;
     s223:connectsTo hvac_devices:00248 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00024 a s223:Connection ;
     s223:cnx hvac_devices:00244,
@@ -570,7 +570,7 @@ hvac:00024 a s223:Connection ;
         hvac_devices:00250 ;
     s223:connectsFrom hvac_devices:00248 ;
     s223:connectsTo hvac_devices:00243 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00025 a s223:Connection ;
     s223:cnx hvac_devices:00204,
@@ -579,25 +579,25 @@ hvac:00025 a s223:Connection ;
         hvac_devices:00245 ;
     s223:connectsFrom hvac_devices:00243 ;
     s223:connectsTo hvac_devices:00203 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00026 a s223:Connection ;
-    s223:cnx hvac_devices:01128,
+    s223:cnx hvac_devices:01120,
         hvac_spaces:00022 ;
-    s223:connectsAt hvac_devices:01128,
+    s223:connectsAt hvac_devices:01120,
         hvac_spaces:00022 ;
-    s223:connectsFrom hvac_devices:01126 ;
+    s223:connectsFrom hvac_devices:01118 ;
     s223:connectsTo hvac_spaces:00021 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00027 a s223:Connection ;
-    s223:cnx hvac_devices:01186,
+    s223:cnx hvac_devices:01174,
         hvac_spaces:00031 ;
-    s223:connectsAt hvac_devices:01186,
+    s223:connectsAt hvac_devices:01174,
         hvac_spaces:00031 ;
-    s223:connectsFrom hvac_devices:01184 ;
+    s223:connectsFrom hvac_devices:01172 ;
     s223:connectsTo hvac_spaces:00030 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac:00028 a s223:Connection ;
     s223:cnx hvac_devices:00550,
@@ -606,7 +606,7 @@ hvac:00028 a s223:Connection ;
         hvac_devices:00604 ;
     s223:connectsFrom hvac_devices:00548 ;
     s223:connectsTo hvac_devices:00603 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00001 a s223:AirHandlingUnit,
         s223:System ;
@@ -660,7 +660,7 @@ hvac_devices:00003 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "ahu1_p_down.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -676,7 +676,7 @@ hvac_devices:00005 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -693,7 +693,7 @@ hvac_devices:00007 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -735,7 +735,7 @@ hvac_devices:00013 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "ahu1_rh_down.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
@@ -755,7 +755,7 @@ hvac_devices:00015 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu1_out_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -775,7 +775,7 @@ hvac_devices:00017 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu1_cc_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -798,7 +798,7 @@ hvac_devices:00019 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "ahu1_p_up.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -815,7 +815,7 @@ hvac_devices:00021 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -831,7 +831,7 @@ hvac_devices:00023 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -874,7 +874,7 @@ hvac_devices:00029 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu1_heat_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -893,7 +893,7 @@ hvac_devices:00031 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "ahu1_rh_up.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
@@ -913,7 +913,7 @@ hvac_devices:00033 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu1_in_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -931,7 +931,7 @@ hvac_devices:00035 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "ahu1_in_flow.Flow" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:FT3-PER-MIN .
 
@@ -974,7 +974,7 @@ hvac_devices:00037 a s223:ConnectionPoint,
     s223:cnx hvac:00019,
         hvac_devices:00036 ;
     s223:connectsThrough hvac:00019 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00036 .
 
 hvac_devices:00038 a s223:ConnectionPoint,
@@ -984,7 +984,7 @@ hvac_devices:00038 a s223:ConnectionPoint,
     s223:cnx hvac:00008,
         hvac_devices:00036 ;
     s223:connectsThrough hvac:00008 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00036 .
 
 hvac_devices:00039 a s223:ConnectionPoint,
@@ -1144,7 +1144,7 @@ hvac_devices:00052 a s223:BidirectionalConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "SF_VFD.ethernet_port" ;
     s223:cnx hvac_devices:00049 ;
-    s223:hasMedium s223:Communication-Ethernet ;
+    s223:hasMedium s223:Signal-Ethernet ;
     s223:isConnectionPointOf hvac_devices:00049 .
 
 hvac_devices:00053 a s223:BidirectionalConnectionPoint,
@@ -1152,7 +1152,7 @@ hvac_devices:00053 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "SF_VFD.mstp_port" ;
     s223:cnx hvac_devices:00049 ;
-    s223:hasMedium s223:Communication-EIA-485 ;
+    s223:hasMedium s223:Signal-EIA485 ;
     s223:isConnectionPointOf hvac_devices:00049 .
 
 hvac_devices:00054 a p223:AnalogInput,
@@ -1286,7 +1286,7 @@ hvac_devices:00070 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "current_sensor.Amps" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -1303,7 +1303,7 @@ hvac_devices:00072 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -1320,7 +1320,7 @@ hvac_devices:00074 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "speed_ref_voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -1378,7 +1378,7 @@ hvac_devices:00077 a s223:ConnectionPoint,
     s223:cnx hvac:00018,
         hvac_devices:00076 ;
     s223:connectsThrough hvac:00018 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00076 .
 
 hvac_devices:00078 a s223:ConnectionPoint,
@@ -1388,7 +1388,7 @@ hvac_devices:00078 a s223:ConnectionPoint,
     s223:cnx hvac:00019,
         hvac_devices:00076 ;
     s223:connectsThrough hvac:00019 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00076 .
 
 hvac_devices:00079 a s223:ConnectionPoint,
@@ -1396,7 +1396,7 @@ hvac_devices:00079 a s223:ConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLGCOIL.chilledWaterInlet" ;
     s223:cnx hvac_devices:00076 ;
-    s223:hasMedium s223:Water-ChilledWater ;
+    s223:hasMedium p223:Water-ChilledWater ;
     s223:isConnectionPointOf hvac_devices:00076 .
 
 hvac_devices:00080 a s223:ConnectionPoint,
@@ -1404,7 +1404,7 @@ hvac_devices:00080 a s223:ConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLGCOIL.chilledWaterOutlet" ;
     s223:cnx hvac_devices:00076 ;
-    s223:hasMedium s223:Water-ChilledWater ;
+    s223:hasMedium p223:Water-ChilledWater ;
     s223:isConnectionPointOf hvac_devices:00076 .
 
 hvac_devices:00081 a s223:Coil,
@@ -1439,7 +1439,7 @@ hvac_devices:00082 a s223:ConnectionPoint,
     s223:cnx hvac:00017,
         hvac_devices:00081 ;
     s223:connectsThrough hvac:00017 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00081 .
 
 hvac_devices:00083 a s223:ConnectionPoint,
@@ -1449,7 +1449,7 @@ hvac_devices:00083 a s223:ConnectionPoint,
     s223:cnx hvac:00018,
         hvac_devices:00081 ;
     s223:connectsThrough hvac:00018 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00081 .
 
 hvac_devices:00084 a s223:ConnectionPoint,
@@ -1518,7 +1518,7 @@ hvac_devices:00090 a s223:ConnectionPoint,
     s223:cnx hvac:00006,
         hvac_devices:00089 ;
     s223:connectsThrough hvac:00006 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00089 .
 
 hvac_devices:00091 a s223:ConnectionPoint,
@@ -1528,7 +1528,7 @@ hvac_devices:00091 a s223:ConnectionPoint,
     s223:cnx hvac:00017,
         hvac_devices:00089 ;
     s223:connectsThrough hvac:00017 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00089 .
 
 hvac_devices:00092 a s223:Connectable,
@@ -1565,7 +1565,7 @@ hvac_devices:00093 a s223:ConnectionPoint,
     s223:cnx hvac:00005,
         hvac_devices:00092 ;
     s223:connectsThrough hvac:00005 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00092 .
 
 hvac_devices:00094 a s223:ConnectionPoint,
@@ -1575,7 +1575,7 @@ hvac_devices:00094 a s223:ConnectionPoint,
     s223:cnx hvac:00006,
         hvac_devices:00092 ;
     s223:connectsThrough hvac:00006 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00092 .
 
 hvac_devices:00095 a p223:MechanicalConnectionPoint,
@@ -1823,7 +1823,7 @@ hvac_devices:00123 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00122 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00122 ;
     s223:mapsTo hvac_devices:00093 .
 
@@ -1832,7 +1832,7 @@ hvac_devices:00124 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00122 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00122 ;
     s223:mapsTo hvac_devices:00094 .
 
@@ -1889,7 +1889,7 @@ hvac_devices:00128 a s223:ConnectionPoint,
     s223:cnx hvac:00010,
         hvac_devices:00127 ;
     s223:connectsThrough hvac:00010 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00127 .
 
 hvac_devices:00129 a s223:ConnectionPoint,
@@ -1899,7 +1899,7 @@ hvac_devices:00129 a s223:ConnectionPoint,
     s223:cnx hvac:00006,
         hvac_devices:00127 ;
     s223:connectsThrough hvac:00006 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00127 .
 
 hvac_devices:00130 a p223:MechanicalConnectionPoint,
@@ -2147,7 +2147,7 @@ hvac_devices:00158 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00157 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00157 ;
     s223:mapsTo hvac_devices:00128 .
 
@@ -2156,7 +2156,7 @@ hvac_devices:00159 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00157 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00157 ;
     s223:mapsTo hvac_devices:00129 .
 
@@ -2183,25 +2183,25 @@ hvac_devices:00162 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU1 .outsideAirInlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00163 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU1 .returnAirInlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00164 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU1 .supplyAirOutlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00165 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU1 .exhaustAirOutlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00166 a s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
@@ -2269,7 +2269,7 @@ hvac_devices:00170 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "ahu2_p_down.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -2285,7 +2285,7 @@ hvac_devices:00172 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -2302,7 +2302,7 @@ hvac_devices:00174 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -2344,7 +2344,7 @@ hvac_devices:00180 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "ahu2_rh_down.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
@@ -2364,7 +2364,7 @@ hvac_devices:00182 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu2_out_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -2384,7 +2384,7 @@ hvac_devices:00184 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu2_cc_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -2407,7 +2407,7 @@ hvac_devices:00186 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "ahu2_p_up.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -2424,7 +2424,7 @@ hvac_devices:00188 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -2440,7 +2440,7 @@ hvac_devices:00190 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -2483,7 +2483,7 @@ hvac_devices:00196 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu2_heat_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -2502,7 +2502,7 @@ hvac_devices:00198 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "ahu2_rh_up.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
@@ -2522,7 +2522,7 @@ hvac_devices:00200 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu2_in_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -2540,7 +2540,7 @@ hvac_devices:00202 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "ahu2_in_flow.Flow" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:FT3-PER-MIN .
 
@@ -2583,7 +2583,7 @@ hvac_devices:00204 a s223:ConnectionPoint,
     s223:cnx hvac:00025,
         hvac_devices:00203 ;
     s223:connectsThrough hvac:00025 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00203 .
 
 hvac_devices:00205 a s223:ConnectionPoint,
@@ -2593,7 +2593,7 @@ hvac_devices:00205 a s223:ConnectionPoint,
     s223:cnx hvac:00009,
         hvac_devices:00203 ;
     s223:connectsThrough hvac:00009 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00203 .
 
 hvac_devices:00206 a s223:ConnectionPoint,
@@ -2753,7 +2753,7 @@ hvac_devices:00219 a s223:BidirectionalConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "SF_VFD.ethernet_port" ;
     s223:cnx hvac_devices:00216 ;
-    s223:hasMedium s223:Communication-Ethernet ;
+    s223:hasMedium s223:Signal-Ethernet ;
     s223:isConnectionPointOf hvac_devices:00216 .
 
 hvac_devices:00220 a s223:BidirectionalConnectionPoint,
@@ -2761,7 +2761,7 @@ hvac_devices:00220 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "SF_VFD.mstp_port" ;
     s223:cnx hvac_devices:00216 ;
-    s223:hasMedium s223:Communication-EIA-485 ;
+    s223:hasMedium s223:Signal-EIA485 ;
     s223:isConnectionPointOf hvac_devices:00216 .
 
 hvac_devices:00221 a p223:AnalogInput,
@@ -2895,7 +2895,7 @@ hvac_devices:00237 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "current_sensor.Amps" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -2912,7 +2912,7 @@ hvac_devices:00239 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -2929,7 +2929,7 @@ hvac_devices:00241 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "speed_ref_voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -2987,7 +2987,7 @@ hvac_devices:00244 a s223:ConnectionPoint,
     s223:cnx hvac:00024,
         hvac_devices:00243 ;
     s223:connectsThrough hvac:00024 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00243 .
 
 hvac_devices:00245 a s223:ConnectionPoint,
@@ -2997,7 +2997,7 @@ hvac_devices:00245 a s223:ConnectionPoint,
     s223:cnx hvac:00025,
         hvac_devices:00243 ;
     s223:connectsThrough hvac:00025 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00243 .
 
 hvac_devices:00246 a s223:ConnectionPoint,
@@ -3005,7 +3005,7 @@ hvac_devices:00246 a s223:ConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLGCOIL.chilledWaterInlet" ;
     s223:cnx hvac_devices:00243 ;
-    s223:hasMedium s223:Water-ChilledWater ;
+    s223:hasMedium p223:Water-ChilledWater ;
     s223:isConnectionPointOf hvac_devices:00243 .
 
 hvac_devices:00247 a s223:ConnectionPoint,
@@ -3013,7 +3013,7 @@ hvac_devices:00247 a s223:ConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CLGCOIL.chilledWaterOutlet" ;
     s223:cnx hvac_devices:00243 ;
-    s223:hasMedium s223:Water-ChilledWater ;
+    s223:hasMedium p223:Water-ChilledWater ;
     s223:isConnectionPointOf hvac_devices:00243 .
 
 hvac_devices:00248 a s223:Coil,
@@ -3048,7 +3048,7 @@ hvac_devices:00249 a s223:ConnectionPoint,
     s223:cnx hvac:00023,
         hvac_devices:00248 ;
     s223:connectsThrough hvac:00023 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00248 .
 
 hvac_devices:00250 a s223:ConnectionPoint,
@@ -3058,7 +3058,7 @@ hvac_devices:00250 a s223:ConnectionPoint,
     s223:cnx hvac:00024,
         hvac_devices:00248 ;
     s223:connectsThrough hvac:00024 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00248 .
 
 hvac_devices:00251 a s223:ConnectionPoint,
@@ -3127,7 +3127,7 @@ hvac_devices:00257 a s223:ConnectionPoint,
     s223:cnx hvac:00007,
         hvac_devices:00256 ;
     s223:connectsThrough hvac:00007 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00256 .
 
 hvac_devices:00258 a s223:ConnectionPoint,
@@ -3137,7 +3137,7 @@ hvac_devices:00258 a s223:ConnectionPoint,
     s223:cnx hvac:00023,
         hvac_devices:00256 ;
     s223:connectsThrough hvac:00023 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00256 .
 
 hvac_devices:00259 a s223:Connectable,
@@ -3174,7 +3174,7 @@ hvac_devices:00260 a s223:ConnectionPoint,
     s223:cnx hvac:00005,
         hvac_devices:00259 ;
     s223:connectsThrough hvac:00005 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00259 .
 
 hvac_devices:00261 a s223:ConnectionPoint,
@@ -3184,7 +3184,7 @@ hvac_devices:00261 a s223:ConnectionPoint,
     s223:cnx hvac:00007,
         hvac_devices:00259 ;
     s223:connectsThrough hvac:00007 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00259 .
 
 hvac_devices:00262 a p223:MechanicalConnectionPoint,
@@ -3432,7 +3432,7 @@ hvac_devices:00290 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00289 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00289 ;
     s223:mapsTo hvac_devices:00260 .
 
@@ -3441,7 +3441,7 @@ hvac_devices:00291 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00289 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00289 ;
     s223:mapsTo hvac_devices:00261 .
 
@@ -3498,7 +3498,7 @@ hvac_devices:00295 a s223:ConnectionPoint,
     s223:cnx hvac:00011,
         hvac_devices:00294 ;
     s223:connectsThrough hvac:00011 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00294 .
 
 hvac_devices:00296 a s223:ConnectionPoint,
@@ -3508,7 +3508,7 @@ hvac_devices:00296 a s223:ConnectionPoint,
     s223:cnx hvac:00007,
         hvac_devices:00294 ;
     s223:connectsThrough hvac:00007 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00294 .
 
 hvac_devices:00297 a p223:MechanicalConnectionPoint,
@@ -3756,7 +3756,7 @@ hvac_devices:00325 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00324 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00324 ;
     s223:mapsTo hvac_devices:00295 .
 
@@ -3765,7 +3765,7 @@ hvac_devices:00326 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00324 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00324 ;
     s223:mapsTo hvac_devices:00296 .
 
@@ -3792,25 +3792,25 @@ hvac_devices:00329 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU2 .outsideAirInlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00330 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU2 .returnAirInlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00331 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU2 .supplyAirOutlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00332 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU2 .exhaustAirOutlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00333 a s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
@@ -3877,7 +3877,7 @@ hvac_devices:00337 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "ahu3_p_down.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -3893,7 +3893,7 @@ hvac_devices:00339 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -3909,7 +3909,7 @@ hvac_devices:00341 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -3951,7 +3951,7 @@ hvac_devices:00347 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "ahu3_rh_down.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
@@ -3971,7 +3971,7 @@ hvac_devices:00349 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu3_out_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -3991,7 +3991,7 @@ hvac_devices:00351 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu3_heat_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -4014,7 +4014,7 @@ hvac_devices:00353 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "ahu3_p_up.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -4031,7 +4031,7 @@ hvac_devices:00355 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -4047,7 +4047,7 @@ hvac_devices:00357 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -4090,7 +4090,7 @@ hvac_devices:00363 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu3_cc_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -4110,7 +4110,7 @@ hvac_devices:00365 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ahu3_in_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -4154,7 +4154,7 @@ hvac_devices:00367 a s223:ConnectionPoint,
     s223:cnx hvac:00016,
         hvac_devices:00366 ;
     s223:connectsThrough hvac:00016 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00366 .
 
 hvac_devices:00368 a s223:ConnectionPoint,
@@ -4164,7 +4164,7 @@ hvac_devices:00368 a s223:ConnectionPoint,
     s223:cnx hvac:00004,
         hvac_devices:00366 ;
     s223:connectsThrough hvac:00004 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00366 .
 
 hvac_devices:00369 a s223:ConnectionPoint,
@@ -4386,7 +4386,7 @@ hvac_devices:00391 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "currentSensor.Amps" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -4431,7 +4431,7 @@ hvac_devices:00396 a s223:ConnectionPoint,
     s223:cnx hvac:00014,
         hvac_devices:00395 ;
     s223:connectsThrough hvac:00014 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00395 .
 
 hvac_devices:00397 a s223:ConnectionPoint,
@@ -4441,7 +4441,7 @@ hvac_devices:00397 a s223:ConnectionPoint,
     s223:cnx hvac:00015,
         hvac_devices:00395 ;
     s223:connectsThrough hvac:00015 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00395 .
 
 hvac_devices:00398 a s223:Coil,
@@ -4476,7 +4476,7 @@ hvac_devices:00399 a s223:ConnectionPoint,
     s223:cnx hvac:00015,
         hvac_devices:00398 ;
     s223:connectsThrough hvac:00015 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00398 .
 
 hvac_devices:00400 a s223:ConnectionPoint,
@@ -4486,7 +4486,7 @@ hvac_devices:00400 a s223:ConnectionPoint,
     s223:cnx hvac:00016,
         hvac_devices:00398 ;
     s223:connectsThrough hvac:00016 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00398 .
 
 hvac_devices:00401 a s223:ConnectionPoint,
@@ -4555,7 +4555,7 @@ hvac_devices:00407 a s223:ConnectionPoint,
     s223:cnx hvac:00002,
         hvac_devices:00406 ;
     s223:connectsThrough hvac:00002 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00406 .
 
 hvac_devices:00408 a s223:ConnectionPoint,
@@ -4565,7 +4565,7 @@ hvac_devices:00408 a s223:ConnectionPoint,
     s223:cnx hvac:00014,
         hvac_devices:00406 ;
     s223:connectsThrough hvac:00014 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00406 .
 
 hvac_devices:00409 a s223:Connectable,
@@ -4602,7 +4602,7 @@ hvac_devices:00410 a s223:ConnectionPoint,
     s223:cnx hvac:00001,
         hvac_devices:00409 ;
     s223:connectsThrough hvac:00001 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00409 .
 
 hvac_devices:00411 a s223:ConnectionPoint,
@@ -4612,7 +4612,7 @@ hvac_devices:00411 a s223:ConnectionPoint,
     s223:cnx hvac:00002,
         hvac_devices:00409 ;
     s223:connectsThrough hvac:00002 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00409 .
 
 hvac_devices:00412 a p223:MechanicalConnectionPoint,
@@ -4860,7 +4860,7 @@ hvac_devices:00440 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00439 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00439 ;
     s223:mapsTo hvac_devices:00410 .
 
@@ -4869,7 +4869,7 @@ hvac_devices:00441 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00439 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00439 ;
     s223:mapsTo hvac_devices:00411 .
 
@@ -4926,7 +4926,7 @@ hvac_devices:00445 a s223:ConnectionPoint,
     s223:cnx hvac:00003,
         hvac_devices:00444 ;
     s223:connectsThrough hvac:00003 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00444 .
 
 hvac_devices:00446 a s223:ConnectionPoint,
@@ -4936,7 +4936,7 @@ hvac_devices:00446 a s223:ConnectionPoint,
     s223:cnx hvac:00002,
         hvac_devices:00444 ;
     s223:connectsThrough hvac:00002 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00444 .
 
 hvac_devices:00447 a p223:MechanicalConnectionPoint,
@@ -5184,7 +5184,7 @@ hvac_devices:00475 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00474 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00474 ;
     s223:mapsTo hvac_devices:00445 .
 
@@ -5193,7 +5193,7 @@ hvac_devices:00476 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00474 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00474 ;
     s223:mapsTo hvac_devices:00446 .
 
@@ -5242,7 +5242,7 @@ hvac_devices:00480 a s223:ConnectionPoint,
     s223:cnx hvac:00003,
         hvac_devices:00479 ;
     s223:connectsThrough hvac:00003 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00479 .
 
 hvac_devices:00481 a s223:ConnectionPoint,
@@ -5252,7 +5252,7 @@ hvac_devices:00481 a s223:ConnectionPoint,
     s223:cnx hvac:00001,
         hvac_devices:00479 ;
     s223:connectsThrough hvac:00001 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00479 .
 
 hvac_devices:00482 a p223:MechanicalConnectionPoint,
@@ -5267,25 +5267,25 @@ hvac_devices:00483 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU3 .outsideAirInlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00484 a bob:AirSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU3 .returnAirInlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00485 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU3 .supplyAirOutlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00486 a bob:AirSystemConnectionPoint,
         bob:OutletSystemConnectionPoint,
         bob:SystemConnectionPoint ;
     rdfs:label "AHU3 .exhaustAirOutlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_devices:00487 a s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
         bob:InletSystemConnectionPoint,
@@ -5341,7 +5341,7 @@ hvac_devices:00490 a s223:ConnectionPoint,
     s223:cnx hvac:00012,
         hvac_devices:00489 ;
     s223:connectsThrough hvac:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00489 .
 
 hvac_devices:00491 a s223:ConnectionPoint,
@@ -5351,7 +5351,7 @@ hvac_devices:00491 a s223:ConnectionPoint,
     s223:cnx hvac:00022,
         hvac_devices:00489 ;
     s223:connectsThrough hvac:00022 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00489 .
 
 hvac_devices:00492 a s223:ConnectionPoint,
@@ -5510,7 +5510,7 @@ hvac_devices:00505 a s223:BidirectionalConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "FAN3_VFD.ethernet_port" ;
     s223:cnx hvac_devices:00502 ;
-    s223:hasMedium s223:Communication-Ethernet ;
+    s223:hasMedium s223:Signal-Ethernet ;
     s223:isConnectionPointOf hvac_devices:00502 .
 
 hvac_devices:00506 a s223:BidirectionalConnectionPoint,
@@ -5518,7 +5518,7 @@ hvac_devices:00506 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "FAN3_VFD.mstp_port" ;
     s223:cnx hvac_devices:00502 ;
-    s223:hasMedium s223:Communication-EIA-485 ;
+    s223:hasMedium s223:Signal-EIA485 ;
     s223:isConnectionPointOf hvac_devices:00502 .
 
 hvac_devices:00507 a p223:AnalogInput,
@@ -5652,7 +5652,7 @@ hvac_devices:00523 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "current_sensor.Amps" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -5669,7 +5669,7 @@ hvac_devices:00525 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -5686,7 +5686,7 @@ hvac_devices:00527 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "speed_ref_voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -5735,7 +5735,7 @@ hvac_devices:00531 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "fan3_in_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -5751,7 +5751,7 @@ hvac_devices:00533 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "fan3_in_flow.Flow" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate .
 
 hvac_devices:00534 a s223:Connectable,
@@ -5772,7 +5772,7 @@ hvac_devices:00535 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "fan3_in_pressure.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -5788,7 +5788,7 @@ hvac_devices:00537 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -5804,7 +5804,7 @@ hvac_devices:00539 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -5858,7 +5858,7 @@ hvac_devices:00545 a s223:ConnectionPoint,
     s223:cnx hvac:00022,
         hvac_devices:00544 ;
     s223:connectsThrough hvac:00022 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00544 .
 
 hvac_devices:00546 a s223:ConnectionPoint,
@@ -5868,7 +5868,7 @@ hvac_devices:00546 a s223:ConnectionPoint,
     s223:cnx hvac:00001,
         hvac_devices:00544 ;
     s223:connectsThrough hvac:00001 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00544 .
 
 hvac_devices:00547 a p223:MechanicalConnectionPoint,
@@ -5918,7 +5918,7 @@ hvac_devices:00549 a s223:ConnectionPoint,
     s223:cnx hvac:00013,
         hvac_devices:00548 ;
     s223:connectsThrough hvac:00013 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00548 .
 
 hvac_devices:00550 a s223:ConnectionPoint,
@@ -5928,7 +5928,7 @@ hvac_devices:00550 a s223:ConnectionPoint,
     s223:cnx hvac:00028,
         hvac_devices:00548 ;
     s223:connectsThrough hvac:00028 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00548 .
 
 hvac_devices:00551 a s223:ConnectionPoint,
@@ -6087,7 +6087,7 @@ hvac_devices:00564 a s223:BidirectionalConnectionPoint,
         bob:EthernetConnectionPoint ;
     rdfs:label "FAN3_VFD.ethernet_port" ;
     s223:cnx hvac_devices:00561 ;
-    s223:hasMedium s223:Communication-Ethernet ;
+    s223:hasMedium s223:Signal-Ethernet ;
     s223:isConnectionPointOf hvac_devices:00561 .
 
 hvac_devices:00565 a s223:BidirectionalConnectionPoint,
@@ -6095,7 +6095,7 @@ hvac_devices:00565 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "FAN3_VFD.mstp_port" ;
     s223:cnx hvac_devices:00561 ;
-    s223:hasMedium s223:Communication-EIA-485 ;
+    s223:hasMedium s223:Signal-EIA485 ;
     s223:isConnectionPointOf hvac_devices:00561 .
 
 hvac_devices:00566 a p223:AnalogInput,
@@ -6229,7 +6229,7 @@ hvac_devices:00582 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "current_sensor.Amps" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -6246,7 +6246,7 @@ hvac_devices:00584 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -6263,7 +6263,7 @@ hvac_devices:00586 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "speed_ref_voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -6312,7 +6312,7 @@ hvac_devices:00590 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "fan4_in_rtd.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -6328,7 +6328,7 @@ hvac_devices:00592 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "fan4_in_flow.Flow" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate .
 
 hvac_devices:00593 a s223:Connectable,
@@ -6349,7 +6349,7 @@ hvac_devices:00594 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "fan4_in_pressure.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -6365,7 +6365,7 @@ hvac_devices:00596 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -6381,7 +6381,7 @@ hvac_devices:00598 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -6435,7 +6435,7 @@ hvac_devices:00604 a s223:ConnectionPoint,
     s223:cnx hvac:00028,
         hvac_devices:00603 ;
     s223:connectsThrough hvac:00028 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00603 .
 
 hvac_devices:00605 a s223:ConnectionPoint,
@@ -6445,7 +6445,7 @@ hvac_devices:00605 a s223:ConnectionPoint,
     s223:cnx hvac:00001,
         hvac_devices:00603 ;
     s223:connectsThrough hvac:00001 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00603 .
 
 hvac_devices:00606 a p223:MechanicalConnectionPoint,
@@ -6489,7 +6489,7 @@ hvac_devices:00608 a s223:ConnectionPoint,
     s223:cnx hvac:00010,
         hvac_devices:00607 ;
     s223:connectsThrough hvac:00010 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00607 .
 
 hvac_devices:00609 a s223:ConnectionPoint,
@@ -6499,7 +6499,7 @@ hvac_devices:00609 a s223:ConnectionPoint,
     s223:cnx hvac:00012,
         hvac_devices:00607 ;
     s223:connectsThrough hvac:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00607 .
 
 hvac_devices:00610 a p223:MechanicalConnectionPoint,
@@ -6747,7 +6747,7 @@ hvac_devices:00638 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00637 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00637 ;
     s223:mapsTo hvac_devices:00608 .
 
@@ -6756,7 +6756,7 @@ hvac_devices:00639 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00637 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00637 ;
     s223:mapsTo hvac_devices:00609 .
 
@@ -6812,7 +6812,7 @@ hvac_devices:00643 a s223:ConnectionPoint,
     s223:cnx hvac:00011,
         hvac_devices:00642 ;
     s223:connectsThrough hvac:00011 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00642 .
 
 hvac_devices:00644 a s223:ConnectionPoint,
@@ -6822,7 +6822,7 @@ hvac_devices:00644 a s223:ConnectionPoint,
     s223:cnx hvac:00013,
         hvac_devices:00642 ;
     s223:connectsThrough hvac:00013 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00642 .
 
 hvac_devices:00645 a p223:MechanicalConnectionPoint,
@@ -7070,7 +7070,7 @@ hvac_devices:00673 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00672 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00672 ;
     s223:mapsTo hvac_devices:00643 .
 
@@ -7079,7 +7079,7 @@ hvac_devices:00674 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00672 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00672 ;
     s223:mapsTo hvac_devices:00644 .
 
@@ -7131,7 +7131,7 @@ hvac_devices:00678 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper10.airInlet" ;
     s223:cnx hvac_devices:00677 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00677 .
 
 hvac_devices:00679 a s223:ConnectionPoint,
@@ -7139,7 +7139,7 @@ hvac_devices:00679 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper10.airOutlet" ;
     s223:cnx hvac_devices:00677 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00677 .
 
 hvac_devices:00680 a p223:MechanicalConnectionPoint,
@@ -7387,7 +7387,7 @@ hvac_devices:00708 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00707 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00707 ;
     s223:mapsTo hvac_devices:00678 .
 
@@ -7396,7 +7396,7 @@ hvac_devices:00709 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00707 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00707 ;
     s223:mapsTo hvac_devices:00679 .
 
@@ -7452,7 +7452,7 @@ hvac_devices:00713 a s223:ConnectionPoint,
     s223:cnx hvac:00004,
         hvac_devices:00712 ;
     s223:connectsThrough hvac:00004 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00712 .
 
 hvac_devices:00714 a s223:ConnectionPoint,
@@ -7462,7 +7462,7 @@ hvac_devices:00714 a s223:ConnectionPoint,
     s223:cnx hvac:00005,
         hvac_devices:00712 ;
     s223:connectsThrough hvac:00005 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00712 .
 
 hvac_devices:00715 a p223:MechanicalConnectionPoint,
@@ -7710,7 +7710,7 @@ hvac_devices:00743 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00742 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00742 ;
     s223:mapsTo hvac_devices:00713 .
 
@@ -7719,7 +7719,7 @@ hvac_devices:00744 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00742 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00742 ;
     s223:mapsTo hvac_devices:00714 .
 
@@ -7775,7 +7775,7 @@ hvac_devices:00748 a s223:ConnectionPoint,
     s223:cnx hvac:00004,
         hvac_devices:00747 ;
     s223:connectsThrough hvac:00004 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00747 .
 
 hvac_devices:00749 a s223:ConnectionPoint,
@@ -7785,7 +7785,7 @@ hvac_devices:00749 a s223:ConnectionPoint,
     s223:cnx hvac:00003,
         hvac_devices:00747 ;
     s223:connectsThrough hvac:00003 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00747 .
 
 hvac_devices:00750 a p223:MechanicalConnectionPoint,
@@ -8033,7 +8033,7 @@ hvac_devices:00778 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00777 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00777 ;
     s223:mapsTo hvac_devices:00748 .
 
@@ -8042,7 +8042,7 @@ hvac_devices:00779 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00777 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00777 ;
     s223:mapsTo hvac_devices:00749 .
 
@@ -8099,7 +8099,7 @@ hvac_devices:00783 a s223:ConnectionPoint,
     s223:cnx hvac:00008,
         hvac_devices:00782 ;
     s223:connectsThrough hvac:00008 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00782 .
 
 hvac_devices:00784 a s223:ConnectionPoint,
@@ -8109,7 +8109,7 @@ hvac_devices:00784 a s223:ConnectionPoint,
     s223:cnx hvac:00009,
         hvac_devices:00782 ;
     s223:connectsThrough hvac:00009 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00782 .
 
 hvac_devices:00785 a p223:MechanicalConnectionPoint,
@@ -8357,7 +8357,7 @@ hvac_devices:00813 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00812 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00812 ;
     s223:mapsTo hvac_devices:00783 .
 
@@ -8366,7 +8366,7 @@ hvac_devices:00814 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00812 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00812 ;
     s223:mapsTo hvac_devices:00784 .
 
@@ -8423,7 +8423,7 @@ hvac_devices:00818 a s223:ConnectionPoint,
     s223:cnx hvac:00009,
         hvac_devices:00817 ;
     s223:connectsThrough hvac:00009 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00817 .
 
 hvac_devices:00819 a s223:ConnectionPoint,
@@ -8433,7 +8433,7 @@ hvac_devices:00819 a s223:ConnectionPoint,
     s223:cnx hvac:00008,
         hvac_devices:00817 ;
     s223:connectsThrough hvac:00008 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00817 .
 
 hvac_devices:00820 a p223:MechanicalConnectionPoint,
@@ -8681,7 +8681,7 @@ hvac_devices:00848 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00847 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00847 ;
     s223:mapsTo hvac_devices:00818 .
 
@@ -8690,7 +8690,7 @@ hvac_devices:00849 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00847 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00847 ;
     s223:mapsTo hvac_devices:00819 .
 
@@ -8747,7 +8747,7 @@ hvac_devices:00853 a s223:ConnectionPoint,
     s223:cnx hvac:00012,
         hvac_devices:00852 ;
     s223:connectsThrough hvac:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00852 .
 
 hvac_devices:00854 a s223:ConnectionPoint,
@@ -8757,7 +8757,7 @@ hvac_devices:00854 a s223:ConnectionPoint,
     s223:cnx hvac:00013,
         hvac_devices:00852 ;
     s223:connectsThrough hvac:00013 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00852 .
 
 hvac_devices:00855 a p223:MechanicalConnectionPoint,
@@ -9005,7 +9005,7 @@ hvac_devices:00883 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00882 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00882 ;
     s223:mapsTo hvac_devices:00853 .
 
@@ -9014,7 +9014,7 @@ hvac_devices:00884 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00882 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00882 ;
     s223:mapsTo hvac_devices:00854 .
 
@@ -9071,7 +9071,7 @@ hvac_devices:00888 a s223:ConnectionPoint,
     s223:cnx hvac:00013,
         hvac_devices:00887 ;
     s223:connectsThrough hvac:00013 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00887 .
 
 hvac_devices:00889 a s223:ConnectionPoint,
@@ -9081,7 +9081,7 @@ hvac_devices:00889 a s223:ConnectionPoint,
     s223:cnx hvac:00012,
         hvac_devices:00887 ;
     s223:connectsThrough hvac:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00887 .
 
 hvac_devices:00890 a p223:MechanicalConnectionPoint,
@@ -9329,7 +9329,7 @@ hvac_devices:00918 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airInlet" ;
     s223:cnx hvac_devices:00917 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00917 ;
     s223:mapsTo hvac_devices:00888 .
 
@@ -9338,7 +9338,7 @@ hvac_devices:00919 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "damper.airOutlet" ;
     s223:cnx hvac_devices:00917 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:00917 ;
     s223:mapsTo hvac_devices:00889 .
 
@@ -9376,7 +9376,7 @@ hvac_devices:00923 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "outdoor_temp.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -9394,7 +9394,7 @@ hvac_devices:00925 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "outdoor_hum.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
@@ -9417,7 +9417,7 @@ hvac_devices:00927 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "outdoor_pressure.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -9433,7 +9433,7 @@ hvac_devices:00929 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "highPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -9449,7 +9449,7 @@ hvac_devices:00931 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "lowPort.DifferentialStaticPressure" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:ForcePerArea ;
     qudt:hasUnit unit:PA .
 
@@ -9510,7 +9510,7 @@ hvac_devices:00937 a s223:ConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chiller1.chilledWaterEntering" ;
     s223:cnx hvac_devices:00936 ;
-    s223:hasMedium s223:Water-ChilledWater ;
+    s223:hasMedium p223:Water-ChilledWater ;
     s223:isConnectionPointOf hvac_devices:00936 .
 
 hvac_devices:00938 a s223:ConnectionPoint,
@@ -9518,7 +9518,7 @@ hvac_devices:00938 a s223:ConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chiller1.chilledWaterLeaving" ;
     s223:cnx hvac_devices:00936 ;
-    s223:hasMedium s223:Water-ChilledWater ;
+    s223:hasMedium p223:Water-ChilledWater ;
     s223:isConnectionPointOf hvac_devices:00936 .
 
 hvac_devices:00939 a s223:ConnectionPoint,
@@ -9609,7 +9609,7 @@ hvac_devices:00947 a s223:ConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "ChilledWaterPump1.waterInlet" ;
     s223:cnx hvac_devices:00946 ;
-    s223:hasMedium s223:Medium-Water ;
+    s223:hasMedium p223:Fluid-Water ;
     s223:isConnectionPointOf hvac_devices:00946 .
 
 hvac_devices:00948 a s223:ConnectionPoint,
@@ -9617,7 +9617,7 @@ hvac_devices:00948 a s223:ConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "ChilledWaterPump1.waterOutlet" ;
     s223:cnx hvac_devices:00946 ;
-    s223:hasMedium s223:Medium-Water ;
+    s223:hasMedium p223:Fluid-Water ;
     s223:isConnectionPointOf hvac_devices:00946 .
 
 hvac_devices:00949 a s223:ConnectionPoint,
@@ -9811,7 +9811,7 @@ hvac_devices:00968 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "currentSensor.Amps" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -9874,7 +9874,7 @@ hvac_devices:00974 a s223:ConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chiller2.chilledWaterEntering" ;
     s223:cnx hvac_devices:00973 ;
-    s223:hasMedium s223:Water-ChilledWater ;
+    s223:hasMedium p223:Water-ChilledWater ;
     s223:isConnectionPointOf hvac_devices:00973 .
 
 hvac_devices:00975 a s223:ConnectionPoint,
@@ -9882,7 +9882,7 @@ hvac_devices:00975 a s223:ConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chiller2.chilledWaterLeaving" ;
     s223:cnx hvac_devices:00973 ;
-    s223:hasMedium s223:Water-ChilledWater ;
+    s223:hasMedium p223:Water-ChilledWater ;
     s223:isConnectionPointOf hvac_devices:00973 .
 
 hvac_devices:00976 a s223:ConnectionPoint,
@@ -9973,7 +9973,7 @@ hvac_devices:00984 a s223:ConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "ChilledWaterPump2.waterInlet" ;
     s223:cnx hvac_devices:00983 ;
-    s223:hasMedium s223:Medium-Water ;
+    s223:hasMedium p223:Fluid-Water ;
     s223:isConnectionPointOf hvac_devices:00983 .
 
 hvac_devices:00985 a s223:ConnectionPoint,
@@ -9981,7 +9981,7 @@ hvac_devices:00985 a s223:ConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "ChilledWaterPump2.waterOutlet" ;
     s223:cnx hvac_devices:00983 ;
-    s223:hasMedium s223:Medium-Water ;
+    s223:hasMedium p223:Fluid-Water ;
     s223:isConnectionPointOf hvac_devices:00983 .
 
 hvac_devices:00986 a s223:ConnectionPoint,
@@ -10175,7 +10175,7 @@ hvac_devices:01005 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "currentSensor.Amps" ;
-    s223:ofMedium s223:Medium-Electricity ;
+    s223:ofMedium s223:Electro-Magnetic-Electricity ;
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -10221,14 +10221,14 @@ hvac_devices:01010 a s223:Connectable,
         hvac_devices:01019,
         hvac_devices:01021,
         hvac_devices:01023,
-        hvac_devices:01058 ;
+        hvac_devices:01027,
+        hvac_devices:01053 ;
     s223:hasConnectionPoint hvac_devices:01011,
         hvac_devices:01012 ;
-    s223:hasProperty hvac_devices:01066 ;
+    s223:hasProperty hvac_devices:01061 ;
     scratch:airFlow hvac_devices:01014 ;
     scratch:airInlet hvac_devices:01011 ;
     scratch:airOutlet hvac_devices:01012 ;
-    scratch:damperPosition hvac_devices:01052 ;
     rdfs:comment "VAV Serving HVAC Zone 1" .
 
 hvac_devices:01011 a s223:ConnectionPoint,
@@ -10238,7 +10238,7 @@ hvac_devices:01011 a s223:ConnectionPoint,
     s223:cnx hvac:00008,
         hvac_devices:01010 ;
     s223:connectsThrough hvac:00008 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:01010 .
 
 hvac_devices:01012 a s223:ConnectionPoint,
@@ -10248,14 +10248,14 @@ hvac_devices:01012 a s223:ConnectionPoint,
     s223:cnx hvac:00020,
         hvac_devices:01010 ;
     s223:connectsThrough hvac:00020 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:01010 .
 
 hvac_devices:01013 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "SA-F" ;
-    s223:hasObservationLocation hvac_devices:01055 ;
+    s223:hasObservationLocation hvac_devices:01025 ;
     s223:observes hvac_devices:01014 ;
     rdfs:comment "Air flow used to control damper" .
 
@@ -10266,7 +10266,7 @@ hvac_devices:01014 a s223:ObservableProperty,
         bob:Flow ;
     rdfs:label "SA-F.Flow" ;
     s223:hasExternalReference bacnet_references:00025 ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:L-PER-SEC .
 
@@ -10276,7 +10276,7 @@ hvac_devices:01015 a s223:Connectable,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
-    s223:hasObservationLocation hvac_devices:01060 ;
+    s223:hasObservationLocation hvac_devices:01055 ;
     s223:observes hvac_devices:01016 ;
     rdfs:comment "Air supplied to zone by VAV 1, AKA discharge air temperature" .
 
@@ -10287,7 +10287,7 @@ hvac_devices:01016 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "DA-T.Temperature" ;
     s223:hasExternalReference bacnet_references:00020 ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -10306,7 +10306,7 @@ hvac_devices:01018 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ZN-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -10326,7 +10326,7 @@ hvac_devices:01020 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "VAV1_ZN-T.Temperature" ;
     s223:hasExternalReference bacnet_references:00019 ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -10344,44 +10344,38 @@ hvac_devices:01022 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "VAV1_ZN-H.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
 hvac_devices:01023 a s223:Connectable,
         s223:Damper,
         s223:Equipment,
-        scratch:Damper,
-        scratch:DamperAndActuator,
-        scratch:ElectricalActuatedProportionalDamper ;
+        scratch:Damper ;
     rdfs:label "DPR" ;
     s223:cnx hvac_devices:01024,
         hvac_devices:01025,
         hvac_devices:01026 ;
-    s223:connected hvac_devices:01058 ;
-    s223:connectedThrough hvac_devices:01067 ;
-    s223:connectedTo hvac_devices:01058 ;
-    s223:contains hvac_devices:01027,
+    s223:connected hvac_devices:01027,
         hvac_devices:01053 ;
+    s223:connectedFrom hvac_devices:01027 ;
+    s223:connectedThrough hvac_devices:01062,
+        hvac_devices:01063 ;
+    s223:connectedTo hvac_devices:01053 ;
     s223:hasConnectionPoint hvac_devices:01024,
         hvac_devices:01025,
         hvac_devices:01026 ;
     bob:airInlet hvac_devices:01024 ;
     bob:airOutlet hvac_devices:01025 ;
-    scratch:command hvac_devices:01037 ;
-    scratch:is_closed hvac_devices:01036 ;
-    scratch:is_open hvac_devices:01035 ;
     scratch:linkageInlet hvac_devices:01026 ;
-    scratch:position hvac_devices:01052 ;
-    scratch:position_feedback hvac_devices:01052 ;
-    rdfs:comment "VAV Box 1 Air Damper" .
+    rdfs:comment "Damper" .
 
 hvac_devices:01024 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airInlet" ;
     s223:cnx hvac_devices:01023 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:01023 ;
     s223:mapsTo hvac_devices:01011 .
 
@@ -10390,16 +10384,18 @@ hvac_devices:01025 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airOutlet" ;
     s223:cnx hvac_devices:01023,
-        hvac_devices:01067 ;
-    s223:connectsThrough hvac_devices:01067 ;
-    s223:hasMedium s223:Medium-Air ;
+        hvac_devices:01062 ;
+    s223:connectsThrough hvac_devices:01062 ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_devices:01023 .
 
 hvac_devices:01026 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "DPR.linkageInlet" ;
-    s223:cnx hvac_devices:01023 ;
+    s223:cnx hvac_devices:01023,
+        hvac_devices:01063 ;
+    s223:connectsThrough hvac_devices:01063 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf hvac_devices:01023 .
 
@@ -10407,17 +10403,18 @@ hvac_devices:01027 a s223:Actuator,
         s223:Connectable,
         s223:Equipment,
         scratch:Actuator,
-        scratch:ElectricalProportionalActuator ;
-    rdfs:label "actuator" ;
+        scratch:ElectricalProportionalActuator,
+        scratch:VAVController ;
+    rdfs:label "VAVController" ;
     s223:cnx hvac_devices:01028,
         hvac_devices:01029,
         hvac_devices:01030,
         hvac_devices:01031,
         hvac_devices:01032,
         hvac_devices:01033 ;
-    s223:connected hvac_devices:01053 ;
-    s223:connectedThrough hvac_devices:01057 ;
-    s223:connectedTo hvac_devices:01053 ;
+    s223:connected hvac_devices:01023 ;
+    s223:connectedThrough hvac_devices:01063 ;
+    s223:connectedTo hvac_devices:01023 ;
     s223:contains hvac_devices:01051 ;
     s223:hasConnectionPoint hvac_devices:01028,
         hvac_devices:01029,
@@ -10434,15 +10431,16 @@ hvac_devices:01027 a s223:Actuator,
         hvac_devices:01042,
         hvac_devices:01045,
         hvac_devices:01048 ;
-    scratch:position hvac_devices:01052 .
+    scratch:position hvac_devices:01052 ;
+    rdfs:comment "VAV Controller with damper" .
 
 hvac_devices:01028 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "actuator.linkageOutlet" ;
+    rdfs:label "VAVController.linkageOutlet" ;
     s223:cnx hvac_devices:01027,
-        hvac_devices:01057 ;
-    s223:connectsThrough hvac_devices:01057 ;
+        hvac_devices:01063 ;
+    s223:connectsThrough hvac_devices:01063 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf hvac_devices:01027 .
 
@@ -10450,7 +10448,7 @@ hvac_devices:01029 a p223:AnalogOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.feedback_signal" ;
+    rdfs:label "VAVController.feedback_signal" ;
     s223:cnx hvac_devices:01027 ;
     s223:hasMedium s223:Signal-Modulated ;
     s223:isConnectionPointOf hvac_devices:01027 .
@@ -10459,7 +10457,7 @@ hvac_devices:01030 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.open_auxswitch_signal" ;
+    rdfs:label "VAVController.open_auxswitch_signal" ;
     s223:cnx hvac_devices:01027 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf hvac_devices:01027 .
@@ -10468,7 +10466,7 @@ hvac_devices:01031 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.close_auxswitch_signal" ;
+    rdfs:label "VAVController.close_auxswitch_signal" ;
     s223:cnx hvac_devices:01027 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
     s223:isConnectionPointOf hvac_devices:01027 .
@@ -10476,7 +10474,7 @@ hvac_devices:01031 a p223:BinaryOutput,
 hvac_devices:01032 a s223:ConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "actuator.electricalInlet" ;
+    rdfs:label "VAVController.electricalInlet" ;
     s223:cnx hvac_devices:01027 ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
     s223:isConnectionPointOf hvac_devices:01027 .
@@ -10485,7 +10483,7 @@ hvac_devices:01033 a p223:AnalogInput,
         s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.proportional_signal" ;
+    rdfs:label "VAVController.proportional_signal" ;
     s223:cnx hvac_devices:01027 ;
     s223:hasMedium s223:Signal-Modulated ;
     s223:isConnectionPointOf hvac_devices:01027 .
@@ -10496,6 +10494,7 @@ hvac_devices:01034 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
+    s223:hasExternalReference bacnet_references:00023 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -10614,116 +10613,59 @@ hvac_devices:01052 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_sensor.Position" ;
-    s223:hasExternalReference bacnet_references:00023 ;
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01053 a s223:Connectable,
-        s223:Damper,
-        s223:Equipment,
-        scratch:Damper ;
-    rdfs:label "damper" ;
-    s223:cnx hvac_devices:01054,
-        hvac_devices:01055,
-        hvac_devices:01056 ;
-    s223:connected hvac_devices:01027 ;
-    s223:connectedFrom hvac_devices:01027 ;
-    s223:connectedThrough hvac_devices:01057 ;
-    s223:hasConnectionPoint hvac_devices:01054,
-        hvac_devices:01055,
-        hvac_devices:01056 ;
-    bob:airInlet hvac_devices:01054 ;
-    bob:airOutlet hvac_devices:01055 ;
-    scratch:linkageInlet hvac_devices:01056 ;
-    scratch:position hvac_devices:01052 .
-
-hvac_devices:01054 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx hvac_devices:01053 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01053 ;
-    s223:mapsTo hvac_devices:01024 .
-
-hvac_devices:01055 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx hvac_devices:01053 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01053 ;
-    s223:mapsTo hvac_devices:01025 .
-
-hvac_devices:01056 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "damper.linkageInlet" ;
-    s223:cnx hvac_devices:01053,
-        hvac_devices:01057 ;
-    s223:connectsThrough hvac_devices:01057 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01053 .
-
-hvac_devices:01057 a s223:Connection ;
-    s223:cnx hvac_devices:01028,
-        hvac_devices:01056 ;
-    s223:connectsAt hvac_devices:01028,
-        hvac_devices:01056 ;
-    s223:connectsFrom hvac_devices:01027 ;
-    s223:connectsTo hvac_devices:01053 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling .
-
-hvac_devices:01058 a s223:Coil,
+hvac_devices:01053 a s223:Coil,
         s223:Connectable,
         s223:Equipment,
         s223:ResistanceHeater ;
     rdfs:label "REHEAT" ;
-    s223:cnx hvac_devices:01059,
-        hvac_devices:01060,
-        hvac_devices:01061 ;
+    s223:cnx hvac_devices:01054,
+        hvac_devices:01055,
+        hvac_devices:01056 ;
     s223:connected hvac_devices:01023 ;
     s223:connectedFrom hvac_devices:01023 ;
-    s223:connectedThrough hvac_devices:01067 ;
-    s223:hasConnectionPoint hvac_devices:01059,
-        hvac_devices:01060,
-        hvac_devices:01061 ;
-    s223:hasProperty hvac_devices:01062,
-        hvac_devices:01063,
-        hvac_devices:01064,
-        hvac_devices:01065 ;
-    bob:airInlet hvac_devices:01059 ;
-    bob:airOutlet hvac_devices:01060 ;
+    s223:connectedThrough hvac_devices:01062 ;
+    s223:hasConnectionPoint hvac_devices:01054,
+        hvac_devices:01055,
+        hvac_devices:01056 ;
+    s223:hasProperty hvac_devices:01057,
+        hvac_devices:01058,
+        hvac_devices:01059,
+        hvac_devices:01060 ;
+    bob:airInlet hvac_devices:01054 ;
+    bob:airOutlet hvac_devices:01055 ;
     rdfs:comment "VAV Box Electrical Heating Coil" .
 
-hvac_devices:01059 a s223:ConnectionPoint,
+hvac_devices:01054 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "REHEAT.airInlet" ;
-    s223:cnx hvac_devices:01058,
-        hvac_devices:01067 ;
-    s223:connectsThrough hvac_devices:01067 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01058 .
+    s223:cnx hvac_devices:01053,
+        hvac_devices:01062 ;
+    s223:connectsThrough hvac_devices:01062 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01053 .
 
-hvac_devices:01060 a s223:ConnectionPoint,
+hvac_devices:01055 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "REHEAT.airOutlet" ;
-    s223:cnx hvac_devices:01058 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01058 ;
+    s223:cnx hvac_devices:01053 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01053 ;
     s223:mapsTo hvac_devices:01012 .
 
-hvac_devices:01061 a s223:ConnectionPoint,
+hvac_devices:01056 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "REHEAT.electricalInlet" ;
-    s223:cnx hvac_devices:01058 ;
+    s223:cnx hvac_devices:01053 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf hvac_devices:01058 .
+    s223:isConnectionPointOf hvac_devices:01053 .
 
-hvac_devices:01062 a s223:ObservableProperty,
+hvac_devices:01057 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -10732,7 +10674,7 @@ hvac_devices:01062 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:01063 a s223:ObservableProperty,
+hvac_devices:01058 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -10742,7 +10684,7 @@ hvac_devices:01063 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-hvac_devices:01064 a s223:ActuatableProperty,
+hvac_devices:01059 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -10752,14 +10694,14 @@ hvac_devices:01064 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01065 a s223:ActuatableProperty,
+hvac_devices:01060 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:01066 a s223:ObservableProperty,
+hvac_devices:01061 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -10768,298 +10710,305 @@ hvac_devices:01066 a s223:ObservableProperty,
     s223:hasExternalReference bacnet_references:00024 ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-hvac_devices:01067 a s223:Connection ;
+hvac_devices:01062 a s223:Connection ;
     s223:cnx hvac_devices:01025,
-        hvac_devices:01059 ;
+        hvac_devices:01054 ;
     s223:connectsAt hvac_devices:01025,
-        hvac_devices:01059 ;
+        hvac_devices:01054 ;
     s223:connectsFrom hvac_devices:01023 ;
-    s223:connectsTo hvac_devices:01058 ;
-    s223:hasMedium s223:Medium-Air .
+    s223:connectsTo hvac_devices:01053 ;
+    s223:hasMedium p223:Fluid-Air .
 
-hvac_devices:01068 a s223:Connectable,
+hvac_devices:01063 a s223:Connection ;
+    s223:cnx hvac_devices:01026,
+        hvac_devices:01028 ;
+    s223:connectsAt hvac_devices:01026,
+        hvac_devices:01028 ;
+    s223:connectsFrom hvac_devices:01027 ;
+    s223:connectsTo hvac_devices:01023 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling .
+
+hvac_devices:01064 a s223:Connectable,
         s223:Equipment,
         scratch:SingleDuctTerminalWithReheat ;
     rdfs:label "VAVBox2System" ;
-    s223:cnx hvac_devices:01069,
-        hvac_devices:01070 ;
+    s223:cnx hvac_devices:01065,
+        hvac_devices:01066 ;
     s223:connected hvac_spaces:00012 ;
     s223:connectedThrough hvac:00008,
         hvac:00021 ;
     s223:connectedTo hvac_spaces:00012 ;
-    s223:contains hvac_devices:01071,
+    s223:contains hvac_devices:01067,
+        hvac_devices:01069,
+        hvac_devices:01071,
         hvac_devices:01073,
         hvac_devices:01075,
         hvac_devices:01077,
-        hvac_devices:01079,
         hvac_devices:01081,
-        hvac_devices:01116 ;
-    s223:hasConnectionPoint hvac_devices:01069,
-        hvac_devices:01070 ;
-    s223:hasProperty hvac_devices:01124 ;
-    scratch:airFlow hvac_devices:01072 ;
-    scratch:airInlet hvac_devices:01069 ;
-    scratch:airOutlet hvac_devices:01070 ;
-    scratch:damperPosition hvac_devices:01110 ;
+        hvac_devices:01107 ;
+    s223:hasConnectionPoint hvac_devices:01065,
+        hvac_devices:01066 ;
+    s223:hasProperty hvac_devices:01115 ;
+    scratch:airFlow hvac_devices:01068 ;
+    scratch:airInlet hvac_devices:01065 ;
+    scratch:airOutlet hvac_devices:01066 ;
     rdfs:comment "VAV Serving HVAC Zone 2" .
 
-hvac_devices:01069 a s223:ConnectionPoint,
+hvac_devices:01065 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAVBox2System.airInlet" ;
     s223:cnx hvac:00008,
-        hvac_devices:01068 ;
+        hvac_devices:01064 ;
     s223:connectsThrough hvac:00008 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01068 .
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01064 .
 
-hvac_devices:01070 a s223:ConnectionPoint,
+hvac_devices:01066 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "VAVBox2System.airOutlet" ;
     s223:cnx hvac:00021,
-        hvac_devices:01068 ;
+        hvac_devices:01064 ;
     s223:connectsThrough hvac:00021 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01068 .
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01064 .
 
-hvac_devices:01071 a s223:Connectable,
+hvac_devices:01067 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "SA-F" ;
-    s223:hasObservationLocation hvac_devices:01113 ;
-    s223:observes hvac_devices:01072 ;
+    s223:hasObservationLocation hvac_devices:01079 ;
+    s223:observes hvac_devices:01068 ;
     rdfs:comment "Air flow used to control damper" .
 
-hvac_devices:01072 a s223:ObservableProperty,
+hvac_devices:01068 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "SA-F.Flow" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:L-PER-SEC .
+
+hvac_devices:01069 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
+    rdfs:label "DA-T" ;
+    s223:hasObservationLocation hvac_devices:01109 ;
+    s223:observes hvac_devices:01070 ;
+    rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
+
+hvac_devices:01070 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "DA-T.Temperature" ;
+    s223:ofMedium p223:Fluid-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasUnit unit:DEG_C .
+
+hvac_devices:01071 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
+    rdfs:label "ZN-T" ;
+    s223:observes hvac_devices:01072 ;
+    rdfs:comment "Temperature of space" .
+
+hvac_devices:01072 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "ZN-T.Temperature" ;
+    s223:ofMedium p223:Fluid-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasUnit unit:DEG_C .
 
 hvac_devices:01073 a s223:Connectable,
         s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
-    rdfs:label "DA-T" ;
-    s223:hasObservationLocation hvac_devices:01118 ;
+    rdfs:label "VAV2_ZN-T" ;
     s223:observes hvac_devices:01074 ;
-    rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
+    rdfs:comment "Zone Air Temperature Sensor (return of thermal mass zone 2)" .
 
 hvac_devices:01074 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
-    rdfs:label "DA-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    rdfs:label "VAV2_ZN-T.Temperature" ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
 hvac_devices:01075 a s223:Connectable,
         s223:Equipment,
-        s223:Sensor,
-        s223:TemperatureSensor,
-        bob:AirTemperatureSensor ;
-    rdfs:label "ZN-T" ;
+        s223:HumiditySensor,
+        s223:Sensor ;
+    rdfs:label "VAV2_ZN-H" ;
     s223:observes hvac_devices:01076 ;
-    rdfs:comment "Temperature of space" .
+    rdfs:comment "Zone Air Humidity Sensor (return of thermal mass zone 2)" .
 
 hvac_devices:01076 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
-        bob:Temperature ;
-    rdfs:label "ZN-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:hasUnit unit:DEG_C .
-
-hvac_devices:01077 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor,
-        s223:TemperatureSensor,
-        bob:AirTemperatureSensor ;
-    rdfs:label "VAV2_ZN-T" ;
-    s223:observes hvac_devices:01078 ;
-    rdfs:comment "Zone Air Temperature Sensor (return of thermal mass zone 2)" .
-
-hvac_devices:01078 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Temperature ;
-    rdfs:label "VAV2_ZN-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:hasUnit unit:DEG_C .
-
-hvac_devices:01079 a s223:Connectable,
-        s223:Equipment,
-        s223:HumiditySensor,
-        s223:Sensor ;
-    rdfs:label "VAV2_ZN-H" ;
-    s223:observes hvac_devices:01080 ;
-    rdfs:comment "Zone Air Humidity Sensor (return of thermal mass zone 2)" .
-
-hvac_devices:01080 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "VAV2_ZN-H.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
-hvac_devices:01081 a s223:Connectable,
+hvac_devices:01077 a s223:Connectable,
         s223:Damper,
         s223:Equipment,
-        scratch:Damper,
-        scratch:DamperAndActuator,
-        scratch:ElectricalActuatedProportionalDamper ;
+        scratch:Damper ;
     rdfs:label "DPR" ;
-    s223:cnx hvac_devices:01082,
-        hvac_devices:01083,
-        hvac_devices:01084 ;
-    s223:connected hvac_devices:01116 ;
-    s223:connectedThrough hvac_devices:01125 ;
-    s223:connectedTo hvac_devices:01116 ;
-    s223:contains hvac_devices:01085,
-        hvac_devices:01111 ;
-    s223:hasConnectionPoint hvac_devices:01082,
-        hvac_devices:01083,
-        hvac_devices:01084 ;
-    bob:airInlet hvac_devices:01082 ;
-    bob:airOutlet hvac_devices:01083 ;
-    scratch:command hvac_devices:01095 ;
-    scratch:is_closed hvac_devices:01094 ;
-    scratch:is_open hvac_devices:01093 ;
-    scratch:linkageInlet hvac_devices:01084 ;
-    scratch:position hvac_devices:01110 ;
-    scratch:position_feedback hvac_devices:01110 ;
-    rdfs:comment "VAV Box 2 Air Damper" .
+    s223:cnx hvac_devices:01078,
+        hvac_devices:01079,
+        hvac_devices:01080 ;
+    s223:connected hvac_devices:01081,
+        hvac_devices:01107 ;
+    s223:connectedFrom hvac_devices:01081 ;
+    s223:connectedThrough hvac_devices:01116,
+        hvac_devices:01117 ;
+    s223:connectedTo hvac_devices:01107 ;
+    s223:hasConnectionPoint hvac_devices:01078,
+        hvac_devices:01079,
+        hvac_devices:01080 ;
+    bob:airInlet hvac_devices:01078 ;
+    bob:airOutlet hvac_devices:01079 ;
+    scratch:linkageInlet hvac_devices:01080 ;
+    rdfs:comment "Damper" .
 
-hvac_devices:01082 a s223:ConnectionPoint,
+hvac_devices:01078 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airInlet" ;
-    s223:cnx hvac_devices:01081 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01081 ;
-    s223:mapsTo hvac_devices:01069 .
+    s223:cnx hvac_devices:01077 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01077 ;
+    s223:mapsTo hvac_devices:01065 .
 
-hvac_devices:01083 a s223:ConnectionPoint,
+hvac_devices:01079 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airOutlet" ;
-    s223:cnx hvac_devices:01081,
-        hvac_devices:01125 ;
-    s223:connectsThrough hvac_devices:01125 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01081 .
+    s223:cnx hvac_devices:01077,
+        hvac_devices:01116 ;
+    s223:connectsThrough hvac_devices:01116 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01077 .
 
-hvac_devices:01084 a p223:MechanicalConnectionPoint,
+hvac_devices:01080 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "DPR.linkageInlet" ;
-    s223:cnx hvac_devices:01081 ;
+    s223:cnx hvac_devices:01077,
+        hvac_devices:01117 ;
+    s223:connectsThrough hvac_devices:01117 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01081 .
+    s223:isConnectionPointOf hvac_devices:01077 .
 
-hvac_devices:01085 a s223:Actuator,
+hvac_devices:01081 a s223:Actuator,
         s223:Connectable,
         s223:Equipment,
         scratch:Actuator,
-        scratch:ElectricalProportionalActuator ;
-    rdfs:label "actuator" ;
-    s223:cnx hvac_devices:01086,
-        hvac_devices:01087,
-        hvac_devices:01088,
+        scratch:ElectricalProportionalActuator,
+        scratch:VAVController ;
+    rdfs:label "VAVController" ;
+    s223:cnx hvac_devices:01082,
+        hvac_devices:01083,
+        hvac_devices:01084,
+        hvac_devices:01085,
+        hvac_devices:01086,
+        hvac_devices:01087 ;
+    s223:connected hvac_devices:01077 ;
+    s223:connectedThrough hvac_devices:01117 ;
+    s223:connectedTo hvac_devices:01077 ;
+    s223:contains hvac_devices:01105 ;
+    s223:hasConnectionPoint hvac_devices:01082,
+        hvac_devices:01083,
+        hvac_devices:01084,
+        hvac_devices:01085,
+        hvac_devices:01086,
+        hvac_devices:01087 ;
+    s223:hasProperty hvac_devices:01088,
         hvac_devices:01089,
         hvac_devices:01090,
-        hvac_devices:01091 ;
-    s223:connected hvac_devices:01111 ;
-    s223:connectedThrough hvac_devices:01115 ;
-    s223:connectedTo hvac_devices:01111 ;
-    s223:contains hvac_devices:01109 ;
-    s223:hasConnectionPoint hvac_devices:01086,
-        hvac_devices:01087,
-        hvac_devices:01088,
-        hvac_devices:01089,
-        hvac_devices:01090,
-        hvac_devices:01091 ;
-    s223:hasProperty hvac_devices:01092,
-        hvac_devices:01093,
-        hvac_devices:01094,
-        hvac_devices:01095,
-        hvac_devices:01096 ;
-    bob:contains hvac_devices:01097,
-        hvac_devices:01100,
-        hvac_devices:01103,
-        hvac_devices:01106 ;
-    scratch:position hvac_devices:01110 .
+        hvac_devices:01091,
+        hvac_devices:01092 ;
+    bob:contains hvac_devices:01093,
+        hvac_devices:01096,
+        hvac_devices:01099,
+        hvac_devices:01102 ;
+    scratch:position hvac_devices:01106 ;
+    rdfs:comment "VAV Controller with damper" .
 
-hvac_devices:01086 a p223:MechanicalConnectionPoint,
+hvac_devices:01082 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "actuator.linkageOutlet" ;
-    s223:cnx hvac_devices:01085,
-        hvac_devices:01115 ;
-    s223:connectsThrough hvac_devices:01115 ;
+    rdfs:label "VAVController.linkageOutlet" ;
+    s223:cnx hvac_devices:01081,
+        hvac_devices:01117 ;
+    s223:connectsThrough hvac_devices:01117 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01085 .
+    s223:isConnectionPointOf hvac_devices:01081 .
 
-hvac_devices:01087 a p223:AnalogOutput,
+hvac_devices:01083 a p223:AnalogOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.feedback_signal" ;
-    s223:cnx hvac_devices:01085 ;
+    rdfs:label "VAVController.feedback_signal" ;
+    s223:cnx hvac_devices:01081 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf hvac_devices:01085 .
+    s223:isConnectionPointOf hvac_devices:01081 .
 
-hvac_devices:01088 a p223:BinaryOutput,
+hvac_devices:01084 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:cnx hvac_devices:01085 ;
+    rdfs:label "VAVController.open_auxswitch_signal" ;
+    s223:cnx hvac_devices:01081 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:01085 .
+    s223:isConnectionPointOf hvac_devices:01081 .
 
-hvac_devices:01089 a p223:BinaryOutput,
+hvac_devices:01085 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:cnx hvac_devices:01085 ;
+    rdfs:label "VAVController.close_auxswitch_signal" ;
+    s223:cnx hvac_devices:01081 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:01085 .
+    s223:isConnectionPointOf hvac_devices:01081 .
 
-hvac_devices:01090 a s223:ConnectionPoint,
+hvac_devices:01086 a s223:ConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "actuator.electricalInlet" ;
-    s223:cnx hvac_devices:01085 ;
+    rdfs:label "VAVController.electricalInlet" ;
+    s223:cnx hvac_devices:01081 ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
-    s223:isConnectionPointOf hvac_devices:01085 .
+    s223:isConnectionPointOf hvac_devices:01081 .
 
-hvac_devices:01091 a p223:AnalogInput,
+hvac_devices:01087 a p223:AnalogInput,
         s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.proportional_signal" ;
-    s223:cnx hvac_devices:01085 ;
+    rdfs:label "VAVController.proportional_signal" ;
+    s223:cnx hvac_devices:01081 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf hvac_devices:01085 .
+    s223:isConnectionPointOf hvac_devices:01081 .
 
-hvac_devices:01092 a s223:ObservableProperty,
+hvac_devices:01088 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11068,21 +11017,21 @@ hvac_devices:01092 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01093 a s223:EnumerableProperty,
+hvac_devices:01089 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:01094 a s223:EnumerableProperty,
+hvac_devices:01090 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:01095 a s223:ActuatableProperty,
+hvac_devices:01091 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -11091,7 +11040,7 @@ hvac_devices:01095 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01096 a s223:ObservableProperty,
+hvac_devices:01092 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11100,83 +11049,83 @@ hvac_devices:01096 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:hasUnit unit:N-M .
 
-hvac_devices:01097 a p223:Producer,
+hvac_devices:01093 a p223:Producer,
         bob:Causality ;
     rdfs:label "positionProducer" ;
-    s223:hasInput hvac_devices:01098 ;
-    s223:hasOutput hvac_devices:01099 ;
-    bob:cause_input hvac_devices:01098 ;
-    bob:effect_output hvac_devices:01099 .
+    s223:hasInput hvac_devices:01094 ;
+    s223:hasOutput hvac_devices:01095 ;
+    bob:cause_input hvac_devices:01094 ;
+    bob:effect_output hvac_devices:01095 .
 
-hvac_devices:01098 a p223:ProducerInput ;
+hvac_devices:01094 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
-    s223:uses hvac_devices:01095 ;
-    bob:hasCauseLocation hvac_devices:01091 .
+    s223:uses hvac_devices:01091 ;
+    bob:hasCauseLocation hvac_devices:01087 .
 
-hvac_devices:01099 a p223:ProducerOutput ;
+hvac_devices:01095 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
-    s223:produces hvac_devices:01110 ;
-    bob:hasEffectLocation hvac_devices:01086 .
+    s223:produces hvac_devices:01106 ;
+    bob:hasEffectLocation hvac_devices:01082 .
 
-hvac_devices:01100 a p223:Producer,
+hvac_devices:01096 a p223:Producer,
         bob:Causality ;
     rdfs:label "feedbackProducer" ;
-    s223:hasInput hvac_devices:01101 ;
-    s223:hasOutput hvac_devices:01102 ;
-    bob:cause_input hvac_devices:01101 ;
-    bob:effect_output hvac_devices:01102 .
+    s223:hasInput hvac_devices:01097 ;
+    s223:hasOutput hvac_devices:01098 ;
+    bob:cause_input hvac_devices:01097 ;
+    bob:effect_output hvac_devices:01098 .
 
-hvac_devices:01101 a p223:ProducerInput ;
+hvac_devices:01097 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
-    s223:uses hvac_devices:01110 .
+    s223:uses hvac_devices:01106 .
 
-hvac_devices:01102 a p223:ProducerOutput ;
+hvac_devices:01098 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
-    s223:produces hvac_devices:01092 ;
-    bob:hasEffectLocation hvac_devices:01087 .
+    s223:produces hvac_devices:01088 ;
+    bob:hasEffectLocation hvac_devices:01083 .
 
-hvac_devices:01103 a p223:Producer,
+hvac_devices:01099 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_open_producer" ;
-    s223:hasInput hvac_devices:01104 ;
-    s223:hasOutput hvac_devices:01105 ;
-    bob:cause_input hvac_devices:01104 ;
-    bob:effect_output hvac_devices:01105 .
+    s223:hasInput hvac_devices:01100 ;
+    s223:hasOutput hvac_devices:01101 ;
+    bob:cause_input hvac_devices:01100 ;
+    bob:effect_output hvac_devices:01101 .
 
-hvac_devices:01104 a p223:ProducerInput ;
+hvac_devices:01100 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
-    s223:uses hvac_devices:01110 .
+    s223:uses hvac_devices:01106 .
 
-hvac_devices:01105 a p223:ProducerOutput ;
+hvac_devices:01101 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
-    s223:produces hvac_devices:01093 ;
-    bob:hasEffectLocation hvac_devices:01088 .
+    s223:produces hvac_devices:01089 ;
+    bob:hasEffectLocation hvac_devices:01084 .
 
-hvac_devices:01106 a p223:Producer,
+hvac_devices:01102 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_close_producer" ;
-    s223:hasInput hvac_devices:01107 ;
-    s223:hasOutput hvac_devices:01108 ;
-    bob:cause_input hvac_devices:01107 ;
-    bob:effect_output hvac_devices:01108 .
+    s223:hasInput hvac_devices:01103 ;
+    s223:hasOutput hvac_devices:01104 ;
+    bob:cause_input hvac_devices:01103 ;
+    bob:effect_output hvac_devices:01104 .
 
-hvac_devices:01107 a p223:ProducerInput ;
+hvac_devices:01103 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
-    s223:uses hvac_devices:01110 .
+    s223:uses hvac_devices:01106 .
 
-hvac_devices:01108 a p223:ProducerOutput ;
+hvac_devices:01104 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
-    s223:produces hvac_devices:01094 ;
-    bob:hasEffectLocation hvac_devices:01089 .
+    s223:produces hvac_devices:01090 ;
+    bob:hasEffectLocation hvac_devices:01085 .
 
-hvac_devices:01109 a s223:Connectable,
+hvac_devices:01105 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasObservationLocation hvac_devices:01086 ;
-    s223:observes hvac_devices:01110 .
+    s223:hasObservationLocation hvac_devices:01082 ;
+    s223:observes hvac_devices:01106 .
 
-hvac_devices:01110 a s223:ObservableProperty,
+hvac_devices:01106 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11185,112 +11134,56 @@ hvac_devices:01110 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01111 a s223:Connectable,
-        s223:Damper,
-        s223:Equipment,
-        scratch:Damper ;
-    rdfs:label "damper" ;
-    s223:cnx hvac_devices:01112,
-        hvac_devices:01113,
-        hvac_devices:01114 ;
-    s223:connected hvac_devices:01085 ;
-    s223:connectedFrom hvac_devices:01085 ;
-    s223:connectedThrough hvac_devices:01115 ;
-    s223:hasConnectionPoint hvac_devices:01112,
-        hvac_devices:01113,
-        hvac_devices:01114 ;
-    bob:airInlet hvac_devices:01112 ;
-    bob:airOutlet hvac_devices:01113 ;
-    scratch:linkageInlet hvac_devices:01114 ;
-    scratch:position hvac_devices:01110 .
-
-hvac_devices:01112 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx hvac_devices:01111 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01111 ;
-    s223:mapsTo hvac_devices:01082 .
-
-hvac_devices:01113 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx hvac_devices:01111 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01111 ;
-    s223:mapsTo hvac_devices:01083 .
-
-hvac_devices:01114 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "damper.linkageInlet" ;
-    s223:cnx hvac_devices:01111,
-        hvac_devices:01115 ;
-    s223:connectsThrough hvac_devices:01115 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01111 .
-
-hvac_devices:01115 a s223:Connection ;
-    s223:cnx hvac_devices:01086,
-        hvac_devices:01114 ;
-    s223:connectsAt hvac_devices:01086,
-        hvac_devices:01114 ;
-    s223:connectsFrom hvac_devices:01085 ;
-    s223:connectsTo hvac_devices:01111 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling .
-
-hvac_devices:01116 a s223:Coil,
+hvac_devices:01107 a s223:Coil,
         s223:Connectable,
         s223:Equipment,
         s223:ResistanceHeater ;
     rdfs:label "REHEAT" ;
-    s223:cnx hvac_devices:01117,
-        hvac_devices:01118,
-        hvac_devices:01119 ;
-    s223:connected hvac_devices:01081 ;
-    s223:connectedFrom hvac_devices:01081 ;
-    s223:connectedThrough hvac_devices:01125 ;
-    s223:hasConnectionPoint hvac_devices:01117,
-        hvac_devices:01118,
-        hvac_devices:01119 ;
-    s223:hasProperty hvac_devices:01120,
-        hvac_devices:01121,
-        hvac_devices:01122,
-        hvac_devices:01123 ;
-    bob:airInlet hvac_devices:01117 ;
-    bob:airOutlet hvac_devices:01118 ;
+    s223:cnx hvac_devices:01108,
+        hvac_devices:01109,
+        hvac_devices:01110 ;
+    s223:connected hvac_devices:01077 ;
+    s223:connectedFrom hvac_devices:01077 ;
+    s223:connectedThrough hvac_devices:01116 ;
+    s223:hasConnectionPoint hvac_devices:01108,
+        hvac_devices:01109,
+        hvac_devices:01110 ;
+    s223:hasProperty hvac_devices:01111,
+        hvac_devices:01112,
+        hvac_devices:01113,
+        hvac_devices:01114 ;
+    bob:airInlet hvac_devices:01108 ;
+    bob:airOutlet hvac_devices:01109 ;
     rdfs:comment "VAV Box Electrical Heating Coil" .
 
-hvac_devices:01117 a s223:ConnectionPoint,
+hvac_devices:01108 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "REHEAT.airInlet" ;
-    s223:cnx hvac_devices:01116,
-        hvac_devices:01125 ;
-    s223:connectsThrough hvac_devices:01125 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01116 .
+    s223:cnx hvac_devices:01107,
+        hvac_devices:01116 ;
+    s223:connectsThrough hvac_devices:01116 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01107 .
 
-hvac_devices:01118 a s223:ConnectionPoint,
+hvac_devices:01109 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "REHEAT.airOutlet" ;
-    s223:cnx hvac_devices:01116 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01116 ;
-    s223:mapsTo hvac_devices:01070 .
+    s223:cnx hvac_devices:01107 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01107 ;
+    s223:mapsTo hvac_devices:01066 .
 
-hvac_devices:01119 a s223:ConnectionPoint,
+hvac_devices:01110 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "REHEAT.electricalInlet" ;
-    s223:cnx hvac_devices:01116 ;
+    s223:cnx hvac_devices:01107 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf hvac_devices:01116 .
+    s223:isConnectionPointOf hvac_devices:01107 .
 
-hvac_devices:01120 a s223:ObservableProperty,
+hvac_devices:01111 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11299,7 +11192,7 @@ hvac_devices:01120 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:01121 a s223:ObservableProperty,
+hvac_devices:01112 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11309,7 +11202,7 @@ hvac_devices:01121 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-hvac_devices:01122 a s223:ActuatableProperty,
+hvac_devices:01113 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -11318,313 +11211,320 @@ hvac_devices:01122 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01123 a s223:ActuatableProperty,
+hvac_devices:01114 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+hvac_devices:01115 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "supplyAirTemperature" ;
+    qudt:hasQuantityKind quantitykind:Temperature .
+
+hvac_devices:01116 a s223:Connection ;
+    s223:cnx hvac_devices:01079,
+        hvac_devices:01108 ;
+    s223:connectsAt hvac_devices:01079,
+        hvac_devices:01108 ;
+    s223:connectsFrom hvac_devices:01077 ;
+    s223:connectsTo hvac_devices:01107 ;
+    s223:hasMedium p223:Fluid-Air .
+
+hvac_devices:01117 a s223:Connection ;
+    s223:cnx hvac_devices:01080,
+        hvac_devices:01082 ;
+    s223:connectsAt hvac_devices:01080,
+        hvac_devices:01082 ;
+    s223:connectsFrom hvac_devices:01081 ;
+    s223:connectsTo hvac_devices:01077 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling .
+
+hvac_devices:01118 a s223:Connectable,
+        s223:Equipment,
+        scratch:SingleDuctTerminalWithReheat ;
+    rdfs:label "VAVBox3System" ;
+    s223:cnx hvac_devices:01119,
+        hvac_devices:01120 ;
+    s223:connected hvac_spaces:00021 ;
+    s223:connectedThrough hvac:00009,
+        hvac:00026 ;
+    s223:connectedTo hvac_spaces:00021 ;
+    s223:contains hvac_devices:01121,
+        hvac_devices:01123,
+        hvac_devices:01125,
+        hvac_devices:01127,
+        hvac_devices:01129,
+        hvac_devices:01131,
+        hvac_devices:01135,
+        hvac_devices:01161 ;
+    s223:hasConnectionPoint hvac_devices:01119,
+        hvac_devices:01120 ;
+    s223:hasProperty hvac_devices:01169 ;
+    scratch:airFlow hvac_devices:01122 ;
+    scratch:airInlet hvac_devices:01119 ;
+    scratch:airOutlet hvac_devices:01120 ;
+    rdfs:comment "VAV Serving HVAC Zone 3" .
+
+hvac_devices:01119 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "VAVBox3System.airInlet" ;
+    s223:cnx hvac:00009,
+        hvac_devices:01118 ;
+    s223:connectsThrough hvac:00009 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01118 .
+
+hvac_devices:01120 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "VAVBox3System.airOutlet" ;
+    s223:cnx hvac:00026,
+        hvac_devices:01118 ;
+    s223:connectsThrough hvac:00026 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01118 .
+
+hvac_devices:01121 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor ;
+    rdfs:label "SA-F" ;
+    s223:hasObservationLocation hvac_devices:01133 ;
+    s223:observes hvac_devices:01122 ;
+    rdfs:comment "Air flow used to control damper" .
+
+hvac_devices:01122 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Flow ;
+    rdfs:label "SA-F.Flow" ;
+    s223:ofMedium p223:Fluid-Air ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:hasUnit unit:L-PER-SEC .
+
+hvac_devices:01123 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
+    rdfs:label "DA-T" ;
+    s223:hasObservationLocation hvac_devices:01163 ;
+    s223:observes hvac_devices:01124 ;
+    rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
 
 hvac_devices:01124 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
-    rdfs:label "supplyAirTemperature" ;
-    qudt:hasQuantityKind quantitykind:Temperature .
-
-hvac_devices:01125 a s223:Connection ;
-    s223:cnx hvac_devices:01083,
-        hvac_devices:01117 ;
-    s223:connectsAt hvac_devices:01083,
-        hvac_devices:01117 ;
-    s223:connectsFrom hvac_devices:01081 ;
-    s223:connectsTo hvac_devices:01116 ;
-    s223:hasMedium s223:Medium-Air .
-
-hvac_devices:01126 a s223:Connectable,
-        s223:Equipment,
-        scratch:SingleDuctTerminalWithReheat ;
-    rdfs:label "VAVBox3System" ;
-    s223:cnx hvac_devices:01127,
-        hvac_devices:01128 ;
-    s223:connected hvac_spaces:00021 ;
-    s223:connectedThrough hvac:00009,
-        hvac:00026 ;
-    s223:connectedTo hvac_spaces:00021 ;
-    s223:contains hvac_devices:01129,
-        hvac_devices:01131,
-        hvac_devices:01133,
-        hvac_devices:01135,
-        hvac_devices:01137,
-        hvac_devices:01139,
-        hvac_devices:01174 ;
-    s223:hasConnectionPoint hvac_devices:01127,
-        hvac_devices:01128 ;
-    s223:hasProperty hvac_devices:01182 ;
-    scratch:airFlow hvac_devices:01130 ;
-    scratch:airInlet hvac_devices:01127 ;
-    scratch:airOutlet hvac_devices:01128 ;
-    scratch:damperPosition hvac_devices:01168 ;
-    rdfs:comment "VAV Serving HVAC Zone 3" .
-
-hvac_devices:01127 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "VAVBox3System.airInlet" ;
-    s223:cnx hvac:00009,
-        hvac_devices:01126 ;
-    s223:connectsThrough hvac:00009 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01126 .
-
-hvac_devices:01128 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "VAVBox3System.airOutlet" ;
-    s223:cnx hvac:00026,
-        hvac_devices:01126 ;
-    s223:connectsThrough hvac:00026 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01126 .
-
-hvac_devices:01129 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor ;
-    rdfs:label "SA-F" ;
-    s223:hasObservationLocation hvac_devices:01171 ;
-    s223:observes hvac_devices:01130 ;
-    rdfs:comment "Air flow used to control damper" .
-
-hvac_devices:01130 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Flow ;
-    rdfs:label "SA-F.Flow" ;
-    s223:ofMedium s223:Medium-Air ;
-    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:hasUnit unit:L-PER-SEC .
-
-hvac_devices:01131 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor,
-        s223:TemperatureSensor,
-        bob:AirTemperatureSensor ;
-    rdfs:label "DA-T" ;
-    s223:hasObservationLocation hvac_devices:01176 ;
-    s223:observes hvac_devices:01132 ;
-    rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
-
-hvac_devices:01132 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Temperature ;
     rdfs:label "DA-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-hvac_devices:01133 a s223:Connectable,
+hvac_devices:01125 a s223:Connectable,
         s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
     rdfs:label "ZN-T" ;
-    s223:observes hvac_devices:01134 ;
+    s223:observes hvac_devices:01126 ;
     rdfs:comment "Temperature of space" .
 
-hvac_devices:01134 a s223:ObservableProperty,
+hvac_devices:01126 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "ZN-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-hvac_devices:01135 a s223:Connectable,
+hvac_devices:01127 a s223:Connectable,
         s223:Equipment,
         s223:Sensor,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
     rdfs:label "VAV3_ZN-T" ;
-    s223:observes hvac_devices:01136 ;
+    s223:observes hvac_devices:01128 ;
     rdfs:comment "Zone Air Temperature Sensor (return of thermal mass zone 3)" .
 
-hvac_devices:01136 a s223:ObservableProperty,
+hvac_devices:01128 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "VAV3_ZN-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-hvac_devices:01137 a s223:Connectable,
+hvac_devices:01129 a s223:Connectable,
         s223:Equipment,
         s223:HumiditySensor,
         s223:Sensor ;
     rdfs:label "VAV3_ZN-H" ;
-    s223:observes hvac_devices:01138 ;
+    s223:observes hvac_devices:01130 ;
     rdfs:comment "Zone Air Humidity Sensor (return of thermal mass zone 3)" .
 
-hvac_devices:01138 a s223:ObservableProperty,
+hvac_devices:01130 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "VAV3_ZN-H.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
-hvac_devices:01139 a s223:Connectable,
+hvac_devices:01131 a s223:Connectable,
         s223:Damper,
         s223:Equipment,
-        scratch:Damper,
-        scratch:DamperAndActuator,
-        scratch:ElectricalActuatedProportionalDamper ;
+        scratch:Damper ;
     rdfs:label "DPR" ;
-    s223:cnx hvac_devices:01140,
-        hvac_devices:01141,
-        hvac_devices:01142 ;
-    s223:connected hvac_devices:01174 ;
-    s223:connectedThrough hvac_devices:01183 ;
-    s223:connectedTo hvac_devices:01174 ;
-    s223:contains hvac_devices:01143,
-        hvac_devices:01169 ;
-    s223:hasConnectionPoint hvac_devices:01140,
-        hvac_devices:01141,
-        hvac_devices:01142 ;
-    bob:airInlet hvac_devices:01140 ;
-    bob:airOutlet hvac_devices:01141 ;
-    scratch:command hvac_devices:01153 ;
-    scratch:is_closed hvac_devices:01152 ;
-    scratch:is_open hvac_devices:01151 ;
-    scratch:linkageInlet hvac_devices:01142 ;
-    scratch:position hvac_devices:01168 ;
-    scratch:position_feedback hvac_devices:01168 ;
-    rdfs:comment "VAV Box 3 Air Damper" .
+    s223:cnx hvac_devices:01132,
+        hvac_devices:01133,
+        hvac_devices:01134 ;
+    s223:connected hvac_devices:01135,
+        hvac_devices:01161 ;
+    s223:connectedFrom hvac_devices:01135 ;
+    s223:connectedThrough hvac_devices:01170,
+        hvac_devices:01171 ;
+    s223:connectedTo hvac_devices:01161 ;
+    s223:hasConnectionPoint hvac_devices:01132,
+        hvac_devices:01133,
+        hvac_devices:01134 ;
+    bob:airInlet hvac_devices:01132 ;
+    bob:airOutlet hvac_devices:01133 ;
+    scratch:linkageInlet hvac_devices:01134 ;
+    rdfs:comment "Damper" .
 
-hvac_devices:01140 a s223:ConnectionPoint,
+hvac_devices:01132 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airInlet" ;
-    s223:cnx hvac_devices:01139 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01139 ;
-    s223:mapsTo hvac_devices:01127 .
+    s223:cnx hvac_devices:01131 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01131 ;
+    s223:mapsTo hvac_devices:01119 .
 
-hvac_devices:01141 a s223:ConnectionPoint,
+hvac_devices:01133 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airOutlet" ;
-    s223:cnx hvac_devices:01139,
-        hvac_devices:01183 ;
-    s223:connectsThrough hvac_devices:01183 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01139 .
+    s223:cnx hvac_devices:01131,
+        hvac_devices:01170 ;
+    s223:connectsThrough hvac_devices:01170 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01131 .
 
-hvac_devices:01142 a p223:MechanicalConnectionPoint,
+hvac_devices:01134 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "DPR.linkageInlet" ;
-    s223:cnx hvac_devices:01139 ;
+    s223:cnx hvac_devices:01131,
+        hvac_devices:01171 ;
+    s223:connectsThrough hvac_devices:01171 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01139 .
+    s223:isConnectionPointOf hvac_devices:01131 .
 
-hvac_devices:01143 a s223:Actuator,
+hvac_devices:01135 a s223:Actuator,
         s223:Connectable,
         s223:Equipment,
         scratch:Actuator,
-        scratch:ElectricalProportionalActuator ;
-    rdfs:label "actuator" ;
-    s223:cnx hvac_devices:01144,
+        scratch:ElectricalProportionalActuator,
+        scratch:VAVController ;
+    rdfs:label "VAVController" ;
+    s223:cnx hvac_devices:01136,
+        hvac_devices:01137,
+        hvac_devices:01138,
+        hvac_devices:01139,
+        hvac_devices:01140,
+        hvac_devices:01141 ;
+    s223:connected hvac_devices:01131 ;
+    s223:connectedThrough hvac_devices:01171 ;
+    s223:connectedTo hvac_devices:01131 ;
+    s223:contains hvac_devices:01159 ;
+    s223:hasConnectionPoint hvac_devices:01136,
+        hvac_devices:01137,
+        hvac_devices:01138,
+        hvac_devices:01139,
+        hvac_devices:01140,
+        hvac_devices:01141 ;
+    s223:hasProperty hvac_devices:01142,
+        hvac_devices:01143,
+        hvac_devices:01144,
         hvac_devices:01145,
-        hvac_devices:01146,
-        hvac_devices:01147,
-        hvac_devices:01148,
-        hvac_devices:01149 ;
-    s223:connected hvac_devices:01169 ;
-    s223:connectedThrough hvac_devices:01173 ;
-    s223:connectedTo hvac_devices:01169 ;
-    s223:contains hvac_devices:01167 ;
-    s223:hasConnectionPoint hvac_devices:01144,
-        hvac_devices:01145,
-        hvac_devices:01146,
-        hvac_devices:01147,
-        hvac_devices:01148,
-        hvac_devices:01149 ;
-    s223:hasProperty hvac_devices:01150,
-        hvac_devices:01151,
-        hvac_devices:01152,
+        hvac_devices:01146 ;
+    bob:contains hvac_devices:01147,
+        hvac_devices:01150,
         hvac_devices:01153,
-        hvac_devices:01154 ;
-    bob:contains hvac_devices:01155,
-        hvac_devices:01158,
-        hvac_devices:01161,
-        hvac_devices:01164 ;
-    scratch:position hvac_devices:01168 .
+        hvac_devices:01156 ;
+    scratch:position hvac_devices:01160 ;
+    rdfs:comment "VAV Controller with damper" .
 
-hvac_devices:01144 a p223:MechanicalConnectionPoint,
+hvac_devices:01136 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "actuator.linkageOutlet" ;
-    s223:cnx hvac_devices:01143,
-        hvac_devices:01173 ;
-    s223:connectsThrough hvac_devices:01173 ;
+    rdfs:label "VAVController.linkageOutlet" ;
+    s223:cnx hvac_devices:01135,
+        hvac_devices:01171 ;
+    s223:connectsThrough hvac_devices:01171 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01143 .
+    s223:isConnectionPointOf hvac_devices:01135 .
 
-hvac_devices:01145 a p223:AnalogOutput,
+hvac_devices:01137 a p223:AnalogOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.feedback_signal" ;
-    s223:cnx hvac_devices:01143 ;
+    rdfs:label "VAVController.feedback_signal" ;
+    s223:cnx hvac_devices:01135 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf hvac_devices:01143 .
+    s223:isConnectionPointOf hvac_devices:01135 .
 
-hvac_devices:01146 a p223:BinaryOutput,
+hvac_devices:01138 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:cnx hvac_devices:01143 ;
+    rdfs:label "VAVController.open_auxswitch_signal" ;
+    s223:cnx hvac_devices:01135 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:01143 .
+    s223:isConnectionPointOf hvac_devices:01135 .
 
-hvac_devices:01147 a p223:BinaryOutput,
+hvac_devices:01139 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:cnx hvac_devices:01143 ;
+    rdfs:label "VAVController.close_auxswitch_signal" ;
+    s223:cnx hvac_devices:01135 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:01143 .
+    s223:isConnectionPointOf hvac_devices:01135 .
 
-hvac_devices:01148 a s223:ConnectionPoint,
+hvac_devices:01140 a s223:ConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "actuator.electricalInlet" ;
-    s223:cnx hvac_devices:01143 ;
+    rdfs:label "VAVController.electricalInlet" ;
+    s223:cnx hvac_devices:01135 ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
-    s223:isConnectionPointOf hvac_devices:01143 .
+    s223:isConnectionPointOf hvac_devices:01135 .
 
-hvac_devices:01149 a p223:AnalogInput,
+hvac_devices:01141 a p223:AnalogInput,
         s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.proportional_signal" ;
-    s223:cnx hvac_devices:01143 ;
+    rdfs:label "VAVController.proportional_signal" ;
+    s223:cnx hvac_devices:01135 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf hvac_devices:01143 .
+    s223:isConnectionPointOf hvac_devices:01135 .
 
-hvac_devices:01150 a s223:ObservableProperty,
+hvac_devices:01142 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11633,21 +11533,21 @@ hvac_devices:01150 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01151 a s223:EnumerableProperty,
+hvac_devices:01143 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:01152 a s223:EnumerableProperty,
+hvac_devices:01144 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:01153 a s223:ActuatableProperty,
+hvac_devices:01145 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -11656,7 +11556,7 @@ hvac_devices:01153 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01154 a s223:ObservableProperty,
+hvac_devices:01146 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11665,83 +11565,83 @@ hvac_devices:01154 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:hasUnit unit:N-M .
 
-hvac_devices:01155 a p223:Producer,
+hvac_devices:01147 a p223:Producer,
         bob:Causality ;
     rdfs:label "positionProducer" ;
-    s223:hasInput hvac_devices:01156 ;
-    s223:hasOutput hvac_devices:01157 ;
-    bob:cause_input hvac_devices:01156 ;
-    bob:effect_output hvac_devices:01157 .
+    s223:hasInput hvac_devices:01148 ;
+    s223:hasOutput hvac_devices:01149 ;
+    bob:cause_input hvac_devices:01148 ;
+    bob:effect_output hvac_devices:01149 .
 
-hvac_devices:01156 a p223:ProducerInput ;
+hvac_devices:01148 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
-    s223:uses hvac_devices:01153 ;
-    bob:hasCauseLocation hvac_devices:01149 .
+    s223:uses hvac_devices:01145 ;
+    bob:hasCauseLocation hvac_devices:01141 .
 
-hvac_devices:01157 a p223:ProducerOutput ;
+hvac_devices:01149 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
-    s223:produces hvac_devices:01168 ;
-    bob:hasEffectLocation hvac_devices:01144 .
+    s223:produces hvac_devices:01160 ;
+    bob:hasEffectLocation hvac_devices:01136 .
 
-hvac_devices:01158 a p223:Producer,
+hvac_devices:01150 a p223:Producer,
         bob:Causality ;
     rdfs:label "feedbackProducer" ;
-    s223:hasInput hvac_devices:01159 ;
-    s223:hasOutput hvac_devices:01160 ;
-    bob:cause_input hvac_devices:01159 ;
-    bob:effect_output hvac_devices:01160 .
+    s223:hasInput hvac_devices:01151 ;
+    s223:hasOutput hvac_devices:01152 ;
+    bob:cause_input hvac_devices:01151 ;
+    bob:effect_output hvac_devices:01152 .
 
-hvac_devices:01159 a p223:ProducerInput ;
+hvac_devices:01151 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
-    s223:uses hvac_devices:01168 .
+    s223:uses hvac_devices:01160 .
 
-hvac_devices:01160 a p223:ProducerOutput ;
+hvac_devices:01152 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
-    s223:produces hvac_devices:01150 ;
-    bob:hasEffectLocation hvac_devices:01145 .
+    s223:produces hvac_devices:01142 ;
+    bob:hasEffectLocation hvac_devices:01137 .
 
-hvac_devices:01161 a p223:Producer,
+hvac_devices:01153 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_open_producer" ;
-    s223:hasInput hvac_devices:01162 ;
-    s223:hasOutput hvac_devices:01163 ;
-    bob:cause_input hvac_devices:01162 ;
-    bob:effect_output hvac_devices:01163 .
+    s223:hasInput hvac_devices:01154 ;
+    s223:hasOutput hvac_devices:01155 ;
+    bob:cause_input hvac_devices:01154 ;
+    bob:effect_output hvac_devices:01155 .
 
-hvac_devices:01162 a p223:ProducerInput ;
+hvac_devices:01154 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
-    s223:uses hvac_devices:01168 .
+    s223:uses hvac_devices:01160 .
 
-hvac_devices:01163 a p223:ProducerOutput ;
+hvac_devices:01155 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
-    s223:produces hvac_devices:01151 ;
-    bob:hasEffectLocation hvac_devices:01146 .
+    s223:produces hvac_devices:01143 ;
+    bob:hasEffectLocation hvac_devices:01138 .
 
-hvac_devices:01164 a p223:Producer,
+hvac_devices:01156 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_close_producer" ;
-    s223:hasInput hvac_devices:01165 ;
-    s223:hasOutput hvac_devices:01166 ;
-    bob:cause_input hvac_devices:01165 ;
-    bob:effect_output hvac_devices:01166 .
+    s223:hasInput hvac_devices:01157 ;
+    s223:hasOutput hvac_devices:01158 ;
+    bob:cause_input hvac_devices:01157 ;
+    bob:effect_output hvac_devices:01158 .
 
-hvac_devices:01165 a p223:ProducerInput ;
+hvac_devices:01157 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
-    s223:uses hvac_devices:01168 .
+    s223:uses hvac_devices:01160 .
 
-hvac_devices:01166 a p223:ProducerOutput ;
+hvac_devices:01158 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
-    s223:produces hvac_devices:01152 ;
-    bob:hasEffectLocation hvac_devices:01147 .
+    s223:produces hvac_devices:01144 ;
+    bob:hasEffectLocation hvac_devices:01139 .
 
-hvac_devices:01167 a s223:Connectable,
+hvac_devices:01159 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasObservationLocation hvac_devices:01144 ;
-    s223:observes hvac_devices:01168 .
+    s223:hasObservationLocation hvac_devices:01136 ;
+    s223:observes hvac_devices:01160 .
 
-hvac_devices:01168 a s223:ObservableProperty,
+hvac_devices:01160 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11750,112 +11650,56 @@ hvac_devices:01168 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01169 a s223:Connectable,
-        s223:Damper,
-        s223:Equipment,
-        scratch:Damper ;
-    rdfs:label "damper" ;
-    s223:cnx hvac_devices:01170,
-        hvac_devices:01171,
-        hvac_devices:01172 ;
-    s223:connected hvac_devices:01143 ;
-    s223:connectedFrom hvac_devices:01143 ;
-    s223:connectedThrough hvac_devices:01173 ;
-    s223:hasConnectionPoint hvac_devices:01170,
-        hvac_devices:01171,
-        hvac_devices:01172 ;
-    bob:airInlet hvac_devices:01170 ;
-    bob:airOutlet hvac_devices:01171 ;
-    scratch:linkageInlet hvac_devices:01172 ;
-    scratch:position hvac_devices:01168 .
-
-hvac_devices:01170 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx hvac_devices:01169 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01169 ;
-    s223:mapsTo hvac_devices:01140 .
-
-hvac_devices:01171 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx hvac_devices:01169 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01169 ;
-    s223:mapsTo hvac_devices:01141 .
-
-hvac_devices:01172 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "damper.linkageInlet" ;
-    s223:cnx hvac_devices:01169,
-        hvac_devices:01173 ;
-    s223:connectsThrough hvac_devices:01173 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01169 .
-
-hvac_devices:01173 a s223:Connection ;
-    s223:cnx hvac_devices:01144,
-        hvac_devices:01172 ;
-    s223:connectsAt hvac_devices:01144,
-        hvac_devices:01172 ;
-    s223:connectsFrom hvac_devices:01143 ;
-    s223:connectsTo hvac_devices:01169 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling .
-
-hvac_devices:01174 a s223:Coil,
+hvac_devices:01161 a s223:Coil,
         s223:Connectable,
         s223:Equipment,
         s223:ResistanceHeater ;
     rdfs:label "REHEAT" ;
-    s223:cnx hvac_devices:01175,
-        hvac_devices:01176,
-        hvac_devices:01177 ;
-    s223:connected hvac_devices:01139 ;
-    s223:connectedFrom hvac_devices:01139 ;
-    s223:connectedThrough hvac_devices:01183 ;
-    s223:hasConnectionPoint hvac_devices:01175,
-        hvac_devices:01176,
-        hvac_devices:01177 ;
-    s223:hasProperty hvac_devices:01178,
-        hvac_devices:01179,
-        hvac_devices:01180,
-        hvac_devices:01181 ;
-    bob:airInlet hvac_devices:01175 ;
-    bob:airOutlet hvac_devices:01176 ;
+    s223:cnx hvac_devices:01162,
+        hvac_devices:01163,
+        hvac_devices:01164 ;
+    s223:connected hvac_devices:01131 ;
+    s223:connectedFrom hvac_devices:01131 ;
+    s223:connectedThrough hvac_devices:01170 ;
+    s223:hasConnectionPoint hvac_devices:01162,
+        hvac_devices:01163,
+        hvac_devices:01164 ;
+    s223:hasProperty hvac_devices:01165,
+        hvac_devices:01166,
+        hvac_devices:01167,
+        hvac_devices:01168 ;
+    bob:airInlet hvac_devices:01162 ;
+    bob:airOutlet hvac_devices:01163 ;
     rdfs:comment "VAV Box Electrical Heating Coil" .
 
-hvac_devices:01175 a s223:ConnectionPoint,
+hvac_devices:01162 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "REHEAT.airInlet" ;
-    s223:cnx hvac_devices:01174,
-        hvac_devices:01183 ;
-    s223:connectsThrough hvac_devices:01183 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01174 .
+    s223:cnx hvac_devices:01161,
+        hvac_devices:01170 ;
+    s223:connectsThrough hvac_devices:01170 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01161 .
 
-hvac_devices:01176 a s223:ConnectionPoint,
+hvac_devices:01163 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "REHEAT.airOutlet" ;
-    s223:cnx hvac_devices:01174 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01174 ;
-    s223:mapsTo hvac_devices:01128 .
+    s223:cnx hvac_devices:01161 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01161 ;
+    s223:mapsTo hvac_devices:01120 .
 
-hvac_devices:01177 a s223:ConnectionPoint,
+hvac_devices:01164 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "REHEAT.electricalInlet" ;
-    s223:cnx hvac_devices:01174 ;
+    s223:cnx hvac_devices:01161 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf hvac_devices:01174 .
+    s223:isConnectionPointOf hvac_devices:01161 .
 
-hvac_devices:01178 a s223:ObservableProperty,
+hvac_devices:01165 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11864,7 +11708,7 @@ hvac_devices:01178 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:01179 a s223:ObservableProperty,
+hvac_devices:01166 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -11874,7 +11718,7 @@ hvac_devices:01179 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-hvac_devices:01180 a s223:ActuatableProperty,
+hvac_devices:01167 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -11883,313 +11727,320 @@ hvac_devices:01180 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01181 a s223:ActuatableProperty,
+hvac_devices:01168 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+
+hvac_devices:01169 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "supplyAirTemperature" ;
+    qudt:hasQuantityKind quantitykind:Temperature .
+
+hvac_devices:01170 a s223:Connection ;
+    s223:cnx hvac_devices:01133,
+        hvac_devices:01162 ;
+    s223:connectsAt hvac_devices:01133,
+        hvac_devices:01162 ;
+    s223:connectsFrom hvac_devices:01131 ;
+    s223:connectsTo hvac_devices:01161 ;
+    s223:hasMedium p223:Fluid-Air .
+
+hvac_devices:01171 a s223:Connection ;
+    s223:cnx hvac_devices:01134,
+        hvac_devices:01136 ;
+    s223:connectsAt hvac_devices:01134,
+        hvac_devices:01136 ;
+    s223:connectsFrom hvac_devices:01135 ;
+    s223:connectsTo hvac_devices:01131 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling .
+
+hvac_devices:01172 a s223:Connectable,
+        s223:Equipment,
+        scratch:SingleDuctTerminalWithReheat ;
+    rdfs:label "VAVBox4System" ;
+    s223:cnx hvac_devices:01173,
+        hvac_devices:01174 ;
+    s223:connected hvac_spaces:00030 ;
+    s223:connectedThrough hvac:00009,
+        hvac:00027 ;
+    s223:connectedTo hvac_spaces:00030 ;
+    s223:contains hvac_devices:01175,
+        hvac_devices:01177,
+        hvac_devices:01179,
+        hvac_devices:01181,
+        hvac_devices:01183,
+        hvac_devices:01185,
+        hvac_devices:01189,
+        hvac_devices:01215 ;
+    s223:hasConnectionPoint hvac_devices:01173,
+        hvac_devices:01174 ;
+    s223:hasProperty hvac_devices:01223 ;
+    scratch:airFlow hvac_devices:01176 ;
+    scratch:airInlet hvac_devices:01173 ;
+    scratch:airOutlet hvac_devices:01174 ;
+    rdfs:comment "VAV Serving HVAC Zone 4" .
+
+hvac_devices:01173 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "VAVBox4System.airInlet" ;
+    s223:cnx hvac:00009,
+        hvac_devices:01172 ;
+    s223:connectsThrough hvac:00009 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01172 .
+
+hvac_devices:01174 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "VAVBox4System.airOutlet" ;
+    s223:cnx hvac:00027,
+        hvac_devices:01172 ;
+    s223:connectsThrough hvac:00027 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01172 .
+
+hvac_devices:01175 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor ;
+    rdfs:label "SA-F" ;
+    s223:hasObservationLocation hvac_devices:01187 ;
+    s223:observes hvac_devices:01176 ;
+    rdfs:comment "Air flow used to control damper" .
+
+hvac_devices:01176 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Flow ;
+    rdfs:label "SA-F.Flow" ;
+    s223:ofMedium p223:Fluid-Air ;
+    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:hasUnit unit:L-PER-SEC .
+
+hvac_devices:01177 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
+    rdfs:label "DA-T" ;
+    s223:hasObservationLocation hvac_devices:01217 ;
+    s223:observes hvac_devices:01178 ;
+    rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
+
+hvac_devices:01178 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "DA-T.Temperature" ;
+    s223:ofMedium p223:Fluid-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasUnit unit:DEG_C .
+
+hvac_devices:01179 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
+    rdfs:label "ZN-T" ;
+    s223:observes hvac_devices:01180 ;
+    rdfs:comment "Temperature of space" .
+
+hvac_devices:01180 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "ZN-T.Temperature" ;
+    s223:ofMedium p223:Fluid-Air ;
+    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasUnit unit:DEG_C .
+
+hvac_devices:01181 a s223:Connectable,
+        s223:Equipment,
+        s223:Sensor,
+        s223:TemperatureSensor,
+        bob:AirTemperatureSensor ;
+    rdfs:label "VAV4_ZN-T" ;
+    s223:observes hvac_devices:01182 ;
+    rdfs:comment "Zone Air Temperature Sensor (return of thermal mass zone 4)" .
 
 hvac_devices:01182 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
-    rdfs:label "supplyAirTemperature" ;
-    qudt:hasQuantityKind quantitykind:Temperature .
-
-hvac_devices:01183 a s223:Connection ;
-    s223:cnx hvac_devices:01141,
-        hvac_devices:01175 ;
-    s223:connectsAt hvac_devices:01141,
-        hvac_devices:01175 ;
-    s223:connectsFrom hvac_devices:01139 ;
-    s223:connectsTo hvac_devices:01174 ;
-    s223:hasMedium s223:Medium-Air .
-
-hvac_devices:01184 a s223:Connectable,
-        s223:Equipment,
-        scratch:SingleDuctTerminalWithReheat ;
-    rdfs:label "VAVBox4System" ;
-    s223:cnx hvac_devices:01185,
-        hvac_devices:01186 ;
-    s223:connected hvac_spaces:00030 ;
-    s223:connectedThrough hvac:00009,
-        hvac:00027 ;
-    s223:connectedTo hvac_spaces:00030 ;
-    s223:contains hvac_devices:01187,
-        hvac_devices:01189,
-        hvac_devices:01191,
-        hvac_devices:01193,
-        hvac_devices:01195,
-        hvac_devices:01197,
-        hvac_devices:01232 ;
-    s223:hasConnectionPoint hvac_devices:01185,
-        hvac_devices:01186 ;
-    s223:hasProperty hvac_devices:01240 ;
-    scratch:airFlow hvac_devices:01188 ;
-    scratch:airInlet hvac_devices:01185 ;
-    scratch:airOutlet hvac_devices:01186 ;
-    scratch:damperPosition hvac_devices:01226 ;
-    rdfs:comment "VAV Serving HVAC Zone 4" .
-
-hvac_devices:01185 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "VAVBox4System.airInlet" ;
-    s223:cnx hvac:00009,
-        hvac_devices:01184 ;
-    s223:connectsThrough hvac:00009 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01184 .
-
-hvac_devices:01186 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "VAVBox4System.airOutlet" ;
-    s223:cnx hvac:00027,
-        hvac_devices:01184 ;
-    s223:connectsThrough hvac:00027 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01184 .
-
-hvac_devices:01187 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor ;
-    rdfs:label "SA-F" ;
-    s223:hasObservationLocation hvac_devices:01229 ;
-    s223:observes hvac_devices:01188 ;
-    rdfs:comment "Air flow used to control damper" .
-
-hvac_devices:01188 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Flow ;
-    rdfs:label "SA-F.Flow" ;
-    s223:ofMedium s223:Medium-Air ;
-    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
-    qudt:hasUnit unit:L-PER-SEC .
-
-hvac_devices:01189 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor,
-        s223:TemperatureSensor,
-        bob:AirTemperatureSensor ;
-    rdfs:label "DA-T" ;
-    s223:hasObservationLocation hvac_devices:01234 ;
-    s223:observes hvac_devices:01190 ;
-    rdfs:comment "Air supplied to zone by VAV 2, AKA discharge air temperature" .
-
-hvac_devices:01190 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Temperature ;
-    rdfs:label "DA-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:hasUnit unit:DEG_C .
-
-hvac_devices:01191 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor,
-        s223:TemperatureSensor,
-        bob:AirTemperatureSensor ;
-    rdfs:label "ZN-T" ;
-    s223:observes hvac_devices:01192 ;
-    rdfs:comment "Temperature of space" .
-
-hvac_devices:01192 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Temperature ;
-    rdfs:label "ZN-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
-    qudt:hasQuantityKind quantitykind:Temperature ;
-    qudt:hasUnit unit:DEG_C .
-
-hvac_devices:01193 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor,
-        s223:TemperatureSensor,
-        bob:AirTemperatureSensor ;
-    rdfs:label "VAV4_ZN-T" ;
-    s223:observes hvac_devices:01194 ;
-    rdfs:comment "Zone Air Temperature Sensor (return of thermal mass zone 4)" .
-
-hvac_devices:01194 a s223:ObservableProperty,
-        s223:Property,
-        s223:QuantifiableObservableProperty,
-        s223:QuantifiableProperty,
-        bob:Temperature ;
     rdfs:label "VAV4_ZN-T.Temperature" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-hvac_devices:01195 a s223:Connectable,
+hvac_devices:01183 a s223:Connectable,
         s223:Equipment,
         s223:HumiditySensor,
         s223:Sensor ;
     rdfs:label "VAV4_ZN-H" ;
-    s223:observes hvac_devices:01196 ;
+    s223:observes hvac_devices:01184 ;
     rdfs:comment "Zone Air Humidity Sensor (return of thermal mass zone 4)" .
 
-hvac_devices:01196 a s223:ObservableProperty,
+hvac_devices:01184 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
         bob:RelativeHumidity ;
     rdfs:label "VAV4_ZN-H.Humidity" ;
-    s223:ofMedium s223:Medium-Air ;
+    s223:ofMedium p223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:RelativeHumidity ;
     qudt:hasUnit unit:PERCENT_RH .
 
-hvac_devices:01197 a s223:Connectable,
+hvac_devices:01185 a s223:Connectable,
         s223:Damper,
         s223:Equipment,
-        scratch:Damper,
-        scratch:DamperAndActuator,
-        scratch:ElectricalActuatedProportionalDamper ;
+        scratch:Damper ;
     rdfs:label "DPR" ;
-    s223:cnx hvac_devices:01198,
-        hvac_devices:01199,
-        hvac_devices:01200 ;
-    s223:connected hvac_devices:01232 ;
-    s223:connectedThrough hvac_devices:01241 ;
-    s223:connectedTo hvac_devices:01232 ;
-    s223:contains hvac_devices:01201,
-        hvac_devices:01227 ;
-    s223:hasConnectionPoint hvac_devices:01198,
-        hvac_devices:01199,
-        hvac_devices:01200 ;
-    bob:airInlet hvac_devices:01198 ;
-    bob:airOutlet hvac_devices:01199 ;
-    scratch:command hvac_devices:01211 ;
-    scratch:is_closed hvac_devices:01210 ;
-    scratch:is_open hvac_devices:01209 ;
-    scratch:linkageInlet hvac_devices:01200 ;
-    scratch:position hvac_devices:01226 ;
-    scratch:position_feedback hvac_devices:01226 ;
-    rdfs:comment "VAV Box 4 Air Damper" .
+    s223:cnx hvac_devices:01186,
+        hvac_devices:01187,
+        hvac_devices:01188 ;
+    s223:connected hvac_devices:01189,
+        hvac_devices:01215 ;
+    s223:connectedFrom hvac_devices:01189 ;
+    s223:connectedThrough hvac_devices:01224,
+        hvac_devices:01225 ;
+    s223:connectedTo hvac_devices:01215 ;
+    s223:hasConnectionPoint hvac_devices:01186,
+        hvac_devices:01187,
+        hvac_devices:01188 ;
+    bob:airInlet hvac_devices:01186 ;
+    bob:airOutlet hvac_devices:01187 ;
+    scratch:linkageInlet hvac_devices:01188 ;
+    rdfs:comment "Damper" .
 
-hvac_devices:01198 a s223:ConnectionPoint,
+hvac_devices:01186 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airInlet" ;
-    s223:cnx hvac_devices:01197 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01197 ;
-    s223:mapsTo hvac_devices:01185 .
+    s223:cnx hvac_devices:01185 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01185 ;
+    s223:mapsTo hvac_devices:01173 .
 
-hvac_devices:01199 a s223:ConnectionPoint,
+hvac_devices:01187 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "DPR.airOutlet" ;
-    s223:cnx hvac_devices:01197,
-        hvac_devices:01241 ;
-    s223:connectsThrough hvac_devices:01241 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01197 .
+    s223:cnx hvac_devices:01185,
+        hvac_devices:01224 ;
+    s223:connectsThrough hvac_devices:01224 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01185 .
 
-hvac_devices:01200 a p223:MechanicalConnectionPoint,
+hvac_devices:01188 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "DPR.linkageInlet" ;
-    s223:cnx hvac_devices:01197 ;
+    s223:cnx hvac_devices:01185,
+        hvac_devices:01225 ;
+    s223:connectsThrough hvac_devices:01225 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01197 .
+    s223:isConnectionPointOf hvac_devices:01185 .
 
-hvac_devices:01201 a s223:Actuator,
+hvac_devices:01189 a s223:Actuator,
         s223:Connectable,
         s223:Equipment,
         scratch:Actuator,
-        scratch:ElectricalProportionalActuator ;
-    rdfs:label "actuator" ;
-    s223:cnx hvac_devices:01202,
-        hvac_devices:01203,
+        scratch:ElectricalProportionalActuator,
+        scratch:VAVController ;
+    rdfs:label "VAVController" ;
+    s223:cnx hvac_devices:01190,
+        hvac_devices:01191,
+        hvac_devices:01192,
+        hvac_devices:01193,
+        hvac_devices:01194,
+        hvac_devices:01195 ;
+    s223:connected hvac_devices:01185 ;
+    s223:connectedThrough hvac_devices:01225 ;
+    s223:connectedTo hvac_devices:01185 ;
+    s223:contains hvac_devices:01213 ;
+    s223:hasConnectionPoint hvac_devices:01190,
+        hvac_devices:01191,
+        hvac_devices:01192,
+        hvac_devices:01193,
+        hvac_devices:01194,
+        hvac_devices:01195 ;
+    s223:hasProperty hvac_devices:01196,
+        hvac_devices:01197,
+        hvac_devices:01198,
+        hvac_devices:01199,
+        hvac_devices:01200 ;
+    bob:contains hvac_devices:01201,
         hvac_devices:01204,
-        hvac_devices:01205,
-        hvac_devices:01206,
-        hvac_devices:01207 ;
-    s223:connected hvac_devices:01227 ;
-    s223:connectedThrough hvac_devices:01231 ;
-    s223:connectedTo hvac_devices:01227 ;
-    s223:contains hvac_devices:01225 ;
-    s223:hasConnectionPoint hvac_devices:01202,
-        hvac_devices:01203,
-        hvac_devices:01204,
-        hvac_devices:01205,
-        hvac_devices:01206,
-        hvac_devices:01207 ;
-    s223:hasProperty hvac_devices:01208,
-        hvac_devices:01209,
-        hvac_devices:01210,
-        hvac_devices:01211,
-        hvac_devices:01212 ;
-    bob:contains hvac_devices:01213,
-        hvac_devices:01216,
-        hvac_devices:01219,
-        hvac_devices:01222 ;
-    scratch:position hvac_devices:01226 .
+        hvac_devices:01207,
+        hvac_devices:01210 ;
+    scratch:position hvac_devices:01214 ;
+    rdfs:comment "VAV Controller with damper" .
 
-hvac_devices:01202 a p223:MechanicalConnectionPoint,
+hvac_devices:01190 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    rdfs:label "actuator.linkageOutlet" ;
-    s223:cnx hvac_devices:01201,
-        hvac_devices:01231 ;
-    s223:connectsThrough hvac_devices:01231 ;
+    rdfs:label "VAVController.linkageOutlet" ;
+    s223:cnx hvac_devices:01189,
+        hvac_devices:01225 ;
+    s223:connectsThrough hvac_devices:01225 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01201 .
+    s223:isConnectionPointOf hvac_devices:01189 .
 
-hvac_devices:01203 a p223:AnalogOutput,
+hvac_devices:01191 a p223:AnalogOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.feedback_signal" ;
-    s223:cnx hvac_devices:01201 ;
+    rdfs:label "VAVController.feedback_signal" ;
+    s223:cnx hvac_devices:01189 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf hvac_devices:01201 .
+    s223:isConnectionPointOf hvac_devices:01189 .
 
-hvac_devices:01204 a p223:BinaryOutput,
+hvac_devices:01192 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.open_auxswitch_signal" ;
-    s223:cnx hvac_devices:01201 ;
+    rdfs:label "VAVController.open_auxswitch_signal" ;
+    s223:cnx hvac_devices:01189 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:01201 .
+    s223:isConnectionPointOf hvac_devices:01189 .
 
-hvac_devices:01205 a p223:BinaryOutput,
+hvac_devices:01193 a p223:BinaryOutput,
         s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:OnOffSignalConnectionPoint ;
-    rdfs:label "actuator.close_auxswitch_signal" ;
-    s223:cnx hvac_devices:01201 ;
+    rdfs:label "VAVController.close_auxswitch_signal" ;
+    s223:cnx hvac_devices:01189 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:isConnectionPointOf hvac_devices:01201 .
+    s223:isConnectionPointOf hvac_devices:01189 .
 
-hvac_devices:01206 a s223:ConnectionPoint,
+hvac_devices:01194 a s223:ConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
-    rdfs:label "actuator.electricalInlet" ;
-    s223:cnx hvac_devices:01201 ;
+    rdfs:label "VAVController.electricalInlet" ;
+    s223:cnx hvac_devices:01189 ;
     s223:hasMedium s223:AC-24VLN-1Ph-60Hz ;
-    s223:isConnectionPointOf hvac_devices:01201 .
+    s223:isConnectionPointOf hvac_devices:01189 .
 
-hvac_devices:01207 a p223:AnalogInput,
+hvac_devices:01195 a p223:AnalogInput,
         s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ModulationSignalConnectionPoint ;
-    rdfs:label "actuator.proportional_signal" ;
-    s223:cnx hvac_devices:01201 ;
+    rdfs:label "VAVController.proportional_signal" ;
+    s223:cnx hvac_devices:01189 ;
     s223:hasMedium s223:Signal-Modulated ;
-    s223:isConnectionPointOf hvac_devices:01201 .
+    s223:isConnectionPointOf hvac_devices:01189 .
 
-hvac_devices:01208 a s223:ObservableProperty,
+hvac_devices:01196 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -12198,21 +12049,21 @@ hvac_devices:01208 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01209 a s223:EnumerableProperty,
+hvac_devices:01197 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:01210 a s223:EnumerableProperty,
+hvac_devices:01198 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:01211 a s223:ActuatableProperty,
+hvac_devices:01199 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -12221,7 +12072,7 @@ hvac_devices:01211 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01212 a s223:ObservableProperty,
+hvac_devices:01200 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -12230,83 +12081,83 @@ hvac_devices:01212 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:Torque ;
     qudt:hasUnit unit:N-M .
 
-hvac_devices:01213 a p223:Producer,
+hvac_devices:01201 a p223:Producer,
         bob:Causality ;
     rdfs:label "positionProducer" ;
-    s223:hasInput hvac_devices:01214 ;
-    s223:hasOutput hvac_devices:01215 ;
-    bob:cause_input hvac_devices:01214 ;
-    bob:effect_output hvac_devices:01215 .
+    s223:hasInput hvac_devices:01202 ;
+    s223:hasOutput hvac_devices:01203 ;
+    bob:cause_input hvac_devices:01202 ;
+    bob:effect_output hvac_devices:01203 .
 
-hvac_devices:01214 a p223:ProducerInput ;
+hvac_devices:01202 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
-    s223:uses hvac_devices:01211 ;
-    bob:hasCauseLocation hvac_devices:01207 .
+    s223:uses hvac_devices:01199 ;
+    bob:hasCauseLocation hvac_devices:01195 .
 
-hvac_devices:01215 a p223:ProducerOutput ;
+hvac_devices:01203 a p223:ProducerOutput ;
     rdfs:label "positionProducer.effect_output" ;
-    s223:produces hvac_devices:01226 ;
-    bob:hasEffectLocation hvac_devices:01202 .
+    s223:produces hvac_devices:01214 ;
+    bob:hasEffectLocation hvac_devices:01190 .
 
-hvac_devices:01216 a p223:Producer,
+hvac_devices:01204 a p223:Producer,
         bob:Causality ;
     rdfs:label "feedbackProducer" ;
-    s223:hasInput hvac_devices:01217 ;
-    s223:hasOutput hvac_devices:01218 ;
-    bob:cause_input hvac_devices:01217 ;
-    bob:effect_output hvac_devices:01218 .
+    s223:hasInput hvac_devices:01205 ;
+    s223:hasOutput hvac_devices:01206 ;
+    bob:cause_input hvac_devices:01205 ;
+    bob:effect_output hvac_devices:01206 .
 
-hvac_devices:01217 a p223:ProducerInput ;
+hvac_devices:01205 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
-    s223:uses hvac_devices:01226 .
+    s223:uses hvac_devices:01214 .
 
-hvac_devices:01218 a p223:ProducerOutput ;
+hvac_devices:01206 a p223:ProducerOutput ;
     rdfs:label "feedbackProducer.effect_output" ;
-    s223:produces hvac_devices:01208 ;
-    bob:hasEffectLocation hvac_devices:01203 .
+    s223:produces hvac_devices:01196 ;
+    bob:hasEffectLocation hvac_devices:01191 .
 
-hvac_devices:01219 a p223:Producer,
+hvac_devices:01207 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_open_producer" ;
-    s223:hasInput hvac_devices:01220 ;
-    s223:hasOutput hvac_devices:01221 ;
-    bob:cause_input hvac_devices:01220 ;
-    bob:effect_output hvac_devices:01221 .
+    s223:hasInput hvac_devices:01208 ;
+    s223:hasOutput hvac_devices:01209 ;
+    bob:cause_input hvac_devices:01208 ;
+    bob:effect_output hvac_devices:01209 .
 
-hvac_devices:01220 a p223:ProducerInput ;
+hvac_devices:01208 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
-    s223:uses hvac_devices:01226 .
+    s223:uses hvac_devices:01214 .
 
-hvac_devices:01221 a p223:ProducerOutput ;
+hvac_devices:01209 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_open_producer.effect_output" ;
-    s223:produces hvac_devices:01209 ;
-    bob:hasEffectLocation hvac_devices:01204 .
+    s223:produces hvac_devices:01197 ;
+    bob:hasEffectLocation hvac_devices:01192 .
 
-hvac_devices:01222 a p223:Producer,
+hvac_devices:01210 a p223:Producer,
         bob:Causality ;
     rdfs:label "auxiliary_switch_close_producer" ;
-    s223:hasInput hvac_devices:01223 ;
-    s223:hasOutput hvac_devices:01224 ;
-    bob:cause_input hvac_devices:01223 ;
-    bob:effect_output hvac_devices:01224 .
+    s223:hasInput hvac_devices:01211 ;
+    s223:hasOutput hvac_devices:01212 ;
+    bob:cause_input hvac_devices:01211 ;
+    bob:effect_output hvac_devices:01212 .
 
-hvac_devices:01223 a p223:ProducerInput ;
+hvac_devices:01211 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
-    s223:uses hvac_devices:01226 .
+    s223:uses hvac_devices:01214 .
 
-hvac_devices:01224 a p223:ProducerOutput ;
+hvac_devices:01212 a p223:ProducerOutput ;
     rdfs:label "auxiliary_switch_close_producer.effect_output" ;
-    s223:produces hvac_devices:01210 ;
-    bob:hasEffectLocation hvac_devices:01205 .
+    s223:produces hvac_devices:01198 ;
+    bob:hasEffectLocation hvac_devices:01193 .
 
-hvac_devices:01225 a s223:Connectable,
+hvac_devices:01213 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
-    s223:hasObservationLocation hvac_devices:01202 ;
-    s223:observes hvac_devices:01226 .
+    s223:hasObservationLocation hvac_devices:01190 ;
+    s223:observes hvac_devices:01214 .
 
-hvac_devices:01226 a s223:ObservableProperty,
+hvac_devices:01214 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -12315,112 +12166,56 @@ hvac_devices:01226 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01227 a s223:Connectable,
-        s223:Damper,
-        s223:Equipment,
-        scratch:Damper ;
-    rdfs:label "damper" ;
-    s223:cnx hvac_devices:01228,
-        hvac_devices:01229,
-        hvac_devices:01230 ;
-    s223:connected hvac_devices:01201 ;
-    s223:connectedFrom hvac_devices:01201 ;
-    s223:connectedThrough hvac_devices:01231 ;
-    s223:hasConnectionPoint hvac_devices:01228,
-        hvac_devices:01229,
-        hvac_devices:01230 ;
-    bob:airInlet hvac_devices:01228 ;
-    bob:airOutlet hvac_devices:01229 ;
-    scratch:linkageInlet hvac_devices:01230 ;
-    scratch:position hvac_devices:01226 .
-
-hvac_devices:01228 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx hvac_devices:01227 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01227 ;
-    s223:mapsTo hvac_devices:01198 .
-
-hvac_devices:01229 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx hvac_devices:01227 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01227 ;
-    s223:mapsTo hvac_devices:01199 .
-
-hvac_devices:01230 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "damper.linkageInlet" ;
-    s223:cnx hvac_devices:01227,
-        hvac_devices:01231 ;
-    s223:connectsThrough hvac_devices:01231 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf hvac_devices:01227 .
-
-hvac_devices:01231 a s223:Connection ;
-    s223:cnx hvac_devices:01202,
-        hvac_devices:01230 ;
-    s223:connectsAt hvac_devices:01202,
-        hvac_devices:01230 ;
-    s223:connectsFrom hvac_devices:01201 ;
-    s223:connectsTo hvac_devices:01227 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling .
-
-hvac_devices:01232 a s223:Coil,
+hvac_devices:01215 a s223:Coil,
         s223:Connectable,
         s223:Equipment,
         s223:ResistanceHeater ;
     rdfs:label "REHEAT" ;
-    s223:cnx hvac_devices:01233,
-        hvac_devices:01234,
-        hvac_devices:01235 ;
-    s223:connected hvac_devices:01197 ;
-    s223:connectedFrom hvac_devices:01197 ;
-    s223:connectedThrough hvac_devices:01241 ;
-    s223:hasConnectionPoint hvac_devices:01233,
-        hvac_devices:01234,
-        hvac_devices:01235 ;
-    s223:hasProperty hvac_devices:01236,
-        hvac_devices:01237,
-        hvac_devices:01238,
-        hvac_devices:01239 ;
-    bob:airInlet hvac_devices:01233 ;
-    bob:airOutlet hvac_devices:01234 ;
+    s223:cnx hvac_devices:01216,
+        hvac_devices:01217,
+        hvac_devices:01218 ;
+    s223:connected hvac_devices:01185 ;
+    s223:connectedFrom hvac_devices:01185 ;
+    s223:connectedThrough hvac_devices:01224 ;
+    s223:hasConnectionPoint hvac_devices:01216,
+        hvac_devices:01217,
+        hvac_devices:01218 ;
+    s223:hasProperty hvac_devices:01219,
+        hvac_devices:01220,
+        hvac_devices:01221,
+        hvac_devices:01222 ;
+    bob:airInlet hvac_devices:01216 ;
+    bob:airOutlet hvac_devices:01217 ;
     rdfs:comment "VAV Box Electrical Heating Coil" .
 
-hvac_devices:01233 a s223:ConnectionPoint,
+hvac_devices:01216 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "REHEAT.airInlet" ;
-    s223:cnx hvac_devices:01232,
-        hvac_devices:01241 ;
-    s223:connectsThrough hvac_devices:01241 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01232 .
+    s223:cnx hvac_devices:01215,
+        hvac_devices:01224 ;
+    s223:connectsThrough hvac_devices:01224 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01215 .
 
-hvac_devices:01234 a s223:ConnectionPoint,
+hvac_devices:01217 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "REHEAT.airOutlet" ;
-    s223:cnx hvac_devices:01232 ;
-    s223:hasMedium s223:Medium-Air ;
-    s223:isConnectionPointOf hvac_devices:01232 ;
-    s223:mapsTo hvac_devices:01186 .
+    s223:cnx hvac_devices:01215 ;
+    s223:hasMedium p223:Fluid-Air ;
+    s223:isConnectionPointOf hvac_devices:01215 ;
+    s223:mapsTo hvac_devices:01174 .
 
-hvac_devices:01235 a s223:ConnectionPoint,
+hvac_devices:01218 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "REHEAT.electricalInlet" ;
-    s223:cnx hvac_devices:01232 ;
+    s223:cnx hvac_devices:01215 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf hvac_devices:01232 .
+    s223:isConnectionPointOf hvac_devices:01215 .
 
-hvac_devices:01236 a s223:ObservableProperty,
+hvac_devices:01219 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -12429,7 +12224,7 @@ hvac_devices:01236 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-hvac_devices:01237 a s223:ObservableProperty,
+hvac_devices:01220 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -12439,7 +12234,7 @@ hvac_devices:01237 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-hvac_devices:01238 a s223:ActuatableProperty,
+hvac_devices:01221 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -12448,14 +12243,14 @@ hvac_devices:01238 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-hvac_devices:01239 a s223:ActuatableProperty,
+hvac_devices:01222 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-hvac_devices:01240 a s223:ObservableProperty,
+hvac_devices:01223 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -12463,14 +12258,23 @@ hvac_devices:01240 a s223:ObservableProperty,
     rdfs:label "supplyAirTemperature" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-hvac_devices:01241 a s223:Connection ;
-    s223:cnx hvac_devices:01199,
-        hvac_devices:01233 ;
-    s223:connectsAt hvac_devices:01199,
-        hvac_devices:01233 ;
-    s223:connectsFrom hvac_devices:01197 ;
-    s223:connectsTo hvac_devices:01232 ;
-    s223:hasMedium s223:Medium-Air .
+hvac_devices:01224 a s223:Connection ;
+    s223:cnx hvac_devices:01187,
+        hvac_devices:01216 ;
+    s223:connectsAt hvac_devices:01187,
+        hvac_devices:01216 ;
+    s223:connectsFrom hvac_devices:01185 ;
+    s223:connectsTo hvac_devices:01215 ;
+    s223:hasMedium p223:Fluid-Air .
+
+hvac_devices:01225 a s223:Connection ;
+    s223:cnx hvac_devices:01188,
+        hvac_devices:01190 ;
+    s223:connectsAt hvac_devices:01188,
+        hvac_devices:01190 ;
+    s223:connectsFrom hvac_devices:01189 ;
+    s223:connectsTo hvac_devices:01185 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling .
 
 hvac_spaces:00001 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -12526,7 +12330,7 @@ hvac_spaces:00004 a s223:ConnectionPoint,
     s223:cnx hvac:00020,
         hvac_spaces:00003 ;
     s223:connectsThrough hvac:00020 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00003 .
 
 hvac_spaces:00005 a s223:ConnectionPoint,
@@ -12536,7 +12340,7 @@ hvac_spaces:00005 a s223:ConnectionPoint,
     s223:cnx hvac:00010,
         hvac_spaces:00003 ;
     s223:connectsThrough hvac:00010 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00003 .
 
 hvac_spaces:00006 a s223:BidirectionalConnectionPoint,
@@ -12544,7 +12348,7 @@ hvac_spaces:00006 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace1.airTransfer" ;
     s223:cnx hvac_spaces:00003 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00003 .
 
 hvac_spaces:00007 a s223:BidirectionalConnectionPoint,
@@ -12552,7 +12356,7 @@ hvac_spaces:00007 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace1.doors" ;
     s223:cnx hvac_spaces:00003 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00003 .
 
 hvac_spaces:00008 a s223:BidirectionalConnectionPoint,
@@ -12560,7 +12364,7 @@ hvac_spaces:00008 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace1.windows" ;
     s223:cnx hvac_spaces:00003 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00003 .
 
 hvac_spaces:00009 a s223:BidirectionalConnectionPoint,
@@ -12568,7 +12372,7 @@ hvac_spaces:00009 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace1.radiantHeating" ;
     s223:cnx hvac_spaces:00003 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00003 .
 
 hvac_spaces:00010 a s223:BidirectionalConnectionPoint,
@@ -12576,7 +12380,7 @@ hvac_spaces:00010 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace1.radiantCooling" ;
     s223:cnx hvac_spaces:00003 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00003 .
 
 hvac_spaces:00011 a s223:EnumerableProperty,
@@ -12596,8 +12400,8 @@ hvac_spaces:00012 a s223:Connectable,
         hvac_spaces:00017,
         hvac_spaces:00018,
         hvac_spaces:00019 ;
-    s223:connected hvac_devices:01068 ;
-    s223:connectedFrom hvac_devices:01068 ;
+    s223:connected hvac_devices:01064 ;
+    s223:connectedFrom hvac_devices:01064 ;
     s223:connectedThrough hvac:00010,
         hvac:00021 ;
     s223:hasConnectionPoint hvac_spaces:00013,
@@ -12626,7 +12430,7 @@ hvac_spaces:00013 a s223:ConnectionPoint,
     s223:cnx hvac:00021,
         hvac_spaces:00012 ;
     s223:connectsThrough hvac:00021 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00012 .
 
 hvac_spaces:00014 a s223:ConnectionPoint,
@@ -12636,7 +12440,7 @@ hvac_spaces:00014 a s223:ConnectionPoint,
     s223:cnx hvac:00010,
         hvac_spaces:00012 ;
     s223:connectsThrough hvac:00010 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00012 .
 
 hvac_spaces:00015 a s223:BidirectionalConnectionPoint,
@@ -12644,7 +12448,7 @@ hvac_spaces:00015 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace2.airTransfer" ;
     s223:cnx hvac_spaces:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00012 .
 
 hvac_spaces:00016 a s223:BidirectionalConnectionPoint,
@@ -12652,7 +12456,7 @@ hvac_spaces:00016 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace2.doors" ;
     s223:cnx hvac_spaces:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00012 .
 
 hvac_spaces:00017 a s223:BidirectionalConnectionPoint,
@@ -12660,7 +12464,7 @@ hvac_spaces:00017 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace2.windows" ;
     s223:cnx hvac_spaces:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00012 .
 
 hvac_spaces:00018 a s223:BidirectionalConnectionPoint,
@@ -12668,7 +12472,7 @@ hvac_spaces:00018 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace2.radiantHeating" ;
     s223:cnx hvac_spaces:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00012 .
 
 hvac_spaces:00019 a s223:BidirectionalConnectionPoint,
@@ -12676,7 +12480,7 @@ hvac_spaces:00019 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace2.radiantCooling" ;
     s223:cnx hvac_spaces:00012 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00012 .
 
 hvac_spaces:00020 a s223:EnumerableProperty,
@@ -12696,8 +12500,8 @@ hvac_spaces:00021 a s223:Connectable,
         hvac_spaces:00026,
         hvac_spaces:00027,
         hvac_spaces:00028 ;
-    s223:connected hvac_devices:01126 ;
-    s223:connectedFrom hvac_devices:01126 ;
+    s223:connected hvac_devices:01118 ;
+    s223:connectedFrom hvac_devices:01118 ;
     s223:connectedThrough hvac:00011,
         hvac:00026 ;
     s223:hasConnectionPoint hvac_spaces:00022,
@@ -12726,7 +12530,7 @@ hvac_spaces:00022 a s223:ConnectionPoint,
     s223:cnx hvac:00026,
         hvac_spaces:00021 ;
     s223:connectsThrough hvac:00026 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00021 .
 
 hvac_spaces:00023 a s223:ConnectionPoint,
@@ -12736,7 +12540,7 @@ hvac_spaces:00023 a s223:ConnectionPoint,
     s223:cnx hvac:00011,
         hvac_spaces:00021 ;
     s223:connectsThrough hvac:00011 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00021 .
 
 hvac_spaces:00024 a s223:BidirectionalConnectionPoint,
@@ -12744,7 +12548,7 @@ hvac_spaces:00024 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace4.airTransfer" ;
     s223:cnx hvac_spaces:00021 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00021 .
 
 hvac_spaces:00025 a s223:BidirectionalConnectionPoint,
@@ -12752,7 +12556,7 @@ hvac_spaces:00025 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace4.doors" ;
     s223:cnx hvac_spaces:00021 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00021 .
 
 hvac_spaces:00026 a s223:BidirectionalConnectionPoint,
@@ -12760,7 +12564,7 @@ hvac_spaces:00026 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace4.windows" ;
     s223:cnx hvac_spaces:00021 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00021 .
 
 hvac_spaces:00027 a s223:BidirectionalConnectionPoint,
@@ -12768,7 +12572,7 @@ hvac_spaces:00027 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace4.radiantHeating" ;
     s223:cnx hvac_spaces:00021 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00021 .
 
 hvac_spaces:00028 a s223:BidirectionalConnectionPoint,
@@ -12776,7 +12580,7 @@ hvac_spaces:00028 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace4.radiantCooling" ;
     s223:cnx hvac_spaces:00021 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00021 .
 
 hvac_spaces:00029 a s223:EnumerableProperty,
@@ -12796,8 +12600,8 @@ hvac_spaces:00030 a s223:Connectable,
         hvac_spaces:00035,
         hvac_spaces:00036,
         hvac_spaces:00037 ;
-    s223:connected hvac_devices:01184 ;
-    s223:connectedFrom hvac_devices:01184 ;
+    s223:connected hvac_devices:01172 ;
+    s223:connectedFrom hvac_devices:01172 ;
     s223:connectedThrough hvac:00011,
         hvac:00027 ;
     s223:hasConnectionPoint hvac_spaces:00031,
@@ -12826,7 +12630,7 @@ hvac_spaces:00031 a s223:ConnectionPoint,
     s223:cnx hvac:00027,
         hvac_spaces:00030 ;
     s223:connectsThrough hvac:00027 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00030 .
 
 hvac_spaces:00032 a s223:ConnectionPoint,
@@ -12836,7 +12640,7 @@ hvac_spaces:00032 a s223:ConnectionPoint,
     s223:cnx hvac:00011,
         hvac_spaces:00030 ;
     s223:connectsThrough hvac:00011 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00030 .
 
 hvac_spaces:00033 a s223:BidirectionalConnectionPoint,
@@ -12844,7 +12648,7 @@ hvac_spaces:00033 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace5.airTransfer" ;
     s223:cnx hvac_spaces:00030 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00030 .
 
 hvac_spaces:00034 a s223:BidirectionalConnectionPoint,
@@ -12852,7 +12656,7 @@ hvac_spaces:00034 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace5.doors" ;
     s223:cnx hvac_spaces:00030 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00030 .
 
 hvac_spaces:00035 a s223:BidirectionalConnectionPoint,
@@ -12860,7 +12664,7 @@ hvac_spaces:00035 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace5.windows" ;
     s223:cnx hvac_spaces:00030 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00030 .
 
 hvac_spaces:00036 a s223:BidirectionalConnectionPoint,
@@ -12868,7 +12672,7 @@ hvac_spaces:00036 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace5.radiantHeating" ;
     s223:cnx hvac_spaces:00030 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00030 .
 
 hvac_spaces:00037 a s223:BidirectionalConnectionPoint,
@@ -12876,7 +12680,7 @@ hvac_spaces:00037 a s223:BidirectionalConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HVACSpace5.radiantCooling" ;
     s223:cnx hvac_spaces:00030 ;
-    s223:hasMedium s223:Medium-Air ;
+    s223:hasMedium p223:Fluid-Air ;
     s223:isConnectionPointOf hvac_spaces:00030 .
 
 hvac_spaces:00038 a s223:EnumerableProperty,
@@ -12904,10 +12708,10 @@ hvac_spaces:00039 a s223:Zone,
 hvac_spaces:00040 a bob:InletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "HVACZone1.airInlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 
 hvac_spaces:00041 a bob:OutletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "HVACZone1.airOutlet" ;
-    s223:hasMedium s223:Medium-Air .
+    s223:hasMedium p223:Fluid-Air .
 

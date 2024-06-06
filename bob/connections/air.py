@@ -4,7 +4,6 @@ from ..core import (
     BOB,
     P223,
     S223,
-    Air,
     BidirectionalConnectionPoint,
     BidirectionalSystemConnectionPoint,
     Connection,
@@ -19,6 +18,7 @@ from ..core import (
     SystemConnectionPoint,
     ZoneConnectionPoint,
 )
+from ..enum import Air
 
 _namespace = BOB
 

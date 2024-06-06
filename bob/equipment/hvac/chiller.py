@@ -13,7 +13,7 @@ from ...connections.controlsignal import (
     OnOffSignalOutletConnectionPoint,
 )
 from ...connections.naturalgas import NaturalGasInletConnectionPoint
-from ...connections.water import (
+from ...connections.liquid import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
     CondensedWaterInletConnectionPoint,

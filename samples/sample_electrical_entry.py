@@ -9,11 +9,10 @@ from bob.connections.electricity import (
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
 from bob.core import (
-    Electricity,
     bind_model_namespace,
     dump,
 )
-from bob.enum import ElectricalPhaseIdentifier
+from bob.enum import Electricity, ElectricalPhaseIdentifier
 from bob.equipment.electricity.distribution import (
     SinglePhaseDistributionPanel,
     SinglePoleCircuitBreaker,

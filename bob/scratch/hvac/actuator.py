@@ -101,6 +101,7 @@ class BaseActuator(Actuator):
     _class_iri = SCRATCH.Actuator
     command: Union[PercentCommand, OnOffCommand]
     position: PropertyReference
+
     # position_feedback: Union[Percent, OpenCloseEnum]
     # is_open: OnOffStatus
     # is_closed: OnOffStatus
@@ -153,7 +154,7 @@ ElectricalProportionalActuator_template = {
 
 
 class ElectricalProportionalActuator(BaseActuator):
-    #_class_iri = SCRATCH.ElectricalProportionalActuator
+    # _class_iri = SCRATCH.ElectricalProportionalActuator
     command: PercentCommand
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -183,7 +184,7 @@ ElectricalOnOffActuator_template = {
 
 
 class ElectricalOnOffActuator(BaseActuator):
-    #_class_iri = SCRATCH.ElectricalOnOffActuator
+    # _class_iri = SCRATCH.ElectricalOnOffActuator
     command: OnOffCommand
 
     def __init__(self, config: Dict = {}, **kwargs):
@@ -218,7 +219,7 @@ PneumaticOnOffActuator_template = {
 
 
 class PneumaticProportionalActuator(BaseActuator):
-    #_class_iri = SCRATCH.PneumaticProportionalActuator
+    # _class_iri = SCRATCH.PneumaticProportionalActuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -229,7 +230,7 @@ class PneumaticProportionalActuator(BaseActuator):
 
 
 class PneumaticOnOffActuator(BaseActuator):
-    #_class_iri = SCRATCH.PneumaticOnOffActuator
+    # _class_iri = SCRATCH.PneumaticOnOffActuator
     compressedAirInlet: CompressedAirInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):

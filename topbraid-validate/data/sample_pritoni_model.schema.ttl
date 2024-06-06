@@ -1,0 +1,2521 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model-schema
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix bacnet: <http://data.ashrae.org/bacnet/2020#> .
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix functions: <urn:sample_pritoni/functions/> .
+@prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix scratch: <http://data.ashrae.org/standard223/si-builder/prototype#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+
+<http://data.ashrae.org/standard223/1.0/data/sample_pritoni_model>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_pritoni_model-schema> ;
+  rdfs:label "sample_pritoni_model-schema" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+bacnet:AnalogInputObject a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.bacnet.AnalogInputObject" ;
+    rdfs:subClassOf bacnet:Object ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bacnet:object-type ] .
+
+bacnet:AnalogValueObject a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.bacnet.AnalogValueObject" ;
+    rdfs:subClassOf bacnet:Object ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bacnet:object-type ] .
+
+bacnet:BinaryInputObject a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.bacnet.BinaryInputObject" ;
+    rdfs:subClassOf bacnet:Object ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bacnet:object-type ] .
+
+bacnet:BinaryOutputObject a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.bacnet.BinaryOutputObject" ;
+    rdfs:subClassOf bacnet:Object ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bacnet:object-type ] .
+
+bacnet:Device a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.bacnet.Device" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Controller,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bacnet:deviceInstance ] .
+
+bacnet:DeviceObject a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.bacnet.DeviceObject" ;
+    rdfs:subClassOf bacnet:Object ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bacnet:vendor-name ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:object-type ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:system-status ],
+        [ a sh:PropertyShape ;
+            sh:datatype xsd:nonNegativeInteger ;
+            sh:path bacnet:vendor-identifier ] .
+
+bacnet:Object a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.bacnet.Object" ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bacnet:description ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:object-identifier ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:object-name ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:object-type ] .
+
+bacnet:ScheduleObject a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.bacnet.ScheduleObject" ;
+    rdfs:subClassOf bacnet:Object ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bacnet:object-type ] .
+
+bacnet:description a rdf:Property .
+
+bacnet:device-identifier a rdf:Property .
+
+bacnet:deviceInstance a rdf:Property .
+
+bacnet:object-identifier a rdf:Property .
+
+bacnet:object-name a rdf:Property .
+
+bacnet:object-type a rdf:Property .
+
+bacnet:property-array-index a rdf:Property .
+
+bacnet:property-identifier a rdf:Property .
+
+bacnet:system-status a rdf:Property .
+
+bacnet:vendor-identifier a rdf:Property .
+
+bacnet:vendor-name a rdf:Property .
+
+bob:actuates a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:airChangePerHour a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:airInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        bob:hasZoneConnectionPoint .
+
+bob:airOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        bob:hasZoneConnectionPoint .
+
+bob:airTransfer a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:alarmOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:alarmStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:area a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:breakDetection a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:brightness a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:brightnessRatio a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:capacityLimit a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:capacityLimitInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:cause_input a rdf:Property .
+
+bob:chilledWaterEntering a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:chilledWaterInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:chilledWaterLeaving a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:chilledWaterOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:co a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:co2 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:command a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:commandedByProperty a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:condensedWaterEntering a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:condensedWaterLeaving a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:currentRating a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:delay a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:differentialPressure a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:differential_output a rdf:Property .
+
+bob:differential_static_pressure a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:doors a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:ductAirInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:ductAirOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:effect_output a rdf:Property .
+
+bob:electricalInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint,
+        bob:hasSystemConnectionPoint .
+
+bob:electricalPower a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:exhaustAirOutlet a rdf:Property ;
+    rdfs:subPropertyOf bob:hasSystemConnectionPoint .
+
+bob:flowCoefficient a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:hasCauseLocation a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:hasEffectLocation a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:hasMaxRange a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:hasPower a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:hasSystemConnectionPoint a rdf:Property .
+
+bob:hasZoneConnectionPoint a rdf:Property .
+
+bob:high_input a rdf:Property .
+
+bob:hotWaterEntering a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:hotWaterInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:hotWaterLeaving a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:hotWaterOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:humidity a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:inLocalOverride a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:inOccSensor a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:inSchedule a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:inStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:indoor a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:isObservedBy a rdf:Property .
+
+bob:isSystemConnectionPointOf a rdf:Property .
+
+bob:isZoneConnectionPointOf a rdf:Property .
+
+bob:is_closed a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:is_open a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:lightInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:lightOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:linkageInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:low_input a rdf:Property .
+
+bob:manufacturer a rdf:Property .
+
+bob:mapsTo a rdf:Property .
+
+bob:measuresMedium a rdf:Property .
+
+bob:modelNumber a rdf:Property .
+
+bob:modulation a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:naturalLight a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:naturalLightInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:no2 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:number_of_circuits a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:occupancy a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:onOffCommand a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:onOffStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:openCloseCommand a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:openCloseStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:outStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:outdoor a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:outsideAirInlet a rdf:Property ;
+    rdfs:subPropertyOf bob:hasSystemConnectionPoint .
+
+bob:position a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:position_feedback a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:radiantCooling a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:radiantHeating a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:returnAirInlet a rdf:Property ;
+    rdfs:subPropertyOf bob:hasSystemConnectionPoint .
+
+bob:setpointReset a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:setpointResetInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:shadeCommand a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:shadeStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:supplyAirOutlet a rdf:Property ;
+    rdfs:subPropertyOf bob:hasSystemConnectionPoint .
+
+bob:temperature a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:temperature_setpoint a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+bob:waterInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:waterOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:windows a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+functions:u1 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+functions:u2 a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+functions:y a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+p223:ActiveInactive-Active a p223:ActiveInactive-Active,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Active" ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+
+p223:ActiveInactive-Inactive a p223:ActiveInactive-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Inactive" ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+
+p223:ActiveInactive-Unknown a p223:ActiveInactive-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind .
+
+p223:Air-CompressedAir a p223:Air-CompressedAir,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CompressedAir" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Air .
+
+p223:Analog-0-10VDC a p223:Analog-0-10VDC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "0-10VDC" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-4-20mA a p223:Analog-4-20mA,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "4-20mA" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC10kType2 a p223:Analog-NTC10kType2,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NTC10kType2" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC10kType3 a p223:Analog-NTC10kType3,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NTC10kType3" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-NTC2250Type2 a p223:Analog-NTC2250Type2,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NTC2250Type2" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Nickel1kRTD a p223:Analog-Nickel1kRTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Nickel1kRTD" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Platinum1kRTD a p223:Analog-Platinum1kRTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Platinum1kRTD" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-RTD a p223:Analog-RTD,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "RTD" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Resistive a p223:Analog-Resistive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Resistive" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:Analog-Unknown a p223:Analog-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf p223:EnumerationKind-Analog,
+        s223:EnumerationKind .
+
+p223:AnalogInput a rdfs:Class ;
+    rdfs:label "bob.connections.controlsignal.ModulationSignalInletConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:ModulationSignalConnectionPoint .
+
+p223:AnalogOutput a rdfs:Class ;
+    rdfs:label "bob.connections.controlsignal.ModulationSignalOutletConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:ModulationSignalConnectionPoint .
+
+p223:Binary-DryContact a p223:Binary-DryContact,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DryContact" ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-Incremental a p223:Binary-Incremental,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Incremental" ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-Pulse a p223:Binary-Pulse,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Pulse" ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:Binary-StartStop a p223:Binary-StartStop,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "StartStop" ;
+    rdfs:subClassOf p223:EnumerationKind-Binary,
+        s223:EnumerationKind .
+
+p223:BinaryInput a rdfs:Class ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalInletConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:OnOffSignalConnectionPoint .
+
+p223:BinaryOutput a rdfs:Class ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalOutletConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:OnOffSignalConnectionPoint .
+
+p223:CurrentRelay a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.switch.CurrentRelay" ;
+    rdfs:comment """
+    Current detection Equipment that gives a OnOff status by the action
+    of a dry contact when electricity is detected.
+
+    This serves as motor status sensor
+
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
+
+p223:Dimensioned-ABLineLineVoltage a p223:Dimensioned-ABLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ABLineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-ANLineNeutralVoltage a p223:Dimensioned-ANLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ANLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-BCLineLineVoltage a p223:Dimensioned-BCLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BCLineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-BNLineNeutralVoltage a p223:Dimensioned-BNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BNLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-CALineLineVoltage a p223:Dimensioned-CALineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CALineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-CNLineNeutralVoltage a p223:Dimensioned-CNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CNLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-LineLineVoltage a p223:Dimensioned-LineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "LineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-LineNeutralVoltage a p223:Dimensioned-LineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "LineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Dimensioned-NominalFrequency a p223:Dimensioned-NominalFrequency,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NominalFrequency" ;
+    rdfs:subClassOf s223:Context-Dimensioned,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Effectiveness-Active a p223:Effectiveness-Active,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Active" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+
+p223:Effectiveness-Inactive a p223:Effectiveness-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Inactive" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+
+p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Effectiveness .
+
+p223:ElectricalDistributionPanel a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.equipment.electricity.distribution.SinglePhaseDistributionPanel",
+        "bob.equipment.electricity.distribution.ThreePhaseDistributionPanel" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:modelNumber ],
+        [ a sh:PropertyShape ;
+            sh:path bob:manufacturer ],
+        [ a sh:PropertyShape ;
+            sh:path bob:modelNumber ],
+        [ a sh:PropertyShape ;
+            sh:path bob:manufacturer ],
+        [ a sh:PropertyShape ;
+            sh:path bob:number_of_circuits ],
+        [ a sh:PropertyShape ;
+            sh:path bob:number_of_circuits ] .
+
+p223:ElectricalSwitch a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.equipment.electricity.switch.Switch" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:onOffStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:hasMaxRange ] .
+
+p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ActiveInactive" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Analog a p223:EnumerationKind-Analog,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Analog" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Binary a p223:EnumerationKind-Binary,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Binary" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-HandOffAuto a p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "HandOffAuto" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-LeftRight a p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "LeftRight" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-ManualAuto a p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ManualAuto" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-NiagaraStatus a p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NiagaraStatus" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-NormalAlarm a p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NormalAlarm" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-NormalFault a p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NormalFault" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-OpenClose a p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "OpenClose" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-OverriddenAuto a p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "OverriddenAuto" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Position a p223:EnumerationKind-Position,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Position" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-Protocol a p223:EnumerationKind-Protocol,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Protocol" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-TopBottom a p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "TopBottom" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-TrueFalse a p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "TrueFalse" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EnumerationKind-YesNo a p223:EnumerationKind-YesNo,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "YesNo" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+p223:EthernetFirewall a rdfs:Class ;
+    rdfs:label "bob.equipment.network.firewall.EthernetFirewall" ;
+    rdfs:comment """
+    An Ethernet Firewall with wan and lan ports
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
+
+p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Auto" ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+
+p223:HandOffAuto-Hand a p223:HandOffAuto-Hand,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Hand" ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+
+p223:HandOffAuto-Off a p223:HandOffAuto-Off,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Off" ;
+    rdfs:subClassOf p223:EnumerationKind-HandOffAuto,
+        s223:EnumerationKind .
+
+p223:LeftRight-Left a p223:LeftRight-Left,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Left" ;
+    rdfs:subClassOf p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind .
+
+p223:LeftRight-Right a p223:LeftRight-Right,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Right" ;
+    rdfs:subClassOf p223:EnumerationKind-LeftRight,
+        s223:EnumerationKind .
+
+p223:ManualAuto-Auto a p223:ManualAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Auto" ;
+    rdfs:subClassOf p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind .
+
+p223:ManualAuto-Manual a p223:ManualAuto-Manual,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Manual" ;
+    rdfs:subClassOf p223:EnumerationKind-ManualAuto,
+        s223:EnumerationKind .
+
+p223:MechanicalConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.mechanical.MechanicalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+p223:Medium-MechanicalCoupling a p223:Medium-MechanicalCoupling,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "MechanicalCoupling" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium .
+
+p223:MotorStarter a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.starter.MotorStarter" ;
+    rdfs:comment """
+    Motor starter
+    This Equipment provides command and status for an electrical
+    Equipment like a fan or a pump
+
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment .
+
+p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "alarm" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-disabled a p223:NiagaraStatus-disabled,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "disabled" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-down a p223:NiagaraStatus-down,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "down" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-fault a p223:NiagaraStatus-fault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "fault" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-null a p223:NiagaraStatus-null,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "null" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-ok a p223:NiagaraStatus-ok,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "ok" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-overridden a p223:NiagaraStatus-overridden,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "overridden" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-stale a p223:NiagaraStatus-stale,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "stale" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NiagaraStatus-unackedAlarm a p223:NiagaraStatus-unackedAlarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "unackedAlarm" ;
+    rdfs:subClassOf p223:EnumerationKind-NiagaraStatus,
+        s223:EnumerationKind .
+
+p223:NormalAlarm-Alarm a p223:NormalAlarm-Alarm,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Alarm" ;
+    rdfs:subClassOf p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind .
+
+p223:NormalAlarm-Normal a p223:NormalAlarm-Normal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Normal" ;
+    rdfs:subClassOf p223:EnumerationKind-NormalAlarm,
+        s223:EnumerationKind .
+
+p223:NormalFault-Fault a p223:NormalFault-Fault,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Fault" ;
+    rdfs:subClassOf p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind .
+
+p223:NormalFault-Normal a p223:NormalFault-Normal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Normal" ;
+    rdfs:subClassOf p223:EnumerationKind-NormalFault,
+        s223:EnumerationKind .
+
+p223:OccupancyFunction a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.producer.occupancy.OccupancyFunction" ;
+    rdfs:comment """
+    This function takes the the occupancy as detected by a sensor (inStatus,
+    perhaps from a motion sensor), the occupancy schedule (inSchedule with
+    an external reference to a BACnet Schedule Object) and outputs
+    "occupied" if the space/room/zone should be considered occupied.
+    """ ;
+    rdfs:subClassOf s223:Function ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:inSchedule ],
+        [ a sh:PropertyShape ;
+            sh:path bob:inOccSensor ],
+        [ a sh:PropertyShape ;
+            sh:path bob:inStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:outStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:inLocalOverride ] .
+
+p223:OpenClose-Close a p223:OpenClose-Close,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Close" ;
+    rdfs:subClassOf p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind .
+
+p223:OpenClose-Open a p223:OpenClose-Open,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Open" ;
+    rdfs:subClassOf p223:EnumerationKind-OpenClose,
+        s223:EnumerationKind .
+
+p223:OverriddenAuto-Auto a p223:OverriddenAuto-Auto,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Auto" ;
+    rdfs:subClassOf p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind .
+
+p223:OverriddenAuto-Overridden a p223:OverriddenAuto-Overridden,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Overridden" ;
+    rdfs:subClassOf p223:EnumerationKind-OverriddenAuto,
+        s223:EnumerationKind .
+
+p223:Position-Close a p223:Position-Close,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Close" ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Position-Moving a p223:Position-Moving,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Moving" ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Position-Open a p223:Position-Open,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Open" ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Position-Unknown a p223:Position-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf p223:EnumerationKind-Position,
+        s223:EnumerationKind .
+
+p223:Producer a rdfs:Class ;
+    rdfs:label "bob.producer.Producer" ;
+    rdfs:comment """
+    Producers are black boxes representing causality.
+    Their inputs are causes and they produce an effect on a property
+    It is very similar to a function, but it is meant to show the relation
+    between an input and an output of something not-driven by an algorithm.
+    A common example would be a relay. You feed it voltage and the relay contact
+    is actuated.
+    """ .
+
+p223:ProducerInput a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.producer.ProducerInput" ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:hasCauseLocation ] .
+
+p223:ProducerOutput a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.producer.ProducerOutput" ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:hasEffectLocation ] .
+
+p223:Protocol-BACnet a p223:Protocol-BACnet,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BACnet" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_IP a p223:Protocol-BACnet_IP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BACnet_IP" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_MSTP a p223:Protocol-BACnet_MSTP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BACnet_MSTP" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-BACnet_SC a p223:Protocol-BACnet_SC,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "BACnet_SC" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Lonworks a p223:Protocol-Lonworks,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Lonworks" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus a p223:Protocol-Modbus,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Modbus" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus_RTU a p223:Protocol-Modbus_RTU,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Modbus_RTU" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Modbus_TCP" ;
+    rdfs:subClassOf p223:EnumerationKind-Protocol,
+        s223:EnumerationKind .
+
+p223:Signal-OnOffSignal a p223:Signal-OnOffSignal,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "OnOffSignal" ;
+    rdfs:subClassOf s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Electricity .
+
+p223:Substance-CH4 a p223:Substance-CH4,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CH4" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+p223:Substance-NO2 a p223:Substance-NO2,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "NO2" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+p223:Substance-Smoke a p223:Substance-Smoke,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Smoke" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance .
+
+p223:TopBottom-Bottom a p223:TopBottom-Bottom,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Bottom" ;
+    rdfs:subClassOf p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind .
+
+p223:TopBottom-Top a p223:TopBottom-Top,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Top" ;
+    rdfs:subClassOf p223:EnumerationKind-TopBottom,
+        s223:EnumerationKind .
+
+p223:TrueFalse-False a p223:TrueFalse-False,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "False" ;
+    rdfs:subClassOf p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind .
+
+p223:TrueFalse-True a p223:TrueFalse-True,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "True" ;
+    rdfs:subClassOf p223:EnumerationKind-TrueFalse,
+        s223:EnumerationKind .
+
+p223:Water-CondensedWater a p223:Water-CondensedWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "CondensedWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DomesticHotWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-DomesticWater a p223:Water-DomesticWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "DomesticWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-GlycoledWater a p223:Water-GlycoledWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "GlycoledWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-MixedWater a p223:Water-MixedWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "MixedWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-PotableWater a p223:Water-PotableWater,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "PotableWater" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:Water-Steam a p223:Water-Steam,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Steam" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Medium,
+        s223:Medium-Water .
+
+p223:YesNo-No a p223:YesNo-No,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "No" ;
+    rdfs:subClassOf p223:EnumerationKind-YesNo,
+        s223:EnumerationKind .
+
+p223:YesNo-Yes a p223:YesNo-Yes,
+        s223:EnumerationKind,
+        rdfs:Class ;
+    rdfs:label "Yes" ;
+    rdfs:subClassOf p223:EnumerationKind-YesNo,
+        s223:EnumerationKind .
+
+g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
+        g36:EnumerationKind-G36AlarmLevels,
+        rdfs:Class ;
+    rdfs:label "G36AlarmLevels" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level1 a s223:EnumerationKind,
+        g36:EnumerationKind-Level1,
+        rdfs:Class ;
+    rdfs:label "Level1" ;
+    rdfs:comment "Life Safetey Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level2 a s223:EnumerationKind,
+        g36:EnumerationKind-Level2,
+        rdfs:Class ;
+    rdfs:label "Level2" ;
+    rdfs:comment "Critical Equipment Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level3 a s223:EnumerationKind,
+        g36:EnumerationKind-Level3,
+        rdfs:Class ;
+    rdfs:label "Level3" ;
+    rdfs:comment "Urgent Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+g36:EnumerationKind-Level4 a s223:EnumerationKind,
+        g36:EnumerationKind-Level4,
+        rdfs:Class ;
+    rdfs:label "Level4" ;
+    rdfs:comment "Normal Message" ;
+    rdfs:subClassOf s223:EnumerationKind .
+
+bob:AirConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.air.AirConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:AirSystemConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.air.AirSystemConnectionPoint" ;
+    rdfs:subClassOf bob:SystemConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:AirTemperatureSensor a rdfs:Class ;
+    rdfs:label "bob.sensor.temperature.AirTemperatureSensor" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
+        s223:Sensor,
+        s223:TemperatureSensor .
+
+bob:Amps a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.Amps" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Area a rdfs:Class ;
+    rdfs:label "bob.properties.physical.Area" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Bathroom a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.physical.Bathroom" ;
+    rdfs:subClassOf s223:PhysicalSpace,
+        bob:Room ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:area ] .
+
+bob:Building a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.physical.Building" ;
+    rdfs:subClassOf s223:PhysicalSpace ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:area ] .
+
+bob:Causality a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.producer.causality.Causality" ;
+    rdfs:comment """
+    Simple causality black box. Its goal is to express a
+    simple relation between the output and the input.
+    It tells : this input, causes an effect on that output.
+    """ ;
+    rdfs:subClassOf p223:Producer ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:effect_output ],
+        [ a sh:PropertyShape ;
+            sh:path bob:cause_input ] .
+
+bob:ChilledWaterConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.water.ChilledWaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:CondensedWaterConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.water.CondensedWaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:Corridor a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.physical.Corridor" ;
+    rdfs:subClassOf s223:PhysicalSpace,
+        bob:Room ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:area ] .
+
+bob:DaylightDetected a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.states.DaylightDetected" ;
+    rdfs:subClassOf s223:EnumerableProperty,
+        s223:EnumeratedObservableProperty,
+        s223:ObservableProperty,
+        s223:Property ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
+
+bob:Differential a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.producer.causality.Differential" ;
+    rdfs:comment """
+    This causality block goals explain that the output is the result
+    of substracting high input and low input.
+    """ ;
+    rdfs:subClassOf p223:Producer ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:differential_output ],
+        [ a sh:PropertyShape ;
+            sh:path bob:low_input ],
+        [ a sh:PropertyShape ;
+            sh:path bob:high_input ] .
+
+bob:DifferentialStaticPressure a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.force.DifferentialStaticPressure" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
+
+bob:DifferentialTime a rdfs:Class ;
+    rdfs:label "bob.properties.time.DifferentialTime" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:DimmableSwitch a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.switch.DimmableSwitch" ;
+    rdfs:comment """
+    Manuel dimmable switch
+
+    """ ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
+        s223:Equipment,
+        bob:SinglePoleSwitch .
+
+bob:ElectricApparentEnergy a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.electricity.ElectricApparentEnergy" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
+
+bob:ElectricApparentPower a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.electricity.ElectricApparentPower" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
+
+bob:ElectricEnergy a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.electricity.ElectricEnergy" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
+
+bob:ElectricPower a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.electricity.ElectricPower" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
+
+bob:ElectricPowerkW a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.ElectricPowerkW" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:ElectricPower .
+
+bob:ElectricReactiveEnergy a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.electricity.ElectricReactiveEnergy" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
+
+bob:ElectricReactivePower a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.electricity.ElectricReactivePower" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
+
+bob:EthernetConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.network.EthernetConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path p223:hasProtocol ],
+        [ a sh:PropertyShape ;
+            sh:path p223:data_rate ],
+        [ a sh:PropertyShape ;
+            sh:path p223:VLAN ] .
+
+bob:Floor a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.physical.Floor" ;
+    rdfs:subClassOf s223:PhysicalSpace ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:area ] .
+
+bob:Flow a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.flow.Flow" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path bob:measuresMedium ] .
+
+bob:Frequency a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.Frequency" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:HP a rdfs:Class ;
+    rdfs:label "bob.properties.force.HP" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:HVACSpace a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.hvac.HVACSpace" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:DomainSpace ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:co2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantCooling ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co ],
+        [ a sh:PropertyShape ;
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airTransfer ],
+        [ a sh:PropertyShape ;
+            sh:path bob:humidity ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:windows ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantHeating ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature_setpoint ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ] .
+
+bob:HVACZone a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.hvac.HVACZone" ;
+    rdfs:subClassOf s223:Zone ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature_setpoint ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ] .
+
+bob:HotWaterConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.water.HotWaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:Hour a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.time.Hour" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:DifferentialTime ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
+
+bob:InletSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
+        "bob.connections.electricity.Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint",
+        "bob.connections.water.WaterInletSystemConnectionPoint",
+        "bob.core.InletSystemConnectionPoint" ;
+    rdfs:subClassOf s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
+        bob:AirSystemConnectionPoint,
+        bob:InletSystemConnectionPoint,
+        bob:SystemConnectionPoint,
+        bob:WaterSystemConnectionPoint .
+
+bob:InletZoneConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirInletZoneConnectionPoint",
+        "bob.core.InletZoneConnectionPoint" ;
+    rdfs:subClassOf bob:InletZoneConnectionPoint,
+        bob:ZoneConnectionPoint .
+
+bob:LightVisibleConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.light.LightVisibleConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint .
+
+bob:LightingSpace a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.light.LightingSpace" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:DomainSpace ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:lightInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:naturalLightInlet ] .
+
+bob:LightingZone a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.light.LightingZone" ;
+    rdfs:subClassOf s223:Zone ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:occupancy ] .
+
+bob:Mbit_per_seconds a rdfs:Class ;
+    rdfs:label "bob.properties.network.Mbit_per_seconds" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:ModulationSignalConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.controlsignal.ModulationSignalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path p223:hasSignalType ] .
+
+bob:Nm a rdfs:Class ;
+    rdfs:label "bob.properties.force.Nm" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Office a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.physical.Office" ;
+    rdfs:subClassOf s223:PhysicalSpace,
+        bob:Room ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:area ] .
+
+bob:OnOffSignalConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.controlsignal.OnOffSignalConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path p223:hasSignalType ] .
+
+bob:OutletSystemConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
+        "bob.connections.water.WaterOutletSystemConnectionPoint",
+        "bob.core.OutletSystemConnectionPoint" ;
+    rdfs:subClassOf bob:AirSystemConnectionPoint,
+        bob:OutletSystemConnectionPoint,
+        bob:SystemConnectionPoint,
+        bob:WaterSystemConnectionPoint .
+
+bob:OutletZoneConnectionPoint a rdfs:Class ;
+    rdfs:label "bob.connections.air.AirOutletZoneConnectionPoint",
+        "bob.core.OutletZoneConnectionPoint" ;
+    rdfs:subClassOf bob:OutletZoneConnectionPoint,
+        bob:ZoneConnectionPoint .
+
+bob:Percent a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.Percent" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:PercentCommand a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.PercentCommand" ;
+    rdfs:subClassOf s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty .
+
+bob:PowerFactor a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.PowerFactor" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:Pressure a rdfs:Class ;
+    rdfs:label "bob.properties.force.Pressure" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:RPM a rdfs:Class ;
+    rdfs:label "bob.properties.ratio.RPM" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:RS485ConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.network.RS485ConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path p223:hasProtocol ] .
+
+bob:Roof a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.physical.Roof" ;
+    rdfs:subClassOf s223:PhysicalSpace ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:area ] .
+
+bob:Room a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.space.physical.Room" ;
+    rdfs:subClassOf s223:PhysicalSpace ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:area ] .
+
+bob:SinglePoleCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.distribution.SinglePoleCircuitBreaker" ;
+    rdfs:comment """
+    One inlet and one outlet
+    hasMaxRange = current max of breaker
+    A rule could check inlet and outlet are same class
+
+    208V single pole available in the High Leg Configuration
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:ElectricBreaker,
+        s223:Equipment .
+
+bob:SinglePoleSwitch a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.switch.SinglePoleSwitch" ;
+    rdfs:comment """
+    One inlet and one outlet
+    hasMaxRange = current max of switch
+    A rule could check inlet and outlet are same class
+    """ ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
+        s223:Equipment .
+
+bob:SystemConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.core.SystemConnectionPoint" ;
+    rdfs:comment """
+    System Connection Point
+    """ ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path bob:isSystemConnectionPointOf ],
+        [ a sh:PropertyShape ;
+            sh:path bob:mapsTo ] .
+
+bob:Temperature a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.properties.temperature.Temperature" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
+
+bob:ThreePolesCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.distribution.ThreePolesCircuitBreaker" ;
+    rdfs:comment """
+    One electrical Inlet because when plugin the breaker
+    in the panel, you get no choice. Three poles are connected
+    at the same time. Electricity is fed from 3 bus bars
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:ElectricBreaker,
+        s223:Equipment .
+
+bob:ThreePolesMainCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.distribution.ThreePolesMainCircuitBreaker" ;
+    rdfs:comment """
+    One electrical Inlet because when plugin the breaker
+    in the panel, you get no choice. Three poles are connected
+    at the same time. Electricity is fed from 3 bus bar (3 x 347V to neutral for example)
+
+    Code do not allow to use only one pole of a 3phase breaker. So
+    this model is just a trick so we can feed 3 bus bar (connect) inside the panel.
+    If not, we would have 3 connections coming from vaccuum of space.
+
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:ElectricBreaker,
+        s223:Equipment .
+
+bob:TimerSwitch a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.equipment.electricity.switch.TimerSwitch" ;
+    rdfs:comment """
+    Manuel switch with integrated timer
+    Typically used for exhaust fan in bathrooms for example
+    """ ;
+    rdfs:subClassOf p223:ElectricalSwitch,
+        s223:Connectable,
+        s223:Equipment,
+        bob:SinglePoleSwitch ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:delay ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffStatus ] .
+
+bob:TwoPolesCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.distribution.TwoPolesCircuitBreaker" ;
+    rdfs:comment """
+    One electrical Inlet because when plugin the breaker
+    in the panel, you get no choice. Both poles are connected
+    at the same time. Electricity is fed from 2 bus bar (2 x 120V)
+    Could also use 208V instead of 240V...
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:ElectricBreaker,
+        s223:Equipment .
+
+bob:TwoPolesMainCircuitBreaker a rdfs:Class ;
+    rdfs:label "bob.equipment.electricity.distribution.TwoPolesMainCircuitBreaker" ;
+    rdfs:comment """
+    A 2 poles Main circuit breaker is modeled differently as I
+    wanted to illustrate the fact that it will be connected to
+    the 2 bus bars in the panel (A & B) and will also be connected
+    to AB. It is really a modeling trick.
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:ElectricBreaker,
+        s223:Equipment .
+
+bob:Volts a rdfs:Class ;
+    rdfs:label "bob.properties.electricity.Volts" ;
+    rdfs:subClassOf s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty .
+
+bob:WaterConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.water.WaterConnectionPoint" ;
+    rdfs:subClassOf s223:ConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:WaterSystemConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.water.WaterSystemConnectionPoint" ;
+    rdfs:subClassOf bob:SystemConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+bob:ZoneConnectionPoint a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.connections.air.AirZoneConnectionPoint",
+        "bob.core.ZoneConnectionPoint" ;
+    rdfs:comment """
+    Zone Connection Point
+    """ ;
+    rdfs:subClassOf bob:ZoneConnectionPoint ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:mapsTo ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path bob:isZoneConnectionPointOf ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+scratch:Actuator a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.hvac.actuator.BaseActuator" ;
+    rdfs:subClassOf s223:Actuator,
+        s223:Connectable,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:position ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:command ] .
+
+scratch:Damper a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.hvac.damper.Damper" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Damper,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:command ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:is_closed ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:is_open ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:linkageInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:position ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:position_feedback ] .
+
+scratch:DamperAndActuator a rdfs:Class ;
+    rdfs:label "bob.scratch.hvac.damper.DamperAndActuator" ;
+    rdfs:comment """
+    This is made as a equipment and not a system because it is a common group of equipment
+    You will see the use of mapsTo in the damper and actuator to link the connection points
+
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Damper,
+        s223:Equipment,
+        scratch:Damper .
+
+scratch:ElectricalActuatedProportionalDamper a rdfs:Class ;
+    rdfs:label "bob.scratch.hvac.damper.ElectricalActuatedProportionalDamper" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Damper,
+        s223:Equipment,
+        scratch:Damper,
+        scratch:DamperAndActuator .
+
+scratch:ElectricalProportionalActuator a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.hvac.actuator.ElectricalProportionalActuator" ;
+    rdfs:subClassOf s223:Actuator,
+        s223:Connectable,
+        s223:Equipment,
+        scratch:Actuator ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:command ] .
+
+scratch:Fan a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.hvac.fan.Fan" ;
+    rdfs:comment """
+    Prototype of a Fan based on the Bob Fan class
+    Fan speed is an important property
+    The intrinsic property I want to make `actuatedby` a starter or a VFD, I'd like it to be
+    a PercentCommand.
+    Because RPM, cfm, amps, etc... will all depend of this and I would not want having to make multiple
+    `actuatesProperty` relationships between the starter/vfd and the fan.
+    I only want 1 property.
+    Then if required, it'll be possible to calculate RPM, amps, cfm, etc, based on the `PercentCommand` actuated property
+
+    RPM of the fan, can be different from RPM of motor (ex. belt and pulley)
+    So here, speed_ratio != RPM because if a fan can deliver x RPM, the ratio of pulley can be changed and
+    giving 100% speed_ratio to a fan, may mean a different speed than RPM of fan.
+
+    A motor starter will give 0% or 100% of speed_ratio depending on being On or Off
+    A VFD will modulate this speed ratio from 0% to 100%.
+    Depending on the configuration of the drive, this ratio can represent 0-60Hz... or 20-50Hz
+    (if freq are configured different than 0-60Hz), etc...
+
+    Using speed_ratio will isolate the model from the real time data by providing an agnostic way
+    of actuating the fan.
+    """ ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment,
+        s223:Fan ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:onOffStatus ] .
+
+scratch:MotorStarter_600VLL_3Ph_60Hz a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.electricity.starter.MotorStarter_600VLL_3Ph_60Hz" ;
+    rdfs:comment """
+    Motor starter
+    This Equipment provides command and status for an electrical
+    Equipment like a fan or a pump
+    This prototype is a 600V 3phases motor starter that implements 
+    onOffCommand and onOffStatus properties
+    status is given by a current relay that is connected to the electrical outlet, that read
+    current using its current sensor.
+
+    """ ;
+    rdfs:subClassOf p223:MotorStarter,
+        s223:Connectable,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:onOffStatus ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:outputSignal ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:inputSignal ] .
+
+scratch:SingleDuctTerminal a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.hvac.vav.VAV" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Equipment ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:damper ] .
+
+scratch:TwoWayActuatedProportionalValve a rdfs:Class ;
+    rdfs:label "bob.scratch.hvac.valve.TwoWayActuatedProportionalValve" ;
+    rdfs:subClassOf s223:System,
+        scratch:TwoWayActuatedValve .
+
+scratch:TwoWayActuatedValve a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.hvac.valve.TwoWayActuatedValve" ;
+    rdfs:comment """
+    This base class allow the creation of SystemConnectionPoints
+    via the config mechanism
+    """ ;
+    rdfs:subClassOf s223:System ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:command ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:waterOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:waterInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:position ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:is_closed ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:position_feedback ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:is_open ] .
+
+scratch:VFDFunction a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.electricity.vfd.VFD_FB" ;
+    rdfs:subClassOf s223:Function ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:speed_ref ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:drive_running ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:kW_load ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:rpm ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:amps_load ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:frequency_load ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:speed_ref_percent ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:alarm ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:volts_load ] .
+
+scratch:VariableFrequencyDrive a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "bob.scratch.electricity.vfd.VFD" ;
+    rdfs:subClassOf s223:Connectable,
+        s223:Controller,
+        s223:Equipment,
+        s223:VariableFrequencyDrive ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path scratch:volts ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:amps ] .
+
+functions:Average a rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "functions.Average" ;
+    rdfs:comment """
+    y = (u1 + u2) / 2.0
+    """ ;
+    rdfs:subClassOf s223:Function ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path functions:y ],
+        [ a sh:PropertyShape ;
+            sh:path functions:u1 ],
+        [ a sh:PropertyShape ;
+            sh:path functions:u2 ] .
+
+p223:VLAN a rdf:Property .
+
+p223:data_rate a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+p223:hasNetworkProfile a rdf:Property .
+
+p223:hasProtocol a rdf:Property .
+
+p223:hasSignalType a rdf:Property .
+
+qudt:hasQuantityKind a rdf:Property .
+
+qudt:hasUnit a rdf:Property .
+
+s223:Actuator sh:property [ a sh:PropertyShape ;
+            sh:path bob:actuates ],
+        [ a sh:PropertyShape ;
+            sh:path bob:commandedByProperty ] .
+
+s223:AirHandlingUnit sh:property [ a sh:PropertyShape ;
+            sh:path bob:electricalInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:outsideAirInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:returnAirInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:supplyAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:exhaustAirOutlet ] .
+
+s223:BACnetExternalReference sh:property [ a sh:PropertyShape ;
+            sh:datatype xsd:nonNegativeInteger ;
+            sh:path bacnet:property-array-index ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:object-identifier ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:device-identifier ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:property-identifier ] .
+
+s223:Boiler sh:property [ a sh:PropertyShape ;
+            sh:path bob:hotWaterEntering ],
+        [ a sh:PropertyShape ;
+            sh:path bob:hotWaterLeaving ],
+        [ a sh:PropertyShape ;
+            sh:path bob:electricalInlet ] .
+
+s223:Chiller sh:property [ a sh:PropertyShape ;
+            sh:path bob:condensedWaterLeaving ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:setpointResetInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:setpointReset ],
+        [ a sh:PropertyShape ;
+            sh:path bob:chilledWaterEntering ],
+        [ a sh:PropertyShape ;
+            sh:path bob:capacityLimitInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:alarmOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:condensedWaterEntering ],
+        [ a sh:PropertyShape ;
+            sh:path bob:alarmStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:capacityLimit ],
+        [ a sh:PropertyShape ;
+            sh:path bob:chilledWaterLeaving ] .
+
+s223:Coil sh:property [ a sh:PropertyShape ;
+            sh:path bob:modulation ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ] .
+
+s223:Connection sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
+
+s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path s223:mapsTo ],
+        [ a sh:PropertyShape ;
+            sh:path s223:isConnectionPointOf ],
+        [ a sh:PropertyShape ;
+            sh:path s223:connectsThrough ] .
+
+s223:Controller sh:property [ a sh:PropertyShape ;
+            sh:path p223:hasNetworkProfile ] .
+
+s223:CoolingCoil sh:property [ a sh:PropertyShape ;
+            sh:path bob:chilledWaterOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:chilledWaterInlet ] .
+
+s223:Damper sh:property [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ] .
+
+s223:DifferentialSensor sh:property [ a sh:PropertyShape ;
+            sh:path bob:differential_static_pressure ] .
+
+s223:DomainSpace sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ] .
+
+s223:ElectricBreaker sh:property [ a sh:PropertyShape ;
+            sh:path bob:currentRating ] .
+
+s223:ElectricTransformer sh:property [ a sh:PropertyShape ;
+            sh:path bob:hasPower ] .
+
+s223:EnumerableProperty sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasEnumerationKind ] .
+
+s223:EnumeratedActuatableProperty sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasValue ] .
+
+s223:EnumeratedObservableProperty sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasValue ] .
+
+s223:Equipment sh:property [ a sh:PropertyShape ;
+            sh:path s223:actuatesProperty ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasPhysicalLocation ] .
+
+s223:Fan sh:property [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ] .
+
+s223:Filter sh:property [ a sh:PropertyShape ;
+            sh:path bob:differentialPressure ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:alarmStatus ] .
+
+s223:HeatingCoil sh:property [ a sh:PropertyShape ;
+            sh:path bob:hotWaterOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:hotWaterInlet ] .
+
+s223:Luminaire sh:property [ a sh:PropertyShape ;
+            sh:path bob:onOffStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:electricalPower ],
+        [ a sh:PropertyShape ;
+            sh:path bob:lightOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:brightnessRatio ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:brightness ] .
+
+s223:ObservableProperty sh:property [ a sh:PropertyShape ;
+            sh:path bob:isObservedBy ] .
+
+s223:OccupantMotionSensor sh:property [ a sh:PropertyShape ;
+            sh:path s223:observes ] .
+
+s223:Property sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofSubstance ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasValue ] .
+
+s223:Pump sh:property [ a sh:PropertyShape ;
+            sh:path bob:waterInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:waterOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffStatus ] .
+
+s223:QuantifiableObservableProperty sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasSetpoint ] .
+
+s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasQuantityKind ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
+
+s223:Sensor sh:property [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMeasurementUncertainty ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMaxRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMaxRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMeasurementPrecision ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMaxRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasObservationLocation ] .
+
+s223:System sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasPhysicalLocation ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ],
+        [ a sh:PropertyShape ;
+            sh:path bob:hasSystemConnectionPoint ] .
+
+s223:TemperatureSensor sh:property [ a sh:PropertyShape ;
+            sh:path s223:observes ] .
+
+s223:TwoWayValve sh:property [ a sh:PropertyShape ;
+            sh:path bob:waterInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:waterOutlet ] .
+
+s223:Valve sh:property [ a sh:PropertyShape ;
+            sh:path bob:linkageInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:flowCoefficient ],
+        [ a sh:PropertyShape ;
+            sh:path bob:command ],
+        [ a sh:PropertyShape ;
+            sh:path bob:is_closed ],
+        [ a sh:PropertyShape ;
+            sh:path bob:position_feedback ],
+        [ a sh:PropertyShape ;
+            sh:path bob:is_open ],
+        [ a sh:PropertyShape ;
+            sh:path bob:position ] .
+
+s223:VariableFrequencyDrive sh:property [ a sh:PropertyShape ;
+            sh:path s223:actuatesProperty ] .
+
+s223:Window sh:property [ a sh:PropertyShape ;
+            sh:path bob:naturalLight ],
+        [ a sh:PropertyShape ;
+            sh:path bob:shadeStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:outdoor ],
+        [ a sh:PropertyShape ;
+            sh:path bob:openCloseCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:breakDetection ],
+        [ a sh:PropertyShape ;
+            sh:path bob:indoor ],
+        [ a sh:PropertyShape ;
+            sh:path bob:shadeCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:openCloseStatus ] .
+
+s223:Zone sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ],
+        [ a sh:PropertyShape ;
+            sh:path bob:hasZoneConnectionPoint ] .
+
+scratch:airInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+scratch:airOutlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+scratch:alarm a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:amps a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:amps_load a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:command a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:damper a rdf:Property .
+
+scratch:drive_running a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:frequency_load a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:inputSignal a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+scratch:is_closed a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:is_open a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:kW_load a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:linkageInlet a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+scratch:onOffCommand a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:onOffStatus a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:outputSignal a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+scratch:position a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:position_feedback a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:rpm a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:speed_ref a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:speed_ref_percent a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:volts a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:volts_load a rdf:Property ;
+    rdfs:subPropertyOf s223:hasProperty .
+
+scratch:waterInlet a rdf:Property ;
+    rdfs:subPropertyOf bob:hasSystemConnectionPoint .
+
+scratch:waterOutlet a rdf:Property ;
+    rdfs:subPropertyOf bob:hasSystemConnectionPoint .
+

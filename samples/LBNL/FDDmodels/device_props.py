@@ -29,7 +29,6 @@ from bob.equipment.hvac.vfd import VFD
 from bob.externalreference.timeseries import TimeSeriesReference
 from bob.properties.electricity import ElectricPowerW
 from bob.properties.ratio import PercentAngularVelocity
-from bob.property import QuantifiableObservableProperty, Setpoint
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.pressure import (

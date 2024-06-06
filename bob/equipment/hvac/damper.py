@@ -1,7 +1,6 @@
 from typing import Dict
 
 
-
 from ...connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
@@ -14,6 +13,7 @@ _log = logging.getLogger(__name__)
 
 # namespace
 _namespace = BOB
+
 
 class Damper(Equipment):
     _class_iri = S223.Damper

@@ -20,7 +20,7 @@ from ...core import (
     PropertyReference,
     data_graph,
     logging,
-    Role
+    Role,
 )
 
 from ...externalreference import NetworkProfile

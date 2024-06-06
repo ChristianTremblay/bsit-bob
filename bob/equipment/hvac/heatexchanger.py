@@ -13,7 +13,7 @@ from ...connections.electricity import (
     ElectricalInletConnectionPoint,
     ElectricalOutletConnectionPoint,
 )
-from ...connections.water import (
+from ...connections.liquid import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
     HotWaterInletConnectionPoint,

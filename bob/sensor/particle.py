@@ -10,20 +10,12 @@ from ..core import (
     QUANTITYKIND,
     S223,
     UNIT,
-    Air,
     Medium,
     PropertyReference,
-    Substance,
     enum,
 )
-from ..enum import Particulate
+from ..enum import Air, Particulate
 from ..properties import ParticulateCount
-from ..property import (
-    ObservableProperty,
-    QuantifiableObservableProperty,
-    QuantifiableProperty,
-    Setpoint,
-)
 from .sensor import Sensor, split_kwargs
 
 _namespace = BOB

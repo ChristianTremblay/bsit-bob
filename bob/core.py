@@ -449,6 +449,10 @@ class Node(metaclass=NodeMetaclass):
             _node_iri = BNode()
         super().__setattr__("_node_iri", _node_iri)
 
+        # allow kwargs to overide
+        self._schema_graph = kwargs.pop("_schema_graph", self._schema_graph)
+        self._data_graph = kwargs.pop("_data_graph", self._data_graph)
+
         if hasattr(self, "_class_iri"):
             if self._class_iri is not None:
                 self._data_graph.add((self._node_iri, RDF.type, self._class_iri))
@@ -797,16 +801,22 @@ class Node(metaclass=NodeMetaclass):
             if isinstance(value, (URIRef, Literal)):
                 # volatile attributes use set() so the old triple is removed
                 if attr in getattr(self, "_volatile", {}):
-                    self._data_graph.set((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+                    self._data_graph.set(
+                        (self._node_iri, self._attr_uriref[attr], value)
+                    )  # type: ignore[attr-defined]
                 else:
-                    self._data_graph.add((self._node_iri, self._attr_uriref[attr], value))  # type: ignore[attr-defined]
+                    self._data_graph.add(
+                        (self._node_iri, self._attr_uriref[attr], value)
+                    )  # type: ignore[attr-defined]
 
             # if the value is a Node, link to it
             if isinstance(value, Node):
                 _log.debug(
                     "    - add (self, %r, %r)", self._attr_uriref[attr], value._node_iri
                 )
-                self._data_graph.add((self._node_iri, self._attr_uriref[attr], value._node_iri))  # type: ignore[attr-defined]
+                self._data_graph.add(
+                    (self._node_iri, self._attr_uriref[attr], value._node_iri)
+                )  # type: ignore[attr-defined]
 
             # if the value is a property, link it to the node
             if isinstance(value, Property) and issubclass(attr_type, Property):
@@ -931,6 +941,7 @@ class Property(Node):
     """
 
     ofMedium: Medium
+    ofConstituent: Constituent
     ofSubstance: Substance
     hasValue: Literal
     # hasExternalReference: set() see below
@@ -1037,6 +1048,168 @@ def reference_mm(prop: Property, external_reference: ExternalReference) -> None:
     prop.add_external_reference(external_reference)
 
 
+class ActuatableProperty(Property):
+    """
+    Such as the setting of a switch.
+    """
+
+    _class_iri: URIRef = S223.ActuatableProperty
+    # TODO : Would it be possible for an Actuatable property, to actuates another actuatable property ?
+    # actuatesProperty: Property
+
+
+class ObservableProperty(Property):
+    """
+    Such as the state of an alarm detector.
+    """
+
+    _class_iri: URIRef = S223.ObservableProperty
+    _attr_uriref = {"isObservedBy": BOB.isObservedBy}
+
+    isObservedBy: Node
+
+
+class QuantifiableProperty(Property):
+    """
+    A property to be expressed as a quantity, it has units.
+    """
+
+    _attr_uriref = {
+        "hasUnit": QUDT["hasUnit"],
+        "hasQuantityKind": QUDT["hasQuantityKind"],
+    }
+
+    _class_iri: URIRef = S223.QuantifiableProperty
+    hasUnit: URIRef
+    hasQuantityKind: URIRef
+
+    def __init__(self, value: Any = None, **kwargs: Any) -> None:
+        _log.debug(f"QuantifiableProperty.__init__ {value!r} {kwargs}")
+        init_value = None
+        if value is None:
+            if "hasValue" in kwargs:
+                init_value = kwargs.pop("hasValue")
+        elif "hasValue" in kwargs:
+            raise RuntimeError("initialization conflict")
+        else:
+            init_value = value
+
+        if init_value is not None:
+            if isinstance(init_value, (int, float)):
+                init_value = Literal(init_value, datatype=XSD.decimal)
+            elif isinstance(init_value, Literal):
+                init_value = Literal(init_value)
+            else:
+                raise TypeError(f"decimal expected: {init_value}")
+
+        super().__init__(init_value, **kwargs)
+
+    def set_value(self, value):
+        self.hasValue = Literal(value, datatype=XSD.decimal)
+
+
+class QuantifiableActuatableProperty(QuantifiableProperty, ActuatableProperty):
+    """
+    Such as a numerical setpoint.
+    """
+
+    _class_iri: URIRef = S223.QuantifiableActuatableProperty
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+
+# Setpoints are subclasses of properties currently, but should they be quantifiable actuatable subclass?
+# Setpoint can be actuatable be they can also be the result of an algortithm in which case, they
+# are observable
+# There could be 2 subclasses of setpoint ?
+#
+# Opinion
+# Setpoints is the "usage" we do of the property, it's not the property itself
+# an aspect would be much more appropriate - Christian
+#
+class Setpoint(QuantifiableProperty):
+    _class_iri: URIRef = S223.Setpoint
+    hasDeadband: Literal
+    hasValue: Literal
+
+    def __init__(self, **kwargs):
+        _properties = {}
+        for k, v in self.__annotations__.items():
+            if k in kwargs:
+                _properties[k] = kwargs.pop(k)
+        super().__init__(**kwargs)
+        for k, v in _properties.items():
+            if v is not None:
+                setattr(self, k, self.__annotations__[k](v))
+
+
+class QuantifiableObservableProperty(QuantifiableProperty, ObservableProperty):
+    """
+    Such as a temperature reading.
+    """
+
+    _class_iri: URIRef = S223.QuantifiableObservableProperty
+    hasSetpoint: Setpoint
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+
+class EnumerableProperty(Property):
+    """
+    A property to be expressed as an EnumerationKind.
+    """
+
+    # _attr_uriref = {}
+
+    _class_iri: URIRef = S223.EnumerableProperty
+    hasEnumerationKind: EnumerationKind
+
+    def __init__(self, value: Any = None, **kwargs: Any) -> None:
+        _log.debug(f"EnumerableProperty.__init__ {value!r} {kwargs}")
+
+        init_value = None
+        if value is None:
+            if "hasValue" in kwargs:
+                init_value = kwargs.pop("hasValue")
+        elif "hasValue" in kwargs:
+            raise RuntimeError("initialization conflict")
+        else:
+            init_value = value
+
+        # TODO : Find a way to be sure it's a good Enumeration for the EnumerationKind ?
+        if init_value is not None:
+            if isinstance(init_value, Literal):
+                init_value = Literal(init_value)
+            else:
+                raise TypeError(f"enumeration expected: {init_value}")
+
+        super().__init__(init_value, **kwargs)
+
+
+class EnumeratedObservableProperty(EnumerableProperty, ObservableProperty):
+    """
+    Such as a On-Off Status.
+    """
+
+    _class_iri: URIRef = S223.EnumeratedObservableProperty
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+
+class EnumeratedActuatableProperty(EnumerableProperty, ActuatableProperty):
+    """
+    Such as a On-Off command.
+    """
+
+    _class_iri: URIRef = S223.EnumeratedActuatableProperty
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+
+
 class PropertyReference:
     def __new__(cls, property):
         if not isinstance(property, Property):
@@ -1131,7 +1304,7 @@ class Container(Node):
 
 
 class EnumerationKind(Node):
-    _class_iri: URIRef = _namespace["EnumerationKind"]
+    _class_iri: URIRef = S223["EnumerationKind"]
     _data_graph = schema_graph
 
     def __init__(self, name, *args, **kwargs) -> None:
@@ -1149,18 +1322,20 @@ class EnumerationKind(Node):
 
         super().__init__(**kwargs)
 
-        schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
-        schema_graph.add((self._node_iri, RDF.type, self._node_iri))
+        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
+        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
+        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
 
-        schema_graph.add(
+        self._schema_graph.add(
             (self._node_iri, RDFS.subClassOf, _namespace["EnumerationKind"])
         )
 
         self._name = name
         self._parent = None
         self._children = set([self])
+        self._constituents = set()
 
-    def __call__(self, name, _alt_namespace=None, **kwargs) -> EnumerationKind:
+    def __call__(self, name, *, _alt_namespace=None, **kwargs) -> EnumerationKind:
         _log.debug("EnumerationKind.__call__ %r", name)
 
         # give it a default label that matches the name
@@ -1168,17 +1343,24 @@ class EnumerationKind(Node):
             kwargs["label"] = name
 
         if _alt_namespace:
-            new_child = EnumerationKind(
+            new_child = self.__class__(
                 name, _node_iri=_alt_namespace[self._name + "-" + name], **kwargs
             )
         else:
-            new_child = EnumerationKind(
+            new_child = self.__class__(
                 name, _node_iri=_namespace[self._name + "-" + name], **kwargs
             )
         _log.debug("    - new_child: %r", new_child)
 
-        new_child._parent = self
+        # constituent references cascade to children and are added as
+        # non-quantifiable properties
+        for each in self._constituents:
+            new_child.add_constituent(each)
 
+        new_child._parent = self
+        new_child._schema_graph.add(
+            (new_child._node_iri, RDFS.label, Literal(kwargs["label"]))
+        )
         pnode = self
         while pnode:
             pnode._children.add(new_child)
@@ -1186,6 +1368,149 @@ class EnumerationKind(Node):
             pnode = pnode._parent
 
         return new_child
+
+
+#
+#   Top Level EnumerationKind Instances
+#
+
+# General EnumerationKind
+Substance = EnumerationKind("Substance")
+Substance.Medium = Medium = Substance("Medium")
+Medium.Constituent = Medium("Constituent")
+Medium.Mix = Medium("Mix")
+
+Role = EnumerationKind("Role")
+Domain = EnumerationKind("Domain")
+
+
+class Constituent(EnumerationKind):
+    def __init__(self, name, *args, **kwargs) -> None:
+        _log.debug("Constituent.__init__ %r", name)
+
+        # give it a default label that matches the name
+        if "label" not in kwargs:
+            kwargs["label"] = name
+
+        if "_alt_namespace" in kwargs:
+            _ns = kwargs.pop("_alt_namespace")
+            kwargs["_node_iri"] = _ns["Constituent" + "-" + name]
+        elif "_node_iri" not in kwargs:
+            kwargs["_node_iri"] = _namespace["Constituent" + "-" + name]
+
+        super().__init__(name, **kwargs)
+
+        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
+        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
+        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
+
+        self._schema_graph.add(
+            (self._node_iri, RDFS.subClassOf, _namespace["Constituent"])
+        )
+
+        # funky parents
+        self._parent = Medium.Constituent
+        Medium.Constituent._children.add(self)
+        Medium._children.add(self)
+        Substance._children.add(self)
+
+    # def __call__(self, *args, **kwargs):
+    #     raise NotImplementedError("no sub-constituents")
+
+
+class Mix(EnumerationKind):
+    # composedOf: Set[Property | QuantifiableProperty]
+
+    def __init__(self, name, *args, **kwargs) -> None:
+        _log.debug("Mix.__init__ %r", name)
+
+        # give it a default label that matches the name
+        if "label" not in kwargs:
+            kwargs["label"] = name
+
+        if "_alt_namespace" in kwargs:
+            _ns = kwargs.pop("_alt_namespace")
+            kwargs["_node_iri"] = _ns["Mix" + "-" + name]
+        elif "_node_iri" not in kwargs:
+            kwargs["_node_iri"] = _namespace["Mix" + "-" + name]
+
+        super().__init__(name, **kwargs)
+
+        self.composedOf = set()
+
+        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
+        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
+        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
+
+        self._schema_graph.add((self._node_iri, RDFS.subClassOf, _namespace["Mix"]))
+
+        # funky parent reference
+        self._parent = Medium.Mix
+
+    def add_constituent(self, constituent: Constituent, *args, **kwargs) -> None:
+        _log.debug("Mix.add_constituent %r %r %r", constituent, args, kwargs)
+        _log.debug("    - self: %r", self)
+
+        if not isinstance(constituent, Constituent):
+            raise TypeError("constituent")
+
+        # look for an existing reference to this constituent
+        for prop in self.composedOf:
+            if prop.ofConstituent == constituent:
+                _log.debug("    - existing property reference: %r", prop)
+
+                update_to_quantifiable = False
+                if "hasQuantityKind" in kwargs:
+                    _log.debug("    - update hasQuantityKind")
+                    prop._data_graph.add(
+                        (
+                            prop._node_iri,
+                            S223.hasQuantityKind,
+                            kwargs["hasQuantityKind"],
+                        )
+                    )
+                    update_to_quantifiable = True
+                if "hasUnit" in kwargs:
+                    _log.debug("    - update hasUnit")
+                    prop._data_graph.add(
+                        (prop._node_iri, S223.hasUnit, kwargs["hasUnit"])
+                    )
+                    update_to_quantifiable = True
+                if "hasValue" in kwargs:
+                    _log.debug("    - update hasValue")
+                    if not update_to_quantifiable:
+                        _log.debug(
+                            "    - should probably specify hasQuantityKind and/or hasUnit"
+                        )
+                    prop.hasValue = kwargs["hasValue"]
+
+                if update_to_quantifiable:
+                    _log.debug("    - upgrade to quantifiable")
+                    prop._data_graph.add(
+                        (prop._node_iri, RDF.type, S223.QuantifiableProperty)
+                    )
+                return
+
+        # see if this should be quantifiable or not
+        property_class: type
+        if ("hasQuantityKind" in kwargs) or ("hasUnit" in kwargs):
+            property_class = QuantifiableProperty
+        else:
+            property_class = Property
+        _log.debug("    - property_class: %r", property_class)
+
+        prop = property_class(
+            *args,
+            label=f"{self._name}.constituent_{constituent._name}",
+            ofConstituent=constituent,
+            _data_graph=self._data_graph,
+            **kwargs,
+        )
+        _log.debug("    - new property: %r", prop)
+
+        self._constituents.add(constituent)
+        prop._schema_graph.add((self._node_iri, S223.composedOf, prop._node_iri))
+        self.composedOf.add(prop)
 
 
 class System(Container):
@@ -1415,16 +1740,17 @@ def connect_mm(from_thing: Connectable, to_thing: Connectable) -> None:
     _log.debug(f"    - to_types: {to_types}")
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
-        raise RuntimeError("no compatiable connection points")
+        raise RuntimeError("no compatible connection points")
     if len(pairs) > 1:
-        raise RuntimeError("too many compatiable connection points")
+        print(pairs)
+        raise RuntimeError("too many compatible connection points")
 
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     from_connection_point = from_out[from_medium].pop()
     _log.debug(f"    - from_connection_point: {from_connection_point}")
     to_connection_point = to_in[to_medium].pop()
@@ -1602,9 +1928,7 @@ def connect_mm(
         raise AttributeError(f"{to_connection_point} hasMedium")
     _log.debug(f"    - to_medium: {to_medium}")
 
-    if (from_medium not in to_medium._children) and (
-        to_medium not in from_medium._children
-    ):
+    if not validate_medium(from_medium, to_medium):
         raise RuntimeError(
             f"mismatched medium: {from_connection_point} >> {to_connection_point}"
         )
@@ -1681,9 +2005,7 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
             raise AttributeError(f"{connection_point} hasMedium")
         _log.debug(f"    - connection_point_medium: {connection_point_medium}")
 
-        if (connection_medium not in connection_point_medium._children) and (
-            connection_point_medium not in connection_medium._children
-        ):
+        if not validate_medium(connection_medium, connection_point_medium):
             raise RuntimeError(f"mismatched medium: {connection_point} >> {connection}")
 
     # property based link
@@ -1748,9 +2070,7 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
             raise AttributeError(f"{connection_point} hasMedium")
         _log.debug(f"    - connection_point_medium: {connection_point_medium}")
 
-        if (connection_medium not in connection_point_medium._children) and (
-            connection_point_medium not in connection_medium._children
-        ):
+        if not validate_medium(connection_medium, connection_point_medium):
             raise RuntimeError(f"mismatched medium: {connection} >> {connection_point}")
 
     # property based link
@@ -1891,9 +2211,7 @@ def connect_mm(equipment: Equipment, connection: Connection) -> None:
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
         if CONNECTION_HAS_MEDIUM:
-            if (medium in connection_medium._children) or (
-                connection_medium in medium._children
-            ):
+            if validate_medium(medium, connection_medium):
                 from_out.add(connection_point)
         else:
             from_out.add(connection_point)
@@ -1932,9 +2250,7 @@ def connect_mm(connection: Connection, equipment: Equipment) -> None:
             continue
 
         if CONNECTION_HAS_MEDIUM:
-            if (medium in connection_medium._children) or (
-                connection_medium in medium._children
-            ):
+            if validate_medium(medium, connection_medium):
                 to_in.add(connection_point)
         else:
             to_in.add(connection_point)
@@ -1977,9 +2293,7 @@ def connect_mm(connection: Connection, equipment_list: List[Equipment]) -> None:
                 continue
 
             if CONNECTION_HAS_MEDIUM:
-                if (medium in connection_medium._children) or (
-                    connection_medium in medium._children
-                ):
+                if validate_medium(medium, connection_medium):
                     to_in.add(connection_point)
             else:
                 to_in.add(connection_point)
@@ -2017,9 +2331,7 @@ def connect_mm(connection_point: ConnectionPoint, equipment: Equipment) -> None:
 
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
-        if (medium in connection_point_medium._children) or (
-            connection_point_medium in medium._children
-        ):
+        if validate_medium(medium, connection_point_medium):
             to_in.add(connection_point)
     _log.debug("    - to_in: %r", to_in)
 
@@ -2063,9 +2375,7 @@ def connect_mm(connection: Connection, system: System) -> None:
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
         if CONNECTION_HAS_MEDIUM:
-            if (medium in connection_medium._children) or (
-                connection_medium in medium._children
-            ):
+            if validate_medium(medium, connection_medium):
                 to_in.add(connection_point)
         else:
             to_in.add(connection_point)
@@ -2108,9 +2418,7 @@ def connect_mm(system: System, connection: Connection) -> None:
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
         if CONNECTION_HAS_MEDIUM:
-            if (medium in connection_medium._children) or (
-                connection_medium in medium._children
-            ):
+            if validate_medium(medium, connection_medium):
                 from_out.add(connection_point)
         else:
             from_out.add(connection_point)
@@ -2205,16 +2513,16 @@ def connect_mm(equipment: Equipment, system: System) -> None:
     _log.debug(f"    - to_types: {to_types}")
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
         raise RuntimeError("no compatiable connection points")
     if len(pairs) > 1:
         raise RuntimeError("too many compatiable connection points")
 
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     from_connection_point = from_out[from_medium].pop()
     _log.debug(f"    - from_connection_point: {from_connection_point}")
     to_connection_point = to_in[to_medium].pop()
@@ -2285,17 +2593,17 @@ def connect_mm(system: System, equipment: Equipment) -> None:
     _log.debug(f"    - from_types: {from_types}")
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
         raise RuntimeError("no compatiable connection points")
     if len(pairs) > 1:
         raise RuntimeError("too many compatiable connection points")
 
     # get the two connection points
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     from_connection_point = from_out[from_medium].pop()
     _log.debug(f"    - from_connection_point: {from_connection_point}")
     to_connection_point = to_in[to_medium].pop()
@@ -2415,16 +2723,16 @@ def connect_mm(from_system: System, to_system: System) -> None:
     _log.debug(f"    - to_types: {to_types}")
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
         raise RuntimeError("no compatiable connection points")
     if len(pairs) > 1:
         raise RuntimeError("too many compatiable connection points")
 
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     from_connection_point = from_out[from_medium].pop()
     _log.debug(f"    - from_connection_point: {from_connection_point}")
     to_connection_point = to_in[to_medium].pop()
@@ -2614,16 +2922,16 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     _log.debug(f"    - to_types: {to_types}")
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
         raise RuntimeError("no compatiable connection points")
     if len(pairs) > 1:
         raise RuntimeError("too many compatiable connection points")
 
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     from_connection_point = from_out[from_medium].pop()
     _log.debug(f"    - from_connection_point: {from_connection_point}")
     to_connection_point = to_in[to_medium].pop()
@@ -2668,9 +2976,7 @@ def connect_mm(zone: Zone, connection: Connection) -> None:
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
         if CONNECTION_HAS_MEDIUM:
-            if (medium in connection_medium._children) or (
-                connection_medium in medium._children
-            ):
+            if validate_medium(medium, connection_medium):
                 from_out.add(connection_point)
         else:
             from_out.add(connection_point)
@@ -2922,11 +3228,7 @@ class Junction(Connectable):
             raise RuntimeError(f"medium required: {self} or {other}")
 
         if junction_medium:
-            if not other_medium:
-                other.hasMedium = junction_medium
-            elif (junction_medium not in other_medium._children) or (
-                other_medium not in junction_medium._children
-            ):
+            if not validate_medium(junction_medium, other_medium):
                 raise RuntimeError(
                     f"incompatiable medium: {junction_medium} or {other_medium}"
                 )
@@ -2960,9 +3262,7 @@ def connect_mm(connectable: Connectable, junction: Junction) -> None:
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
         if junction_medium:
-            if (junction_medium not in medium._children) or (
-                medium not in junction_medium._children
-            ):
+            if not validate_medium(medium, junction_medium):
                 continue
         from_out[medium].add(connection_point)
 
@@ -3011,16 +3311,16 @@ def connect_mm(connectable: Connectable, junction: Junction) -> None:
         to_in[medium].add(connection_point)
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
         raise RuntimeError("no compatiable connection points")
     if len(pairs) > 1:
         raise RuntimeError("too many compatiable connection points")
 
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     from_connection_point = from_out[from_medium].pop()
     _log.debug(f"    - from_connection_point: {from_connection_point}")
     to_connection_point = to_in[to_medium].pop()
@@ -3070,9 +3370,7 @@ def connect_mm(junction: Junction, connectable: Connectable) -> None:
         if not (medium := getattr(connection_point, "hasMedium", None)):
             continue
         if junction_medium:
-            if (junction_medium not in medium._children) or (
-                medium not in junction_medium._children
-            ):
+            if not validate_medium(medium, junction_medium):
                 continue
         to_in[medium].add(connection_point)
 
@@ -3105,16 +3403,16 @@ def connect_mm(junction: Junction, connectable: Connectable) -> None:
         from_out[medium].add(connection_point)
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
         raise RuntimeError("no compatiable connection points")
     if len(pairs) > 1:
         raise RuntimeError("too many compatiable connection points")
 
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     from_connection_point = from_out[from_medium].pop()
     _log.debug(f"    - from_connection_point: {from_connection_point}")
     to_connection_point = to_in[to_medium].pop()
@@ -3233,9 +3531,7 @@ def connect_mm(from_connection_point: ConnectionPoint, junction: Junction) -> No
     # get the medium of the junction if it has one
     junction_medium = getattr(junction, "hasMedium", None)
     if junction_medium:
-        if (junction_medium not in medium._children) or (
-            medium not in junction_medium._children
-        ):
+        if not validate_medium(medium, junction_medium):
             raise RuntimeError(f"incompatible medium: {medium}, {junction_medium}")
 
     # build a dict of inlet connection points that are not already connected
@@ -3268,16 +3564,16 @@ def connect_mm(from_connection_point: ConnectionPoint, junction: Junction) -> No
         to_in[medium].add(connection_point)
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
         raise RuntimeError("no compatiable connection points")
     if len(pairs) > 1:
         raise RuntimeError("too many compatiable connection points")
 
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     to_connection_point = to_in[to_medium].pop()
     _log.debug(f"    - to_connection_point: {to_connection_point}")
 
@@ -3298,9 +3594,7 @@ def connect_mm(junction: Junction, to_connection_point: ConnectionPoint) -> None
     # get the medium of the junction if it has one
     junction_medium = getattr(junction, "hasMedium", None)
     if junction_medium:
-        if (junction_medium not in medium._children) or (
-            medium not in junction_medium._children
-        ):
+        if not validate_medium(medium, junction_medium):
             raise RuntimeError(f"incompatible medium: {medium}, {junction_medium}")
 
     # build a dict of outlet connection points that are not already connected
@@ -3333,16 +3627,16 @@ def connect_mm(junction: Junction, to_connection_point: ConnectionPoint) -> None
         from_out[medium].add(connection_point)
 
     # find compatible pairs
-    pairs = []
+    pairs = set()
     for from_medium, to_medium in itertools.product(from_types, to_types):
-        if (from_medium in to_medium._children) or (to_medium in from_medium._children):
-            pairs.append((from_medium, to_medium))
+        if validate_medium(from_medium, to_medium):
+            pairs.add((from_medium, to_medium))
     if len(pairs) == 0:
         raise RuntimeError("no compatiable connection points")
     if len(pairs) > 1:
         raise RuntimeError("too many compatiable connection points")
 
-    from_medium, to_medium = pairs[0]
+    from_medium, to_medium = pairs.pop()
     from_connection_point = from_out[from_medium].pop()
     _log.debug(f"    - from_connection_point: {from_connection_point}")
 
@@ -3672,24 +3966,24 @@ class BidirectionalZoneConnectionPoint(ZoneConnectionPoint):
     _class_iri: URIRef = BOB.BidirectionalZoneConnectionPoint
 
 
-#
-#   EnumerationKind Instances
-#
-
-# General EnumerationKind
-Medium = EnumerationKind("Medium")
-Substance = EnumerationKind("Substance")
-Role = EnumerationKind("Role")
-Domain = EnumerationKind("Domain")
-
-# Top Hierarchy Media
-Air = Medium("Air")
-Water = Medium("Water")
-EM = Medium("EM")  # electro-magnetic
-Light = EM("Light")
-Microwave = EM("Microwave")
-RF = EM("RF")
-Electricity = Medium("Electricity")
-NaturalGas = Medium("NaturalGas")
-Glycol = Medium("Glycol")
-Occupant = Medium("Occupant")
+def validate_medium(from_medium, to_medium):
+    # print(from_medium, to_medium)
+    if (
+        (
+            from_medium not in to_medium._children
+            and to_medium not in from_medium._children
+        )
+        and not (
+            from_medium in to_medium._constituents
+            or to_medium in from_medium._constituents
+        )
+        and not (
+            any(
+                element in to_medium._constituents
+                for element in from_medium._constituents
+            )
+        )
+    ):
+        return False
+    else:
+        return True

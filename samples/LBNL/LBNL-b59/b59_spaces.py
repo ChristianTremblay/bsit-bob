@@ -9,7 +9,7 @@ from b59_HVAC import *
 from header import lbnl_header
 
 from bob.connections.air import *
-from bob.connections.water import *
+from bob.connections.liquid import *
 from bob.core import (
     HVAC,
     Air,
@@ -30,7 +30,6 @@ from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.vfd import VFD
-from bob.property import *
 from bob.role import Exhaust, Return, Supply
 
 # from bob.signal import(

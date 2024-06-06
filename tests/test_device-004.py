@@ -3,9 +3,14 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import QUANTITYKIND, UNIT, bind_model_namespace, dump
+from bob.core import (
+    QUANTITYKIND,
+    UNIT,
+    bind_model_namespace,
+    dump,
+    QuantifiableObservableProperty,
+)
 from bob.equipment.hvac.gas import GasMonitor
-from bob.property import QuantifiableObservableProperty
 from bob.sensor.gas import CO2Sensor, COSensor, NO2Sensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone

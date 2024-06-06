@@ -1,9 +1,11 @@
 from typing import Dict
 
 from bob.connections import electricity as elec_cnx
-from bob.connections.controlsignal import (OnOffSignalInletConnectionPoint,
-                                           OnOffSignalOutletConnectionPoint)
-from bob.core import (SCRATCH, UNIT, PropertyReference, logging)
+from bob.connections.controlsignal import (
+    OnOffSignalInletConnectionPoint,
+    OnOffSignalOutletConnectionPoint,
+)
+from bob.core import SCRATCH, UNIT, PropertyReference, logging
 from bob.equipment.electricity.starter import MotorStarter as BasicMotorStarter
 from bob.equipment.electricity.switch import CurrentRelay
 from bob.properties.electricity import ElectricPower
@@ -37,7 +39,7 @@ class MotorStarter_600VLL_3Ph_60Hz(BasicMotorStarter):
     Motor starter
     This Equipment provides command and status for an electrical
     Equipment like a fan or a pump
-    This prototype is a 600V 3phases motor starter that implements 
+    This prototype is a 600V 3phases motor starter that implements
     onOffCommand and onOffStatus properties
     status is given by a current relay that is connected to the electrical outlet, that read
     current using its current sensor.

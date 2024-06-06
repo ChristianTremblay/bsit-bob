@@ -2,8 +2,9 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import bind_model_namespace, dump
-from bob.property import (
+from bob.core import (
+    bind_model_namespace,
+    dump,
     ActuatableProperty,
     ObservableProperty,
     Property,

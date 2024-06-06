@@ -1,7 +1,6 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, dump
-from bob.property import Setpoint
+from bob.core import bind_model_namespace, dump, Setpoint
 from bob.space.hvac import HVACSpace, HVACZone, OccupancyStatus
 
 model_name = Path(__file__).stem

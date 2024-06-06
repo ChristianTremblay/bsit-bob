@@ -9,15 +9,12 @@ from ..core import (
     QUANTITYKIND,
     S223,
     UNIT,
-    Air,
     Equipment,
     Medium,
     PropertyReference,
-    Substance,
-    Water,
 )
+from ..enum import Air
 from ..properties import SmokePresence
-from ..property import QuantifiableProperty, Setpoint
 from .sensor import Sensor, split_kwargs
 
 _namespace = BOB

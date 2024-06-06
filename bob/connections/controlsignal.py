@@ -11,7 +11,6 @@ from ..core import (
     BidirectionalSystemConnectionPoint,
     Connection,
     ConnectionPoint,
-    Electricity,
     InletConnectionPoint,
     InletSystemConnectionPoint,
     InletZoneConnectionPoint,
@@ -22,7 +21,7 @@ from ..core import (
     SystemConnectionPoint,
     enum,
 )
-
+from ..enum import Electricity
 _namespace = BOB
 # It is modeling dry contact, Triac and other On-Off relationships
 

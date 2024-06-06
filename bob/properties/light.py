@@ -1,7 +1,12 @@
 from rdflib import URIRef
 
-from ..core import BOB, P223, QUANTITYKIND, UNIT
-from ..property import QuantifiableObservableProperty, QuantifiableProperty
+from ..core import (
+    BOB,
+    P223,
+    QUANTITYKIND,
+    UNIT,
+    QuantifiableObservableProperty,
+)
 from .ratio import Percent
 
 _namespace = BOB

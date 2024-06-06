@@ -15,9 +15,8 @@ from bob.properties import (
     RelativeHumidity,
     Temperature,
 )
-from bob.property import Setpoint
 
-from ..core import BOB, P223, S223, Air, Domain, DomainSpace, Medium, Zone, enum
+from ..core import BOB, P223, S223, Domain, DomainSpace, Medium, Zone, Setpoint
 
 _namespace = BOB
 

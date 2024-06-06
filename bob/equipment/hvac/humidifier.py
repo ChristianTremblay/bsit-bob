@@ -7,7 +7,7 @@ from bob.properties import Percent, PercentCommand
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import ElectricalInletConnectionPoint
-from ...connections.water import (
+from ...connections.liquid import (
     SteamInletConnectionPoint,
     SteamOutletConnectionPoint,
     WaterInletConnectionPoint,

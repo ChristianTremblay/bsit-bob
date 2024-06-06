@@ -4,13 +4,13 @@ from header import ttl_test_header
 
 from bob import core
 from bob.core import (
-    Air,
     Connection,
     Equipment,
     InletConnectionPoint,
     bind_model_namespace,
     dump,
 )
+from bob.enum import Air
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

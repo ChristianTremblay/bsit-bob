@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 # working directory mapped as a volume in validate-run.sh
-DATA_DIRECTORY = Path("/data")
+DATA_DIRECTORY = Path("data")
 
 S223 = Namespace("http://data.ashrae.org/standard223#")
 

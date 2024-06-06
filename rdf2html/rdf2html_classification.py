@@ -24,7 +24,7 @@ propgraph_labels = {
     "direction": ["hasDirection"],
     "aspects": ["hasAspect"],
     "roles": ["hasRole"],
-    "medium": ["hasMedium", "ofSubstance", "ofMedium", "hasSignalType"],
+    "medium": ["hasMedium", "ofConstituent", "ofMedium", "hasSignalType", "composedOf"],
     "quantityKind": ["hasQuantityKind"],
     "enumerationKind": ["hasEnumerationKind"],
     "domain": ["hasDomain"],

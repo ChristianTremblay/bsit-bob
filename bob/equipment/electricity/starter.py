@@ -60,4 +60,3 @@ class MotorStarter(_MotorStarter):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _config.pop("relations", []))
-

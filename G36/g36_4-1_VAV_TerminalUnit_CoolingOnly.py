@@ -18,25 +18,28 @@ from bob.core import (
     UNIT,
     bind_model_namespace,
     dump,
+    QuantifiableObservableProperty,
 )
 from bob.enum import AnalogSignalTypeEnum
 from bob.equipment.architectural import Window
 from bob.equipment.control import AnalogInput, AnalogOutput, BinaryInput
 from bob.equipment.control.controller import Controller
 
+from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.gas import GasMonitor
 from bob.equipment.hvac.stats import NetworkRoomSensor
 
 from bob.producer.g36 import G36VAVCoolingOnly
 from bob.producer.occupancy import OccupancyFunction
 from bob.properties.states import OccupancyStatus
-from bob.property import QuantifiableObservableProperty
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
 from bob.sensor.motion import OccupantMotionSensor
 from bob.sensor.security import IntrusionSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace, HVACZone
+
+from bob.scratch.control.controller import VAVController
 
 # Prototypes
 from bob.scratch.hvac.vav import VAV_Simple
@@ -119,7 +122,7 @@ vav_system_template = {
     },
     "equipment": {
         ("ZONE-THERMOSTAT", NetworkRoomSensor): {"config": Thermostat_template},
-        ("DPR", ElectricalActuatedProportionalDamper): {
+        ("VAVController", VAVController): {
             "comment": "VAV Box Damper with electrical actuator"
         },
         ("ZN-CO2", GasMonitor): {
@@ -142,8 +145,8 @@ vav = VAV_Simple(config=vav_system_template)
 supply_air >> vav.airInlet
 vav.airOutlet >> discharge_air >> hvac_space.ductAirInlet
 
-vav["DPR"]["actuator"].proportional_signal << controller.damper_output
-vav["DPR"]["actuator"].proportional_signal.hasSignalType = AnalogSignalTypeEnum.VDC_0_10
+vav["VAVController"].proportional_signal << controller.damper_output
+vav["VAVController"].proportional_signal.hasSignalType = AnalogSignalTypeEnum.VDC_0_10
 vav["ZONE-THERMOSTAT"]["temperature_sensor"] % hvac_space
 vav["ZONE-THERMOSTAT"].mstp << controller.bacnet_mstp
 vav["ZN-CO2"]["CO2"] % hvac_space
@@ -196,7 +199,7 @@ g36fig_a_1 = G36VAVCoolingOnly(
     zoneTemperature=hvac_zone.temperature,
     zoneCO2=hvac_zone.co2,
     zonewindowSwitch=hvac_zone.windows_switch,
-    boxDamperPosition=vav["DPR"]["actuator"]["command"],
+    boxDamperPosition=vav["VAVController"]["command"],
     effectiveOccupancy=hvac_space.occupancy,
 )
 

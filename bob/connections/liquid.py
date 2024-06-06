@@ -9,12 +9,12 @@ from ..core import (
     ConnectionPoint,
     InletConnectionPoint,
     InletSystemConnectionPoint,
-    Medium,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     SystemConnectionPoint,
-    Water,
+    Medium
 )
+from ..enum import GlycolSolution_15Percent, GlycolSolution_30Percent, Water
 
 _namespace = BOB
 
@@ -270,5 +270,43 @@ class CondensedWaterInletSystemConnectionPoint(
 
 class CondensedWaterOutletSystemConnectionPoint(
     OutletSystemConnectionPoint, CondensedWaterSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
+
+
+# === Glycol Solution 15%
+class Glycol15PercentConnection(Connection):
+    hasMedium: Medium = GlycolSolution_15Percent
+    _class_iri = S223.Connection
+
+
+class Glycol15PercentConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = GlycolSolution_15Percent
+
+
+class Glycol15PercentInletConnectionPoint(
+    InletConnectionPoint, Glycol15PercentConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class Glycol15PercentOutletConnectionPoint(
+    OutletConnectionPoint, Glycol15PercentConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class Glycol15PercentSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = GlycolSolution_15Percent
+
+
+class Glycol15PercentInletSystemConnectionPoint(
+    InletSystemConnectionPoint, Glycol15PercentSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class Glycol15PercentOutletSystemConnectionPoint(
+    OutletSystemConnectionPoint, Glycol15PercentSystemConnectionPoint
 ):
     _class_iri = BOB.OutletSystemConnectionPoint

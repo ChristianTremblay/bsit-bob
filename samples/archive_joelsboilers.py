@@ -4,7 +4,7 @@ from typing import Any
 from header import sample_header
 
 from bob.connections.air import *
-from bob.connections.water import (
+from bob.connections.liquid import (
     WaterConnection,
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,

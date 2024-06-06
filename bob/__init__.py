@@ -18,3 +18,4 @@ from .core import bind_model_namespace  # associate a namespace and prefix
 from .core import data_graph  # the data model created
 from .core import dump  # output a graph, defaults to data_graph
 from .core import schema_graph  # the schema for the custom components in the model
+# from . import enum

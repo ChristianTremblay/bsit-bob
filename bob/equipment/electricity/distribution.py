@@ -5,10 +5,17 @@ from rdflib import Literal
 from bob.enum import ElectricalPhaseIdentifier, Dimensioned
 from bob.properties import ElectricPowerkW
 from bob.properties.electricity import Amps
-from bob.property import QuantifiableObservableProperty
 
 from ...connections import electricity as elec_cnx
-from ...core import BOB, P223, S223, QUANTITYKIND, UNIT, Equipment
+from ...core import (
+    BOB,
+    P223,
+    S223,
+    QUANTITYKIND,
+    UNIT,
+    Equipment,
+    QuantifiableObservableProperty,
+)
 
 _namespace = BOB
 

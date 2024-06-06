@@ -5,7 +5,7 @@ from header import sample_header
 
 from bob.connections.air import *
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.connections.water import WaterConnection
+from bob.connections.liquid import WaterConnection
 from bob.core import (
     UNIT,
     Equipment,
