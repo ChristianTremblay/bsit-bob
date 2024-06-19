@@ -11,12 +11,16 @@ import argparse
 import logging
 import sys
 
-import ontoenv
-import owlrl
-import pyshacl
-from rdflib import OWL, RDF, RDFS, Graph, Namespace, URIRef
+try:
+    import ontoenv
+except:
+    ontoenv = None
+try:
+    import owlrl
+except:
+    owlrl = None
 
-logger = logging.getLogger(__name__)
+from rdflib import OWL, RDF, RDFS, Graph, Namespace, URIRef, Literal
 
 # build a parser for the command line arguments
 parser = argparse.ArgumentParser(
@@ -32,28 +36,29 @@ parser.add_argument(
     help="turtle files to load",
 )
 
-# add an option to run RDFS semantics
-parser.add_argument(
-    "--rdfs",
-    action="store_true",
-    help="run RDFS semantics",
-)
+if owlrl:
+    # add an option to run RDFS semantics
+    parser.add_argument(
+        "--rdfs",
+        action="store_true",
+        help="run RDFS semantics",
+    )
 
-# add an option to run OWLRL semantics
-parser.add_argument(
-    "--owlrl",
-    action="store_true",
-    help="run OWLRL semantics",
-)
+    # add an option to run OWLRL semantics
+    parser.add_argument(
+        "--owlrl",
+        action="store_true",
+        help="run OWLRL semantics",
+    )
 
-# add an option to run both RDFS and OWLRL semantics
-parser.add_argument(
-    "--both",
-    action="store_true",
-    help="run both RDFS and OWLRL semantics",
-)
+    # add an option to run both RDFS and OWLRL semantics
+    parser.add_argument(
+        "--both",
+        action="store_true",
+        help="run both RDFS and OWLRL semantics",
+    )
 
-# add an option to run both RDFS and OWLRL semantics
+# add an option to remove useless triplea
 parser.add_argument(
     "--clean",
     action="store_true",
@@ -85,9 +90,9 @@ args = parser.parse_args()
 
 # logging options
 if args.debug:
-    logger.setLevel(logging.DEBUG)
+    logging.getLogger().setLevel(logging.DEBUG)
 elif args.info:
-    logger.setLevel(logging.INFO)
+    logging.getLogger().setLevel(logging.INFO)
 
 # make a graph
 g = Graph()
@@ -98,15 +103,16 @@ for fname in args.ttl:
         g.parse(sys.stdin, format="turtle")
     else:
         g.parse(fname, format="turtle")
-logger.info("g data: %d triples", len(g))
+logging.info("g data: %d triples", len(g))
 
 # suck in the ontology files
-env = ontoenv.OntoEnv()
-env.import_dependencies(g)
-logger.info("g env: %d triples", len(g))
+if ontoenv:
+    env = ontoenv.OntoEnv()
+    env.import_dependencies(g)
+    logging.info("g env: %d triples", len(g))
 
 # expand the graph
-if args.rdfs or args.owlrl or args.both:
+if owlrl and (args.rdfs or args.owlrl or args.both):
     if (args.rdfs and args.owlrl) or args.both:
         inferencer = owlrl.DeductiveClosure(owlrl.RDFS_OWLRL_Semantics)
     elif args.rdfs and not args.owlrl:
@@ -114,7 +120,7 @@ if args.rdfs or args.owlrl or args.both:
     elif not args.rdfs and args.owlrl:
         inferencer = owlrl.DeductiveClosure(owlrl.OWLRL_Semantics)
     inferencer.expand(g)
-    logger.info("g inference: %d triples", len(g))
+    logging.info("g inference: %d triples", len(g))
 
 # clean out most of the useless triples
 if args.clean:
@@ -131,7 +137,7 @@ if args.clean:
     for s, p, o in g.triples((None, OWL.sameAs, None)):
         if s == o:
             g.remove((s, p, o))
-    logger.info("g cleaned: %d triples", len(g))
+    logging.info("g cleaned: %d triples", len(g))
 
 # save the result for debugging
 if args.export:
@@ -141,6 +147,7 @@ if args.export:
 prefixes = {}
 for prefix, uriref in g.namespaces():
     prefixes[prefix] = Namespace(uriref)
+logging.debug("prefixes: %s", prefixes)
 
 # loop for interactive queries
 while True:
@@ -171,11 +178,15 @@ while True:
             mini_graph.add(stmt)
 
     for stmt in g.triples((node_iri, None, None)):
+        if isinstance(stmt[2], Literal):
+            continue
         mini_graph.add(stmt)
 
         # expand the results to the next nodes
         if (stmt[1] != RDF.type) and isinstance(stmt[2], URIRef):
             for substmt in g.triples((stmt[2], None, None)):
+                if isinstance(substmt[2], Literal):
+                    continue
                 mini_graph.add(substmt)
 
     print(mini_graph.serialize(format="turtle"))
