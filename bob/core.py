@@ -1068,7 +1068,7 @@ class Property(Node):
                 (
                     internal_reference._node_iri,
                     S223.isInternalReferenceOf,
-                    property._node_iri,
+                    self._node_iri,
                 )
             )
         self.hasInternalReference.add(internal_reference)
