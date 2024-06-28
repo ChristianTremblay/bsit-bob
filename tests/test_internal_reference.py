@@ -1,20 +1,20 @@
 from pathlib import Path
+
 import pytest
 from header import ttl_test_header
 
-from bob.core import bind_model_namespace, dump, Property, UNIT
-from bob.externalreference.bacnet import BACnetExternalReference
-from bob.properties.temperature import Temperature
-
 from bob.bacnet import (
-    Device,
-    DeviceObject,
     AnalogInputObject,
     AnalogValueObject,
     BinaryInputObject,
     BinaryOutputObject,
+    Device,
+    DeviceObject,
     ScheduleObject,
 )
+from bob.core import UNIT, Property, bind_model_namespace, dump
+from bob.externalreference.bacnet import BACnetExternalReference
+from bob.properties.temperature import Temperature
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -37,6 +37,7 @@ def test_add_external_reference_to_property_then_create_internal_ref(bob_fixture
 
     prop = Property(label="fake prop with ext ref")
     prop @ ref_prop
+    dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
 
 
 def test_add_internal_reference_to_temperature_property_with_ext_ref(bob_fixture):
@@ -48,5 +49,3 @@ def test_add_internal_reference_to_temperature_property_with_ext_ref(bob_fixture
         )
         prop @ ref1
         prop @ intref_prop
-
-        dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
