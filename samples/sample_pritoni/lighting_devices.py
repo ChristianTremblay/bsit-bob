@@ -11,6 +11,7 @@ from bob.equipment.lighting.light import Luminaire
 from bob.externalreference.bacnet import BACnetExternalReference
 from bob.properties.electricity import ElectricPower
 from bob.properties.light import RelativeLuminousFlux
+from bob.properties.ratio import Percent, PercentCommand
 from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.light import DaylightSensor
 from bob.sensor.motion import OccupantMotionSensor
@@ -144,7 +145,7 @@ openofficeNorth_luminaire_1 = Luminaire(
     label="Luminaire1",
     comment="Luminaire #1 in OpenOffice North",
     hasPhysicalLocation=ps.openoffice,
-    brightnessRatio=0,
+    brightnessRatio=PercentCommand(),
     onOffStatus=OnOffStatus(),
     onOffCommand=OnOffCommand(),
     electricalInlet=Electricity_120VLN_1Ph_60HzInletConnectionPoint,

@@ -28,7 +28,7 @@ class Average(Function):
 
 
 # line up the output to a special property
-f_avg_temp = Temperature(label="DA-T-AVG", hasValue=0, hasUnit=UNIT.DEG_C)
+f_avg_temp = Temperature(label="DA-T-AVG", hasUnit=UNIT.DEG_C)
 
 # make an instance
 f = Average(
