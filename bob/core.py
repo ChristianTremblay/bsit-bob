@@ -1553,7 +1553,7 @@ class Mix(EnumerationKind):
 
         prop = property_class(
             *args,
-            label=f"{self._name}.constituent_{constituent._name}",
+            label=f"{self._name}.Constituent-{constituent._name}",
             ofConstituent=constituent,
             _data_graph=self._data_graph,
             **kwargs,
