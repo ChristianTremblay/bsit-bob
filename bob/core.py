@@ -966,13 +966,21 @@ class Property(Node):
             init_value = value
 
         external_reference = None
+        internal_reference = None
+
         if "hasExternalReference" in kwargs:
-            if init_value:
+            if init_value or internal_reference:
                 raise RuntimeError(
                     "initialization conflict, can't have a value and an external datasource"
                 )
             external_reference = kwargs.pop("hasExternalReference")
 
+        if "hasInternalReference" in kwargs:
+            if init_value or external_reference:
+                raise RuntimeError(
+                    "initialization conflict, can't have a value and an internal datasource"
+                )
+            internal_reference = kwargs.pop("hasExternalReference")
         # Retrieve aspects so we can add them after the creation
         aspects = []
         if "hasAspect" in kwargs:
@@ -986,6 +994,8 @@ class Property(Node):
         super().__init__(**kwargs)
         self.hasAspect = set()
         self.hasExternalReference = set()
+        self.hasInternalReference = set()
+        self._hasValue = None
 
         # Add aspects
         for each in aspects:
@@ -996,6 +1006,7 @@ class Property(Node):
             if not isinstance(init_value, Literal):
                 init_value = Literal(init_value)
             self.hasValue = init_value
+            self._hasValue = init_value
 
         # same for ExternalReference, allow initializing with a list of them
         if external_reference is not None:
@@ -1004,6 +1015,14 @@ class Property(Node):
                     self @ ref
             elif isinstance(external_reference, ExternalReference):
                 self @ external_reference
+            else:
+                raise TypeError(f"external reference expected: {external_reference}")
+        if internal_reference is not None:
+            if isinstance(internal_reference, list):
+                for ref in internal_reference:
+                    self >> ref
+            elif isinstance(internal_reference, Property):
+                self >> internal_reference
             else:
                 raise TypeError(f"external reference expected: {external_reference}")
 
@@ -1015,6 +1034,10 @@ class Property(Node):
         return self
 
     def add_external_reference(self, external_reference):
+        if self.hasInternalReference or self._hasValue is not None:
+            raise AttributeError(
+                f"Can't add external reference if property already have a value or internal reference {self.hasInternalReference} {self._hasValue}"
+            )
         if not isinstance(external_reference, self._external_reference_class):
             external_reference = self._external_reference_class(
                 comment=external_reference,
@@ -1027,6 +1050,28 @@ class Property(Node):
             (self._node_iri, S223.hasExternalReference, external_reference._node_iri)
         )
         self.hasExternalReference.add(external_reference)
+
+    def add_internal_reference(self, internal_reference):
+        if self.hasExternalReference or self._hasValue is not None:
+            raise AttributeError(
+                "Can't add internal reference if property already have a value or external reference"
+            )
+        if not isinstance(internal_reference, Property):
+            raise TypeError(f"property expected: {internal_reference}")
+
+        # link the two together
+        self._data_graph.add(
+            (self._node_iri, S223.hasInternalReference, internal_reference._node_iri)
+        )
+        if INCLUDE_INVERSE:
+            self._data_graph.add(
+                (
+                    internal_reference._node_iri,
+                    S223.isInternalReferenceOf,
+                    self._node_iri,
+                )
+            )
+        self.hasInternalReference.add(internal_reference)
 
 
 @multimethod
@@ -1046,6 +1091,13 @@ def reference_mm(prop: Property, external_reference: ExternalReference) -> None:
     """Add an additional external reference to a property."""
     _log.info(f"add external reference {external_reference} to {prop}")
     prop.add_external_reference(external_reference)
+
+
+@multimethod
+def reference_mm(property: Property, internal_reference: Property) -> None:
+    """Property @ Property"""
+    _log.info(f"Property {property} hasInternalReference {internal_reference}")
+    property.add_internal_reference(internal_reference)
 
 
 class ActuatableProperty(Property):
@@ -1501,7 +1553,7 @@ class Mix(EnumerationKind):
 
         prop = property_class(
             *args,
-            label=f"{self._name}.constituent_{constituent._name}",
+            label=f"{self._name}.Constituent-{constituent._name}",
             ofConstituent=constituent,
             _data_graph=self._data_graph,
             **kwargs,

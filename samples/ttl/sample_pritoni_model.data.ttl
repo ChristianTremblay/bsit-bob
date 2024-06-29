@@ -1552,10 +1552,10 @@ electrical_devices:00113 a p223:ElectricalSwitch,
     s223:cnx electrical_devices:00114,
         electrical_devices:00115,
         electrical_devices:00116 ;
-    s223:connected lighting_devices:00064 ;
+    s223:connected lighting_devices:00065 ;
     s223:connectedThrough electrical_devices:00099,
         electricity:00007 ;
-    s223:connectedTo lighting_devices:00064 ;
+    s223:connectedTo lighting_devices:00065 ;
     s223:hasConnectionPoint electrical_devices:00114,
         electrical_devices:00115,
         electrical_devices:00116 ;
@@ -3448,7 +3448,7 @@ electricity:00007 a s223:Connection ;
     s223:connectsAt electrical_devices:00115,
         lighting_devices:00067 ;
     s223:connectsFrom electrical_devices:00113 ;
-    s223:connectsTo lighting_devices:00064 ;
+    s223:connectsTo lighting_devices:00065 ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz .
 
 electricity:00008 a s223:Connection ;
@@ -3467,7 +3467,6 @@ functions:00001 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "DA-T-AVG" ;
     s223:hasExternalReference bacnet_references:00021 ;
-    s223:hasValue 0.0 ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -10623,7 +10622,16 @@ lighting_devices:00060 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Medium-Occupant .
 
-lighting_devices:00061 a s223:EnumerableProperty,
+lighting_devices:00061 a s223:ActuatableProperty,
+        s223:Property,
+        s223:QuantifiableActuatableProperty,
+        s223:QuantifiableProperty,
+        bob:PercentCommand ;
+    s223:hasExternalReference bacnet_references:00019 ;
+    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasUnit unit:PERCENT .
+
+lighting_devices:00062 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
@@ -10631,14 +10639,14 @@ lighting_devices:00061 a s223:EnumerableProperty,
     s223:hasExternalReference bacnet_references:00020 ;
     s223:hasValue s223:OnOff-Off .
 
-lighting_devices:00062 a s223:ActuatableProperty,
+lighting_devices:00063 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
-lighting_devices:00063 a s223:ObservableProperty,
+lighting_devices:00064 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -10647,7 +10655,7 @@ lighting_devices:00063 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:W .
 
-lighting_devices:00064 a s223:Connectable,
+lighting_devices:00065 a s223:Connectable,
         s223:Equipment,
         s223:Luminaire ;
     rdfs:label "Luminaire1" ;
@@ -10663,43 +10671,33 @@ lighting_devices:00064 a s223:Connectable,
     s223:hasProperty lighting_devices:00061,
         lighting_devices:00062,
         lighting_devices:00063,
-        lighting_devices:00065 ;
-    bob:brightnessRatio lighting_devices:00065 ;
-    bob:electricalPower lighting_devices:00063 ;
+        lighting_devices:00064 ;
+    bob:brightnessRatio lighting_devices:00061 ;
+    bob:electricalPower lighting_devices:00064 ;
     bob:lightOutlet lighting_devices:00066 ;
-    bob:onOffCommand lighting_devices:00062 ;
-    bob:onOffStatus lighting_devices:00061 ;
+    bob:onOffCommand lighting_devices:00063 ;
+    bob:onOffStatus lighting_devices:00062 ;
     rdfs:comment "Luminaire #1 in OpenOffice North" .
-
-lighting_devices:00065 a s223:ActuatableProperty,
-        s223:Property,
-        s223:QuantifiableActuatableProperty,
-        s223:QuantifiableProperty,
-        bob:PercentCommand ;
-    s223:hasExternalReference bacnet_references:00019 ;
-    s223:hasValue 0.0 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
-    qudt:hasUnit unit:PERCENT .
 
 lighting_devices:00066 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Luminaire1.lightOutlet" ;
-    s223:cnx lighting_devices:00064,
+    s223:cnx lighting_devices:00065,
         lighting_devices:00086 ;
     s223:connectsThrough lighting_devices:00086 ;
     s223:hasMedium s223:Light-Visible ;
-    s223:isConnectionPointOf lighting_devices:00064 .
+    s223:isConnectionPointOf lighting_devices:00065 .
 
 lighting_devices:00067 a s223:ConnectionPoint,
         s223:Electricity_120VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "Luminaire1.electricalInlet" ;
     s223:cnx electricity:00007,
-        lighting_devices:00064 ;
+        lighting_devices:00065 ;
     s223:connectsThrough electricity:00007 ;
     s223:hasMedium s223:AC-120VLN-1Ph-60Hz ;
-    s223:isConnectionPointOf lighting_devices:00064 .
+    s223:isConnectionPointOf lighting_devices:00065 .
 
 lighting_devices:00068 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -10898,7 +10896,7 @@ lighting_devices:00086 a s223:Connection ;
     s223:connectsAt lighting_devices:00066,
         lighting_devices:00072,
         lighting_spaces:00002 ;
-    s223:connectsFrom lighting_devices:00064,
+    s223:connectsFrom lighting_devices:00065,
         lighting_devices:00071 ;
     s223:connectsTo lighting_spaces:00001 ;
     s223:hasMedium s223:Light-Visible ;

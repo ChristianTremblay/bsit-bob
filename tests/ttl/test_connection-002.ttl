@@ -1,7 +1,7 @@
 # baseURI: http://data.ashrae.org/standard223/1.0/sample/test_connection-002
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
-@prefix ex34: <urn:ex/test_system-007/> .
+@prefix ex35: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -18,24 +18,24 @@
   rdfs:label "test_connection-002" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex34:00001 a s223:Connectable,
+ex35:00001 a s223:Connectable,
         s223:Equipment ;
     rdfs:label "d1" ;
-    s223:cnx ex34:00002 ;
-    s223:connectedThrough ex34:00003 ;
-    s223:hasConnectionPoint ex34:00002 .
+    s223:cnx ex35:00002 ;
+    s223:connectedThrough ex35:00003 ;
+    s223:hasConnectionPoint ex35:00002 .
 
-ex34:00002 a s223:ConnectionPoint,
+ex35:00002 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    s223:cnx ex34:00001,
-        ex34:00003 ;
-    s223:connectsThrough ex34:00003 ;
+    s223:cnx ex35:00001,
+        ex35:00003 ;
+    s223:connectsThrough ex35:00003 ;
     s223:hasMedium p223:Fluid-Air ;
-    s223:isConnectionPointOf ex34:00001 .
+    s223:isConnectionPointOf ex35:00001 .
 
-ex34:00003 a s223:Connection ;
-    s223:cnx ex34:00002 ;
-    s223:connectsAt ex34:00002 ;
-    s223:connectsFrom ex34:00001 ;
+ex35:00003 a s223:Connection ;
+    s223:cnx ex35:00002 ;
+    s223:connectsAt ex35:00002 ;
+    s223:connectsFrom ex35:00001 ;
     s223:hasMedium p223:Fluid-Air .
 
