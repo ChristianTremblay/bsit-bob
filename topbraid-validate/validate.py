@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 # working directory mapped as a volume in validate-run.sh
-DATA_DIRECTORY = Path("data")
+DATA_DIRECTORY = Path("/data")
 
 S223 = Namespace("http://data.ashrae.org/standard223#")
 
@@ -118,7 +118,9 @@ def test_data_validation(data_file_name: str, schema_file_name: Optional[str] = 
                 break
 
         # save the updated data graph as the compiled graph
-        data_graph.serialize(data_file_root + ".compiled.ttl", format="ttl")
+        compiled_file_path = data_file_root + ".compiled.ttl"
+        logger.debug(f"{compiled_file_path = }")
+        data_graph.serialize(compiled_file_path, format="ttl")
 
         # get the shacl-1.4.2/bin/shaclvalidate.sh script
         script = "shacl-1.4.2/bin/shaclvalidate.sh"
@@ -141,7 +143,10 @@ def test_data_validation(data_file_name: str, schema_file_name: Optional[str] = 
 
         # load it in and save a copy
         report_graph = Graph().parse(report_file_path, format="turtle")
-        report_graph.serialize(data_file_root + ".report.ttl", format="ttl")
+
+        report_file_path = data_file_root + ".report.ttl"
+        logger.debug(f"{report_file_path = }")
+        report_graph.serialize(report_file_path, format="ttl")
 
     # find the prefix definitions so the select can find them
     namespace_map = {}
