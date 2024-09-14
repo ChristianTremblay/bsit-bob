@@ -839,11 +839,23 @@ class Node(metaclass=NodeMetaclass):
             if isinstance(value, ExternalReference):
                 self.add_external_reference(value)
 
-            # if the value is a ConnectionPoint and the attribute type is a BoundaryConnectionPoint, link it to the node
-            if issubclass(attr_type, BoundaryConnectionPoint) and isinstance(
-                value, ConnectionPoint
+            # if the value is a ConnectionPoint and the attribute type is a
+            # BoundaryConnectionPoint, link it to the node
+            if isinstance(value, ConnectionPoint) and issubclass(
+                attr_type, BoundaryConnectionPoint
             ):
                 self.add_boundary_connection_point(value)
+
+            # if the value is a ConnectionPoint and the attribute type is an
+            # OptionalConnectionPoint it is already linked but needs an extra
+            # triple, link it to the node
+            if isinstance(value, ConnectionPoint) and issubclass(
+                attr_type, OptionalConnectionPoint
+            ):
+                _log.debug("    - optional connection point")
+                self._data_graph.add(
+                    (self._node_iri, S223.hasOptionalConnectionPoint, value._node_iri)
+                )  # type: ignore[attr-defined]
 
         # if this needs some datatype decoration, turn it into a literal
         if attr in self._datatypes:
@@ -1590,7 +1602,7 @@ class System(Container):
     """
 
     _class_iri: URIRef = S223.System
-    _boundary_connection_points: Dict[str, BoundaryConnectionPoint]
+    _boundary_connection_points: Set[BoundaryConnectionPoint]
     _serves_zones: Dict[str, Zone]
 
     def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
@@ -1635,7 +1647,7 @@ class System(Container):
                 raise RuntimeError("empty label")
 
         # no relationships to connection points or zones yet
-        self._boundary_connection_points = {}
+        self._boundary_connection_points = set()
         self._serves_zones = {}
 
     def add_boundary_connection_point(
@@ -1644,13 +1656,24 @@ class System(Container):
         """Add a boundary connection point to a system, returns the added connection point."""
         assert isinstance(connection_point, ConnectionPoint)
 
+        # add this to the others for this node
+        self._boundary_connection_points.add(connection_point)
+
         # link the two together
         self._data_graph.add(
-            (self._node_iri, S223.hasBoundaryConnectionPoint, prop._node_iri)
+            (
+                self._node_iri,
+                S223.hasBoundaryConnectionPoint,
+                connection_point._node_iri,
+            )
         )
         if INCLUDE_INVERSE:
             self._data_graph.add(
-                (prop._node_iri, S223.isBoundaryConnectionPointOf, self._node_iri)
+                (
+                    connection_point._node_iri,
+                    S223.isBoundaryConnectionPointOf,
+                    self._node_iri,
+                )
             )
 
         return connection_point
@@ -2410,18 +2433,13 @@ def connect_mm(connection: Connection, system: System) -> None:
             raise AttributeError(f"{connection} hasMedium")
         _log.debug(f"    - connection_medium: {connection_medium}")
 
-    # build a dict of mapped inlet connection points that are not
+    # build a set of inlet connection points that are not
     # already connected, filtered by medium
     to_in = set()
-    for attr, system_connection_point in system._boundary_connection_points.items():
-        if isinstance(system_connection_point, OutletSystemConnectionPoint):
-            continue
-        connection_point = system_connection_point.mapsTo
-        if not connection_point:
+    for connection_point in system._boundary_connection_points:
+        if isinstance(connection_point, OutletConnectionPoint):
             continue
         if connection_point.connectsThrough:
-            continue
-        if isinstance(connection_point, OutletConnectionPoint):
             continue
 
         if not (medium := getattr(connection_point, "hasMedium", None)):
@@ -2456,15 +2474,10 @@ def connect_mm(system: System, connection: Connection) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     from_out = set()
-    for attr, system_connection_point in system._boundary_connection_points.items():
-        if isinstance(system_connection_point, InletSystemConnectionPoint):
-            continue
-        connection_point = system_connection_point.mapsTo
-        if not connection_point:
+    for connection_point in system._boundary_connection_points:
+        if isinstance(connection_point, InletConnectionPoint):
             continue
         if connection_point.connectsThrough:
-            continue
-        if isinstance(connection_point, InletConnectionPoint):
             continue
 
         if not (medium := getattr(connection_point, "hasMedium", None)):
@@ -2515,12 +2528,7 @@ def connect_mm(equipment: Equipment, system: System) -> None:
     # build a dict of mapped inlet connection points that are not
     # already connected, organized by medium
     to_in = defaultdict(set)
-    for attr, system_connection_point in system._boundary_connection_points.items():
-        if not isinstance(system_connection_point, InletSystemConnectionPoint):
-            continue
-        connection_point = system_connection_point.mapsTo
-        if not connection_point:
-            continue
+    for connection_point in system._boundary_connection_points:
         if connection_point.connectsThrough:
             continue
         if not isinstance(connection_point, InletConnectionPoint):
@@ -2566,17 +2574,8 @@ def connect_mm(system: System, equipment: Equipment) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     from_out = defaultdict(set)
-    for attr, system_connection_point in system._boundary_connection_points.items():
-        _log.debug(
-            f"    - attr, system_connection_point: {attr} {system_connection_point}"
-        )
-        if not isinstance(system_connection_point, OutletSystemConnectionPoint):
-            _log.debug("        - not a system outlet")
-            continue
-        connection_point = system_connection_point.mapsTo
-        if not connection_point:
-            _log.debug("        - not mapped")
-            continue
+    for connection_point in system._boundary_connection_points:
+        _log.debug(f"    - attr, connection_point: {attr} {connection_point}")
         if connection_point.connectsThrough:
             _log.debug("        - already connected")
             continue
@@ -2645,6 +2644,10 @@ class BoundaryConnectionPoint:
             raise TypeError(f"connection point expected: {connection_point}")
         return connection_point
 
+    def __init__(self) -> None:
+        _log.debug(f"BoundaryConnectionPoint.__init__")
+        raise RuntimeError("BoundaryConnectionPoint heirarchy are abstract classes")
+
 
 class OptionalConnectionPoint(BoundaryConnectionPoint):
     pass
@@ -2658,15 +2661,7 @@ def connect_mm(from_system: System, to_system: System) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     from_out = defaultdict(set)
-    for (
-        attr,
-        system_connection_point,
-    ) in from_system._boundary_connection_points.items():
-        if isinstance(system_connection_point, InletSystemConnectionPoint):
-            continue
-        connection_point = system_connection_point.mapsTo
-        if not connection_point:
-            continue
+    for connection_point in from_system._boundary_connection_points:
         if connection_point.connectsThrough:
             continue
         if isinstance(connection_point, InletConnectionPoint):
@@ -2688,12 +2683,7 @@ def connect_mm(from_system: System, to_system: System) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     to_in = defaultdict(set)
-    for attr, system_connection_point in to_system._boundary_connection_points.items():
-        if isinstance(system_connection_point, OutletSystemConnectionPoint):
-            continue
-        connection_point = system_connection_point.mapsTo
-        if not connection_point:
-            continue
+    for connection_point in to_system._boundary_connection_points:
         if connection_point.connectsThrough:
             continue
         if isinstance(connection_point, OutletConnectionPoint):
@@ -2790,15 +2780,7 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     from_out = defaultdict(set)
-    for (
-        attr,
-        system_connection_point,
-    ) in from_system._boundary_connection_points.items():
-        if isinstance(system_connection_point, InletSystemConnectionPoint):
-            continue
-        connection_point = system_connection_point.mapsTo
-        if not connection_point:
-            continue
+    for connection_point in from_system._boundary_connection_points:
         if connection_point.connectsThrough:
             continue
         if isinstance(connection_point, InletConnectionPoint):
@@ -2818,10 +2800,10 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # build a dict of mapped inlet connection points that are not
     # already connected, organized by medium
     to_in = defaultdict(set)
-    for attr, system_connection_point in to_zone._zone_connection_points.items():
-        if isinstance(system_connection_point, OutletSystemConnectionPoint):
+    for attr, boundary_connection_point in to_zone._zone_connection_points.items():
+        if isinstance(boundary_connection_point, OutletSystemConnectionPoint):
             continue
-        connection_point = system_connection_point.mapsTo
+        connection_point = boundary_connection_point.mapsTo
         if not connection_point:
             continue
         if connection_point.connectsThrough:

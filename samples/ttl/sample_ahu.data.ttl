@@ -44,16 +44,6 @@ sample_ahu:00001 a s223:AirHandlingUnit,
         sample_ahu:00124,
         sample_ahu:00159,
         sample_ahu:00194 ;
-    bob:electricalInlet sample_ahu:00233 ;
-    bob:exhaustAirOutlet sample_ahu:00232 ;
-    bob:hasSystemConnectionPoint sample_ahu:00229,
-        sample_ahu:00230,
-        sample_ahu:00231,
-        sample_ahu:00232,
-        sample_ahu:00233 ;
-    bob:outsideAirInlet sample_ahu:00229 ;
-    bob:returnAirInlet sample_ahu:00230 ;
-    bob:supplyAirOutlet sample_ahu:00231 ;
     rdfs:comment "AHU delivering air to 2 VAV boxes" .
 
 sample_ahu:00002 a s223:Connectable,
@@ -395,7 +385,7 @@ sample_ahu:00042 a s223:Connectable,
         sample_ahu:00045 ;
     s223:connected sample_ahu:00055 ;
     s223:connectedFrom sample_ahu:00055 ;
-    s223:connectedThrough sample_ahu:00235 ;
+    s223:connectedThrough sample_ahu:00230 ;
     s223:hasConnectionPoint sample_ahu:00043,
         sample_ahu:00044,
         sample_ahu:00045 ;
@@ -434,8 +424,8 @@ sample_ahu:00045 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "RF.electricalInlet" ;
     s223:cnx sample_ahu:00042,
-        sample_ahu:00235 ;
-    s223:connectsThrough sample_ahu:00235 ;
+        sample_ahu:00230 ;
+    s223:connectsThrough sample_ahu:00230 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf sample_ahu:00042 .
 
@@ -535,7 +525,7 @@ sample_ahu:00055 a s223:Connectable,
         sample_ahu:00061,
         sample_ahu:00062 ;
     s223:connected sample_ahu:00042 ;
-    s223:connectedThrough sample_ahu:00235 ;
+    s223:connectedThrough sample_ahu:00230 ;
     s223:connectedTo sample_ahu:00042 ;
     s223:contains sample_ahu:00075,
         sample_ahu:00077,
@@ -576,8 +566,8 @@ sample_ahu:00057 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "RF_VFD.electricalOutlet" ;
     s223:cnx sample_ahu:00055,
-        sample_ahu:00235 ;
-    s223:connectsThrough sample_ahu:00235 ;
+        sample_ahu:00230 ;
+    s223:connectsThrough sample_ahu:00230 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf sample_ahu:00055 .
 
@@ -798,7 +788,7 @@ sample_ahu:00082 a s223:Connectable,
         sample_ahu:00085 ;
     s223:connected sample_ahu:00095 ;
     s223:connectedFrom sample_ahu:00095 ;
-    s223:connectedThrough sample_ahu:00234 ;
+    s223:connectedThrough sample_ahu:00229 ;
     s223:hasConnectionPoint sample_ahu:00083,
         sample_ahu:00084,
         sample_ahu:00085 ;
@@ -837,8 +827,8 @@ sample_ahu:00085 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SF.electricalInlet" ;
     s223:cnx sample_ahu:00082,
-        sample_ahu:00234 ;
-    s223:connectsThrough sample_ahu:00234 ;
+        sample_ahu:00229 ;
+    s223:connectsThrough sample_ahu:00229 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf sample_ahu:00082 .
 
@@ -934,7 +924,7 @@ sample_ahu:00095 a p223:MotorStarter,
         sample_ahu:00098,
         sample_ahu:00099 ;
     s223:connected sample_ahu:00082 ;
-    s223:connectedThrough sample_ahu:00234 ;
+    s223:connectedThrough sample_ahu:00229 ;
     s223:connectedTo sample_ahu:00082 ;
     s223:contains sample_ahu:00102 ;
     s223:hasConnectionPoint sample_ahu:00096,
@@ -979,8 +969,8 @@ sample_ahu:00099 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "SF_Starter.electricalOutlet" ;
     s223:cnx sample_ahu:00095,
-        sample_ahu:00234 ;
-    s223:connectsThrough sample_ahu:00234 ;
+        sample_ahu:00229 ;
+    s223:connectsThrough sample_ahu:00229 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf sample_ahu:00095 .
 
@@ -2155,37 +2145,7 @@ sample_ahu:00228 a s223:Connection ;
     s223:connectsTo sample_ahu:00224 ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 
-sample_ahu:00229 a bob:AirSystemConnectionPoint,
-        bob:InletSystemConnectionPoint,
-        bob:SystemConnectionPoint ;
-    rdfs:label "AHU.outsideAirInlet" ;
-    s223:hasMedium p223:Fluid-Air .
-
-sample_ahu:00230 a bob:AirSystemConnectionPoint,
-        bob:InletSystemConnectionPoint,
-        bob:SystemConnectionPoint ;
-    rdfs:label "AHU.returnAirInlet" ;
-    s223:hasMedium p223:Fluid-Air .
-
-sample_ahu:00231 a bob:AirSystemConnectionPoint,
-        bob:OutletSystemConnectionPoint,
-        bob:SystemConnectionPoint ;
-    rdfs:label "AHU.supplyAirOutlet" ;
-    s223:hasMedium p223:Fluid-Air .
-
-sample_ahu:00232 a bob:AirSystemConnectionPoint,
-        bob:OutletSystemConnectionPoint,
-        bob:SystemConnectionPoint ;
-    rdfs:label "AHU.exhaustAirOutlet" ;
-    s223:hasMedium p223:Fluid-Air .
-
-sample_ahu:00233 a s223:Electricity_600VLL_3Ph_60HzSystemConnectionPoint,
-        bob:InletSystemConnectionPoint,
-        bob:SystemConnectionPoint ;
-    rdfs:label "AHU.electricalInlet" ;
-    s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
-
-sample_ahu:00234 a s223:Connection ;
+sample_ahu:00229 a s223:Connection ;
     s223:cnx sample_ahu:00085,
         sample_ahu:00099 ;
     s223:connectsAt sample_ahu:00085,
@@ -2194,7 +2154,7 @@ sample_ahu:00234 a s223:Connection ;
     s223:connectsTo sample_ahu:00082 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 
-sample_ahu:00235 a s223:Connection ;
+sample_ahu:00230 a s223:Connection ;
     s223:cnx sample_ahu:00045,
         sample_ahu:00057 ;
     s223:connectsAt sample_ahu:00045,

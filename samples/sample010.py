@@ -5,15 +5,11 @@ from header import sample_header
 
 from bob.core import (
     Equipment,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
     System,
 )
 from bob.connections.air import (
     AirInletConnectionPoint,
-    AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
 )
 from bob.connections.liquid import WaterInletConnectionPoint, WaterOutletConnectionPoint
 
@@ -34,11 +30,11 @@ s1 = System(label="s1")
 s2 = System(label="s2")
 
 # create some bi-directional connection points on the fly
-s1_cp = AirOutletSystemConnectionPoint(s1, label="s1.cp", mapsTo=d1_cp)
-s2_cp = AirInletSystemConnectionPoint(s2, label="s2.cp", mapsTo=d2_cp)
+s1.add_boundary_connection_point(d1_cp)
+s2.add_boundary_connection_point(d2_cp)
 
 # connect the connection points together (directional connection)
-s1_cp >> s2_cp
+s1 >> s2
 
 # make a couple Equipment
 d3 = Equipment(label="d3")
@@ -53,8 +49,8 @@ s3 = System(label="s3")
 s4 = System(label="s4")
 
 # create some directional connection points on the fly
-s3_ocp = OutletSystemConnectionPoint(s3, label="s3.ocp", mapsTo=d3_cp)
-s4_icp = InletSystemConnectionPoint(s4, label="s4.icp", mapsTo=d4_cp)
+s3.add_boundary_connection_point(d3_cp)
+s4.add_boundary_connection_point(d4_cp)
 
 # connect the systems together
 s3 >> s4

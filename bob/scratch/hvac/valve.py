@@ -1,16 +1,18 @@
 from typing import Dict
 
 
-from bob.connections.liquid import (
-    WaterInletSystemConnectionPoint,
-    WaterOutletSystemConnectionPoint,
-)
 from bob.equipment.hvac.valve import (
     TwoWayValve,
     ThreeWayValveMixing,
     ThreeWayValveDiverting,
 )
-from bob.core import SCRATCH, PropertyReference, System, logging
+from bob.core import (
+    SCRATCH,
+    BoundaryConnectionPoint,
+    PropertyReference,
+    System,
+    logging,
+)
 from bob.template import template_update
 from .actuator import ElectricalOnOffActuator, ElectricalProportionalActuator
 
@@ -28,8 +30,8 @@ class TwoWayActuatedValve(System):
     """
 
     _class_iri = SCRATCH.TwoWayActuatedValve
-    waterInlet: WaterInletSystemConnectionPoint
-    waterOutlet: WaterOutletSystemConnectionPoint
+    waterInlet: BoundaryConnectionPoint
+    waterOutlet: BoundaryConnectionPoint
     position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
@@ -48,8 +50,8 @@ class TwoWayActuatedValve(System):
         self["actuator"].linkageOutlet >> self["valve"].linkageInlet
         self.position = self["valve"].position = self["actuator"].position
         self["position_feedback"] = self["actuator"]["position_sensor"].observedProperty
-        self.waterInlet.mapsTo = self["valve"].waterInlet
-        self.waterOutlet.mapsTo = self["valve"].waterOutlet
+        self.waterInlet = self["valve"].waterInlet
+        self.waterOutlet = self["valve"].waterOutlet
 
 
 electrical_actuated_proportional_2w_valve_template = {
@@ -114,9 +116,9 @@ class ThreeWayActuatedValve(System):
 
 class ThreeWayMixingSystem(ThreeWayActuatedValve):
     _class_iri = SCRATCH.ThreeWayMixingSystem
-    waterInletAB: WaterInletSystemConnectionPoint
-    waterOutletA: WaterOutletSystemConnectionPoint
-    waterOutletB: WaterOutletSystemConnectionPoint
+    waterInletAB: BoundaryConnectionPoint
+    waterOutletA: BoundaryConnectionPoint
+    waterOutletB: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -124,16 +126,16 @@ class ThreeWayMixingSystem(ThreeWayActuatedValve):
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.waterInletAB.mapsTo = self["valve"].waterInletAB
-        self.waterOutletA.mapsTo = self["valve"].waterOutletA
-        self.waterOutletB.mapsTo = self["valve"].waterOutletB
+        self.waterInletAB = self["valve"].waterInletAB
+        self.waterOutletA = self["valve"].waterOutletA
+        self.waterOutletB = self["valve"].waterOutletB
 
 
 class ThreeWayDivertingSystem(ThreeWayActuatedValve):
     _class_iri = SCRATCH.ThreeWayDivertingSystem
-    waterInletA: WaterInletSystemConnectionPoint
-    waterInletB: WaterInletSystemConnectionPoint
-    waterOutlet: WaterOutletSystemConnectionPoint
+    waterInletA: BoundaryConnectionPoint
+    waterInletB: BoundaryConnectionPoint
+    waterOutlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -141,9 +143,9 @@ class ThreeWayDivertingSystem(ThreeWayActuatedValve):
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.waterInletA.mapsTo = self["valve"].waterInletA
-        self.waterInletB.mapsTo = self["valve"].waterInletB
-        self.waterOutlet.mapsTo = self["valve"].waterOutlet
+        self.waterInletA = self["valve"].waterInletA
+        self.waterInletB = self["valve"].waterInletB
+        self.waterOutlet = self["valve"].waterOutlet
 
 
 class ThreeWayMixingActuatedProportionalValve(ThreeWayMixingSystem):

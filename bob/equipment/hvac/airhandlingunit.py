@@ -3,13 +3,7 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from ...connections.air import (
-    AirOutletConnectionPoint,
-)
-from ...connections.electricity import (
-    Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint,
-)
-from ...core import BOB, P223, S223, Equipment, System
+from ...core import BOB, P223, S223, BoundaryConnectionPoint, Equipment, System
 from ...template import template_update
 
 # logging
@@ -108,11 +102,11 @@ class AirHandlingUnit(System):
     """
 
     _class_iri = S223.AirHandlingUnit
-    outsideAirInlet: AirInletSystemConnectionPoint
-    returnAirInlet: AirInletSystemConnectionPoint
-    supplyAirOutlet: AirOutletSystemConnectionPoint
-    exhaustAirOutlet: AirOutletSystemConnectionPoint
-    electricalInlet: Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint
+    outsideAirInlet: BoundaryConnectionPoint
+    returnAirInlet: BoundaryConnectionPoint
+    supplyAirOutlet: BoundaryConnectionPoint
+    exhaustAirOutlet: BoundaryConnectionPoint
+    electricalInlet: BoundaryConnectionPoint
     # The system connection points are now a Bob thing only, there is no such thing in 223P anymore
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -124,10 +118,10 @@ class AirHandlingUnit(System):
 
 class FanCoil(System):
     _class_iri = S223.FanCoilUnit
-    returnAirInlet: AirInletSystemConnectionPoint
-    supplyAirOutlet: AirOutletSystemConnectionPoint
-    exhaustAirOutlet: AirOutletSystemConnectionPoint
-    electricalInlet: Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint
+    returnAirInlet: BoundaryConnectionPoint
+    supplyAirOutlet: BoundaryConnectionPoint
+    exhaustAirOutlet: BoundaryConnectionPoint
+    electricalInlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = {}, **kwargs) -> None:
         _config = template_update(fan_coil_template, config)

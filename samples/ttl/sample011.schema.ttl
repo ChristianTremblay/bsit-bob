@@ -1,38 +1,9 @@
-@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex1: <urn:ex/sample011/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-
-bob:InletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.core.InletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:SystemConnectionPoint .
-
-bob:OutletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.core.OutletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:SystemConnectionPoint .
-
-bob:SystemConnectionPoint a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.core.SystemConnectionPoint" ;
-    rdfs:comment """
-    System Connection Point
-    """ ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path bob:isSystemConnectionPointOf ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ] .
-
-bob:hasSystemConnectionPoint a rdf:Property .
-
-bob:isSystemConnectionPointOf a rdf:Property .
-
-bob:mapsTo a rdf:Property .
 
 ex1:TestEquipment a rdfs:Class,
         sh:NodeShape ;
@@ -54,18 +25,18 @@ ex1:TestSystem a rdfs:Class,
             sh:path ex1:cpIn ] .
 
 ex1:cpIn a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint,
-        bob:hasSystemConnectionPoint .
+    rdfs:subPropertyOf s223:hasBoundaryConnectionPoint,
+        s223:hasConnectionPoint .
 
 ex1:cpOut a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint,
-        bob:hasSystemConnectionPoint .
+    rdfs:subPropertyOf s223:hasBoundaryConnectionPoint,
+        s223:hasConnectionPoint .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
+            sh:path s223:isConnectionPointOf ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
@@ -73,12 +44,4 @@ s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
 
 s223:Equipment sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
-
-s223:System sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ],
-        [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ] .
 

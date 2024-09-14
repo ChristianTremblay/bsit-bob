@@ -6,10 +6,8 @@ from header import sample_header
 from bob.connections.air import (
     AirConnection,
     AirInletConnectionPoint,
-    AirInletSystemConnectionPoint,
     AirInletZoneConnectionPoint,
     AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
     AirOutletZoneConnectionPoint,
 )
 from bob.connections.electricity import ElectricalInletConnectionPoint
@@ -18,6 +16,7 @@ from bob.core import (
     UNIT,
     Connection,
     ConnectionPoint,
+    BoundaryConnectionPoint,
     DomainSpace,
     Equipment,
     Junction,
@@ -54,10 +53,10 @@ class TemperatureSensor(Equipment):
 
 
 class RooftopUnit(System):
-    returnAirInlet: AirInletSystemConnectionPoint
-    outsideAirInlet: AirInletSystemConnectionPoint
-    supplyAirOutlet: AirOutletSystemConnectionPoint
-    exhaustAirOutlet: AirOutletSystemConnectionPoint
+    returnAirInlet: BoundaryConnectionPoint
+    outsideAirInlet: BoundaryConnectionPoint
+    supplyAirOutlet: BoundaryConnectionPoint
+    exhaustAirOutlet: BoundaryConnectionPoint
 
     # should I put the basic command and feedback in the class here?
 

@@ -7,6 +7,7 @@ from bob.core import (
     UNIT,
     bind_model_namespace,
     dump,
+    BoundaryConnectionPoint,
 )
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.coil import ChilledWaterCoil
@@ -77,9 +78,9 @@ mixedAir >> rtu["SF-1"].airInlet
 rtu["SF-1"].airOutlet >> rtu["CWC-1"].airInlet
 
 # Mapping of the system
-rtu.outsideAirInlet.mapsTo = rtu["OAD-1"].airInlet
-rtu.returnAirInlet.mapsTo = rtu["RF-1"].airInlet
-rtu.supplyAirOutlet.mapsTo = rtu["CWC-1"].airOutlet
+rtu.outsideAirInlet = rtu["OAD-1"].airInlet
+rtu.returnAirInlet = rtu["RF-1"].airInlet
+rtu.supplyAirOutlet = rtu["CWC-1"].airOutlet
 
 return_plenum = AirConnection(
     label="Return Air Plenum", comment="Air returns from zone here"
@@ -118,8 +119,8 @@ rtu["RA-T"].hasPhysicalLocation = roof
 
 # Should a plenum be a segment or is system correct??
 # class Plenum(AirConnection):
-#    AirInlet: AirInletSystemConnectionPoint  # would the outlet be a junction, or just connection points??
-#    AirOutlet: AirOutletSystemConnectionPoint
+#    AirInlet: BoundaryConnectionPoint  # would the outlet be a junction, or just connection points??
+#    AirOutlet: BoundaryConnectionPoint
 #    hasMedium = Air##
 
 #    def __init__(self, **kwargs: Any) -> None:
@@ -128,8 +129,8 @@ rtu["RA-T"].hasPhysicalLocation = roof
 #        # j.hasMedium = Air
 #        j2 = Junction(label=self.label + ".outlet")
 #        # j2.hasMedium = Air #If the junction has a substance, then it doesn't connect. Am I just doing this wrong??
-#        self.AirInlet.mapsTo = j
-#        self.AirOutlet.mapsTo = j2
+#        self.AirInlet = j
+#        self.AirOutlet = j2
 
 
 # make an instance
@@ -141,7 +142,7 @@ rtu["RA-T"].hasPhysicalLocation = roof
 #        super().__init__(label=label)
 #        # I need a junction to be the system inlet and outlet if I want to connect to another junction.
 #        j = Junction()
-#        self.supplyAir.mapsTo = j#
+#        self.supplyAir = j#
 
 
 # r = RooftopUnit(node_iri=ex.rtu, label="rtu")
