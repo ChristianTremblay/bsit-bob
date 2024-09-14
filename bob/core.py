@@ -675,9 +675,7 @@ class Node(metaclass=NodeMetaclass):
                 cls._attr_uriref[attr] = attr_uriref
                 cls._schema_graph.add((attr_uriref, RDF.type, RDF.Property))
 
-                if issubclass(
-                    attr_type, (Property, PropertyReference, LocationReference)
-                ):
+                if issubclass(attr_type, Property):
                     cls._schema_graph.add(
                         (attr_uriref, RDFS.subPropertyOf, S223.hasProperty)
                     )
@@ -689,12 +687,27 @@ class Node(metaclass=NodeMetaclass):
                             S223.hasConnectionPoint,
                         )
                     )
-                elif issubclass(attr_type, SystemConnectionPoint):
+                elif issubclass(attr_type, OptionalConnectionPoint):
                     cls._schema_graph.add(
                         (
                             attr_uriref,
                             RDFS.subPropertyOf,
-                            BOB.hasSystemConnectionPoint,
+                            S223.hasOptionalConnectionPoint,
+                        )
+                    )
+                    cls._schema_graph.add(
+                        (
+                            attr_uriref,
+                            RDFS.subPropertyOf,
+                            S223.hasBoundaryConnectionPoint,
+                        )
+                    )
+                elif issubclass(attr_type, BoundaryConnectionPoint):
+                    cls._schema_graph.add(
+                        (
+                            attr_uriref,
+                            RDFS.subPropertyOf,
+                            S223.hasBoundaryConnectionPoint,
                         )
                     )
                 elif issubclass(attr_type, ZoneConnectionPoint):
@@ -825,6 +838,12 @@ class Node(metaclass=NodeMetaclass):
             # if the value is an external reference, link it to the node
             if isinstance(value, ExternalReference):
                 self.add_external_reference(value)
+
+            # if the value is a ConnectionPoint and the attribute type is a BoundaryConnectionPoint, link it to the node
+            if issubclass(attr_type, BoundaryConnectionPoint) and isinstance(
+                value, ConnectionPoint
+            ):
+                self.add_boundary_connection_point(value)
 
         # if this needs some datatype decoration, turn it into a literal
         if attr in self._datatypes:
@@ -1571,15 +1590,7 @@ class System(Container):
     """
 
     _class_iri: URIRef = S223.System
-    _attr_uriref: Dict[str, URIRef] = {
-        "hasSystemConnectionPoint": BOB.hasSystemConnectionPoint,
-    }
-
-    hasPhysicalLocation: PhysicalSpace
-    hasDomain: Domain
-    hasSystemConnectionPoint: List[SystemConnectionPoint]
-
-    _system_connection_points: Dict[str, SystemConnectionPoint]
+    _boundary_connection_points: Dict[str, BoundaryConnectionPoint]
     _serves_zones: Dict[str, Zone]
 
     def __init__(self, config: Dict[str, Any] = {}, *args, **kwargs: Any) -> None:
@@ -1623,21 +1634,26 @@ class System(Container):
             if not kwargs["label"]:
                 raise RuntimeError("empty label")
 
-        # no relationships to zones yet
+        # no relationships to connection points or zones yet
+        self._boundary_connection_points = {}
         self._serves_zones = {}
 
-        # instantiate and associate all of the system connection points
-        self._system_connection_points = {}
-        for attr_name, attr_type in self._nodes.items():
-            if inspect.isclass(attr_type) and issubclass(
-                attr_type, SystemConnectionPoint
-            ):
-                # build an instance of this connection point
-                attr_element = attr_type(self, label=self.label + "." + attr_name)
-                self._system_connection_points[attr_name] = attr_element
-                _log.debug(f"    - system connection point {attr_name}: {attr_element}")
+    def add_boundary_connection_point(
+        self, connection_point: ConnectionPoint
+    ) -> ConnectionPoint:
+        """Add a boundary connection point to a system, returns the added connection point."""
+        assert isinstance(connection_point, ConnectionPoint)
 
-                setattr(self, attr_name, attr_element)
+        # link the two together
+        self._data_graph.add(
+            (self._node_iri, S223.hasBoundaryConnectionPoint, prop._node_iri)
+        )
+        if INCLUDE_INVERSE:
+            self._data_graph.add(
+                (prop._node_iri, S223.isBoundaryConnectionPointOf, self._node_iri)
+            )
+
+        return connection_point
 
 
 @multimethod
@@ -2157,22 +2173,6 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
 
 
 @multimethod
-def connect_mm(
-    equipment: Equipment, system_connection_point: SystemConnectionPoint
-) -> None:
-    """Equipment >> SystemConnectionPoint"""
-    _log.debug(f"connect from {equipment} to {system_connection_point}")
-
-    to_connection_point = system_connection_point.mapsTo
-    if not to_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {system_connection_point}"
-        )
-
-    connect_mm(equipment, to_connection_point)
-
-
-@multimethod
 def connect_mm(equipment: Equipment, connection_point: ConnectionPoint) -> None:
     """Equipment >> ConnectionPoint"""
     _log.info(f"connect from {equipment} to {connection_point}")
@@ -2413,7 +2413,7 @@ def connect_mm(connection: Connection, system: System) -> None:
     # build a dict of mapped inlet connection points that are not
     # already connected, filtered by medium
     to_in = set()
-    for attr, system_connection_point in system._system_connection_points.items():
+    for attr, system_connection_point in system._boundary_connection_points.items():
         if isinstance(system_connection_point, OutletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
@@ -2456,7 +2456,7 @@ def connect_mm(system: System, connection: Connection) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     from_out = set()
-    for attr, system_connection_point in system._system_connection_points.items():
+    for attr, system_connection_point in system._boundary_connection_points.items():
         if isinstance(system_connection_point, InletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
@@ -2484,32 +2484,6 @@ def connect_mm(system: System, connection: Connection) -> None:
 
     # set the relationships
     connect_mm(from_thing, connection)
-
-
-@multimethod
-def connect_mm(
-    connection_point: ConnectionPoint, system_connection_point: SystemConnectionPoint
-) -> None:
-    """ConnectionPoint >> SystemConnectionPoint"""
-    _log.info(f"connect from {connection_point} to {system_connection_point}")
-
-    if isinstance(connection_point, InletConnectionPoint):
-        raise TypeError("connection point direction")
-    if connection_point.connectsThrough:
-        raise RuntimeError("connection point already connected")
-    # if connection_point.mapsTo:
-    #     raise RuntimeError("connection point already mapped")
-
-    to_connection_point = system_connection_point.mapsTo
-    if not to_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {system_connection_point}"
-        )
-    if to_connection_point.connectsThrough:
-        raise RuntimeError("system connection point already connected")
-
-    # continue the process
-    connect_mm(connection_point, to_connection_point)
 
 
 @multimethod
@@ -2541,7 +2515,7 @@ def connect_mm(equipment: Equipment, system: System) -> None:
     # build a dict of mapped inlet connection points that are not
     # already connected, organized by medium
     to_in = defaultdict(set)
-    for attr, system_connection_point in system._system_connection_points.items():
+    for attr, system_connection_point in system._boundary_connection_points.items():
         if not isinstance(system_connection_point, InletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
@@ -2592,7 +2566,7 @@ def connect_mm(system: System, equipment: Equipment) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     from_out = defaultdict(set)
-    for attr, system_connection_point in system._system_connection_points.items():
+    for attr, system_connection_point in system._boundary_connection_points.items():
         _log.debug(
             f"    - attr, system_connection_point: {attr} {system_connection_point}"
         )
@@ -2665,52 +2639,15 @@ def connect_mm(system: System, equipment: Equipment) -> None:
     connect_mm(from_connection_point, to_connection_point)
 
 
-class SystemConnectionPoint(Node):
-    """
-    System Connection Point
-    """
+class BoundaryConnectionPoint:
+    def __new__(cls, connection_point):
+        if not isinstance(connection_point, ConnectionPoint):
+            raise TypeError(f"connection point expected: {connection_point}")
+        return connection_point
 
-    _class_iri: URIRef = BOB.SystemConnectionPoint
-    _attr_uriref: Dict[str, URIRef] = {
-        "mapsTo": BOB.mapsTo,
-        "isSystemConnectionPointOf": BOB.isSystemConnectionPointOf,
-    }
 
-    hasMedium: Medium
-    mapsTo: Node  # Union[Junction, ConnectionPoint]
-
-    # connectsThrough: Connection
-    isSystemConnectionPointOf: System
-
-    def __init__(self, system: System, **kwargs: Any) -> None:
-        _log.debug(f"SystemConnectionPoint.__init__ {system} {kwargs}")
-        # abstract base class
-        if self.__class__ is SystemConnectionPoint:
-            raise RuntimeError("SystemConnectionPoint is an abstract base class")
-
-        super().__init__(**kwargs)
-
-        self._data_graph.add(
-            (system._node_iri, BOB.hasSystemConnectionPoint, self._node_iri)
-        )
-        if INCLUDE_INVERSE:
-            self.isSystemConnectionPointOf = system
-
-        # this is one of the connection points of the system
-        system._system_connection_points[str(self._node_iri)] = self
-
-    def maps_to(self, other: Union[Junction, ConnectionPoint]) -> None:
-        """
-        Maps this connection point to a space connection point.
-        """
-        _log.debug(f"SystemConnectionPoint.maps_to {other}")
-        if self.mapsTo:
-            raise RuntimeError("zone connection point already mapped")
-
-        if not isinstance(other, (Junction, ConnectionPoint)):
-            raise TypeError("ConnectionPoint expected")
-
-        self.mapsTo = other
+class OptionalConnectionPoint(BoundaryConnectionPoint):
+    pass
 
 
 @multimethod
@@ -2721,7 +2658,10 @@ def connect_mm(from_system: System, to_system: System) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     from_out = defaultdict(set)
-    for attr, system_connection_point in from_system._system_connection_points.items():
+    for (
+        attr,
+        system_connection_point,
+    ) in from_system._boundary_connection_points.items():
         if isinstance(system_connection_point, InletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
@@ -2748,7 +2688,7 @@ def connect_mm(from_system: System, to_system: System) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     to_in = defaultdict(set)
-    for attr, system_connection_point in to_system._system_connection_points.items():
+    for attr, system_connection_point in to_system._boundary_connection_points.items():
         if isinstance(system_connection_point, OutletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
@@ -2791,82 +2731,6 @@ def connect_mm(from_system: System, to_system: System) -> None:
     _log.debug(f"    - to_connection_point: {to_connection_point}")
 
     # continue creating the connection
-    connect_mm(from_connection_point, to_connection_point)
-
-
-@multimethod
-def connect_mm(
-    system_connection_point: SystemConnectionPoint, connection: Connection
-) -> None:
-    """SystemConnectionPoint >> Connection"""
-    _log.info(f"connect from {system_connection_point} to {connection}")
-
-    from_connection_point = system_connection_point.mapsTo
-    if not from_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {system_connection_point}"
-        )
-
-    # continue the process
-    connect_mm(from_connection_point, connection)
-
-
-@multimethod
-def connect_mm(
-    connection: Connection, system_connection_point: SystemConnectionPoint
-) -> None:
-    """Connection >> SystemConnectionPoint"""
-    _log.info(f"connect from {connection} to {system_connection_point}")
-
-    to_connection_point = system_connection_point.mapsTo
-    if not to_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {system_connection_point}"
-        )
-
-    # continue the process
-    connect_mm(connection, to_connection_point)
-
-
-@multimethod
-def connect_mm(
-    system_connection_point: SystemConnectionPoint, connection_point: ConnectionPoint
-) -> None:
-    """SystemConnectionPoint >> ConnectionPoint"""
-    _log.info(f"connect from {system_connection_point} to {connection_point}")
-
-    from_connection_point = system_connection_point.mapsTo
-    if not from_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {system_connection_point}"
-        )
-
-    # continue the process
-    connect_mm(from_connection_point, connection_point)
-
-
-@multimethod
-def connect_mm(
-    from_system_connection_point: SystemConnectionPoint,
-    to_system_connection_point: SystemConnectionPoint,
-) -> None:
-    """SystemConnectionPoint >> SystemConnectionPoint"""
-    _log.info(
-        f"connect from {from_system_connection_point} to {to_system_connection_point}"
-    )
-
-    from_connection_point = from_system_connection_point.mapsTo
-    if not from_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {from_system_connection_point}"
-        )
-
-    to_connection_point = to_system_connection_point.mapsTo
-    if not to_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {to_system_connection_point}"
-        )
-
     connect_mm(from_connection_point, to_connection_point)
 
 
@@ -2926,7 +2790,10 @@ def connect_mm(from_system: System, to_zone: Zone) -> None:
     # build a dict of mapped outlet connection points that are not
     # already connected, organized by medium
     from_out = defaultdict(set)
-    for attr, system_connection_point in from_system._system_connection_points.items():
+    for (
+        attr,
+        system_connection_point,
+    ) in from_system._boundary_connection_points.items():
         if isinstance(system_connection_point, InletSystemConnectionPoint):
             continue
         connection_point = system_connection_point.mapsTo
@@ -3125,48 +2992,6 @@ def connect_mm(
     if not to_connection_point:
         raise RuntimeError(
             f"unmapped system connection point {to_zone_connection_point}"
-        )
-
-    connect_mm(from_connection_point, to_connection_point)
-
-
-@multimethod
-def connect_mm(
-    system_connection_point: SystemConnectionPoint,
-    zone_connection_point: ZoneConnectionPoint,
-) -> None:
-    """SystemConnectionPoint >> ZoneConnectionPoint"""
-    _log.info(f"connect from {system_connection_point} to {zone_connection_point}")
-
-    from_connection_point = system_connection_point.mapsTo
-    if not from_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {system_connection_point}"
-        )
-
-    to_connection_point = zone_connection_point.mapsTo
-    if not to_connection_point:
-        raise RuntimeError(f"unmapped zone connection point {zone_connection_point}")
-
-    connect_mm(from_connection_point, to_connection_point)
-
-
-@multimethod
-def connect_mm(
-    zone_connection_point: ZoneConnectionPoint,
-    system_connection_point: SystemConnectionPoint,
-) -> None:
-    """ZoneConnectionPoint >> SystemConnectionPoint"""
-    _log.info(f"connect from {system_connection_point} to {zone_connection_point}")
-
-    from_connection_point = zone_connection_point.mapsTo
-    if not from_connection_point:
-        raise RuntimeError(f"unmapped zone connection point {zone_connection_point}")
-
-    to_connection_point = system_connection_point.mapsTo
-    if not to_connection_point:
-        raise RuntimeError(
-            f"unmapped system connection point {system_connection_point}"
         )
 
     connect_mm(from_connection_point, to_connection_point)
@@ -3982,23 +3807,6 @@ class OutletConnectionPoint(ConnectionPoint):
 
 class BidirectionalConnectionPoint(ConnectionPoint):
     _class_iri: URIRef = S223.BidirectionalConnectionPoint
-
-
-#
-#   Direction Specific System Connection Points
-#
-
-
-class InletSystemConnectionPoint(SystemConnectionPoint):
-    _class_iri: URIRef = BOB.InletSystemConnectionPoint
-
-
-class OutletSystemConnectionPoint(SystemConnectionPoint):
-    _class_iri: URIRef = BOB.OutletSystemConnectionPoint
-
-
-class BidirectionalSystemConnectionPoint(SystemConnectionPoint):
-    _class_iri: URIRef = BOB.BidirectionalSystemConnectionPoint
 
 
 #

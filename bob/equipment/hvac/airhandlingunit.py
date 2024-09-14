@@ -4,9 +4,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...connections.air import (
-    AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
 )
 from ...connections.electricity import (
     Electricity_600VLL_3Ph_60HzSystemInletConnectionPoint,

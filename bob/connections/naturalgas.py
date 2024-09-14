@@ -9,10 +9,10 @@ from ..core import (
     InletConnectionPoint,
     Medium,
     OutletConnectionPoint,
-    SystemConnectionPoint,
     enum,
 )
 from ..enum import NaturalGas
+
 _namespace = BOB
 
 
@@ -30,20 +30,4 @@ class NaturalGasInletConnectionPoint(InletConnectionPoint, NaturalGasConnectionP
 
 
 class NaturalGasOutletConnectionPoint(OutletConnectionPoint, NaturalGasConnectionPoint):
-    _class_iri = S223.OutletConnectionPoint
-
-
-class NaturalGasSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = NaturalGas
-
-
-class NaturalGasInletSystemConnectionPoint(
-    InletConnectionPoint, NaturalGasSystemConnectionPoint
-):
-    _class_iri = S223.InletConnectionPoint
-
-
-class NaturalGasOutletSystemConnectionPoint(
-    OutletConnectionPoint, NaturalGasSystemConnectionPoint
-):
     _class_iri = S223.OutletConnectionPoint

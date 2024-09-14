@@ -5,15 +5,11 @@ from ..core import (
     P223,
     S223,
     BidirectionalConnectionPoint,
-    BidirectionalSystemConnectionPoint,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
-    InletSystemConnectionPoint,
     Medium,
     OutletConnectionPoint,
-    OutletSystemConnectionPoint,
-    SystemConnectionPoint,
 )
 
 _namespace = P223
@@ -39,19 +35,3 @@ class MechanicalInletConnectionPoint(InletConnectionPoint, MechanicalConnectionP
 
 class MechanicalOutletConnectionPoint(OutletConnectionPoint, MechanicalConnectionPoint):
     _class_iri = S223.OutletConnectionPoint
-
-
-class MechanicalSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = MechanicalCoupling
-
-
-class MechanicalSystemInletConnectionPoint(
-    MechanicalSystemConnectionPoint, InletSystemConnectionPoint
-):
-    _class_iri = BOB.InletSystemConnectionPoint
-
-
-class MechanicalSystemOutletConnectionPoint(
-    MechanicalSystemConnectionPoint, OutletSystemConnectionPoint
-):
-    _class_iri = BOB.OutletSystemConnectionPoint

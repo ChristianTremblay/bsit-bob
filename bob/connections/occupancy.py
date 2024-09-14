@@ -5,17 +5,13 @@ from ..core import (
     P223,
     S223,
     BidirectionalConnectionPoint,
-    BidirectionalSystemConnectionPoint,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
-    InletSystemConnectionPoint,
     InletZoneConnectionPoint,
     Medium,
     OutletConnectionPoint,
-    OutletSystemConnectionPoint,
     OutletZoneConnectionPoint,
-    SystemConnectionPoint,
     ZoneConnectionPoint,
     enum,
 )
@@ -38,22 +34,6 @@ class OccupancyInletConnectionPoint(OccupancyConnectionPoint, InletConnectionPoi
 
 class OccupancyOutletConnectionPoint(OccupancyConnectionPoint, OutletConnectionPoint):
     _class_iri = S223.OutletConnectionPoint
-
-
-class OccupancySystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium
-
-
-class OccupancyInletSystemConnectionPoint(
-    OccupancySystemConnectionPoint, InletSystemConnectionPoint
-):
-    _class_iri = BOB.InletSystemConnectionPoint
-
-
-class OccupancyOutletSystemConnectionPoint(
-    OccupancySystemConnectionPoint, OutletSystemConnectionPoint
-):
-    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 class OccupancyZoneConnectionPoint(ZoneConnectionPoint):
