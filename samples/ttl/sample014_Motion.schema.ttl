@@ -1,8 +1,8 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
-@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -28,35 +28,35 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:doors ],
-        [ a sh:PropertyShape ;
-            sh:path bob:radiantHeating ],
-        [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
-        [ a sh:PropertyShape ;
             sh:path bob:airChangePerHour ],
         [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co2 ],
+            sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
             sh:path bob:humidity ],
         [ a sh:PropertyShape ;
             sh:path bob:temperature ],
         [ a sh:PropertyShape ;
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantHeating ],
+        [ a sh:PropertyShape ;
             sh:path bob:ductAirInlet ],
         [ a sh:PropertyShape ;
             sh:path bob:occupancy ],
         [ a sh:PropertyShape ;
-            sh:path bob:windows ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co ],
-        [ a sh:PropertyShape ;
-            sh:path bob:ductAirOutlet ],
+            sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
             sh:path bob:radiantCooling ],
         [ a sh:PropertyShape ;
-            sh:path bob:airTransfer ] .
+            sh:path bob:windows ] .
 
 bob:airChangePerHour a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -719,18 +719,18 @@ p223:GlycolSolution-GlycolSolution-15Percent a p223:GlycolSolution-GlycolSolutio
     rdfs:label "GlycolSolution-15Percent" ;
     s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
-            s223:hasQuantityKind quantitykind:VolumeFraction ;
-            s223:hasUnit unit:PERCENT ;
-            s223:hasValue 15 ;
-            s223:ofConstituent p223:Constituent-Glycol ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
-            s223:hasQuantityKind quantitykind:VolumeFraction ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
             s223:hasUnit unit:PERCENT ;
             s223:hasValue 85 ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
+            s223:ofConstituent p223:Constituent-H2O ],
+        [ a s223:Property,
+                s223:QuantifiableProperty ;
+            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
+            s223:hasUnit unit:PERCENT ;
+            s223:hasValue 15 ;
+            s223:ofConstituent p223:Constituent-Glycol ] ;
     rdfs:subClassOf p223:Fluid-Water,
         p223:Mix-Fluid,
         p223:Water-GlycolSolution,
@@ -749,14 +749,14 @@ p223:GlycolSolution-GlycolSolution-30Percent a p223:GlycolSolution-GlycolSolutio
     s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-30Percent.Constituent-H2O" ;
-            s223:hasQuantityKind quantitykind:VolumeFraction ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
             s223:hasUnit unit:PERCENT ;
             s223:hasValue 70 ;
             s223:ofConstituent p223:Constituent-H2O ],
         [ a s223:Property,
                 s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-30Percent.Constituent-Glycol" ;
-            s223:hasQuantityKind quantitykind:VolumeFraction ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
             s223:hasUnit unit:PERCENT ;
             s223:hasValue 30 ;
             s223:ofConstituent p223:Constituent-Glycol ] ;
@@ -1018,11 +1018,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1409,23 +1409,23 @@ bob:Causality a rdfs:Class,
     """ ;
     rdfs:subClassOf p223:Producer ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:effect_output ],
+            sh:path bob:cause_input ],
         [ a sh:PropertyShape ;
-            sh:path bob:cause_input ] .
+            sh:path bob:effect_output ] .
 
 qudt:hasQuantityKind a rdf:Property .
 
 qudt:hasUnit a rdf:Property .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ] .
+            sh:path s223:connectsThrough ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
 
 s223:DomainSpace sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
@@ -1451,34 +1451,34 @@ s223:OccupantMotionSensor sh:property [ a sh:PropertyShape ;
             sh:path s223:observes ] .
 
 s223:Property sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasValue ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofSubstance ],
         [ a sh:PropertyShape ;
             sh:path s223:ofConstituent ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path s223:hasValue ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ] .
+            sh:path s223:ofMedium ] .
 
 s223:QuantifiableObservableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasSetpoint ] .
 
 s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
+            sh:path qudt:hasQuantityKind ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasQuantityKind ] .
+            sh:path qudt:hasUnit ] .
 
 s223:Sensor sh:property [ a sh:PropertyShape ;
             sh:path s223:observes ],
         [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
             sh:path s223:hasMaxRange ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasObservationLocation ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMeasurementUncertainty ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMeasurementPrecision ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMinRange ] .
+            sh:path s223:hasMeasurementUncertainty ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasObservationLocation ] .
 
