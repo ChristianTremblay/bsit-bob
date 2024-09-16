@@ -223,14 +223,8 @@ _namespace = S223
 
 # common namespaces
 QUDT = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
-QUANTITYKIND = bind_namespace("quantitykind", "http://qudt.org/vocab/quantitykind/")
-QUANTITYVALUE = bind_namespace(
-    "quantityValue", "http://QUDT.org/schema/qudt/quantityValue"
-)
+QUANTITYKIND = bind_namespace("qudtqk", "http://qudt.org/vocab/quantitykind/")
 UNIT = bind_namespace("unit", "http://qudt.org/vocab/unit/")
-enum = bind_namespace(
-    "enum", "http://data.ashrae.org/standard223/1.0/vocab/enumeration#"
-)
 BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")
 
 # the model_namespace is used to create "blank" node identifiers, a serial
