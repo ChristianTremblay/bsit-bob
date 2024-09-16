@@ -1,12 +1,9 @@
-from typing import Any, Dict
-
-from rdflib import URIRef
+from typing import Dict
 
 from bob.properties.states import NormalAlarmStatus
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import BOB, P223, S223, Equipment, enum
-from ...sensor import Sensor
+from ...core import P223, Equipment
 from ...sensor.particle import (
     CoarseParticulateSensor,
     FineParticulateSensor,

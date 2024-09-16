@@ -1,28 +1,19 @@
 from pathlib import Path
 
 from header import ttl_test_header
-from rdflib import URIRef
 
-from bob.connections.electricity import ElectricalInletConnectionPoint
+from bob.core import (
+    Equipment,
+    bind_model_namespace,
+    dump,
+    data_graph,
+    schema_graph,
+)
 from bob.connections.liquid import (
     Glycol15PercentInletConnectionPoint,
     Glycol15PercentOutletConnectionPoint,
 )
-from bob.core import (
-    P223,
-    Equipment,
-    bind_model_namespace,
-    dump,
-    enum,
-    data_graph,
-    schema_graph,
-)
-from bob.equipment.network.switch import PoESwitch, EthernetSwitch
 from bob.equipment.hvac.pump import Pump
-from bob.equipment.hvac.valve import TwoWayValve
-
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.physical import Building, Floor, MechanicalRoom, Office
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

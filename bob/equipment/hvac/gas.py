@@ -1,5 +1,4 @@
-import logging
-from typing import Any, Dict
+from typing import Dict
 
 from rdflib import URIRef
 
@@ -7,25 +6,13 @@ from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...core import (
     BOB,
     P223,
-    QUANTITYKIND,
-    S223,
-    UNIT,
     Equipment,
     PropertyReference,
-    enum,
-    QuantifiableObservableProperty,
 )
-from ...sensor import Sensor
 from ...sensor.gas import (
-    CH4Sensor,
-    CO2Sensor,
     COSensor,
-    GasConcentrationSensor,
     NO2Sensor,
 )
-
-# logging
-_log = logging.getLogger(__name__)
 
 # namespace
 _namespace = BOB
@@ -69,17 +56,12 @@ gasmonitor_template = {
 
 class GasMonitor(Equipment):
     """
-    This allow the creation of a gas monitor that
-    can contain 1 or more gas sensor
-
-    to create
-
-    monitor = GasMonitor()
-
+    Gas monitor that contains 1 or more gas sensors
     """
 
     _class_iri: URIRef = P223.GasMonitor
     airInletSupply: AirInletConnectionPoint
+    airOutletExhaust: AirOutletConnectionPoint
 
     alarmStatus: PropertyReference
 

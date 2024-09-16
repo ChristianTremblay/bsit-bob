@@ -1,15 +1,11 @@
-from rdflib import URIRef
-
 from ..core import (
     BOB,
-    P223,
     S223,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
     Medium,
     OutletConnectionPoint,
-    enum,
 )
 from ..enum import NaturalGas
 

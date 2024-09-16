@@ -3,15 +3,12 @@ from pathlib import Path
 from header import ttl_test_header
 from rdflib import URIRef
 
+from bob.core import P223, Equipment, bind_model_namespace, dump
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.light import (
     LightVisibleConnection,
     LightVisibleOutletConnectionPoint,
 )
-from bob.core import P223, Equipment, bind_model_namespace, dump, enum
-from bob.equipment.hvac.fan import Fan
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.physical import Building, Floor, MechanicalRoom, Office
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

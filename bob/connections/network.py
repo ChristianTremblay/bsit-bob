@@ -1,7 +1,4 @@
-from rdflib import Literal, URIRef
-
-from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum, ProtocolEnum
-from bob.properties.network import Mbit_per_seconds
+from rdflib import Literal
 
 from ..core import (
     BOB,
@@ -10,13 +7,9 @@ from ..core import (
     BidirectionalConnectionPoint,
     Connection,
     ConnectionPoint,
-    InletConnectionPoint,
-    InletZoneConnectionPoint,
-    Medium,
-    OutletConnectionPoint,
-    OutletZoneConnectionPoint,
-    enum,
 )
+from bob.enum import ProtocolEnum
+from bob.properties.network import Mbit_per_seconds
 from ..enum import PowerAndSignal, Electricity
 
 _namespace = BOB
