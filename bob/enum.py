@@ -49,10 +49,10 @@ Constituent.SO2 = SO2 = Constituent("SO2", label="SO2", _alt_namespace=P223)
 Constituent.N = Nitrogen = Constituent("N", label="Nitrogen", _alt_namespace=P223)
 Constituent.VOC = VOC = Constituent("VOC", label="VOC", _alt_namespace=P223)
 Constituent.Radon = Radon = Constituent("Radon", label="Radon", _alt_namespace=P223)
-Constituent.R22 = R22 = Constituent("R22", label="R22", _alt_namespace=P223)
-Constituent.R134a = R134a = Constituent("R134a", label="R134a", _alt_namespace=P223)
-Constituent.R410a = R410a = Constituent("R410a", label="R410a", _alt_namespace=P223)
-Constituent.R32 = R32 = Constituent("R32", label="R32", _alt_namespace=P223)
+Constituent.R22 = const_R22 = Constituent("R22", label="R22", _alt_namespace=P223)
+Constituent.R134a = const_R134a = Constituent("R134a", label="R134a", _alt_namespace=P223)
+Constituent.R410a = const_R410a = Constituent("R410a", label="R410a", _alt_namespace=P223)
+Constituent.R32 = const_R32 = Constituent("R32", label="R32", _alt_namespace=P223)
 
 Constituent.Glycol = Glycol = Constituent("Glycol", label="Glycol", _alt_namespace=P223)
 
@@ -181,13 +181,19 @@ PowerAndSignal.USB.add_constituent(Electricity.DC5V)
 # ===================
 # MEDIA FLAVOURS
 # ===================
-# Air
+# Air and gases
 Mix.Fluid = Fluid = Mix("Fluid", _alt_namespace=P223)
-
-Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas", _alt_namespace=P223)
-
 Fluid.Air = Air = Fluid("Air", _alt_namespace=P223)
 Air.CompressedAir = CompressedAir = Air("CompressedAir", _alt_namespace=P223)
+
+Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas", _alt_namespace=P223)
+Fluid.RefrigerationGas = RefrigerationGas = Fluid("RefrigerationGas", _alt_namespace=P223)
+RefrigerationGas.R410a = R410a = RefrigerationGas("R410a", _alt_namespace=P223)
+R410a.add_constituent(const_R410a)
+RefrigerationGas.R32 = R32 = RefrigerationGas("R32", _alt_namespace=P223)
+R32.add_constituent(const_R32)
+RefrigerationGas.R22 = R22 = RefrigerationGas("R22", _alt_namespace=P223)
+R22.add_constituent(const_R22)
 
 # Water
 Fluid.Water = Water = Fluid("Water", _alt_namespace=P223)
@@ -283,6 +289,8 @@ Role.Primary = Primary = Role("Primary")
 Role.Return = Return = Role("Return")
 Role.Secondary = Secondary = Role("Secondary")
 Role.Supply = Supply = Role("Supply")
+Role.Condenser = Condenser = Role("Condenser")
+Role.Evaporator = Evaporator = Role("Evaporator")
 
 # ===================
 # Values Enumeration
