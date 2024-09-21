@@ -25,7 +25,18 @@ from ...connections.liquid import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
+from ...connections.refrigerant import (
+    RefrigerationGasBidirectionalConnectionPoint,
+    RefrigerationGasInletConnectionPoint,
+    RefrigerationGasOutletConnectionPoint,
+)
 from ...core import BOB, P223, S223, Equipment, PropertyReference
+from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
+    R22,
+    R32,
+    R410a,
+    RefrigerationGas,
+)
 from ...template import template_update
 
 _namespace = BOB
@@ -81,6 +92,23 @@ class HotWaterCoil(Coil):
         _config = template_update({}, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+
+
+class HeatpumpCoil(Coil):
+    _class_iri = S223.Coil
+    gasPortA: RefrigerationGasBidirectionalConnectionPoint
+    gasPortB: RefrigerationGasBidirectionalConnectionPoint
+    # airInlet: AirInletConnectionPoint
+    # airOutlet: AirOutletConnectionPoint
+
+    def __init__(self, config: Dict = coil_template, **kwargs):
+        _config = template_update({}, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+
+    def set_gas_type(self, gas: RefrigerationGas):
+        self.gasPortA.hasMedium = gas
+        self.gasPortB.hasMedium = gas
 
 
 # Electrical Coil
