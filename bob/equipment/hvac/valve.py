@@ -4,17 +4,24 @@ from ...connections.air import (
     CompressedAirInletConnectionPoint,
     CompressedAirOutletConnectionPoint,
 )
+from ...connections.liquid import WaterInletConnectionPoint, WaterOutletConnectionPoint
 from ...connections.mechanical import MechanicalInletConnectionPoint
 from ...connections.naturalgas import (
     NaturalGasInletConnectionPoint,
     NaturalGasOutletConnectionPoint,
 )
-
-from ...connections.liquid import (
-    WaterInletConnectionPoint,
-    WaterOutletConnectionPoint,
+from ...connections.refrigerant import (
+    RefrigerationGasBidirectionalConnectionPoint,
+    RefrigerationGasInletConnectionPoint,
+    RefrigerationGasOutletConnectionPoint,
 )
 from ...core import BOB, S223, Equipment, PropertyReference, logging
+from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
+    R22,
+    R32,
+    R410a,
+    RefrigerationGas,
+)
 from ...properties import Gallons
 
 # logging
@@ -82,3 +89,28 @@ class PneumaticValve(Valve):
     _class_iri = S223.Valve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint
+
+
+class ExpansionValve(Valve):
+    _class_iri = S223.Valve
+    portA: RefrigerationGasBidirectionalConnectionPoint
+    portB: RefrigerationGasBidirectionalConnectionPoint
+
+    def set_gas_type(self, gas: RefrigerationGas):
+        self.portA.hasMedium = gas
+        self.portB.hasMedium = gas
+
+
+class ReversingValve(Valve):
+    _class_iri = S223.Valve
+    refrigerantHighPressureInlet: RefrigerationGasInletConnectionPoint
+    refrigerantLowPressureOutlet: RefrigerationGasOutletConnectionPoint
+    refrigerantIndoorCoilPort: RefrigerationGasBidirectionalConnectionPoint
+    refrigerantOutdoorCoilPort: RefrigerationGasBidirectionalConnectionPoint
+    position: PropertyReference
+
+    def set_gas_type(self, gas: RefrigerationGas):
+        self.refrigerantHighPressureInlet.hasMedium = gas
+        self.refrigerantLowPressureOutlet.hasMedium = gas
+        self.refrigerantIndoorCoilPort.hasMedium = gas
+        self.refrigerantOutdoorCoilPort.hasMedium = gas
