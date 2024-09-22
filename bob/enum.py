@@ -186,46 +186,42 @@ PowerAndSignal.USB.add_constituent(Electricity.DC5V)
 # MEDIA FLAVOURS
 # ===================
 # Air and gases
-Mix.Fluid = Fluid = Mix("Fluid", _alt_namespace=P223)
-Fluid.Air = Air = Fluid("Air", _alt_namespace=P223)
-Air.CompressedAir = CompressedAir = Air("CompressedAir", _alt_namespace=P223)
+Mix.Fluid = Fluid = Mix("Fluid")
+Fluid.Air = Air = Fluid("Air")
+Air.CompressedAir = CompressedAir = Air("CompressedAir")
 
-Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas", _alt_namespace=P223)
-Fluid.RefrigerationGas = RefrigerationGas = Fluid(
-    "RefrigerationGas", _alt_namespace=P223
-)
-RefrigerationGas.R410a = R410a = RefrigerationGas("R410a", _alt_namespace=P223)
+Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas")
+Fluid.RefrigerationGas = RefrigerationGas = Fluid("RefrigerationGas")
+RefrigerationGas.R410a = R410a = RefrigerationGas("R410a")
 R410a.add_constituent(const_R410a)
-RefrigerationGas.R32 = R32 = RefrigerationGas("R32", _alt_namespace=P223)
+RefrigerationGas.R32 = R32 = RefrigerationGas("R32")
 R32.add_constituent(const_R32)
-RefrigerationGas.R22 = R22 = RefrigerationGas("R22", _alt_namespace=P223)
+RefrigerationGas.R22 = R22 = RefrigerationGas("R22")
 R22.add_constituent(const_R22)
 
 # Water
-Fluid.Water = Water = Fluid("Water", _alt_namespace=P223)
+Fluid.Water = Water = Fluid("Water")
 Water.add_constituent(Constituent.H2O)
 
-Water.ChilledWater = ChilledWater = Water("ChilledWater", _alt_namespace=P223)
+Water.ChilledWater = ChilledWater = Water("ChilledWater")
 
-Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
+Water.PotableWater = PotableWater = Water("PotableWater")
 
-Water.HotWater = HotWater = Water("HotWater", _alt_namespace=P223)
+Water.HotWater = HotWater = Water("HotWater")
 
-Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
+Water.MixedWater = MixedWater = Water("MixedWater")
 
-Water.DomesticWater = DomesticWater = Water("DomesticWater", _alt_namespace=P223)
+Water.DomesticWater = DomesticWater = Water("DomesticWater")
 
-Water.DomesticHotWater = DomesticHotWater = Water(
-    "DomesticHotWater", _alt_namespace=P223
-)
+Water.DomesticHotWater = DomesticHotWater = Water("DomesticHotWater")
 
-Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
+Water.CondensedWater = CondensedWater = Water("CondensedWater")
 
-Water.GlycolSolution = GlycolSolution = Water("GlycolSolution", _alt_namespace=P223)
+Water.GlycolSolution = GlycolSolution = Water("GlycolSolution")
 GlycolSolution.add_constituent(Constituent.Glycol)
 
 GlycolSolution.GlycolSolution_15Percent = GlycolSolution_15Percent = GlycolSolution(
-    "GlycolSolution-15Percent", _alt_namespace=P223
+    "GlycolSolution-15Percent"
 )
 GlycolSolution_15Percent.add_constituent(
     Constituent.H2O,
@@ -241,7 +237,7 @@ GlycolSolution_15Percent.add_constituent(
 )
 
 GlycolSolution.GlycolSolution_30Percent = GlycolSolution_30Percent = GlycolSolution(
-    "GlycolSolution-30Percent", _alt_namespace=P223
+    "GlycolSolution-30Percent"
 )
 GlycolSolution_30Percent.add_constituent(
     Constituent.H2O,
@@ -256,7 +252,7 @@ GlycolSolution_30Percent.add_constituent(
     hasUnit=UNIT.PERCENT,
 )
 
-Water.Steam = Steam = Water("Steam", _alt_namespace=P223)
+Water.Steam = Steam = Water("Steam")
 
 # Light
 Light.Visible = Light("Visible")
