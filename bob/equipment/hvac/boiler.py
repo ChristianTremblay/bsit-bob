@@ -8,6 +8,8 @@ from ...connections.electricity import (
 from ...connections.liquid import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
+    WaterBidirectionalConnectionPoint,
+    WaterConnection,
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
@@ -50,6 +52,7 @@ class Tank(Equipment):
     _class_iri = P223.Tank
     leavingFluid: WaterOutletConnectionPoint
     enteringFluid: WaterInletConnectionPoint
+
     # leavingFluidTemperature: Temperature
     # enteringFluidTemperature: Temperature
     # fluidFlow: Flow
@@ -60,6 +63,7 @@ domesticwaterheater_template = {
     "properties": {
         ("leavingFluidTemperature", Temperature): {},
         ("enteringFluidTemperature", Temperature): {},
+        ("tankFluidTemperature", Temperature): {},
         ("fluidFlow", Flow): {"hasUnit": UNIT["L-PER-SEC"]},
     },
     "equipment": {
@@ -79,6 +83,7 @@ domesticwaterheater_template = {
 
 class DomesticElectricalWaterHeater(Tank):
     _class_iri = P223.DomesticWaterHeater
+    tankFluid: WaterBidirectionalConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(domesticwaterheater_template, config)
@@ -86,3 +91,8 @@ class DomesticElectricalWaterHeater(Tank):
         super().__init__(_config, **kwargs)
         self.leavingFluid.hasMedium = DomesticHotWater
         self.enteringFluid.hasMedium = DomesticWater
+        self.tankFluid.hasMedium = DomesticWater
+        self.heatExchangeConnection = WaterConnection(label="heatExchangeConnection")
+        self.tankFluid >> self.heatExchangeConnection
+        self["element1"].fluidContact >> self.heatExchangeConnection
+        self["element2"].fluidContact >> self.heatExchangeConnection
