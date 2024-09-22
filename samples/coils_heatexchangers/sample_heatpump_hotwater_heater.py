@@ -12,6 +12,7 @@ from bob.connections.electricity import (
 from bob.connections.liquid import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
+    WaterBidirectionalConnectionPoint,
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
@@ -64,7 +65,10 @@ domesticHPwaterheater_template = {
             "comment": "Evaporator Fan",
             "electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint,
         },
-        ("CONDENSERCOIL", HeatpumpCoil): {"comment": "Condenser Coil"},
+        ("CONDENSERCOIL", HeatpumpCoil): {
+            "comment": "Condenser Coil",
+            "config": {"cp": {"fluidContact": WaterBidirectionalConnectionPoint}},
+        },
         ("EVAPORATORCOIL", HeatpumpCoil): {"comment": "Evaporator coil"},
         ("COMPRESSOR", RefrigeartionGasCompressor): {"comment": "Compressor"},
         ("EXPANSIONVALVE", ExpansionValve): {"comment": "Expansion Valve"},
@@ -98,8 +102,10 @@ class DomesticHPWaterHeater(DomesticElectricalWaterHeater):
         super().__init__(_config, **kwargs)
         self["EVAPORATORCOIL"] += Role.Evaporator
         self["CONDENSERCOIL"] += Role.Condenser
+        self["CONDENSERCOIL"] += Role.Heating
         self["COMPRESSOR"].dischargePort >> self["CONDENSERCOIL"].gasPortA
         self["CONDENSERCOIL"].gasPortB >> self["EXPANSIONVALVE"].portA
+        self["CONDENSERCOIL"].fluidContact >> self.heatExchangeConnection
         self["EXPANSIONVALVE"].portB >> self["EVAPORATORCOIL"].gasPortA
         self["EVAPORATORCOIL"].gasPortB >> self["COMPRESSOR"].returnPort
 
