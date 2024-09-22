@@ -9,10 +9,10 @@ from ..core import (
     ConnectionPoint,
     InletConnectionPoint,
     InletSystemConnectionPoint,
+    Medium,
     OutletConnectionPoint,
     OutletSystemConnectionPoint,
     SystemConnectionPoint,
-    Medium
 )
 from ..enum import GlycolSolution_15Percent, GlycolSolution_30Percent, Water
 
@@ -58,11 +58,13 @@ _namespace = BOB
 
 # === WATER
 class WaterConnection(Connection):
+    _volatile = ("hasMedium",)
     hasMedium: Medium = Water
     _class_iri = S223.Connection
 
 
 class WaterConnectionPoint(ConnectionPoint):
+    _volatile = ("hasMedium",)
     hasMedium: Medium = Water
 
 
