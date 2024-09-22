@@ -36,11 +36,11 @@ sample_heatpump:00001 a s223:Connectable,
         sample_heatpump:00011,
         sample_heatpump:00024,
         sample_heatpump:00037,
-        sample_heatpump:00042,
-        sample_heatpump:00047,
-        sample_heatpump:00052,
-        sample_heatpump:00056,
-        sample_heatpump:00062 ;
+        sample_heatpump:00045,
+        sample_heatpump:00053,
+        sample_heatpump:00058,
+        sample_heatpump:00062,
+        sample_heatpump:00068 ;
     s223:hasConnectionPoint sample_heatpump:00002,
         sample_heatpump:00003,
         sample_heatpump:00004 ;
@@ -62,7 +62,7 @@ sample_heatpump:00003 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HeatPump.airInlet" ;
     s223:cnx sample_heatpump:00001 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf sample_heatpump:00001 .
 
 sample_heatpump:00004 a s223:ConnectionPoint,
@@ -70,7 +70,7 @@ sample_heatpump:00004 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HeatPump.airOutlet" ;
     s223:cnx sample_heatpump:00001 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf sample_heatpump:00001 .
 
 sample_heatpump:00005 a s223:Connectable,
@@ -88,7 +88,7 @@ sample_heatpump:00006 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "OA-T.Temperature" ;
-    s223:ofMedium p223:Fluid-Air ;
+    s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -107,7 +107,7 @@ sample_heatpump:00008 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "DA-T.Temperature" ;
-    s223:ofMedium p223:Fluid-Air ;
+    s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -126,7 +126,7 @@ sample_heatpump:00010 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "RA-T.Temperature" ;
-    s223:ofMedium p223:Fluid-Air ;
+    s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind quantitykind:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
@@ -140,7 +140,7 @@ sample_heatpump:00011 a s223:Connectable,
         sample_heatpump:00014 ;
     s223:connected sample_heatpump:00037 ;
     s223:connectedFrom sample_heatpump:00037 ;
-    s223:connectedThrough sample_heatpump:00072 ;
+    s223:connectedThrough sample_heatpump:00078 ;
     s223:hasConnectionPoint sample_heatpump:00012,
         sample_heatpump:00013,
         sample_heatpump:00014 ;
@@ -163,9 +163,9 @@ sample_heatpump:00012 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF.airInlet" ;
     s223:cnx sample_heatpump:00011,
-        sample_heatpump:00072 ;
-    s223:connectsThrough sample_heatpump:00072 ;
-    s223:hasMedium p223:Fluid-Air ;
+        sample_heatpump:00078 ;
+    s223:connectsThrough sample_heatpump:00078 ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf sample_heatpump:00011 .
 
 sample_heatpump:00013 a s223:ConnectionPoint,
@@ -173,7 +173,7 @@ sample_heatpump:00013 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "SF.airOutlet" ;
     s223:cnx sample_heatpump:00011 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf sample_heatpump:00011 ;
     s223:mapsTo sample_heatpump:00004 .
 
@@ -275,9 +275,9 @@ sample_heatpump:00024 a s223:Connectable,
     s223:cnx sample_heatpump:00025,
         sample_heatpump:00026,
         sample_heatpump:00027 ;
-    s223:connected sample_heatpump:00042 ;
-    s223:connectedFrom sample_heatpump:00042 ;
-    s223:connectedThrough sample_heatpump:00073 ;
+    s223:connected sample_heatpump:00045 ;
+    s223:connectedFrom sample_heatpump:00045 ;
+    s223:connectedThrough sample_heatpump:00079 ;
     s223:hasConnectionPoint sample_heatpump:00025,
         sample_heatpump:00026,
         sample_heatpump:00027 ;
@@ -299,9 +299,9 @@ sample_heatpump:00025 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OUTDOORUNITFAN.airInlet" ;
     s223:cnx sample_heatpump:00024,
-        sample_heatpump:00073 ;
-    s223:connectsThrough sample_heatpump:00073 ;
-    s223:hasMedium p223:Fluid-Air ;
+        sample_heatpump:00079 ;
+    s223:connectsThrough sample_heatpump:00079 ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf sample_heatpump:00024 .
 
 sample_heatpump:00026 a s223:ConnectionPoint,
@@ -309,7 +309,7 @@ sample_heatpump:00026 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OUTDOORUNITFAN.airOutlet" ;
     s223:cnx sample_heatpump:00024 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf sample_heatpump:00024 .
 
 sample_heatpump:00027 a s223:ConnectionPoint,
@@ -411,21 +411,24 @@ sample_heatpump:00037 a s223:Coil,
         sample_heatpump:00040,
         sample_heatpump:00041 ;
     s223:connected sample_heatpump:00011,
-        sample_heatpump:00052,
-        sample_heatpump:00056,
-        sample_heatpump:00062 ;
-    s223:connectedFrom sample_heatpump:00056,
-        sample_heatpump:00062 ;
-    s223:connectedThrough sample_heatpump:00067,
-        sample_heatpump:00068,
-        sample_heatpump:00071,
-        sample_heatpump:00072 ;
+        sample_heatpump:00058,
+        sample_heatpump:00062,
+        sample_heatpump:00068 ;
+    s223:connectedFrom sample_heatpump:00062,
+        sample_heatpump:00068 ;
+    s223:connectedThrough sample_heatpump:00073,
+        sample_heatpump:00074,
+        sample_heatpump:00077,
+        sample_heatpump:00078 ;
     s223:connectedTo sample_heatpump:00011,
-        sample_heatpump:00052 ;
+        sample_heatpump:00058 ;
     s223:hasConnectionPoint sample_heatpump:00038,
         sample_heatpump:00039,
         sample_heatpump:00040,
         sample_heatpump:00041 ;
+    s223:hasProperty sample_heatpump:00042,
+        sample_heatpump:00043,
+        sample_heatpump:00044 ;
     s223:hasRole s223:Role-Condenser,
         s223:Role-Cooling,
         s223:Role-Evaporator,
@@ -441,9 +444,9 @@ sample_heatpump:00038 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "INDOORCOIL.airInlet" ;
     s223:cnx sample_heatpump:00037,
-        sample_heatpump:00071 ;
-    s223:connectsThrough sample_heatpump:00071 ;
-    s223:hasMedium p223:Fluid-Air ;
+        sample_heatpump:00077 ;
+    s223:connectsThrough sample_heatpump:00077 ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf sample_heatpump:00037 .
 
 sample_heatpump:00039 a s223:ConnectionPoint,
@@ -451,9 +454,9 @@ sample_heatpump:00039 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "INDOORCOIL.airOutlet" ;
     s223:cnx sample_heatpump:00037,
-        sample_heatpump:00072 ;
-    s223:connectsThrough sample_heatpump:00072 ;
-    s223:hasMedium p223:Fluid-Air ;
+        sample_heatpump:00078 ;
+    s223:connectsThrough sample_heatpump:00078 ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf sample_heatpump:00037 .
 
 sample_heatpump:00040 a s223:BidirectionalConnectionPoint,
@@ -461,10 +464,10 @@ sample_heatpump:00040 a s223:BidirectionalConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "INDOORCOIL.gasPortA" ;
     s223:cnx sample_heatpump:00037,
-        sample_heatpump:00068 ;
-    s223:connectsThrough sample_heatpump:00068 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
+        sample_heatpump:00074 ;
+    s223:connectsThrough sample_heatpump:00074 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
     s223:isConnectionPointOf sample_heatpump:00037 .
 
 sample_heatpump:00041 a s223:BidirectionalConnectionPoint,
@@ -472,132 +475,183 @@ sample_heatpump:00041 a s223:BidirectionalConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "INDOORCOIL.gasPortB" ;
     s223:cnx sample_heatpump:00037,
-        sample_heatpump:00067 ;
-    s223:connectsThrough sample_heatpump:00067 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
+        sample_heatpump:00073 ;
+    s223:connectsThrough sample_heatpump:00073 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
     s223:isConnectionPointOf sample_heatpump:00037 .
 
-sample_heatpump:00042 a s223:Coil,
+sample_heatpump:00042 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "averageSurfaceTemperature" ;
+    qudt:hasQuantityKind quantitykind:Temperature .
+
+sample_heatpump:00043 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Pressure ;
+    rdfs:label "internalPressure" ;
+    qudt:hasQuantityKind quantitykind:Pressure .
+
+sample_heatpump:00044 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "internalTemperature" ;
+    qudt:hasQuantityKind quantitykind:Temperature .
+
+sample_heatpump:00045 a s223:Coil,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "OUTDOORCOIL" ;
-    s223:cnx sample_heatpump:00043,
-        sample_heatpump:00044,
-        sample_heatpump:00045,
-        sample_heatpump:00046 ;
+    s223:cnx sample_heatpump:00046,
+        sample_heatpump:00047,
+        sample_heatpump:00048,
+        sample_heatpump:00049 ;
     s223:connected sample_heatpump:00024,
-        sample_heatpump:00052,
-        sample_heatpump:00056 ;
-    s223:connectedFrom sample_heatpump:00052 ;
-    s223:connectedThrough sample_heatpump:00069,
-        sample_heatpump:00070,
-        sample_heatpump:00073 ;
+        sample_heatpump:00058,
+        sample_heatpump:00062 ;
+    s223:connectedFrom sample_heatpump:00058 ;
+    s223:connectedThrough sample_heatpump:00075,
+        sample_heatpump:00076,
+        sample_heatpump:00079 ;
     s223:connectedTo sample_heatpump:00024,
-        sample_heatpump:00056 ;
-    s223:hasConnectionPoint sample_heatpump:00043,
-        sample_heatpump:00044,
-        sample_heatpump:00045,
-        sample_heatpump:00046 ;
+        sample_heatpump:00062 ;
+    s223:hasConnectionPoint sample_heatpump:00046,
+        sample_heatpump:00047,
+        sample_heatpump:00048,
+        sample_heatpump:00049 ;
+    s223:hasProperty sample_heatpump:00050,
+        sample_heatpump:00051,
+        sample_heatpump:00052 ;
     s223:hasRole s223:Role-Condenser,
         s223:Role-Evaporator ;
-    bob:airInlet sample_heatpump:00043 ;
-    bob:airOutlet sample_heatpump:00044 ;
-    bob:gasPortA sample_heatpump:00045 ;
-    bob:gasPortB sample_heatpump:00046 ;
+    bob:airInlet sample_heatpump:00046 ;
+    bob:airOutlet sample_heatpump:00047 ;
+    bob:gasPortA sample_heatpump:00048 ;
+    bob:gasPortB sample_heatpump:00049 ;
     rdfs:comment "Outdoor coil" .
 
-sample_heatpump:00043 a s223:ConnectionPoint,
+sample_heatpump:00046 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OUTDOORCOIL.airInlet" ;
-    s223:cnx sample_heatpump:00042 ;
-    s223:hasMedium p223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump:00042 .
+    s223:cnx sample_heatpump:00045 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf sample_heatpump:00045 .
 
-sample_heatpump:00044 a s223:ConnectionPoint,
+sample_heatpump:00047 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OUTDOORCOIL.airOutlet" ;
-    s223:cnx sample_heatpump:00042,
-        sample_heatpump:00073 ;
-    s223:connectsThrough sample_heatpump:00073 ;
-    s223:hasMedium p223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump:00042 .
+    s223:cnx sample_heatpump:00045,
+        sample_heatpump:00079 ;
+    s223:connectsThrough sample_heatpump:00079 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf sample_heatpump:00045 .
 
-sample_heatpump:00045 a s223:BidirectionalConnectionPoint,
+sample_heatpump:00048 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "OUTDOORCOIL.gasPortA" ;
-    s223:cnx sample_heatpump:00042,
-        sample_heatpump:00069 ;
-    s223:connectsThrough sample_heatpump:00069 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00042 .
+    s223:cnx sample_heatpump:00045,
+        sample_heatpump:00075 ;
+    s223:connectsThrough sample_heatpump:00075 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00045 .
 
-sample_heatpump:00046 a s223:BidirectionalConnectionPoint,
+sample_heatpump:00049 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "OUTDOORCOIL.gasPortB" ;
-    s223:cnx sample_heatpump:00042,
-        sample_heatpump:00070 ;
-    s223:connectsThrough sample_heatpump:00070 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00042 .
+    s223:cnx sample_heatpump:00045,
+        sample_heatpump:00076 ;
+    s223:connectsThrough sample_heatpump:00076 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00045 .
 
-sample_heatpump:00047 a s223:Compressor,
+sample_heatpump:00050 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "averageSurfaceTemperature" ;
+    qudt:hasQuantityKind quantitykind:Temperature .
+
+sample_heatpump:00051 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Pressure ;
+    rdfs:label "internalPressure" ;
+    qudt:hasQuantityKind quantitykind:Pressure .
+
+sample_heatpump:00052 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "internalTemperature" ;
+    qudt:hasQuantityKind quantitykind:Temperature .
+
+sample_heatpump:00053 a s223:Compressor,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "COMPRESSOR" ;
-    s223:cnx sample_heatpump:00048,
-        sample_heatpump:00049,
-        sample_heatpump:00050 ;
-    s223:connected sample_heatpump:00056 ;
-    s223:connectedFrom sample_heatpump:00056 ;
-    s223:connectedThrough sample_heatpump:00065,
-        sample_heatpump:00066 ;
-    s223:connectedTo sample_heatpump:00056 ;
-    s223:hasConnectionPoint sample_heatpump:00048,
-        sample_heatpump:00049,
-        sample_heatpump:00050 ;
-    s223:hasProperty sample_heatpump:00051 ;
-    bob:dischargePort sample_heatpump:00049 ;
-    bob:returnPort sample_heatpump:00048 ;
+    s223:cnx sample_heatpump:00054,
+        sample_heatpump:00055,
+        sample_heatpump:00056 ;
+    s223:connected sample_heatpump:00062 ;
+    s223:connectedFrom sample_heatpump:00062 ;
+    s223:connectedThrough sample_heatpump:00071,
+        sample_heatpump:00072 ;
+    s223:connectedTo sample_heatpump:00062 ;
+    s223:hasConnectionPoint sample_heatpump:00054,
+        sample_heatpump:00055,
+        sample_heatpump:00056 ;
+    s223:hasProperty sample_heatpump:00057 ;
+    bob:dischargePort sample_heatpump:00055 ;
+    bob:returnPort sample_heatpump:00054 ;
     rdfs:comment "Compressor" .
 
-sample_heatpump:00048 a s223:ConnectionPoint,
+sample_heatpump:00054 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "COMPRESSOR.returnPort" ;
-    s223:cnx sample_heatpump:00047,
-        sample_heatpump:00066 ;
-    s223:connectsThrough sample_heatpump:00066 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00047 .
+    s223:cnx sample_heatpump:00053,
+        sample_heatpump:00072 ;
+    s223:connectsThrough sample_heatpump:00072 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00053 .
 
-sample_heatpump:00049 a s223:ConnectionPoint,
+sample_heatpump:00055 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "COMPRESSOR.dischargePort" ;
-    s223:cnx sample_heatpump:00047,
-        sample_heatpump:00065 ;
-    s223:connectsThrough sample_heatpump:00065 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00047 .
+    s223:cnx sample_heatpump:00053,
+        sample_heatpump:00071 ;
+    s223:connectsThrough sample_heatpump:00071 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00053 .
 
-sample_heatpump:00050 a s223:ConnectionPoint,
+sample_heatpump:00056 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "COMPRESSOR.electricalInlet" ;
-    s223:cnx sample_heatpump:00047 ;
+    s223:cnx sample_heatpump:00053 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_heatpump:00047 .
+    s223:isConnectionPointOf sample_heatpump:00053 .
 
-sample_heatpump:00051 a s223:ObservableProperty,
+sample_heatpump:00057 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -607,253 +661,253 @@ sample_heatpump:00051 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-sample_heatpump:00052 a s223:Connectable,
+sample_heatpump:00058 a s223:Connectable,
         s223:Equipment,
         s223:Valve ;
     rdfs:label "EXPANSIONVALVE" ;
-    s223:cnx sample_heatpump:00053,
-        sample_heatpump:00054,
-        sample_heatpump:00055 ;
+    s223:cnx sample_heatpump:00059,
+        sample_heatpump:00060,
+        sample_heatpump:00061 ;
     s223:connected sample_heatpump:00037,
-        sample_heatpump:00042 ;
+        sample_heatpump:00045 ;
     s223:connectedFrom sample_heatpump:00037 ;
-    s223:connectedThrough sample_heatpump:00068,
-        sample_heatpump:00069 ;
-    s223:connectedTo sample_heatpump:00042 ;
-    s223:hasConnectionPoint sample_heatpump:00053,
-        sample_heatpump:00054,
-        sample_heatpump:00055 ;
-    bob:linkageInlet sample_heatpump:00053 ;
-    bob:portA sample_heatpump:00054 ;
-    bob:portB sample_heatpump:00055 ;
+    s223:connectedThrough sample_heatpump:00074,
+        sample_heatpump:00075 ;
+    s223:connectedTo sample_heatpump:00045 ;
+    s223:hasConnectionPoint sample_heatpump:00059,
+        sample_heatpump:00060,
+        sample_heatpump:00061 ;
+    bob:linkageInlet sample_heatpump:00059 ;
+    bob:portA sample_heatpump:00060 ;
+    bob:portB sample_heatpump:00061 ;
     rdfs:comment "Expansion Valve" .
 
-sample_heatpump:00053 a p223:MechanicalConnectionPoint,
+sample_heatpump:00059 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "EXPANSIONVALVE.linkageInlet" ;
-    s223:cnx sample_heatpump:00052 ;
+    s223:cnx sample_heatpump:00058 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_heatpump:00052 .
-
-sample_heatpump:00054 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint,
-        bob:RefrigerationGasConnectionPoint ;
-    rdfs:label "EXPANSIONVALVE.portA" ;
-    s223:cnx sample_heatpump:00052,
-        sample_heatpump:00069 ;
-    s223:connectsThrough sample_heatpump:00069 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00052 .
-
-sample_heatpump:00055 a s223:BidirectionalConnectionPoint,
-        s223:ConnectionPoint,
-        bob:RefrigerationGasConnectionPoint ;
-    rdfs:label "EXPANSIONVALVE.portB" ;
-    s223:cnx sample_heatpump:00052,
-        sample_heatpump:00068 ;
-    s223:connectsThrough sample_heatpump:00068 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00052 .
-
-sample_heatpump:00056 a s223:Connectable,
-        s223:Equipment,
-        s223:Valve ;
-    rdfs:label "REVERSINGVALVE" ;
-    s223:cnx sample_heatpump:00057,
-        sample_heatpump:00058,
-        sample_heatpump:00059,
-        sample_heatpump:00060,
-        sample_heatpump:00061 ;
-    s223:connected sample_heatpump:00037,
-        sample_heatpump:00042,
-        sample_heatpump:00047 ;
-    s223:connectedFrom sample_heatpump:00042,
-        sample_heatpump:00047 ;
-    s223:connectedThrough sample_heatpump:00065,
-        sample_heatpump:00066,
-        sample_heatpump:00067,
-        sample_heatpump:00070 ;
-    s223:connectedTo sample_heatpump:00037,
-        sample_heatpump:00047 ;
-    s223:hasConnectionPoint sample_heatpump:00057,
-        sample_heatpump:00058,
-        sample_heatpump:00059,
-        sample_heatpump:00060,
-        sample_heatpump:00061 ;
-    bob:linkageInlet sample_heatpump:00057 ;
-    bob:refrigerantHighPressureInlet sample_heatpump:00058 ;
-    bob:refrigerantIndoorCoilPort sample_heatpump:00060 ;
-    bob:refrigerantLowPressureOutlet sample_heatpump:00059 ;
-    bob:refrigerantOutdoorCoilPort sample_heatpump:00061 ;
-    rdfs:comment "Reversing Valve" .
-
-sample_heatpump:00057 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "REVERSINGVALVE.linkageInlet" ;
-    s223:cnx sample_heatpump:00056 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_heatpump:00056 .
-
-sample_heatpump:00058 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:RefrigerationGasConnectionPoint ;
-    rdfs:label "REVERSINGVALVE.refrigerantHighPressureInlet" ;
-    s223:cnx sample_heatpump:00056,
-        sample_heatpump:00065 ;
-    s223:connectsThrough sample_heatpump:00065 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00056 .
-
-sample_heatpump:00059 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:RefrigerationGasConnectionPoint ;
-    rdfs:label "REVERSINGVALVE.refrigerantLowPressureOutlet" ;
-    s223:cnx sample_heatpump:00056,
-        sample_heatpump:00066 ;
-    s223:connectsThrough sample_heatpump:00066 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00056 .
+    s223:isConnectionPointOf sample_heatpump:00058 .
 
 sample_heatpump:00060 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
-    rdfs:label "REVERSINGVALVE.refrigerantIndoorCoilPort" ;
-    s223:cnx sample_heatpump:00056,
-        sample_heatpump:00067 ;
-    s223:connectsThrough sample_heatpump:00067 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00056 .
+    rdfs:label "EXPANSIONVALVE.portA" ;
+    s223:cnx sample_heatpump:00058,
+        sample_heatpump:00075 ;
+    s223:connectsThrough sample_heatpump:00075 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00058 .
 
 sample_heatpump:00061 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
-    rdfs:label "REVERSINGVALVE.refrigerantOutdoorCoilPort" ;
-    s223:cnx sample_heatpump:00056,
-        sample_heatpump:00070 ;
-    s223:connectsThrough sample_heatpump:00070 ;
-    s223:hasMedium p223:Fluid-RefrigerationGas,
-        p223:RefrigerationGas-R410a ;
-    s223:isConnectionPointOf sample_heatpump:00056 .
+    rdfs:label "EXPANSIONVALVE.portB" ;
+    s223:cnx sample_heatpump:00058,
+        sample_heatpump:00074 ;
+    s223:connectsThrough sample_heatpump:00074 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00058 .
 
 sample_heatpump:00062 a s223:Connectable,
         s223:Equipment,
-        s223:Filter ;
-    rdfs:label "FILTER" ;
+        s223:Valve ;
+    rdfs:label "REVERSINGVALVE" ;
     s223:cnx sample_heatpump:00063,
-        sample_heatpump:00064 ;
-    s223:connected sample_heatpump:00037 ;
-    s223:connectedThrough sample_heatpump:00071 ;
-    s223:connectedTo sample_heatpump:00037 ;
+        sample_heatpump:00064,
+        sample_heatpump:00065,
+        sample_heatpump:00066,
+        sample_heatpump:00067 ;
+    s223:connected sample_heatpump:00037,
+        sample_heatpump:00045,
+        sample_heatpump:00053 ;
+    s223:connectedFrom sample_heatpump:00045,
+        sample_heatpump:00053 ;
+    s223:connectedThrough sample_heatpump:00071,
+        sample_heatpump:00072,
+        sample_heatpump:00073,
+        sample_heatpump:00076 ;
+    s223:connectedTo sample_heatpump:00037,
+        sample_heatpump:00053 ;
     s223:hasConnectionPoint sample_heatpump:00063,
-        sample_heatpump:00064 ;
-    bob:airInlet sample_heatpump:00063 ;
-    bob:airOutlet sample_heatpump:00064 ;
-    rdfs:comment "Filter" .
+        sample_heatpump:00064,
+        sample_heatpump:00065,
+        sample_heatpump:00066,
+        sample_heatpump:00067 ;
+    bob:linkageInlet sample_heatpump:00063 ;
+    bob:refrigerantHighPressureInlet sample_heatpump:00064 ;
+    bob:refrigerantIndoorCoilPort sample_heatpump:00066 ;
+    bob:refrigerantLowPressureOutlet sample_heatpump:00065 ;
+    bob:refrigerantOutdoorCoilPort sample_heatpump:00067 ;
+    rdfs:comment "Reversing Valve" .
 
-sample_heatpump:00063 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "FILTER.airInlet" ;
+sample_heatpump:00063 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "REVERSINGVALVE.linkageInlet" ;
     s223:cnx sample_heatpump:00062 ;
-    s223:hasMedium p223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump:00062 ;
-    s223:mapsTo sample_heatpump:00003 .
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf sample_heatpump:00062 .
 
 sample_heatpump:00064 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "FILTER.airOutlet" ;
+        s223:InletConnectionPoint,
+        bob:RefrigerationGasConnectionPoint ;
+    rdfs:label "REVERSINGVALVE.refrigerantHighPressureInlet" ;
     s223:cnx sample_heatpump:00062,
         sample_heatpump:00071 ;
     s223:connectsThrough sample_heatpump:00071 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
     s223:isConnectionPointOf sample_heatpump:00062 .
 
-sample_heatpump:00065 a s223:Connection ;
-    s223:cnx sample_heatpump:00049,
-        sample_heatpump:00058 ;
-    s223:connectsAt sample_heatpump:00049,
-        sample_heatpump:00058 ;
-    s223:connectsFrom sample_heatpump:00047 ;
-    s223:connectsTo sample_heatpump:00056 ;
-    s223:hasMedium p223:RefrigerationGas-R410a .
+sample_heatpump:00065 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:RefrigerationGasConnectionPoint ;
+    rdfs:label "REVERSINGVALVE.refrigerantLowPressureOutlet" ;
+    s223:cnx sample_heatpump:00062,
+        sample_heatpump:00072 ;
+    s223:connectsThrough sample_heatpump:00072 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00062 .
 
-sample_heatpump:00066 a s223:Connection ;
-    s223:cnx sample_heatpump:00048,
-        sample_heatpump:00059 ;
-    s223:connectsAt sample_heatpump:00048,
-        sample_heatpump:00059 ;
-    s223:connectsFrom sample_heatpump:00056 ;
-    s223:connectsTo sample_heatpump:00047 ;
-    s223:hasMedium p223:RefrigerationGas-R410a .
+sample_heatpump:00066 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
+        bob:RefrigerationGasConnectionPoint ;
+    rdfs:label "REVERSINGVALVE.refrigerantIndoorCoilPort" ;
+    s223:cnx sample_heatpump:00062,
+        sample_heatpump:00073 ;
+    s223:connectsThrough sample_heatpump:00073 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00062 .
 
-sample_heatpump:00067 a s223:Connection ;
-    s223:cnx sample_heatpump:00041,
-        sample_heatpump:00060 ;
-    s223:connectsAt sample_heatpump:00041,
-        sample_heatpump:00060 ;
-    s223:connectsFrom sample_heatpump:00056 ;
-    s223:connectsTo sample_heatpump:00037 ;
-    s223:hasMedium p223:RefrigerationGas-R410a .
+sample_heatpump:00067 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
+        bob:RefrigerationGasConnectionPoint ;
+    rdfs:label "REVERSINGVALVE.refrigerantOutdoorCoilPort" ;
+    s223:cnx sample_heatpump:00062,
+        sample_heatpump:00076 ;
+    s223:connectsThrough sample_heatpump:00076 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas,
+        s223:RefrigerationGas-R410a ;
+    s223:isConnectionPointOf sample_heatpump:00062 .
 
-sample_heatpump:00068 a s223:Connection ;
-    s223:cnx sample_heatpump:00040,
-        sample_heatpump:00055 ;
-    s223:connectsAt sample_heatpump:00040,
-        sample_heatpump:00055 ;
-    s223:connectsFrom sample_heatpump:00037 ;
-    s223:connectsTo sample_heatpump:00052 ;
-    s223:hasMedium p223:RefrigerationGas-R410a .
+sample_heatpump:00068 a s223:Connectable,
+        s223:Equipment,
+        s223:Filter ;
+    rdfs:label "FILTER" ;
+    s223:cnx sample_heatpump:00069,
+        sample_heatpump:00070 ;
+    s223:connected sample_heatpump:00037 ;
+    s223:connectedThrough sample_heatpump:00077 ;
+    s223:connectedTo sample_heatpump:00037 ;
+    s223:hasConnectionPoint sample_heatpump:00069,
+        sample_heatpump:00070 ;
+    bob:airInlet sample_heatpump:00069 ;
+    bob:airOutlet sample_heatpump:00070 ;
+    rdfs:comment "Filter" .
 
-sample_heatpump:00069 a s223:Connection ;
-    s223:cnx sample_heatpump:00045,
-        sample_heatpump:00054 ;
-    s223:connectsAt sample_heatpump:00045,
-        sample_heatpump:00054 ;
-    s223:connectsFrom sample_heatpump:00052 ;
-    s223:connectsTo sample_heatpump:00042 ;
-    s223:hasMedium p223:RefrigerationGas-R410a .
+sample_heatpump:00069 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "FILTER.airInlet" ;
+    s223:cnx sample_heatpump:00068 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf sample_heatpump:00068 ;
+    s223:mapsTo sample_heatpump:00003 .
 
-sample_heatpump:00070 a s223:Connection ;
-    s223:cnx sample_heatpump:00046,
-        sample_heatpump:00061 ;
-    s223:connectsAt sample_heatpump:00046,
-        sample_heatpump:00061 ;
-    s223:connectsFrom sample_heatpump:00042 ;
-    s223:connectsTo sample_heatpump:00056 ;
-    s223:hasMedium p223:RefrigerationGas-R410a .
+sample_heatpump:00070 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "FILTER.airOutlet" ;
+    s223:cnx sample_heatpump:00068,
+        sample_heatpump:00077 ;
+    s223:connectsThrough sample_heatpump:00077 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf sample_heatpump:00068 .
 
 sample_heatpump:00071 a s223:Connection ;
-    s223:cnx sample_heatpump:00038,
+    s223:cnx sample_heatpump:00055,
         sample_heatpump:00064 ;
-    s223:connectsAt sample_heatpump:00038,
+    s223:connectsAt sample_heatpump:00055,
         sample_heatpump:00064 ;
-    s223:connectsFrom sample_heatpump:00062 ;
-    s223:connectsTo sample_heatpump:00037 ;
-    s223:hasMedium p223:Fluid-Air .
+    s223:connectsFrom sample_heatpump:00053 ;
+    s223:connectsTo sample_heatpump:00062 ;
+    s223:hasMedium s223:RefrigerationGas-R410a .
 
 sample_heatpump:00072 a s223:Connection ;
+    s223:cnx sample_heatpump:00054,
+        sample_heatpump:00065 ;
+    s223:connectsAt sample_heatpump:00054,
+        sample_heatpump:00065 ;
+    s223:connectsFrom sample_heatpump:00062 ;
+    s223:connectsTo sample_heatpump:00053 ;
+    s223:hasMedium s223:RefrigerationGas-R410a .
+
+sample_heatpump:00073 a s223:Connection ;
+    s223:cnx sample_heatpump:00041,
+        sample_heatpump:00066 ;
+    s223:connectsAt sample_heatpump:00041,
+        sample_heatpump:00066 ;
+    s223:connectsFrom sample_heatpump:00062 ;
+    s223:connectsTo sample_heatpump:00037 ;
+    s223:hasMedium s223:RefrigerationGas-R410a .
+
+sample_heatpump:00074 a s223:Connection ;
+    s223:cnx sample_heatpump:00040,
+        sample_heatpump:00061 ;
+    s223:connectsAt sample_heatpump:00040,
+        sample_heatpump:00061 ;
+    s223:connectsFrom sample_heatpump:00037 ;
+    s223:connectsTo sample_heatpump:00058 ;
+    s223:hasMedium s223:RefrigerationGas-R410a .
+
+sample_heatpump:00075 a s223:Connection ;
+    s223:cnx sample_heatpump:00048,
+        sample_heatpump:00060 ;
+    s223:connectsAt sample_heatpump:00048,
+        sample_heatpump:00060 ;
+    s223:connectsFrom sample_heatpump:00058 ;
+    s223:connectsTo sample_heatpump:00045 ;
+    s223:hasMedium s223:RefrigerationGas-R410a .
+
+sample_heatpump:00076 a s223:Connection ;
+    s223:cnx sample_heatpump:00049,
+        sample_heatpump:00067 ;
+    s223:connectsAt sample_heatpump:00049,
+        sample_heatpump:00067 ;
+    s223:connectsFrom sample_heatpump:00045 ;
+    s223:connectsTo sample_heatpump:00062 ;
+    s223:hasMedium s223:RefrigerationGas-R410a .
+
+sample_heatpump:00077 a s223:Connection ;
+    s223:cnx sample_heatpump:00038,
+        sample_heatpump:00070 ;
+    s223:connectsAt sample_heatpump:00038,
+        sample_heatpump:00070 ;
+    s223:connectsFrom sample_heatpump:00068 ;
+    s223:connectsTo sample_heatpump:00037 ;
+    s223:hasMedium s223:Fluid-Air .
+
+sample_heatpump:00078 a s223:Connection ;
     s223:cnx sample_heatpump:00012,
         sample_heatpump:00039 ;
     s223:connectsAt sample_heatpump:00012,
         sample_heatpump:00039 ;
     s223:connectsFrom sample_heatpump:00037 ;
     s223:connectsTo sample_heatpump:00011 ;
-    s223:hasMedium p223:Fluid-Air .
+    s223:hasMedium s223:Fluid-Air .
 
-sample_heatpump:00073 a s223:Connection ;
+sample_heatpump:00079 a s223:Connection ;
     s223:cnx sample_heatpump:00025,
-        sample_heatpump:00044 ;
+        sample_heatpump:00047 ;
     s223:connectsAt sample_heatpump:00025,
-        sample_heatpump:00044 ;
-    s223:connectsFrom sample_heatpump:00042 ;
+        sample_heatpump:00047 ;
+    s223:connectsFrom sample_heatpump:00045 ;
     s223:connectsTo sample_heatpump:00024 ;
-    s223:hasMedium p223:Fluid-Air .
+    s223:hasMedium s223:Fluid-Air .
 
