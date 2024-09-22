@@ -1,14 +1,27 @@
-from typing import Any
+from typing import Any, Dict
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...connections.electricity import ElectricalInletConnectionPoint
-from ...connections.naturalgas import NaturalGasInletConnectionPoint
+from ...connections.electricity import (
+    ElectricalInletConnectionPoint,
+    Electricity_240VLL_1Ph_60HzInletConnectionPoint,
+)
 from ...connections.liquid import (
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
+    WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment
+from ...connections.naturalgas import NaturalGasInletConnectionPoint
+from ...core import BOB, P223, S223, UNIT, Equipment, PropertyReference
+from ...enum import DomesticHotWater, DomesticWater, Role
+from ...properties.flow import Flow
+from ...properties.temperature import Temperature
+from ...template import template_update
+from .coil import HeatpumpCoil, ImmersedResistanceHeaterElement
+from .compressor import RefrigeartionGasCompressor
+from .fan import Fan
+from .filter import Filter
+from .valve import ExpansionValve, ReversingValve
 
 _namespace = BOB
 
@@ -31,3 +44,45 @@ class NaturalGasHotWaterBoiler(HotWaterBoiler):
     combustionAirInlet: AirInletConnectionPoint
     combustionAirOutlet: AirOutletConnectionPoint
     condensedWaterOutlet: WaterOutletConnectionPoint
+
+
+class Tank(Equipment):
+    _class_iri = P223.Tank
+    leavingFluid: WaterOutletConnectionPoint
+    enteringFluid: WaterInletConnectionPoint
+    # leavingFluidTemperature: Temperature
+    # enteringFluidTemperature: Temperature
+    # fluidFlow: Flow
+
+
+domesticwaterheater_template = {
+    "cp": {"electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint},
+    "properties": {
+        ("leavingFluidTemperature", Temperature): {},
+        ("enteringFluidTemperature", Temperature): {},
+        ("fluidFlow", Flow): {"hasUnit": UNIT["L-PER-SEC"]},
+    },
+    "equipment": {
+        ("element1", ImmersedResistanceHeaterElement): {
+            "comment": "Electrical element 1",
+            "electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint,
+            "hasRole": Role.Heating,
+        },
+        ("element2", ImmersedResistanceHeaterElement): {
+            "comment": "Electrical element 2",
+            "electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint,
+            "hasRole": Role.Heating,
+        },
+    },
+}
+
+
+class DomesticElectricalWaterHeater(Tank):
+    _class_iri = P223.DomesticWaterHeater
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update(domesticwaterheater_template, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        self.leavingFluid.hasMedium = DomesticHotWater
+        self.enteringFluid.hasMedium = DomesticWater
