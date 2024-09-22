@@ -30,23 +30,28 @@ sample_heatpump_hotwater_heater:00001 a p223:DomesticHeatPumpWaterHeater,
     rdfs:label "hp_waterheater" ;
     s223:cnx sample_heatpump_hotwater_heater:00002,
         sample_heatpump_hotwater_heater:00003,
-        sample_heatpump_hotwater_heater:00004 ;
-    s223:contains sample_heatpump_hotwater_heater:00008,
-        sample_heatpump_hotwater_heater:00015,
-        sample_heatpump_hotwater_heater:00022,
-        sample_heatpump_hotwater_heater:00026,
-        sample_heatpump_hotwater_heater:00034,
-        sample_heatpump_hotwater_heater:00042,
-        sample_heatpump_hotwater_heater:00047,
-        sample_heatpump_hotwater_heater:00051 ;
+        sample_heatpump_hotwater_heater:00004,
+        sample_heatpump_hotwater_heater:00005 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00057 ;
+    s223:contains sample_heatpump_hotwater_heater:00010,
+        sample_heatpump_hotwater_heater:00017,
+        sample_heatpump_hotwater_heater:00024,
+        sample_heatpump_hotwater_heater:00028,
+        sample_heatpump_hotwater_heater:00037,
+        sample_heatpump_hotwater_heater:00045,
+        sample_heatpump_hotwater_heater:00050,
+        sample_heatpump_hotwater_heater:00054 ;
     s223:hasConnectionPoint sample_heatpump_hotwater_heater:00002,
         sample_heatpump_hotwater_heater:00003,
-        sample_heatpump_hotwater_heater:00004 ;
-    s223:hasProperty sample_heatpump_hotwater_heater:00005,
-        sample_heatpump_hotwater_heater:00006,
-        sample_heatpump_hotwater_heater:00007 ;
+        sample_heatpump_hotwater_heater:00004,
+        sample_heatpump_hotwater_heater:00005 ;
+    s223:hasProperty sample_heatpump_hotwater_heater:00006,
+        sample_heatpump_hotwater_heater:00007,
+        sample_heatpump_hotwater_heater:00008,
+        sample_heatpump_hotwater_heater:00009 ;
     bob:enteringFluid sample_heatpump_hotwater_heater:00003 ;
-    bob:leavingFluid sample_heatpump_hotwater_heater:00002 .
+    bob:leavingFluid sample_heatpump_hotwater_heater:00002 ;
+    bob:tankFluid sample_heatpump_hotwater_heater:00004 .
 
 sample_heatpump_hotwater_heater:00002 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
@@ -66,7 +71,18 @@ sample_heatpump_hotwater_heater:00003 a s223:ConnectionPoint,
         s223:Water-DomesticWater ;
     s223:isConnectionPointOf sample_heatpump_hotwater_heater:00001 .
 
-sample_heatpump_hotwater_heater:00004 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00004 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
+        bob:WaterConnectionPoint ;
+    rdfs:label "hp_waterheater.tankFluid" ;
+    s223:cnx sample_heatpump_hotwater_heater:00001,
+        sample_heatpump_hotwater_heater:00057 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00057 ;
+    s223:hasMedium s223:Fluid-Water,
+        s223:Water-DomesticWater ;
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00001 .
+
+sample_heatpump_hotwater_heater:00005 a s223:ConnectionPoint,
         s223:Electricity_240VLL_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "hp_waterheater.electricalInlet" ;
@@ -74,7 +90,7 @@ sample_heatpump_hotwater_heater:00004 a s223:ConnectionPoint,
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
     s223:isConnectionPointOf sample_heatpump_hotwater_heater:00001 .
 
-sample_heatpump_hotwater_heater:00005 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00006 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -82,7 +98,7 @@ sample_heatpump_hotwater_heater:00005 a s223:ObservableProperty,
     rdfs:label "leavingFluidTemperature" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-sample_heatpump_hotwater_heater:00006 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00007 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -90,7 +106,15 @@ sample_heatpump_hotwater_heater:00006 a s223:ObservableProperty,
     rdfs:label "enteringFluidTemperature" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-sample_heatpump_hotwater_heater:00007 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00008 a s223:ObservableProperty,
+        s223:Property,
+        s223:QuantifiableObservableProperty,
+        s223:QuantifiableProperty,
+        bob:Temperature ;
+    rdfs:label "tankFluidTemperature" ;
+    qudt:hasQuantityKind quantitykind:Temperature .
+
+sample_heatpump_hotwater_heater:00009 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -99,39 +123,42 @@ sample_heatpump_hotwater_heater:00007 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
     qudt:hasUnit unit:L-PER-SEC .
 
-sample_heatpump_hotwater_heater:00008 a s223:Connectable,
+sample_heatpump_hotwater_heater:00010 a s223:Connectable,
         s223:Equipment,
         s223:ResistanceHeater ;
     rdfs:label "element1" ;
-    s223:cnx sample_heatpump_hotwater_heater:00009,
-        sample_heatpump_hotwater_heater:00010 ;
-    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00009,
-        sample_heatpump_hotwater_heater:00010 ;
-    s223:hasProperty sample_heatpump_hotwater_heater:00011,
-        sample_heatpump_hotwater_heater:00012,
-        sample_heatpump_hotwater_heater:00013,
-        sample_heatpump_hotwater_heater:00014 ;
+    s223:cnx sample_heatpump_hotwater_heater:00011,
+        sample_heatpump_hotwater_heater:00012 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00057 ;
+    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00011,
+        sample_heatpump_hotwater_heater:00012 ;
+    s223:hasProperty sample_heatpump_hotwater_heater:00013,
+        sample_heatpump_hotwater_heater:00014,
+        sample_heatpump_hotwater_heater:00015,
+        sample_heatpump_hotwater_heater:00016 ;
     s223:hasRole s223:Role-Heating ;
-    bob:fluidContact sample_heatpump_hotwater_heater:00009 ;
+    bob:fluidContact sample_heatpump_hotwater_heater:00011 ;
     rdfs:comment "Electrical element 1" .
 
-sample_heatpump_hotwater_heater:00009 a s223:BidirectionalConnectionPoint,
+sample_heatpump_hotwater_heater:00011 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "element1.fluidContact" ;
-    s223:cnx sample_heatpump_hotwater_heater:00008 ;
+    s223:cnx sample_heatpump_hotwater_heater:00010,
+        sample_heatpump_hotwater_heater:00057 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00057 ;
     s223:hasMedium s223:Fluid-Water ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00008 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00010 .
 
-sample_heatpump_hotwater_heater:00010 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00012 a s223:ConnectionPoint,
         s223:Electricity_240VLL_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "element1.electricalInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00008 ;
+    s223:cnx sample_heatpump_hotwater_heater:00010 ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00008 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00010 .
 
-sample_heatpump_hotwater_heater:00011 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00013 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -140,7 +167,7 @@ sample_heatpump_hotwater_heater:00011 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_heatpump_hotwater_heater:00012 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00014 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -150,7 +177,7 @@ sample_heatpump_hotwater_heater:00012 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-sample_heatpump_hotwater_heater:00013 a s223:ActuatableProperty,
+sample_heatpump_hotwater_heater:00015 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -159,46 +186,49 @@ sample_heatpump_hotwater_heater:00013 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_heatpump_hotwater_heater:00014 a s223:ActuatableProperty,
+sample_heatpump_hotwater_heater:00016 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_heatpump_hotwater_heater:00015 a s223:Connectable,
+sample_heatpump_hotwater_heater:00017 a s223:Connectable,
         s223:Equipment,
         s223:ResistanceHeater ;
     rdfs:label "element2" ;
-    s223:cnx sample_heatpump_hotwater_heater:00016,
-        sample_heatpump_hotwater_heater:00017 ;
-    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00016,
-        sample_heatpump_hotwater_heater:00017 ;
-    s223:hasProperty sample_heatpump_hotwater_heater:00018,
-        sample_heatpump_hotwater_heater:00019,
-        sample_heatpump_hotwater_heater:00020,
-        sample_heatpump_hotwater_heater:00021 ;
+    s223:cnx sample_heatpump_hotwater_heater:00018,
+        sample_heatpump_hotwater_heater:00019 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00057 ;
+    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00018,
+        sample_heatpump_hotwater_heater:00019 ;
+    s223:hasProperty sample_heatpump_hotwater_heater:00020,
+        sample_heatpump_hotwater_heater:00021,
+        sample_heatpump_hotwater_heater:00022,
+        sample_heatpump_hotwater_heater:00023 ;
     s223:hasRole s223:Role-Heating ;
-    bob:fluidContact sample_heatpump_hotwater_heater:00016 ;
+    bob:fluidContact sample_heatpump_hotwater_heater:00018 ;
     rdfs:comment "Electrical element 2" .
 
-sample_heatpump_hotwater_heater:00016 a s223:BidirectionalConnectionPoint,
+sample_heatpump_hotwater_heater:00018 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "element2.fluidContact" ;
-    s223:cnx sample_heatpump_hotwater_heater:00015 ;
+    s223:cnx sample_heatpump_hotwater_heater:00017,
+        sample_heatpump_hotwater_heater:00057 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00057 ;
     s223:hasMedium s223:Fluid-Water ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00015 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00017 .
 
-sample_heatpump_hotwater_heater:00017 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00019 a s223:ConnectionPoint,
         s223:Electricity_240VLL_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "element2.electricalInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00015 ;
+    s223:cnx sample_heatpump_hotwater_heater:00017 ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00015 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00017 .
 
-sample_heatpump_hotwater_heater:00018 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00020 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -207,7 +237,7 @@ sample_heatpump_hotwater_heater:00018 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_heatpump_hotwater_heater:00019 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00021 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -217,7 +247,7 @@ sample_heatpump_hotwater_heater:00019 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-sample_heatpump_hotwater_heater:00020 a s223:ActuatableProperty,
+sample_heatpump_hotwater_heater:00022 a s223:ActuatableProperty,
         s223:Property,
         s223:QuantifiableActuatableProperty,
         s223:QuantifiableProperty,
@@ -226,121 +256,135 @@ sample_heatpump_hotwater_heater:00020 a s223:ActuatableProperty,
     qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
-sample_heatpump_hotwater_heater:00021 a s223:ActuatableProperty,
+sample_heatpump_hotwater_heater:00023 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
-sample_heatpump_hotwater_heater:00022 a s223:Connectable,
+sample_heatpump_hotwater_heater:00024 a s223:Connectable,
         s223:Equipment,
         s223:Fan ;
     rdfs:label "EVAPORATORFAN" ;
-    s223:cnx sample_heatpump_hotwater_heater:00023,
-        sample_heatpump_hotwater_heater:00024,
-        sample_heatpump_hotwater_heater:00025 ;
-    s223:connected sample_heatpump_hotwater_heater:00034 ;
-    s223:connectedFrom sample_heatpump_hotwater_heater:00034 ;
-    s223:connectedThrough sample_heatpump_hotwater_heater:00059 ;
-    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00023,
-        sample_heatpump_hotwater_heater:00024,
-        sample_heatpump_hotwater_heater:00025 ;
-    bob:airInlet sample_heatpump_hotwater_heater:00023 ;
-    bob:airOutlet sample_heatpump_hotwater_heater:00024 ;
+    s223:cnx sample_heatpump_hotwater_heater:00025,
+        sample_heatpump_hotwater_heater:00026,
+        sample_heatpump_hotwater_heater:00027 ;
+    s223:connected sample_heatpump_hotwater_heater:00037 ;
+    s223:connectedFrom sample_heatpump_hotwater_heater:00037 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00063 ;
+    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00025,
+        sample_heatpump_hotwater_heater:00026,
+        sample_heatpump_hotwater_heater:00027 ;
+    bob:airInlet sample_heatpump_hotwater_heater:00025 ;
+    bob:airOutlet sample_heatpump_hotwater_heater:00026 ;
     rdfs:comment "Evaporator Fan" .
 
-sample_heatpump_hotwater_heater:00023 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00025 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EVAPORATORFAN.airInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00022,
-        sample_heatpump_hotwater_heater:00059 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00059 ;
+    s223:cnx sample_heatpump_hotwater_heater:00024,
+        sample_heatpump_hotwater_heater:00063 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00063 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00022 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00024 .
 
-sample_heatpump_hotwater_heater:00024 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00026 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EVAPORATORFAN.airOutlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00022 ;
+    s223:cnx sample_heatpump_hotwater_heater:00024 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00022 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00024 .
 
-sample_heatpump_hotwater_heater:00025 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00027 a s223:ConnectionPoint,
         s223:Electricity_240VLL_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "EVAPORATORFAN.electricalInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00022 ;
+    s223:cnx sample_heatpump_hotwater_heater:00024 ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00022 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00024 .
 
-sample_heatpump_hotwater_heater:00026 a s223:Coil,
+sample_heatpump_hotwater_heater:00028 a s223:Coil,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "CONDENSERCOIL" ;
-    s223:cnx sample_heatpump_hotwater_heater:00027,
-        sample_heatpump_hotwater_heater:00028,
-        sample_heatpump_hotwater_heater:00029,
-        sample_heatpump_hotwater_heater:00030 ;
-    s223:connected sample_heatpump_hotwater_heater:00042,
-        sample_heatpump_hotwater_heater:00047 ;
-    s223:connectedFrom sample_heatpump_hotwater_heater:00042 ;
-    s223:connectedThrough sample_heatpump_hotwater_heater:00054,
-        sample_heatpump_hotwater_heater:00055 ;
-    s223:connectedTo sample_heatpump_hotwater_heater:00047 ;
-    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00027,
-        sample_heatpump_hotwater_heater:00028,
-        sample_heatpump_hotwater_heater:00029,
-        sample_heatpump_hotwater_heater:00030 ;
-    s223:hasProperty sample_heatpump_hotwater_heater:00031,
+    s223:cnx sample_heatpump_hotwater_heater:00029,
+        sample_heatpump_hotwater_heater:00030,
+        sample_heatpump_hotwater_heater:00031,
         sample_heatpump_hotwater_heater:00032,
         sample_heatpump_hotwater_heater:00033 ;
-    s223:hasRole s223:Role-Condenser ;
-    bob:airInlet sample_heatpump_hotwater_heater:00027 ;
-    bob:airOutlet sample_heatpump_hotwater_heater:00028 ;
-    bob:gasPortA sample_heatpump_hotwater_heater:00029 ;
-    bob:gasPortB sample_heatpump_hotwater_heater:00030 ;
+    s223:connected sample_heatpump_hotwater_heater:00045,
+        sample_heatpump_hotwater_heater:00050 ;
+    s223:connectedFrom sample_heatpump_hotwater_heater:00045 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00057,
+        sample_heatpump_hotwater_heater:00058,
+        sample_heatpump_hotwater_heater:00059 ;
+    s223:connectedTo sample_heatpump_hotwater_heater:00050 ;
+    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00029,
+        sample_heatpump_hotwater_heater:00030,
+        sample_heatpump_hotwater_heater:00031,
+        sample_heatpump_hotwater_heater:00032,
+        sample_heatpump_hotwater_heater:00033 ;
+    s223:hasProperty sample_heatpump_hotwater_heater:00034,
+        sample_heatpump_hotwater_heater:00035,
+        sample_heatpump_hotwater_heater:00036 ;
+    s223:hasRole s223:Role-Condenser,
+        s223:Role-Heating ;
+    bob:airInlet sample_heatpump_hotwater_heater:00029 ;
+    bob:airOutlet sample_heatpump_hotwater_heater:00030 ;
+    bob:gasPortA sample_heatpump_hotwater_heater:00031 ;
+    bob:gasPortB sample_heatpump_hotwater_heater:00032 ;
     rdfs:comment "Condenser Coil" .
 
-sample_heatpump_hotwater_heater:00027 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00029 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CONDENSERCOIL.airInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00026 ;
+    s223:cnx sample_heatpump_hotwater_heater:00028 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00026 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00028 .
 
-sample_heatpump_hotwater_heater:00028 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00030 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CONDENSERCOIL.airOutlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00026 ;
+    s223:cnx sample_heatpump_hotwater_heater:00028 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00026 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00028 .
 
-sample_heatpump_hotwater_heater:00029 a s223:BidirectionalConnectionPoint,
+sample_heatpump_hotwater_heater:00031 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "CONDENSERCOIL.gasPortA" ;
-    s223:cnx sample_heatpump_hotwater_heater:00026,
-        sample_heatpump_hotwater_heater:00054 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00054 ;
+    s223:cnx sample_heatpump_hotwater_heater:00028,
+        sample_heatpump_hotwater_heater:00058 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00058 ;
     s223:hasMedium s223:Fluid-RefrigerationGas ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00026 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00028 .
 
-sample_heatpump_hotwater_heater:00030 a s223:BidirectionalConnectionPoint,
+sample_heatpump_hotwater_heater:00032 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "CONDENSERCOIL.gasPortB" ;
-    s223:cnx sample_heatpump_hotwater_heater:00026,
-        sample_heatpump_hotwater_heater:00055 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00055 ;
+    s223:cnx sample_heatpump_hotwater_heater:00028,
+        sample_heatpump_hotwater_heater:00059 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00059 ;
     s223:hasMedium s223:Fluid-RefrigerationGas ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00026 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00028 .
 
-sample_heatpump_hotwater_heater:00031 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00033 a s223:BidirectionalConnectionPoint,
+        s223:ConnectionPoint,
+        bob:WaterConnectionPoint ;
+    rdfs:label "CONDENSERCOIL.fluidContact" ;
+    s223:cnx sample_heatpump_hotwater_heater:00028,
+        sample_heatpump_hotwater_heater:00057 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00057 ;
+    s223:hasMedium s223:Fluid-Water ;
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00028 .
+
+sample_heatpump_hotwater_heater:00034 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -348,7 +392,7 @@ sample_heatpump_hotwater_heater:00031 a s223:ObservableProperty,
     rdfs:label "averageSurfaceTemperature" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-sample_heatpump_hotwater_heater:00032 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00035 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -356,7 +400,7 @@ sample_heatpump_hotwater_heater:00032 a s223:ObservableProperty,
     rdfs:label "internalPressure" ;
     qudt:hasQuantityKind quantitykind:Pressure .
 
-sample_heatpump_hotwater_heater:00033 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00036 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -364,81 +408,81 @@ sample_heatpump_hotwater_heater:00033 a s223:ObservableProperty,
     rdfs:label "internalTemperature" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-sample_heatpump_hotwater_heater:00034 a s223:Coil,
+sample_heatpump_hotwater_heater:00037 a s223:Coil,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "EVAPORATORCOIL" ;
-    s223:cnx sample_heatpump_hotwater_heater:00035,
-        sample_heatpump_hotwater_heater:00036,
-        sample_heatpump_hotwater_heater:00037,
-        sample_heatpump_hotwater_heater:00038 ;
-    s223:connected sample_heatpump_hotwater_heater:00022,
-        sample_heatpump_hotwater_heater:00042,
-        sample_heatpump_hotwater_heater:00047,
-        sample_heatpump_hotwater_heater:00051 ;
-    s223:connectedFrom sample_heatpump_hotwater_heater:00047,
-        sample_heatpump_hotwater_heater:00051 ;
-    s223:connectedThrough sample_heatpump_hotwater_heater:00056,
-        sample_heatpump_hotwater_heater:00057,
-        sample_heatpump_hotwater_heater:00058,
-        sample_heatpump_hotwater_heater:00059 ;
-    s223:connectedTo sample_heatpump_hotwater_heater:00022,
-        sample_heatpump_hotwater_heater:00042 ;
-    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00035,
-        sample_heatpump_hotwater_heater:00036,
-        sample_heatpump_hotwater_heater:00037,
-        sample_heatpump_hotwater_heater:00038 ;
-    s223:hasProperty sample_heatpump_hotwater_heater:00039,
+    s223:cnx sample_heatpump_hotwater_heater:00038,
+        sample_heatpump_hotwater_heater:00039,
         sample_heatpump_hotwater_heater:00040,
         sample_heatpump_hotwater_heater:00041 ;
+    s223:connected sample_heatpump_hotwater_heater:00024,
+        sample_heatpump_hotwater_heater:00045,
+        sample_heatpump_hotwater_heater:00050,
+        sample_heatpump_hotwater_heater:00054 ;
+    s223:connectedFrom sample_heatpump_hotwater_heater:00050,
+        sample_heatpump_hotwater_heater:00054 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00060,
+        sample_heatpump_hotwater_heater:00061,
+        sample_heatpump_hotwater_heater:00062,
+        sample_heatpump_hotwater_heater:00063 ;
+    s223:connectedTo sample_heatpump_hotwater_heater:00024,
+        sample_heatpump_hotwater_heater:00045 ;
+    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00038,
+        sample_heatpump_hotwater_heater:00039,
+        sample_heatpump_hotwater_heater:00040,
+        sample_heatpump_hotwater_heater:00041 ;
+    s223:hasProperty sample_heatpump_hotwater_heater:00042,
+        sample_heatpump_hotwater_heater:00043,
+        sample_heatpump_hotwater_heater:00044 ;
     s223:hasRole s223:Role-Evaporator ;
-    bob:airInlet sample_heatpump_hotwater_heater:00035 ;
-    bob:airOutlet sample_heatpump_hotwater_heater:00036 ;
-    bob:gasPortA sample_heatpump_hotwater_heater:00037 ;
-    bob:gasPortB sample_heatpump_hotwater_heater:00038 ;
+    bob:airInlet sample_heatpump_hotwater_heater:00038 ;
+    bob:airOutlet sample_heatpump_hotwater_heater:00039 ;
+    bob:gasPortA sample_heatpump_hotwater_heater:00040 ;
+    bob:gasPortB sample_heatpump_hotwater_heater:00041 ;
     rdfs:comment "Evaporator coil" .
 
-sample_heatpump_hotwater_heater:00035 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00038 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EVAPORATORCOIL.airInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00034,
-        sample_heatpump_hotwater_heater:00058 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00058 ;
+    s223:cnx sample_heatpump_hotwater_heater:00037,
+        sample_heatpump_hotwater_heater:00062 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00062 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00034 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00037 .
 
-sample_heatpump_hotwater_heater:00036 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00039 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EVAPORATORCOIL.airOutlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00034,
-        sample_heatpump_hotwater_heater:00059 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00059 ;
+    s223:cnx sample_heatpump_hotwater_heater:00037,
+        sample_heatpump_hotwater_heater:00063 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00063 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00034 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00037 .
 
-sample_heatpump_hotwater_heater:00037 a s223:BidirectionalConnectionPoint,
+sample_heatpump_hotwater_heater:00040 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "EVAPORATORCOIL.gasPortA" ;
-    s223:cnx sample_heatpump_hotwater_heater:00034,
-        sample_heatpump_hotwater_heater:00056 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00056 ;
+    s223:cnx sample_heatpump_hotwater_heater:00037,
+        sample_heatpump_hotwater_heater:00060 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00060 ;
     s223:hasMedium s223:Fluid-RefrigerationGas ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00034 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00037 .
 
-sample_heatpump_hotwater_heater:00038 a s223:BidirectionalConnectionPoint,
+sample_heatpump_hotwater_heater:00041 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "EVAPORATORCOIL.gasPortB" ;
-    s223:cnx sample_heatpump_hotwater_heater:00034,
-        sample_heatpump_hotwater_heater:00057 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00057 ;
+    s223:cnx sample_heatpump_hotwater_heater:00037,
+        sample_heatpump_hotwater_heater:00061 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00061 ;
     s223:hasMedium s223:Fluid-RefrigerationGas ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00034 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00037 .
 
-sample_heatpump_hotwater_heater:00039 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00042 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -446,7 +490,7 @@ sample_heatpump_hotwater_heater:00039 a s223:ObservableProperty,
     rdfs:label "averageSurfaceTemperature" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-sample_heatpump_hotwater_heater:00040 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00043 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -454,7 +498,7 @@ sample_heatpump_hotwater_heater:00040 a s223:ObservableProperty,
     rdfs:label "internalPressure" ;
     qudt:hasQuantityKind quantitykind:Pressure .
 
-sample_heatpump_hotwater_heater:00041 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00044 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -462,56 +506,56 @@ sample_heatpump_hotwater_heater:00041 a s223:ObservableProperty,
     rdfs:label "internalTemperature" ;
     qudt:hasQuantityKind quantitykind:Temperature .
 
-sample_heatpump_hotwater_heater:00042 a s223:Compressor,
+sample_heatpump_hotwater_heater:00045 a s223:Compressor,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "COMPRESSOR" ;
-    s223:cnx sample_heatpump_hotwater_heater:00043,
-        sample_heatpump_hotwater_heater:00044,
-        sample_heatpump_hotwater_heater:00045 ;
-    s223:connected sample_heatpump_hotwater_heater:00026,
-        sample_heatpump_hotwater_heater:00034 ;
-    s223:connectedFrom sample_heatpump_hotwater_heater:00034 ;
-    s223:connectedThrough sample_heatpump_hotwater_heater:00054,
-        sample_heatpump_hotwater_heater:00057 ;
-    s223:connectedTo sample_heatpump_hotwater_heater:00026 ;
-    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00043,
-        sample_heatpump_hotwater_heater:00044,
-        sample_heatpump_hotwater_heater:00045 ;
-    s223:hasProperty sample_heatpump_hotwater_heater:00046 ;
-    bob:dischargePort sample_heatpump_hotwater_heater:00044 ;
-    bob:returnPort sample_heatpump_hotwater_heater:00043 ;
+    s223:cnx sample_heatpump_hotwater_heater:00046,
+        sample_heatpump_hotwater_heater:00047,
+        sample_heatpump_hotwater_heater:00048 ;
+    s223:connected sample_heatpump_hotwater_heater:00028,
+        sample_heatpump_hotwater_heater:00037 ;
+    s223:connectedFrom sample_heatpump_hotwater_heater:00037 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00058,
+        sample_heatpump_hotwater_heater:00061 ;
+    s223:connectedTo sample_heatpump_hotwater_heater:00028 ;
+    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00046,
+        sample_heatpump_hotwater_heater:00047,
+        sample_heatpump_hotwater_heater:00048 ;
+    s223:hasProperty sample_heatpump_hotwater_heater:00049 ;
+    bob:dischargePort sample_heatpump_hotwater_heater:00047 ;
+    bob:returnPort sample_heatpump_hotwater_heater:00046 ;
     rdfs:comment "Compressor" .
 
-sample_heatpump_hotwater_heater:00043 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00046 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "COMPRESSOR.returnPort" ;
-    s223:cnx sample_heatpump_hotwater_heater:00042,
-        sample_heatpump_hotwater_heater:00057 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00057 ;
+    s223:cnx sample_heatpump_hotwater_heater:00045,
+        sample_heatpump_hotwater_heater:00061 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00061 ;
     s223:hasMedium s223:Fluid-RefrigerationGas ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00042 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00045 .
 
-sample_heatpump_hotwater_heater:00044 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00047 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "COMPRESSOR.dischargePort" ;
-    s223:cnx sample_heatpump_hotwater_heater:00042,
-        sample_heatpump_hotwater_heater:00054 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00054 ;
+    s223:cnx sample_heatpump_hotwater_heater:00045,
+        sample_heatpump_hotwater_heater:00058 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00058 ;
     s223:hasMedium s223:Fluid-RefrigerationGas ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00042 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00045 .
 
-sample_heatpump_hotwater_heater:00045 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00048 a s223:ConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "COMPRESSOR.electricalInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00042 ;
+    s223:cnx sample_heatpump_hotwater_heater:00045 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00042 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00045 .
 
-sample_heatpump_hotwater_heater:00046 a s223:ObservableProperty,
+sample_heatpump_hotwater_heater:00049 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -521,161 +565,177 @@ sample_heatpump_hotwater_heater:00046 a s223:ObservableProperty,
     qudt:hasQuantityKind quantitykind:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
-sample_heatpump_hotwater_heater:00047 a s223:Connectable,
+sample_heatpump_hotwater_heater:00050 a s223:Connectable,
         s223:Equipment,
         s223:Valve ;
     rdfs:label "EXPANSIONVALVE" ;
-    s223:cnx sample_heatpump_hotwater_heater:00048,
-        sample_heatpump_hotwater_heater:00049,
-        sample_heatpump_hotwater_heater:00050 ;
-    s223:connected sample_heatpump_hotwater_heater:00026,
-        sample_heatpump_hotwater_heater:00034 ;
-    s223:connectedFrom sample_heatpump_hotwater_heater:00026 ;
-    s223:connectedThrough sample_heatpump_hotwater_heater:00055,
-        sample_heatpump_hotwater_heater:00056 ;
-    s223:connectedTo sample_heatpump_hotwater_heater:00034 ;
-    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00048,
-        sample_heatpump_hotwater_heater:00049,
-        sample_heatpump_hotwater_heater:00050 ;
-    bob:linkageInlet sample_heatpump_hotwater_heater:00048 ;
-    bob:portA sample_heatpump_hotwater_heater:00049 ;
-    bob:portB sample_heatpump_hotwater_heater:00050 ;
+    s223:cnx sample_heatpump_hotwater_heater:00051,
+        sample_heatpump_hotwater_heater:00052,
+        sample_heatpump_hotwater_heater:00053 ;
+    s223:connected sample_heatpump_hotwater_heater:00028,
+        sample_heatpump_hotwater_heater:00037 ;
+    s223:connectedFrom sample_heatpump_hotwater_heater:00028 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00059,
+        sample_heatpump_hotwater_heater:00060 ;
+    s223:connectedTo sample_heatpump_hotwater_heater:00037 ;
+    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00051,
+        sample_heatpump_hotwater_heater:00052,
+        sample_heatpump_hotwater_heater:00053 ;
+    bob:linkageInlet sample_heatpump_hotwater_heater:00051 ;
+    bob:portA sample_heatpump_hotwater_heater:00052 ;
+    bob:portB sample_heatpump_hotwater_heater:00053 ;
     rdfs:comment "Expansion Valve" .
 
-sample_heatpump_hotwater_heater:00048 a p223:MechanicalConnectionPoint,
+sample_heatpump_hotwater_heater:00051 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "EXPANSIONVALVE.linkageInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00047 ;
+    s223:cnx sample_heatpump_hotwater_heater:00050 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00047 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00050 .
 
-sample_heatpump_hotwater_heater:00049 a s223:BidirectionalConnectionPoint,
+sample_heatpump_hotwater_heater:00052 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "EXPANSIONVALVE.portA" ;
-    s223:cnx sample_heatpump_hotwater_heater:00047,
-        sample_heatpump_hotwater_heater:00055 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00055 ;
+    s223:cnx sample_heatpump_hotwater_heater:00050,
+        sample_heatpump_hotwater_heater:00059 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00059 ;
     s223:hasMedium s223:Fluid-RefrigerationGas ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00047 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00050 .
 
-sample_heatpump_hotwater_heater:00050 a s223:BidirectionalConnectionPoint,
+sample_heatpump_hotwater_heater:00053 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:RefrigerationGasConnectionPoint ;
     rdfs:label "EXPANSIONVALVE.portB" ;
-    s223:cnx sample_heatpump_hotwater_heater:00047,
-        sample_heatpump_hotwater_heater:00056 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00056 ;
+    s223:cnx sample_heatpump_hotwater_heater:00050,
+        sample_heatpump_hotwater_heater:00060 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00060 ;
     s223:hasMedium s223:Fluid-RefrigerationGas ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00047 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00050 .
 
-sample_heatpump_hotwater_heater:00051 a s223:Connectable,
+sample_heatpump_hotwater_heater:00054 a s223:Connectable,
         s223:Equipment,
         s223:Filter ;
     rdfs:label "FILTER" ;
-    s223:cnx sample_heatpump_hotwater_heater:00052,
-        sample_heatpump_hotwater_heater:00053 ;
-    s223:connected sample_heatpump_hotwater_heater:00034 ;
-    s223:connectedThrough sample_heatpump_hotwater_heater:00058 ;
-    s223:connectedTo sample_heatpump_hotwater_heater:00034 ;
-    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00052,
-        sample_heatpump_hotwater_heater:00053 ;
-    bob:airInlet sample_heatpump_hotwater_heater:00052 ;
-    bob:airOutlet sample_heatpump_hotwater_heater:00053 ;
+    s223:cnx sample_heatpump_hotwater_heater:00055,
+        sample_heatpump_hotwater_heater:00056 ;
+    s223:connected sample_heatpump_hotwater_heater:00037 ;
+    s223:connectedThrough sample_heatpump_hotwater_heater:00062 ;
+    s223:connectedTo sample_heatpump_hotwater_heater:00037 ;
+    s223:hasConnectionPoint sample_heatpump_hotwater_heater:00055,
+        sample_heatpump_hotwater_heater:00056 ;
+    bob:airInlet sample_heatpump_hotwater_heater:00055 ;
+    bob:airOutlet sample_heatpump_hotwater_heater:00056 ;
     rdfs:comment "Filter" .
 
-sample_heatpump_hotwater_heater:00052 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00055 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "FILTER.airInlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00051 ;
+    s223:cnx sample_heatpump_hotwater_heater:00054 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00051 .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00054 .
 
-sample_heatpump_hotwater_heater:00053 a s223:ConnectionPoint,
+sample_heatpump_hotwater_heater:00056 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "FILTER.airOutlet" ;
-    s223:cnx sample_heatpump_hotwater_heater:00051,
-        sample_heatpump_hotwater_heater:00058 ;
-    s223:connectsThrough sample_heatpump_hotwater_heater:00058 ;
+    s223:cnx sample_heatpump_hotwater_heater:00054,
+        sample_heatpump_hotwater_heater:00062 ;
+    s223:connectsThrough sample_heatpump_hotwater_heater:00062 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00051 .
-
-sample_heatpump_hotwater_heater:00054 a s223:Connection ;
-    s223:cnx sample_heatpump_hotwater_heater:00029,
-        sample_heatpump_hotwater_heater:00044 ;
-    s223:connectsAt sample_heatpump_hotwater_heater:00029,
-        sample_heatpump_hotwater_heater:00044 ;
-    s223:connectsFrom sample_heatpump_hotwater_heater:00042 ;
-    s223:connectsTo sample_heatpump_hotwater_heater:00026 ;
-    s223:hasMedium s223:Fluid-RefrigerationGas .
-
-sample_heatpump_hotwater_heater:00055 a s223:Connection ;
-    s223:cnx sample_heatpump_hotwater_heater:00030,
-        sample_heatpump_hotwater_heater:00049 ;
-    s223:connectsAt sample_heatpump_hotwater_heater:00030,
-        sample_heatpump_hotwater_heater:00049 ;
-    s223:connectsFrom sample_heatpump_hotwater_heater:00026 ;
-    s223:connectsTo sample_heatpump_hotwater_heater:00047 ;
-    s223:hasMedium s223:Fluid-RefrigerationGas .
-
-sample_heatpump_hotwater_heater:00056 a s223:Connection ;
-    s223:cnx sample_heatpump_hotwater_heater:00037,
-        sample_heatpump_hotwater_heater:00050 ;
-    s223:connectsAt sample_heatpump_hotwater_heater:00037,
-        sample_heatpump_hotwater_heater:00050 ;
-    s223:connectsFrom sample_heatpump_hotwater_heater:00047 ;
-    s223:connectsTo sample_heatpump_hotwater_heater:00034 ;
-    s223:hasMedium s223:Fluid-RefrigerationGas .
+    s223:isConnectionPointOf sample_heatpump_hotwater_heater:00054 .
 
 sample_heatpump_hotwater_heater:00057 a s223:Connection ;
-    s223:cnx sample_heatpump_hotwater_heater:00038,
-        sample_heatpump_hotwater_heater:00043 ;
-    s223:connectsAt sample_heatpump_hotwater_heater:00038,
-        sample_heatpump_hotwater_heater:00043 ;
-    s223:connectsFrom sample_heatpump_hotwater_heater:00034 ;
-    s223:connectsTo sample_heatpump_hotwater_heater:00042 ;
-    s223:hasMedium s223:Fluid-RefrigerationGas .
+    rdfs:label "heatExchangeConnection" ;
+    s223:cnx sample_heatpump_hotwater_heater:00004,
+        sample_heatpump_hotwater_heater:00011,
+        sample_heatpump_hotwater_heater:00018,
+        sample_heatpump_hotwater_heater:00033 ;
+    s223:connectsAt sample_heatpump_hotwater_heater:00004,
+        sample_heatpump_hotwater_heater:00011,
+        sample_heatpump_hotwater_heater:00018,
+        sample_heatpump_hotwater_heater:00033 ;
+    s223:connectsFrom sample_heatpump_hotwater_heater:00001,
+        sample_heatpump_hotwater_heater:00010,
+        sample_heatpump_hotwater_heater:00017,
+        sample_heatpump_hotwater_heater:00028 ;
+    s223:hasMedium s223:Fluid-Water .
 
 sample_heatpump_hotwater_heater:00058 a s223:Connection ;
-    s223:cnx sample_heatpump_hotwater_heater:00035,
-        sample_heatpump_hotwater_heater:00053 ;
-    s223:connectsAt sample_heatpump_hotwater_heater:00035,
-        sample_heatpump_hotwater_heater:00053 ;
-    s223:connectsFrom sample_heatpump_hotwater_heater:00051 ;
-    s223:connectsTo sample_heatpump_hotwater_heater:00034 ;
-    s223:hasMedium s223:Fluid-Air .
+    s223:cnx sample_heatpump_hotwater_heater:00031,
+        sample_heatpump_hotwater_heater:00047 ;
+    s223:connectsAt sample_heatpump_hotwater_heater:00031,
+        sample_heatpump_hotwater_heater:00047 ;
+    s223:connectsFrom sample_heatpump_hotwater_heater:00045 ;
+    s223:connectsTo sample_heatpump_hotwater_heater:00028 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas .
 
 sample_heatpump_hotwater_heater:00059 a s223:Connection ;
-    s223:cnx sample_heatpump_hotwater_heater:00023,
-        sample_heatpump_hotwater_heater:00036 ;
-    s223:connectsAt sample_heatpump_hotwater_heater:00023,
-        sample_heatpump_hotwater_heater:00036 ;
-    s223:connectsFrom sample_heatpump_hotwater_heater:00034 ;
-    s223:connectsTo sample_heatpump_hotwater_heater:00022 ;
+    s223:cnx sample_heatpump_hotwater_heater:00032,
+        sample_heatpump_hotwater_heater:00052 ;
+    s223:connectsAt sample_heatpump_hotwater_heater:00032,
+        sample_heatpump_hotwater_heater:00052 ;
+    s223:connectsFrom sample_heatpump_hotwater_heater:00028 ;
+    s223:connectsTo sample_heatpump_hotwater_heater:00050 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas .
+
+sample_heatpump_hotwater_heater:00060 a s223:Connection ;
+    s223:cnx sample_heatpump_hotwater_heater:00040,
+        sample_heatpump_hotwater_heater:00053 ;
+    s223:connectsAt sample_heatpump_hotwater_heater:00040,
+        sample_heatpump_hotwater_heater:00053 ;
+    s223:connectsFrom sample_heatpump_hotwater_heater:00050 ;
+    s223:connectsTo sample_heatpump_hotwater_heater:00037 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas .
+
+sample_heatpump_hotwater_heater:00061 a s223:Connection ;
+    s223:cnx sample_heatpump_hotwater_heater:00041,
+        sample_heatpump_hotwater_heater:00046 ;
+    s223:connectsAt sample_heatpump_hotwater_heater:00041,
+        sample_heatpump_hotwater_heater:00046 ;
+    s223:connectsFrom sample_heatpump_hotwater_heater:00037 ;
+    s223:connectsTo sample_heatpump_hotwater_heater:00045 ;
+    s223:hasMedium s223:Fluid-RefrigerationGas .
+
+sample_heatpump_hotwater_heater:00062 a s223:Connection ;
+    s223:cnx sample_heatpump_hotwater_heater:00038,
+        sample_heatpump_hotwater_heater:00056 ;
+    s223:connectsAt sample_heatpump_hotwater_heater:00038,
+        sample_heatpump_hotwater_heater:00056 ;
+    s223:connectsFrom sample_heatpump_hotwater_heater:00054 ;
+    s223:connectsTo sample_heatpump_hotwater_heater:00037 ;
     s223:hasMedium s223:Fluid-Air .
 
-sample_heatpump_hotwater_heater:00060 a s223:Function,
+sample_heatpump_hotwater_heater:00063 a s223:Connection ;
+    s223:cnx sample_heatpump_hotwater_heater:00025,
+        sample_heatpump_hotwater_heater:00039 ;
+    s223:connectsAt sample_heatpump_hotwater_heater:00025,
+        sample_heatpump_hotwater_heater:00039 ;
+    s223:connectsFrom sample_heatpump_hotwater_heater:00037 ;
+    s223:connectsTo sample_heatpump_hotwater_heater:00024 ;
+    s223:hasMedium s223:Fluid-Air .
+
+sample_heatpump_hotwater_heater:00064 a s223:Function,
         bob:CondenserCoilHeatTransferToWater ;
     rdfs:label "Heat Transfer Function" ;
-    s223:hasInput sample_heatpump_hotwater_heater:00007,
-        sample_heatpump_hotwater_heater:00012,
-        sample_heatpump_hotwater_heater:00013,
+    s223:hasInput sample_heatpump_hotwater_heater:00009,
         sample_heatpump_hotwater_heater:00014,
-        sample_heatpump_hotwater_heater:00019,
-        sample_heatpump_hotwater_heater:00020,
+        sample_heatpump_hotwater_heater:00015,
+        sample_heatpump_hotwater_heater:00016,
         sample_heatpump_hotwater_heater:00021,
-        sample_heatpump_hotwater_heater:00031 ;
-    s223:hasOutput sample_heatpump_hotwater_heater:00005 ;
-    sample_heatpump_hotwater_heater:averageSurfaceTemperature sample_heatpump_hotwater_heater:00031 ;
-    sample_heatpump_hotwater_heater:leavingWaterTemp sample_heatpump_hotwater_heater:00005 ;
-    sample_heatpump_hotwater_heater:resistanceHeaterCommand1 sample_heatpump_hotwater_heater:00014 ;
-    sample_heatpump_hotwater_heater:resistanceHeaterCommand2 sample_heatpump_hotwater_heater:00021 ;
-    sample_heatpump_hotwater_heater:resistanceHeaterModulation1 sample_heatpump_hotwater_heater:00013 ;
-    sample_heatpump_hotwater_heater:resistanceHeaterModulation2 sample_heatpump_hotwater_heater:00020 ;
-    sample_heatpump_hotwater_heater:resistanceHeaterPower1 sample_heatpump_hotwater_heater:00012 ;
-    sample_heatpump_hotwater_heater:resistanceHeaterPower2 sample_heatpump_hotwater_heater:00019 ;
-    sample_heatpump_hotwater_heater:waterFlow sample_heatpump_hotwater_heater:00007 .
+        sample_heatpump_hotwater_heater:00022,
+        sample_heatpump_hotwater_heater:00023,
+        sample_heatpump_hotwater_heater:00034 ;
+    s223:hasOutput sample_heatpump_hotwater_heater:00006 ;
+    sample_heatpump_hotwater_heater:averageSurfaceTemperature sample_heatpump_hotwater_heater:00034 ;
+    sample_heatpump_hotwater_heater:leavingWaterTemp sample_heatpump_hotwater_heater:00006 ;
+    sample_heatpump_hotwater_heater:resistanceHeaterCommand1 sample_heatpump_hotwater_heater:00016 ;
+    sample_heatpump_hotwater_heater:resistanceHeaterCommand2 sample_heatpump_hotwater_heater:00023 ;
+    sample_heatpump_hotwater_heater:resistanceHeaterModulation1 sample_heatpump_hotwater_heater:00015 ;
+    sample_heatpump_hotwater_heater:resistanceHeaterModulation2 sample_heatpump_hotwater_heater:00022 ;
+    sample_heatpump_hotwater_heater:resistanceHeaterPower1 sample_heatpump_hotwater_heater:00014 ;
+    sample_heatpump_hotwater_heater:resistanceHeaterPower2 sample_heatpump_hotwater_heater:00021 ;
+    sample_heatpump_hotwater_heater:waterFlow sample_heatpump_hotwater_heater:00009 .
 
