@@ -17,6 +17,7 @@ from bob.connections.liquid import (
     WaterOutletConnectionPoint,
 )
 from bob.connections.naturalgas import NaturalGasInletConnectionPoint
+from bob.properties.temperature import Temperature
 from bob.core import (
     BOB,
     P223,
@@ -37,6 +38,7 @@ from bob.equipment.hvac.compressor import RefrigeartionGasCompressor
 from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.valve import ExpansionValve, ReversingValve
+from bob.equipment.hvac.tank import Tank
 from bob.functions import Function, FunctionInput, FunctionOutput
 from bob.template import template_update
 
@@ -96,6 +98,10 @@ class InsideTankHeatTransfer(Function):
 
 class DomesticHPWaterHeater(DomesticElectricalWaterHeater):
     _class_iri = P223.DomesticHeatPumpWaterHeater
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
+    leavingFluid: WaterOutletConnectionPoint
+    enteringFluid: WaterInletConnectionPoint
 
     def __init__(self, config: Dict = domesticHPwaterheater_template, **kwargs):
         _config = template_update({}, config)
@@ -116,6 +122,11 @@ class DomesticHPWaterHeater(DomesticElectricalWaterHeater):
         self["EVAPORATORCOIL"].airOutlet >> self["EVAPORATORFAN"].airInlet
         # self['EVAPORATORFAN'].airOutlet -> ambiant
         # push air to outdoor
+
+        self.airInlet.mapsTo = self["FILTER"].airInlet
+        self.airOutlet.mapsTo = self["EVAPORATORFAN"].airOutlet
+        self.leavingFluid.mapsTo = self["tank"].leavingFluid
+        self.enteringFluid.mapsTo = self["tank"].enteringFluid
 
         # Relate the temperature of the surface of the condenser coil and the water flow in the tank to the temperature of the water leaving the tank
         heat_transfer = InsideTankHeatTransfer(
