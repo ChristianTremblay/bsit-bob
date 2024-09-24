@@ -61,11 +61,9 @@ domesticwaterheater_template = {
     },
     "equipment": {
         ("tank", Tank): {
-            "config": {
-                "properties": {
-                    ("fluidTemperature", Temperature): {},
-                }
-            }
+            "config": {"properties": {("fluidTemperature", Temperature): {}}},
+            "hasRole": Role.Storage,
+            "comment": "Water tank",
         },
         ("element1", ImmersedResistanceHeaterElement): {
             "comment": "Electrical element 1",

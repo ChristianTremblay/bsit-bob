@@ -293,6 +293,7 @@ Role.Secondary = Secondary = Role("Secondary")
 Role.Supply = Supply = Role("Supply")
 Role.Condenser = Condenser = Role("Condenser")
 Role.Evaporator = Evaporator = Role("Evaporator")
+Role.Storage = Storage = Role("Storage", _alt_namespace=P223)
 
 # ===================
 # Values Enumeration
