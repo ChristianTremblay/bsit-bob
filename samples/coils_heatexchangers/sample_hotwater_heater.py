@@ -65,12 +65,11 @@ domesticHPwaterheater_template = {
 }
 
 
-class CondenserCoilHeatTransfer(Function):
+class InsideTankHeatTransfer(Function):
     """ """
 
-    _class_iri = BOB.CondenserCoilHeatTransferToWater
+    _class_iri = BOB.InsideTankHeatTransfer
 
-    averageSurfaceTemperature: FunctionInput
     waterFlow: FunctionInput
     resistanceHeaterPower1: FunctionInput
     resistanceHeaterModulation1: FunctionInput
@@ -90,7 +89,7 @@ class MyDomesticElectricalWaterHeater(DomesticElectricalWaterHeater):
         super().__init__(_config, **kwargs)
 
         # Relate the temperature of the surface of the condenser coil and the water flow in the tank to the temperature of the water leaving the tank
-        heat_transfer = CondenserCoilHeatTransfer(
+        heat_transfer = InsideTankHeatTransfer(
             label="Heat Transfer Function",
             waterFlow=self["fluidFlow"],
             resistanceHeaterPower1=self["element1"]["kW"],
