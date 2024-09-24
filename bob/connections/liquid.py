@@ -14,7 +14,7 @@ from ..core import (
     OutletSystemConnectionPoint,
     SystemConnectionPoint,
 )
-from ..enum import GlycolSolution_15Percent, GlycolSolution_30Percent, Water
+from ..enum import Fluid, GlycolSolution_15Percent, GlycolSolution_30Percent, Water
 
 _namespace = BOB
 
@@ -54,6 +54,54 @@ _namespace = BOB
 # A class factory that would build everything ?
 # lst_of_substance_classes = [HotWater, ChilledWater, ... ]
 # for each in lst_of_substance_classes:
+
+
+# === Generic Fluid
+class FluidConnection(Connection):
+    _volatile = ("hasMedium",)
+    hasMedium: Fluid = Water
+    _class_iri = S223.Connection
+
+    def __inif__(self, hasMedium=Water, **kwargs):
+        super().__init__(hasMedium=hasMedium, **kwargs)
+
+
+class FluidConnectionPoint(ConnectionPoint):
+    _volatile = ("hasMedium",)
+    hasMedium: Fluid = Water
+
+    def __inif__(self, hasMedium=Water, **kwargs):
+        super().__init__(hasMedium=hasMedium, **kwargs)
+
+
+class FluidInletConnectionPoint(FluidConnectionPoint, InletConnectionPoint):
+    _class_iri = S223.InletConnectionPoint
+
+
+class FluidOutletConnectionPoint(FluidConnectionPoint, OutletConnectionPoint):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class FluidBidirectionalConnectionPoint(
+    FluidConnectionPoint, BidirectionalConnectionPoint
+):
+    _class_iri = S223.BidirectionalConnectionPoint
+
+
+class FluidSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Fluid = Water
+
+
+class FluidInletSystemConnectionPoint(
+    FluidSystemConnectionPoint, InletSystemConnectionPoint
+):
+    _class_iri = BOB.InletSystemConnectionPoint
+
+
+class FLuidOutletSystemConnectionPoint(
+    FluidSystemConnectionPoint, OutletSystemConnectionPoint
+):
+    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 # === WATER

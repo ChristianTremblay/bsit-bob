@@ -45,23 +45,8 @@ _log = logging.getLogger(__name__)
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
-domesticHPwaterheater_template = {
+domesticwaterheater_template = {
     "cp": {"electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint},
-    # "properties": {
-    #    ("volume", Gallons): {},
-    # },
-    "equipment": {
-        # ("element1", ImmersedResistanceHeaterElement): {
-        #    "comment": "Electrical element 1",
-        #    "electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint,
-        #    "hasRole": Role.Heating,
-        # },
-        # ("element2", ImmersedResistanceHeaterElement): {
-        #    "comment": "Electrical element 2",
-        #    "electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint,
-        #    "hasRole": Role.Heating,
-        # },
-    },
 }
 
 
@@ -78,12 +63,13 @@ class InsideTankHeatTransfer(Function):
     resistanceHeaterModulation2: FunctionInput
     resistanceHeaterCommand2: FunctionInput
     leavingWaterTemp: FunctionOutput
+    fluidTemp: FunctionOutput
 
 
 class MyDomesticElectricalWaterHeater(DomesticElectricalWaterHeater):
     _class_iri = P223.DomesticHeatPumpWaterHeater
 
-    def __init__(self, config: Dict = domesticHPwaterheater_template, **kwargs):
+    def __init__(self, config: Dict = domesticwaterheater_template, **kwargs):
         _config = template_update({}, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
@@ -99,11 +85,12 @@ class MyDomesticElectricalWaterHeater(DomesticElectricalWaterHeater):
             resistanceHeaterModulation2=self["element2"]["modulation"],
             resistanceHeaterCommand2=self["element2"]["onOffCommand"],
             leavingWaterTemp=self["leavingFluidTemperature"],
+            fluidTemp=self["tank"]["fluidTemperature"],
         )
 
 
 hpwh = MyDomesticElectricalWaterHeater(
-    config=domesticHPwaterheater_template, label="Electric Water Heater"
+    config=domesticwaterheater_template, label="Electric Water Heater"
 )
 
 

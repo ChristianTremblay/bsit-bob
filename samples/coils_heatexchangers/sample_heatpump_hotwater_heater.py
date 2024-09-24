@@ -91,6 +91,7 @@ class InsideTankHeatTransfer(Function):
     resistanceHeaterModulation2: FunctionInput
     resistanceHeaterCommand2: FunctionInput
     leavingWaterTemp: FunctionOutput
+    fluidTemp: FunctionOutput
 
 
 class DomesticHPWaterHeater(DomesticElectricalWaterHeater):
@@ -130,6 +131,7 @@ class DomesticHPWaterHeater(DomesticElectricalWaterHeater):
             resistanceHeaterModulation2=self["element2"]["modulation"],
             resistanceHeaterCommand2=self["element2"]["onOffCommand"],
             leavingWaterTemp=self["leavingFluidTemperature"],
+            fluidTemp=self["tank"]["fluidTemperature"],
         )
 
 
