@@ -52,6 +52,7 @@ class Tank(Equipment):
     _class_iri = P223.Tank
     leavingFluid: WaterOutletConnectionPoint
     enteringFluid: WaterInletConnectionPoint
+    containedFluid: WaterBidirectionalConnectionPoint
 
     # leavingFluidTemperature: Temperature
     # enteringFluidTemperature: Temperature
@@ -67,6 +68,7 @@ domesticwaterheater_template = {
         ("fluidFlow", Flow): {"hasUnit": UNIT["L-PER-SEC"]},
     },
     "equipment": {
+        ("tank", Tank): {},
         ("element1", ImmersedResistanceHeaterElement): {
             "comment": "Electrical element 1",
             "electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint,
@@ -81,9 +83,10 @@ domesticwaterheater_template = {
 }
 
 
-class DomesticElectricalWaterHeater(Tank):
+class DomesticElectricalWaterHeater(Equipment):
     _class_iri = P223.DomesticWaterHeater
-    tankFluid: WaterBidirectionalConnectionPoint
+    leavingFluid: WaterOutletConnectionPoint
+    enteringFluid: WaterInletConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(domesticwaterheater_template, config)
@@ -91,8 +94,10 @@ class DomesticElectricalWaterHeater(Tank):
         super().__init__(_config, **kwargs)
         self.leavingFluid.hasMedium = DomesticHotWater
         self.enteringFluid.hasMedium = DomesticWater
-        self.tankFluid.hasMedium = DomesticWater
+        self["tank"].containedFluid.hasMedium = DomesticWater
         self.heatExchangeConnection = WaterConnection(label="heatExchangeConnection")
-        self.tankFluid >> self.heatExchangeConnection
+        self["tank"].containedFluid >> self.heatExchangeConnection
         self["element1"].fluidContact >> self.heatExchangeConnection
         self["element2"].fluidContact >> self.heatExchangeConnection
+        self["tank"].enteringFluid.mapsTo = self.enteringFluid
+        self["tank"].leavingFluid.mapsTo = self.leavingFluid
