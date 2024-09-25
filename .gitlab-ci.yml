@@ -30,9 +30,10 @@ before_script:
   - pip install rdflib
   - pip install pyvis
 
+
 test_python:
   script:
-    - pytest
+    - pytest -v tests/
 
 generate_html:
   script:
@@ -44,34 +45,15 @@ generate_html:
       - G36/ttl/*.html
 
 validate:
-  image: docker:latest
-  services:
-    - docker:dind
-  before_script: []
   script:
-    - apk add --no-cache git python3 py3-pip python3-dev py3-virtualenv  # Install necessary packages
-    - virtualenv validate_venv
-    - source validate_venv/bin/activate
-    - pip3 install .
-    - pip3 install pytest
-    - pip3 install pyshacl
-    - pip3 install ontoenv
-    - pip3 install rdflib
-    - pip3 install pyvis
-    - docker build --tag validate:latest --file topbraid-validate/validate.dockerfile .
+    - pip install requests
+    - pip install pytest-xdist[psutil]
+    - pip install python-dotenv
+    - ontoenv init
     - git clone https://bas-im.emcs.cornell.edu/223/223standard
     - export S223_FOLDER=$(pwd)/223standard
-    - python3 topbraid-validate/merge-graphs.py --no-imports --clean $S223_FOLDER/models/*.ttl $S223_FOLDER/vocab/*.ttl $S223_FOLDER/validation/*.ttl $S223_FOLDER/inference/*.ttl $S223_FOLDER/imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL-v2.1.ttl $S223_FOLDER/imports/qudt/VOCAB_QUDT-UNITS-ALL-v2.1.ttl 223standard.ttl
-    - mv 223standard.ttl samples/validation
-    - for data_file in samples/ttl/validation/*.data.ttl; do
-        prefix=$(basename "$data_file" .data.ttl);
-        schema_file="samples/ttl/validation/${prefix}.schema.ttl";
-        if [ -f "$schema_file" ]; then
-          validate-run.sh "$data_file" "$schema_file";
-        else
-          echo "Schema file $schema_file not found for data file $data_file";
-        fi;
-      done
+    - pytest -v validate_cicd/
+
   artifacts:
-    paths: ['samples/validation/223standard.ttl']
+    paths: ['samples/ttl/validation/*.*']
   when: manual
