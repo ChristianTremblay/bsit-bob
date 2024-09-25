@@ -19,7 +19,7 @@ cache:
     - venv/
 
 before_script:
-  - python -V               # Print out python version for debugging
+  - python -V # Print out python version for debugging
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
@@ -33,7 +33,7 @@ before_script:
 test_python:
   script:
     - pytest
-    
+
 generate_html:
   script:
     - rdf2html samples/ttl
@@ -43,11 +43,22 @@ generate_html:
       - samples/ttl/*.html
       - G36/ttl/*.html
 
-#    - cd tests
-#    - bash no-barf.sh
-
+validate:
+  image: ghcr.io/topquadrant/shacl:1.4.3
+  script:
+    - git clone https://bas-im.emcs.cornell.edu/223/223standard
+    - export S223_FOLDER=$(pwd)/223standard
+    - python3 topbraid-validate/merge-graphs.py --no-imports --clean $S223_FOLDER/models/*.ttl $S223_FOLDER/vocab/*.ttl $S223_FOLDER/validation/*.ttl $S223_FOLDER/inference/*.ttl $S223_FOLDER/imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL-v2.1.ttl $S223_FOLDER/imports/qudt/VOCAB_QUDT-UNITS-ALL-v2.1.ttl 223standard.ttl
+    - mv 223standard.ttl samples/validation
+    - for file in samples/ttl/validation/*.ttl; do
+      docker run --rm -v $(pwd)/samples/validation:/data ghcr.io/topquadrant/shacl:1.4.3 validate -datafile /data/$(basename "$file") -shapesfile /data/223standard.ttl;
+      done
+  artifacts:
+    expose_as: 'Report'
+    paths: ['samples/ttl/validation/*.ttl']
+  when: manual
 #validate_pritoni:
-#  script: 
+#  script:
 #    - pip install .
 #    - pip install pytest
 #    - pip install pyshacl
