@@ -43,52 +43,22 @@ generate_html:
       - samples/ttl/*.html
       - G36/ttl/*.html
 
-build_image:
-  stage: build
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - git clone https://github.com/TopQuadrant/shacl.git
-    - cd shacl
-    - docker build -f .docker/Dockerfile -t ghcr.io/topquadrant/shacl:1.4.3 --build-arg VERSION=1.4.3 --build-arg ARCH_BASE=eclipse-temurin:11-alpine .
-  artifacts:
-    paths:
-      - shacl/.docker/Dockerfile  # Save the Dockerfile as an artifact if needed
-  when: manual
-
 validate:
-  image: ghcr.io/topquadrant/shacl:1.4.3
   script:
+    - docker build --tag validate:latest --file topbraid-validate/validate.dockerfile
     - git clone https://bas-im.emcs.cornell.edu/223/223standard
     - export S223_FOLDER=$(pwd)/223standard
     - python3 topbraid-validate/merge-graphs.py --no-imports --clean $S223_FOLDER/models/*.ttl $S223_FOLDER/vocab/*.ttl $S223_FOLDER/validation/*.ttl $S223_FOLDER/inference/*.ttl $S223_FOLDER/imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL-v2.1.ttl $S223_FOLDER/imports/qudt/VOCAB_QUDT-UNITS-ALL-v2.1.ttl 223standard.ttl
     - mv 223standard.ttl samples/validation
-    - for file in samples/ttl/validation/*.ttl; do
-      docker run --rm -v $(pwd)/samples/validation:/data ghcr.io/topquadrant/shacl:1.4.3 validate -datafile /data/$(basename "$file") -shapesfile /data/223standard.ttl;
+    - for data_file in samples/ttl/validation/*.data.ttl; do
+        prefix=$(basename "$data_file" .data.ttl);
+        schema_file="samples/ttl/validation/${prefix}.schema.ttl";
+        if [ -f "$schema_file" ]; then
+          validate-run.sh "$data_file" "$schema_file";
+        else
+          echo "Schema file $schema_file not found for data file $data_file";
+        fi;
       done
   artifacts:
-    paths: ['samples/ttl/validation/*.ttl']
+    paths: ['samples/validation/223standard.ttl']
   when: manual
-#validate_pritoni:
-#  script:
-#    - pip install .
-#    - pip install pytest
-#    - pip install pyshacl
-#    - pip install ontoenv
-#    - pip install rdflib
-#    - ontoenv refresh
-#    - ["bash ./validate-pritoni.sh"]
-#  artifacts:
-#    expose_as: 'Report'
-#    paths: ['samples/ttl/sample_pritoni_model.report.ttl']
-
-#test:
-#  stage: test
-#  script:
-#    - apt-get update -qy
-#    - apt-get install -y python3-dev python3-pip zip unzip git
-#    - pip3 install -r tests/requirements.txt#
-#    - ontoenv ini#t
-#    - cd tests
-#    - pytest -s -vvvv --durations=0 -n auto
