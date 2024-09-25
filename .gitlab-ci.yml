@@ -44,8 +44,13 @@ generate_html:
       - G36/ttl/*.html
 
 validate:
+  image: docker:latest
+  services:
+    - docker:dind
   script:
-    - docker build --tag validate:latest --file topbraid-validate/validate.dockerfile
+    - apk add --no-cache git python3 py3-pip  # Install necessary packages
+    - pip3 install --no-cache-dir -r requirements.txt  # Install Python dependencies if needed
+    - docker build --tag validate:latest --file topbraid-validate/validate.dockerfile .
     - git clone https://bas-im.emcs.cornell.edu/223/223standard
     - export S223_FOLDER=$(pwd)/223standard
     - python3 topbraid-validate/merge-graphs.py --no-imports --clean $S223_FOLDER/models/*.ttl $S223_FOLDER/vocab/*.ttl $S223_FOLDER/validation/*.ttl $S223_FOLDER/inference/*.ttl $S223_FOLDER/imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL-v2.1.ttl $S223_FOLDER/imports/qudt/VOCAB_QUDT-UNITS-ALL-v2.1.ttl 223standard.ttl
