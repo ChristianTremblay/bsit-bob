@@ -88,7 +88,10 @@ def validate(data_graph: rdflib.Graph) -> Tuple[rdflib.Graph, bool, rdflib.Graph
         # as this file
         script = (
             Path(__file__).parent
-            / "../topbraid-validate/shacl-1.4.2/bin/shaclvalidate.sh"
+            / "topbraid-validate"
+            / "shacl-1.4.2"
+            / "bin"
+            / "shaclvalidate.sh"
         )
         try:
             print(f"Running {script} -datafile {target_file_path}")
