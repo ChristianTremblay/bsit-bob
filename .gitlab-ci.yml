@@ -54,7 +54,6 @@ validate:
       docker run --rm -v $(pwd)/samples/validation:/data ghcr.io/topquadrant/shacl:1.4.3 validate -datafile /data/$(basename "$file") -shapesfile /data/223standard.ttl;
       done
   artifacts:
-    expose_as: 'Report'
     paths: ['samples/ttl/validation/*.ttl']
   when: manual
 #validate_pritoni:
