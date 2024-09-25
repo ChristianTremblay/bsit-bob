@@ -50,6 +50,15 @@ validate:
   before_script: []
   script:
     - apk add --no-cache git python3 py3-pip  # Install necessary packages
+    - pip3 install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip3 install .
+    - pip3 install pytest
+    - pip3 install pyshacl
+    - pip3 install ontoenv
+    - pip3 install rdflib
+    - pip3 install pyvis
     - docker build --tag validate:latest --file topbraid-validate/validate.dockerfile .
     - git clone https://bas-im.emcs.cornell.edu/223/223standard
     - export S223_FOLDER=$(pwd)/223standard
