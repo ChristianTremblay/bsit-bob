@@ -75,12 +75,12 @@ heatpump_template = {
 }
 
 
-class HeatPump(Equipment):
+class AirToAirHeatPump(Equipment):
     """
     A heatpump with refrigeration cycle
     """
 
-    _class_iri: URIRef = S223.Fan
+    _class_iri: URIRef = S223.HeatPump
     electricalInlet: Electricity_240VLL_1Ph_60HzInletConnectionPoint  # needs to be in a template so other templates can override it.
     airInlet: AirInletConnectionPoint  # return
     airOutlet: AirOutletConnectionPoint  # supply
@@ -133,7 +133,7 @@ class HeatPump(Equipment):
         # push air to outdoor
 
 
-hp = HeatPump(config=heatpump_template)
+hp = AirToAirHeatPump(config=heatpump_template)
 
 
 dump(
