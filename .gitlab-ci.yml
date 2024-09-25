@@ -43,6 +43,24 @@ generate_html:
       - samples/ttl/*.html
       - G36/ttl/*.html
 
+stages:
+  - build
+  - validate
+
+build_image:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - git clone https://github.com/TopQuadrant/shacl.git
+    - cd shacl
+    - docker build -f .docker/Dockerfile -t ghcr.io/topquadrant/shacl:1.4.3 --build-arg VERSION=1.4.3 --build-arg ARCH_BASE=eclipse-temurin:11-alpine .
+  artifacts:
+    paths:
+      - shacl/.docker/Dockerfile  # Save the Dockerfile as an artifact if needed
+  when: manual
+
 validate:
   image: ghcr.io/topquadrant/shacl:1.4.3
   script:
