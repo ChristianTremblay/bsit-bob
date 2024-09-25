@@ -51,7 +51,7 @@ def validate(data_graph: rdflib.Graph) -> Tuple[rdflib.Graph, bool, rdflib.Graph
             # get the shacl-1.4.2/bin/shaclinfer.sh script from the same directory
             # as this file
             script = (
-                Path(__file__).parent
+                Path(__file__).resolve().parent
                 / "topbraid-validate"
                 / "shacl-1.4.2"
                 / "bin"
@@ -87,7 +87,7 @@ def validate(data_graph: rdflib.Graph) -> Tuple[rdflib.Graph, bool, rdflib.Graph
         # get the shacl-1.4.2/bin/shaclvalidate.sh script from the same directory
         # as this file
         script = (
-            Path(__file__).parent
+            Path(__file__).resolve().parent
             / "topbraid-validate"
             / "shacl-1.4.2"
             / "bin"
