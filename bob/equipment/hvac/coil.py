@@ -131,7 +131,7 @@ electricalheating_template = {
 
 
 class ElectricalHeatingCoil(Coil):
-    _class_iri = S223.ResistanceHeater
+    _class_iri = S223.ElectricResistanceElement
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electricalheating_template, config)
@@ -151,7 +151,7 @@ electricalradiant_template = {
 
 # Baseboard, radiant panel, heating floor
 class ElectricalRadiantHeatingCoil(Equipment):
-    _class_iri = S223.RadiantPanel
+    _class_iri = S223.RadiantHeater
     airContact: AirBidirectionalConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -173,7 +173,7 @@ element_template = {
 
 
 class ImmersedResistanceHeaterElement(Equipment):
-    _class_iri = S223.ResistanceHeater
+    _class_iri = S223.ElectricResistanceElement
     fluidContact: WaterBidirectionalConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
