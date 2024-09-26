@@ -49,12 +49,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
             sh:path bob:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:path bob:isSystemConnectionPointOf ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
+            sh:path bob:isSystemConnectionPointOf ] .
 
 bob:hasSystemConnectionPoint a rdf:Property .
 
@@ -68,18 +68,18 @@ ex1:TestEquipment a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpOut ],
+            sh:path ex1:cpIn ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpIn ] .
+            sh:path ex1:cpOut ] .
 
 ex1:TestSystem a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "__main__.TestSystem" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpIn ],
+            sh:path ex1:cpOut ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpOut ] .
+            sh:path ex1:cpIn ] .
 
 ex1:cpIn a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -381,39 +381,39 @@ p223:Constituent-Oil a p223:Constituent-Oil,
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-R134a a p223:Constituent-R134a,
+p223:Constituent-R-134A a p223:Constituent-R-134A,
         s223:Constituent,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "R134a" ;
+    rdfs:label "R-134A" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-R22 a p223:Constituent-R22,
+p223:Constituent-R-22 a p223:Constituent-R-22,
         s223:Constituent,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "R22" ;
+    rdfs:label "R-22" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-R32 a p223:Constituent-R32,
+p223:Constituent-R-32 a p223:Constituent-R-32,
         s223:Constituent,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "R32" ;
+    rdfs:label "R-32" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-R410a a p223:Constituent-R410a,
+p223:Constituent-R-410A a p223:Constituent-R-410A,
         s223:Constituent,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "R410a" ;
+    rdfs:label "R-410A" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
@@ -1002,6 +1002,23 @@ p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
     rdfs:subClassOf p223:EnumerationKind-Protocol,
         s223:EnumerationKind .
 
+p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
+        s223:EnumerationKind,
+        s223:Mix,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "R-32" ;
+    s223:composedOf [ a s223:Property ;
+            rdfs:label "R-32.Constituent-R-32" ;
+            s223:ofConstituent p223:Constituent-R-32 ] ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Refrigerant,
+        s223:Medium-Mix,
+        s223:Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
         rdfs:Class,
@@ -1074,12 +1091,12 @@ p223:YesNo-Yes a p223:YesNo-Yes,
         s223:EnumerationKind .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
+            sh:path s223:mapsTo ],
+        [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ] .
 
@@ -1124,30 +1141,26 @@ s223:Property sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofSubstance ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
-        [ a sh:PropertyShape ;
             sh:path s223:ofConstituent ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasValue ] .
+            sh:path s223:hasValue ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
 
-s223:Refrigerant-R22 s223:composedOf [ a s223:Property ;
-            rdfs:label "R22.Constituent-R22" ;
-            s223:ofConstituent p223:Constituent-R22 ] .
+s223:Refrigerant-R-22 s223:composedOf [ a s223:Property ;
+            rdfs:label "R-22.Constituent-R-22" ;
+            s223:ofConstituent p223:Constituent-R-22 ] .
 
-s223:Refrigerant-R32 s223:composedOf [ a s223:Property ;
-            rdfs:label "R32.Constituent-R32" ;
-            s223:ofConstituent p223:Constituent-R32 ] .
-
-s223:Refrigerant-R410a s223:composedOf [ a s223:Property ;
-            rdfs:label "R410a.Constituent-R410a" ;
-            s223:ofConstituent p223:Constituent-R410a ] .
+s223:Refrigerant-R-410A s223:composedOf [ a s223:Property ;
+            rdfs:label "R-410A.Constituent-R-410A" ;
+            s223:ofConstituent p223:Constituent-R-410A ] .
 
 s223:System sh:property [ a sh:PropertyShape ;
+            sh:path bob:hasSystemConnectionPoint ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasDomain ],
-        [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ],
         [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
 
