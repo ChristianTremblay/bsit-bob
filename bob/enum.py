@@ -49,14 +49,14 @@ Constituent.SO2 = SO2 = Constituent("SO2", label="SO2", _alt_namespace=P223)
 Constituent.N = Nitrogen = Constituent("N", label="Nitrogen", _alt_namespace=P223)
 Constituent.VOC = VOC = Constituent("VOC", label="VOC", _alt_namespace=P223)
 Constituent.Radon = Radon = Constituent("Radon", label="Radon", _alt_namespace=P223)
-Constituent.R22 = const_R22 = Constituent("R22", label="R22", _alt_namespace=P223)
-Constituent.R134a = const_R134a = Constituent(
-    "R134a", label="R134a", _alt_namespace=P223
+Constituent.R22 = const_R22 = Constituent("R-22", label="R-22", _alt_namespace=P223)
+Constituent.R134A = const_R134A = Constituent(
+    "R-134A", label="R-134A", _alt_namespace=P223
 )
-Constituent.R410a = const_R410a = Constituent(
-    "R410a", label="R410a", _alt_namespace=P223
+Constituent.R410A = const_R410A = Constituent(
+    "R-410A", label="R-410A", _alt_namespace=P223
 )
-Constituent.R32 = const_R32 = Constituent("R32", label="R32", _alt_namespace=P223)
+Constituent.R32 = const_R32 = Constituent("R-32", label="R-32", _alt_namespace=P223)
 
 Constituent.Glycol = Glycol = Constituent("Glycol", label="Glycol", _alt_namespace=P223)
 
@@ -192,11 +192,11 @@ Air.CompressedAir = CompressedAir = Air("CompressedAir")
 
 Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas")
 Fluid.Refrigerant = Refrigerant = Fluid("Refrigerant")
-Refrigerant.R410a = R410a = Refrigerant("R410a")
-R410a.add_constituent(const_R410a)
-Refrigerant.R32 = R32 = Refrigerant("R32")
+Refrigerant.R410A = R410a = Refrigerant("R-410A")
+R410a.add_constituent(const_R410A)
+Refrigerant.R32 = R32 = Refrigerant("R-32", _alt_namespace=P223)
 R32.add_constituent(const_R32)
-Refrigerant.R22 = R22 = Refrigerant("R22")
+Refrigerant.R22 = R22 = Refrigerant("R-22")
 R22.add_constituent(const_R22)
 
 # Water
