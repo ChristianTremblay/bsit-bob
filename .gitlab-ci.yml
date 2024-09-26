@@ -47,6 +47,7 @@ generate_html:
 validate:
   image: azul/zulu-openjdk-debian
   before_script: 
+    - apt-get update -qy
     - apt-get install -y zip unzip python3 python3-pip git
     - python3 -V # Print out python version for debugging
     - pip install virtualenv
