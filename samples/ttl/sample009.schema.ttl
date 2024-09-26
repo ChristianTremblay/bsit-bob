@@ -35,12 +35,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:isSystemConnectionPointOf ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
-        [ a sh:PropertyShape ;
-            sh:path bob:isSystemConnectionPointOf ] .
+            sh:path bob:mapsTo ] .
 
 bob:hasSystemConnectionPoint a rdf:Property .
 
@@ -72,9 +72,9 @@ ex1:EquipmentInOut a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:EquipmentOut1 a rdfs:Class,
         sh:NodeShape ;
@@ -90,9 +90,9 @@ ex1:EquipmentOut2 a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:SystemIn1 a rdfs:Class,
         sh:NodeShape ;
@@ -131,9 +131,9 @@ ex1:SystemOut2 a rdfs:Class,
     rdfs:label "__main__.SystemOut2" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
+            sh:path ex1:cp2 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
+            sh:path ex1:cp1 ] .
 
 ex1:cp a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint,
@@ -511,87 +511,6 @@ p223:Constituent-VOC a p223:Constituent-VOC,
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Dimensioned-ABLineLineVoltage a p223:Dimensioned-ABLineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ABLineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-ANLineNeutralVoltage a p223:Dimensioned-ANLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ANLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-BCLineLineVoltage a p223:Dimensioned-BCLineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "BCLineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-BNLineNeutralVoltage a p223:Dimensioned-BNLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "BNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-CALineLineVoltage a p223:Dimensioned-CALineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CALineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-CNLineNeutralVoltage a p223:Dimensioned-CNLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-LineLineVoltage a p223:Dimensioned-LineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "LineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-LineNeutralVoltage a p223:Dimensioned-LineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "LineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-NominalFrequency a p223:Dimensioned-NominalFrequency,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "NominalFrequency" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
         rdfs:Class,
@@ -897,6 +816,87 @@ p223:NormalFault-Normal a p223:NormalFault-Normal,
     rdfs:subClassOf p223:EnumerationKind-NormalFault,
         s223:EnumerationKind .
 
+p223:Numerical-ABLineLineVoltage a p223:Numerical-ABLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "ABLineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-ANLineNeutralVoltage a p223:Numerical-ANLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "ANLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-BCLineLineVoltage a p223:Numerical-BCLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "BCLineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-BNLineNeutralVoltage a p223:Numerical-BNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "BNLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-CALineLineVoltage a p223:Numerical-CALineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "CALineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-CNLineNeutralVoltage a p223:Numerical-CNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "CNLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-LineLineVoltage a p223:Numerical-LineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "LineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-LineNeutralVoltage a p223:Numerical-LineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "LineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-NominalFrequency a p223:Numerical-NominalFrequency,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "NominalFrequency" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
         rdfs:Class,
@@ -1136,14 +1136,14 @@ s223:Connection sh:property [ a sh:PropertyShape ;
             sh:path s223:hasMedium ] .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ],
+            sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ],
+            sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ] .
+            sh:path s223:mapsTo ] .
 
 s223:Equipment sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
@@ -1169,29 +1169,29 @@ s223:GlycolSolution-GlycolSolution-15Percent s223:composedOf [ a s223:Property,
 
 s223:GlycolSolution-GlycolSolution-30Percent s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-30Percent.Constituent-Glycol" ;
-            s223:hasValue 30 ;
-            s223:ofConstituent p223:Constituent-Glycol ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-30Percent.Constituent-H2O" ;
             s223:hasValue 70 ;
             s223:ofConstituent p223:Constituent-H2O ;
             qudt:hasQuantityKind quantitykind:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ],
+        [ a s223:Property,
+                s223:QuantifiableProperty ;
+            rdfs:label "GlycolSolution-30Percent.Constituent-Glycol" ;
+            s223:hasValue 30 ;
+            s223:ofConstituent p223:Constituent-Glycol ;
+            qudt:hasQuantityKind quantitykind:VolumeFraction ;
             qudt:hasUnit unit:PERCENT ] .
 
 s223:Property sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasValue ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofSubstance ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path s223:ofConstituent ],
         [ a sh:PropertyShape ;
-            sh:path s223:ofConstituent ] .
+            sh:path s223:hasValue ] .
 
 s223:Refrigerant-R22 s223:composedOf [ a s223:Property ;
             rdfs:label "R22.Constituent-R22" ;
@@ -1206,12 +1206,12 @@ s223:Refrigerant-R410a s223:composedOf [ a s223:Property ;
             s223:ofConstituent p223:Constituent-R410a ] .
 
 s223:System sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
+            sh:path bob:hasSystemConnectionPoint ],
         [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ],
         [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ] .
 
 s223:Water-ChilledWater s223:composedOf [ a s223:Property ;
             rdfs:label "ChilledWater.Constituent-H2O" ;
@@ -1230,11 +1230,11 @@ s223:Water-DomesticWater s223:composedOf [ a s223:Property ;
             s223:ofConstituent p223:Constituent-H2O ] .
 
 s223:Water-GlycolSolution s223:composedOf [ a s223:Property ;
-            rdfs:label "GlycolSolution.Constituent-Glycol" ;
-            s223:ofConstituent p223:Constituent-Glycol ],
-        [ a s223:Property ;
             rdfs:label "GlycolSolution.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] .
+            s223:ofConstituent p223:Constituent-H2O ],
+        [ a s223:Property ;
+            rdfs:label "GlycolSolution.Constituent-Glycol" ;
+            s223:ofConstituent p223:Constituent-Glycol ] .
 
 s223:Water-HotWater s223:composedOf [ a s223:Property ;
             rdfs:label "HotWater.Constituent-H2O" ;
