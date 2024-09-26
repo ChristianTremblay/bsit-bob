@@ -191,12 +191,12 @@ Fluid.Air = Air = Fluid("Air")
 Air.CompressedAir = CompressedAir = Air("CompressedAir")
 
 Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas")
-Fluid.RefrigerationGas = RefrigerationGas = Fluid("RefrigerationGas")
-RefrigerationGas.R410a = R410a = RefrigerationGas("R410a")
+Fluid.Refrigerant = Refrigerant = Fluid("Refrigerant")
+Refrigerant.R410a = R410a = Refrigerant("R410a")
 R410a.add_constituent(const_R410a)
-RefrigerationGas.R32 = R32 = RefrigerationGas("R32")
+Refrigerant.R32 = R32 = Refrigerant("R32")
 R32.add_constituent(const_R32)
-RefrigerationGas.R22 = R22 = RefrigerationGas("R22")
+Refrigerant.R22 = R22 = Refrigerant("R22")
 R22.add_constituent(const_R22)
 
 # Water

@@ -42,10 +42,6 @@ _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 heatpump_template = {
     "params": {"label": "HeatPump", "comment": "Heatpump"},
     "sensors": {
-        ("OA-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Oudoor air temperature",
-        },
         ("DA-T", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
             "comment": "Discharge Air temperature after indoor coil",
@@ -131,6 +127,9 @@ class AirToAirHeatPump(Equipment):
         self["OUTDOORCOIL"].airOutlet >> self["OUTDOORUNITFAN"].airInlet
         # self['OUTDOORUNITFAN'].airOutlet -> ambiant
         # push air to outdoor
+
+        self["DA-T"].hasObservationLocation = self.airOutlet
+        self["RA-T"].hasObservationLocation = self.airInlet
 
 
 hp = AirToAirHeatPump(config=heatpump_template)

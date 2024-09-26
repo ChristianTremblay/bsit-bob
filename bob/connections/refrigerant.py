@@ -13,51 +13,49 @@ from ..core import (
     SystemConnectionPoint,
     enum,
 )
-from ..enum import RefrigerationGas
+from ..enum import Refrigerant
 
 _namespace = BOB
 
 
-class RefrigerationGasConnection(Connection):
+class RefrigerantConnection(Connection):
     _volatile = ("hasMedium",)
-    hasMedium: Medium = RefrigerationGas
+    hasMedium: Medium = Refrigerant
     _class_iri = S223.Connection
 
 
-class RefrigerationGasConnectionPoint(ConnectionPoint):
+class RefrigerantConnectionPoint(ConnectionPoint):
     _volatile = ("hasMedium",)
-    hasMedium: Medium = RefrigerationGas
+    hasMedium: Medium = Refrigerant
 
 
-class RefrigerationGasInletConnectionPoint(
-    InletConnectionPoint, RefrigerationGasConnectionPoint
-):
+class RefrigerantInletConnectionPoint(InletConnectionPoint, RefrigerantConnectionPoint):
     _class_iri = S223.InletConnectionPoint
 
 
-class RefrigerationGasOutletConnectionPoint(
-    OutletConnectionPoint, RefrigerationGasConnectionPoint
+class RefrigerantOutletConnectionPoint(
+    OutletConnectionPoint, RefrigerantConnectionPoint
 ):
     _class_iri = S223.OutletConnectionPoint
 
 
-class RefrigerationGasBidirectionalConnectionPoint(
-    BidirectionalConnectionPoint, RefrigerationGasConnectionPoint
+class RefrigerantBidirectionalConnectionPoint(
+    BidirectionalConnectionPoint, RefrigerantConnectionPoint
 ):
     _class_iri = S223.BidirectionalConnectionPoint
 
 
-class RefrigerationGasSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = RefrigerationGas
+class RefrigerantSystemConnectionPoint(SystemConnectionPoint):
+    hasMedium: Medium = Refrigerant
 
 
-class RefrigerationGasInletSystemConnectionPoint(
-    InletConnectionPoint, RefrigerationGasSystemConnectionPoint
+class RefrigerantInletSystemConnectionPoint(
+    InletConnectionPoint, RefrigerantSystemConnectionPoint
 ):
     _class_iri = S223.InletConnectionPoint
 
 
-class RefrigerationGasOutletSystemConnectionPoint(
-    OutletConnectionPoint, RefrigerationGasSystemConnectionPoint
+class RefrigerantOutletSystemConnectionPoint(
+    OutletConnectionPoint, RefrigerantSystemConnectionPoint
 ):
     _class_iri = S223.OutletConnectionPoint

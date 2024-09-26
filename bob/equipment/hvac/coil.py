@@ -27,16 +27,16 @@ from ...connections.liquid import (
     WaterOutletConnectionPoint,
 )
 from ...connections.refrigerant import (
-    RefrigerationGasBidirectionalConnectionPoint,
-    RefrigerationGasInletConnectionPoint,
-    RefrigerationGasOutletConnectionPoint,
+    RefrigerantBidirectionalConnectionPoint,
+    RefrigerantInletConnectionPoint,
+    RefrigerantOutletConnectionPoint,
 )
 from ...core import BOB, P223, S223, Equipment, PropertyReference
 from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
     R22,
     R32,
     R410a,
-    RefrigerationGas,
+    Refrigerant,
 )
 from ...properties.force import Pressure
 from ...properties.temperature import Temperature
@@ -103,8 +103,8 @@ class HotWaterCoil(Coil):
 
 class HeatpumpCoil(Coil):
     _class_iri = S223.Coil
-    gasPortA: RefrigerationGasBidirectionalConnectionPoint
-    gasPortB: RefrigerationGasBidirectionalConnectionPoint
+    gasPortA: RefrigerantBidirectionalConnectionPoint
+    gasPortB: RefrigerantBidirectionalConnectionPoint
     # airInlet: AirInletConnectionPoint
     # airOutlet: AirOutletConnectionPoint
 
@@ -113,7 +113,7 @@ class HeatpumpCoil(Coil):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
 
-    def set_gas_type(self, gas: RefrigerationGas):
+    def set_gas_type(self, gas: Refrigerant):
         self.gasPortA.hasMedium = gas
         self.gasPortB.hasMedium = gas
 
