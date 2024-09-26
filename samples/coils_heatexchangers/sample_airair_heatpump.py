@@ -38,6 +38,7 @@ _log = logging.getLogger(__name__)
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(model_name, f"urn:ex/{model_name}/")
 
+VALIDATE = True
 
 heatpump_template = {
     "params": {"label": "HeatPump", "comment": "Heatpump"},
@@ -134,14 +135,14 @@ class AirToAirHeatPump(Equipment):
 
 hp = AirToAirHeatPump(config=heatpump_template)
 
-
+_folder = "ttl/validation" if VALIDATE else "ttl"
 dump(
     data_graph,
-    filename=f"samples/ttl/{model_name}.data.ttl",
+    filename=f"samples/{_folder}/{model_name}.data.ttl",
     header=sample_header(model_name, "data"),
 )
 dump(
     schema_graph,
-    filename=f"samples/ttl/{model_name}.schema.ttl",
+    filename=f"samples/{_folder}/{model_name}.schema.ttl",
     header=sample_header(model_name, "schema"),
 )

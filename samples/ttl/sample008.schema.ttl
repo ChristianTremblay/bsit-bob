@@ -52,9 +52,9 @@ bob:SystemConnectionPoint a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
+            sh:path bob:isSystemConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:path bob:isSystemConnectionPointOf ] .
+            sh:path bob:mapsTo ] .
 
 bob:hasSystemConnectionPoint a rdf:Property .
 
@@ -75,9 +75,9 @@ ex1:TestSystem a rdfs:Class,
     rdfs:label "__main__.TestSystem" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpI ],
+            sh:path ex1:cpO ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpO ] .
+            sh:path ex1:cpI ] .
 
 ex1:cp a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -1073,14 +1073,14 @@ p223:YesNo-Yes a p223:YesNo-Yes,
         s223:EnumerationKind .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
+            sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ] .
+            sh:path s223:connectsThrough ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
 
 s223:Equipment sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
@@ -1091,16 +1091,16 @@ s223:Fluid-Water s223:composedOf [ a s223:Property ;
 
 s223:GlycolSolution-GlycolSolution-15Percent s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
-            s223:hasValue 15 ;
-            s223:ofConstituent p223:Constituent-Glycol ;
+            rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
+            s223:hasValue 85 ;
+            s223:ofConstituent p223:Constituent-H2O ;
             qudt:hasQuantityKind quantitykind:VolumeFraction ;
             qudt:hasUnit unit:PERCENT ],
         [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
-            s223:hasValue 85 ;
-            s223:ofConstituent p223:Constituent-H2O ;
+            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
+            s223:hasValue 15 ;
+            s223:ofConstituent p223:Constituent-Glycol ;
             qudt:hasQuantityKind quantitykind:VolumeFraction ;
             qudt:hasUnit unit:PERCENT ] .
 
@@ -1143,12 +1143,12 @@ s223:Refrigerant-R410a s223:composedOf [ a s223:Property ;
             s223:ofConstituent p223:Constituent-R410a ] .
 
 s223:System sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasPhysicalLocation ],
+        [ a sh:PropertyShape ;
             sh:path bob:hasSystemConnectionPoint ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ] .
+            sh:path s223:hasDomain ] .
 
 s223:Water-ChilledWater s223:composedOf [ a s223:Property ;
             rdfs:label "ChilledWater.Constituent-H2O" ;
