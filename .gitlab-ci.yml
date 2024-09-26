@@ -46,9 +46,20 @@ generate_html:
 
 validate:
   image: openjdk:slim
-  script:
+  before_script: 
     - apt-get update -qy
     - apt-get install -y zip unzip python3 python3-pip
+    - python3 -V # Print out python version for debugging
+    - pip install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install .
+    - pip install pytest
+    - pip install pyshacl
+    - pip install ontoenv
+    - pip install rdflib
+    - pip install pyvis
+  script:
     - pip install requests
     - pip install pytest-xdist[psutil]
     - pip install python-dotenv
