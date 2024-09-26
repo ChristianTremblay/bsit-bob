@@ -1127,7 +1127,7 @@ class QuantifiableProperty(Property):
     """
 
     _attr_uriref = {
-        "hasUnit": QUDT["hasUnit"],
+        "hasUnit": QUDT["Unit"],
         "hasQuantityKind": QUDT["hasQuantityKind"],
     }
 
@@ -1517,16 +1517,14 @@ class Mix(EnumerationKind):
                     prop._data_graph.add(
                         (
                             prop._node_iri,
-                            S223.hasQuantityKind,
+                            QUDT.hasQuantityKind,
                             kwargs["hasQuantityKind"],
                         )
                     )
                     update_to_quantifiable = True
                 if "hasUnit" in kwargs:
                     _log.debug("    - update hasUnit")
-                    prop._data_graph.add(
-                        (prop._node_iri, S223.hasUnit, kwargs["hasUnit"])
-                    )
+                    prop._data_graph.add((prop._node_iri, QUDT.Unit, kwargs["hasUnit"]))
                     update_to_quantifiable = True
                 if "hasValue" in kwargs:
                     _log.debug("    - update hasValue")
