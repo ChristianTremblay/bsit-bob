@@ -32,13 +32,13 @@ Substance.Soot = Soot = Substance("Soot")
 # Media, Constituents & Mix
 # ======================================
 #
-Constituent.H2O = H2O = Constituent("H2O", label="H2O", _alt_namespace=P223)
+Constituent.H2O = H2O = Constituent("H2O", label="H2O")
 Constituent.Oil = Oil = Constituent("Oil", label="Oil", _alt_namespace=P223)
 Constituent.Smoke = Smoke = Constituent("Smoke", label="Smoke", _alt_namespace=P223)
 # Gases
 Constituent.Ar = Argon = Constituent("Ar", label="Argon", _alt_namespace=P223)
-Constituent.CO = CO = Constituent("CO", label="Carbon monoxyde", _alt_namespace=P223)
-Constituent.CO2 = CO2 = Constituent("CO2", label="Carbon dioxyde", _alt_namespace=P223)
+Constituent.CO = CO = Constituent("CO", label="Carbon monoxyde")
+Constituent.CO2 = CO2 = Constituent("CO2", label="Carbon dioxyde")
 Constituent.NO2 = NO2 = Constituent("NO2", label="NO2", _alt_namespace=P223)
 Constituent.CH4 = CH4 = Constituent("CH4", label="CH4", _alt_namespace=P223)
 Constituent.NH3 = NH3 = Constituent("NH3", label="NH3", _alt_namespace=P223)
@@ -58,7 +58,7 @@ Constituent.R410A = const_R410A = Constituent(
 )
 Constituent.R32 = const_R32 = Constituent("R-32", label="R-32", _alt_namespace=P223)
 
-Constituent.Glycol = Glycol = Constituent("Glycol", label="Glycol", _alt_namespace=P223)
+Constituent.Glycol = Glycol = Constituent("Glycol", label="Glycol")
 
 # Electromagnetic
 EM = Constituent("Electro-Magnetic")  # electro-magnetic
