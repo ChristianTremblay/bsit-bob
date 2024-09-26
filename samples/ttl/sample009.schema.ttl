@@ -35,12 +35,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
             sh:path bob:isSystemConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
+            sh:path bob:mapsTo ] .
 
 bob:hasSystemConnectionPoint a rdf:Property .
 
@@ -72,9 +72,9 @@ ex1:EquipmentInOut a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
+            sh:path ex1:cp2 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
+            sh:path ex1:cp1 ] .
 
 ex1:EquipmentOut1 a rdfs:Class,
         sh:NodeShape ;
@@ -968,11 +968,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1136,12 +1136,12 @@ s223:Connection sh:property [ a sh:PropertyShape ;
             sh:path s223:hasMedium ] .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
+            sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ] .
 
@@ -1183,33 +1183,33 @@ s223:GlycolSolution-GlycolSolution-30Percent s223:composedOf [ a s223:Property,
             qudt:hasUnit unit:PERCENT ] .
 
 s223:Property sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasValue ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path s223:ofConstituent ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofSubstance ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
-        [ a sh:PropertyShape ;
-            sh:path s223:ofConstituent ] .
+            sh:path s223:hasValue ] .
 
-s223:RefrigerationGas-R22 s223:composedOf [ a s223:Property ;
+s223:Refrigerant-R22 s223:composedOf [ a s223:Property ;
             rdfs:label "R22.Constituent-R22" ;
             s223:ofConstituent p223:Constituent-R22 ] .
 
-s223:RefrigerationGas-R32 s223:composedOf [ a s223:Property ;
+s223:Refrigerant-R32 s223:composedOf [ a s223:Property ;
             rdfs:label "R32.Constituent-R32" ;
             s223:ofConstituent p223:Constituent-R32 ] .
 
-s223:RefrigerationGas-R410a s223:composedOf [ a s223:Property ;
+s223:Refrigerant-R410a s223:composedOf [ a s223:Property ;
             rdfs:label "R410a.Constituent-R410a" ;
             s223:ofConstituent p223:Constituent-R410a ] .
 
 s223:System sh:property [ a sh:PropertyShape ;
+            sh:path bob:hasSystemConnectionPoint ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasDomain ],
-        [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ],
         [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
 
