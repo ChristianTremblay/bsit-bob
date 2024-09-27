@@ -789,11 +789,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -887,9 +887,12 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "R-32" ;
-    s223:composedOf [ a s223:Property ;
+    s223:composedOf [ a s223:Property,
+                s223:QuantifiableProperty ;
             rdfs:label "R-32.Constituent-R-32" ;
-            s223:ofConstituent p223:Constituent-R-32 ] ;
+            s223:ofConstituent p223:Constituent-R-32 ;
+            qudt:hasQuantityKind qudtqk:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ] ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Refrigerant,
@@ -1068,10 +1071,10 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path bob:measuresMedium ],
-        [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ] .
@@ -1168,13 +1171,13 @@ scratch:Fan a rdfs:Class,
         s223:Equipment,
         s223:Fan ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:onOffCommand ],
-        [ a sh:PropertyShape ;
             sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ] .
+            sh:path scratch:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ] .
 
 s223:Actuator a s223:Class,
         sh:NodeShape ;
@@ -17665,7 +17668,21 @@ s223:Compressor a s223:Class,
     rdfs:label "Compressor" ;
     rdfs:comment "A device for mechanically increasing the pressure of a gas." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Compressor shall have at least one inlet." ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:succionPressure ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path bob:alarmStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:dischargePressure ],
+        [ a sh:PropertyShape ;
+            sh:path bob:dischargePort ],
+        [ a sh:PropertyShape ;
+            sh:path bob:returnPort ],
+        [ rdfs:comment "A Compressor shall have at least one inlet." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
@@ -17674,21 +17691,7 @@ s223:Compressor a s223:Class,
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ],
-        [ a sh:PropertyShape ;
-            sh:path bob:onOffStatus ],
-        [ a sh:PropertyShape ;
-            sh:path bob:returnPort ],
-        [ a sh:PropertyShape ;
-            sh:path bob:alarmStatus ],
-        [ a sh:PropertyShape ;
-            sh:path bob:dischargePort ],
-        [ a sh:PropertyShape ;
-            sh:path bob:onOffCommand ],
-        [ a sh:PropertyShape ;
-            sh:path bob:succionPressure ],
-        [ a sh:PropertyShape ;
-            sh:path bob:dischargePressure ] .
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ] .
 
 s223:Constituent-CO a s223:Class,
         s223:Constituent-CO,
@@ -17966,7 +17969,15 @@ s223:Filter a s223:Class,
     rdfs:label "Filter" ;
     rdfs:comment "A device that removes contaminants from gases or liquids." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:alarmStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:differentialPressure ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
@@ -17976,14 +17987,6 @@ s223:Filter a s223:Class,
             sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
             sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ],
-        [ a sh:PropertyShape ;
-            sh:path bob:alarmStatus ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:differentialPressure ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
         [ rdfs:comment "A filter should have one common constituent between the inlet and outlet" ;
             sh:path s223:hasConnectionPoint ;
             sh:severity sh:Warning ;
@@ -18236,7 +18239,13 @@ s223:HeatPump a s223:Class,
     rdfs:label "HeatPump" ;
     rdfs:comment "A device that can heat or cool by transferring thermal energy using a reversible refrigeration cycle." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A HeatPump shall have at least one inlet using the medium Air." ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path sample_airair_heatpump:electricalInlet ],
+        [ a sh:PropertyShape ;
+            sh:path sample_airair_heatpump:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path sample_airair_heatpump:airOutlet ],
+        [ rdfs:comment "A HeatPump shall have at least one inlet using the medium Air." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
@@ -18249,13 +18258,7 @@ s223:HeatPump a s223:Class,
             sh:qualifiedMinCount 1 ;
             sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
                     sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ],
-        [ a sh:PropertyShape ;
-            sh:path sample_airair_heatpump:electricalInlet ],
-        [ a sh:PropertyShape ;
-            sh:path sample_airair_heatpump:airOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path sample_airair_heatpump:airInlet ] .
+                                    sh:path s223:hasMedium ] ] ] ] .
 
 s223:Light-Infrared a s223:Class,
         s223:Light-Infrared,
@@ -18489,9 +18492,12 @@ s223:Refrigerant-R-22 a s223:Class,
         s223:Refrigerant-R-22,
         sh:NodeShape ;
     rdfs:label "Refrigerant-R-22" ;
-    s223:composedOf [ a s223:Property ;
+    s223:composedOf [ a s223:Property,
+                s223:QuantifiableProperty ;
             rdfs:label "R-22.Constituent-R-22" ;
-            s223:ofConstituent p223:Constituent-R-22 ] ;
+            s223:ofConstituent p223:Constituent-R-22 ;
+            qudt:hasQuantityKind qudtqk:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ] ;
     rdfs:comment "Refrigerant-R-22" ;
     rdfs:subClassOf s223:Fluid-Refrigerant .
 
@@ -18499,9 +18505,12 @@ s223:Refrigerant-R-410A a s223:Class,
         s223:Refrigerant-R-410A,
         sh:NodeShape ;
     rdfs:label "Refrigerant-R-410A" ;
-    s223:composedOf [ a s223:Property ;
+    s223:composedOf [ a s223:Property,
+                s223:QuantifiableProperty ;
             rdfs:label "R-410A.Constituent-R-410A" ;
-            s223:ofConstituent p223:Constituent-R-410A ] ;
+            s223:ofConstituent p223:Constituent-R-410A ;
+            qudt:hasQuantityKind qudtqk:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ] ;
     rdfs:comment "Refrigerant-R-410A" ;
     rdfs:subClassOf s223:Fluid-Refrigerant .
 
@@ -48332,11 +48341,14 @@ s223:Water-GlycolSolution a s223:Class,
         sh:NodeShape ;
     rdfs:label "Water-GlycolSolution" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "GlycolSolution.Constituent-Glycol" ;
-            s223:ofConstituent s223:Constituent-Glycol ],
-        [ a s223:Property ;
             rdfs:label "GlycolSolution.Constituent-H2O" ;
             s223:ofConstituent s223:Constituent-H2O ],
+        [ a s223:Property,
+                s223:QuantifiableProperty ;
+            rdfs:label "GlycolSolution.Constituent-Glycol" ;
+            s223:ofConstituent s223:Constituent-Glycol ;
+            qudt:hasQuantityKind qudtqk:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ],
         [ a s223:QuantifiableProperty ;
             rdfs:label "Unspecified" ;
             s223:ofConstituent s223:Constituent-Glycol ;
@@ -58192,7 +58204,19 @@ s223:Coil a s223:Class,
     rdfs:label "Coil" ;
     rdfs:comment "A cooling or heating element made of pipe or tube that may or may not be finned and formed into helical or serpentine shape." ;
     rdfs:subClassOf s223:HeatExchanger ;
-    sh:property [ rdfs:comment "A Coil shall have at least one inlet using the medium Air." ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:modulation ],
+        [ a sh:PropertyShape ;
+            sh:path bob:gasPortA ],
+        [ a sh:PropertyShape ;
+            sh:path bob:gasPortB ],
+        [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ],
+        [ rdfs:comment "A Coil shall have at least one inlet using the medium Air." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
@@ -58205,19 +58229,7 @@ s223:Coil a s223:Class,
             sh:qualifiedMinCount 1 ;
             sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
                     sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ],
-        [ a sh:PropertyShape ;
-            sh:path bob:gasPortA ],
-        [ a sh:PropertyShape ;
-            sh:path bob:onOffCommand ],
-        [ a sh:PropertyShape ;
-            sh:path bob:modulation ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:gasPortB ] .
+                                    sh:path s223:hasMedium ] ] ] ] .
 
 s223:DC-48V a s223:Class,
         s223:DC-48V,
@@ -58249,7 +58261,11 @@ s223:Fan a s223:Class,
     rdfs:label "Fan" ;
     rdfs:comment "A machine used to create flow within a gas such as air. " ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Fan shall have at least one inlet using the medium Air." ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ rdfs:comment "A Fan shall have at least one inlet using the medium Air." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
@@ -58262,11 +58278,7 @@ s223:Fan a s223:Class,
             sh:qualifiedMinCount 1 ;
             sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
                     sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ] .
+                                    sh:path s223:hasMedium ] ] ] ] .
 
 s223:LineLineVoltage-10000V a s223:Class,
         s223:LineLineVoltage-10000V,
@@ -58466,29 +58478,29 @@ s223:Valve a s223:Class,
     rdfs:comment "A device to regulate or stop the flow of fluid in a pipe or a duct by throttling." ;
     rdfs:subClassOf s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:command ],
-        [ a sh:PropertyShape ;
-            sh:path bob:position_feedback ],
+            sh:path bob:linkageInlet ],
         [ a sh:PropertyShape ;
             sh:path bob:refrigerantOutdoorCoilPort ],
         [ a sh:PropertyShape ;
-            sh:path bob:flowCoefficient ],
+            sh:path bob:command ],
+        [ a sh:PropertyShape ;
+            sh:path bob:position ],
+        [ a sh:PropertyShape ;
+            sh:path bob:refrigerantIndoorCoilPort ],
         [ a sh:PropertyShape ;
             sh:path bob:portB ],
         [ a sh:PropertyShape ;
-            sh:path bob:position ],
-        [ a sh:PropertyShape ;
-            sh:path bob:linkageInlet ],
+            sh:path bob:flowCoefficient ],
         [ a sh:PropertyShape ;
             sh:path bob:position ],
-        [ a sh:PropertyShape ;
-            sh:path bob:portA ],
         [ a sh:PropertyShape ;
             sh:path bob:refrigerantLowPressureOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:refrigerantHighPressureInlet ],
+            sh:path bob:position_feedback ],
         [ a sh:PropertyShape ;
-            sh:path bob:refrigerantIndoorCoilPort ] .
+            sh:path bob:portA ],
+        [ a sh:PropertyShape ;
+            sh:path bob:refrigerantHighPressureInlet ] .
 
 s223:Voltage-24V a s223:Class,
         s223:Voltage-24V,
@@ -69697,7 +69709,19 @@ s223:Sensor a s223:Class,
     rdfs:label "Sensor" ;
     rdfs:comment "A Sensor observes an ObservableProperty (see `s223:ObservableProperty`) which may be quantifiable (see `s223:QuantifiableObservableProperty`), such as a temperature, flowrate, or concentration, or Enumerable (see `s223:EnumeratedObservableProperty`), such as an alarm state or occupancy state." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMeasurementPrecision ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMaxRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMeasurementUncertainty ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasObservationLocation ],
+        [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
             sh:class s223:QuantifiableProperty ;
             sh:path s223:hasMeasurementResolution ],
         [ rdfs:comment "If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
@@ -69711,18 +69735,6 @@ s223:Sensor a s223:Class,
         [ rdfs:comment "A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
-            sh:path s223:hasObservationLocation ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMaxRange ],
-        [ a sh:PropertyShape ;
-            sh:path s223:observes ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMeasurementPrecision ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMeasurementUncertainty ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMinRange ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasObservationLocation ],
         [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
             sh:path s223:observes ;
@@ -72210,9 +72222,12 @@ s223:Fluid-Water a s223:Class,
         s223:Fluid-Water,
         sh:NodeShape ;
     rdfs:label "Fluid-Water" ;
-    s223:composedOf [ a s223:Property ;
+    s223:composedOf [ a s223:Property,
+                s223:QuantifiableProperty ;
             rdfs:label "Water.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ],
+            s223:ofConstituent s223:Constituent-H2O ;
+            qudt:hasQuantityKind qudtqk:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ],
         [ a s223:QuantifiableProperty ;
             rdfs:label "Water conc" ;
             s223:ofConstituent s223:Constituent-H2O ;
@@ -73997,32 +74012,6 @@ s223:Frequency-50Hz a s223:Class,
     rdfs:comment "50 Hertz" ;
     rdfs:subClassOf s223:Numerical-Frequency .
 
-qudtqk:VolumeFraction a qudt:QuantityKind ;
-    rdfs:label "Volume Fraction"@en ;
-    dcterms:description "\"Volume Fraction\" is the volume of a constituent divided by the volume of all constituents of the mixture prior to mixing. Volume fraction is also called volume concentration in ideal solutions where the volumes of the constituents are additive (the volume of the solution is equal to the sum of the volumes of its ingredients)."^^rdf:HTML ;
-    qudt:applicableUnit unit:CentiM3-PER-CentiM3,
-        unit:CentiM3-PER-M3,
-        unit:DeciM3-PER-M3,
-        unit:L-PER-L,
-        unit:M3-PER-M3,
-        unit:MicroL-PER-L,
-        unit:MicroM3-PER-M3,
-        unit:MicroM3-PER-MilliL,
-        unit:MilliL-PER-L,
-        unit:MilliL-PER-M3,
-        unit:MilliM3-PER-M3 ;
-    qudt:hasDimensionVector qkdv:A0E0L0I0M0H0T0D1 ;
-    qudt:iec61360Code "0112/2///62720#UAD240" ;
-    qudt:informativeReference "http://en.wikipedia.org/wiki/Volume_fraction"^^xsd:anyURI ;
-    qudt:isoNormativeReference "http://www.iso.org/iso/catalogue_detail?csnumber=31894"^^xsd:anyURI ;
-    qudt:latexDefinition "$\\varphi_B = \\frac{x_B V_{m,B}^*}{\\sum x_i V_{m,i}^*}$, where $V_{m,i}^*$ is the molar volume of the pure substances $i$ at the same temperature and pressure, $x_i$ denotes the amount-of-substance fraction of substance $i$, and $\\sum$ denotes summation over all substances $i$."^^qudt:LatexString ;
-    qudt:latexSymbol "$\\varphi_B$"^^qudt:LatexString ;
-    qudt:plainTextDescription "\"Volume Fraction\" is the volume of a constituent divided by the volume of all constituents of the mixture prior to mixing. Volume fraction is also called volume concentration in ideal solutions where the volumes of the constituents are additive (the volume of the solution is equal to the sum of the volumes of its ingredients)." ;
-    qudt:qkdvDenominator qkdv:A0E0L3I0M0H0T0D0 ;
-    qudt:qkdvNumerator qkdv:A0E0L3I0M0H0T0D0 ;
-    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
-    skos:broader qudtqk:DimensionlessRatio .
-
 unit:DecaPA a qudt:Unit ;
     rdfs:label "Decapascal"@en ;
     dcterms:description "10-fold of the derived SI unit pascal"^^rdf:HTML ;
@@ -75498,6 +75487,32 @@ unit:TON_UK a qudt:Unit ;
     qudt:ucumCode "[lton_av]"^^qudt:UCUMcs ;
     qudt:uneceCommonCode "LTN" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
+
+qudtqk:VolumeFraction a qudt:QuantityKind ;
+    rdfs:label "Volume Fraction"@en ;
+    dcterms:description "\"Volume Fraction\" is the volume of a constituent divided by the volume of all constituents of the mixture prior to mixing. Volume fraction is also called volume concentration in ideal solutions where the volumes of the constituents are additive (the volume of the solution is equal to the sum of the volumes of its ingredients)."^^rdf:HTML ;
+    qudt:applicableUnit unit:CentiM3-PER-CentiM3,
+        unit:CentiM3-PER-M3,
+        unit:DeciM3-PER-M3,
+        unit:L-PER-L,
+        unit:M3-PER-M3,
+        unit:MicroL-PER-L,
+        unit:MicroM3-PER-M3,
+        unit:MicroM3-PER-MilliL,
+        unit:MilliL-PER-L,
+        unit:MilliL-PER-M3,
+        unit:MilliM3-PER-M3 ;
+    qudt:hasDimensionVector qkdv:A0E0L0I0M0H0T0D1 ;
+    qudt:iec61360Code "0112/2///62720#UAD240" ;
+    qudt:informativeReference "http://en.wikipedia.org/wiki/Volume_fraction"^^xsd:anyURI ;
+    qudt:isoNormativeReference "http://www.iso.org/iso/catalogue_detail?csnumber=31894"^^xsd:anyURI ;
+    qudt:latexDefinition "$\\varphi_B = \\frac{x_B V_{m,B}^*}{\\sum x_i V_{m,i}^*}$, where $V_{m,i}^*$ is the molar volume of the pure substances $i$ at the same temperature and pressure, $x_i$ denotes the amount-of-substance fraction of substance $i$, and $\\sum$ denotes summation over all substances $i$."^^qudt:LatexString ;
+    qudt:latexSymbol "$\\varphi_B$"^^qudt:LatexString ;
+    qudt:plainTextDescription "\"Volume Fraction\" is the volume of a constituent divided by the volume of all constituents of the mixture prior to mixing. Volume fraction is also called volume concentration in ideal solutions where the volumes of the constituents are additive (the volume of the solution is equal to the sum of the volumes of its ingredients)." ;
+    qudt:qkdvDenominator qkdv:A0E0L3I0M0H0T0D0 ;
+    qudt:qkdvNumerator qkdv:A0E0L3I0M0H0T0D0 ;
+    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
+    skos:broader qudtqk:DimensionlessRatio .
 
 unit:AMU a qudt:Unit ;
     rdfs:label "Atomic mass unit"@en ;
@@ -77003,14 +77018,14 @@ ConnectionPoints are represented graphically in this standard by a triangle with
  """ ;
     rdfs:subClassOf s223:Concept ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
+            sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
             sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
         [ rdfs:comment "A ConnectionPoint must be associated with at most one Connectable using the cnx relation." ;
             sh:message "s223: A ConnectionPoint must be associated with at most one Connectable using the cnx relation." ;
             sh:path s223:cnx ;
@@ -77242,41 +77257,6 @@ qudtqk:Time a qudt:QuantityKind ;
     qudt:siExactMatch si-quantity:TIME ;
     qudt:symbol "t" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
-
-unit:PERCENT a qudt:Unit ;
-    rdfs:label "Percent"@en ;
-    dcterms:description "\"Percent\" is a unit for  'Dimensionless Ratio' expressed as $\\%$."^^qudt:LatexString ;
-    qudt:applicableSystem sou:ASU,
-        sou:CGS,
-        sou:CGS-EMU,
-        sou:CGS-ESU,
-        sou:CGS-GAUSS,
-        sou:IMPERIAL,
-        sou:PLANCK,
-        sou:SI ;
-    qudt:conversionMultiplier 0.01 ;
-    qudt:conversionMultiplierSN 1e-02 ;
-    qudt:dbpediaMatch "http://dbpedia.org/resource/Percentage"^^xsd:anyURI ;
-    qudt:hasDimensionVector qkdv:A0E0L0I0M0H0T0D1 ;
-    qudt:hasQuantityKind qudtqk:DimensionlessRatio,
-        qudtqk:LengthPercentage,
-        qudtqk:PressurePercentage,
-        qudtqk:Prevalence,
-        qudtqk:Reflectance,
-        qudtqk:RelativeHumidity,
-        qudtqk:RelativeLuminousFlux,
-        qudtqk:RelativePartialPressure,
-        qudtqk:ResistancePercentage,
-        qudtqk:TimePercentage,
-        qudtqk:VoltagePercentage ;
-    qudt:iec61360Code "0112/2///62720#UAA000" ;
-    qudt:informativeReference "http://en.wikipedia.org/wiki/Percentage?oldid=495284540"^^xsd:anyURI ;
-    qudt:omUnit <http://www.ontology-of-units-of-measure.org/resource/om-2/percent> ;
-    qudt:symbol "%" ;
-    qudt:ucumCode "%"^^qudt:UCUMcs ;
-    qudt:udunitsCode "%" ;
-    qudt:uneceCommonCode "P1" ;
-    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
 s223:InletConnectionPoint a s223:Class,
         sh:NodeShape ;
@@ -78088,6 +78068,41 @@ unit:MicroIN a qudt:DerivedUnit,
     qudt:uneceCommonCode "M7" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
+unit:PERCENT a qudt:Unit ;
+    rdfs:label "Percent"@en ;
+    dcterms:description "\"Percent\" is a unit for  'Dimensionless Ratio' expressed as $\\%$."^^qudt:LatexString ;
+    qudt:applicableSystem sou:ASU,
+        sou:CGS,
+        sou:CGS-EMU,
+        sou:CGS-ESU,
+        sou:CGS-GAUSS,
+        sou:IMPERIAL,
+        sou:PLANCK,
+        sou:SI ;
+    qudt:conversionMultiplier 0.01 ;
+    qudt:conversionMultiplierSN 1e-02 ;
+    qudt:dbpediaMatch "http://dbpedia.org/resource/Percentage"^^xsd:anyURI ;
+    qudt:hasDimensionVector qkdv:A0E0L0I0M0H0T0D1 ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio,
+        qudtqk:LengthPercentage,
+        qudtqk:PressurePercentage,
+        qudtqk:Prevalence,
+        qudtqk:Reflectance,
+        qudtqk:RelativeHumidity,
+        qudtqk:RelativeLuminousFlux,
+        qudtqk:RelativePartialPressure,
+        qudtqk:ResistancePercentage,
+        qudtqk:TimePercentage,
+        qudtqk:VoltagePercentage ;
+    qudt:iec61360Code "0112/2///62720#UAA000" ;
+    qudt:informativeReference "http://en.wikipedia.org/wiki/Percentage?oldid=495284540"^^xsd:anyURI ;
+    qudt:omUnit <http://www.ontology-of-units-of-measure.org/resource/om-2/percent> ;
+    qudt:symbol "%" ;
+    qudt:ucumCode "%"^^qudt:UCUMcs ;
+    qudt:udunitsCode "%" ;
+    qudt:uneceCommonCode "P1" ;
+    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
+
 s223:Frequency-60Hz a s223:Class,
         s223:Frequency-60Hz,
         sh:NodeShape ;
@@ -78233,190 +78248,6 @@ unit:NUM a qudt:CountingUnit,
         "{#}"^^qudt:UCUMcs ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-s223:QuantifiableProperty a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Quantifiable Property" ;
-    rdfs:comment "This class is for quantifiable values that describe an object (System, Equipment, etc.) that are typically static (hasValue). That is, they are neither measured nor specified in the course of operations." ;
-    rdfs:subClassOf s223:Property ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
-            sh:path qudt:hasQuantityKind ],
-        [ rdfs:comment "A QuantifiableProperty must be associated with a QuantityKind using the relation hasQuantityKind." ;
-            sh:class qudt:QuantityKind ;
-            sh:maxCount 1 ;
-            sh:message "s223: A QuantifiableProperty must be associated with a QuantityKind using the relation hasQuantityKind." ;
-            sh:minCount 1 ;
-            sh:path qudt:hasQuantityKind ],
-        [ rdfs:comment "A QuantifiableProperty can be associated with at most one Unit using the relation hasUnit." ;
-            sh:class qudt:Unit ;
-            sh:maxCount 1 ;
-            sh:message "s223: A QuantifiableProperty can be associated with at most one Unit using the relation hasUnit." ;
-            sh:path qudt:hasUnit ],
-        [ rdfs:comment """A QuantifiableProperty can be associated with an optional Boolean flag using the relation isDeltaQuantity. \r
-If the relation isDeltaQuantity has a value of true, the associated value should be interpreted as a difference reading, such as a \r
-temperature difference. This is needed to distinguish between a temperature reading and a temperature difference reading, which\r
-affects unit conversion calculations.""" ;
-            sh:datatype xsd:boolean ;
-            sh:maxCount 1 ;
-            sh:path qudt:isDeltaQuantity ],
-        [ rdfs:comment """Normally, a QuantifiableProperty is associated with a static decimal value using s223:hasValue, along with a single \r
-unit and quantity kind. However, in some cases, a QuantifiableProperty may instead be associated with a qudt:QuantityValue using the relation \r
-qudt:quantityValue. This allows the qudt:QuantityValue to express multiple equivalent combinations of unit and value.""" ;
-            sh:class qudt:QuantityValue ;
-            sh:path qudt:quantityValue ],
-        [ rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
-            sh:path s223:hasValue ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
-                    sh:message "s223: {$this} referenced by {?subject} has a value of {?v} but does not specify a Unit." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?v ?subject\r
-WHERE {\r
-$this s223:hasValue ?v .\r
-FILTER NOT EXISTS {$this qudt:hasUnit ?u} .\r
-?subject ?p $this .\r
-}\r
-""" ] ],
-        [ rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
-            sh:path s223:hasValue ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
-                    sh:message "s223: {$this} referenced by {?subject} has a value of {?v} but does not specify a Unit." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?v ?subject\r
-WHERE {\r
-$this s223:hasValue ?v .\r
-FILTER NOT EXISTS {$this qudt:hasUnit ?u} .\r
-?subject ?p $this .\r
-}\r
-""" ] ],
-        [ rdfs:comment "This QuantifiableProperty uses hasSetpoint to reference a Property that lacks an Aspect of Aspect-Setpoint." ;
-            sh:path qudt:hasAspect ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "This QuantifiableProperty uses hasSetpoint to reference a Property that lacks an Aspect of Aspect-Setpoint." ;
-                    sh:message "s223: {$this} uses hasSetpoint to reference {?setpoint} that lacks an Aspect of Aspect-Setpoint." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?setpoint\r
-WHERE {\r
-$this s223:hasSetpoint ?setpoint .\r
-FILTER NOT EXISTS {?setpoint s223:hasAspect s223:Aspect-Setpoint} .\r
-}\r
-""" ] ],
-        [ rdfs:comment "This QuantifiableProperty and the Setpoint associated with it have non-commensurate QuantityKinds." ;
-            sh:path qudt:hasQuantityKind ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "This QuantifiableProperty and the Setpoint associated with it have non-commensurate QuantityKinds." ;
-                    sh:message "s223: {$this} uses QuantityKind {?pqk} with DimensionVector {?pdv}, while Setpoint {?setpoint} uses QuantityKind {?sqk} with DimensionVector {?sdv}. These are non-commensurate" ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?setpoint ?pqk ?sqk ?pdv ?sdv\r
-WHERE {\r
-$this qudt:hasQuantityKind ?pqk .\r
-$this s223:hasSetpoint ?setpoint .\r
-?setpoint qudt:hasQuantityKind ?sqk .\r
-?pqk qudt:hasDimensionVector ?pdv .\r
-?sqk qudt:hasDimensionVector ?sdv .\r
-FILTER (?pqk != ?sqk) .\r
-FILTER (?pdv != ?sdv) .\r
-}\r
-""" ] ],
-        [ rdfs:comment "This QuantifiableProperty with Aspect-Setpoint is not referenced by any Property using hasSetpoint." ;
-            sh:path qudt:hasSetpoint ;
-            sh:severity sh:Info ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "This QuantifiableProperty with Aspect-Setpoint is not referenced by any Property using hasSetpoint." ;
-                    sh:message "s223: {$this} has Aspect-Setpoint but is not referenced by any Property using hasSetpoint." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this \r
-WHERE {\r
-$this s223:hasAspect s223:Aspect-Setpoint .\r
-FILTER NOT EXISTS {?anything s223:hasSetpoint $this} .\r
-}\r
-""" ] ],
-        [ rdfs:comment "This QuantifiableProperty and the associated Setpoint use non-commensurate Units." ;
-            sh:path qudt:hasUnit ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "This QuantifiableProperty and the associated Setpoint use non-commensurate Units." ;
-                    sh:message "s223: {$this} uses Unit {?punit}, while Setpoint {?setpoint} uses Unit {?sunit}. These are non-commensurate." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?setpoint ?punit ?sunit\r
-WHERE {\r
-$this qudt:hasUnit ?punit .\r
-$this s223:hasSetpoint ?setpoint .\r
-?setpoint qudt:hasUnit ?sunit .\r
-?punit qudt:hasDimensionVector ?pdv .\r
-?sunit qudt:hasDimensionVector ?sdv .\r
-FILTER (?punit != ?sunit) .\r
-FILTER (?pdv != ?sdv) .\r
-}\r
-""" ] ],
-        [ rdfs:comment "This QuantifiableProperty uses a different Unit than the Setpoint associated with it." ;
-            sh:path qudt:hasUnit ;
-            sh:severity sh:Info ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "This QuantifiableProperty uses a different Unit than the Setpoint associated with it." ;
-                    sh:message "s223: {$this} uses Unit {?punit}, while Setpoint {?setpoint} uses Unit {?sunit}. Be careful." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?setpoint ?punit ?sunit\r
-WHERE {\r
-$this qudt:hasUnit ?punit .\r
-$this s223:hasSetpoint ?setpoint .\r
-?setpoint qudt:hasUnit ?sunit .\r
-?punit qudt:hasDimensionVector ?pdv .\r
-?sunit qudt:hasDimensionVector ?sdv .\r
-FILTER (?punit != ?sunit) .\r
-FILTER (?pdv = ?sdv) .\r
-}\r
-""" ] ],
-        [ rdfs:comment "A QuantifiableProperty should use s223:hasValue instead of qudt:value." ;
-            sh:maxCount 0 ;
-            sh:message "A QuantifiableProperty should use s223:hasValue instead of qudt:value." ;
-            sh:path qudt:value ],
-        [ rdfs:comment "A QuantifiableProperty should use s223:hasValue instead of qudt:value." ;
-            sh:maxCount 0 ;
-            sh:message "A QuantifiableProperty should use s223:hasValue instead of qudt:value." ;
-            sh:path qudt:value ] ;
-    sh:rule [ a sh:SPARQLRule ;
-            rdfs:comment "Infer the hasQuantityKind relation if it is unambiguous." ;
-            sh:construct """\r
-CONSTRUCT {\r
-$this qudt:hasQuantityKind ?uniqueqk\r
-}\r
-WHERE {\r
-{\r
-SELECT $this (COUNT (DISTINCT (?qk)) AS ?count)\r
-WHERE {\r
-FILTER (NOT EXISTS {$this qudt:hasQuantityKind ?something}) .\r
-$this qudt:hasUnit/qudt:hasQuantityKind ?qk .\r
-}\r
-GROUP BY $this\r
-}\r
-FILTER (?count = 1)\r
-$this qudt:hasUnit/qudt:hasQuantityKind ?uniqueqk .\r
-}\r
-""" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/model-rules> ] ;
-    sh:sparql [ a sh:SPARQLConstraint ;
-            rdfs:comment "Checks for consistent dimension vectors for a QuantityKind and the Unit" ;
-            sh:message "s223: Inconsistent dimensionalities among the Property's Unit and Property's Quantity Kind" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-            sh:select """\r
-SELECT $this\r
-   WHERE \r
-{\r
-      $this qudt:hasQuantityKind/qudt:hasDimensionVector ?qkdv1 .\r
-      $this qudt:hasUnit/qudt:hasDimensionVector ?qkdv2 .\r
-FILTER (?qkdv1 != ?qkdv2) .\r
-}\r
-""" ] .
-
 s223:Equipment a s223:Class,
         sh:NodeShape ;
     rdfs:label "Equipment" ;
@@ -78437,7 +78268,9 @@ The graphical depiction of Equipment used in this standard is a rounded cornered
 ![Graphical Depiction of Equipment.](figures/Figure_5-1Graphical_Depiciton_of_Equipment.svg)\r
   """ ;
     rdfs:subClassOf s223:Connectable ;
-    sh:property [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
+    sh:property [ a sh:PropertyShape ;
+            sh:path s223:hasPhysicalLocation ],
+        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
 Note that any Equipment may use this relation, not just Actuator.""" ;
             sh:class s223:ActuatableProperty ;
             sh:path s223:actuatedByProperty ],
@@ -78455,8 +78288,6 @@ Note that any Equipment may use this relation, not just Actuator.""" ;
             sh:name "device contains shape" ;
             sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
             sh:path s223:contains ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ],
         [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
             sh:path s223:connectedFrom ;
             sh:sparql [ a sh:SPARQLConstraint ;
@@ -78704,6 +78535,190 @@ qudtqk:DimensionlessRatio a qudt:QuantityKind ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader qudtqk:Dimensionless .
 
+s223:QuantifiableProperty a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Quantifiable Property" ;
+    rdfs:comment "This class is for quantifiable values that describe an object (System, Equipment, etc.) that are typically static (hasValue). That is, they are neither measured nor specified in the course of operations." ;
+    rdfs:subClassOf s223:Property ;
+    sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasQuantityKind ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ],
+        [ rdfs:comment "A QuantifiableProperty must be associated with a QuantityKind using the relation hasQuantityKind." ;
+            sh:class qudt:QuantityKind ;
+            sh:maxCount 1 ;
+            sh:message "s223: A QuantifiableProperty must be associated with a QuantityKind using the relation hasQuantityKind." ;
+            sh:minCount 1 ;
+            sh:path qudt:hasQuantityKind ],
+        [ rdfs:comment "A QuantifiableProperty can be associated with at most one Unit using the relation hasUnit." ;
+            sh:class qudt:Unit ;
+            sh:maxCount 1 ;
+            sh:message "s223: A QuantifiableProperty can be associated with at most one Unit using the relation hasUnit." ;
+            sh:path qudt:hasUnit ],
+        [ rdfs:comment """A QuantifiableProperty can be associated with an optional Boolean flag using the relation isDeltaQuantity. \r
+If the relation isDeltaQuantity has a value of true, the associated value should be interpreted as a difference reading, such as a \r
+temperature difference. This is needed to distinguish between a temperature reading and a temperature difference reading, which\r
+affects unit conversion calculations.""" ;
+            sh:datatype xsd:boolean ;
+            sh:maxCount 1 ;
+            sh:path qudt:isDeltaQuantity ],
+        [ rdfs:comment """Normally, a QuantifiableProperty is associated with a static decimal value using s223:hasValue, along with a single \r
+unit and quantity kind. However, in some cases, a QuantifiableProperty may instead be associated with a qudt:QuantityValue using the relation \r
+qudt:quantityValue. This allows the qudt:QuantityValue to express multiple equivalent combinations of unit and value.""" ;
+            sh:class qudt:QuantityValue ;
+            sh:path qudt:quantityValue ],
+        [ rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
+            sh:path s223:hasValue ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
+                    sh:message "s223: {$this} referenced by {?subject} has a value of {?v} but does not specify a Unit." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?v ?subject\r
+WHERE {\r
+$this s223:hasValue ?v .\r
+FILTER NOT EXISTS {$this qudt:hasUnit ?u} .\r
+?subject ?p $this .\r
+}\r
+""" ] ],
+        [ rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
+            sh:path s223:hasValue ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
+                    sh:message "s223: {$this} referenced by {?subject} has a value of {?v} but does not specify a Unit." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?v ?subject\r
+WHERE {\r
+$this s223:hasValue ?v .\r
+FILTER NOT EXISTS {$this qudt:hasUnit ?u} .\r
+?subject ?p $this .\r
+}\r
+""" ] ],
+        [ rdfs:comment "This QuantifiableProperty uses hasSetpoint to reference a Property that lacks an Aspect of Aspect-Setpoint." ;
+            sh:path qudt:hasAspect ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "This QuantifiableProperty uses hasSetpoint to reference a Property that lacks an Aspect of Aspect-Setpoint." ;
+                    sh:message "s223: {$this} uses hasSetpoint to reference {?setpoint} that lacks an Aspect of Aspect-Setpoint." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?setpoint\r
+WHERE {\r
+$this s223:hasSetpoint ?setpoint .\r
+FILTER NOT EXISTS {?setpoint s223:hasAspect s223:Aspect-Setpoint} .\r
+}\r
+""" ] ],
+        [ rdfs:comment "This QuantifiableProperty and the Setpoint associated with it have non-commensurate QuantityKinds." ;
+            sh:path qudt:hasQuantityKind ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "This QuantifiableProperty and the Setpoint associated with it have non-commensurate QuantityKinds." ;
+                    sh:message "s223: {$this} uses QuantityKind {?pqk} with DimensionVector {?pdv}, while Setpoint {?setpoint} uses QuantityKind {?sqk} with DimensionVector {?sdv}. These are non-commensurate" ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?setpoint ?pqk ?sqk ?pdv ?sdv\r
+WHERE {\r
+$this qudt:hasQuantityKind ?pqk .\r
+$this s223:hasSetpoint ?setpoint .\r
+?setpoint qudt:hasQuantityKind ?sqk .\r
+?pqk qudt:hasDimensionVector ?pdv .\r
+?sqk qudt:hasDimensionVector ?sdv .\r
+FILTER (?pqk != ?sqk) .\r
+FILTER (?pdv != ?sdv) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "This QuantifiableProperty with Aspect-Setpoint is not referenced by any Property using hasSetpoint." ;
+            sh:path qudt:hasSetpoint ;
+            sh:severity sh:Info ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "This QuantifiableProperty with Aspect-Setpoint is not referenced by any Property using hasSetpoint." ;
+                    sh:message "s223: {$this} has Aspect-Setpoint but is not referenced by any Property using hasSetpoint." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this \r
+WHERE {\r
+$this s223:hasAspect s223:Aspect-Setpoint .\r
+FILTER NOT EXISTS {?anything s223:hasSetpoint $this} .\r
+}\r
+""" ] ],
+        [ rdfs:comment "This QuantifiableProperty and the associated Setpoint use non-commensurate Units." ;
+            sh:path qudt:hasUnit ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "This QuantifiableProperty and the associated Setpoint use non-commensurate Units." ;
+                    sh:message "s223: {$this} uses Unit {?punit}, while Setpoint {?setpoint} uses Unit {?sunit}. These are non-commensurate." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?setpoint ?punit ?sunit\r
+WHERE {\r
+$this qudt:hasUnit ?punit .\r
+$this s223:hasSetpoint ?setpoint .\r
+?setpoint qudt:hasUnit ?sunit .\r
+?punit qudt:hasDimensionVector ?pdv .\r
+?sunit qudt:hasDimensionVector ?sdv .\r
+FILTER (?punit != ?sunit) .\r
+FILTER (?pdv != ?sdv) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "This QuantifiableProperty uses a different Unit than the Setpoint associated with it." ;
+            sh:path qudt:hasUnit ;
+            sh:severity sh:Info ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "This QuantifiableProperty uses a different Unit than the Setpoint associated with it." ;
+                    sh:message "s223: {$this} uses Unit {?punit}, while Setpoint {?setpoint} uses Unit {?sunit}. Be careful." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?setpoint ?punit ?sunit\r
+WHERE {\r
+$this qudt:hasUnit ?punit .\r
+$this s223:hasSetpoint ?setpoint .\r
+?setpoint qudt:hasUnit ?sunit .\r
+?punit qudt:hasDimensionVector ?pdv .\r
+?sunit qudt:hasDimensionVector ?sdv .\r
+FILTER (?punit != ?sunit) .\r
+FILTER (?pdv = ?sdv) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "A QuantifiableProperty should use s223:hasValue instead of qudt:value." ;
+            sh:maxCount 0 ;
+            sh:message "A QuantifiableProperty should use s223:hasValue instead of qudt:value." ;
+            sh:path qudt:value ],
+        [ rdfs:comment "A QuantifiableProperty should use s223:hasValue instead of qudt:value." ;
+            sh:maxCount 0 ;
+            sh:message "A QuantifiableProperty should use s223:hasValue instead of qudt:value." ;
+            sh:path qudt:value ] ;
+    sh:rule [ a sh:SPARQLRule ;
+            rdfs:comment "Infer the hasQuantityKind relation if it is unambiguous." ;
+            sh:construct """\r
+CONSTRUCT {\r
+$this qudt:hasQuantityKind ?uniqueqk\r
+}\r
+WHERE {\r
+{\r
+SELECT $this (COUNT (DISTINCT (?qk)) AS ?count)\r
+WHERE {\r
+FILTER (NOT EXISTS {$this qudt:hasQuantityKind ?something}) .\r
+$this qudt:hasUnit/qudt:hasQuantityKind ?qk .\r
+}\r
+GROUP BY $this\r
+}\r
+FILTER (?count = 1)\r
+$this qudt:hasUnit/qudt:hasQuantityKind ?uniqueqk .\r
+}\r
+""" ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/model-rules> ] ;
+    sh:sparql [ a sh:SPARQLConstraint ;
+            rdfs:comment "Checks for consistent dimension vectors for a QuantityKind and the Unit" ;
+            sh:message "s223: Inconsistent dimensionalities among the Property's Unit and Property's Quantity Kind" ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+            sh:select """\r
+SELECT $this\r
+   WHERE \r
+{\r
+      $this qudt:hasQuantityKind/qudt:hasDimensionVector ?qkdv1 .\r
+      $this qudt:hasUnit/qudt:hasDimensionVector ?qkdv2 .\r
+FILTER (?qkdv1 != ?qkdv2) .\r
+}\r
+""" ] .
+
 qudtqk:ForcePerArea a qudt:QuantityKind ;
     rdfs:label "Force Per Area"@en ;
     dcterms:description "The force applied to a unit area of surface; measured in pascals (SI unit) or in dynes (cgs unit)"^^rdf:HTML ;
@@ -78911,15 +78926,15 @@ with respect to its value.\r
 """ ;
     rdfs:subClassOf s223:Concept ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasValue ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:path s223:ofConstituent ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofSubstance ],
         [ rdfs:comment "If the relation hasAspect is present, it must associate the Property with an EnumerationKind." ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasAspect ],
