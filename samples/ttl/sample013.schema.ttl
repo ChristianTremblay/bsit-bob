@@ -682,18 +682,18 @@ p223:GlycolSolution-GlycolSolution-30Percent a p223:GlycolSolution-GlycolSolutio
     rdfs:label "GlycolSolution-30Percent" ;
     s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-30Percent.Constituent-H2O" ;
-            s223:hasQuantityKind qudtqk:VolumeFraction ;
-            s223:hasUnit unit:PERCENT ;
-            s223:hasValue 70 ;
-            s223:ofConstituent p223:Constituent-H2O ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-30Percent.Constituent-Glycol" ;
             s223:hasQuantityKind qudtqk:VolumeFraction ;
             s223:hasUnit unit:PERCENT ;
             s223:hasValue 30 ;
-            s223:ofConstituent p223:Constituent-Glycol ] ;
+            s223:ofConstituent p223:Constituent-Glycol ],
+        [ a s223:Property,
+                s223:QuantifiableProperty ;
+            rdfs:label "GlycolSolution-30Percent.Constituent-H2O" ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
+            s223:hasUnit unit:PERCENT ;
+            s223:hasValue 70 ;
+            s223:ofConstituent p223:Constituent-H2O ] ;
     rdfs:subClassOf p223:Fluid-Water,
         p223:Mix-Fluid,
         p223:Water-GlycolSolution,
@@ -1274,10 +1274,10 @@ s223:Property sh:property [ a sh:PropertyShape ;
             sh:path s223:hasValue ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ],
-        [ a sh:PropertyShape ;
-            sh:path s223:ofConstituent ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofSubstance ],
+        [ a sh:PropertyShape ;
+            sh:path s223:ofConstituent ] .
 

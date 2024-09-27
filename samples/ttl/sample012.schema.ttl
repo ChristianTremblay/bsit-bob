@@ -34,9 +34,9 @@ ex1:TestSystem a rdfs:Class,
     rdfs:label "__main__.TestSystem" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpIn ],
+            sh:path ex1:cpOut ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpOut ] .
+            sh:path ex1:cpIn ] .
 
 ex1:cpIn a rdf:Property ;
     rdfs:subPropertyOf s223:hasBoundaryConnectionPoint,
@@ -691,18 +691,18 @@ p223:GlycolSolution-GlycolSolution-15Percent a p223:GlycolSolution-GlycolSolutio
     rdfs:label "GlycolSolution-15Percent" ;
     s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
-            s223:hasQuantityKind qudtqk:VolumeFraction ;
-            s223:hasUnit unit:PERCENT ;
-            s223:hasValue 15 ;
-            s223:ofConstituent p223:Constituent-Glycol ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
             s223:hasQuantityKind qudtqk:VolumeFraction ;
             s223:hasUnit unit:PERCENT ;
             s223:hasValue 85 ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
+            s223:ofConstituent p223:Constituent-H2O ],
+        [ a s223:Property,
+                s223:QuantifiableProperty ;
+            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
+            s223:hasUnit unit:PERCENT ;
+            s223:hasValue 15 ;
+            s223:ofConstituent p223:Constituent-Glycol ] ;
     rdfs:subClassOf p223:Fluid-Water,
         p223:Mix-Fluid,
         p223:Water-GlycolSolution,
@@ -990,11 +990,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ] ;
+            s223:ofConstituent s223:DC-48V ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-Ethernet" ;
+            s223:ofConstituent s223:Signal-Ethernet ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1204,11 +1204,11 @@ p223:Water-GlycolSolution a p223:Water-GlycolSolution,
         sh:NodeShape ;
     rdfs:label "GlycolSolution" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "GlycolSolution.Constituent-Glycol" ;
-            s223:ofConstituent p223:Constituent-Glycol ],
-        [ a s223:Property ;
             rdfs:label "GlycolSolution.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
+            s223:ofConstituent p223:Constituent-H2O ],
+        [ a s223:Property ;
+            rdfs:label "GlycolSolution.Constituent-Glycol" ;
+            s223:ofConstituent p223:Constituent-Glycol ] ;
     rdfs:subClassOf p223:Fluid-Water,
         p223:Mix-Fluid,
         s223:EnumerationKind,
@@ -1302,14 +1302,14 @@ p223:YesNo-Yes a p223:YesNo-Yes,
         s223:EnumerationKind .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
+            sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ],
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ] .
+            sh:path s223:mapsTo ] .
 
 s223:Equipment sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
@@ -1317,11 +1317,11 @@ s223:Equipment sh:property [ a sh:PropertyShape ;
 s223:Property sh:property [ a sh:PropertyShape ;
             sh:path s223:ofConstituent ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasValue ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ] .
+            sh:path s223:ofSubstance ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasValue ] .
 
