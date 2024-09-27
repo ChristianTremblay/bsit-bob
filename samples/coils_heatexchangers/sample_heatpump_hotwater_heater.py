@@ -125,10 +125,8 @@ class DomesticHPWaterHeater(DomesticElectricalWaterHeater):
         # self['EVAPORATORFAN'].airOutlet -> ambiant
         # push air to outdoor
 
-        self.airInlet.mapsTo = self["FILTER"].airInlet
-        self.airOutlet.mapsTo = self["EVAPORATORFAN"].airOutlet
-        self.leavingFluid.mapsTo = self["tank"].leavingFluid
-        self.enteringFluid.mapsTo = self["tank"].enteringFluid
+        self["FILTER"].airInlet.mapsTo = self.airInlet
+        self["EVAPORATORFAN"].airOutlet.mapsTo = self.airOutlet
 
         # Relate the temperature of the surface of the condenser coil and the water flow in the tank to the temperature of the water leaving the tank
         heat_transfer = InsideTankHeatTransfer(
