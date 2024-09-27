@@ -11,7 +11,11 @@ from pathlib import Path
 import ontoenv
 import rdflib
 from dotenv import load_dotenv
-from .topquadrant_shacl import validate
+
+try:
+    from .topquadrant_shacl import validate
+except ImportError:
+    from topquadrant_shacl import validate
 
 from bob.core import dump
 

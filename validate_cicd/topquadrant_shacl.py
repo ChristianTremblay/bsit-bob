@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 from typing import Tuple
@@ -14,6 +15,7 @@ load_dotenv()
 MAX_ITERATIONS = 20
 S223_FOLDER = Path(os.getenv("S223_FOLDER"))
 # SHACL_FOLDER = Path(os.getenv('SHACL_FOLDER'))
+WINDOWS = True if sys.platform == "win32" else False
 
 
 def validate(data_graph: rdflib.Graph) -> Tuple[rdflib.Graph, bool, rdflib.Graph]:
@@ -55,15 +57,24 @@ def validate(data_graph: rdflib.Graph) -> Tuple[rdflib.Graph, bool, rdflib.Graph
                 / "topbraid-validate"
                 / "shacl-1.4.2"
                 / "bin"
-                / "shaclinfer.sh"
+                / "shaclinfer.bat"
+                if WINDOWS
+                else "shaclinfer.sh"
             )
             try:
                 print(f"Running {script} -datafile {target_file_path}")
-                output = subprocess.check_output(
-                    ["/bin/bash", script, "-datafile", target_file_path],
-                    stderr=subprocess.STDOUT,
-                    universal_newlines=True,
-                )
+                if WINDOWS:
+                    output = subprocess.check_output(
+                        [script, "-datafile", target_file_path],
+                        stderr=subprocess.STDOUT,
+                        universal_newlines=True,
+                    )
+                else:
+                    output = subprocess.check_output(
+                        ["/bin/bash", script, "-datafile", target_file_path],
+                        stderr=subprocess.STDOUT,
+                        universal_newlines=True,
+                    )
             except subprocess.CalledProcessError as e:
                 output = e.output  # Capture the output of the failed subprocess
             # Write logs to a file in the temporary directory (or the desired location)
@@ -91,15 +102,24 @@ def validate(data_graph: rdflib.Graph) -> Tuple[rdflib.Graph, bool, rdflib.Graph
             / "topbraid-validate"
             / "shacl-1.4.2"
             / "bin"
-            / "shaclvalidate.sh"
+            / "shaclvalidate.bat"
+            if WINDOWS
+            else "shaclvalidate.sh"
         )
         try:
             print(f"Running {script} -datafile {target_file_path}")
-            output = subprocess.check_output(
-                ["/bin/bash", script, "-datafile", target_file_path],
-                stderr=subprocess.STDOUT,
-                universal_newlines=True,
-            )
+            if WINDOWS:
+                output = subprocess.check_output(
+                    [script, "-datafile", target_file_path],
+                    stderr=subprocess.STDOUT,
+                    universal_newlines=True,
+                )
+            else:
+                output = subprocess.check_output(
+                    ["/bin/bash", script, "-datafile", target_file_path],
+                    stderr=subprocess.STDOUT,
+                    universal_newlines=True,
+                )
         except subprocess.CalledProcessError as e:
             output = e.output  # Capture the output of the failed subprocess
 
