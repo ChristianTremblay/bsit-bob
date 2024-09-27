@@ -42,12 +42,12 @@ bacnet:DeviceObject a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bacnet:system-status ],
         [ a sh:PropertyShape ;
-            sh:path bacnet:object-type ],
+            sh:datatype xsd:nonNegativeInteger ;
+            sh:path bacnet:vendor-identifier ],
         [ a sh:PropertyShape ;
             sh:path bacnet:vendor-name ],
         [ a sh:PropertyShape ;
-            sh:datatype xsd:nonNegativeInteger ;
-            sh:path bacnet:vendor-identifier ] .
+            sh:path bacnet:object-type ] .
 
 bacnet:Object a rdfs:Class,
         sh:NodeShape ;
@@ -57,9 +57,9 @@ bacnet:Object a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path bacnet:object-identifier ],
         [ a sh:PropertyShape ;
-            sh:path bacnet:description ],
+            sh:path bacnet:object-type ],
         [ a sh:PropertyShape ;
-            sh:path bacnet:object-type ] .
+            sh:path bacnet:description ] .
 
 bacnet:description a rdf:Property .
 
@@ -751,9 +751,9 @@ p223:GasMonitor a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:airInletSupply ],
+            sh:path bob:alarmStatus ],
         [ a sh:PropertyShape ;
-            sh:path bob:alarmStatus ] .
+            sh:path bob:airInletSupply ] .
 
 p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
         s223:EnumerationKind,
@@ -801,9 +801,9 @@ p223:Light a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex8:electricalInlet ],
+            sh:path ex8:lightOutlet ],
         [ a sh:PropertyShape ;
-            sh:path ex8:lightOutlet ] .
+            sh:path ex8:electricalInlet ] .
 
 p223:ManualAuto-Auto a p223:ManualAuto-Auto,
         s223:EnumerationKind,
@@ -1401,12 +1401,12 @@ bob:EthernetConnectionPoint a rdfs:Class,
     rdfs:label "bob.connections.network.EthernetConnectionPoint" ;
     rdfs:subClassOf s223:ConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
+            sh:path p223:data_rate ],
+        [ a sh:PropertyShape ;
             sh:path p223:VLAN ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path p223:hasProtocol ],
-        [ a sh:PropertyShape ;
-            sh:path p223:data_rate ] .
+            sh:path p223:hasProtocol ] .
 
 bob:Floor a rdfs:Class,
         sh:NodeShape ;
@@ -1447,44 +1447,44 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:occupancy ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airTransfer ],
-        [ a sh:PropertyShape ;
-            sh:path bob:ductAirInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:radiantHeating ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airChangePerHour ],
-        [ a sh:PropertyShape ;
-            sh:path bob:humidity ],
-        [ a sh:PropertyShape ;
-            sh:path bob:radiantCooling ],
-        [ a sh:PropertyShape ;
             sh:path bob:ductAirOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
-        [ a sh:PropertyShape ;
-            sh:path bob:doors ],
         [ a sh:PropertyShape ;
             sh:path bob:windows ],
         [ a sh:PropertyShape ;
+            sh:path bob:co ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airTransfer ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantHeating ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature_setpoint ],
+        [ a sh:PropertyShape ;
+            sh:path bob:humidity ],
+        [ a sh:PropertyShape ;
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantCooling ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
             sh:path bob:temperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:co ] .
+            sh:path bob:no2 ] .
 
 bob:HVACZone a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.space.hvac.HVACZone" ;
     rdfs:subClassOf s223:Zone ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
-            sh:path bob:co2 ],
+            sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
             sh:path bob:temperature ],
         [ a sh:PropertyShape ;
@@ -1492,7 +1492,7 @@ bob:HVACZone a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ] .
+            sh:path bob:co2 ] .
 
 bob:HotWaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -1561,12 +1561,12 @@ bob:PoEConnectionPoint a rdfs:Class,
     rdfs:label "bob.connections.network.PoEConnectionPoint" ;
     rdfs:subClassOf s223:ConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
-            sh:path p223:data_rate ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path p223:hasProtocol ],
         [ a sh:PropertyShape ;
-            sh:path bob:VLAN ] .
+            sh:path bob:VLAN ],
+        [ a sh:PropertyShape ;
+            sh:path p223:data_rate ] .
 
 bob:PowerFactor a rdfs:Class ;
     rdfs:label "bob.properties.electricity.PowerFactor" ;
@@ -1629,12 +1629,12 @@ bob:ZoneConnectionPoint a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
+            sh:path bob:isZoneConnectionPointOf ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
-        [ a sh:PropertyShape ;
-            sh:path bob:isZoneConnectionPointOf ] .
+            sh:path bob:mapsTo ] .
 
 p223:VLAN a rdf:Property .
 
@@ -1658,38 +1658,38 @@ qudt:hasUnit a rdf:Property .
 s223:BACnetExternalReference sh:property [ a sh:PropertyShape ;
             sh:path bacnet:property-identifier ],
         [ a sh:PropertyShape ;
-            sh:datatype xsd:nonNegativeInteger ;
-            sh:path bacnet:property-array-index ],
+            sh:path bacnet:object-identifier ],
         [ a sh:PropertyShape ;
             sh:path bacnet:device-identifier ],
         [ a sh:PropertyShape ;
-            sh:path bacnet:object-identifier ] .
+            sh:datatype xsd:nonNegativeInteger ;
+            sh:path bacnet:property-array-index ] .
 
 s223:Boiler sh:property [ a sh:PropertyShape ;
-            sh:path bob:naturalGasInlet ],
-        [ a sh:PropertyShape ;
             sh:path bob:hotWaterLeaving ],
         [ a sh:PropertyShape ;
-            sh:path bob:combustionAirOutlet ],
+            sh:path bob:electricalInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:electricalInlet ],
         [ a sh:PropertyShape ;
             sh:path bob:hotWaterEntering ],
         [ a sh:PropertyShape ;
+            sh:path bob:naturalGasInlet ],
+        [ a sh:PropertyShape ;
             sh:path bob:condensedWaterOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:electricalInlet ],
+            sh:path bob:combustionAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:electricalInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:combustionAirInlet ] .
+            sh:path bob:combustionAirOutlet ] .
 
 s223:Coil sh:property [ a sh:PropertyShape ;
+            sh:path bob:modulation ],
+        [ a sh:PropertyShape ;
             sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
             sh:path bob:onOffCommand ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:modulation ] .
+            sh:path bob:airInlet ] .
 
 s223:Connection sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
@@ -1720,9 +1720,9 @@ s223:CoolingCoil sh:property [ a sh:PropertyShape ;
             sh:path bob:chilledWaterOutlet ] .
 
 s223:Damper sh:property [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ] .
+            sh:path bob:airInlet ] .
 
 s223:DomainSpace sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
@@ -1746,9 +1746,9 @@ s223:Equipment sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
 
 s223:Fan sh:property [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
+            sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ] .
+            sh:path bob:airOutlet ] .
 
 s223:Fluid-Water s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
@@ -1788,9 +1788,9 @@ s223:GlycolSolution-GlycolSolution-30Percent s223:composedOf [ a s223:Property,
             qudt:hasUnit unit:PERCENT ] .
 
 s223:HeatingCoil sh:property [ a sh:PropertyShape ;
-            sh:path bob:hotWaterOutlet ],
+            sh:path bob:hotWaterInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:hotWaterInlet ] .
+            sh:path bob:hotWaterOutlet ] .
 
 s223:Junction sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
@@ -1803,32 +1803,32 @@ s223:ParticulateSensor sh:property [ a sh:PropertyShape ;
             sh:path s223:observes ] .
 
 s223:Property sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasValue ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path s223:ofSubstance ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasValue ],
         [ a sh:PropertyShape ;
             sh:path s223:ofConstituent ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ] .
+            sh:path s223:ofMedium ] .
 
 s223:Pump sh:property [ a sh:PropertyShape ;
             sh:path bob:onOffStatus ],
         [ a sh:PropertyShape ;
+            sh:path bob:onOffCommand ],
+        [ a sh:PropertyShape ;
             sh:path bob:waterInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:waterOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:onOffCommand ] .
+            sh:path bob:waterOutlet ] .
 
 s223:QuantifiableObservableProperty sh:property [ a sh:PropertyShape ;
             sh:path s223:hasSetpoint ] .
 
 s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasQuantityKind ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:path qudt:hasQuantityKind ] .
 
 s223:Refrigerant-R-22 s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
@@ -1845,35 +1845,35 @@ s223:Refrigerant-R-410A s223:composedOf [ a s223:Property,
             qudt:hasUnit unit:PERCENT ] .
 
 s223:Sensor sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasMeasurementPrecision ],
-        [ a sh:PropertyShape ;
-            sh:path s223:observes ],
+            sh:path s223:hasMaxRange ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMaxRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMeasurementPrecision ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMaxRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMinRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasMaxRange ],
+        [ a sh:PropertyShape ;
+            sh:path s223:observes ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMinRange ],
         [ a sh:PropertyShape ;
             sh:path s223:hasObservationLocation ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMaxRange ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMaxRange ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMaxRange ],
-        [ a sh:PropertyShape ;
             sh:path s223:hasMinRange ],
         [ a sh:PropertyShape ;
             sh:path s223:observes ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMeasurementUncertainty ],
+            sh:path s223:hasMaxRange ],
         [ a sh:PropertyShape ;
             sh:path s223:hasMinRange ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasMinRange ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMinRange ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasMaxRange ] .
+            sh:path s223:hasMeasurementUncertainty ] .
 
 s223:TemperatureSensor sh:property [ a sh:PropertyShape ;
             sh:path s223:observes ] .
@@ -1899,13 +1899,16 @@ s223:Water-DomesticWater s223:composedOf [ a s223:Property ;
 
 s223:Water-GlycolSolution s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
+            rdfs:label "GlycolSolution.Constituent-H2O" ;
+            s223:ofConstituent s223:Constituent-H2O ;
+            qudt:hasQuantityKind quantitykind:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ],
+        [ a s223:Property,
+                s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution.Constituent-Glycol" ;
             s223:ofConstituent s223:Constituent-Glycol ;
             qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ],
-        [ a s223:Property ;
-            rdfs:label "GlycolSolution.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
+            qudt:hasUnit unit:PERCENT ] .
 
 s223:Water-HotWater s223:composedOf [ a s223:Property ;
             rdfs:label "HotWater.Constituent-H2O" ;
@@ -1924,8 +1927,8 @@ s223:Water-Steam s223:composedOf [ a s223:Property ;
             s223:ofConstituent s223:Constituent-H2O ] .
 
 s223:Zone sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
+            sh:path bob:hasZoneConnectionPoint ],
         [ a sh:PropertyShape ;
-            sh:path bob:hasZoneConnectionPoint ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ] .
 
