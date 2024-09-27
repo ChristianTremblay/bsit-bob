@@ -9,8 +9,9 @@ optionally remove OWL import statements, and save the results as a Turtle file.
 
 import argparse
 import sys
+from pathlib import Path
 
-from rdflib import OWL, RDF, RDFS, Graph, URIRef
+from rdflib import OWL, RDF, RDFS, Graph, Literal, URIRef
 
 try:
     import owlrl
@@ -116,9 +117,20 @@ if args.clean:
         if s == o:
             g.remove((s, p, o))
 
+_path = Path(args.ttl[-1])
+
+prefix = _path.stem.split(".")[0]
+header = f"# baseURI: http://example.org/{prefix}\n# imports: http://data.ashrae.org/standard223/1.0/model/all\n# prefix: {prefix}\n\n"
+s = URIRef(f"http://example.org/{prefix}")
+g.add((s, RDF.type, OWL.Ontology))
+g.add((s, OWL.imports, URIRef("http://data.ashrae.org/standard223/1.0/model/all")))
+g.add((s, OWL.versionInfo, Literal("Created with Bob The Builder")))
+
 # save the merged graph
 with open(args.ttl[-1], "wb") as f:
+    f.write(header.encode("utf-8"))
     print(f"Saving merged graph to {args.ttl[-1]}")
     g.serialize(f, format="turtle")
+
 
 print("Done")
