@@ -30,6 +30,20 @@ def test_build_IBAL_samples(bob_fixture):
     assert not subprocess.call(["python", filename])
 
 
+def test_build_coilshp_samples(bob_fixture):
+    samples_folder = os.path.join(
+        bob_fixture["samples_directory"], "coils_heatexchangers"
+    )
+    samples_ttl_folder = bob_fixture["samples_ttl_directory"]
+    files = [
+        os.path.join(samples_folder, f)
+        for f in os.listdir(samples_folder)
+        if f.endswith(".py")
+    ]
+    for filename in files:
+        assert not subprocess.call(["python", filename])
+
+
 def test_create_html(bob_fixture):
     samples_folder = bob_fixture["samples_directory"]
     job = os.path.join(samples_folder, "create_html.py")
