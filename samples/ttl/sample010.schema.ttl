@@ -1,8 +1,7 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
-@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -18,42 +17,6 @@ bob:AirConnectionPoint a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ] .
 
-bob:AirSystemConnectionPoint a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.connections.air.AirSystemConnectionPoint" ;
-    rdfs:subClassOf bob:SystemConnectionPoint ;
-    sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
-
-bob:InletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirInletSystemConnectionPoint",
-        "bob.core.InletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:InletSystemConnectionPoint,
-        bob:SystemConnectionPoint .
-
-bob:OutletSystemConnectionPoint a rdfs:Class ;
-    rdfs:label "bob.connections.air.AirOutletSystemConnectionPoint",
-        "bob.core.OutletSystemConnectionPoint" ;
-    rdfs:subClassOf bob:AirSystemConnectionPoint,
-        bob:OutletSystemConnectionPoint,
-        bob:SystemConnectionPoint .
-
-bob:SystemConnectionPoint a rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "bob.core.SystemConnectionPoint" ;
-    rdfs:comment """
-    System Connection Point
-    """ ;
-    sh:property [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
-        [ a sh:PropertyShape ;
-            sh:path bob:isSystemConnectionPointOf ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
-
 bob:WaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.connections.liquid.WaterConnectionPoint" ;
@@ -61,12 +24,6 @@ bob:WaterConnectionPoint a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ] .
-
-bob:hasSystemConnectionPoint a rdf:Property .
-
-bob:isSystemConnectionPointOf a rdf:Property .
-
-bob:mapsTo a rdf:Property .
 
 g36:EnumerationKind-G36AlarmLevels a s223:EnumerationKind,
         g36:EnumerationKind-G36AlarmLevels,
@@ -714,14 +671,14 @@ p223:GlycolSolution-GlycolSolution-15Percent a p223:GlycolSolution-GlycolSolutio
     s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
-            s223:hasQuantityKind quantitykind:VolumeFraction ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
             s223:hasUnit unit:PERCENT ;
             s223:hasValue 15 ;
             s223:ofConstituent p223:Constituent-Glycol ],
         [ a s223:Property,
                 s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
-            s223:hasQuantityKind quantitykind:VolumeFraction ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
             s223:hasUnit unit:PERCENT ;
             s223:hasValue 85 ;
             s223:ofConstituent p223:Constituent-H2O ] ;
@@ -742,18 +699,18 @@ p223:GlycolSolution-GlycolSolution-30Percent a p223:GlycolSolution-GlycolSolutio
     rdfs:label "GlycolSolution-30Percent" ;
     s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-30Percent.Constituent-Glycol" ;
-            s223:hasQuantityKind quantitykind:VolumeFraction ;
-            s223:hasUnit unit:PERCENT ;
-            s223:hasValue 30 ;
-            s223:ofConstituent p223:Constituent-Glycol ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
             rdfs:label "GlycolSolution-30Percent.Constituent-H2O" ;
-            s223:hasQuantityKind quantitykind:VolumeFraction ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
             s223:hasUnit unit:PERCENT ;
             s223:hasValue 70 ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
+            s223:ofConstituent p223:Constituent-H2O ],
+        [ a s223:Property,
+                s223:QuantifiableProperty ;
+            rdfs:label "GlycolSolution-30Percent.Constituent-Glycol" ;
+            s223:hasQuantityKind qudtqk:VolumeFraction ;
+            s223:hasUnit unit:PERCENT ;
+            s223:hasValue 30 ;
+            s223:ofConstituent p223:Constituent-Glycol ] ;
     rdfs:subClassOf p223:Fluid-Water,
         p223:Mix-Fluid,
         p223:Water-GlycolSolution,
@@ -1328,12 +1285,12 @@ s223:Connection sh:property [ a sh:PropertyShape ;
             sh:path s223:hasMedium ] .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
             sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
             sh:path s223:isConnectionPointOf ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ] .
 
@@ -1350,12 +1307,4 @@ s223:Property sh:property [ a sh:PropertyShape ;
             sh:path s223:ofConstituent ],
         [ a sh:PropertyShape ;
             sh:path s223:hasValue ] .
-
-s223:System sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ],
-        [ a sh:PropertyShape ;
-            sh:path bob:hasSystemConnectionPoint ] .
 

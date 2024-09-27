@@ -169,11 +169,11 @@ hs.hvac_zone_2.airOutlet.mapsTo = hs.corridorSouth_hvac.airTransfer
 # hd.vav2.airInlet.mapsTo = hd.vav2["VAV2_damper"].airInlet
 # hd.vav2.airOutlet.mapsTo = hd.vav2["VAV2_HeatingCoil"].airOutlet
 
-hd.ahu.outsideAirInlet.mapsTo = hd.ahu["OADPR"].airInlet
-hd.ahu.returnAirInlet.mapsTo = hd.ahu["MADPR"].airInlet
-hd.ahu.supplyAirOutlet.mapsTo = hd.ahu["SF"].airOutlet
-hd.ahu.exhaustAirOutlet.mapsTo = hd.ahu["EADPR"].airOutlet
-hd.ahu.electricalInlet.mapsTo = hd.ahu["SF_Starter"].electricalInlet
+hd.ahu.outsideAirInlet = hd.ahu["OADPR"].airInlet
+hd.ahu.returnAirInlet = hd.ahu["MADPR"].airInlet
+hd.ahu.supplyAirOutlet = hd.ahu["SF"].airOutlet
+hd.ahu.exhaustAirOutlet = hd.ahu["EADPR"].airOutlet
+hd.ahu.electricalInlet = hd.ahu["SF_Starter"].electricalInlet
 
 if __name__ == "__main__":
     dump()

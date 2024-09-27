@@ -9,7 +9,6 @@ from ...connections.controlsignal import (
     ModulationSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
-    OnOffSignalSystemConnectionPoint,
 )
 from ...connections.network import (
     RS485BidirectionalConnectionPoint,

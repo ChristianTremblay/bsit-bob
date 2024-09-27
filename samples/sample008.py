@@ -4,17 +4,14 @@ from bob.core import bind_model_namespace, data_graph, schema_graph, dump
 from header import sample_header
 
 from bob.core import (
+    BoundaryConnectionPoint,
     Equipment,
     InletConnectionPoint,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
     System,
 )
 from bob.connections.air import (
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
-    AirInletSystemConnectionPoint,
-    AirOutletSystemConnectionPoint,
 )
 
 model_name = Path(__file__).stem
@@ -26,14 +23,14 @@ class TestEquipment(Equipment):
 
 
 class TestSystem(System):
-    cpI: AirInletSystemConnectionPoint
-    cpO: AirOutletSystemConnectionPoint
+    cpI: BoundaryConnectionPoint
+    cpO: BoundaryConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
         equipment = TestEquipment(label=kwargs["label"] + "-d")
-        self.cpI.mapsTo = equipment.cp
+        self.cpI = equipment.cp
 
 
 # two independant systems

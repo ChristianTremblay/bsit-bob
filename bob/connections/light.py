@@ -5,20 +5,17 @@ from ..core import (
     P223,
     S223,
     BidirectionalConnectionPoint,
-    BidirectionalSystemConnectionPoint,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
-    InletSystemConnectionPoint,
     InletZoneConnectionPoint,
     Medium,
     OutletConnectionPoint,
-    OutletSystemConnectionPoint,
     OutletZoneConnectionPoint,
-    SystemConnectionPoint,
     ZoneConnectionPoint,
 )
 from ..enum import Light
+
 _namespace = BOB
 
 
@@ -33,22 +30,6 @@ class LightInletConnectionPoint(LightConnectionPoint, InletConnectionPoint):
 
 class LightOutletConnectionPoint(LightConnectionPoint, OutletConnectionPoint):
     _class_iri = S223.OutletConnectionPoint
-
-
-class LightSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Light
-
-
-class LightInletSystemConnectionPoint(
-    LightSystemConnectionPoint, InletSystemConnectionPoint
-):
-    _class_iri = BOB.InletSystemConnectionPoint
-
-
-class LightOutletSystemConnectionPoint(
-    LightSystemConnectionPoint, OutletSystemConnectionPoint
-):
-    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 class LightZoneConnectionPoint(ZoneConnectionPoint):
@@ -85,22 +66,6 @@ class LightVisibleOutletConnectionPoint(
     LightVisibleConnectionPoint, OutletConnectionPoint
 ):
     _class_iri = S223.OutletConnectionPoint
-
-
-class LightVisibleSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium = Light.Visible
-
-
-class LightVisibleInletSystemConnectionPoint(
-    LightVisibleSystemConnectionPoint, InletSystemConnectionPoint
-):
-    _class_iri = BOB.InletSystemConnectionPoint
-
-
-class LightVisibleOutletSystemConnectionPoint(
-    LightVisibleSystemConnectionPoint, OutletSystemConnectionPoint
-):
-    _class_iri = BOB.OutletSystemConnectionPoint
 
 
 class LightVisibleZoneConnectionPoint(ZoneConnectionPoint):

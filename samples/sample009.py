@@ -6,8 +6,7 @@ from header import sample_header
 
 from bob.core import (
     Equipment,
-    InletSystemConnectionPoint,
-    OutletSystemConnectionPoint,
+    BoundaryConnectionPoint,
     System,
 )
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
@@ -21,7 +20,7 @@ class EquipmentIn1(Equipment):
 
 
 class SystemIn1(System):
-    cp: InletSystemConnectionPoint
+    cp: BoundaryConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -29,7 +28,7 @@ class SystemIn1(System):
         equipment = EquipmentIn1(label=kwargs["label"] + "-d")
 
         self > equipment
-        self.cp.mapsTo = equipment.cp
+        self.cp = equipment.cp
 
 
 class EquipmentIn2(Equipment):
@@ -38,8 +37,8 @@ class EquipmentIn2(Equipment):
 
 
 class SystemIn2(System):
-    cp1: InletSystemConnectionPoint
-    cp2: InletSystemConnectionPoint
+    cp1: BoundaryConnectionPoint
+    cp2: BoundaryConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -47,8 +46,8 @@ class SystemIn2(System):
         equipment = EquipmentIn2(label=kwargs["label"] + "-d")
 
         self > equipment
-        self.cp1.mapsTo = equipment.cp1
-        self.cp2.mapsTo = equipment.cp2
+        self.cp1 = equipment.cp1
+        self.cp2 = equipment.cp2
 
 
 class EquipmentOut1(Equipment):
@@ -56,7 +55,7 @@ class EquipmentOut1(Equipment):
 
 
 class SystemOut1(System):
-    cp: OutletSystemConnectionPoint
+    cp: BoundaryConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -64,7 +63,7 @@ class SystemOut1(System):
         equipment = EquipmentOut1(label=kwargs["label"] + "-d")
 
         self > equipment
-        self.cp.mapsTo = equipment.cp
+        self.cp = equipment.cp
 
 
 class EquipmentOut2(Equipment):
@@ -73,8 +72,8 @@ class EquipmentOut2(Equipment):
 
 
 class SystemOut2(System):
-    cp1: OutletSystemConnectionPoint
-    cp2: OutletSystemConnectionPoint
+    cp1: BoundaryConnectionPoint
+    cp2: BoundaryConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -82,8 +81,8 @@ class SystemOut2(System):
         equipment = EquipmentOut2(label=kwargs["label"] + "-d")
 
         self > equipment
-        self.cp1.mapsTo = equipment.cp1
-        self.cp2.mapsTo = equipment.cp2
+        self.cp1 = equipment.cp1
+        self.cp2 = equipment.cp2
 
 
 class EquipmentInOut(Equipment):
@@ -92,8 +91,8 @@ class EquipmentInOut(Equipment):
 
 
 class SystemInOut(System):
-    cp1: InletSystemConnectionPoint
-    cp2: OutletSystemConnectionPoint
+    cp1: BoundaryConnectionPoint
+    cp2: BoundaryConnectionPoint
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
@@ -101,8 +100,8 @@ class SystemInOut(System):
         equipment = EquipmentInOut(label=kwargs["label"] + "-d")
 
         self > equipment
-        self.cp1.mapsTo = equipment.cp1
-        self.cp2.mapsTo = equipment.cp2
+        self.cp1 = equipment.cp1
+        self.cp2 = equipment.cp2
 
 
 # two independant systems
