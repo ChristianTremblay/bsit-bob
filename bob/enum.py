@@ -193,15 +193,23 @@ Air.CompressedAir = CompressedAir = Air("CompressedAir")
 Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas")
 Fluid.Refrigerant = Refrigerant = Fluid("Refrigerant")
 Refrigerant.R410A = R410a = Refrigerant("R-410A")
-R410a.add_constituent(const_R410A)
+R410a.add_constituent(
+    const_R410A, hasQuantityKind=QUANTITYKIND.VolumeFraction, hasUnit=UNIT.PERCENT
+)
 Refrigerant.R32 = R32 = Refrigerant("R-32", _alt_namespace=P223)
-R32.add_constituent(const_R32)
+R32.add_constituent(
+    const_R32, hasQuantityKind=QUANTITYKIND.VolumeFraction, hasUnit=UNIT.PERCENT
+)
 Refrigerant.R22 = R22 = Refrigerant("R-22")
-R22.add_constituent(const_R22)
+R22.add_constituent(
+    const_R22, hasQuantityKind=QUANTITYKIND.VolumeFraction, hasUnit=UNIT.PERCENT
+)
 
 # Water
 Fluid.Water = Water = Fluid("Water")
-Water.add_constituent(Constituent.H2O)
+Water.add_constituent(
+    Constituent.H2O, hasQuantityKind=QUANTITYKIND.VolumeFraction, hasUnit=UNIT.PERCENT
+)
 
 Water.ChilledWater = ChilledWater = Water("ChilledWater")
 
@@ -218,7 +226,11 @@ Water.DomesticHotWater = DomesticHotWater = Water("DomesticHotWater")
 Water.CondensedWater = CondensedWater = Water("CondensedWater")
 
 Water.GlycolSolution = GlycolSolution = Water("GlycolSolution")
-GlycolSolution.add_constituent(Constituent.Glycol)
+GlycolSolution.add_constituent(
+    Constituent.Glycol,
+    hasQuantityKind=QUANTITYKIND.VolumeFraction,
+    hasUnit=UNIT.PERCENT,
+)
 
 GlycolSolution.GlycolSolution_15Percent = GlycolSolution_15Percent = GlycolSolution(
     "GlycolSolution-15Percent"
