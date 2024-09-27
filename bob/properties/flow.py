@@ -9,6 +9,7 @@ from ..core import (
     Medium,
     QuantifiableObservableProperty,
 )
+from ..enum import Fluid
 
 _namespace = BOB
 
@@ -16,6 +17,6 @@ _namespace = BOB
 class Flow(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.VolumeFlowRate
     hasUnit: URIRef
-    ofMedium: Medium  # set from the sensor
+    ofMedium: Fluid  # set from the sensor
     # isObservedBy: Sensor
-    measuresMedium: Medium  # set from the sensor
+    measuresMedium: Fluid  # set from the sensor
