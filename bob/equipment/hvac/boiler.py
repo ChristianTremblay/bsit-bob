@@ -90,9 +90,9 @@ class DomesticElectricalWaterHeater(Equipment):
         _config = template_update(domesticwaterheater_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self["tank"].set_medium(DomesticWater)
-        self.leavingFluid.hasMedium = DomesticHotWater
-        self.enteringFluid.hasMedium = DomesticWater
+        # self["tank"].set_medium(DomesticWater)
+        # self.leavingFluid.hasMedium = DomesticHotWater
+        # self.enteringFluid.hasMedium = DomesticWater
         self.heatExchangeConnection = WaterConnection(label="heatExchangeConnection")
         self["tank"].containedFluid >> self.heatExchangeConnection
         self["element1"].fluidContact >> self.heatExchangeConnection

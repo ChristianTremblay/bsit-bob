@@ -62,9 +62,9 @@ ex1:EquipmentIn2 a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
+            sh:path ex1:cp2 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
+            sh:path ex1:cp1 ] .
 
 ex1:EquipmentInOut a rdfs:Class,
         sh:NodeShape ;
@@ -72,9 +72,9 @@ ex1:EquipmentInOut a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:EquipmentOut1 a rdfs:Class,
         sh:NodeShape ;
@@ -106,18 +106,18 @@ ex1:SystemIn2 a rdfs:Class,
     rdfs:label "__main__.SystemIn2" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
+            sh:path ex1:cp2 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
+            sh:path ex1:cp1 ] .
 
 ex1:SystemInOut a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "__main__.SystemInOut" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:SystemOut1 a rdfs:Class,
         sh:NodeShape ;
@@ -932,11 +932,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1099,6 +1099,74 @@ p223:TrueFalse-True a p223:TrueFalse-True,
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
 
+p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
+        s223:EnumerationKind,
+        s223:Mix,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "DomesticHotWater" ;
+    s223:composedOf [ a s223:Property ;
+            rdfs:label "DomesticHotWater.Constituent-H2O" ;
+            s223:ofConstituent s223:Constituent-H2O ] ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Water-DomesticWater a p223:Water-DomesticWater,
+        s223:EnumerationKind,
+        s223:Mix,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "DomesticWater" ;
+    s223:composedOf [ a s223:Property ;
+            rdfs:label "DomesticWater.Constituent-H2O" ;
+            s223:ofConstituent s223:Constituent-H2O ] ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Water-MixedWater a p223:Water-MixedWater,
+        s223:EnumerationKind,
+        s223:Mix,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "MixedWater" ;
+    s223:composedOf [ a s223:Property ;
+            rdfs:label "MixedWater.Constituent-H2O" ;
+            s223:ofConstituent s223:Constituent-H2O ] ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Water-PotableWater a p223:Water-PotableWater,
+        s223:EnumerationKind,
+        s223:Mix,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "PotableWater" ;
+    s223:composedOf [ a s223:Property ;
+            rdfs:label "PotableWater.Constituent-H2O" ;
+            s223:ofConstituent s223:Constituent-H2O ] ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
 p223:YesNo-No a p223:YesNo-No,
         s223:EnumerationKind,
         rdfs:Class,
@@ -1124,14 +1192,14 @@ s223:Connection sh:property [ a sh:PropertyShape ;
             sh:path s223:hasMedium ] .
 
 s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ],
-        [ a sh:PropertyShape ;
             sh:path s223:connectsThrough ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
+            sh:path s223:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ] .
+            sh:path s223:isConnectionPointOf ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ] .
 
 s223:Equipment sh:property [ a sh:PropertyShape ;
             sh:path s223:hasPhysicalLocation ] .
@@ -1145,16 +1213,16 @@ s223:Fluid-Water s223:composedOf [ a s223:Property,
 
 s223:GlycolSolution-GlycolSolution-15Percent s223:composedOf [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
-            s223:hasValue 15 ;
-            s223:ofConstituent s223:Constituent-Glycol ;
+            rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
+            s223:hasValue 85 ;
+            s223:ofConstituent s223:Constituent-H2O ;
             qudt:hasQuantityKind quantitykind:VolumeFraction ;
             qudt:hasUnit unit:PERCENT ],
         [ a s223:Property,
                 s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
-            s223:hasValue 85 ;
-            s223:ofConstituent s223:Constituent-H2O ;
+            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
+            s223:hasValue 15 ;
+            s223:ofConstituent s223:Constituent-Glycol ;
             qudt:hasQuantityKind quantitykind:VolumeFraction ;
             qudt:hasUnit unit:PERCENT ] .
 
@@ -1174,15 +1242,15 @@ s223:GlycolSolution-GlycolSolution-30Percent s223:composedOf [ a s223:Property,
             qudt:hasUnit unit:PERCENT ] .
 
 s223:Property sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ],
+            sh:path s223:ofConstituent ],
+        [ a sh:PropertyShape ;
+            sh:path s223:hasValue ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
-            sh:path s223:ofConstituent ],
-        [ a sh:PropertyShape ;
-            sh:path s223:hasValue ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofSubstance ] .
 
 s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
             sh:path qudt:hasQuantityKind ],
@@ -1206,10 +1274,10 @@ s223:Refrigerant-R-410A s223:composedOf [ a s223:Property,
 s223:System sh:property [ a sh:PropertyShape ;
             sh:path bob:hasSystemConnectionPoint ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasDomain ],
+            sh:path s223:hasPhysicalLocation ],
         [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasDomain ] .
 
 s223:Water-ChilledWater s223:composedOf [ a s223:Property ;
             rdfs:label "ChilledWater.Constituent-H2O" ;
@@ -1217,14 +1285,6 @@ s223:Water-ChilledWater s223:composedOf [ a s223:Property ;
 
 s223:Water-CondensedWater s223:composedOf [ a s223:Property ;
             rdfs:label "CondensedWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
-
-s223:Water-DomesticHotWater s223:composedOf [ a s223:Property ;
-            rdfs:label "DomesticHotWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
-
-s223:Water-DomesticWater s223:composedOf [ a s223:Property ;
-            rdfs:label "DomesticWater.Constituent-H2O" ;
             s223:ofConstituent s223:Constituent-H2O ] .
 
 s223:Water-GlycolSolution s223:composedOf [ a s223:Property,
@@ -1242,14 +1302,6 @@ s223:Water-GlycolSolution s223:composedOf [ a s223:Property,
 
 s223:Water-HotWater s223:composedOf [ a s223:Property ;
             rdfs:label "HotWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
-
-s223:Water-MixedWater s223:composedOf [ a s223:Property ;
-            rdfs:label "MixedWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
-
-s223:Water-PotableWater s223:composedOf [ a s223:Property ;
-            rdfs:label "PotableWater.Constituent-H2O" ;
             s223:ofConstituent s223:Constituent-H2O ] .
 
 s223:Water-Steam s223:composedOf [ a s223:Property ;
