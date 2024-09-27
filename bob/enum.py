@@ -213,15 +213,17 @@ Water.add_constituent(
 
 Water.ChilledWater = ChilledWater = Water("ChilledWater")
 
-Water.PotableWater = PotableWater = Water("PotableWater")
+Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
 
 Water.HotWater = HotWater = Water("HotWater")
 
-Water.MixedWater = MixedWater = Water("MixedWater")
+Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
 
-Water.DomesticWater = DomesticWater = Water("DomesticWater")
+Water.DomesticWater = DomesticWater = Water("DomesticWater", _alt_namespace=P223)
 
-Water.DomesticHotWater = DomesticHotWater = Water("DomesticHotWater")
+Water.DomesticHotWater = DomesticHotWater = Water(
+    "DomesticHotWater", _alt_namespace=P223
+)
 
 Water.CondensedWater = CondensedWater = Water("CondensedWater")
 
