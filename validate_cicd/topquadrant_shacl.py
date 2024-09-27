@@ -52,14 +52,13 @@ def validate(data_graph: rdflib.Graph) -> Tuple[rdflib.Graph, bool, rdflib.Graph
             iteration_count += 1
             # get the shacl-1.4.2/bin/shaclinfer.sh script from the same directory
             # as this file
+            _script_name = "shaclinfer.bat" if WINDOWS else "shaclinfer.sh"
             script = (
                 Path(__file__).resolve().parent.parent
                 / "topbraid-validate"
                 / "shacl-1.4.2"
                 / "bin"
-                / "shaclinfer.bat"
-                if WINDOWS
-                else "shaclinfer.sh"
+                / _script_name
             )
             try:
                 print(f"Running {script} -datafile {target_file_path}")
@@ -97,14 +96,13 @@ def validate(data_graph: rdflib.Graph) -> Tuple[rdflib.Graph, bool, rdflib.Graph
 
         # get the shacl-1.4.2/bin/shaclvalidate.sh script from the same directory
         # as this file
+        _script_name = "shaclvalidate.bat" if WINDOWS else "shaclvalidate.sh"
         script = (
             Path(__file__).resolve().parent.parent
             / "topbraid-validate"
             / "shacl-1.4.2"
             / "bin"
-            / "shaclvalidate.bat"
-            if WINDOWS
-            else "shaclvalidate.sh"
+            / _script_name
         )
         try:
             print(f"Running {script} -datafile {target_file_path}")
