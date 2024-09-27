@@ -231,6 +231,11 @@ GlycolSolution.add_constituent(
     hasQuantityKind=QUANTITYKIND.VolumeFraction,
     hasUnit=UNIT.PERCENT,
 )
+GlycolSolution.add_constituent(
+    Constituent.H2O,
+    hasQuantityKind=QUANTITYKIND.VolumeFraction,
+    hasUnit=UNIT.PERCENT,
+)
 
 GlycolSolution.GlycolSolution_15Percent = GlycolSolution_15Percent = GlycolSolution(
     "GlycolSolution-15Percent"
