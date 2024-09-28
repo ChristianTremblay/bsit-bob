@@ -98,12 +98,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:isSystemConnectionPointOf ],
+        [ a sh:PropertyShape ;
             sh:path bob:mapsTo ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
-            sh:path bob:isSystemConnectionPointOf ] .
+            sh:path s223:hasMedium ] .
 
 bob:hasSystemConnectionPoint a rdf:Property .
 
@@ -125,9 +125,9 @@ ex1:EquipmentIn2 a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:EquipmentInOut a rdfs:Class,
         sh:NodeShape ;
@@ -135,9 +135,9 @@ ex1:EquipmentInOut a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ],
+            sh:path ex1:cp1 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ] .
+            sh:path ex1:cp2 ] .
 
 ex1:EquipmentOut1 a rdfs:Class,
         sh:NodeShape ;
@@ -153,9 +153,9 @@ ex1:EquipmentOut2 a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
+            sh:path ex1:cp2 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
+            sh:path ex1:cp1 ] .
 
 ex1:SystemIn1 a rdfs:Class,
         sh:NodeShape ;
@@ -178,9 +178,9 @@ ex1:SystemInOut a rdfs:Class,
     rdfs:label "__main__.SystemInOut" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cp1 ],
+            sh:path ex1:cp2 ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cp2 ] .
+            sh:path ex1:cp1 ] .
 
 ex1:SystemOut1 a rdfs:Class,
         sh:NodeShape ;
@@ -732,12 +732,13 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
 
 p223:Mix-PowerAndSignal a p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PowerAndSignal" ;
     rdfs:subClassOf s223:EnumerationKind,
-        s223:Medium-Mix .
+        s223:EnumerationKind-Substance,
+        s223:Medium-Mix,
+        s223:Substance-Medium .
 
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
@@ -990,16 +991,15 @@ p223:Position-Unknown a p223:Position-Unknown,
 
 p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1008,7 +1008,6 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
 
 p223:PowerAndSignal-USB a p223:PowerAndSignal-USB,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "USB" ;
@@ -1087,7 +1086,6 @@ p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
 
 p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "R-32" ;
@@ -1161,7 +1159,6 @@ p223:TrueFalse-True a p223:TrueFalse-True,
 
 p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DomesticHotWater" ;
@@ -1174,7 +1171,6 @@ p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
 
 p223:Water-DomesticWater a p223:Water-DomesticWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DomesticWater" ;
@@ -1187,7 +1183,6 @@ p223:Water-DomesticWater a p223:Water-DomesticWater,
 
 p223:Water-MixedWater a p223:Water-MixedWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "MixedWater" ;
@@ -1200,7 +1195,6 @@ p223:Water-MixedWater a p223:Water-MixedWater,
 
 p223:Water-PotableWater a p223:Water-PotableWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PotableWater" ;

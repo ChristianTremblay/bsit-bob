@@ -1386,6 +1386,7 @@ class EnumerationKind(Node):
         self._parent = None
         self._children = set([self])
         self._constituents = set()
+        self.composedOf = set()
 
     def __call__(self, name, *, _alt_namespace=None, **kwargs) -> EnumerationKind:
         _log.debug("EnumerationKind.__call__ %r", name)
@@ -1421,92 +1422,18 @@ class EnumerationKind(Node):
 
         return new_child
 
-
-#
-#   Top Level EnumerationKind Instances
-#
-
-# General EnumerationKind
-Substance = EnumerationKind("Substance")
-Substance.Medium = Medium = Substance("Medium")
-Medium.Constituent = Medium("Constituent")
-Medium.Mix = Medium("Mix")
-
-Role = EnumerationKind("Role")
-Domain = EnumerationKind("Domain")
-
-
-class Constituent(EnumerationKind):
-    def __init__(self, name, *args, **kwargs) -> None:
-        _log.debug("Constituent.__init__ %r", name)
-
-        # give it a default label that matches the name
-        if "label" not in kwargs:
-            kwargs["label"] = name
-
-        if "_alt_namespace" in kwargs:
-            _ns = kwargs.pop("_alt_namespace")
-            kwargs["_node_iri"] = _ns["Constituent" + "-" + name]
-        elif "_node_iri" not in kwargs:
-            kwargs["_node_iri"] = _namespace["Constituent" + "-" + name]
-
-        super().__init__(name, **kwargs)
-
-        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
-        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
-        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
-
-        self._schema_graph.add(
-            (self._node_iri, RDFS.subClassOf, _namespace["Constituent"])
-        )
-
-        # funky parents
-        self._parent = Medium.Constituent
-        Medium.Constituent._children.add(self)
-        Medium._children.add(self)
-        Substance._children.add(self)
-
-    # def __call__(self, *args, **kwargs):
-    #     raise NotImplementedError("no sub-constituents")
-
-
-class Mix(EnumerationKind):
-    # composedOf: Set[Property | QuantifiableProperty]
-
-    def __init__(self, name, *args, **kwargs) -> None:
-        _log.debug("Mix.__init__ %r", name)
-
-        # give it a default label that matches the name
-        if "label" not in kwargs:
-            kwargs["label"] = name
-
-        if "_alt_namespace" in kwargs:
-            _ns = kwargs.pop("_alt_namespace")
-            kwargs["_node_iri"] = _ns["Mix" + "-" + name]
-        elif "_node_iri" not in kwargs:
-            kwargs["_node_iri"] = _namespace["Mix" + "-" + name]
-
-        super().__init__(name, **kwargs)
-
-        self.composedOf = set()
-
-        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
-        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
-        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
-
-        self._schema_graph.add(
-            (self._node_iri, RDFS.subClassOf, _namespace["Medium-Mix"])
-        )
-
-        # funky parent reference
-        self._parent = Medium.Mix
-
     def add_constituent(self, constituent: Constituent, *args, **kwargs) -> None:
         _log.debug("Mix.add_constituent %r %r %r", constituent, args, kwargs)
         _log.debug("    - self: %r", self)
 
         if not isinstance(constituent, Constituent):
             raise TypeError("constituent")
+
+        # if not isinstance(self, Mix):
+        #    raise TypeError("Only Mix can have constituents")
+
+        if not self.composedOf:
+            self.composedOf = set()
 
         # look for an existing reference to this constituent
         for prop in self.composedOf:
@@ -1565,6 +1492,54 @@ class Mix(EnumerationKind):
         self._constituents.add(constituent)
         prop._schema_graph.add((self._node_iri, S223.composedOf, prop._node_iri))
         self.composedOf.add(prop)
+
+
+#
+#   Top Level EnumerationKind Instances
+#
+
+# General EnumerationKind
+Substance = EnumerationKind("Substance")
+Substance.Medium = Medium = Substance("Medium")
+Medium.Constituent = Medium("Constituent")
+Medium.Mix = Mix = Medium("Mix")
+
+Role = EnumerationKind("Role")
+Domain = EnumerationKind("Domain")
+
+
+class Constituent(EnumerationKind):
+    def __init__(self, name, *args, **kwargs) -> None:
+        _log.debug("Constituent.__init__ %r", name)
+
+        # give it a default label that matches the name
+        if "label" not in kwargs:
+            kwargs["label"] = name
+
+        if "_alt_namespace" in kwargs:
+            _ns = kwargs.pop("_alt_namespace")
+            kwargs["_node_iri"] = _ns["Constituent" + "-" + name]
+        elif "_node_iri" not in kwargs:
+            kwargs["_node_iri"] = _namespace["Constituent" + "-" + name]
+
+        super().__init__(name, **kwargs)
+
+        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
+        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
+        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
+
+        self._schema_graph.add(
+            (self._node_iri, RDFS.subClassOf, _namespace["Constituent"])
+        )
+
+        # funky parents
+        self._parent = Medium.Constituent
+        Medium.Constituent._children.add(self)
+        Medium._children.add(self)
+        Substance._children.add(self)
+
+    # def __call__(self, *args, **kwargs):
+    #     raise NotImplementedError("no sub-constituents")
 
 
 class System(Container):

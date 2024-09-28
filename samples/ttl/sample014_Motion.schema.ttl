@@ -119,35 +119,35 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:windows ],
+        [ a sh:PropertyShape ;
             sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
             sh:path bob:temperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:ductAirOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:ductAirInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:windows ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airChangePerHour ],
-        [ a sh:PropertyShape ;
-            sh:path bob:doors ],
-        [ a sh:PropertyShape ;
-            sh:path bob:occupancy ],
+            sh:path bob:radiantHeating ],
         [ a sh:PropertyShape ;
             sh:path bob:humidity ],
         [ a sh:PropertyShape ;
-            sh:path bob:radiantHeating ],
+            sh:path bob:airChangePerHour ],
         [ a sh:PropertyShape ;
-            sh:path bob:radiantCooling ] .
+            sh:path bob:ductAirInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantCooling ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature_setpoint ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co2 ] .
 
 bob:airChangePerHour a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -689,12 +689,13 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
 
 p223:Mix-PowerAndSignal a p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PowerAndSignal" ;
     rdfs:subClassOf s223:EnumerationKind,
-        s223:Medium-Mix .
+        s223:EnumerationKind-Substance,
+        s223:Medium-Mix,
+        s223:Substance-Medium .
 
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
@@ -947,16 +948,15 @@ p223:Position-Unknown a p223:Position-Unknown,
 
 p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ] ;
+            s223:ofConstituent s223:DC-48V ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-Ethernet" ;
+            s223:ofConstituent s223:Signal-Ethernet ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -965,7 +965,6 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
 
 p223:PowerAndSignal-USB a p223:PowerAndSignal-USB,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "USB" ;
@@ -1067,7 +1066,6 @@ p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
 
 p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "R-32" ;
@@ -1141,7 +1139,6 @@ p223:TrueFalse-True a p223:TrueFalse-True,
 
 p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DomesticHotWater" ;
@@ -1154,7 +1151,6 @@ p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
 
 p223:Water-DomesticWater a p223:Water-DomesticWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DomesticWater" ;
@@ -1167,7 +1163,6 @@ p223:Water-DomesticWater a p223:Water-DomesticWater,
 
 p223:Water-MixedWater a p223:Water-MixedWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "MixedWater" ;
@@ -1180,7 +1175,6 @@ p223:Water-MixedWater a p223:Water-MixedWater,
 
 p223:Water-PotableWater a p223:Water-PotableWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PotableWater" ;
@@ -1264,9 +1258,9 @@ bob:Causality a rdfs:Class,
     """ ;
     rdfs:subClassOf p223:Producer ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:effect_output ],
+            sh:path bob:cause_input ],
         [ a sh:PropertyShape ;
-            sh:path bob:cause_input ] .
+            sh:path bob:effect_output ] .
 
 qudt:hasQuantityKind a rdf:Property .
 
