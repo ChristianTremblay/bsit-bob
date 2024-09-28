@@ -167,7 +167,7 @@ class SchemaGraph(Graph):
         subj, pred, obj = triple
 
         # exclude the schema content in the S223 namespace by default
-        if subj.startswith(S223) and (not isinstance(obj, BNode)):
+        if subj.startswith(S223):  # and (not isinstance(obj, BNode)):
             return
 
         # passes the tests

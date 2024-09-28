@@ -4,6 +4,9 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
 
+[] a sh:PropertyShape ;
+    sh:path s223:hasPhysicalLocation .
+
 ex1:Part1 a rdfs:Class ;
     rdfs:label "__main__.Part1" ;
     rdfs:subClassOf s223:Connectable,
@@ -18,7 +21,4 @@ ex1:TestEquipment a rdfs:Class ;
     rdfs:label "__main__.TestEquipment" ;
     rdfs:subClassOf s223:Connectable,
         s223:Equipment .
-
-s223:Equipment sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ] .
 

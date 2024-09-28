@@ -24,6 +24,80 @@
   rdfs:label "sample_hotwater_heater-schema" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
+[] a s223:Property,
+        s223:QuantifiableProperty ;
+    rdfs:label "R-22.Constituent-R-22" ;
+    s223:ofConstituent p223:Constituent-R-22 ;
+    qudt:hasQuantityKind quantitykind:VolumeFraction ;
+    qudt:hasUnit unit:PERCENT .
+
+[] a s223:Property,
+        s223:QuantifiableProperty ;
+    rdfs:label "R-410A.Constituent-R-410A" ;
+    s223:ofConstituent p223:Constituent-R-410A ;
+    qudt:hasQuantityKind quantitykind:VolumeFraction ;
+    qudt:hasUnit unit:PERCENT .
+
+[] a sh:PropertyShape ;
+    sh:class s223:EnumerationKind ;
+    sh:path s223:hasMedium .
+
+[] a sh:PropertyShape ;
+    sh:class s223:EnumerationKind ;
+    sh:path s223:hasMedium .
+
+[] a sh:PropertyShape ;
+    sh:class s223:EnumerationKind ;
+    sh:path s223:hasMedium .
+
+[] a sh:PropertyShape ;
+    sh:class s223:EnumerationKind ;
+    sh:path s223:hasValue .
+
+[] a sh:PropertyShape ;
+    sh:class s223:EnumerationKind ;
+    sh:path s223:ofMedium .
+
+[] a sh:PropertyShape ;
+    sh:class s223:EnumerationKind ;
+    sh:path s223:ofSubstance .
+
+[] a sh:PropertyShape ;
+    sh:path bob:fluidContact .
+
+[] a sh:PropertyShape ;
+    sh:path bob:isObservedBy .
+
+[] a sh:PropertyShape ;
+    sh:path qudt:hasQuantityKind .
+
+[] a sh:PropertyShape ;
+    sh:path qudt:hasUnit .
+
+[] a sh:PropertyShape ;
+    sh:path s223:connectsThrough .
+
+[] a sh:PropertyShape ;
+    sh:path s223:hasEnumerationKind .
+
+[] a sh:PropertyShape ;
+    sh:path s223:hasPhysicalLocation .
+
+[] a sh:PropertyShape ;
+    sh:path s223:hasSetpoint .
+
+[] a sh:PropertyShape ;
+    sh:path s223:hasValue .
+
+[] a sh:PropertyShape ;
+    sh:path s223:isConnectionPointOf .
+
+[] a sh:PropertyShape ;
+    sh:path s223:mapsTo .
+
+[] a sh:PropertyShape ;
+    sh:path s223:ofConstituent .
+
 bob:Amps a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Amps" ;
     rdfs:subClassOf s223:ObservableProperty,
@@ -57,10 +131,10 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ],
+        [ a sh:PropertyShape ;
             sh:class s223:Mix ;
             sh:path bob:measuresMedium ],
-        [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:Mix ;
             sh:path s223:ofMedium ] .
@@ -79,23 +153,23 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:waterFlow ],
+            sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterCommand1 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
-        [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterModulation2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:waterFlow ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:leavingWaterTemp ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:fluidTemp ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:leavingWaterTemp ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterModulation1 ] .
+            sh:path sample_hotwater_heater:resistanceHeaterCommand1 ] .
 
 bob:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
@@ -112,10 +186,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:WaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -487,11 +561,11 @@ p223:DomesticWaterHeater a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:enteringFluid ],
+        [ a sh:PropertyShape ;
             sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
-        [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ] .
+            sh:path bob:leavingFluid ] .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -959,11 +1033,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ] ;
+            s223:ofConstituent s223:DC-48V ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-Ethernet" ;
+            s223:ofConstituent s223:Signal-Ethernet ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1106,9 +1180,9 @@ p223:Tank a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
+            sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ] .
+            sh:path bob:fluidTemperature ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
@@ -1148,9 +1222,6 @@ p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DomesticHotWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "DomesticHotWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
@@ -1165,9 +1236,6 @@ p223:Water-DomesticWater a p223:Water-DomesticWater,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DomesticWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "DomesticWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
@@ -1182,9 +1250,6 @@ p223:Water-MixedWater a p223:Water-MixedWater,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "MixedWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "MixedWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
@@ -1199,9 +1264,6 @@ p223:Water-PotableWater a p223:Water-PotableWater,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PotableWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "PotableWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
@@ -1229,138 +1291,6 @@ p223:YesNo-Yes a p223:YesNo-Yes,
 qudt:hasQuantityKind a rdf:Property .
 
 qudt:hasUnit a rdf:Property .
-
-s223:Connection sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
-
-s223:ConnectionPoint sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ],
-        [ a sh:PropertyShape ;
-            sh:path s223:isConnectionPointOf ],
-        [ a sh:PropertyShape ;
-            sh:path s223:connectsThrough ],
-        [ a sh:PropertyShape ;
-            sh:path s223:mapsTo ] .
-
-s223:ElectricResistanceElement sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidContact ] .
-
-s223:EnumerableProperty sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasEnumerationKind ] .
-
-s223:EnumeratedActuatableProperty sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasValue ] .
-
-s223:Equipment sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasPhysicalLocation ] .
-
-s223:Fluid-Water s223:composedOf [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "Water.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ] .
-
-s223:GlycolSolution-GlycolSolution-15Percent s223:composedOf [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
-            s223:hasValue 15 ;
-            s223:ofConstituent s223:Constituent-Glycol ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
-            s223:hasValue 85 ;
-            s223:ofConstituent s223:Constituent-H2O ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ] .
-
-s223:GlycolSolution-GlycolSolution-30Percent s223:composedOf [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-30Percent.Constituent-H2O" ;
-            s223:hasValue 70 ;
-            s223:ofConstituent s223:Constituent-H2O ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-30Percent.Constituent-Glycol" ;
-            s223:hasValue 30 ;
-            s223:ofConstituent s223:Constituent-Glycol ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ] .
-
-s223:ObservableProperty sh:property [ a sh:PropertyShape ;
-            sh:path bob:isObservedBy ] .
-
-s223:Property sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasValue ],
-        [ a sh:PropertyShape ;
-            sh:path s223:ofConstituent ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofSubstance ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
-
-s223:QuantifiableObservableProperty sh:property [ a sh:PropertyShape ;
-            sh:path s223:hasSetpoint ] .
-
-s223:QuantifiableProperty sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasQuantityKind ],
-        [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
-
-s223:Refrigerant-R-22 s223:composedOf [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "R-22.Constituent-R-22" ;
-            s223:ofConstituent p223:Constituent-R-22 ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ] .
-
-s223:Refrigerant-R-410A s223:composedOf [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "R-410A.Constituent-R-410A" ;
-            s223:ofConstituent p223:Constituent-R-410A ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ] .
-
-s223:Water-ChilledWater s223:composedOf [ a s223:Property ;
-            rdfs:label "ChilledWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
-
-s223:Water-CondensedWater s223:composedOf [ a s223:Property ;
-            rdfs:label "CondensedWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
-
-s223:Water-GlycolSolution s223:composedOf [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution.Constituent-Glycol" ;
-            s223:ofConstituent s223:Constituent-Glycol ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ] .
-
-s223:Water-HotWater s223:composedOf [ a s223:Property ;
-            rdfs:label "HotWater.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
-
-s223:Water-Steam s223:composedOf [ a s223:Property ;
-            rdfs:label "Steam.Constituent-H2O" ;
-            s223:ofConstituent s223:Constituent-H2O ] .
 
 sample_hotwater_heater:fluidTemp a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .

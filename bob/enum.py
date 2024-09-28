@@ -206,10 +206,7 @@ R22.add_constituent(
 )
 
 # Water
-Fluid.Water = Water = Fluid("Water")
-Water.add_constituent(
-    Constituent.H2O, hasQuantityKind=QUANTITYKIND.VolumeFraction, hasUnit=UNIT.PERCENT
-)
+Fluid.Water = Water = Fluid("Water")  # constituent in S223 already
 
 Water.ChilledWater = ChilledWater = Water("ChilledWater")
 
@@ -227,49 +224,16 @@ Water.DomesticHotWater = DomesticHotWater = Water(
 
 Water.CondensedWater = CondensedWater = Water("CondensedWater")
 
-Water.GlycolSolution = GlycolSolution = Water("GlycolSolution")
-GlycolSolution.add_constituent(
-    Constituent.Glycol,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
-GlycolSolution.add_constituent(
-    Constituent.H2O,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
+Water.GlycolSolution = GlycolSolution = Water(
+    "GlycolSolution"
+)  # constituent in S223 already
 
 GlycolSolution.GlycolSolution_15Percent = GlycolSolution_15Percent = GlycolSolution(
     "GlycolSolution-15Percent"
-)
-GlycolSolution_15Percent.add_constituent(
-    Constituent.H2O,
-    hasValue=85,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
-GlycolSolution_15Percent.add_constituent(
-    Constituent.Glycol,
-    hasValue=15,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
-
+)  # constituent in S223 already
 GlycolSolution.GlycolSolution_30Percent = GlycolSolution_30Percent = GlycolSolution(
     "GlycolSolution-30Percent"
-)
-GlycolSolution_30Percent.add_constituent(
-    Constituent.H2O,
-    hasValue=70,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
-GlycolSolution_30Percent.add_constituent(
-    Constituent.Glycol,
-    hasValue=30,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
+)  # constituent in S223 already
 
 Water.Steam = Steam = Water("Steam")
 
