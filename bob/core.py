@@ -1494,7 +1494,9 @@ class Mix(EnumerationKind):
         self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
         self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
 
-        self._schema_graph.add((self._node_iri, RDFS.subClassOf, _namespace["Mix"]))
+        self._schema_graph.add(
+            (self._node_iri, RDFS.subClassOf, _namespace["Medium-Mix"])
+        )
 
         # funky parent reference
         self._parent = Medium.Mix
