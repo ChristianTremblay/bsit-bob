@@ -131,13 +131,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:Mix ;
             sh:path bob:measuresMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:Mix ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -155,21 +155,21 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
-        [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterModulation2 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:waterFlow ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterModulation1 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:leavingWaterTemp ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:fluidTemp ],
+            sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterCommand1 ] .
+            sh:path sample_hotwater_heater:fluidTemp ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:waterFlow ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterCommand1 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:leavingWaterTemp ] .
 
 bob:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
@@ -563,9 +563,9 @@ p223:DomesticWaterHeater a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
+            sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ] .
+            sh:path bob:fluidTemperature ] .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -775,7 +775,7 @@ p223:Mix-PowerAndSignal a p223:Mix-PowerAndSignal,
         sh:NodeShape ;
     rdfs:label "PowerAndSignal" ;
     rdfs:subClassOf s223:EnumerationKind,
-        s223:Mix .
+        s223:Medium-Mix .
 
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
@@ -1033,16 +1033,15 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Substance-Medium .
 
 p223:PowerAndSignal-USB a p223:PowerAndSignal-USB,
@@ -1058,7 +1057,6 @@ p223:PowerAndSignal-USB a p223:PowerAndSignal-USB,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Substance-Medium .
 
 p223:Protocol-BACnet a p223:Protocol-BACnet,
@@ -1141,7 +1139,6 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:EnumerationKind-Substance,
         s223:Fluid-Refrigerant,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
@@ -1174,15 +1171,15 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:internalPressure ],
-        [ a sh:PropertyShape ;
-            sh:path bob:containedFluid ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:containedFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:internalPressure ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
@@ -1226,7 +1223,6 @@ p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
@@ -1240,7 +1236,6 @@ p223:Water-DomesticWater a p223:Water-DomesticWater,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
@@ -1254,7 +1249,6 @@ p223:Water-MixedWater a p223:Water-MixedWater,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
@@ -1268,7 +1262,6 @@ p223:Water-PotableWater a p223:Water-PotableWater,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 

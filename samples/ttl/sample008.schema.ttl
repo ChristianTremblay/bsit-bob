@@ -108,12 +108,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
             sh:path bob:isSystemConnectionPointOf ],
         [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
+            sh:path bob:mapsTo ] .
 
 bob:hasSystemConnectionPoint a rdf:Property .
 
@@ -134,9 +134,9 @@ ex1:TestSystem a rdfs:Class,
     rdfs:label "__main__.TestSystem" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpI ],
+            sh:path ex1:cpO ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpO ] .
+            sh:path ex1:cpI ] .
 
 ex1:cp a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -674,7 +674,7 @@ p223:Mix-PowerAndSignal a p223:Mix-PowerAndSignal,
         sh:NodeShape ;
     rdfs:label "PowerAndSignal" ;
     rdfs:subClassOf s223:EnumerationKind,
-        s223:Mix .
+        s223:Medium-Mix .
 
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
@@ -941,7 +941,6 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Substance-Medium .
 
 p223:PowerAndSignal-USB a p223:PowerAndSignal-USB,
@@ -957,7 +956,6 @@ p223:PowerAndSignal-USB a p223:PowerAndSignal-USB,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Substance-Medium .
 
 p223:Protocol-BACnet a p223:Protocol-BACnet,
@@ -1040,7 +1038,6 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:EnumerationKind-Substance,
         s223:Fluid-Refrigerant,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
@@ -1109,7 +1106,6 @@ p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
@@ -1123,7 +1119,6 @@ p223:Water-DomesticWater a p223:Water-DomesticWater,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
@@ -1137,7 +1132,6 @@ p223:Water-MixedWater a p223:Water-MixedWater,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
@@ -1151,7 +1145,6 @@ p223:Water-PotableWater a p223:Water-PotableWater,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
