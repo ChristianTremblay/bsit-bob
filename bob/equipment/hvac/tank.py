@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
@@ -17,14 +17,14 @@ from ...connections.liquid import (
     WaterOutletConnectionPoint,
 )
 from ...connections.naturalgas import NaturalGasInletConnectionPoint
-from ...core import BOB, P223, S223, UNIT, Equipment, PropertyReference
+from ...core import BOB, P223, S223, UNIT, ConnectionPoint, Equipment, PropertyReference
 from ...enum import DomesticHotWater, DomesticWater, Fluid, Role, Water
 from ...properties.flow import Flow
 from ...properties.force import Pressure
 from ...properties.temperature import Temperature
 from ...template import template_update
 from .coil import HeatpumpCoil, ImmersedResistanceHeaterElement
-from .compressor import RefrigeartionGasCompressor
+from .compressor import RefrigerationGasCompressor
 from .fan import Fan
 from .filter import Filter
 from .valve import ExpansionValve, ReversingValve
@@ -44,7 +44,5 @@ class Tank(Equipment):
     # leavingFluidTemperature: Temperature
     # enteringFluidTemperature: Temperature
     # fluidFlow: Flow
-    def set_medium(self, medium: Fluid = Water):
-        self.containedFluid.hasMedium = medium
-        self.enteringFluid.hasMedium = medium
-        self.leavingFluid.hasMedium = medium
+    def set_fluid_type(self, fluid: Fluid = Water):
+        self.set_medium(["leavingFluid", "enteringFluid", "containedFluid"], fluid)
