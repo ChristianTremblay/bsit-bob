@@ -6,12 +6,11 @@ from header import sample_header
 from bob.core import (
     Equipment,
     System,
+    BoundaryConnectionPoint,
 )
 from bob.connections.air import (
     AirInletConnectionPoint,
-    AirInletSystemConnectionPoint,
     AirOutletConnectionPoint,
-    AirOutletSystemConnectionPoint,
 )
 
 model_name = Path(__file__).stem
@@ -19,8 +18,8 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 
 class TestSystem(System):
-    cpIn: AirInletSystemConnectionPoint
-    cpOut: AirOutletSystemConnectionPoint
+    cpIn: BoundaryConnectionPoint
+    cpOut: BoundaryConnectionPoint
 
 
 class TestEquipment(Equipment):
@@ -39,10 +38,10 @@ d2 = TestEquipment(label="d2")
 d2 < s2
 
 # pass-in from the system to the Equipment
-s2.cpIn.mapsTo = d2.cpIn
+s2.cpIn = d2.cpIn
 
 # pass-out from the Equipment to the system
-s2.cpOut.mapsTo = d2.cpOut
+s2.cpOut = d2.cpOut
 
 # dump the result
 dump(

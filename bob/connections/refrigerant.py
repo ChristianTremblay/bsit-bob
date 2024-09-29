@@ -1,8 +1,5 @@
-from rdflib import URIRef
-
 from ..core import (
     BOB,
-    P223,
     S223,
     BidirectionalConnectionPoint,
     Connection,
@@ -10,8 +7,6 @@ from ..core import (
     InletConnectionPoint,
     Medium,
     OutletConnectionPoint,
-    SystemConnectionPoint,
-    enum,
 )
 from ..enum import Refrigerant
 
@@ -43,19 +38,3 @@ class RefrigerantBidirectionalConnectionPoint(
     BidirectionalConnectionPoint, RefrigerantConnectionPoint
 ):
     _class_iri = S223.BidirectionalConnectionPoint
-
-
-class RefrigerantSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium: Medium = Refrigerant
-
-
-class RefrigerantInletSystemConnectionPoint(
-    InletConnectionPoint, RefrigerantSystemConnectionPoint
-):
-    _class_iri = S223.InletConnectionPoint
-
-
-class RefrigerantOutletSystemConnectionPoint(
-    OutletConnectionPoint, RefrigerantSystemConnectionPoint
-):
-    _class_iri = S223.OutletConnectionPoint

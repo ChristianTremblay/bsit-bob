@@ -8,6 +8,7 @@ from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.connections.liquid import WaterConnection
 from bob.core import (
     UNIT,
+    BoundaryConnectionPoint,
     Equipment,
     Junction,
     System,
@@ -88,11 +89,11 @@ outdoor = AirConnection(label="Outdoor")
 # This process needs to be improved... should be a simple class like custom system
 # taking a template for configuration
 hx = System(label="ECHANGEUR", comment="The complete heat Exchanger by Trane")
-hx_outdoorCP1 = (AirBidirectionalSystemConnectionPoint(hx),)
-hx_outdoorCP2 = (AirBidirectionalSystemConnectionPoint(hx),)
-hx_returnDuct = (AirInletSystemConnectionPoint(hx),)
-hx_supplyDuct = (AirOutletSystemConnectionPoint(hx),)
-hx_pneumaticInlet = CompressedAirInletSystemConnectionPoint(hx)
+hx_outdoorCP1 = (BoundaryConnectionPoint(hx),)
+hx_outdoorCP2 = (BoundaryConnectionPoint(hx),)
+hx_returnDuct = (BoundaryConnectionPoint(hx),)
+hx_supplyDuct = (BoundaryConnectionPoint(hx),)
+hx_pneumaticInlet = CompressedBoundaryConnectionPoint(hx)
 
 
 # System - Air Handling Unit

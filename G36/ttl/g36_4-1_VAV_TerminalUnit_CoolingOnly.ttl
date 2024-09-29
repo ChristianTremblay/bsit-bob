@@ -2,8 +2,8 @@
 @prefix exg3601: <http://data.ashrae.org/standard223/data/g36_4-1_VAV_TerminalUnit_CoolingOnly#> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
-@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix scratch: <http://data.ashrae.org/standard223/si-builder/prototype#> .
@@ -25,8 +25,8 @@ exg3601:00001 a s223:Connectable,
         exg3601:00009 ;
     s223:connected exg3601:00045,
         exg3601:00052 ;
-    s223:connectedThrough exg3601:00082,
-        exg3601:00083 ;
+    s223:connectedThrough exg3601:00083,
+        exg3601:00084 ;
     s223:connectedTo exg3601:00045,
         exg3601:00052 ;
     s223:hasConnectionPoint exg3601:00002,
@@ -99,8 +99,8 @@ exg3601:00008 a p223:AnalogOutput,
     rdfs:label "Controller for G36 VAV Cooling Only.damper_output" ;
     p223:hasSignalType p223:Analog-0-10VDC ;
     s223:cnx exg3601:00001,
-        exg3601:00082 ;
-    s223:connectsThrough exg3601:00082 ;
+        exg3601:00083 ;
+    s223:connectsThrough exg3601:00083 ;
     s223:hasMedium s223:Signal-Modulated ;
     s223:isConnectionPointOf exg3601:00001 .
 
@@ -109,8 +109,8 @@ exg3601:00009 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "Controller for G36 VAV Cooling Only.bacnet_mstp" ;
     s223:cnx exg3601:00001,
-        exg3601:00083 ;
-    s223:connectsThrough exg3601:00083 ;
+        exg3601:00084 ;
+    s223:connectsThrough exg3601:00084 ;
     s223:hasMedium s223:Signal-EIA485 ;
     s223:isConnectionPointOf exg3601:00001 .
 
@@ -120,7 +120,7 @@ exg3601:00010 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Minimum Range" ;
     s223:hasValue 0.0 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
 exg3601:00011 a s223:ObservableProperty,
@@ -129,7 +129,7 @@ exg3601:00011 a s223:ObservableProperty,
         s223:QuantifiableProperty ;
     rdfs:label "Maximum Range" ;
     s223:hasValue 2000.0 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
 exg3601:00012 a s223:Connection ;
@@ -176,9 +176,9 @@ exg3601:00014 a s223:Connectable,
     s223:hasDomain s223:Domain-HVAC ;
     s223:hasProperty exg3601:00022,
         exg3601:00049,
-        exg3601:00081 ;
+        exg3601:00082 ;
     bob:airTransfer exg3601:00017 ;
-    bob:co2 exg3601:00081 ;
+    bob:co2 exg3601:00082 ;
     bob:doors exg3601:00018 ;
     bob:ductAirInlet exg3601:00015 ;
     bob:ductAirOutlet exg3601:00016 ;
@@ -368,7 +368,7 @@ exg3601:00032 a s223:ObservableProperty,
         bob:Flow ;
     rdfs:label "SA-F.Flow" ;
     s223:ofMedium s223:Fluid-Air ;
-    qudt:hasQuantityKind quantitykind:VolumeFlowRate ;
+    qudt:hasQuantityKind qudtqk:VolumeFlowRate ;
     qudt:hasUnit unit:L-PER-SEC .
 
 exg3601:00033 a s223:Connectable,
@@ -388,7 +388,7 @@ exg3601:00034 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "DA-T.Temperature" ;
     s223:ofMedium s223:Fluid-Air ;
-    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind qudtqk:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
 exg3601:00035 a s223:Connectable,
@@ -407,7 +407,7 @@ exg3601:00036 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "ZN-T.Temperature" ;
     s223:ofMedium s223:Fluid-Air ;
-    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind qudtqk:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
 exg3601:00037 a s223:Connectable,
@@ -488,7 +488,7 @@ exg3601:00045 a p223:NetworkRoomSensor,
     s223:cnx exg3601:00046 ;
     s223:connected exg3601:00001 ;
     s223:connectedFrom exg3601:00001 ;
-    s223:connectedThrough exg3601:00083 ;
+    s223:connectedThrough exg3601:00084 ;
     s223:contains exg3601:00048,
         exg3601:00050 ;
     s223:hasConnectionPoint exg3601:00046 ;
@@ -500,8 +500,8 @@ exg3601:00046 a s223:BidirectionalConnectionPoint,
         bob:RS485ConnectionPoint ;
     rdfs:label "ZONE-THERMOSTAT.mstp" ;
     s223:cnx exg3601:00045,
-        exg3601:00083 ;
-    s223:connectsThrough exg3601:00083 ;
+        exg3601:00084 ;
+    s223:connectsThrough exg3601:00084 ;
     s223:hasMedium s223:Signal-EIA485 ;
     s223:isConnectionPointOf exg3601:00045 .
 
@@ -509,7 +509,7 @@ exg3601:00047 a s223:Property,
         s223:QuantifiableProperty,
         s223:Setpoint ;
     rdfs:label "temperature_setpoint" ;
-    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind qudtqk:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
 exg3601:00048 a s223:Connectable,
@@ -528,7 +528,7 @@ exg3601:00049 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "temperature_sensor.Temperature" ;
     s223:ofMedium s223:Fluid-Air ;
-    qudt:hasQuantityKind quantitykind:Temperature ;
+    qudt:hasQuantityKind qudtqk:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
 exg3601:00050 a s223:Connectable,
@@ -561,7 +561,7 @@ exg3601:00052 a s223:Actuator,
         exg3601:00058 ;
     s223:connected exg3601:00001 ;
     s223:connectedFrom exg3601:00001 ;
-    s223:connectedThrough exg3601:00082 ;
+    s223:connectedThrough exg3601:00083 ;
     s223:contains exg3601:00076 ;
     s223:hasConnectionPoint exg3601:00053,
         exg3601:00054,
@@ -631,8 +631,8 @@ exg3601:00058 a p223:AnalogInput,
     rdfs:label "VAVController.proportional_signal" ;
     p223:hasSignalType p223:Analog-0-10VDC ;
     s223:cnx exg3601:00052,
-        exg3601:00082 ;
-    s223:connectsThrough exg3601:00082 ;
+        exg3601:00083 ;
+    s223:connectsThrough exg3601:00083 ;
     s223:hasMedium s223:Signal-Modulated ;
     s223:isConnectionPointOf exg3601:00052 .
 
@@ -642,7 +642,7 @@ exg3601:00059 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
 exg3601:00060 a s223:EnumerableProperty,
@@ -665,7 +665,7 @@ exg3601:00062 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "command" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
 exg3601:00063 a s223:ObservableProperty,
@@ -674,7 +674,7 @@ exg3601:00063 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Nm ;
     rdfs:label "torque" ;
-    qudt:hasQuantityKind quantitykind:Torque ;
+    qudt:hasQuantityKind qudtqk:Torque ;
     qudt:hasUnit unit:N-M .
 
 exg3601:00064 a p223:Producer,
@@ -759,17 +759,20 @@ exg3601:00077 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_sensor.Position" ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
 exg3601:00078 a p223:GasMonitor,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "ZN-CO2" ;
-    s223:cnx exg3601:00079 ;
-    s223:contains exg3601:00080 ;
-    s223:hasConnectionPoint exg3601:00079 ;
+    s223:cnx exg3601:00079,
+        exg3601:00080 ;
+    s223:contains exg3601:00081 ;
+    s223:hasConnectionPoint exg3601:00079,
+        exg3601:00080 ;
     bob:airInletSupply exg3601:00079 ;
+    bob:airOutletExhaust exg3601:00080 ;
     rdfs:comment "CO2 of space" .
 
 exg3601:00079 a s223:ConnectionPoint,
@@ -780,16 +783,24 @@ exg3601:00079 a s223:ConnectionPoint,
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf exg3601:00078 .
 
-exg3601:00080 a s223:Connectable,
+exg3601:00080 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "ZN-CO2.airOutletExhaust" ;
+    s223:cnx exg3601:00078 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf exg3601:00078 .
+
+exg3601:00081 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "CO2" ;
     s223:hasMaxRange exg3601:00011 ;
     s223:hasMinRange exg3601:00010 ;
     s223:hasObservationLocation exg3601:00014 ;
-    s223:observes exg3601:00081 .
+    s223:observes exg3601:00082 .
 
-exg3601:00081 a s223:ObservableProperty,
+exg3601:00082 a s223:ObservableProperty,
         s223:Property,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty,
@@ -797,10 +808,10 @@ exg3601:00081 a s223:ObservableProperty,
     rdfs:label "CO2.GasConcentration" ;
     s223:ofMedium s223:Fluid-Air ;
     s223:ofSubstance s223:Constituent-CO2 ;
-    qudt:hasQuantityKind quantitykind:DimensionlessRatio ;
+    qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
-exg3601:00082 a s223:Connection ;
+exg3601:00083 a s223:Connection ;
     s223:cnx exg3601:00008,
         exg3601:00058 ;
     s223:connectsAt exg3601:00008,
@@ -809,7 +820,7 @@ exg3601:00082 a s223:Connection ;
     s223:connectsTo exg3601:00052 ;
     s223:hasMedium s223:Signal-Modulated .
 
-exg3601:00083 a s223:Connection ;
+exg3601:00084 a s223:Connection ;
     s223:cnx exg3601:00009,
         exg3601:00046 ;
     s223:connectsAt exg3601:00009,
@@ -818,7 +829,7 @@ exg3601:00083 a s223:Connection ;
     s223:connectsTo exg3601:00045 ;
     s223:hasMedium s223:Signal-EIA485 .
 
-exg3601:00084 a s223:Zone,
+exg3601:00085 a s223:Zone,
         bob:HVACZone ;
     rdfs:label "HVACZone" ;
     s223:hasDomain s223:Domain-HVAC ;
@@ -826,27 +837,27 @@ exg3601:00084 a s223:Zone,
     s223:hasProperty exg3601:00022,
         exg3601:00047,
         exg3601:00049,
-        exg3601:00081 ;
-    bob:airInlet exg3601:00085 ;
-    bob:airOutlet exg3601:00086 ;
-    bob:co2 exg3601:00081 ;
-    bob:hasZoneConnectionPoint exg3601:00085,
-        exg3601:00086 ;
+        exg3601:00082 ;
+    bob:airInlet exg3601:00086 ;
+    bob:airOutlet exg3601:00087 ;
+    bob:co2 exg3601:00082 ;
+    bob:hasZoneConnectionPoint exg3601:00086,
+        exg3601:00087 ;
     bob:temperature exg3601:00049 ;
     bob:temperature_setpoint exg3601:00047 ;
     rdfs:comment "Contains HVACSpace" .
 
-exg3601:00085 a bob:InletZoneConnectionPoint,
+exg3601:00086 a bob:InletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "HVACZone.airInlet" ;
     s223:hasMedium s223:Fluid-Air .
 
-exg3601:00086 a bob:OutletZoneConnectionPoint,
+exg3601:00087 a bob:OutletZoneConnectionPoint,
         bob:ZoneConnectionPoint ;
     rdfs:label "HVACZone.airOutlet" ;
     s223:hasMedium s223:Fluid-Air .
 
-exg3601:00087 a p223:OccupancyFunction,
+exg3601:00088 a p223:OccupancyFunction,
         s223:Function ;
     rdfs:label "OccControl" ;
     s223:hasInput exg3601:00038,
@@ -857,7 +868,7 @@ exg3601:00087 a p223:OccupancyFunction,
     bob:outStatus exg3601:00022 ;
     rdfs:comment "This define occupancy for the zone. The occupancy sensor or the local override on the thermostat will turn the occupancy -> OCCUPIED" .
 
-exg3601:00088 a s223:Function,
+exg3601:00089 a s223:Function,
         g36:Function,
         g36:VAVCoolingOnly ;
     rdfs:label "Bob G36 VAV Cooling Only" ;
@@ -865,12 +876,12 @@ exg3601:00088 a s223:Function,
         exg3601:00032,
         exg3601:00040,
         exg3601:00049,
-        exg3601:00081 ;
+        exg3601:00082 ;
     s223:hasOutput exg3601:00062 ;
     g36:boxDamperPosition exg3601:00062 ;
     g36:effectiveOccupancy exg3601:00022 ;
     g36:supplyAirFlow exg3601:00032 ;
-    g36:zoneCO2 exg3601:00081 ;
+    g36:zoneCO2 exg3601:00082 ;
     g36:zoneTemperature exg3601:00049 ;
     g36:zonewindowSwitch exg3601:00040 ;
     rdfs:comment "Lorem ipsum of sequence" .

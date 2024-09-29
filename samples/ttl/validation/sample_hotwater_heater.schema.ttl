@@ -5,8 +5,8 @@
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
-@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -28,75 +28,15 @@
         s223:QuantifiableProperty ;
     rdfs:label "R-22.Constituent-R-22" ;
     s223:ofConstituent p223:Constituent-R-22 ;
-    qudt:hasQuantityKind quantitykind:VolumeFraction ;
+    qudt:hasQuantityKind qudtqk:VolumeFraction ;
     qudt:hasUnit unit:PERCENT .
 
 [] a s223:Property,
         s223:QuantifiableProperty ;
     rdfs:label "R-410A.Constituent-R-410A" ;
     s223:ofConstituent p223:Constituent-R-410A ;
-    qudt:hasQuantityKind quantitykind:VolumeFraction ;
+    qudt:hasQuantityKind qudtqk:VolumeFraction ;
     qudt:hasUnit unit:PERCENT .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:hasMedium .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:hasMedium .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:hasMedium .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:hasValue .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:ofMedium .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:ofSubstance .
-
-[] a sh:PropertyShape ;
-    sh:path bob:fluidContact .
-
-[] a sh:PropertyShape ;
-    sh:path bob:isObservedBy .
-
-[] a sh:PropertyShape ;
-    sh:path qudt:hasQuantityKind .
-
-[] a sh:PropertyShape ;
-    sh:path qudt:hasUnit .
-
-[] a sh:PropertyShape ;
-    sh:path s223:connectsThrough .
-
-[] a sh:PropertyShape ;
-    sh:path s223:hasEnumerationKind .
-
-[] a sh:PropertyShape ;
-    sh:path s223:hasPhysicalLocation .
-
-[] a sh:PropertyShape ;
-    sh:path s223:hasSetpoint .
-
-[] a sh:PropertyShape ;
-    sh:path s223:hasValue .
-
-[] a sh:PropertyShape ;
-    sh:path s223:isConnectionPointOf .
-
-[] a sh:PropertyShape ;
-    sh:path s223:mapsTo .
-
-[] a sh:PropertyShape ;
-    sh:path s223:ofConstituent .
 
 bob:Amps a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Amps" ;
@@ -132,10 +72,10 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path bob:measuresMedium ],
         [ a sh:PropertyShape ;
             sh:path qudt:hasUnit ] .
 
@@ -153,23 +93,23 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterModulation2 ],
-        [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:fluidTemp ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterModulation1 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:waterFlow ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:leavingWaterTemp ] .
+            sh:path sample_hotwater_heater:resistanceHeaterCommand1 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:leavingWaterTemp ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterModulation2 ] .
 
 bob:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
@@ -561,11 +501,11 @@ p223:DomesticWaterHeater a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:fluidTemperature ],
+        [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
-        [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:leavingFluid ] .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -1033,11 +973,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ] ;
+            s223:ofConstituent s223:DC-48V ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-Ethernet" ;
+            s223:ofConstituent s223:Signal-Ethernet ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1131,7 +1071,7 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
                 s223:QuantifiableProperty ;
             rdfs:label "R-32.Constituent-R-32" ;
             s223:ofConstituent p223:Constituent-R-32 ;
-            qudt:hasQuantityKind quantitykind:VolumeFraction ;
+            qudt:hasQuantityKind qudtqk:VolumeFraction ;
             qudt:hasUnit unit:PERCENT ] ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1169,11 +1109,11 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
+            sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
@@ -1279,30 +1219,21 @@ qudt:hasQuantityKind a rdf:Property .
 
 qudt:hasUnit a rdf:Property .
 
-sample_hotwater_heater:fluidTemp a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:fluidTemp a rdf:Property .
 
-sample_hotwater_heater:leavingWaterTemp a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:leavingWaterTemp a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterCommand1 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterCommand1 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterCommand2 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterCommand2 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterModulation1 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterModulation1 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterModulation2 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterModulation2 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterPower1 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterPower1 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterPower2 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterPower2 a rdf:Property .
 
-sample_hotwater_heater:waterFlow a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:waterFlow a rdf:Property .
 

@@ -1,16 +1,10 @@
 from pathlib import Path
 
 from header import ttl_test_header
-from rdflib import URIRef
-
-from bob.connections.electricity import ElectricalInletConnectionPoint
 
 from bob.core import (
-    P223,
-    Equipment,
     bind_model_namespace,
     dump,
-    enum,
     data_graph,
     schema_graph,
 )

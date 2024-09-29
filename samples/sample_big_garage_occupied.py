@@ -7,16 +7,12 @@ from pathlib import Path
 
 from header import sample_header
 
-from bob.connections.air import (
-    AirInletSystemConnectionPoint,
-    AirOutletSystemConnectionPoint,
-)
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import (
     S223,
     UNIT,
     System,
-    SystemConnectionPoint,
+    BoundaryConnectionPoint,
     bind_model_namespace,
     dump,
 )
@@ -78,15 +74,13 @@ movement_2.hasPhysicalLocation = big_garage
 
 # SYSTEM
 fancoil = System(label="Fan coil")
-fc_airInlet = AirInletSystemConnectionPoint(fancoil, label="Fan coil air inlet")
-fc_airOutlet = AirOutletSystemConnectionPoint(fancoil, label="Fan coil air outlet")
+fancoil.add_boundary_connection_point(fan.airInlet)
+fancoil.add_boundary_connection_point(heating_coil.airOutlet)
 ###TODO:  the occupancy status of the fan coil should be the movement property
 #         movement_1.observedProperty
-# fc_occupancy = SystemConnectionPoint(
+# fc_occupancy = BoundaryConnectionPoint(
 #     fancoil, label="Occupancy Inlet", hasDirection=S223["Direction-Inlet"]
 # )
 # fc_occupancy.mapsTo = movement_1
-fc_airInlet.mapsTo = fan.airInlet
-fc_airOutlet.mapsTo = heating_coil.airOutlet
 
 dump(filename=f"samples/ttl/{model_name}.ttl", header=sample_header(model_name))

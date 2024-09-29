@@ -2,17 +2,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from rdflib import URIRef, util
-
 from ..core import (
     BOB,
-    P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    Medium,
     PropertyReference,
-    enum,
 )
 from ..enum import Air, Particulate
 from ..properties import ParticulateCount

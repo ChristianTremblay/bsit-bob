@@ -1,27 +1,16 @@
-from rdflib import Literal, URIRef
-
-from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum, ProtocolEnum
-from bob.properties.network import Mbit_per_seconds
+from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum
 
 from ..core import (
     BOB,
     P223,
     S223,
-    BidirectionalConnectionPoint,
-    BidirectionalSystemConnectionPoint,
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
-    InletSystemConnectionPoint,
-    InletZoneConnectionPoint,
-    Medium,
     OutletConnectionPoint,
-    OutletSystemConnectionPoint,
-    OutletZoneConnectionPoint,
-    SystemConnectionPoint,
-    enum,
 )
 from ..enum import Electricity
+
 _namespace = BOB
 # It is modeling dry contact, Triac and other On-Off relationships
 
@@ -49,24 +38,10 @@ class OnOffSignalOutletConnectionPoint(
     _class_iri = P223.BinaryOutput
 
 
-class OnOffSignalSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium = Electricity.OnOffSignal
-
-
-class OnOffSignalSystemInletConnectionPoint(
-    OnOffSignalSystemConnectionPoint, InletSystemConnectionPoint
-):
-    _class_iri = BOB.InletSystemConnectionPoint
-
-
-class OnOffSignalSystemOutletConnectionPoint(
-    OnOffSignalSystemConnectionPoint, OutletSystemConnectionPoint
-):
-    _class_iri = BOB.OutletSystemConnectionPoint
-
-
 # This is high level and we don't know if it's using 0-10VDC, 4-20mA, etc...
 # === Modulation signals
+
+
 class ModulationSignalConnection(Connection):
     hasMedium = Electricity.ModulatedSignal
     _class_iri = S223.Connection
@@ -89,19 +64,3 @@ class ModulationSignalOutletConnectionPoint(
     OutletConnectionPoint, ModulationSignalConnectionPoint
 ):
     _class_iri = P223.AnalogOutput
-
-
-class ModulationSignalSystemConnectionPoint(SystemConnectionPoint):
-    hasMedium = Electricity.ModulatedSignal
-
-
-class ModulationSignalSystemInletConnectionPoint(
-    ModulationSignalSystemConnectionPoint, InletSystemConnectionPoint
-):
-    _class_iri = BOB.InletSystemConnectionPoint
-
-
-class ModulationSignalSystemOutletConnectionPoint(
-    ModulationSignalSystemConnectionPoint, OutletSystemConnectionPoint
-):
-    _class_iri = BOB.OutletSystemConnectionPoint

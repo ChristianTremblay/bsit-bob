@@ -5,11 +5,10 @@ from header import ttl_test_header
 from bob import core
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.core import (
+    BoundaryConnectionPoint,
     Equipment,
     InletConnectionPoint,
-    InletSystemConnectionPoint,
     OutletConnectionPoint,
-    OutletSystemConnectionPoint,
     System,
     bind_model_namespace,
     dump,
@@ -25,21 +24,21 @@ def test_systems_004(bob_fixture):
         cOut: AirOutletConnectionPoint
 
     class X(System):
-        cOut: OutletSystemConnectionPoint
+        cOut: BoundaryConnectionPoint
 
     class B(Equipment):
         cIn: AirInletConnectionPoint
 
     class Y(System):
-        cIn: InletSystemConnectionPoint
+        cIn: BoundaryConnectionPoint
 
     a = A(label="a")
     x = X(label="x")
-    x.cOut.mapsTo = a.cOut
+    x.cOut = a.cOut
 
     b = B(label="b")
     y = Y(label="y")
-    y.cIn.mapsTo = b.cIn
+    y.cIn = b.cIn
 
     # system from system
     y << x
