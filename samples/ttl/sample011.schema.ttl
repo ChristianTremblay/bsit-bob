@@ -47,12 +47,12 @@ bob:SystemConnectionPoint a rdfs:Class,
     System Connection Point
     """ ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path bob:isSystemConnectionPointOf ] .
+            sh:path bob:isSystemConnectionPointOf ],
+        [ a sh:PropertyShape ;
+            sh:path bob:mapsTo ] .
 
 bob:hasSystemConnectionPoint a rdf:Property .
 
@@ -66,9 +66,9 @@ ex1:TestEquipment a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpIn ],
+            sh:path ex1:cpOut ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpOut ] .
+            sh:path ex1:cpIn ] .
 
 ex1:TestSystem a rdfs:Class,
         sh:NodeShape ;
