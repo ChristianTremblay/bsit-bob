@@ -62,16 +62,10 @@ class FluidConnection(Connection):
     hasMedium: Fluid = Water
     _class_iri = S223.Connection
 
-    def __inif__(self, hasMedium=Water, **kwargs):
-        super().__init__(hasMedium=hasMedium, **kwargs)
-
 
 class FluidConnectionPoint(ConnectionPoint):
     _volatile = ("hasMedium",)
     hasMedium: Fluid = Water
-
-    def __inif__(self, hasMedium=Water, **kwargs):
-        super().__init__(hasMedium=hasMedium, **kwargs)
 
 
 class FluidInletConnectionPoint(FluidConnectionPoint, InletConnectionPoint):
