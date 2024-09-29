@@ -89,11 +89,11 @@ class AirToAirHeatPump(Equipment):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        # self["EXPANSIONVALVE"].set_gas_type(R410a)
-        # self["REVERSINGVALVE"].set_gas_type(R410a)
-        # self["COMPRESSOR"].set_gas_type(R410a)
-        # self["INDOORCOIL"].set_gas_type(R410a)
-        # self["OUTDOORCOIL"].set_gas_type(R410a)
+        self["EXPANSIONVALVE"].set_gas_type(R410a)
+        self["REVERSINGVALVE"].set_gas_type(R410a)
+        self["COMPRESSOR"].set_gas_type(R410a)
+        self["INDOORCOIL"].set_gas_type(R410a)
+        self["OUTDOORCOIL"].set_gas_type(R410a)
 
         self["OUTDOORCOIL"] += Role.Condenser
         self["OUTDOORCOIL"] += Role.Evaporator
