@@ -19,6 +19,7 @@ from ...core import BOB, S223, Equipment, PropertyReference, logging
 from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
     R22,
     R32,
+    Fluid,
     R410a,
     Refrigerant,
 )
@@ -56,6 +57,9 @@ class TwoWayValve(Valve):
     is_open: PropertyReference
     is_closed: PropertyReference
 
+    def set_fluid_type(self, fluid: Fluid):
+        self.set_medium(["waterInlet", "waterOutlet"], fluid)
+
 
 class ThreeWayValveDiverting(Valve):
     """
@@ -67,6 +71,9 @@ class ThreeWayValveDiverting(Valve):
     waterOutletA: WaterOutletConnectionPoint
     waterOutletB: WaterOutletConnectionPoint
 
+    def set_fluid_type(self, fluid: Fluid):
+        self.set_medium(["waterInletAB", "waterOutletA", "waterOutletB"], fluid)
+
 
 class ThreeWayValveMixing(Valve):
     """
@@ -77,6 +84,9 @@ class ThreeWayValveMixing(Valve):
     waterInletA: WaterInletConnectionPoint
     waterInletB: WaterOutletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
+
+    def set_fluid_type(self, fluid: Fluid):
+        self.set_medium(["waterInletA", "waterInletB", "waterOutlet"], fluid)
 
 
 class NaturalGasValve(Valve):
@@ -97,8 +107,7 @@ class ExpansionValve(Valve):
     portB: RefrigerantBidirectionalConnectionPoint
 
     def set_gas_type(self, gas: Refrigerant):
-        self.portA.hasMedium = gas
-        self.portB.hasMedium = gas
+        self.set_medium(["portA", "portB"], gas)
 
 
 class ReversingValve(Valve):
@@ -110,7 +119,12 @@ class ReversingValve(Valve):
     position: PropertyReference
 
     def set_gas_type(self, gas: Refrigerant):
-        self.refrigerantHighPressureInlet.hasMedium = gas
-        self.refrigerantLowPressureOutlet.hasMedium = gas
-        self.refrigerantIndoorCoilPort.hasMedium = gas
-        self.refrigerantOutdoorCoilPort.hasMedium = gas
+        self.set_medium(
+            [
+                "refrigerantHighPressureInlet",
+                "refrigerantLowPressureOutlet",
+                "refrigerantIndoorCoilPort",
+                "refrigerantOutdoorCoilPort",
+            ],
+            gas,
+        )
