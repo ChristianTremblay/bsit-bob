@@ -1300,7 +1300,11 @@ class Container(Node):
             label = Literal(label)
         elif not isinstance(label, Literal):
             raise TypeError(f"Literal or string expected: {label!r}")
-        return self._contents[label]
+        try:
+            return self._contents[label]
+        except KeyError:
+            # maybe it's the name of a property
+            return self.__dict__[str(label)]
 
     def __setitem__(self, label: Union[str, Literal], value: Node) -> None:
         _log.debug(f"Container.__getitem__ {label!r} {value!r}")
@@ -1503,6 +1507,7 @@ Substance = EnumerationKind("Substance")
 Substance.Medium = Medium = Substance("Medium")
 Medium.Constituent = Medium("Constituent")
 Medium.Mix = Mix = Medium("Mix")
+Medium.ThermalConductor = Medium("ThermalConductor")
 
 Role = EnumerationKind("Role")
 Domain = EnumerationKind("Domain")
@@ -3760,6 +3765,21 @@ class Equipment(Container, Connectable):
         """
         add_mm(self, role)
         return self
+
+    def set_medium(self, cps: List[str] = None, medium: Medium = None):
+        """
+        Set the medium of the connection points of the equipment. This allows creating
+        basics equipment with connection points and then set the medium of the connection
+        """
+        if cps is None:
+            raise ValueError("List of connection Points is required")
+        if medium is None:
+            raise ValueError("Medium is required")
+        for each in cps:
+            self[each].hasMedium = medium
+            self[each]._data_graph.set(
+                (self[each]._node_iri, S223.hasMedium, medium._node_iri)
+            )
 
 
 @multimethod
