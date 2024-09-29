@@ -635,15 +635,14 @@ class Node(metaclass=NodeMetaclass):
             _log.debug(f"        - attr_uriref: {attr_uriref!r}")
 
             # create a property restriction for the attribute
-            if cls._class_iri is not None:
+            sh_property: Optional[BNode] = None
+            if cls._class_iri is not None and not cls._class_iri.startswith(S223):
                 sh_property = BNode()
                 cls._schema_graph.add((sh_property, RDF.type, SH.PropertyShape))
                 cls._schema_graph.add((sh_property, SH.path, attr_uriref))
 
                 cls._schema_graph.add((cls._class_iri, RDF.type, SH.NodeShape))
                 cls._schema_graph.add((cls._class_iri, SH.property, sh_property))
-            else:
-                sh_property = None
 
             if isinstance(attr_type, URIRef):
                 if not attr_type.startswith(XSD):
