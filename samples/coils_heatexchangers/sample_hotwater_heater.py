@@ -33,7 +33,7 @@ from bob.core import (
 from bob.enum import DomesticHotWater, DomesticWater, Role
 from bob.equipment.hvac.boiler import DomesticElectricalWaterHeater
 from bob.equipment.hvac.coil import HeatpumpCoil, ImmersedResistanceHeaterElement
-from bob.equipment.hvac.compressor import RefrigeartionGasCompressor
+from bob.equipment.hvac.compressor import RefrigerationGasCompressor
 from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.valve import ExpansionValve, ReversingValve

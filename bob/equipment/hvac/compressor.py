@@ -52,7 +52,7 @@ class AirCompressor(Equipment):
         super().__init__(config, **kwargs)
 
 
-class RefrigeartionGasCompressor(Equipment):
+class RefrigerationGasCompressor(Equipment):
     _class_iri: URIRef = S223.Compressor
     returnPort: RefrigerantInletConnectionPoint
     dischargePort: RefrigerantOutletConnectionPoint

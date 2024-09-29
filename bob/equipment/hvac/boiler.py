@@ -23,7 +23,7 @@ from ...properties.flow import Flow
 from ...properties.temperature import Temperature
 from ...template import template_update
 from .coil import HeatpumpCoil, ImmersedResistanceHeaterElement
-from .compressor import RefrigeartionGasCompressor
+from .compressor import RefrigerationGasCompressor
 from .fan import Fan
 from .filter import Filter
 from .tank import Tank

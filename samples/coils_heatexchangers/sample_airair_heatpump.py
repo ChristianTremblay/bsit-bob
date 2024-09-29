@@ -20,7 +20,7 @@ from bob.core import (
 from bob.enum import R410a
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.coil import Coil, HeatpumpCoil
-from bob.equipment.hvac.compressor import RefrigeartionGasCompressor
+from bob.equipment.hvac.compressor import RefrigerationGasCompressor
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 from bob.equipment.hvac.valve import ExpansionValve, ReversingValve
@@ -64,7 +64,7 @@ heatpump_template = {
         },
         ("INDOORCOIL", HeatpumpCoil): {"comment": "Indoor Coil"},
         ("OUTDOORCOIL", HeatpumpCoil): {"comment": "Outdoor coil"},
-        ("COMPRESSOR", RefrigeartionGasCompressor): {"comment": "Compressor"},
+        ("COMPRESSOR", RefrigerationGasCompressor): {"comment": "Compressor"},
         ("EXPANSIONVALVE", ExpansionValve): {"comment": "Expansion Valve"},
         ("REVERSINGVALVE", ReversingValve): {"comment": "Reversing Valve"},
         ("FILTER", Filter): {"comment": "Filter"},
