@@ -73,5 +73,4 @@ class RefrigerationGasCompressor(Equipment):
         super().__init__(config, **kwargs)
 
     def set_gas_type(self, gas: Refrigerant):
-        self.returnPort.hasMedium = gas
-        self.dischargePort.hasMedium = gas
+        self.set_medium(["returnPort", "dischargePort"], gas)
