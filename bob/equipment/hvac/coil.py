@@ -114,8 +114,7 @@ class HeatpumpCoil(Coil):
         super().__init__(_config, **kwargs)
 
     def set_gas_type(self, gas: Refrigerant):
-        self.gasPortA.hasMedium = gas
-        self.gasPortB.hasMedium = gas
+        self.set_medium(["gasPortA", "gasPortB"], gas)
 
 
 # Electrical Coil
