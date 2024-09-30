@@ -23,6 +23,7 @@ model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
+VALIDATE = True
 
 # Relations between Physical spaces and Domain spaces
 ps.bldg > ps.roof
@@ -44,13 +45,15 @@ ps.private_office > ls.privateoffice_lightspace
 ps.floor1 > ps.kitchenette > hs.kitchenette_hvac
 ps.kitchenette > ls.kitchenette_lightspace
 
+
+_folder = "ttl/validation" if VALIDATE else "ttl"
 dump(
     data_graph,
-    filename=f"samples/ttl/{model_name}.data.ttl",
+    filename=f"samples/{_folder}/{model_name}.data.ttl",
     header=sample_header(model_name, "data"),
 )
 dump(
     schema_graph,
-    filename=f"samples/ttl/{model_name}.schema.ttl",
+    filename=f"samples/{_folder}/{model_name}.schema.ttl",
     header=sample_header(model_name, "schema"),
 )
