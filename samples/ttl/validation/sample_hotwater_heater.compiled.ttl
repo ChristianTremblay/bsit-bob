@@ -330,11 +330,11 @@ p223:DomesticWaterHeater a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:enteringFluid ] .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -802,11 +802,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -938,15 +938,15 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
-        [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:internalPressure ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ] .
+            sh:path bob:fluidTemperature ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
@@ -1131,10 +1131,10 @@ bob:Flow a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path bob:measuresMedium ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
 
 bob:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -1150,23 +1150,23 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:fluidTemp ],
+            sh:path sample_hotwater_heater:resistanceHeaterCommand2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterModulation2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:waterFlow ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:leavingWaterTemp ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
-        [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterModulation1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:waterFlow ],
+            sh:path sample_hotwater_heater:fluidTemp ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterModulation2 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterCommand1 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterCommand2 ] .
+            sh:path sample_hotwater_heater:resistanceHeaterCommand1 ] .
 
 bob:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
@@ -2683,6 +2683,11 @@ s223:inverseOf a rdf:Property ;
 
 <http://data.ashrae.org/standard223/1.0/vocab/enumeration> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid Composer" .
+
+bob:fluidContact a rdf:Property ;
+    rdfs:subPropertyOf s223:hasConnectionPoint .
+
+bob:isObservedBy a rdf:Property .
 
 <http://example.org/sample_hotwater_heater> a owl:Ontology ;
     owl:imports <http://data.ashrae.org/standard223/1.0/model/all> ;
@@ -18885,6 +18890,14 @@ s223:hasNumberOfElectricalPhases a rdf:Property ;
     rdfs:label "has number of electrical phases" ;
     rdfs:comment "The relation hasNumberOfElectricalPhases is used to identify the number of electrical phases in an AC electricity enumeration kind. " .
 
+s223:hasPhysicalLocation a rdf:Property ;
+    rdfs:label "has Physical Location" ;
+    rdfs:comment "The relation hasPhysicalLocation is used to indicate the PhysicalSpace (see `s223:PhysicalSpace`) where a piece of Equipment (see `s223:Equipment`) is located. The physical location of a piece of equipment is not necessarily the same as the location affected by the operation of the equipment. For example, an air handler may physically be on the roof, but its effect is to provide conditioned air to a Zone or DomainSpace within the building. By following the path of Connections, it can be determined what other equipment or spaces are possibly impacted by the equipment." .
+
+s223:hasSetpoint a rdf:Property ;
+    rdfs:label "has setpoint" ;
+    rdfs:comment "This relation binds a control setpoint to the quantifiable property indicating the desired value which the control process is trying to maintain." .
+
 s223:hasThermodynamicPhase a rdf:Property ;
     rdfs:label "has thermodynamic phase" ;
     rdfs:comment "The relation hasThermodynamicPhase is used to indicate the thermodynamic phase of the Medium inside a Connection." .
@@ -18892,13 +18905,8 @@ s223:hasThermodynamicPhase a rdf:Property ;
 bob:containedFluid a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
 
-bob:fluidContact a rdf:Property ;
-    rdfs:subPropertyOf s223:hasConnectionPoint .
-
 bob:internalPressure a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
-
-bob:isObservedBy a rdf:Property .
 
 bob:measuresMedium a rdf:Property .
 
@@ -40381,32 +40389,23 @@ sample_hotwater_heater:00023 a s223:ObservableProperty,
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
-sample_hotwater_heater:fluidTemp a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:fluidTemp a rdf:Property .
 
-sample_hotwater_heater:leavingWaterTemp a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:leavingWaterTemp a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterCommand1 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterCommand1 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterCommand2 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterCommand2 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterModulation1 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterModulation1 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterModulation2 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterModulation2 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterPower1 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterPower1 a rdf:Property .
 
-sample_hotwater_heater:resistanceHeaterPower2 a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:resistanceHeaterPower2 a rdf:Property .
 
-sample_hotwater_heater:waterFlow a rdf:Property ;
-    rdfs:subPropertyOf s223:hasProperty .
+sample_hotwater_heater:waterFlow a rdf:Property .
 
 s223:Aspect-Effectiveness a s223:Aspect-Effectiveness,
         s223:Class,
@@ -41128,13 +41127,9 @@ s223:hasOptionalConnectionPoint a rdf:Property ;
     rdfs:label "has Optional Connection Point" ;
     rdfs:comment "The hasOptionalConnectionPoint relation means the ConnectionPoint represents the boundary of a s223:System (`see s223:System`) defined by the modeler, such as a model fragment provided by the vendor of a collection of equipment intended for integration with another model. The presence of this relation is used to indicate that such a \"dangling ConnectionPoint\" should not generate a validation error in an integrated or non-integrated context." .
 
-s223:hasPhysicalLocation a rdf:Property ;
-    rdfs:label "has Physical Location" ;
-    rdfs:comment "The relation hasPhysicalLocation is used to indicate the PhysicalSpace (see `s223:PhysicalSpace`) where a piece of Equipment (see `s223:Equipment`) is located. The physical location of a piece of equipment is not necessarily the same as the location affected by the operation of the equipment. For example, an air handler may physically be on the roof, but its effect is to provide conditioned air to a Zone or DomainSpace within the building. By following the path of Connections, it can be determined what other equipment or spaces are possibly impacted by the equipment." .
-
-s223:hasSetpoint a rdf:Property ;
-    rdfs:label "has setpoint" ;
-    rdfs:comment "This relation binds a control setpoint to the quantifiable property indicating the desired value which the control process is trying to maintain." .
+s223:ofSubstance a rdf:Property ;
+    rdfs:label "of substance" ;
+    rdfs:comment "The ofSubstance relation is used on a Property being observed by a sensor. It links the Property to a Substance it characterizes within a specific Medium. For instance, to denote the concentration of a Substance in a Medium, 'ofSubstance' is used. Typically, there's also an ofMedium relation between the observed Property and the Medium. For example, to represent the concentration of CO2 in air, we use ofSubstance to relate to CO2 and ofMedium to relate to air. The term ofSubstance is broad enough to include situations where a sensor is used to detect constituents that should not be present in a medium, such as ammonia in air. Therefore, 'ofSubstance' is used to indicate the substance of interest, while 'ofConstituent' would indicate a constituent that is normally present in the composition of the mix." .
 
 <http://data.ashrae.org/standard223/1.0/inference/owl-subset> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid Composer" ;
@@ -48119,6 +48114,10 @@ s223:hasDomainSpace a rdf:Property ;
     rdfs:label "has domain space" ;
     rdfs:comment "The relation hasDomainSpace is used to associate a Zone with the DomainSpace(s) that make up that Zone." .
 
+s223:hasEnumerationKind a rdf:Property ;
+    rdfs:label "has enumeration kind" ;
+    rdfs:comment "The relation hasEnumerationKind associates an EnumerableProperty with a class of enumeration values. This is used to, for example, identify what kind of substance is transported along a Connection or which day of the week a setpoint is active." .
+
 s223:hasInternalReference a rdf:Property ;
     rdfs:label "has internal reference" ;
     rdfs:comment """The relation hasInternalReference is used to relate a Property to another candidate equivalent Property. For example, \r
@@ -48129,13 +48128,22 @@ s223:hasOutput a rdf:Property ;
     rdfs:label "has output" ;
     rdfs:comment "The relation hasOutput is used to relate a Function (see `s223:Function`) to a Property (see `s223:Property`) that is calculated by the Function." .
 
+s223:hasProperty a rdf:Property ;
+    rdfs:label "has Property" ;
+    rdfs:comment "The relation hasProperty associates any 223 Concept with a Property." .
+
 s223:hasZone a rdf:Property ;
     rdfs:label "has zone" ;
     rdfs:comment "The relation hasZone is used to associate a ZoneGroup with the Zones that make up that ZoneGroup." .
 
-s223:ofSubstance a rdf:Property ;
-    rdfs:label "of substance" ;
-    rdfs:comment "The ofSubstance relation is used on a Property being observed by a sensor. It links the Property to a Substance it characterizes within a specific Medium. For instance, to denote the concentration of a Substance in a Medium, 'ofSubstance' is used. Typically, there's also an ofMedium relation between the observed Property and the Medium. For example, to represent the concentration of CO2 in air, we use ofSubstance to relate to CO2 and ofMedium to relate to air. The term ofSubstance is broad enough to include situations where a sensor is used to detect constituents that should not be present in a medium, such as ammonia in air. Therefore, 'ofSubstance' is used to indicate the substance of interest, while 'ofConstituent' would indicate a constituent that is normally present in the composition of the mix." .
+s223:isConnectionPointOf a rdf:Property ;
+    rdfs:label "is connection point of" ;
+    s223:inverseOf s223:hasConnectionPoint ;
+    rdfs:comment "The relation isConnectionPointOf is part of a pair of relations that bind a ConnectionPoint to a Connectable thing. It is the inverse of the relation hasConnectionPoint (see `s223:hasConnectionPoint`)." .
+
+s223:ofMedium a rdf:Property ;
+    rdfs:label "of medium" ;
+    rdfs:comment "The relation ofMedium is used to associate a Property with the specific Medium it describes. A property corresponding to the temperature of a medium would be associated with this medium using the relation ofMedium." .
 
 qudtqk:AmountOfSubstancePerUnitVolume a qudt:QuantityKind ;
     rdfs:label "Amount of Substance per Unit Volume"@en ;
@@ -55706,22 +55714,9 @@ s223:connectedFrom a rdf:Property ;
     rdfs:comment "The relation connectedFrom indicates that connectable things are connected with a specific flow direction. B is connectedFrom A, means a directionality beginning at A and ending at B.  The inverse direction is indicated by connectedTo (see `s223:connectedTo`)." ;
     rdfs:domain s223:Equipment .
 
-s223:hasEnumerationKind a rdf:Property ;
-    rdfs:label "has enumeration kind" ;
-    rdfs:comment "The relation hasEnumerationKind associates an EnumerableProperty with a class of enumeration values. This is used to, for example, identify what kind of substance is transported along a Connection or which day of the week a setpoint is active." .
-
 s223:hasObservationLocation a rdf:Property ;
     rdfs:label "has observation location" ;
     rdfs:comment "The relation hasObservationLocation associates a sensor to the topological location where it is observing the property (see `s223:observes`). The observation location shall be a Connectable (see `s223:Connectable`), Connection (see `s223:Connection`), or ConnectionPoint (see `s223:ConnectionPoint`)." .
-
-s223:isConnectionPointOf a rdf:Property ;
-    rdfs:label "is connection point of" ;
-    s223:inverseOf s223:hasConnectionPoint ;
-    rdfs:comment "The relation isConnectionPointOf is part of a pair of relations that bind a ConnectionPoint to a Connectable thing. It is the inverse of the relation hasConnectionPoint (see `s223:hasConnectionPoint`)." .
-
-s223:ofMedium a rdf:Property ;
-    rdfs:label "of medium" ;
-    rdfs:comment "The relation ofMedium is used to associate a Property with the specific Medium it describes. A property corresponding to the temperature of a medium would be associated with this medium using the relation ofMedium." .
 
 qudtqk:AreaTime a qudt:QuantityKind ;
     rdfs:label "Area Time"@en ;
@@ -58305,6 +58300,11 @@ s223:connectedTo a rdf:Property ;
     rdfs:comment "The relation connectedTo indicates that connectable things are connected with a specific flow direction. A is connectedTo B, means a directionality beginning at A and ending at B.  The inverse direction is indicated by connectedFrom (see `s223:connectedFrom`)." ;
     rdfs:domain s223:Equipment .
 
+s223:connectsThrough a rdf:Property ;
+    rdfs:label "connects through" ;
+    s223:inverseOf s223:connectsAt ;
+    rdfs:comment "The relation connectsThrough binds a ConnectionPoint to a Connection without regard to the direction of flow." .
+
 s223:hasReferenceLocation a rdf:Property ;
     rdfs:label "has reference location" ;
     rdfs:comment "The relation hasReferenceLocation associates a differential sensor to the topological location of the baseline (reference) property (see `s223:observes`)." .
@@ -58312,6 +58312,10 @@ s223:hasReferenceLocation a rdf:Property ;
 s223:hasVoltage a rdf:Property ;
     rdfs:label "hasVoltage" ;
     rdfs:comment "The relation hasVoltage is used to identify the voltage of an electricity enumeration kind. " .
+
+s223:ofConstituent a rdf:Property ;
+    rdfs:label "of constituent" ;
+    rdfs:comment "The relation ofConstituent is used to associate a Property that characterizes a medium mix with one of the constituents of that mix. (ex. Fluid-Water composedOf property ofConstituent Constituent-H2O." .
 
 qudtqk:ActivityConcentration a qudt:QuantityKind ;
     rdfs:label "Activity Concentration"@en ;
@@ -60500,14 +60504,9 @@ s223:Function a s223:Class,
             sh:class s223:Property ;
             sh:path s223:hasOutput ] .
 
-s223:connectsThrough a rdf:Property ;
-    rdfs:label "connects through" ;
-    s223:inverseOf s223:connectsAt ;
-    rdfs:comment "The relation connectsThrough binds a ConnectionPoint to a Connection without regard to the direction of flow." .
-
-s223:ofConstituent a rdf:Property ;
-    rdfs:label "of constituent" ;
-    rdfs:comment "The relation ofConstituent is used to associate a Property that characterizes a medium mix with one of the constituents of that mix. (ex. Fluid-Water composedOf property ofConstituent Constituent-H2O." .
+s223:hasValue a rdf:Property ;
+    rdfs:label "hasValue" ;
+    rdfs:comment "hasValue is used to contain a fixed value that is part of a 223 model, rather than a computed, measured, or externally derived variable." .
 
 qudtqk:BoilingPoint a qudt:QuantityKind ;
     rdfs:label "Boiling Point Temperature"@en ;
@@ -64382,10 +64381,6 @@ s223:composedOf a rdf:Property ;
     rdfs:label "composed of" ;
     rdfs:comment "The relation composedOf is used to indicate what substances constitute a material. Allowable values are instances of Property that in turn identify constituents defined in Medium-Constituent (see `s223:Medium-Constituent`) via the relation ofConstituent." .
 
-s223:hasValue a rdf:Property ;
-    rdfs:label "hasValue" ;
-    rdfs:comment "hasValue is used to contain a fixed value that is part of a 223 model, rather than a computed, measured, or externally derived variable." .
-
 qudtqk:AbsorbedDose a qudt:QuantityKind ;
     rdfs:label "Absorbed Dose"@en ;
     dcterms:description "\"Absorbed Dose\" (also known as Total Ionizing Dose, TID) is a measure of the energy deposited in a medium by ionizing radiation. It is equal to the energy deposited per unit mass of medium, and so has the unit \\(J/kg\\), which is given the special name Gray (\\(Gy\\))."^^qudt:LatexString ;
@@ -66065,6 +66060,10 @@ s223:LineLineVoltage-240V a s223:Class,
     rdfs:comment "240V Line-Line Voltage" ;
     rdfs:subClassOf s223:Numerical-LineLineVoltage .
 
+s223:mapsTo a rdf:Property ;
+    rdfs:label "mapsTo" ;
+    rdfs:comment "The relation mapsTo is used to associate a ConnectionPoint of a Connectable to a corresponding ConnectionPoint of the one containing it (see `pub:equipment-containment`). The associated ConnectionPoints must have the same direction (see `s223:EnumerationKind-Direction`) and compatiable medium Substance-Medium." .
+
 <http://data.ashrae.org/standard223/1.0/inference/model-rules> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid Composer" ;
     sh:declare [ sh:namespace "http://data.ashrae.org/standard223#"^^xsd:anyURI ;
@@ -66079,6 +66078,9 @@ s223:LineLineVoltage-240V a s223:Class,
             sh:prefix "unit" ],
         [ sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
             sh:prefix "rdfs" ] .
+
+qudt:hasUnit a rdf:Property ;
+    rdfs:comment "A reference to the unit of measure of a QuantifiableProperty of interest." .
 
 qudtqk:AreaPerTime a qudt:QuantityKind ;
     rdfs:label "Area per Time"@en ;
@@ -67337,13 +67339,6 @@ UNION\r
             sh:name "InferredMeasurementLocation" ;
             sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/model-rules> ] .
 
-s223:mapsTo a rdf:Property ;
-    rdfs:label "mapsTo" ;
-    rdfs:comment "The relation mapsTo is used to associate a ConnectionPoint of a Connectable to a corresponding ConnectionPoint of the one containing it (see `pub:equipment-containment`). The associated ConnectionPoints must have the same direction (see `s223:EnumerationKind-Direction`) and compatiable medium Substance-Medium." .
-
-qudt:hasUnit a rdf:Property ;
-    rdfs:comment "A reference to the unit of measure of a QuantifiableProperty of interest." .
-
 qudtqk:Conductance a qudt:QuantityKind ;
     rdfs:label "Conductance"@en ;
     dcterms:description "$\\textit{Conductance}$, for a resistive two-terminal element or two-terminal circuit with terminals A and B, quotient of the electric current i in the element or circuit by the voltage $u_{AB}$ between the terminals: $G = \\frac{1}{R}$, where the electric current is taken as positive if its direction is from A to B and negative in the opposite case. The conductance of an element or circuit is the inverse of its resistance."^^qudt:LatexString ;
@@ -68356,10 +68351,6 @@ s223:cnx a s223:SymmetricProperty ;
 s223:hasDomain a rdf:Property ;
     rdfs:label "has domain" ;
     rdfs:comment "The relation hasDomain is used to indicate what domain a Zone or DomainSpace pertains to (e.g. HVAC, lighting, electrical, etc.). Possible values are defined in EnumerationKind-Domain (see `s223:EnumerationKind-Domain`)." .
-
-s223:hasProperty a rdf:Property ;
-    rdfs:label "has Property" ;
-    rdfs:comment "The relation hasProperty associates any 223 Concept with a Property." .
 
 qudtqk:Admittance a qudt:QuantityKind ;
     rdfs:label "Admittance"@en ;
@@ -69964,6 +69955,9 @@ For example, see `s223:GlycolSolution-15Percent`.""" ;
             sh:class s223:Property ;
             sh:path s223:composedOf ] .
 
+qudt:hasQuantityKind a rdf:Property ;
+    rdfs:comment "A reference to the QuantityKind of a QuantifiableProperty of interest, e.g. quantitykind:Temperature." .
+
 qudtqk:ElectricFieldStrength a qudt:QuantityKind ;
     rdfs:label "شدة المجال الكهربائي"@ar,
         "Електрично поле"@bg,
@@ -70383,9 +70377,6 @@ s223:hasRole a rdf:Property ;
 s223:observes a rdf:Property ;
     rdfs:label "observes" ;
     rdfs:comment "The relation observes binds a sensor to one ObservableProperty `see s223:ObservableProperty` which is used by the sensor to generate a measurement value (ex. a temperature) or a simple observation of a stimulus causing a reaction (a current binary switch that closes a dry contact when a fan is powered on)." .
-
-qudt:hasQuantityKind a rdf:Property ;
-    rdfs:comment "A reference to the QuantityKind of a QuantifiableProperty of interest, e.g. quantitykind:Temperature." .
 
 qudtqk:ComplexPower a qudt:QuantityKind ;
     rdfs:label "Complex Power"@en ;
@@ -79465,72 +79456,12 @@ qudtqk:Unknown a qudt:QuantityKind ;
     qudt:hasQuantityKind qudtqk:VolumeFraction ;
     qudt:hasUnit unit:PERCENT .
 
-[] a sh:PropertyShape ;
-    sh:path bob:isObservedBy .
-
-[] a sh:PropertyShape ;
-    sh:path qudt:hasQuantityKind .
-
-[] a sh:PropertyShape ;
-    sh:path qudt:hasUnit .
-
-[] a sh:PropertyShape ;
-    sh:path s223:connectsThrough .
-
-[] a sh:PropertyShape ;
-    sh:path s223:hasEnumerationKind .
-
-[] a sh:PropertyShape ;
-    sh:path s223:hasPhysicalLocation .
-
-[] a sh:PropertyShape ;
-    sh:path s223:hasSetpoint .
-
-[] a sh:PropertyShape ;
-    sh:path s223:hasValue .
-
-[] a sh:PropertyShape ;
-    sh:path s223:isConnectionPointOf .
-
-[] a sh:PropertyShape ;
-    sh:path s223:mapsTo .
-
 [] a s223:Property,
         s223:QuantifiableProperty ;
     rdfs:label "R-410A.Constituent-R-410A" ;
     s223:ofConstituent p223:Constituent-R-410A ;
     qudt:hasQuantityKind qudtqk:VolumeFraction ;
     qudt:hasUnit unit:PERCENT .
-
-[] a sh:PropertyShape ;
-    sh:path s223:ofConstituent .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:hasMedium .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:hasMedium .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:hasMedium .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:hasValue .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:ofMedium .
-
-[] a sh:PropertyShape ;
-    sh:class s223:EnumerationKind ;
-    sh:path s223:ofSubstance .
-
-[] a sh:PropertyShape ;
-    sh:path bob:fluidContact .
 
 [] sh:minCount 1 .
 
