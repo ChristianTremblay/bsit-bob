@@ -41,15 +41,25 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
+            sh:path bob:humidity ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
             sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantHeating ],
+        [ a sh:PropertyShape ;
+            sh:path bob:windows ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
             sh:path bob:occupancy ],
         [ a sh:PropertyShape ;
             sh:path bob:ductAirOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:windows ],
         [ a sh:PropertyShape ;
             sh:path bob:radiantCooling ],
         [ a sh:PropertyShape ;
@@ -57,19 +67,9 @@ bob:HVACSpace a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path bob:ductAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:humidity ],
-        [ a sh:PropertyShape ;
-            sh:path bob:radiantHeating ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co ],
-        [ a sh:PropertyShape ;
             sh:path bob:co2 ],
         [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airTransfer ] .
+            sh:path bob:co ] .
 
 bob:airChangePerHour a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .

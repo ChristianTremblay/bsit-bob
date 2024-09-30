@@ -1298,9 +1298,9 @@ bob:EthernetConnectionPoint a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path p223:hasProtocol ],
         [ a sh:PropertyShape ;
-            sh:path p223:VLAN ],
+            sh:path p223:data_rate ],
         [ a sh:PropertyShape ;
-            sh:path p223:data_rate ] .
+            sh:path p223:VLAN ] .
 
 bob:Flow a rdfs:Class,
         sh:NodeShape ;
@@ -1310,13 +1310,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
             sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path bob:measuresMedium ] .
 
 bob:Frequency a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Frequency" ;
@@ -1414,10 +1414,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:Volts a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Volts" ;
@@ -1433,9 +1433,9 @@ scratch:Actuator a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:command ],
+            sh:path scratch:position ],
         [ a sh:PropertyShape ;
-            sh:path scratch:position ] .
+            sh:path scratch:command ] .
 
 scratch:Damper a rdfs:Class,
         sh:NodeShape ;
@@ -1444,17 +1444,17 @@ scratch:Damper a rdfs:Class,
         s223:Damper,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:position_feedback ],
-        [ a sh:PropertyShape ;
             sh:path scratch:is_closed ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:is_open ],
         [ a sh:PropertyShape ;
             sh:path scratch:linkageInlet ],
         [ a sh:PropertyShape ;
+            sh:path scratch:is_open ],
+        [ a sh:PropertyShape ;
             sh:path scratch:command ],
         [ a sh:PropertyShape ;
-            sh:path scratch:position ] .
+            sh:path scratch:position ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:position_feedback ] .
 
 scratch:DamperAndActuator a rdfs:Class ;
     rdfs:label "bob.scratch.hvac.damper.DamperAndActuator" ;
@@ -1515,13 +1515,13 @@ scratch:Fan a rdfs:Class,
         s223:Equipment,
         s223:Fan ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
-        [ a sh:PropertyShape ;
             sh:path scratch:onOffCommand ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ] .
+            sh:path scratch:onOffStatus ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ] .
 
 scratch:MotorStarter_600VLL_3Ph_60Hz a rdfs:Class,
         sh:NodeShape ;
@@ -1540,11 +1540,11 @@ scratch:MotorStarter_600VLL_3Ph_60Hz a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:inputSignal ],
+            sh:path scratch:outputSignal ],
         [ a sh:PropertyShape ;
             sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
-            sh:path scratch:outputSignal ] .
+            sh:path scratch:inputSignal ] .
 
 p223:VLAN a rdf:Property .
 
@@ -1566,21 +1566,21 @@ scratch:VFDFunction a rdfs:Class,
     rdfs:label "bob.scratch.electricity.vfd.VFD_FB" ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
+            sh:path scratch:frequency_load ],
+        [ a sh:PropertyShape ;
             sh:path scratch:speed_ref_percent ],
         [ a sh:PropertyShape ;
             sh:path scratch:kW_load ],
         [ a sh:PropertyShape ;
-            sh:path scratch:amps_load ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:drive_running ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:frequency_load ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:rpm ],
+            sh:path scratch:speed_ref ],
         [ a sh:PropertyShape ;
             sh:path scratch:alarm ],
         [ a sh:PropertyShape ;
-            sh:path scratch:speed_ref ],
+            sh:path scratch:rpm ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:amps_load ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:drive_running ],
         [ a sh:PropertyShape ;
             sh:path scratch:volts_load ] .
 
@@ -1592,9 +1592,9 @@ scratch:VariableFrequencyDrive a rdfs:Class,
         s223:Equipment,
         s223:VariableFrequencyDrive ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:volts ],
+            sh:path scratch:amps ],
         [ a sh:PropertyShape ;
-            sh:path scratch:amps ] .
+            sh:path scratch:volts ] .
 
 scratch:alarm a rdf:Property .
 
