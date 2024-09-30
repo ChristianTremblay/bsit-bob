@@ -3572,10 +3572,13 @@ class Equipment(Container, Connectable):
         if medium is None:
             raise ValueError("Medium is required")
         for each in cps:
-            self[each].hasMedium = medium
-            self[each]._data_graph.set(
-                (self[each]._node_iri, S223.hasMedium, medium._node_iri)
-            )
+            if medium in self[each].hasMedium._children:
+                self[each].hasMedium = medium
+                self[each]._data_graph.set(
+                    (self[each]._node_iri, S223.hasMedium, medium._node_iri)
+                )
+            else:
+                raise ValueError(f"Incompatible medium {medium} for {each}")
 
 
 @multimethod

@@ -87,13 +87,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
             sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path bob:measuresMedium ] .
 
 bob:HP a rdfs:Class ;
     rdfs:label "bob.properties.force.HP" ;
@@ -1297,13 +1297,13 @@ scratch:Fan a rdfs:Class,
         s223:Equipment,
         s223:Fan ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ],
+            sh:path scratch:onOffCommand ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
+            sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
             sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:onOffCommand ] .
+            sh:path bob:airOutlet ] .
 
 scratch:onOffCommand a rdf:Property .
 

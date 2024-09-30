@@ -93,23 +93,23 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:fluidTemp ],
-        [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterCommand2 ],
+            sh:path sample_hotwater_heater:resistanceHeaterModulation1 ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterModulation2 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:waterFlow ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
+            sh:path sample_hotwater_heater:fluidTemp ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterCommand2 ],
+        [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:leavingWaterTemp ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterModulation1 ] .
+            sh:path sample_hotwater_heater:waterFlow ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterPower1 ] .
 
 bob:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
@@ -503,9 +503,9 @@ p223:DomesticWaterHeater a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
+            sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ] .
+            sh:path bob:leavingFluid ] .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -1111,13 +1111,13 @@ p223:Tank a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
-        [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:internalPressure ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:enteringFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:internalPressure ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
