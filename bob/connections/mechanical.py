@@ -1,7 +1,4 @@
-from rdflib import Literal, URIRef
-
 from ..core import (
-    BOB,
     P223,
     S223,
     BidirectionalConnectionPoint,
@@ -35,3 +32,9 @@ class MechanicalInletConnectionPoint(InletConnectionPoint, MechanicalConnectionP
 
 class MechanicalOutletConnectionPoint(OutletConnectionPoint, MechanicalConnectionPoint):
     _class_iri = S223.OutletConnectionPoint
+
+
+class MechanicalBidirectionalConnectionPoint(
+    BidirectionalConnectionPoint, MechanicalConnectionPoint
+):
+    _class_iri = S223.BidirectionalConnectionPoint

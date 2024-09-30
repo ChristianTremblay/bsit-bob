@@ -1,8 +1,5 @@
-from rdflib import URIRef
-
 from ..core import (
     BOB,
-    P223,
     S223,
     BidirectionalConnectionPoint,
     Connection,
@@ -11,57 +8,51 @@ from ..core import (
     OutletConnectionPoint,
     Medium,
 )
-from ..enum import GlycolSolution_15Percent, GlycolSolution_30Percent, Water
+from ..enum import Fluid, GlycolSolution_15Percent, GlycolSolution_30Percent, Water
 
 _namespace = BOB
 
 
-# class DomesticWater(Water):
-#     _class_iri: URIRef = S223["Water-DomesticWater"]
-
-
-# class DomesticHotWater(Water):
-#     _class_iri: URIRef = S223["Water-DomesticHotWater"]
-
-
-# class ChilledWater(Water):
-#     _class_iri: URIRef = S223["Water-ChilledWater"]
-
-
-# class HotWater(Water):
-#     _class_iri: URIRef = S223["Water-HotWater"]
-
-
-# class CondensedWater(Water):
-#     _class_iri: URIRef = S223["Water-CondensedWater"]
-
-
-# class GlycoledWater(Water):
-#     # glycol_proportion =
-#     _class_iri: URIRef = S223["Water-GlycoledWater"]
-
-
-# class Steam(Water):
-#     # glycol_proportion =
-#     _class_iri: URIRef = S223["Water-Steam"]
-
-
 # Connections
 
-# A class factory that would build everything ?
-# lst_of_substance_classes = [HotWater, ChilledWater, ... ]
-# for each in lst_of_substance_classes:
+
+# === Generic Fluid
+class FluidConnection(Connection):
+    _volatile = ("hasMedium",)
+    hasMedium: Fluid = Water
+    _class_iri = S223.Connection
+
+
+class FluidConnectionPoint(ConnectionPoint):
+    _volatile = ("hasMedium",)
+    hasMedium: Fluid = Water
+
+
+class FluidInletConnectionPoint(FluidConnectionPoint, InletConnectionPoint):
+    _class_iri = S223.InletConnectionPoint
+
+
+class FluidOutletConnectionPoint(FluidConnectionPoint, OutletConnectionPoint):
+    _class_iri = S223.OutletConnectionPoint
+
+
+class FluidBidirectionalConnectionPoint(
+    FluidConnectionPoint, BidirectionalConnectionPoint
+):
+    _class_iri = S223.BidirectionalConnectionPoint
 
 
 # === WATER
 
 
 class WaterConnection(Connection):
+    _volatile = ("hasMedium",)
     hasMedium: Medium = Water
     _class_iri = S223.Connection
 
 
 class WaterConnectionPoint(ConnectionPoint):
+    _volatile = ("hasMedium",)
     hasMedium: Medium = Water
 
 
@@ -99,7 +90,7 @@ class HotWaterOutletConnectionPoint(HotWaterConnectionPoint, OutletConnectionPoi
     _class_iri = S223.OutletConnectionPoint
 
 
-# === HOT WATER
+# === MIXED WATER
 
 
 class MixedWaterConnection(Connection):
@@ -206,6 +197,30 @@ class Glycol15PercentInletConnectionPoint(
 
 
 class Glycol15PercentOutletConnectionPoint(
+    OutletConnectionPoint, Glycol15PercentConnectionPoint
+):
+    _class_iri = S223.OutletConnectionPoint
+
+
+# === Glycol Solution 15%
+
+
+class Glycol30PercentConnection(Connection):
+    hasMedium: Medium = GlycolSolution_30Percent
+    _class_iri = S223.Connection
+
+
+class Glycol30PercentConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = GlycolSolution_30Percent
+
+
+class Glycol30PercentInletConnectionPoint(
+    InletConnectionPoint, Glycol15PercentConnectionPoint
+):
+    _class_iri = S223.InletConnectionPoint
+
+
+class Glycol30PercentOutletConnectionPoint(
     OutletConnectionPoint, Glycol15PercentConnectionPoint
 ):
     _class_iri = S223.OutletConnectionPoint

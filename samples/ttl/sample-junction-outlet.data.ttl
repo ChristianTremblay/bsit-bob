@@ -4,7 +4,6 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex1: <urn:ex/sample-junction-outlet/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
@@ -40,7 +39,7 @@ ex1:00002 a s223:ConnectionPoint,
     s223:cnx ex1:00001,
         ex1:00015 ;
     s223:connectsThrough ex1:00015 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00001 .
 
 ex1:00003 a s223:Connectable,
@@ -61,7 +60,7 @@ ex1:00004 a s223:ConnectionPoint,
     s223:cnx ex1:00003,
         ex1:00015 ;
     s223:connectsThrough ex1:00015 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00003 .
 
 ex1:00005 a s223:Connectable,
@@ -82,7 +81,7 @@ ex1:00006 a s223:ConnectionPoint,
     s223:cnx ex1:00005,
         ex1:00011 ;
     s223:connectsThrough ex1:00011 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00005 .
 
 ex1:00007 a s223:Connectable,
@@ -103,7 +102,7 @@ ex1:00008 a s223:ConnectionPoint,
     s223:cnx ex1:00007,
         ex1:00013 ;
     s223:connectsThrough ex1:00013 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00007 .
 
 ex1:00009 a s223:Connectable,
@@ -120,14 +119,14 @@ ex1:00009 a s223:Connectable,
     s223:hasConnectionPoint ex1:00010,
         ex1:00012,
         ex1:00014 ;
-    s223:hasMedium p223:Fluid-Air .
+    s223:hasMedium s223:Fluid-Air .
 
 ex1:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:cnx ex1:00009,
         ex1:00011 ;
     s223:connectsThrough ex1:00011 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00009 .
 
 ex1:00011 a s223:Connection ;
@@ -137,14 +136,14 @@ ex1:00011 a s223:Connection ;
         ex1:00010 ;
     s223:connectsFrom ex1:00005 ;
     s223:connectsTo ex1:00009 ;
-    s223:hasMedium p223:Fluid-Air .
+    s223:hasMedium s223:Fluid-Air .
 
 ex1:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     s223:cnx ex1:00009,
         ex1:00013 ;
     s223:connectsThrough ex1:00013 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00009 .
 
 ex1:00013 a s223:Connection ;
@@ -154,13 +153,13 @@ ex1:00013 a s223:Connection ;
         ex1:00012 ;
     s223:connectsFrom ex1:00007 ;
     s223:connectsTo ex1:00009 ;
-    s223:hasMedium p223:Fluid-Air .
+    s223:hasMedium s223:Fluid-Air .
 
 ex1:00014 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     s223:cnx ex1:00009 ;
-    s223:hasMedium p223:Fluid-Air ;
+    s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex1:00009 ;
     s223:mapsTo ex1:00002 .
 
@@ -171,5 +170,5 @@ ex1:00015 a s223:Connection ;
         ex1:00004 ;
     s223:connectsFrom ex1:00001 ;
     s223:connectsTo ex1:00003 ;
-    s223:hasMedium p223:Fluid-Air .
+    s223:hasMedium s223:Fluid-Air .
 

@@ -167,7 +167,7 @@ class SchemaGraph(Graph):
         subj, pred, obj = triple
 
         # exclude the schema content in the S223 namespace by default
-        if subj.startswith(S223) and (not isinstance(obj, BNode)):
+        if subj.startswith(S223):  # and (not isinstance(obj, BNode)):
             return
 
         # passes the tests
@@ -1324,7 +1324,11 @@ class Container(Node):
             label = Literal(label)
         elif not isinstance(label, Literal):
             raise TypeError(f"Literal or string expected: {label!r}")
-        return self._contents[label]
+        try:
+            return self._contents[label]
+        except KeyError:
+            # maybe it's the name of a property
+            return self.__dict__[str(label)]
 
     def __setitem__(self, label: Union[str, Literal], value: Node) -> None:
         _log.debug(f"Container.__getitem__ {label!r} {value!r}")
@@ -1410,6 +1414,7 @@ class EnumerationKind(Node):
         self._parent = None
         self._children = set([self])
         self._constituents = set()
+        self.composedOf = set()
 
     def __call__(self, name, *, _alt_namespace=None, **kwargs) -> EnumerationKind:
         _log.debug("EnumerationKind.__call__ %r", name)
@@ -1445,90 +1450,18 @@ class EnumerationKind(Node):
 
         return new_child
 
-
-#
-#   Top Level EnumerationKind Instances
-#
-
-# General EnumerationKind
-Substance = EnumerationKind("Substance")
-Substance.Medium = Medium = Substance("Medium")
-Medium.Constituent = Medium("Constituent")
-Medium.Mix = Medium("Mix")
-
-Role = EnumerationKind("Role")
-Domain = EnumerationKind("Domain")
-
-
-class Constituent(EnumerationKind):
-    def __init__(self, name, *args, **kwargs) -> None:
-        _log.debug("Constituent.__init__ %r", name)
-
-        # give it a default label that matches the name
-        if "label" not in kwargs:
-            kwargs["label"] = name
-
-        if "_alt_namespace" in kwargs:
-            _ns = kwargs.pop("_alt_namespace")
-            kwargs["_node_iri"] = _ns["Constituent" + "-" + name]
-        elif "_node_iri" not in kwargs:
-            kwargs["_node_iri"] = _namespace["Constituent" + "-" + name]
-
-        super().__init__(name, **kwargs)
-
-        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
-        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
-        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
-
-        self._schema_graph.add(
-            (self._node_iri, RDFS.subClassOf, _namespace["Constituent"])
-        )
-
-        # funky parents
-        self._parent = Medium.Constituent
-        Medium.Constituent._children.add(self)
-        Medium._children.add(self)
-        Substance._children.add(self)
-
-    # def __call__(self, *args, **kwargs):
-    #     raise NotImplementedError("no sub-constituents")
-
-
-class Mix(EnumerationKind):
-    # composedOf: Set[Property | QuantifiableProperty]
-
-    def __init__(self, name, *args, **kwargs) -> None:
-        _log.debug("Mix.__init__ %r", name)
-
-        # give it a default label that matches the name
-        if "label" not in kwargs:
-            kwargs["label"] = name
-
-        if "_alt_namespace" in kwargs:
-            _ns = kwargs.pop("_alt_namespace")
-            kwargs["_node_iri"] = _ns["Mix" + "-" + name]
-        elif "_node_iri" not in kwargs:
-            kwargs["_node_iri"] = _namespace["Mix" + "-" + name]
-
-        super().__init__(name, **kwargs)
-
-        self.composedOf = set()
-
-        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
-        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
-        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
-
-        self._schema_graph.add((self._node_iri, RDFS.subClassOf, _namespace["Mix"]))
-
-        # funky parent reference
-        self._parent = Medium.Mix
-
     def add_constituent(self, constituent: Constituent, *args, **kwargs) -> None:
         _log.debug("Mix.add_constituent %r %r %r", constituent, args, kwargs)
         _log.debug("    - self: %r", self)
 
         if not isinstance(constituent, Constituent):
             raise TypeError("constituent")
+
+        # if not isinstance(self, Mix):
+        #    raise TypeError("Only Mix can have constituents")
+
+        if not self.composedOf:
+            self.composedOf = set()
 
         # look for an existing reference to this constituent
         for prop in self.composedOf:
@@ -1541,7 +1474,7 @@ class Mix(EnumerationKind):
                     prop._data_graph.add(
                         (
                             prop._node_iri,
-                            S223.hasQuantityKind,
+                            QUDT.hasQuantityKind,
                             kwargs["hasQuantityKind"],
                         )
                     )
@@ -1549,7 +1482,7 @@ class Mix(EnumerationKind):
                 if "hasUnit" in kwargs:
                     _log.debug("    - update hasUnit")
                     prop._data_graph.add(
-                        (prop._node_iri, S223.hasUnit, kwargs["hasUnit"])
+                        (prop._node_iri, QUDT.hasUnit, kwargs["hasUnit"])
                     )
                     update_to_quantifiable = True
                 if "hasValue" in kwargs:
@@ -1587,6 +1520,55 @@ class Mix(EnumerationKind):
         self._constituents.add(constituent)
         prop._schema_graph.add((self._node_iri, S223.composedOf, prop._node_iri))
         self.composedOf.add(prop)
+
+
+#
+#   Top Level EnumerationKind Instances
+#
+
+# General EnumerationKind
+Substance = EnumerationKind("Substance")
+Substance.Medium = Medium = Substance("Medium")
+Medium.Constituent = Medium("Constituent")
+Medium.Mix = Mix = Medium("Mix")
+Medium.ThermalConductor = Medium("ThermalConductor")
+
+Role = EnumerationKind("Role")
+Domain = EnumerationKind("Domain")
+
+
+class Constituent(EnumerationKind):
+    def __init__(self, name, *args, **kwargs) -> None:
+        _log.debug("Constituent.__init__ %r", name)
+
+        # give it a default label that matches the name
+        if "label" not in kwargs:
+            kwargs["label"] = name
+
+        if "_alt_namespace" in kwargs:
+            _ns = kwargs.pop("_alt_namespace")
+            kwargs["_node_iri"] = _ns["Constituent" + "-" + name]
+        elif "_node_iri" not in kwargs:
+            kwargs["_node_iri"] = _namespace["Constituent" + "-" + name]
+
+        super().__init__(name, **kwargs)
+
+        self._schema_graph.add((self._node_iri, RDF.type, RDFS.Class))
+        self._schema_graph.add((self._node_iri, RDF.type, self._node_iri))
+        self._schema_graph.add((self._node_iri, RDF.type, SH.NodeShape))
+
+        self._schema_graph.add(
+            (self._node_iri, RDFS.subClassOf, _namespace["Constituent"])
+        )
+
+        # funky parents
+        self._parent = Medium.Constituent
+        Medium.Constituent._children.add(self)
+        Medium._children.add(self)
+        Substance._children.add(self)
+
+    # def __call__(self, *args, **kwargs):
+    #     raise NotImplementedError("no sub-constituents")
 
 
 class System(Container):
@@ -2723,12 +2705,8 @@ class Zone(Container, Node):
     """
 
     _class_iri: URIRef = S223.Zone
-    _attr_uriref: Dict[str, URIRef] = {
-        "hasZoneConnectionPoint": BOB.hasZoneConnectionPoint,
-    }
 
     hasDomain: Domain
-    hasZoneConnectionPoint: List[ZoneConnectionPoint]
 
     _zone_connection_points: Dict[str, ZoneConnectionPoint]
 
@@ -3583,6 +3561,21 @@ class Equipment(Container, Connectable):
         """
         add_mm(self, role)
         return self
+
+    def set_medium(self, cps: List[str] = None, medium: Medium = None):
+        """
+        Set the medium of the connection points of the equipment. This allows creating
+        basics equipment with connection points and then set the medium of the connection
+        """
+        if cps is None:
+            raise ValueError("List of connection Points is required")
+        if medium is None:
+            raise ValueError("Medium is required")
+        for each in cps:
+            self[each].hasMedium = medium
+            self[each]._data_graph.set(
+                (self[each]._node_iri, S223.hasMedium, medium._node_iri)
+            )
 
 
 @multimethod

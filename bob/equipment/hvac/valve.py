@@ -4,17 +4,25 @@ from ...connections.air import (
     CompressedAirInletConnectionPoint,
     CompressedAirOutletConnectionPoint,
 )
+from ...connections.liquid import WaterInletConnectionPoint, WaterOutletConnectionPoint
 from ...connections.mechanical import MechanicalInletConnectionPoint
 from ...connections.naturalgas import (
     NaturalGasInletConnectionPoint,
     NaturalGasOutletConnectionPoint,
 )
-
-from ...connections.liquid import (
-    WaterInletConnectionPoint,
-    WaterOutletConnectionPoint,
+from ...connections.refrigerant import (
+    RefrigerantBidirectionalConnectionPoint,
+    RefrigerantInletConnectionPoint,
+    RefrigerantOutletConnectionPoint,
 )
 from ...core import BOB, S223, Equipment, PropertyReference, logging
+from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
+    R22,
+    R32,
+    Fluid,
+    R410a,
+    Refrigerant,
+)
 from ...properties import Gallons
 
 # logging
@@ -49,6 +57,9 @@ class TwoWayValve(Valve):
     is_open: PropertyReference
     is_closed: PropertyReference
 
+    def set_fluid_type(self, fluid: Fluid):
+        self.set_medium(["waterInlet", "waterOutlet"], fluid)
+
 
 class ThreeWayValveDiverting(Valve):
     """
@@ -59,6 +70,9 @@ class ThreeWayValveDiverting(Valve):
     waterInletAB: WaterInletConnectionPoint
     waterOutletA: WaterOutletConnectionPoint
     waterOutletB: WaterOutletConnectionPoint
+
+    def set_fluid_type(self, fluid: Fluid):
+        self.set_medium(["waterInletAB", "waterOutletA", "waterOutletB"], fluid)
 
 
 class ThreeWayValveMixing(Valve):
@@ -71,6 +85,9 @@ class ThreeWayValveMixing(Valve):
     waterInletB: WaterOutletConnectionPoint
     waterOutlet: WaterOutletConnectionPoint
 
+    def set_fluid_type(self, fluid: Fluid):
+        self.set_medium(["waterInletA", "waterInletB", "waterOutlet"], fluid)
+
 
 class NaturalGasValve(Valve):
     _class_iri = S223.Valve
@@ -82,3 +99,32 @@ class PneumaticValve(Valve):
     _class_iri = S223.Valve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint
+
+
+class ExpansionValve(Valve):
+    _class_iri = S223.Valve
+    portA: RefrigerantBidirectionalConnectionPoint
+    portB: RefrigerantBidirectionalConnectionPoint
+
+    def set_gas_type(self, gas: Refrigerant):
+        self.set_medium(["portA", "portB"], gas)
+
+
+class ReversingValve(Valve):
+    _class_iri = S223.Valve
+    refrigerantHighPressureInlet: RefrigerantInletConnectionPoint
+    refrigerantLowPressureOutlet: RefrigerantOutletConnectionPoint
+    refrigerantIndoorCoilPort: RefrigerantBidirectionalConnectionPoint
+    refrigerantOutdoorCoilPort: RefrigerantBidirectionalConnectionPoint
+    position: PropertyReference
+
+    def set_gas_type(self, gas: Refrigerant):
+        self.set_medium(
+            [
+                "refrigerantHighPressureInlet",
+                "refrigerantLowPressureOutlet",
+                "refrigerantIndoorCoilPort",
+                "refrigerantOutdoorCoilPort",
+            ],
+            gas,
+        )

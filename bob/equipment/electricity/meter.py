@@ -1,6 +1,6 @@
 from typing import Dict
 
-from bob.enum import Dimensioned, ElectricalPhaseIdentifier
+from bob.enum import Numerical, ElectricalPhaseIdentifier
 from bob.properties import electricity
 from bob.properties.electricity import (
     ElectricApparentEnergy,
@@ -45,13 +45,13 @@ three_phase_electricalmeter_template = {
         ("power_factor", PowerFactor): {"comment": "Total Power Factor"},
         ("voltage_ll_avg", Volts): {
             "comment": "Voltage L-L Average",
-            "hasAspect": [ElectricalPhaseIdentifier.ABC, Dimensioned.LineLineVoltage],
+            "hasAspect": [ElectricalPhaseIdentifier.ABC, Numerical.LineLineVoltage],
         },
         ("voltage_ln_avg", Volts): {
             "comment": "Voltage L-N Average",
             "hasAspect": [
                 ElectricalPhaseIdentifier.ABC,
-                Dimensioned.LineNeutralVoltage,
+                Numerical.LineNeutralVoltage,
             ],
         },
         ("current_avg", Volts): {
@@ -87,7 +87,7 @@ three_phase_electricalmeter_template = {
         },
         ("frequency", Frequency): {
             "comment": "Frequency",
-            "hasAspect": Dimensioned.NominalFrequency,
+            "hasAspect": Numerical.NominalFrequency,
         },
         ("kVAh", ElectricApparentEnergy): {
             "hasUnit": UNIT["KiloV-A-HR"],

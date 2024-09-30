@@ -3,16 +3,16 @@ from rdflib import Graph, URIRef
 from .core import (
     G36,
     P223,
+    QUANTITYKIND,
     S223,
+    UNIT,
+    Constituent,
     Domain,
     EnumerationKind,
-    Role,
     Medium,
-    Substance,
     Mix,
-    Constituent,
-    QUANTITYKIND,
-    UNIT,
+    Role,
+    Substance,
 )
 
 _namespace = S223
@@ -32,13 +32,13 @@ Substance.Soot = Soot = Substance("Soot")
 # Media, Constituents & Mix
 # ======================================
 #
-Constituent.H2O = H2O = Constituent("H2O", label="H2O", _alt_namespace=P223)
+Constituent.H2O = H2O = Constituent("H2O", label="H2O")
 Constituent.Oil = Oil = Constituent("Oil", label="Oil", _alt_namespace=P223)
 Constituent.Smoke = Smoke = Constituent("Smoke", label="Smoke", _alt_namespace=P223)
 # Gases
 Constituent.Ar = Argon = Constituent("Ar", label="Argon", _alt_namespace=P223)
-Constituent.CO = CO = Constituent("CO", label="Carbon monoxyde", _alt_namespace=P223)
-Constituent.CO2 = CO2 = Constituent("CO2", label="Carbon dioxyde", _alt_namespace=P223)
+Constituent.CO = CO = Constituent("CO", label="Carbon monoxyde")
+Constituent.CO2 = CO2 = Constituent("CO2", label="Carbon dioxyde")
 Constituent.NO2 = NO2 = Constituent("NO2", label="NO2", _alt_namespace=P223)
 Constituent.CH4 = CH4 = Constituent("CH4", label="CH4", _alt_namespace=P223)
 Constituent.NH3 = NH3 = Constituent("NH3", label="NH3", _alt_namespace=P223)
@@ -49,12 +49,16 @@ Constituent.SO2 = SO2 = Constituent("SO2", label="SO2", _alt_namespace=P223)
 Constituent.N = Nitrogen = Constituent("N", label="Nitrogen", _alt_namespace=P223)
 Constituent.VOC = VOC = Constituent("VOC", label="VOC", _alt_namespace=P223)
 Constituent.Radon = Radon = Constituent("Radon", label="Radon", _alt_namespace=P223)
-Constituent.R22 = R22 = Constituent("R22", label="R22", _alt_namespace=P223)
-Constituent.R134a = R134a = Constituent("R134a", label="R134a", _alt_namespace=P223)
-Constituent.R410a = R410a = Constituent("R410a", label="R410a", _alt_namespace=P223)
-Constituent.R32 = R32 = Constituent("R32", label="R32", _alt_namespace=P223)
+Constituent.R22 = const_R22 = Constituent("R-22", label="R-22", _alt_namespace=P223)
+Constituent.R134A = const_R134A = Constituent(
+    "R-134A", label="R-134A", _alt_namespace=P223
+)
+Constituent.R410A = const_R410A = Constituent(
+    "R-410A", label="R-410A", _alt_namespace=P223
+)
+Constituent.R32 = const_R32 = Constituent("R-32", label="R-32", _alt_namespace=P223)
 
-Constituent.Glycol = Glycol = Constituent("Glycol", label="Glycol", _alt_namespace=P223)
+Constituent.Glycol = Glycol = Constituent("Glycol", label="Glycol")
 
 # Electromagnetic
 EM = Constituent("Electro-Magnetic")  # electro-magnetic
@@ -181,23 +185,34 @@ PowerAndSignal.USB.add_constituent(Electricity.DC5V)
 # ===================
 # MEDIA FLAVOURS
 # ===================
-# Air
-Mix.Fluid = Fluid = Mix("Fluid", _alt_namespace=P223)
+# Air and gases
+Mix.Fluid = Fluid = Mix("Fluid")
+Fluid.Air = Air = Fluid("Air")
+Air.CompressedAir = CompressedAir = Air("CompressedAir")
 
-Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas", _alt_namespace=P223)
-
-Fluid.Air = Air = Fluid("Air", _alt_namespace=P223)
-Air.CompressedAir = CompressedAir = Air("CompressedAir", _alt_namespace=P223)
+Fluid.NaturalGas = NaturalGas = Fluid("NaturalGas")
+Fluid.Refrigerant = Refrigerant = Fluid("Refrigerant")
+Refrigerant.R410A = R410a = Refrigerant("R-410A")
+R410a.add_constituent(
+    const_R410A, hasQuantityKind=QUANTITYKIND.VolumeFraction, hasUnit=UNIT.PERCENT
+)
+Refrigerant.R32 = R32 = Refrigerant("R-32", _alt_namespace=P223)
+R32.add_constituent(
+    const_R32, hasQuantityKind=QUANTITYKIND.VolumeFraction, hasUnit=UNIT.PERCENT
+)
+Refrigerant.R22 = R22 = Refrigerant("R-22")
+R22.add_constituent(
+    const_R22, hasQuantityKind=QUANTITYKIND.VolumeFraction, hasUnit=UNIT.PERCENT
+)
 
 # Water
-Fluid.Water = Water = Fluid("Water", _alt_namespace=P223)
-Water.add_constituent(Constituent.H2O)
+Fluid.Water = Water = Fluid("Water")  # constituent in S223 already
 
-Water.ChilledWater = ChilledWater = Water("ChilledWater", _alt_namespace=P223)
+Water.ChilledWater = ChilledWater = Water("ChilledWater")
 
 Water.PotableWater = PotableWater = Water("PotableWater", _alt_namespace=P223)
 
-Water.HotWater = HotWater = Water("HotWater", _alt_namespace=P223)
+Water.HotWater = HotWater = Water("HotWater")
 
 Water.MixedWater = MixedWater = Water("MixedWater", _alt_namespace=P223)
 
@@ -207,44 +222,20 @@ Water.DomesticHotWater = DomesticHotWater = Water(
     "DomesticHotWater", _alt_namespace=P223
 )
 
-Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
+Water.CondensedWater = CondensedWater = Water("CondensedWater")
 
-Water.GlycolSolution = GlycolSolution = Water("GlycolSolution", _alt_namespace=P223)
-GlycolSolution.add_constituent(Constituent.Glycol)
+Water.GlycolSolution = GlycolSolution = Water(
+    "GlycolSolution"
+)  # constituent in S223 already
 
 GlycolSolution.GlycolSolution_15Percent = GlycolSolution_15Percent = GlycolSolution(
-    "GlycolSolution-15Percent", _alt_namespace=P223
-)
-GlycolSolution_15Percent.add_constituent(
-    Constituent.H2O,
-    hasValue=85,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
-GlycolSolution_15Percent.add_constituent(
-    Constituent.Glycol,
-    hasValue=15,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
-
+    "GlycolSolution-15Percent"
+)  # constituent in S223 already
 GlycolSolution.GlycolSolution_30Percent = GlycolSolution_30Percent = GlycolSolution(
-    "GlycolSolution-30Percent", _alt_namespace=P223
-)
-GlycolSolution_30Percent.add_constituent(
-    Constituent.H2O,
-    hasValue=70,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
-GlycolSolution_30Percent.add_constituent(
-    Constituent.Glycol,
-    hasValue=30,
-    hasQuantityKind=QUANTITYKIND.VolumeFraction,
-    hasUnit=UNIT.PERCENT,
-)
+    "GlycolSolution-30Percent"
+)  # constituent in S223 already
 
-Water.Steam = Steam = Water("Steam", _alt_namespace=P223)
+Water.Steam = Steam = Water("Steam")
 
 # Light
 Light.Visible = Light("Visible")
@@ -283,6 +274,9 @@ Role.Primary = Primary = Role("Primary")
 Role.Return = Return = Role("Return")
 Role.Secondary = Secondary = Role("Secondary")
 Role.Supply = Supply = Role("Supply")
+Role.Condenser = Condenser = Role("Condenser")
+Role.Evaporator = Evaporator = Role("Evaporator")
+Role.Storage = Storage = Role("Storage", _alt_namespace=P223)
 
 # ===================
 # Values Enumeration
@@ -510,46 +504,40 @@ S223:EnumerationKind-RunStatus
 # Enumeration kinds that add context to properties
 Context = EnumerationKind("Context")
 CtxAttribute = Context("Attribute")
-Dimensioned = Context("Dimensioned")
+Numerical = Context("Numerical")
 Dimensionless = Context("Dimensionless")
 
-Dimensioned.LineLineVoltage = Dimensioned("LineLineVoltage", _alt_namespace=P223)
-Dimensioned.ABLineLineVoltage = Dimensioned("ABLineLineVoltage", _alt_namespace=P223)
-Dimensioned.BCLineLineVoltage = Dimensioned("BCLineLineVoltage", _alt_namespace=P223)
-Dimensioned.CALineLineVoltage = Dimensioned("CALineLineVoltage", _alt_namespace=P223)
-Dimensioned.LineNeutralVoltage = Dimensioned("LineNeutralVoltage", _alt_namespace=P223)
-Dimensioned.ANLineNeutralVoltage = Dimensioned(
-    "ANLineNeutralVoltage", _alt_namespace=P223
-)
-Dimensioned.BNLineNeutralVoltage = Dimensioned(
-    "BNLineNeutralVoltage", _alt_namespace=P223
-)
-Dimensioned.CNLineNeutralVoltage = Dimensioned(
-    "CNLineNeutralVoltage", _alt_namespace=P223
-)
-Dimensioned.NominalFrequency = Dimensioned("NominalFrequency", _alt_namespace=P223)
+Numerical.LineLineVoltage = Numerical("LineLineVoltage", _alt_namespace=P223)
+Numerical.ABLineLineVoltage = Numerical("ABLineLineVoltage", _alt_namespace=P223)
+Numerical.BCLineLineVoltage = Numerical("BCLineLineVoltage", _alt_namespace=P223)
+Numerical.CALineLineVoltage = Numerical("CALineLineVoltage", _alt_namespace=P223)
+Numerical.LineNeutralVoltage = Numerical("LineNeutralVoltage", _alt_namespace=P223)
+Numerical.ANLineNeutralVoltage = Numerical("ANLineNeutralVoltage", _alt_namespace=P223)
+Numerical.BNLineNeutralVoltage = Numerical("BNLineNeutralVoltage", _alt_namespace=P223)
+Numerical.CNLineNeutralVoltage = Numerical("CNLineNeutralVoltage", _alt_namespace=P223)
+Numerical.NominalFrequency = Numerical("NominalFrequency", _alt_namespace=P223)
 
-Dimensioned.Delta = Dimensioned("Delta")
-Dimensioned.DryBulb = Dimensioned("DryBulb")
-Dimensioned.Latent = Dimensioned("Latent")
-Dimensioned.Loss = Dimensioned("Loss")
-Dimensioned.Maximum = Dimensioned("Maximum")
-Dimensioned.Minimum = Dimensioned("Minimum")
-Dimensioned.Nominal = Dimensioned("Nominal")
-Dimensioned.Rated = Dimensioned("Rated")
-Dimensioned.Sensible = Dimensioned("Sensible")
-Dimensioned.StandardConditions = Dimensioned("StandardConditions")
-Dimensioned.Standby = Dimensioned("Standby")
-Dimensioned.Startup = Dimensioned("Startup")
-Dimensioned.Threshold = Dimensioned("Threshold")
-Dimensioned.Total = Dimensioned("Total")
-Dimensioned.Weight = Dimensioned("Weight")
-Dimensioned.WetBulb = Dimensioned("WetBulb")
-Dimensionless.Efficiency = Dimensioned("Efficiency")
-Dimensionless.NumberOfElectricalPhases = Dimensioned("NumberOfElectricalPhases")
-Dimensionless.PhaseAngle = Dimensioned("PhaseAngle")
-Dimensionless.PowerFactor = Dimensioned("PowerFactor")
-Dimensionless.ServiceFactor = Dimensioned("ServiceFactor")
+Numerical.Delta = Numerical("Delta")
+Numerical.DryBulb = Numerical("DryBulb")
+Numerical.Latent = Numerical("Latent")
+Numerical.Loss = Numerical("Loss")
+Numerical.Maximum = Numerical("Maximum")
+Numerical.Minimum = Numerical("Minimum")
+Numerical.Nominal = Numerical("Nominal")
+Numerical.Rated = Numerical("Rated")
+Numerical.Sensible = Numerical("Sensible")
+Numerical.StandardConditions = Numerical("StandardConditions")
+Numerical.Standby = Numerical("Standby")
+Numerical.Startup = Numerical("Startup")
+Numerical.Threshold = Numerical("Threshold")
+Numerical.Total = Numerical("Total")
+Numerical.Weight = Numerical("Weight")
+Numerical.WetBulb = Numerical("WetBulb")
+Dimensionless.Efficiency = Numerical("Efficiency")
+Dimensionless.NumberOfElectricalPhases = Numerical("NumberOfElectricalPhases")
+Dimensionless.PhaseAngle = Numerical("PhaseAngle")
+Dimensionless.PowerFactor = Numerical("PowerFactor")
+Dimensionless.ServiceFactor = Numerical("ServiceFactor")
 
 CtxAttribute.CatalogNumber = CtxAttribute("CatalogNumber")
 CtxAttribute.DayOfWeek = CtxAttribute("DayOfWeek")

@@ -1,14 +1,28 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+
+[] a s223:Property,
+        s223:QuantifiableProperty ;
+    rdfs:label "R-22.Constituent-R-22" ;
+    s223:ofConstituent p223:Constituent-R-22 ;
+    qudt:hasQuantityKind qudtqk:VolumeFraction ;
+    qudt:hasUnit unit:PERCENT .
+
+[] a s223:Property,
+        s223:QuantifiableProperty ;
+    rdfs:label "R-410A.Constituent-R-410A" ;
+    s223:ofConstituent p223:Constituent-R-410A ;
+    qudt:hasQuantityKind qudtqk:VolumeFraction ;
+    qudt:hasUnit unit:PERCENT .
 
 bob:AirConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -24,17 +38,7 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:doors ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airChangePerHour ],
-        [ a sh:PropertyShape ;
-            sh:path bob:occupancy ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co ],
+            sh:path bob:windows ],
         [ a sh:PropertyShape ;
             sh:path bob:radiantHeating ],
         [ a sh:PropertyShape ;
@@ -42,34 +46,44 @@ bob:HVACSpace a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
-            sh:path bob:co2 ],
-        [ a sh:PropertyShape ;
             sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
-            sh:path bob:windows ],
-        [ a sh:PropertyShape ;
-            sh:path bob:humidity ],
+            sh:path bob:temperature ],
         [ a sh:PropertyShape ;
             sh:path bob:radiantCooling ],
         [ a sh:PropertyShape ;
-            sh:path bob:ductAirOutlet ] .
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:humidity ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co ] .
 
 bob:HVACZone a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.space.hvac.HVACZone" ;
     rdfs:subClassOf s223:Zone ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
             sh:path bob:co2 ],
         [ a sh:PropertyShape ;
             sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
             sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
-            sh:path bob:occupancy ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature ] .
+            sh:path bob:occupancy ] .
 
 bob:InletZoneConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirInletZoneConnectionPoint",
@@ -92,10 +106,10 @@ bob:ZoneConnectionPoint a rdfs:Class,
     """ ;
     rdfs:subClassOf bob:ZoneConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path bob:mapsTo ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
@@ -130,8 +144,6 @@ bob:ductAirInlet a rdf:Property ;
 
 bob:ductAirOutlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
-
-bob:hasZoneConnectionPoint a rdf:Property .
 
 bob:humidity a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -223,20 +235,6 @@ p223:ActiveInactive-Unknown a p223:ActiveInactive-Unknown,
     rdfs:label "Unknown" ;
     rdfs:subClassOf p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind .
-
-p223:Air-CompressedAir a p223:Air-CompressedAir,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CompressedAir" ;
-    rdfs:subClassOf p223:Fluid-Air,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
 
 p223:Analog-0-10VDC a p223:Analog-0-10VDC,
         s223:EnumerationKind,
@@ -368,42 +366,6 @@ p223:Constituent-CH4 a p223:Constituent-CH4,
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-CO a p223:Constituent-CO,
-        s223:Constituent,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Carbon monoxyde" ;
-    rdfs:subClassOf s223:Constituent,
-        s223:EnumerationKind .
-
-p223:Constituent-CO2 a p223:Constituent-CO2,
-        s223:Constituent,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Carbon dioxyde" ;
-    rdfs:subClassOf s223:Constituent,
-        s223:EnumerationKind .
-
-p223:Constituent-Glycol a p223:Constituent-Glycol,
-        s223:Constituent,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Glycol" ;
-    rdfs:subClassOf s223:Constituent,
-        s223:EnumerationKind .
-
-p223:Constituent-H2O a p223:Constituent-H2O,
-        s223:Constituent,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "H2O" ;
-    rdfs:subClassOf s223:Constituent,
-        s223:EnumerationKind .
-
 p223:Constituent-H2S a p223:Constituent-H2S,
         s223:Constituent,
         s223:EnumerationKind,
@@ -467,39 +429,39 @@ p223:Constituent-Oil a p223:Constituent-Oil,
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-R134a a p223:Constituent-R134a,
+p223:Constituent-R-134A a p223:Constituent-R-134A,
         s223:Constituent,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "R134a" ;
+    rdfs:label "R-134A" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-R22 a p223:Constituent-R22,
+p223:Constituent-R-22 a p223:Constituent-R-22,
         s223:Constituent,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "R22" ;
+    rdfs:label "R-22" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-R32 a p223:Constituent-R32,
+p223:Constituent-R-32 a p223:Constituent-R-32,
         s223:Constituent,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "R32" ;
+    rdfs:label "R-32" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Constituent-R410a a p223:Constituent-R410a,
+p223:Constituent-R-410A a p223:Constituent-R-410A,
         s223:Constituent,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "R410a" ;
+    rdfs:label "R-410A" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
@@ -538,87 +500,6 @@ p223:Constituent-VOC a p223:Constituent-VOC,
     rdfs:label "VOC" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
-
-p223:Dimensioned-ABLineLineVoltage a p223:Dimensioned-ABLineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ABLineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-ANLineNeutralVoltage a p223:Dimensioned-ANLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ANLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-BCLineLineVoltage a p223:Dimensioned-BCLineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "BCLineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-BNLineNeutralVoltage a p223:Dimensioned-BNLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "BNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-CALineLineVoltage a p223:Dimensioned-CALineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CALineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-CNLineNeutralVoltage a p223:Dimensioned-CNLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-LineLineVoltage a p223:Dimensioned-LineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "LineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-LineNeutralVoltage a p223:Dimensioned-LineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "LineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
-
-p223:Dimensioned-NominalFrequency a p223:Dimensioned-NominalFrequency,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "NominalFrequency" ;
-    rdfs:subClassOf s223:Context-Dimensioned,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -756,106 +637,6 @@ p223:EnumerationKind-YesNo a p223:EnumerationKind-YesNo,
     rdfs:label "YesNo" ;
     rdfs:subClassOf s223:EnumerationKind .
 
-p223:Fluid-Air a p223:Fluid-Air,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Air" ;
-    rdfs:subClassOf p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
-p223:Fluid-NaturalGas a p223:Fluid-NaturalGas,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "NaturalGas" ;
-    rdfs:subClassOf p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
-p223:Fluid-Water a p223:Fluid-Water,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Water" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "Water.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
-p223:GlycolSolution-GlycolSolution-15Percent a p223:GlycolSolution-GlycolSolution-15Percent,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "GlycolSolution-15Percent" ;
-    s223:composedOf [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-H2O" ;
-            s223:hasQuantityKind qudtqk:VolumeFraction ;
-            s223:hasUnit unit:PERCENT ;
-            s223:hasValue 85 ;
-            s223:ofConstituent p223:Constituent-H2O ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-15Percent.Constituent-Glycol" ;
-            s223:hasQuantityKind qudtqk:VolumeFraction ;
-            s223:hasUnit unit:PERCENT ;
-            s223:hasValue 15 ;
-            s223:ofConstituent p223:Constituent-Glycol ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        p223:Water-GlycolSolution,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
-p223:GlycolSolution-GlycolSolution-30Percent a p223:GlycolSolution-GlycolSolution-30Percent,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "GlycolSolution-30Percent" ;
-    s223:composedOf [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-30Percent.Constituent-Glycol" ;
-            s223:hasQuantityKind qudtqk:VolumeFraction ;
-            s223:hasUnit unit:PERCENT ;
-            s223:hasValue 30 ;
-            s223:ofConstituent p223:Constituent-Glycol ],
-        [ a s223:Property,
-                s223:QuantifiableProperty ;
-            rdfs:label "GlycolSolution-30Percent.Constituent-H2O" ;
-            s223:hasQuantityKind qudtqk:VolumeFraction ;
-            s223:hasUnit unit:PERCENT ;
-            s223:hasValue 70 ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        p223:Water-GlycolSolution,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
 p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
         s223:EnumerationKind,
         rdfs:Class,
@@ -912,23 +693,15 @@ p223:ManualAuto-Manual a p223:ManualAuto-Manual,
     rdfs:subClassOf p223:EnumerationKind-ManualAuto,
         s223:EnumerationKind .
 
-p223:Mix-Fluid a p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Fluid" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:Mix .
-
 p223:Mix-PowerAndSignal a p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PowerAndSignal" ;
     rdfs:subClassOf s223:EnumerationKind,
-        s223:Mix .
+        s223:EnumerationKind-Substance,
+        s223:Medium-Mix,
+        s223:Substance-Medium .
 
 p223:NiagaraStatus-alarm a p223:NiagaraStatus-alarm,
         s223:EnumerationKind,
@@ -1034,6 +807,87 @@ p223:NormalFault-Normal a p223:NormalFault-Normal,
     rdfs:subClassOf p223:EnumerationKind-NormalFault,
         s223:EnumerationKind .
 
+p223:Numerical-ABLineLineVoltage a p223:Numerical-ABLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "ABLineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-ANLineNeutralVoltage a p223:Numerical-ANLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "ANLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-BCLineLineVoltage a p223:Numerical-BCLineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "BCLineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-BNLineNeutralVoltage a p223:Numerical-BNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "BNLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-CALineLineVoltage a p223:Numerical-CALineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "CALineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-CNLineNeutralVoltage a p223:Numerical-CNLineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "CNLineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-LineLineVoltage a p223:Numerical-LineLineVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "LineLineVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-LineNeutralVoltage a p223:Numerical-LineNeutralVoltage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "LineNeutralVoltage" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
+p223:Numerical-NominalFrequency a p223:Numerical-NominalFrequency,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "NominalFrequency" ;
+    rdfs:subClassOf s223:Context-Numerical,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Context .
+
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
         rdfs:Class,
@@ -1100,7 +954,6 @@ p223:Position-Unknown a p223:Position-Unknown,
 
 p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PoE" ;
@@ -1114,12 +967,10 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Substance-Medium .
 
 p223:PowerAndSignal-USB a p223:PowerAndSignal-USB,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "USB" ;
@@ -1130,7 +981,6 @@ p223:PowerAndSignal-USB a p223:PowerAndSignal-USB,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Medium-Mix,
-        s223:Mix,
         s223:Substance-Medium .
 
 p223:Protocol-BACnet a p223:Protocol-BACnet,
@@ -1197,6 +1047,32 @@ p223:Protocol-Modbus_TCP a p223:Protocol-Modbus_TCP,
     rdfs:subClassOf p223:EnumerationKind-Protocol,
         s223:EnumerationKind .
 
+p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "R-32" ;
+    s223:composedOf [ a s223:Property,
+                s223:QuantifiableProperty ;
+            rdfs:label "R-32.Constituent-R-32" ;
+            s223:ofConstituent p223:Constituent-R-32 ;
+            qudt:hasQuantityKind qudtqk:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ] ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Refrigerant,
+        s223:Medium-Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Role-Storage a p223:Role-Storage,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Storage" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
 p223:Signal-OnOffSignal a p223:Signal-OnOffSignal,
         s223:Constituent,
         s223:EnumerationKind,
@@ -1244,160 +1120,52 @@ p223:TrueFalse-True a p223:TrueFalse-True,
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
 
-p223:Water-ChilledWater a p223:Water-ChilledWater,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ChilledWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "ChilledWater.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
-p223:Water-CondensedWater a p223:Water-CondensedWater,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CondensedWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "CondensedWater.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
 p223:Water-DomesticHotWater a p223:Water-DomesticHotWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DomesticHotWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "DomesticHotWater.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
+    rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
+        s223:Mix-Fluid,
         s223:Substance-Medium .
 
 p223:Water-DomesticWater a p223:Water-DomesticWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DomesticWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "DomesticWater.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
+    rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
-p223:Water-GlycolSolution a p223:Water-GlycolSolution,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "GlycolSolution" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "GlycolSolution.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ],
-        [ a s223:Property ;
-            rdfs:label "GlycolSolution.Constituent-Glycol" ;
-            s223:ofConstituent p223:Constituent-Glycol ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
-p223:Water-HotWater a p223:Water-HotWater,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "HotWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "HotWater.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
+        s223:Mix-Fluid,
         s223:Substance-Medium .
 
 p223:Water-MixedWater a p223:Water-MixedWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "MixedWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "MixedWater.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
+    rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
+        s223:Mix-Fluid,
         s223:Substance-Medium .
 
 p223:Water-PotableWater a p223:Water-PotableWater,
         s223:EnumerationKind,
-        s223:Mix,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "PotableWater" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "PotableWater.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
+    rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
         s223:Medium-Mix,
-        s223:Mix,
-        s223:Substance-Medium .
-
-p223:Water-Steam a p223:Water-Steam,
-        s223:EnumerationKind,
-        s223:Mix,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Steam" ;
-    s223:composedOf [ a s223:Property ;
-            rdfs:label "Steam.Constituent-H2O" ;
-            s223:ofConstituent p223:Constituent-H2O ] ;
-    rdfs:subClassOf p223:Fluid-Water,
-        p223:Mix-Fluid,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Substance,
-        s223:Medium-Mix,
-        s223:Mix,
+        s223:Mix-Fluid,
         s223:Substance-Medium .
 
 p223:YesNo-No a p223:YesNo-No,
@@ -1415,4 +1183,8 @@ p223:YesNo-Yes a p223:YesNo-Yes,
     rdfs:label "Yes" ;
     rdfs:subClassOf p223:EnumerationKind-YesNo,
         s223:EnumerationKind .
+
+qudt:hasQuantityKind a rdf:Property .
+
+qudt:hasUnit a rdf:Property .
 

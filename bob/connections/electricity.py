@@ -1,7 +1,4 @@
-from rdflib import Literal, URIRef
-
 from ..core import (
-    BOB,
     S223,
     Connection,
     ConnectionPoint,

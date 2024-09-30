@@ -4,6 +4,18 @@ This directory contains scripts to build and run a Docker image that uses
 the *TopBraid SHACL API*, an open source implementation of the W3C Shapes
 Constraint Language (SHACL) based on Apache Jena.
 
+## Source
+We can clone this repo or use the repo in this folder
+
+- https://github.com/TopQuadrant/shacl
+
+## Build
+### x86
+- docker build -f .docker/Dockerfile -t ghcr.io/topquadrant/shacl:1.4.3 --build-arg VERSION=1.4.3 --build-arg ARCH_BASE=eclipse-temurin:11-alpine .
+
+### ARM
+- docker build -f .docker/Dockerfile -t ghcr.io/topquadrant/shacl:1.4.3 --build-arg VERSION=1.4.3 --build-arg ARCH_BASE=amazoncorretto:11-alpine3.18-jdk .
+
 ## merge-graphs.sh
 
 This script combines all of the 223 and QUDT Quantity Kinds and Units into a

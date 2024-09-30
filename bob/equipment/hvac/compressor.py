@@ -11,7 +11,17 @@ from ...connections.electricity import (
     ElectricalOutletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
+from ...connections.refrigerant import (
+    RefrigerantInletConnectionPoint,
+    RefrigerantOutletConnectionPoint,
+)
 from ...core import BOB, P223, S223, Equipment, PropertyReference
+from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
+    R22,
+    R32,
+    R410a,
+    Refrigerant,
+)
 
 _namespace = BOB
 
@@ -40,3 +50,27 @@ class AirCompressor(Equipment):
         )
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+
+
+class RefrigerationGasCompressor(Equipment):
+    _class_iri: URIRef = S223.Compressor
+    returnPort: RefrigerantInletConnectionPoint
+    dischargePort: RefrigerantOutletConnectionPoint
+
+    onOffStatus: OnOffStatus
+    alarmStatus: NormalAlarmStatus
+    onOffCommand: OnOffCommand
+
+    # This will come from a sensor, but accessible from here
+    dischargePressure: PropertyReference
+    succionPressure: PropertyReference
+
+    def __init__(self, config: Dict = compressor_template, **kwargs):
+        config["properties"] = config.get(
+            "properties", compressor_template["properties"]
+        )
+        kwargs = {**config.get("params", {}), **kwargs}
+        super().__init__(config, **kwargs)
+
+    def set_gas_type(self, gas: Refrigerant):
+        self.set_medium(["returnPort", "dischargePort"], gas)
