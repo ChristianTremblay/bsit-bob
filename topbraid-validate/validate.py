@@ -48,9 +48,6 @@ def test_data_validation(data_file_name: str, schema_file_name: Optional[str] = 
     data_graph = Graph().parse(data_file_path, format="turtle")
     logger.debug(f"{len(data_graph) = }")
 
-    # remove OWL imports
-    data_graph.remove((None, OWL.imports, None))
-
     # make a copy of the data graph
     model = copy_graph(data_graph)
 
@@ -58,6 +55,9 @@ def test_data_validation(data_file_name: str, schema_file_name: Optional[str] = 
     if schema_file_name:
         model.parse(DATA_DIRECTORY / schema_file_name, format="turtle")
     model.parse("223standard.ttl", format="turtle")
+
+    # remove OWL imports
+    model.remove((None, OWL.imports, None))
 
     # Create a temporary directory
     with tempfile.TemporaryDirectory() as temp_dir:
