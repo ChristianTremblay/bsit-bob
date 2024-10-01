@@ -63,7 +63,7 @@ validate:
     - pip install pytest-xdist[psutil]
     - pip install python-dotenv
     - ontoenv init
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@bas-im.emcs.cornell.edu/223/223standard
+    - git clone --branch 568-plate-heat-exchangers https://gitlab-ci-token:${CI_JOB_TOKEN}@bas-im.emcs.cornell.edu/223/223standard
     - export S223_FOLDER=$(pwd)/223standard
     - python3 validate_cicd/preparefiles.py
     - pytest -s -vvvv -n auto validate_cicd/
