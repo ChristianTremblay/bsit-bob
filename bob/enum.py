@@ -504,7 +504,7 @@ S223:EnumerationKind-RunStatus
 # Aspects
 # ===================
 # Enumeration kinds that add context to properties
-Aspect = EnumerationKind("Context")
+Aspect = EnumerationKind("Aspect")
 Numerical = EnumerationKind("Numerical")
 ElectricalVoltagePhases = Aspect("ElectricalVoltagePhases")
 
