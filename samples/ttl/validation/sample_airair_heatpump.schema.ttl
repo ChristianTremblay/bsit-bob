@@ -88,12 +88,12 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path bob:measuresMedium ] .
 
 bob:HP a rdfs:Class ;
     rdfs:label "bob.properties.force.HP" ;
@@ -1055,6 +1055,14 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
+p223:Role-RunStatus a p223:Role-RunStatus,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "RunStatus" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
+
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
         rdfs:Class,
@@ -1215,13 +1223,13 @@ scratch:Fan a rdfs:Class,
         s223:Equipment,
         s223:Fan ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path scratch:onOffCommand ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
             sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:onOffCommand ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ] .
+            sh:path bob:airInlet ] .
 
 scratch:onOffCommand a rdf:Property .
 

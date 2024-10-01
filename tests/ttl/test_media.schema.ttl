@@ -54,26 +54,26 @@ bacnet:DeviceObject a rdfs:Class,
     rdfs:label "bob.bacnet.DeviceObject" ;
     rdfs:subClassOf bacnet:Object ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bacnet:system-status ],
-        [ a sh:PropertyShape ;
-            sh:path bacnet:vendor-name ],
+            sh:datatype xsd:nonNegativeInteger ;
+            sh:path bacnet:vendor-identifier ],
         [ a sh:PropertyShape ;
             sh:path bacnet:object-type ],
         [ a sh:PropertyShape ;
-            sh:datatype xsd:nonNegativeInteger ;
-            sh:path bacnet:vendor-identifier ] .
+            sh:path bacnet:vendor-name ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:system-status ] .
 
 bacnet:Object a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.bacnet.Object" ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bacnet:object-name ],
-        [ a sh:PropertyShape ;
-            sh:path bacnet:object-identifier ],
-        [ a sh:PropertyShape ;
             sh:path bacnet:description ],
         [ a sh:PropertyShape ;
-            sh:path bacnet:object-type ] .
+            sh:path bacnet:object-type ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:object-name ],
+        [ a sh:PropertyShape ;
+            sh:path bacnet:object-identifier ] .
 
 bacnet:description a rdf:Property .
 
@@ -758,9 +758,9 @@ p223:GasMonitor a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:alarmStatus ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutletExhaust ],
+            sh:path bob:airInletSupply ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInletSupply ] .
+            sh:path bob:airOutletExhaust ] .
 
 p223:HandOffAuto-Auto a p223:HandOffAuto-Auto,
         s223:EnumerationKind,
@@ -989,9 +989,9 @@ p223:ParticleCounter a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path p223:airOutlet ],
+            sh:path p223:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path p223:airInlet ] .
+            sh:path p223:airOutlet ] .
 
 p223:ParticulateCount a rdfs:Class,
         sh:NodeShape ;
@@ -1045,11 +1045,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1151,6 +1151,14 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:Medium-Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
+
+p223:Role-RunStatus a p223:Role-RunStatus,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "RunStatus" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
 
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
@@ -1371,10 +1379,10 @@ bob:EthernetConnectionPoint a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path p223:VLAN ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path p223:hasProtocol ],
+            sh:path p223:data_rate ],
         [ a sh:PropertyShape ;
-            sh:path p223:data_rate ] .
+            sh:class s223:EnumerationKind ;
+            sh:path p223:hasProtocol ] .
 
 bob:Floor a rdfs:Class,
         sh:NodeShape ;
@@ -1417,33 +1425,33 @@ bob:HVACSpace a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:ductAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:radiantCooling ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:ductAirInlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:windows ],
-        [ a sh:PropertyShape ;
-            sh:path bob:occupancy ],
-        [ a sh:PropertyShape ;
-            sh:path bob:humidity ],
-        [ a sh:PropertyShape ;
             sh:path bob:radiantHeating ],
         [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
+            sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
             sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
-            sh:path bob:airChangePerHour ],
+            sh:path bob:ductAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:doors ],
+            sh:path bob:radiantCooling ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
         [ a sh:PropertyShape ;
             sh:path bob:co2 ],
         [ a sh:PropertyShape ;
-            sh:path bob:airTransfer ] .
+            sh:path bob:co ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
+            sh:path bob:humidity ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:doors ],
+        [ a sh:PropertyShape ;
+            sh:path bob:windows ] .
 
 bob:HVACZone a rdfs:Class,
         sh:NodeShape ;
@@ -1452,15 +1460,15 @@ bob:HVACZone a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:occupancy ],
-        [ a sh:PropertyShape ;
             sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
             sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
-            sh:path bob:co2 ] .
+            sh:path bob:co2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature ] .
 
 bob:HotWaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -1529,12 +1537,12 @@ bob:PoEConnectionPoint a rdfs:Class,
     rdfs:label "bob.connections.network.PoEConnectionPoint" ;
     rdfs:subClassOf s223:ConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path p223:hasProtocol ],
+        [ a sh:PropertyShape ;
             sh:path bob:VLAN ],
         [ a sh:PropertyShape ;
-            sh:path p223:data_rate ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path p223:hasProtocol ] .
+            sh:path p223:data_rate ] .
 
 bob:PowerFactor a rdfs:Class ;
     rdfs:label "bob.properties.electricity.PowerFactor" ;
@@ -1599,10 +1607,10 @@ bob:ZoneConnectionPoint a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path bob:mapsTo ],
         [ a sh:PropertyShape ;
-            sh:path bob:isZoneConnectionPointOf ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:hasMedium ] .
+            sh:path s223:hasMedium ],
+        [ a sh:PropertyShape ;
+            sh:path bob:isZoneConnectionPointOf ] .
 
 p223:VLAN a rdf:Property .
 

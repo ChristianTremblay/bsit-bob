@@ -39,9 +39,9 @@ ex1:TestEquipment a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpIn ],
+            sh:path ex1:cpOut ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpOut ] .
+            sh:path ex1:cpIn ] .
 
 ex1:TestSystem a rdfs:Class,
         sh:NodeShape ;
@@ -870,6 +870,14 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:Medium-Mix,
         s223:Mix-Fluid,
         s223:Substance-Medium .
+
+p223:Role-RunStatus a p223:Role-RunStatus,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "RunStatus" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Role .
 
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
