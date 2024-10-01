@@ -126,13 +126,11 @@ def test_data_validation(data_file):
         format="turtle",
     )
     global schema_report
-    try:
+    if schema_report is not None:
         schema_report.serialize(
             data_file.parent / "compiled" / f"{data_file.stem}.schema_report.ttl",
             format="turtle",
         )
-    except Exception:
-        pass
 
     def rdf_to_html_table(graph):
         html = "<html><body><table border='1'>"
