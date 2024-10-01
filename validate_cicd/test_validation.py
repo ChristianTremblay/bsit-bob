@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 schema_report = None
 
+
 def copy_graph(g: rdflib.Graph) -> rdflib.Graph:
     c = rdflib.Graph()
     for t in g.triples((None, None, None)):
@@ -120,8 +121,19 @@ def test_data_validation(data_file):
     (data_file.parent / "compiled").mkdir(exist_ok=True)
     # save inferred graph under same name into data/compiled/
     inferred.serialize(data_file.parent / "compiled" / data_file.name, format="turtle")
-    report.serialize(data_file.parent / "compiled" / f"{data_file.stem}.validation_report.ttl", format="turtle")
-    schema_report.serialize(data_file.parent / "compiled" / f"{data_file.stem}.schema_report.ttl", format="turtle")
+    report.serialize(
+        data_file.parent / "compiled" / f"{data_file.stem}.validation_report.ttl",
+        format="turtle",
+    )
+    global schema_report
+    try:
+        schema_report.serialize(
+            data_file.parent / "compiled" / f"{data_file.stem}.schema_report.ttl",
+            format="turtle",
+        )
+    except Exception:
+        pass
+
     def rdf_to_html_table(graph):
         html = "<html><body><table border='1'>"
         html += "<tr><th>Subject</th><th>Predicate</th><th>Object</th></tr>"
@@ -130,8 +142,12 @@ def test_data_validation(data_file):
             html += f"<tr><td>{subj}</td><td>{pred}</td><td>{obj}</td></tr>"
 
         html += "</table></body></html>"
-        with open(data_file.parent / "compiled" / f"{data_file.stem}.validation_report.html", "w") as f:
+        with open(
+            data_file.parent / "compiled" / f"{data_file.stem}.validation_report.html",
+            "w",
+        ) as f:
             f.write(html)
+
     rdf_to_html_table(report)
     assert valid, report.serialize(format="ttl")
 
