@@ -1058,7 +1058,11 @@ class Property(Node):
         return self
 
     def add_external_reference(self, external_reference):
-        if self.hasInternalReference or self._hasValue is not None:
+        if (
+            self.hasInternalReference
+            or self._hasValue is not None
+            or self.hasValue is not None
+        ):
             raise AttributeError(
                 f"Can't add external reference if property already have a value or internal reference {self.hasInternalReference} {self._hasValue}"
             )
@@ -1076,7 +1080,11 @@ class Property(Node):
         self.hasExternalReference.add(external_reference)
 
     def add_internal_reference(self, internal_reference):
-        if self.hasExternalReference or self._hasValue is not None:
+        if (
+            self.hasExternalReference
+            or self._hasValue is not None
+            or self.hasValue is not None
+        ):
             raise AttributeError(
                 "Can't add internal reference if property already have a value or external reference"
             )
