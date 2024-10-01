@@ -763,78 +763,6 @@ p223:NormalFault-Normal a p223:NormalFault-Normal,
     rdfs:subClassOf p223:EnumerationKind-NormalFault,
         s223:EnumerationKind .
 
-p223:Numerical-ABLineLineVoltage a p223:Numerical-ABLineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ABLineLineVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-ANLineNeutralVoltage a p223:Numerical-ANLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ANLineNeutralVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-BCLineLineVoltage a p223:Numerical-BCLineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "BCLineLineVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-BNLineNeutralVoltage a p223:Numerical-BNLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "BNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-CALineLineVoltage a p223:Numerical-CALineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CALineLineVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-CNLineNeutralVoltage a p223:Numerical-CNLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-LineLineVoltage a p223:Numerical-LineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "LineLineVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-LineNeutralVoltage a p223:Numerical-LineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "LineNeutralVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-NominalFrequency a p223:Numerical-NominalFrequency,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "NominalFrequency" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
         rdfs:Class,
@@ -905,11 +833,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ] ;
+            s223:ofConstituent s223:DC-48V ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-Ethernet" ;
+            s223:ofConstituent s223:Signal-Ethernet ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1050,9 +978,8 @@ p223:Signal-OnOffSignal a p223:Signal-OnOffSignal,
         sh:NodeShape ;
     rdfs:label "OnOffSignal" ;
     rdfs:subClassOf s223:Constituent,
-        s223:Constituent-Electro-Magnetic,
+        s223:Constituent-Electricity,
         s223:Electricity-Signal,
-        s223:Electro-Magnetic-Electricity,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Medium-Constituent,
@@ -1225,9 +1152,9 @@ bob:Causality a rdfs:Class,
     """ ;
     rdfs:subClassOf p223:Producer ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:cause_input ],
+            sh:path bob:effect_output ],
         [ a sh:PropertyShape ;
-            sh:path bob:effect_output ] .
+            sh:path bob:cause_input ] .
 
 bob:ChilledWaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -1246,11 +1173,11 @@ bob:Differential a rdfs:Class,
     """ ;
     rdfs:subClassOf p223:Producer ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:low_input ],
+        [ a sh:PropertyShape ;
             sh:path bob:high_input ],
         [ a sh:PropertyShape ;
-            sh:path bob:differential_output ],
-        [ a sh:PropertyShape ;
-            sh:path bob:low_input ] .
+            sh:path bob:differential_output ] .
 
 bob:DifferentialStaticPressure a rdfs:Class,
         sh:NodeShape ;
@@ -1286,12 +1213,12 @@ bob:EthernetConnectionPoint a rdfs:Class,
     rdfs:label "bob.connections.network.EthernetConnectionPoint" ;
     rdfs:subClassOf s223:ConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
-            sh:path p223:data_rate ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path p223:hasProtocol ],
         [ a sh:PropertyShape ;
-            sh:path p223:VLAN ] .
+            sh:path p223:VLAN ],
+        [ a sh:PropertyShape ;
+            sh:path p223:data_rate ] .
 
 bob:Flow a rdfs:Class,
         sh:NodeShape ;
@@ -1304,10 +1231,10 @@ bob:Flow a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:class s223:EnumerationKind ;
+            sh:path bob:measuresMedium ] .
 
 bob:Frequency a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Frequency" ;
@@ -1435,17 +1362,17 @@ scratch:Damper a rdfs:Class,
         s223:Damper,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:position ],
-        [ a sh:PropertyShape ;
             sh:path scratch:linkageInlet ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:command ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:position_feedback ],
         [ a sh:PropertyShape ;
             sh:path scratch:is_open ],
         [ a sh:PropertyShape ;
-            sh:path scratch:is_closed ] .
+            sh:path scratch:position ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:is_closed ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:command ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:position_feedback ] .
 
 scratch:DamperAndActuator a rdfs:Class ;
     rdfs:label "bob.scratch.hvac.damper.DamperAndActuator" ;
@@ -1506,13 +1433,13 @@ scratch:Fan a rdfs:Class,
         s223:Equipment,
         s223:Fan ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
             sh:path scratch:onOffCommand ],
         [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ] .
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ] .
 
 scratch:MotorStarter_600VLL_3Ph_60Hz a rdfs:Class,
         sh:NodeShape ;
@@ -1531,11 +1458,11 @@ scratch:MotorStarter_600VLL_3Ph_60Hz a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:inputSignal ],
+            sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
             sh:path scratch:outputSignal ],
         [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ] .
+            sh:path scratch:inputSignal ] .
 
 p223:VLAN a rdf:Property .
 
@@ -1557,23 +1484,23 @@ scratch:VFDFunction a rdfs:Class,
     rdfs:label "bob.scratch.electricity.vfd.VFD_FB" ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:rpm ],
+            sh:path scratch:kW_load ],
         [ a sh:PropertyShape ;
             sh:path scratch:alarm ],
         [ a sh:PropertyShape ;
-            sh:path scratch:kW_load ],
-        [ a sh:PropertyShape ;
             sh:path scratch:volts_load ],
         [ a sh:PropertyShape ;
-            sh:path scratch:frequency_load ],
+            sh:path scratch:rpm ],
         [ a sh:PropertyShape ;
             sh:path scratch:amps_load ],
         [ a sh:PropertyShape ;
             sh:path scratch:speed_ref ],
         [ a sh:PropertyShape ;
-            sh:path scratch:drive_running ],
+            sh:path scratch:frequency_load ],
         [ a sh:PropertyShape ;
-            sh:path scratch:speed_ref_percent ] .
+            sh:path scratch:speed_ref_percent ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:drive_running ] .
 
 scratch:VariableFrequencyDrive a rdfs:Class,
         sh:NodeShape ;
@@ -1583,9 +1510,9 @@ scratch:VariableFrequencyDrive a rdfs:Class,
         s223:Equipment,
         s223:VariableFrequencyDrive ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:amps ],
+            sh:path scratch:volts ],
         [ a sh:PropertyShape ;
-            sh:path scratch:volts ] .
+            sh:path scratch:amps ] .
 
 scratch:alarm a rdf:Property .
 

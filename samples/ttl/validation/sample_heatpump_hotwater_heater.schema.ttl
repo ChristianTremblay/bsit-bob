@@ -80,10 +80,10 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path bob:measuresMedium ],
         [ a sh:PropertyShape ;
             sh:path qudt:hasUnit ] .
 
@@ -103,21 +103,21 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:leavingWaterTemp ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation1 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower2 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:averageSurfaceTemperature ],
-        [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:waterFlow ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand2 ],
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation1 ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:fluidTemp ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower2 ],
+        [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:fluidTemp ],
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation2 ] .
 
@@ -574,11 +574,11 @@ p223:DomesticHeatPumpWaterHeater a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
-        [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:airInlet ] .
 
@@ -588,11 +588,11 @@ p223:DomesticWaterHeater a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
+            sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ] .
+            sh:path bob:leavingFluid ] .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -917,78 +917,6 @@ p223:NormalFault-Normal a p223:NormalFault-Normal,
     rdfs:subClassOf p223:EnumerationKind-NormalFault,
         s223:EnumerationKind .
 
-p223:Numerical-ABLineLineVoltage a p223:Numerical-ABLineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ABLineLineVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-ANLineNeutralVoltage a p223:Numerical-ANLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "ANLineNeutralVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-BCLineLineVoltage a p223:Numerical-BCLineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "BCLineLineVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-BNLineNeutralVoltage a p223:Numerical-BNLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "BNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-CALineLineVoltage a p223:Numerical-CALineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CALineLineVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-CNLineNeutralVoltage a p223:Numerical-CNLineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "CNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-LineLineVoltage a p223:Numerical-LineLineVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "LineLineVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-LineNeutralVoltage a p223:Numerical-LineNeutralVoltage,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "LineNeutralVoltage" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
-p223:Numerical-NominalFrequency a p223:Numerical-NominalFrequency,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "NominalFrequency" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Numerical .
-
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
         rdfs:Class,
@@ -1059,11 +987,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1181,9 +1109,8 @@ p223:Signal-OnOffSignal a p223:Signal-OnOffSignal,
         sh:NodeShape ;
     rdfs:label "OnOffSignal" ;
     rdfs:subClassOf s223:Constituent,
-        s223:Constituent-Electro-Magnetic,
+        s223:Constituent-Electricity,
         s223:Electricity-Signal,
-        s223:Electro-Magnetic-Electricity,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Medium-Constituent,
@@ -1195,13 +1122,13 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:internalPressure ],
-        [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:containedFluid ],
+            sh:path bob:internalPressure ],
         [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ] .
 
