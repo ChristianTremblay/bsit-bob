@@ -82,10 +82,10 @@ bob:Flow a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ] .
+            sh:path bob:measuresMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -101,13 +101,19 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation2 ],
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:fluidTemp ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:leavingWaterTemp ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:waterFlow ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
@@ -115,11 +121,7 @@ bob:InsideTankHeatTransfer a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand2 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:fluidTemp ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower1 ] .
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation2 ] .
 
 bob:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
@@ -574,13 +576,13 @@ p223:DomesticHeatPumpWaterHeater a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:airOutlet ],
+            sh:path bob:enteringFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
-        [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ] .
+            sh:path sample_heatpump_hotwater_heater:airOutlet ] .
 
 p223:DomesticWaterHeater a rdfs:Class,
         sh:NodeShape ;
@@ -590,9 +592,9 @@ p223:DomesticWaterHeater a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
+            sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ] .
+            sh:path bob:fluidTemperature ] .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -1206,11 +1208,11 @@ p223:Tank a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
+            sh:path bob:leavingFluid ],
+        [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidTemperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:internalPressure ] .
 
