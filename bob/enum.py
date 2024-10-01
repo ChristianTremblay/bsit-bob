@@ -4,6 +4,7 @@ from .core import (
     G36,
     P223,
     QUANTITYKIND,
+    QUDT,
     S223,
     UNIT,
     Constituent,
@@ -65,7 +66,8 @@ EM = Constituent("Electro-Magnetic")  # electro-magnetic
 EM.Light = Light = EM("Light")
 EM.Microwave = Microwave = EM("Microwave")
 EM.RF = RF = EM("RF")
-EM.Electricity = Electricity = EM("Electricity")
+
+Electricity = Constituent("Electricity")
 # Electricity
 Electricity.AC = Electricity("AC")
 Electricity.DC = Electricity("DC")
@@ -504,16 +506,26 @@ S223:EnumerationKind-RunStatus
 # Enumeration kinds that add context to properties
 Aspect = EnumerationKind("Context")
 Numerical = EnumerationKind("Numerical")
+ElectricalVoltagePhases = Aspect("ElectricalVoltagePhases")
 
-Numerical.LineLineVoltage = Numerical("LineLineVoltage", _alt_namespace=P223)
-Numerical.ABLineLineVoltage = Numerical("ABLineLineVoltage", _alt_namespace=P223)
-Numerical.BCLineLineVoltage = Numerical("BCLineLineVoltage", _alt_namespace=P223)
-Numerical.CALineLineVoltage = Numerical("CALineLineVoltage", _alt_namespace=P223)
-Numerical.LineNeutralVoltage = Numerical("LineNeutralVoltage", _alt_namespace=P223)
-Numerical.ANLineNeutralVoltage = Numerical("ANLineNeutralVoltage", _alt_namespace=P223)
-Numerical.BNLineNeutralVoltage = Numerical("BNLineNeutralVoltage", _alt_namespace=P223)
-Numerical.CNLineNeutralVoltage = Numerical("CNLineNeutralVoltage", _alt_namespace=P223)
-Numerical.NominalFrequency = Numerical("NominalFrequency", _alt_namespace=P223)
+Numerical.LineLineVoltage = Numerical("LineLineVoltage")
+Numerical.LineNeutralVoltage = Numerical("LineNeutralVoltage")
+Numerical.Frequency = Numerical("Frequency")
+
+ElectricalVoltagePhases.ABLineLineVoltage = ElectricalVoltagePhases("ABLineLineVoltage")
+ElectricalVoltagePhases.BCLineLineVoltage = ElectricalVoltagePhases("BCLineLineVoltage")
+ElectricalVoltagePhases.CALineLineVoltage = ElectricalVoltagePhases("CALineLineVoltage")
+
+ElectricalVoltagePhases.ANLineNeutralVoltage = ElectricalVoltagePhases(
+    "ANLineNeutralVoltage"
+)
+ElectricalVoltagePhases.BNLineNeutralVoltage = ElectricalVoltagePhases(
+    "BNLineNeutralVoltage"
+)
+ElectricalVoltagePhases.CNLineNeutralVoltage = ElectricalVoltagePhases(
+    "CNLineNeutralVoltage"
+)
+
 
 Numerical.Delta = Numerical("Delta")
 Numerical.DryBulb = Numerical("DryBulb")
@@ -540,6 +552,7 @@ Aspect.ServiceFactor = Numerical("ServiceFactor")
 Aspect.CatalogNumber = Aspect("CatalogNumber")
 Aspect.DayOfWeek = Aspect("DayOfWeek")
 Aspect.Effectiveness = Aspect("Effectiveness")
+
 Aspect.ElectricalVoltagePhases = Aspect("ElectricalVoltagePhases")
 ElectricalPhaseIdentifier = Aspect("ElectricalPhaseIdentifier")
 ElectricalPhaseIdentifier.A = ElectricalPhaseIdentifier("A")

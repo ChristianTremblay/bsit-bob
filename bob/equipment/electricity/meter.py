@@ -87,7 +87,7 @@ three_phase_electricalmeter_template = {
         },
         ("frequency", Frequency): {
             "comment": "Frequency",
-            "hasAspect": Numerical.NominalFrequency,
+            "hasAspect": Numerical.Frequency,
         },
         ("kVAh", ElectricApparentEnergy): {
             "hasUnit": UNIT["KiloV-A-HR"],
