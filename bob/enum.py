@@ -279,6 +279,7 @@ Role.Supply = Supply = Role("Supply")
 Role.Condenser = Condenser = Role("Condenser")
 Role.Evaporator = Evaporator = Role("Evaporator")
 Role.Storage = Storage = Role("Storage", _alt_namespace=P223)
+Role.RunStatus = RunStatus = Role("RunStatus", _alt_namespace=P223)
 
 # ===================
 # Values Enumeration
@@ -482,24 +483,6 @@ TrueFalseEnum.false = TrueFalseEnum("False", _alt_namespace=P223)
 YesNoEnum.Yes = YesNoEnum("Yes", _alt_namespace=P223)
 YesNoEnum.No = YesNoEnum("No", _alt_namespace=P223)
 
-"""
-Those are relatively central....let's keep them in core...
-S223:EnumerationKind-Direction
-    S223:Direction-Inlet
-    S223:Direction-Outlet
-    S223:Direction-Bidirectional
-
-I created ActiveInactive.... still needed ?
-S223:EnumerationKind-Effectiveness
-    S223:Effectiveness-Active
-
-RunningNotRunning ?
-S223:EnumerationKind-RunStatus
-    S223:RunStatus-Off
-    S223:RunStatus-On
-    S223:RunStatus-Unknown
-
-"""
 # ===================
 # Aspects
 # ===================
