@@ -79,13 +79,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path bob:measuresMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -101,25 +101,25 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:leavingWaterTemp ],
+        [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation1 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:fluidTemp ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand1 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation2 ],
+            sh:path sample_heatpump_hotwater_heater:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower1 ],
+            sh:path sample_heatpump_hotwater_heater:waterFlow ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:leavingWaterTemp ],
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:waterFlow ] .
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower1 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:fluidTemp ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation2 ] .
 
 bob:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
@@ -576,9 +576,9 @@ p223:DomesticHeatPumpWaterHeater a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:airOutlet ],
-        [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:airOutlet ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:airInlet ] .
 
@@ -590,9 +590,9 @@ p223:DomesticWaterHeater a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:enteringFluid ] .
 
 p223:Effectiveness-Active a p223:Effectiveness-Active,
         s223:EnumerationKind,
@@ -922,81 +922,72 @@ p223:Numerical-ABLineLineVoltage a p223:Numerical-ABLineLineVoltage,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "ABLineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-ANLineNeutralVoltage a p223:Numerical-ANLineNeutralVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "ANLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-BCLineLineVoltage a p223:Numerical-BCLineLineVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "BCLineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-BNLineNeutralVoltage a p223:Numerical-BNLineNeutralVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "BNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-CALineLineVoltage a p223:Numerical-CALineLineVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "CALineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-CNLineNeutralVoltage a p223:Numerical-CNLineNeutralVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "CNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-LineLineVoltage a p223:Numerical-LineLineVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "LineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-LineNeutralVoltage a p223:Numerical-LineNeutralVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "LineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-NominalFrequency a p223:Numerical-NominalFrequency,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "NominalFrequency" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
@@ -1206,13 +1197,13 @@ p223:Tank a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:internalPressure ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
+            sh:path bob:leavingFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
-        [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:enteringFluid ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,

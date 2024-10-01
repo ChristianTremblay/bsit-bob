@@ -66,12 +66,12 @@ bob:EthernetConnectionPoint a rdfs:Class,
     rdfs:label "bob.connections.network.EthernetConnectionPoint" ;
     rdfs:subClassOf s223:ConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
-            sh:path p223:data_rate ],
+            sh:class s223:EnumerationKind ;
+            sh:path p223:hasProtocol ],
         [ a sh:PropertyShape ;
             sh:path p223:VLAN ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path p223:hasProtocol ] .
+            sh:path p223:data_rate ] .
 
 bob:Floor a rdfs:Class,
         sh:NodeShape ;
@@ -86,52 +86,52 @@ bob:HVACSpace a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:DomainSpace ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:airChangePerHour ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airTransfer ],
-        [ a sh:PropertyShape ;
             sh:path bob:temperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:no2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co2 ],
-        [ a sh:PropertyShape ;
-            sh:path bob:co ],
-        [ a sh:PropertyShape ;
-            sh:path bob:humidity ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature_setpoint ],
         [ a sh:PropertyShape ;
             sh:path bob:radiantCooling ],
         [ a sh:PropertyShape ;
-            sh:path bob:windows ],
+            sh:path bob:co ],
         [ a sh:PropertyShape ;
-            sh:path bob:doors ],
+            sh:path bob:airTransfer ],
         [ a sh:PropertyShape ;
             sh:path bob:occupancy ],
         [ a sh:PropertyShape ;
-            sh:path bob:ductAirOutlet ],
+            sh:path bob:co2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:radiantHeating ],
+        [ a sh:PropertyShape ;
+            sh:path bob:windows ],
         [ a sh:PropertyShape ;
             sh:path bob:ductAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:radiantHeating ] .
+            sh:path bob:ductAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:no2 ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature_setpoint ],
+        [ a sh:PropertyShape ;
+            sh:path bob:humidity ],
+        [ a sh:PropertyShape ;
+            sh:path bob:doors ] .
 
 bob:HVACZone a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.space.hvac.HVACZone" ;
     rdfs:subClassOf s223:Zone ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:temperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:occupancy ],
-        [ a sh:PropertyShape ;
             sh:path bob:temperature_setpoint ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co2 ],
         [ a sh:PropertyShape ;
             sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:co2 ] .
+            sh:path bob:occupancy ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airOutlet ] .
 
 bob:InletZoneConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.air.AirInletZoneConnectionPoint",
@@ -177,12 +177,12 @@ bob:PoEConnectionPoint a rdfs:Class,
     rdfs:label "bob.connections.network.PoEConnectionPoint" ;
     rdfs:subClassOf s223:ConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:VLAN ],
+            sh:path p223:data_rate ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path p223:hasProtocol ],
         [ a sh:PropertyShape ;
-            sh:path p223:data_rate ] .
+            sh:path bob:VLAN ] .
 
 bob:Pressure a rdfs:Class ;
     rdfs:label "bob.properties.force.Pressure" ;
@@ -225,12 +225,12 @@ bob:ZoneConnectionPoint a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path bob:isZoneConnectionPointOf ],
+            sh:path bob:mapsTo ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
-            sh:path bob:mapsTo ] .
+            sh:path bob:isZoneConnectionPointOf ] .
 
 bob:airChangePerHour a rdf:Property ;
     rdfs:subPropertyOf s223:hasProperty .
@@ -968,81 +968,72 @@ p223:Numerical-ABLineLineVoltage a p223:Numerical-ABLineLineVoltage,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "ABLineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-ANLineNeutralVoltage a p223:Numerical-ANLineNeutralVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "ANLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-BCLineLineVoltage a p223:Numerical-BCLineLineVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "BCLineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-BNLineNeutralVoltage a p223:Numerical-BNLineNeutralVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "BNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-CALineLineVoltage a p223:Numerical-CALineLineVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "CALineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-CNLineNeutralVoltage a p223:Numerical-CNLineNeutralVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "CNLineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-LineLineVoltage a p223:Numerical-LineLineVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "LineLineVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-LineNeutralVoltage a p223:Numerical-LineNeutralVoltage,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "LineNeutralVoltage" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:Numerical-NominalFrequency a p223:Numerical-NominalFrequency,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "NominalFrequency" ;
-    rdfs:subClassOf s223:Context-Numerical,
-        s223:EnumerationKind,
-        s223:EnumerationKind-Context .
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Numerical .
 
 p223:OpenClose-Close a p223:OpenClose-Close,
         s223:EnumerationKind,
