@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import Literal
 
-from bob.enum import ElectricalPhaseIdentifier, Numerical
+from bob.enum import ElectricalPhaseIdentifier, Numerical, Aspect
 from bob.properties import ElectricPowerkW
 from bob.properties.electricity import Amps
 
@@ -219,7 +219,7 @@ class CircuitBreaker(Equipment):
         super().__init__(config, **kwargs)
 
         self.currentRating = Amps(
-            amps, label="Current rating of breaker", hasAspect=Numerical.Nominal
+            amps, label="Current rating of breaker", hasAspect=Aspect.Nominal
         )
 
 

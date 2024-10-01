@@ -98,6 +98,7 @@ hd.ahu["MA-T"] % hd.ahu["FILTER"].airInlet
 hd.ahu["TPD1"]["lowPort"] % hd.ahu["FILTER"].airOutlet
 hd.ahu["HC-T"] % hd.ahu["HTGCOIL"].airOutlet
 hd.ahu["DA-T"] % hd.ahu["CLGCOIL"].airOutlet
+hd.ahu["RA-T"] % hd.ahu["MADPR"].airInlet
 hd.ahu["TPD2"]["highPort"] % hd.ahu["SF"].airOutlet
 hd.ahu["TPD2"]["lowPort"] % plenum
 hd.ahu["TPD3"]["highPort"] % hd.ahu["RF"].airOutlet
