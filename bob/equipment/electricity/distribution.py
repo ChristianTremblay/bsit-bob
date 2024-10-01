@@ -10,8 +10,8 @@ from ...connections import electricity as elec_cnx
 from ...core import (
     BOB,
     P223,
-    S223,
     QUANTITYKIND,
+    S223,
     UNIT,
     Equipment,
     QuantifiableObservableProperty,
@@ -74,9 +74,9 @@ class SinglePhaseDistributionPanel(Equipment):
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
 
-        self.electricalBusA += ElectricalPhaseIdentifier.A
-        self.electricalBusB += ElectricalPhaseIdentifier.B
-        self.electricalBusAB += ElectricalPhaseIdentifier.AB
+        self.electricalBusA.hasElectricalPhase = ElectricalPhaseIdentifier.A
+        self.electricalBusB.hasElectricalPhase = ElectricalPhaseIdentifier.B
+        self.electricalBusAB.hasElectricalPhase = ElectricalPhaseIdentifier.AB
 
         for _lit, circuit_breaker in self._contents.items():
             if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
@@ -171,13 +171,13 @@ class ThreePhaseDistributionPanel(Equipment):
             label=f"{self.label}.electricalBusABC"
         )
 
-        self.electricalBusA += ElectricalPhaseIdentifier.A
-        self.electricalBusB += ElectricalPhaseIdentifier.B
-        self.electricalBusC += ElectricalPhaseIdentifier.C
-        self.electricalBusAB += ElectricalPhaseIdentifier.AB
-        self.electricalBusBC += ElectricalPhaseIdentifier.BC
-        self.electricalBusCA += ElectricalPhaseIdentifier.CA
-        self.electricalBusABC += ElectricalPhaseIdentifier.ABC
+        self.electricalBusA.hasElectricalPhase = ElectricalPhaseIdentifier.A
+        self.electricalBusB.hasElectricalPhase = ElectricalPhaseIdentifier.B
+        self.electricalBusC.hasElectricalPhase = ElectricalPhaseIdentifier.C
+        self.electricalBusAB.hasElectricalPhase = ElectricalPhaseIdentifier.AB
+        self.electricalBusBC.hasElectricalPhase = ElectricalPhaseIdentifier.BC
+        self.electricalBusCA.hasElectricalPhase = ElectricalPhaseIdentifier.CA
+        self.electricalBusABC.hasElectricalPhase = ElectricalPhaseIdentifier.ABC
 
         for lit, circuit_breaker in self._contents.items():
             if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
@@ -404,10 +404,10 @@ class TwoPolesMainCircuitBreaker(CircuitBreaker):
             self, label=f"{self.label}.electricalOutlet_LineA_LineB"
         )
 
-        self.electricalInlet += ElectricalPhaseIdentifier.AB
-        self.electricalOutletA += ElectricalPhaseIdentifier.A
-        self.electricalOutletB += ElectricalPhaseIdentifier.B
-        self.electricalOutlet += ElectricalPhaseIdentifier.AB
+        self.electricalInlet.hasElectricalPhase = ElectricalPhaseIdentifier.AB
+        self.electricalOutletA.hasElectricalPhase = ElectricalPhaseIdentifier.A
+        self.electricalOutletB.hasElectricalPhase = ElectricalPhaseIdentifier.B
+        self.electricalOutlet.hasElectricalPhase = ElectricalPhaseIdentifier.AB
 
 
 class ThreePolesCircuitBreaker(CircuitBreaker):
@@ -567,13 +567,13 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
             self, label=f"{self.label}.electricalOutletABC"
         )
 
-        self.electricalOutletA += ElectricalPhaseIdentifier.B
-        self.electricalOutletB += ElectricalPhaseIdentifier.C
-        self.electricalOutletC += ElectricalPhaseIdentifier.C
-        self.electricalOutletAB += ElectricalPhaseIdentifier.AB
-        self.electricalOutletBC += ElectricalPhaseIdentifier.BC
-        self.electricalOutletCA += ElectricalPhaseIdentifier.CA
-        self.electricalOutlet += ElectricalPhaseIdentifier.ABC
+        self.electricalOutletA.hasElectricalPhase = ElectricalPhaseIdentifier.B
+        self.electricalOutletB.hasElectricalPhase = ElectricalPhaseIdentifier.C
+        self.electricalOutletC.hasElectricalPhase = ElectricalPhaseIdentifier.C
+        self.electricalOutletAB.hasElectricalPhase = ElectricalPhaseIdentifier.AB
+        self.electricalOutletBC.hasElectricalPhase = ElectricalPhaseIdentifier.BC
+        self.electricalOutletCA.hasElectricalPhase = ElectricalPhaseIdentifier.CA
+        self.electricalOutlet.hasElectricalPhase = ElectricalPhaseIdentifier.ABC
 
 
 # Define breaker in template
