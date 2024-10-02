@@ -9,7 +9,7 @@ from ..core import (
     InletConnectionPoint,
     OutletConnectionPoint,
 )
-from ..enum import Electricity
+from ..enum import Electricity, ModulatedSignal
 
 _namespace = BOB
 # It is modeling dry contact, Triac and other On-Off relationships
@@ -43,14 +43,14 @@ class OnOffSignalOutletConnectionPoint(
 
 
 class ModulationSignalConnection(Connection):
-    hasMedium = Electricity.ModulatedSignal
+    hasMedium = ModulatedSignal
     _class_iri = S223.Connection
 
 
 class ModulationSignalConnectionPoint(ConnectionPoint):
     _attr_uriref = {"hasSignalType": P223.hasSignalType}
 
-    hasMedium = Electricity.ModulatedSignal
+    hasMedium = ModulatedSignal
     hasSignalType: AnalogSignalTypeEnum
 
 

@@ -6,24 +6,24 @@ from ..core import (
     QUANTITYKIND,
     S223,
     UNIT,
-    EnumerationKind,
-    ExternalReference,
-    Substance,
-    Medium,
-    SchemaGraph,
     ActuatableProperty,
     EnumerableProperty,
     EnumeratedActuatableProperty,
     EnumeratedObservableProperty,
+    EnumerationKind,
+    ExternalReference,
+    Medium,
     ObservableProperty,
+    SchemaGraph,
+    Substance,
 )
 from ..enum import (
     Light,
-    MotionEnum,
+    Motion,
     NormalAlarmEnum,
     OccupancyStatus,
     OnOffEnum,
-    OpenCloseEnum,
+    Position,
     Smoke,
     YesNoEnum,
 )
@@ -56,14 +56,14 @@ class NormalAlarmStatus(EnumeratedObservableProperty):
 
 class OpenCloseCommand(EnumeratedActuatableProperty):
     _class_iri: URIRef = S223.EnumeratedActuatableProperty
-    hasEnumerationKind = OpenCloseEnum
-    hasValue: OpenCloseEnum
+    hasEnumerationKind = Position
+    hasValue: Position
 
 
 class OpenCloseStatus(EnumeratedActuatableProperty):
     _class_iri: URIRef = S223.EnumeratedActuatableProperty
-    hasEnumerationKind = OpenCloseEnum
-    hasValue: OpenCloseEnum
+    hasEnumerationKind = Position
+    hasValue: Position
 
 
 class Schedule(EnumerableProperty):
@@ -80,8 +80,8 @@ class OccupancyStatus(EnumeratedObservableProperty):
 
 class Motion(EnumeratedObservableProperty):
     _class_iri: URIRef = S223.EnumeratedObservableProperty
-    hasEnumerationKind = MotionEnum
-    hasValue: MotionEnum
+    hasEnumerationKind = Motion
+    hasValue: Motion
 
 
 class SmokePresence(EnumeratedObservableProperty):

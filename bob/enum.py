@@ -171,24 +171,24 @@ Electricity.Neutral = Electricity("Neutral")
 # Electricity.Control = Electricity.Signal("Control", _alt_namespace=P223)
 Electricity.OnOffSignal = Electricity.Signal("OnOffSignal", _alt_namespace=P223)
 
-Signal.ModulatedSignal = ModulatedSignal = Signal("Modulated")
+
 Signal.RS485 = Signal("EIA485")
 Signal.Ethernet = Signal("Ethernet")
 Signal.IEC14908 = Signal("IEC14908")
-Signal.USB = Signal("USB")
-
+Signal.USB = USB = Signal("USB")
+Signal.WiFi = Signal("WiFi", _alt_namespace=P223)
+Signal.ModulatedSignal = ModulatedSignal = Signal("Modulated")
 ModulatedSignal.DC0_10 = ModulatedSignal("0-10VDC")
 ModulatedSignal.MA4_20 = ModulatedSignal("4-20mA")
-# Electricity.Communication = Electricity.Signal("Communication", _alt_namespace=P223)
 
 
 Mix.PowerAndSignal = PowerAndSignal = Mix("PowerAndSignal", _alt_namespace=P223)
 PowerAndSignal.PoE = PowerAndSignal("PoE", _alt_namespace=P223)
 PowerAndSignal.PoE.add_constituent(Electricity.DC48V)
-PowerAndSignal.PoE.add_constituent(Electricity.Ethernet)
+PowerAndSignal.PoE.add_constituent(Signal.Ethernet)
 PowerAndSignal.USB = PowerAndSignal("USB", _alt_namespace=P223)
 PowerAndSignal.USB.add_constituent(Electricity.DC5V)
-# PowerAndSignal.USB.add_constituent(Electricity.Ethernet)
+
 
 # ===================
 # MEDIA FLAVOURS
