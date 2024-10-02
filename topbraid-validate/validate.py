@@ -18,6 +18,9 @@ from rdflib import OWL, SH, Graph, Literal, Namespace
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
+# globals
+args = None
+
 # working directory mapped as a volume in validate-run.sh
 DATA_DIRECTORY = Path("/data")
 
@@ -123,6 +126,10 @@ def test_data_validation(data_file_name: str, schema_file_name: Optional[str] = 
         logger.debug(f"{compiled_file_path = }")
         data_graph.serialize(compiled_file_path, format="ttl")
 
+        # skip the rest if we're not validating
+        if args.skip_validation:
+            return
+
         # get the shacl-1.4.2/bin/shaclvalidate.sh script
         script = "shacl-1.4.2/bin/shaclvalidate.sh"
         try:
@@ -222,6 +229,12 @@ if __name__ == "__main__":
         nargs="?",
         help="optional schema file to load",
         default=None,
+    )
+    # debug option
+    parser.add_argument(
+        "--skip-validation",
+        action="store_true",
+        help="run the inferencing but skip validation",
     )
     # debug option
     parser.add_argument(
