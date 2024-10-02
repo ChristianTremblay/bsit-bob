@@ -25,7 +25,7 @@ __|___|__|___|___|__
 class Actuator(Equipment):
     _class_iri = S223.Actuator
     actuates: Equipment
-    commandedByProperty: PropertyReference
+    actuatedByProperty: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update({}, config=config)
