@@ -39,9 +39,9 @@ ex1:TestEquipment a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpOut ],
+            sh:path ex1:cpIn ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpIn ] .
+            sh:path ex1:cpOut ] .
 
 ex1:TestSystem a rdfs:Class,
         sh:NodeShape ;
@@ -203,36 +203,36 @@ p223:Analog-Unknown a p223:Analog-Unknown,
     rdfs:subClassOf p223:EnumerationKind-Analog,
         s223:EnumerationKind .
 
-p223:Binary-DryContact a p223:Binary-DryContact,
+p223:BinarySignalType-DryContact a p223:BinarySignalType-DryContact,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "DryContact" ;
-    rdfs:subClassOf p223:EnumerationKind-Binary,
+    rdfs:subClassOf p223:EnumerationKind-BinarySignalType,
         s223:EnumerationKind .
 
-p223:Binary-Incremental a p223:Binary-Incremental,
+p223:BinarySignalType-Incremental a p223:BinarySignalType-Incremental,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "Incremental" ;
-    rdfs:subClassOf p223:EnumerationKind-Binary,
+    rdfs:subClassOf p223:EnumerationKind-BinarySignalType,
         s223:EnumerationKind .
 
-p223:Binary-Pulse a p223:Binary-Pulse,
+p223:BinarySignalType-Pulse a p223:BinarySignalType-Pulse,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "Pulse" ;
-    rdfs:subClassOf p223:EnumerationKind-Binary,
+    rdfs:subClassOf p223:EnumerationKind-BinarySignalType,
         s223:EnumerationKind .
 
-p223:Binary-StartStop a p223:Binary-StartStop,
+p223:BinarySignalType-StartStop a p223:BinarySignalType-StartStop,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "StartStop" ;
-    rdfs:subClassOf p223:EnumerationKind-Binary,
+    rdfs:subClassOf p223:EnumerationKind-BinarySignalType,
         s223:EnumerationKind .
 
 p223:Constituent-Ar a p223:Constituent-Ar,
@@ -388,30 +388,6 @@ p223:Constituent-VOC a p223:Constituent-VOC,
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
-p223:Effectiveness-Active a p223:Effectiveness-Active,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Active" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Effectiveness .
-
-p223:Effectiveness-Inactive a p223:Effectiveness-Inactive,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Inactive" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Effectiveness .
-
-p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Unknown" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Effectiveness .
-
 p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind,
         rdfs:Class,
@@ -426,11 +402,11 @@ p223:EnumerationKind-Analog a p223:EnumerationKind-Analog,
     rdfs:label "Analog" ;
     rdfs:subClassOf s223:EnumerationKind .
 
-p223:EnumerationKind-Binary a p223:EnumerationKind-Binary,
+p223:EnumerationKind-BinarySignalType a p223:EnumerationKind-BinarySignalType,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "Binary" ;
+    rdfs:label "BinarySignalType" ;
     rdfs:subClassOf s223:EnumerationKind .
 
 p223:EnumerationKind-HandOffAuto a p223:EnumerationKind-HandOffAuto,
@@ -475,25 +451,11 @@ p223:EnumerationKind-NormalFault a p223:EnumerationKind-NormalFault,
     rdfs:label "NormalFault" ;
     rdfs:subClassOf s223:EnumerationKind .
 
-p223:EnumerationKind-OpenClose a p223:EnumerationKind-OpenClose,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "OpenClose" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
 p223:EnumerationKind-OverriddenAuto a p223:EnumerationKind-OverriddenAuto,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "OverriddenAuto" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
-p223:EnumerationKind-Position a p223:EnumerationKind-Position,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Position" ;
     rdfs:subClassOf s223:EnumerationKind .
 
 p223:EnumerationKind-Protocol a p223:EnumerationKind-Protocol,
@@ -694,22 +656,6 @@ p223:NormalFault-Normal a p223:NormalFault-Normal,
     rdfs:subClassOf p223:EnumerationKind-NormalFault,
         s223:EnumerationKind .
 
-p223:OpenClose-Close a p223:OpenClose-Close,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Close" ;
-    rdfs:subClassOf p223:EnumerationKind-OpenClose,
-        s223:EnumerationKind .
-
-p223:OpenClose-Open a p223:OpenClose-Open,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Open" ;
-    rdfs:subClassOf p223:EnumerationKind-OpenClose,
-        s223:EnumerationKind .
-
 p223:OverriddenAuto-Auto a p223:OverriddenAuto-Auto,
         s223:EnumerationKind,
         rdfs:Class,
@@ -724,38 +670,6 @@ p223:OverriddenAuto-Overridden a p223:OverriddenAuto-Overridden,
         sh:NodeShape ;
     rdfs:label "Overridden" ;
     rdfs:subClassOf p223:EnumerationKind-OverriddenAuto,
-        s223:EnumerationKind .
-
-p223:Position-Close a p223:Position-Close,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Close" ;
-    rdfs:subClassOf p223:EnumerationKind-Position,
-        s223:EnumerationKind .
-
-p223:Position-Moving a p223:Position-Moving,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Moving" ;
-    rdfs:subClassOf p223:EnumerationKind-Position,
-        s223:EnumerationKind .
-
-p223:Position-Open a p223:Position-Open,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Open" ;
-    rdfs:subClassOf p223:EnumerationKind-Position,
-        s223:EnumerationKind .
-
-p223:Position-Unknown a p223:Position-Unknown,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "Unknown" ;
-    rdfs:subClassOf p223:EnumerationKind-Position,
         s223:EnumerationKind .
 
 p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
@@ -893,6 +807,20 @@ p223:Signal-OnOffSignal a p223:Signal-OnOffSignal,
         rdfs:Class,
         sh:NodeShape ;
     rdfs:label "OnOffSignal" ;
+    rdfs:subClassOf s223:Constituent,
+        s223:Constituent-Electricity,
+        s223:Electricity-Signal,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Medium-Constituent,
+        s223:Substance-Medium .
+
+p223:Signal-WiFi a p223:Signal-WiFi,
+        s223:Constituent,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "WiFi" ;
     rdfs:subClassOf s223:Constituent,
         s223:Constituent-Electricity,
         s223:Electricity-Signal,
