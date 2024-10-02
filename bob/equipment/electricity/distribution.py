@@ -14,6 +14,7 @@ from ...core import (
     S223,
     UNIT,
     Equipment,
+    System,
     QuantifiableObservableProperty,
 )
 
@@ -39,7 +40,7 @@ class Transformer(Equipment):
         )
 
 
-class SinglePhaseDistributionPanel(Equipment):
+class SinglePhaseDistributionPanel(System):
     _class_iri = P223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
@@ -97,7 +98,7 @@ class SinglePhaseDistributionPanel(Equipment):
                     self.electricalBusB >> circuit_breaker
 
 
-class ThreePhaseDistributionPanel(Equipment):
+class ThreePhaseDistributionPanel(System):
     _class_iri = P223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
