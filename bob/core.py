@@ -1539,7 +1539,7 @@ Substance = EnumerationKind("Substance")
 Substance.Medium = Medium = Substance("Medium")
 Medium.Constituent = Medium("Constituent")
 Medium.Mix = Mix = Medium("Mix")
-Medium.ThermalConductor = Medium("ThermalConductor")
+Medium.ThermalContact = Medium("ThermalContact")
 
 Role = EnumerationKind("Role")
 Domain = EnumerationKind("Domain")
