@@ -322,7 +322,7 @@ NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE
 NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
 NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
 OccupancyStatus = EnumerationKind("Occupancy")
-Motion = OccupancyStatus('Motion')
+Motion = OccupancyStatus("Motion")
 OnOffEnum = EnumerationKind("OnOff")
 Phase = EnumerationKind("Phase")
 Gas = Phase("Gas")
@@ -335,7 +335,6 @@ Position = EnumerationKind("Position")
 
 OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=P223)
 ProtocolEnum = EnumerationKind("Protocol", _alt_namespace=P223)
-)
 RunStatusEnum = EnumerationKind("RunStatus")
 Speed = EnumerationKind("Speed")
 ThreeSpeedSetting = EnumerationKind("ThreeSpeedSetting")
@@ -461,10 +460,9 @@ OccupancyStatus.Occupied = OccupancyStatus("Occupied")
 OccupancyStatus.Unoccupied = OccupancyStatus("Unoccupied")
 OccupancyStatus.Standby = OccupancyStatus("Standby")
 OccupancyStatus.Bypass = OccupancyStatus("Bypass")
-OccupancyStatus.Presence = Presence= OccupancyStatus("Presence")
+OccupancyStatus.Presence = Presence = OccupancyStatus("Presence")
 Presence.false = Presence("False")
 Presence.true = Presence("True")
-
 
 
 #
@@ -537,7 +535,9 @@ Aspect.DryBulb = Aspect("DryBulb")
 Aspect.Effectiveness = Aspect("Effectiveness")
 Aspect.Efficiency = Numerical("Efficiency")
 ElectricalPhaseIdentifier = Aspect("ElectricalPhaseIdentifier")
-Aspect.ElectricalVoltagePhases = ElectricalVoltagePhases = Aspect("ElectricalVoltagePhases")
+Aspect.ElectricalVoltagePhases = ElectricalVoltagePhases = Aspect(
+    "ElectricalVoltagePhases"
+)
 Aspect.Face = Aspect("Face")
 Aspect.Fault = Aspect("Fault")
 Aspect.HighLimit = Aspect("HighLimit")
@@ -610,25 +610,6 @@ Numerical.Threshold = Numerical("Threshold")
 Numerical.Total = Numerical("Total")
 Numerical.Weight = Numerical("Weight")
 Numerical.WetBulb = Numerical("WetBulb")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ElectricalPhaseIdentifier.A = ElectricalPhaseIdentifier("A")
