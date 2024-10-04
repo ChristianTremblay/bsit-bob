@@ -1615,7 +1615,7 @@ class System(Container):
                     if isinstance(thing, (Equipment, System)):
                         self > thing
                     if isinstance(thing, Property):
-                        thing @ self
+                        # thing @ self
                         self[thing_name] = thing
                         self.add_property(thing)
 
@@ -3695,7 +3695,6 @@ class DomainSpace(Connectable):
 
     _class_iri: URIRef = S223.DomainSpace
     hasDomain: Domain
-    hasMedium: Medium
 
     def __init__(self, **kwargs: Any) -> None:
         _log.debug(f"DomainSpace.__init__ {kwargs}")

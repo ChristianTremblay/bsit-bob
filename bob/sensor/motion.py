@@ -19,9 +19,10 @@ from ..core import (
     Medium,
     PropertyReference,
 )
+from ..enum import Light, Occupant
 from ..properties import Count, Motion
 from .sensor import Sensor, split_kwargs
-from ..enum import Occupant
+
 _namespace = S223
 
 
@@ -42,7 +43,7 @@ class OccupantMotionSensor(OccupancySensor):
         self.observes = Motion(
             # isObservedBy=self,
             label=f"{self.label}.OccupantMotion",
-            ofMedium=Occupant,
+            ofMedium=Light.Infrared,
             **_property_kwargs,
         )
 
@@ -59,7 +60,6 @@ class OccupantCounterSensor(OccupantMotionSensor):
         super().__init__(**_sensor_kwargs)
         self.OccupantCount = Count(
             label=f"{self.label}.OccupantCount",
-            ofMedium=Occupant,
             **_property_kwargs,
         )
         counter = Causality(label="countProducer")
