@@ -82,14 +82,18 @@ plenum = AirConnection(
 outdoor >> hd.ahu["OADPR"].airInlet  # >> mixedAir
 hd.ahu["OADPR"].airOutlet >> mixedAir
 hd.ahu["MADPR"].airOutlet >> mixedAir
-(mixedAir >> hd.ahu["FILTER"] >> hd.ahu["HTGCOIL"].airInlet)
-(hd.ahu["HTGCOIL"].airOutlet >> hd.ahu["CLGCOIL"].airInlet)
+(mixedAir >> hd.ahu["FILTER"] >> hd.ahu["CLGCOIL"].airInlet)
 (hd.ahu["CLGCOIL"].airOutlet >> hd.ahu["SF"].airInlet)
-(hd.ahu["SF"].airOutlet >> supplyAir)
+(hd.ahu["SF"].airOutlet >> hd.ahu["HTGCOIL"].airInlet)
+(hd.ahu["HTGCOIL"].airOutlet >> supplyAir)
 hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"].airInlet
 hd.ahu["RF"].airOutlet >> returnExhaust >> hd.ahu["EADPR"].airInlet
 hd.ahu["EADPR"].airOutlet >> outdoor
 returnExhaust >> hd.ahu["MADPR"].airInlet
+# hd.ahu.exhaustAirOutlet = hd.ahu["EADPR"].airOutlet
+# hd.ahu.supplyAirOutlet = hd.ahu["HTGCOIL"].airOutlet
+# hd.ahu.returnAirInlet = hd.ahu["RF"].airInlet
+# hd.ahu.outsideAirInlet = hd.ahu["OADPR"].airInlet
 
 # AHU Sensors
 hd.ahu["OA-T"] % outdoor
@@ -97,7 +101,7 @@ hd.ahu["TPD1"]["highPort"] % hd.ahu["FILTER"].airInlet
 hd.ahu["MA-T"] % hd.ahu["FILTER"].airInlet
 hd.ahu["TPD1"]["lowPort"] % hd.ahu["FILTER"].airOutlet
 hd.ahu["HC-T"] % hd.ahu["HTGCOIL"].airOutlet
-hd.ahu["DA-T"] % hd.ahu["CLGCOIL"].airOutlet
+hd.ahu["DA-T"] % hd.ahu["SF"].airOutlet
 hd.ahu["RA-T"] % hd.ahu["MADPR"].airInlet
 hd.ahu["TPD2"]["highPort"] % hd.ahu["SF"].airOutlet
 hd.ahu["TPD2"]["lowPort"] % plenum

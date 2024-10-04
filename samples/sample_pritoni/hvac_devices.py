@@ -7,6 +7,7 @@ from bob.connections.electricity import (
     Electricity_120VLN_1Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
+from bob.connections.air import AirConnection
 from bob.core import UNIT, Role, bind_model_namespace, dump
 from bob.equipment.architectural import Window
 
@@ -158,9 +159,6 @@ vav2_config = {
 }
 
 ahu = AirHandlingUnit(config=ahu_template)
-ahu["SF_Starter"] >> ahu["SF"]
-ahu["SF"].onOffStatus = ahu["SF_Starter"].onOffStatus
-ahu["RF_VFD"] >> ahu["RF"]
 
 clg_vlv = TwoWayActuatedProportionalValve(label="A5")
 htg_vlv = TwoWayActuatedProportionalValve(label="A4")
@@ -198,8 +196,8 @@ window2 = Window(
     comment="Second Window in OpenOffice, covering East portion of room",
 )
 
-vav1 = VAV(config=vav1_config)
-vav2 = VAV(config=vav2_config)
+vav1 = VAV_Simple(config=vav1_config)
+vav2 = VAV_Simple(config=vav2_config)
 
 
 if __name__ == "__main__":
