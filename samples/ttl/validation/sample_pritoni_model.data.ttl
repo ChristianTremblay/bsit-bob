@@ -3914,8 +3914,8 @@ hvac:00028 a s223:Connection ;
     s223:connectsTo hvac_spaces:00047 ;
     s223:hasMedium s223:Fluid-Air .
 
-hvac_devices:00001 a s223:AirHandlingUnit,
-        s223:System ;
+hvac_devices:00001 a s223:System,
+        bob:AirHandlingUnit ;
     rdfs:label "AHU" ;
     s223:hasBoundaryConnectionPoint hvac_devices:00084,
         hvac_devices:00098,
@@ -5285,6 +5285,7 @@ hvac_devices:00134 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty hvac_devices:00144 ;
     s223:cnx hvac_devices:00135,
         hvac_devices:00136,
         hvac_devices:00137,
@@ -5610,6 +5611,7 @@ hvac_devices:00169 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty hvac_devices:00179 ;
     s223:cnx hvac_devices:00170,
         hvac_devices:00171,
         hvac_devices:00172,
@@ -5935,6 +5937,7 @@ hvac_devices:00204 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty hvac_devices:00214 ;
     s223:cnx hvac_devices:00205,
         hvac_devices:00206,
         hvac_devices:00207,
@@ -6218,6 +6221,7 @@ hvac_devices:00236 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty hvac_devices:00246 ;
     s223:cnx hvac_devices:00237,
         hvac_devices:00238,
         hvac_devices:00239,
@@ -6509,6 +6513,7 @@ hvac_devices:00268 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty hvac_devices:00278 ;
     s223:cnx hvac_devices:00269,
         hvac_devices:00270,
         hvac_devices:00271,
@@ -6844,7 +6849,7 @@ hvac_devices:00302 a s223:ConnectionPoint,
         bob:CondensedWaterConnectionPoint ;
     rdfs:label "Chiller.condensedWaterEntering" ;
     s223:cnx hvac_devices:00299 ;
-    s223:hasMedium s223:Water-CondensedWater ;
+    s223:hasMedium p223:Water-CondensedWater ;
     s223:isConnectionPointOf hvac_devices:00299 .
 
 hvac_devices:00303 a s223:ConnectionPoint,
@@ -6852,7 +6857,7 @@ hvac_devices:00303 a s223:ConnectionPoint,
         bob:CondensedWaterConnectionPoint ;
     rdfs:label "Chiller.condensedWaterLeaving" ;
     s223:cnx hvac_devices:00299 ;
-    s223:hasMedium s223:Water-CondensedWater ;
+    s223:hasMedium p223:Water-CondensedWater ;
     s223:isConnectionPointOf hvac_devices:00299 .
 
 hvac_devices:00304 a p223:AnalogInput,
@@ -7663,7 +7668,7 @@ hvac_devices:00380 a s223:Connectable,
         hvac_devices:00383 ;
     s223:connectedThrough hvac:00004,
         hvac:00005,
-        lighting_devices:00092 ;
+        lighting_devices:00090 ;
     s223:hasConnectionPoint hvac_devices:00381,
         hvac_devices:00382,
         hvac_devices:00383 ;
@@ -7698,8 +7703,8 @@ hvac_devices:00383 a s223:ConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Window_West.naturalLight" ;
     s223:cnx hvac_devices:00380,
-        lighting_devices:00092 ;
-    s223:connectsThrough lighting_devices:00092 ;
+        lighting_devices:00090 ;
+    s223:connectsThrough lighting_devices:00090 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf hvac_devices:00380 .
 
@@ -7712,7 +7717,7 @@ hvac_devices:00384 a s223:Connectable,
         hvac_devices:00387 ;
     s223:connectedThrough hvac:00004,
         hvac:00005,
-        lighting_devices:00092 ;
+        lighting_devices:00090 ;
     s223:hasConnectionPoint hvac_devices:00385,
         hvac_devices:00386,
         hvac_devices:00387 ;
@@ -7747,8 +7752,8 @@ hvac_devices:00387 a s223:ConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "Window_East.naturalLight" ;
     s223:cnx hvac_devices:00384,
-        lighting_devices:00092 ;
-    s223:connectsThrough lighting_devices:00092 ;
+        lighting_devices:00090 ;
+    s223:connectsThrough lighting_devices:00090 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf hvac_devices:00384 .
 
@@ -7920,7 +7925,6 @@ hvac_devices:00403 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "VAV1_ZN-T.Temperature" ;
     s223:hasExternalReference bacnet_references:00015 ;
-    s223:hasValue 69.7 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Temperature ;
     qudt:hasUnit unit:DEG_F .
@@ -8038,6 +8042,7 @@ hvac_devices:00413 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty hvac_devices:00423 ;
     s223:cnx hvac_devices:00414,
         hvac_devices:00415,
         hvac_devices:00416,
@@ -8558,7 +8563,6 @@ hvac_devices:00467 a s223:ObservableProperty,
         bob:Temperature ;
     rdfs:label "VAV2_ZN-T.Temperature" ;
     s223:hasExternalReference bacnet_references:00016 ;
-    s223:hasValue 73.2 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Temperature ;
     qudt:hasUnit unit:DEG_F .
@@ -8676,6 +8680,7 @@ hvac_devices:00477 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty hvac_devices:00487 ;
     s223:cnx hvac_devices:00478,
         hvac_devices:00479,
         hvac_devices:00480,
@@ -10351,8 +10356,7 @@ lighting_devices:00062 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:hasExternalReference bacnet_references:00020 ;
-    s223:hasValue s223:OnOff-Off .
+    s223:hasExternalReference bacnet_references:00020 .
 
 lighting_devices:00063 a s223:ActuatableProperty,
         s223:EnumerableProperty,
@@ -10653,25 +10657,7 @@ lighting_devices:00089 a s223:EnumerableProperty,
     s223:hasEnumerationKind s223:Occupancy-Motion ;
     s223:ofMedium s223:Light-Infrared .
 
-lighting_devices:00090 a s223:Connectable,
-        s223:Equipment,
-        s223:Sensor ;
-    rdfs:label "D1" ;
-    s223:hasObservationLocation lighting_spaces:00001 ;
-    s223:hasPhysicalLocation physical_spaces:00006 ;
-    s223:observes lighting_devices:00091 ;
-    rdfs:comment "Daylight sensor installed in open office (D1)" .
-
-lighting_devices:00091 a s223:EnumerableProperty,
-        s223:EnumeratedObservableProperty,
-        s223:ObservableProperty,
-        s223:Property,
-        bob:DaylightDetected ;
-    rdfs:label "D1.Daylight" ;
-    s223:hasEnumerationKind p223:EnumerationKind-YesNo ;
-    s223:ofMedium s223:Light-Visible .
-
-lighting_devices:00092 a s223:Connection ;
+lighting_devices:00090 a s223:Connection ;
     rdfs:label "LightHub_NaturalLight" ;
     s223:cnx hvac_devices:00383,
         hvac_devices:00387,
@@ -10692,7 +10678,7 @@ lighting_spaces:00001 a s223:Connectable,
     s223:cnx lighting_spaces:00002,
         lighting_spaces:00003 ;
     s223:connectedThrough lighting_devices:00086,
-        lighting_devices:00092 ;
+        lighting_devices:00090 ;
     s223:hasConnectionPoint lighting_spaces:00002,
         lighting_spaces:00003 ;
     s223:hasDomain s223:Domain-Lighting ;
@@ -10716,9 +10702,9 @@ lighting_spaces:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "LightingSpace1.naturalLightInlet" ;
-    s223:cnx lighting_devices:00092,
+    s223:cnx lighting_devices:00090,
         lighting_spaces:00001 ;
-    s223:connectsThrough lighting_devices:00092 ;
+    s223:connectsThrough lighting_devices:00090 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf lighting_spaces:00001 .
 
