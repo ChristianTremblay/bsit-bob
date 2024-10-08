@@ -231,7 +231,7 @@ Water.DomesticHotWater = DomesticHotWater = Water(
     "DomesticHotWater", _alt_namespace=P223
 )
 
-Water.CondensedWater = CondensedWater = Water("CondensedWater")
+Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
 
 Water.GlycolSolution = GlycolSolution = Water(
     "GlycolSolution"
