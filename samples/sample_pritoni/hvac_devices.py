@@ -196,8 +196,8 @@ window2 = Window(
     comment="Second Window in OpenOffice, covering East portion of room",
 )
 
-vav1 = VAV_Simple(config=vav1_config)
-vav2 = VAV_Simple(config=vav2_config)
+vav1 = VAV(config=vav1_config)
+vav2 = VAV(config=vav2_config)
 
 
 if __name__ == "__main__":

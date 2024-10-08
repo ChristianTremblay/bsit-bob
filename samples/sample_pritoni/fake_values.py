@@ -14,7 +14,6 @@ model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
-hd.vav1["VAV1_ZN-T"].observedProperty.set_value(69.7)  # PD-SR-MP HVACZone1Temperature
 hd.vav2["VAV2_ZN-T"].observedProperty.set_value(73.2)  # PD-SR-MP HVACZone2Temperature
 hd.vav1["VAV1_DA-T"].observedProperty.set_value(
     72.3
@@ -39,7 +38,6 @@ ls.corridor_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
 ls.privateoffice_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
 ls.kitchenette_lightspace.occupancy.hasValue = OccupancyStatus.Unoccupied
 
-ld.openofficeNorth_luminaire_1.onOffStatus.hasValue = OnOffEnum.Off
 ld.openofficeNorth_luminaire_1.onOffCommand.hasValue = OnOffEnum.Off
 
 ld.openofficeNorth_luminaire_2.onOffStatus.hasValue = OnOffEnum.Off

@@ -64,8 +64,8 @@ hd.window1.naturalLight >> ld.natural_ligth_conn
 hd.window2.naturalLight >> ld.natural_ligth_conn
 ld.natural_ligth_conn >> ls.openofficeNorth_lightspace.naturalLightInlet
 
-ld.daylight_sensor % ls.openofficeNorth_lightspace
-ld.daylight_sensor.hasPhysicalLocation = ps.openoffice
+# ld.daylight_sensor % ls.openofficeNorth_lightspace
+# ld.daylight_sensor.hasPhysicalLocation = ps.openoffice
 
 if __name__ == "__main__":
     dump()
