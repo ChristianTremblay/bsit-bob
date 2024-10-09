@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from header import sample_header
+from bob.scratch.header import sample_header
 
 from bob.connections.electricity import (
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,

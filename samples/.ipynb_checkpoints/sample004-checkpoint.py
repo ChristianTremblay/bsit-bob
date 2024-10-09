@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from header import sample_header
+from bob.scratch.header import sample_header
 
 from bob.hvac import VAV1, HVACZone1
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from header import sample_header
+from bob.scratch.header import sample_header
 
 from bob.connections.air import AirConnection
 from bob.core import bind_model_namespace, dump

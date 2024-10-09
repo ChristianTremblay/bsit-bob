@@ -4,7 +4,7 @@ from bob.connections.electricity import (
     Electricity_240VLL_208VLN_120VLN_3Ph_60HzConnection,
 )
 
-from header import sample_header
+from bob.scratch.header import sample_header
 
 from bob.connections.air import *
 from bob.connections.electricity import *

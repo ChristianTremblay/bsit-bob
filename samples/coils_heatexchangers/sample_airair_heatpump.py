@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing import Dict
 
-from header import sample_header
+from bob.scratch.header import sample_header
 
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.connections.electricity import Electricity_240VLL_1Ph_60HzInletConnectionPoint

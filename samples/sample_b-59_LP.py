@@ -1,24 +1,20 @@
 """
 B59
 """
+
 from bob.connections.air import AirConnection
 from bob.connections.electricity import ElectricalInletConnectionPoint
-from bob.core import (
-    UNIT,
-    bind_model_namespace,
-    dump,
-    BoundaryConnectionPoint,
-)
+from bob.core import UNIT, BoundaryConnectionPoint, bind_model_namespace, dump
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.coil import ChilledWaterCoil
 from bob.equipment.hvac.fan import Fan
-from bob.sensor.temperature import AirTemperatureSensor
-from bob.space.hvac import HVACSpace, HVACZone
-from bob.space.physical import Building, Floor, Office, Roof
+from bob.scratch.header import sample_header
 
 # Prototypes
 from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
-from header import sample_header
+from bob.sensor.temperature import AirTemperatureSensor
+from bob.space.hvac import HVACSpace, HVACZone
+from bob.space.physical import Building, Floor, Office, Roof
 
 # model_name = Path(__file__).stem
 model_name = "B59"
