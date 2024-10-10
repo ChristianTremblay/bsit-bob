@@ -37,10 +37,12 @@ chilledWaterCoil_template = {
 # Should this b ea system
 
 
-class HeatExchanger(Equipment):
-    _class_iri: URIRef = S223.HeatExchanger
-    airInlet: AirInletConnectionPoint
-    airOutlet: AirOutletConnectionPoint
+class AirHeatExchanger(Equipment):
+    _class_iri: URIRef = S223.AirHeatExchanger
+    supplyAirInlet: AirInletConnectionPoint
+    supplyAirOutlet: AirOutletConnectionPoint
+    exhaustAirInlet: AirInletConnectionPoint
+    exhaustAirOutlet: AirOutletConnectionPoint
 
 
 class Accumulator(Equipment):
@@ -51,7 +53,7 @@ class Accumulator(Equipment):
     will repeat.
     """
 
-    _class_iri: URIRef = S223.HeatExchanger
+    _class_iri: URIRef = S223.Equipment
     outdoorSide: AirBidirectionalConnectionPoint
     indoorSide: AirBidirectionalConnectionPoint
 
@@ -63,7 +65,7 @@ class Accumulator4SidesDuct(Equipment):
     Return and supply are directional, but accumulator 1 and 2 are bidirectional
     """
 
-    _class_iri: URIRef = S223.HeatExchanger
+    _class_iri: URIRef = S223.Equipment
     accumulator1Connection: AirBidirectionalConnectionPoint
     accumulator2Connection: AirBidirectionalConnectionPoint
     supplyDuctOutlet: AirOutletConnectionPoint
