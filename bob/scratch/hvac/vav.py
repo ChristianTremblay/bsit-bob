@@ -232,7 +232,7 @@ class VAV(System):
         self["SystemAirFlow"] @ self["SA-F"].observedProperty
 
         # Measure location
-        self["SA-F"] % self["DPR"].airOutlet
+        self["SA-F"] % self["DPR"].airInlet
         self["DA-T"] % self["DPR"].airOutlet
 
 
