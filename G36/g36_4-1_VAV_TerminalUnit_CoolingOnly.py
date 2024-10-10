@@ -33,7 +33,7 @@ from bob.scratch.control.controller import VAVController
 from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
 
 # Prototypes
-from bob.scratch.hvac.vav import VAV_Simple
+from bob.scratch.hvac.vav import VAV
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
 from bob.sensor.motion import OccupantMotionSensor
@@ -150,7 +150,7 @@ hvac_space.occupancy = OccupancyStatus(label="Occupancy Status of Domain Space")
 
 window = Window(label="Window")
 window.indoor >> hvac_space.windows
-vav = VAV_Simple(config=vav_system_template)
+vav = VAV(config=vav_system_template)
 
 supply_air >> vav.airInlet
 vav.airOutlet >> discharge_air >> hvac_space.ductAirInlet
