@@ -3,35 +3,31 @@ from pathlib import Path
 import hvac_spaces as hs
 import physical_spaces as ps
 
+from bob.connections.air import AirConnection
 from bob.connections.electricity import (
     Electricity_120VLN_1Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
-from bob.connections.air import AirConnection
 from bob.core import UNIT, Role, bind_model_namespace, dump
 from bob.equipment.architectural import Window
-
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
 from bob.equipment.hvac.chiller import Chiller
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
-
-
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.pressure import DifferentialStaticPressure
-from bob.sensor.temperature import AirTemperatureSensor, Temperature
-
 # Prototypes
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
-from bob.scratch.hvac.fan import Fan
 from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.scratch.hvac.fan import Fan
 from bob.scratch.hvac.valve import TwoWayActuatedProportionalValve
 from bob.scratch.hvac.vav import VAV
+from bob.sensor.flow import AirFlowSensor
+from bob.sensor.pressure import DifferentialStaticPressure
+from bob.sensor.temperature import AirTemperatureSensor, Temperature
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
@@ -108,20 +104,7 @@ ahu_template = {
 
 vav1_config = {
     "params": {"label": "VAVBox1System", "comment": "VAV Serving HVAC Zone 1"},
-    "sensors": {
-        ("VAV1_SA-F", AirFlowSensor): {
-            "hasUnit": UNIT["L-PER-SEC"],
-            "comment": "Air flow used to control damper (S9)",
-        },
-        ("VAV1_DA-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_F,
-            "comment": "Air supplied to zone by VAV 1, AKA discharge air temperature (S10)",
-        },
-        ("VAV1_ZN-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_F,
-            "comment": "Zone Air Temperature Sensor, which is a thermostats...",
-        },
-    },
+    "sensors": {},
     "equipment": {
         ("VAV1_damper", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box 1 Air Damper (actuator:Ax)"
@@ -134,20 +117,7 @@ vav1_config = {
 
 vav2_config = {
     "params": {"label": "VAVBox2System", "comment": "VAV Serving HVAC Zone 2"},
-    "sensors": {
-        ("VAV2_SA-F", AirFlowSensor): {
-            "hasUnit": UNIT["L-PER-SEC"],
-            "comment": "Air flow used to control damper (S11)",
-        },
-        ("VAV2_DA-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_F,
-            "comment": "Air supplied to zone by VAV 2, AKA discharge air temperature (S12)",
-        },
-        ("VAV2_ZN-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_F,
-            "comment": "Zone Air Temperature Sensor, which is a thermostats...",
-        },
-    },
+    "sensors": {},
     "equipment": {
         ("VAV2_damper", ElectricalActuatedProportionalDamper): {
             "comment": "VAV Box 2 Air Damper (actuator:A6)"

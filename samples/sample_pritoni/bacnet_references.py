@@ -136,10 +136,10 @@ pritoni_schedule = ScheduleObject(
 )
 CGM_2_004 > pritoni_schedule
 
-hd.vav1["VAV1_ZN-T"].observedProperty @ BACnetExternalReference(
+hd.vav1["ZN-T"].observedProperty @ BACnetExternalReference(
     "bacnet://5205/analog-input,1001/present-value"
 )
-hd.vav2["VAV2_ZN-T"].observedProperty @ BACnetExternalReference(
+hd.vav2["ZN-T"].observedProperty @ BACnetExternalReference(
     "bacnet://5206/analog-input,1002/present-value"
 )
 
