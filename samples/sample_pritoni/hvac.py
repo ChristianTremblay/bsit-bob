@@ -146,8 +146,6 @@ hd.vav1["VAV1_damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
 
 # vav1 >> hs.hvac_zone_1
 hd.vav1["VAV1_HeatingCoil"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
-hd.vav1["SA-F"] % hd.vav1["VAV1_damper"].airInlet
-hd.vav1["DA-T"] % hd.vav1["VAV1_HeatingCoil"].airOutlet
 hd.vav1["ZN-T"] % hs.openoffice_hvac
 hd.vav1["ZN-T"].hasPhysicalLocation = ps.openoffice
 
@@ -158,8 +156,6 @@ hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
 
 # vav2 >> hs.hvac_zone_2
 hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
-hd.vav2["SA-F"] % hd.vav2["VAV2_damper"].airInlet
-hd.vav2["DA-T"] % hd.vav2["VAV2_HeatingCoil"].airOutlet
 hd.vav2["ZN-T"] % hs.corridorSouth_hvac
 hd.vav2["ZN-T"].hasPhysicalLocation = ps.corridor
 

@@ -79,7 +79,7 @@ private_office_occ_control = OccupancyFunction(
     comment="Deal with OccupancySpace3...probably not required but it's defined",
     inStatus=ld.privateoffice_movement.observedProperty,
     inSchedule=private_office_occ_control_schedule,
-    outStatus=ls.corridor_lightspace.occupancy,
+    outStatus=ls.privateoffice_lightspace.occupancy,
 )
 
 ### private_office_occ_control.outStatus >> hs.privateoffice_hvac.occupancy

@@ -196,6 +196,10 @@ openoffice_movement = OccupantMotionSensor(
 # )
 
 # Windows are good for natural light
+natural_ligth_source_from_outdoor = LightVisibleConnection(
+    label="Natural Light comes from outside",
+    comment="2 windows contribute and light is brought to 2 light spaces",
+)
 natural_ligth_conn = LightVisibleConnection(
     label="LightHub_NaturalLight",
     comment="2 windows contribute and light is brought to 2 light spaces",
