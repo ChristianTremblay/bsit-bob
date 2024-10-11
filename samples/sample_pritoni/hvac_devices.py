@@ -15,6 +15,7 @@ from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
 from bob.equipment.hvac.chiller import Chiller
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.heatexchanger import AirHeatExchanger
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 
@@ -132,6 +133,8 @@ ahu = AirHandlingUnit(config=ahu_template)
 
 clg_vlv = TwoWayActuatedProportionalValve(label="A5")
 htg_vlv = TwoWayActuatedProportionalValve(label="A4")
+
+hrv = AirHeatExchanger(label="HRV")
 
 chiller = Chiller(label="Chiller")
 chilled_water_pump = Pump(label="ChilledWaterPump")
