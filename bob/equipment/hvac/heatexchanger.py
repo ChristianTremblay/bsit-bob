@@ -1,4 +1,5 @@
-from typing import Any
+import logging
+from typing import Any, Dict
 
 from rdflib import URIRef
 
@@ -20,8 +21,10 @@ from ...connections.liquid import (
     HotWaterOutletConnectionPoint,
 )
 from ...core import BOB, P223, S223, Equipment
+from ...template import configure_relations, template_update  # logging
 
 _namespace = BOB
+_log = logging.getLogger(__name__)
 
 """
 chilledWaterCoil_template = {
@@ -30,6 +33,7 @@ chilledWaterCoil_template = {
     "equipment": {("valve", Equipment): {"comment": "SubDev comment"}},
 }
 """
+
 # SEMANTIC QUESTION
 # here, that could be a good way to define the coil and its valve...
 # but the valve connect to the coil
@@ -43,6 +47,16 @@ class AirHeatExchanger(Equipment):
     supplyAirOutlet: AirOutletConnectionPoint
     exhaustAirInlet: AirInletConnectionPoint
     exhaustAirOutlet: AirOutletConnectionPoint
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _log.info(f"AirHeatExchanger.__init__ {_config} {kwargs}")
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        self.supplyAirInlet.paired_to(self.supplyAirOutlet)
+        self.exhaustAirInlet.paired_to(self.exhaustAirOutlet)
 
 
 class Accumulator(Equipment):

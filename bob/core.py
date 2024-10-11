@@ -1928,6 +1928,7 @@ class ConnectionPoint(Node):
 
         super().__init__(**kwargs)
         self.hasRole = set()
+        self.paired_cp = None
 
         self._data_graph.add((thing._node_iri, S223.hasConnectionPoint, self._node_iri))
         if INCLUDE_CNX:
@@ -1956,6 +1957,25 @@ class ConnectionPoint(Node):
             raise RuntimeError("other connection point connected")
 
         self.mapsTo = other
+
+    def paired_to(self, other: ConnectionPoint) -> None:
+        """
+        Pair this connection point with another connection point.
+        """
+        _log.info(f"pair from {self} to {other}")
+
+        if not isinstance(other, ConnectionPoint):
+            raise TypeError("ConnectionPoint expected")
+
+        if self.paired_cp is None and other.paired_cp is None:
+            self.paired_cp = other
+            other.paired_cp = self
+            self._data_graph.add(
+                (self._node_iri, S223.pairedConnectionPoint, other._node_iri)
+            )
+            self._data_graph.add(
+                (other._node_iri, S223.pairedConnectionPoint, self._node_iri)
+            )
 
 
 @multimethod
