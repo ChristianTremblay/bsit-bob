@@ -8,42 +8,38 @@ from pathlib import Path
 
 from header import g36_header
 
-from bob.connections.air import (
-    AirConnection,
-)
+from bob.connections.air import AirConnection
 from bob.connections.electricity import Electricity_24VLN_1Ph_60HzInletConnectionPoint
 from bob.connections.network import RS485BidirectionalConnectionPoint
 from bob.core import (
     QUANTITYKIND,
     UNIT,
+    QuantifiableObservableProperty,
     bind_model_namespace,
     dump,
-    QuantifiableObservableProperty,
 )
 from bob.enum import AnalogSignalTypeEnum
 from bob.equipment.architectural import Window
 from bob.equipment.control import AnalogInput, AnalogOutput, BinaryInput
 from bob.equipment.control.controller import Controller
-
 from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.gas import GasMonitor
 from bob.equipment.hvac.stats import NetworkRoomSensor
-
 from bob.producer.g36 import G36VAVCoolingOnly
 from bob.producer.occupancy import OccupancyFunction
+from bob.properties.ratio import Percent
 from bob.properties.states import OccupancyStatus
+from bob.scratch.control.controller import VAVController
+from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
+
+# Prototypes
+from bob.scratch.hvac.vav import VAV
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.gas import CO2Sensor
 from bob.sensor.motion import OccupantMotionSensor
 from bob.sensor.security import IntrusionSensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
 from bob.space.hvac import HVACSpace, HVACZone
-
-from bob.scratch.control.controller import VAVController
-
-# Prototypes
-from bob.scratch.hvac.vav import VAV_Simple
-from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace(
@@ -111,6 +107,20 @@ Thermostat_template = {
 
 vav_system_template = {
     "params": {"label": "VAV_CoolingOnly", "comment": "VAV with Airflow + Damper"},
+    "properties": {
+        ("damperPosition", Percent): {
+            "hasUnit": UNIT.PERCENT,
+            "comment": "Damper Position",
+        },
+        ("zoneTemperature", AirTemperatureSensor): {
+            "hasUnit": UNIT.DEG_C,
+            "comment": "Temperature of space",
+        },
+        ("airFlow", AirFlowSensor): {
+            "hasUnit": UNIT["L-PER-SEC"],
+            "comment": "Air Flow",
+        },
+    },
     "sensors": {
         ("SA-F", AirFlowSensor): {"hasUnit": UNIT["L-PER-SEC"], "comment": "Air Flow"},
         ("DA-T", AirTemperatureSensor): {
@@ -140,7 +150,7 @@ hvac_space.occupancy = OccupancyStatus(label="Occupancy Status of Domain Space")
 
 window = Window(label="Window")
 window.indoor >> hvac_space.windows
-vav = VAV_Simple(config=vav_system_template)
+vav = VAV(config=vav_system_template)
 
 supply_air >> vav.airInlet
 vav.airOutlet >> discharge_air >> hvac_space.ductAirInlet

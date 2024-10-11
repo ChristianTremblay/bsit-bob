@@ -19,7 +19,7 @@ import functions  # isort: skip
 from pathlib import Path
 from typing import Any
 
-from header import sample_header
+from bob.scratch.header import sample_header
 
 from bob.core import bind_model_namespace, data_graph, dump, schema_graph
 

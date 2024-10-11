@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import Literal
 
-from bob.enum import ElectricalPhaseIdentifier, Numerical
+from bob.enum import ElectricalPhaseIdentifier, Numerical, Aspect
 from bob.properties import ElectricPowerkW
 from bob.properties.electricity import Amps
 
@@ -10,10 +10,11 @@ from ...connections import electricity as elec_cnx
 from ...core import (
     BOB,
     P223,
-    S223,
     QUANTITYKIND,
+    S223,
     UNIT,
     Equipment,
+    System,
     QuantifiableObservableProperty,
 )
 
@@ -39,7 +40,7 @@ class Transformer(Equipment):
         )
 
 
-class SinglePhaseDistributionPanel(Equipment):
+class SinglePhaseDistributionPanel(System):
     _class_iri = P223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
@@ -74,9 +75,9 @@ class SinglePhaseDistributionPanel(Equipment):
         self.electricalBusB = _electricalBusB(label=f"{self.label}.electricalBusB")
         self.electricalBusAB = _electricalBusAB(label=f"{self.label}.electricalBusAB")
 
-        self.electricalBusA += ElectricalPhaseIdentifier.A
-        self.electricalBusB += ElectricalPhaseIdentifier.B
-        self.electricalBusAB += ElectricalPhaseIdentifier.AB
+        self.electricalBusA.electrical_phase(ElectricalPhaseIdentifier.A)
+        self.electricalBusB.electrical_phase(ElectricalPhaseIdentifier.B)
+        self.electricalBusAB.electrical_phase(ElectricalPhaseIdentifier.AB)
 
         for _lit, circuit_breaker in self._contents.items():
             if isinstance(circuit_breaker, TwoPolesMainCircuitBreaker):
@@ -97,7 +98,7 @@ class SinglePhaseDistributionPanel(Equipment):
                     self.electricalBusB >> circuit_breaker
 
 
-class ThreePhaseDistributionPanel(Equipment):
+class ThreePhaseDistributionPanel(System):
     _class_iri = P223.ElectricalDistributionPanel
     manufacturer: str
     modelNumber: str
@@ -171,13 +172,13 @@ class ThreePhaseDistributionPanel(Equipment):
             label=f"{self.label}.electricalBusABC"
         )
 
-        self.electricalBusA += ElectricalPhaseIdentifier.A
-        self.electricalBusB += ElectricalPhaseIdentifier.B
-        self.electricalBusC += ElectricalPhaseIdentifier.C
-        self.electricalBusAB += ElectricalPhaseIdentifier.AB
-        self.electricalBusBC += ElectricalPhaseIdentifier.BC
-        self.electricalBusCA += ElectricalPhaseIdentifier.CA
-        self.electricalBusABC += ElectricalPhaseIdentifier.ABC
+        self.electricalBusA.electrical_phase(ElectricalPhaseIdentifier.A)
+        self.electricalBusB.electrical_phase(ElectricalPhaseIdentifier.B)
+        self.electricalBusC.electrical_phase(ElectricalPhaseIdentifier.C)
+        self.electricalBusAB.electrical_phase(ElectricalPhaseIdentifier.AB)
+        self.electricalBusBC.electrical_phase(ElectricalPhaseIdentifier.BC)
+        self.electricalBusCA.electrical_phase(ElectricalPhaseIdentifier.CA)
+        self.electricalBusABC.electrical_phase(ElectricalPhaseIdentifier.ABC)
 
         for lit, circuit_breaker in self._contents.items():
             if isinstance(circuit_breaker, ThreePolesMainCircuitBreaker):
@@ -219,7 +220,7 @@ class CircuitBreaker(Equipment):
         super().__init__(config, **kwargs)
 
         self.currentRating = Amps(
-            amps, label="Current rating of breaker", hasAspect=Numerical.Nominal
+            amps, label="Current rating of breaker", hasAspect=Aspect.Nominal
         )
 
 
@@ -404,10 +405,10 @@ class TwoPolesMainCircuitBreaker(CircuitBreaker):
             self, label=f"{self.label}.electricalOutlet_LineA_LineB"
         )
 
-        self.electricalInlet += ElectricalPhaseIdentifier.AB
-        self.electricalOutletA += ElectricalPhaseIdentifier.A
-        self.electricalOutletB += ElectricalPhaseIdentifier.B
-        self.electricalOutlet += ElectricalPhaseIdentifier.AB
+        self.electricalInlet.electrical_phase(ElectricalPhaseIdentifier.AB)
+        self.electricalOutletA.electrical_phase(ElectricalPhaseIdentifier.A)
+        self.electricalOutletB.electrical_phase(ElectricalPhaseIdentifier.B)
+        self.electricalOutlet.electrical_phase(ElectricalPhaseIdentifier.AB)
 
 
 class ThreePolesCircuitBreaker(CircuitBreaker):
@@ -567,13 +568,13 @@ class ThreePolesMainCircuitBreaker(CircuitBreaker):
             self, label=f"{self.label}.electricalOutletABC"
         )
 
-        self.electricalOutletA += ElectricalPhaseIdentifier.B
-        self.electricalOutletB += ElectricalPhaseIdentifier.C
-        self.electricalOutletC += ElectricalPhaseIdentifier.C
-        self.electricalOutletAB += ElectricalPhaseIdentifier.AB
-        self.electricalOutletBC += ElectricalPhaseIdentifier.BC
-        self.electricalOutletCA += ElectricalPhaseIdentifier.CA
-        self.electricalOutlet += ElectricalPhaseIdentifier.ABC
+        self.electricalOutletA.electrical_phase(ElectricalPhaseIdentifier.A)
+        self.electricalOutletB.electrical_phase(ElectricalPhaseIdentifier.B)
+        self.electricalOutletC.electrical_phase(ElectricalPhaseIdentifier.C)
+        self.electricalOutletAB.electrical_phase(ElectricalPhaseIdentifier.AB)
+        self.electricalOutletBC.electrical_phase(ElectricalPhaseIdentifier.BC)
+        self.electricalOutletCA.electrical_phase(ElectricalPhaseIdentifier.CA)
+        self.electricalOutlet.electrical_phase(ElectricalPhaseIdentifier.ABC)
 
 
 # Define breaker in template

@@ -82,14 +82,18 @@ plenum = AirConnection(
 outdoor >> hd.ahu["OADPR"].airInlet  # >> mixedAir
 hd.ahu["OADPR"].airOutlet >> mixedAir
 hd.ahu["MADPR"].airOutlet >> mixedAir
-(mixedAir >> hd.ahu["FILTER"] >> hd.ahu["HTGCOIL"].airInlet)
-(hd.ahu["HTGCOIL"].airOutlet >> hd.ahu["CLGCOIL"].airInlet)
+(mixedAir >> hd.ahu["FILTER"] >> hd.ahu["CLGCOIL"].airInlet)
 (hd.ahu["CLGCOIL"].airOutlet >> hd.ahu["SF"].airInlet)
-(hd.ahu["SF"].airOutlet >> supplyAir)
+(hd.ahu["SF"].airOutlet >> hd.ahu["HTGCOIL"].airInlet)
+(hd.ahu["HTGCOIL"].airOutlet >> supplyAir)
 hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"].airInlet
 hd.ahu["RF"].airOutlet >> returnExhaust >> hd.ahu["EADPR"].airInlet
 hd.ahu["EADPR"].airOutlet >> outdoor
 returnExhaust >> hd.ahu["MADPR"].airInlet
+# hd.ahu.exhaustAirOutlet = hd.ahu["EADPR"].airOutlet
+# hd.ahu.supplyAirOutlet = hd.ahu["HTGCOIL"].airOutlet
+# hd.ahu.returnAirInlet = hd.ahu["RF"].airInlet
+# hd.ahu.outsideAirInlet = hd.ahu["OADPR"].airInlet
 
 # AHU Sensors
 hd.ahu["OA-T"] % outdoor
@@ -97,7 +101,8 @@ hd.ahu["TPD1"]["highPort"] % hd.ahu["FILTER"].airInlet
 hd.ahu["MA-T"] % hd.ahu["FILTER"].airInlet
 hd.ahu["TPD1"]["lowPort"] % hd.ahu["FILTER"].airOutlet
 hd.ahu["HC-T"] % hd.ahu["HTGCOIL"].airOutlet
-hd.ahu["DA-T"] % hd.ahu["CLGCOIL"].airOutlet
+hd.ahu["DA-T"] % hd.ahu["SF"].airOutlet
+hd.ahu["RA-T"] % hd.ahu["MADPR"].airInlet
 hd.ahu["TPD2"]["highPort"] % hd.ahu["SF"].airOutlet
 hd.ahu["TPD2"]["lowPort"] % plenum
 hd.ahu["TPD3"]["highPort"] % hd.ahu["RF"].airOutlet
@@ -141,10 +146,8 @@ hd.vav1["VAV1_damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
 
 # vav1 >> hs.hvac_zone_1
 hd.vav1["VAV1_HeatingCoil"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
-hd.vav1["VAV1_SA-F"] % hd.vav1["VAV1_damper"].airInlet
-hd.vav1["VAV1_DA-T"] % hd.vav1["VAV1_HeatingCoil"].airOutlet
-hd.vav1["VAV1_ZN-T"] % hs.openoffice_hvac
-hd.vav1["VAV1_ZN-T"].hasPhysicalLocation = ps.openoffice
+hd.vav1["ZN-T"] % hs.openoffice_hvac
+hd.vav1["ZN-T"].hasPhysicalLocation = ps.openoffice
 
 
 supplyAir >> hd.vav2["VAV2_damper"].airInlet
@@ -153,10 +156,8 @@ hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
 
 # vav2 >> hs.hvac_zone_2
 hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
-hd.vav2["VAV2_SA-F"] % hd.vav2["VAV2_damper"].airInlet
-hd.vav2["VAV2_DA-T"] % hd.vav2["VAV2_HeatingCoil"].airOutlet
-hd.vav2["VAV2_ZN-T"] % hs.corridorSouth_hvac
-hd.vav2["VAV2_ZN-T"].hasPhysicalLocation = ps.corridor
+hd.vav2["ZN-T"] % hs.corridorSouth_hvac
+hd.vav2["ZN-T"].hasPhysicalLocation = ps.corridor
 
 hs.hvac_zone_1.airInlet.mapsTo = hs.privateoffice_hvac.ductAirInlet
 hs.hvac_zone_1.airOutlet.mapsTo = hs.openoffice_hvac.ductAirOutlet

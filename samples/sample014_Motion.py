@@ -10,7 +10,7 @@ from bob.core import (
     DomainSpace,
     PhysicalSpace,
 )
-from header import sample_header
+from bob.scratch.header import sample_header
 
 from bob.enum import HVAC
 from bob.space.hvac import HVACSpace

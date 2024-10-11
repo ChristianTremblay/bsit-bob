@@ -105,8 +105,8 @@ ahu1_supplyAir >> hd.damper5a.airInlet
 hd.damper5a.airOutlet >> ahu2_supplyAir
 ahu1_supplyAir >> hd.vav1
 ahu1_supplyAir >> hd.vav2
-hd.vav1 >> hs.zone1_hvac.ductAirInlet
-hd.vav2 >> hs.zone2_hvac.ductAirInlet
+hd.vav1["REHEAT"].airOutlet >> hs.zone1_hvac.ductAirInlet
+hd.vav2["REHEAT"].airOutlet >> hs.zone2_hvac.ductAirInlet
 
 hs.zone1_hvac.ductAirOutlet >> ahu1_returnAir
 
@@ -136,8 +136,8 @@ ahu2_supplyAir >> hd.damper5b.airInlet
 hd.damper5b.airOutlet >> ahu1_supplyAir
 ahu2_supplyAir >> hd.vav3
 ahu2_supplyAir >> hd.vav4
-hd.vav3 >> hs.zone3_hvac.ductAirInlet
-hd.vav4 >> hs.zone4_hvac.ductAirInlet
+hd.vav3["REHEAT"].airOutlet >> hs.zone3_hvac.ductAirInlet
+hd.vav4["REHEAT"].airOutlet >> hs.zone4_hvac.ductAirInlet
 hs.zone3_hvac.ductAirOutlet >> ahu2_returnAir
 hs.zone4_hvac.ductAirOutlet >> ahu2_returnAir
 

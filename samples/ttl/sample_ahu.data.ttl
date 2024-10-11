@@ -23,8 +23,8 @@
   rdfs:label "sample_ahu-data" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-sample_ahu:00001 a s223:AirHandlingUnit,
-        s223:System ;
+sample_ahu:00001 a s223:System,
+        bob:AirHandlingUnit ;
     rdfs:label "AHU" ;
     s223:hasMember sample_ahu:00002,
         sample_ahu:00004,
@@ -420,6 +420,7 @@ sample_ahu:00044 a s223:ConnectionPoint,
     s223:isConnectionPointOf sample_ahu:00042 .
 
 sample_ahu:00045 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "RF.electricalInlet" ;
@@ -554,6 +555,7 @@ sample_ahu:00055 a s223:Connectable,
     rdfs:comment "Return Air Fan VFD" .
 
 sample_ahu:00056 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "RF_VFD.electricalInlet" ;
@@ -562,6 +564,7 @@ sample_ahu:00056 a s223:ConnectionPoint,
     s223:isConnectionPointOf sample_ahu:00055 .
 
 sample_ahu:00057 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "RF_VFD.electricalOutlet" ;
@@ -718,7 +721,7 @@ sample_ahu:00076 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "current_sensor.Amps" ;
-    s223:ofMedium s223:Electro-Magnetic-Electricity ;
+    s223:ofMedium s223:Constituent-Electricity ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -735,7 +738,7 @@ sample_ahu:00078 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Electro-Magnetic-Electricity ;
+    s223:ofMedium s223:Constituent-Electricity ;
     qudt:hasQuantityKind qudtqk:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -752,7 +755,7 @@ sample_ahu:00080 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Volts ;
     rdfs:label "speed_ref_voltage_sensor.Voltage" ;
-    s223:ofMedium s223:Electro-Magnetic-Electricity ;
+    s223:ofMedium s223:Constituent-Electricity ;
     qudt:hasQuantityKind qudtqk:Voltage ;
     qudt:hasUnit unit:V .
 
@@ -823,6 +826,7 @@ sample_ahu:00084 a s223:ConnectionPoint,
     s223:isConnectionPointOf sample_ahu:00082 .
 
 sample_ahu:00085 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SF.electricalInlet" ;
@@ -957,6 +961,7 @@ sample_ahu:00097 a p223:BinaryInput,
     s223:isConnectionPointOf sample_ahu:00095 .
 
 sample_ahu:00098 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "SF_Starter.electricalInlet" ;
@@ -965,6 +970,7 @@ sample_ahu:00098 a s223:ConnectionPoint,
     s223:isConnectionPointOf sample_ahu:00095 .
 
 sample_ahu:00099 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_600VLL_3Ph_60HzConnectionPoint,
         s223:OutletConnectionPoint ;
     rdfs:label "SF_Starter.electricalOutlet" ;
@@ -1008,7 +1014,7 @@ sample_ahu:00103 a p223:BinaryOutput,
     rdfs:label "currentRelay.dryContact" ;
     s223:cnx sample_ahu:00102 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:hasRole s223:EnumerationKind-RunStatus ;
+    s223:hasRole p223:Role-RunStatus ;
     s223:isConnectionPointOf sample_ahu:00102 .
 
 sample_ahu:00104 a s223:ObservableProperty,
@@ -1025,7 +1031,7 @@ sample_ahu:00105 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasAspect s223:EnumerationKind-RunStatus ;
+    s223:hasAspect p223:Role-RunStatus ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 sample_ahu:00106 a s223:Connectable,
@@ -1041,7 +1047,7 @@ sample_ahu:00107 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "currentSensor.Amps" ;
-    s223:ofMedium s223:Electro-Magnetic-Electricity ;
+    s223:ofMedium s223:Constituent-Electricity ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -1300,6 +1306,7 @@ sample_ahu:00134 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty sample_ahu:00144 ;
     s223:cnx sample_ahu:00135,
         sample_ahu:00136,
         sample_ahu:00137,
@@ -1365,6 +1372,7 @@ sample_ahu:00138 a p223:BinaryOutput,
     s223:isConnectionPointOf sample_ahu:00134 .
 
 sample_ahu:00139 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
@@ -1618,6 +1626,7 @@ sample_ahu:00169 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty sample_ahu:00179 ;
     s223:cnx sample_ahu:00170,
         sample_ahu:00171,
         sample_ahu:00172,
@@ -1683,6 +1692,7 @@ sample_ahu:00173 a p223:BinaryOutput,
     s223:isConnectionPointOf sample_ahu:00169 .
 
 sample_ahu:00174 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;
@@ -1936,6 +1946,7 @@ sample_ahu:00204 a s223:Actuator,
         scratch:Actuator,
         scratch:ElectricalProportionalActuator ;
     rdfs:label "actuator" ;
+    s223:actuatedByProperty sample_ahu:00214 ;
     s223:cnx sample_ahu:00205,
         sample_ahu:00206,
         sample_ahu:00207,
@@ -2001,6 +2012,7 @@ sample_ahu:00208 a p223:BinaryOutput,
     s223:isConnectionPointOf sample_ahu:00204 .
 
 sample_ahu:00209 a s223:ConnectionPoint,
+        s223:ElectricalConnectionPoint,
         s223:Electricity_24VLN_1Ph_60HzConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "actuator.electricalInlet" ;

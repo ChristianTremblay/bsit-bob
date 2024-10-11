@@ -21,8 +21,8 @@ cache:
 before_script:
   - python3 -V # Print out python version for debugging
   - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
+  - python3 -m venv test_venv
+  - source test_venv/bin/activate
   - pip install .
   - pip install pytest
   - pip install pyshacl
@@ -63,7 +63,7 @@ validate:
     - pip install pytest-xdist[psutil]
     - pip install python-dotenv
     - ontoenv init
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@bas-im.emcs.cornell.edu/223/223standard
+    - git clone --branch 568-plate-heat-exchangers https://gitlab-ci-token:${CI_JOB_TOKEN}@bas-im.emcs.cornell.edu/223/223standard
     - export S223_FOLDER=$(pwd)/223standard
     - python3 validate_cicd/preparefiles.py
     - pytest -s -vvvv -n auto validate_cicd/
@@ -71,3 +71,4 @@ validate:
   artifacts:
     paths: 
       - samples/ttl/validation/**/*.*
+  when: always

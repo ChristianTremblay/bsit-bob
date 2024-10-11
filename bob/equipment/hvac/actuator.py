@@ -1,9 +1,8 @@
-from typing import Dict
 import logging
+from typing import Dict
 
-
-from ...core import BOB, S223, Equipment, PropertyReference
-from ...template import template_update, configure_relations
+from ...core import BOB, S223, Equipment, Property, PropertyReference
+from ...template import configure_relations, template_update
 
 # logging
 _log = logging.getLogger(__name__)
@@ -25,7 +24,6 @@ __|___|__|___|___|__
 class Actuator(Equipment):
     _class_iri = S223.Actuator
     actuates: Equipment
-    commandedByProperty: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update({}, config=config)
@@ -34,3 +32,8 @@ class Actuator(Equipment):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
+
+    def actuatedby(self, actuatedby: Property):
+        self._data_graph.add(
+            (self._node_iri, S223.actuatedByProperty, actuatedby._node_iri)
+        )

@@ -60,12 +60,14 @@ ld.openofficeSouth_light_conn >> ls.openofficeSouth_lightspace.lightInlet
 ld.openoffice_movement % hs.openoffice_hvac
 ld.openoffice_movement.hasPhysicalLocation = ps.openoffice
 
-hd.window1.naturalLight >> ld.natural_ligth_conn
-hd.window2.naturalLight >> ld.natural_ligth_conn
+ld.natural_ligth_source_from_outdoor >> hd.window1.naturalLightInlet
+ld.natural_ligth_source_from_outdoor >> hd.window2.naturalLightInlet
+hd.window1.naturalLightOutlet >> ld.natural_ligth_conn
+hd.window2.naturalLightOutlet >> ld.natural_ligth_conn
 ld.natural_ligth_conn >> ls.openofficeNorth_lightspace.naturalLightInlet
 
-ld.daylight_sensor % ls.openofficeNorth_lightspace
-ld.daylight_sensor.hasPhysicalLocation = ps.openoffice
+# ld.daylight_sensor % ls.openofficeNorth_lightspace
+# ld.daylight_sensor.hasPhysicalLocation = ps.openoffice
 
 if __name__ == "__main__":
     dump()

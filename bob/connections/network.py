@@ -10,7 +10,7 @@ from ..core import (
 )
 from bob.enum import ProtocolEnum
 from bob.properties.network import Mbit_per_seconds
-from ..enum import PowerAndSignal, Electricity
+from ..enum import PowerAndSignal, Electricity, Signal
 
 _namespace = BOB
 
@@ -19,14 +19,14 @@ _namespace = BOB
 
 
 class RS485Connection(Connection):
-    hasMedium = Electricity.RS485
+    hasMedium = Signal.RS485
     _class_iri = S223.Connection
 
 
 class RS485ConnectionPoint(ConnectionPoint):
     _attr_uriref = {"hasProtocol": P223.hasProtocol}
 
-    hasMedium = Electricity.RS485
+    hasMedium = Signal.RS485
     hasProtocol: ProtocolEnum
 
 
@@ -40,7 +40,7 @@ class RS485BidirectionalConnectionPoint(
 
 
 class EthernetConnection(Connection):
-    hasMedium = Electricity.Ethernet
+    hasMedium = Signal.Ethernet
     _class_iri = S223.Connection
 
 
@@ -50,7 +50,7 @@ class EthernetConnectionPoint(ConnectionPoint):
         "data_rate": P223.data_rate,
         "vlan": P223.VLAN,
     }
-    hasMedium = Electricity.Ethernet
+    hasMedium = Signal.Ethernet
     hasProtocol: ProtocolEnum
     data_rate: Mbit_per_seconds
     vlan: Literal

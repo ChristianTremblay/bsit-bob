@@ -1,27 +1,21 @@
 from typing import Dict, Union
 
-
-from bob.connections.mechanical import MechanicalOutletConnectionPoint
-from bob.producer.causality import Causality
-from bob.properties import Nm, Percent, PercentCommand
-from bob.properties.states import OnOffCommand, OnOffStatus
-from bob.sensor.motion import PositionSensor
-
-from bob.connections.air import (
-    CompressedAirInletConnectionPoint,
-)
+from bob.connections.air import CompressedAirInletConnectionPoint
 from bob.connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     ModulationSignalOutletConnectionPoint,
     OnOffSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
 )
-from bob.connections.electricity import (
-    Electricity_24VLN_1Ph_60HzInletConnectionPoint,
-)
-from bob.core import SCRATCH, PropertyReference
-from bob.template import template_update
+from bob.connections.electricity import Electricity_24VLN_1Ph_60HzInletConnectionPoint
+from bob.connections.mechanical import MechanicalOutletConnectionPoint
+from bob.core import S223, SCRATCH, PropertyReference
 from bob.equipment.hvac.actuator import Actuator
+from bob.producer.causality import Causality
+from bob.properties import Nm, Percent, PercentCommand
+from bob.properties.states import OnOffCommand, OnOffStatus
+from bob.sensor.motion import PositionSensor
+from bob.template import template_update
 
 _namespace = SCRATCH
 
@@ -101,6 +95,7 @@ class BaseActuator(Actuator):
     _class_iri = SCRATCH.Actuator
     command: Union[PercentCommand, OnOffCommand]
     position: PropertyReference
+    # actuatedByProperty: PropertyReference
 
     # position_feedback: Union[Percent, OpenCloseEnum]
     # is_open: OnOffStatus
@@ -123,15 +118,16 @@ class BaseActuator(Actuator):
 
         self["auxiliary_switch_open_producer"].cause_input << self.position
         self["auxiliary_switch_open_producer"].effect_output >> self["is_open"]
-        self[
-            "auxiliary_switch_open_producer"
-        ].effect_output.hasEffectLocation = self.open_auxswitch_signal
+        self["auxiliary_switch_open_producer"].effect_output.hasEffectLocation = (
+            self.open_auxswitch_signal
+        )
 
         self["auxiliary_switch_close_producer"].cause_input << self.position
         self["auxiliary_switch_close_producer"].effect_output >> self["is_closed"]
-        self[
-            "auxiliary_switch_close_producer"
-        ].effect_output.hasEffectLocation = self.close_auxswitch_signal
+        self["auxiliary_switch_close_producer"].effect_output.hasEffectLocation = (
+            self.close_auxswitch_signal
+        )
+        self.actuatedby(self["command"])
 
 
 """
@@ -179,6 +175,7 @@ ElectricalOnOffActuator_template = {
         ("is_open", OnOffStatus): {},
         ("is_closed", OnOffStatus): {},
         ("torque", Nm): {},
+        ("actuatedByProperty", OnOffCommand): {},
     },
 }
 
@@ -202,6 +199,7 @@ PneumaticProportionalActuator_template = {
         ("is_open", OnOffStatus): {},
         ("is_closed", OnOffStatus): {},
         ("torque", Nm): {},
+        ("actuatedByProperty", PercentCommand): {},
     },
 }
 
@@ -214,6 +212,7 @@ PneumaticOnOffActuator_template = {
         ("is_open", OnOffStatus): {},
         ("is_closed", OnOffStatus): {},
         ("torque", Nm): {},
+        ("actuatedByProperty", OnOffCommand): {},
     },
 }
 

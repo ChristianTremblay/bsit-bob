@@ -3,15 +3,15 @@ Simple garage with one physical space
 Two (2) lighting spaces
 In each lighting space there is a movement detector for each set of lights
 """
-from pathlib import Path
 
-from header import sample_header
+from pathlib import Path
 
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import UNIT, bind_model_namespace, dump
 from bob.equipment.hvac.coil import ElectricalHeatingCoil
 from bob.equipment.hvac.fan import Fan
 from bob.equipment.lighting.light import Luminaire
+from bob.scratch.header import sample_header
 from bob.sensor.motion import OccupantMotionSensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace, HVACZone

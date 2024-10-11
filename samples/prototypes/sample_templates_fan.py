@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from header import sample_header
+from bob.scratch.header import sample_header
 from bob.core import UNIT, Role, bind_model_namespace, data_graph, dump, schema_graph
 from bob.template import SystemFromTemplate
 from bob.equipment.hvac.fan import Fan as BasicFan

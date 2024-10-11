@@ -9,9 +9,8 @@ This one, I try to model the space with
     So we need to connect them in some way.
 
 """
-from pathlib import Path
 
-from header import sample_header
+from pathlib import Path
 
 from bob.connections.air import (
     AirConnection,
@@ -21,6 +20,7 @@ from bob.connections.air import (
 )
 from bob.core import bind_model_namespace, dump
 from bob.equipment.hvac.coil import ElectricalHeatingCoil, ElectricalRadiantHeatingCoil
+from bob.scratch.header import sample_header
 from bob.space.hvac import HVACSpace, HVACZone
 from bob.space.physical import Building, Floor, Office, Roof
 

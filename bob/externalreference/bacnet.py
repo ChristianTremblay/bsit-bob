@@ -39,7 +39,7 @@ class BACnetExternalReference(ExternalReference):
         "deviceIdentifier": BACNET["device-identifier"],
     }
     objectIdentifier: Literal
-    propertyIdentifier: URIRef
+    propertyIdentifier: Literal
     propertyArrayIndex: XSD.nonNegativeInteger
     deviceIdentifier: Literal
 
@@ -84,7 +84,7 @@ class BACnetExternalReference(ExternalReference):
                     raise ValueError("initialization conflict: propertyIdentifier")
                 property_identifier = kwargs.get("propertyIdentifier")
 
-            if isinstance(property_identifier, URIRef):
+            if isinstance(property_identifier, Literal):
                 kwargs["propertyIdentifier"] = property_identifier
             elif isinstance(property_identifier, int):
                 raise NotImplementedError("integer property identifiers")  # TODO
@@ -104,9 +104,12 @@ class BACnetExternalReference(ExternalReference):
             else:
                 raise TypeError("propertyIdentifier")
 
+            # Issue with Validation, rules ask for sh:datatype xsd:string
+            kwargs["propertyIdentifier"] = Literal(kwargs["propertyIdentifier"])
+
             if "propertyArrayIndex" in kwargs:
                 raise ValueError("initialization conflict: propertyArrayIndex")
             if property_array_index:
-                kwargs["propertyArrayIndex"] = int(property_array_index)
+                kwargs["propertyArrayIndex"] = Literal(property_array_index)
 
         super().__init__(**kwargs)

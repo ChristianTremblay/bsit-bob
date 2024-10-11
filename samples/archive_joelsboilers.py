@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any
 
-from header import sample_header
+from bob.scratch.header import sample_header
 
 from bob.connections.air import *
 from bob.connections.liquid import (

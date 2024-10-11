@@ -9,9 +9,7 @@ from bob.connections.electricity import (
 )
 from bob.core import UNIT, Role, bind_model_namespace, dump
 from bob.equipment.architectural import Window
-
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
 from bob.equipment.hvac.chiller import Chiller
 from bob.equipment.hvac.coil import (
@@ -20,32 +18,26 @@ from bob.equipment.hvac.coil import (
     ElectricalHeatingCoil,
     HotWaterCoil,
 )
-
-
+from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
-
-
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.humidity import AirHumiditySensor, RelativeHumidity
-from bob.sensor.pressure import DifferentialStaticPressure
-from bob.sensor.temperature import AirTemperatureSensor, Temperature
+from bob.scratch.control.controller import VAVController
 
 # Prototypes
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
-from bob.scratch.control.controller import VAVController
+from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper, GravityDamper
 from bob.scratch.hvac.fan import Fan
-from bob.scratch.hvac.damper import (
-    ElectricalActuatedProportionalDamper,
-    GravityDamper,
-)
 from bob.scratch.hvac.valve import (
     ThreeWayDivertingActuatedProportionalValve,
     TwoWayActuatedProportionalValve,
 )
 from bob.scratch.hvac.vav import VAV_Reheat
+from bob.sensor.flow import AirFlowSensor
+from bob.sensor.humidity import AirHumiditySensor, RelativeHumidity
+from bob.sensor.pressure import DifferentialStaticPressure
+from bob.sensor.temperature import AirTemperatureSensor, Temperature
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
@@ -234,9 +226,9 @@ ahu3_template = {
 
 vav1_config = {
     "params": {"label": "VAVBox1System", "comment": "VAV Serving HVAC Zone 1"},
-    "properties": {
-        ("supplyAirTemperature", Temperature): {},
-    },
+    # "properties": {
+    #    ("supplyAirTemperature", Temperature): {},
+    # },
     "sensors": {
         ("SA-F", AirFlowSensor): {
             "hasUnit": UNIT["L-PER-SEC"],
@@ -264,9 +256,9 @@ vav1_config = {
 
 vav2_config = {
     "params": {"label": "VAVBox2System", "comment": "VAV Serving HVAC Zone 2"},
-    "properties": {
-        ("supplyAirTemperature", Temperature): {},
-    },
+    # "properties": {
+    #    ("supplyAirTemperature", Temperature): {},
+    # },
     "sensors": {
         ("SA-F", AirFlowSensor): {
             "hasUnit": UNIT["L-PER-SEC"],
@@ -294,9 +286,9 @@ vav2_config = {
 
 vav3_config = {
     "params": {"label": "VAVBox3System", "comment": "VAV Serving HVAC Zone 3"},
-    "properties": {
-        ("supplyAirTemperature", Temperature): {},
-    },
+    # "properties": {
+    #    ("supplyAirTemperature", Temperature): {},
+    # },
     "sensors": {
         ("SA-F", AirFlowSensor): {
             "hasUnit": UNIT["L-PER-SEC"],
@@ -324,9 +316,9 @@ vav3_config = {
 
 vav4_config = {
     "params": {"label": "VAVBox4System", "comment": "VAV Serving HVAC Zone 4"},
-    "properties": {
-        ("supplyAirTemperature", Temperature): {},
-    },
+    # "properties": {
+    #    ("supplyAirTemperature", Temperature): {},
+    # },
     "sensors": {
         ("SA-F", AirFlowSensor): {
             "hasUnit": UNIT["L-PER-SEC"],

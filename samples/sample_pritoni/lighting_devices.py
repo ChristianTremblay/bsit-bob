@@ -3,8 +3,8 @@ from pathlib import Path
 import lighting_spaces as ls
 import physical_spaces as ps
 
-from bob.connections.light import LightVisibleConnection
 from bob.connections.electricity import Electricity_120VLN_1Ph_60HzInletConnectionPoint
+from bob.connections.light import LightVisibleConnection
 from bob.core import UNIT, bind_model_namespace, dump
 from bob.equipment.electricity.switch import DimmableSwitch
 from bob.equipment.lighting.light import Luminaire
@@ -191,11 +191,15 @@ openoffice_movement = OccupantMotionSensor(
     comment="Occupancy sensor for OpenOffice (O1)",
 )
 
-daylight_sensor = DaylightSensor(
-    label="D1", comment="Daylight sensor installed in open office (D1)"
-)
+# daylight_sensor = DaylightSensor(
+#    label="D1", comment="Daylight sensor installed in open office (D1)"
+# )
 
 # Windows are good for natural light
+natural_ligth_source_from_outdoor = LightVisibleConnection(
+    label="Natural Light comes from outside",
+    comment="2 windows contribute and light is brought to 2 light spaces",
+)
 natural_ligth_conn = LightVisibleConnection(
     label="LightHub_NaturalLight",
     comment="2 windows contribute and light is brought to 2 light spaces",

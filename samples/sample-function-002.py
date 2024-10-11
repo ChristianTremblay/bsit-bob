@@ -2,12 +2,12 @@
 Sample function with one input and one output associated with properties
 provided to `__init__()`.
 """
-from pathlib import Path
 
-from header import sample_header
+from pathlib import Path
 
 from bob.core import EX, Property, bind_model_namespace, dump
 from bob.producer import Function, G36AnalogInput, G36AnalogOutput
+from bob.scratch.header import sample_header
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")

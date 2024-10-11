@@ -10,13 +10,13 @@ from bob.properties.states import OccupancyStatus
 
 from ..core import BOB, P223, S223, Domain, DomainSpace, PropertyReference, Zone
 from ..enum import Light
+
 _namespace = BOB
 
 
 class LightingSpace(DomainSpace):
     _class_iri = BOB.LightingSpace
     hasDomain = Domain.Lighting
-    hasMedium = Light.Visible
     lightInlet: LightVisibleInletConnectionPoint
     naturalLightInlet: LightVisibleInletConnectionPoint
     occupancy: OccupancyStatus
