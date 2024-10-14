@@ -5,6 +5,7 @@ Performs validation of the model/schema and data files in the 223P repository
 import glob
 import logging
 import os
+import shutil
 import sys
 from pathlib import Path
 
@@ -13,9 +14,11 @@ import rdflib
 from dotenv import load_dotenv
 
 try:
-    from .topquadrant_shacl import validate
+    from ..ttl_tools.topquadrant_shacl import validate
+    from ..ttl_tools.validation2html import print_report
 except ImportError:
-    from topquadrant_shacl import validate
+    from ttl_tools.topquadrant_shacl import validate
+    from ttl_tools.validation2html import print_report
 
 from bob.core import dump
 
@@ -120,33 +123,47 @@ def test_data_validation(data_file):
     # make 'compiled' directory
     (data_file.parent / "compiled").mkdir(exist_ok=True)
     # save inferred graph under same name into data/compiled/
-    inferred.serialize(data_file.parent / "compiled" / data_file.name, format="turtle")
+    inferred.serialize(
+        data_file.parent / "validation" / data_file.name, format="turtle"
+    )
     report.serialize(
-        data_file.parent / "compiled" / f"{data_file.stem}.validation_report.ttl",
+        data_file.parent / "validation" / f"{data_file.stem}.validation_report.ttl",
         format="turtle",
     )
+    # global schema_report
+    # if schema_report is not None:
+    #    schema_report.serialize(
+    #        data_file.parent / "compiled" / f"{data_file.stem}.schema_report.ttl",
+    #        format="turtle",
+    #    )
     global schema_report
     if schema_report is not None:
         schema_report.serialize(
-            data_file.parent / "compiled" / f"{data_file.stem}.schema_report.ttl",
+            data_file.parent / "validation" / f"{data_file.stem}.schema_report.ttl",
             format="turtle",
         )
 
-    def rdf_to_html_table(graph):
-        html = "<html><body><table border='1'>"
-        html += "<tr><th>Subject</th><th>Predicate</th><th>Object</th></tr>"
+    html_path = data_file.parent / "validation" / "schema.validation_report.html"
+    print_report(
+        schema_report, show_info=True, html_path=html_path, title=data_file.stem
+    )
+    _sample_doc_folder = html_path.parent.parent.parent / "doc"
+    if _sample_doc_folder.exists():
+        _existing_file = _sample_doc_folder / "schema.validation_report.html"
+        if _existing_file.exists():
+            os.remove(_existing_file)
+        shutil.move(html_path, _sample_doc_folder)
 
-        for subj, pred, obj in graph:
-            html += f"<tr><td>{subj}</td><td>{pred}</td><td>{obj}</td></tr>"
-
-        html += "</table></body></html>"
-        with open(
-            data_file.parent / "compiled" / f"{data_file.stem}.validation_report.html",
-            "w",
-        ) as f:
-            f.write(html)
-
-    rdf_to_html_table(report)
+    html_path = (
+        data_file.parent / "validation" / f"{data_file.stem}.validation_report.html"
+    )
+    print_report(report, show_info=True, html_path=html_path, title=data_file.stem)
+    _sample_doc_folder = html_path.parent.parent.parent / "doc"
+    if _sample_doc_folder.exists():
+        _existing_file = _sample_doc_folder / f"{data_file.stem}.validation_report.html"
+        if _existing_file.exists():
+            os.remove(_existing_file)
+        shutil.move(html_path, _sample_doc_folder)
     assert valid, report.serialize(format="ttl")
 
 
