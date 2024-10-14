@@ -29,6 +29,7 @@ Particulate.PM1_0 = Particulate.PM1_0 = Particulate(
 Particulate.PM2_5 = Particulate.PM2_5 = Particulate("PM2.5")
 Particulate.PM10_0 = Particulate.PM10_0 = Particulate("PM10.0")
 Substance.Soot = Soot = Substance("Soot")
+
 # ======================================
 # Media, Constituents & Mix
 # ======================================
@@ -67,8 +68,8 @@ EM.Light = Light = EM("Light")
 EM.Microwave = Microwave = EM("Microwave")
 EM.RF = RF = EM("RF")
 
-Electricity = Constituent("Electricity")
 # Electricity
+Electricity = Constituent("Electricity")
 Electricity.AC = Electricity("AC")
 Electricity.DC = Electricity("DC")
 
@@ -165,12 +166,11 @@ Electricity.DC48V = Electricity.DC("48V")
 Electricity.DC5V = Electricity.DC("5V")
 Electricity.DC6V = Electricity.DC("6V")
 
-Electricity.Signal = Signal = Electricity("Signal")
 Electricity.Earth = Electricity("Earth")
 Electricity.Neutral = Electricity("Neutral")
-# Electricity.Control = Electricity.Signal("Control", _alt_namespace=P223)
-Electricity.OnOffSignal = Electricity.Signal("OnOffSignal", _alt_namespace=P223)
 
+Electricity.Signal = Signal = Electricity("Signal")
+Electricity.OnOffSignal = Electricity.Signal("OnOffSignal", _alt_namespace=P223)
 
 Signal.RS485 = Signal("EIA485")
 Signal.Ethernet = Signal("Ethernet")
@@ -231,7 +231,8 @@ Water.DomesticHotWater = DomesticHotWater = Water(
     "DomesticHotWater", _alt_namespace=P223
 )
 
-Water.CondensedWater = CondensedWater = Water("CondensedWater", _alt_namespace=P223)
+Water.Condensate = Condensate = Water("Condensate", _alt_namespace=P223)
+Water.Condenser = Condensate = Water("Condenser", _alt_namespace=P223)
 
 Water.GlycolSolution = GlycolSolution = Water(
     "GlycolSolution"
@@ -255,46 +256,41 @@ Occupant = Medium("Occupant")
 # ===================
 # DOMAINS FLAVOURS
 # ===================
-Domain.HVAC = HVAC = Domain("HVAC")
-Domain.Lighting = Lighting = Domain("Lighting")
-Domain.Occupancy = Occupancy = Domain(
-    "Occupancy"
-)  # TODO : GET RID OF THIS... Occupancy is a function
-Domain.Physical = Physical = Domain("Physical")
 Domain.ConveyanceSystems = ConveyanceSystems = Domain("ConveyanceSystems")
 Domain.Electrical = Electrical = Domain("Electrical")
 Domain.Fire = Fire = Domain("Fire")
+Domain.HVAC = HVAC = Domain("HVAC")
+Domain.Lighting = Lighting = Domain("Lighting")
 Domain.Networking = Networking = Domain("Networking")
+Domain.Occupancy = Domain("Occupancy")
+Domain.PhysicalSecurity = Security = Domain("PhysicalSecurity")
 Domain.Plumbing = Plumbing = Domain("Plumbing")
 Domain.Refrigeration = Refrigeration = Domain("Refrigeration")
-Domain.PhysicalSecurity = Security = Domain("PhysicalSecurity")
 
 # ===================
-# ROLES FLAVOURS
 # ===================
+Role.Condenser = Condenser = Role("Condenser")
 Role.Controller = Controller = Role("Controller")
 Role.Cooling = Cooling = Role("Cooling")
 Role.Discharge = Discharge = Role("Discharge")
-Role.Exhaust = Exhaust = Role("Exhaust")
-Role.Generator = Generator = Role("Generator")
-Role.Heating = Heating = Role("Heating")
-Role.Load = Load = Role("Load")
-Role.Primary = Primary = Role("Primary")
-Role.Return = Return = Role("Return")
-Role.Secondary = Secondary = Role("Secondary")
-Role.Supply = Supply = Role("Supply")
-Role.Condenser = Condenser = Role("Condenser")
-Role.Evaporator = Evaporator = Role("Evaporator")
-Role.Storage = Storage = Role("Storage", _alt_namespace=P223)
-Role.RunStatus = RunStatus = Role("RunStatus", _alt_namespace=P223)
 Role.Economizer = Economizer = Role("Economizer")
+Role.Evaporator = Evaporator = Role("Evaporator")
+Role.Exhaust = Exhaust = Role("Exhaust")
 Role.Expansion = Expansion = Role("Expansion")
 Role.Generator = Generator = Role("Generator")
 Role.HeatRecovery = HeatRecovery = Role("HeatRecovery")
+Role.HeatTransfer = HeatRecovery = Role("HeatTransfer")
+Role.Heating = Heating = Role("Heating")
+Role.Load = Load = Role("Load")
 Role.OutdoorAirIntake = OutdoorAirIntake = Role("OutdoorAirIntake")
+Role.Primary = Primary = Role("Primary")
 Role.Recirculating = Recirculating = Role("Recirculating")
 Role.Relief = Relief = Role("Relief")
+Role.Return = Return = Role("Return")
+Role.Secondary = Secondary = Role("Secondary")
+Role.Supply = Supply = Role("Supply")
 
+Role.Storage = Storage = Role("Storage", _alt_namespace=P223)
 
 # ===================
 # Values Enumeration
@@ -302,40 +298,31 @@ Role.Relief = Relief = Role("Relief")
 # Enumeration kinds to create hasValue
 ActiveInactiveEnum = EnumerationKind("ActiveInactive", _alt_namespace=P223)
 AnalogSignalTypeEnum = EnumerationKind("Analog", _alt_namespace=P223)
-
 BinarySignalTypeEnum = EnumerationKind("BinarySignalType", _alt_namespace=P223)
+
 Binary = EnumerationKind("Binary")
 Binary.false = Binary("False")
 Binary.true = Binary("True")
 Binary.Unknown = Binary("Unknown")
 
 
-Effectiveness = EnumerationKind("Effectiveness")
 G36AlarmLevel = EnumerationKind("G36AlarmLevels", _alt_namespace=G36)
 HandOffAutoEnum = EnumerationKind("HandOffAuto", _alt_namespace=P223)
 HVACOperatingMode = EnumerationKind("HVACOperatingMode")
 HVACOperatingStatus = EnumerationKind("HVACOperatingStatus")
 LeftRightEnum = EnumerationKind("LeftRight", _alt_namespace=P223)
 ManualAutoEnum = EnumerationKind("ManualAuto", _alt_namespace=P223)
-# MotionNoMotionEnum = EnumerationKind("MotionNoMotion", _alt_namespace=P223)
 NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE BELOW
 NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
 NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
-OccupancyStatus = EnumerationKind("Occupancy")
-Motion = OccupancyStatus("Motion")
-OnOffEnum = EnumerationKind("OnOff")
+Occupancy = EnumerationKind("Occupancy")
+OnOff = EnumerationKind("OnOff")
 Phase = EnumerationKind("Phase")
-Phase.Gas = Gas = Phase("Gas")
-Gas.SuperHeated = SuperHeated = Gas("SuperHeated")
-Phase.Liquid = Liquid = Phase("Liquid")
-Liquid.SubCooled = Subcooled = Liquid("SubCooled")
-Phase.Solid = Solid = Phase("Solid")
-Phase.Vapor = Vapor = Phase("Vapor")
 Position = EnumerationKind("Position")
 
 OverriddenAuto = EnumerationKind("OverriddenAuto", _alt_namespace=P223)
 ProtocolEnum = EnumerationKind("Protocol", _alt_namespace=P223)
-RunStatusEnum = EnumerationKind("RunStatus")
+RunStatus = EnumerationKind("RunStatus")
 Speed = EnumerationKind("Speed")
 ThreeSpeedSetting = EnumerationKind("ThreeSpeedSetting")
 TopBottomEnum = EnumerationKind("TopBottom", _alt_namespace=P223)
@@ -381,11 +368,6 @@ BinarySignalTypeEnum.Incremental = BinarySignalTypeEnum(
 )
 
 #
-Effectiveness.Active = Effectiveness("Active")
-Effectiveness.Inactive = Effectiveness("Inactive")
-Effectiveness.Unknown = Effectiveness("Unknown")
-
-#
 G36AlarmLevel.Level1 = EnumerationKind(
     "Level1", comment="Life Safetey Message", _alt_namespace=G36
 )
@@ -412,10 +394,10 @@ HVACOperatingMode.HeatOnly = HVACOperatingMode("HeatOnly")
 HVACOperatingMode.Off = HVACOperatingMode("Off")
 
 #
-HVACOperatingStatus.Off = HVACOperatingStatus("Off")
 HVACOperatingStatus.Cooling = HVACOperatingStatus("Cooling")
 HVACOperatingStatus.Dehumidifying = HVACOperatingStatus("Dehumidifying")
 HVACOperatingStatus.Heating = HVACOperatingStatus("Heating")
+HVACOperatingStatus.Off = HVACOperatingStatus("Off")
 HVACOperatingStatus.Ventilating = HVACOperatingStatus("Ventilating")
 
 #
@@ -425,10 +407,6 @@ LeftRightEnum.Right = LeftRightEnum("Right", _alt_namespace=P223)
 #
 ManualAutoEnum.Manual = ManualAutoEnum("Manual", _alt_namespace=P223)
 ManualAutoEnum.Auto = ManualAutoEnum("Auto", _alt_namespace=P223)
-
-#
-Motion.true = Motion("True")
-Motion.false = Motion("False")
 
 # This is a test example... do we want to fill 223 with
 # that kind of enums ?
@@ -455,20 +433,36 @@ NormalFaultEnum.Normal = NormalFaultEnum("Normal", _alt_namespace=P223)
 NormalFaultEnum.Fault = NormalFaultEnum("Fault", _alt_namespace=P223)
 
 #
-OccupancyStatus.Unknown = OccupancyStatus("Unknown")
-OccupancyStatus.Occupied = OccupancyStatus("Occupied")
-OccupancyStatus.Unoccupied = OccupancyStatus("Unoccupied")
-OccupancyStatus.Standby = OccupancyStatus("Standby")
-OccupancyStatus.Bypass = OccupancyStatus("Bypass")
-OccupancyStatus.Presence = Presence = OccupancyStatus("Presence")
+Occupancy.Motion = Motion = Occupancy("Motion")
+Occupancy.Occupied = Occupancy("Occupied")
+Occupancy.Presence = Presence = Occupancy("Presence")
 Presence.false = Presence("False")
 Presence.true = Presence("True")
+Occupancy.Unknown = Occupancy("Unknown")
+Occupancy.Unoccupied = Occupancy("Unoccupied")
+
+#
+Motion.true = Motion("True")
+Motion.false = Motion("False")
 
 
 #
-OnOffEnum.On = OnOffEnum("On")
-OnOffEnum.Off = OnOffEnum("Off")
-OnOffEnum.Unknown = OnOffEnum("Unknown")
+OnOff.On = OnOff("On")
+OnOff.Off = OnOff("Off")
+OnOff.Unknown = OnOff("Unknown")
+
+#
+Phase.Gas = Phase("Gas")
+Phase.Gas.SuperHeated = Phase.Gas("SuperHeated")
+Phase.Liquid = Phase("Liquid")
+Phase.Liquid.Subcooled = Phase.Liquid("Subcooled")
+Phase.Solid = Phase("Solid")
+Phase.Vapor = Phase("Vapor")
+
+#
+Position.Closed = Position("Closed")
+Position.Open = Position("Open")
+Position.Unknown = Position("Unknown")
 
 #
 OverriddenAuto.Auto = OverriddenAuto("Auto", _alt_namespace=P223)
@@ -485,16 +479,11 @@ ProtocolEnum.Modbus_TCP = ProtocolEnum("Modbus_TCP", _alt_namespace=P223)
 ProtocolEnum.Lonworks = ProtocolEnum("Lonworks", _alt_namespace=P223)
 
 #
-Position.Close = Position("Close")
-Position.Open = Position("Open")
-Position.Moving = Position("Moving")
-Position.Unknown = Position("Unknown")
+RunStatus.On = RunStatus("On")
+RunStatus.Off = RunStatus("Off")
+RunStatus.Unknown = RunStatus("Unknown")
 
 #
-RunStatusEnum.On = RunStatusEnum("On")
-RunStatusEnum.Off = RunStatusEnum("Off")
-RunStatusEnum.Unknown = RunStatusEnum("Unknown")
-
 Speed.High = Speed("High")
 Speed.Low = Speed("Low")
 Speed.Medium = Speed("Medium")
@@ -518,13 +507,11 @@ TrueFalseEnum.false = TrueFalseEnum("False", _alt_namespace=P223)
 YesNoEnum.Yes = YesNoEnum("Yes", _alt_namespace=P223)
 YesNoEnum.No = YesNoEnum("No", _alt_namespace=P223)
 
-# ===================
-# Aspects and Numerical
-# ===================
+# =======
+# Aspects
+# =======
 # Enumeration kinds that add context to properties
 Aspect = EnumerationKind("Aspect")
-Numerical = EnumerationKind("Numerical")
-
 Aspect.Alarm = Aspect("Alarm")
 Aspect.CatalogNumber = Aspect("CatalogNumber")
 Aspect.Command = Aspect("Command")
@@ -532,9 +519,11 @@ Aspect.DayOfWeek = DayOfWeek = Aspect("DayOfWeek")
 Aspect.Deadband = Aspect("Deadband")
 Aspect.Delta = Aspect("Delta")
 Aspect.DryBulb = Aspect("DryBulb")
-Aspect.Effectiveness = Aspect("Effectiveness")
-Aspect.Efficiency = Numerical("Efficiency")
-ElectricalPhaseIdentifier = Aspect("ElectricalPhaseIdentifier")
+Aspect.Effectiveness = Effectiveness = Aspect("Effectiveness")
+Aspect.Efficiency = Aspect("Efficiency")
+Aspect.ElectricalPhaseIdentifier = ElectricalPhaseIdentifier = Aspect(
+    "ElectricalPhaseIdentifier"
+)
 Aspect.ElectricalVoltagePhases = ElectricalVoltagePhases = Aspect(
     "ElectricalVoltagePhases"
 )
@@ -551,11 +540,11 @@ Aspect.Model = Aspect("Model")
 Aspect.Nominal = Aspect("Nominal")
 Aspect.NominalFrequency = Aspect("NominalFrequency")
 Aspect.PhaseAngle = Aspect("PhaseAngle")
-Aspect.PowerFactor = Numerical("PowerFactor")
+Aspect.PowerFactor = Aspect("PowerFactor")
 Aspect.Rated = Aspect("Rated")
 Aspect.Sensible = Aspect("Sensible")
 Aspect.SerialNumber = Aspect("SerialNumber")
-Aspect.ServiceFactor = Numerical("ServiceFactor")
+Aspect.ServiceFactor = Aspect("ServiceFactor")
 Aspect.Setpoint = Aspect("Setpoint")
 Aspect.StandardConditions = Aspect("StandardConditions")
 Aspect.Standby = Aspect("Standby")
@@ -565,8 +554,9 @@ Aspect.Total = Aspect("Total")
 Aspect.WetBulb = Aspect("WetBulb")
 Aspect.Year = Aspect("Year")
 
+#
 DayOfWeek.Weekday = Weekday = DayOfWeek("Weekday")
-DayOfWeek.Weekend = DayOfWeek("Weekend")
+DayOfWeek.Weekend = Weekend = DayOfWeek("Weekend")
 Weekday.Monday = Weekday("Monday")
 Weekday.Tuesday = Weekday("Tuesday")
 Weekday.Wednesday = Weekday("Wednesday")
@@ -574,10 +564,57 @@ Weekday.Thursday = Weekday("Thursday")
 Weekday.Friday = Weekday("Friday")
 Weekday.Saturday = Weekday("Saturday")
 Weekday.Sunday = Weekday("Sunday")
+Weekend.Saturday = Weekday("Saturday")
+Weekend.Sunday = Weekday("Sunday")
+
+#
+Effectiveness.Active = Effectiveness("Active")
+Effectiveness.Inactive = Effectiveness("Inactive", _alt_namespace=P223)
+Effectiveness.Unknown = Effectiveness("Unknown", _alt_namespace=P223)
+
+#
+Numerical = EnumerationKind("Numerical")
+Numerical.DCVoltage = DCVoltage = Numerical("DCVoltage")
+DCVoltage.DCNegativeVoltage = DCVoltage("DCNegativeVoltage")
+# s223:DCNegativeVoltage-2.5V
+# s223:DCNegativeVoltage-3.0V
+# s223:DCNegativeVoltage-5.0V
+# s223:DCNegativeVoltage-6.0V
+# s223:DCNegativeVoltage-12.0V
+# s223:DCNegativeVoltage-24.0V
+# s223:DCNegativeVoltage-48.0V
+# s223:DCNegativeVoltage-190.0V
+# s223:DCNegativeVoltage-380.0V
+DCVoltage.DCPositiveVoltage = DCVoltage("DCPositiveVoltage")
+# see also negative voltages above
+DCVoltage.DCZeroVoltage = DCVoltage("DCZeroVoltage")
+
+Numerical.Frequency = Numerical("Frequency")
+# s223:Frequency-50Hz
+# s223:Frequency-60Hz
 
 Numerical.LineLineVoltage = Numerical("LineLineVoltage")
+# many
 Numerical.LineNeutralVoltage = Numerical("LineNeutralVoltage")
-Numerical.Frequency = Numerical("Frequency")
+# many
+
+Numerical.NumberOfElectricalPhases = NumberOfElectricalPhases = Numerical(
+    "NumberOfElectricalPhases"
+)
+NumberOfElectricalPhases.SinglePhase = NumberOfElectricalPhases("SinglePhase")
+NumberOfElectricalPhases.ThreePhase = NumberOfElectricalPhases("ThreePhase")
+
+#
+Numerical.Voltage = Voltage = Numerical("Voltage")
+# many
+
+ElectricalPhaseIdentifier.A = ElectricalPhaseIdentifier("A")
+ElectricalPhaseIdentifier.B = ElectricalPhaseIdentifier("B")
+ElectricalPhaseIdentifier.C = ElectricalPhaseIdentifier("C")
+ElectricalPhaseIdentifier.AB = ElectricalPhaseIdentifier("AB")
+ElectricalPhaseIdentifier.BC = ElectricalPhaseIdentifier("BC")
+ElectricalPhaseIdentifier.CA = ElectricalPhaseIdentifier("CA")
+ElectricalPhaseIdentifier.ABC = ElectricalPhaseIdentifier("ABC")
 
 ElectricalVoltagePhases.ABLineLineVoltage = ElectricalVoltagePhases("ABLineLineVoltage")
 ElectricalVoltagePhases.BCLineLineVoltage = ElectricalVoltagePhases("BCLineLineVoltage")
@@ -592,30 +629,3 @@ ElectricalVoltagePhases.BNLineNeutralVoltage = ElectricalVoltagePhases(
 ElectricalVoltagePhases.CNLineNeutralVoltage = ElectricalVoltagePhases(
     "CNLineNeutralVoltage"
 )
-
-
-Numerical.Delta = Numerical("Delta")
-Numerical.DryBulb = Numerical("DryBulb")
-Numerical.Latent = Numerical("Latent")
-Numerical.Loss = Numerical("Loss")
-Numerical.Maximum = Numerical("Maximum")
-Numerical.Minimum = Numerical("Minimum")
-
-Numerical.Rated = Numerical("Rated")
-Numerical.Sensible = Numerical("Sensible")
-Numerical.StandardConditions = Numerical("StandardConditions")
-Numerical.Standby = Numerical("Standby")
-Numerical.Startup = Numerical("Startup")
-Numerical.Threshold = Numerical("Threshold")
-Numerical.Total = Numerical("Total")
-Numerical.Weight = Numerical("Weight")
-Numerical.WetBulb = Numerical("WetBulb")
-
-
-ElectricalPhaseIdentifier.A = ElectricalPhaseIdentifier("A")
-ElectricalPhaseIdentifier.B = ElectricalPhaseIdentifier("B")
-ElectricalPhaseIdentifier.C = ElectricalPhaseIdentifier("C")
-ElectricalPhaseIdentifier.AB = ElectricalPhaseIdentifier("AB")
-ElectricalPhaseIdentifier.BC = ElectricalPhaseIdentifier("BC")
-ElectricalPhaseIdentifier.CA = ElectricalPhaseIdentifier("CA")
-ElectricalPhaseIdentifier.ABC = ElectricalPhaseIdentifier("ABC")

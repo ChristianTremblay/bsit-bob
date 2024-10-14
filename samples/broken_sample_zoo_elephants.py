@@ -327,10 +327,10 @@ entering_chilledWater_pipe = WaterConnection(
     label="CHWE_Pipe", comment="Chilled Water Entering Pipe for both chillers"
 )
 
-leaving_condensedWater_pipe = WaterConnection(
+leaving_condenser_pipe = WaterConnection(
     label="CWL_Pipe", comment="Condensed Water Leaving Pipe from both chillers"
 )
-entering_condensedWater_pipe = WaterConnection(
+entering_condenser_pipe = WaterConnection(
     label="CWE_Pipe", comment="Condensed Water Entering Pipe for both chillers"
 )
 
@@ -376,12 +376,12 @@ coil.waterOutlet >> coil_return_pipe
 coil_return_pipe >> v1A_no.waterInlet
 coil_return_pipe >> v1A_nc.waterInlet
 
-v1A_nc.waterOutlet >> entering_condensedWater_pipe
+v1A_nc.waterOutlet >> entering_condenser_pipe
 v1A_no.waterOutlet >> leaving_chilledWater_pipe
-# radiant_floor_collector_return >> entering_condensedWater_pipe
+# radiant_floor_collector_return >> entering_condenser_pipe
 
-entering_condensedWater_pipe >> pc1.condensedWaterEntering
-entering_condensedWater_pipe >> pc2.condensedWaterEntering
+entering_condenser_pipe >> pc1.condenserEntering
+entering_condenser_pipe >> pc2.condenserEntering
 
 p3_p4_leaving >> v2.waterInlet
 v2.waterOutlet >> pc1.chilledWaterEntering

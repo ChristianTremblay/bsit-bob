@@ -1,6 +1,5 @@
 from ..core import BOB, P223, S223, PropertyReference
 from ..producer import Function, FunctionInput, FunctionOutput
-from ..properties import OccupancyStatus, Schedule
 
 _namespace = BOB
 

@@ -46,9 +46,9 @@ ex1:TestSystem a rdfs:Class,
     rdfs:label "__main__.TestSystem" ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ex1:cpI ],
+            sh:path ex1:cpO ],
         [ a sh:PropertyShape ;
-            sh:path ex1:cpO ] .
+            sh:path ex1:cpI ] .
 
 ex1:cp a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -386,6 +386,24 @@ p223:Constituent-VOC a p223:Constituent-VOC,
     rdfs:label "VOC" ;
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
+
+p223:Effectiveness-Inactive a p223:Effectiveness-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Inactive" ;
+    rdfs:subClassOf s223:Aspect-Effectiveness,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Aspect .
+
+p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf s223:Aspect-Effectiveness,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Aspect .
 
 p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind,
@@ -784,14 +802,6 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
-p223:Role-RunStatus a p223:Role-RunStatus,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "RunStatus" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Role .
-
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
         rdfs:Class,
@@ -860,11 +870,23 @@ p223:TrueFalse-True a p223:TrueFalse-True,
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
 
-p223:Water-CondensedWater a p223:Water-CondensedWater,
+p223:Water-Condensate a p223:Water-Condensate,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "CondensedWater" ;
+    rdfs:label "Condensate" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Water-Condenser a p223:Water-Condenser,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Condenser" ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,

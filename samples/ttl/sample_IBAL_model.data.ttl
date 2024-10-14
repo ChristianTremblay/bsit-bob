@@ -4324,7 +4324,7 @@ hvac_devices:00383 a p223:BinaryOutput,
     rdfs:label "currentRelay.dryContact" ;
     s223:cnx hvac_devices:00382 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:hasRole p223:Role-RunStatus ;
+    s223:hasRole s223:EnumerationKind-RunStatus ;
     s223:isConnectionPointOf hvac_devices:00382 .
 
 hvac_devices:00384 a s223:ObservableProperty,
@@ -4341,7 +4341,7 @@ hvac_devices:00385 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasAspect p223:Role-RunStatus ;
+    s223:hasAspect s223:EnumerationKind-RunStatus ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 hvac_devices:00386 a s223:Connectable,
@@ -8405,7 +8405,7 @@ hvac_devices:00811 a s223:Connectable,
     scratch:linkageInlet hvac_devices:00814 ;
     scratch:position hvac_devices:00840 ;
     scratch:position_feedback hvac_devices:00840 ;
-    rdfs:comment "from boottom to top" .
+    rdfs:comment "from bottom to top" .
 
 hvac_devices:00812 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
@@ -9057,7 +9057,7 @@ hvac_devices:00881 a s223:Connectable,
     scratch:linkageInlet hvac_devices:00884 ;
     scratch:position hvac_devices:00910 ;
     scratch:position_feedback hvac_devices:00910 ;
-    rdfs:comment "from boottom to top" .
+    rdfs:comment "from bottom to top" .
 
 hvac_devices:00882 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
@@ -9498,8 +9498,8 @@ hvac_devices:00930 a s223:Chiller,
     bob:capacityLimitInlet hvac_devices:00937 ;
     bob:chilledWaterEntering hvac_devices:00931 ;
     bob:chilledWaterLeaving hvac_devices:00932 ;
-    bob:condensedWaterEntering hvac_devices:00933 ;
-    bob:condensedWaterLeaving hvac_devices:00934 ;
+    bob:condenserEntering hvac_devices:00933 ;
+    bob:condenserLeaving hvac_devices:00934 ;
     bob:setpointResetInlet hvac_devices:00935 .
 
 hvac_devices:00931 a s223:ConnectionPoint,
@@ -9520,18 +9520,18 @@ hvac_devices:00932 a s223:ConnectionPoint,
 
 hvac_devices:00933 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
-        bob:CondensedWaterConnectionPoint ;
-    rdfs:label "Chiller1.condensedWaterEntering" ;
+        bob:CondenserConnectionPoint ;
+    rdfs:label "Chiller1.condenserEntering" ;
     s223:cnx hvac_devices:00930 ;
-    s223:hasMedium p223:Water-CondensedWater ;
+    s223:hasMedium p223:Water-Condenser ;
     s223:isConnectionPointOf hvac_devices:00930 .
 
 hvac_devices:00934 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
-        bob:CondensedWaterConnectionPoint ;
-    rdfs:label "Chiller1.condensedWaterLeaving" ;
+        bob:CondenserConnectionPoint ;
+    rdfs:label "Chiller1.condenserLeaving" ;
     s223:cnx hvac_devices:00930 ;
-    s223:hasMedium p223:Water-CondensedWater ;
+    s223:hasMedium p223:Water-Condenser ;
     s223:isConnectionPointOf hvac_devices:00930 .
 
 hvac_devices:00935 a p223:AnalogInput,
@@ -9779,7 +9779,7 @@ hvac_devices:00958 a p223:BinaryOutput,
     rdfs:label "currentRelay.dryContact" ;
     s223:cnx hvac_devices:00957 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:hasRole p223:Role-RunStatus ;
+    s223:hasRole s223:EnumerationKind-RunStatus ;
     s223:isConnectionPointOf hvac_devices:00957 .
 
 hvac_devices:00959 a s223:ObservableProperty,
@@ -9796,7 +9796,7 @@ hvac_devices:00960 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasAspect p223:Role-RunStatus ;
+    s223:hasAspect s223:EnumerationKind-RunStatus ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 hvac_devices:00961 a s223:Connectable,
@@ -9866,8 +9866,8 @@ hvac_devices:00967 a s223:Chiller,
     bob:capacityLimitInlet hvac_devices:00974 ;
     bob:chilledWaterEntering hvac_devices:00968 ;
     bob:chilledWaterLeaving hvac_devices:00969 ;
-    bob:condensedWaterEntering hvac_devices:00970 ;
-    bob:condensedWaterLeaving hvac_devices:00971 ;
+    bob:condenserEntering hvac_devices:00970 ;
+    bob:condenserLeaving hvac_devices:00971 ;
     bob:setpointResetInlet hvac_devices:00972 .
 
 hvac_devices:00968 a s223:ConnectionPoint,
@@ -9888,18 +9888,18 @@ hvac_devices:00969 a s223:ConnectionPoint,
 
 hvac_devices:00970 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
-        bob:CondensedWaterConnectionPoint ;
-    rdfs:label "Chiller2.condensedWaterEntering" ;
+        bob:CondenserConnectionPoint ;
+    rdfs:label "Chiller2.condenserEntering" ;
     s223:cnx hvac_devices:00967 ;
-    s223:hasMedium p223:Water-CondensedWater ;
+    s223:hasMedium p223:Water-Condenser ;
     s223:isConnectionPointOf hvac_devices:00967 .
 
 hvac_devices:00971 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
-        bob:CondensedWaterConnectionPoint ;
-    rdfs:label "Chiller2.condensedWaterLeaving" ;
+        bob:CondenserConnectionPoint ;
+    rdfs:label "Chiller2.condenserLeaving" ;
     s223:cnx hvac_devices:00967 ;
-    s223:hasMedium p223:Water-CondensedWater ;
+    s223:hasMedium p223:Water-Condenser ;
     s223:isConnectionPointOf hvac_devices:00967 .
 
 hvac_devices:00972 a p223:AnalogInput,
@@ -10147,7 +10147,7 @@ hvac_devices:00995 a p223:BinaryOutput,
     rdfs:label "currentRelay.dryContact" ;
     s223:cnx hvac_devices:00994 ;
     s223:hasMedium p223:Signal-OnOffSignal ;
-    s223:hasRole p223:Role-RunStatus ;
+    s223:hasRole s223:EnumerationKind-RunStatus ;
     s223:isConnectionPointOf hvac_devices:00994 .
 
 hvac_devices:00996 a s223:ObservableProperty,
@@ -10164,7 +10164,7 @@ hvac_devices:00997 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasAspect p223:Role-RunStatus ;
+    s223:hasAspect s223:EnumerationKind-RunStatus ;
     s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 hvac_devices:00998 a s223:Connectable,

@@ -5,7 +5,7 @@ from ...properties.electricity import Amps
 from ...properties.ratio import PercentCommand
 from ...properties.states import OnOffCommand, OnOffStatus
 
-from ...enum import Electricity, Role
+from ...enum import Electricity, RunStatus
 from ...connections import electricity as elec_cnx
 from ...connections.controlsignal import OnOffSignalOutletConnectionPoint
 from ...core import (
@@ -120,8 +120,8 @@ class CurrentRelay(Equipment):
         status_producer.cause_input << sensor.observedProperty
         status_producer.effect_output >> self["onOffStatus"]
         self > status_producer
-        self["onOffStatus"] += Role.RunStatus
-        self.dryContact += Role.RunStatus
+        self["onOffStatus"] += RunStatus
+        self.dryContact += RunStatus
 
 
 class TimerSwitch(SinglePoleSwitch):

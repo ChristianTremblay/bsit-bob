@@ -93,23 +93,23 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_hotwater_heater:leavingWaterTemp ],
+        [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterModulation1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:leavingWaterTemp ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterCommand2 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterModulation2 ],
+            sh:path sample_hotwater_heater:waterFlow ],
         [ a sh:PropertyShape ;
             sh:path sample_hotwater_heater:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:resistanceHeaterPower2 ],
+            sh:path sample_hotwater_heater:fluidTemp ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:waterFlow ],
+            sh:path sample_hotwater_heater:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
-            sh:path sample_hotwater_heater:fluidTemp ] .
+            sh:path sample_hotwater_heater:resistanceHeaterModulation2 ] .
 
 bob:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
@@ -501,11 +501,29 @@ p223:DomesticWaterHeater a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
-        [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ] .
+            sh:path bob:leavingFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:fluidTemperature ] .
+
+p223:Effectiveness-Inactive a p223:Effectiveness-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Inactive" ;
+    rdfs:subClassOf s223:Aspect-Effectiveness,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Aspect .
+
+p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf s223:Aspect-Effectiveness,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Aspect .
 
 p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind,
@@ -913,14 +931,6 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
-p223:Role-RunStatus a p223:Role-RunStatus,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "RunStatus" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Role .
-
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
         rdfs:Class,
@@ -963,13 +973,13 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
-        [ a sh:PropertyShape ;
             sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:internalPressure ] .
 
@@ -1005,11 +1015,23 @@ p223:TrueFalse-True a p223:TrueFalse-True,
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
 
-p223:Water-CondensedWater a p223:Water-CondensedWater,
+p223:Water-Condensate a p223:Water-Condensate,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "CondensedWater" ;
+    rdfs:label "Condensate" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Water-Condenser a p223:Water-Condenser,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Condenser" ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,

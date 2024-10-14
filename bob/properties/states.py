@@ -21,8 +21,8 @@ from ..enum import (
     Light,
     Motion,
     NormalAlarmEnum,
-    OccupancyStatus,
-    OnOffEnum,
+    Occupancy,
+    OnOff,
     Position,
     Smoke,
     YesNoEnum,
@@ -38,14 +38,14 @@ _namespace = BOB
 
 class OnOffStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = S223.EnumeratedObservableProperty
-    hasEnumerationKind = OnOffEnum
-    hasValue: OnOffEnum
+    hasEnumerationKind = OnOff
+    hasValue: OnOff
 
 
 class OnOffCommand(EnumeratedActuatableProperty):
     _class_iri: URIRef = S223.EnumeratedActuatableProperty
-    hasEnumerationKind = OnOffEnum
-    hasValue: OnOffEnum
+    hasEnumerationKind = OnOff
+    hasValue: OnOff
 
 
 class NormalAlarmStatus(EnumeratedObservableProperty):
@@ -68,14 +68,14 @@ class OpenCloseStatus(EnumeratedActuatableProperty):
 
 class Schedule(EnumerableProperty):
     _class_iri: URIRef = S223.EnumerableProperty
-    hasEnumerationKind = OccupancyStatus
-    hasValue: OccupancyStatus
+    hasEnumerationKind = Occupancy
+    hasValue: Occupancy
 
 
 class OccupancyStatus(EnumeratedObservableProperty):
     _class_iri: URIRef = S223.EnumeratedObservableProperty
-    hasEnumerationKind = OccupancyStatus
-    hasValue: OccupancyStatus
+    hasEnumerationKind = Occupancy
+    hasValue: Occupancy
 
 
 class Motion(EnumeratedObservableProperty):
