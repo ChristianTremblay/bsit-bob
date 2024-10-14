@@ -1,0 +1,241 @@
+"""
+Figure A-10
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any, Dict
+
+from header import g36_header
+
+from bob.connections.air import (
+    AirConnection,
+    AirInletConnectionPoint,
+    AirInletSystemConnectionPoint,
+    AirOutletConnectionPoint,
+    AirOutletSystemConnectionPoint,
+)
+from bob.connections.electricity import (
+    Electricity_120VLN_1Ph_60HzConnection,
+    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
+    Electricity_120VLN_1Ph_60HzOutletConnectionPoint,
+)
+from bob.connections.controlsignal import (
+    ModulationSignalInletConnectionPoint,
+    OnOffSignalInletConnectionPoint,
+)
+from bob.connections.network import (
+    RS485BidirectionalConnectionPoint,
+)
+from bob.connections.water import (
+    ChilledWaterConnection,
+    ChilledWaterInletConnectionPoint,
+    ChilledWaterOutletConnectionPoint,
+    HotWaterConnection,
+    HotWaterInletConnectionPoint,
+    HotWaterOutletConnectionPoint,
+)
+from bob.core import (
+    QUANTITYKIND,
+    UNIT,
+    Equipment,
+    PropertyReference,
+    System,
+    bind_model_namespace,
+    dump,
+)
+from bob.equipment.electricity.vfd import VFD
+from bob.equipment.hvac.actuator import ElectricalProportionalActuator
+from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
+from bob.equipment.hvac.damper import ElectricalActuatedProportionalDamper
+from bob.equipment.hvac.fan import Fan, FanWithVFD
+from bob.equipment.hvac.filter import Filter
+from bob.equipment.hvac.gas import GasMonitor
+from bob.equipment.hvac.stats import (
+    HighStaticPressureStat,
+    NetworkRoomSensor,
+    NetworkThermostat,
+)
+from bob.equipment.hvac.valve import TwoWayActuatedProportionalValve, TwoWayValve
+from bob.producer import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
+from bob.producer.g36 import G36Sequence
+from bob.properties import Flow, PercentCommand, Temperature
+from bob.properties.states import SmokePresence
+from bob.properties.volume import Gallons
+from bob.property import QuantifiableObservableProperty
+from bob.sensor.fire import SmokeDetectionSensor
+from bob.sensor.flow import AirFlowSensor
+from bob.sensor.gas import CO2Sensor
+from bob.sensor.motion import  OccupancySensor
+from bob.sensor.security import IntrusionSensor
+from bob.sensor.pressure import DifferentialStaticPressureSensor
+from bob.sensor.temperature import AirTemperatureSensor, TemperatureSetpoint
+from bob.space.hvac import HVACSpace
+
+model_name = Path(__file__).stem
+_namespace = bind_model_namespace(
+    "exg3610", f"http://data.ashrae.org/standard223/data/{model_name}#"
+)
+
+min_oa_dpr = ElectricalActuatedProportionalDamper(
+    label="MIN-OA-DPR", comment="Minimum ouside air damper, 2 pos"
+)
+econ_dpr = ElectricalActuatedProportionalDamper(
+    label="ECON-DPR", comment="Economizer damper, modulating"
+)
+
+outside = AirConnection(label="Outside")
+mixed_air_supply = AirConnection(label="MixedAirSupply")
+oat = AirTemperatureSensor(label="OA-T", unit=UNIT.DEG_C, comment="Outside Air Temp")
+mat = AirTemperatureSensor(label="MA-T", unit=UNIT.DEG_C, comment="Mixed Air Temp")
+
+filter = Filter(label="Filter")
+filter_dpt = DifferentialStaticPressureSensor(
+    label="DPT-1", unit=UNIT.PA, comment="Filter Differential Pressure Transmitter"
+)
+
+# Heating coil
+hot_water_valve_template = {
+    "cp": {
+        "waterInlet": HotWaterInletConnectionPoint,
+        "waterOutlet": HotWaterOutletConnectionPoint,
+        "positionInlet": ModulationSignalInletConnectionPoint,
+        "onOffInlet": OnOffSignalInletConnectionPoint,
+    },
+    "properties": {
+        ("position", PercentCommand): {},
+        ("flowCoefficient", Gallons): {},
+    },
+    "equipment": {("actuator", ElectricalProportionalActuator): {}},
+}
+htg_coil = HotWaterCoil(label="HWC", comment="Hot Water Coil")
+htg_vlv = TwoWayActuatedProportionalValve(
+    label="HTG-VLV", comment="Heating 2W Valve", config=hot_water_valve_template
+)
+hwct = AirTemperatureSensor(
+    label="HTGCOIL-T", unit=UNIT.DEG_C, comment="Heat Coil Air Temp"
+)
+
+hws = HotWaterConnection(label="Hot Water Supply")
+hwr = HotWaterConnection(label="Hot Water Return")
+
+# Cooling Coil
+chilled_water_valve_template = {
+    "cp": {
+        "waterInlet": ChilledWaterInletConnectionPoint,
+        "waterOutlet": ChilledWaterOutletConnectionPoint,
+        "positionInlet": ModulationSignalInletConnectionPoint,
+        "onOffInlet": OnOffSignalInletConnectionPoint,
+    },
+    "properties": {
+        ("flowCoefficient", Gallons): {},
+        ("position", PercentCommand): {},
+    },
+    "equipment": {("actuator", ElectricalProportionalActuator): {}},
+}
+clg_coil = ChilledWaterCoil(label="CWC", comment="Chilled Water Coil")
+clg_vlv = TwoWayActuatedProportionalValve(
+    label="CLG-VLV", comment="Cooling 2W Valve", config=chilled_water_valve_template
+)
+
+chws = ChilledWaterConnection(label="Chilled Water Supply")
+chwr = ChilledWaterConnection(label="Chilled Water Return")
+
+# Supply Fan with its VFD
+sf = FanWithVFD(label="SF", comment="Supply Fan")
+
+
+# Protections
+hsp_limit_mix = HighStaticPressureStat(label="HighStaticPressureLimit_Mix")
+hsp_limit_supply = HighStaticPressureStat(label="HighStaticPressureLimit_Supply")
+smoke = SmokeDetectionSensor(label="SD", comment="Supply Air Smoke Detector")
+
+sat = AirTemperatureSensor(label="SA-T", unit=UNIT.DEG_C, comment="Supply Air Temp")
+duct_dpt = DifferentialStaticPressureSensor(
+    label="DPT-2", unit=UNIT.PA, comment="Duct Static Pressure Transmitter"
+)
+
+supply_air = AirConnection(label="Supply Air")
+return_air = AirConnection(label="Return Air")
+
+rat = AirTemperatureSensor(label="RA-T", unit=UNIT.DEG_C, comment="Return Air Temp")
+
+rad = ElectricalActuatedProportionalDamper(label="RAD", comment="Return Air Damper")
+
+# Exhaust Fan with its VFD
+ef = FanWithVFD(label="EF", comment="Exhaust Fan")
+ead = ElectricalActuatedProportionalDamper(label="EAD", comment="Exhaust Air Damper")
+
+building_dpt = DifferentialStaticPressureSensor(
+    label="DPT-3", unit=UNIT.PA, comment="Building Static Pressure Transmitter"
+)
+
+hvacspace = HVACSpace(label="SPACE", comment="Space where this unit feeds air")
+
+# Connections
+# AIR
+outside >> min_oa_dpr >> mixed_air_supply
+outside >> econ_dpr >> mixed_air_supply
+rad.airOutlet >> mixed_air_supply
+
+mixed_air_supply >> filter >> htg_coil >> clg_coil >> sf >> supply_air >> hvacspace.ductAirInlet
+hvacspace.ductAirOutlet >> return_air
+return_air >> ef.airInlet
+ef >> ead >> outside
+return_air >> rad.airInlet
+
+# WATER
+hws >> htg_coil.hotWaterInlet
+### TODO htg_coil.hotWaterOutlet >> htg_vlv >> hwr
+
+chws >> clg_coil.chilledWaterInlet
+### TODO clg_coil.chilledWaterOutlet >> clg_vlv >> chwr
+
+# Sensors measurements
+oat % econ_dpr.airOutlet
+hsp_limit_mix["pressure_sensor"]["highPort"] % hvacspace
+hsp_limit_mix["pressure_sensor"]["lowPort"] % mixed_air_supply
+mat % mixed_air_supply
+filter_dpt["highPort"] % filter.airInlet
+filter_dpt["lowPort"] % filter.airOutlet
+hwct % htg_coil.airOutlet
+hsp_limit_supply["pressure_sensor"]["lowPort"] % hvacspace
+hsp_limit_supply["pressure_sensor"]["highPort"] % sf.airOutlet
+smoke % supply_air
+sat % supply_air
+duct_dpt["highPort"] % supply_air
+duct_dpt["lowPort"] % hvacspace
+building_dpt["highPort"] % hvacspace
+building_dpt["lowPort"] % outside
+
+
+class G36_FIG10_AHU(System):
+    returnAir: AirInletSystemConnectionPoint
+    supplyAir: AirOutletSystemConnectionPoint
+    exhaustAir: AirOutletSystemConnectionPoint
+    outdoorAir: AirInletSystemConnectionPoint
+    cooling: PropertyReference
+    heating: PropertyReference
+    return_air_temp: PropertyReference
+    supply_air_temp: PropertyReference
+
+
+ahu = G36_FIG10_AHU(label="AHU", comment="Is this really required ?")
+ahu.returnAir.mapsTo = return_air
+ahu.supplyAir.mapsTo = supply_air
+ahu.exhaustAir.mapsTo = ead.airOutlet
+ahu.outdoorAir.mapsTo = econ_dpr.airInlet
+ahu.cooling = clg_vlv["position"]  #
+ahu.heating = htg_vlv["position"]  # equivalent to htg_vlv['actuator']['postion']
+
+
+# TODO : Complete this
+# Definition of G36
+sequence = "lorem ipsum of sequence"
+g36_fig_a_10 = G36Sequence(label="G36_FIG_A_10", comment=sequence)
+
+g36_fig_a_10.uses(rat.observedProperty, AnalogInput, "return-air-temp")
+g36_fig_a_10.produces(htg_vlv["actuator"]["command"], AnalogOutput, "HW VALVE")
+
+dump(filename=f"G36/ttl/{model_name}.ttl", header=g36_header(model_name))

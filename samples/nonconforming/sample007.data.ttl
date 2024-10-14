@@ -1,0 +1,70 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/sample/sample007-data
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix ex1: <urn:ex/sample007/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+
+<http://data.ashrae.org/standard223/1.0/data/sample007>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample007-data> ;
+  rdfs:label "sample007-data" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+ex1:00001 a s223:Connectable,
+        s223:Equipment,
+        ex1:TestEquipment ;
+    rdfs:label "Test Equipment 1" ;
+    s223:contains ex1:00002,
+        ex1:00003 .
+
+ex1:00002 a s223:Connectable,
+        s223:Equipment,
+        ex1:Part1 ;
+    rdfs:label "p11" .
+
+ex1:00003 a s223:Connectable,
+        s223:Equipment,
+        ex1:Part2 ;
+    rdfs:label "p12" .
+
+ex1:00004 a s223:Connectable,
+        s223:Equipment,
+        ex1:TestEquipment ;
+    rdfs:label "Test Equipment 2" ;
+    s223:contains ex1:00005 .
+
+ex1:00005 a s223:Connectable,
+        s223:Equipment,
+        ex1:Part1 ;
+    rdfs:label "p21" ;
+    s223:contains ex1:00006 .
+
+ex1:00006 a s223:Connectable,
+        s223:Equipment,
+        ex1:Part2 ;
+    rdfs:label "p22" .
+
+ex1:00007 a s223:Connectable,
+        s223:Equipment,
+        ex1:TestEquipment ;
+    rdfs:label "Test Equipment 3" ;
+    s223:contains ex1:00009 .
+
+ex1:00008 a s223:Connectable,
+        s223:Equipment,
+        ex1:Part1 ;
+    rdfs:label "p31" .
+
+ex1:00009 a s223:Connectable,
+        s223:Equipment,
+        ex1:Part2 ;
+    rdfs:label "p32" ;
+    s223:contains ex1:00008 .
+

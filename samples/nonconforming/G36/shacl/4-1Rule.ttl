@@ -1,0 +1,162 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix exg3601: <http://data.ashrae.org/standard223/data/g36-figure-a-1#> .
+@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ref: <https://brickschema.org/schema/Brick/ref#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+@prefix : <http://data.ashrae.org/standard223/g36/4.1/vav-cooling-only/> .
+
+
+:vav a sh:NodeShape;
+    sh:targetClass exg3601:VAV_FIGA1 ;
+    sh:message "FIG 4-1 invalid" ;
+    sh:severity s223:g36 ;
+    sh:property :s223-damper-position, :s223-zone-temp-occ-co2, :s223-discharge-flow, :vav-flow ;
+#    sh:node :flow_or ;
+.
+:flow_or a sh:NodeShape ;
+    sh:or (:s223-discharge-flow :vav-flow ) ;
+.
+:vav-flow a sh:PropertyShape ;
+    sh:path s223:hasProperty ;
+    sh:qualifiedValueShape [ sh:node :s223-flow-prop ];  # [sh:class bob:Flow] ;
+    sh:qualifiedMinCount 1 ;
+    sh:qualifiedMaxCount 1 ;
+    sh:message "No VAV flow property" ;
+    sh:severity s223:g36 
+.
+:s223-flow-prop a sh:NodeShape ; 
+    sh:class s223:QuantifiableObservableProperty ;
+    sh:property [
+        sh:path qudt:hasQuantityKind ;
+        sh:hasValue quantitykind:VolumeFlowRate ;
+        sh:minCount 1 ;
+    ] ;
+.    
+:s223-discharge-flow a sh:PropertyShape ;
+    sh:path s223:hasSystemConnectionPoint ;
+    sh:qualifiedValueShape [ sh:node :s223-outlet-cp ] ;
+    sh:qualifiedMinCount 1 ;
+    sh:message "No Discharge Flow Property, try using vav-flow property instead" ;
+    sh:severity s223:g36 ;
+    sh:deactivated false ;
+.
+:s223-outlet-cp a sh:NodeShape ; 
+    sh:class s223:OutletSystemConnectionPoint ;
+    sh:property [
+        sh:path s223:mapsTo ;
+        sh:node :s223-device-outlet ;
+        sh:minCount 1 ;
+    ] ;
+.
+#should complete the triangle, so outlet CP will just have this property
+:s223-device-outlet a sh:NodeShape ;
+    sh:class s223:ConnectionPoint ; 
+    sh:property [
+        sh:path [ sh:inversePath s223:hasObservationLocation ] ;
+        sh:qualifiedValueShape [ sh:node :s223-flow-sensor ] ;
+        sh:qualifiedMinCount 1 ;
+    ] ;
+.
+:s223-flow-sensor a sh:NodeShape ; 
+    sh:class s223:Sensor ;
+    sh:property [
+        sh:path s223:observesProperty ;
+        sh:node :s223-flow-prop ;
+        sh:minCount 1 ;
+    ] ;
+.     
+#Can a VAV serve multiple zones?
+:s223-zone-temp-occ-co2 a sh:PropertyShape ;
+    sh:path s223:servesZone ;
+    sh:node :s223-zone ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Zone properties missing" ;
+    sh:severity s223:g36 ;
+.
+:s223-zone a sh:NodeShape ;
+    sh:class s223:Zone ;
+    sh:property [
+        sh:path s223:hasDomain ;
+        sh:hasValue s223:Domain-HVAC ;
+     ] ;
+    sh:property [
+        sh:path s223:hasProperty ;
+        sh:qualifiedValueShape [ sh:node :s223-temp-prop ] ;
+        sh:qualifiedMinCount 1 ;
+    ] ;
+    sh:property [
+        sh:path s223:hasProperty ;
+        sh:qualifiedValueShape [ sh:node :s223-occ-prop ] ;
+        sh:qualifiedMinCount 1 ;
+    ] ;
+    sh:property [
+        sh:path s223:hasProperty ;
+        sh:qualifiedValueShape [ sh:node :s223-co2-prop ] ;
+        sh:qualifiedMinCount 1 ;
+    ] ;
+.
+:s223-co2-prop a sh:NodeShape ;
+    sh:class s223:QuantifiableObservableProperty ;
+    sh:property [
+        sh:path qudt:unit ;
+        sh:hasValue unit:PPM ;
+    ] ;
+    sh:propety [
+        sh:path s223:ofMedium ;
+        sh:hasValue s223:Medium-Air ;
+    ] ;
+    sh:property [
+        sh:path s223:ofSubstance ;
+        sh:hasValue s223:Substance-CO2 ;
+    ] ;
+.
+:s223-temp-prop a sh:NodeShape ;
+    sh:class s223:QuantifiableObservableProperty ;
+    sh:property [
+        sh:path qudt:hasQuantityKind ;
+        sh:hasValue quantitykind:Temperature ;
+    ] ;
+.
+:s223-occ-prop a sh:NodeShape ;
+    sh:class s223:EnumeratedObservableProperty ;
+    sh:property [
+        sh:path s223:hasEnumerationKind ;
+        sh:hasValue p223:EnumerationKind-Occupancy ;
+    ] ;
+.
+:s223-damper-position a sh:PropertyShape ;
+    sh:path s223:contains ;
+    sh:qualifiedValueShape [ sh:node :s223-dmp-hasprop ] ;
+    sh:qualifiedMinCount 1 ;
+    sh:qualifiedMaxCount 1 ;
+    sh:message "Damper Position not Found" ;
+    sh:severity s223:g36 ;
+.
+
+:s223-dmp-hasprop a sh:NodeShape ;
+    sh:class s223:Damper ;
+    sh:property [
+        sh:path s223:hasProperty ;
+        sh:qualifiedValueShape [ sh:node :dmp-pos ] ;
+        sh:qualifiedMinCount 1 ;
+        sh:severity s223:g36 ;
+    ]
+.
+#cheating here with new quantitykind, don't see another way to do it unless we have some other property type
+:dmp-pos a sh:NodeShape ;
+    sh:class s223:QuantifiableActuatableProperty ;
+    sh:property [
+        sh:path qudt:hasQuantityKind ;
+        sh:hasValue quantitykind:DimensionlessRatio ;# s223:Position;
+        sh:severity s223:g36 ;
+    ] ;
+.

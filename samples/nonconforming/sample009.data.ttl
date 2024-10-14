@@ -1,0 +1,526 @@
+# baseURI: http://data.ashrae.org/standard223/1.0/sample/sample009-data
+# imports: http://data.ashrae.org/standard223/1.0/model/all
+
+@prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix ex1: <urn:ex/sample009/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+
+<http://data.ashrae.org/standard223/1.0/data/sample009>
+  a owl:Ontology ;
+  rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample009-data> ;
+  rdfs:label "sample009-data" ;
+  owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
+
+ex1:00001 a s223:System,
+        ex1:SystemIn1 ;
+    rdfs:label "s1" ;
+    s223:hasBoundaryConnectionPoint ex1:00003 ;
+    s223:hasMember ex1:00002 ;
+    ex1:cp ex1:00003 .
+
+ex1:00002 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentIn1 ;
+    rdfs:label "s1-d" ;
+    s223:cnx ex1:00003 ;
+    s223:hasConnectionPoint ex1:00003 ;
+    ex1:cp ex1:00003 .
+
+ex1:00003 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp" ;
+    s223:cnx ex1:00002 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00002 .
+
+ex1:00004 a s223:System,
+        ex1:SystemOut1 ;
+    rdfs:label "s2" ;
+    s223:hasBoundaryConnectionPoint ex1:00006 ;
+    s223:hasMember ex1:00005 ;
+    ex1:cp ex1:00006 .
+
+ex1:00005 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentOut1 ;
+    rdfs:label "s2-d" ;
+    s223:cnx ex1:00006 ;
+    s223:hasConnectionPoint ex1:00006 ;
+    ex1:cp ex1:00006 .
+
+ex1:00006 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp" ;
+    s223:cnx ex1:00005 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00005 .
+
+ex1:00007 a s223:System,
+        ex1:SystemIn1 ;
+    rdfs:label "s1" ;
+    s223:hasBoundaryConnectionPoint ex1:00009 ;
+    s223:hasMember ex1:00008 ;
+    ex1:cp ex1:00009 .
+
+ex1:00008 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentIn1 ;
+    rdfs:label "s1-d" ;
+    s223:cnx ex1:00009 ;
+    s223:hasConnectionPoint ex1:00009 ;
+    ex1:cp ex1:00009 .
+
+ex1:00009 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp" ;
+    s223:cnx ex1:00008 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00008 .
+
+ex1:00010 a s223:System,
+        ex1:SystemOut1 ;
+    rdfs:label "s2" ;
+    s223:hasBoundaryConnectionPoint ex1:00012 ;
+    s223:hasMember ex1:00011 ;
+    ex1:cp ex1:00012 .
+
+ex1:00011 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentOut1 ;
+    rdfs:label "s2-d" ;
+    s223:cnx ex1:00012 ;
+    s223:hasConnectionPoint ex1:00012 ;
+    ex1:cp ex1:00012 .
+
+ex1:00012 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp" ;
+    s223:cnx ex1:00011 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00011 .
+
+ex1:00013 a s223:System,
+        ex1:SystemIn1 ;
+    rdfs:label "s1" ;
+    s223:hasBoundaryConnectionPoint ex1:00015 ;
+    s223:hasMember ex1:00014 ;
+    ex1:cp ex1:00015 .
+
+ex1:00014 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentIn1 ;
+    rdfs:label "s1-d" ;
+    s223:cnx ex1:00015 ;
+    s223:connected ex1:00017 ;
+    s223:connectedFrom ex1:00017 ;
+    s223:connectedThrough ex1:00019 ;
+    s223:hasConnectionPoint ex1:00015 ;
+    ex1:cp ex1:00015 .
+
+ex1:00015 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp" ;
+    s223:cnx ex1:00014,
+        ex1:00019 ;
+    s223:connectsThrough ex1:00019 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00014 .
+
+ex1:00016 a s223:System,
+        ex1:SystemOut1 ;
+    rdfs:label "s2" ;
+    s223:hasBoundaryConnectionPoint ex1:00018 ;
+    s223:hasMember ex1:00017 ;
+    ex1:cp ex1:00018 .
+
+ex1:00017 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentOut1 ;
+    rdfs:label "s2-d" ;
+    s223:cnx ex1:00018 ;
+    s223:connected ex1:00014 ;
+    s223:connectedThrough ex1:00019 ;
+    s223:connectedTo ex1:00014 ;
+    s223:hasConnectionPoint ex1:00018 ;
+    ex1:cp ex1:00018 .
+
+ex1:00018 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp" ;
+    s223:cnx ex1:00017,
+        ex1:00019 ;
+    s223:connectsThrough ex1:00019 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00017 .
+
+ex1:00019 a s223:Connection ;
+    s223:cnx ex1:00015,
+        ex1:00018 ;
+    s223:connectsAt ex1:00015,
+        ex1:00018 ;
+    s223:connectsFrom ex1:00017 ;
+    s223:connectsTo ex1:00014 ;
+    s223:hasMedium s223:Fluid-Air .
+
+ex1:00020 a s223:System,
+        ex1:SystemIn1 ;
+    rdfs:label "s1" ;
+    s223:hasBoundaryConnectionPoint ex1:00022 ;
+    s223:hasMember ex1:00021 ;
+    ex1:cp ex1:00022 .
+
+ex1:00021 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentIn1 ;
+    rdfs:label "s1-d" ;
+    s223:cnx ex1:00022 ;
+    s223:hasConnectionPoint ex1:00022 ;
+    ex1:cp ex1:00022 .
+
+ex1:00022 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp" ;
+    s223:cnx ex1:00021 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00021 .
+
+ex1:00023 a s223:System,
+        ex1:SystemOut1 ;
+    rdfs:label "s2" ;
+    s223:hasBoundaryConnectionPoint ex1:00025 ;
+    s223:hasMember ex1:00024 ;
+    ex1:cp ex1:00025 .
+
+ex1:00024 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentOut1 ;
+    rdfs:label "s2-d" ;
+    s223:cnx ex1:00025 ;
+    s223:hasConnectionPoint ex1:00025 ;
+    ex1:cp ex1:00025 .
+
+ex1:00025 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp" ;
+    s223:cnx ex1:00024 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00024 .
+
+ex1:00026 a s223:System,
+        ex1:SystemIn1 ;
+    rdfs:label "s1" ;
+    s223:hasBoundaryConnectionPoint ex1:00028 ;
+    s223:hasMember ex1:00027 ;
+    ex1:cp ex1:00028 .
+
+ex1:00027 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentIn1 ;
+    rdfs:label "s1-d" ;
+    s223:cnx ex1:00028 ;
+    s223:connected ex1:00030 ;
+    s223:connectedFrom ex1:00030 ;
+    s223:connectedThrough ex1:00032 ;
+    s223:hasConnectionPoint ex1:00028 ;
+    ex1:cp ex1:00028 .
+
+ex1:00028 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp" ;
+    s223:cnx ex1:00027,
+        ex1:00032 ;
+    s223:connectsThrough ex1:00032 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00027 .
+
+ex1:00029 a s223:System,
+        ex1:SystemOut1 ;
+    rdfs:label "s2" ;
+    s223:hasBoundaryConnectionPoint ex1:00031 ;
+    s223:hasMember ex1:00030 ;
+    ex1:cp ex1:00031 .
+
+ex1:00030 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentOut1 ;
+    rdfs:label "s2-d" ;
+    s223:cnx ex1:00031 ;
+    s223:connected ex1:00027 ;
+    s223:connectedThrough ex1:00032 ;
+    s223:connectedTo ex1:00027 ;
+    s223:hasConnectionPoint ex1:00031 ;
+    ex1:cp ex1:00031 .
+
+ex1:00031 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp" ;
+    s223:cnx ex1:00030,
+        ex1:00032 ;
+    s223:connectsThrough ex1:00032 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00030 .
+
+ex1:00032 a s223:Connection ;
+    s223:cnx ex1:00028,
+        ex1:00031 ;
+    s223:connectsAt ex1:00028,
+        ex1:00031 ;
+    s223:connectsFrom ex1:00030 ;
+    s223:connectsTo ex1:00027 ;
+    s223:hasMedium s223:Fluid-Air .
+
+ex1:00033 a s223:System,
+        ex1:SystemIn2 ;
+    rdfs:label "s1" ;
+    s223:hasBoundaryConnectionPoint ex1:00035,
+        ex1:00036 ;
+    s223:hasMember ex1:00034 ;
+    ex1:cp1 ex1:00035 ;
+    ex1:cp2 ex1:00036 .
+
+ex1:00034 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentIn2 ;
+    rdfs:label "s1-d" ;
+    s223:cnx ex1:00035,
+        ex1:00036 ;
+    s223:hasConnectionPoint ex1:00035,
+        ex1:00036 ;
+    ex1:cp1 ex1:00035 ;
+    ex1:cp2 ex1:00036 .
+
+ex1:00035 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp1" ;
+    s223:cnx ex1:00034 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00034 .
+
+ex1:00036 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp2" ;
+    s223:cnx ex1:00034 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00034 .
+
+ex1:00037 a s223:System,
+        ex1:SystemOut1 ;
+    rdfs:label "s2" ;
+    s223:hasBoundaryConnectionPoint ex1:00039 ;
+    s223:hasMember ex1:00038 ;
+    ex1:cp ex1:00039 .
+
+ex1:00038 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentOut1 ;
+    rdfs:label "s2-d" ;
+    s223:cnx ex1:00039 ;
+    s223:hasConnectionPoint ex1:00039 ;
+    ex1:cp ex1:00039 .
+
+ex1:00039 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp" ;
+    s223:cnx ex1:00038 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00038 .
+
+ex1:00040 a s223:System,
+        ex1:SystemIn1 ;
+    rdfs:label "s1" ;
+    s223:hasBoundaryConnectionPoint ex1:00042 ;
+    s223:hasMember ex1:00041 ;
+    ex1:cp ex1:00042 .
+
+ex1:00041 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentIn1 ;
+    rdfs:label "s1-d" ;
+    s223:cnx ex1:00042 ;
+    s223:hasConnectionPoint ex1:00042 ;
+    ex1:cp ex1:00042 .
+
+ex1:00042 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp" ;
+    s223:cnx ex1:00041 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00041 .
+
+ex1:00043 a s223:System,
+        ex1:SystemOut2 ;
+    rdfs:label "s2" ;
+    s223:hasBoundaryConnectionPoint ex1:00045,
+        ex1:00046 ;
+    s223:hasMember ex1:00044 ;
+    ex1:cp1 ex1:00045 ;
+    ex1:cp2 ex1:00046 .
+
+ex1:00044 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentOut2 ;
+    rdfs:label "s2-d" ;
+    s223:cnx ex1:00045,
+        ex1:00046 ;
+    s223:hasConnectionPoint ex1:00045,
+        ex1:00046 ;
+    ex1:cp1 ex1:00045 ;
+    ex1:cp2 ex1:00046 .
+
+ex1:00045 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp1" ;
+    s223:cnx ex1:00044 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00044 .
+
+ex1:00046 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp2" ;
+    s223:cnx ex1:00044 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00044 .
+
+ex1:00047 a s223:System,
+        ex1:SystemOut1 ;
+    rdfs:label "s1" ;
+    s223:hasBoundaryConnectionPoint ex1:00049 ;
+    s223:hasMember ex1:00048 ;
+    ex1:cp ex1:00049 .
+
+ex1:00048 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentOut1 ;
+    rdfs:label "s1-d" ;
+    s223:cnx ex1:00049 ;
+    s223:connected ex1:00051 ;
+    s223:connectedThrough ex1:00057 ;
+    s223:connectedTo ex1:00051 ;
+    s223:hasConnectionPoint ex1:00049 ;
+    ex1:cp ex1:00049 .
+
+ex1:00049 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s1-d.cp" ;
+    s223:cnx ex1:00048,
+        ex1:00057 ;
+    s223:connectsThrough ex1:00057 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00048 .
+
+ex1:00050 a s223:System,
+        ex1:SystemInOut ;
+    rdfs:label "s2" ;
+    s223:hasBoundaryConnectionPoint ex1:00052,
+        ex1:00053 ;
+    s223:hasMember ex1:00051 ;
+    ex1:cp1 ex1:00052 ;
+    ex1:cp2 ex1:00053 .
+
+ex1:00051 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentInOut ;
+    rdfs:label "s2-d" ;
+    s223:cnx ex1:00052,
+        ex1:00053 ;
+    s223:connected ex1:00048,
+        ex1:00055 ;
+    s223:connectedFrom ex1:00048 ;
+    s223:connectedThrough ex1:00057,
+        ex1:00058 ;
+    s223:connectedTo ex1:00055 ;
+    s223:hasConnectionPoint ex1:00052,
+        ex1:00053 ;
+    ex1:cp1 ex1:00052 ;
+    ex1:cp2 ex1:00053 .
+
+ex1:00052 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp1" ;
+    s223:cnx ex1:00051,
+        ex1:00057 ;
+    s223:connectsThrough ex1:00057 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00051 .
+
+ex1:00053 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s2-d.cp2" ;
+    s223:cnx ex1:00051,
+        ex1:00058 ;
+    s223:connectsThrough ex1:00058 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00051 .
+
+ex1:00054 a s223:System,
+        ex1:SystemIn1 ;
+    rdfs:label "s3" ;
+    s223:hasBoundaryConnectionPoint ex1:00056 ;
+    s223:hasMember ex1:00055 ;
+    ex1:cp ex1:00056 .
+
+ex1:00055 a s223:Connectable,
+        s223:Equipment,
+        ex1:EquipmentIn1 ;
+    rdfs:label "s3-d" ;
+    s223:cnx ex1:00056 ;
+    s223:connected ex1:00051 ;
+    s223:connectedFrom ex1:00051 ;
+    s223:connectedThrough ex1:00058 ;
+    s223:hasConnectionPoint ex1:00056 ;
+    ex1:cp ex1:00056 .
+
+ex1:00056 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "s3-d.cp" ;
+    s223:cnx ex1:00055,
+        ex1:00058 ;
+    s223:connectsThrough ex1:00058 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf ex1:00055 .
+
+ex1:00057 a s223:Connection ;
+    s223:cnx ex1:00049,
+        ex1:00052 ;
+    s223:connectsAt ex1:00049,
+        ex1:00052 ;
+    s223:connectsFrom ex1:00048 ;
+    s223:connectsTo ex1:00051 ;
+    s223:hasMedium s223:Fluid-Air .
+
+ex1:00058 a s223:Connection ;
+    s223:cnx ex1:00053,
+        ex1:00056 ;
+    s223:connectsAt ex1:00053,
+        ex1:00056 ;
+    s223:connectsFrom ex1:00051 ;
+    s223:connectsTo ex1:00055 ;
+    s223:hasMedium s223:Fluid-Air .
+
