@@ -1,6 +1,8 @@
 import os
 import re
+import shutil
 import subprocess
+from pathlib import Path
 
 import click
 import pyvis
@@ -387,11 +389,22 @@ def convert_all(folder):
 @click.command()
 @click.argument("source", type=click.Path())
 @click.option("-v", "--view", default=False)
-def process(source=None, view=False):
+@click.option("-m", "--move", is_flag=True, default=False)
+def process(source=None, view=False, move=False):
     if os.path.isfile(source):
         to_html(source, show=view)
     else:
         convert_all(source)
+    _folder = Path(source).resolve()
+
+    if move:
+        doc_folder = _folder.parent / "doc"
+        print(_folder, doc_folder)
+        if doc_folder.exists():
+            print("Folder exists")
+            for html_file in _folder.glob("*.html"):
+                print(html_file)
+                shutil.move(src=html_file, dst=doc_folder / html_file.name)
 
 
 if __name__ == "__main__":
