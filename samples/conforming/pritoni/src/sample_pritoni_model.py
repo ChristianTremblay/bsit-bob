@@ -1,3 +1,11 @@
+import os
+from pathlib import Path
+from typing import Any
+
+from bob.assemblage import create_data_and_schema_ttl
+from bob.core import bind_model_namespace, data_graph, dump, schema_graph
+from bob.scratch.header import sample_header
+
 import physical_spaces as ps  # isort: skip
 import hvac_devices as hd  # isort: skip
 import hvac_spaces as hs  # isort: skip
@@ -13,11 +21,6 @@ import functions  # isort: skip
 import bacnet_references  # isort: skip
 import fake_values  # isort: skip
 
-from pathlib import Path
-from typing import Any
-from bob.scratch.header import sample_header
-
-from bob.core import bind_model_namespace, data_graph, dump, schema_graph
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
@@ -46,14 +49,5 @@ ps.floor1 > ps.kitchenette > hs.kitchenette_hvac
 ps.kitchenette > ls.kitchenette_lightspace
 
 
-_folder = "ttl/validation" if VALIDATE else "ttl"
-dump(
-    data_graph,
-    filename=f"samples/{_folder}/{model_name}.data.ttl",
-    header=sample_header(model_name, "data"),
-)
-dump(
-    schema_graph,
-    filename=f"samples/{_folder}/{model_name}.schema.ttl",
-    header=sample_header(model_name, "schema"),
-)
+_folder = Path(__file__).parent
+create_data_and_schema_ttl(model_name, _folder, header=sample_header(model_name))

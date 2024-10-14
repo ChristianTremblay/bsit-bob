@@ -7,6 +7,7 @@ from bob.connections.electricity import (
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
 from bob.core import bind_model_namespace, dump
+from bob.enum import Electricity
 from bob.equipment.electricity.distribution import (
     SinglePhaseDistributionPanel,
     SinglePoleCircuitBreaker,
@@ -20,7 +21,7 @@ from bob.equipment.electricity.distribution import (
 from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
 from bob.equipment.electricity.switch import DimmableSwitch, TimerSwitch
 from bob.properties.time import Hour
-from bob.enum import Electricity
+
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")

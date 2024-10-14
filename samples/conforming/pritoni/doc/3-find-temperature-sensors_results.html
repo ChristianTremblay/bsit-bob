@@ -1,0 +1,31 @@
+<html><body>
+<h1>SPARQL Query</h1>
+<pre>PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX qudt: <http://qudt.org/schema/qudt/>
+PREFIX quantitykind: <http://qudt.org/vocab/quantitykind/>
+
+SELECT DISTINCT ?sensorLabel
+WHERE {
+    ?sensor a/rdfs:subClassOf* s223:Sensor .
+    ?sensor s223:observes ?prop .
+    {
+       ?prop qudt:hasQuantityKind quantitykind:Temperature .
+    }
+    UNION
+    {
+       ?prop qudt:unit/qudt:hasQuantityKind quantitykind:Temperature .
+    }
+    ?sensor rdfs:label ?sensorLabel .
+}
+</pre>
+<h1>Results</h1>
+<table border='1'>
+<tr><th>Result</th></tr>
+<tr><td>(rdflib.term.Literal('OA-T'),)</td></tr>
+<tr><td>(rdflib.term.Literal('HC-T'),)</td></tr>
+<tr><td>(rdflib.term.Literal('MA-T'),)</td></tr>
+<tr><td>(rdflib.term.Literal('DA-T'),)</td></tr>
+<tr><td>(rdflib.term.Literal('RA-T'),)</td></tr>
+<tr><td>(rdflib.term.Literal('ZN-T'),)</td></tr>
+</table>
+</body></html>

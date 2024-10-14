@@ -1,0 +1,18 @@
+<html><body>
+<h1>SPARQL Query</h1>
+<pre>PREFIX s223: <http://data.ashrae.org/standard223#>
+
+SELECT (COUNT (?d) AS ?count)
+WHERE{
+    ?d a s223:Luminaire .
+    ?d s223:hasProperty ?prop .
+    ?prop a s223:ObservableProperty .
+    ?prop s223:hasValue s223:OnOff-On .
+}
+</pre>
+<h1>Results</h1>
+<table border='1'>
+<tr><th>Result</th></tr>
+<tr><td>(rdflib.term.Literal('0', datatype=rdflib.term.URIRef('http://www.w3.org/2001/XMLSchema#integer')),)</td></tr>
+</table>
+</body></html>
