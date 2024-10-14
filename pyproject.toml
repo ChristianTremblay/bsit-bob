@@ -1,6 +1,6 @@
 [project]
 name = "bob"
-version = "0.97"
+version = "0.98"
 authors = [
     {name="Joel Bender", email="jjb5@cornell.edu"},
     {name="Christian Tremblay", email="christian.tremblay@servisys.com"},
@@ -10,6 +10,8 @@ readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
     "rdflib",
+    "python-dotenv",
+    
 ]
 
 [build-system]
@@ -17,7 +19,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["bob*", "rdf2html"]
+include = ["bob*", "rdf2html", "ttl_tools"]
 namespaces = false
 
 [project.optional-dependencies]
@@ -27,3 +29,7 @@ cov = ["pytest < 5.0.0", "pytest-cov[all]"]
 
 [project.scripts]
 rdf2html = "rdf2html.rdf2html:process"
+mergegraphs = "ttl_tools.mergegraphs:main"
+compile_ttl = "ttl_tools.compile:main"
+validation2html = "ttl_tools.validation2html:main"
+query_model = "ttl_tools.query_model:main"
