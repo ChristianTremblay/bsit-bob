@@ -5,7 +5,7 @@ from pathlib import Path
 current_dir = Path(__file__).resolve().parent.parent
 
 # Construct the path to the ttl files
-ttl_path = current_dir / "samples" / "ttl" / "validation" / "*.compiled.ttl"
+ttl_path = current_dir / "samples" / "conforming" / "**" / "ttl" / "*.compiled.ttl"
 # print(ttl_path, current_dir)
 # Use glob to find the files
 
