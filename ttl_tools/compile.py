@@ -1,3 +1,4 @@
+import argparse
 import glob
 import logging
 import os
@@ -5,7 +6,7 @@ import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
-import argparse
+
 import ontoenv
 import rdflib
 from dotenv import load_dotenv
@@ -14,7 +15,8 @@ load_dotenv()
 S223_FOLDER = Path(os.getenv("S223_FOLDER"))
 current_dir = Path(__file__).resolve().parent.parent
 
-def compile(base_folder:Path=None):
+
+def compile(base_folder: Path = None):
     print(f"Base Folder : {base_folder}")
 
     # Define the folder paths and other TTL files to be merged
@@ -70,15 +72,20 @@ def main():
     parser.add_argument(
         "folder",
         type=str,
-        nargs='?',
+        nargs="?",
         default=None,
-        help="The base folder to process files from (optional)"
+        help="The base folder to process files from (optional)",
     )
     args = parser.parse_args()
 
     # Use the provided folder or default to a specific path
-    base_folder = Path(args.folder) if args.folder else current_dir / "samples" / "ttl" / "validation"
+    base_folder = (
+        Path(args.folder)
+        if args.folder
+        else current_dir / "samples" / "ttl" / "validation"
+    )
     compile(base_folder)
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,9 @@
-import rdflib
 import argparse
-from pathlib import Path
-import shutil
 import os
+import shutil
+from pathlib import Path
+
+import rdflib
 
 
 def load_query(query_file):
@@ -20,7 +21,9 @@ def main():
         description="Load RDF graph and execute SPARQL query."
     )
     parser.add_argument("ttl_file", type=str, help="Path to the compiled.ttl file")
-    parser.add_argument("sparql", type=str, help="Path to the SPARQL query file or folder")
+    parser.add_argument(
+        "sparql", type=str, help="Path to the SPARQL query file or folder"
+    )
     parser.add_argument(
         "--move",
         action="store_true",

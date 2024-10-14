@@ -1,10 +1,11 @@
+import argparse
 import os
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 from typing import Tuple
-import argparse
+
 import ontoenv
 import rdflib
 from dotenv import load_dotenv
@@ -157,5 +158,3 @@ if __name__ == "__main__":
     report, valid, _ = validate(g)
     print_report(report.serialize(format="turtle"))
     print(f"Valid?: {valid}")
-
-

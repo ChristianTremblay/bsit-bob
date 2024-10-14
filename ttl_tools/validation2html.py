@@ -1,17 +1,24 @@
-from typing import Union
+import argparse
+import html
 from pathlib import Path
+from typing import Union
+
 import rdflib
 from rdflib.namespace import SH
+from rich import box
 from rich.console import Console
 from rich.table import Table
-from rich import box
-import html
-import argparse
 
 console = Console()
 
-def print_report(ttl_graph: Union[Path, rdflib.Graph], show_info: bool = False, html_path: Path=None, title:str=""):
-    stats = {'error': 0, 'warning': 0, 'info': 0}
+
+def print_report(
+    ttl_graph: Union[Path, rdflib.Graph],
+    show_info: bool = False,
+    html_path: Path = None,
+    title: str = "",
+):
+    stats = {"error": 0, "warning": 0, "info": 0}
     if isinstance(ttl_graph, Path):
         report_g = rdflib.Graph().parse(ttl_graph, format="turtle")
     else:
@@ -53,17 +60,17 @@ def print_report(ttl_graph: Union[Path, rdflib.Graph], show_info: bool = False, 
     color_map = {
         "http://www.w3.org/ns/shacl#Error": "red",
         "http://www.w3.org/ns/shacl#Warning": "yellow",
-        "http://www.w3.org/ns/shacl#Info": "green"
+        "http://www.w3.org/ns/shacl#Info": "green",
     }
     severity_map = {
         "http://www.w3.org/ns/shacl#Error": "ERROR",
         "http://www.w3.org/ns/shacl#Warning": "WARNING",
-        "http://www.w3.org/ns/shacl#Info": "INFO"
+        "http://www.w3.org/ns/shacl#Info": "INFO",
     }
     shape_map = {
         "http://data.ashrae.org/standard223": "s223",
         "http://data.ashrae.org/standard223/si-builder": "bob",
-        "http://data.ashrae.org/proposal-to-standard223":"p223"
+        "http://data.ashrae.org/proposal-to-standard223": "p223",
     }
 
     html_content = """
@@ -112,12 +119,23 @@ def print_report(ttl_graph: Union[Path, rdflib.Graph], show_info: bool = False, 
         stats[severity.lower()] += 1
         if not show_info and severity == "INFO":
             continue
-        shape_prefix = shape_map.get(str(sourceShape.split('#')[0]), sourceShape)
+        shape_prefix = shape_map.get(str(sourceShape.split("#")[0]), sourceShape)
         shape = f"{shape_prefix}:{sourceShape.split('#')[-1]}"
-        focusNode = focusNode.replace("/", " / ") # so wrap works in the table... if not, it truncates
-        value  = value.replace("/", " / ") if value else "" # so wrap works in the table... if not, it truncates
-        
-        table.add_row(severity, shape, resultMessage, focusNode, value if value else "", style=color)
+        focusNode = focusNode.replace(
+            "/", " / "
+        )  # so wrap works in the table... if not, it truncates
+        value = (
+            value.replace("/", " / ") if value else ""
+        )  # so wrap works in the table... if not, it truncates
+
+        table.add_row(
+            severity,
+            shape,
+            resultMessage,
+            focusNode,
+            value if value else "",
+            style=color,
+        )
         table.add_row("", "", "", "", "")  # Add an empty row as a separator
 
         html_content += f"""
@@ -135,7 +153,9 @@ def print_report(ttl_graph: Union[Path, rdflib.Graph], show_info: bool = False, 
         <p>Errors: {errors}, Warnings: {warnings}, Info: {info}</p>
     </body>
     </html>
-    """.format(errors=stats['error'], warnings=stats['warning'], info=stats['info'])
+    """.format(
+        errors=stats["error"], warnings=stats["warning"], info=stats["info"]
+    )
 
     # Write the HTML content to a file
     if html_path is not None:
@@ -144,13 +164,22 @@ def print_report(ttl_graph: Union[Path, rdflib.Graph], show_info: bool = False, 
             f.write(html_content)
 
     console.print(table)
-    console.print(f"Errors: {stats['error']}, Warnings: {stats['warning']}, Info: {stats['info']}")
+    console.print(
+        f"Errors: {stats['error']}, Warnings: {stats['warning']}, Info: {stats['info']}"
+    )
+
 
 # Example usage
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Process and print RDF validation report.")
-    parser.add_argument("ttl_graph", type=str, help="Path to the TTL file or RDF graph.")
-    parser.add_argument("--show-info", action="store_true", help="Show info level messages.")
+    parser = argparse.ArgumentParser(
+        description="Process and print RDF validation report."
+    )
+    parser.add_argument(
+        "ttl_graph", type=str, help="Path to the TTL file or RDF graph."
+    )
+    parser.add_argument(
+        "--show-info", action="store_true", help="Show info level messages."
+    )
     parser.add_argument("--output-path", type=str, help="Path to save the HTML report.")
 
     args = parser.parse_args()

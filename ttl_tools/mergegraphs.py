@@ -134,7 +134,6 @@ def main():
         print(f"Saving merged graph to {args.ttl[-1]}")
         g.serialize(f, format="turtle")
 
-
     print("Done")
 
 
