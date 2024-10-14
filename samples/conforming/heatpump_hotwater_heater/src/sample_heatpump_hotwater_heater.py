@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 from bob.scratch.header import sample_header
-
+from bob.assemblage import create_data_and_schema_ttl
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.connections.electricity import (
     ElectricalInletConnectionPoint,
@@ -151,14 +151,5 @@ hpwh = DomesticHPWaterHeater(
 )
 
 
-_folder = "ttl/validation" if VALIDATE else "ttl"
-dump(
-    data_graph,
-    filename=f"samples/{_folder}/{model_name}.data.ttl",
-    header=sample_header(model_name, "data"),
-)
-dump(
-    schema_graph,
-    filename=f"samples/{_folder}/{model_name}.schema.ttl",
-    header=sample_header(model_name, "schema"),
-)
+_folder = Path(__file__).parent
+create_data_and_schema_ttl(model_name, _folder, header=sample_header(model_name))
