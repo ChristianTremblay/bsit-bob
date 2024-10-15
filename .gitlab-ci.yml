@@ -35,15 +35,6 @@ test_python:
   script:
     - pytest -v tests/
 
-generate_html:
-  script:
-    - rdf2html samples/ttl
-    - rdf2html G36/ttl
-  artifacts:
-    paths:
-      - samples/ttl/*.html
-      - G36/ttl/*.html
-
 validate:
   image: azul/zulu-openjdk-debian:11-jre-latest
   before_script: 
