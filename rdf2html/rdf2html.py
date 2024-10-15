@@ -357,7 +357,7 @@ def find_ttl_files(folder, found=[], include_compiled=False):
         # print(each)
         if each.is_file():
             file = each.name
-            if not include_compiled and "compiled.ttl" in file:
+            if not include_compiled and "compiled" in file:
                 continue
             # print('Name : ', file)
             if ttl_name_std.search(file):
