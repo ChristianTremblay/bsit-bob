@@ -3,8 +3,8 @@ Build Dizzy
 
 Application that sucks in the Brick.ttl file and spits out a Bob module.
 """
-import sys
 
+import sys
 from collections import defaultdict
 from copy import deepcopy
 from textwrap import fill, indent
