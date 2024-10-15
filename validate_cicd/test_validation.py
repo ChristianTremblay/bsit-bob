@@ -143,16 +143,16 @@ def test_data_validation(data_file):
             format="turtle",
         )
 
-    html_path = data_file.parent / "validation" / "schema.validation_report.html"
-    print_report(
-        schema_report, show_info=True, html_path=html_path, title=data_file.stem
-    )
-    _sample_doc_folder = html_path.parent.parent.parent / "doc"
-    if _sample_doc_folder.exists():
-        _existing_file = _sample_doc_folder / "schema.validation_report.html"
-        if _existing_file.exists():
-            os.remove(_existing_file)
-        shutil.move(html_path, _sample_doc_folder)
+        html_path = data_file.parent / "validation" / "schema.validation_report.html"
+        print_report(
+            schema_report, show_info=True, html_path=html_path, title=data_file.stem
+        )
+        _sample_doc_folder = html_path.parent.parent.parent / "doc"
+        if _sample_doc_folder.exists():
+            _existing_file = _sample_doc_folder / "schema.validation_report.html"
+            if _existing_file.exists():
+                os.remove(_existing_file)
+            shutil.move(html_path, _sample_doc_folder)
 
     html_path = (
         data_file.parent / "validation" / f"{data_file.stem}.validation_report.html"
