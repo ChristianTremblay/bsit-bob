@@ -350,19 +350,21 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
     del visual_graph
 
 
-def find_ttl_files(folder, found=[]):
+def find_ttl_files(folder, found=[], include_compiled=False):
     ttl_name_std = re.compile(r".ttl$")
     files_found = found
     for each in list(os.scandir(folder)):
         # print(each)
         if each.is_file():
             file = each.name
+            if not include_compiled and "compiled.ttl" in file:
+                continue
             # print('Name : ', file)
             if ttl_name_std.search(file):
                 # print('Found : ', file)
                 files_found.append(os.path.join(folder, file))
         elif each.is_dir() and each.name not in (".", ".git"):
-            find_ttl_files(each, found=files_found)
+            find_ttl_files(each, found=files_found, include_compiled=include_compiled)
     return files_found
 
 
@@ -375,8 +377,8 @@ def clear() -> None:
     g = Graph()
 
 
-def convert_all(folder):
-    files = find_ttl_files(folder)
+def convert_all(folder, compiled=False):
+    files = find_ttl_files(folder, compiled=compiled)
     for each in files:
         p = os.path.normpath(each)
         print(f"Processing {p}")
@@ -390,15 +392,19 @@ def convert_all(folder):
 @click.argument("source", type=click.Path())
 @click.option("-v", "--view", default=False)
 @click.option("-m", "--move", is_flag=True, default=False)
-def process(source=None, view=False, move=False):
+@click.option("-ic", "--include_compiled", is_flag=False, default=False)
+def process(source=None, view=False, move=False, include_compiled=False):
     if os.path.isfile(source):
         to_html(source, show=view)
     else:
-        convert_all(source)
+        convert_all(source, include_compiled=include_compiled)
     _folder = Path(source).resolve()
 
     if move:
-        doc_folder = _folder.parent / "doc"
+        if _folder.parent.name == "validation":
+            doc_folder = _folder.parent.parent / "doc"
+        else:
+            doc_folder = _folder.parent / "doc"
         print(_folder, doc_folder)
         if doc_folder.exists():
             print("Folder exists")
