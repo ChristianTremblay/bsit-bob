@@ -103,21 +103,19 @@ bob:InsideTankHeatTransfer a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand2 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower2 ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation2 ],
+            sh:path sample_heatpump_hotwater_heater:leavingWaterTemp ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:averageSurfaceTemperature ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:waterFlow ],
-        [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:leavingWaterTemp ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:fluidTemp ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand1 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation2 ],
+        [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:waterFlow ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
@@ -153,10 +151,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:WaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -578,11 +576,11 @@ p223:DomesticHeatPumpWaterHeater a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:airInlet ],
         [ a sh:PropertyShape ;
+            sh:path bob:enteringFluid ],
+        [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path sample_heatpump_hotwater_heater:airOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ] .
+            sh:path sample_heatpump_hotwater_heater:airOutlet ] .
 
 p223:DomesticWaterHeater a rdfs:Class,
         sh:NodeShape ;
@@ -590,11 +588,29 @@ p223:DomesticWaterHeater a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:enteringFluid ] .
+
+p223:Effectiveness-Inactive a p223:Effectiveness-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Inactive" ;
+    rdfs:subClassOf s223:Aspect-Effectiveness,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Aspect .
+
+p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf s223:Aspect-Effectiveness,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Aspect .
 
 p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind,
@@ -903,11 +919,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ] ;
+            s223:ofConstituent s223:Signal-Ethernet ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-48V" ;
+            s223:ofConstituent s223:DC-48V ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1052,13 +1068,13 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
-        [ a sh:PropertyShape ;
-            sh:path bob:leavingFluid ],
+            sh:path bob:internalPressure ],
         [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:internalPressure ],
+            sh:path bob:enteringFluid ],
+        [ a sh:PropertyShape ;
+            sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidTemperature ] .
 

@@ -319,6 +319,24 @@ p223:Constituent-VOC a p223:Constituent-VOC,
     rdfs:subClassOf s223:Constituent,
         s223:EnumerationKind .
 
+p223:Effectiveness-Inactive a p223:Effectiveness-Inactive,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Inactive" ;
+    rdfs:subClassOf s223:Aspect-Effectiveness,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Aspect .
+
+p223:Effectiveness-Unknown a p223:Effectiveness-Unknown,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Unknown" ;
+    rdfs:subClassOf s223:Aspect-Effectiveness,
+        s223:EnumerationKind,
+        s223:EnumerationKind-Aspect .
+
 p223:EnumerationKind-ActiveInactive a p223:EnumerationKind-ActiveInactive,
         s223:EnumerationKind,
         rdfs:Class,
@@ -733,14 +751,6 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
-p223:Role-RunStatus a p223:Role-RunStatus,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "RunStatus" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Role .
-
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
         rdfs:Class,
@@ -809,11 +819,23 @@ p223:TrueFalse-True a p223:TrueFalse-True,
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
 
-p223:Water-CondensedWater a p223:Water-CondensedWater,
+p223:Water-Condensate a p223:Water-Condensate,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "CondensedWater" ;
+    rdfs:label "Condensate" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Water-Condenser a p223:Water-Condenser,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Condenser" ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
@@ -1084,13 +1106,13 @@ scratch:Fan a rdfs:Class,
         s223:Equipment,
         s223:Fan ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
             sh:path scratch:onOffCommand ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
+            sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ] .
+            sh:path bob:airOutlet ] .
 
 s223:Actuator a s223:Class,
         sh:NodeShape ;
@@ -40609,13 +40631,6 @@ s223:AC-600VLL-3Ph-60Hz a s223:AC-600VLL-3Ph-60Hz,
     rdfs:comment "AC-600VLL-3Ph-60Hz" ;
     rdfs:subClassOf s223:Electricity-AC .
 
-s223:Aspect-Effectiveness a s223:Aspect-Effectiveness,
-        s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Aspect-Effectiveness" ;
-    rdfs:comment "This class enumerates the possible states of effectiveness" ;
-    rdfs:subClassOf s223:EnumerationKind-Aspect .
-
 s223:DCNegativeVoltage-190.0V a s223:Class,
         s223:DCNegativeVoltage-190.0V,
         sh:NodeShape ;
@@ -55629,6 +55644,13 @@ s223:AC-240VLL-1Ph-60Hz a s223:AC-240VLL-1Ph-60Hz,
     rdfs:comment "AC-240VLL-1Ph-60Hz" ;
     rdfs:subClassOf s223:Electricity-AC .
 
+s223:Aspect-Effectiveness a s223:Aspect-Effectiveness,
+        s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Aspect-Effectiveness" ;
+    rdfs:comment "This class enumerates the possible states of effectiveness" ;
+    rdfs:subClassOf s223:EnumerationKind-Aspect .
+
 s223:Constituent-EM a s223:Class,
         s223:Constituent-EM,
         sh:NodeShape ;
@@ -68495,13 +68517,6 @@ unit:YR_TROPICAL a qudt:Unit ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> ;
     skos:altLabel "solar year" .
 
-s223:Medium-Mix a s223:Class,
-        s223:Medium-Mix,
-        sh:NodeShape ;
-    rdfs:label "Medium-Mix" ;
-    rdfs:comment "Medium-Mix" ;
-    rdfs:subClassOf s223:Substance-Medium .
-
 s223:cnx a s223:SymmetricProperty ;
     rdfs:label "cnx" ;
     rdfs:comment "The cnx relation is a symmetric property used to associate adjacent entities in a connection path (comprised of Equipment-ConnectionPoint-Connection-ConnectionPoint-Equipment sequences)." .
@@ -68897,6 +68912,13 @@ s223:DCVoltage-DCZeroVoltage a s223:Class,
     qudt:hasUnit unit:V ;
     rdfs:comment "DCVoltage-DCZero voltage" ;
     rdfs:subClassOf s223:Numerical-DCVoltage .
+
+s223:Medium-Mix a s223:Class,
+        s223:Medium-Mix,
+        sh:NodeShape ;
+    rdfs:label "Medium-Mix" ;
+    rdfs:comment "Medium-Mix" ;
+    rdfs:subClassOf s223:Substance-Medium .
 
 qudtqk:Activity a qudt:QuantityKind ;
     rdfs:label "Activity"@en ;
@@ -70941,32 +70963,6 @@ unit:NanoM2 a qudt:Unit ;
     qudt:ucumCode "nm2"^^qudt:UCUMcs ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-s223:EnumerationKind-Substance a s223:Class,
-        s223:EnumerationKind-Substance,
-        sh:NodeShape ;
-    rdfs:label "Substance" ;
-    rdfs:comment "This class has enumerated subclasses of the substances that are consumed, produced, transported, sensed, controlled or otherwise interacted with (e.g. water, air, etc.)." ;
-    rdfs:subClassOf s223:EnumerationKind ;
-    sh:property [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also composed ofs." ;
-            sh:path s223:composedOf ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
-                    sh:message "s223: This substance {$this} has a constituent {?constituent} that itself composed ofs {?nextConstituent}. Create new substance with only atomic constituents." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?constituent ?nextConstituent\r
-WHERE {\r
-$this s223:composedOf ?constituent .\r
-?constituent s223:ofConstituent/s223:composedOf ?nextConstituent .\r
-}\r
-""" ] ],
-        [ rdfs:comment """If the relation composedOf is present, it must associate an EnumerationKind-Substance with one or more Properties that \r
-identify and characterize its constituents. The Property identifies the constituent using the relation ofConstituent. If appropriate, a \r
-QuantifiableProperty may be used to also specify the amount of the constituent using the relations qudt:hasQuantityKind, qudt:hasUnit, and s223:hasValue.  \r
-For example, see `s223:GlycolSolution-15Percent`.""" ;
-            sh:class s223:Property ;
-            sh:path s223:composedOf ] .
-
 s223:Numerical-LineLineVoltage a s223:Class,
         s223:Numerical-LineLineVoltage,
         sh:NodeShape ;
@@ -71529,6 +71525,32 @@ $this s223:connectsAt ?cp .\r
             sh:object [ sh:path s223:cnx ] ;
             sh:predicate s223:connectsAt ;
             sh:subject sh:this ] .
+
+s223:EnumerationKind-Substance a s223:Class,
+        s223:EnumerationKind-Substance,
+        sh:NodeShape ;
+    rdfs:label "Substance" ;
+    rdfs:comment "This class has enumerated subclasses of the substances that are consumed, produced, transported, sensed, controlled or otherwise interacted with (e.g. water, air, etc.)." ;
+    rdfs:subClassOf s223:EnumerationKind ;
+    sh:property [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also composed ofs." ;
+            sh:path s223:composedOf ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
+                    sh:message "s223: This substance {$this} has a constituent {?constituent} that itself composed ofs {?nextConstituent}. Create new substance with only atomic constituents." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?constituent ?nextConstituent\r
+WHERE {\r
+$this s223:composedOf ?constituent .\r
+?constituent s223:ofConstituent/s223:composedOf ?nextConstituent .\r
+}\r
+""" ] ],
+        [ rdfs:comment """If the relation composedOf is present, it must associate an EnumerationKind-Substance with one or more Properties that \r
+identify and characterize its constituents. The Property identifies the constituent using the relation ofConstituent. If appropriate, a \r
+QuantifiableProperty may be used to also specify the amount of the constituent using the relations qudt:hasQuantityKind, qudt:hasUnit, and s223:hasValue.  \r
+For example, see `s223:GlycolSolution-15Percent`.""" ;
+            sh:class s223:Property ;
+            sh:path s223:composedOf ] .
 
 qudtqk:MassPerEnergy a qudt:QuantityKind ;
     rdfs:label "Mass per Energy"@en ;
@@ -72215,13 +72237,6 @@ unit:N a qudt:DerivedUnit,
     qudt:uneceCommonCode "NEW" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-s223:Substance-Medium a s223:Class,
-        s223:Substance-Medium,
-        sh:NodeShape ;
-    rdfs:label "Medium" ;
-    rdfs:comment "This class has enumerated subclasses of a physical substance or anything that allows for the transfer of energy or information." ;
-    rdfs:subClassOf s223:EnumerationKind-Substance .
-
 qudtqk:HeatFlowRate a qudt:QuantityKind ;
     rdfs:label "Heat Flow Rate"@en ;
     dcterms:description "The rate of heat flow between two systems is measured in watts (joules per second). The formula for rate of heat flow is $\\bigtriangleup Q / \\bigtriangleup t = -K \\times A \\times \\bigtriangleup T/x$, where $\\bigtriangleup Q / \\bigtriangleup t$ is the rate of heat flow; $-K$ is the thermal conductivity factor; A is the surface area; $\\bigtriangleup T$ is the change in temperature and $x$ is the thickness of the material. $\\bigtriangleup  T/ x$ is called the temperature gradient and is always negative because of the heat of flow always goes from more thermal energy to less)."^^qudt:LatexString ;
@@ -72355,6 +72370,13 @@ unit:GigaHZ-M a qudt:Unit ;
     qudt:ucumCode "GHz.m"^^qudt:UCUMcs ;
     qudt:uneceCommonCode "M18" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
+
+s223:Substance-Medium a s223:Class,
+        s223:Substance-Medium,
+        sh:NodeShape ;
+    rdfs:label "Medium" ;
+    rdfs:comment "This class has enumerated subclasses of a physical substance or anything that allows for the transfer of energy or information." ;
+    rdfs:subClassOf s223:EnumerationKind-Substance .
 
 qudtqk:ActivePower a qudt:QuantityKind ;
     rdfs:label "Active Power"@en ;
@@ -72644,13 +72666,6 @@ sample_airair_heatpump:00060 a s223:Connectable,
     bob:refrigerantOutdoorCoilPort sample_airair_heatpump:00065 ;
     rdfs:comment "Reversing Valve" .
 
-s223:Mix-Fluid a s223:Class,
-        s223:Mix-Fluid,
-        sh:NodeShape ;
-    rdfs:label "Mix-Fluid" ;
-    rdfs:comment "Mix-Fluid" ;
-    rdfs:subClassOf s223:Medium-Mix .
-
 qudtqk:ElectricCurrent a qudt:QuantityKind ;
     rdfs:label "تيار كهربائي"@ar,
         "Електрически ток"@bg,
@@ -72897,6 +72912,13 @@ s223:BidirectionalConnectionPoint a s223:Class,
     sh:property [ rdfs:comment "If the relation mapsTo is present it must associate the BidirectionalConnectionPoint with a BidirectionalConnectionPoint." ;
             sh:class s223:BidirectionalConnectionPoint ;
             sh:path s223:mapsTo ] .
+
+s223:Mix-Fluid a s223:Class,
+        s223:Mix-Fluid,
+        sh:NodeShape ;
+    rdfs:label "Mix-Fluid" ;
+    rdfs:comment "Mix-Fluid" ;
+    rdfs:subClassOf s223:Medium-Mix .
 
 qudtqk:DynamicViscosity a qudt:QuantityKind ;
     rdfs:label "لزوجة"@ar,
@@ -73885,6 +73907,13 @@ unit:TORR a qudt:Unit ;
     qudt:uneceCommonCode "UA" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
+s223:EnumerationKind-Role a s223:Class,
+        s223:EnumerationKind-Role,
+        sh:NodeShape ;
+    rdfs:label "Role" ;
+    rdfs:comment "This class has enumerated subclasses of roles played by entities, such as cooling, generator, relief, return." ;
+    rdfs:subClassOf s223:EnumerationKind .
+
 qudtqk:VolumeFraction a qudt:QuantityKind ;
     rdfs:label "Volume Fraction"@en ;
     dcterms:description "\"Volume Fraction\" is the volume of a constituent divided by the volume of all constituents of the mixture prior to mixing. Volume fraction is also called volume concentration in ideal solutions where the volumes of the constituents are additive (the volume of the solution is equal to the sum of the volumes of its ingredients)."^^rdf:HTML ;
@@ -74001,25 +74030,6 @@ unit:PDL-PER-IN2 a qudt:Unit ;
     qudt:ucumCode "[lb_av].[ft_i].s-2.[in_i]-2"^^qudt:UCUMcs ;
     qudt:uneceCommonCode "N26" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
-
-s223:EnumerationKind-Role a s223:Class,
-        s223:EnumerationKind-Role,
-        sh:NodeShape ;
-    rdfs:label "Role" ;
-    rdfs:comment "This class has enumerated subclasses of roles played by entities, such as cooling, generator, relief, return." ;
-    rdfs:subClassOf s223:EnumerationKind .
-
-s223:Fluid-Water a s223:Class,
-        s223:Fluid-Water,
-        sh:NodeShape ;
-    rdfs:label "Fluid-Water" ;
-    s223:composedOf [ a s223:QuantifiableProperty ;
-            rdfs:label "Water conc" ;
-            s223:ofConstituent s223:Constituent-H2O ;
-            qudt:hasQuantityKind qudtqk:VolumeFraction ;
-            qudt:hasUnit unit:PERCENT ] ;
-    rdfs:comment "This class has enumerated subclasses of water and aqueous solutions in various states." ;
-    rdfs:subClassOf s223:Mix-Fluid .
 
 s223:Frequency-50Hz a s223:Class,
         s223:Frequency-50Hz,
@@ -74247,6 +74257,18 @@ s223:Constituent-Electricity a s223:Class,
     rdfs:label "Electricity" ;
     rdfs:comment "This class has enumerated subclasses of all forms of electricity, including AC and DC." ;
     rdfs:subClassOf s223:Medium-Constituent .
+
+s223:Fluid-Water a s223:Class,
+        s223:Fluid-Water,
+        sh:NodeShape ;
+    rdfs:label "Fluid-Water" ;
+    s223:composedOf [ a s223:QuantifiableProperty ;
+            rdfs:label "Water conc" ;
+            s223:ofConstituent s223:Constituent-H2O ;
+            qudt:hasQuantityKind qudtqk:VolumeFraction ;
+            qudt:hasUnit unit:PERCENT ] ;
+    rdfs:comment "This class has enumerated subclasses of water and aqueous solutions in various states." ;
+    rdfs:subClassOf s223:Mix-Fluid .
 
 qudtqk:Temperature a qudt:QuantityKind ;
     rdfs:label "Temperature"@en ;
@@ -76727,15 +76749,6 @@ unit:THM_US a qudt:Unit ;
     qudt:uneceCommonCode "N72" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-s223:EnumerationKind-Aspect a s223:Class,
-        s223:EnumerationKind-Aspect,
-        sh:NodeShape ;
-    rdfs:label "EnumerationKind Aspect" ;
-    rdfs:comment """This class has enumerated subclasses usually used to specify the context of a s223:Property. The following table lists all of the defined enumerations for Aspect. \r
-  Some Aspect enumerations have subclasses for more specific use. Those subclasses are not shown in the table but each of them are defined in `s223:Aspect-DayOfWeek` - `s223:Aspect-ElectricalVoltagePhases`. \r
-  The following table lists all of the defined enumerations for Aspect.""" ;
-    rdfs:subClassOf s223:EnumerationKind .
-
 s223:ObservableProperty a s223:Class,
         sh:NodeShape ;
     rdfs:label "Observable Property" ;
@@ -76784,6 +76797,15 @@ unit:PicoJ a qudt:Unit ;
     qudt:iec61360Code "0112/2///62720#UAB738" ;
     qudt:symbol "pJ" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
+
+s223:EnumerationKind-Aspect a s223:Class,
+        s223:EnumerationKind-Aspect,
+        sh:NodeShape ;
+    rdfs:label "EnumerationKind Aspect" ;
+    rdfs:comment """This class has enumerated subclasses usually used to specify the context of a s223:Property. The following table lists all of the defined enumerations for Aspect. \r
+  Some Aspect enumerations have subclasses for more specific use. Those subclasses are not shown in the table but each of them are defined in `s223:Aspect-DayOfWeek` - `s223:Aspect-ElectricalVoltagePhases`. \r
+  The following table lists all of the defined enumerations for Aspect.""" ;
+    rdfs:subClassOf s223:EnumerationKind .
 
 unit:J a qudt:DerivedUnit,
         qudt:Unit ;
