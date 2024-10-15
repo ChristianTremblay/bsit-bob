@@ -16,8 +16,8 @@ from ...connections.naturalgas import NaturalGasInletConnectionPoint
 from ...connections.liquid import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
-    CondensedWaterInletConnectionPoint,
-    CondensedWaterOutletConnectionPoint,
+    CondenserInletConnectionPoint,
+    CondenserOutletConnectionPoint,
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
@@ -38,8 +38,8 @@ class Chiller(Equipment):
     _class_iri = S223.Chiller
     chilledWaterEntering: ChilledWaterInletConnectionPoint
     chilledWaterLeaving: ChilledWaterOutletConnectionPoint
-    condensedWaterEntering: CondensedWaterInletConnectionPoint
-    condensedWaterLeaving: CondensedWaterOutletConnectionPoint
+    condenserEntering: CondenserInletConnectionPoint
+    condenserLeaving: CondenserOutletConnectionPoint
 
     # refrigerant
     # manufacturer

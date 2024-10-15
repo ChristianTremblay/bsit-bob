@@ -105,6 +105,8 @@ bob:InsideTankHeatTransfer a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
+            sh:path sample_heatpump_hotwater_heater:resistanceHeaterPower2 ],
+        [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:resistanceHeaterModulation2 ],
         [ a sh:PropertyShape ;
             sh:path sample_heatpump_hotwater_heater:averageSurfaceTemperature ],
@@ -1008,14 +1010,6 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
-p223:Role-RunStatus a p223:Role-RunStatus,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "RunStatus" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Role .
-
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
         rdfs:Class,
@@ -1058,7 +1052,7 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
@@ -1100,11 +1094,23 @@ p223:TrueFalse-True a p223:TrueFalse-True,
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
 
-p223:Water-CondensedWater a p223:Water-CondensedWater,
+p223:Water-Condensate a p223:Water-Condensate,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "CondensedWater" ;
+    rdfs:label "Condensate" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Water-Condenser a p223:Water-Condenser,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Condenser" ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,

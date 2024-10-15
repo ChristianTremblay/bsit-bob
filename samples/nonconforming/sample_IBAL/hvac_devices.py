@@ -408,14 +408,14 @@ damper5a = ElectricalActuatedProportionalDamper(
     label="damper5a", comment="from top to bottom"
 )
 damper5b = ElectricalActuatedProportionalDamper(
-    label="damper5b", comment="from boottom to top"
+    label="damper5b", comment="from bottom to top"
 )
 
 damper10a = ElectricalActuatedProportionalDamper(
     label="damper10a", comment="from top to bottom"
 )
 damper10b = ElectricalActuatedProportionalDamper(
-    label="damper10b", comment="from boottom to top"
+    label="damper10b", comment="from bottom to top"
 )
 
 outdoor_temp = AirTemperatureSensor(label="outdoor_temp", hasUnit=UNIT.DEG_C)

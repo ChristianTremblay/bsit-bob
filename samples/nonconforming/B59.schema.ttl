@@ -879,14 +879,6 @@ p223:Refrigerant-R-32 a p223:Refrigerant-R-32,
         s223:Mix-Fluid,
         s223:Substance-Medium .
 
-p223:Role-RunStatus a p223:Role-RunStatus,
-        s223:EnumerationKind,
-        rdfs:Class,
-        sh:NodeShape ;
-    rdfs:label "RunStatus" ;
-    rdfs:subClassOf s223:EnumerationKind,
-        s223:EnumerationKind-Role .
-
 p223:Role-Storage a p223:Role-Storage,
         s223:EnumerationKind,
         rdfs:Class,
@@ -955,11 +947,23 @@ p223:TrueFalse-True a p223:TrueFalse-True,
     rdfs:subClassOf p223:EnumerationKind-TrueFalse,
         s223:EnumerationKind .
 
-p223:Water-CondensedWater a p223:Water-CondensedWater,
+p223:Water-Condensate a p223:Water-Condensate,
         s223:EnumerationKind,
         rdfs:Class,
         sh:NodeShape ;
-    rdfs:label "CondensedWater" ;
+    rdfs:label "Condensate" ;
+    rdfs:subClassOf s223:EnumerationKind,
+        s223:EnumerationKind-Substance,
+        s223:Fluid-Water,
+        s223:Medium-Mix,
+        s223:Mix-Fluid,
+        s223:Substance-Medium .
+
+p223:Water-Condenser a p223:Water-Condenser,
+        s223:EnumerationKind,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "Condenser" ;
     rdfs:subClassOf s223:EnumerationKind,
         s223:EnumerationKind-Substance,
         s223:Fluid-Water,
@@ -1157,15 +1161,15 @@ bob:AirHandlingUnit a rdfs:Class,
     """ ;
     rdfs:subClassOf s223:System ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:supplyAirOutlet ],
+            sh:path bob:outsideAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:electricalInlet ],
+            sh:path bob:supplyAirOutlet ],
         [ a sh:PropertyShape ;
             sh:path bob:exhaustAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:outsideAirInlet ],
+            sh:path bob:returnAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:returnAirInlet ] .
+            sh:path bob:electricalInlet ] .
 
 bob:AirTemperatureSensor a rdfs:Class ;
     rdfs:label "bob.sensor.temperature.AirTemperatureSensor" ;
@@ -1236,6 +1240,10 @@ bob:HVACSpace a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path bob:radiantCooling ],
         [ a sh:PropertyShape ;
+            sh:path bob:airChangePerHour ],
+        [ a sh:PropertyShape ;
+            sh:path bob:ductAirOutlet ],
+        [ a sh:PropertyShape ;
             sh:path bob:radiantHeating ],
         [ a sh:PropertyShape ;
             sh:path bob:co2 ],
@@ -1252,6 +1260,10 @@ bob:HVACZone a rdfs:Class,
     rdfs:subClassOf s223:Zone ;
     sh:property [ a sh:PropertyShape ;
             sh:path bob:temperature_setpoint ],
+        [ a sh:PropertyShape ;
+            sh:path bob:temperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:co2 ],
         [ a sh:PropertyShape ;
             sh:path bob:temperature ],
         [ a sh:PropertyShape ;
@@ -1368,6 +1380,8 @@ bob:ZoneConnectionPoint a rdfs:Class,
             sh:class s223:EnumerationKind ;
             sh:path s223:hasMedium ],
         [ a sh:PropertyShape ;
+            sh:path bob:mapsTo ],
+        [ a sh:PropertyShape ;
             sh:path bob:isZoneConnectionPointOf ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
@@ -1380,9 +1394,9 @@ scratch:Actuator a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:command ],
+            sh:path scratch:position ],
         [ a sh:PropertyShape ;
-            sh:path scratch:position ] .
+            sh:path scratch:command ] .
 
 scratch:Damper a rdfs:Class,
         sh:NodeShape ;

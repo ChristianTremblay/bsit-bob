@@ -5,8 +5,8 @@ from ..core import (
     Connection,
     ConnectionPoint,
     InletConnectionPoint,
-    OutletConnectionPoint,
     Medium,
+    OutletConnectionPoint,
 )
 from ..enum import Fluid, GlycolSolution_15Percent, GlycolSolution_30Percent, Water
 
@@ -154,27 +154,43 @@ class ChilledWaterOutletConnectionPoint(
     _class_iri = S223.OutletConnectionPoint
 
 
-# === CONDENSED WATER
+# === Condensate
 
 
-class CondensedWaterConnection(Connection):
-    hasMedium: Medium = Water.CondensedWater
+class CondensateConnection(Connection):
+    hasMedium: Medium = Water.Condensate
     _class_iri = S223.Connection
 
 
-class CondensedWaterConnectionPoint(ConnectionPoint):
-    hasMedium: Medium = Water.CondensedWater
+class CondensateConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Water.Condensate
 
 
-class CondensedWaterInletConnectionPoint(
-    InletConnectionPoint, CondensedWaterConnectionPoint
-):
+class CondensateInletConnectionPoint(InletConnectionPoint, CondensateConnectionPoint):
     _class_iri = S223.InletConnectionPoint
 
 
-class CondensedWaterOutletConnectionPoint(
-    OutletConnectionPoint, CondensedWaterConnectionPoint
-):
+class CondensateOutletConnectionPoint(OutletConnectionPoint, CondensateConnectionPoint):
+    _class_iri = S223.OutletConnectionPoint
+
+
+# === Condenser
+
+
+class CondenserConnection(Connection):
+    hasMedium: Medium = Water.Condenser
+    _class_iri = S223.Connection
+
+
+class CondenserConnectionPoint(ConnectionPoint):
+    hasMedium: Medium = Water.Condenser
+
+
+class CondenserInletConnectionPoint(InletConnectionPoint, CondenserConnectionPoint):
+    _class_iri = S223.InletConnectionPoint
+
+
+class CondenserOutletConnectionPoint(OutletConnectionPoint, CondenserConnectionPoint):
     _class_iri = S223.OutletConnectionPoint
 
 

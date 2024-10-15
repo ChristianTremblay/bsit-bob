@@ -13,7 +13,6 @@ from ..core import (
 from ..properties import (
     Flow,
     GasConcentration,
-    OccupancyStatus,
     OnOffStatus,
     Percent,
     Schedule,
