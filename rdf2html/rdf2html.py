@@ -377,8 +377,8 @@ def clear() -> None:
     g = Graph()
 
 
-def convert_all(folder, compiled=False):
-    files = find_ttl_files(folder, compiled=compiled)
+def convert_all(folder, include_compiled=False):
+    files = find_ttl_files(folder, include_compiled=include_compiled)
     for each in files:
         p = os.path.normpath(each)
         print(f"Processing {p}")
