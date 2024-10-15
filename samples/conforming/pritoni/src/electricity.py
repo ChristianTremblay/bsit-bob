@@ -7,9 +7,9 @@ import network_devices as nd
 import physical_spaces as ps
 
 from bob.core import bind_model_namespace, dump
+from bob.assemblage import model_namespace
 
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
+model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 

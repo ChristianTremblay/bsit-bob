@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-from bob.assemblage import create_data_and_schema_ttl
+from bob.assemblage import create_data_and_schema_ttl, model_namespace
 from bob.core import bind_model_namespace, data_graph, dump, schema_graph
 from bob.scratch.header import sample_header
 
@@ -22,11 +22,8 @@ import bacnet_references  # isort: skip
 import fake_values  # isort: skip
 
 
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
+model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
-
-VALIDATE = True
 
 # Relations between Physical spaces and Domain spaces
 ps.bldg > ps.roof

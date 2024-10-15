@@ -21,9 +21,9 @@ from bob.equipment.electricity.distribution import (
 from bob.equipment.electricity.meter import ThreePhaseElectricalMeter
 from bob.equipment.electricity.switch import DimmableSwitch, TimerSwitch
 from bob.properties.time import Hour
+from bob.assemblage import model_namespace
 
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
+model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 

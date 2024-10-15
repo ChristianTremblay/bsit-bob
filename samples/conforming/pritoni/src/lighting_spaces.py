@@ -4,8 +4,9 @@ from bob.core import bind_model_namespace, dump
 from bob.properties import OccupancyStatus
 from bob.space.light import LightingSpace, LightingZone
 
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
+from bob.assemblage import model_namespace
+
+model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 

@@ -9,9 +9,9 @@ from rdflib import URIRef
 
 from bob.core import bind_model_namespace, dump
 from bob.enum import OccupancyStatus, OnOffEnum
+from bob.assemblage import model_namespace
 
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
+model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 hd.vav1["DA-T"].observedProperty.set_value(72.3)  # PD-SR-MP VAV1 Outlet Temperature

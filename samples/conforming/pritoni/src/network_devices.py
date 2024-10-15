@@ -9,9 +9,9 @@ from bob.core import bind_model_namespace, dump
 from bob.equipment.network.firewall import EthernetFirewall, internet
 from bob.equipment.network.switch import EthernetSwitch
 from bob.connections.electricity import Electricity_120VLN_1Ph_60HzInletConnectionPoint
+from bob.assemblage import model_namespace
 
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
+model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 eth_switch_template = {

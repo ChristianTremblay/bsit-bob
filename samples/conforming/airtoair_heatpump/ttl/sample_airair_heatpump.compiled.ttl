@@ -1050,10 +1050,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
 
 scratch:Fan a rdfs:Class,
         sh:NodeShape ;
@@ -1084,13 +1084,13 @@ scratch:Fan a rdfs:Class,
         s223:Equipment,
         s223:Fan ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ],
-        [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ],
+            sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:onOffCommand ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ] .
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:onOffStatus ] .
 
 s223:Actuator a s223:Class,
         sh:NodeShape ;
@@ -1950,7 +1950,28 @@ s223:Pump a s223:Class,
     rdfs:label "Pump" ;
     rdfs:comment "A machine for imparting energy to a fluid, drawing a fluid into itself through an entrance port, and forcing the fluid out through an exhaust port." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
+    sh:property [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+            sh:path s223:hasConnectionPoint ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+                    sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
+WHERE {\r
+  $this s223:hasConnectionPoint ?cpa .\r
+  $this s223:hasConnectionPoint ?cpb .\r
+  FILTER (?cpa != ?cpb) .\r
+  ?cpa s223:hasMedium ?mediuma .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  ?cpb s223:hasMedium ?mediumb .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  FILTER (?mediuma != ?mediumb) .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
@@ -1973,28 +1994,7 @@ s223:Pump a s223:Class,
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Refrigerant ;
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Oil ;
                                                 sh:path s223:hasMedium ] ] ) ;
-                            sh:severity sh:Warning ] ] ],
-        [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
-            sh:path s223:hasConnectionPoint ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
-                    sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
-WHERE {\r
-  $this s223:hasConnectionPoint ?cpa .\r
-  $this s223:hasConnectionPoint ?cpb .\r
-  FILTER (?cpa != ?cpb) .\r
-  ?cpa s223:hasMedium ?mediuma .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  ?cpb s223:hasMedium ?mediumb .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  FILTER (?mediuma != ?mediumb) .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
-}\r
-""" ] ] .
+                            sh:severity sh:Warning ] ] ] .
 
 s223:RadiantHeaterInletShape a sh:NodeShape ;
     rdfs:label "Radiant heater inlet shape" ;
@@ -18039,17 +18039,7 @@ s223:Filter a s223:Class,
     rdfs:label "Filter" ;
     rdfs:comment "A device that removes contaminants from gases or liquids." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
-        [ rdfs:comment "A Filter shall have at least one outlet." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ],
-        [ rdfs:comment "A filter should have one common constituent between the inlet and outlet" ;
+    sh:property [ rdfs:comment "A filter should have one common constituent between the inlet and outlet" ;
             sh:path s223:hasConnectionPoint ;
             sh:severity sh:Warning ;
             sh:sparql [ a sh:SPARQLConstraint ;
@@ -18124,7 +18114,17 @@ FILTER NOT EXISTS {?m2 s223:composedOf ?c2}\r
 FILTER (NOT EXISTS {?m2 rdfs:subClassOf* ?m1}) .\r
 FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
+        [ rdfs:comment "A Filter shall have at least one outlet." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ] .
 
 s223:Gas-SuperHeated a s223:Class,
         s223:Gas-SuperHeated,
@@ -18708,7 +18708,19 @@ s223:System a s223:Class,
             sh:name "InferredSystemToBoundaryConnectionPointFromOptional" ;
             sh:object [ sh:path s223:hasOptionalConnectionPoint ] ;
             sh:predicate s223:hasBoundaryConnectionPoint ;
-            sh:subject sh:this ] .
+            sh:subject sh:this ] ;
+    sh:sparql [ a sh:SPARQLConstraint ;
+            rdfs:comment "Ensure that the Boundary CPs of a System belong to only members of that System" ;
+            sh:message "s223: System {$this} hasBoundaryConnectionPoint {?cp}, belonging to {?con} that is not a member of {?this}." ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+            sh:select """\r
+SELECT $this ?cp ?con\r
+WHERE {\r
+$this s223:hasBoundaryConnectionPoint ?cp .\r
+?cp s223:isConnectionPointOf ?con .\r
+FILTER NOT EXISTS {$this s223:hasMember+ ?con}\r
+}\r
+""" ] .
 
 s223:Water-ChilledWater a s223:Class,
         s223:Water-ChilledWater,
@@ -69689,22 +69701,7 @@ s223:Sensor a s223:Class,
     rdfs:label "Sensor" ;
     rdfs:comment "A Sensor observes an ObservableProperty (see `s223:ObservableProperty`) which may be quantifiable (see `s223:QuantifiableObservableProperty`), such as a temperature, flowrate, or concentration, or Enumerable (see `s223:EnumeratedObservableProperty`), such as an alarm state or occupancy state." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
-            sh:class s223:QuantifiableProperty ;
-            sh:path s223:hasMeasurementResolution ],
-        [ rdfs:comment "A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:path s223:hasObservationLocation ],
-        [ rdfs:comment "If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
-            sh:maxCount 1 ;
-            sh:path s223:hasReferenceLocation ],
-        [ rdfs:comment "A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
-            sh:class s223:ObservableProperty ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:path s223:observes ],
-        [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
+    sh:property [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
             sh:path s223:observes ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
@@ -69733,7 +69730,22 @@ $this s223:observes ?x .\r
 ?x a/rdfs:subClassOf* s223:QuantifiableProperty .\r
 FILTER NOT EXISTS {$this s223:hasReferenceLocation ?y}\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
+            sh:class s223:QuantifiableProperty ;
+            sh:path s223:hasMeasurementResolution ],
+        [ rdfs:comment "A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path s223:hasObservationLocation ],
+        [ rdfs:comment "If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
+            sh:maxCount 1 ;
+            sh:path s223:hasReferenceLocation ],
+        [ rdfs:comment "A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
+            sh:class s223:ObservableProperty ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path s223:observes ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "Infer the hasObservationLocation relation for a Sensor from the Property that it is observing, only if that property is associated with a single entity." ;
             sh:construct """\r
@@ -70935,13 +70947,7 @@ s223:EnumerationKind-Substance a s223:Class,
     rdfs:label "Substance" ;
     rdfs:comment "This class has enumerated subclasses of the substances that are consumed, produced, transported, sensed, controlled or otherwise interacted with (e.g. water, air, etc.)." ;
     rdfs:subClassOf s223:EnumerationKind ;
-    sh:property [ rdfs:comment """If the relation composedOf is present, it must associate an EnumerationKind-Substance with one or more Properties that \r
-identify and characterize its constituents. The Property identifies the constituent using the relation ofConstituent. If appropriate, a \r
-QuantifiableProperty may be used to also specify the amount of the constituent using the relations qudt:hasQuantityKind, qudt:hasUnit, and s223:hasValue.  \r
-For example, see `s223:GlycolSolution-15Percent`.""" ;
-            sh:class s223:Property ;
-            sh:path s223:composedOf ],
-        [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also composed ofs." ;
+    sh:property [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also composed ofs." ;
             sh:path s223:composedOf ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
@@ -70953,7 +70959,13 @@ WHERE {\r
 $this s223:composedOf ?constituent .\r
 ?constituent s223:ofConstituent/s223:composedOf ?nextConstituent .\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment """If the relation composedOf is present, it must associate an EnumerationKind-Substance with one or more Properties that \r
+identify and characterize its constituents. The Property identifies the constituent using the relation ofConstituent. If appropriate, a \r
+QuantifiableProperty may be used to also specify the amount of the constituent using the relations qudt:hasQuantityKind, qudt:hasUnit, and s223:hasValue.  \r
+For example, see `s223:GlycolSolution-15Percent`.""" ;
+            sh:class s223:Property ;
+            sh:path s223:composedOf ] .
 
 s223:Numerical-LineLineVoltage a s223:Class,
         s223:Numerical-LineLineVoltage,
@@ -77331,19 +77343,6 @@ qudtqk:Volume a qudt:QuantityKind ;
     qudt:siExactMatch si-quantity:VOLU ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
-<http://data.ashrae.org/standard223/1.0/validation/model> a owl:Ontology ;
-    owl:versionInfo "Created with TopBraid Composer" ;
-    sh:declare [ sh:namespace "http://data.ashrae.org/standard223#"^^xsd:anyURI ;
-            sh:prefix "s223" ],
-        [ sh:namespace "http://qudt.org/schema/qudt/"^^xsd:anyURI ;
-            sh:prefix "qudt" ],
-        [ sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ;
-            sh:prefix "rdf" ],
-        [ sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
-            sh:prefix "rdfs" ],
-        [ sh:namespace "http://www.w3.org/ns/shacl#"^^xsd:anyURI ;
-            sh:prefix "sh" ] .
-
 unit:ANGSTROM a qudt:Unit ;
     rdfs:label "Angstrom"@en ;
     dcterms:description "The $Angstr\\ddot{o}m$ is an internationally recognized unit of length equal to $0.1 \\,nanometre$ or $1 \\times 10^{-10}\\,metres$.  Although accepted for use, it is not formally defined within the International System of Units(SI). The angstrom is often used in the natural sciences to express the sizes of atoms, lengths of chemical bonds and the wavelengths of electromagnetic radiation, and in technology for the dimensions of parts of integrated circuits. It is also commonly used in structural biology."^^qudt:LatexString ;
@@ -77981,6 +77980,19 @@ unit:ZOLL a qudt:Unit ;
     qudt:iec61360Code "0112/2///62720#UAB837" ;
     qudt:symbol "“" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
+
+<http://data.ashrae.org/standard223/1.0/validation/model> a owl:Ontology ;
+    owl:versionInfo "Created with TopBraid Composer" ;
+    sh:declare [ sh:namespace "http://data.ashrae.org/standard223#"^^xsd:anyURI ;
+            sh:prefix "s223" ],
+        [ sh:namespace "http://qudt.org/schema/qudt/"^^xsd:anyURI ;
+            sh:prefix "qudt" ],
+        [ sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ;
+            sh:prefix "rdf" ],
+        [ sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
+            sh:prefix "rdfs" ],
+        [ sh:namespace "http://www.w3.org/ns/shacl#"^^xsd:anyURI ;
+            sh:prefix "sh" ] .
 
 unit:FM a qudt:Unit ;
     rdfs:label "fermi"@en ;
@@ -78696,26 +78708,7 @@ The graphical depiction of Equipment used in this standard is a rounded cornered
 ![Graphical Depiction of Equipment.](figures/Figure_5-1Graphical_Depiciton_of_Equipment.svg)\r
   """ ;
     rdfs:subClassOf s223:Connectable ;
-    sh:property [ a sh:PropertyShape ;
-            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:message "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:name "device contains shape" ;
-            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
-            sh:path s223:contains ],
-        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
-Note that any Equipment may use this relation, not just Actuator.""" ;
-            sh:class s223:ActuatableProperty ;
-            sh:path s223:actuatedByProperty ],
-        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a Function." ;
-            sh:class s223:Function ;
-            sh:path s223:executes ],
-        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
-            sh:class s223:PhysicalSpace ;
-            sh:path s223:hasPhysicalLocation ],
-        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:path s223:hasRole ],
-        [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
+    sh:property [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
             sh:path s223:connectedFrom ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Disallow contained equipment from having external incoming connections." ;
@@ -78768,7 +78761,26 @@ UNION\r
 ?type1 rdfs:subClassOf* ?type2 .\r
 }\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ a sh:PropertyShape ;
+            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:message "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:name "device contains shape" ;
+            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
+            sh:path s223:contains ],
+        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
+Note that any Equipment may use this relation, not just Actuator.""" ;
+            sh:class s223:ActuatableProperty ;
+            sh:path s223:actuatedByProperty ],
+        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a Function." ;
+            sh:class s223:Function ;
+            sh:path s223:executes ],
+        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
+            sh:class s223:PhysicalSpace ;
+            sh:path s223:hasPhysicalLocation ],
+        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:path s223:hasRole ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "For equipment contained within another piece of equipment use the mapsTo relation to infer a Medium from the containing equipment." ;
             sh:construct """\r

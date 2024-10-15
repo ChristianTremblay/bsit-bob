@@ -29,9 +29,9 @@ from bob.scratch.hvac.vav import VAV
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
+from bob.assemblage import model_namespace
 
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
+model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 

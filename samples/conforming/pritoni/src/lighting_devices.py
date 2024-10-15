@@ -16,8 +16,9 @@ from bob.properties.states import OnOffCommand, OnOffStatus
 from bob.sensor.light import DaylightSensor
 from bob.sensor.motion import OccupantMotionSensor
 
-model_name = Path(__file__).stem
-global_ns = Path(__file__).parent.stem
+from bob.assemblage import model_namespace
+
+model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
 
 
