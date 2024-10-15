@@ -40,3 +40,14 @@ def create_data_and_schema_ttl(
             pass
         shutil.move(src=f"{folder}/{model_name}.schema.ttl", dst=ttl_folder)
         shutil.move(src=f"{folder}/{model_name}.data.ttl", dst=ttl_folder)
+
+
+def model_namespace(file: Path = None):
+    if Path(file).parent.stem == "src":
+        model_name = Path(file).stem
+        global_ns = Path(file).parent.parent.stem
+    else:
+        model_name = Path(file).stem
+        global_ns = Path(file).parent.stem
+    # _namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+    return (model_name, global_ns)
