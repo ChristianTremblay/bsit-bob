@@ -13,3 +13,10 @@ Validate by running
 ```python
 pytest -s -vvvv -n auto validate_cicd/test_validation.py
 ```
+
+# Querying sample models
+Using `query_model` you can execute queries found in the sparql folder of sample and generate the result html files
+
+```
+query_model path_to_ttl_file path_to_sparql_queries
+```
