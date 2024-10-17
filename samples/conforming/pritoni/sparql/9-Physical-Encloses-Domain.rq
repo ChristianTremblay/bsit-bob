@@ -1,0 +1,7 @@
+select ?node (GROUP_CONCAT(?ds; separator="; ") as ?dss) where {
+    ?node a s223:PhysicalSpace ; s223:encloses ?ds .
+    ?ds a s223:DomainSpace .
+    optional { ?ds rdfs:label ?label } .
+    optional { ?ds rdfs:comment ?comment } .
+    }
+group by ?node
