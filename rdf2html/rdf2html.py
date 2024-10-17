@@ -3,6 +3,7 @@ import re
 import shutil
 import subprocess
 from pathlib import Path
+from typing import Union
 
 import click
 import pyvis
@@ -299,13 +300,26 @@ def prefix(full):
     return (full, full)
 
 
-def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
+def to_html(
+    ttl_file: Union[Path, str, Graph],
+    filter_urn=False,
+    remove_basic_classes=False,
+    show=False,
+    return_html=False,
+    filter_menu=True,
+    physic_options=None,
+):
     global g, nodes
-    g = parse_rdf(ttl_file)
+    if isinstance(ttl_file, Graph):
+        g = ttl_file
+        html_filename = "temp.html"
+    else:
+        g = parse_rdf(ttl_file)
+        html_filename = f"{ttl_file.split('.ttl')[0]}.html"
     prepare_nodes(g)
 
     visual_graph = pyvis.network.Network(
-        select_menu=True, filter_menu=True, cdn_resources="remote", directed=True
+        select_menu=True, filter_menu=filter_menu, cdn_resources="remote", directed=True
     )
 
     for k, v in nodes.items():
@@ -339,11 +353,22 @@ def to_html(ttl_file, filter_urn=False, remove_basic_classes=False, show=False):
     make_legend(visual_graph)
 
     visual_graph.toggle_physics(True)
-    visual_graph.show_buttons()
+    if physic_options is False:
+        visual_graph.show_buttons(filter_=[])
+    else:
+        if isinstance(physic_options, list):
+            visual_graph.show_buttons(filter_=physic_options)
+        else:
+            visual_graph.show_buttons(True)
     visual_graph.set_edge_smooth("dynamic")
-    html_filename = f"{ttl_file.split('.ttl')[0]}.html"
+
     if show:
         visual_graph.show(html_filename, notebook=False)
+    elif return_html:
+        _html = visual_graph.generate_html()
+        visual_graph = None
+        del visual_graph
+        return _html
     else:
         visual_graph.write_html(html_filename, notebook=False)
     visual_graph = None
