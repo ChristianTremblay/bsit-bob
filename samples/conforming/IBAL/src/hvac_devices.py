@@ -358,15 +358,21 @@ ahu1 = AirHandlingUnit(config=ahu1_template)
 ahu1["SF_VFD"] >> ahu1["SF"]
 # ahu1["SF"].onOffStatus = ahu1["SF_VFD"].onOffStatus
 # ahu1_clg_vlv = ThreeWayDivertingActuatedProportionalValve(label="valve1")
+ahu1.supplyAirOutlet = ahu1["SF"].airOutlet
+ahu1.outsideAirInlet = ahu1["OADPR_d6"].airInlet
 
 ahu2 = AirHandlingUnit(config=ahu2_template)
 ahu2["SF_VFD"] >> ahu2["SF"]
 # ahu2["SF"].onOffStatus = ahu1["SF_VFD"].onOffStatus
 # ahu2_clg_vlv = ThreeWayDivertingActuatedProportionalValve(label="valve2")
+ahu2.supplyAirOutlet = ahu2["SF"].airOutlet
+ahu2.outsideAirInlet = ahu2["OADPR_d7"].airInlet
 
 ahu3 = AirHandlingUnit(config=ahu3_template)
 ahu3["SF_Starter"] >> ahu3["SF"]
 ahu3["SF"].onOffStatus = ahu3["SF_Starter"].onOffStatus
+ahu3.supplyAirOutlet = ahu3["SF"].airOutlet
+ahu3.outsideAirInlet = ahu3["OADPR_d19"].airInlet
 
 fan3 = Fan(
     config=fan_exhaust_template,
