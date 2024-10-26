@@ -17,11 +17,20 @@ from ...connections.liquid import (
     WaterOutletConnectionPoint,
 )
 from ...connections.naturalgas import NaturalGasInletConnectionPoint
-from ...core import BOB, P223, S223, UNIT, Equipment, PropertyReference
+from ...core import (
+    BOB,
+    P223,
+    S223,
+    UNIT,
+    BoundaryConnectionPoint,
+    Equipment,
+    PropertyReference,
+    System,
+)
 from ...enum import DomesticHotWater, DomesticWater, Fluid, Role, Water
 from ...properties.flow import Flow
 from ...properties.temperature import Temperature
-from ...template import template_update
+from ...template import SystemFromTemplate, template_update
 from .coil import HeatpumpCoil, ImmersedResistanceHeaterElement
 from .compressor import RefrigerationGasCompressor
 from .fan import Fan
@@ -31,7 +40,40 @@ from .valve import ExpansionValve, ReversingValve
 
 _namespace = BOB
 
+# if no configuration is passed, use this basic template of a generic hot water heater equipment
+basic_hotwaterheater_template = {
+    "params": {"label": "HotWaterHeater", "comment": "Hot Water Heater"},
+    "equipment": {
+        ("hw_heater", Equipment): {
+            "config": {
+                "cp": {
+                    "hotWaterLeaving": HotWaterOutletConnectionPoint,
+                    "hotWaterEntering": HotWaterInletConnectionPoint,
+                }
+            },
+        },
+    },
+    "relations": [
+        ("self.leavingFluid", "=", "self['hw_heater'].hotWaterLeaving"),
+        ("self.enteringFluid", "=", "self['hw_heater'].hotWaterEntering"),
+    ],
+}
 
+
+# 223 Standard Systems
+class DomesticHotWaterHeater(SystemFromTemplate):
+    _class_iri = S223.DomesticHotWaterHeater
+    leavingFluid: BoundaryConnectionPoint
+    enteringFluid: BoundaryConnectionPoint
+
+    def __init__(self, config: Dict = basic_hotwaterheater_template, **kwargs) -> None:
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        self.hasRole = Role.Heating
+
+
+# 223 Standard Equipment
 class HotWaterBoiler(Equipment):
     _class_iri = S223.Boiler
     hotWaterLeaving: HotWaterOutletConnectionPoint
@@ -50,54 +92,3 @@ class NaturalGasHotWaterBoiler(HotWaterBoiler):
     combustionAirInlet: AirInletConnectionPoint
     combustionAirOutlet: AirOutletConnectionPoint
     condensedWaterOutlet: WaterOutletConnectionPoint
-
-
-domesticwaterheater_template = {
-    "cp": {"electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint},
-    "properties": {
-        ("leavingFluidTemperature", Temperature): {},
-        ("enteringFluidTemperature", Temperature): {},
-        ("fluidFlow", Flow): {"hasUnit": UNIT["L-PER-SEC"]},
-    },
-    "equipment": {
-        ("tank", Tank): {
-            "config": {"properties": {("fluidTemperature", Temperature): {}}},
-            "hasRole": Role.Storage,
-            "comment": "Water tank",
-        },
-        ("element1", ImmersedResistanceHeaterElement): {
-            "comment": "Electrical element 1",
-            "electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint,
-            "hasRole": Role.Heating,
-        },
-        ("element2", ImmersedResistanceHeaterElement): {
-            "comment": "Electrical element 2",
-            "electricalInlet": Electricity_240VLL_1Ph_60HzInletConnectionPoint,
-            "hasRole": Role.Heating,
-        },
-    },
-}
-
-
-class DomesticElectricalWaterHeater(Equipment):
-    _class_iri = P223.DomesticWaterHeater
-    leavingFluid: WaterOutletConnectionPoint
-    enteringFluid: WaterInletConnectionPoint
-
-    fluidTemperature: PropertyReference
-
-    def __init__(self, config: Dict = None, **kwargs):
-        _config = template_update(domesticwaterheater_template, config)
-        kwargs = {**_config.pop("params", {}), **kwargs}
-        super().__init__(_config, **kwargs)
-        # self["tank"].set_medium(DomesticWater)
-        # self.leavingFluid.hasMedium = DomesticHotWater
-        # self.enteringFluid.hasMedium = DomesticWater
-        self.heatExchangeConnection = WaterConnection(label="heatExchangeConnection")
-        self["tank"].containedFluid >> self.heatExchangeConnection
-        self["element1"].fluidContact >> self.heatExchangeConnection
-        self["element2"].fluidContact >> self.heatExchangeConnection
-        self["tank"].enteringFluid.mapsTo = self.enteringFluid
-        self["tank"].leavingFluid.mapsTo = self.leavingFluid
-        self.fluidTemperature = self["tank"]["fluidTemperature"]
-        self["tank"].hasRole = Role.Storage
