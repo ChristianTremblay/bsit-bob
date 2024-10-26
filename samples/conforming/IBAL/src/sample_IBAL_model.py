@@ -24,7 +24,7 @@ from bob.scratch.header import sample_header
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
-_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 
 hd.vav1 > bn.vav_controller
 hd.ahu1 > bn.ahu_controller

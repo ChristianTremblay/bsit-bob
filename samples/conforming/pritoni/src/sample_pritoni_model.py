@@ -23,7 +23,7 @@ import fake_values  # isort: skip
 
 
 model_name, global_ns = model_namespace(__file__)
-_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 
 # Relations between Physical spaces and Domain spaces
 ps.bldg > ps.roof

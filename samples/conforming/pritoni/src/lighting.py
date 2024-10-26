@@ -11,7 +11,7 @@ from bob.core import bind_model_namespace, dump
 from bob.assemblage import model_namespace
 
 model_name, global_ns = model_namespace(__file__)
-_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 
 
 ld.kitchenette_luminaire_11.lightOutlet >> ld.kitch_light_conn

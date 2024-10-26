@@ -12,7 +12,7 @@ from bob.assemblage import model_namespace
 from bob.enum import Occupancy, OnOff
 
 model_name, global_ns = model_namespace(__file__)
-_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 
 hd.vav1["DA-T"].observedProperty.set_value(72.3)  # PD-SR-MP VAV1 Outlet Temperature
 hd.vav2["DA-T"].observedProperty.set_value(71.2)  # PD-SR-MP VAV2 Outlet Temperature

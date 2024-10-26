@@ -10,7 +10,7 @@ from bob.sensor.temperature import Temperature
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
-_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 
 
 outdoor = AirConnection(

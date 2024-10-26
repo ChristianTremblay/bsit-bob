@@ -33,7 +33,7 @@ from bob.externalreference.bacnet import BACnetExternalReference
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
-_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 
 vav_controller_template_example = {
     "cp": {

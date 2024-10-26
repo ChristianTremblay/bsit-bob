@@ -19,7 +19,7 @@ from bob.externalreference.bacnet import BACnetExternalReference
 from bob.assemblage import model_namespace
 
 model_name, global_ns = model_namespace(__file__)
-_namespace = bind_model_namespace(model_name, f"urn:{global_ns}/{model_name}/")
+_namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 
 
 # An HVAC BACnet Device
