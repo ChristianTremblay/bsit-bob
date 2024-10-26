@@ -94,6 +94,8 @@ def configure_relations(
                 # print(equipment, source_key, target)
                 try:
                     setattr(source_element, source_key, target)
+                except AttributeError:
+                    setattr(container, source_key, target)
                 except TypeError as error:
                     print(error)
                     print("Container :", container)
@@ -108,6 +110,8 @@ def configure_relations(
             source << target
         elif operator == "%":
             source % target
+        elif operator == "mapsTo":
+            source.mapsTo(target)
         # no @ here as we are creating relation "inside" the equipment or system
 
 
