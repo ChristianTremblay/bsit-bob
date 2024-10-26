@@ -1597,6 +1597,7 @@ class System(Container):
         #     kwargs = {**config["params"], **kwargs}
 
         super().__init__(*args, **kwargs)
+        self.hasRole = set()
 
         if config:
             for group_name, group_items in config.items():
@@ -1693,6 +1694,18 @@ def contains_mm(system: System, thing_list: List[Node]) -> None:
         if not isinstance(thing, (Equipment, System)):
             raise TypeError(f"Equipment or system expected: {thing}")
         contains_mm(system, thing)
+
+
+@multimethod
+def add_mm(system: System, role: EnumerationKind) -> None:
+    """
+    Add a role to a system
+    """
+    _log.info(f"add role {role} to {system}")
+    system.hasRole.add(role)
+    system._data_graph.add((system._node_iri, S223.hasRole, role._node_iri))
+    if INCLUDE_INVERSE:
+        role.isRoleOf = system
 
 
 class ConnectionMetaclass(NodeMetaclass):
