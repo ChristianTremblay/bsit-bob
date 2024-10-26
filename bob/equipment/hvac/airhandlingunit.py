@@ -101,7 +101,7 @@ class AirHandlingUnit(System):
 
     """
 
-    _class_iri = BOB.AirHandlingUnit
+    _class_iri = S223.AirHandlingUnit
     outsideAirInlet: BoundaryConnectionPoint
     returnAirInlet: BoundaryConnectionPoint
     supplyAirOutlet: BoundaryConnectionPoint

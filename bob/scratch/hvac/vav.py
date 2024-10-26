@@ -3,6 +3,7 @@ from typing import Dict
 
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.core import (
+    S223,
     SCRATCH,
     UNIT,
     BoundaryConnectionPoint,
@@ -208,7 +209,7 @@ vav_withelectricreheat_template = {
 
 
 class VAV(System):
-    _class_iri = SCRATCH.SingleDuctTerminal
+    _class_iri = S223.SingleDuctTerminal
     airInlet: BoundaryConnectionPoint
     airOutlet: BoundaryConnectionPoint
     airFlow: PropertyReference
@@ -237,7 +238,7 @@ class VAV(System):
 
 
 class VAV_Dual(System):
-    _class_iri = SCRATCH.DualDuctTerminal
+    _class_iri = S223.DualDuctTerminal
     airInlet: BoundaryConnectionPoint
     plenumInlet: BoundaryConnectionPoint
     airOutlet: BoundaryConnectionPoint
@@ -268,7 +269,7 @@ class VAV_Dual(System):
 
 # Cannot inherit from VAV_Simple for now because DA-T will not point to the same thing and DRP connected to reheat, etc...
 class VAV_Reheat(System):
-    _class_iri = SCRATCH.SingleDuctTerminalWithReheat
+    _class_iri = S223.SingleDuctTerminal
     airInlet: BoundaryConnectionPoint
     airOutlet: BoundaryConnectionPoint
     # airFlow: PropertyReference

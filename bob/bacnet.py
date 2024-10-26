@@ -166,10 +166,12 @@ class DeviceObject(Object):
         "systemStatus": BACNET["system-status"],
         "vendorName": BACNET["vendor-name"],
         "vendorIdentifier": BACNET["vendor-identifier"],
+        "modelName": BACNET["model-name"],
     }
     systemStatus: URIRef  # one of bacnet:DeviceStatus
     vendorName: Literal
     vendorIdentifier: XSD.nonNegativeInteger
+    modelName: Literal
 
 
 class AnalogInputObject(Object):
