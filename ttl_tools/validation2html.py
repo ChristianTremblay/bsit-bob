@@ -18,7 +18,7 @@ def print_report(
     html_path: Path = None,
     title: str = "",
 ):
-    stats = {"error": 0, "warning": 0, "info": 0}
+    stats = {"violation": 0, "error": 0, "warning": 0, "info": 0}
     if isinstance(ttl_graph, Path):
         report_g = rdflib.Graph().parse(ttl_graph, format="turtle")
     else:
@@ -58,11 +58,13 @@ def print_report(
 
     prev = None
     color_map = {
+        "http://www.w3.org/ns/shacl#Violation": "red",
         "http://www.w3.org/ns/shacl#Error": "red",
         "http://www.w3.org/ns/shacl#Warning": "yellow",
         "http://www.w3.org/ns/shacl#Info": "green",
     }
     severity_map = {
+        "http://www.w3.org/ns/shacl#Violation": "VIOLATION",
         "http://www.w3.org/ns/shacl#Error": "ERROR",
         "http://www.w3.org/ns/shacl#Warning": "WARNING",
         "http://www.w3.org/ns/shacl#Info": "INFO",
@@ -115,7 +117,7 @@ def print_report(
 
     for resultSeverity, sourceShape, resultMessage, focusNode, value in results:
         color = color_map.get(str(resultSeverity), "white")
-        severity = severity_map.get(str(resultSeverity), "white")
+        severity = severity_map.get(str(resultSeverity), "UNKNOWN")
         stats[severity.lower()] += 1
         if not show_info and severity == "INFO":
             continue
@@ -150,11 +152,14 @@ def print_report(
 
     html_content += """
         </table>
-        <p>Errors: {errors}, Warnings: {warnings}, Info: {info}</p>
+        <p>Violations: {violations}, Errors: {errors}, Warnings: {warnings}, Info: {info}</p>
     </body>
     </html>
     """.format(
-        errors=stats["error"], warnings=stats["warning"], info=stats["info"]
+        violations=stats["violation"],
+        errors=stats["error"],
+        warnings=stats["warning"],
+        info=stats["info"],
     )
 
     # Write the HTML content to a file
@@ -165,7 +170,7 @@ def print_report(
 
     console.print(table)
     console.print(
-        f"Errors: {stats['error']}, Warnings: {stats['warning']}, Info: {stats['info']}"
+        f"Violation: {stats['violation']}, Errors: {stats['error']}, Warnings: {stats['warning']}, Info: {stats['info']}"
     )
 
 

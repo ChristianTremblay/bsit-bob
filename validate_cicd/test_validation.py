@@ -73,6 +73,7 @@ def test_schema_validation():
     """
     # load in schema validation shapes
     shape_graph = create_schema()
+    shape_graph.serialize("223p_schema.ttl", format="turtle")
 
     # import dependencies on other ontologies
     env = ontoenv.OntoEnv()
@@ -83,11 +84,12 @@ def test_schema_validation():
     report, valid, _ = validate(shape_graph)
     global schema_report
     schema_report = report
+    report.serialize(format="ttl")
 
     # valid, _, res_text = pyshacl.validate(data_graph=shape_graph, advanced=True, allow_warnings=True)
     assert (
         valid
-    ), f"Schema files not passing SHACL validation:\n{report.serialize(format='ttl')}"
+    ), f"Schema files not passing SHACL validation. See 223p_schema.validation_report.html for details"
 
 
 def test_data_validation(data_file):
@@ -121,7 +123,7 @@ def test_data_validation(data_file):
     # run topquadrant shacl and get the report
     report, valid, inferred = validate(data_graph)
     # make 'compiled' directory
-    (data_file.parent / "compiled").mkdir(exist_ok=True)
+    (data_file.parent / "validation").mkdir(exist_ok=True)
     # save inferred graph under same name into data/compiled/
     inferred.serialize(
         data_file.parent / "validation" / data_file.name, format="turtle"
@@ -164,7 +166,8 @@ def test_data_validation(data_file):
         if _existing_file.exists():
             os.remove(_existing_file)
         shutil.move(html_path, _sample_doc_folder)
-    assert valid, report.serialize(format="ttl")
+    assert report.serialize(format="ttl")
+    assert valid
 
 
 def dump_graphs():
