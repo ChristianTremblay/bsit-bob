@@ -5,22 +5,20 @@
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX qudtqk: <http://qudt.org/vocab/quantitykind/>
 
-SELECT ?roomLabel (AVG(?tval) AS ?avg)
+SELECT ?sensorLabel ?extref
 WHERE {
     ?oprop a/rdfs:subClassOf* s223:Property .
-    ?oprop s223:hasValue s223:OccupancyStatus-Unoccupied .
-    ?ds s223:hasProperty ?oprop .
-    ?room s223:encloses ?ds .
-    ?room s223:encloses ?otherds .
-    ?otherds s223:hasProperty ?tprop .
-    ?tprop qudt:hasQuantityKind qudtqk:Temperature .
-    ?tprop s223:hasValue ?tval .
-    ?room rdfs:label ?roomLabel .
+    ?sensor s223:observes ?oprop .
+    ?oprop qudt:hasQuantityKind qudtqk:Temperature .
+    ?oprop s223:hasExternalReference ?extref .
+    ?sensor rdfs:label ?sensorLabel .
 }
-GROUP BY ?roomLabel
+GROUP BY ?sensorLabel
 </pre>
 <h1>Results</h1>
 <table border='1'>
-<tr><th>roomLabel</th><th>avg</th></tr>
+<tr><th>sensorLabel</th><th>extref</th></tr>
+<tr>
+<td>ZN-T</td><td>bacnet_references:00015</td></tr>
 </table>
 </body></html>

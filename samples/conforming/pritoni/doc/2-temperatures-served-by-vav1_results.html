@@ -6,22 +6,21 @@ PREFIX s223: <http://data.ashrae.org/standard223#>
 PREFIX qudt: <http://qudt.org/schema/qudt/>
 PREFIX qudtqk: <http://qudt.org/vocab/quantitykind/>
 
-SELECT ?sensor ?unit
+SELECT DISTINCT ?vav ?sensor ?unit
 WHERE {
-    SELECT DISTINCT ?sensor ?value ?unit
-    WHERE {
-        ?zone s223:contains ?ds .
-        ?sensor s223:hasObservationLocation ?ds .
-        ?sensor a/rdfs:subClassOf* s223:Sensor .
-        ?sensor s223:observes ?t .
-        ?t qudt:hasQuantityKind qudtqk:Temperature .
-        ?t qudt:unit ?unit .
-    }
+    ?sensor s223:hasObservationLocation ?ds .
+    ?sensor a ?sensorType .
+    ?sensorType rdfs:subClassOf* s223:Sensor .
+    ?sensor s223:observes ?t .
+    ?t qudt:hasQuantityKind qudtqk:Temperature .
+    ?t qudt:unit ?unit .
+    ?vav s223:TerminalUnit* ?eq .
+    ?eq s223:contains ?sensor .
 }
-GROUP BY ?unit
-</pre>
+
+GROUP BY ?vav ?sensor ?unit</pre>
 <h1>Results</h1>
 <table border='1'>
-<tr><th>sensor</th><th>unit</th></tr>
+<tr><th>vav</th><th>sensor</th><th>unit</th></tr>
 </table>
 </body></html>

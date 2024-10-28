@@ -1,48 +1,45 @@
-@prefix ns2: <http://data.ashrae.org/standard223#> .
-@prefix ns4: <urn:ex/sample_hotwater_heater/> .
+@prefix ns3: <http://data.ashrae.org/standard223#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 [] a sh:ValidationReport ;
     sh:conforms false ;
     sh:result [ a sh:ValidationResult ;
-            sh:focusNode ns4:00002 ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex/sample_hotwater_heater/00002> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:focusNode <urn:ex:sample_hotwater_heater/00016> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_hotwater_heater/00016> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_hotwater_heater/00002>." ;
+            sh:resultPath ns3:mapsTo ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:nbfc916810e9248ce9dea3e5d2fd946fcb7 ;
+            sh:sourceConstraint _:nc412b2c658604d838b4054787858e078b9 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:nbfc916810e9248ce9dea3e5d2fd946fcb8 ],
+            sh:sourceShape _:nc412b2c658604d838b4054787858e078b10 ],
         [ a sh:ValidationResult ;
-            sh:focusNode ns4:00015 ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex/sample_hotwater_heater/00015> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex/sample_hotwater_heater/00001> because it is associated with a Junction or Equipment that is contained by <urn:ex/sample_hotwater_heater/00001>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:nbfc916810e9248ce9dea3e5d2fd946fcb3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:nbfc916810e9248ce9dea3e5d2fd946fcb4 ],
+            sh:focusNode <urn:ex:sample_hotwater_heater/00030> ;
+            sh:resultMessage "Value must have at least one of the following shapes: _:13dcada08b0ab87e7aa730c907783bbf, _:dd06660d78a28fc3ad9c6e6e8daacf47" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape _:nc412b2c658604d838b4054787858e078b3 ;
+            sh:value <urn:ex:sample_hotwater_heater/00030> ],
         [ a sh:ValidationResult ;
-            sh:focusNode ns4:00022 ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex/sample_hotwater_heater/00022> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex/sample_hotwater_heater/00001> because it is associated with a Junction or Equipment that is contained by <urn:ex/sample_hotwater_heater/00001>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:nbfc916810e9248ce9dea3e5d2fd946fcb3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:nbfc916810e9248ce9dea3e5d2fd946fcb4 ],
+            sh:focusNode <urn:ex:sample_hotwater_heater/00001> ;
+            sh:resultMessage "Value must have at least one of the following shapes: _:13dcada08b0ab87e7aa730c907783bbf, _:dd06660d78a28fc3ad9c6e6e8daacf47" ;
+            sh:resultSeverity sh:Violation ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape _:nc412b2c658604d838b4054787858e078b3 ;
+            sh:value <urn:ex:sample_hotwater_heater/00001> ],
         [ a sh:ValidationResult ;
-            sh:focusNode ns4:00004 ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex/sample_hotwater_heater/00004> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:focusNode <urn:ex:sample_hotwater_heater/00034> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_hotwater_heater/00034> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns3:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:nbfc916810e9248ce9dea3e5d2fd946fcb7 ;
+            sh:sourceConstraint [ ] ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:nbfc916810e9248ce9dea3e5d2fd946fcb8 ],
+            sh:sourceShape [ ] ],
         [ a sh:ValidationResult ;
-            sh:focusNode ns4:00003 ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex/sample_hotwater_heater/00003> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:focusNode <urn:ex:sample_hotwater_heater/00023> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_hotwater_heater/00023> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_hotwater_heater/00002>." ;
+            sh:resultPath ns3:mapsTo ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:nbfc916810e9248ce9dea3e5d2fd946fcb7 ;
+            sh:sourceConstraint _:nc412b2c658604d838b4054787858e078b9 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:nbfc916810e9248ce9dea3e5d2fd946fcb8 ] .
+            sh:sourceShape _:nc412b2c658604d838b4054787858e078b10 ] .
 
