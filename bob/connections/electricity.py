@@ -1,6 +1,7 @@
 from rdflib import Literal
 
 from ..core import (
+    BOB,
     S223,
     Connection,
     ConnectionPoint,
@@ -9,7 +10,7 @@ from ..core import (
 )
 from ..enum import ElectricalPhaseIdentifier, Electricity
 
-_namespace = S223
+_namespace = BOB
 
 # === Generic
 # Undefined Electrical
