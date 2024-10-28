@@ -56,6 +56,7 @@ basic_hotwaterheater_template = {
     "relations": [
         ("self.leavingFluid", "=", "self['hw_heater'].hotWaterLeaving"),
         ("self.enteringFluid", "=", "self['hw_heater'].hotWaterEntering"),
+        ("self.electricalInlet", "=", "self['hw_heater'].electricalInlet"),
     ],
 }
 
@@ -65,12 +66,13 @@ class DomesticHotWaterHeater(SystemFromTemplate):
     _class_iri = S223.DomesticHotWaterHeater
     leavingFluid: BoundaryConnectionPoint
     enteringFluid: BoundaryConnectionPoint
+    electricalInlet: ElectricalInletConnectionPoint
 
     def __init__(self, config: Dict = basic_hotwaterheater_template, **kwargs) -> None:
         _config = template_update({}, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.hasRole = Role.Heating
+        self += Role.Heating
 
 
 # 223 Standard Equipment

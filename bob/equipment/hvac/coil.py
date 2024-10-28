@@ -37,6 +37,7 @@ from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507
     R32,
     R410a,
     Refrigerant,
+    Role,
 )
 from ...properties.force import Pressure
 from ...properties.temperature import Temperature
@@ -88,6 +89,7 @@ class ChilledWaterCoil(Coil):
         _config = template_update({}, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Cooling
 
 
 class HotWaterCoil(Coil):
@@ -99,6 +101,7 @@ class HotWaterCoil(Coil):
         _config = template_update({}, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating
 
 
 class HeatpumpCoil(Coil):
@@ -112,6 +115,8 @@ class HeatpumpCoil(Coil):
         _config = template_update(coil_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating
+        self += Role.Cooling
 
     def set_gas_type(self, gas: Refrigerant):
         self.set_medium(["gasPortA", "gasPortB"], gas)
@@ -136,6 +141,7 @@ class ElectricalHeatingCoil(Coil):
         _config = template_update(electricalheating_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating
 
 
 # Electrical Coil
@@ -157,6 +163,7 @@ class ElectricalRadiantHeatingCoil(Equipment):
         _config = template_update(electricalradiant_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating
 
 
 # Water heaters
@@ -179,3 +186,4 @@ class ImmersedResistanceHeaterElement(Equipment):
         _config = template_update(element_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating

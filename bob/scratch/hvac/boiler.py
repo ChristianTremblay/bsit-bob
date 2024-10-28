@@ -96,6 +96,7 @@ class _DomesticElectricalWaterHeater(Equipment):
         self["tank"].leavingFluid.mapsTo = self.leavingFluid
         self.fluidTemperature = self["tank"]["fluidTemperature"]
         self["tank"] += Role.Storage
+        self += Role.Heating
 
         heat_transfer = InsideTankHeatTransfer(
             label="Heat Transfer Function",
@@ -230,7 +231,7 @@ class _DomesticHPWaterHeater(Equipment):
         self["TANK"].enteringFluid.mapsTo = self.enteringFluid
         self["TANK"].leavingFluid.mapsTo = self.leavingFluid
         self.fluidTemperature = self["TANK"]["fluidTemperature"]
-        self["TANK"].hasRole = Role.Storage
+        self["TANK"] += Role.Storage
         self += Role.Heating
 
 
