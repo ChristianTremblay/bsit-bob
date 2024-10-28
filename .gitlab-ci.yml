@@ -55,7 +55,7 @@ validate:
     - pip install python-dotenv
     - pip install rich
     - ontoenv init
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@bas-im.emcs.cornell.edu/223/223standard
+    - git clone -b issue624-system-and-equipment https://gitlab-ci-token:${CI_JOB_TOKEN}@bas-im.emcs.cornell.edu/223/223standard
     - export S223_FOLDER=$(pwd)/223standard
     - pytest -v validate_cicd/test_create_samples.py
     - pytest -s -vvvv -n auto validate_cicd/test_validation.py
