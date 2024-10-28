@@ -1,7 +1,8 @@
-import typing as t
-from bob.core import Equipment, System
-import re
 import copy
+import re
+import typing as t
+
+from bob.core import Connection, Equipment, System
 
 
 def template_update(base: t.Dict = {}, config: t.Dict = None, bases: t.List = None):
@@ -80,13 +81,34 @@ def configure_relations(
         source_element, source_key = get_instance(container, _source)
         target_element, target_key = get_instance(container, _target)
 
-        source = getattr(source_element, source_key, None)
+        if source_key is None:
+            source = source_element
+        else:
+            source = getattr(source_element, source_key, None)
+        if source is None and isinstance(source_element, Connection):
+            source = source_element
+
+        # if source_element is None:
+        #    source_element = container
+
+        # if source_key is None:
+        #    source = source_element
+        # else:
+        #    source = getattr(source_element, source_key, None)
+
+        # if source is None and isinstance(source_element, Connection):
+        #    source = source_element
+        # elif source is None:
+        #    raise AttributeError(f"Source {source_key} not found in {source_element} | container {container} | relation {relation}")
+
         if target_key is None:
             target = target_element
         else:
             target = getattr(target_element, target_key, None)
 
-        if target is None:
+        if target is None and isinstance(target_element, Connection):
+            target = target_element
+        elif target is None:
             raise AttributeError(f"Target {target_key} not found in {target_element}")
 
         if operator == "=":
@@ -112,6 +134,8 @@ def configure_relations(
             source % target
         elif operator == "mapsTo":
             source.mapsTo(target)
+        elif operator == "@":
+            source @ target
         # no @ here as we are creating relation "inside" the equipment or system
 
 

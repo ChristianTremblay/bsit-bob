@@ -103,8 +103,8 @@ hd.ahu1["MADPR_d5"].airOutlet >> ahu1_mixedAir
 )
 ahu1_supplyAir >> hd.damper5a.airInlet
 hd.damper5a.airOutlet >> ahu2_supplyAir
-ahu1_supplyAir >> hd.vav1
-ahu1_supplyAir >> hd.vav2
+ahu1_supplyAir >> hd.vav1["DPR"].airInlet
+ahu1_supplyAir >> hd.vav2["DPR"].airInlet
 hd.vav1["REHEAT"].airOutlet >> hs.zone1_hvac.ductAirInlet
 hd.vav2["REHEAT"].airOutlet >> hs.zone2_hvac.ductAirInlet
 
@@ -134,8 +134,8 @@ hd.ahu2["MADPR_d8"].airOutlet >> ahu2_mixedAir
 )
 ahu2_supplyAir >> hd.damper5b.airInlet
 hd.damper5b.airOutlet >> ahu1_supplyAir
-ahu2_supplyAir >> hd.vav3
-ahu2_supplyAir >> hd.vav4
+ahu2_supplyAir >> hd.vav3["DPR"].airInlet
+ahu2_supplyAir >> hd.vav4["DPR"].airInlet
 hd.vav3["REHEAT"].airOutlet >> hs.zone3_hvac.ductAirInlet
 hd.vav4["REHEAT"].airOutlet >> hs.zone4_hvac.ductAirInlet
 hs.zone3_hvac.ductAirOutlet >> ahu2_returnAir

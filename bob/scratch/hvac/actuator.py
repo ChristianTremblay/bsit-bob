@@ -9,7 +9,7 @@ from bob.connections.controlsignal import (
 )
 from bob.connections.electricity import Electricity_24VLN_1Ph_60HzInletConnectionPoint
 from bob.connections.mechanical import MechanicalOutletConnectionPoint
-from bob.core import S223, SCRATCH, PropertyReference
+from bob.core import SCRATCH, PropertyReference
 from bob.equipment.hvac.actuator import Actuator
 from bob.producer.causality import Causality
 from bob.properties import Nm, Percent, PercentCommand

@@ -4,7 +4,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...core import BOB, P223, S223, BoundaryConnectionPoint, Equipment, System
-from ...template import template_update
+from ...template import template_update, SystemFromTemplate
 
 # logging
 _log = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ fan_coil_template = {
 }
 
 
-class AirHandlingUnit(System):
+class AirHandlingUnit(SystemFromTemplate):
     """
         This is treated as a system.
         We will add multiple devices inside using a template

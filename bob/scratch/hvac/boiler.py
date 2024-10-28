@@ -1,45 +1,32 @@
-from typing import Any, Dict
+from typing import Dict
 
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from bob.connections.electricity import (
-    ElectricalInletConnectionPoint,
-    Electricity_240VLL_1Ph_60HzInletConnectionPoint,
-)
+from bob.connections.electricity import Electricity_240VLL_1Ph_60HzInletConnectionPoint
 from bob.connections.liquid import (
-    FluidBidirectionalConnectionPoint,
-    FluidInletConnectionPoint,
-    FluidOutletConnectionPoint,
-    HotWaterInletConnectionPoint,
-    HotWaterOutletConnectionPoint,
     WaterBidirectionalConnectionPoint,
     WaterConnection,
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from bob.connections.naturalgas import NaturalGasInletConnectionPoint
 from bob.core import (
-    BOB,
-    P223,
     S223,
     SCRATCH,
     UNIT,
     BoundaryConnectionPoint,
     Equipment,
     PropertyReference,
-    System,
-    clear,
 )
-from bob.enum import DomesticHotWater, DomesticWater, Fluid, Role, Water
+from bob.enum import Role
 from bob.equipment.hvac.coil import HeatpumpCoil, ImmersedResistanceHeaterElement
 from bob.equipment.hvac.compressor import RefrigerationGasCompressor
 from bob.equipment.hvac.fan import Fan
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.tank import Tank
-from bob.equipment.hvac.valve import ExpansionValve, ReversingValve
+from bob.equipment.hvac.valve import ExpansionValve
 from bob.functions import Function, FunctionInput, FunctionOutput
 from bob.properties.flow import Flow
 from bob.properties.temperature import Temperature
-from bob.template import SystemFromTemplate, configure_relations, template_update
+from bob.template import SystemFromTemplate, template_update
 
 _namespace = SCRATCH
 
@@ -76,6 +63,7 @@ class InsideTankHeatTransfer(Function):
     _class_iri = SCRATCH.InsideTankHeatTransfer
 
     waterFlow: FunctionInput
+    averageSurfaceTemperature: FunctionInput
     resistanceHeaterPower1: FunctionInput
     resistanceHeaterModulation1: FunctionInput
     resistanceHeaterCommand1: FunctionInput
@@ -90,7 +78,7 @@ class _DomesticElectricalWaterHeater(Equipment):
     _class_iri = SCRATCH.DomesticElectricalWaterHeater
     leavingFluid: WaterOutletConnectionPoint
     enteringFluid: WaterInletConnectionPoint
-
+    # electricalInlet: ElectricalInletConnectionPoint
     fluidTemperature: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
@@ -107,7 +95,7 @@ class _DomesticElectricalWaterHeater(Equipment):
         self["tank"].enteringFluid.mapsTo = self.enteringFluid
         self["tank"].leavingFluid.mapsTo = self.leavingFluid
         self.fluidTemperature = self["tank"]["fluidTemperature"]
-        self["tank"].hasRole = Role.Storage
+        self["tank"] += Role.Storage
 
         heat_transfer = InsideTankHeatTransfer(
             label="Heat Transfer Function",
@@ -131,6 +119,7 @@ scratch_system_template = {
     "relations": [
         ("self.leavingFluid", "=", "self['DomesticHotWaterHeater'].leavingFluid"),
         ("self.enteringFluid", "=", "self['DomesticHotWaterHeater'].enteringFluid"),
+        ("self.electricalInlet", "=", "self['DomesticHotWaterHeater'].electricalInlet"),
     ],
 }
 
@@ -139,12 +128,13 @@ class DomesticHotWaterHeater(SystemFromTemplate):
     _class_iri = S223.DomesticHotWaterHeater
     leavingFluid: BoundaryConnectionPoint
     enteringFluid: BoundaryConnectionPoint
+    electricalInlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = scratch_system_template, **kwargs) -> None:
         _config = template_update({}, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.hasRole = Role.Heating
+        self += Role.Heating
 
 
 domesticHPwaterheater_template = {
@@ -241,6 +231,7 @@ class _DomesticHPWaterHeater(Equipment):
         self["TANK"].leavingFluid.mapsTo = self.leavingFluid
         self.fluidTemperature = self["TANK"]["fluidTemperature"]
         self["TANK"].hasRole = Role.Storage
+        self += Role.Heating
 
 
 scratch_system_template = {
@@ -251,6 +242,7 @@ scratch_system_template = {
     "relations": [
         ("self.leavingFluid", "=", "self['DomesticHPWaterHeater'].leavingFluid"),
         ("self.enteringFluid", "=", "self['DomesticHPWaterHeater'].enteringFluid"),
+        ("self.electricalInlet", "=", "self['DomesticHPWaterHeater'].electricalInlet"),
     ],
 }
 
@@ -259,9 +251,10 @@ class DomesticHPWaterHeater(SystemFromTemplate):
     _class_iri = S223.DomesticHotWaterHeater
     leavingFluid: BoundaryConnectionPoint
     enteringFluid: BoundaryConnectionPoint
+    electricalInlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = scratch_system_template, **kwargs) -> None:
         _config = template_update({}, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.hasRole = Role.Heating
+        self += Role.Heating

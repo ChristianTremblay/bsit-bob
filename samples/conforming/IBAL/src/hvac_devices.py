@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from typing import Dict
 import hvac_spaces as hs
 
 from bob.connections.electricity import (
@@ -7,7 +7,14 @@ from bob.connections.electricity import (
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
 )
-from bob.core import UNIT, Role, bind_model_namespace, dump
+from bob.core import (
+    S223,
+    UNIT,
+    Role,
+    bind_model_namespace,
+    dump,
+    BoundaryConnectionPoint,
+)
 from bob.equipment.architectural import Window
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
@@ -25,6 +32,7 @@ from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 from bob.scratch.control.controller import VAVController
 
 # Prototypes
+from bob.properties.ratio import Percent
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
 from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper, GravityDamper
@@ -33,11 +41,12 @@ from bob.scratch.hvac.valve import (
     ThreeWayDivertingActuatedProportionalValve,
     TwoWayActuatedProportionalValve,
 )
-from bob.scratch.hvac.vav import VAV_Reheat
+from bob.scratch.hvac.vav import VAV, vav_withelectricreheat_template
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.humidity import AirHumiditySensor, RelativeHumidity
 from bob.sensor.pressure import DifferentialStaticPressure
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
+from bob.template import SystemFromTemplate, template_update
 
 model_name = Path(__file__).stem
 global_ns = Path(__file__).parent.stem
@@ -224,125 +233,16 @@ ahu3_template = {
     },
 }
 
-vav1_config = {
-    "params": {"label": "VAVBox1System", "comment": "VAV Serving HVAC Zone 1"},
-    # "properties": {
-    #    ("supplyAirTemperature", Temperature): {},
-    # },
-    "sensors": {
-        ("SA-F", AirFlowSensor): {
-            "hasUnit": UNIT["L-PER-SEC"],
-            "comment": "Air flow used to control damper",
-        },
-        ("DA-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Air supplied to zone by VAV 1, AKA discharge air temperature",
-        },
-        ("VAV1_ZN-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Zone Air Temperature Sensor (return of thermal mass zone 1)",
-        },
-        ("VAV1_ZN-H", AirHumiditySensor): {
-            "comment": "Zone Air Humidity Sensor (return of thermal mass zone 1)",
-        },
-    },
-    "equipment": {
-        ("VAVController", VAVController): {},
-        ("REHEAT", ElectricalHeatingCoil): {
-            "comment": "VAV Box Electrical Heating Coil"
-        },
-    },
-}
 
-vav2_config = {
-    "params": {"label": "VAVBox2System", "comment": "VAV Serving HVAC Zone 2"},
-    # "properties": {
-    #    ("supplyAirTemperature", Temperature): {},
-    # },
+vav_config = {
+    "params": {"label": "VAVBoxSystem"},
     "sensors": {
-        ("SA-F", AirFlowSensor): {
-            "hasUnit": UNIT["L-PER-SEC"],
-            "comment": "Air flow used to control damper",
-        },
-        ("DA-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Air supplied to zone by VAV 2, AKA discharge air temperature",
-        },
-        ("VAV2_ZN-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Zone Air Temperature Sensor (return of thermal mass zone 2)",
-        },
-        ("VAV2_ZN-H", AirHumiditySensor): {
-            "comment": "Zone Air Humidity Sensor (return of thermal mass zone 2)",
-        },
-    },
-    "equipment": {
-        ("VAVController", VAVController): {},
-        ("REHEAT", ElectricalHeatingCoil): {
-            "comment": "VAV Box Electrical Heating Coil"
-        },
-    },
-}
-
-vav3_config = {
-    "params": {"label": "VAVBox3System", "comment": "VAV Serving HVAC Zone 3"},
-    # "properties": {
-    #    ("supplyAirTemperature", Temperature): {},
-    # },
-    "sensors": {
-        ("SA-F", AirFlowSensor): {
-            "hasUnit": UNIT["L-PER-SEC"],
-            "comment": "Air flow used to control damper",
-        },
-        ("DA-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Air supplied to zone by VAV 2, AKA discharge air temperature",
-        },
-        ("VAV3_ZN-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Zone Air Temperature Sensor (return of thermal mass zone 3)",
-        },
-        ("VAV3_ZN-H", AirHumiditySensor): {
-            "comment": "Zone Air Humidity Sensor (return of thermal mass zone 3)",
-        },
-    },
-    "equipment": {
-        ("VAVController", VAVController): {},
-        ("REHEAT", ElectricalHeatingCoil): {
-            "comment": "VAV Box Electrical Heating Coil"
-        },
-    },
-}
-
-vav4_config = {
-    "params": {"label": "VAVBox4System", "comment": "VAV Serving HVAC Zone 4"},
-    # "properties": {
-    #    ("supplyAirTemperature", Temperature): {},
-    # },
-    "sensors": {
-        ("SA-F", AirFlowSensor): {
-            "hasUnit": UNIT["L-PER-SEC"],
-            "comment": "Air flow used to control damper",
-        },
-        ("DA-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Air supplied to zone by VAV 2, AKA discharge air temperature",
-        },
-        ("VAV4_ZN-T", AirTemperatureSensor): {
-            "hasUnit": UNIT.DEG_C,
-            "comment": "Zone Air Temperature Sensor (return of thermal mass zone 4)",
-        },
-        ("VAV4_ZN-H", AirHumiditySensor): {
+        ("ZN-H", AirHumiditySensor): {
             "comment": "Zone Air Humidity Sensor (return of thermal mass zone 4)",
         },
     },
-    "equipment": {
-        ("VAVController", VAVController): {},
-        ("REHEAT", ElectricalHeatingCoil): {
-            "comment": "VAV Box Electrical Heating Coil"
-        },
-    },
 }
+
 
 fan_exhaust_template = {
     "cp": {
@@ -440,10 +340,10 @@ chilled_water_pump2 = Pump(label="ChilledWaterPump2")
 chilled_water_pump2_starter = MotorStarter(label="ChilledWaterPump2Starter")
 chilled_water_pump2_starter >> chilled_water_pump2
 
-vav1 = VAV_Reheat(config=vav1_config, reheat_type="electrical")
-vav2 = VAV_Reheat(config=vav2_config, reheat_type="electrical")
-vav3 = VAV_Reheat(config=vav3_config, reheat_type="electrical")
-vav4 = VAV_Reheat(config=vav4_config, reheat_type="electrical")
+vav1 = VAV(config=vav_withelectricreheat_template, comment="VAV Serving HVAC Zone 1")
+vav2 = VAV(config=vav_withelectricreheat_template, comment="VAV Serving HVAC Zone 2")
+vav3 = VAV(config=vav_withelectricreheat_template, comment="VAV Serving HVAC Zone 3")
+vav4 = VAV(config=vav_withelectricreheat_template, comment="VAV Serving HVAC Zone 4")
 
 
 if __name__ == "__main__":

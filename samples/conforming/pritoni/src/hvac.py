@@ -50,52 +50,20 @@ outdoor = AirConnection(
     label="Outdoor",
     comment="This is where we exhaust air of bathroom, and windows of OpenOffice are connected here to",
 )
-
-openoffice_windows = AirConnection(
-    label="OpenOfficeWindows",
-    comment="There are 2 windows connected to the space, so I use a connection",
-)
-
-mixedAir = AirConnection(
-    label="MixedAirDuct",
-    comment="Mix between return air and outdoor air",
-)
-returnExhaust = AirConnection(
-    label="Return / Exhaust",
-    comment="Paths for return or exhaust",
-)
-
-supplyAir = AirConnection(
-    label="SUPPLY-DUCT", comment="Supply Air Duct that feed VAV Boxes 1 & 2"
-)
-
-returnAir = AirConnection(
-    label="RETURN-DUCT", comment="Return Air Duct extracting air from open office"
-)
-
 plenum = AirConnection(
     label="Plenum",
     comment="Plenum. It's where Duct Static Pressure Low port is connected",
 )
-
+openoffice_windows = AirConnection(
+    label="OpenOfficeWindows",
+    comment="There are 2 windows connected to the space, so I use a connection",
+)
 # AHU
 outdoor >> hd.hrv.supplyAirInlet
-hd.hrv.supplyAirOutlet >> hd.ahu["OADPR"].airInlet  # >> mixedAir
-hd.ahu["OADPR"].airOutlet >> mixedAir
-hd.ahu["MADPR"].airOutlet >> mixedAir
-(mixedAir >> hd.ahu["FILTER"] >> hd.ahu["CLGCOIL"].airInlet)
-(hd.ahu["CLGCOIL"].airOutlet >> hd.ahu["SF"].airInlet)
-(hd.ahu["SF"].airOutlet >> hd.ahu["HTGCOIL"].airInlet)
-(hd.ahu["HTGCOIL"].airOutlet >> supplyAir)
-hs.openoffice_hvac.ductAirOutlet >> returnAir >> hd.ahu["RF"].airInlet
-hd.ahu["RF"].airOutlet >> returnExhaust >> hd.ahu["EADPR"].airInlet
+hd.hrv.supplyAirOutlet >> hd.ahu["OADPR"].airInlet
+hs.openoffice_hvac.ductAirOutlet >> hd.ahu.returnAir
 hd.ahu["EADPR"].airOutlet >> hd.hrv.exhaustAirInlet
 hd.hrv.exhaustAirOutlet >> outdoor
-returnExhaust >> hd.ahu["MADPR"].airInlet
-# hd.ahu.exhaustAirOutlet = hd.ahu["EADPR"].airOutlet
-# hd.ahu.supplyAirOutlet = hd.ahu["HTGCOIL"].airOutlet
-# hd.ahu.returnAirInlet = hd.ahu["RF"].airInlet
-# hd.ahu.outsideAirInlet = hd.ahu["OADPR"].airInlet
 
 # AHU Sensors
 hd.ahu["OA-T"] % outdoor
@@ -142,22 +110,20 @@ hd.bathroom_exhaust_fan.airOutlet >> outdoor
 
 # VAV Boxes
 # Relationships between Equipment and positioning sensors
-supplyAir >> hd.vav1["VAV1_damper"].airInlet
+hd.ahu.supplyAir >> hd.vav1["DPR"].airInlet
 hd.vav1.hasPhysicalLocation = ps.private_office
-hd.vav1["VAV1_damper"].airOutlet >> hd.vav1["VAV1_HeatingCoil"].airInlet
 
 # vav1 >> hs.hvac_zone_1
-hd.vav1["VAV1_HeatingCoil"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
+hd.vav1["REHEAT"].airOutlet >> hs.privateoffice_hvac.ductAirInlet
 hd.vav1["ZN-T"] % hs.openoffice_hvac
 hd.vav1["ZN-T"].hasPhysicalLocation = ps.openoffice
 
 
-supplyAir >> hd.vav2["VAV2_damper"].airInlet
+hd.ahu.supplyAir >> hd.vav2["DPR"].airInlet
 hd.vav2.hasPhysicalLocation = ps.kitchenette
-hd.vav2["VAV2_damper"].airOutlet >> hd.vav2["VAV2_HeatingCoil"].airInlet
 
 # vav2 >> hs.hvac_zone_2
-hd.vav2["VAV2_HeatingCoil"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
+hd.vav2["REHEAT"].airOutlet >> hs.kitchenette_hvac.ductAirInlet
 hd.vav2["ZN-T"] % hs.corridorSouth_hvac
 hd.vav2["ZN-T"].hasPhysicalLocation = ps.corridor
 

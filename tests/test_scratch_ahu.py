@@ -1,76 +1,57 @@
 from pathlib import Path
 
-import hvac_spaces as hs
-import physical_spaces as ps
-
-from bob.assemblage import model_namespace
-from bob.connections.air import AirConnection
-from bob.connections.electricity import (
-    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
-)
-from bob.core import UNIT, Role, bind_model_namespace, dump
-from bob.equipment.architectural import Window
-from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
-from bob.equipment.hvac.chiller import Chiller
+from bob.assemblage import create_data_and_schema_ttl, model_namespace
+from bob.connections import AirConnection
+from bob.connections.electricity import Electricity_600VLL_3Ph_60HzInletConnectionPoint
+from bob.core import UNIT, Role, bind_model_namespace
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.equipment.hvac.filter import Filter
-from bob.equipment.hvac.heatexchanger import AirHeatExchanger
-from bob.equipment.hvac.pump import Pump, PumpWithStarter
+from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
-
-# Prototypes
+from bob.scratch.header import sample_header
 from bob.scratch.hvac.airhandlingunit import AirHandlingUnit
 from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.scratch.hvac.fan import Fan
-from bob.scratch.hvac.valve import TwoWayActuatedProportionalValve
-from bob.scratch.hvac.vav import VAV, vav_withhotwaterreheat_template
-from bob.sensor.flow import AirFlowSensor
-from bob.sensor.pressure import (
-    AirDifferentialStaticPressureSensor,
-    DifferentialStaticPressure,
-)
-from bob.sensor.temperature import AirTemperatureSensor, Temperature
+from bob.sensor.temperature import AirTemperatureSensor
 
 model_name, global_ns = model_namespace(__file__)
 _namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
-
 
 ahu_template = {
     "params": {"label": "AHU", "comment": "AHU delivering air to 2 VAV boxes"},
     "sensors": {
         ("OA-T", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Oudoor air temperature (S3)",
+            "comment": "Oudoor air temperature",
         },
         ("TPD1", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Filter Differential Pressure Sensor (S5)",
+            "comment": "Filter Differential Pressure Sensor",
         },
         ("HC-T", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after heating coil (S6)",
+            "comment": "Air temperature after heating coil",
         },
         ("MA-T", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_F,
-            "comment": "Return Air temperature (S4)",
+            "comment": "Return Air temperature",
         },
         ("DA-T", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_F,
-            "comment": "Discharge Air temperature after cooling coil (S7)",
+            "comment": "Discharge Air temperature after cooling coil",
         },
         ("RA-T", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_F,
-            "comment": "Return Air temperature (S2)",
+            "comment": "Return Air temperature",
         },
         ("TPD2", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Supply Duct Static Pressure (S8)",
+            "comment": "Supply Duct Static Pressure",
         },
         ("TPD3", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Return Duct Static Pressure (S1)",
+            "comment": "Return Duct Static Pressure",
         },
     },
     "equipment": {
@@ -117,52 +98,29 @@ ahu_template = {
         ('self["RF"].airOutlet', ">>", "self.returnExhaust"),
         ("self.returnExhaust", ">>", 'self["EADPR"].airInlet'),
         ("self.returnExhaust", ">>", 'self["MADPR"].airInlet'),
+        ('self["TPD1"]["highPort"]', "%", 'self["FILTER"].airInlet'),
+        ('self["MA-T"]', "%", 'self["FILTER"].airInlet'),
+        ('self["TPD1"]["lowPort"]', "%", 'self["FILTER"].airOutlet'),
+        ('self["HC-T"]', "%", 'self["HTGCOIL"].airOutlet'),
+        ('self["DA-T"]', "%", 'self["SF"].airOutlet'),
+        ('self["RA-T"]', "%", 'self["MADPR"].airInlet'),
+        ('self["TPD2"]["highPort"]', "%", 'self["SF"].airOutlet'),
+        # ('self["TPD2"]["lowPort"]', "%", 'self.plenum'),
+        ('self["TPD3"]["highPort"]', "%", 'self["RF"].airOutlet'),
+        # ('self["TPD3"]["lowPort"]', "%", 'self.plenum'),
     ],
 }
 
-ahu = AirHandlingUnit(config=ahu_template)
-
-clg_vlv = TwoWayActuatedProportionalValve(label="A5")
-htg_vlv = TwoWayActuatedProportionalValve(label="A4")
-
-hrv = AirHeatExchanger(label="HRV")
-
-chiller = Chiller(label="Chiller")
-chilled_water_pump = Pump(label="ChilledWaterPump")
-chilled_water_pump_starter = MotorStarter(label="ChilledWaterPumpStarter")
-chilled_water_pump_starter >> chilled_water_pump
-boiler = ElectricalHotWaterBoiler(label="Boiler")
-hot_water_pump = Pump(label="HotWaterPump")
-hot_water_pump_starter = MotorStarter(label="HotWaterPumpStarter")
-hot_water_pump_starter >> hot_water_pump
-
-
-exhaustfan_template = {
-    "cp": {
-        "electricalInlet": Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-    },
-    "params": {
-        "hasRole": Role.Exhaust,
-    },
-}
-bathroom_exhaust_fan = Fan(
-    config=exhaustfan_template,
-    label="ExhaustFan",
-    comment="Bathroom exhaust fan",
-    hasPhysicalLocation=ps.bathroom,
+outdoor = AirConnection(
+    label="Outdoor",
+    comment="This is where we exhaust air of bathroom, and windows of OpenOffice are connected here to",
 )
-window1 = Window(
-    label="Window_West",
-    comment="First Window in OpenOffice, covering West portion of room",
-)
-window2 = Window(
-    label="Window_East",
-    comment="Second Window in OpenOffice, covering East portion of room",
+plenum = AirConnection(
+    label="Plenum",
+    comment="Plenum. It's where Duct Static Pressure Low port is connected",
 )
 
-vav1 = VAV(config=vav_withhotwaterreheat_template)
-vav2 = VAV(config=vav_withhotwaterreheat_template)
+ahu = AirHandlingUnit(config=ahu_template, label="ahu")
 
-
-if __name__ == "__main__":
-    dump()
+_folder = Path(__file__).parent
+create_data_and_schema_ttl(model_name, _folder, header=sample_header(model_name))

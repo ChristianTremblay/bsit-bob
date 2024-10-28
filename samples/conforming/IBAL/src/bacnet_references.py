@@ -147,11 +147,11 @@ ahu_controller > vav1_heat_c_AI
 heater_command >> vav_controller.heating_command
 vav1_heat_c_AI >> ahu_controller.heating_command_request
 
-hd.vav1["VAV1_ZN-T"].observedProperty @ zone1_temp.presentValue
+hd.vav1["ZN-T"].observedProperty @ zone1_temp.presentValue
 hd.vav1["DA-T"].observedProperty @ vav1_dat.presentValue
-hd.vav1["VAVController"]["command"] @ damper_command.presentValue
+hd.vav1["DPR"]["actuator"]["command"] @ damper_command.presentValue
 hd.vav1["REHEAT"]["modulation"] @ heater_command.presentValue
-hd.vav1["VAVController"]["position_feedback"] @ damper_feedback.presentValue
+hd.vav1["DPR"]["actuator"]["position_feedback"] @ damper_feedback.presentValue
 # hd.vav1["supplyAirTemperature"] @ vav1_sat.presentValue
 # hd.vav1.airFlow @ vav1_flow.presentValue
 hs.zone1_hvac.temperature_setpoint @ zone1_temp_sp.presentValue

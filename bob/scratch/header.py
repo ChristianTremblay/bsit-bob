@@ -1,5 +1,3 @@
-import sys
-
 SAMPLE_HEADER = """# baseURI: http://data.ashrae.org/standard223/1.0/sample/{sample_name}
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 

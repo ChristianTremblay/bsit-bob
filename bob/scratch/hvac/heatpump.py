@@ -1,8 +1,5 @@
-import logging
-from pathlib import Path
 from typing import Dict
 
-from bob.assemblage import create_data_and_schema_ttl
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.connections.electricity import Electricity_240VLL_1Ph_60HzInletConnectionPoint
 from bob.core import (
@@ -12,26 +9,15 @@ from bob.core import (
     BoundaryConnectionPoint,
     Equipment,
     Role,
-    System,
     URIRef,
-    bind_model_namespace,
-    data_graph,
-    dump,
-    schema_graph,
 )
 from bob.enum import R410a
-from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
-from bob.equipment.hvac.coil import Coil, HeatpumpCoil
+from bob.equipment.hvac.coil import HeatpumpCoil
 from bob.equipment.hvac.compressor import RefrigerationGasCompressor
 from bob.equipment.hvac.filter import Filter
-from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 from bob.equipment.hvac.valve import ExpansionValve, ReversingValve
 
 # Prototypes
-from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
-from bob.scratch.electricity.vfd import VFD
-from bob.scratch.header import sample_header
-from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper
 from bob.scratch.hvac.fan import Fan
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.template import SystemFromTemplate, configure_relations, template_update
@@ -78,8 +64,10 @@ class _AirToAirHeatPump(Equipment):
 
     _class_iri: URIRef = SCRATCH.AirToAirHeatPump
     electricalInlet: Electricity_240VLL_1Ph_60HzInletConnectionPoint  # needs to be in a template so other templates can override it.
-    airInlet: AirInletConnectionPoint  # return
-    airOutlet: AirOutletConnectionPoint  # supply
+    indoorAirInlet: AirInletConnectionPoint  # return
+    indoorAirOutlet: AirOutletConnectionPoint  # supply
+    outdoorAirInlet: AirInletConnectionPoint  # return
+    outdoorAirOutlet: AirOutletConnectionPoint  # supply
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(heatpump_template, config=config)
@@ -116,19 +104,20 @@ class _AirToAirHeatPump(Equipment):
             >> self["REVERSINGVALVE"].refrigerantOutdoorCoilPort
         )
 
-        self["FILTER"].airInlet.mapsTo = self.airInlet
+        self["FILTER"].airInlet.mapsTo = self.indoorAirInlet
         self["FILTER"].airOutlet >> self["INDOORCOIL"].airInlet
         self["INDOORCOIL"].airOutlet >> self["SF"].airInlet
-        self["SF"].airOutlet.mapsTo = self.airOutlet
+        self["SF"].airOutlet.mapsTo = self.indoorAirOutlet
 
         # takes air from outdoor
         # ambiant -> self['OUTDOORCOIL'].airInlet
         self["OUTDOORCOIL"].airOutlet >> self["OUTDOORUNITFAN"].airInlet
-        # self['OUTDOORUNITFAN'].airOutlet -> ambiant
+        self["OUTDOORCOIL"].airInlet.mapsTo = self.outdoorAirInlet
+        self["OUTDOORUNITFAN"].airOutlet.mapsTo = self.outdoorAirOutlet
         # push air to outdoor
 
-        self["DA-T"].hasObservationLocation = self.airOutlet
-        self["RA-T"].hasObservationLocation = self.airInlet
+        self["DA-T"].hasObservationLocation = self.indoorAirOutlet
+        self["RA-T"].hasObservationLocation = self.indoorAirInlet
 
 
 scratch_system_template = {
@@ -137,16 +126,20 @@ scratch_system_template = {
         ("AirToAirHeatPump", _AirToAirHeatPump): {},
     },
     "relations": [
-        ("self.airInlet", "=", "self['AirToAirHeatPump'].airInlet"),
-        ("self.airOutlet", "=", "self['AirToAirHeatPump'].airOutlet"),
+        ("self.indoorAirInlet", "=", "self['AirToAirHeatPump'].indoorAirInlet"),
+        ("self.indoorAirOutlet", "=", "self['AirToAirHeatPump'].indoorAirOutlet"),
+        ("self.outdoorAirInlet", "=", "self['AirToAirHeatPump'].outdoorAirInlet"),
+        ("self.outdoorAirOutlet", "=", "self['AirToAirHeatPump'].outdoorAirOutlet"),
     ],
 }
 
 
 class AirToAirHeatPump(SystemFromTemplate):
     _class_iri = S223.AirSourceHeatPump
-    airInlet: BoundaryConnectionPoint
-    airOutlet: BoundaryConnectionPoint
+    indoorAirInlet: BoundaryConnectionPoint
+    indoorAirOutlet: BoundaryConnectionPoint
+    outdoorAirInlet: BoundaryConnectionPoint
+    outdoorAirOutlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = scratch_system_template, **kwargs) -> None:
         _config = template_update({}, config=config)

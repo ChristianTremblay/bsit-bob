@@ -2,11 +2,12 @@ from typing import Dict
 
 from rdflib import URIRef
 
-
-from bob.equipment.hvac.damper import Damper as BaseDamper
 from bob.connections.mechanical import MechanicalInletConnectionPoint
-from bob.core import SCRATCH, PropertyReference, logging
-from bob.template import template_update
+from bob.core import SCRATCH, UNIT, logging
+from bob.equipment.hvac.damper import Damper as BaseDamper
+from bob.properties.ratio import Percent
+from bob.template import configure_relations, template_update
+
 from .actuator import (
     ElectricalOnOffActuator,
     ElectricalProportionalActuator,
@@ -29,11 +30,11 @@ class Damper(BaseDamper):
     linkageInlet: MechanicalInletConnectionPoint
     # airInlet: AirInletConnectionPoint
     # airOutlet: AirOutletConnectionPoint
-    position: PropertyReference
-    command: PropertyReference
-    position_feedback: PropertyReference
-    is_open: PropertyReference
-    is_closed: PropertyReference
+    # position: PropertyReference
+    # command: PropertyReference
+    # position_feedback: PropertyReference
+    # is_open: PropertyReference
+    # is_closed: PropertyReference
 
 
 class GravityDamper(Damper):
@@ -93,9 +94,42 @@ class DamperAndActuator(Damper):
 electrical_actuated_proportional_damper_template = {
     "equipment": {
         ("actuator", ElectricalProportionalActuator): {},
-        ("damper", Damper): {},
+        ("damper", Damper): {
+            "config": {
+                "properties": {
+                    ("position", Percent): {
+                        "hasUnit": UNIT.PERCENT,
+                        "comment": "Damper Effective Position",
+                    },
+                }
+            },
+        },
     },
-    "properties": {},
+    "properties": {
+        ("position", Percent): {
+            "hasUnit": UNIT.PERCENT,
+            "comment": "Damper Effective Position",
+        },
+        ("command", Percent): {
+            "hasUnit": UNIT.PERCENT,
+            "comment": "Damper Position command",
+        },
+        ("position_feedback", Percent): {
+            "hasUnit": UNIT.PERCENT,
+            "comment": "Damper Position feedback",
+        },
+        # "is_open": PropertyReference,
+        # "is_closed": PropertyReference,
+    },
+    "relations": [
+        ("self['position']", "@", "self['damper']['position']"),
+        (
+            "self['position_feedback']",
+            "@",
+            'self["actuator"]["position_sensor"].observedProperty',
+        ),
+        ("self['command']", "@", "self['actuator']['command']"),
+    ],
 }
 
 electrical_actuated_onoff_damper_template = {
@@ -113,7 +147,9 @@ class ElectricalActuatedProportionalDamper(DamperAndActuator):
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"ElectricalActuatedProportionalDamper.__init__ {_config} {kwargs}")
+        _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
 
 
 class ElectricalActuatedOnOffDamper(DamperAndActuator):
