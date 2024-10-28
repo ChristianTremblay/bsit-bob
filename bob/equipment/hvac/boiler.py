@@ -49,6 +49,7 @@ basic_hotwaterheater_template = {
                 "cp": {
                     "hotWaterLeaving": HotWaterOutletConnectionPoint,
                     "hotWaterEntering": HotWaterInletConnectionPoint,
+                    "electricalInlet": ElectricalInletConnectionPoint,
                 }
             },
         },
