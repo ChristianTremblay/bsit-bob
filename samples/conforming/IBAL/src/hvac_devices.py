@@ -22,17 +22,17 @@ from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
 from bob.equipment.hvac.chiller import Chiller
 from bob.equipment.hvac.coil import (
     ChilledWaterCoil,
-    Coil,
+    DXCoolingCoil,
     ElectricalHeatingCoil,
     HotWaterCoil,
 )
 from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
-from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
 
 # Prototypes
 from bob.properties.ratio import Percent
+from bob.enum import Air
 from bob.scratch.control.controller import VAVController
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
@@ -45,7 +45,7 @@ from bob.scratch.hvac.valve import (
 from bob.scratch.hvac.vav import VAV, vav_withelectricreheat_template
 from bob.sensor.flow import AirFlowSensor
 from bob.sensor.humidity import AirHumiditySensor, RelativeHumidity
-from bob.sensor.pressure import DifferentialStaticPressure
+from bob.sensor.pressure import AirDifferentialStaticPressureSensor, PressureSensor
 from bob.sensor.temperature import AirTemperatureSensor, Temperature
 from bob.template import SystemFromTemplate, template_update
 
@@ -221,7 +221,7 @@ ahu3_template = {
             "comment": "Supply Air Fan Starter",
             "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         },
-        ("CLGCOIL", Coil): {"comment": "DX Cooling Coil"},
+        ("CLGCOIL", DXCoolingCoil): {"comment": "DX Cooling Coil"},
         ("HTGCOIL", ElectricalHeatingCoil): {"comment": "Reheat coil"},
         ("FILTER", Filter): {"comment": "Filter"},
         ("OADPR_d19", ElectricalActuatedProportionalDamper): {
@@ -288,6 +288,7 @@ fan3_in_flow = AirFlowSensor(label="fan3_in_flow")
 fan3_in_pressure = AirDifferentialStaticPressureSensor(
     label="fan3_in_pressure", hasUnit=UNIT.PA
 )
+
 fan3_barometric_damper = GravityDamper(label="fan3_barometric_damper")
 
 fan4 = Fan(
@@ -327,8 +328,8 @@ damper10b = ElectricalActuatedProportionalDamper(
 
 outdoor_temp = AirTemperatureSensor(label="outdoor_temp", hasUnit=UNIT.DEG_C)
 outdoor_hum = AirHumiditySensor(label="outdoor_hum")
-outdoor_pressure = AirDifferentialStaticPressureSensor(
-    label="outdoor_pressure", hasUnit=UNIT.PA
+outdoor_pressure = PressureSensor(
+    label="outdoor_pressure", hasUnit=UNIT.PA, ofMedium=Air
 )
 
 chiller1 = Chiller(label="Chiller1")

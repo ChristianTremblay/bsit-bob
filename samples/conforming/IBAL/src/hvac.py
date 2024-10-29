@@ -164,10 +164,10 @@ hd.outdoor_hum % outdoor
 hd.outdoor_pressure % outdoor
 
 # AHU Sensors
-hd.ahu1["ahu1_p_up"]["highPort"] % hd.ahu1["SF"].airInlet
-hd.ahu1["ahu1_p_up"]["lowPort"] % plenum
-hd.ahu1["ahu1_p_down"]["highPort"] % ahu1_supplyAir
-hd.ahu1["ahu1_p_down"]["lowPort"] % plenum
+hd.ahu1["ahu1_p_up"] % (hd.ahu1["SF"].airInlet, plenum)
+
+hd.ahu1["ahu1_p_down"] % (ahu1_supplyAir, plenum)
+
 hd.ahu1["ahu1_out_rtd"] % ahu1_supplyAir
 hd.ahu1["ahu1_rh_down"] % ahu1_supplyAir
 hd.ahu1["ahu1_cc_rtd"] % hd.ahu1["CLGCOIL"].airOutlet
@@ -175,10 +175,10 @@ hd.ahu1["ahu1_heat_rtd"] % hd.ahu1["HTGCOIL"].airOutlet
 hd.ahu1["ahu1_rh_up"] % hd.ahu1["HTGCOIL"].airInlet
 hd.ahu1["ahu1_in_rtd"] % hd.ahu1["HTGCOIL"].airInlet
 
-hd.ahu2["ahu2_p_up"]["highPort"] % hd.ahu2["SF"].airInlet
-hd.ahu2["ahu2_p_up"]["lowPort"] % plenum
-hd.ahu2["ahu2_p_down"]["highPort"] % ahu2_supplyAir
-hd.ahu2["ahu2_p_down"]["lowPort"] % plenum
+hd.ahu2["ahu2_p_up"] % (hd.ahu2["SF"].airInlet, plenum)
+
+hd.ahu2["ahu2_p_down"] % (ahu2_supplyAir, plenum)
+
 hd.ahu2["ahu2_out_rtd"] % ahu2_supplyAir
 hd.ahu2["ahu2_rh_down"] % ahu2_supplyAir
 hd.ahu2["ahu2_cc_rtd"] % hd.ahu2["CLGCOIL"].airOutlet
@@ -187,10 +187,9 @@ hd.ahu2["ahu2_rh_up"] % hd.ahu2["HTGCOIL"].airInlet
 hd.ahu2["ahu2_in_rtd"] % hd.ahu2["HTGCOIL"].airInlet
 
 
-hd.ahu3["ahu3_p_up"]["highPort"] % hd.ahu3["SF"].airInlet
-hd.ahu3["ahu3_p_up"]["lowPort"] % plenum
-hd.ahu3["ahu3_p_down"]["highPort"] % ahu3_supplyAir
-hd.ahu3["ahu3_p_down"]["lowPort"] % plenum
+hd.ahu3["ahu3_p_up"] % (hd.ahu3["SF"].airInlet, plenum)
+
+hd.ahu3["ahu3_p_down"] % (ahu3_supplyAir, plenum)
 
 hd.ahu3["ahu3_out_rtd"] % ahu3_supplyAir
 hd.ahu3["ahu3_rh_down"] % ahu3_supplyAir
@@ -207,6 +206,13 @@ hd.vav2["ZN-T"] % hs.zone2_hvac
 hd.vav3["ZN-T"] % hs.zone3_hvac
 hd.vav4["ZN-T"] % hs.zone4_hvac
 
+hd.fan3_in_pressure % (hd.fan3.airInlet, plenum)
+hd.fan3_in_flow % hd.fan3.airInlet
+hd.fan3_in_rtd % hd.fan3.airInlet
+
+hd.fan4_in_pressure % (hd.fan4.airInlet, plenum)
+hd.fan4_in_flow % hd.fan4.airInlet
+hd.fan4_in_rtd % hd.fan4.airInlet
 
 """
 NOT READY TO DO THAT
