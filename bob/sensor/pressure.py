@@ -8,6 +8,7 @@ from bob.producer.causality import Differential
 
 from ..core import (
     BOB,
+    INCLUDE_INVERSE,
     P223,
     QUANTITYKIND,
     S223,
@@ -27,7 +28,7 @@ _namespace = BOB  #
 
 
 class PressureSensor(Sensor):
-    _class_iri = S223.Sensor
+    _class_iri = S223.PressureSensor
     observes: PropertyReference  # Temperature
     # hasObservationLocation: LocationReference
 
@@ -50,23 +51,49 @@ class PressureSensor(Sensor):
         )
 
 
-class DifferentialStaticPressureSetpoint(Setpoint):
-    _class_iri = S223.Sensor
-    hasQuantityKind: URIRef = QUANTITYKIND.ForcePerArea
-    hasUnit: URIRef
+class PressureReferenceSensor(PressureSensor):
+    _class_iri = S223.PressureSensor
+
+    def add_hasObservationLocation(self, node: Node) -> None:
+        # This is a special case called hasReferenceLocation
+        # but we keep the same function name for consistency
+        # and make % work
+        # link the two together
+        self._data_graph.add(
+            (self._node_iri, S223.hasReferenceLocation, node._node_iri)
+        )
+        if INCLUDE_INVERSE:
+            node.isReferenceLocation = self
+
+
+# class DifferentialStaticPressureSetpoint(Setpoint):
+#    _class_iri = S223.Sensor
+#    hasQuantityKind: URIRef = QUANTITYKIND.ForcePerArea
+#    hasUnit: URIRef
 
 
 class DifferentialStaticPressureSensor(Sensor):
-    _class_iri = S223.DifferentialSensor
+    _class_iri = S223.PressureSensor
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
 
         super().__init__(**_sensor_kwargs)
 
+    def add_hasObservationLocation(self, node: Node) -> None:
+        # For now, make that a secret, or we end up with s223.hasObservationLocation
+        # self._hasObservationLocation = node
 
-class AirDifferentialStaticPressureSensor(Sensor):
-    _class_iri = S223.DifferentialSensor
+        # link the two together
+        self._data_graph.add(
+            (self["highPort"]._node_iri, S223.hasReferenceLocation, node._node_iri)
+        )
+        if INCLUDE_INVERSE:
+            node.isReferenceLocation = self["highPort"]
+
+
+class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
+    _class_iri = S223.PressureSensor
     # observes: PropertyReference
     differential_static_pressure: DifferentialStaticPressure
 
@@ -79,7 +106,9 @@ class AirDifferentialStaticPressureSensor(Sensor):
             **_property_kwargs,
         )
         self > PressureSensor(label=f"highPort", ofMedium=Air, **_property_kwargs)
-        self > PressureSensor(label=f"lowPort", ofMedium=Air, **_property_kwargs)
+        self > PressureReferenceSensor(
+            label=f"lowPort", ofMedium=Air, **_property_kwargs
+        )
         self > Differential(
             label="diff_causality", comment="Will output High minus Low"
         )
