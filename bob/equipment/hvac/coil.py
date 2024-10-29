@@ -80,6 +80,18 @@ class WaterCoil(Coil):
         super().__init__(config, **kwargs)
 
 
+class DXCoolingCoil(Coil):
+    _class_iri = S223.CoolingCoil
+    refrigerantInlet: RefrigerantInletConnectionPoint
+    refrigerantOutlet: RefrigerantOutletConnectionPoint
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        self += Role.Cooling
+
+
 class ChilledWaterCoil(Coil):
     _class_iri = S223.CoolingCoil
     chilledWaterInlet: ChilledWaterInletConnectionPoint
@@ -134,8 +146,13 @@ electricalheating_template = {
 }
 
 
-class ElectricalHeatingCoil(Coil):
+class ElectricalHeatingCoil(Equipment):
     _class_iri = S223.ElectricResistanceElement
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
+    # Those could come from a valve, SCR, Triac, etc...
+    modulation: PropertyReference
+    onOffCommand: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electricalheating_template, config)
