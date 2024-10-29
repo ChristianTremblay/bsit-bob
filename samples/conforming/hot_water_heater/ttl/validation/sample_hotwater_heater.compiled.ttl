@@ -2,9 +2,9 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ns1: <http://qudt.org/schema/qudt/> .
 @prefix ns2: <http://data.ashrae.org/standard223#> .
-@prefix ns3: <http://data.ashrae.org/standard223/si-builder/prototype#> .
-@prefix ns4: <http://www.linkedmodel.org/schema/vaem#> .
-@prefix ns5: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix ns3: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix ns4: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix ns5: <http://data.ashrae.org/standard223/si-builder/prototype#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -768,15 +768,15 @@
     rdfs:subClassOf ns2:Connectable,
         ns2:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ns5:internalPressure ],
+            sh:path ns4:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path ns5:leavingFluid ],
+            sh:path ns4:containedFluid ],
         [ a sh:PropertyShape ;
-            sh:path ns5:fluidTemperature ],
+            sh:path ns4:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path ns5:containedFluid ],
+            sh:path ns4:internalPressure ],
         [ a sh:PropertyShape ;
-            sh:path ns5:enteringFluid ] .
+            sh:path ns4:fluidTemperature ] .
 
 <http://data.ashrae.org/proposal-to-standard223#TopBottom-Bottom> a <http://data.ashrae.org/proposal-to-standard223#TopBottom-Bottom>,
         ns2:EnumerationKind,
@@ -949,14 +949,14 @@ ns2:SymmetricProperty a rdfs:Class,
     rdfs:comment "Normal Message" ;
     rdfs:subClassOf ns2:EnumerationKind .
 
-ns5:Amps a rdfs:Class ;
+ns4:Amps a rdfs:Class ;
     rdfs:label "bob.properties.electricity.Amps" ;
     rdfs:subClassOf ns2:ObservableProperty,
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty .
 
-ns5:ElectricPower a rdfs:Class,
+ns4:ElectricPower a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.properties.electricity.ElectricPower" ;
     rdfs:subClassOf ns2:ObservableProperty,
@@ -966,24 +966,24 @@ ns5:ElectricPower a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path ns1:hasUnit ] .
 
-ns5:ElectricPowerkW a rdfs:Class ;
+ns4:ElectricPowerkW a rdfs:Class ;
     rdfs:label "bob.properties.electricity.ElectricPowerkW" ;
     rdfs:subClassOf ns2:ObservableProperty,
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:ElectricPower .
+        ns4:ElectricPower .
 
-ns5:ElectricalConnectionPoint a rdfs:Class ;
+ns4:ElectricalConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.electricity.ElectricalConnectionPoint" ;
     rdfs:subClassOf ns2:ConnectionPoint .
 
-ns5:Electricity_240VLL_1Ph_60HzConnectionPoint a rdfs:Class ;
+ns4:Electricity_240VLL_1Ph_60HzConnectionPoint a rdfs:Class ;
     rdfs:label "bob.connections.electricity.Electricity_240VLL_1Ph_60HzConnectionPoint" ;
     rdfs:subClassOf ns2:ConnectionPoint,
-        ns5:ElectricalConnectionPoint .
+        ns4:ElectricalConnectionPoint .
 
-ns5:Flow a rdfs:Class,
+ns4:Flow a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.properties.flow.Flow" ;
     rdfs:subClassOf ns2:ObservableProperty,
@@ -991,15 +991,15 @@ ns5:Flow a rdfs:Class,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:class ns2:EnumerationKind ;
-            sh:path ns5:measuresMedium ],
-        [ a sh:PropertyShape ;
             sh:path ns1:hasUnit ],
+        [ a sh:PropertyShape ;
+            sh:class ns2:EnumerationKind ;
+            sh:path ns4:measuresMedium ],
         [ a sh:PropertyShape ;
             sh:class ns2:EnumerationKind ;
             sh:path ns2:ofMedium ] .
 
-ns5:FluidConnectionPoint a rdfs:Class,
+ns4:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.connections.liquid.FluidConnectionPoint" ;
     rdfs:subClassOf ns2:ConnectionPoint ;
@@ -1007,7 +1007,7 @@ ns5:FluidConnectionPoint a rdfs:Class,
             sh:class ns2:EnumerationKind ;
             sh:path ns2:hasMedium ] .
 
-ns5:HotWaterConnectionPoint a rdfs:Class,
+ns4:HotWaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.connections.liquid.HotWaterConnectionPoint" ;
     rdfs:subClassOf ns2:ConnectionPoint ;
@@ -1015,14 +1015,14 @@ ns5:HotWaterConnectionPoint a rdfs:Class,
             sh:class ns2:EnumerationKind ;
             sh:path ns2:hasMedium ] .
 
-ns5:PercentCommand a rdfs:Class ;
+ns4:PercentCommand a rdfs:Class ;
     rdfs:label "bob.properties.ratio.PercentCommand" ;
     rdfs:subClassOf ns2:ActuatableProperty,
         ns2:Property,
         ns2:QuantifiableActuatableProperty,
         ns2:QuantifiableProperty .
 
-ns5:Temperature a rdfs:Class,
+ns4:Temperature a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.properties.temperature.Temperature" ;
     rdfs:subClassOf ns2:ObservableProperty,
@@ -1035,7 +1035,7 @@ ns5:Temperature a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path ns1:hasUnit ] .
 
-ns5:WaterConnectionPoint a rdfs:Class,
+ns4:WaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.connections.liquid.WaterConnectionPoint" ;
     rdfs:subClassOf ns2:ConnectionPoint ;
@@ -1043,43 +1043,43 @@ ns5:WaterConnectionPoint a rdfs:Class,
             sh:class ns2:EnumerationKind ;
             sh:path ns2:hasMedium ] .
 
-ns3:DomesticElectricalWaterHeater a rdfs:Class,
+ns5:DomesticElectricalWaterHeater a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.scratch.hvac.boiler._DomesticElectricalWaterHeater" ;
     rdfs:subClassOf ns2:Connectable,
         ns2:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ns3:leavingFluid ],
+            sh:path ns5:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path ns3:fluidTemperature ],
+            sh:path ns5:enteringFluid ],
         [ a sh:PropertyShape ;
-            sh:path ns3:enteringFluid ] .
+            sh:path ns5:fluidTemperature ] .
 
-ns3:InsideTankHeatTransfer a rdfs:Class,
+ns5:InsideTankHeatTransfer a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.scratch.hvac.boiler.InsideTankHeatTransfer" ;
     rdfs:comment " " ;
     rdfs:subClassOf ns2:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path ns3:resistanceHeaterCommand2 ],
+            sh:path ns5:waterFlow ],
         [ a sh:PropertyShape ;
-            sh:path ns3:resistanceHeaterModulation2 ],
+            sh:path ns5:resistanceHeaterModulation1 ],
         [ a sh:PropertyShape ;
-            sh:path ns3:resistanceHeaterModulation1 ],
+            sh:path ns5:resistanceHeaterModulation2 ],
         [ a sh:PropertyShape ;
-            sh:path ns3:resistanceHeaterCommand1 ],
+            sh:path ns5:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
-            sh:path ns3:leavingWaterTemp ],
+            sh:path ns5:fluidTemp ],
         [ a sh:PropertyShape ;
-            sh:path ns3:resistanceHeaterPower2 ],
+            sh:path ns5:leavingWaterTemp ],
         [ a sh:PropertyShape ;
-            sh:path ns3:averageSurfaceTemperature ],
+            sh:path ns5:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
-            sh:path ns3:resistanceHeaterPower1 ],
+            sh:path ns5:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
-            sh:path ns3:fluidTemp ],
+            sh:path ns5:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
-            sh:path ns3:waterFlow ] .
+            sh:path ns5:resistanceHeaterCommand2 ] .
 
 <http://example/SystemFromTemplate> a rdfs:Class ;
     rdfs:label "bob.template.SystemFromTemplate" ;
@@ -1262,7 +1262,7 @@ ns2:ClosedWorldShape a sh:NodeShape ;
             rdfs:comment """Ensure that all instances of an s223 class use only the properties defined for that class. Note that\r
 properties from other namespaces are not checked by this validation.""" ;
             sh:message "s223: Predicate {?p} is not defined for instance {$this}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?p ?o\r
 WHERE {\r
@@ -1643,7 +1643,7 @@ ns2:Filter a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 2: A medium with constituents and a pure Medium." ;
                     sh:message "s223: {$this} has an incompatible medium {?m1} with any constituent of {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?m1\r
 WHERE {\r
@@ -1667,7 +1667,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 3: Two mediums with constituents." ;
                     sh:message "s223: For Filter {$this} there is no compatible substance between medium {?m2} and medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT ?this ?m2 ?m1\r
 WHERE {\r
@@ -1697,7 +1697,7 @@ WHERE {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 1: Two pure mediums." ;
                     sh:message "s223: {$this} with inlet medium {?m2} is incompatible with outlet medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?m1\r
 WHERE {\r
@@ -1946,7 +1946,7 @@ WHERE {\r
   ?p s223:inverseOf ?invP .\r
 }\r
 			""" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ] ;
     sh:targetClass ns2:Concept .
 
 ns2:Inverter a ns2:Class,
@@ -2001,7 +2001,7 @@ ns2:JunctionUsageWarning a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "This Junction is not used to model significant details of a branching point in a connection, and may not be required." ;
             sh:message "This Junction {$this} is not used to model significant details of a branching point in a connection, and may not be required." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
             SELECT $this\r
             WHERE {\r
@@ -2183,7 +2183,7 @@ ns2:Pump a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
                     sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
 WHERE {\r
@@ -2285,7 +2285,7 @@ ns2:RequiredCommentsShape1 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that any property shape must have an rdfs:comment. " ;
             sh:message "s223: The SPARQLConstraint for path {?path} for Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?path\r
 WHERE {\r
@@ -2302,7 +2302,7 @@ ns2:RequiredCommentsShape2 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that any property shape must have an rdfs:comment. " ;
             sh:message "s223: The property shape with path {?path} for Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?path\r
 WHERE {\r
@@ -2318,7 +2318,7 @@ ns2:RequiredCommentsShape3 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that every SPARQLRule must have an rdfs:comment. " ;
             sh:message "s223: Every SPARQLRule for Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -2334,7 +2334,7 @@ ns2:RequiredCommentsShape4 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that every TripleRule must have an rdfs:comment. " ;
             sh:message "s223: The TripleRule inferring {?pred} for Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?pred\r
 WHERE {\r
@@ -2351,7 +2351,7 @@ ns2:RequiredCommentsShape5 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Every class of the 223 standard must also be an instance of sh:NodeShape. " ;
             sh:message "s223: Class {$this} must be declared as an instance of sh:NodeShape." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -2365,7 +2365,7 @@ ns2:RequiredCommentsShape6 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Every class of the 223 standard must be a direct or indirect subclass of s223:Concept. " ;
             sh:message "s223: Class {$this} must be within the rdfs:subClassOf hierarchy under s223:Concept." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -2380,7 +2380,7 @@ ns2:RequiredCommentsShape7 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Every class of the 223 standard must have an rdfs:comment. " ;
             sh:message "s223: Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -2485,7 +2485,7 @@ WHERE {\r
   ?p a s223:SymmetricProperty .\r
 }\r
 			""" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ] ;
     sh:targetClass ns2:Concept .
 
 ns2:TemperatureSensor a ns2:Class,
@@ -2703,13 +2703,13 @@ ns2:inverseOf a rdf:Property ;
     rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_hotwater_heater-data>,
         <http://data.ashrae.org/standard223/1.0/sample/sample_hotwater_heater-schema> .
 
-<http://data.ashrae.org/standard223/1.0/inference/data-rules> a owl:Ontology ;
-    owl:versionInfo "Created with TopBraid Composer" .
-
 <http://data.ashrae.org/standard223/1.0/inference/model-rules> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid  Composer" .
 
 <http://data.ashrae.org/standard223/1.0/inference/owl-subset> a owl:Ontology ;
+    owl:versionInfo "Created with TopBraid Composer" .
+
+<http://data.ashrae.org/standard223/1.0/model/core> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid Composer" .
 
 <http://data.ashrae.org/standard223/1.0/model/equipment> a owl:Ontology ;
@@ -2732,15 +2732,15 @@ ns2:inverseOf a rdf:Property ;
 <http://data.ashrae.org/standard223/1.0/vocab/enumeration> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid Composer" .
 
+ns4:electricalInlet a rdf:Property ;
+    rdfs:subPropertyOf ns2:hasConnectionPoint .
+
+ns4:fluidContact a rdf:Property ;
+    rdfs:subPropertyOf ns2:hasConnectionPoint .
+
+ns4:isObservedBy a rdf:Property .
+
 ns5:electricalInlet a rdf:Property ;
-    rdfs:subPropertyOf ns2:hasConnectionPoint .
-
-ns5:fluidContact a rdf:Property ;
-    rdfs:subPropertyOf ns2:hasConnectionPoint .
-
-ns5:isObservedBy a rdf:Property .
-
-ns3:electricalInlet a rdf:Property ;
     rdfs:subPropertyOf ns2:hasBoundaryConnectionPoint .
 
 <http://example.org/sample_hotwater_heater> a owl:Ontology ;
@@ -4703,7 +4703,7 @@ $t = T - T_0$, where $T$ is Thermodynamic Temperature and $T_0 = 273.15 K$."""^^
     ns1:informativeReference "http://en.wikipedia.org/wiki/Acoustic_impedance#Characteristic_acoustic_impedance"^^xsd:anyURI ;
     ns1:latexDefinition "$Z_c = pc$, where $p$ is the sound pressure and $c$ is the phase speed of sound."^^ns1:LatexString ;
     ns1:symbol "Z" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/AcousticImpedance> .
 
@@ -6714,7 +6714,7 @@ Females expend about 10 per cent less energy than males of the same size doing a
     ns1:informativeReference "http://www.rockfon.co.uk/acoustics/comparing+ceilings/sound+absorption/equivalent+absorption+area"^^xsd:anyURI ;
     ns1:plainTextDescription "In a diffuse sound field, the Equivalent Absorption Area is that area of a surface having an absorption factor equal to 1, which, if diffraction effects are neglected, would, in the same diffuse sound field, absorb the same power." ;
     ns1:symbol "A" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/Area> .
 
@@ -10282,7 +10282,7 @@ $\\text{Magnetic Polarization}$ is a vector quantity equal to the product of the
     ns1:latexDefinition "$Z_m = Z_a A^2$, where $A$ is the area of the surface considered and $Z_a$ is the acoustic impedance."^^ns1:LatexString ;
     ns1:plainTextDescription "Mechanical surface impedance at a surface, is the complex quotient of the total force on the surface by the component of the average sound particle velocity at the surface in the direction of the force" ;
     ns1:symbol "Z" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:comment "There are various interpretations of MechanicalSurfaceImpedance: Pressure/Velocity - https://apps.dtic.mil/sti/pdfs/ADA315595.pdf, Force / Speed - https://www.wikidata.org/wiki/Q6421317, and (Pressure / Velocity)**0.5 - https://www.sciencedirect.com/topics/engineering/mechanical-impedance. We are seeking a resolution to these differences." ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
@@ -13285,7 +13285,7 @@ For layered and finite media, according to the CIE, reflectivity is distinguish
     ns1:informativeReference "http://en.wikipedia.org/wiki/Reverberation"^^xsd:anyURI ;
     ns1:plainTextDescription "Reverberation Time is the time required for reflections of a direct sound to decay by 60 dB below the level of the direct sound." ;
     ns1:symbol "T" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/Time> .
 
@@ -13669,7 +13669,7 @@ For layered and finite media, according to the CIE, reflectivity is distinguish
     ns1:informativeReference "http://en.wikipedia.org/wiki/Sound_energy_density"^^xsd:anyURI ;
     ns1:latexDefinition "$E = \\frac{I}{c}$, where $I$ is the sound intensity in $\\frac{W}{m^2}$ and $c$ is the sound speed in $\\frac{m}{s}$."^^ns1:LatexString ;
     ns1:symbol "E" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/EnergyDensity> .
 
@@ -13695,7 +13695,7 @@ For layered and finite media, according to the CIE, reflectivity is distinguish
     ns1:informativeReference "http://en.wikipedia.org/wiki/Particle_acceleration"^^xsd:anyURI ;
     ns1:latexDefinition "$a = \\frac{\\partial v}{\\partial t}$, where $v$ is sound particle velocity and $t$ is time."^^ns1:LatexString ;
     ns1:symbol "a" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/Acceleration> .
 
@@ -13746,7 +13746,7 @@ For layered and finite media, according to the CIE, reflectivity is distinguish
     ns1:informativeReference "http://en.wikipedia.org/wiki/Particle_displacement"^^xsd:anyURI ;
     ns1:plainTextDescription "Sound Particle Displacement is the nstantaneous displacement of a particle in a medium from what would be its position in the absence of sound waves." ;
     ns1:symbol "ξ" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/Length> .
 
@@ -13831,7 +13831,7 @@ For layered and finite media, according to the CIE, reflectivity is distinguish
     ns1:informativeReference "http://en.wikipedia.org/wiki/Sound_power"^^xsd:anyURI ;
     ns1:latexDefinition "$P_a = IA$, where $I$ is the sound intensity in $\\frac{W}{m^2}$ and $A$ is the area in $m^2$."^^ns1:LatexString ;
     ns1:symbol "P" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:altLabel "potência sonora"@pt ;
     skos:broader <http://qudt.org/vocab/quantitykind/Power> .
@@ -13907,7 +13907,7 @@ For layered and finite media, according to the CIE, reflectivity is distinguish
     ns1:informativeReference "http://en.wikipedia.org/wiki/Static_pressure"^^xsd:anyURI ;
     ns1:plainTextDescription "Sound Pressure is the difference between instantaneous total pressure and static pressure." ;
     ns1:symbol "p" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/Pressure> .
 
@@ -14567,7 +14567,7 @@ electric current through the source. The name "electromotive force} with the abb
     ns1:hasDimensionVector <http://qudt.org/vocab/dimensionvector/A0E0L-1I0M1H0T-2D0> ;
     ns1:informativeReference "http://en.wikipedia.org/wiki/Static_pressure"^^xsd:anyURI ;
     ns1:symbol "p" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/Pressure> .
 
@@ -15254,7 +15254,7 @@ electric current through the source. The name "electromotive force} with the abb
     ns1:latexDefinition "$I = \\frac{1}{t2 - t1} \\int_{t1}^{t2}i(t)dt$, where $t1$ and $t2$ are the starting and ending times for the integral and $i$ is sound intensity."^^ns1:LatexString ;
     ns1:plainTextDescription "Sound intensity or acoustic intensity ($I$) is defined as the sound power $P_a$ per unit area $A$. The usual context is the noise measurement of sound intensity in the air at a listener's location as a sound energy quantity." ;
     ns1:symbol "I" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/SoundIntensity> .
 
@@ -15471,7 +15471,7 @@ electric current through the source. The name "electromotive force} with the abb
     ns1:latexDefinition "$\\tau = \\frac{\\Phi_t}{\\Phi_m}$, where $\\Phi_t$ is the transmitted radiant flux or the transmitted luminous flux, and $\\Phi_m$ is the radiant flux or luminous flux of the incident radiation."^^ns1:LatexString ;
     ns1:latexSymbol "$\\tau, T$"^^ns1:LatexString ;
     ns1:plainTextDescription "Transmittance is the fraction of incident light (electromagnetic radiation) at a specified wavelength that passes through a sample." ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/DimensionlessRatio> .
 
@@ -15876,7 +15876,7 @@ electric current through the source. The name "electromotive force} with the abb
     ns1:informativeReference "http://en.wikipedia.org/wiki/Wavelength"^^xsd:anyURI ;
     ns1:latexDefinition "$\\lambda = \\frac{c}{\\nu}$, where $\\lambda$ is the wave length, $\\nu$ is the frequency, and $c$ is the speed of light in the medium."^^ns1:LatexString ;
     ns1:symbol "λ" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/Length> .
 
@@ -16524,7 +16524,7 @@ $k = \\frac{2\\pi}{\\lambda}= \\frac{2\\pi\\upsilon}{\\upsilon_p}=\\frac{\\omega
     ns1:uneceCommonCode "J12" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-<http://voag.linkedmodel.org/schema/voag#QUDT-UNITS-VocabCatalogEntry> a ns4:CatalogEntry ;
+<http://voag.linkedmodel.org/schema/voag#QUDT-UNITS-VocabCatalogEntry> a ns3:CatalogEntry ;
     rdfs:label "QUDT UNITS Vocab Catalog Entry" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
@@ -16537,13 +16537,13 @@ $k = \\frac{2\\pi}{\\lambda}= \\frac{2\\pi\\upsilon}{\\upsilon_p}=\\frac{\\omega
         <urn:ex:sample_hotwater_heater/00005> ;
     ns2:hasMember <urn:ex:sample_hotwater_heater/00002> ;
     ns2:hasRole ns2:Role-Heating ;
-    ns3:electricalInlet <urn:ex:sample_hotwater_heater/00005> ;
-    ns3:enteringFluid <urn:ex:sample_hotwater_heater/00004> ;
-    ns3:leavingFluid <urn:ex:sample_hotwater_heater/00003> ;
+    ns5:electricalInlet <urn:ex:sample_hotwater_heater/00005> ;
+    ns5:enteringFluid <urn:ex:sample_hotwater_heater/00004> ;
+    ns5:leavingFluid <urn:ex:sample_hotwater_heater/00003> ;
     rdfs:comment "Hot Water Heater" .
 
 <urn:ex:sample_hotwater_heater/00029> a ns2:Function,
-        ns3:InsideTankHeatTransfer ;
+        ns5:InsideTankHeatTransfer ;
     rdfs:label "Heat Transfer Function" ;
     ns2:hasInput <urn:ex:sample_hotwater_heater/00008>,
         <urn:ex:sample_hotwater_heater/00018>,
@@ -16554,15 +16554,15 @@ $k = \\frac{2\\pi}{\\lambda}= \\frac{2\\pi\\upsilon}{\\upsilon_p}=\\frac{\\omega
         <urn:ex:sample_hotwater_heater/00027> ;
     ns2:hasOutput <urn:ex:sample_hotwater_heater/00006>,
         <urn:ex:sample_hotwater_heater/00013> ;
-    ns3:fluidTemp <urn:ex:sample_hotwater_heater/00013> ;
-    ns3:leavingWaterTemp <urn:ex:sample_hotwater_heater/00006> ;
-    ns3:resistanceHeaterCommand1 <urn:ex:sample_hotwater_heater/00020> ;
-    ns3:resistanceHeaterCommand2 <urn:ex:sample_hotwater_heater/00027> ;
-    ns3:resistanceHeaterModulation1 <urn:ex:sample_hotwater_heater/00019> ;
-    ns3:resistanceHeaterModulation2 <urn:ex:sample_hotwater_heater/00026> ;
-    ns3:resistanceHeaterPower1 <urn:ex:sample_hotwater_heater/00018> ;
-    ns3:resistanceHeaterPower2 <urn:ex:sample_hotwater_heater/00025> ;
-    ns3:waterFlow <urn:ex:sample_hotwater_heater/00008> .
+    ns5:fluidTemp <urn:ex:sample_hotwater_heater/00013> ;
+    ns5:leavingWaterTemp <urn:ex:sample_hotwater_heater/00006> ;
+    ns5:resistanceHeaterCommand1 <urn:ex:sample_hotwater_heater/00020> ;
+    ns5:resistanceHeaterCommand2 <urn:ex:sample_hotwater_heater/00027> ;
+    ns5:resistanceHeaterModulation1 <urn:ex:sample_hotwater_heater/00019> ;
+    ns5:resistanceHeaterModulation2 <urn:ex:sample_hotwater_heater/00026> ;
+    ns5:resistanceHeaterPower1 <urn:ex:sample_hotwater_heater/00018> ;
+    ns5:resistanceHeaterPower2 <urn:ex:sample_hotwater_heater/00025> ;
+    ns5:waterFlow <urn:ex:sample_hotwater_heater/00008> .
 
 <urn:ex:sample_hotwater_heater/00030> a ns2:DomesticHotWaterHeater,
         ns2:System,
@@ -16572,9 +16572,9 @@ $k = \\frac{2\\pi}{\\lambda}= \\frac{2\\pi\\upsilon}{\\upsilon_p}=\\frac{\\omega
         <urn:ex:sample_hotwater_heater/00033> ;
     ns2:hasMember <urn:ex:sample_hotwater_heater/00031> ;
     ns2:hasRole ns2:Role-Heating ;
-    ns5:electricalInlet <urn:ex:sample_hotwater_heater/00034> ;
-    ns5:enteringFluid <urn:ex:sample_hotwater_heater/00033> ;
-    ns5:leavingFluid <urn:ex:sample_hotwater_heater/00032> ;
+    ns4:electricalInlet <urn:ex:sample_hotwater_heater/00034> ;
+    ns4:enteringFluid <urn:ex:sample_hotwater_heater/00033> ;
+    ns4:leavingFluid <urn:ex:sample_hotwater_heater/00032> ;
     rdfs:comment "Hot Water Heater" .
 
 <http://data.ashrae.org/bacnet/2020#device-identifier> a rdf:Property ;
@@ -18655,7 +18655,7 @@ ns2:Role-OutdoorAirIntake a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure that Role-OutdoorAirIntake is associated with a Connectable directly connecting to Outdoor Air, or properties of this Connectable." ;
                     sh:message "{?this} is associated with {$entity}, which does not directly connect to outdoor air." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?entity\r
 WHERE {\r
@@ -18869,7 +18869,7 @@ ns2:Zone a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "The associated Domain of a Zone and the Domain of the DomainSpaces it contains must be the same." ;
                     sh:message "s223: Zone {$this} has a Domain of {?domain}, but it contains a DomainSpace {?ds} which has a Domain of {?dsdomain}. These should be the same." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT DISTINCT $this ?domain ?ds ?dsdomain\r
 WHERE {\r
@@ -18950,54 +18950,54 @@ ns2:hasThermodynamicPhase a rdf:Property ;
     rdfs:label "has thermodynamic phase" ;
     rdfs:comment "The relation hasThermodynamicPhase is used to indicate the thermodynamic phase of the Medium inside a Connection." .
 
-ns5:containedFluid a rdf:Property ;
+ns4:containedFluid a rdf:Property ;
     rdfs:subPropertyOf ns2:hasConnectionPoint .
+
+ns4:enteringFluid a rdf:Property ;
+    rdfs:subPropertyOf ns2:hasBoundaryConnectionPoint,
+        ns2:hasConnectionPoint .
+
+ns4:fluidTemperature a rdf:Property ;
+    rdfs:subPropertyOf ns2:hasProperty .
+
+ns4:internalPressure a rdf:Property ;
+    rdfs:subPropertyOf ns2:hasProperty .
+
+ns4:leavingFluid a rdf:Property ;
+    rdfs:subPropertyOf ns2:hasBoundaryConnectionPoint,
+        ns2:hasConnectionPoint .
+
+ns4:measuresMedium a rdf:Property .
+
+ns5:averageSurfaceTemperature a rdf:Property .
 
 ns5:enteringFluid a rdf:Property ;
     rdfs:subPropertyOf ns2:hasBoundaryConnectionPoint,
         ns2:hasConnectionPoint .
 
-ns5:fluidTemperature a rdf:Property ;
-    rdfs:subPropertyOf ns2:hasProperty .
+ns5:fluidTemp a rdf:Property .
 
-ns5:internalPressure a rdf:Property ;
-    rdfs:subPropertyOf ns2:hasProperty .
+ns5:fluidTemperature a rdf:Property .
 
 ns5:leavingFluid a rdf:Property ;
     rdfs:subPropertyOf ns2:hasBoundaryConnectionPoint,
         ns2:hasConnectionPoint .
 
-ns5:measuresMedium a rdf:Property .
+ns5:leavingWaterTemp a rdf:Property .
 
-ns3:averageSurfaceTemperature a rdf:Property .
+ns5:resistanceHeaterCommand1 a rdf:Property .
 
-ns3:enteringFluid a rdf:Property ;
-    rdfs:subPropertyOf ns2:hasBoundaryConnectionPoint,
-        ns2:hasConnectionPoint .
+ns5:resistanceHeaterCommand2 a rdf:Property .
 
-ns3:fluidTemp a rdf:Property .
+ns5:resistanceHeaterModulation1 a rdf:Property .
 
-ns3:fluidTemperature a rdf:Property .
+ns5:resistanceHeaterModulation2 a rdf:Property .
 
-ns3:leavingFluid a rdf:Property ;
-    rdfs:subPropertyOf ns2:hasBoundaryConnectionPoint,
-        ns2:hasConnectionPoint .
+ns5:resistanceHeaterPower1 a rdf:Property .
 
-ns3:leavingWaterTemp a rdf:Property .
+ns5:resistanceHeaterPower2 a rdf:Property .
 
-ns3:resistanceHeaterCommand1 a rdf:Property .
-
-ns3:resistanceHeaterCommand2 a rdf:Property .
-
-ns3:resistanceHeaterModulation1 a rdf:Property .
-
-ns3:resistanceHeaterModulation2 a rdf:Property .
-
-ns3:resistanceHeaterPower1 a rdf:Property .
-
-ns3:resistanceHeaterPower2 a rdf:Property .
-
-ns3:waterFlow a rdf:Property .
+ns5:waterFlow a rdf:Property .
 
 <http://qudt.org/vocab/quantitykind/AbsoluteActivity> a ns1:QuantityKind ;
     rdfs:label "Absolute Activity"@en ;
@@ -19022,7 +19022,7 @@ ns3:waterFlow a rdf:Property .
     ns1:latexDefinition "$\\alpha = \\frac{\\Phi_a}{\\Phi_m}$, where $\\Phi_a$ is the absorbed radiant flux or the absorbed luminous flux, and $\\Phi_m$ is the radiant flux or luminous flux of the incident radiation."^^ns1:LatexString ;
     ns1:latexSymbol "$\\alpha$"^^ns1:LatexString ;
     ns1:plainTextDescription "Absorptance is the ratio of the radiation absorbed by a surface to that incident upon it. Also known as absorbance." ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/AcceptorIonizationEnergy> a ns1:QuantityKind ;
@@ -19683,7 +19683,7 @@ ns3:waterFlow a rdf:Property .
     ns1:latexDefinition "$\\delta = \\frac{P_d}{P_i}$, where $P_d$ is the dissipated sound power, and $P_i$ is the incident sound power."^^ns1:LatexString ;
     ns1:latexSymbol "$\\delta$"^^ns1:LatexString ;
     ns1:plainTextDescription "Dissipance, or dissipation factor for sound power, is the ratio of dissipated sound power to incident sound power. The dissipation factor (DF) is a measure of loss-rate of energy of a mode of oscillation (mechanical, electrical, or electromechanical) in a dissipative system. It is the reciprocal of quality factor, which represents the quality of oscillation." ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/DonorIonizationEnergy> a ns1:QuantityKind ;
@@ -22444,7 +22444,7 @@ the quotient of rms voltage and rms electric current; it is often denoted by $Z$
     ns1:latexDefinition "$E = \\int_{t1}^{t2}p^2dt$, where $t1$ and $t2$ are the starting and ending times for the integral and $p$ is the sound pressure."^^ns1:LatexString ;
     ns1:plainTextDescription "Sound Exposure is the energy of the A-weighted sound calculated over the measurement time(s). For a given period of time, an increase of 10 dB(A) in sound pressure level corresponds to a tenfold increase in E." ;
     ns1:symbol "E" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/SoundIntensity> a ns1:QuantityKind ;
@@ -22480,7 +22480,7 @@ the quotient of rms voltage and rms electric current; it is often denoted by $Z$
     ns1:latexDefinition "$I = pv$, where $p$ is the sound pressure and $v$ is sound particle velocity."^^ns1:LatexString ;
     ns1:plainTextDescription "Sound intensity or acoustic intensity ($I$) is defined as the sound power $P_a$ per unit area $A$. The usual context is the noise measurement of sound intensity in the air at a listener's location as a sound energy quantity." ;
     ns1:symbol "I" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/PowerPerArea> .
 
@@ -22492,7 +22492,7 @@ the quotient of rms voltage and rms electric current; it is often denoted by $Z$
     ns1:informativeReference "http://en.wikipedia.org/wiki/Acoustic_impedance"^^xsd:anyURI ;
     ns1:latexDefinition "$q= vS$, where $v$ is sound particle velocity and $S$ is the surface area through which an acoustic wave of frequence $f$ propagates."^^ns1:LatexString ;
     ns1:symbol "q" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/SpecificElectricCharge> a ns1:QuantityKind ;
@@ -23869,7 +23869,7 @@ the quotient of rms voltage and rms electric current; it is often denoted by $Z$
     ns1:ucumCode "[Btu_IT].[ft_i].[ft_i]-2.h-1.[degF]-1"^^ns1:UCUMcs,
         "[Btu_IT].[ft_i]/([ft_i]2.h.[degF])"^^ns1:UCUMcs ;
     ns1:uneceCommonCode "J40" ;
-    ns4:comment "qudt:exactMatch: unit:BTU_IT-FT-PER-HR-FT2-DEG_F" ;
+    ns3:comment "qudt:exactMatch: unit:BTU_IT-FT-PER-HR-FT2-DEG_F" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
 <http://qudt.org/vocab/unit/BTU_IT-IN> a ns1:DerivedUnit,
@@ -40357,11 +40357,11 @@ not the volume of the gas. The reference conditions for standard cubic metre per
     ns1:symbol "Z" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-<http://voag.linkedmodel.org/schema/voag#QUDT-QUANTITY-KINDS-VocabCatalogEntry_v1.2> a ns4:CatalogEntry ;
+<http://voag.linkedmodel.org/schema/voag#QUDT-QUANTITY-KINDS-VocabCatalogEntry_v1.2> a ns3:CatalogEntry ;
     rdfs:label "QUDT Quantity Kinds Vocabulary Catalog Entry v1.2" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
-ns4:GMD_QUDT-QUANTITY-KINDS-ALL a ns4:GraphMetaData ;
+ns3:GMD_QUDT-QUANTITY-KINDS-ALL a ns3:GraphMetaData ;
     rdfs:label "QUDT Quantity Kind Vocabulary Metadata Version 2.1.41" ;
     dcterms:contributor "Jack Hodges",
         "Simon J D Cox",
@@ -40374,23 +40374,23 @@ ns4:GMD_QUDT-QUANTITY-KINDS-ALL a ns4:GraphMetaData ;
     dcterms:rights "The QUDT Ontologies are issued under a Creative Commons Attribution 4.0 International License (CC BY 4.0), available at https://creativecommons.org/licenses/by/4.0/. Attribution should be made to QUDT.org" ;
     dcterms:subject "QUANTITY-KINDS-ALL" ;
     dcterms:title "QUDT Quantity Kinds Version 2.1 Vocabulary" ;
-    ns4:applicableDiscipline "All disciplines" ;
-    ns4:applicableDomain "Science, Medicine and Engineering" ;
-    ns4:dateCreated "2019-08-01T21:26:38"^^xsd:dateTime ;
-    ns4:graphTitle "QUDT Quantity Kinds Version 2.1.41" ;
-    ns4:hasGraphRole ns4:VocabularyGraph ;
-    ns4:intent "Provides a vocabulary of all quantity kinds." ;
-    ns4:isMetadataFor <http://qudt.org/2.1/vocab/quantitykind> ;
-    ns4:latestPublishedVersion "https://qudt.org/doc/2024/07/DOC_VOCAB-QUANTITY-KINDS-ALL-v2.1.html"^^xsd:anyURI ;
-    ns4:logo "https://qudt.org/linkedmodels.org/assets/lib/lm/images/logos/qudt_logo-300x110.png" ;
-    ns4:namespace "http://qudt.org/vocab/quantitykind/"^^xsd:anyURI ;
-    ns4:namespacePrefix "quantitykind" ;
-    ns4:owner "qudt.org" ;
-    ns4:previousPublishedVersion "https://qudt.org/doc/2024/06/DOC_VOCAB-QUANTITY-KINDS-ALL-v2.1.html"^^xsd:anyURI ;
-    ns4:revision "2.1" ;
-    ns4:specificity 1 ;
-    ns4:turtleFileURL "http://qudt.org/2.1/vocab/quantitykind"^^xsd:anyURI ;
-    ns4:usesNonImportedResource dc:contributor,
+    ns3:applicableDiscipline "All disciplines" ;
+    ns3:applicableDomain "Science, Medicine and Engineering" ;
+    ns3:dateCreated "2019-08-01T21:26:38"^^xsd:dateTime ;
+    ns3:graphTitle "QUDT Quantity Kinds Version 2.1.41" ;
+    ns3:hasGraphRole ns3:VocabularyGraph ;
+    ns3:intent "Provides a vocabulary of all quantity kinds." ;
+    ns3:isMetadataFor <http://qudt.org/2.1/vocab/quantitykind> ;
+    ns3:latestPublishedVersion "https://qudt.org/doc/2024/07/DOC_VOCAB-QUANTITY-KINDS-ALL-v2.1.html"^^xsd:anyURI ;
+    ns3:logo "https://qudt.org/linkedmodels.org/assets/lib/lm/images/logos/qudt_logo-300x110.png" ;
+    ns3:namespace "http://qudt.org/vocab/quantitykind/"^^xsd:anyURI ;
+    ns3:namespacePrefix "quantitykind" ;
+    ns3:owner "qudt.org" ;
+    ns3:previousPublishedVersion "https://qudt.org/doc/2024/06/DOC_VOCAB-QUANTITY-KINDS-ALL-v2.1.html"^^xsd:anyURI ;
+    ns3:revision "2.1" ;
+    ns3:specificity 1 ;
+    ns3:turtleFileURL "http://qudt.org/2.1/vocab/quantitykind"^^xsd:anyURI ;
+    ns3:usesNonImportedResource dc:contributor,
         dc:creator,
         dc:description,
         dc:rights,
@@ -40409,11 +40409,11 @@ ns4:GMD_QUDT-QUANTITY-KINDS-ALL a ns4:GraphMetaData ;
         <http://voag.linkedmodel.org/voag/QUDT-Attribution>,
         skos:closeMatch,
         skos:exactMatch ;
-    ns4:withAttributionTo <http://voag.linkedmodel.org/schema/voag#QUDT-Attribution>,
+    ns3:withAttributionTo <http://voag.linkedmodel.org/schema/voag#QUDT-Attribution>,
         <http://voag.linkedmodel.org/voag/QUDT-Attribution> ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
-ns4:GMD_QUDT-UNITS-ALL a ns4:GraphMetaData ;
+ns3:GMD_QUDT-UNITS-ALL a ns3:GraphMetaData ;
     rdfs:label "QUDT Unit of Measure Vocabulary Metadata Version 2.1.41" ;
     dcterms:contributor "Jack Hodges",
         "Simon J D Cox",
@@ -40429,23 +40429,23 @@ THE UCUM TABLE (IN ALL FORMATS), UCUM DEFINITIONS, AND SPECIFICATION ARE PROVIDE
         "The QUDT Ontologies are issued under a Creative Commons Attribution 4.0 International License (CC BY 4.0), available at https://creativecommons.org/licenses/by/4.0/. Attribution should be made to QUDT.org" ;
     dcterms:subject "Units-All" ;
     dcterms:title "QUDT Units Version 2.1 Vocabulary" ;
-    ns4:description "Standard units of measure for all units." ;
-    ns4:graphName "qudt" ;
-    ns4:graphTitle "QUDT Units Version 2.1.41" ;
-    ns4:hasGraphRole ns4:VocabularyGraph ;
-    ns4:hasOwner ns4:QUDT.org ;
-    ns4:hasSteward ns4:QUDT.org ;
-    ns4:intent "To provide a vocabulary of all units." ;
-    ns4:isMetadataFor <http://qudt.org/2.1/vocab/unit> ;
-    ns4:latestPublishedVersion "https://qudt.org/doc/2024/07/DOC_VOCAB-UNITS-ALL-v2.1.html"^^xsd:anyURI ;
-    ns4:logo "https://qudt.org/linkedmodels.org/assets/lib/lm/images/logos/qudt_logo-300x110.png"^^xsd:anyURI ;
-    ns4:namespace "http://qudt.org/vocab/unit/"^^xsd:anyURI ;
-    ns4:namespacePrefix "unit" ;
-    ns4:owner "QUDT.org" ;
-    ns4:previousPublishedVersion "https://qudt.org/doc/2024/06/DOC_VOCAB-UNITS-ALL-v2.1.html"^^xsd:anyURI ;
-    ns4:revision "2.1" ;
-    ns4:turtleFileURL "http://qudt.org/2.1/vocab/unit"^^xsd:anyURI ;
-    ns4:usesNonImportedResource dcterms:abstract,
+    ns3:description "Standard units of measure for all units." ;
+    ns3:graphName "qudt" ;
+    ns3:graphTitle "QUDT Units Version 2.1.41" ;
+    ns3:hasGraphRole ns3:VocabularyGraph ;
+    ns3:hasOwner ns3:QUDT.org ;
+    ns3:hasSteward ns3:QUDT.org ;
+    ns3:intent "To provide a vocabulary of all units." ;
+    ns3:isMetadataFor <http://qudt.org/2.1/vocab/unit> ;
+    ns3:latestPublishedVersion "https://qudt.org/doc/2024/07/DOC_VOCAB-UNITS-ALL-v2.1.html"^^xsd:anyURI ;
+    ns3:logo "https://qudt.org/linkedmodels.org/assets/lib/lm/images/logos/qudt_logo-300x110.png"^^xsd:anyURI ;
+    ns3:namespace "http://qudt.org/vocab/unit/"^^xsd:anyURI ;
+    ns3:namespacePrefix "unit" ;
+    ns3:owner "QUDT.org" ;
+    ns3:previousPublishedVersion "https://qudt.org/doc/2024/06/DOC_VOCAB-UNITS-ALL-v2.1.html"^^xsd:anyURI ;
+    ns3:revision "2.1" ;
+    ns3:turtleFileURL "http://qudt.org/2.1/vocab/unit"^^xsd:anyURI ;
+    ns3:usesNonImportedResource dcterms:abstract,
         dcterms:created,
         dcterms:creator,
         dcterms:modified,
@@ -40456,7 +40456,7 @@ THE UCUM TABLE (IN ALL FORMATS), UCUM DEFINITIONS, AND SPECIFICATION ARE PROVIDE
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:Temperature ;
+        ns4:Temperature ;
     rdfs:label "enteringFluidTemperature" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/Temperature> .
 
@@ -40464,7 +40464,7 @@ THE UCUM TABLE (IN ALL FORMATS), UCUM DEFINITIONS, AND SPECIFICATION ARE PROVIDE
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:Amps ;
+        ns4:Amps ;
     rdfs:label "amps" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/ElectricCurrent> ;
     ns1:hasUnit <http://qudt.org/vocab/unit/A> .
@@ -40473,7 +40473,7 @@ THE UCUM TABLE (IN ALL FORMATS), UCUM DEFINITIONS, AND SPECIFICATION ARE PROVIDE
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:Amps ;
+        ns4:Amps ;
     rdfs:label "amps" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/ElectricCurrent> ;
     ns1:hasUnit <http://qudt.org/vocab/unit/A> .
@@ -41779,7 +41779,7 @@ $\\text{Electromagnetic Energy Density}$, also known as the $\\color{indigo} {\\
     ns1:latexDefinition "$c_g = \\frac{d\\omega}{dk}$, where $\\omega$ is the angular frequency and $k$ is angular wavenumber."^^ns1:LatexString ;
     ns1:plainTextDescription "In a dispersive medium sound speed is a function of sound frequency, through the dispersion relation. The spatial and temporal distribution of a propagating disturbance will continually change. The group speed of sound describes the propagation of the disturbance." ;
     ns1:symbol "c" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/SpeedOfSound> .
 
@@ -41980,7 +41980,7 @@ $\\text{Electromagnetic Energy Density}$, also known as the $\\color{indigo} {\\
     ns1:hasDimensionVector <http://qudt.org/vocab/dimensionvector/A0E0L0I0M0H0T0D1> ;
     ns1:iec61360Code "0112/2///62720#UAD083" ;
     ns1:latexDefinition "$G = \\log_{2}(f2/f1)$, where $f1$ and $f2 \\geq f1$ are frequencies of two tones."^^ns1:LatexString ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/LuminousExposure> a ns1:QuantityKind ;
@@ -42183,7 +42183,7 @@ $J_m = \\mu_0 M$ where $\\mu_0$ is the magnetic constant and $M$ is Magnetizatio
         <http://qudt.org/vocab/unit/SEC> ;
     ns1:hasDimensionVector <http://qudt.org/vocab/dimensionvector/A0E0L0I0M0H0T1D0> ;
     ns1:plainTextDescription "Duration of one cycle of a periodic phenomenon." ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/PhaseSpeedOfSound> a ns1:QuantityKind ;
@@ -42196,7 +42196,7 @@ $J_m = \\mu_0 M$ where $\\mu_0$ is the magnetic constant and $M$ is Magnetizatio
     ns1:latexDefinition "$c = \\frac{\\omega}{k} = \\lambda f$, where $\\omega$ is the angular frequency, $k$ is angular wavenumber, $\\lambda$ is the wavelength, and $f$ is the frequency."^^ns1:LatexString ;
     ns1:plainTextDescription "In a dispersive medium sound speed is a function of sound frequency, through the dispersion relation. The spatial and temporal distribution of a propagating disturbance will continually change. Each frequency component propagates at its own Phase Velocity of Sound." ;
     ns1:symbol "c" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:broader <http://qudt.org/vocab/quantitykind/SpeedOfSound> .
 
@@ -42267,7 +42267,7 @@ $J_m = \\mu_0 M$ where $\\mu_0$ is the magnetic constant and $M$ is Magnetizatio
         "http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=31891"^^xsd:anyURI ;
     ns1:latexDefinition "If $\\underline{Z} = R + jX$, then $Q = \\left | X \\right |/R$, where $\\underline{Z}$ is impedance, $R$ is resistance, and $X$ is reactance."^^ns1:LatexString ;
     ns1:symbol "Q" ;
-    ns4:todo "Resolve Quality Facor - electronics and also doses" ;
+    ns3:todo "Resolve Quality Facor - electronics and also doses" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     rdfs:seeAlso <http://qudt.org/vocab/quantitykind/Impedance>,
         <http://qudt.org/vocab/quantitykind/Resistance> .
@@ -42410,7 +42410,7 @@ $J_m = \\mu_0 M$ where $\\mu_0$ is the magnetic constant and $M$ is Magnetizatio
     ns1:latexDefinition "$v = \\frac{\\partial\\delta }{\\partial t}$, where $\\delta$ is sound particle displacement and $t$ is time."^^ns1:LatexString ;
     ns1:plainTextDescription "Sound Particle velocity is the velocity v of a particle (real or imagined) in a medium as it transmits a wave. In many cases this is a longitudinal wave of pressure as with sound, but it can also be a transverse wave as with the vibration of a taut string. When applied to a sound wave through a medium of a fluid like air, particle velocity would be the physical speed of a parcel of fluid as it moves back and forth in the direction the sound wave is travelling as it passes." ;
     ns1:symbol "v" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:altLabel "prędkość cząstki"@pl ;
     skos:broader <http://qudt.org/vocab/quantitykind/Velocity> .
@@ -42484,7 +42484,7 @@ $J_m = \\mu_0 M$ where $\\mu_0$ is the magnetic constant and $M$ is Magnetizatio
     ns1:latexDefinition "$c = \\sqrt{\\frac{K}{\\rho}}$, where $K$ is the coefficient of stiffness, the bulk modulus (or the modulus of bulk elasticity for gases), and $\\rho$ is the density. Also, $c^2 = \\frac{\\partial p}{\\partial \\rho}$, where $p$ is the pressure and $\\rho$ is the density."^^ns1:LatexString ;
     ns1:plainTextDescription "The speed of sound is the distance travelled during a unit of time by a sound wave propagating through an elastic medium." ;
     ns1:symbol "c" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:altLabel "Schallausbreitungsgeschwindigkeit"@de,
         "célérité du son"@fr ;
@@ -42962,7 +42962,7 @@ $J_m = \\mu_0 M$ where $\\mu_0$ is the magnetic constant and $M$ is Magnetizatio
     ns1:informativeReference "http://wordinfo.info/unit/4266"^^xsd:anyURI ;
     ns1:symbol "abA·cm²" ;
     ns1:ucumCode "Bi.cm2"^^ns1:UCUMcs ;
-    ns4:todo "Determine type for magnetic moment" ;
+    ns3:todo "Determine type for magnetic moment" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
 <http://qudt.org/vocab/unit/A_Stat> a ns1:Unit ;
@@ -43129,7 +43129,7 @@ $J_m = \\mu_0 M$ where $\\mu_0$ is the magnetic constant and $M$ is Magnetizatio
     ns1:ucumCode "[Btu_IT].[in_i].[ft_i]-2.h-1.[degF]-1"^^ns1:UCUMcs,
         "[Btu_IT].[in_i]/([ft_i]2.h.[degF])"^^ns1:UCUMcs ;
     ns1:uneceCommonCode "J41" ;
-    ns4:comment "qudt:exactMatch: unit:BTU_IT-IN-PER-HR-FT2-DEG_F" ;
+    ns3:comment "qudt:exactMatch: unit:BTU_IT-IN-PER-HR-FT2-DEG_F" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
 <http://qudt.org/vocab/unit/BTU_IT-IN-PER-FT2-SEC-DEG_F> a ns1:DerivedUnit,
@@ -47780,8 +47780,8 @@ rdfs:comment a rdf:Property ;
 
 <urn:ex:sample_hotwater_heater/00016> a ns2:ConnectionPoint,
         ns2:InletConnectionPoint,
-        ns5:ElectricalConnectionPoint,
-        ns5:Electricity_240VLL_1Ph_60HzConnectionPoint ;
+        ns4:ElectricalConnectionPoint,
+        ns4:Electricity_240VLL_1Ph_60HzConnectionPoint ;
     rdfs:label "element1.electricalInlet" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00014> ;
     ns2:hasMedium ns2:AC-240VLL-1Ph-60Hz ;
@@ -47789,8 +47789,8 @@ rdfs:comment a rdf:Property ;
 
 <urn:ex:sample_hotwater_heater/00023> a ns2:ConnectionPoint,
         ns2:InletConnectionPoint,
-        ns5:ElectricalConnectionPoint,
-        ns5:Electricity_240VLL_1Ph_60HzConnectionPoint ;
+        ns4:ElectricalConnectionPoint,
+        ns4:Electricity_240VLL_1Ph_60HzConnectionPoint ;
     rdfs:label "element2.electricalInlet" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00021> ;
     ns2:hasMedium ns2:AC-240VLL-1Ph-60Hz ;
@@ -48011,7 +48011,7 @@ it is not allowed to change the Medium that passes through it. This is why Junct
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 3: Junction with a pure medium and an associated ConnectionPoint with constituents." ;
                     sh:message "s223: Junction {$this} with Medium {?m1} is incompatible with {?cp} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -48033,7 +48033,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 1: Two pure mediums." ;
                     sh:message "s223: Junction {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -48054,7 +48054,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 2: A Junction with constituents and an associated ConnectionPoint with a pure Medium." ;
                     sh:message "s223: Junction {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -48076,7 +48076,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 4: Junction with constituents and an associated ConnectionPoint with constituents." ;
                     sh:message "s223: Junction {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -48104,7 +48104,7 @@ $this s223:hasMedium ?m2 .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 1: Two ConnectionPoints with pure mediums." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -48128,7 +48128,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 2: Two ConnectionPoints with a medium with constituents and a pure Medium." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -48152,7 +48152,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 3: Two ConnectionPoints with mediums with constituents." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -48493,7 +48493,7 @@ ns2:ofMedium a rdf:Property ;
     ns1:isoNormativeReference "http://www.iso.org/iso/catalogue_detail?csnumber=43012"^^xsd:anyURI ;
     ns1:latexDefinition "$\\omega = 2\\pi f$, where $f$ is frequency."^^ns1:LatexString ;
     ns1:latexSymbol "$\\omega$"^^ns1:LatexString ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:altLabel "نابض"@ar,
         "Pulsatanzpulsation"@de,
@@ -48528,7 +48528,7 @@ Alternatively:\r
 $k = \\frac{p}{\\hbar}$, where $p$ is the linear momentum of quasi free electrons in an electron gas and $\\hbar$ is the reduced Planck constant ($h$ divided by $2\\pi$); for phonons, its magnitude is $k = \\frac{2\\pi}{\\lambda}$, where $\\lambda$ is the wavelength of the lattice vibrations."""^^ns1:LatexString ;
     ns1:plainTextDescription "\"wavenumber\" is the spatial frequency of a wave - the number of waves that exist over a specified distance. More formally, it is the reciprocal of the wavelength. It is also the magnitude of the wave vector." ;
     ns1:symbol "k" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:altLabel "تكرار زاوى"@ar,
         "Kreiswellenzahl"@de,
@@ -55528,7 +55528,7 @@ $$\\  \\text{Siemens}\\equiv\\frac{\\text{A}}{\\text{V}}\\equiv\\frac{\\text{amp
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:Temperature ;
+        ns4:Temperature ;
     rdfs:label "leavingFluidTemperature" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/Temperature> .
 
@@ -55536,14 +55536,14 @@ $$\\  \\text{Siemens}\\equiv\\frac{\\text{A}}{\\text{V}}\\equiv\\frac{\\text{amp
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:Flow ;
+        ns4:Flow ;
     rdfs:label "fluidFlow" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/VolumeFlowRate> ;
     ns1:hasUnit <http://qudt.org/vocab/unit/L-PER-SEC> .
 
 <urn:ex:sample_hotwater_heater/00010> a ns2:ConnectionPoint,
         ns2:OutletConnectionPoint,
-        ns5:FluidConnectionPoint ;
+        ns4:FluidConnectionPoint ;
     rdfs:label "tank.leavingFluid" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00009> ;
     ns2:hasMedium ns2:Fluid-Water ;
@@ -55552,7 +55552,7 @@ $$\\  \\text{Siemens}\\equiv\\frac{\\text{A}}{\\text{V}}\\equiv\\frac{\\text{amp
 
 <urn:ex:sample_hotwater_heater/00011> a ns2:ConnectionPoint,
         ns2:InletConnectionPoint,
-        ns5:FluidConnectionPoint ;
+        ns4:FluidConnectionPoint ;
     rdfs:label "tank.enteringFluid" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00009> ;
     ns2:hasMedium ns2:Fluid-Water ;
@@ -55563,8 +55563,8 @@ $$\\  \\text{Siemens}\\equiv\\frac{\\text{A}}{\\text{V}}\\equiv\\frac{\\text{amp
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:ElectricPower,
-        ns5:ElectricPowerkW ;
+        ns4:ElectricPower,
+        ns4:ElectricPowerkW ;
     rdfs:label "kW" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/ElectricPower> ;
     ns1:hasUnit <http://qudt.org/vocab/unit/KiloW> .
@@ -55573,7 +55573,7 @@ $$\\  \\text{Siemens}\\equiv\\frac{\\text{A}}{\\text{V}}\\equiv\\frac{\\text{amp
         ns2:Property,
         ns2:QuantifiableActuatableProperty,
         ns2:QuantifiableProperty,
-        ns5:PercentCommand ;
+        ns4:PercentCommand ;
     rdfs:label "modulation" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/DimensionlessRatio> ;
     ns1:hasUnit <http://qudt.org/vocab/unit/PERCENT> .
@@ -55589,8 +55589,8 @@ $$\\  \\text{Siemens}\\equiv\\frac{\\text{A}}{\\text{V}}\\equiv\\frac{\\text{amp
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:ElectricPower,
-        ns5:ElectricPowerkW ;
+        ns4:ElectricPower,
+        ns4:ElectricPowerkW ;
     rdfs:label "kW" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/ElectricPower> ;
     ns1:hasUnit <http://qudt.org/vocab/unit/KiloW> .
@@ -55599,7 +55599,7 @@ $$\\  \\text{Siemens}\\equiv\\frac{\\text{A}}{\\text{V}}\\equiv\\frac{\\text{amp
         ns2:Property,
         ns2:QuantifiableActuatableProperty,
         ns2:QuantifiableProperty,
-        ns5:PercentCommand ;
+        ns4:PercentCommand ;
     rdfs:label "modulation" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/DimensionlessRatio> ;
     ns1:hasUnit <http://qudt.org/vocab/unit/PERCENT> .
@@ -55613,7 +55613,7 @@ $$\\  \\text{Siemens}\\equiv\\frac{\\text{A}}{\\text{V}}\\equiv\\frac{\\text{amp
 
 <urn:ex:sample_hotwater_heater/00034> a ns2:ConnectionPoint,
         ns2:InletConnectionPoint,
-        ns5:ElectricalConnectionPoint ;
+        ns4:ElectricalConnectionPoint ;
     rdfs:label "hw_heater.electricalInlet" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00031> ;
     ns2:hasMedium ns2:Constituent-Electricity ;
@@ -55689,7 +55689,7 @@ ns2:EnumerableProperty a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Checks for valid enumeration value consistent with the stated EnumerationKind." ;
                     sh:message "s223: {$this} has an enumeration value of {?value} which is not a valid {?kind}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?value ?kind\r
 WHERE {\r
@@ -56305,7 +56305,7 @@ ns2:hasObservationLocation a rdf:Property ;
     ns1:latexDefinition "$U_m = \\frac{U}{n}$, where $U$ is internal energy and $n$ is amount of substance."^^ns1:LatexString ;
     ns1:siExactMatch <https://si-digital-framework.org/SI/quantities/MOEG> ;
     ns1:symbol "U_M" ;
-    ns4:todo "dimensions are wrong" ;
+    ns3:todo "dimensions are wrong" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/MolarHeatCapacity> a ns1:QuantityKind ;
@@ -58267,8 +58267,8 @@ The abvolt is another option for a unit of voltage in the cgs system."""^^rdf:HT
 
 <urn:ex:sample_hotwater_heater/00005> a ns2:ConnectionPoint,
         ns2:InletConnectionPoint,
-        ns5:ElectricalConnectionPoint,
-        ns5:Electricity_240VLL_1Ph_60HzConnectionPoint ;
+        ns4:ElectricalConnectionPoint,
+        ns4:Electricity_240VLL_1Ph_60HzConnectionPoint ;
     rdfs:label "DomesticHotWaterHeater.electricalInlet" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00002> ;
     ns2:hasMedium ns2:AC-240VLL-1Ph-60Hz ;
@@ -58278,13 +58278,13 @@ The abvolt is another option for a unit of voltage in the cgs system."""^^rdf:HT
         ns2:Property,
         ns2:QuantifiableObservableProperty,
         ns2:QuantifiableProperty,
-        ns5:Temperature ;
+        ns4:Temperature ;
     rdfs:label "fluidTemperature" ;
     ns1:hasQuantityKind <http://qudt.org/vocab/quantitykind/Temperature> .
 
 <urn:ex:sample_hotwater_heater/00032> a ns2:ConnectionPoint,
         ns2:OutletConnectionPoint,
-        ns5:HotWaterConnectionPoint ;
+        ns4:HotWaterConnectionPoint ;
     rdfs:label "hw_heater.hotWaterLeaving" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00031> ;
     ns2:hasMedium ns2:Water-HotWater ;
@@ -58292,7 +58292,7 @@ The abvolt is another option for a unit of voltage in the cgs system."""^^rdf:HT
 
 <urn:ex:sample_hotwater_heater/00033> a ns2:ConnectionPoint,
         ns2:InletConnectionPoint,
-        ns5:HotWaterConnectionPoint ;
+        ns4:HotWaterConnectionPoint ;
     rdfs:label "hw_heater.hotWaterEntering" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00031> ;
     ns2:hasMedium ns2:Water-HotWater ;
@@ -60787,7 +60787,7 @@ The Baumé scale is a pair of hydrometer scales developed by French pharmacist A
 
 <urn:ex:sample_hotwater_heater/00012> a ns2:BidirectionalConnectionPoint,
         ns2:ConnectionPoint,
-        ns5:FluidConnectionPoint ;
+        ns4:FluidConnectionPoint ;
     rdfs:label "tank.containedFluid" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00009>,
         <urn:ex:sample_hotwater_heater/00028> ;
@@ -60797,7 +60797,7 @@ The Baumé scale is a pair of hydrometer scales developed by French pharmacist A
 
 <urn:ex:sample_hotwater_heater/00015> a ns2:BidirectionalConnectionPoint,
         ns2:ConnectionPoint,
-        ns5:WaterConnectionPoint ;
+        ns4:WaterConnectionPoint ;
     rdfs:label "element1.fluidContact" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00014>,
         <urn:ex:sample_hotwater_heater/00028> ;
@@ -60807,7 +60807,7 @@ The Baumé scale is a pair of hydrometer scales developed by French pharmacist A
 
 <urn:ex:sample_hotwater_heater/00022> a ns2:BidirectionalConnectionPoint,
         ns2:ConnectionPoint,
-        ns5:WaterConnectionPoint ;
+        ns4:WaterConnectionPoint ;
     rdfs:label "element2.fluidContact" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00021>,
         <urn:ex:sample_hotwater_heater/00028> ;
@@ -61394,7 +61394,7 @@ $\\mu(\\lambda) = \\frac{1}{\\Phi_\\lambda(\\lambda)}\\frac{d\\Phi_\\lambda(\\la
     ns1:informativeReference "http://en.wikipedia.org/wiki/Attenuation_coefficient"^^xsd:anyURI ;
     ns1:latexDefinition "If $F(x) = Ae^{-\\alpha x} \\cos{[\\beta (x - x_0)]}$, then $\\alpha$ is the attenuation coefficient and $\\beta$ is the phase coefficient."^^ns1:LatexString ;
     ns1:latexSymbol "$\\beta$"^^ns1:LatexString ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/PlanckFunction> a ns1:QuantityKind ;
@@ -61446,7 +61446,7 @@ where, $\\tilde{\\nu}$ is wavelength, $h$ is Planck's Constant, $k$ is Boltzman'
     ns1:informativeReference "http://en.wikipedia.org/wiki/Propagation_constant"^^xsd:anyURI ;
     ns1:latexDefinition "$\\gamma = \\alpha + j\\beta$, where $\\alpha$ is the attenuation coefficient and $\\beta$ is the phase coefficient."^^ns1:LatexString ;
     ns1:latexSymbol "$\\gamma$"^^ns1:LatexString ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/RotationalMass> a ns1:QuantityKind ;
@@ -61476,7 +61476,7 @@ where, $\\tilde{\\nu}$ is wavelength, $h$ is Planck's Constant, $k$ is Boltzman'
     ns1:informativeReference "http://www.diracdelta.co.uk/science/source/s/o/sound%20exposure%20level/source.html"^^xsd:anyURI ;
     ns1:latexDefinition "$L_E = 10 \\log_{10} \\frac{E}{E_0} dB$, where $E$ is sound power and the reference value is $E_0 = 400 \\mu Pa^2 s$."^^ns1:LatexString ;
     ns1:symbol "L" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/SoundReductionIndex> a ns1:QuantityKind ;
@@ -61493,7 +61493,7 @@ where, $\\tilde{\\nu}$ is wavelength, $h$ is Planck's Constant, $k$ is Boltzman'
     ns1:latexDefinition "$R = 10 \\log (\\frac{1}{\\tau}) dB$, where $\\tau$ is the transmission factor."^^ns1:LatexString ;
     ns1:plainTextDescription "The Sound Reduction Index is used to measure the level of sound insulation provided by a structure such as a wall, window, door, or ventilator." ;
     ns1:symbol "R" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/SpecificEnthalpy> a ns1:QuantityKind ;
@@ -62975,7 +62975,7 @@ Some substances expand when cooled, such as freezing water, so they have negativ
 
 <urn:ex:sample_hotwater_heater/00003> a ns2:ConnectionPoint,
         ns2:OutletConnectionPoint,
-        ns5:WaterConnectionPoint ;
+        ns4:WaterConnectionPoint ;
     rdfs:label "DomesticHotWaterHeater.leavingFluid" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00002> ;
     ns2:hasMedium ns2:Fluid-Water ;
@@ -62983,7 +62983,7 @@ Some substances expand when cooled, such as freezing water, so they have negativ
 
 <urn:ex:sample_hotwater_heater/00004> a ns2:ConnectionPoint,
         ns2:InletConnectionPoint,
-        ns5:WaterConnectionPoint ;
+        ns4:WaterConnectionPoint ;
     rdfs:label "DomesticHotWaterHeater.enteringFluid" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00002> ;
     ns2:hasMedium ns2:Fluid-Water ;
@@ -63095,7 +63095,7 @@ ns2:connectsAt a rdf:Property ;
     ns1:latexDefinition "$F(x) = Ae^{-\\alpha x} \\cos{[\\beta (x - x_0)]}$, then $\\alpha$ is the attenuation coefficient and $\\beta$ is the phase coefficient."^^ns1:LatexString ;
     ns1:latexSymbol "$\\alpha$"^^ns1:LatexString ;
     ns1:plainTextDescription "The attenuation coefficient is a quantity that characterizes how easily a material or medium can be penetrated by a beam of light, sound, particles, or other energy or matter. A large attenuation coefficient means that the beam is quickly \"attenuated\" (weakened) as it passes through the medium, and a small attenuation coefficient means that the medium is relatively transparent to the beam. The Attenuation Coefficient is also called linear attenuation coefficient, narrow beam attenuation coefficient, or absorption coefficient." ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/DisplacementCurrent> a ns1:QuantityKind ;
@@ -63370,7 +63370,7 @@ ns2:connectsAt a rdf:Property ;
     ns1:informativeReference "http://en.wikipedia.org/wiki/Sound_power#Sound_power_level"^^xsd:anyURI ;
     ns1:latexDefinition "$L_W = 10 \\log_{10} \\frac{P}{P_0} dB$, where $P$ is sound power and the reference value is $P_0 =1pW$."^^ns1:LatexString ;
     ns1:symbol "L" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/SoundPressureLevel> a ns1:QuantityKind ;
@@ -63401,7 +63401,7 @@ ns2:connectsAt a rdf:Property ;
     ns1:informativeReference "http://en.wikipedia.org/wiki/Sound_pressure#Sound_pressure_level"^^xsd:anyURI ;
     ns1:latexDefinition "$L_P = 10 \\log_{10} \\frac{p^2}{p_0^2} dB$, where $p$ is sound pressure and the reference value in airborne acoustics is $p_0 = 20 \\mu Pa$."^^ns1:LatexString ;
     ns1:symbol "L" ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     skos:altLabel "Tahap tekanan bunyi"@ms .
 
@@ -64715,7 +64715,7 @@ ns2:connectsAt a rdf:Property ;
 
 <urn:ex:sample_hotwater_heater/00002> a ns2:Connectable,
         ns2:Equipment,
-        ns3:DomesticElectricalWaterHeater ;
+        ns5:DomesticElectricalWaterHeater ;
     rdfs:label "DomesticHotWaterHeater" ;
     ns2:cnx <urn:ex:sample_hotwater_heater/00003>,
         <urn:ex:sample_hotwater_heater/00004>,
@@ -64730,9 +64730,9 @@ ns2:connectsAt a rdf:Property ;
         <urn:ex:sample_hotwater_heater/00007>,
         <urn:ex:sample_hotwater_heater/00008> ;
     ns2:hasRole ns2:Role-Heating ;
-    ns3:enteringFluid <urn:ex:sample_hotwater_heater/00004> ;
-    ns3:fluidTemperature <urn:ex:sample_hotwater_heater/00013> ;
-    ns3:leavingFluid <urn:ex:sample_hotwater_heater/00003> .
+    ns5:enteringFluid <urn:ex:sample_hotwater_heater/00004> ;
+    ns5:fluidTemperature <urn:ex:sample_hotwater_heater/00013> ;
+    ns5:leavingFluid <urn:ex:sample_hotwater_heater/00003> .
 
 <urn:ex:sample_hotwater_heater/00031> a ns2:Connectable,
         ns2:Equipment ;
@@ -65445,7 +65445,7 @@ ns2:composedOf a rdf:Property ;
         <urn:ex:sample_hotwater_heater/00020> ;
     ns2:hasRole ns2:Role-HeatTransfer,
         ns2:Role-Heating ;
-    ns5:fluidContact <urn:ex:sample_hotwater_heater/00015> ;
+    ns4:fluidContact <urn:ex:sample_hotwater_heater/00015> ;
     rdfs:comment "Electrical element 1" .
 
 <urn:ex:sample_hotwater_heater/00021> a ns2:Connectable,
@@ -65465,7 +65465,7 @@ ns2:composedOf a rdf:Property ;
         <urn:ex:sample_hotwater_heater/00027> ;
     ns2:hasRole ns2:Role-HeatTransfer,
         ns2:Role-Heating ;
-    ns5:fluidContact <urn:ex:sample_hotwater_heater/00022> ;
+    ns4:fluidContact <urn:ex:sample_hotwater_heater/00022> ;
     rdfs:comment "Electrical element 2" .
 
 ns2:ActuatableProperty a ns2:Class,
@@ -66162,7 +66162,7 @@ A Connection may contain branches or intersections. These may be modeled using J
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A Connection must only have a cnx relation with a ConnectionPoint" ;
                     sh:message "s223: {$this} cannot have a s223:cnx relation to {?something}, because {?something} is not a ConnectionPoint." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """SELECT $this ?something\r
 WHERE {\r
 $this s223:cnx ?something .\r
@@ -66174,7 +66174,7 @@ FILTER NOT EXISTS {?something a/rdfs:subClassOf* s223:ConnectionPoint} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 1: Two pure mediums." ;
                     sh:message "s223: Connection {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -66195,7 +66195,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 2: A Connection with constituents and an associated ConnectionPoint with a pure Medium." ;
                     sh:message "s223: Connection {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -66217,7 +66217,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 3: Connection with a pure medium and an associated ConnectionPoint with constituents." ;
                     sh:message "s223: Connection {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -66239,7 +66239,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 4: A Connection with constituents and an associated ConnectionPoint with constituents." ;
                     sh:message "s223: Connection {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -66267,7 +66267,7 @@ $this s223:hasMedium ?m1 .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 1: Two ConnectionPoints with pure mediums." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -66290,7 +66290,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 2: A medium with constituents and a pure Medium." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -66315,7 +66315,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Inconsistent Medium. Case 3: Two ConnectionPoints with mediums with constituents." ;
                     sh:message "s223: {?cp1} with Medium {?m2} is incompatible with {?cp2} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -66387,7 +66387,7 @@ $this s223:connectsAt ?cp .\r
 }\r
 """ ;
             sh:name "InferredConnectionToUpstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ],
         [ a sh:SPARQLRule ;
             rdfs:comment "Infer the connectsTo relation using connectsAt" ;
             sh:construct """\r
@@ -66399,7 +66399,7 @@ $this s223:connectsAt ?cp .\r
 }\r
 """ ;
             sh:name "InferredConnectionToDownstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ],
         [ a sh:TripleRule ;
             rdfs:comment "Infer cnx relation using connectsAt",
                 "InferredConnectionToConnectionPointBaseProperty" ;
@@ -67629,9 +67629,9 @@ Note that SI supports only the use of symbols and deprecates the use of any abbr
         <urn:ex:sample_hotwater_heater/00012> ;
     ns2:hasProperty <urn:ex:sample_hotwater_heater/00013> ;
     ns2:hasRole <http://data.ashrae.org/proposal-to-standard223#Role-Storage> ;
-    ns5:containedFluid <urn:ex:sample_hotwater_heater/00012> ;
-    ns5:enteringFluid <urn:ex:sample_hotwater_heater/00011> ;
-    ns5:leavingFluid <urn:ex:sample_hotwater_heater/00010> ;
+    ns4:containedFluid <urn:ex:sample_hotwater_heater/00012> ;
+    ns4:enteringFluid <urn:ex:sample_hotwater_heater/00011> ;
+    ns4:leavingFluid <urn:ex:sample_hotwater_heater/00010> ;
     rdfs:comment "Water tank" .
 
 ns2:Sensor a ns2:Class,
@@ -67644,7 +67644,7 @@ ns2:Sensor a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
                     sh:message "s223: Sensor {$this} has a reference location, but its Property lacks isDeltaQuantity true." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
           SELECT $this\r
           WHERE {\r
@@ -67659,7 +67659,7 @@ FILTER NOT EXISTS {$this s223:observes/qudt:isDeltaQuantity true}\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "s223: If the observed Property has isDeltaQuantity true, the Sensor must have a hasReferenceLocation relation." ;
                     sh:message "s223: Sensor {$this} has Property {?x} with isDeltaQuantity true, but the Sensor lacks a reference location." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
           SELECT $this ?x\r
           WHERE {\r
@@ -67712,7 +67712,7 @@ UNION\r
 }\r
 """ ;
             sh:name "InferredMeasurementLocation" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] .
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ] .
 
 <http://qudt.org/vocab/quantitykind/Conductance> a ns1:QuantityKind ;
     rdfs:label "Conductance"@en ;
@@ -69734,11 +69734,11 @@ BIND(REPLACE(?localName, "-", " ", "i") AS ?newLabel)\r
 }\r
 """ ;
             sh:name "AddLabelFromLocalName" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ] ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that any instance that is declared to be an instance of an abstract class must also be declared an instance of at least one subClass of that abstract class" ;
             sh:message "s223: {$this} cannot be declared an instance of only abstract class {?class}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT DISTINCT $this ?class\r
 WHERE {\r
@@ -69755,7 +69755,7 @@ FILTER (!bound (?otherClass)) .\r
         [ a sh:SPARQLConstraint ;
             rdfs:comment "Inconsistent Medium. Case 1: Two pure mediums." ;
             sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?m1 ?prop ?m2\r
 WHERE {\r
@@ -69773,7 +69773,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
         [ a sh:SPARQLConstraint ;
             rdfs:comment "Inconsistent Medium. Case 2: A pure medium and an associated property with constituents." ;
             sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?m1 ?prop ?m2\r
 WHERE {\r
@@ -69792,7 +69792,7 @@ FILTER NOT EXISTS {\r
         [ a sh:SPARQLConstraint ;
             rdfs:comment "Inconsistent Medium. Case 3: A medium with constituents and an associated property with a pure medium." ;
             sh:message "s223: {$this} hasMedium of {?m2}, but is associated with property {?prop} that has ofMedium of {?m1}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?m1 ?prop ?m2\r
 WHERE {\r
@@ -69811,7 +69811,7 @@ FILTER NOT EXISTS {\r
         [ a sh:SPARQLConstraint ;
             rdfs:comment "Inconsistent Medium. Case 4: A medium with constituents and an associated property with constituents." ;
             sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?m1 ?prop ?m2\r
 WHERE {\r
@@ -69874,7 +69874,7 @@ ns2:System a ns2:Class,
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that the Boundary CPs of a System belong to only members of that System" ;
             sh:message "s223: System {$this} hasBoundaryConnectionPoint {?cp}, belonging to {?con} that is not a member of {?this}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this ?cp ?con\r
 WHERE {\r
@@ -69950,7 +69950,7 @@ FILTER NOT EXISTS {$this s223:hasMember+ ?con}\r
         <http://qudt.org/vocab/unit/NanoMOL-PER-KiloGM>,
         <http://qudt.org/vocab/unit/PicoMOL-PER-KiloGM> ;
     ns1:hasDimensionVector <http://qudt.org/vocab/dimensionvector/A1E0L0I0M-1H0T0D0> ;
-    ns4:todo "fix the numerator and denominator dimensions" ;
+    ns3:todo "fix the numerator and denominator dimensions" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/ElectricChargePerArea> a ns1:QuantityKind ;
@@ -71334,7 +71334,7 @@ ns2:EnumerationKind-Substance a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
                     sh:message "s223: This substance {$this} has a constituent {?constituent} that itself composed ofs {?nextConstituent}. Create new substance with only atomic constituents." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?constituent ?nextConstituent\r
 WHERE {\r
@@ -71840,7 +71840,7 @@ ns2:Connectable a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a Connectable has s223:connected or s223:connectedTo (i.e. high-level connection specification), it must also have the supporting cnx relations (low-level connection specification)." ;
                     sh:message "s223: {$this} is s223:connected (high-level) to {?otherC} but not connected at the cnx-level." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?otherC\r
 WHERE {\r
@@ -71912,7 +71912,7 @@ FILTER NOT EXISTS {?d2 s223:contains* $this} .\r
 }\r
 """ ;
             sh:name "InferredEquipmentToDownstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ],
         [ a sh:SPARQLRule ;
             rdfs:comment "Infer the connectedFrom relations using connectsThrough and connectsFrom." ;
             sh:construct """\r
@@ -71924,7 +71924,7 @@ $this s223:hasConnectionPoint ?cp .\r
 }\r
 """ ;
             sh:name "InferredEquipmentToUpstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ],
         [ a sh:SPARQLRule ;
             rdfs:comment "Infer the connectedTo relation using connectsThrough and connectsTo." ;
             sh:construct """\r
@@ -71936,7 +71936,7 @@ $this s223:hasConnectionPoint ?cp .\r
 }\r
 """ ;
             sh:name "InferredEquipmentToDownstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ],
         [ a sh:TripleRule ;
             rdfs:comment "Infer the cnx relation using isConnectionPointOf." ;
             sh:name "InferredEquipmentToConnectionPointCnxPropertyFromInverse" ;
@@ -76073,7 +76073,7 @@ ConnectionPoints are represented graphically in this standard by a triangle with
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a ConnectionPoint lacks a connectsThrough and mapsTo relation, and is not associated with a Junction or Equipment that is contained by an Equipment, then suggest that the ConnectionPoint probably needs an association with a Connection." ;
                     sh:message "s223: ConnectionPoint {$this} probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
     SELECT $this \r
     WHERE {\r
@@ -76091,7 +76091,7 @@ ConnectionPoints are represented graphically in this standard by a triangle with
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure that the Medium identified by a ConnectionPoint via the s223:hasMedium relation is compatible with the Medium identified by the entity identified by the mapsTo+ relation." ;
                     sh:message "s223: {$this} declares a Medium of {?a}, but the Medium of {?b} is declared by {?target} pointed to by the mapsTo+ relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT DISTINCT $this ?a ?b ?target\r
 WHERE {\r
@@ -76110,7 +76110,7 @@ FILTER (NOT EXISTS {?a a/rdfs:subClassOf* ?b}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A ConnectionPoint must not have both a mapsTo and a connectsThrough relation." ;
                     sh:message "s223: {$this} cannot have both a mapsTo {?uppercp} and a connectsThrough {?connection}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?uppercp ?connection\r
 WHERE {\r
@@ -76125,7 +76125,7 @@ $this s223:connectsThrough ?connection .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a ConnectionPoint lacks a connectsThrough and mapsTo relation, but is associated with a Junction or Equipment that is contained by an Equipment, then suggest that the ConnectionPoint might need a mapsTo relation to a ConnectionPoint of the containing Equipment." ;
                     sh:message "s223: ConnectionPoint {$this} could be missing a mapsTo relation to a ConnectionPoint of {?containerEquipment} because it is associated with a Junction or Equipment that is contained by {?containerEquipment}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
     SELECT $this ?containerEquipment\r
     WHERE {\r
@@ -76141,7 +76141,7 @@ $this s223:connectsThrough ?connection .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a ConnectionPoint mapsTo another ConnectionPoint, the respective Equipment should have a contains relation." ;
                     sh:message "s223: {?otherEquipment} should contain {?equipment} because ConnectionPoint {$this} has a mapsTo relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?equipment ?otherEquipment\r
 WHERE {\r
@@ -76625,7 +76625,7 @@ ns2:QuantifiableProperty a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
                     sh:message "s223: {$this} referenced by {?subject} has a value of {?v} but does not specify a Unit." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?v ?subject\r
 WHERE {\r
@@ -76639,7 +76639,7 @@ FILTER NOT EXISTS {$this qudt:hasUnit ?u} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
                     sh:message "s223: {$this} referenced by {?subject} has a value of {?v} but does not specify a Unit." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?v ?subject\r
 WHERE {\r
@@ -76653,7 +76653,7 @@ FILTER NOT EXISTS {$this qudt:hasUnit ?u} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty uses hasSetpoint to reference a Property that lacks an Aspect of Aspect-Setpoint." ;
                     sh:message "s223: {$this} uses hasSetpoint to reference {?setpoint} that lacks an Aspect of Aspect-Setpoint." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?setpoint\r
 WHERE {\r
@@ -76666,7 +76666,7 @@ FILTER NOT EXISTS {?setpoint s223:hasAspect s223:Aspect-Setpoint} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty and the Setpoint associated with it have non-commensurate QuantityKinds." ;
                     sh:message "s223: {$this} uses QuantityKind {?pqk} with DimensionVector {?pdv}, while Setpoint {?setpoint} uses QuantityKind {?sqk} with DimensionVector {?sdv}. These are non-commensurate" ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?setpoint ?pqk ?sqk ?pdv ?sdv\r
 WHERE {\r
@@ -76685,7 +76685,7 @@ FILTER (?pdv != ?sdv) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty with Aspect-Setpoint is not referenced by any Property using hasSetpoint." ;
                     sh:message "s223: {$this} has Aspect-Setpoint but is not referenced by any Property using hasSetpoint." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this \r
 WHERE {\r
@@ -76698,7 +76698,7 @@ FILTER NOT EXISTS {?anything s223:hasSetpoint $this} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty and the associated Setpoint use non-commensurate Units." ;
                     sh:message "s223: {$this} uses Unit {?punit}, while Setpoint {?setpoint} uses Unit {?sunit}. These are non-commensurate." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?setpoint ?punit ?sunit\r
 WHERE {\r
@@ -76717,7 +76717,7 @@ FILTER (?pdv != ?sdv) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty uses a different Unit than the Setpoint associated with it." ;
                     sh:message "s223: {$this} uses Unit {?punit}, while Setpoint {?setpoint} uses Unit {?sunit}. Be careful." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?setpoint ?punit ?sunit\r
 WHERE {\r
@@ -76787,11 +76787,11 @@ FILTER (?count = 1)\r
 $this qudt:hasUnit/qudt:hasQuantityKind ?uniqueqk .\r
 }\r
 """ ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ] ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Checks for consistent dimension vectors for a QuantityKind and the Unit" ;
             sh:message "s223: Inconsistent dimensionalities among the Property's Unit and Property's Quantity Kind" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this\r
    WHERE \r
@@ -76985,7 +76985,7 @@ with respect to its value.\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A Property must not have both a hasInternalReference and a hasExternalReference relation." ;
                     sh:message "s223: {$this} cannot have both a hasInternalReference and a hasExternalReference relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -76998,7 +76998,7 @@ $this s223:hasExternalReference ?ext .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A Property must not have both a hasInternalReference and a hasValue relation." ;
                     sh:message "s223: {$this} cannot have both a hasInternalReference and a hasValue relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -77011,7 +77011,7 @@ $this s223:hasValue ?val .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A Property must not have both a hasExternalReference and a hasValue relation." ;
                     sh:message "s223: {$this} cannot have both a hasExternalReference and a hasValue relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -77024,7 +77024,7 @@ $this s223:hasValue ?val .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If an incoming relation composedOf exists, then the Property must have a declared substance using the relation ofConstituent." ;
                     sh:message "s223: Property {$this} is referred to by {?something} with s223:composedOf, but the Property has no value for s223:ofConstituent." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?something\r
 WHERE {\r
@@ -77070,7 +77070,7 @@ FILTER NOT EXISTS {$this s223:ofConstituent ?someSubstance} .\r
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "A Property instance cannot be declared an instance of both an ActuatableProperty and an ObservableProperty." ;
             sh:message "s223: {$this} cannot be declared an instance of both an ActuatableProperty and an ObservableProperty." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -77219,7 +77219,7 @@ ns2:OutletConnectionPoint a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure an OutletConnectionPoint has a mapsTo relation to its containing Equipment if it has an external Connection" ;
                     sh:message "s223: {$this} must have a mapsTo an OutletConnectionPoint of {?parentEquipment} and not an external Connection to {?destinationEquipment}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?parentEquipment ?destinationEquipment\r
 WHERE {\r
@@ -77338,7 +77338,7 @@ The graphical depiction of Equipment used in this standard is a rounded cornered
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Disallow contained equipment from having external incoming connections." ;
                     sh:message "s223: {$this} should not have a connection from external equipment {?otherDev} because {?container} contains {$this}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?container ?otherDev\r
 WHERE {\r
@@ -77353,7 +77353,7 @@ FILTER NOT EXISTS {?container s223:contains ?otherDev .}\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Disallow contained equipment from having external outgoing connections." ;
                     sh:message "s223: {$this} should not have a connection to external equipment {?otherDev} because {?container} contains {$this}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?container ?otherDev\r
 WHERE {\r
@@ -77369,7 +77369,7 @@ FILTER NOT EXISTS {?container s223:contains ?otherDev .}\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Warning about a subClass of Equipment of type A containing something that is in the same subClass branch." ;
                     sh:message "s223: {$this}, of type {?type1}, contains {?subEquip} of type {?type2}, that could result in double-counting items in the class hierarchy of {?type1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?subEquip ?type1 ?type2\r
 WHERE {\r
@@ -77425,7 +77425,7 @@ WHERE {\r
   FILTER NOT EXISTS {?childCp s223:hasMedium ?something} .\r
 }\r
 """ ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ],
         [ a sh:SPARQLRule ;
             rdfs:comment "For equipment containing another piece of equipment, use the mapsTo relation to infer a Medium from the contained equipment." ;
             sh:construct """\r
@@ -77440,7 +77440,7 @@ WHERE {\r
   FILTER NOT EXISTS {?parentCp s223:hasMedium ?something} .\r
 }\r
 """ ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] .
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ] .
 
 <http://qudt.org/vocab/quantitykind/Volume> a ns1:QuantityKind ;
     rdfs:label "Volume"@en ;
@@ -78234,7 +78234,7 @@ ns2:InletConnectionPoint a ns2:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure an InletConnectionPoint has a mapsTo relation to its containing Equipment if it has an external Connection" ;
                     sh:message "s223: {$this} must have a mapsTo an InletConnectionPoint of {?parentEquipment} and not an external Connection from {?sourceEquipment}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this ?parentEquipment ?sourceEquipment\r
 WHERE {\r
@@ -78458,7 +78458,7 @@ FILTER NOT EXISTS {$this s223:mapsTo ?anything} .\r
     ns1:latexDefinition "$\\rho = m/V$, where $\\rho$ is the density, $m$ is the mass, and $V$ is the volume."^^ns1:LatexString ;
     ns1:latexSymbol "$\\rho$"^^ns1:LatexString ;
     ns1:siExactMatch <https://si-digital-framework.org/SI/quantities/DENS> ;
-    ns4:todo "belongs to SOQ-ISO" ;
+    ns3:todo "belongs to SOQ-ISO" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/vocab/quantitykind/DimensionlessRatio> a ns1:QuantityKind ;
@@ -78729,7 +78729,7 @@ FILTER NOT EXISTS {$this s223:mapsTo ?anything} .\r
         "flux energetic"@ro,
         "ısı akış oranı"@tr .
 
-<http://data.ashrae.org/standard223/1.0/model/core> a owl:Ontology ;
+<http://data.ashrae.org/standard223/1.0/inference/data-rules> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid Composer" ;
     sh:declare [ sh:namespace "http://data.ashrae.org/standard223#"^^xsd:anyURI ;
             sh:prefix "s223" ],
@@ -78960,7 +78960,7 @@ rdf:Property a sh:NodeShape ;
             sh:path rdfs:comment ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     sh:message "s223: {$this} must have an rdfs:comment" ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -78973,7 +78973,7 @@ FILTER (NOT EXISTS {$this rdfs:comment ?something}) .\r
             sh:path rdfs:label ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     sh:message "s223: {$this} must have an rdfs:label" ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/inference/data-rules> ;
                     sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -79977,13 +79977,13 @@ or if they are mixtures sharing at least one constituent.""" ;
 
 <http://qudt.org/2.1/vocab/quantitykind> a owl:Ontology ;
     rdfs:label "QUDT Quantity Kind Vocabulary Version 2.1.41" ;
-    ns4:hasGraphMetadata ns4:GMD_QUDT-QUANTITY-KINDS-ALL ;
+    ns3:hasGraphMetadata ns3:GMD_QUDT-QUANTITY-KINDS-ALL ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
     owl:versionIRI <http://qudt.org/2.1/vocab/quantitykind> .
 
 <http://qudt.org/2.1/vocab/unit> a owl:Ontology ;
     rdfs:label "QUDT VOCAB Units of Measure Release 2.1.41" ;
-    ns4:hasGraphMetadata ns4:GMD_QUDT-UNITS-ALL ;
+    ns3:hasGraphMetadata ns3:GMD_QUDT-UNITS-ALL ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> ;
     owl:versionIRI <http://qudt.org/2.1/vocab/unit> .
 
