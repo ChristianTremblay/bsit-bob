@@ -18,6 +18,11 @@ outdoor = AirConnection(
     comment="This is where we exhaust air of bathroom, and windows of OpenOffice are connected here to",
 )
 
+plenum = AirConnection(
+    label="Plenum",
+    comment="Air around units, mostly to reference low static pressure port of differential pressure sensor",
+)
+
 ahu3_mixedAir = AirConnection(
     label="MixedAirDuct",
     comment="Mix between return air and outdoor air",
@@ -160,8 +165,9 @@ hd.outdoor_pressure % outdoor
 
 # AHU Sensors
 hd.ahu1["ahu1_p_up"]["highPort"] % hd.ahu1["SF"].airInlet
-hd.ahu1["ahu1_p_down"] % ahu1_supplyAir
-hd.ahu1["ahu1_p_down"]["lowPort"] % hs.zone1_hvac
+hd.ahu1["ahu1_p_up"]["lowPort"] % plenum
+hd.ahu1["ahu1_p_down"]["highPort"] % ahu1_supplyAir
+hd.ahu1["ahu1_p_down"]["lowPort"] % plenum
 hd.ahu1["ahu1_out_rtd"] % ahu1_supplyAir
 hd.ahu1["ahu1_rh_down"] % ahu1_supplyAir
 hd.ahu1["ahu1_cc_rtd"] % hd.ahu1["CLGCOIL"].airOutlet
@@ -170,8 +176,9 @@ hd.ahu1["ahu1_rh_up"] % hd.ahu1["HTGCOIL"].airInlet
 hd.ahu1["ahu1_in_rtd"] % hd.ahu1["HTGCOIL"].airInlet
 
 hd.ahu2["ahu2_p_up"]["highPort"] % hd.ahu2["SF"].airInlet
-hd.ahu2["ahu2_p_down"] % ahu2_supplyAir
-hd.ahu2["ahu2_p_down"]["lowPort"] % hs.zone3_hvac
+hd.ahu2["ahu2_p_up"]["lowPort"] % plenum
+hd.ahu2["ahu2_p_down"]["highPort"] % ahu2_supplyAir
+hd.ahu2["ahu2_p_down"]["lowPort"] % plenum
 hd.ahu2["ahu2_out_rtd"] % ahu2_supplyAir
 hd.ahu2["ahu2_rh_down"] % ahu2_supplyAir
 hd.ahu2["ahu2_cc_rtd"] % hd.ahu2["CLGCOIL"].airOutlet
@@ -181,7 +188,10 @@ hd.ahu2["ahu2_in_rtd"] % hd.ahu2["HTGCOIL"].airInlet
 
 
 hd.ahu3["ahu3_p_up"]["highPort"] % hd.ahu3["SF"].airInlet
-hd.ahu3["ahu3_p_down"] % ahu3_supplyAir
+hd.ahu3["ahu3_p_up"]["lowPort"] % plenum
+hd.ahu3["ahu3_p_down"]["highPort"] % ahu3_supplyAir
+hd.ahu3["ahu3_p_down"]["lowPort"] % plenum
+
 hd.ahu3["ahu3_out_rtd"] % ahu3_supplyAir
 hd.ahu3["ahu3_rh_down"] % ahu3_supplyAir
 hd.ahu3["ahu3_cc_rtd"] % hd.ahu3["CLGCOIL"].airOutlet
@@ -191,6 +201,12 @@ hd.ahu3["ahu3_in_rtd"] % hd.ahu3["CLGCOIL"].airInlet
 # Flow
 hd.ahu1["ahu1_in_flow"] % hd.ahu1["OADPR_d6"].airInlet
 hd.ahu2["ahu2_in_flow"] % hd.ahu2["OADPR_d7"].airInlet
+
+hd.vav1["ZN-T"] % hs.zone1_hvac
+hd.vav2["ZN-T"] % hs.zone2_hvac
+hd.vav3["ZN-T"] % hs.zone3_hvac
+hd.vav4["ZN-T"] % hs.zone4_hvac
+
 
 """
 NOT READY TO DO THAT

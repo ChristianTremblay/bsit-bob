@@ -1,1150 +1,1006 @@
-@prefix ns2: <http://data.ashrae.org/standard223#> .
+@prefix ns1: <http://data.ashrae.org/standard223#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 [] a sh:ValidationReport ;
     sh:conforms false ;
     sh:result [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00123> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00072> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00072> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00329> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00329> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00036> ],
-        [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:network_devices/00007> ;
             sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00007> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00003> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00003> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00173> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00377> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00377> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:network_devices/00009> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00009> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00433> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00433> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00215> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00215> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00141> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00141> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00108> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00108> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac/00005> ;
-            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
-            sh:resultPath ns2:connectsAt ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b20 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00180> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00180> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00218> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00218> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00050> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00050> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:lighting_spaces/00023> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00023> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac/00005> ;
-            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
-            sh:value <urn:pritoni:hvac/00005> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00378> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00378> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00262> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00262> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00020> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00260> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00260> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00137> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00137> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00046> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00018> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00016> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00016> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00220> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00220> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00052> ;
-            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
-            sh:value <urn:pritoni:electrical_devices/00052> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:lighting_spaces/00019> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00019> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00384> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00384> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00376> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00376>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00053> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00053> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00347> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00347> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00434> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00434> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00432> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00432> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00261> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00261> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00051> ;
-            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
-            sh:resultPath ns2:connectsAt ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b20 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00140> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00140> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00134> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00142> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00142> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00065> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00065> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:hvac_spaces/00018> ;
             sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00018> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00049> ;
+            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape ns1:ConnectionCnxShape ;
+            sh:value <urn:pritoni:electrical_devices/00049> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00096> ;
+            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
+            sh:resultPath ns1:connectsAt ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00050> ;
+            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape ns1:ConnectionCnxShape ;
+            sh:value <urn:pritoni:electrical_devices/00050> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00142> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00142> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00005> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00005> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00003> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00003> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00053> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00053> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00384> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00384> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00376> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00376>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:lighting_spaces/00019> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00019> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00031> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00031> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00143> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00143> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00017> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00017> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00063> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00063> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:lighting_spaces/00015> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00015> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00137> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00137> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:hvac_devices/00222> ;
             sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00222> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
-            sh:resultPath ns2:mapsTo ;
+            sh:resultPath ns1:mapsTo ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00493> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00493> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac/00005> ;
+            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
+            sh:resultPath ns1:connectsAt ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00022> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00022> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00378> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00378> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:hvac_devices/00330> ;
             sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00330> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
+            sh:focusNode <urn:pritoni:hvac_devices/00261> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00261> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00277> ;
+            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
+            sh:resultPath ns1:connectsAt ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00051> ;
+            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
+            sh:resultSeverity sh:Warning ;
             sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00212> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:network_devices/00010> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00010> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00044> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00044> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00049> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00049> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00219> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00219> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00471> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00471> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00494> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00494> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00101> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00101> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00346> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00346> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00332> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00332> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00295> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00295> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00291> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00291> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00043> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00043> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00328> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00328> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape ns1:ConnectionCnxShape ;
+            sh:value <urn:pritoni:electrical_devices/00051> ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:electrical_devices/00096> ;
             sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
             sh:resultSeverity sh:Warning ;
             sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
+            sh:sourceShape ns1:ConnectionCnxShape ;
             sh:value <urn:pritoni:electrical_devices/00096> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00008> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00008> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00053> ;
-            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
-            sh:resultPath ns2:connectsAt ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b20 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00490> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00490> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00015> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00015> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00292> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00292> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:lighting_spaces/00007> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00007> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00429> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00429> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00353> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00353> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00345> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00345>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:network_devices/00024> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00024> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00045> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00045> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00293> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00293> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:network_devices/00008> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00008> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00052> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00052> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00036> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00036> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00131> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00472> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00472> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00012> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00012> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00259> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00259> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00182> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00182> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00436> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00436> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00331> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00331> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:lighting_spaces/00011> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00011> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00034> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00034> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00021> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00021> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00263> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00263> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00277> ;
-            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
-            sh:value <urn:pritoni:electrical_devices/00277> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00040> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00040> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00026> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00063> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00063> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00066> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00066> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00532> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00532> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00099> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00027> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00027> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00294> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00294> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00031> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00031> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00035> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00035> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00052> ;
-            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
-            sh:resultPath ns2:connectsAt ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b20 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:hvac_devices/00533> ;
             sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00533> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00086> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00107> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00107> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00099> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00099>." ;
-            sh:resultPath ns2:mapsTo ;
+            sh:focusNode <urn:pritoni:hvac_devices/00262> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00262> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:network_devices/00026> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00026> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:focusNode <urn:pritoni:electrical_devices/00072> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00072> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:lighting_spaces/00015> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00015> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00049> ;
-            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
-            sh:resultPath ns2:connectsAt ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b20 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00050> ;
-            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
-            sh:value <urn:pritoni:electrical_devices/00050> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00176> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00176> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00053> ;
-            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
-            sh:value <urn:pritoni:electrical_devices/00053> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00051> ;
-            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
-            sh:value <urn:pritoni:electrical_devices/00051> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00009> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00009> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00181> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00181> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00054> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00054> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00435> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00435> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:network_devices/00005> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00005> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00022> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00022> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:hvac_spaces/00026> ;
             sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00026> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:hvac_spaces/00025> ;
             sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00025> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00031> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00031> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00043> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00043> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00495> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00495> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
-            sh:resultPath ns2:mapsTo ;
+            sh:focusNode <urn:pritoni:hvac_devices/00064> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00064> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00059> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00005> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00005> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00221> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00221> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:network_devices/00006> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00006> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00017> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00017> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00493> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00493> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00030> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00030> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00050> ;
-            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
-            sh:resultPath ns2:connectsAt ;
-            sh:resultSeverity sh:Warning ;
-            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b20 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00496> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00496> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00143> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00143> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00115> ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:network_devices/00025> ;
             sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00025> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00277> ;
+            sh:focusNode <urn:pritoni:hvac_devices/00328> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00328> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00014> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00014> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00015> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00015> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00034> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00034> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00049> ;
             sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
-            sh:resultPath ns2:connectsAt ;
+            sh:resultPath ns1:connectsAt ;
             sh:resultSeverity sh:Warning ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b20 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00221> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00221> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00429> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00429> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00066> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00066> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00140> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00140> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00294> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00294> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00182> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00182> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00044> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00044> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00035> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00035> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00292> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00292> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00176> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00176> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00050> ;
+            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
+            sh:resultPath ns1:connectsAt ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00065> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00065> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00052> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00052> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:lighting_spaces/00023> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00023> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00009> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00009> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00052> ;
+            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape ns1:ConnectionCnxShape ;
+            sh:value <urn:pritoni:electrical_devices/00052> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00353> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00353> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00345> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00345>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00100> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00100> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00219> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00219> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00434> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00434> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00295> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00295> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00346> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00346> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00041> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00041> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00051> ;
+            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
+            sh:resultPath ns1:connectsAt ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00180> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00180> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00016> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00016> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00179> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00179> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:network_devices/00009> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00009> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00021> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00021> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00497> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00497> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00495> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00495> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:network_devices/00008> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00008> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:network_devices/00010> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00010> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00472> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00472> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00045> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00045> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00293> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00293> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00494> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00494> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00331> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00331> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00532> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00532> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:lighting_spaces/00011> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00011> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:network_devices/00006> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00006> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00181> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00181> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00101> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00101> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00259> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00259> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00183> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00183> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00260> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00260> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00433> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00433> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00031> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00031> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00377> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00377> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00049> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00049> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:lighting_spaces/00007> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:lighting_spaces/00007> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00027> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00027> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00215> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00215> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00036> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00036> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00116> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00116> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00347> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00347> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00008> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00008> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00490> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00490> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00012> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00012> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac/00005> ;
+            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:OrConstraintComponent ;
+            sh:sourceShape ns1:ConnectionCnxShape ;
+            sh:value <urn:pritoni:hvac/00005> ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00496> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00496> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00144> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00144> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00220> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00220> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00040> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00040> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00141> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00141> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00050> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00050> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00436> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00436> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:network_devices/00026> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00026> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00052> ;
+            sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
+            sh:resultPath ns1:connectsAt ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00435> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00435> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00432> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00432> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00426> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00426>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00471> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00471> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00030> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00030> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:network_devices/00005> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00005> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00291> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00291> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00108> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00108> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00332> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00332> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:pritoni:lighting_devices/00090> ;
             sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
             sh:resultSeverity sh:Warning ;
             sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
+            sh:sourceShape ns1:ConnectionCnxShape ;
             sh:value <urn:pritoni:lighting_devices/00090> ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00100> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00100> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:focusNode <urn:pritoni:hvac_devices/00263> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00263> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00096> ;
+            sh:focusNode <urn:pritoni:network_devices/00024> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:network_devices/00024> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_spaces/00054> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00054> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00053> ;
             sh:resultMessage "s223: A Connection must have two or more connectsAt relations to ConnectionPoints" ;
-            sh:resultPath ns2:connectsAt ;
+            sh:resultPath ns1:connectsAt ;
             sh:resultSeverity sh:Warning ;
             sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b20 ],
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb16 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00014> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00014> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00183> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00183> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00049> ;
+            sh:focusNode <urn:pritoni:electrical_devices/00053> ;
             sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
             sh:resultSeverity sh:Warning ;
             sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape ns2:ConnectionCnxShape ;
-            sh:value <urn:pritoni:electrical_devices/00049> ],
+            sh:sourceShape ns1:ConnectionCnxShape ;
+            sh:value <urn:pritoni:electrical_devices/00053> ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
+            sh:focusNode <urn:pritoni:hvac_devices/00218> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00218> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00212> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00212>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00107> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00107> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00099> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00099>." ;
+            sh:resultPath ns1:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb3 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:hvac_devices/00329> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00329> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath ns1:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:nfb93b2098f2a42f1a3a3bf695fbd033eb6 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:nfb93b2098f2a42f1a3a3bf695fbd033eb7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:pritoni:electrical_devices/00277> ;
+            sh:resultMessage "s223: You need either an InletCP and an OutletCP, or at least one BidirectionalCP and another CP of any type." ;
+            sh:resultSeverity sh:Warning ;
             sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00006> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00144> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00144> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00134> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00134>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00022> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00008> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_spaces/00041> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_spaces/00041> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00497> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00497> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00487> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00487>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00179> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00179> could be missing a mapsTo relation to a ConnectionPoint of <urn:pritoni:hvac_devices/00173> because it is associated with a Junction or Equipment that is contained by <urn:pritoni:hvac_devices/00173>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:electrical_devices/00116> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:electrical_devices/00116> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00005> ;
-            sh:resultMessage "Value must have at least one of the following shapes: _:945eb5478a1d244c30aa6475390cd2b7, _:a251a78f3d87fea2a06e04075b377e68" ;
-            sh:resultPath ns2:hasMember ;
-            sh:resultSeverity sh:Violation ;
-            sh:sourceConstraintComponent sh:OrConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b13 ;
-            sh:value <urn:pritoni:hvac_devices/00024> ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:pritoni:hvac_devices/00064> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:pritoni:hvac_devices/00064> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n0cdbd1a97974485796eabea4de193f31b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n0cdbd1a97974485796eabea4de193f31b4 ] .
+            sh:sourceShape ns1:ConnectionCnxShape ;
+            sh:value <urn:pritoni:electrical_devices/00277> ] .
 

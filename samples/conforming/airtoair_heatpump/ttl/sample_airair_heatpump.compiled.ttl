@@ -1021,13 +1021,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
             sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
-        [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path bob:measuresMedium ] .
 
 bob:HP a rdfs:Class ;
     rdfs:label "bob.properties.force.HP" ;
@@ -1087,10 +1087,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 scratch:AirToAirHeatPump a rdfs:Class,
         sh:NodeShape ;
@@ -1104,9 +1104,9 @@ scratch:AirToAirHeatPump a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:indoorAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:outdoorAirInlet ],
-        [ a sh:PropertyShape ;
             sh:path scratch:indoorAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:outdoorAirInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:electricalInlet ],
         [ a sh:PropertyShape ;
@@ -1168,44 +1168,24 @@ s223:Actuator a s223:Class,
             sh:message "s223: If the relation actuates is present it must associate the Actuator with a Equipment." ;
             sh:path s223:actuates ] .
 
-s223:AirHandlingUnit a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Air handling unit" ;
-    rdfs:comment "An assembly consisting of a fan or fans and other necessary equipment to perform one or more of the following functions: circulating, filtration, heating, cooling, heat recovery, humidifying, dehumidifying, and mixing of air." ;
-    rdfs:subClassOf s223:System ;
-    sh:property [ rdfs:comment "An AirHandlingUnit shall either have members : at least one Fan, one Coil, and three Dampers, or `have member an equipment of type s223:Equipment fulfilling the boundary connection conditions." ;
-            sh:or ( [ sh:property [ sh:minCount 1 ;
-                                sh:path s223:hasMember ;
-                                sh:qualifiedMinCount 1 ;
-                                sh:qualifiedValueShape [ sh:class s223:Fan ] ],
-                            [ sh:minCount 1 ;
-                                sh:path s223:hasMember ;
-                                sh:qualifiedMinCount 1 ;
-                                sh:qualifiedValueShape [ sh:class s223:Coil ] ],
-                            [ sh:minCount 2 ;
-                                sh:path s223:hasMember ;
-                                sh:qualifiedMinCount 2 ;
-                                sh:qualifiedValueShape [ sh:class s223:Damper ] ] ] [ sh:property [ sh:minCount 1 ;
-                                sh:path s223:hasMember ;
-                                sh:qualifiedMinCount 1 ;
-                                sh:qualifiedValueShape [ sh:class s223:Equipment ] ] ] ) ;
-            sh:path s223:hasMember ],
-        [ rdfs:comment "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
-            sh:message "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
-            <http://www.w3.org/ns/shacl#minCount:> 1 ;
-            sh:path s223:hasBoundaryConnectionPoint ;
-            <http://www.w3.org/ns/shacl#qualifiedMinCount:> 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
-                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ],
-        [ rdfs:comment "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
-            sh:message "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
-            <http://www.w3.org/ns/shacl#minCount:> 1 ;
-            sh:path s223:hasBoundaryConnectionPoint ;
-            <http://www.w3.org/ns/shacl#qualifiedMinCount:> 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
-                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ] .
+s223:AirHandlingUnitShape rdfs:comment "An AirHandlingUnit shall either have members : at least one Fan, one Coil, and two Dampers, or `have member an equipment of type s223:Equipment fulfilling the boundary connection conditions." ;
+    sh:message "An AirHandlingUnit shall either have members : at least one Fan, one Coil, and two Dampers, or `have member an equipment of type s223:Equipment fulfilling the boundary connection conditions." ;
+    sh:or ( [ sh:property [ sh:minCount 1 ;
+                        sh:path s223:hasMember ;
+                        sh:qualifiedMinCount 1 ;
+                        sh:qualifiedValueShape [ sh:class s223:Coil ] ],
+                    [ sh:minCount 1 ;
+                        sh:path s223:hasMember ;
+                        sh:qualifiedMinCount 1 ;
+                        sh:qualifiedValueShape [ sh:class s223:Fan ] ],
+                    [ sh:minCount 2 ;
+                        sh:path s223:hasMember ;
+                        sh:qualifiedMinCount 2 ;
+                        sh:qualifiedValueShape [ sh:class s223:Damper ] ] ] [ sh:property [ sh:minCount 1 ;
+                        sh:path s223:hasMember ;
+                        sh:qualifiedMinCount 1 ;
+                        sh:qualifiedValueShape [ sh:class s223:Equipment ] ] ] ) ;
+    sh:targetClass s223:AirHandlingUnit .
 
 s223:BACnetExternalReference a s223:Class,
         sh:NodeShape ;
@@ -1492,14 +1472,14 @@ s223:DomesticHotWaterHeater a s223:Class,
                         sh:minCount 1 ;
                         sh:path s223:hasBoundaryConnectionPoint ;
                         sh:qualifiedMinCount 1 ;
-                        sh:qualifiedValueShape [ sh:class s223:ElectricalConnectionPoint ;
+                        sh:qualifiedValueShape [ sh:class s223:ConnectionPoint ;
                                 sh:node [ sh:property [ sh:class s223:Constituent-Electricity ;
                                                 sh:path s223:hasMedium ] ] ] ] [ rdfs:comment "A DomesticHotWaterHeater shall have at least one gas connection." ;
                         sh:message "s223: A DomesticHotWaterHeater shall have at least one gas connection." ;
                         sh:minCount 1 ;
                         sh:path s223:hasBoundaryConnectionPoint ;
                         sh:qualifiedMinCount 1 ;
-                        sh:qualifiedValueShape [ sh:class s223:GasConnectionPoint ;
+                        sh:qualifiedValueShape [ sh:class s223:ConnectionPoint ;
                                 sh:node [ sh:property [ sh:class s223:Fluid-NaturalGas ;
                                                 sh:path s223:hasMedium ] ] ] ] ) ] .
 
@@ -1637,17 +1617,7 @@ s223:EnergyRecoverVentilator a s223:Class,
     rdfs:label "Energy Recovery Ventilator" ;
     rdfs:comment "A device that transfers energy from the exhaust air stream to the supply air stream." ;
     rdfs:subClassOf s223:System ;
-    sh:property [ rdfs:comment "An HeatRecoverVentilator shall have members : at least one Fan and one AirHeatExchanger." ;
-            sh:and ( [ sh:property [ sh:minCount 1 ;
-                                sh:path s223:hasMember ;
-                                sh:qualifiedMinCount 1 ;
-                                sh:qualifiedValueShape [ sh:class s223:Fan ] ],
-                            [ sh:minCount 1 ;
-                                sh:path s223:hasMember ;
-                                sh:qualifiedMinCount 1 ;
-                                sh:qualifiedValueShape [ sh:class s223:AirHeatExchanger ] ] ] ) ;
-            sh:path s223:hasMember ],
-        [ rdfs:comment "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
+    sh:property [ rdfs:comment "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
             sh:message "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
             <http://www.w3.org/ns/shacl#minCount:> 1 ;
             sh:path s223:hasBoundaryConnectionPoint ;
@@ -1662,7 +1632,17 @@ s223:EnergyRecoverVentilator a s223:Class,
             <http://www.w3.org/ns/shacl#qualifiedMinCount:> 1 ;
             sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
                     sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ] .
+                                    sh:path s223:hasMedium ] ] ] ],
+        [ rdfs:comment "An HeatRecoverVentilator shall have members : at least one Fan and one AirHeatExchanger." ;
+            sh:and ( [ sh:property [ sh:minCount 1 ;
+                                sh:path s223:hasMember ;
+                                sh:qualifiedMinCount 1 ;
+                                sh:qualifiedValueShape [ sh:class s223:AirHeatExchanger ] ],
+                            [ sh:minCount 1 ;
+                                sh:path s223:hasMember ;
+                                sh:qualifiedMinCount 1 ;
+                                sh:qualifiedValueShape [ sh:class s223:Fan ] ] ] ) ;
+            sh:path s223:hasMember ] .
 
 s223:EnumeratedActuatableProperty a s223:Class,
         sh:NodeShape ;
@@ -1676,7 +1656,23 @@ s223:FanCoilUnit a s223:Class,
     rdfs:label "Fan coil unit" ;
     rdfs:comment "A device consisting of a heat exchanger (coil) and a fan to regulate the temperature of one or more spaces." ;
     rdfs:subClassOf s223:System ;
-    sh:property [ rdfs:comment "An AirHandlingUnit shall either have members : at least one Fan, one Coil, and three Dampers, or `have member an equipment of type s223:Equipment fulfilling the boundary connection conditions." ;
+    sh:property [ rdfs:comment "A FanCoilUnit shall have at least a boundary connection point to one inlet using the medium Air." ;
+            sh:message "s223: A FanCoilUnit shall have at least a boundary connection point to one inlet using the medium Air." ;
+            sh:minCount 1 ;
+            sh:path s223:hasBoundaryConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
+                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
+                                    sh:path s223:hasMedium ] ] ] ],
+        [ rdfs:comment "A FanCoilUnit shall have at least a boundary connection point to one outlet using the medium Air." ;
+            sh:message "s223: A FanCoilUnit shall have at least a boundary connection point to one outlet using the medium Air." ;
+            sh:minCount 1 ;
+            sh:path s223:hasBoundaryConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
+                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
+                                    sh:path s223:hasMedium ] ] ] ],
+        [ rdfs:comment "An AirHandlingUnit shall either have members : at least one Fan, one Coil, and three Dampers, or `have member an equipment of type s223:Equipment fulfilling the boundary connection conditions." ;
             sh:or ( [ sh:property [ rdfs:comment "A FanCoilUnit must be associated with at least 1 Coil using the relation contains." ;
                                 sh:message "s223: A FanCoilUnit must be associated with at least 1 Coil using the relation contains." ;
                                 sh:minCount 1 ;
@@ -1695,22 +1691,6 @@ s223:FanCoilUnit a s223:Class,
                         sh:qualifiedMinCount 1 ;
                         sh:qualifiedValueShape [ sh:class s223:Equipment ] ] ) ;
             sh:path s223:hasMember ],
-        [ rdfs:comment "A FanCoilUnit shall have at least a boundary connection point to one inlet using the medium Air." ;
-            sh:message "s223: A FanCoilUnit shall have at least a boundary connection point to one inlet using the medium Air." ;
-            sh:minCount 1 ;
-            sh:path s223:hasBoundaryConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
-                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ],
-        [ rdfs:comment "A FanCoilUnit shall have at least a boundary connection point to one outlet using the medium Air." ;
-            sh:message "s223: A FanCoilUnit shall have at least a boundary connection point to one outlet using the medium Air." ;
-            sh:minCount 1 ;
-            sh:path s223:hasBoundaryConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
-                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ],
         [ rdfs:comment "A FanCoilUnit must at least have the role Role-Heating or Role-Cooling." ;
             sh:message "s223: A FanCoilUnit must at least have the role Role-Heating or Role-Cooling." ;
             sh:minCount 1 ;
@@ -1845,17 +1825,7 @@ s223:HeatRecoverVentilator a s223:Class,
     rdfs:label "Heat Recovery Ventilator" ;
     rdfs:comment "A device that transfers energy from the exhaust air stream to the supply air stream." ;
     rdfs:subClassOf s223:System ;
-    sh:property [ rdfs:comment "An HeatRecoverVentilator shall have members : at least one Fan and one AirHeatExchanger." ;
-            sh:and ( [ sh:property [ sh:minCount 1 ;
-                                sh:path s223:hasMember ;
-                                sh:qualifiedMinCount 1 ;
-                                sh:qualifiedValueShape [ sh:class s223:Fan ] ],
-                            [ sh:minCount 1 ;
-                                sh:path s223:hasMember ;
-                                sh:qualifiedMinCount 1 ;
-                                sh:qualifiedValueShape [ sh:class s223:AirHeatExchanger ] ] ] ) ;
-            sh:path s223:hasMember ],
-        [ rdfs:comment "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
+    sh:property [ rdfs:comment "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
             sh:message "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
             <http://www.w3.org/ns/shacl#minCount:> 1 ;
             sh:path s223:hasBoundaryConnectionPoint ;
@@ -1870,7 +1840,17 @@ s223:HeatRecoverVentilator a s223:Class,
             <http://www.w3.org/ns/shacl#qualifiedMinCount:> 1 ;
             sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
                     sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ] .
+                                    sh:path s223:hasMedium ] ] ] ],
+        [ rdfs:comment "An HeatRecoverVentilator shall have members : at least one Fan and one AirHeatExchanger." ;
+            sh:and ( [ sh:property [ sh:minCount 1 ;
+                                sh:path s223:hasMember ;
+                                sh:qualifiedMinCount 1 ;
+                                sh:qualifiedValueShape [ sh:class s223:AirHeatExchanger ] ],
+                            [ sh:minCount 1 ;
+                                sh:path s223:hasMember ;
+                                sh:qualifiedMinCount 1 ;
+                                sh:qualifiedValueShape [ sh:class s223:Fan ] ] ] ) ;
+            sh:path s223:hasMember ] .
 
 s223:HeatTransferRole sh:rule [ a sh:TripleRule ;
             rdfs:comment "Infer the hasRole s223:Role-HeatTransfer relation for every instance of the listed targetClass values." ;
@@ -2182,28 +2162,7 @@ s223:Pump a s223:Class,
     rdfs:label "Pump" ;
     rdfs:comment "A machine for imparting energy to a fluid, drawing a fluid into itself through an entrance port, and forcing the fluid out through an exhaust port." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
-            sh:path s223:hasConnectionPoint ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
-                    sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
-WHERE {\r
-  $this s223:hasConnectionPoint ?cpa .\r
-  $this s223:hasConnectionPoint ?cpb .\r
-  FILTER (?cpa != ?cpb) .\r
-  ?cpa s223:hasMedium ?mediuma .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  ?cpb s223:hasMedium ?mediumb .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  FILTER (?mediuma != ?mediumb) .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
-}\r
-""" ] ],
-        [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
+    sh:property [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:message "s223: A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
@@ -2228,7 +2187,28 @@ WHERE {\r
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Refrigerant ;
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Oil ;
                                                 sh:path s223:hasMedium ] ] ) ;
-                            sh:severity sh:Warning ] ] ] .
+                            sh:severity sh:Warning ] ] ],
+        [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+            sh:path s223:hasConnectionPoint ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+                    sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
+WHERE {\r
+  $this s223:hasConnectionPoint ?cpa .\r
+  $this s223:hasConnectionPoint ?cpb .\r
+  FILTER (?cpa != ?cpb) .\r
+  ?cpa s223:hasMedium ?mediuma .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  ?cpb s223:hasMedium ?mediumb .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  FILTER (?mediuma != ?mediumb) .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
+}\r
+""" ] ] .
 
 s223:RadiantHeaterInletShape a sh:NodeShape ;
     rdfs:label "Radiant heater inlet shape" ;
@@ -17634,6 +17614,28 @@ s223:AC-6600VLL-3Ph-60Hz a s223:AC-6600VLL-3Ph-60Hz,
     rdfs:comment "AC-6600VLL-3Ph-60Hz" ;
     rdfs:subClassOf s223:Electricity-AC .
 
+s223:AirHandlingUnit a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Air handling unit" ;
+    rdfs:comment "An assembly consisting of a fan or fans and other necessary equipment to perform one or more of the following functions: circulating, filtration, heating, cooling, heat recovery, humidifying, dehumidifying, and mixing of air." ;
+    rdfs:subClassOf s223:System ;
+    sh:property [ rdfs:comment "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
+            sh:message "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
+            <http://www.w3.org/ns/shacl#minCount:> 1 ;
+            sh:path s223:hasBoundaryConnectionPoint ;
+            <http://www.w3.org/ns/shacl#qualifiedMinCount:> 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
+                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
+                                    sh:path s223:hasMedium ] ] ] ],
+        [ rdfs:comment "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
+            sh:message "An AirHandlingUnit System shall have boundary connection to a air inlet and a air outlet" ;
+            <http://www.w3.org/ns/shacl#minCount:> 1 ;
+            sh:path s223:hasBoundaryConnectionPoint ;
+            <http://www.w3.org/ns/shacl#qualifiedMinCount:> 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
+                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
+                                    sh:path s223:hasMedium ] ] ] ] .
+
 s223:AirSourceHeatPump a s223:Class,
         sh:NodeShape ;
     rdfs:label "Air source heat pump" ;
@@ -18273,7 +18275,19 @@ s223:Filter a s223:Class,
     rdfs:label "Filter" ;
     rdfs:comment "A device that removes contaminants from gases or liquids." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A filter should have one common constituent between the inlet and outlet" ;
+    sh:property [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
+            sh:message "s223: A Filter shall have at least one inlet ConnectionPoint." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
+        [ rdfs:comment "A Filter shall have at least one outlet." ;
+            sh:message "s223: A Filter shall have at least one outlet." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ],
+        [ rdfs:comment "A filter should have one common constituent between the inlet and outlet" ;
             sh:path s223:hasConnectionPoint ;
             sh:severity sh:Warning ;
             sh:sparql [ a sh:SPARQLConstraint ;
@@ -18348,19 +18362,7 @@ FILTER NOT EXISTS {?m2 s223:composedOf ?c2}\r
 FILTER (NOT EXISTS {?m2 rdfs:subClassOf* ?m1}) .\r
 FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
 }\r
-""" ] ],
-        [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
-            sh:message "s223: A Filter shall have at least one inlet ConnectionPoint." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
-        [ rdfs:comment "A Filter shall have at least one outlet." ;
-            sh:message "s223: A Filter shall have at least one outlet." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ] .
+""" ] ] .
 
 s223:Gas-SuperHeated a s223:Class,
         s223:Gas-SuperHeated,
@@ -70051,7 +70053,26 @@ s223:Sensor a s223:Class,
     rdfs:label "Sensor" ;
     rdfs:comment "A Sensor observes an ObservableProperty (see `s223:ObservableProperty`) which may be quantifiable (see `s223:QuantifiableObservableProperty`), such as a temperature, flowrate, or concentration, or Enumerable (see `s223:EnumeratedObservableProperty`), such as an alarm state or occupancy state." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
+    sh:property [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
+            sh:class s223:QuantifiableProperty ;
+            sh:message "s223: If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
+            sh:path s223:hasMeasurementResolution ],
+        [ rdfs:comment "A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
+            sh:maxCount 1 ;
+            sh:message "s223: A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
+            sh:minCount 1 ;
+            sh:path s223:hasObservationLocation ],
+        [ rdfs:comment "If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
+            sh:maxCount 1 ;
+            sh:message "s223: If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
+            sh:path s223:hasReferenceLocation ],
+        [ rdfs:comment "A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
+            sh:class s223:ObservableProperty ;
+            sh:maxCount 1 ;
+            sh:message "s223: A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
+            sh:minCount 1 ;
+            sh:path s223:observes ],
+        [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
             sh:path s223:observes ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
@@ -70080,26 +70101,7 @@ $this s223:observes ?x .\r
 ?x a/rdfs:subClassOf* s223:QuantifiableProperty .\r
 FILTER NOT EXISTS {$this s223:hasReferenceLocation ?y}\r
 }\r
-""" ] ],
-        [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
-            sh:class s223:QuantifiableProperty ;
-            sh:message "s223: If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
-            sh:path s223:hasMeasurementResolution ],
-        [ rdfs:comment "A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
-            sh:maxCount 1 ;
-            sh:message "s223: A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
-            sh:minCount 1 ;
-            sh:path s223:hasObservationLocation ],
-        [ rdfs:comment "If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
-            sh:maxCount 1 ;
-            sh:message "s223: If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
-            sh:path s223:hasReferenceLocation ],
-        [ rdfs:comment "A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
-            sh:class s223:ObservableProperty ;
-            sh:maxCount 1 ;
-            sh:message "s223: A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
-            sh:minCount 1 ;
-            sh:path s223:observes ] ;
+""" ] ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "Infer the hasObservationLocation relation for a Sensor from the Property that it is observing, only if that property is associated with a single entity." ;
             sh:construct """\r
@@ -71309,6 +71311,10 @@ s223:Numerical-LineLineVoltage a s223:Class,
             sh:minCount 1 ;
             sh:path s223:hasVoltage ] .
 
+s223:hasMember a rdf:Property ;
+    rdfs:label "has member" ;
+    rdfs:comment "The relation hasMember associates a System with its component Equipment and/or Systems." .
+
 qudtqk:CoefficientOfHeatTransfer a qudt:QuantityKind ;
     rdfs:label "Coefficient of heat transfer"@en ;
     dcterms:description "\"Coefficient of Heat Transfer\", in thermodynamics and in mechanical and chemical engineering, is used in calculating the heat transfer, typically by convection or phase transition between a fluid and a solid. The heat transfer coefficient is the proportionality coefficient between the heat flux, that is heat flow per unit area, q/A, and the thermodynamic driving force for the flow of heat (that is, the temperature difference, (Delta T).  Areic heat flow rate divided by thermodynamic temperature difference. In building technology, the \"Coefficient of Heat Transfer\", is often called \"thermal transmittance}\" with the symbol \"U\". It has SI units in watts per squared meter kelvin."^^rdf:HTML ;
@@ -71887,10 +71893,6 @@ QuantifiableProperty may be used to also specify the amount of the constituent u
 For example, see `s223:GlycolSolution-15Percent`.""" ;
             sh:class s223:Property ;
             sh:path s223:composedOf ] .
-
-s223:hasMember a rdf:Property ;
-    rdfs:label "has member" ;
-    rdfs:comment "The relation hasMember associates a System with its component Equipment and/or Systems." .
 
 qudtqk:MassPerEnergy a qudt:QuantityKind ;
     rdfs:label "Mass per Energy"@en ;
@@ -77487,6 +77489,65 @@ qudtqk:Time a qudt:QuantityKind ;
     qudt:symbol "t" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
+qudtqk:Volume a qudt:QuantityKind ;
+    rdfs:label "Volume"@en ;
+    dcterms:description "The volume of a solid object is the three-dimensional concept of how much space it occupies, often quantified numerically. One-dimensional figures (such as lines) and two-dimensional shapes (such as squares) are assigned zero volume in the three-dimensional space."^^rdf:HTML ;
+    qudt:applicableUnit unit:AC-FT,
+        unit:AC-FT_US,
+        unit:ANGSTROM3,
+        unit:BBL,
+        unit:BBL_UK_PET,
+        unit:BBL_US,
+        unit:CentiM3,
+        unit:DecaL,
+        unit:DecaM3,
+        unit:DeciL,
+        unit:DeciM3,
+        unit:FBM,
+        unit:FT3,
+        unit:FemtoL,
+        unit:GI_UK,
+        unit:GI_US,
+        unit:GT,
+        unit:HectoL,
+        unit:IN3,
+        unit:KiloCubicFT,
+        unit:KiloL,
+        unit:L,
+        unit:M3,
+        unit:MI3,
+        unit:MI_UK3,
+        unit:MegaL,
+        unit:MicroL,
+        unit:MicroM3,
+        unit:MilliL,
+        unit:MilliM3,
+        unit:NT,
+        unit:NanoL,
+        unit:OZ_VOL_UK,
+        unit:PINT,
+        unit:PINT_UK,
+        unit:PK_UK,
+        unit:PicoL,
+        unit:PlanckVolume,
+        unit:QT_UK,
+        unit:QT_US,
+        unit:RT,
+        unit:STR,
+        unit:Standard,
+        unit:TBSP,
+        unit:TON_Register,
+        unit:TON_SHIPPING_UK,
+        unit:TON_SHIPPING_US,
+        unit:TSP,
+        unit:YD3 ;
+    qudt:dbpediaMatch "http://dbpedia.org/resource/Volume"^^xsd:anyURI ;
+    qudt:hasDimensionVector qkdv:A0E0L3I0M0H0T0D0 ;
+    qudt:iec61360Code "0112/2///62720#UAD238" ;
+    qudt:plainTextDescription "The volume of a solid object is the three-dimensional concept of how much space it occupies, often quantified numerically. One-dimensional figures (such as lines) and two-dimensional shapes (such as squares) are assigned zero volume in the three-dimensional space." ;
+    qudt:siExactMatch si-quantity:VOLU ;
+    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
+
 s223:ConnectionPoint a s223:Class,
         sh:NodeShape ;
     rdfs:label "ConnectionPoint" ;
@@ -77639,65 +77700,6 @@ FILTER NOT EXISTS {?otherEquipment s223:contains ?equipment}\r
             sh:maxCount 1 ;
             sh:message "s223: A ConnectionPoint can be associated with at most one other ConnectionPoint using the inverse of relation mapsTo" ;
             sh:path [ sh:inversePath s223:mapsTo ] ] .
-
-qudtqk:Volume a qudt:QuantityKind ;
-    rdfs:label "Volume"@en ;
-    dcterms:description "The volume of a solid object is the three-dimensional concept of how much space it occupies, often quantified numerically. One-dimensional figures (such as lines) and two-dimensional shapes (such as squares) are assigned zero volume in the three-dimensional space."^^rdf:HTML ;
-    qudt:applicableUnit unit:AC-FT,
-        unit:AC-FT_US,
-        unit:ANGSTROM3,
-        unit:BBL,
-        unit:BBL_UK_PET,
-        unit:BBL_US,
-        unit:CentiM3,
-        unit:DecaL,
-        unit:DecaM3,
-        unit:DeciL,
-        unit:DeciM3,
-        unit:FBM,
-        unit:FT3,
-        unit:FemtoL,
-        unit:GI_UK,
-        unit:GI_US,
-        unit:GT,
-        unit:HectoL,
-        unit:IN3,
-        unit:KiloCubicFT,
-        unit:KiloL,
-        unit:L,
-        unit:M3,
-        unit:MI3,
-        unit:MI_UK3,
-        unit:MegaL,
-        unit:MicroL,
-        unit:MicroM3,
-        unit:MilliL,
-        unit:MilliM3,
-        unit:NT,
-        unit:NanoL,
-        unit:OZ_VOL_UK,
-        unit:PINT,
-        unit:PINT_UK,
-        unit:PK_UK,
-        unit:PicoL,
-        unit:PlanckVolume,
-        unit:QT_UK,
-        unit:QT_US,
-        unit:RT,
-        unit:STR,
-        unit:Standard,
-        unit:TBSP,
-        unit:TON_Register,
-        unit:TON_SHIPPING_UK,
-        unit:TON_SHIPPING_US,
-        unit:TSP,
-        unit:YD3 ;
-    qudt:dbpediaMatch "http://dbpedia.org/resource/Volume"^^xsd:anyURI ;
-    qudt:hasDimensionVector qkdv:A0E0L3I0M0H0T0D0 ;
-    qudt:iec61360Code "0112/2///62720#UAD238" ;
-    qudt:plainTextDescription "The volume of a solid object is the three-dimensional concept of how much space it occupies, often quantified numerically. One-dimensional figures (such as lines) and two-dimensional shapes (such as squares) are assigned zero volume in the three-dimensional space." ;
-    qudt:siExactMatch si-quantity:VOLU ;
-    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
 unit:ANGSTROM a qudt:Unit ;
     rdfs:label "Angstrom"@en ;
@@ -78620,7 +78622,31 @@ The graphical depiction of Equipment used in this standard is a rounded cornered
 ![Graphical Depiction of Equipment.](figures/Figure_5-1Graphical_Depiciton_of_Equipment.svg)\r
   """ ;
     rdfs:subClassOf s223:Connectable ;
-    sh:property [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
+    sh:property [ a sh:PropertyShape ;
+            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:message "s223: If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:name "device contains shape" ;
+            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
+            sh:path s223:contains ],
+        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
+Note that any Equipment may use this relation, not just Actuator.""" ;
+            sh:class s223:ActuatableProperty ;
+            sh:message """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
+Note that any Equipment may use this relation, not just Actuator.""" ;
+            sh:path s223:actuatedByProperty ],
+        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a Function." ;
+            sh:class s223:Function ;
+            sh:message "s223: If the relation executes is present it must associate the Equipment with a Function." ;
+            sh:path s223:executes ],
+        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
+            sh:class s223:PhysicalSpace ;
+            sh:message "s223: If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
+            sh:path s223:hasPhysicalLocation ],
+        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:message "s223: If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
+            sh:path s223:hasRole ],
+        [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
             sh:path s223:connectedFrom ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Disallow contained equipment from having external incoming connections." ;
@@ -78673,31 +78699,7 @@ UNION\r
 ?type1 rdfs:subClassOf* ?type2 .\r
 }\r
 }\r
-""" ] ],
-        [ a sh:PropertyShape ;
-            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:message "s223: If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:name "device contains shape" ;
-            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
-            sh:path s223:contains ],
-        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
-Note that any Equipment may use this relation, not just Actuator.""" ;
-            sh:class s223:ActuatableProperty ;
-            sh:message """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
-Note that any Equipment may use this relation, not just Actuator.""" ;
-            sh:path s223:actuatedByProperty ],
-        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a Function." ;
-            sh:class s223:Function ;
-            sh:message "s223: If the relation executes is present it must associate the Equipment with a Function." ;
-            sh:path s223:executes ],
-        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
-            sh:class s223:PhysicalSpace ;
-            sh:message "s223: If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
-            sh:path s223:hasPhysicalLocation ],
-        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:message "s223: If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
-            sh:path s223:hasRole ] ;
+""" ] ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "For equipment contained within another piece of equipment use the mapsTo relation to infer a Medium from the containing equipment." ;
             sh:construct """\r

@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Dict
+
 import hvac_spaces as hs
 
 from bob.connections.electricity import (
@@ -10,10 +11,10 @@ from bob.connections.electricity import (
 from bob.core import (
     S223,
     UNIT,
+    BoundaryConnectionPoint,
     Role,
     bind_model_namespace,
     dump,
-    BoundaryConnectionPoint,
 )
 from bob.equipment.architectural import Window
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
@@ -29,10 +30,10 @@ from bob.equipment.hvac.damper import Damper
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.pump import Pump, PumpWithStarter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
-from bob.scratch.control.controller import VAVController
 
 # Prototypes
 from bob.properties.ratio import Percent
+from bob.scratch.control.controller import VAVController
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
 from bob.scratch.hvac.damper import ElectricalActuatedProportionalDamper, GravityDamper
@@ -254,21 +255,21 @@ fan_exhaust_template = {
 }
 
 
-ahu1 = AirHandlingUnit(config=ahu1_template)
+ahu1 = AirHandlingUnit(config=ahu1_template, label="AHU1")
 ahu1["SF_VFD"] >> ahu1["SF"]
 # ahu1["SF"].onOffStatus = ahu1["SF_VFD"].onOffStatus
 # ahu1_clg_vlv = ThreeWayDivertingActuatedProportionalValve(label="valve1")
 ahu1.supplyAirOutlet = ahu1["SF"].airOutlet
 ahu1.outsideAirInlet = ahu1["OADPR_d6"].airInlet
 
-ahu2 = AirHandlingUnit(config=ahu2_template)
+ahu2 = AirHandlingUnit(config=ahu2_template, label="AHU2")
 ahu2["SF_VFD"] >> ahu2["SF"]
 # ahu2["SF"].onOffStatus = ahu1["SF_VFD"].onOffStatus
 # ahu2_clg_vlv = ThreeWayDivertingActuatedProportionalValve(label="valve2")
 ahu2.supplyAirOutlet = ahu2["SF"].airOutlet
 ahu2.outsideAirInlet = ahu2["OADPR_d7"].airInlet
 
-ahu3 = AirHandlingUnit(config=ahu3_template)
+ahu3 = AirHandlingUnit(config=ahu3_template, label="AHU3")
 ahu3["SF_Starter"] >> ahu3["SF"]
 ahu3["SF"].onOffStatus = ahu3["SF_Starter"].onOffStatus
 ahu3.supplyAirOutlet = ahu3["SF"].airOutlet
