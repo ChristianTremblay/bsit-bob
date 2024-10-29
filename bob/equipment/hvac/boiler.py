@@ -67,7 +67,7 @@ class DomesticHotWaterHeater(SystemFromTemplate):
     _class_iri = S223.DomesticHotWaterHeater
     leavingFluid: BoundaryConnectionPoint
     enteringFluid: BoundaryConnectionPoint
-    electricalInlet: ElectricalInletConnectionPoint
+    electricalInlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = basic_hotwaterheater_template, **kwargs) -> None:
         _config = template_update({}, config=config)
