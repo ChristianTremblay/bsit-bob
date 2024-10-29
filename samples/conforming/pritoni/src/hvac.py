@@ -67,16 +67,15 @@ hd.hrv.exhaustAirOutlet >> outdoor
 
 # AHU Sensors
 hd.ahu["OA-T"] % outdoor
-hd.ahu["TPD1"]["highPort"] % hd.ahu["FILTER"].airInlet
+hd.ahu["TPD1"] % (hd.ahu["FILTER"].airInlet, hd.ahu["FILTER"].airOutlet)
 hd.ahu["MA-T"] % hd.ahu["FILTER"].airInlet
-hd.ahu["TPD1"]["lowPort"] % hd.ahu["FILTER"].airOutlet
+
 hd.ahu["HC-T"] % hd.ahu["HTGCOIL"].airOutlet
 hd.ahu["DA-T"] % hd.ahu["SF"].airOutlet
 hd.ahu["RA-T"] % hd.ahu["MADPR"].airInlet
-hd.ahu["TPD2"]["highPort"] % hd.ahu["SF"].airOutlet
-hd.ahu["TPD2"]["lowPort"] % plenum
-hd.ahu["TPD3"]["highPort"] % hd.ahu["RF"].airOutlet
-hd.ahu["TPD3"]["lowPort"] % plenum
+hd.ahu["TPD2"] % (hd.ahu["SF"].airOutlet, plenum)
+
+hd.ahu["TPD3"] % (hd.ahu["RF"].airOutlet, plenum)
 
 hd.ahu["RF_VFD"].drive_running = OnOffStatus(label="VFD DriveRunning")
 hd.ahu["RF_VFD"].run_command = OnOffCommand(label="Run Command")
