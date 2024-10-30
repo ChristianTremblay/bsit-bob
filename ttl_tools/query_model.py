@@ -69,6 +69,11 @@ def query(model: rdflib.Graph = None, sparql: Path = None, move=False):
         output_file.write("<h2>{}</h2>\n".format(_name))
         output_file.write("<pre>{}</pre>\n".format(query))
         output_file.write("<h1>Results</h1>\n")
+        output_file.write("<h2>Number of triples in original model</h2>\n")
+        output_file.write(f"<p>{len(model)}</p>\n")
+        output_file.write("<h2>Number of triples in query result</h2>\n")
+        output_file.write(f"<p>{len(results)}</p>\n")
+        output_file.write("<h2>Query result</h2>\n")
 
         headers = results.vars
         output_file.write("<table border='1'>\n")
