@@ -72,7 +72,7 @@ vav_withelectricreheat_template = {
         ('self["SA-F"]', "%", 'self["DPR"].airInlet'),
         ('self["DA-T"]', "%", 'self["REHEAT"].airOutlet'),
         # Equipment relations
-        ('self["DPR"]', ">>", 'self["REHEAT"]'),
+        ('self["DPR"].airOutlet', ">>", 'self["REHEAT"].airInlet'),
         # ('self["VAVController"]["actuator"]', ">>", 'self["DPR"]'),
         ("self['DamperPosition']", "@", "self['DPR']['position']"),
         # ("self['DPR']['position']", "@", "self['VAVController']['position_feedback']"),
