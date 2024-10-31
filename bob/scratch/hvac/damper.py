@@ -3,7 +3,8 @@ from typing import Dict
 from rdflib import URIRef
 
 from bob.connections.mechanical import MechanicalInletConnectionPoint
-from bob.core import SCRATCH, UNIT, logging
+from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from bob.core import SCRATCH, UNIT, logging, Equipment
 from bob.equipment.hvac.damper import Damper as BaseDamper
 from bob.properties.ratio import Percent
 from bob.template import configure_relations, template_update
@@ -25,11 +26,11 @@ _namespace = SCRATCH
 # DAMPERS
 
 
-class Damper(BaseDamper):
+class Damper(Equipment):
     # _class_iri = S223.Damper
     linkageInlet: MechanicalInletConnectionPoint
-    # airInlet: AirInletConnectionPoint
-    # airOutlet: AirOutletConnectionPoint
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
     # position: PropertyReference
     # command: PropertyReference
     # position_feedback: PropertyReference
@@ -37,11 +38,11 @@ class Damper(BaseDamper):
     # is_closed: PropertyReference
 
 
-class GravityDamper(Damper):
+class GravityDamper(BaseDamper):
     _class_iri = SCRATCH.GravityDamper
 
 
-class FireDamper(Damper):
+class FireDamper(BaseDamper):
     _class_iri = SCRATCH.FireDamper
 
 
