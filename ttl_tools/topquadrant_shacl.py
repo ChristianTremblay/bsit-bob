@@ -36,9 +36,9 @@ def infer(
     iteration_count = 0
     original_size = len(data_graph)
 
-    while int(previous_size) != int(current_size):
-        if iteration_count > MAX_ITERATIONS:
-            break
+    while int(previous_size) != int(current_size) and (
+        iteration_count < MAX_ITERATIONS
+    ):
         print(
             f"Running inference iteration {iteration_count} (previous size: {previous_size}, current size: {current_size})"
         )
