@@ -14,10 +14,10 @@ import rdflib
 from dotenv import load_dotenv
 
 try:
-    from ..ttl_tools.topquadrant_shacl import validate
+    from ..ttl_tools.topquadrant_shacl import infer_and_validate
     from ..ttl_tools.validation2html import print_report
 except ImportError:
-    from ttl_tools.topquadrant_shacl import validate
+    from ttl_tools.topquadrant_shacl import infer_and_validate
     from ttl_tools.validation2html import print_report
 
 from bob.core import dump
@@ -121,7 +121,7 @@ def test_data_validation(data_file):
         "Validating data definition of %s (%d triples)", data_file, len(data_graph)
     )
     # run topquadrant shacl and get the report
-    report, valid, inferred = validate(data_graph)
+    report, valid, inferred = infer_and_validate(data_graph)
     # make 'compiled' directory
     (data_file.parent / "validation").mkdir(exist_ok=True)
     # save inferred graph under same name into data/compiled/

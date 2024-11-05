@@ -94,7 +94,11 @@ def query(model: rdflib.Graph = None, sparql: Path = None, move=False):
                     elif SEPARATOR in var:
                         value = var.split(SEPARATOR)
                         for each in value:
-                            if isinstance(var, rdflib.term.URIRef) or "http" in each:
+                            if (
+                                isinstance(var, rdflib.term.URIRef)
+                                or "http"
+                                or "urn" in each
+                            ):
                                 value = model.namespace_manager.normalizeUri(each)
                                 output_file.write(f"<td>{str(value)}</td>")
                             else:

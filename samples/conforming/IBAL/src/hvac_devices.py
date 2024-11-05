@@ -16,6 +16,7 @@ from bob.core import (
     bind_model_namespace,
     dump,
 )
+from bob.enum import Air
 from bob.equipment.architectural import Window
 from bob.equipment.hvac.airhandlingunit import AirHandlingUnit
 from bob.equipment.hvac.boiler import ElectricalHotWaterBoiler
@@ -32,7 +33,6 @@ from bob.equipment.hvac.pump import Pump, PumpWithStarter
 
 # Prototypes
 from bob.properties.ratio import Percent
-from bob.enum import Air
 from bob.scratch.control.controller import VAVController
 from bob.scratch.electricity.starter import MotorStarter_600VLL_3Ph_60Hz as MotorStarter
 from bob.scratch.electricity.vfd import VFD
@@ -342,10 +342,26 @@ chilled_water_pump2 = Pump(label="ChilledWaterPump2")
 chilled_water_pump2_starter = MotorStarter(label="ChilledWaterPump2Starter")
 chilled_water_pump2_starter >> chilled_water_pump2
 
-vav1 = VAV(config=vav_withelectricreheat_template, comment="VAV Serving HVAC Zone 1")
-vav2 = VAV(config=vav_withelectricreheat_template, comment="VAV Serving HVAC Zone 2")
-vav3 = VAV(config=vav_withelectricreheat_template, comment="VAV Serving HVAC Zone 3")
-vav4 = VAV(config=vav_withelectricreheat_template, comment="VAV Serving HVAC Zone 4")
+vav1 = VAV(
+    config=vav_withelectricreheat_template,
+    label="vav1",
+    comment="VAV Serving HVAC Zone 1",
+)
+vav2 = VAV(
+    config=vav_withelectricreheat_template,
+    label="vav2",
+    comment="VAV Serving HVAC Zone 2",
+)
+vav3 = VAV(
+    config=vav_withelectricreheat_template,
+    label="vav3",
+    comment="VAV Serving HVAC Zone 3",
+)
+vav4 = VAV(
+    config=vav_withelectricreheat_template,
+    label="vav4",
+    comment="VAV Serving HVAC Zone 4",
+)
 
 
 if __name__ == "__main__":

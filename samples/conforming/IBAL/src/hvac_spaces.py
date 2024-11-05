@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from bob.core import bind_model_namespace, dump, Setpoint, QUANTITYKIND, UNIT
+from bob.core import QUANTITYKIND, UNIT, Setpoint, bind_model_namespace, dump
 from bob.space.hvac import HVACSpace, HVACZone, OccupancyStatus
 
 model_name = Path(__file__).stem
@@ -10,18 +10,24 @@ _namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 # HVAC Spaces
 zone1_hvac = HVACSpace(
     label="HVACSpace1",
-    comment="OpenOffice.HVAC",
+    comment="Zone 1 Supplied by AHU1 or AHU2, through VAV1",
     occupancy=OccupancyStatus(),
     temperature_setpoint=Setpoint(hasQuantityKind=QUANTITYKIND.Temperature),
 )
 zone2_hvac = HVACSpace(
-    label="HVACSpace2", comment="Bathroom.HVAC", occupancy=OccupancyStatus()
+    label="HVACSpace2",
+    comment="Zone 2 Supplied by AHU1 or AHU2, through VAV2",
+    occupancy=OccupancyStatus(),
 )
 zone3_hvac = HVACSpace(
-    label="HVACSpace4", comment="CorridorNorth.HVAC", occupancy=OccupancyStatus()
+    label="HVACSpace3",
+    comment="Zone 3 Supplied by AHU1 or AHU2, through VAV3",
+    occupancy=OccupancyStatus(),
 )
 zone4_hvac = HVACSpace(
-    label="HVACSpace5", comment="CorridorSouth.HVAC", occupancy=OccupancyStatus()
+    label="HVACSpace4",
+    comment="Zone 3 Supplied by AHU1 or AHU2, through VAV4",
+    occupancy=OccupancyStatus(),
 )
 
 # HVAC Zones
