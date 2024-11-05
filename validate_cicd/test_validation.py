@@ -81,7 +81,7 @@ def test_schema_validation():
 
     logger.info("Validating schema definition")
     # validate with topquadrant shacl
-    report, valid, _ = validate(shape_graph)
+    report, valid, _ = infer_and_validate(shape_graph)
     global schema_report
     schema_report = report
     report.serialize(format="ttl")

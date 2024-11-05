@@ -51,7 +51,6 @@ def infer(
                 Path(__file__).resolve().parent.parent
                 / "topbraid-validate"
                 / "shacl-1.4.2"
-                / "bin"
             )
             if not SHACL_HOME
             else SHACL_HOME
@@ -125,13 +124,14 @@ def infer_and_validate(
             data_graph=data_graph,
             dir_path=temp_dir_path,
             target_file_path=target_file_path,
+            returns_graph=True,
         )
         report_g, validates, data_graph = validate(
             data_graph=inferred_data_graph,
             dir_path=temp_dir_path,
             target_file_path=target_file_path,
         )
-    return report_g, validates, data_graph
+    return report_g, validates, inferred_data_graph
 
 
 def validate(
@@ -140,13 +140,12 @@ def validate(
     # get the shacl-1.4.2/bin/shaclvalidate.sh script from the same directory
     # as this file
     _script_name = "shaclvalidate.bat" if WINDOWS else "shaclvalidate.sh"
-    script = (
-        Path(__file__).resolve().parent.parent
-        / "topbraid-validate"
-        / "shacl-1.4.2"
-        / "bin"
-        / _script_name
+    script_folder = (
+        (Path(__file__).resolve().parent.parent / "topbraid-validate" / "shacl-1.4.2")
+        if not SHACL_HOME
+        else SHACL_HOME
     )
+    script = script_folder / "bin" / _script_name
     try:
         print(f"Running {script} -datafile {target_file_path}")
         if WINDOWS:

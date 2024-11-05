@@ -37,11 +37,11 @@ test_scratch_ahu:00002 a s223:Connection ;
 test_scratch_ahu:00003 a s223:Connection ;
     rdfs:label "MixedAirDuct" ;
     s223:cnx test_scratch_ahu:00152,
-        test_scratch_ahu:00156,
-        test_scratch_ahu:00195 ;
+        test_scratch_ahu:00157,
+        test_scratch_ahu:00196 ;
     s223:connectsAt test_scratch_ahu:00152,
-        test_scratch_ahu:00156,
-        test_scratch_ahu:00195 ;
+        test_scratch_ahu:00157,
+        test_scratch_ahu:00196 ;
     s223:connectsFrom test_scratch_ahu:00154,
         test_scratch_ahu:00193 ;
     s223:connectsTo test_scratch_ahu:00151 ;
@@ -51,11 +51,11 @@ test_scratch_ahu:00003 a s223:Connection ;
 test_scratch_ahu:00004 a s223:Connection ;
     rdfs:label "Return / Exhaust" ;
     s223:cnx test_scratch_ahu:00068,
-        test_scratch_ahu:00194,
-        test_scratch_ahu:00233 ;
+        test_scratch_ahu:00195,
+        test_scratch_ahu:00234 ;
     s223:connectsAt test_scratch_ahu:00068,
-        test_scratch_ahu:00194,
-        test_scratch_ahu:00233 ;
+        test_scratch_ahu:00195,
+        test_scratch_ahu:00234 ;
     s223:connectsFrom test_scratch_ahu:00066 ;
     s223:connectsTo test_scratch_ahu:00193,
         test_scratch_ahu:00232 ;
@@ -327,7 +327,7 @@ test_scratch_ahu:00032 a s223:Connectable,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
     rdfs:label "RA-T" ;
-    s223:hasObservationLocation test_scratch_ahu:00194 ;
+    s223:hasObservationLocation test_scratch_ahu:00195 ;
     s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00033 ;
     rdfs:comment "Return Air temperature" .
@@ -1582,7 +1582,6 @@ test_scratch_ahu:00153 a s223:ConnectionPoint,
     s223:isConnectionPointOf test_scratch_ahu:00151 .
 
 test_scratch_ahu:00154 a s223:Connectable,
-        s223:Damper,
         s223:Equipment,
         scratch:Damper,
         scratch:DamperAndActuator,
@@ -1601,12 +1600,20 @@ test_scratch_ahu:00154 a s223:Connectable,
         test_scratch_ahu:00190,
         test_scratch_ahu:00191 ;
     s223:isMemberOf test_scratch_ahu:00007 ;
-    bob:airInlet test_scratch_ahu:00155 ;
-    bob:airOutlet test_scratch_ahu:00156 ;
-    scratch:linkageInlet test_scratch_ahu:00157 ;
+    scratch:airInlet test_scratch_ahu:00156 ;
+    scratch:airOutlet test_scratch_ahu:00157 ;
+    scratch:linkageInlet test_scratch_ahu:00155 ;
     rdfs:comment "Outdoor air damper" .
 
-test_scratch_ahu:00155 a s223:ConnectionPoint,
+test_scratch_ahu:00155 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "OADPR.linkageInlet" ;
+    s223:cnx test_scratch_ahu:00154 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf test_scratch_ahu:00154 .
+
+test_scratch_ahu:00156 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OADPR.airInlet" ;
@@ -1614,7 +1621,7 @@ test_scratch_ahu:00155 a s223:ConnectionPoint,
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf test_scratch_ahu:00154 .
 
-test_scratch_ahu:00156 a s223:ConnectionPoint,
+test_scratch_ahu:00157 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "OADPR.airOutlet" ;
@@ -1622,14 +1629,6 @@ test_scratch_ahu:00156 a s223:ConnectionPoint,
         test_scratch_ahu:00154 ;
     s223:connectsThrough test_scratch_ahu:00003 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00154 .
-
-test_scratch_ahu:00157 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "OADPR.linkageInlet" ;
-    s223:cnx test_scratch_ahu:00154 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf test_scratch_ahu:00154 .
 
 test_scratch_ahu:00158 a s223:Actuator,
@@ -1861,7 +1860,6 @@ test_scratch_ahu:00183 a s223:ObservableProperty,
     qudt:hasUnit unit:PERCENT .
 
 test_scratch_ahu:00184 a s223:Connectable,
-        s223:Damper,
         s223:Equipment,
         scratch:Damper ;
     rdfs:label "damper" ;
@@ -1876,29 +1874,11 @@ test_scratch_ahu:00184 a s223:Connectable,
         test_scratch_ahu:00187 ;
     s223:hasProperty test_scratch_ahu:00188 ;
     s223:isContainedIn test_scratch_ahu:00154 ;
-    bob:airInlet test_scratch_ahu:00185 ;
-    bob:airOutlet test_scratch_ahu:00186 ;
-    scratch:linkageInlet test_scratch_ahu:00187 .
+    scratch:airInlet test_scratch_ahu:00186 ;
+    scratch:airOutlet test_scratch_ahu:00187 ;
+    scratch:linkageInlet test_scratch_ahu:00185 .
 
-test_scratch_ahu:00185 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx test_scratch_ahu:00184 ;
-    s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00184 ;
-    s223:mapsTo test_scratch_ahu:00155 .
-
-test_scratch_ahu:00186 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx test_scratch_ahu:00184 ;
-    s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00184 ;
-    s223:mapsTo test_scratch_ahu:00156 .
-
-test_scratch_ahu:00187 a p223:MechanicalConnectionPoint,
+test_scratch_ahu:00185 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
@@ -1907,6 +1887,24 @@ test_scratch_ahu:00187 a p223:MechanicalConnectionPoint,
     s223:connectsThrough test_scratch_ahu:00192 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf test_scratch_ahu:00184 .
+
+test_scratch_ahu:00186 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airInlet" ;
+    s223:cnx test_scratch_ahu:00184 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf test_scratch_ahu:00184 ;
+    s223:mapsTo test_scratch_ahu:00156 .
+
+test_scratch_ahu:00187 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airOutlet" ;
+    s223:cnx test_scratch_ahu:00184 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf test_scratch_ahu:00184 ;
+    s223:mapsTo test_scratch_ahu:00157 .
 
 test_scratch_ahu:00188 a s223:ObservableProperty,
         s223:Property,
@@ -1958,15 +1956,14 @@ test_scratch_ahu:00191 a s223:ObservableProperty,
 
 test_scratch_ahu:00192 a s223:Connection ;
     s223:cnx test_scratch_ahu:00159,
-        test_scratch_ahu:00187 ;
+        test_scratch_ahu:00185 ;
     s223:connectsAt test_scratch_ahu:00159,
-        test_scratch_ahu:00187 ;
+        test_scratch_ahu:00185 ;
     s223:connectsFrom test_scratch_ahu:00158 ;
     s223:connectsTo test_scratch_ahu:00184 ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 
 test_scratch_ahu:00193 a s223:Connectable,
-        s223:Damper,
         s223:Equipment,
         scratch:Damper,
         scratch:DamperAndActuator,
@@ -1986,12 +1983,20 @@ test_scratch_ahu:00193 a s223:Connectable,
         test_scratch_ahu:00229,
         test_scratch_ahu:00230 ;
     s223:isMemberOf test_scratch_ahu:00007 ;
-    bob:airInlet test_scratch_ahu:00194 ;
-    bob:airOutlet test_scratch_ahu:00195 ;
-    scratch:linkageInlet test_scratch_ahu:00196 ;
+    scratch:airInlet test_scratch_ahu:00195 ;
+    scratch:airOutlet test_scratch_ahu:00196 ;
+    scratch:linkageInlet test_scratch_ahu:00194 ;
     rdfs:comment "Mixed Air Damper" .
 
-test_scratch_ahu:00194 a s223:ConnectionPoint,
+test_scratch_ahu:00194 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "MADPR.linkageInlet" ;
+    s223:cnx test_scratch_ahu:00193 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf test_scratch_ahu:00193 .
+
+test_scratch_ahu:00195 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "MADPR.airInlet" ;
@@ -2001,7 +2006,7 @@ test_scratch_ahu:00194 a s223:ConnectionPoint,
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf test_scratch_ahu:00193 .
 
-test_scratch_ahu:00195 a s223:ConnectionPoint,
+test_scratch_ahu:00196 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "MADPR.airOutlet" ;
@@ -2009,14 +2014,6 @@ test_scratch_ahu:00195 a s223:ConnectionPoint,
         test_scratch_ahu:00193 ;
     s223:connectsThrough test_scratch_ahu:00003 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00193 .
-
-test_scratch_ahu:00196 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "MADPR.linkageInlet" ;
-    s223:cnx test_scratch_ahu:00193 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf test_scratch_ahu:00193 .
 
 test_scratch_ahu:00197 a s223:Actuator,
@@ -2248,7 +2245,6 @@ test_scratch_ahu:00222 a s223:ObservableProperty,
     qudt:hasUnit unit:PERCENT .
 
 test_scratch_ahu:00223 a s223:Connectable,
-        s223:Damper,
         s223:Equipment,
         scratch:Damper ;
     rdfs:label "damper" ;
@@ -2263,29 +2259,11 @@ test_scratch_ahu:00223 a s223:Connectable,
         test_scratch_ahu:00226 ;
     s223:hasProperty test_scratch_ahu:00227 ;
     s223:isContainedIn test_scratch_ahu:00193 ;
-    bob:airInlet test_scratch_ahu:00224 ;
-    bob:airOutlet test_scratch_ahu:00225 ;
-    scratch:linkageInlet test_scratch_ahu:00226 .
+    scratch:airInlet test_scratch_ahu:00225 ;
+    scratch:airOutlet test_scratch_ahu:00226 ;
+    scratch:linkageInlet test_scratch_ahu:00224 .
 
-test_scratch_ahu:00224 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx test_scratch_ahu:00223 ;
-    s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00223 ;
-    s223:mapsTo test_scratch_ahu:00194 .
-
-test_scratch_ahu:00225 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx test_scratch_ahu:00223 ;
-    s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00223 ;
-    s223:mapsTo test_scratch_ahu:00195 .
-
-test_scratch_ahu:00226 a p223:MechanicalConnectionPoint,
+test_scratch_ahu:00224 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
@@ -2294,6 +2272,24 @@ test_scratch_ahu:00226 a p223:MechanicalConnectionPoint,
     s223:connectsThrough test_scratch_ahu:00231 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf test_scratch_ahu:00223 .
+
+test_scratch_ahu:00225 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airInlet" ;
+    s223:cnx test_scratch_ahu:00223 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf test_scratch_ahu:00223 ;
+    s223:mapsTo test_scratch_ahu:00195 .
+
+test_scratch_ahu:00226 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airOutlet" ;
+    s223:cnx test_scratch_ahu:00223 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf test_scratch_ahu:00223 ;
+    s223:mapsTo test_scratch_ahu:00196 .
 
 test_scratch_ahu:00227 a s223:ObservableProperty,
         s223:Property,
@@ -2345,15 +2341,14 @@ test_scratch_ahu:00230 a s223:ObservableProperty,
 
 test_scratch_ahu:00231 a s223:Connection ;
     s223:cnx test_scratch_ahu:00198,
-        test_scratch_ahu:00226 ;
+        test_scratch_ahu:00224 ;
     s223:connectsAt test_scratch_ahu:00198,
-        test_scratch_ahu:00226 ;
+        test_scratch_ahu:00224 ;
     s223:connectsFrom test_scratch_ahu:00197 ;
     s223:connectsTo test_scratch_ahu:00223 ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
 
 test_scratch_ahu:00232 a s223:Connectable,
-        s223:Damper,
         s223:Equipment,
         scratch:Damper,
         scratch:DamperAndActuator,
@@ -2372,12 +2367,20 @@ test_scratch_ahu:00232 a s223:Connectable,
         test_scratch_ahu:00268,
         test_scratch_ahu:00269 ;
     s223:isMemberOf test_scratch_ahu:00007 ;
-    bob:airInlet test_scratch_ahu:00233 ;
-    bob:airOutlet test_scratch_ahu:00234 ;
-    scratch:linkageInlet test_scratch_ahu:00235 ;
+    scratch:airInlet test_scratch_ahu:00234 ;
+    scratch:airOutlet test_scratch_ahu:00235 ;
+    scratch:linkageInlet test_scratch_ahu:00233 ;
     rdfs:comment "Exhaust Air Damper" .
 
-test_scratch_ahu:00233 a s223:ConnectionPoint,
+test_scratch_ahu:00233 a p223:MechanicalConnectionPoint,
+        s223:ConnectionPoint,
+        s223:InletConnectionPoint ;
+    rdfs:label "EADPR.linkageInlet" ;
+    s223:cnx test_scratch_ahu:00232 ;
+    s223:hasMedium p223:Medium-MechanicalCoupling ;
+    s223:isConnectionPointOf test_scratch_ahu:00232 .
+
+test_scratch_ahu:00234 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EADPR.airInlet" ;
@@ -2387,20 +2390,12 @@ test_scratch_ahu:00233 a s223:ConnectionPoint,
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf test_scratch_ahu:00232 .
 
-test_scratch_ahu:00234 a s223:ConnectionPoint,
+test_scratch_ahu:00235 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "EADPR.airOutlet" ;
     s223:cnx test_scratch_ahu:00232 ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00232 .
-
-test_scratch_ahu:00235 a p223:MechanicalConnectionPoint,
-        s223:ConnectionPoint,
-        s223:InletConnectionPoint ;
-    rdfs:label "EADPR.linkageInlet" ;
-    s223:cnx test_scratch_ahu:00232 ;
-    s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf test_scratch_ahu:00232 .
 
 test_scratch_ahu:00236 a s223:Actuator,
@@ -2632,7 +2627,6 @@ test_scratch_ahu:00261 a s223:ObservableProperty,
     qudt:hasUnit unit:PERCENT .
 
 test_scratch_ahu:00262 a s223:Connectable,
-        s223:Damper,
         s223:Equipment,
         scratch:Damper ;
     rdfs:label "damper" ;
@@ -2647,29 +2641,11 @@ test_scratch_ahu:00262 a s223:Connectable,
         test_scratch_ahu:00265 ;
     s223:hasProperty test_scratch_ahu:00266 ;
     s223:isContainedIn test_scratch_ahu:00232 ;
-    bob:airInlet test_scratch_ahu:00263 ;
-    bob:airOutlet test_scratch_ahu:00264 ;
-    scratch:linkageInlet test_scratch_ahu:00265 .
+    scratch:airInlet test_scratch_ahu:00264 ;
+    scratch:airOutlet test_scratch_ahu:00265 ;
+    scratch:linkageInlet test_scratch_ahu:00263 .
 
-test_scratch_ahu:00263 a s223:ConnectionPoint,
-        s223:InletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airInlet" ;
-    s223:cnx test_scratch_ahu:00262 ;
-    s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00262 ;
-    s223:mapsTo test_scratch_ahu:00233 .
-
-test_scratch_ahu:00264 a s223:ConnectionPoint,
-        s223:OutletConnectionPoint,
-        bob:AirConnectionPoint ;
-    rdfs:label "damper.airOutlet" ;
-    s223:cnx test_scratch_ahu:00262 ;
-    s223:hasMedium s223:Fluid-Air ;
-    s223:isConnectionPointOf test_scratch_ahu:00262 ;
-    s223:mapsTo test_scratch_ahu:00234 .
-
-test_scratch_ahu:00265 a p223:MechanicalConnectionPoint,
+test_scratch_ahu:00263 a p223:MechanicalConnectionPoint,
         s223:ConnectionPoint,
         s223:InletConnectionPoint ;
     rdfs:label "damper.linkageInlet" ;
@@ -2678,6 +2654,24 @@ test_scratch_ahu:00265 a p223:MechanicalConnectionPoint,
     s223:connectsThrough test_scratch_ahu:00270 ;
     s223:hasMedium p223:Medium-MechanicalCoupling ;
     s223:isConnectionPointOf test_scratch_ahu:00262 .
+
+test_scratch_ahu:00264 a s223:ConnectionPoint,
+        s223:InletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airInlet" ;
+    s223:cnx test_scratch_ahu:00262 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf test_scratch_ahu:00262 ;
+    s223:mapsTo test_scratch_ahu:00234 .
+
+test_scratch_ahu:00265 a s223:ConnectionPoint,
+        s223:OutletConnectionPoint,
+        bob:AirConnectionPoint ;
+    rdfs:label "damper.airOutlet" ;
+    s223:cnx test_scratch_ahu:00262 ;
+    s223:hasMedium s223:Fluid-Air ;
+    s223:isConnectionPointOf test_scratch_ahu:00262 ;
+    s223:mapsTo test_scratch_ahu:00235 .
 
 test_scratch_ahu:00266 a s223:ObservableProperty,
         s223:Property,
@@ -2729,9 +2723,9 @@ test_scratch_ahu:00269 a s223:ObservableProperty,
 
 test_scratch_ahu:00270 a s223:Connection ;
     s223:cnx test_scratch_ahu:00237,
-        test_scratch_ahu:00265 ;
+        test_scratch_ahu:00263 ;
     s223:connectsAt test_scratch_ahu:00237,
-        test_scratch_ahu:00265 ;
+        test_scratch_ahu:00263 ;
     s223:connectsFrom test_scratch_ahu:00236 ;
     s223:connectsTo test_scratch_ahu:00262 ;
     s223:hasMedium p223:Medium-MechanicalCoupling .
