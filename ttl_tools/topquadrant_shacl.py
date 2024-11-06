@@ -11,6 +11,8 @@ import rdflib
 from dotenv import load_dotenv
 from rdflib import OWL, SH
 
+from bob import core  # to load .env if required
+from bob.assemblage import configure_known_namespaces  # to bind prefixes
 from ttl_tools.validation2html import print_report
 
 load_dotenv()
@@ -118,6 +120,7 @@ def infer_and_validate(
 
         # Define the target path within the temporary directory
         target_file_path = temp_dir_path / "data.ttl"
+        configure_known_namespaces(data_graph)
         data_graph.serialize(target_file_path, format="ttl")
 
         inferred_data_graph = infer(
@@ -126,11 +129,15 @@ def infer_and_validate(
             target_file_path=target_file_path,
             returns_graph=True,
         )
+        # core.bind_all_namespaces(inferred_data_graph)
+        # inferred_data_graph.serialize(target_file_path, format="ttl")
         report_g, validates, data_graph = validate(
             data_graph=inferred_data_graph,
             dir_path=temp_dir_path,
             target_file_path=target_file_path,
         )
+        # core.bind_all_namespaces(report_g)
+        # report_g.serialize(report_file_path, format="turtle")
     return report_g, validates, inferred_data_graph
 
 
@@ -211,7 +218,7 @@ def main():
 
     if args.action in {"validate", "both"}:
         report, valid, _ = validate(g, dir_path, target_file_name)
-        print_report(report.serialize(format="turtle"))
+        print_report(report)
         print(f"Valid?: {valid}")
 
 

@@ -12,6 +12,7 @@ from pathlib import Path
 import ontoenv
 import rdflib
 from dotenv import load_dotenv
+from rdflib import OWL
 
 try:
     from ..ttl_tools.topquadrant_shacl import infer_and_validate
@@ -20,6 +21,8 @@ except ImportError:
     from ttl_tools.topquadrant_shacl import infer_and_validate
     from ttl_tools.validation2html import print_report
 
+from bob import core  # to load .env if required
+from bob.assemblage import configure_known_namespaces  # to bind prefixes
 from bob.core import dump
 
 load_dotenv()
@@ -73,11 +76,13 @@ def test_schema_validation():
     """
     # load in schema validation shapes
     shape_graph = create_schema()
+    configure_known_namespaces(shape_graph)
     shape_graph.serialize("223p_schema.ttl", format="turtle")
 
     # import dependencies on other ontologies
     env = ontoenv.OntoEnv()
     env.import_dependencies(shape_graph)
+    shape_graph.remove((None, OWL.imports, None))
 
     logger.info("Validating schema definition")
     # validate with topquadrant shacl
@@ -122,6 +127,8 @@ def test_data_validation(data_file):
     )
     # run topquadrant shacl and get the report
     report, valid, inferred = infer_and_validate(data_graph)
+    configure_known_namespaces(report)
+    configure_known_namespaces(inferred)
     # make 'compiled' directory
     (data_file.parent / "validation").mkdir(exist_ok=True)
     # save inferred graph under same name into data/compiled/
