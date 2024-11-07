@@ -56,63 +56,63 @@ _namespace = bind_model_namespace(model_name, f"urn:{global_ns}:{model_name}/")
 
 ahu1_template = {
     "params": {
-        "label": "AHU1 ",
+        "label": "AHU1",
         "comment": "AHU delivering air to VAV boxes 1 2 3 4 in parallel with AHU 2 (not at the same time, see damper 5)",
     },
     "sensors": {
         ("ahu1_p_down", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Duct static pressure after fan",
+            "comment": "AHU1 Duct static pressure after fan",
         },
         ("ahu1_rh_down", AirHumiditySensor): {
-            "comment": "Discharge Air humidity after fan",
+            "comment": "AHU1 Discharge Air humidity after fan",
         },
         ("ahu1_out_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after fan",
+            "comment": "AHU1 Air temperature after fan",
         },
         ("ahu1_cc_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after cooling coil",
+            "comment": "AHU1 Air temperature after cooling coil",
         },
         ("ahu1_p_up", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Duct static pressure after cooling coil, before fan",
+            "comment": "AHU1 Duct static pressure after cooling coil, before fan",
         },
         ("ahu1_heat_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
             "comment": "Air temperature after heating coil",
         },
         ("ahu1_rh_up", AirHumiditySensor): {
-            "comment": "Discharge Air humidity before heating coil",
+            "comment": "AHU1 Discharge Air humidity before heating coil",
         },
         ("ahu1_in_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature before heating coil",
+            "comment": "AHU1 Air temperature before heating coil",
         },
         ("ahu1_in_flow", AirFlowSensor): {
             "hasUnit": UNIT["FT3-PER-MIN"],
-            "comment": "Air flow before fresh air damper",
+            "comment": "AHU1 Air flow before fresh air damper",
         },
     },
     "equipment": {
         ("SF", Fan): {
-            "comment": "Supply Air Fan",
+            "comment": "AHU1 Supply Air Fan",
             "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
             "hasRole": Role.Supply,
         },
         ("SF_VFD", VFD): {
-            "comment": "Return Air Fan VFD",
+            "comment": "AHU1 Return Air Fan VFD",
             "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         },
-        ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
-        ("HTGCOIL", ElectricalHeatingCoil): {"comment": "Heating coil"},
-        ("FILTER", Filter): {"comment": "Filter"},
+        ("CLGCOIL", ChilledWaterCoil): {"comment": "AHU1 Cooling Coil"},
+        ("HTGCOIL", ElectricalHeatingCoil): {"comment": "AHU1 Heating coil"},
+        ("FILTER", Filter): {"comment": "AHU1 Filter"},
         ("OADPR_d6", ElectricalActuatedProportionalDamper): {
-            "comment": "Outdoor air damper (d6)"
+            "comment": "AHU1 Outdoor air damper (d6)"
         },
         ("MADPR_d5", ElectricalActuatedProportionalDamper): {
-            "comment": "Mixed Air Damper (d5)"
+            "comment": "AHU1 Mixed Air Damper (d5)"
         },
     },
 }
@@ -125,57 +125,57 @@ ahu2_template = {
     "sensors": {
         ("ahu2_p_down", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Duct static pressure after fan",
+            "comment": "AHU2 Duct static pressure after fan",
         },
         ("ahu2_rh_down", AirHumiditySensor): {
-            "comment": "Discharge Air humidity after fan",
+            "comment": "AHU2 Discharge Air humidity after fan",
         },
         ("ahu2_out_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after fan",
+            "comment": "AHU2 Air temperature after fan",
         },
         ("ahu2_cc_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after cooling coil",
+            "comment": "AHU2 Air temperature after cooling coil",
         },
         ("ahu2_p_up", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Duct static pressure after cooling coil, before fan",
+            "comment": "AHU2 Duct static pressure after cooling coil, before fan",
         },
         ("ahu2_heat_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after heating coil",
+            "comment": "AHU2 Air temperature after heating coil",
         },
         ("ahu2_rh_up", AirHumiditySensor): {
-            "comment": "Discharge Air humidity before heating coil",
+            "comment": "AHU2 Discharge Air humidity before heating coil",
         },
         ("ahu2_in_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature before heating coil",
+            "comment": "AHU2 Air temperature before heating coil",
         },
         ("ahu2_in_flow", AirFlowSensor): {
             "hasUnit": UNIT["FT3-PER-MIN"],
-            "comment": "Air flow before fresh air damper",
+            "comment": "AHU2 Air flow before fresh air damper",
         },
     },
     "equipment": {
         ("SF", Fan): {
-            "comment": "Supply Air Fan",
+            "comment": "AHU2 Supply Air Fan",
             "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
             "hasRole": Role.Supply,
         },
         ("SF_VFD", VFD): {
             "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
-            "comment": "Return Air Fan VFD",
+            "comment": "AHU2 Return Air Fan VFD",
         },
-        ("CLGCOIL", ChilledWaterCoil): {"comment": "Cooling Coil"},
-        ("HTGCOIL", ElectricalHeatingCoil): {"comment": "Heating coil"},
-        ("FILTER", Filter): {"comment": "Filter"},
+        ("CLGCOIL", ChilledWaterCoil): {"comment": "AHU2 Cooling Coil"},
+        ("HTGCOIL", ElectricalHeatingCoil): {"comment": "AHU2 Heating coil"},
+        ("FILTER", Filter): {"comment": "AHU2 Filter"},
         ("OADPR_d7", ElectricalActuatedProportionalDamper): {
-            "comment": "Outdoor air damper (d7)"
+            "comment": "AHU2 Outdoor air damper (d7)"
         },
         ("MADPR_d8", ElectricalActuatedProportionalDamper): {
-            "comment": "Mixed Air Damper (d8)"
+            "comment": "AHU2 Mixed Air Damper (d8)"
         },
     },
 }
@@ -185,52 +185,52 @@ ahu3_template = {
     "sensors": {
         ("ahu3_p_down", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Duct static pressure after fan",
+            "comment": "AHU3 Duct static pressure after fan",
         },
         ("ahu3_rh_down", AirHumiditySensor): {
-            "comment": "Discharge Air humidity after fan",
+            "comment": "AHU3 Discharge Air humidity after fan",
         },
         ("ahu3_out_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after fan",
+            "comment": "AHU3 Air temperature after fan",
         },
         ("ahu3_heat_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after reheat coil",
+            "comment": "AHU3 Air temperature after reheat coil",
         },
         ("ahu3_p_up", AirDifferentialStaticPressureSensor): {
             "hasUnit": UNIT.PA,
-            "comment": "Duct static pressure after reheat coil, before fan",
+            "comment": "AHU3 Duct static pressure after reheat coil, before fan",
         },
         ("ahu3_cc_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature after cooling coil",
+            "comment": "AHU3 Air temperature after cooling coil",
         },
         ("ahu3_in_rtd", AirTemperatureSensor): {
             "hasUnit": UNIT.DEG_C,
-            "comment": "Air temperature before cooling coil",
+            "comment": "AHU3 Air temperature before cooling coil",
         },
     },
     "equipment": {
         ("SF", Fan): {
-            "comment": "Supply Air Fan",
+            "comment": "AHU3 Supply Air Fan",
             "electricalInlet": Electricity_600VLL_3Ph_60HzInletConnectionPoint,
             "hasRole": Role.Supply,
         },
         ("SF_Starter", MotorStarter): {
-            "comment": "Supply Air Fan Starter",
+            "comment": "AHU3 Supply Air Fan Starter",
             "electricalOutlet": Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
         },
-        ("CLGCOIL", DXCoolingCoil): {"comment": "DX Cooling Coil"},
-        ("HTGCOIL", ElectricalHeatingCoil): {"comment": "Reheat coil"},
-        ("FILTER", Filter): {"comment": "Filter"},
+        ("CLGCOIL", DXCoolingCoil): {"comment": "AHU3 DX Cooling Coil"},
+        ("HTGCOIL", ElectricalHeatingCoil): {"comment": "AHU3 Reheat coil"},
+        ("FILTER", Filter): {"comment": "AHU3 Filter"},
         ("OADPR_d19", ElectricalActuatedProportionalDamper): {
-            "comment": "Outdoor air damper (d19)"
+            "comment": "AHU3 Outdoor air damper (d19)"
         },
         ("MADPR_d8", ElectricalActuatedProportionalDamper): {
-            "comment": "Mixed Air Damper (d18)"
+            "comment": "AHU3 Mixed Air Damper (d18)"
         },
-        ("EADPR_d17", GravityDamper): {"comment": "Exhaust Air Damper (d17)"},
+        ("EADPR_d17", GravityDamper): {"comment": "AHU3 Exhaust Air Damper (d17)"},
     },
 }
 
