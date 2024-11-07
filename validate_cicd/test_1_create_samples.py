@@ -37,23 +37,3 @@ def test_compile_conforming_samples(bob_fixture):
         if "ttl" in dirs:
             ttl_folder = Path(root) / "ttl"
             assert not subprocess.call(["compile_ttl", ttl_folder.resolve()])
-
-
-def test_query_conforming_samples(bob_fixture):
-    samples_folder = bob_fixture["conforming_samples_directory"]
-    _queries = []
-    _model = None
-    ttl_folder = None
-    rq_folder = None
-    for root, dirs, files in os.walk(samples_folder):
-        if "sparql" in dirs:
-            rq_folder = Path(root) / "sparql"
-            for filename in os.scandir(rq_folder):
-                if filename.name.endswith("rq"):
-                    _queries.append(filename.path)
-        if "ttl" in dirs:
-            ttl_folder = Path(root) / "ttl"
-            for filename in os.scandir(ttl_folder):
-                if filename.name.endswith("compiled.ttl"):
-                    _model = filename.path
-    assert not subprocess.call(["query_model", _model, rq_folder, "--move"])

@@ -1,14 +1,26 @@
 import glob
-from pathlib import Path
-import pytest
-from bob.core import clear
 import os
+from pathlib import Path
+
+import pytest
+import pytest_asyncio
+
+from bob.core import clear
 
 # Get the current script directory
 current_dir = Path(__file__).resolve().parent.parent
 
 # Construct the path to the ttl files
 ttl_path = current_dir / "samples" / "conforming" / "**" / "ttl" / "*.compiled.ttl"
+inferred_ttl_path = (
+    current_dir
+    / "samples"
+    / "conforming"
+    / "**"
+    / "ttl"
+    / "validation"
+    / "*.compiled.ttl"
+)
 # print(ttl_path, current_dir)
 # Use glob to find the files
 
@@ -18,6 +30,10 @@ def pytest_generate_tests(metafunc):
         args = glob.glob(str(ttl_path))
         # print(args)
         metafunc.parametrize("data_file", args)
+    if "inferred_file" in metafunc.fixturenames:
+        args = glob.glob(str(inferred_ttl_path))
+        # print(args)
+        metafunc.parametrize("inferred_file", args)
 
 
 @pytest.fixture(autouse=True)
