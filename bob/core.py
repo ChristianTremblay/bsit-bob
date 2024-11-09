@@ -1945,8 +1945,14 @@ class ConnectionPoint(Node):
 
         self._data_graph.add((thing._node_iri, S223.hasConnectionPoint, self._node_iri))
         if INCLUDE_CNX:
-            self._data_graph.add((thing._node_iri, S223.cnx, self._node_iri))
-            self._data_graph.add((self._node_iri, S223.cnx, thing._node_iri))
+            if isinstance(self, InletConnectionPoint) or isinstance(
+                self, BidirectionalConnectionPoint
+            ):
+                self._data_graph.add((self._node_iri, S223.cnx, thing._node_iri))
+            if isinstance(self, OutletConnectionPoint) or isinstance(
+                self, BidirectionalConnectionPoint
+            ):
+                self._data_graph.add((thing._node_iri, S223.cnx, self._node_iri))
 
         self.isConnectionPointOf = thing
 
@@ -2123,12 +2129,18 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         (connection._node_iri, S223.connectsAt, connection_point._node_iri)
     )
     if INCLUDE_CNX:
-        connection_point._data_graph.add(
-            (connection._node_iri, S223.cnx, connection_point._node_iri)
-        )
-        connection_point._data_graph.add(
-            (connection_point._node_iri, S223.cnx, connection._node_iri)
-        )
+        if isinstance(connection_point, OutletConnectionPoint) or isinstance(
+            connection_point, BidirectionalConnectionPoint
+        ):
+            connection_point._data_graph.add(
+                (connection._node_iri, S223.cnx, connection_point._node_iri)
+            )
+        if isinstance(connection_point, InletConnectionPoint) or isinstance(
+            connection_point, BidirectionalConnectionPoint
+        ):
+            connection_point._data_graph.add(
+                (connection_point._node_iri, S223.cnx, connection._node_iri)
+            )
 
     connection_point._data_graph.add(
         (
@@ -2195,12 +2207,18 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
         (connection._node_iri, S223.connectsAt, connection_point._node_iri)
     )
     if INCLUDE_CNX:
-        connection._data_graph.add(
-            (connection._node_iri, S223.cnx, connection_point._node_iri)
-        )
-        connection._data_graph.add(
-            (connection_point._node_iri, S223.cnx, connection._node_iri)
-        )
+        if isinstance(connection_point, InletConnectionPoint) or isinstance(
+            connection_point, BidirectionalConnectionPoint
+        ):
+            connection._data_graph.add(
+                (connection._node_iri, S223.cnx, connection_point._node_iri)
+            )
+        if isinstance(connection_point, OutletConnectionPoint) or isinstance(
+            connection_point, BidirectionalConnectionPoint
+        ):
+            connection._data_graph.add(
+                (connection_point._node_iri, S223.cnx, connection._node_iri)
+            )
 
     connection._data_graph.add(
         (
