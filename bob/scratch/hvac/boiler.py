@@ -16,7 +16,7 @@ from bob.core import (
     Equipment,
     PropertyReference,
 )
-from bob.enum import Role
+from bob.enum import Role, SystemType
 from bob.equipment.hvac.coil import HeatpumpCoil, ImmersedResistanceHeaterElement
 from bob.equipment.hvac.compressor import RefrigerationGasCompressor
 from bob.equipment.hvac.fan import Fan
@@ -76,8 +76,8 @@ class InsideTankHeatTransfer(Function):
 
 class _DomesticElectricalWaterHeater(Equipment):
     _class_iri = SCRATCH.DomesticElectricalWaterHeater
-    leavingFluid: WaterOutletConnectionPoint
-    enteringFluid: WaterInletConnectionPoint
+    fluidOutlet: WaterOutletConnectionPoint
+    fluidInlet: WaterInletConnectionPoint
     # electricalInlet: ElectricalInletConnectionPoint
     fluidTemperature: PropertyReference
 
@@ -92,8 +92,8 @@ class _DomesticElectricalWaterHeater(Equipment):
         self["tank"].containedFluid >> self.heatExchangeConnection
         self["element1"].fluidContact >> self.heatExchangeConnection
         self["element2"].fluidContact >> self.heatExchangeConnection
-        self["tank"].enteringFluid.mapsTo = self.enteringFluid
-        self["tank"].leavingFluid.mapsTo = self.leavingFluid
+        self["tank"].fluidInlet.mapsTo = self.fluidInlet
+        self["tank"].fluidOutlet.mapsTo = self.fluidOutlet
         self.fluidTemperature = self["tank"]["fluidTemperature"]
         self["tank"] += Role.Storage
         self += Role.Heating
@@ -118,8 +118,8 @@ scratch_system_template = {
         ("DomesticHotWaterHeater", _DomesticElectricalWaterHeater): {},
     },
     "relations": [
-        ("self.leavingFluid", "=", "self['DomesticHotWaterHeater'].leavingFluid"),
-        ("self.enteringFluid", "=", "self['DomesticHotWaterHeater'].enteringFluid"),
+        ("self.fluidOutlet", "=", "self['DomesticHotWaterHeater'].fluidOutlet"),
+        ("self.fluidInlet", "=", "self['DomesticHotWaterHeater'].fluidInlet"),
         ("self.electricalInlet", "=", "self['DomesticHotWaterHeater'].electricalInlet"),
     ],
 }
@@ -127,8 +127,8 @@ scratch_system_template = {
 
 class DomesticHotWaterHeater(SystemFromTemplate):
     _class_iri = S223.DomesticHotWaterHeater
-    leavingFluid: BoundaryConnectionPoint
-    enteringFluid: BoundaryConnectionPoint
+    fluidOutlet: BoundaryConnectionPoint
+    fluidInlet: BoundaryConnectionPoint
     electricalInlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = scratch_system_template, **kwargs) -> None:
@@ -136,6 +136,7 @@ class DomesticHotWaterHeater(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Heating
+        self += SystemType.WaterHeater
 
 
 domesticHPwaterheater_template = {
@@ -181,8 +182,8 @@ class _DomesticHPWaterHeater(Equipment):
     _class_iri = SCRATCH.DomesticHeatPumpWaterHeater
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
-    leavingFluid: WaterOutletConnectionPoint
-    enteringFluid: WaterInletConnectionPoint
+    fluidOutlet: WaterOutletConnectionPoint
+    fluidInlet: WaterInletConnectionPoint
 
     def __init__(self, config: Dict = domesticHPwaterheater_template, **kwargs):
         _config = template_update({}, config)
@@ -228,11 +229,13 @@ class _DomesticHPWaterHeater(Equipment):
         self["TANK"].containedFluid >> self.heatExchangeConnection
         self["ELEMENT1"].fluidContact >> self.heatExchangeConnection
         self["ELEMENT2"].fluidContact >> self.heatExchangeConnection
-        self["TANK"].enteringFluid.mapsTo = self.enteringFluid
-        self["TANK"].leavingFluid.mapsTo = self.leavingFluid
+        self["TANK"].fluidInlet.mapsTo = self.fluidInlet
+        self["TANK"].fluidOutlet.mapsTo = self.fluidOutlet
         self.fluidTemperature = self["TANK"]["fluidTemperature"]
         self["TANK"] += Role.Storage
         self += Role.Heating
+        self += SystemType.HeatPump
+        self += SystemType.WaterHeater
 
 
 scratch_system_template = {
@@ -241,8 +244,8 @@ scratch_system_template = {
         ("DomesticHPWaterHeater", _DomesticHPWaterHeater): {},
     },
     "relations": [
-        ("self.leavingFluid", "=", "self['DomesticHPWaterHeater'].leavingFluid"),
-        ("self.enteringFluid", "=", "self['DomesticHPWaterHeater'].enteringFluid"),
+        ("self.fluidOutlet", "=", "self['DomesticHPWaterHeater'].fluidOutlet"),
+        ("self.fluidInlet", "=", "self['DomesticHPWaterHeater'].fluidInlet"),
         ("self.electricalInlet", "=", "self['DomesticHPWaterHeater'].electricalInlet"),
     ],
 }
@@ -250,8 +253,8 @@ scratch_system_template = {
 
 class DomesticHPWaterHeater(SystemFromTemplate):
     _class_iri = S223.DomesticHotWaterHeater
-    leavingFluid: BoundaryConnectionPoint
-    enteringFluid: BoundaryConnectionPoint
+    fluidOutlet: BoundaryConnectionPoint
+    fluidInlet: BoundaryConnectionPoint
     electricalInlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = scratch_system_template, **kwargs) -> None:
@@ -259,3 +262,5 @@ class DomesticHPWaterHeater(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Heating
+        self += SystemType.WaterHeater
+        self += SystemType.HeatPump

@@ -1544,6 +1544,8 @@ Medium.ThermalContact = Medium("ThermalContact")
 Role = EnumerationKind("Role")
 Domain = EnumerationKind("Domain")
 
+SystemType = EnumerationKind("System")
+
 
 class Constituent(EnumerationKind):
     def __init__(self, name, *args, **kwargs) -> None:
@@ -1598,6 +1600,7 @@ class System(Container):
 
         super().__init__(*args, **kwargs)
         self.hasRole = set()
+        self.hasSystemType = set()
 
         if config:
             for group_name, group_items in config.items():
@@ -1697,15 +1700,27 @@ def contains_mm(system: System, thing_list: List[Node]) -> None:
 
 
 @multimethod
-def add_mm(system: System, role: EnumerationKind) -> None:
-    """
-    Add a role to a system
-    """
-    _log.info(f"add role {role} to {system}")
-    system.hasRole.add(role)
-    system._data_graph.add((system._node_iri, S223.hasRole, role._node_iri))
-    if INCLUDE_INVERSE:
-        role.isRoleOf = system
+def add_mm(system: System, info: EnumerationKind) -> None:
+    if info in Role._children:
+        """
+        Add a role to a system
+        """
+        role = info
+        _log.info(f"add role {role} to {system}")
+        system.hasRole.add(role)
+        system._data_graph.add((system._node_iri, S223.hasRole, role._node_iri))
+        if INCLUDE_INVERSE:
+            role.isRoleOf = system
+    elif info in SystemType._children:
+        """
+        Add a SystemType to a system
+        """
+        system_type = info
+        _log.info(f"add system type {system_type} to {system}")
+        system.hasSystemType.add(system_type)
+        system._data_graph.add(
+            (system._node_iri, S223.isSystemType, system_type._node_iri)
+        )
 
 
 class ConnectionMetaclass(NodeMetaclass):
@@ -1997,10 +2012,10 @@ class ConnectionPoint(Node):
                 (other._node_iri, S223.pairedConnectionPoint, self._node_iri)
             )
 
-    def __ipow__(self, other: Any) -> Any:
+    def __ipow__(self, other: Any) -> None:
         """Use **= to pair the connection point with another connection point."""
         self.paired_to(other)
-        return self
+        # return self
 
 
 @multimethod
@@ -3589,6 +3604,7 @@ class Equipment(Container, Connectable):
         super().__init__(*args, **kwargs)
 
         self.hasRole = set()
+        self.hasSystemType = set()
         if _role:
             self += _role
 
@@ -3647,15 +3663,24 @@ class Equipment(Container, Connectable):
 
 
 @multimethod
-def add_mm(equipment: Equipment, role: EnumerationKind) -> None:
+def add_mm(equipment: Equipment, info: EnumerationKind) -> None:
     """
     Add a role to an equipment
     """
-    _log.info(f"add role {role} to {equipment}")
-    equipment.hasRole.add(role)
-    equipment._data_graph.add((equipment._node_iri, S223.hasRole, role._node_iri))
-    if INCLUDE_INVERSE:
-        role.isRoleOf = equipment
+    if info in Role._children:
+        role = info
+        _log.info(f"add role {role} to {equipment}")
+        equipment.hasRole.add(role)
+        equipment._data_graph.add((equipment._node_iri, S223.hasRole, role._node_iri))
+        if INCLUDE_INVERSE:
+            role.isRoleOf = equipment
+    elif info in SystemType._children:
+        system_type = info
+        _log.info(f"add system type {system_type} to {equipment}")
+        equipment.hasSystemType.add(system_type)
+        equipment._data_graph.add(
+            (equipment._node_iri, S223.isSystemType, system_type._node_iri)
+        )
 
 
 @multimethod

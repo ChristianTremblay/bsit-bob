@@ -55,8 +55,8 @@ class AirHeatExchanger(Equipment):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.supplyAirOutlet **= self.supplyAirInlet
-        self.exhaustAirOutlet **= self.exhaustAirInlet
+        self.supplyAirOutlet.paired_to(self.supplyAirInlet)
+        self.exhaustAirOutlet.paired_to(self.exhaustAirInlet)
 
 
 class Accumulator(Equipment):

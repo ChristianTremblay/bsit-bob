@@ -34,15 +34,18 @@ _namespace = BOB
 
 class Tank(Equipment):
     _class_iri = P223.Tank
-    leavingFluid: FluidOutletConnectionPoint
-    enteringFluid: FluidInletConnectionPoint
+    fluidInlet: FluidOutletConnectionPoint
+    fluidOutlet: FluidInletConnectionPoint
     containedFluid: FluidBidirectionalConnectionPoint
 
     fluidTemperature: Temperature
     internalPressure: Pressure
 
-    # leavingFluidTemperature: Temperature
-    # enteringFluidTemperature: Temperature
-    # fluidFlow: Flow
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        self.fluidOutlet.paired_to(self.fluidInlet)
+
     def set_fluid_type(self, fluid: Fluid = Water):
         self.set_medium(["leavingFluid", "enteringFluid", "containedFluid"], fluid)

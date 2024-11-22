@@ -3,6 +3,7 @@ from typing import Dict
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...core import BOB, S223, BoundaryConnectionPoint, Equipment, System
+from ...enum import TerminalUnit
 from ...equipment.hvac.damper import Damper
 from ...sensor.flow import AirFlowSensor
 from ...template import configure_relations, template_update
@@ -31,6 +32,7 @@ class SingleDuctTerminal(System):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.info(f"SingleDuctTerminal.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
+        self += TerminalUnit.SingleDuctTerminal
 
 
 # Generic
@@ -44,4 +46,5 @@ class GenericSingleDuctTerminal(Equipment):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.info(f"GenericSingleDuctTerminal.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
-        self.airOutlet **= self.airInlet
+        self.airOutlet.paired_to(self.airInlet)
+        self += TerminalUnit.SingleDuctTerminal

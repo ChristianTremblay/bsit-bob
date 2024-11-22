@@ -8,6 +8,7 @@ from bob.core import (
     BoundaryConnectionPoint,
     System,
 )
+from bob.enum import TerminalUnit
 from bob.equipment.hvac.coil import ElectricalHeatingCoil, HotWaterCoil
 from bob.properties.flow import Flow
 from bob.properties.ratio import Percent
@@ -171,6 +172,7 @@ class VAV(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"VAV.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
+        self += TerminalUnit.SingleDuctTerminal
 
 
 vav_dual_template = {
@@ -243,3 +245,4 @@ class VAV_Dual(System):
         # Measure location
         self["SA-F"] % self["DPR"].airOutlet
         self["DA-T"] % self["DPR"].airOutlet
+        self += TerminalUnit.DualDuctTerminal

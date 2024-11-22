@@ -28,9 +28,6 @@ SCR_template = {
         ("amps", Amps): {},
         ("kW", ElectricPowerkW): {},
     },
-    "relations": [
-        ("self.electricalOutlet", "**=", "self.electricalInlet"),
-    ],
 }
 
 
@@ -44,3 +41,4 @@ class SCR(Equipment):
         config["properties"] = config.get("properties", SCR_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+        self.electricalOutlet.paired_to(self.electricalInlet)

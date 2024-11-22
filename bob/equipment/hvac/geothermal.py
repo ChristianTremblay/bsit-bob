@@ -49,4 +49,4 @@ class GeothermalWell(Equipment):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.waterOutlet **= self.waterInlet
+        self.waterOutlet.paired_to(self.waterInlet)

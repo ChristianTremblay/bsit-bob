@@ -4,6 +4,7 @@ from typing import Any, Dict
 from rdflib import URIRef
 
 from ...core import BOB, P223, S223, BoundaryConnectionPoint, Equipment, System
+from ...enum import SystemType
 from ...template import template_update, SystemFromTemplate
 
 # logging
@@ -114,6 +115,7 @@ class AirHandlingUnit(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"AirHandlingUnit.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
+        self += SystemType.AirHandlingUnit
 
 
 class FanCoil(System):
@@ -128,3 +130,4 @@ class FanCoil(System):
         kwargs = {**_config.get("params", {}), **kwargs}
         _log.debug(f"FanCoil.__init__ {_config} {kwargs}")
         super().__init__(config, **kwargs)
+        self += SystemType.FanCoilUnit

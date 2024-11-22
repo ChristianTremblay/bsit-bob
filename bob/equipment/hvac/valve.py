@@ -66,7 +66,7 @@ class TwoWayValve(Valve):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.fluidOutlet **= self.fluidInlet
+        self.fluidOutlet.paired_to(self.fluidInlet)
 
     def set_fluid_type(self, fluid: Fluid):
         self.set_medium(["fluidInlet", "fluidOutlet"], fluid)
@@ -88,8 +88,8 @@ class ThreeWayValveDiverting(Valve):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.fluidOutletA **= self.fluidInletAB
-        self.fluidOutletB **= self.fluidInletAB
+        self.fluidOutletA.paired_to(self.fluidInletAB)
+        self.fluidOutletB.paired_to(self.fluidInletAB)
 
     def set_fluid_type(self, fluid: Fluid):
         self.set_medium(["fluidInletAB", "fluidOutletA", "fluidOutletB"], fluid)
@@ -111,8 +111,8 @@ class ThreeWayValveMixing(Valve):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.fluidOutlet **= self.fluidInletA
-        self.fluidOutlet **= self.fluidInletB
+        self.fluidOutlet.paired_to(self.fluidInletA)
+        self.fluidOutlet.paired_to(self.fluidInletB)
 
     def set_fluid_type(self, fluid: Fluid):
         self.set_medium(["fluidInletA", "fluidInletB", "fluidOutlet"], fluid)
@@ -129,7 +129,7 @@ class NaturalGasValve(Valve):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.naturalGasOutlet **= self.naturalGasInlet
+        self.naturalGasOutlet.paired_to(self.naturalGasInlet)
 
 
 class PneumaticValve(Valve):
@@ -143,7 +143,7 @@ class PneumaticValve(Valve):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.compressedAirOutlet **= self.compressedAirInlet
+        self.compressedAirOutlet.paired_to(self.compressedAirInlet)
 
 
 class ExpansionValve(Valve):
@@ -157,7 +157,7 @@ class ExpansionValve(Valve):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.portB **= self.portA
+        self.portB.paired_to(self.portA)
 
     def set_gas_type(self, gas: Refrigerant):
         self.set_medium(["portA", "portB"], gas)
@@ -177,7 +177,7 @@ class ReversingValve(Valve):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        # self.refrigerantLowPressureOutlet **= self.refrigerantHighPressureInlet
+        # self.refrigerantLowPressureOutlet.paired_to(self.refrigerantHighPressureInlet)
 
     def set_gas_type(self, gas: Refrigerant):
         self.set_medium(

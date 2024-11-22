@@ -30,8 +30,8 @@ class TwoWayActuatedValve(System):
     """
 
     _class_iri = SCRATCH.TwoWayActuatedValve
-    waterInlet: BoundaryConnectionPoint
-    waterOutlet: BoundaryConnectionPoint
+    fluidInlet: BoundaryConnectionPoint
+    fluidOutlet: BoundaryConnectionPoint
     position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
@@ -50,8 +50,8 @@ class TwoWayActuatedValve(System):
         self["actuator"].linkageOutlet >> self["valve"].linkageInlet
         self.position = self["valve"].position = self["actuator"].position
         self["position_feedback"] = self["actuator"]["position_sensor"].observedProperty
-        self.waterInlet = self["valve"].waterInlet
-        self.waterOutlet = self["valve"].waterOutlet
+        self.fluidInlet = self["valve"].fluidInlet
+        self.fluidOutlet = self["valve"].fluidOutlet
 
 
 electrical_actuated_proportional_2w_valve_template = {
@@ -116,9 +116,9 @@ class ThreeWayActuatedValve(System):
 
 class ThreeWayMixingSystem(ThreeWayActuatedValve):
     _class_iri = SCRATCH.ThreeWayMixingSystem
-    waterInletAB: BoundaryConnectionPoint
-    waterOutletA: BoundaryConnectionPoint
-    waterOutletB: BoundaryConnectionPoint
+    fluidInletAB: BoundaryConnectionPoint
+    fluidOutletA: BoundaryConnectionPoint
+    fluidOutletB: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -126,16 +126,16 @@ class ThreeWayMixingSystem(ThreeWayActuatedValve):
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.waterInletAB = self["valve"].waterInletAB
-        self.waterOutletA = self["valve"].waterOutletA
-        self.waterOutletB = self["valve"].waterOutletB
+        self.fluidInletAB = self["valve"].fluidInletAB
+        self.fluidOutletA = self["valve"].fluidOutletA
+        self.fluidOutletB = self["valve"].fluidOutletB
 
 
 class ThreeWayDivertingSystem(ThreeWayActuatedValve):
     _class_iri = SCRATCH.ThreeWayDivertingSystem
-    waterInletA: BoundaryConnectionPoint
-    waterInletB: BoundaryConnectionPoint
-    waterOutlet: BoundaryConnectionPoint
+    fluidInletA: BoundaryConnectionPoint
+    fluidInletB: BoundaryConnectionPoint
+    fluidOutlet: BoundaryConnectionPoint
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(
@@ -143,9 +143,9 @@ class ThreeWayDivertingSystem(ThreeWayActuatedValve):
         )
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
-        self.waterInletA = self["valve"].waterInletA
-        self.waterInletB = self["valve"].waterInletB
-        self.waterOutlet = self["valve"].waterOutlet
+        self.fluidInletA = self["valve"].fluidInletA
+        self.fluidInletB = self["valve"].fluidInletB
+        self.fluidOutlet = self["valve"].fluidOutlet
 
 
 class ThreeWayMixingActuatedProportionalValve(ThreeWayMixingSystem):

@@ -11,7 +11,7 @@ from bob.core import (
     Role,
     URIRef,
 )
-from bob.enum import R410a
+from bob.enum import R410a, SystemType
 from bob.equipment.hvac.coil import HeatpumpCoil
 from bob.equipment.hvac.compressor import RefrigerationGasCompressor
 from bob.equipment.hvac.filter import Filter
@@ -118,6 +118,7 @@ class _AirToAirHeatPump(Equipment):
 
         self["DA-T"].hasObservationLocation = self.indoorAirOutlet
         self["RA-T"].hasObservationLocation = self.indoorAirInlet
+        self += SystemType.HeatPump.AirToAirHeatPump
 
 
 scratch_system_template = {
