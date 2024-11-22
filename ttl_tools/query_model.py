@@ -19,7 +19,7 @@ def load_query(query_file):
         return file.read()
 
 
-def execute_query(graph, query):
+def execute_query(graph: rdflib.Graph = None, query: str = None):
     return graph.query(query)
 
 

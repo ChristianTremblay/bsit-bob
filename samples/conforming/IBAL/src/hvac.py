@@ -217,10 +217,10 @@ hd.fan4_in_rtd % hd.fan4.airInlet
 """
 NOT READY TO DO THAT
 
-hd.chiller.chilledWaterLeaving >> hd.chilled_water_pump.waterInlet
-hd.chilled_water_pump.waterOutlet >> hd.ahu1["CLGCOIL"].chilledWaterInlet
-hd.ahu1["CLGCOIL"].chilledWaterOutlet >> hd.clg_vlv["valve"].waterInlet
-hd.clg_vlv["valve"].waterOutlet >> hd.chiller.chilledWaterEntering
+hd.chiller.chilledWaterLeaving >> hd.chilled_water_pump.fluidInlet
+hd.chilled_water_pump.fluidOutlet >> hd.ahu1["CLGCOIL"].chilledWaterInlet
+hd.ahu1["CLGCOIL"].chilledWaterOutlet >> hd.clg_vlv["valve"].fluidInlet
+hd.clg_vlv["valve"].fluidOutlet >> hd.chiller.chilledWaterEntering
 
 """
 

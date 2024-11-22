@@ -80,16 +80,16 @@ hd.ahu["TPD3"] % (hd.ahu["RF"].airOutlet, plenum)
 hd.ahu["RF_VFD"].drive_running = OnOffStatus(label="VFD DriveRunning")
 hd.ahu["RF_VFD"].run_command = OnOffCommand(label="Run Command")
 
-hd.boiler.hotWaterLeaving >> hd.hot_water_pump.waterInlet
-hd.hot_water_pump.waterOutlet >> hd.ahu["HTGCOIL"].hotWaterInlet
+hd.boiler.hotWaterLeaving >> hd.hot_water_pump.fluidInlet
+hd.hot_water_pump.fluidOutlet >> hd.ahu["HTGCOIL"].hotWaterInlet
 
-hd.ahu["HTGCOIL"].hotWaterOutlet >> hd.htg_vlv["valve"].waterInlet
-hd.htg_vlv.waterOutlet >> hd.boiler.hotWaterEntering
+hd.ahu["HTGCOIL"].hotWaterOutlet >> hd.htg_vlv["valve"].fluidInlet
+hd.htg_vlv.fluidOutlet >> hd.boiler.hotWaterEntering
 
-hd.chiller.chilledWaterLeaving >> hd.chilled_water_pump.waterInlet
-hd.chilled_water_pump.waterOutlet >> hd.ahu["CLGCOIL"].chilledWaterInlet
-hd.ahu["CLGCOIL"].chilledWaterOutlet >> hd.clg_vlv["valve"].waterInlet
-hd.clg_vlv["valve"].waterOutlet >> hd.chiller.chilledWaterEntering
+hd.chiller.chilledWaterLeaving >> hd.chilled_water_pump.fluidInlet
+hd.chilled_water_pump.fluidOutlet >> hd.ahu["CLGCOIL"].chilledWaterInlet
+hd.ahu["CLGCOIL"].chilledWaterOutlet >> hd.clg_vlv["valve"].fluidInlet
+hd.clg_vlv["valve"].fluidOutlet >> hd.chiller.chilledWaterEntering
 
 
 # Windows
