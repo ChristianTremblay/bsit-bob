@@ -57,6 +57,8 @@ class Chiller(Equipment):
         config["properties"] = config.get("properties", chiller_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+        self.chilledWaterLeaving **= self.chilledWaterEntering
+        self.condenserLeaving **= self.condenserEntering
 
 
 class AgnosticChiller(Equipment):

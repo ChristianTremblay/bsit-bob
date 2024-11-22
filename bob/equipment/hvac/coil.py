@@ -67,6 +67,7 @@ class Coil(Equipment):
         config["properties"] = config.get("properties", coil_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+        self.airOutlet **= self.airInlet
 
 
 class WaterCoil(Coil):
@@ -78,6 +79,7 @@ class WaterCoil(Coil):
         config["properties"] = config.get("properties", coil_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+        self.waterOutlet **= self.waterInlet
 
 
 class DXCoolingCoil(Coil):
@@ -90,6 +92,7 @@ class DXCoolingCoil(Coil):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Cooling
+        self.refrigerantOutlet **= self.refrigerantInlet
 
 
 class ChilledWaterCoil(Coil):
@@ -102,6 +105,7 @@ class ChilledWaterCoil(Coil):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Cooling
+        self.chilledWaterOutlet **= self.chilledWaterInlet
 
 
 class HotWaterCoil(Coil):
@@ -114,6 +118,7 @@ class HotWaterCoil(Coil):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Heating
+        self.hotWaterOutlet **= self.hotWaterInlet
 
 
 class HeatpumpCoil(Coil):
@@ -129,6 +134,7 @@ class HeatpumpCoil(Coil):
         super().__init__(_config, **kwargs)
         self += Role.Heating
         self += Role.Cooling
+        self.gasPortB **= self.gasPortA
 
     def set_gas_type(self, gas: Refrigerant):
         self.set_medium(["gasPortA", "gasPortB"], gas)
@@ -159,6 +165,7 @@ class ElectricalHeatingCoil(Equipment):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Heating
+        self.airOutlet **= self.airInlet
 
 
 # Electrical Coil

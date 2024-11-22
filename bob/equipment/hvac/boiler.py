@@ -58,13 +58,18 @@ basic_hotwaterheater_template = {
         ("self.leavingFluid", "=", "self['hw_heater'].hotWaterLeaving"),
         ("self.enteringFluid", "=", "self['hw_heater'].hotWaterEntering"),
         ("self.electricalInlet", "=", "self['hw_heater'].electricalInlet"),
+        (
+            "self['hw_heater'].hotWaterLeaving",
+            "**=",
+            "self['hw_heater'].hotWaterEntering",
+        ),
     ],
 }
 
 
 # 223 Standard Systems
 class DomesticHotWaterHeater(SystemFromTemplate):
-    _class_iri = S223.DomesticHotWaterHeater
+    # _class_iri = S223.DomesticHotWaterHeater
     leavingFluid: BoundaryConnectionPoint
     enteringFluid: BoundaryConnectionPoint
     electricalInlet: BoundaryConnectionPoint
@@ -74,6 +79,7 @@ class DomesticHotWaterHeater(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Heating
+        self.leavingFluid.paired_to(self.enteringFluid)
 
 
 # 223 Standard Equipment
@@ -81,6 +87,13 @@ class HotWaterBoiler(Equipment):
     _class_iri = S223.Boiler
     hotWaterLeaving: HotWaterOutletConnectionPoint
     hotWaterEntering: HotWaterInletConnectionPoint
+
+    def __init__(self, config: Dict = basic_hotwaterheater_template, **kwargs) -> None:
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        self += Role.Heating
+        self.hotWaterLeaving.paired_to(self.hotWaterEntering)
 
 
 class ElectricalHotWaterBoiler(HotWaterBoiler):

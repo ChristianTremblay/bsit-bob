@@ -28,6 +28,9 @@ SCR_template = {
         ("amps", Amps): {},
         ("kW", ElectricPowerkW): {},
     },
+    "relations": [
+        ("self.electricalOutlet", "**=", "self.electricalInlet"),
+    ],
 }
 
 

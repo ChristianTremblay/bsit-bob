@@ -22,7 +22,7 @@ TerminalUnit_template = {
 
 
 class SingleDuctTerminal(System):
-    _class_iri = S223.SingleDuctTerminal
+    # _class_iri = S223.SingleDuctTerminal
     airInlet: BoundaryConnectionPoint
     airOutlet: BoundaryConnectionPoint
 
@@ -31,6 +31,17 @@ class SingleDuctTerminal(System):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.info(f"SingleDuctTerminal.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
-        self.airInlet = self["damper"].airInlet
-        self.airOutlet = self["damper"].airOutlet
-        # self['flow_sensor'] % self['damper'].airInlet
+
+
+# Generic
+class GenericSingleDuctTerminal(Equipment):
+    _class_iri = S223.SingleDuctTerminal
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirInletConnectionPoint
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _log.info(f"GenericSingleDuctTerminal.__init__ {_config} {kwargs}")
+        super().__init__(_config, **kwargs)
+        self.airOutlet **= self.airInlet

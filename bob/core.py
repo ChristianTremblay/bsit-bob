@@ -1949,6 +1949,7 @@ class ConnectionPoint(Node):
                 self, BidirectionalConnectionPoint
             ):
                 self._data_graph.add((self._node_iri, S223.cnx, thing._node_iri))
+
             if isinstance(self, OutletConnectionPoint) or isinstance(
                 self, BidirectionalConnectionPoint
             ):
@@ -1995,6 +1996,11 @@ class ConnectionPoint(Node):
             self._data_graph.add(
                 (other._node_iri, S223.pairedConnectionPoint, self._node_iri)
             )
+
+    def __ipow__(self, other: Any) -> Any:
+        """Use **= to pair the connection point with another connection point."""
+        self.paired_to(other)
+        return self
 
 
 @multimethod
@@ -2129,13 +2135,13 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         (connection._node_iri, S223.connectsAt, connection_point._node_iri)
     )
     if INCLUDE_CNX:
-        if isinstance(connection_point, OutletConnectionPoint) or isinstance(
+        if isinstance(connection_point, InletConnectionPoint) or isinstance(
             connection_point, BidirectionalConnectionPoint
         ):
             connection_point._data_graph.add(
                 (connection._node_iri, S223.cnx, connection_point._node_iri)
             )
-        if isinstance(connection_point, InletConnectionPoint) or isinstance(
+        if isinstance(connection_point, OutletConnectionPoint) or isinstance(
             connection_point, BidirectionalConnectionPoint
         ):
             connection_point._data_graph.add(

@@ -1,3 +1,5 @@
+from typing import Dict
+
 from rdflib import URIRef
 
 from ...connections.air import (
@@ -24,6 +26,7 @@ from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507
     Refrigerant,
 )
 from ...properties import Gallons
+from ...template import configure_relations, template_update
 
 # logging
 _log = logging.getLogger(__name__)
@@ -52,13 +55,21 @@ class TwoWayValve(Valve):
     """
 
     _class_iri: URIRef = S223.TwoWayValve
-    waterInlet: WaterInletConnectionPoint
-    waterOutlet: WaterOutletConnectionPoint
+    fluidInlet: WaterInletConnectionPoint
+    fluidOutlet: WaterOutletConnectionPoint
     is_open: PropertyReference
     is_closed: PropertyReference
 
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        self.fluidOutlet **= self.fluidInlet
+
     def set_fluid_type(self, fluid: Fluid):
-        self.set_medium(["waterInlet", "waterOutlet"], fluid)
+        self.set_medium(["fluidInlet", "fluidOutlet"], fluid)
 
 
 class ThreeWayValveDiverting(Valve):
@@ -67,12 +78,21 @@ class ThreeWayValveDiverting(Valve):
     """
 
     _class_iri = S223.ThreeWayValve
-    waterInletAB: WaterInletConnectionPoint
-    waterOutletA: WaterOutletConnectionPoint
-    waterOutletB: WaterOutletConnectionPoint
+    fluidInletAB: WaterInletConnectionPoint
+    fluidOutletA: WaterOutletConnectionPoint
+    fluidOutletB: WaterOutletConnectionPoint
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        self.fluidOutletA **= self.fluidInletAB
+        self.fluidOutletB **= self.fluidInletAB
 
     def set_fluid_type(self, fluid: Fluid):
-        self.set_medium(["waterInletAB", "waterOutletA", "waterOutletB"], fluid)
+        self.set_medium(["fluidInletAB", "fluidOutletA", "fluidOutletB"], fluid)
 
 
 class ThreeWayValveMixing(Valve):
@@ -81,12 +101,21 @@ class ThreeWayValveMixing(Valve):
     """
 
     _class_iri: URIRef = S223.ThreeWayValve
-    waterInletA: WaterInletConnectionPoint
-    waterInletB: WaterOutletConnectionPoint
-    waterOutlet: WaterOutletConnectionPoint
+    fluidInletA: WaterInletConnectionPoint
+    fluidInletB: WaterOutletConnectionPoint
+    fluidOutlet: WaterOutletConnectionPoint
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        self.fluidOutlet **= self.fluidInletA
+        self.fluidOutlet **= self.fluidInletB
 
     def set_fluid_type(self, fluid: Fluid):
-        self.set_medium(["waterInletA", "waterInletB", "waterOutlet"], fluid)
+        self.set_medium(["fluidInletA", "fluidInletB", "fluidOutlet"], fluid)
 
 
 class NaturalGasValve(Valve):
@@ -94,17 +123,41 @@ class NaturalGasValve(Valve):
     naturalGasInlet: NaturalGasInletConnectionPoint
     naturalGasOutlet: NaturalGasOutletConnectionPoint
 
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        self.naturalGasOutlet **= self.naturalGasInlet
+
 
 class PneumaticValve(Valve):
     _class_iri = S223.Valve
     compressedAirInlet: CompressedAirInletConnectionPoint
     compressedAirOutlet: CompressedAirOutletConnectionPoint
 
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        self.compressedAirOutlet **= self.compressedAirInlet
+
 
 class ExpansionValve(Valve):
     _class_iri = S223.Valve
     portA: RefrigerantBidirectionalConnectionPoint
     portB: RefrigerantBidirectionalConnectionPoint
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        self.portB **= self.portA
 
     def set_gas_type(self, gas: Refrigerant):
         self.set_medium(["portA", "portB"], gas)
@@ -117,6 +170,14 @@ class ReversingValve(Valve):
     refrigerantIndoorCoilPort: RefrigerantBidirectionalConnectionPoint
     refrigerantOutdoorCoilPort: RefrigerantBidirectionalConnectionPoint
     position: PropertyReference
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        # self.refrigerantLowPressureOutlet **= self.refrigerantHighPressureInlet
 
     def set_gas_type(self, gas: Refrigerant):
         self.set_medium(

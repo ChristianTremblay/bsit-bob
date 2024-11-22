@@ -27,3 +27,4 @@ class Damper(Equipment):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
+        self.airOutlet **= self.airInlet
