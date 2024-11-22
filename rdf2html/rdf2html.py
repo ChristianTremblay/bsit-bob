@@ -25,9 +25,12 @@ nodes = {}
 def parse_rdf(ttl_file):
     global g
     assert os.path.exists(ttl_file)
-    with open(os.path.abspath(ttl_file), "r") as ttl:
-        lines = ttl.read()
-    graph = g.parse(data=lines, format="turtle")
+    # with open(os.path.abspath(ttl_file), "r", encoding="utf-8") as ttl:
+    #    try:
+    #        lines = ttl.read()
+    #    except UnicodeDecodeError:
+    #        print(f"Error reading {ttl_file}")
+    graph = g.parse(os.path.abspath(ttl_file), format="turtle")
     return graph
 
 
@@ -370,7 +373,9 @@ def to_html(
         del visual_graph
         return _html
     else:
-        visual_graph.write_html(html_filename, notebook=False)
+        _html = visual_graph.generate_html()
+        with open(html_filename, "w", encoding="utf-8") as f:
+            f.write(_html)
     visual_graph = None
     del visual_graph
 
