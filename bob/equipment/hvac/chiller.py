@@ -22,7 +22,6 @@ from ...connections.liquid import (
     WaterOutletConnectionPoint,
 )
 from ...core import BOB, P223, S223, Equipment
-from ...enum import SystemType
 from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
 
 _namespace = BOB
@@ -60,7 +59,6 @@ class Chiller(Equipment):
         super().__init__(config, **kwargs)
         self.chilledWaterLeaving.paired_to(self.chilledWaterEntering)
         self.condenserLeaving.paired_to(self.condenserEntering)
-        self += SystemType.Chiller
 
 
 class AgnosticChiller(Equipment):
@@ -86,4 +84,3 @@ class AgnosticChiller(Equipment):
         config["properties"] = config.get("properties", chiller_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
-        self += SystemType.Chiller

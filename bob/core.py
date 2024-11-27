@@ -1544,8 +1544,6 @@ Medium.ThermalContact = Medium("ThermalContact")
 Role = EnumerationKind("Role")
 Domain = EnumerationKind("Domain")
 
-SystemType = EnumerationKind("System")
-
 
 class Constituent(EnumerationKind):
     def __init__(self, name, *args, **kwargs) -> None:
@@ -1600,7 +1598,6 @@ class System(Container):
 
         super().__init__(*args, **kwargs)
         self.hasRole = set()
-        self.hasSystemType = set()
 
         if config:
             for group_name, group_items in config.items():
@@ -1711,16 +1708,6 @@ def add_mm(system: System, info: EnumerationKind) -> None:
         system._data_graph.add((system._node_iri, S223.hasRole, role._node_iri))
         if INCLUDE_INVERSE:
             role.isRoleOf = system
-    elif info in SystemType._children:
-        """
-        Add a SystemType to a system
-        """
-        system_type = info
-        _log.info(f"add system type {system_type} to {system}")
-        system.hasSystemType.add(system_type)
-        system._data_graph.add(
-            (system._node_iri, S223.isSystemType, system_type._node_iri)
-        )
 
 
 class ConnectionMetaclass(NodeMetaclass):
@@ -3674,13 +3661,6 @@ def add_mm(equipment: Equipment, info: EnumerationKind) -> None:
         equipment._data_graph.add((equipment._node_iri, S223.hasRole, role._node_iri))
         if INCLUDE_INVERSE:
             role.isRoleOf = equipment
-    elif info in SystemType._children:
-        system_type = info
-        _log.info(f"add system type {system_type} to {equipment}")
-        equipment.hasSystemType.add(system_type)
-        equipment._data_graph.add(
-            (equipment._node_iri, S223.isSystemType, system_type._node_iri)
-        )
 
 
 @multimethod

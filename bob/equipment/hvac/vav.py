@@ -32,7 +32,6 @@ class SingleDuctTerminal(System):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.info(f"SingleDuctTerminal.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
-        self += TerminalUnit.SingleDuctTerminal
 
 
 # Generic
@@ -47,4 +46,3 @@ class GenericSingleDuctTerminal(Equipment):
         _log.info(f"GenericSingleDuctTerminal.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
         self.airOutlet.paired_to(self.airInlet)
-        self += TerminalUnit.SingleDuctTerminal

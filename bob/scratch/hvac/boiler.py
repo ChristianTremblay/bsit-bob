@@ -16,7 +16,7 @@ from bob.core import (
     Equipment,
     PropertyReference,
 )
-from bob.enum import Role, SystemType
+from bob.enum import Role
 from bob.equipment.hvac.coil import HeatpumpCoil, ImmersedResistanceHeaterElement
 from bob.equipment.hvac.compressor import RefrigerationGasCompressor
 from bob.equipment.hvac.fan import Fan
@@ -136,7 +136,6 @@ class DomesticHotWaterHeater(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Heating
-        self += SystemType.WaterHeater
 
 
 domesticHPwaterheater_template = {
@@ -234,8 +233,6 @@ class _DomesticHPWaterHeater(Equipment):
         self.fluidTemperature = self["TANK"]["fluidTemperature"]
         self["TANK"] += Role.Storage
         self += Role.Heating
-        self += SystemType.HeatPump
-        self += SystemType.WaterHeater
 
 
 scratch_system_template = {
@@ -262,5 +259,3 @@ class DomesticHPWaterHeater(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
         self += Role.Heating
-        self += SystemType.WaterHeater
-        self += SystemType.HeatPump

@@ -4,7 +4,7 @@ from typing import Dict
 from bob.connections.air import AirConnection
 from bob.connections.electricity import Electricity_600VLL_3Ph_60HzInletConnectionPoint
 from bob.core import S223, SCRATCH, UNIT, BoundaryConnectionPoint, Role
-from bob.enum import SystemType
+from bob.concept import System_AirHandlingUnit
 from bob.equipment.hvac.coil import ChilledWaterCoil, HotWaterCoil
 from bob.equipment.hvac.filter import Filter
 from bob.equipment.hvac.stats import AirDifferentialStaticPressureSensor
@@ -73,8 +73,8 @@ ahu_template = {
 }
 
 
-class AirHandlingUnit(SystemFromTemplate):
-    _class_iri = S223.AirHandlingUnit
+class AirHandlingUnit(SystemFromTemplate, System_AirHandlingUnit):
+    _class_iri = SCRATCH.AirHandlingUnit
     airInlet: BoundaryConnectionPoint
     airOutlet: BoundaryConnectionPoint
 
@@ -102,4 +102,3 @@ class AirHandlingUnit(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"AHU.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
-        self += SystemType.AirHandlingUnit

@@ -14,7 +14,6 @@ from .core import (
     Mix,
     Role,
     Substance,
-    SystemType,
 )
 
 _namespace = S223
@@ -633,29 +632,29 @@ ElectricalVoltagePhases.CNLineNeutralVoltage = ElectricalVoltagePhases(
 
 
 ## System Types
-SystemType.AirHandlingUnit = AirHandlingUnit = SystemType("AirHandlingUnit")
-SystemType.AirHeatExchanger = AirHeatExchanger = SystemType("AirHeatExchanger")
+# SystemType.AirHandlingUnit = AirHandlingUnit = SystemType("AirHandlingUnit")
+# SystemType.AirHeatExchanger = AirHeatExchanger = SystemType("AirHeatExchanger")##
 
-SystemType.Chiller = Chiller = SystemType("Chiller")
-SystemType.CoolingTower = CoolingTower = SystemType("CoolingTower")
-SystemType.FumeHood = FumeHood = SystemType("FumeHood")
-SystemType.Furnace = Furnace = SystemType("Furnace")
-SystemType.HeatExchanger = HeatExchanger = SystemType("HeatExchanger")
+# SystemType.Chiller = Chiller = SystemType("Chiller")
+# SystemType.CoolingTower = CoolingTower = SystemType("CoolingTower")
+# SystemType.FumeHood = FumeHood = SystemType("FumeHood")
+# SystemType.Furnace = Furnace = SystemType("Furnace")
+# SystemType.HeatExchanger = HeatExchanger = SystemType("HeatExchanger")
 
-SystemType.HeatPump = HeatPump = SystemType("HeatPump")
-HeatPump.AirToAirHeatPump = AirToAirHeatPump = HeatPump("AirToAirHeatPump")
-HeatPump.GroundToAirHeatPump = GroundToAirHeatPump = HeatPump("GroundToAirHeatPump")
-HeatPump.WaterToAirHeatPump = WaterToAirHeatPump = HeatPump("WaterToAirHeatPump")
-HeatPump.WaterToWaterHeatPump = WaterToWaterHeatPump = HeatPump("WaterToWaterHeatPump")
+# SystemType.HeatPump = HeatPump = SystemType("HeatPump")
+# HeatPump.AirToAirHeatPump = AirToAirHeatPump = HeatPump("AirToAirHeatPump")
+# HeatPump.GroundToAirHeatPump = GroundToAirHeatPump = HeatPump("GroundToAirHeatPump")
+# HeatPump.WaterToAirHeatPump = WaterToAirHeatPump = HeatPump("WaterToAirHeatPump")
+# HeatPump.WaterToWaterHeatPump = WaterToWaterHeatPump = HeatPump("WaterToWaterHeatPump")
 
-SystemType.TerminalUnit = TerminalUnit = SystemType("TerminalUnit")
-TerminalUnit.FanCoilUnit = FanCoilUnit = TerminalUnit("FanCoilUnit")
-TerminalUnit.FanPoweredTerminal = FanPoweredTerminal = TerminalUnit(
-    "FanPoweredTerminal"
-)
-TerminalUnit.SingleDuctTerminal = SingleDuctTerminal = TerminalUnit(
-    "SingleDuctTerminal"
-)
-TerminalUnit.DualDuctTerminal = DualDuctTerminal = TerminalUnit("DualDuctTerminal")
+# SystemType.TerminalUnit = TerminalUnit = SystemType("TerminalUnit")
+# TerminalUnit.FanCoilUnit = FanCoilUnit = TerminalUnit("FanCoilUnit")
+# TerminalUnit.FanPoweredTerminal = FanPoweredTerminal = TerminalUnit(
+#    "FanPoweredTerminal"
+# )
+# TerminalUnit.SingleDuctTerminal = SingleDuctTerminal = TerminalUnit(
+#    "SingleDuctTerminal"
+# )
+# TerminalUnit.DualDuctTerminal = DualDuctTerminal = TerminalUnit("DualDuctTerminal")
 
-SystemType.WaterHeater = WaterHeater = SystemType("WaterHeater")
+# SystemType.WaterHeater = WaterHeater = SystemType("WaterHeater")

@@ -3,9 +3,9 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
+from ...concept import System_AirHandlingUnit, System_FanCoilUnit
 from ...core import BOB, P223, S223, BoundaryConnectionPoint, Equipment, System
-from ...enum import SystemType
-from ...template import template_update, SystemFromTemplate
+from ...template import SystemFromTemplate, template_update
 
 # logging
 _log = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ fan_coil_template = {
 }
 
 
-class AirHandlingUnit(SystemFromTemplate):
+class AirHandlingUnit(SystemFromTemplate, System_AirHandlingUnit):
     """
         This is treated as a system.
         We will add multiple devices inside using a template
@@ -102,7 +102,7 @@ class AirHandlingUnit(SystemFromTemplate):
 
     """
 
-    _class_iri = S223.AirHandlingUnit
+    _class_iri = BOB.AirHandlingUnit
     outsideAirInlet: BoundaryConnectionPoint
     returnAirInlet: BoundaryConnectionPoint
     supplyAirOutlet: BoundaryConnectionPoint
@@ -115,11 +115,10 @@ class AirHandlingUnit(SystemFromTemplate):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"AirHandlingUnit.__init__ {_config} {kwargs}")
         super().__init__(_config, **kwargs)
-        self += SystemType.AirHandlingUnit
 
 
-class FanCoil(System):
-    _class_iri = S223.FanCoilUnit
+class FanCoil(System, System_FanCoilUnit):
+    _class_iri = BOB.FanCoilUnit
     returnAirInlet: BoundaryConnectionPoint
     supplyAirOutlet: BoundaryConnectionPoint
     exhaustAirOutlet: BoundaryConnectionPoint
@@ -130,4 +129,4 @@ class FanCoil(System):
         kwargs = {**_config.get("params", {}), **kwargs}
         _log.debug(f"FanCoil.__init__ {_config} {kwargs}")
         super().__init__(config, **kwargs)
-        self += SystemType.FanCoilUnit
+        # self += SystemType.FanCoilUnit
