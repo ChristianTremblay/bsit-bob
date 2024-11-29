@@ -1,0 +1,14 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?ds ?dsLabel ?dsComment
+
+WHERE {
+    ?ds a s223:DomainSpace .
+    ?ds rdfs:label "HVACSpace1" .
+    
+    OPTIONAL { ?ds rdfs:comment ?dsComment } .
+    OPTIONAL { ?ds rdfs:comment ?dsLabel } .
+}

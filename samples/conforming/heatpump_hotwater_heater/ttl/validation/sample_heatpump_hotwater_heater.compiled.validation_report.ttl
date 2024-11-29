@@ -1,79 +1,212 @@
-@prefix ns2: <http://data.ashrae.org/standard223#> .
+@prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 [] a sh:ValidationReport ;
     sh:conforms false ;
     sh:result [ a sh:ValidationResult ;
-            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00054> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00054> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b4 ],
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00028> ;
+            sh:resultMessage "s223: An ActuatableProperty normally is referred to by Equipment using the relation s223:actuatedByProperty." ;
+            sh:resultPath [ sh:inversePath s223:actuatedByProperty ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b4 ],
         [ a sh:ValidationResult ;
-            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00003> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00003> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b9 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b10 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00035> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00035> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00025> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00025> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00018> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00018> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b4 ],
-        [ a sh:ValidationResult ;
-            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00057> ;
-            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00057> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
-            sh:resultPath ns2:mapsTo ;
-            sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b3 ;
-            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b4 ],
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00021> ;
+            sh:resultMessage "s223: An ActuatableProperty normally is referred to by Equipment using the relation s223:actuatedByProperty." ;
+            sh:resultPath [ sh:inversePath s223:actuatedByProperty ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b4 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00033> ;
             sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00033> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
-            sh:resultPath ns2:mapsTo ;
+            sh:resultPath s223:mapsTo ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b3 ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b15 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b4 ],
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00018> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00018> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b15 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00029> ;
+            sh:resultMessage "s223: An ActuatableProperty normally is referred to by Equipment using the relation s223:actuatedByProperty." ;
+            sh:resultPath [ sh:inversePath s223:actuatedByProperty ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00022> ;
+            sh:resultMessage "s223: An ActuatableProperty normally is referred to by Equipment using the relation s223:actuatedByProperty." ;
+            sh:resultPath [ sh:inversePath s223:actuatedByProperty ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b4 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00010> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00050> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00019> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00003> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00003> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
+            sh:resultPath s223:connectsThrough ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b27 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b28 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00026> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00015> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00049> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00035> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00035> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b15 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00055> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00020> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00054> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00054> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b15 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00009> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00036> ;
             sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00036> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
-            sh:resultPath ns2:mapsTo ;
+            sh:resultPath s223:mapsTo ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b3 ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b15 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b4 ],
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b16 ],
         [ a sh:ValidationResult ;
             sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00004> ;
             sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00004> probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-            sh:resultPath ns2:connectsThrough ;
+            sh:resultPath s223:connectsThrough ;
             sh:resultSeverity sh:Info ;
-            sh:sourceConstraint _:n2d521d2a02c844f9a04400c5c8352fb6b9 ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b27 ;
             sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
-            sh:sourceShape _:n2d521d2a02c844f9a04400c5c8352fb6b10 ] .
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b28 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00048> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00042> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00057> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00057> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b15 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00027> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00008> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00040> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00025> ;
+            sh:resultMessage "s223: ConnectionPoint <urn:ex:sample_heatpump_hotwater_heater/00025> could be missing a mapsTo relation to a ConnectionPoint of <urn:ex:sample_heatpump_hotwater_heater/00002> because it is associated with a Junction or Equipment that is contained by <urn:ex:sample_heatpump_hotwater_heater/00002>." ;
+            sh:resultPath s223:mapsTo ;
+            sh:resultSeverity sh:Info ;
+            sh:sourceConstraint _:n21da5a535dcb441daa6f2098ef83c587b15 ;
+            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b16 ],
+        [ a sh:ValidationResult ;
+            sh:focusNode <urn:ex:sample_heatpump_hotwater_heater/00041> ;
+            sh:resultMessage "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:resultPath [ sh:inversePath s223:observes ] ;
+            sh:resultSeverity sh:Warning ;
+            sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
+            sh:sourceShape _:n21da5a535dcb441daa6f2098ef83c587b7 ] .
 

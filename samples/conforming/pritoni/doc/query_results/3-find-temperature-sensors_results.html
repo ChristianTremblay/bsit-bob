@@ -1,0 +1,44 @@
+<html><body>
+<h1>SPARQL Query</h1>
+<h2>3-find-temperature-sensors</h2>
+<p>Created on 2024-11-21 23:56:40</p>
+<pre>PREFIX s223: &lt;http://data.ashrae.org/standard223#&gt;
+PREFIX qudt: &lt;http://qudt.org/schema/qudt/&gt;
+PREFIX quantitykind: &lt;http://qudt.org/vocab/quantitykind/&gt;
+
+SELECT DISTINCT ?sensorLabel
+WHERE {
+    ?sensor a/rdfs:subClassOf* s223:Sensor .
+    ?sensor s223:observes ?prop .
+    {
+       ?prop qudt:hasQuantityKind quantitykind:Temperature .
+    }
+    UNION
+    {
+       ?prop qudt:unit/qudt:hasQuantityKind quantitykind:Temperature .
+    }
+    ?sensor rdfs:label ?sensorLabel .
+}
+</pre>
+<h1>Results</h1>
+<h2>Number of triples in original model</h2>
+<p>87862</p>
+<h2>Number of triples in query result</h2>
+<p>6</p>
+<h2>Query result</h2>
+<table border='1'>
+<tr><th>sensorLabel</th></tr>
+<tr>
+<td>OA-T</td></tr>
+<tr>
+<td>HC-T</td></tr>
+<tr>
+<td>MA-T</td></tr>
+<tr>
+<td>DA-T</td></tr>
+<tr>
+<td>RA-T</td></tr>
+<tr>
+<td>ZN-T</td></tr>
+</table>
+</body></html>

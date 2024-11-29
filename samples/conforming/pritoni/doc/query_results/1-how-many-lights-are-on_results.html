@@ -1,0 +1,25 @@
+<html><body>
+<h1>SPARQL Query</h1>
+<h2>1-how-many-lights-are-on</h2>
+<p>Created on 2024-11-21 23:56:40</p>
+<pre>
+SELECT (COUNT (?d) AS ?count)
+WHERE{
+    ?d a s223:Luminaire .
+    ?d s223:hasProperty ?prop .
+    ?prop a s223:ObservableProperty .
+    ?prop s223:hasExternalReference ?ref .
+}
+</pre>
+<h1>Results</h1>
+<h2>Number of triples in original model</h2>
+<p>87862</p>
+<h2>Number of triples in query result</h2>
+<p>1</p>
+<h2>Query result</h2>
+<table border='1'>
+<tr><th>count</th></tr>
+<tr>
+<td>1</td></tr>
+</table>
+</body></html>

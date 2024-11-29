@@ -1,0 +1,8 @@
+DESCRIBE ?ds ?thing ?start WHERE {
+?start a/rdfs:subClassOf* s223:Equipment .
+?start s223:connectedTo ?ds .
+?ds a s223:DomainSpace .
+?ds s223:hasDomain s223:Domain-HVAC .
+?start s223:connectedTo+ ?thing .
+FILTER (?start != ?thing) .
+}

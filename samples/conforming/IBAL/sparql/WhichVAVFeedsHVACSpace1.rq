@@ -1,0 +1,23 @@
+DESCRIBE ?eq ?space1 ?airInletCP ?eqLabel ?eqComment #?vav ?vavLabel ?vavComment
+WHERE { 
+    BIND(<urn:src:hvac_spaces/00003> AS ?space1)
+    ?space1 s223:hasConnectionPoint ?airInletCP .
+    ?airInletCP a s223:InletConnectionPoint .
+    ?airInletCP s223:hasMedium s223:Fluid-Air .
+    ?space1 s223:hasConnectionPoint ?airOutletCP .
+    ?airOutletCP a s223:OutletConnectionPoint .
+    ?airOutletCP s223:hasMedium s223:Fluid-Air .
+
+    ?eq s223:cnx+ ?airInletCP .
+    #?eq a s223:Fan .
+    ?eq (s223:hasConnectionPoint/s223:cnx) ?c .
+    ?c s223:hasMedium s223:Fluid-Air .
+    #?vav s223:hasMember ?eq .
+    #?vav a/rdfs:subClassOf s223:TerminalUnit .
+
+    #OPTIONAL { ?vav rdfs:label ?vavLabel} .
+    #OPTIONAL { ?vav rdfs:label ?vavComment} .
+    OPTIONAL { ?eq rdfs:label ?eqLabel} .
+    OPTIONAL { ?eq rdfs:label ?eqComment} .
+}
+

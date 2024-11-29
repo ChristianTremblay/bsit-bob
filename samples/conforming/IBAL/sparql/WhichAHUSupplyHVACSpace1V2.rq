@@ -1,0 +1,35 @@
+SELECT ?eq ?ahu ?shortestPathLength ?space1
+WHERE {
+    BIND(<urn:src:hvac_spaces/00003> AS ?space1)
+    ?ahu a s223:AirHandlingUnit .
+    ?ahu s223:hasBoundaryConnectionPoint ?cp .
+    ?cp s223:hasMedium s223:Fluid-Air .
+    ?cp s223:connectsThrough ?connection .
+    ?connection s223:connectsTo ?eq .
+    ?eq s223:connectedTo+ ?space1 .
+    
+    {
+        SELECT (MIN(?length) AS ?shortestPathLength)
+        WHERE {
+            ?eq s223:connectedTo* ?space1 .
+            {
+                SELECT (COUNT(?intermediateNode) AS ?length)
+                WHERE {
+                    ?eq s223:connectedTo ?intermediateNode .
+                    ?intermediateNode s223:connectedTo* ?space1 .
+                }
+            }
+        }
+        GROUP BY ?shortestPathLength
+    }
+    ?ahu s223:hasMember ?eq .
+    #?system a s223:System .
+    #OPTIONAL { ?system s223:hasMember ?eq } .
+    #OPTIONAL { ?system rdfs:label ?systemLabel} .
+    #OPTIONAL { ?system rdfs:label ?systemComment} .
+    #OPTIONAL { ?eq rdfs:label ?eqLabel} .
+    #OPTIONAL { ?eq rdfs:label ?eqComment} .
+}
+
+
+

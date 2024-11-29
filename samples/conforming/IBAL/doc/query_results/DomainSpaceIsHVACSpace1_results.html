@@ -1,0 +1,30 @@
+<html><body>
+<h1>SPARQL Query</h1>
+<h2>DomainSpaceIsHVACSpace1</h2>
+<p>Created on 2024-11-21 23:56:16</p>
+<pre>PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX s223: &lt;http://data.ashrae.org/standard223#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?ds ?dsLabel ?dsComment
+
+WHERE {
+    ?ds a s223:DomainSpace .
+    ?ds rdfs:label &quot;HVACSpace1&quot; .
+    
+    OPTIONAL { ?ds rdfs:comment ?dsComment } .
+    OPTIONAL { ?ds rdfs:comment ?dsLabel } .
+}</pre>
+<h1>Results</h1>
+<h2>Number of triples in original model</h2>
+<p>89523</p>
+<h2>Number of triples in query result</h2>
+<p>1</p>
+<h2>Query result</h2>
+<table border='1'>
+<tr><th>ds</th><th>dsLabel</th><th>dsComment</th></tr>
+<tr>
+<td>&lt;urn:src:hvac_spaces/00003&gt;</td><td>Zone 1 Supplied by AHU1 or AHU2, through VAV1</td><td>Zone 1 Supplied by AHU1 or AHU2, through VAV1</td></tr>
+</table>
+</body></html>

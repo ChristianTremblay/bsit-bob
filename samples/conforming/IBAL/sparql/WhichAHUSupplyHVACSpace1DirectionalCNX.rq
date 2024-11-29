@@ -1,0 +1,23 @@
+DESCRIBE ?eq ?ahu ?space1 ?airInletCP ?ahuLabel ?ahuComment ?eqLabel ?eqComment
+WHERE {
+    BIND(<urn:src:hvac_spaces/00003> AS ?space1)
+    BIND(<urn:src:hvac_devices/00867> AS ?excludedEquipment)
+    ?space1 s223:hasConnectionPoint ?airInletCP .
+    ?airInletCP a s223:InletConnectionPoint .
+    ?airInletCP s223:hasMedium s223:Fluid-Air .
+
+    ?eq s223:cnx+ ?airInletCP .
+    #?eq a s223:Fan .
+    ?eq (s223:hasConnectionPoint/s223:cnx) ?c .
+    ?c s223:hasMedium s223:Fluid-Air .
+    ?ahu s223:hasMember ?eq .
+    ?ahu a s223:AirHandlingUnit .
+
+    OPTIONAL { ?ahu rdfs:label ?ahuLabel} .
+    OPTIONAL { ?ahu rdfs:label ?ahuComment} .
+    OPTIONAL { ?eq rdfs:label ?eqLabel} .
+    OPTIONAL { ?eq rdfs:label ?eqComment} .
+}
+
+
+

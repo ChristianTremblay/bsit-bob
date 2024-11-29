@@ -1,0 +1,36 @@
+DESCRIBE ?c
+WHERE {
+    BIND(<urn:src:hvac_spaces/00003> AS ?space1)
+    BIND(<urn:src:hvac_devices/00867> AS ?damper5a)
+    BIND(<urn:src:hvac_devices/00906> AS ?damper5b)
+    ?space1 s223:connectedFrom ?eq1 .
+    ?eq1 s223:connectedFrom* ?eq .
+    
+    ?eq s223:connectedThrough ?c . 
+    ?c s223:hasMedium s223:Fluid-Air .
+    ?c s223:connectsAt 
+    #{
+    #SELECT (COUNT(?cp) AS ?cp_per_conn)
+    #    WHERE {
+    #        ?c s223:connectsAt ?cp .
+    #    }
+    #}
+    #?eq1 s223:connectedThrough ?c1 .
+    
+    #FILTER(?cp_per_conn <= 3)
+    #FILTER(?c1 = ?c)
+
+    #FILTER(?eq1 != ?damper5a && ?eq1 != ?damper5b)
+    #FILTER(?eq != ?damper5a && ?eq != ?damper5b)
+    
+    
+    #?system a s223:System .
+    #OPTIONAL { ?system s223:hasMember ?eq } .
+    #OPTIONAL { ?system rdfs:label ?systemLabel} .
+    #OPTIONAL { ?system rdfs:label ?systemComment} .
+    #OPTIONAL { ?eq rdfs:label ?eqLabel} .
+    #OPTIONAL { ?eq rdfs:label ?eqComment} .
+}
+
+
+

@@ -1,0 +1,29 @@
+<html><body>
+<h1>SPARQL Query</h1>
+<h2>AHU1</h2>
+<p>Created on 2024-11-06 23:26:49</p>
+<pre>PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX s223: &lt;http://data.ashrae.org/standard223#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?ahu ?ahuLabel ?ahuComment 
+WHERE {
+    ?ahu a s223:System .
+    ?ahu rdfs:label &quot;AHU1&quot; .
+    OPTIONAL { ?ahu rdfs:comment ?ahuComment } .
+    OPTIONAL { ?ahu rdfs:label ?ahuLabel } .
+}
+</pre>
+<h1>Results</h1>
+<h2>Number of triples in original model</h2>
+<p>87632</p>
+<h2>Number of triples in query result</h2>
+<p>1</p>
+<h2>Query result</h2>
+<table border='1'>
+<tr><th>ahu</th><th>ahuLabel</th><th>ahuComment</th></tr>
+<tr>
+<td>&lt;urn:src:hvac_devices/00001&gt;</td><td>AHU1</td><td>AHU delivering air to VAV boxes 1 2 3 4 in parallel with AHU 2 (not at the same time, see damper 5)</td></tr>
+</table>
+</body></html>
