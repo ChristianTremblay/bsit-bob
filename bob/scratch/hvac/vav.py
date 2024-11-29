@@ -8,6 +8,7 @@ from bob.core import (
     BoundaryConnectionPoint,
     System,
 )
+from bob import concept
 from bob.equipment.hvac.coil import ElectricalHeatingCoil, HotWaterCoil
 from bob.properties.flow import Flow
 from bob.properties.ratio import Percent
@@ -141,8 +142,8 @@ vav_system_template = {
 }
 
 
-class VAV(SystemFromTemplate):
-    _class_iri = S223.SingleDuctTerminal
+class VAV(SystemFromTemplate, concept.SingleDuctTerminal):
+    _class_iri = SCRATCH.SingleDuctTerminal
     airInlet: BoundaryConnectionPoint
     airOutlet: BoundaryConnectionPoint
 
@@ -215,8 +216,8 @@ vav_dual_template = {
 }
 
 
-class VAV_Dual(System):
-    _class_iri = S223.DualDuctTerminal
+class VAV_Dual(System, concept.SingleDuctTerminal):
+    _class_iri = SCRATCH.DualDuctTerminal
     airInlet: BoundaryConnectionPoint
     plenumInlet: BoundaryConnectionPoint
     airOutlet: BoundaryConnectionPoint

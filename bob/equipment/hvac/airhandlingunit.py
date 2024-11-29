@@ -3,7 +3,7 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from ...concept import System_AirHandlingUnit, System_FanCoilUnit
+from ... import concept
 from ...core import BOB, P223, S223, BoundaryConnectionPoint, Equipment, System
 from ...template import SystemFromTemplate, template_update
 
@@ -26,7 +26,7 @@ fan_coil_template = {
 }
 
 
-class AirHandlingUnit(SystemFromTemplate, System_AirHandlingUnit):
+class AirHandlingUnit(SystemFromTemplate, concept.AirHandlingUnit):
     """
         This is treated as a system.
         We will add multiple devices inside using a template
@@ -117,7 +117,7 @@ class AirHandlingUnit(SystemFromTemplate, System_AirHandlingUnit):
         super().__init__(_config, **kwargs)
 
 
-class FanCoil(System, System_FanCoilUnit):
+class FanCoil(System, concept.FanCoilUnit):
     _class_iri = BOB.FanCoilUnit
     returnAirInlet: BoundaryConnectionPoint
     supplyAirOutlet: BoundaryConnectionPoint

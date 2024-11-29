@@ -3,6 +3,7 @@ from typing import Dict
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...core import BOB, S223, BoundaryConnectionPoint, Equipment, System
+from ... import concept
 from ...enum import TerminalUnit
 from ...equipment.hvac.damper import Damper
 from ...sensor.flow import AirFlowSensor
@@ -22,7 +23,7 @@ TerminalUnit_template = {
 }
 
 
-class SingleDuctTerminal(System):
+class SingleDuctTerminal(System, concept.SingleDuctTerminal):
     # _class_iri = S223.SingleDuctTerminal
     airInlet: BoundaryConnectionPoint
     airOutlet: BoundaryConnectionPoint
@@ -35,7 +36,7 @@ class SingleDuctTerminal(System):
 
 
 # Generic
-class GenericSingleDuctTerminal(Equipment):
+class GenericSingleDuctTerminal(Equipment, concept.SingleDuctTerminal):
     _class_iri = S223.SingleDuctTerminal
     airInlet: AirInletConnectionPoint
     airOutlet: AirInletConnectionPoint

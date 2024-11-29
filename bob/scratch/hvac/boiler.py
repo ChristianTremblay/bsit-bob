@@ -1,5 +1,6 @@
 from typing import Dict
 
+from bob import concept
 from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from bob.connections.electricity import Electricity_240VLL_1Ph_60HzInletConnectionPoint
 from bob.connections.liquid import (
@@ -125,7 +126,7 @@ scratch_system_template = {
 }
 
 
-class DomesticHotWaterHeater(SystemFromTemplate):
+class DomesticHotWaterHeater(SystemFromTemplate, concept.HotWaterHeater):
     _class_iri = S223.DomesticHotWaterHeater
     fluidOutlet: BoundaryConnectionPoint
     fluidInlet: BoundaryConnectionPoint
@@ -248,7 +249,9 @@ scratch_system_template = {
 }
 
 
-class DomesticHPWaterHeater(SystemFromTemplate):
+class DomesticHPWaterHeater(
+    SystemFromTemplate, concept.HotWaterHeater, concept.HeatPump
+):
     _class_iri = S223.DomesticHotWaterHeater
     fluidOutlet: BoundaryConnectionPoint
     fluidInlet: BoundaryConnectionPoint

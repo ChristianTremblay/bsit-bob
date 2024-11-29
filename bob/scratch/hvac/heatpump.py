@@ -11,6 +11,7 @@ from bob.core import (
     Role,
     URIRef,
 )
+from bob import concept
 from bob.enum import R410a
 from bob.equipment.hvac.coil import HeatpumpCoil
 from bob.equipment.hvac.compressor import RefrigerationGasCompressor
@@ -56,7 +57,7 @@ heatpump_template = {
 }
 
 
-class _AirToAirHeatPump(Equipment):
+class _AirToAirHeatPump(Equipment, concept.AirToAirHeatPump):
     """
     A heatpump with refrigeration cycle
     Created as an s223:Equipment member of a s223:HeatPump system
@@ -134,8 +135,8 @@ scratch_system_template = {
 }
 
 
-class AirToAirHeatPump(SystemFromTemplate):
-    _class_iri = S223.AirSourceHeatPump
+class AirToAirHeatPump(SystemFromTemplate, concept.AirToAirHeatPump):
+    _class_iri = SCRATCH.AirSourceHeatPump
     indoorAirInlet: BoundaryConnectionPoint
     indoorAirOutlet: BoundaryConnectionPoint
     outdoorAirInlet: BoundaryConnectionPoint
