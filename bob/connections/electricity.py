@@ -18,7 +18,7 @@ _namespace = BOB
 
 class ElectricalConnection(Connection):
     hasMedium = Electricity
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
     def electrical_phase(self, phase: ElectricalPhaseIdentifier = None):
         self.hasElectricalPhase = phase
@@ -47,7 +47,7 @@ class ElectricalOutletConnectionPoint(OutletConnectionPoint, ElectricalConnectio
 
 class Electricity_10000VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC10000VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_10000VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -72,7 +72,7 @@ class Electricity_10000VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_10000VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC10000VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_10000VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -97,7 +97,7 @@ class Electricity_10000VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_10000VLL_5770VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC10000VLL_5770VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_10000VLL_5770VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -123,7 +123,7 @@ class Electricity_10000VLL_5770VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_10000VLL_5770VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC10000VLL_5770VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_10000VLL_5770VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -149,7 +149,7 @@ class Electricity_10000VLL_5770VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_110VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC110VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_110VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -170,7 +170,7 @@ class Electricity_110VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_120VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC120VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_120VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -195,7 +195,7 @@ class Electricity_120VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_127VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC127VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_127VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -220,7 +220,7 @@ class Electricity_127VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_139VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC139VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_139VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -245,7 +245,7 @@ class Electricity_139VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_1730VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC1730VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_1730VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -270,7 +270,7 @@ class Electricity_1730VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_1900VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC1900VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_1900VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -295,7 +295,7 @@ class Electricity_1900VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_190VLL_110VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC190VLL_110VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_190VLL_110VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -320,7 +320,7 @@ class Electricity_190VLL_110VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_190VLL_110VLN_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC190VLL_110VLN_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_190VLL_110VLN_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -345,7 +345,7 @@ class Electricity_190VLL_110VLN_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_190VLL_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC190VLL_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_190VLL_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -370,7 +370,7 @@ class Electricity_190VLL_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_190VLL_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC190VLL_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_190VLL_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -395,7 +395,7 @@ class Electricity_190VLL_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_208VLL_120VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC208VLL_120VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_208VLL_120VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -420,7 +420,7 @@ class Electricity_208VLL_120VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_208VLL_120VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC208VLL_120VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_208VLL_120VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -445,7 +445,7 @@ class Electricity_208VLL_120VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_208VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC208VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_208VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -470,7 +470,7 @@ class Electricity_208VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_208VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC208VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_208VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -495,7 +495,7 @@ class Electricity_208VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_219VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC219VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_219VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -520,7 +520,7 @@ class Electricity_219VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_220VLL_127VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC220VLL_127VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_220VLL_127VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -545,7 +545,7 @@ class Electricity_220VLL_127VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_220VLL_127VLN_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC220VLL_127VLN_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_220VLL_127VLN_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -570,7 +570,7 @@ class Electricity_220VLL_127VLN_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_220VLL_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC220VLL_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_220VLL_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -595,7 +595,7 @@ class Electricity_220VLL_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_220VLL_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC220VLL_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_220VLL_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -620,7 +620,7 @@ class Electricity_220VLL_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_231VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC231VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_231VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -645,7 +645,7 @@ class Electricity_231VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_2400VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC2400VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_2400VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -670,7 +670,7 @@ class Electricity_2400VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_240VLL_120VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_120VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_120VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -695,7 +695,7 @@ class Electricity_240VLL_120VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_240VLL_139VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_139VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_139VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -720,7 +720,7 @@ class Electricity_240VLL_139VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_240VLL_139VLN_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_139VLN_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_139VLN_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -745,7 +745,7 @@ class Electricity_240VLL_139VLN_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_240VLL_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -770,7 +770,7 @@ class Electricity_240VLL_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_240VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -795,7 +795,7 @@ class Electricity_240VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_240VLL_208VLN_120VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_208VLN_120VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_208VLN_120VLN_1Ph_60HzConnectionPoint(
@@ -824,7 +824,7 @@ class Electricity_240VLL_208VLN_120VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_240VLL_208VLN_120VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_208VLN_120VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_208VLN_120VLN_3Ph_60HzConnectionPoint(
@@ -853,7 +853,7 @@ class Electricity_240VLL_208VLN_120VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_240VLL_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -878,7 +878,7 @@ class Electricity_240VLL_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_240VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -903,7 +903,7 @@ class Electricity_240VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_240VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC240VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_240VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -928,7 +928,7 @@ class Electricity_240VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_24VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC24VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_24VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -953,7 +953,7 @@ class Electricity_24VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_24VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC24VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_24VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -978,7 +978,7 @@ class Electricity_24VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_277VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC277VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_277VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1003,7 +1003,7 @@ class Electricity_277VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_3000VLL_1730VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3000VLL_1730VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3000VLL_1730VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1028,7 +1028,7 @@ class Electricity_3000VLL_1730VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_3000VLL_1730VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3000VLL_1730VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3000VLL_1730VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1053,7 +1053,7 @@ class Electricity_3000VLL_1730VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_3000VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3000VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3000VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1078,7 +1078,7 @@ class Electricity_3000VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_3000VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3000VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3000VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1103,7 +1103,7 @@ class Electricity_3000VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_3300VLL_1900VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3300VLL_1900VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3300VLL_1900VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1128,7 +1128,7 @@ class Electricity_3300VLL_1900VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_3300VLL_1900VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3300VLL_1900VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3300VLL_1900VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1153,7 +1153,7 @@ class Electricity_3300VLL_1900VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_3300VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3300VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3300VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1178,7 +1178,7 @@ class Electricity_3300VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_3300VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3300VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3300VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1203,7 +1203,7 @@ class Electricity_3300VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_3460VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3460VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3460VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1228,7 +1228,7 @@ class Electricity_3460VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_347VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC347VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_347VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1253,7 +1253,7 @@ class Electricity_347VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_380VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC380VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_380VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1278,7 +1278,7 @@ class Electricity_380VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_380VLL_219VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC380VLL_219VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_380VLL_219VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1303,7 +1303,7 @@ class Electricity_380VLL_219VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_380VLL_219VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC380VLL_219VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_380VLL_219VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1328,7 +1328,7 @@ class Electricity_380VLL_219VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_380VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC380VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_380VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1353,7 +1353,7 @@ class Electricity_380VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_3810VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC3810VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_3810VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1378,7 +1378,7 @@ class Electricity_3810VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_400VLL_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC400VLL_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_400VLL_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -1403,7 +1403,7 @@ class Electricity_400VLL_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_400VLL_231VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC400VLL_231VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_400VLL_231VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -1428,7 +1428,7 @@ class Electricity_400VLL_231VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_400VLL_231VLN_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC400VLL_231VLN_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_400VLL_231VLN_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -1453,7 +1453,7 @@ class Electricity_400VLL_231VLN_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_400VLL_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC400VLL_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_400VLL_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -1478,7 +1478,7 @@ class Electricity_400VLL_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_415VLL_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC415VLL_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_415VLL_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -1503,7 +1503,7 @@ class Electricity_415VLL_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_415VLL_240VLN_1Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC415VLL_240VLN_1Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_415VLL_240VLN_1Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -1528,7 +1528,7 @@ class Electricity_415VLL_240VLN_1Ph_50HzOutletConnectionPoint(
 
 class Electricity_415VLL_240VLN_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC415VLL_240VLN_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_415VLL_240VLN_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -1553,7 +1553,7 @@ class Electricity_415VLL_240VLN_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_415VLL_3Ph_50HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC415VLL_3Ph_50Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_415VLL_3Ph_50HzConnectionPoint(ElectricalConnectionPoint):
@@ -1578,7 +1578,7 @@ class Electricity_415VLL_3Ph_50HzOutletConnectionPoint(
 
 class Electricity_4160VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC4160VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_4160VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1603,7 +1603,7 @@ class Electricity_4160VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_4160VLL_2400VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC4160VLL_2400VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_4160VLL_2400VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1628,7 +1628,7 @@ class Electricity_4160VLL_2400VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_4160VLL_2400VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC4160VLL_2400VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_4160VLL_2400VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1653,7 +1653,7 @@ class Electricity_4160VLL_2400VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_4160VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC4160VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_4160VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1678,7 +1678,7 @@ class Electricity_4160VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_480VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC480VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_480VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1703,7 +1703,7 @@ class Electricity_480VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_480VLL_277VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC480VLL_277VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_480VLL_277VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1728,7 +1728,7 @@ class Electricity_480VLL_277VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_480VLL_277VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC480VLL_277VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_480VLL_277VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1753,7 +1753,7 @@ class Electricity_480VLL_277VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_480VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC480VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_480VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1778,7 +1778,7 @@ class Electricity_480VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_5770VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC5770VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_5770VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1803,7 +1803,7 @@ class Electricity_5770VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_6000VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC6000VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6000VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1828,7 +1828,7 @@ class Electricity_6000VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_6000VLL_3460VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC6000VLL_3460VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6000VLL_3460VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1853,7 +1853,7 @@ class Electricity_6000VLL_3460VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_6000VLL_3460VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC6000VLL_3460VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6000VLL_3460VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1878,7 +1878,7 @@ class Electricity_6000VLL_3460VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_6000VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC6000VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6000VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1903,7 +1903,7 @@ class Electricity_6000VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_600VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC600VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_600VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1928,7 +1928,7 @@ class Electricity_600VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_600VLL_347VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC600VLL_347VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_600VLL_347VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1953,7 +1953,7 @@ class Electricity_600VLL_347VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_600VLL_347VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC600VLL_347VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_600VLL_347VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -1978,7 +1978,7 @@ class Electricity_600VLL_347VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_600VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC600VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_600VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -2003,7 +2003,7 @@ class Electricity_600VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_6600VLL_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC6600VLL_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6600VLL_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -2028,7 +2028,7 @@ class Electricity_6600VLL_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_6600VLL_3810VLN_1Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC6600VLL_3810VLN_1Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6600VLL_3810VLN_1Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -2053,7 +2053,7 @@ class Electricity_6600VLL_3810VLN_1Ph_60HzOutletConnectionPoint(
 
 class Electricity_6600VLL_3810VLN_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC6600VLL_3810VLN_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6600VLL_3810VLN_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -2078,7 +2078,7 @@ class Electricity_6600VLL_3810VLN_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_6600VLL_3Ph_60HzConnection(ElectricalConnection):
     hasMedium = Electricity.AC6600VLL_3Ph_60Hz
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6600VLL_3Ph_60HzConnectionPoint(ElectricalConnectionPoint):
@@ -2103,7 +2103,7 @@ class Electricity_6600VLL_3Ph_60HzOutletConnectionPoint(
 
 class Electricity_12VConnection(ElectricalConnection):
     hasMedium = Electricity.DC12V
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_12VConnectionPoint(ElectricalConnectionPoint):
@@ -2128,7 +2128,7 @@ class Electricity_12VOutletConnectionPoint(
 
 class Electricity_24VConnection(ElectricalConnection):
     hasMedium = Electricity.DC24V
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_24VConnectionPoint(ElectricalConnectionPoint):
@@ -2153,7 +2153,7 @@ class Electricity_24VOutletConnectionPoint(
 
 class Electricity_380VConnection(ElectricalConnection):
     hasMedium = Electricity.DC380V
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_380VConnectionPoint(ElectricalConnectionPoint):
@@ -2178,7 +2178,7 @@ class Electricity_380VOutletConnectionPoint(
 
 class Electricity_48VConnection(ElectricalConnection):
     hasMedium = Electricity.DC48V
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_48VConnectionPoint(ElectricalConnectionPoint):
@@ -2203,7 +2203,7 @@ class Electricity_48VOutletConnectionPoint(
 
 class Electricity_5VConnection(ElectricalConnection):
     hasMedium = Electricity.DC5V
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_5VConnectionPoint(ElectricalConnectionPoint):
@@ -2228,7 +2228,7 @@ class Electricity_5VOutletConnectionPoint(
 
 class Electricity_6VConnection(ElectricalConnection):
     hasMedium = Electricity.DC6V
-    _class_iri = S223.ElectricWire
+    _class_iri = S223.Conductor
 
 
 class Electricity_6VConnectionPoint(ElectricalConnectionPoint):
