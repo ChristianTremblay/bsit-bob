@@ -3771,7 +3771,7 @@ def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
     zone._data_graph.add((zone._node_iri, S223.hasDomainSpace, domain_space._node_iri))
     if INCLUDE_INVERSE:
         zone._data_graph.add(
-            (domain_space._node_iri, S223.isContainedIn, zone._node_iri)
+            (domain_space._node_iri, S223.isContainedInZone, zone._node_iri)
         )
 
 
