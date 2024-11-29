@@ -133,7 +133,7 @@ def configure_relations(
         elif operator == "%":
             source % target
         elif operator == "mapsTo":
-            source.mapsTo(target)
+            source.mapsTo = target
         elif operator == "@":
             source @ target
         # no @ here as we are creating relation "inside" the equipment or system

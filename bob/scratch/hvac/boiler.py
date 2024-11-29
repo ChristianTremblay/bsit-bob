@@ -127,7 +127,7 @@ scratch_system_template = {
 
 
 class DomesticHotWaterHeater(SystemFromTemplate, concept.HotWaterHeater):
-    _class_iri = S223.DomesticHotWaterHeater
+    _class_iri = SCRATCH.DomesticHotWaterHeater
     fluidOutlet: BoundaryConnectionPoint
     fluidInlet: BoundaryConnectionPoint
     electricalInlet: BoundaryConnectionPoint
@@ -178,7 +178,7 @@ domesticHPwaterheater_template = {
 }
 
 
-class _DomesticHPWaterHeater(Equipment):
+class _DomesticHPWaterHeater(Equipment, concept.HotWaterHeater, concept.HeatPump):
     _class_iri = SCRATCH.DomesticHeatPumpWaterHeater
     airInlet: AirInletConnectionPoint
     airOutlet: AirOutletConnectionPoint
@@ -252,7 +252,7 @@ scratch_system_template = {
 class DomesticHPWaterHeater(
     SystemFromTemplate, concept.HotWaterHeater, concept.HeatPump
 ):
-    _class_iri = S223.DomesticHotWaterHeater
+    _class_iri = SCRATCH.DomesticHotWaterHeater
     fluidOutlet: BoundaryConnectionPoint
     fluidInlet: BoundaryConnectionPoint
     electricalInlet: BoundaryConnectionPoint

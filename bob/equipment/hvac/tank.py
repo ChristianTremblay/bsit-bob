@@ -34,8 +34,8 @@ _namespace = BOB
 
 class Tank(Equipment):
     _class_iri = P223.Tank
-    fluidInlet: FluidOutletConnectionPoint
-    fluidOutlet: FluidInletConnectionPoint
+    fluidInlet: FluidInletConnectionPoint
+    fluidOutlet: FluidOutletConnectionPoint
     containedFluid: FluidBidirectionalConnectionPoint
 
     fluidTemperature: Temperature
