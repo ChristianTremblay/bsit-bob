@@ -902,8 +902,6 @@ class Node(metaclass=NodeMetaclass):
 
         # link the two together
         self._data_graph.add((self._node_iri, S223.hasProperty, prop._node_iri))
-        if INCLUDE_INVERSE:
-            self._data_graph.add((prop._node_iri, S223.isPropertyOf, self._node_iri))
 
         return prop
 
@@ -1651,14 +1649,6 @@ class System(Container):
                 connection_point._node_iri,
             )
         )
-        if INCLUDE_INVERSE:
-            self._data_graph.add(
-                (
-                    connection_point._node_iri,
-                    S223.isBoundaryConnectionPointOf,
-                    self._node_iri,
-                )
-            )
 
         return connection_point
 
@@ -3060,10 +3050,6 @@ def contains_mm(parent_space: PhysicalSpace, child_space: PhysicalSpace) -> None
     parent_space._data_graph.add(
         (parent_space._node_iri, S223.contains, child_space._node_iri)
     )
-    if INCLUDE_INVERSE:
-        parent_space._data_graph.add(
-            (child_space._node_iri, S223.isContainedIn, parent_space._node_iri)
-        )
 
 
 @multimethod
@@ -3671,10 +3657,6 @@ def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None
     parent_equipment._data_graph.add(
         (parent_equipment._node_iri, S223.contains, child_equipment._node_iri)
     )
-    if INCLUDE_INVERSE:
-        parent_equipment._data_graph.add(
-            (child_equipment._node_iri, S223.isContainedIn, parent_equipment._node_iri)
-        )
 
 
 @multimethod
@@ -3696,10 +3678,6 @@ def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None:
     parent_equipment._data_graph.add(
         (parent_equipment._node_iri, S223.contains, child_junction._node_iri)
     )
-    if INCLUDE_INVERSE:
-        parent_equipment._data_graph.add(
-            (child_junction._node_iri, S223.isContainedIn, parent_equipment._node_iri)
-        )
 
 
 class _Sensor(Equipment):
@@ -3719,10 +3697,6 @@ def contains_mm(equipment: Equipment, sensor: _Sensor) -> None:
     _log.info(f"equipment {equipment} contains sensor {sensor}")
 
     equipment._data_graph.add((equipment._node_iri, S223.contains, sensor._node_iri))
-    if INCLUDE_INVERSE:
-        equipment._data_graph.add(
-            (sensor._node_iri, S223.isContainedIn, equipment._node_iri)
-        )
 
 
 class _Producer(Container, Node):
@@ -3742,10 +3716,6 @@ def contains_mm(parent_equipment: Equipment, child_producer: _Producer) -> None:
     parent_equipment._data_graph.add(
         (parent_equipment._node_iri, BOB.contains, child_producer._node_iri)
     )
-    if INCLUDE_INVERSE:
-        parent_equipment._data_graph.add(
-            (child_producer._node_iri, BOB.isContainedIn, parent_equipment._node_iri)
-        )
 
 
 class DomainSpace(Connectable):
@@ -3769,10 +3739,6 @@ def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
     _log.info(f"zone {zone} contains domain space {domain_space}")
 
     zone._data_graph.add((zone._node_iri, S223.hasDomainSpace, domain_space._node_iri))
-    if INCLUDE_INVERSE:
-        zone._data_graph.add(
-            (domain_space._node_iri, S223.isContainedInZone, zone._node_iri)
-        )
 
 
 @multimethod

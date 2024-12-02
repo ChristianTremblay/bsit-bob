@@ -109,10 +109,6 @@ def contains_mm(producer: Producer, sub_producer: _Producer) -> None:
     _log.info(f"producer {producer} contains producer {sub_producer}")
 
     producer._data_graph.add((producer._node_iri, BOB.contains, sub_producer._node_iri))
-    if INCLUDE_INVERSE:
-        producer._data_graph.add(
-            (sub_producer._node_iri, BOB.isContainedIn, producer._node_iri)
-        )
 
 
 #
@@ -374,10 +370,6 @@ def contains_mm(producer: Producer, sub_producer: Producer) -> None:
     _log.info(f"producer {producer} contains producer {sub_producer}")
 
     producer._data_graph.add((producer._node_iri, BOB.contains, sub_producer._node_iri))
-    if INCLUDE_INVERSE:
-        producer._data_graph.add(
-            (sub_producer._node_iri, BOB.isContainedIn, producer._node_iri)
-        )
 
 
 @multimethod
@@ -386,7 +378,3 @@ def contains_mm(equipment: Equipment, producer: Producer) -> None:
     _log.info(f"equipment {equipment} contains producer {producer}")
 
     producer._data_graph.add((equipment._node_iri, BOB.contains, producer._node_iri))
-    if INCLUDE_INVERSE:
-        producer._data_graph.add(
-            (producer._node_iri, BOB.isContainedIn, equipment._node_iri)
-        )
