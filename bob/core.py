@@ -1093,14 +1093,6 @@ class Property(Node):
         self._data_graph.add(
             (self._node_iri, S223.hasInternalReference, internal_reference._node_iri)
         )
-        if INCLUDE_INVERSE:
-            self._data_graph.add(
-                (
-                    internal_reference._node_iri,
-                    S223.isInternalReferenceOf,
-                    self._node_iri,
-                )
-            )
         self.hasInternalReference.add(internal_reference)
 
 
@@ -1659,8 +1651,6 @@ def contains_mm(system: System, equipment: Equipment) -> None:
     _log.info(f"system {system} hasMember Equipment {equipment}")
 
     system._data_graph.add((system._node_iri, S223.hasMember, equipment._node_iri))
-    if INCLUDE_INVERSE:
-        system._data_graph.add((equipment._node_iri, S223.isMemberOf, system._node_iri))
 
 
 @multimethod
@@ -1669,8 +1659,6 @@ def contains_mm(system: System, subsystem: System) -> None:
     _log.info(f"system {system} hasMember subsystem {subsystem}")
 
     system._data_graph.add((system._node_iri, S223.hasMember, subsystem._node_iri))
-    if INCLUDE_INVERSE:
-        system._data_graph.add((subsystem._node_iri, S223.isMemberOf, system._node_iri))
 
 
 @multimethod
@@ -3060,10 +3048,6 @@ def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> Non
     physical_space._data_graph.add(
         (physical_space._node_iri, S223.encloses, domain_space._node_iri)
     )
-    if INCLUDE_INVERSE:
-        physical_space._data_graph.add(
-            (domain_space._node_iri, S223.isEnclosedIn, physical_space._node_iri)
-        )
 
 
 @multimethod
