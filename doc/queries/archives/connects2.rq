@@ -1,0 +1,63 @@
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+CONSTRUCT {
+    ?cp s223:cnx ?connectable .
+    ?connectable s223:cnx ?cp .
+    ?cp rdfs:label ?cp_label .
+    ?cp rdfs:comment ?cp_comment .
+    ?connectable rdfs:label ?connectable_label .
+    ?connectable rdfs:comment ?connectable_comment .
+    ?cp s223:hasMedium s223:Fluid-Air .
+    ?cp a ?cp_type .
+    ?connectable a ?connectable_type .
+}
+WHERE {
+    ?cp a s223:ConnectionPoint .
+    ?cp s223:hasMedium s223:Fluid-Air .
+    MINUS { ?cp s223:mapsTo s223:ConnectionPoint } .
+    {
+        ?cp s223:cnx ?connectable .
+        ?connectable a s223:Connection .
+    }
+    UNION
+    {
+        ?connectable s223:cnx ?cp .
+        ?connectable a s223:Connection .
+    }
+    UNION
+    {
+        ?cp s223:cnx ?connectable .
+        ?connectable a s223:Equipment .
+    }
+    UNION
+    {
+        ?connectable s223:cnx ?cp .
+        ?connectable a s223:Equipment .
+    }
+    UNION
+    {
+        ?connectable s223:cnx ?cp .
+        ?connectable a s223:DomainSpace .
+    }   
+    UNION
+    {
+        ?cp s223:cnx ?connectable .
+        ?connectable a s223:DomainSpace .
+    }
+    OPTIONAL { ?cp rdfs:label ?cp_label } .
+    OPTIONAL { ?cp rdfs:comment ?cp_comment } .
+    OPTIONAL { ?connectable rdfs:label ?connectable_label } .
+    OPTIONAL { ?connectable rdfs:comment ?connectable_comment } .
+    # Infer flow direction based on connection point type
+    ?cp a ?cp_type .
+    FILTER(?cp_type IN (s223:InletConnectionPoint, s223:OutletConnectionPoint))
+    
+    # Add rdfs:label and rdfs:comment for all connections and connection points
+    OPTIONAL { ?connectable rdfs:label ?connectable_label } .
+    OPTIONAL { ?connectable rdfs:comment ?connectable_comment } .
+    OPTIONAL { ?cp rdfs:label ?cp_label } .
+    OPTIONAL { ?cp rdfs:comment ?cp_comment } .
+    # Get the type for connection or equipment
+    ?connectable a ?connectable_type .
+}

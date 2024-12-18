@@ -1,0 +1,56 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+CONSTRUCT {
+    ?ahu s223:hasMember ?equipment .
+    ?equipment s223:cnx ?equipmentCp .
+    ?equipmentCp s223:cnx ?connection .
+    ?connection s223:cnx ?domainSpaceCp .
+    ?equipment rdfs:label ?equipmentLabel .
+    ?equipmentCp rdfs:label ?equipmentCpLabel .
+    ?connection rdfs:label ?connectionLabel .
+    ?domainSpaceCp rdfs:label ?domainSpaceCpLabel .
+    ?ahu rdfs:label ?ahuLabel .
+    ?equipment rdfs:comment ?equipmentComment .
+    ?equipmentCp rdfs:comment ?equipmentCpComment .
+    ?connection rdfs:comment ?connectionComment .
+    ?domainSpaceCp rdfs:comment ?domainSpaceCpComment .
+    ?ahu rdfs:comment ?ahuComment .
+    ?equipment a ?equipmentType .
+    ?equipmentCp a ?equipmentCpType .
+    ?connection a ?connectionType .
+    ?domainSpaceCp a ?domainSpaceCpType .
+    ?ahu a ?ahuType .
+}
+WHERE {
+    ?domainSpace a s223:DomainSpace ;
+                 rdfs:label "HVACSpace2" ;
+                 s223:hasConnectionPoint ?domainSpaceCp .
+    #?domainSpaceCp a s223:InletConnectionPoint .
+    ?domainSpaceCp s223:cnx ?connection .
+    ?connection s223:hasMedium s223:Fluid-Air .
+    ?equipment s223:hasConnectionPoint ?equipmentCp ;
+               a s223:Equipment .
+    ?equipmentCp s223:cnx ?connection .
+    ?ahu s223:hasMember ?equipment ;
+         a s223:System .
+
+    OPTIONAL { ?equipment rdfs:label ?equipmentLabel } .
+    OPTIONAL { ?equipmentCp rdfs:label ?equipmentCpLabel } .
+    OPTIONAL { ?connection rdfs:label ?connectionLabel } .
+    OPTIONAL { ?domainSpaceCp rdfs:label ?domainSpaceCpLabel } .
+    OPTIONAL { ?ahu rdfs:label ?ahuLabel } .
+    OPTIONAL { ?equipment rdfs:comment ?equipmentComment } .
+    OPTIONAL { ?equipmentCp rdfs:comment ?equipmentCpComment } .
+    OPTIONAL { ?connection rdfs:comment ?connectionComment } .
+    OPTIONAL { ?domainSpaceCp rdfs:comment ?domainSpaceCpComment } .
+    OPTIONAL { ?ahu rdfs:comment ?ahuComment } .
+    OPTIONAL { ?equipment a ?equipmentType } .
+    OPTIONAL { ?equipmentCp a ?equipmentCpType } .
+    OPTIONAL { ?connection a ?connectionType } .
+    OPTIONAL { ?domainSpaceCp a ?domainSpaceCpType } .
+    OPTIONAL { ?ahu a ?ahuType } .
+}
+LIMIT 100

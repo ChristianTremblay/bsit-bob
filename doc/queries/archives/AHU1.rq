@@ -1,0 +1,12 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?ahu ?ahuLabel ?ahuComment 
+WHERE {
+    ?ahu a s223:System .
+    ?ahu rdfs:label "AHU1" .
+    OPTIONAL { ?ahu rdfs:comment ?ahuComment } .
+    OPTIONAL { ?ahu rdfs:label ?ahuLabel } .
+}

@@ -1,0 +1,18 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+CONSTRUCT {
+    ?node s223:cnx ?cp .
+    ?node a ?eqType .
+    ?node rdfs:label ?nodeLabel .
+
+}
+WHERE {
+    ?node s223:cnx ?cp .
+    ?cp s223:hasMedium s223:Fluid-Air .
+    ?eq1 a ?eqType .
+    OPTIONAL { ?node rdfs:label ?nodeLabel } .
+
+}

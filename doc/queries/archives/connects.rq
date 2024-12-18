@@ -1,0 +1,35 @@
+PREFIX s223: <http://data.ashrae.org/standard223#>
+CONSTRUCT {
+    ?connection s223:cnx ?inletCP . 
+    ?flabel rdfs:label ?flabel .
+    ?connection rdfs:label ?tlabel .
+    ?inletCP a ?from_type .
+    ?connection a ?to_type .
+    ?connection rdfs:comment ?tcomment .
+    ?inletCP rdfs:comment ?fcomment .
+    }
+WHERE {
+    ?connection ^s223:connectsThrough ?inletCP . # points to a connection point
+    ?inletCP a s223:InletConnectionPoint .
+    optional { ?inletCP rdfs:label ?flabel } .
+    ?inletCP a ?from_type .
+    ?connection a ?to_type .
+    optional { ?connection rdfs:label ?tlabel } .
+    optional { ?connection rdfs:comment ?tcomment } .
+    optional { ?inletCP rdfs:comment ?fcomment } .
+    }
+
+#   Pattern that find OutletConnectionPoint -> connection
+#   Pattern that find connection -> InletConnectionPoint
+#   CONSTRUCT {
+#    ?outletCP s223:cnx ?connection .
+#   WHERE
+#    ?connection s223:connectsThrough ?outletCP . # points to a connection point
+#    ?outletCP a s223:InletConnectionPoint .
+#
+#   Pattern that find connection -> InletConnectionPoint
+#   CONSTRUCT {
+#    ?connection s223:cnx ?inletCP .
+#   WHERE
+#    ?connection ^s223:connectsThrough ?inletCP . # points to a connection point
+#    ?inletCP a s223:InletConnectionPoint .
