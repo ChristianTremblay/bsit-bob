@@ -4,6 +4,7 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex35: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -21,7 +22,8 @@
   rdfs:label "test_device-002" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-ex35:00001 a s223:Boiler,
+ex35:00001 a p223:System-Boiler,
+        s223:Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "HWB-1" ;
@@ -29,7 +31,6 @@ ex35:00001 a s223:Boiler,
     s223:hasConnectionPoint ex35:00002,
         ex35:00003 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isSystemType s223:Role-Heating ;
     bob:hotWaterEntering ex35:00003 ;
     bob:hotWaterLeaving ex35:00002 ;
     rdfs:comment "Hot Water Boiler" .
@@ -55,8 +56,7 @@ ex35:00004 a s223:Connectable,
     rdfs:label "hw_heater" ;
     s223:hasConnectionPoint ex35:00005,
         ex35:00006,
-        ex35:00007 ;
-    s223:isContainedIn ex35:00001 .
+        ex35:00007 .
 
 ex35:00005 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
@@ -79,7 +79,8 @@ ex35:00007 a s223:ConnectionPoint,
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex35:00004 .
 
-ex35:00008 a s223:Boiler,
+ex35:00008 a p223:System-Boiler,
+        s223:Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "Electrical Hot Water Boiler" ;
@@ -88,7 +89,6 @@ ex35:00008 a s223:Boiler,
         ex35:00010,
         ex35:00011 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isSystemType s223:Role-Heating ;
     bob:electricalInlet ex35:00011 ;
     bob:hotWaterEntering ex35:00010 ;
     bob:hotWaterLeaving ex35:00009 ;
@@ -122,8 +122,7 @@ ex35:00012 a s223:Connectable,
     rdfs:label "hw_heater" ;
     s223:hasConnectionPoint ex35:00013,
         ex35:00014,
-        ex35:00015 ;
-    s223:isContainedIn ex35:00008 .
+        ex35:00015 .
 
 ex35:00013 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
@@ -146,7 +145,8 @@ ex35:00015 a s223:ConnectionPoint,
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex35:00012 .
 
-ex35:00016 a s223:Boiler,
+ex35:00016 a p223:System-Boiler,
+        s223:Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "HWB-2" ;
@@ -159,7 +159,6 @@ ex35:00016 a s223:Boiler,
         ex35:00022,
         ex35:00023 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isSystemType s223:Role-Heating ;
     bob:combustionAirInlet ex35:00021 ;
     bob:combustionAirOutlet ex35:00022 ;
     bob:condensedWaterOutlet ex35:00023 ;
@@ -225,8 +224,7 @@ ex35:00024 a s223:Connectable,
     rdfs:label "hw_heater" ;
     s223:hasConnectionPoint ex35:00025,
         ex35:00026,
-        ex35:00027 ;
-    s223:isContainedIn ex35:00016 .
+        ex35:00027 .
 
 ex35:00025 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
@@ -262,7 +260,6 @@ ex35:00028 a s223:Coil,
         ex35:00034,
         ex35:00035 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isSystemType s223:Role-Heating ;
     bob:airInlet ex35:00029 ;
     bob:airOutlet ex35:00030 ;
     bob:hotWaterInlet ex35:00031 ;
@@ -306,7 +303,6 @@ ex35:00033 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "averageSurfaceTemperature" ;
-    s223:isPropertyOf ex35:00028 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 ex35:00034 a s223:ObservableProperty,
@@ -315,7 +311,6 @@ ex35:00034 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "internalPressure" ;
-    s223:isPropertyOf ex35:00028 ;
     qudt:hasQuantityKind qudtqk:Pressure .
 
 ex35:00035 a s223:ObservableProperty,
@@ -324,7 +319,6 @@ ex35:00035 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "internalTemperature" ;
-    s223:isPropertyOf ex35:00028 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 ex35:00036 a s223:Coil,
@@ -340,7 +334,6 @@ ex35:00036 a s223:Coil,
         ex35:00042,
         ex35:00043 ;
     s223:hasRole s223:Role-Cooling ;
-    s223:isSystemType s223:Role-Cooling ;
     bob:airInlet ex35:00037 ;
     bob:airOutlet ex35:00038 ;
     bob:chilledWaterInlet ex35:00039 ;
@@ -384,7 +377,6 @@ ex35:00041 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "averageSurfaceTemperature" ;
-    s223:isPropertyOf ex35:00036 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 ex35:00042 a s223:ObservableProperty,
@@ -393,7 +385,6 @@ ex35:00042 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "internalPressure" ;
-    s223:isPropertyOf ex35:00036 ;
     qudt:hasQuantityKind qudtqk:Pressure .
 
 ex35:00043 a s223:ObservableProperty,
@@ -402,7 +393,6 @@ ex35:00043 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "internalTemperature" ;
-    s223:isPropertyOf ex35:00036 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 ex35:00044 a s223:Connectable,
@@ -417,7 +407,6 @@ ex35:00044 a s223:Connectable,
         ex35:00050,
         ex35:00051 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isSystemType s223:Role-Heating ;
     bob:airInlet ex35:00045 ;
     bob:airOutlet ex35:00046 .
 
@@ -451,7 +440,6 @@ ex35:00048 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf ex35:00044 ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -462,7 +450,6 @@ ex35:00049 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf ex35:00044 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -472,7 +459,6 @@ ex35:00050 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "modulation" ;
-    s223:isPropertyOf ex35:00044 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -481,6 +467,5 @@ ex35:00051 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf ex35:00044 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 

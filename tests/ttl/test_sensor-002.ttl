@@ -34,7 +34,6 @@ ex35:00001 a s223:Connectable,
         ex35:00007,
         ex35:00008 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:isEnclosedIn ex35:00018 ;
     bob:airTransfer ex35:00004 ;
     bob:doors ex35:00005 ;
     bob:ductAirInlet ex35:00002 ;
@@ -104,7 +103,6 @@ ex35:00009 a s223:Connectable,
         ex35:00015,
         ex35:00016 ;
     s223:hasDomain s223:Domain-HVAC ;
-    s223:isEnclosedIn ex35:00019 ;
     bob:airTransfer ex35:00012 ;
     bob:doors ex35:00013 ;
     bob:ductAirInlet ex35:00010 ;
@@ -172,20 +170,17 @@ ex35:00017 a s223:PhysicalSpace,
 ex35:00018 a s223:PhysicalSpace,
         bob:Room ;
     rdfs:label "Clean Room #1" ;
-    s223:encloses ex35:00001 ;
-    s223:isContainedIn ex35:00017 .
+    s223:encloses ex35:00001 .
 
 ex35:00019 a s223:PhysicalSpace,
         bob:Room ;
     rdfs:label "SAS leading to Clean Room #1" ;
-    s223:encloses ex35:00009 ;
-    s223:isContainedIn ex35:00017 .
+    s223:encloses ex35:00009 .
 
 ex35:00020 a s223:PhysicalSpace,
         bob:MechanicalRoom,
         bob:Room ;
-    rdfs:label "Mechanical room for Clean Room #1" ;
-    s223:isContainedIn ex35:00017 .
+    rdfs:label "Mechanical room for Clean Room #1" .
 
 ex35:00021 a s223:Connectable,
         s223:Equipment,
@@ -212,7 +207,6 @@ ex35:00022 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "TPD-01.DifferentialStaticPressure" ;
-    s223:isPropertyOf ex35:00021 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:ForcePerArea ;
     qudt:hasUnit unit:PA ;
@@ -224,7 +218,6 @@ ex35:00023 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "TPD-01.ObservationPressure" ;
-    s223:isPropertyOf ex35:00021 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
@@ -235,7 +228,6 @@ ex35:00024 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "TPD-01.ReferencePressure" ;
-    s223:isPropertyOf ex35:00021 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
@@ -248,7 +240,6 @@ ex35:00025 a p223:Producer,
     s223:hasOutput ex35:00028 ;
     bob:differential_output ex35:00028 ;
     bob:high_input ex35:00026 ;
-    bob:isContainedIn ex35:00021 ;
     bob:low_input ex35:00027 ;
     rdfs:comment "Will output High minus Low" .
 
@@ -270,7 +261,6 @@ ex35:00029 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "highPort" ;
     s223:hasObservationLocation ex35:00001 ;
-    s223:isContainedIn ex35:00021 ;
     s223:observes ex35:00030 .
 
 ex35:00030 a s223:ObservableProperty,
@@ -289,7 +279,6 @@ ex35:00031 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "lowPort" ;
     s223:hasObservationLocation ex35:00009 ;
-    s223:isContainedIn ex35:00021 ;
     s223:observes ex35:00032 .
 
 ex35:00032 a s223:ObservableProperty,
@@ -310,7 +299,6 @@ ex35:00033 a p223:Producer,
     s223:hasOutput ex35:00036 ;
     bob:differential_output ex35:00036 ;
     bob:high_input ex35:00034 ;
-    bob:isContainedIn ex35:00021 ;
     bob:low_input ex35:00035 ;
     rdfs:comment "Will output High minus Low" .
 
