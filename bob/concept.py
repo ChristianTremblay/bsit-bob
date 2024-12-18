@@ -18,84 +18,84 @@ from .core import (
     Substance,
 )
 
-_namespace = S223
+_namespace = P223
 
 
 class AirHandlingUnit(Node):
-    _class_iri: URIRef = S223["System-AirHandlingUnit"]
+    _class_iri: URIRef = P223["System-AirHandlingUnit"]
 
 
 class Boiler(Node):
-    _class_iri: URIRef = S223["System-Boiler"]
+    _class_iri: URIRef = P223["System-Boiler"]
 
 
 class Chiller(Node):
-    _class_iri: URIRef = S223["System-Chiller"]
+    _class_iri: URIRef = P223["System-Chiller"]
 
 
 class CoolingTower(Node):
-    _class_iri: URIRef = S223["System-CoolingTower"]
+    _class_iri: URIRef = P223["System-CoolingTower"]
 
 
 class FumeHood(Node):
-    _class_iri: URIRef = S223["System-FumeHood"]
+    _class_iri: URIRef = P223["System-FumeHood"]
 
 
 class Furnace(Node):
-    _class_iri: URIRef = S223["System-Furnace"]
+    _class_iri: URIRef = P223["System-Furnace"]
 
 
 class HeatExchanger(Node):
-    _class_iri: URIRef = S223["System-HeatExchanger"]
+    _class_iri: URIRef = P223["System-HeatExchanger"]
 
 
 class HeatPump(Node):
-    _class_iri: URIRef = S223["System-HeatPump"]
+    _class_iri: URIRef = P223["System-HeatPump"]
 
 
 class HotWaterHeater(Node):
-    _class_iri: URIRef = S223["System-HotWaterHeater"]
+    _class_iri: URIRef = P223["System-HotWaterHeater"]
 
 
 class AirToAirHeatPump(HeatPump):
-    _class_iri: URIRef = S223["HeatPump-AirToAirHeatPump"]
+    _class_iri: URIRef = P223["HeatPump-AirToAirHeatPump"]
 
 
 class GroundToAirHeatPump(HeatPump):
-    _class_iri: URIRef = S223["HeatPump-GroundToAirHeatPump"]
+    _class_iri: URIRef = P223["HeatPump-GroundToAirHeatPump"]
 
 
 class WaterToAirHeatPump(HeatPump):
-    _class_iri: URIRef = S223["HeatPump-WaterToAirHeatPump"]
+    _class_iri: URIRef = P223["HeatPump-WaterToAirHeatPump"]
 
 
 class WaterToWaterHeatPump(HeatPump):
-    _class_iri: URIRef = S223["HeatPump-WaterToWaterHeatPump"]
+    _class_iri: URIRef = P223["HeatPump-WaterToWaterHeatPump"]
 
 
 class TerminalUnit(Node):
-    _class_iri: URIRef = S223["System-TerminalUnit"]
+    _class_iri: URIRef = P223["System-TerminalUnit"]
 
 
 class FanCoilUnit(TerminalUnit):
-    _class_iri: URIRef = S223["TerminalUnit-FanCoilUnit"]
+    _class_iri: URIRef = P223["TerminalUnit-FanCoilUnit"]
 
 
 class FanPoweredTerminal(TerminalUnit):
-    _class_iri: URIRef = S223["TerminalUnit-FanPoweredTerminal"]
+    _class_iri: URIRef = P223["TerminalUnit-FanPoweredTerminal"]
 
 
 class SingleDuctTerminal(TerminalUnit):
-    _class_iri: URIRef = S223["TerminalUnit-SingleDuctTerminal"]
+    _class_iri: URIRef = P223["TerminalUnit-SingleDuctTerminal"]
 
 
 class DualDuctTerminal(TerminalUnit):
-    _class_iri: URIRef = S223["TerminalUnit-DualDuctTerminal"]
+    _class_iri: URIRef = P223["TerminalUnit-DualDuctTerminal"]
 
 
 class ElectricalDistribution(Node):
-    _class_iri: URIRef = S223["System-ElectricalDistribution"]
+    _class_iri: URIRef = P223["System-ElectricalDistribution"]
 
 
 class ElectricalPanel(ElectricalDistribution):
-    _class_iri: URIRef = S223["ElectricalDistribution-ElectricalPanel"]
+    _class_iri: URIRef = P223["ElectricalDistribution-ElectricalPanel"]
