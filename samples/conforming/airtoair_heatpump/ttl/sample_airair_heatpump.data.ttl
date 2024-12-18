@@ -64,7 +64,6 @@ sample_airair_heatpump:00002 a s223:Connectable,
         sample_airair_heatpump:00005,
         sample_airair_heatpump:00006,
         sample_airair_heatpump:00007 ;
-    s223:isMemberOf sample_airair_heatpump:00001 ;
     scratch:electricalInlet sample_airair_heatpump:00003 ;
     scratch:indoorAirInlet sample_airair_heatpump:00004 ;
     scratch:indoorAirOutlet sample_airair_heatpump:00005 ;
@@ -85,7 +84,6 @@ sample_airair_heatpump:00004 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "AirToAirHeatPump.indoorAirInlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isBoundaryConnectionPointOf sample_airair_heatpump:00001 ;
     s223:isConnectionPointOf sample_airair_heatpump:00002 .
 
 sample_airair_heatpump:00005 a s223:ConnectionPoint,
@@ -93,7 +91,6 @@ sample_airair_heatpump:00005 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "AirToAirHeatPump.indoorAirOutlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isBoundaryConnectionPointOf sample_airair_heatpump:00001 ;
     s223:isConnectionPointOf sample_airair_heatpump:00002 .
 
 sample_airair_heatpump:00006 a s223:ConnectionPoint,
@@ -101,7 +98,6 @@ sample_airair_heatpump:00006 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "AirToAirHeatPump.outdoorAirInlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isBoundaryConnectionPointOf sample_airair_heatpump:00001 ;
     s223:isConnectionPointOf sample_airair_heatpump:00002 .
 
 sample_airair_heatpump:00007 a s223:ConnectionPoint,
@@ -109,7 +105,6 @@ sample_airair_heatpump:00007 a s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "AirToAirHeatPump.outdoorAirOutlet" ;
     s223:hasMedium s223:Fluid-Air ;
-    s223:isBoundaryConnectionPointOf sample_airair_heatpump:00001 ;
     s223:isConnectionPointOf sample_airair_heatpump:00002 .
 
 sample_airair_heatpump:00008 a s223:Connectable,
@@ -119,7 +114,6 @@ sample_airair_heatpump:00008 a s223:Connectable,
         bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
     s223:hasObservationLocation sample_airair_heatpump:00005 ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     s223:observes sample_airair_heatpump:00009 ;
     rdfs:comment "Discharge Air temperature after indoor coil" .
 
@@ -140,7 +134,6 @@ sample_airair_heatpump:00010 a s223:Connectable,
         bob:AirTemperatureSensor ;
     rdfs:label "RA-T" ;
     s223:hasObservationLocation sample_airair_heatpump:00004 ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     s223:observes sample_airair_heatpump:00011 ;
     rdfs:comment "Return Air temperature (S2)" .
 
@@ -174,7 +167,6 @@ sample_airair_heatpump:00012 a s223:Connectable,
         sample_airair_heatpump:00022,
         sample_airair_heatpump:00023,
         sample_airair_heatpump:00024 ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     bob:airInlet sample_airair_heatpump:00013 ;
     bob:airOutlet sample_airair_heatpump:00014 ;
     rdfs:comment "Supply Air Fan" .
@@ -211,7 +203,6 @@ sample_airair_heatpump:00016 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speedRatio" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -221,7 +212,6 @@ sample_airair_heatpump:00017 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "staticPressure" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
 
@@ -231,7 +221,6 @@ sample_airair_heatpump:00018 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -241,7 +230,6 @@ sample_airair_heatpump:00019 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
@@ -251,7 +239,6 @@ sample_airair_heatpump:00020 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "cfm" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:VolumeFlowRate ;
     qudt:hasUnit unit:FT3-PER-MIN .
 
@@ -261,7 +248,6 @@ sample_airair_heatpump:00021 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:Power ;
     qudt:hasUnit unit:HP .
 
@@ -272,7 +258,6 @@ sample_airair_heatpump:00022 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -282,7 +267,6 @@ sample_airair_heatpump:00023 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:PowerFactor ;
     rdfs:label "powerFactor" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:PowerFactor ;
     qudt:hasUnit unit:UNITLESS .
 
@@ -292,7 +276,6 @@ sample_airair_heatpump:00024 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "efficiency" ;
-    s223:isPropertyOf sample_airair_heatpump:00012 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -316,7 +299,6 @@ sample_airair_heatpump:00025 a s223:Connectable,
         sample_airair_heatpump:00035,
         sample_airair_heatpump:00036,
         sample_airair_heatpump:00037 ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     bob:airInlet sample_airair_heatpump:00026 ;
     bob:airOutlet sample_airair_heatpump:00027 ;
     rdfs:comment "Outdoor Unit Fan" .
@@ -353,7 +335,6 @@ sample_airair_heatpump:00029 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speedRatio" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -363,7 +344,6 @@ sample_airair_heatpump:00030 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "staticPressure" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
 
@@ -373,7 +353,6 @@ sample_airair_heatpump:00031 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -383,7 +362,6 @@ sample_airair_heatpump:00032 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
@@ -393,7 +371,6 @@ sample_airair_heatpump:00033 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "cfm" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:VolumeFlowRate ;
     qudt:hasUnit unit:FT3-PER-MIN .
 
@@ -403,7 +380,6 @@ sample_airair_heatpump:00034 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:Power ;
     qudt:hasUnit unit:HP .
 
@@ -414,7 +390,6 @@ sample_airair_heatpump:00035 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -424,7 +399,6 @@ sample_airair_heatpump:00036 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:PowerFactor ;
     rdfs:label "powerFactor" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:PowerFactor ;
     qudt:hasUnit unit:UNITLESS .
 
@@ -434,7 +408,6 @@ sample_airair_heatpump:00037 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "efficiency" ;
-    s223:isPropertyOf sample_airair_heatpump:00025 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -465,7 +438,6 @@ sample_airair_heatpump:00038 a s223:Coil,
         s223:Role-Cooling,
         s223:Role-Evaporator,
         s223:Role-Heating ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     bob:airInlet sample_airair_heatpump:00039 ;
     bob:airOutlet sample_airair_heatpump:00040 ;
     bob:gasPortA sample_airair_heatpump:00041 ;
@@ -514,7 +486,6 @@ sample_airair_heatpump:00043 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "averageSurfaceTemperature" ;
-    s223:isPropertyOf sample_airair_heatpump:00038 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_airair_heatpump:00044 a s223:ObservableProperty,
@@ -523,7 +494,6 @@ sample_airair_heatpump:00044 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "internalPressure" ;
-    s223:isPropertyOf sample_airair_heatpump:00038 ;
     qudt:hasQuantityKind qudtqk:Pressure .
 
 sample_airair_heatpump:00045 a s223:ObservableProperty,
@@ -532,7 +502,6 @@ sample_airair_heatpump:00045 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "internalTemperature" ;
-    s223:isPropertyOf sample_airair_heatpump:00038 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_airair_heatpump:00046 a s223:Coil,
@@ -559,7 +528,6 @@ sample_airair_heatpump:00046 a s223:Coil,
         s223:Role-Cooling,
         s223:Role-Evaporator,
         s223:Role-Heating ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     bob:airInlet sample_airair_heatpump:00047 ;
     bob:airOutlet sample_airair_heatpump:00048 ;
     bob:gasPortA sample_airair_heatpump:00049 ;
@@ -608,7 +576,6 @@ sample_airair_heatpump:00051 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "averageSurfaceTemperature" ;
-    s223:isPropertyOf sample_airair_heatpump:00046 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_airair_heatpump:00052 a s223:ObservableProperty,
@@ -617,7 +584,6 @@ sample_airair_heatpump:00052 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "internalPressure" ;
-    s223:isPropertyOf sample_airair_heatpump:00046 ;
     qudt:hasQuantityKind qudtqk:Pressure .
 
 sample_airair_heatpump:00053 a s223:ObservableProperty,
@@ -626,7 +592,6 @@ sample_airair_heatpump:00053 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "internalTemperature" ;
-    s223:isPropertyOf sample_airair_heatpump:00046 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_airair_heatpump:00054 a s223:Compressor,
@@ -642,7 +607,6 @@ sample_airair_heatpump:00054 a s223:Compressor,
         sample_airair_heatpump:00056,
         sample_airair_heatpump:00057 ;
     s223:hasProperty sample_airair_heatpump:00058 ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     bob:dischargePort sample_airair_heatpump:00056 ;
     bob:returnPort sample_airair_heatpump:00055 ;
     rdfs:comment "Compressor" .
@@ -680,7 +644,6 @@ sample_airair_heatpump:00058 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf sample_airair_heatpump:00054 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -697,7 +660,6 @@ sample_airair_heatpump:00059 a s223:Connectable,
     s223:hasConnectionPoint sample_airair_heatpump:00060,
         sample_airair_heatpump:00061,
         sample_airair_heatpump:00062 ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     bob:linkageInlet sample_airair_heatpump:00060 ;
     bob:portA sample_airair_heatpump:00061 ;
     bob:portB sample_airair_heatpump:00062 ;
@@ -748,7 +710,6 @@ sample_airair_heatpump:00063 a s223:Connectable,
         sample_airair_heatpump:00066,
         sample_airair_heatpump:00067,
         sample_airair_heatpump:00068 ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     bob:linkageInlet sample_airair_heatpump:00064 ;
     bob:refrigerantHighPressureInlet sample_airair_heatpump:00065 ;
     bob:refrigerantIndoorCoilPort sample_airair_heatpump:00067 ;
@@ -804,7 +765,6 @@ sample_airair_heatpump:00069 a s223:Connectable,
     s223:connectedTo sample_airair_heatpump:00038 ;
     s223:hasConnectionPoint sample_airair_heatpump:00070,
         sample_airair_heatpump:00071 ;
-    s223:isContainedIn sample_airair_heatpump:00002 ;
     bob:airInlet sample_airair_heatpump:00070 ;
     bob:airOutlet sample_airair_heatpump:00071 ;
     rdfs:comment "Filter" .

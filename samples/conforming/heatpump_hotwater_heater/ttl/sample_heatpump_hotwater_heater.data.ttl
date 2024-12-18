@@ -64,7 +64,6 @@ sample_heatpump_hotwater_heater:00002 a s223:Connectable,
         sample_heatpump_hotwater_heater:00009,
         sample_heatpump_hotwater_heater:00010 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isMemberOf sample_heatpump_hotwater_heater:00001 ;
     scratch:airInlet sample_heatpump_hotwater_heater:00003 ;
     scratch:airOutlet sample_heatpump_hotwater_heater:00004 ;
     scratch:fluidInlet sample_heatpump_hotwater_heater:00006 ;
@@ -89,7 +88,6 @@ sample_heatpump_hotwater_heater:00005 a s223:ConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "DomesticHPWaterHeater.fluidOutlet" ;
     s223:hasMedium s223:Fluid-Water ;
-    s223:isBoundaryConnectionPointOf sample_heatpump_hotwater_heater:00001 ;
     s223:isConnectionPointOf sample_heatpump_hotwater_heater:00002 .
 
 sample_heatpump_hotwater_heater:00006 a s223:ConnectionPoint,
@@ -97,7 +95,6 @@ sample_heatpump_hotwater_heater:00006 a s223:ConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "DomesticHPWaterHeater.fluidInlet" ;
     s223:hasMedium s223:Fluid-Water ;
-    s223:isBoundaryConnectionPointOf sample_heatpump_hotwater_heater:00001 ;
     s223:isConnectionPointOf sample_heatpump_hotwater_heater:00002 .
 
 sample_heatpump_hotwater_heater:00007 a s223:ConnectionPoint,
@@ -106,7 +103,6 @@ sample_heatpump_hotwater_heater:00007 a s223:ConnectionPoint,
         bob:Electricity_240VLL_1Ph_60HzConnectionPoint ;
     rdfs:label "DomesticHPWaterHeater.electricalInlet" ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
-    s223:isBoundaryConnectionPointOf sample_heatpump_hotwater_heater:00001 ;
     s223:isConnectionPointOf sample_heatpump_hotwater_heater:00002 .
 
 sample_heatpump_hotwater_heater:00008 a s223:ObservableProperty,
@@ -115,7 +111,6 @@ sample_heatpump_hotwater_heater:00008 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "leavingFluidTemperature" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00002 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_heatpump_hotwater_heater:00009 a s223:ObservableProperty,
@@ -124,7 +119,6 @@ sample_heatpump_hotwater_heater:00009 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "enteringFluidTemperature" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00002 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_heatpump_hotwater_heater:00010 a s223:ObservableProperty,
@@ -133,7 +127,6 @@ sample_heatpump_hotwater_heater:00010 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "fluidFlow" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00002 ;
     qudt:hasQuantityKind qudtqk:VolumeFlowRate ;
     qudt:hasUnit unit:L-PER-SEC .
 
@@ -147,7 +140,6 @@ sample_heatpump_hotwater_heater:00011 a p223:Tank,
         sample_heatpump_hotwater_heater:00014 ;
     s223:hasProperty sample_heatpump_hotwater_heater:00015 ;
     s223:hasRole p223:Role-Storage ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:containedFluid sample_heatpump_hotwater_heater:00014 ;
     bob:fluidInlet sample_heatpump_hotwater_heater:00012 ;
     bob:fluidOutlet sample_heatpump_hotwater_heater:00013 ;
@@ -185,7 +177,6 @@ sample_heatpump_hotwater_heater:00015 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "fluidTemperature" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00011 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_heatpump_hotwater_heater:00016 a s223:Connectable,
@@ -200,7 +191,6 @@ sample_heatpump_hotwater_heater:00016 a s223:Connectable,
         sample_heatpump_hotwater_heater:00021,
         sample_heatpump_hotwater_heater:00022 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:fluidContact sample_heatpump_hotwater_heater:00017 ;
     rdfs:comment "Electrical element 1" .
 
@@ -226,7 +216,6 @@ sample_heatpump_hotwater_heater:00019 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00016 ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -237,7 +226,6 @@ sample_heatpump_hotwater_heater:00020 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00016 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -247,7 +235,6 @@ sample_heatpump_hotwater_heater:00021 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "modulation" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00016 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -256,8 +243,7 @@ sample_heatpump_hotwater_heater:00022 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00016 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 sample_heatpump_hotwater_heater:00023 a s223:Connectable,
         s223:ElectricResistanceElement,
@@ -271,7 +257,6 @@ sample_heatpump_hotwater_heater:00023 a s223:Connectable,
         sample_heatpump_hotwater_heater:00028,
         sample_heatpump_hotwater_heater:00029 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:fluidContact sample_heatpump_hotwater_heater:00024 ;
     rdfs:comment "Electrical element 2" .
 
@@ -297,7 +282,6 @@ sample_heatpump_hotwater_heater:00026 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00023 ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -308,7 +292,6 @@ sample_heatpump_hotwater_heater:00027 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00023 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -318,7 +301,6 @@ sample_heatpump_hotwater_heater:00028 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "modulation" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00023 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -327,8 +309,7 @@ sample_heatpump_hotwater_heater:00029 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00023 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 sample_heatpump_hotwater_heater:00030 a s223:Connectable,
         s223:Equipment,
@@ -340,7 +321,6 @@ sample_heatpump_hotwater_heater:00030 a s223:Connectable,
     s223:hasConnectionPoint sample_heatpump_hotwater_heater:00031,
         sample_heatpump_hotwater_heater:00032,
         sample_heatpump_hotwater_heater:00033 ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:airInlet sample_heatpump_hotwater_heater:00031 ;
     bob:airOutlet sample_heatpump_hotwater_heater:00032 ;
     rdfs:comment "Evaporator Fan" .
@@ -393,7 +373,6 @@ sample_heatpump_hotwater_heater:00034 a s223:Coil,
     s223:hasRole s223:Role-Condenser,
         s223:Role-Cooling,
         s223:Role-Heating ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:airInlet sample_heatpump_hotwater_heater:00035 ;
     bob:airOutlet sample_heatpump_hotwater_heater:00036 ;
     bob:gasPortA sample_heatpump_hotwater_heater:00037 ;
@@ -448,7 +427,6 @@ sample_heatpump_hotwater_heater:00040 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "averageSurfaceTemperature" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00034 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_heatpump_hotwater_heater:00041 a s223:ObservableProperty,
@@ -457,7 +435,6 @@ sample_heatpump_hotwater_heater:00041 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "internalPressure" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00034 ;
     qudt:hasQuantityKind qudtqk:Pressure .
 
 sample_heatpump_hotwater_heater:00042 a s223:ObservableProperty,
@@ -466,7 +443,6 @@ sample_heatpump_hotwater_heater:00042 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "internalTemperature" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00034 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_heatpump_hotwater_heater:00043 a s223:Coil,
@@ -495,7 +471,6 @@ sample_heatpump_hotwater_heater:00043 a s223:Coil,
     s223:hasRole s223:Role-Cooling,
         s223:Role-Evaporator,
         s223:Role-Heating ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:airInlet sample_heatpump_hotwater_heater:00044 ;
     bob:airOutlet sample_heatpump_hotwater_heater:00045 ;
     bob:gasPortA sample_heatpump_hotwater_heater:00046 ;
@@ -544,7 +519,6 @@ sample_heatpump_hotwater_heater:00048 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "averageSurfaceTemperature" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00043 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_heatpump_hotwater_heater:00049 a s223:ObservableProperty,
@@ -553,7 +527,6 @@ sample_heatpump_hotwater_heater:00049 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "internalPressure" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00043 ;
     qudt:hasQuantityKind qudtqk:Pressure .
 
 sample_heatpump_hotwater_heater:00050 a s223:ObservableProperty,
@@ -562,7 +535,6 @@ sample_heatpump_hotwater_heater:00050 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "internalTemperature" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00043 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 sample_heatpump_hotwater_heater:00051 a s223:Compressor,
@@ -579,7 +551,6 @@ sample_heatpump_hotwater_heater:00051 a s223:Compressor,
         sample_heatpump_hotwater_heater:00053,
         sample_heatpump_hotwater_heater:00054 ;
     s223:hasProperty sample_heatpump_hotwater_heater:00055 ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:dischargePort sample_heatpump_hotwater_heater:00053 ;
     bob:returnPort sample_heatpump_hotwater_heater:00052 ;
     rdfs:comment "Compressor" .
@@ -617,7 +588,6 @@ sample_heatpump_hotwater_heater:00055 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf sample_heatpump_hotwater_heater:00051 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -634,7 +604,6 @@ sample_heatpump_hotwater_heater:00056 a s223:Connectable,
     s223:hasConnectionPoint sample_heatpump_hotwater_heater:00057,
         sample_heatpump_hotwater_heater:00058,
         sample_heatpump_hotwater_heater:00059 ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:linkageInlet sample_heatpump_hotwater_heater:00057 ;
     bob:portA sample_heatpump_hotwater_heater:00058 ;
     bob:portB sample_heatpump_hotwater_heater:00059 ;
@@ -674,7 +643,6 @@ sample_heatpump_hotwater_heater:00060 a s223:Connectable,
     s223:connectedTo sample_heatpump_hotwater_heater:00043 ;
     s223:hasConnectionPoint sample_heatpump_hotwater_heater:00061,
         sample_heatpump_hotwater_heater:00062 ;
-    s223:isContainedIn sample_heatpump_hotwater_heater:00002 ;
     bob:airInlet sample_heatpump_hotwater_heater:00061 ;
     bob:airOutlet sample_heatpump_hotwater_heater:00062 ;
     rdfs:comment "Filter" .

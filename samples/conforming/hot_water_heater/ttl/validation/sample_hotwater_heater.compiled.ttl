@@ -774,15 +774,15 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:fluidOutlet ],
+        [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:internalPressure ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:internalPressure ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
@@ -969,11 +969,11 @@ bob:DomesticHotWaterHeater a rdfs:Class,
         s223:System-HotWaterHeater,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:electricalInlet ],
+            sh:path bob:enteringFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ] .
+            sh:path bob:electricalInlet ] .
 
 bob:ElectricPower a rdfs:Class,
         sh:NodeShape ;
@@ -1010,13 +1010,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
-        [ a sh:PropertyShape ;
             sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:class s223:EnumerationKind ;
+            sh:path bob:measuresMedium ] .
 
 bob:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -1081,11 +1081,11 @@ scratch:DomesticHotWaterHeater a rdfs:Class,
         s223:System-HotWaterHeater,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:electricalInlet ],
-        [ a sh:PropertyShape ;
             sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:fluidInlet ] .
+            sh:path scratch:fluidInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:electricalInlet ] .
 
 scratch:InsideTankHeatTransfer a rdfs:Class,
         sh:NodeShape ;
@@ -1093,23 +1093,23 @@ scratch:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:leavingWaterTemp ],
-        [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterCommand2 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterPower1 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:fluidTemp ],
+            sh:path scratch:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
             sh:path scratch:waterFlow ],
         [ a sh:PropertyShape ;
             sh:path scratch:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterPower1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:leavingWaterTemp ],
+        [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:fluidTemp ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterModulation2 ] .
 
@@ -1252,7 +1252,7 @@ s223:Boiler a s223:Class,
         sh:NodeShape ;
     rdfs:label "Boiler" ;
     rdfs:comment "A closed, pressure vessel that uses fuel or electricity for heating water or other fluids to supply steam or hot water for heating, humidification, or other applications." ;
-    rdfs:subClassOf s223:Equipment,
+    rdfs:subClassOf s223:Generic,
         s223:System-Boiler ;
     sh:property [ rdfs:comment "A Boiler shall have at least one inlet using the medium Water." ;
             sh:message "s223: A Boiler shall have at least one inlet using the medium Water." ;
@@ -1301,7 +1301,7 @@ s223:ClosedWorldShape a sh:NodeShape ;
             rdfs:comment """Ensure that all instances of an s223 class use only the properties defined for that class. Note that\r
 properties from other namespaces are not checked by this validation.""" ;
             sh:message "s223: Predicate {?p} is not defined for instance {$this}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this ?p ?o\r
 WHERE {\r
@@ -1649,24 +1649,12 @@ s223:Filter a s223:Class,
     rdfs:label "Filter" ;
     rdfs:comment "A device that removes contaminants from gases or liquids." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
-            sh:message "s223: A Filter shall have at least one inlet ConnectionPoint." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
-        [ rdfs:comment "A Filter shall have at least one outlet." ;
-            sh:message "s223: A Filter shall have at least one outlet." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ],
-        [ rdfs:comment "Incompatible Medium. Case 1: Associated ConnectionPoints with two pure mediums." ;
+    sh:property [ rdfs:comment "Incompatible Medium. Case 1: Associated ConnectionPoints with two pure mediums." ;
             sh:path s223:hasConnectionPoint ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 1: Two pure mediums." ;
                     sh:message "s223: {$this} with inlet medium {?m2} is incompatible with outlet medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?m1\r
 WHERE {\r
@@ -1687,7 +1675,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 2: A medium with constituents and a pure medium." ;
                     sh:message "s223: {$this} has an incompatible medium {?m1} with any constituent of {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?m1\r
 WHERE {\r
@@ -1710,7 +1698,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 3: Two mediums with constituents." ;
                     sh:message "s223: For Filter {$this} there is no compatible substance between medium {?m2} and medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT ?this ?m2 ?m1\r
 WHERE {\r
@@ -1733,7 +1721,19 @@ WHERE {\r
     {?s22 rdfs:subClassOf* ?s21} UNION {?s21 rdfs:subClassOf* ?s22} .\r
   }\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
+            sh:message "s223: A Filter shall have at least one inlet ConnectionPoint." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
+        [ rdfs:comment "A Filter shall have at least one outlet." ;
+            sh:message "s223: A Filter shall have at least one outlet." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ] .
 
 s223:FlowSensor a s223:Class,
         sh:NodeShape ;
@@ -1866,6 +1866,22 @@ s223:GroundToAirHeatPump a s223:Class,
                     sh:node [ sh:property [ sh:class s223:Fluid-Air ;
                                     sh:path s223:hasMedium ] ] ] ] .
 
+s223:Guideline36-VAV_TerminalUnit_CoolingOnly a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Guideline36-VAV_TerminalUnit_CoolingOnly" ;
+    s223:abstract true ;
+    rdfs:comment "Guideline36-VAV_TerminalUnit_CoolingOnly | Figure 4.1" ;
+    rdfs:subClassOf s223:System-Guideline36 ;
+    skos:editorialNote "This class is used as a base for all validations rules for Guideline 36 VAV Terminal Unit Cooling Only. The thing defined as a subClassOf this G36 system, should have at least one property presenting the supply air flow, damper position, zone setpoint, zone temp,  and optional local override, zone CO2 reading, zone window switch and occupancy sensor" ;
+    sh:property [ rdfs:comment "A G36 VAV_TerminalUnit_CoolingOnly must have a zone temperature property" ;
+            sh:message "s223: A G36 VAV_TerminalUnit_CoolingOnly must have a zone temperature property" ;
+            sh:minCount 1 ;
+            sh:path s223:hasProperty ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:ObservableProperty ;
+                    sh:node [ sh:property [ sh:class qudtqk:Temperature ;
+                                    sh:path s223:hasQuantityKind ] ] ] ] .
+
 s223:HeatPump-AirToAirHeatPump a s223:Class,
         sh:NodeShape ;
     rdfs:label "HeatPump-AirToAirHeatPump" ;
@@ -1972,7 +1988,7 @@ WHERE {\r
   ?p s223:inverseOf ?invP .\r
 }\r
 			""" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ] ;
     sh:targetClass s223:Concept .
 
 s223:Inverter a s223:Class,
@@ -2027,7 +2043,7 @@ s223:JunctionUsageWarning a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "This Junction is not used to model significant details of a branching point in a connection, and may not be required." ;
             sh:message "This Junction {$this} is not used to model significant details of a branching point in a connection, and may not be required." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
             SELECT $this\r
             WHERE {\r
@@ -2204,7 +2220,28 @@ s223:Pump a s223:Class,
     rdfs:label "Pump" ;
     rdfs:comment "A machine for imparting energy to a fluid, drawing a fluid into itself through an entrance port, and forcing the fluid out through an exhaust port." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
+    sh:property [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+            sh:path s223:hasConnectionPoint ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+                    sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
+WHERE {\r
+  $this s223:hasConnectionPoint ?cpa .\r
+  $this s223:hasConnectionPoint ?cpb .\r
+  FILTER (?cpa != ?cpb) .\r
+  ?cpa s223:hasMedium ?mediuma .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  ?cpb s223:hasMedium ?mediumb .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  FILTER (?mediuma != ?mediumb) .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:message "s223: A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
@@ -2229,28 +2266,7 @@ s223:Pump a s223:Class,
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Refrigerant ;
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Oil ;
                                                 sh:path s223:hasMedium ] ] ) ;
-                            sh:severity sh:Warning ] ] ],
-        [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
-            sh:path s223:hasConnectionPoint ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
-                    sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
-WHERE {\r
-  $this s223:hasConnectionPoint ?cpa .\r
-  $this s223:hasConnectionPoint ?cpb .\r
-  FILTER (?cpa != ?cpb) .\r
-  ?cpa s223:hasMedium ?mediuma .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  ?cpb s223:hasMedium ?mediumb .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  FILTER (?mediuma != ?mediumb) .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
-}\r
-""" ] ] .
+                            sh:severity sh:Warning ] ] ] .
 
 s223:RadiantHeaterInletShape a sh:NodeShape ;
     rdfs:label "Radiant heater inlet shape" ;
@@ -2311,7 +2327,7 @@ s223:RequiredCommentsShape1 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that any property shape must have an rdfs:comment. " ;
             sh:message "s223: The SPARQLConstraint for path {?path} for Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this ?path\r
 WHERE {\r
@@ -2328,7 +2344,7 @@ s223:RequiredCommentsShape2 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that any property shape must have an rdfs:comment. " ;
             sh:message "s223: The property shape with path {?path} for Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this ?path\r
 WHERE {\r
@@ -2344,7 +2360,7 @@ s223:RequiredCommentsShape3 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that every SPARQLRule must have an rdfs:comment. " ;
             sh:message "s223: Every SPARQLRule for Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -2360,7 +2376,7 @@ s223:RequiredCommentsShape4 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Ensure that every TripleRule must have an rdfs:comment. " ;
             sh:message "s223: The TripleRule inferring {?pred} for Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this ?pred\r
 WHERE {\r
@@ -2377,7 +2393,7 @@ s223:RequiredCommentsShape5 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Every class of the 223 standard must also be an instance of sh:NodeShape. " ;
             sh:message "s223: Class {$this} must be declared as an instance of sh:NodeShape." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -2391,7 +2407,7 @@ s223:RequiredCommentsShape6 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Every class of the 223 standard must be a direct or indirect subclass of s223:Concept. " ;
             sh:message "s223: Class {$this} must be within the rdfs:subClassOf hierarchy under s223:Concept." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -2406,7 +2422,7 @@ s223:RequiredCommentsShape7 a sh:NodeShape ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Every class of the 223 standard must have an rdfs:comment. " ;
             sh:message "s223: Class {$this} must have an rdfs:comment." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -2512,7 +2528,7 @@ WHERE {\r
   ?p a s223:SymmetricProperty .\r
 }\r
 			""" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ] ;
     sh:targetClass s223:Concept .
 
 s223:System-ChilledWater a s223:Class,
@@ -2852,12 +2868,6 @@ s223:inverseOf a rdf:Property ;
     rdfs:label "inverse of" ;
     rdfs:comment "The relation inverseOf is a modeling construct to associate relations that are inverses of one another, such as connectedTo and connectedFrom." .
 
-<http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> a owl:Ontology ;
-    rdfs:label "sample_hotwater_heater-data",
-        "sample_hotwater_heater-schema" ;
-    rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_hotwater_heater-data>,
-        <http://data.ashrae.org/standard223/1.0/sample/sample_hotwater_heater-schema> .
-
 <http://data.ashrae.org/standard223/1.0/inference/data-rules> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid Composer" .
 
@@ -2868,6 +2878,9 @@ s223:inverseOf a rdf:Property ;
     owl:versionInfo "Created with TopBraid Composer" .
 
 <http://data.ashrae.org/standard223/1.0/model/concept> a owl:Ontology ;
+    owl:versionInfo "Created with TopBraid Composer" .
+
+<http://data.ashrae.org/standard223/1.0/model/core> a owl:Ontology ;
     owl:versionInfo "Created with TopBraid Composer" .
 
 <http://data.ashrae.org/standard223/1.0/model/equipment> a owl:Ontology ;
@@ -16680,6 +16693,21 @@ unit:PER-MILLE-PER-PSI a qudt:Unit ;
     rdfs:label "QUDT UNITS Vocab Catalog Entry" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
+<urn:ex:sample_hotwater_heater/00001> a s223:System,
+        s223:System-HotWaterHeater,
+        scratch:DomesticHotWaterHeater,
+        ex:SystemFromTemplate ;
+    rdfs:label "Scratch Electric Water Heater" ;
+    s223:hasBoundaryConnectionPoint <urn:ex:sample_hotwater_heater/00003>,
+        <urn:ex:sample_hotwater_heater/00004>,
+        <urn:ex:sample_hotwater_heater/00005> ;
+    s223:hasMember <urn:ex:sample_hotwater_heater/00002> ;
+    s223:hasRole s223:Role-Heating ;
+    scratch:electricalInlet <urn:ex:sample_hotwater_heater/00005> ;
+    scratch:fluidInlet <urn:ex:sample_hotwater_heater/00004> ;
+    scratch:fluidOutlet <urn:ex:sample_hotwater_heater/00003> ;
+    rdfs:comment "Hot Water Heater" .
+
 <urn:ex:sample_hotwater_heater/00029> a s223:Function,
         scratch:InsideTankHeatTransfer ;
     rdfs:label "Heat Transfer Function" ;
@@ -16701,6 +16729,21 @@ unit:PER-MILLE-PER-PSI a qudt:Unit ;
     scratch:resistanceHeaterPower1 <urn:ex:sample_hotwater_heater/00018> ;
     scratch:resistanceHeaterPower2 <urn:ex:sample_hotwater_heater/00025> ;
     scratch:waterFlow <urn:ex:sample_hotwater_heater/00008> .
+
+<urn:ex:sample_hotwater_heater/00030> a s223:System,
+        s223:System-HotWaterHeater,
+        bob:DomesticHotWaterHeater,
+        ex:SystemFromTemplate ;
+    rdfs:label "Bob Electric Water Heater" ;
+    s223:hasBoundaryConnectionPoint <urn:ex:sample_hotwater_heater/00032>,
+        <urn:ex:sample_hotwater_heater/00033>,
+        <urn:ex:sample_hotwater_heater/00034> ;
+    s223:hasMember <urn:ex:sample_hotwater_heater/00031> ;
+    s223:hasRole s223:Role-Heating ;
+    bob:electricalInlet <urn:ex:sample_hotwater_heater/00034> ;
+    bob:enteringFluid <urn:ex:sample_hotwater_heater/00033> ;
+    bob:leavingFluid <urn:ex:sample_hotwater_heater/00032> ;
+    rdfs:comment "Hot Water Heater" .
 
 bacnet:device-identifier a rdf:Property ;
     rdfs:label "Device Identifier" ;
@@ -18834,7 +18877,7 @@ s223:Role-OutdoorAirIntake a s223:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure that Role-OutdoorAirIntake is associated with a Connectable directly connecting to Outdoor Air, or properties of this Connectable." ;
                     sh:message "{?this} is associated with {$entity}, which does not directly connect to outdoor air." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?entity\r
 WHERE {\r
@@ -19023,6 +19066,13 @@ s223:System-Furnace a s223:Class,
     rdfs:comment "Furnace System Type" ;
     rdfs:subClassOf s223:SystemType .
 
+s223:System-Guideline36 a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "System-Guideline36" ;
+    s223:abstract true ;
+    rdfs:comment "Parent class for all Guideline 36 Systems" ;
+    rdfs:subClassOf s223:SystemType .
+
 s223:System-HotWater a s223:Class,
         sh:NodeShape ;
     rdfs:label "System-HotWater" ;
@@ -19103,6 +19153,49 @@ s223:Weekend-Sunday a s223:Class,
     rdfs:comment "Sunday" ;
     rdfs:subClassOf s223:DayOfWeek-Weekend .
 
+s223:Zone a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Zone" ;
+    rdfs:comment "A Zone is a logical grouping of one or more DomainSpaces for a specific domain for some building service or control-related purpose. Zones may be grouped into ZoneGroups (see `s223:ZoneGroup`)." ;
+    rdfs:subClassOf s223:Concept ;
+    sh:property [ rdfs:comment "A Zone must be associated with exactly one EnumerationKind-Domain using the relation hasDomain." ;
+            sh:class s223:EnumerationKind-Domain ;
+            sh:maxCount 1 ;
+            sh:message "s223: A Zone must be associated with exactly one EnumerationKind-Domain using the relation hasDomain." ;
+            sh:minCount 1 ;
+            sh:path s223:hasDomain ],
+        [ rdfs:comment "A Zone must be associated with at least one DomainSpace using the relation hasDomainSpace." ;
+            sh:class s223:DomainSpace ;
+            sh:message "s223: A Zone must be associated with at least one DomainSpace using the relation hasDomainSpace." ;
+            sh:minCount 1 ;
+            sh:path s223:hasDomainSpace ],
+        [ rdfs:comment "The associated Domain of a Zone and the Domain of the DomainSpaces it contains must be the same." ;
+            sh:path s223:hasDomain ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "The associated Domain of a Zone and the Domain of the DomainSpaces it contains must be the same." ;
+                    sh:message "s223: Zone {$this} has a Domain of {?domain}, but it contains a DomainSpace {?ds} which has a Domain of {?dsdomain}. These should be the same." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT DISTINCT $this ?domain ?ds ?dsdomain\r
+WHERE {\r
+$this a s223:Zone .\r
+$this s223:hasDomain ?domain .\r
+$this s223:contains ?ds .\r
+?ds s223:hasDomain ?dsdomain .\r
+FILTER (?domain != ?dsdomain)\r
+}\r
+""" ] ] ;
+    sh:rule [ a sh:TripleRule ;
+            rdfs:comment "Infer a hasDomain relation by checking any enclosed DomainSpaces to determine the domain." ;
+            sh:object [ sh:path ( s223:hasDomainSpace s223:hasDomain ) ] ;
+            sh:predicate s223:hasDomain ;
+            sh:subject sh:this ],
+        [ a sh:TripleRule ;
+            rdfs:comment "Infer a hasDomain relation by checking any enclosing ZoneGroup to determine the domain." ;
+            sh:object [ sh:path ( [ sh:inversePath s223:hasZone ] s223:hasDomain ) ] ;
+            sh:predicate s223:hasDomain ;
+            sh:subject sh:this ] .
+
 s223:abstract a rdf:Property ;
     rdfs:label "abstract" ;
     rdfs:comment "If the relation abstract has a value of true, the associated class cannot be instantiated. " ;
@@ -19140,6 +19233,10 @@ s223:hasMeasurementResolution a rdf:Property ;
     rdfs:label "has measurement resolution" ;
     rdfs:comment "The hasMeasurementResolution relation is used to link to a numerical property whose value indicates the smallest recognizable change in engineering units that the sensor is able to indicate. " .
 
+s223:hasMember a rdf:Property ;
+    rdfs:label "has member" ;
+    rdfs:comment "The relation hasMember is used to associate a System with its component Equipment and/or Systems." .
+
 s223:hasNumberOfElectricalPhases a rdf:Property ;
     rdfs:label "has number of electrical phases" ;
     rdfs:comment "The relation hasNumberOfElectricalPhases is used to identify the number of electrical phases in an AC electricity enumeration kind. " .
@@ -19155,21 +19252,6 @@ s223:hasSetpoint a rdf:Property ;
 s223:hasThermodynamicPhase a rdf:Property ;
     rdfs:label "has thermodynamic phase" ;
     rdfs:comment "The relation hasThermodynamicPhase is used to indicate the thermodynamic phase of the Medium inside a Connection." .
-
-s223:isContainedInZone a rdf:Property ;
-    rdfs:label "is contained in zone" ;
-    s223:inverseOf s223:hasDomainSpace ;
-    rdfs:comment "The relation isContainedInZone is part of a pair of relations that bind a Domain Space to a Zone. It is the inverse of the relation hasDomainSpace (see `s223:hasDomainSpace`)." .
-
-s223:isEnclosedIn a rdf:Property ;
-    rdfs:label "is enclosed in" ;
-    s223:inverseOf s223:encloses ;
-    rdfs:comment "The relation isEnclosedIn is part of a pair of relations that bind a Domain Space to a PhysicalSpace. It is the inverse of the relation encloses (see `s223:encloses`)." .
-
-s223:isInternalReferenceOf a rdf:Property ;
-    rdfs:label "is internal reference of" ;
-    s223:inverseOf s223:hasInternalReference ;
-    rdfs:comment "The relation isInternalReferenceOf is part of a pair of relations that bind a Property to a Property. It is the inverse of the relation hasInternalReference (see `s223:hasInternalReference`)." .
 
 bob:containedFluid a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -40681,7 +40763,6 @@ THE UCUM TABLE (IN ALL FORMATS), UCUM DEFINITIONS, AND SPECIFICATION ARE PROVIDE
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "enteringFluidTemperature" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00002> ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 <urn:ex:sample_hotwater_heater/00017> a s223:ObservableProperty,
@@ -40690,7 +40771,6 @@ THE UCUM TABLE (IN ALL FORMATS), UCUM DEFINITIONS, AND SPECIFICATION ARE PROVIDE
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00014> ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -40700,7 +40780,6 @@ THE UCUM TABLE (IN ALL FORMATS), UCUM DEFINITIONS, AND SPECIFICATION ARE PROVIDE
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00021> ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -40835,14 +40914,6 @@ s223:DomainSpace a s223:Class,
             sh:message "s223: A DomainSpace must be associated with exactly one EnumerationKind-Domain using the relation hasDomain." ;
             sh:minCount 1 ;
             sh:path s223:hasDomain ],
-        [ rdfs:comment "If the relation isEnclosedIn is present it must associate the DomainSpace with a PhysicalSpace." ;
-            sh:class s223:PhysicalSpace ;
-            sh:message "s223: If the relation isEnclosedIn is present it must associate the DomainSpace with a PhysicalSpace." ;
-            sh:path s223:isEnclosedIn ],
-        [ rdfs:comment "If the relation isContainedIn is present it must associate the DomainSpace with a Zone." ;
-            sh:class s223:Zone ;
-            sh:message "s223: If the relation isContainedIn is present it must associate the DomainSpace with a Zone." ;
-            sh:path s223:isContainedInZone ],
         [ rdfs:comment "A DomainSpace must be enclosed by a PhysicalSpace." ;
             sh:message "s223: A DomainSpace must be enclosed by a PhysicalSpace." ;
             sh:minCount 1 ;
@@ -41273,52 +41344,13 @@ s223:Voltage-6600V a s223:Class,
     rdfs:comment "6600V Voltage" ;
     rdfs:subClassOf s223:Numerical-Voltage .
 
-s223:Zone a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Zone" ;
-    rdfs:comment "A Zone is a logical grouping of one or more DomainSpaces for a specific domain for some building service or control-related purpose. Zones may be grouped into ZoneGroups (see `s223:ZoneGroup`)." ;
-    rdfs:subClassOf s223:Concept ;
-    sh:property [ rdfs:comment "A Zone must be associated with exactly one EnumerationKind-Domain using the relation hasDomain." ;
-            sh:class s223:EnumerationKind-Domain ;
-            sh:maxCount 1 ;
-            sh:message "s223: A Zone must be associated with exactly one EnumerationKind-Domain using the relation hasDomain." ;
-            sh:minCount 1 ;
-            sh:path s223:hasDomain ],
-        [ rdfs:comment "A Zone must be associated with at least one DomainSpace using the relation hasDomainSpace." ;
-            sh:class s223:DomainSpace ;
-            sh:message "s223: A Zone must be associated with at least one DomainSpace using the relation hasDomainSpace." ;
-            sh:minCount 1 ;
-            sh:path s223:hasDomainSpace ],
-        [ rdfs:comment "The associated Domain of a Zone and the Domain of the DomainSpaces it contains must be the same." ;
-            sh:path s223:hasDomain ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "The associated Domain of a Zone and the Domain of the DomainSpaces it contains must be the same." ;
-                    sh:message "s223: Zone {$this} has a Domain of {?domain}, but it contains a DomainSpace {?ds} which has a Domain of {?dsdomain}. These should be the same." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT DISTINCT $this ?domain ?ds ?dsdomain\r
-WHERE {\r
-$this a s223:Zone .\r
-$this s223:hasDomain ?domain .\r
-$this s223:contains ?ds .\r
-?ds s223:hasDomain ?dsdomain .\r
-FILTER (?domain != ?dsdomain)\r
-}\r
-""" ] ] ;
-    sh:rule [ a sh:TripleRule ;
-            rdfs:comment "Infer a hasDomain relation by checking any enclosed DomainSpaces to determine the domain." ;
-            sh:object [ sh:path ( s223:hasDomainSpace s223:hasDomain ) ] ;
-            sh:predicate s223:hasDomain ;
-            sh:subject sh:this ],
-        [ a sh:TripleRule ;
-            rdfs:comment "Infer a hasDomain relation by checking any enclosing ZoneGroup to determine the domain." ;
-            sh:object [ sh:path ( [ sh:inversePath s223:hasZone ] s223:hasDomain ) ] ;
-            sh:predicate s223:hasDomain ;
-            sh:subject sh:this ] .
-
 s223:connectedThrough a rdf:Property ;
     rdfs:label "connected through" ;
     rdfs:comment "The relation connectedThrough is used to associate a Connectable thing with a Connection without regard to the direction of flow. It is used to discover what connection links two connectable things." .
+
+s223:encloses a rdf:Property ;
+    rdfs:label "encloses" ;
+    rdfs:comment "The relation encloses is used to associate a PhysicalSpace with its DomainSpaces. " .
 
 s223:hasElectricalPhase a rdf:Property ;
     rdfs:label "has electrical phase" ;
@@ -41328,28 +41360,14 @@ s223:hasInput a rdf:Property ;
     rdfs:label "has input" ;
     rdfs:comment "The relation hasInput is used to relate a Function (see `s223:Function`) to a Property (see `s223:Property`) that is used as input." .
 
-s223:hasMember a rdf:Property ;
-    rdfs:label "has member" ;
-    rdfs:comment "The relation hasMember is used to associate a System with its component Equipment and/or Systems." .
-
 s223:hasOptionalConnectionPoint a rdf:Property ;
     rdfs:label "has Optional Connection Point" ;
     rdfs:comment "The hasOptionalConnectionPoint relation means the ConnectionPoint represents the boundary of a s223:System (`see s223:System`) defined by the modeler, such as a model fragment provided by the vendor of a collection of equipment intended for integration with another model. The presence of this relation is used to indicate that such a \"dangling ConnectionPoint\" should not generate a validation error in an integrated or non-integrated context." .
 
-s223:isBoundaryConnectionPointOf a rdf:Property ;
+s223:isConnectionPointOf a rdf:Property ;
     rdfs:label "is connection point of" ;
-    s223:inverseOf s223:hasBoundaryConnectionPoint ;
-    rdfs:comment "The relation isBoundaryConnectionPointOf is part of a pair of relations that bind a ConnectionPoint to a System. It is the inverse of the relation hasBoundaryConnectionPoint (see `s223:hasBoundaryConnectionPoint`)." .
-
-s223:isMemberOf a rdf:Property ;
-    rdfs:label "is member of" ;
-    s223:inverseOf s223:hasMember ;
-    rdfs:comment "The relation isMemberOf is part of a pair of relations that bind a Equipment or a System to a System. It is the inverse of the relation hasMember (see `s223:hasMember`)." .
-
-s223:isPropertyOf a rdf:Property ;
-    rdfs:label "is property of" ;
-    s223:inverseOf s223:hasProperty ;
-    rdfs:comment "The relation isPropertyOf is part of a pair of relations that bind a property to a node. It is the inverse of the relation hasProperty (see `s223:hasProperty`)." .
+    s223:inverseOf s223:hasConnectionPoint ;
+    rdfs:comment "The relation isConnectionPointOf is part of a pair of relations that bind a ConnectionPoint to a Connectable thing. It is the inverse of the relation hasConnectionPoint (see `s223:hasConnectionPoint`)." .
 
 s223:ofSubstance a rdf:Property ;
     rdfs:label "of substance" ;
@@ -48207,17 +48225,13 @@ it is not allowed to change the Medium that passes through it. This is why Junct
             sh:message "s223: A Junction must be associated with exactly one EnumerationKind-Medium using the relation hasMedium." ;
             sh:minCount 1 ;
             sh:path s223:hasMedium ],
-        [ rdfs:comment "If the relation isContainedIn is present it must associate the Junction with a Equipment." ;
-            sh:class s223:Equipment ;
-            sh:message "s223: If the relation isContainedIn is present it must associate the Junction with a Equipment." ;
-            sh:path s223:isContainedIn ],
         [ rdfs:comment "Ensure compatibility - Case 3: Junction with a pure medium and an associated ConnectionPoint with constituents" ;
             sh:name "Test for compatible declared Medium" ;
             sh:path s223:hasMedium ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 3: Junction with a pure medium and an associated ConnectionPoint with constituents." ;
                     sh:message "s223: Junction {$this} with Medium {?m1} is incompatible with {?cp} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -48239,7 +48253,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 2: A Junction with constituents and an associated ConnectionPoint with a pure medium." ;
                     sh:message "s223: Junction {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -48261,7 +48275,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 6: Two ConnectionPoints with a medium with constituents and a pure medium." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -48285,7 +48299,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 7: Two ConnectionPoints with mediums with constituents." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -48315,7 +48329,7 @@ $this s223:cnx ?cp2 .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 1: Two pure mediums." ;
                     sh:message "s223: Junction {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -48336,7 +48350,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 4: Junction with constituents and an associated ConnectionPoint with constituents." ;
                     sh:message "s223: Junction {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -48364,7 +48378,7 @@ $this s223:hasMedium ?m2 .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 5: Two ConnectionPoints with pure mediums." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -48404,6 +48418,20 @@ s223:OccupancySensor a s223:Class,
     rdfs:label "Occupancy sensor" ;
     rdfs:comment "An OccupancySensor is a subclass of a Sensor that observes a Property that represents measurement of occupancy in a space." ;
     rdfs:subClassOf s223:Sensor .
+
+s223:PhysicalSpace a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Physical Space" ;
+    rdfs:comment "A PhysicalSpace is an architectural concept representing a room, a part of a room, a collection of rooms, or any other physical region in a building. PhysicalSpaces may be grouped to define larger PhysicalSpaces using the relation contains (see `s223:contains`)." ;
+    rdfs:subClassOf s223:Concept ;
+    sh:property [ rdfs:comment "If the relation contains is present it must associate the PhysicalSpace with a PhysicalSpace." ;
+            sh:class s223:PhysicalSpace ;
+            sh:message "s223: If the relation contains is present it must associate the PhysicalSpace with a PhysicalSpace." ;
+            sh:path s223:contains ],
+        [ rdfs:comment "If the relation encloses is present it must associate the PhysicalSpace with a DomainSpace." ;
+            sh:class s223:DomainSpace ;
+            sh:message "s223: If the relation encloses is present it must associate the PhysicalSpace with a DomainSpace." ;
+            sh:path s223:encloses ] .
 
 s223:QuantifiableActuatableProperty a s223:Class,
         sh:NodeShape ;
@@ -48545,17 +48573,23 @@ s223:connected a s223:SymmetricProperty,
     rdfs:label "connected" ;
     rdfs:comment "The relation connected indicates that two connectable things are connected without regard to any directionality of a process flow.  " .
 
-s223:encloses a rdf:Property ;
-    rdfs:label "encloses" ;
-    rdfs:comment "The relation encloses is used to associate a PhysicalSpace with its DomainSpaces. " .
-
 s223:executes a rdf:Property ;
     rdfs:label "executes" ;
     rdfs:comment "The relation executes is used to specify that a Controller (see `s223:Controller`) is responsible for the execution of a Function (see `s223:Function`). " .
 
+s223:hasDomainSpace a rdf:Property ;
+    rdfs:label "has domain space" ;
+    rdfs:comment "The relation hasDomainSpace is used to associate a Zone with its component DomainSpaces." .
+
 s223:hasEnumerationKind a rdf:Property ;
     rdfs:label "has enumeration kind" ;
     rdfs:comment "The relation hasEnumerationKind is used to associate an EnumerableProperty with a class of enumeration values. This is used to, for example, identify what kind of substance is transported along a Connection or which day of the week a setpoint is active." .
+
+s223:hasInternalReference a rdf:Property ;
+    rdfs:label "has internal reference" ;
+    rdfs:comment """The relation hasInternalReference is used to relate a Property to another candidate equivalent Property. For example, \r
+a Property that represents a Zone temperature could have one or more hasInternalReference relations to Properties that are measurements by \r
+different sensors.""" .
 
 s223:hasOutput a rdf:Property ;
     rdfs:label "has output" ;
@@ -48564,11 +48598,6 @@ s223:hasOutput a rdf:Property ;
 s223:hasZone a rdf:Property ;
     rdfs:label "has zone" ;
     rdfs:comment "The relation hasZone is used to associate a ZoneGroup with its component Zones." .
-
-s223:isConnectionPointOf a rdf:Property ;
-    rdfs:label "is connection point of" ;
-    s223:inverseOf s223:hasConnectionPoint ;
-    rdfs:comment "The relation isConnectionPointOf is part of a pair of relations that bind a ConnectionPoint to a Connectable thing. It is the inverse of the relation hasConnectionPoint (see `s223:hasConnectionPoint`)." .
 
 s223:ofMedium a rdf:Property ;
     rdfs:label "of medium" ;
@@ -55708,7 +55737,6 @@ unit:failures-in-time a qudt:Unit ;
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "leavingFluidTemperature" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00002> ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 <urn:ex:sample_hotwater_heater/00008> a s223:ObservableProperty,
@@ -55717,7 +55745,6 @@ unit:failures-in-time a qudt:Unit ;
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "fluidFlow" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00002> ;
     qudt:hasQuantityKind qudtqk:VolumeFlowRate ;
     qudt:hasUnit unit:L-PER-SEC .
 
@@ -55728,7 +55755,6 @@ unit:failures-in-time a qudt:Unit ;
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00014> ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -55738,7 +55764,6 @@ unit:failures-in-time a qudt:Unit ;
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "modulation" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00014> ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -55747,8 +55772,7 @@ unit:failures-in-time a qudt:Unit ;
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00014> .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 <urn:ex:sample_hotwater_heater/00025> a s223:ObservableProperty,
         s223:Property,
@@ -55757,7 +55781,6 @@ unit:failures-in-time a qudt:Unit ;
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00021> ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -55767,7 +55790,6 @@ unit:failures-in-time a qudt:Unit ;
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "modulation" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00021> ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -55776,8 +55798,7 @@ unit:failures-in-time a qudt:Unit ;
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00021> .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 s223:AC-240VLL-1Ph-60Hz a s223:AC-240VLL-1Ph-60Hz,
         s223:Class,
@@ -55936,7 +55957,7 @@ s223:EnumerableProperty a s223:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Checks for valid enumeration value consistent with the stated EnumerationKind." ;
                     sh:message "s223: {$this} has an enumeration value of {?value} which is not a valid {?kind}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?value ?kind\r
 WHERE {\r
@@ -56215,29 +56236,13 @@ s223:connectedFrom a rdf:Property ;
     rdfs:comment "The relation connectedFrom indicates that connectable things are connected with a specific flow direction. B is connectedFrom A, means a directionality beginning at A and ending at B.  The inverse direction is indicated by connectedTo (see `s223:connectedTo`)." ;
     rdfs:domain s223:Equipment .
 
-s223:hasDomainSpace a rdf:Property ;
-    rdfs:label "has domain space" ;
-    rdfs:comment "The relation hasDomainSpace is used to associate a Zone with its component DomainSpaces." .
-
-s223:hasInternalReference a rdf:Property ;
-    rdfs:label "has internal reference" ;
-    rdfs:comment """The relation hasInternalReference is used to relate a Property to another candidate equivalent Property. For example, \r
-a Property that represents a Zone temperature could have one or more hasInternalReference relations to Properties that are measurements by \r
-different sensors.""" .
-
 s223:hasObservationLocation a rdf:Property ;
     rdfs:label "has observation location" ;
     rdfs:comment "The relation hasObservationLocation is used to associate a sensor to the topological location where it is observing the property (see `s223:observes`). The observation location shall be a Connectable (see `s223:Connectable`), Connection (see `s223:Connection`), or ConnectionPoint (see `s223:ConnectionPoint`)." .
 
 s223:hasProperty a rdf:Property ;
     rdfs:label "has Property" ;
-    s223:inverseOf s223:isPropertyOf ;
     rdfs:comment "The relation hasProperty is used to associate any 223 Concept with a Property." .
-
-s223:isContainedIn a rdf:Property ;
-    rdfs:label "is contained in" ;
-    s223:inverseOf s223:contains ;
-    rdfs:comment "The relation isContainedIn is part of a pair of relations that bind a Physical Space to another Physical Space and relations that bind Equipment or Junction to a Equipment. It is the inverse of the relation contains (see `s223:contains`)." .
 
 qudtqk:AreaTime a qudt:QuantityKind ;
     rdfs:label "Area Time"@en ;
@@ -58540,21 +58545,6 @@ unit:YD-PER-SEC2 a qudt:Unit ;
     qudt:uneceCommonCode "M40" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-<urn:ex:sample_hotwater_heater/00001> a s223:System,
-        s223:System-HotWaterHeater,
-        scratch:DomesticHotWaterHeater,
-        ex:SystemFromTemplate ;
-    rdfs:label "Scratch Electric Water Heater" ;
-    s223:hasBoundaryConnectionPoint <urn:ex:sample_hotwater_heater/00003>,
-        <urn:ex:sample_hotwater_heater/00004>,
-        <urn:ex:sample_hotwater_heater/00005> ;
-    s223:hasMember <urn:ex:sample_hotwater_heater/00002> ;
-    s223:hasRole s223:Role-Heating ;
-    scratch:electricalInlet <urn:ex:sample_hotwater_heater/00005> ;
-    scratch:fluidInlet <urn:ex:sample_hotwater_heater/00004> ;
-    scratch:fluidOutlet <urn:ex:sample_hotwater_heater/00003> ;
-    rdfs:comment "Hot Water Heater" .
-
 <urn:ex:sample_hotwater_heater/00005> a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint,
@@ -58562,7 +58552,6 @@ unit:YD-PER-SEC2 a qudt:Unit ;
     rdfs:label "DomesticHotWaterHeater.electricalInlet" ;
     s223:cnx <urn:ex:sample_hotwater_heater/00002> ;
     s223:hasMedium s223:AC-240VLL-1Ph-60Hz ;
-    s223:isBoundaryConnectionPointOf <urn:ex:sample_hotwater_heater/00001> ;
     s223:isConnectionPointOf <urn:ex:sample_hotwater_heater/00002> .
 
 <urn:ex:sample_hotwater_heater/00010> a s223:ConnectionPoint,
@@ -58591,23 +58580,7 @@ unit:YD-PER-SEC2 a qudt:Unit ;
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "fluidTemperature" ;
-    s223:isPropertyOf <urn:ex:sample_hotwater_heater/00009> ;
     qudt:hasQuantityKind qudtqk:Temperature .
-
-<urn:ex:sample_hotwater_heater/00030> a s223:System,
-        s223:System-HotWaterHeater,
-        bob:DomesticHotWaterHeater,
-        ex:SystemFromTemplate ;
-    rdfs:label "Bob Electric Water Heater" ;
-    s223:hasBoundaryConnectionPoint <urn:ex:sample_hotwater_heater/00032>,
-        <urn:ex:sample_hotwater_heater/00033>,
-        <urn:ex:sample_hotwater_heater/00034> ;
-    s223:hasMember <urn:ex:sample_hotwater_heater/00031> ;
-    s223:hasRole s223:Role-Heating ;
-    bob:electricalInlet <urn:ex:sample_hotwater_heater/00034> ;
-    bob:enteringFluid <urn:ex:sample_hotwater_heater/00033> ;
-    bob:leavingFluid <urn:ex:sample_hotwater_heater/00032> ;
-    rdfs:comment "Hot Water Heater" .
 
 <urn:ex:sample_hotwater_heater/00034> a s223:ConnectionPoint,
         s223:InletConnectionPoint,
@@ -58615,7 +58588,6 @@ unit:YD-PER-SEC2 a qudt:Unit ;
     rdfs:label "hw_heater.electricalInlet" ;
     s223:cnx <urn:ex:sample_hotwater_heater/00031> ;
     s223:hasMedium s223:Constituent-Electricity ;
-    s223:isBoundaryConnectionPointOf <urn:ex:sample_hotwater_heater/00030> ;
     s223:isConnectionPointOf <urn:ex:sample_hotwater_heater/00031> .
 
 s223:Constituent-Glycol a s223:Class,
@@ -61054,7 +61026,6 @@ unit:T a qudt:DerivedUnit,
     rdfs:label "hw_heater.hotWaterLeaving" ;
     s223:cnx <urn:ex:sample_hotwater_heater/00031> ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isBoundaryConnectionPointOf <urn:ex:sample_hotwater_heater/00030> ;
     s223:isConnectionPointOf <urn:ex:sample_hotwater_heater/00031> ;
     s223:pairedConnectionPoint <urn:ex:sample_hotwater_heater/00033> .
 
@@ -61064,7 +61035,6 @@ unit:T a qudt:DerivedUnit,
     rdfs:label "hw_heater.hotWaterEntering" ;
     s223:cnx <urn:ex:sample_hotwater_heater/00031> ;
     s223:hasMedium s223:Water-HotWater ;
-    s223:isBoundaryConnectionPointOf <urn:ex:sample_hotwater_heater/00030> ;
     s223:isConnectionPointOf <urn:ex:sample_hotwater_heater/00031> ;
     s223:pairedConnectionPoint <urn:ex:sample_hotwater_heater/00032> .
 
@@ -61132,24 +61102,6 @@ s223:Function a s223:Class,
             sh:message "s223: If the relation hasOutput is present it must associate a Function with a Property." ;
             sh:path s223:hasOutput ] .
 
-s223:PhysicalSpace a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Physical Space" ;
-    rdfs:comment "A PhysicalSpace is an architectural concept representing a room, a part of a room, a collection of rooms, or any other physical region in a building. PhysicalSpaces may be grouped to define larger PhysicalSpaces using the relation contains (see `s223:contains`)." ;
-    rdfs:subClassOf s223:Concept ;
-    sh:property [ rdfs:comment "If the relation contains is present it must associate the PhysicalSpace with a PhysicalSpace." ;
-            sh:class s223:PhysicalSpace ;
-            sh:message "s223: If the relation contains is present it must associate the PhysicalSpace with a PhysicalSpace." ;
-            sh:path s223:contains ],
-        [ rdfs:comment "If the relation isContainedIn is present it must associate the PhysicalSpace with a PhysicalSpace." ;
-            sh:class s223:PhysicalSpace ;
-            sh:message "s223: If the relation contains is present it must associate the PhysicalSpace with a PhysicalSpace." ;
-            sh:path s223:isContainedIn ],
-        [ rdfs:comment "If the relation encloses is present it must associate the PhysicalSpace with a DomainSpace." ;
-            sh:class s223:DomainSpace ;
-            sh:message "s223: If the relation encloses is present it must associate the PhysicalSpace with a DomainSpace." ;
-            sh:path s223:encloses ] .
-
 s223:Role-Cooling a s223:Class,
         s223:Role-Cooling,
         sh:NodeShape ;
@@ -61163,6 +61115,49 @@ s223:Role-HeatTransfer a s223:Class,
     rdfs:label "Heat Transfer" ;
     rdfs:comment "Heat Transfer" ;
     rdfs:subClassOf s223:EnumerationKind-Role .
+
+s223:System a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "System" ;
+    rdfs:comment "A System is a logical grouping of one or more Equipment  or other Systems for some functional purpose." ;
+    rdfs:subClassOf s223:Concept ;
+    sh:property [ a sh:PropertyShape ;
+            rdfs:comment "A System should be associated with at least one instance of Equipment or System using the relation hasMember." ;
+            sh:message "s223: A System must be associated with at least one instance of Equipment or System using the relation hasMember." ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:System ] ) ;
+            sh:path s223:hasMember ;
+            sh:severity sh:Warning ],
+        [ rdfs:comment "A System may be defined with a number of ConnectionPoints that are the \"boundary\" of the equipment. The hasBoundaryConnectionPoint relation is used to reference those connection points of its equipment that must be connected, but in the context of validating the a model with the system by itself, the \"dangling ConnectionPoint\" should not generate a validation error." ;
+            sh:class s223:ConnectionPoint ;
+            sh:message "s223: A System may be defined with a number of ConnectionPoints that are the \"boundary\" of the equipment. The hasBoundaryConnectionPoint relation is used to reference those connection points of its equipment that must be connected, but in the context of validating the a model with the system by itself, the \"dangling ConnectionPoint\" should not generate a validation error." ;
+            sh:path s223:hasBoundaryConnectionPoint ],
+        [ rdfs:comment "A System may be defined with a number of ConnectionPoints that are the \"boundary\" of the equipment. The hasOptionalConnectionPoint relation is used to reference those connection points of its equipment that may not be connected, the \"dangling ConnectionPoint\" should not generate a validation error." ;
+            sh:class s223:ConnectionPoint ;
+            sh:message "s223: A System may be defined with a number of ConnectionPoints that are the \"boundary\" of the equipment. The hasOptionalConnectionPoint relation is used to reference those connection points of its equipment that may not be connected, the \"dangling ConnectionPoint\" should not generate a validation error." ;
+            sh:path s223:hasOptionalConnectionPoint ],
+        [ rdfs:comment "If the relation hasRole is present, it must associate the System with an EnumerationKind-Role." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:message "s223: If the relation hasRole is present, it must associate the System with an EnumerationKind-Role." ;
+            sh:path s223:hasRole ] ;
+    sh:rule [ a sh:TripleRule ;
+            rdfs:comment "Infer the hasBoundaryConnectionPoint relation using hasOptionalConnectionPoint." ;
+            sh:name "InferredSystemToBoundaryConnectionPointFromOptional" ;
+            sh:object [ sh:path s223:hasOptionalConnectionPoint ] ;
+            sh:predicate s223:hasBoundaryConnectionPoint ;
+            sh:subject sh:this ] ;
+    sh:sparql [ a sh:SPARQLConstraint ;
+            rdfs:comment "Ensure that the Boundary CPs of a System belong to only members of that System" ;
+            sh:message "s223: System {$this} hasBoundaryConnectionPoint {?cp}, belonging to {?con} that is not a member of {?this}." ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+            sh:select """\r
+SELECT $this ?cp ?con\r
+WHERE {\r
+$this s223:hasBoundaryConnectionPoint ?cp .\r
+?cp s223:isConnectionPointOf ?con .\r
+FILTER NOT EXISTS {$this s223:hasMember+ ?con}\r
+}\r
+""" ] .
 
 s223:hasValue a rdf:Property ;
     rdfs:label "hasValue" ;
@@ -63246,7 +63241,6 @@ unit:W-PER-M2-K a qudt:DerivedUnit,
     rdfs:label "DomesticHotWaterHeater.fluidOutlet" ;
     s223:cnx <urn:ex:sample_hotwater_heater/00002> ;
     s223:hasMedium s223:Fluid-Water ;
-    s223:isBoundaryConnectionPointOf <urn:ex:sample_hotwater_heater/00001> ;
     s223:isConnectionPointOf <urn:ex:sample_hotwater_heater/00002> .
 
 <urn:ex:sample_hotwater_heater/00004> a s223:ConnectionPoint,
@@ -63255,7 +63249,6 @@ unit:W-PER-M2-K a qudt:DerivedUnit,
     rdfs:label "DomesticHotWaterHeater.fluidInlet" ;
     s223:cnx <urn:ex:sample_hotwater_heater/00002> ;
     s223:hasMedium s223:Fluid-Water ;
-    s223:isBoundaryConnectionPointOf <urn:ex:sample_hotwater_heater/00001> ;
     s223:isConnectionPointOf <urn:ex:sample_hotwater_heater/00002> .
 
 s223:EnumerationKind-Numerical a s223:Class,
@@ -63293,6 +63286,10 @@ s223:connectsAt a rdf:Property ;
     rdfs:label "connects at" ;
     s223:inverseOf s223:connectsThrough ;
     rdfs:comment "The relation connectsAt binds a Connection to a specific ConnectionPoint." .
+
+s223:contains a rdf:Property ;
+    rdfs:label "contains" ;
+    rdfs:comment "The relation contains is used to associate a PhysicalSpace with its component PhysicalSpaces or a piece of Equipment with its component pieces of Equipment." .
 
 s223:pairedConnectionPoint a s223:SymmetricProperty ;
     rdfs:label "paired connection point" ;
@@ -64986,6 +64983,27 @@ unit:W-HR-PER-KiloGM a qudt:Unit ;
         "W.h/kg"^^qudt:UCUMcs ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
+<urn:ex:sample_hotwater_heater/00002> a s223:Connectable,
+        s223:Equipment,
+        scratch:DomesticElectricalWaterHeater ;
+    rdfs:label "DomesticHotWaterHeater" ;
+    s223:cnx <urn:ex:sample_hotwater_heater/00003>,
+        <urn:ex:sample_hotwater_heater/00004>,
+        <urn:ex:sample_hotwater_heater/00005> ;
+    s223:contains <urn:ex:sample_hotwater_heater/00009>,
+        <urn:ex:sample_hotwater_heater/00014>,
+        <urn:ex:sample_hotwater_heater/00021> ;
+    s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00003>,
+        <urn:ex:sample_hotwater_heater/00004>,
+        <urn:ex:sample_hotwater_heater/00005> ;
+    s223:hasProperty <urn:ex:sample_hotwater_heater/00006>,
+        <urn:ex:sample_hotwater_heater/00007>,
+        <urn:ex:sample_hotwater_heater/00008> ;
+    s223:hasRole s223:Role-Heating ;
+    scratch:fluidInlet <urn:ex:sample_hotwater_heater/00004> ;
+    scratch:fluidOutlet <urn:ex:sample_hotwater_heater/00003> ;
+    scratch:fluidTemperature <urn:ex:sample_hotwater_heater/00013> .
+
 <urn:ex:sample_hotwater_heater/00031> a s223:Connectable,
         s223:Equipment ;
     rdfs:label "hw_heater" ;
@@ -64994,8 +65012,7 @@ unit:W-HR-PER-KiloGM a qudt:Unit ;
         <urn:ex:sample_hotwater_heater/00034> ;
     s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00032>,
         <urn:ex:sample_hotwater_heater/00033>,
-        <urn:ex:sample_hotwater_heater/00034> ;
-    s223:isMemberOf <urn:ex:sample_hotwater_heater/00030> .
+        <urn:ex:sample_hotwater_heater/00034> .
 
 s223:Electricity-Signal a s223:Class,
         s223:Electricity-Signal,
@@ -65008,10 +65025,9 @@ s223:composedOf a rdf:Property ;
     rdfs:label "composed of" ;
     rdfs:comment "The relation composedOf is used to indicate what substances constitute a material. Allowable values are instances of Property that in turn identify constituents defined in Medium-Constituent (see `s223:Medium-Constituent`) via the relation ofConstituent." .
 
-s223:contains a rdf:Property ;
-    rdfs:label "contains" ;
-    s223:inverseOf s223:isContainedIn ;
-    rdfs:comment "The relation contains is used to associate a PhysicalSpace with its component PhysicalSpaces or a piece of Equipment with its component pieces of Equipment." .
+s223:hasBoundaryConnectionPoint a rdf:Property ;
+    rdfs:label "has Boundary Connection Point" ;
+    rdfs:comment "The hasBoundaryConnectionPoint relation means the ConnectionPoint represents the boundary of a s223:System (`see s223:System`) defined by the modeler, such as a model fragment provided by the vendor of a collection of equipment intended for integration with another model. The presence of this relation is used to indicate that such a \"dangling ConnectionPoint\" should not generate a validation error in a non-integrated context but should generate an error in a integrated context." .
 
 qudtqk:AbsorbedDose a qudt:QuantityKind ;
     rdfs:label "Absorbed Dose"@en ;
@@ -65686,6 +65702,46 @@ unit:TeraW a qudt:Unit ;
     qudt:uneceCommonCode "D31" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
+<urn:ex:sample_hotwater_heater/00014> a s223:Connectable,
+        s223:ElectricResistanceElement,
+        s223:Equipment ;
+    rdfs:label "element1" ;
+    s223:cnx <urn:ex:sample_hotwater_heater/00015>,
+        <urn:ex:sample_hotwater_heater/00016> ;
+    s223:connected <urn:ex:sample_hotwater_heater/00009>,
+        <urn:ex:sample_hotwater_heater/00021> ;
+    s223:connectedThrough <urn:ex:sample_hotwater_heater/00028> ;
+    s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00015>,
+        <urn:ex:sample_hotwater_heater/00016> ;
+    s223:hasProperty <urn:ex:sample_hotwater_heater/00017>,
+        <urn:ex:sample_hotwater_heater/00018>,
+        <urn:ex:sample_hotwater_heater/00019>,
+        <urn:ex:sample_hotwater_heater/00020> ;
+    s223:hasRole s223:Role-HeatTransfer,
+        s223:Role-Heating ;
+    bob:fluidContact <urn:ex:sample_hotwater_heater/00015> ;
+    rdfs:comment "Electrical element 1" .
+
+<urn:ex:sample_hotwater_heater/00021> a s223:Connectable,
+        s223:ElectricResistanceElement,
+        s223:Equipment ;
+    rdfs:label "element2" ;
+    s223:cnx <urn:ex:sample_hotwater_heater/00022>,
+        <urn:ex:sample_hotwater_heater/00023> ;
+    s223:connected <urn:ex:sample_hotwater_heater/00009>,
+        <urn:ex:sample_hotwater_heater/00014> ;
+    s223:connectedThrough <urn:ex:sample_hotwater_heater/00028> ;
+    s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00022>,
+        <urn:ex:sample_hotwater_heater/00023> ;
+    s223:hasProperty <urn:ex:sample_hotwater_heater/00024>,
+        <urn:ex:sample_hotwater_heater/00025>,
+        <urn:ex:sample_hotwater_heater/00026>,
+        <urn:ex:sample_hotwater_heater/00027> ;
+    s223:hasRole s223:Role-HeatTransfer,
+        s223:Role-Heating ;
+    bob:fluidContact <urn:ex:sample_hotwater_heater/00022> ;
+    rdfs:comment "Electrical element 2" .
+
 s223:ActuatableProperty a s223:Class,
         sh:NodeShape ;
     rdfs:label "Actuatable Property" ;
@@ -65720,89 +65776,12 @@ s223:EM-Light a s223:Class,
     rdfs:comment "The EM-Light class has enumerated subclasses of what are considered visible or near-visible light." ;
     rdfs:subClassOf s223:Constituent-EM .
 
-s223:Generic a s223:Class,
-        s223:Equipment,
-        sh:NodeShape ;
-    rdfs:label "Generic" ;
-    rdfs:comment """\r
-Generic is a class that represents a generic equipment. It is used to create equipment that are typically composed of\r
-multiple other equipment but provided as a single entity, as a convenience for modeling purposes.\r
-Generic equipment also defines the minimum properties that all equipment must have and rules that apply to all similar equipment.\r
-Generic equipment, by definition can be created in multiple ways, and the specific equipment contained within are typically \r
-not defined by the standard. Modelers could create their own version by using multiple equipment classes grouped as\r
-a system or contained inside another equipment, or use the Generic.\r
-\r
-This creates a challenge for queries that need to identify specific equipment types. For example, a query that needs to identify\r
-all AirHandlingUnits would not be able to identify a Generic equipment, container equipment or system that is an AirHandlingUnit. \r
-To address this, the standard provides a set of system classes that are used to globally identify typical equipment types.\r
-\r
-For example, s223:AirHandlingUnit is a system class that is used to identify all equipment that are AirHandlingUnits, \r
-including those that are created as a Generic equipment.\r
-\r
-The predicate \r
-\r
-  """ ;
-    rdfs:subClassOf s223:Equipment .
-
 s223:Medium-Constituent a s223:Class,
         s223:Medium-Constituent,
         sh:NodeShape ;
     rdfs:label "Medium-Constituent" ;
     rdfs:comment "Medium-Constituent" ;
     rdfs:subClassOf s223:Substance-Medium .
-
-s223:System a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "System" ;
-    rdfs:comment "A System is a logical grouping of one or more Equipment  or other Systems for some functional purpose." ;
-    rdfs:subClassOf s223:Concept ;
-    sh:property [ a sh:PropertyShape ;
-            rdfs:comment "A System should be associated with at least one instance of Equipment or System using the relation hasMember." ;
-            sh:message "s223: A System must be associated with at least one instance of Equipment or System using the relation hasMember." ;
-            sh:minCount 1 ;
-            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:System ] ) ;
-            sh:path s223:hasMember ;
-            sh:severity sh:Warning ],
-        [ a sh:PropertyShape ;
-            rdfs:comment "A System can be associated with another System using the relation isMemberOf." ;
-            sh:class s223:System ;
-            sh:message "s223: A System can be associated with another System using the relation isMemberOf." ;
-            sh:path s223:isMemberOf ],
-        [ rdfs:comment "A System may be defined with a number of ConnectionPoints that are the \"boundary\" of the equipment. The hasBoundaryConnectionPoint relation is used to reference those connection points of its equipment that must be connected, but in the context of validating the a model with the system by itself, the \"dangling ConnectionPoint\" should not generate a validation error." ;
-            sh:class s223:ConnectionPoint ;
-            sh:message "s223: A System may be defined with a number of ConnectionPoints that are the \"boundary\" of the equipment. The hasBoundaryConnectionPoint relation is used to reference those connection points of its equipment that must be connected, but in the context of validating the a model with the system by itself, the \"dangling ConnectionPoint\" should not generate a validation error." ;
-            sh:path s223:hasBoundaryConnectionPoint ],
-        [ rdfs:comment "A System may be defined with a number of ConnectionPoints that are the \"boundary\" of the equipment. The hasOptionalConnectionPoint relation is used to reference those connection points of its equipment that may not be connected, the \"dangling ConnectionPoint\" should not generate a validation error." ;
-            sh:class s223:ConnectionPoint ;
-            sh:message "s223: A System may be defined with a number of ConnectionPoints that are the \"boundary\" of the equipment. The hasOptionalConnectionPoint relation is used to reference those connection points of its equipment that may not be connected, the \"dangling ConnectionPoint\" should not generate a validation error." ;
-            sh:path s223:hasOptionalConnectionPoint ],
-        [ rdfs:comment "If the relation hasRole is present, it must associate the System with an EnumerationKind-Role." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:message "s223: If the relation hasRole is present, it must associate the System with an EnumerationKind-Role." ;
-            sh:path s223:hasRole ] ;
-    sh:rule [ a sh:TripleRule ;
-            rdfs:comment "Infer the hasBoundaryConnectionPoint relation using hasOptionalConnectionPoint." ;
-            sh:name "InferredSystemToBoundaryConnectionPointFromOptional" ;
-            sh:object [ sh:path s223:hasOptionalConnectionPoint ] ;
-            sh:predicate s223:hasBoundaryConnectionPoint ;
-            sh:subject sh:this ] ;
-    sh:sparql [ a sh:SPARQLConstraint ;
-            rdfs:comment "Ensure that the Boundary CPs of a System belong to only members of that System" ;
-            sh:message "s223: System {$this} hasBoundaryConnectionPoint {?cp}, belonging to {?con} that is not a member of {?this}." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-            sh:select """\r
-SELECT $this ?cp ?con\r
-WHERE {\r
-$this s223:hasBoundaryConnectionPoint ?cp .\r
-?cp s223:isConnectionPointOf ?con .\r
-FILTER NOT EXISTS {$this s223:hasMember+ ?con}\r
-}\r
-""" ] .
-
-s223:hasBoundaryConnectionPoint a rdf:Property ;
-    rdfs:label "has Boundary Connection Point" ;
-    s223:inverseOf s223:isBoundaryConnectionPointOf ;
-    rdfs:comment "The hasBoundaryConnectionPoint relation means the ConnectionPoint represents the boundary of a s223:System (`see s223:System`) defined by the modeler, such as a model fragment provided by the vendor of a collection of equipment intended for integration with another model. The presence of this relation is used to indicate that such a \"dangling ConnectionPoint\" should not generate a validation error in a non-integrated context but should generate an error in a integrated context." .
 
 qudtqk:AngularMomentum a qudt:QuantityKind ;
     rdfs:label "Angular Momentum"@en ;
@@ -66500,7 +66479,7 @@ A Connection may contain branches or intersections. These may be modeled using J
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A Connection must only have a cnx relation with a ConnectionPoint" ;
                     sh:message "s223: {$this} cannot have a s223:cnx relation to {?something}, because {?something} is not a ConnectionPoint." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """SELECT $this ?something\r
 WHERE {\r
 $this s223:cnx ?something .\r
@@ -66512,7 +66491,7 @@ FILTER NOT EXISTS {?something a/rdfs:subClassOf* s223:ConnectionPoint} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 1: Two pure mediums." ;
                     sh:message "s223: Connection {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -66533,7 +66512,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 2: A Connection with constituents and an associated ConnectionPoint with a pure medium." ;
                     sh:message "s223: Connection {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -66555,7 +66534,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 3: Connection with a pure medium and an associated ConnectionPoint with constituents." ;
                     sh:message "s223: Connection {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -66577,7 +66556,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 4: A Connection with constituents and an associated ConnectionPoint with constituents." ;
                     sh:message "s223: Connection {$this} with Medium {?m2} is incompatible with {?cp} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?m2 ?cp ?m1\r
 WHERE {\r
@@ -66605,7 +66584,7 @@ $this s223:hasMedium ?m1 .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 5: Two ConnectionPoints with pure mediums." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -66628,7 +66607,7 @@ FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 6: A medium with constituents and a pure medium." ;
                     sh:message "s223: {?cp1} with Medium {?m1} is incompatible with {?cp2} with Medium {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -66653,7 +66632,7 @@ FILTER NOT EXISTS {\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 7: Two ConnectionPoints with mediums with constituents." ;
                     sh:message "s223: {?cp1} with Medium {?m2} is incompatible with {?cp2} with Medium {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?cp1 ?m1 ?cp2 ?m2\r
 WHERE {\r
@@ -66689,7 +66668,7 @@ $this s223:connectsAt ?cp .\r
 }\r
 """ ;
             sh:name "InferredConnectionToUpstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ],
         [ a sh:SPARQLRule ;
             rdfs:comment "Infer the connectsTo relation using connectsAt" ;
             sh:construct """\r
@@ -66701,7 +66680,7 @@ $this s223:connectsAt ?cp .\r
 }\r
 """ ;
             sh:name "InferredConnectionToDownstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ],
         [ a sh:TripleRule ;
             rdfs:comment "Infer cnx relation using connectsAt",
                 "InferredConnectionToConnectionPointBaseProperty" ;
@@ -66740,6 +66719,30 @@ s223:DCVoltage-DCPositiveVoltage a s223:Class,
     qudt:hasUnit unit:V ;
     rdfs:comment "This class has enumerated instances of common positive voltages." ;
     rdfs:subClassOf s223:Numerical-DCVoltage .
+
+s223:Generic a s223:Class,
+        s223:Equipment,
+        sh:NodeShape ;
+    rdfs:label "Generic" ;
+    rdfs:comment """\r
+Generic is a class that represents a generic equipment. It is used to create equipment that are typically composed of\r
+multiple other equipment but provided as a single entity, as a convenience for modeling purposes.\r
+Generic equipment also defines the minimum properties that all equipment must have and rules that apply to all similar equipment.\r
+Generic equipment, by definition can be created in multiple ways, and the specific equipment contained within are typically \r
+not defined by the standard. Modelers could create their own version by using multiple equipment classes grouped as\r
+a system or contained inside another equipment, or use the Generic.\r
+\r
+This creates a challenge for queries that need to identify specific equipment types. For example, a query that needs to identify\r
+all AirHandlingUnits would not be able to identify a Generic equipment, container equipment or system that is an AirHandlingUnit. \r
+To address this, the standard provides a set of system classes that are used to globally identify typical equipment types.\r
+\r
+For example, s223:AirHandlingUnit is a system class that is used to identify all equipment that are AirHandlingUnits, \r
+including those that are created as a Generic equipment.\r
+\r
+The predicate \r
+\r
+  """ ;
+    rdfs:subClassOf s223:Equipment .
 
 s223:LineLineVoltage-240V a s223:Class,
         s223:LineLineVoltage-240V,
@@ -67916,6 +67919,26 @@ unit:YR_Sidereal a qudt:Unit ;
     qudt:uneceCommonCode "L96" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
+<urn:ex:sample_hotwater_heater/00009> a p223:Tank,
+        s223:Connectable,
+        s223:Equipment ;
+    rdfs:label "tank" ;
+    s223:cnx <urn:ex:sample_hotwater_heater/00010>,
+        <urn:ex:sample_hotwater_heater/00011>,
+        <urn:ex:sample_hotwater_heater/00012> ;
+    s223:connected <urn:ex:sample_hotwater_heater/00014>,
+        <urn:ex:sample_hotwater_heater/00021> ;
+    s223:connectedThrough <urn:ex:sample_hotwater_heater/00028> ;
+    s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00010>,
+        <urn:ex:sample_hotwater_heater/00011>,
+        <urn:ex:sample_hotwater_heater/00012> ;
+    s223:hasProperty <urn:ex:sample_hotwater_heater/00013> ;
+    s223:hasRole p223:Role-Storage ;
+    bob:containedFluid <urn:ex:sample_hotwater_heater/00012> ;
+    bob:fluidInlet <urn:ex:sample_hotwater_heater/00010> ;
+    bob:fluidOutlet <urn:ex:sample_hotwater_heater/00011> ;
+    rdfs:comment "Water tank" .
+
 qudtqk:Conductance a qudt:QuantityKind ;
     rdfs:label "Conductance"@en ;
     dcterms:description "$\\textit{Conductance}$, for a resistive two-terminal element or two-terminal circuit with terminals A and B, quotient of the electric current i in the element or circuit by the voltage $u_{AB}$ between the terminals: $G = \\frac{1}{R}$, where the electric current is taken as positive if its direction is from A to B and negative in the opposite case. The conductance of an element or circuit is the inverse of its resistance."^^qudt:LatexString ;
@@ -68921,27 +68944,6 @@ unit:YR_TROPICAL a qudt:Unit ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> ;
     skos:altLabel "solar year" .
 
-<urn:ex:sample_hotwater_heater/00009> a p223:Tank,
-        s223:Connectable,
-        s223:Equipment ;
-    rdfs:label "tank" ;
-    s223:cnx <urn:ex:sample_hotwater_heater/00010>,
-        <urn:ex:sample_hotwater_heater/00011>,
-        <urn:ex:sample_hotwater_heater/00012> ;
-    s223:connected <urn:ex:sample_hotwater_heater/00014>,
-        <urn:ex:sample_hotwater_heater/00021> ;
-    s223:connectedThrough <urn:ex:sample_hotwater_heater/00028> ;
-    s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00010>,
-        <urn:ex:sample_hotwater_heater/00011>,
-        <urn:ex:sample_hotwater_heater/00012> ;
-    s223:hasProperty <urn:ex:sample_hotwater_heater/00013> ;
-    s223:hasRole p223:Role-Storage ;
-    s223:isContainedIn <urn:ex:sample_hotwater_heater/00002> ;
-    bob:containedFluid <urn:ex:sample_hotwater_heater/00012> ;
-    bob:fluidInlet <urn:ex:sample_hotwater_heater/00010> ;
-    bob:fluidOutlet <urn:ex:sample_hotwater_heater/00011> ;
-    rdfs:comment "Water tank" .
-
 s223:Role-Heating a s223:Class,
         s223:Role-Heating,
         sh:NodeShape ;
@@ -68954,7 +68956,37 @@ s223:Sensor a s223:Class,
     rdfs:label "Sensor" ;
     rdfs:comment "A Sensor observes an ObservableProperty (see `s223:ObservableProperty`) which may be quantifiable (see `s223:QuantifiableObservableProperty`), such as a temperature, flowrate, or concentration, or Enumerable (see `s223:EnumeratedObservableProperty`), such as an alarm state or occupancy state." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
+    sh:property [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
+            sh:path s223:observes ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
+                    sh:message "s223: Sensor {$this} has a reference location, but its Property lacks isDeltaQuantity true." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+          SELECT $this\r
+          WHERE {\r
+$this s223:hasReferenceLocation ?y .\r
+$this s223:observes ?x .\r
+?x a/rdfs:subClassOf* s223:QuantifiableProperty .\r
+FILTER NOT EXISTS {$this s223:observes/qudt:isDeltaQuantity true}\r
+}\r
+""" ] ],
+        [ rdfs:comment "s223: If the observed Property has isDeltaQuantity true, the Sensor must have a hasReferenceLocation relation." ;
+            sh:path s223:observes ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "s223: If the observed Property has isDeltaQuantity true, the Sensor must have a hasReferenceLocation relation." ;
+                    sh:message "s223: Sensor {$this} has Property {?x} with isDeltaQuantity true, but the Sensor lacks a reference location." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+          SELECT $this ?x\r
+          WHERE {\r
+$this s223:observes/qudt:isDeltaQuantity true .\r
+$this s223:observes ?x .\r
+?x a/rdfs:subClassOf* s223:QuantifiableProperty .\r
+FILTER NOT EXISTS {$this s223:hasReferenceLocation ?y}\r
+}\r
+""" ] ],
+        [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
             sh:class s223:QuantifiableProperty ;
             sh:message "s223: If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
             sh:path s223:hasMeasurementResolution ],
@@ -68972,37 +69004,7 @@ s223:Sensor a s223:Class,
             sh:maxCount 1 ;
             sh:message "s223: A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
             sh:minCount 1 ;
-            sh:path s223:observes ],
-        [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
-            sh:path s223:observes ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
-                    sh:message "s223: Sensor {$this} has a reference location, but its Property lacks isDeltaQuantity true." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-          SELECT $this\r
-          WHERE {\r
-$this s223:hasReferenceLocation ?y .\r
-$this s223:observes ?x .\r
-?x a/rdfs:subClassOf* s223:QuantifiableProperty .\r
-FILTER NOT EXISTS {$this s223:observes/qudt:isDeltaQuantity true}\r
-}\r
-""" ] ],
-        [ rdfs:comment "s223: If the observed Property has isDeltaQuantity true, the Sensor must have a hasReferenceLocation relation." ;
-            sh:path s223:observes ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "s223: If the observed Property has isDeltaQuantity true, the Sensor must have a hasReferenceLocation relation." ;
-                    sh:message "s223: Sensor {$this} has Property {?x} with isDeltaQuantity true, but the Sensor lacks a reference location." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-          SELECT $this ?x\r
-          WHERE {\r
-$this s223:observes/qudt:isDeltaQuantity true .\r
-$this s223:observes ?x .\r
-?x a/rdfs:subClassOf* s223:QuantifiableProperty .\r
-FILTER NOT EXISTS {$this s223:hasReferenceLocation ?y}\r
-}\r
-""" ] ] ;
+            sh:path s223:observes ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "Infer the hasObservationLocation relation for a Sensor from the Property that it is observing, only if that property is associated with a single entity." ;
             sh:construct """\r
@@ -69027,7 +69029,7 @@ UNION\r
 }\r
 """ ;
             sh:name "InferredMeasurementLocation" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] .
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ] .
 
 s223:cnx a s223:SymmetricProperty ;
     rdfs:label "cnx" ;
@@ -69411,48 +69413,6 @@ unit:RPK a qudt:Unit ;
     qudt:symbol "RPK" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> ;
     skos:altLabel "RPK" .
-
-<urn:ex:sample_hotwater_heater/00014> a s223:Connectable,
-        s223:ElectricResistanceElement,
-        s223:Equipment ;
-    rdfs:label "element1" ;
-    s223:cnx <urn:ex:sample_hotwater_heater/00015>,
-        <urn:ex:sample_hotwater_heater/00016> ;
-    s223:connected <urn:ex:sample_hotwater_heater/00009>,
-        <urn:ex:sample_hotwater_heater/00021> ;
-    s223:connectedThrough <urn:ex:sample_hotwater_heater/00028> ;
-    s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00015>,
-        <urn:ex:sample_hotwater_heater/00016> ;
-    s223:hasProperty <urn:ex:sample_hotwater_heater/00017>,
-        <urn:ex:sample_hotwater_heater/00018>,
-        <urn:ex:sample_hotwater_heater/00019>,
-        <urn:ex:sample_hotwater_heater/00020> ;
-    s223:hasRole s223:Role-HeatTransfer,
-        s223:Role-Heating ;
-    s223:isContainedIn <urn:ex:sample_hotwater_heater/00002> ;
-    bob:fluidContact <urn:ex:sample_hotwater_heater/00015> ;
-    rdfs:comment "Electrical element 1" .
-
-<urn:ex:sample_hotwater_heater/00021> a s223:Connectable,
-        s223:ElectricResistanceElement,
-        s223:Equipment ;
-    rdfs:label "element2" ;
-    s223:cnx <urn:ex:sample_hotwater_heater/00022>,
-        <urn:ex:sample_hotwater_heater/00023> ;
-    s223:connected <urn:ex:sample_hotwater_heater/00009>,
-        <urn:ex:sample_hotwater_heater/00014> ;
-    s223:connectedThrough <urn:ex:sample_hotwater_heater/00028> ;
-    s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00022>,
-        <urn:ex:sample_hotwater_heater/00023> ;
-    s223:hasProperty <urn:ex:sample_hotwater_heater/00024>,
-        <urn:ex:sample_hotwater_heater/00025>,
-        <urn:ex:sample_hotwater_heater/00026>,
-        <urn:ex:sample_hotwater_heater/00027> ;
-    s223:hasRole s223:Role-HeatTransfer,
-        s223:Role-Heating ;
-    s223:isContainedIn <urn:ex:sample_hotwater_heater/00002> ;
-    bob:fluidContact <urn:ex:sample_hotwater_heater/00022> ;
-    rdfs:comment "Electrical element 2" .
 
 s223:DCVoltage-DCZeroVoltage a s223:Class,
         s223:DCVoltage-DCZeroVoltage,
@@ -70053,41 +70013,12 @@ unit:PlanckTemperature a qudt:Unit ;
     qudt:symbol "plancktemperature" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-<urn:ex:sample_hotwater_heater/00002> a s223:Connectable,
-        s223:Equipment,
-        scratch:DomesticElectricalWaterHeater ;
-    rdfs:label "DomesticHotWaterHeater" ;
-    s223:cnx <urn:ex:sample_hotwater_heater/00003>,
-        <urn:ex:sample_hotwater_heater/00004>,
-        <urn:ex:sample_hotwater_heater/00005> ;
-    s223:contains <urn:ex:sample_hotwater_heater/00009>,
-        <urn:ex:sample_hotwater_heater/00014>,
-        <urn:ex:sample_hotwater_heater/00021> ;
-    s223:hasConnectionPoint <urn:ex:sample_hotwater_heater/00003>,
-        <urn:ex:sample_hotwater_heater/00004>,
-        <urn:ex:sample_hotwater_heater/00005> ;
-    s223:hasProperty <urn:ex:sample_hotwater_heater/00006>,
-        <urn:ex:sample_hotwater_heater/00007>,
-        <urn:ex:sample_hotwater_heater/00008> ;
-    s223:hasRole s223:Role-Heating ;
-    s223:isMemberOf <urn:ex:sample_hotwater_heater/00001> ;
-    scratch:fluidInlet <urn:ex:sample_hotwater_heater/00004> ;
-    scratch:fluidOutlet <urn:ex:sample_hotwater_heater/00003> ;
-    scratch:fluidTemperature <urn:ex:sample_hotwater_heater/00013> .
-
 s223:EnumerationKind-Domain a s223:Class,
         s223:EnumerationKind-Domain,
         sh:NodeShape ;
     rdfs:label "EnumerationKind Domain" ;
     rdfs:comment "A Domain represents a categorization of building services or specialization used to characterize equipment or spaces in a building. Example domains include HVAC, Lighting, and Plumbing." ;
     rdfs:subClassOf s223:EnumerationKind .
-
-s223:SystemType a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Concept | SystemType" ;
-    s223:abstract true ;
-    rdfs:comment "Modeling complex system or complex equipment is a common task and depending on the needs of the modelers, different techniques may be used. Using a generic equipment representing a complete Air Handling Unit is valid. The modeler could also choose to add details to this generic equipment and add contained equipment. Another choice is using a flat-model and define all atomic equipment like, fanm dampers, etc and group them all under an instance of s223:System. This class is meant to be used as a base class for instances of s223:System or s223:Equipment as a way to clearly identify the type of application and decoupling the concept of the thing, from the implementation. Validation rules or properties can be defined on this class to ensure that the modeler is using the correct type of equipment." ;
-    rdfs:subClassOf s223:Concept .
 
 qudtqk:AmountOfSubstance a qudt:QuantityKind ;
     rdfs:label "كمية المادة"@ar,
@@ -70567,6 +70498,154 @@ unit:YD2 a qudt:DerivedUnit,
     qudt:uneceCommonCode "YDK" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
+s223:Concept a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Concept" ;
+    s223:abstract true ;
+    rdfs:comment "All classes defined in the 223 standard are subclasses of s223:Concept." ;
+    rdfs:subClassOf rdfs:Resource ;
+    sh:property [ rdfs:comment "If the relation hasProperty is present, it must associate the concept with a Property." ;
+            sh:class s223:Property ;
+            sh:message "s223: If the relation hasProperty is present, it must associate the concept with a Property." ;
+            sh:path s223:hasProperty ],
+        [ rdfs:comment "A Concept must be associated with at least one label using the relation label." ;
+            sh:message "s223: A Concept must be associated with at least one label using the relation label." ;
+            sh:minCount 1 ;
+            sh:path rdfs:label ;
+            sh:severity sh:Warning ],
+        [ rdfs:comment "Ensure that any instance that is declared to be an instance of an abstract class must also be declared an instance of at least one subClass of that abstract class." ;
+            sh:path s223:abstract ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "Ensure that any instance that is declared to be an instance of an abstract class must also be declared an instance of at least one subClass of that abstract class" ;
+                    sh:message "s223: {$this} cannot be declared an instance of only abstract class {?class}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT DISTINCT $this ?class\r
+WHERE {\r
+?class s223:abstract true .\r
+$this a ?class .\r
+OPTIONAL {\r
+?otherClass rdfs:subClassOf+ ?class .\r
+$this a ?otherClass .\r
+FILTER (?class != ?otherClass) .\r
+}\r
+FILTER (!bound (?otherClass)) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "Incompatible Medium. Case1: An entity with a pure medium and an associated property with a pure medium." ;
+            sh:name "Test for compatible declared Medium" ;
+            sh:path s223:hasMedium ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "Incompatible Medium. Case 1: Two pure mediums." ;
+                    sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this ?m1 ?prop ?m2\r
+WHERE {\r
+$this s223:hasMedium ?m1 .\r
+$this ?p ?prop .\r
+?prop a/rdfs:subClassOf* s223:Property .\r
+?prop s223:ofMedium ?m2 .\r
+FILTER (?m1 != ?m2 ) .\r
+FILTER NOT EXISTS {?m1 s223:composedOf ?c1} .\r
+FILTER NOT EXISTS {?m2 s223:composedOf ?c2}\r
+FILTER (NOT EXISTS {?m2 rdfs:subClassOf* ?m1}) .\r
+FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "Incompatible Medium. Case2: An entity with a pure medium and an associated property with constituents." ;
+            sh:name "Test for compatible declared Medium" ;
+            sh:path s223:hasMedium ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "Incompatible Medium. Case 2: A pure medium and an associated property with constituents." ;
+                    sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this ?m1 ?prop ?m2\r
+WHERE {\r
+$this s223:hasMedium ?m1 .\r
+$this ?p ?prop .\r
+?prop a/rdfs:subClassOf* s223:Property .\r
+?prop s223:ofMedium ?m2 .\r
+?m2 s223:composedOf/s223:ofConstituent ?s2 .\r
+FILTER NOT EXISTS {?m1 s223:composedOf ?c1} .\r
+FILTER NOT EXISTS {\r
+  ?m2 s223:composedOf/s223:ofConstituent ?s12 .\r
+  {?s12 rdfs:subClassOf* ?m1} UNION {?m1 rdfs:subClassOf* ?s12} .\r
+}\r
+}\r
+""" ] ],
+        [ rdfs:comment "Incompatible Medium. Case3: An entity with constituents and an associated property with a pure medium." ;
+            sh:name "Test for compatible declared Medium" ;
+            sh:path s223:hasMedium ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "Incompatible Medium. Case 3: A medium with constituents and an associated property with a pure medium." ;
+                    sh:message "s223: {$this} hasMedium of {?m2}, but is associated with property {?prop} that has ofMedium of {?m1}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this ?m1 ?prop ?m2\r
+WHERE {\r
+$this s223:hasMedium ?m2 .\r
+$this ?p ?prop .\r
+?prop a/rdfs:subClassOf* s223:Property .\r
+?prop s223:ofMedium ?m1 .\r
+?m2 s223:composedOf/s223:ofConstituent ?s2 .\r
+FILTER NOT EXISTS {?m1 s223:composedOf ?c1} .\r
+FILTER NOT EXISTS {\r
+  ?m2 s223:composedOf/s223:ofConstituent ?s12 .\r
+  {?s12 rdfs:subClassOf* ?m1} UNION {?m1 rdfs:subClassOf* ?s12} .\r
+}\r
+}\r
+""" ] ],
+        [ rdfs:comment "Incompatible Medium. Case4: An entity with constituents and an associated property with constituents." ;
+            sh:name "Test for compatible declared Medium" ;
+            sh:path s223:hasMedium ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "Incompatible Medium. Case 4: A medium with constituents and an associated property with constituents." ;
+                    sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this ?m1 ?prop ?m2\r
+WHERE {\r
+$this s223:hasMedium ?m1 .\r
+$this ?p ?prop .\r
+?prop a/rdfs:subClassOf* s223:Property .\r
+?prop s223:ofMedium ?m2 .\r
+    ?m1 s223:composedOf/s223:ofConstituent ?s1 .\r
+    ?m2 s223:composedOf/s223:ofConstituent ?s2 .\r
+  FILTER NOT EXISTS {\r
+    ?m1 s223:composedOf/s223:ofConstituent ?s11 .\r
+    ?m2 s223:composedOf/s223:ofConstituent ?s12 .\r
+    FILTER (?s11 = ?s12) .\r
+  }\r
+  FILTER NOT EXISTS {\r
+    ?m1 s223:composedOf/s223:ofConstituent ?s21 .\r
+    ?m2 s223:composedOf/s223:ofConstituent ?s22 .\r
+    {?s22 rdfs:subClassOf* ?s21} UNION {?s21 rdfs:subClassOf* ?s22} .\r
+  }\r
+}\r
+""" ] ] ;
+    sh:rule [ a sh:SPARQLRule ;
+            rdfs:comment "Add an rdfs:label if it is missing." ;
+            sh:construct """\r
+CONSTRUCT {$this rdfs:label ?newLabel .}\r
+WHERE {\r
+FILTER (NOT EXISTS {$this rdfs:label ?something}) .\r
+BIND(REPLACE(STR($this), "^.*/([^/]*)$", "$1") AS ?localNameWithoutHash)\r
+BIND(REPLACE(?localNameWithoutHash, "^.*#(.*)$", "$1") AS ?localName)\r
+BIND(REPLACE(?localName, "-", " ", "i") AS ?newLabel)\r
+}\r
+""" ;
+            sh:name "AddLabelFromLocalName" ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ] .
+
+s223:SystemType a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Concept | SystemType" ;
+    s223:abstract true ;
+    rdfs:comment "Modeling complex system or complex equipment is a common task and depending on the needs of the modelers, different techniques may be used. Using a generic equipment representing a complete Air Handling Unit is valid. The modeler could also choose to add details to this generic equipment and add contained equipment. Another choice is using a flat-model and define all atomic equipment like, fanm dampers, etc and group them all under an instance of s223:System. This class is meant to be used as a base class for instances of s223:System or s223:Equipment as a way to clearly identify the type of application and decoupling the concept of the thing, from the implementation. Validation rules or properties can be defined on this class to ensure that the modeler is using the correct type of equipment." ;
+    rdfs:subClassOf s223:Concept .
+
 qudt:hasQuantityKind a rdf:Property ;
     rdfs:comment "A reference to the QuantityKind of a QuantifiableProperty of interest, e.g. quantitykind:Temperature." .
 
@@ -70953,147 +71032,6 @@ unit:MilliM2 a qudt:Unit ;
     qudt:uneceCommonCode "MMK" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/unit> .
 
-s223:Concept a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Concept" ;
-    s223:abstract true ;
-    rdfs:comment "All classes defined in the 223 standard are subclasses of s223:Concept." ;
-    rdfs:subClassOf rdfs:Resource ;
-    sh:property [ rdfs:comment "If the relation hasProperty is present, it must associate the concept with a Property." ;
-            sh:class s223:Property ;
-            sh:message "s223: If the relation hasProperty is present, it must associate the concept with a Property." ;
-            sh:path s223:hasProperty ],
-        [ rdfs:comment "A Concept must be associated with at least one label using the relation label." ;
-            sh:message "s223: A Concept must be associated with at least one label using the relation label." ;
-            sh:minCount 1 ;
-            sh:path rdfs:label ;
-            sh:severity sh:Warning ],
-        [ rdfs:comment "Ensure that any instance that is declared to be an instance of an abstract class must also be declared an instance of at least one subClass of that abstract class." ;
-            sh:path s223:abstract ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "Ensure that any instance that is declared to be an instance of an abstract class must also be declared an instance of at least one subClass of that abstract class" ;
-                    sh:message "s223: {$this} cannot be declared an instance of only abstract class {?class}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT DISTINCT $this ?class\r
-WHERE {\r
-?class s223:abstract true .\r
-$this a ?class .\r
-OPTIONAL {\r
-?otherClass rdfs:subClassOf+ ?class .\r
-$this a ?otherClass .\r
-FILTER (?class != ?otherClass) .\r
-}\r
-FILTER (!bound (?otherClass)) .\r
-}\r
-""" ] ],
-        [ rdfs:comment "Incompatible Medium. Case1: An entity with a pure medium and an associated property with a pure medium." ;
-            sh:name "Test for compatible declared Medium" ;
-            sh:path s223:hasMedium ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "Incompatible Medium. Case 1: Two pure mediums." ;
-                    sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this ?m1 ?prop ?m2\r
-WHERE {\r
-$this s223:hasMedium ?m1 .\r
-$this ?p ?prop .\r
-?prop a/rdfs:subClassOf* s223:Property .\r
-?prop s223:ofMedium ?m2 .\r
-FILTER (?m1 != ?m2 ) .\r
-FILTER NOT EXISTS {?m1 s223:composedOf ?c1} .\r
-FILTER NOT EXISTS {?m2 s223:composedOf ?c2}\r
-FILTER (NOT EXISTS {?m2 rdfs:subClassOf* ?m1}) .\r
-FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
-}\r
-""" ] ],
-        [ rdfs:comment "Incompatible Medium. Case2: An entity with a pure medium and an associated property with constituents." ;
-            sh:name "Test for compatible declared Medium" ;
-            sh:path s223:hasMedium ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "Incompatible Medium. Case 2: A pure medium and an associated property with constituents." ;
-                    sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this ?m1 ?prop ?m2\r
-WHERE {\r
-$this s223:hasMedium ?m1 .\r
-$this ?p ?prop .\r
-?prop a/rdfs:subClassOf* s223:Property .\r
-?prop s223:ofMedium ?m2 .\r
-?m2 s223:composedOf/s223:ofConstituent ?s2 .\r
-FILTER NOT EXISTS {?m1 s223:composedOf ?c1} .\r
-FILTER NOT EXISTS {\r
-  ?m2 s223:composedOf/s223:ofConstituent ?s12 .\r
-  {?s12 rdfs:subClassOf* ?m1} UNION {?m1 rdfs:subClassOf* ?s12} .\r
-}\r
-}\r
-""" ] ],
-        [ rdfs:comment "Incompatible Medium. Case3: An entity with constituents and an associated property with a pure medium." ;
-            sh:name "Test for compatible declared Medium" ;
-            sh:path s223:hasMedium ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "Incompatible Medium. Case 3: A medium with constituents and an associated property with a pure medium." ;
-                    sh:message "s223: {$this} hasMedium of {?m2}, but is associated with property {?prop} that has ofMedium of {?m1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this ?m1 ?prop ?m2\r
-WHERE {\r
-$this s223:hasMedium ?m2 .\r
-$this ?p ?prop .\r
-?prop a/rdfs:subClassOf* s223:Property .\r
-?prop s223:ofMedium ?m1 .\r
-?m2 s223:composedOf/s223:ofConstituent ?s2 .\r
-FILTER NOT EXISTS {?m1 s223:composedOf ?c1} .\r
-FILTER NOT EXISTS {\r
-  ?m2 s223:composedOf/s223:ofConstituent ?s12 .\r
-  {?s12 rdfs:subClassOf* ?m1} UNION {?m1 rdfs:subClassOf* ?s12} .\r
-}\r
-}\r
-""" ] ],
-        [ rdfs:comment "Incompatible Medium. Case4: An entity with constituents and an associated property with constituents." ;
-            sh:name "Test for compatible declared Medium" ;
-            sh:path s223:hasMedium ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "Incompatible Medium. Case 4: A medium with constituents and an associated property with constituents." ;
-                    sh:message "s223: {$this} hasMedium of {?m1}, but is associated with property {?prop} that has ofMedium of {?m2}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this ?m1 ?prop ?m2\r
-WHERE {\r
-$this s223:hasMedium ?m1 .\r
-$this ?p ?prop .\r
-?prop a/rdfs:subClassOf* s223:Property .\r
-?prop s223:ofMedium ?m2 .\r
-    ?m1 s223:composedOf/s223:ofConstituent ?s1 .\r
-    ?m2 s223:composedOf/s223:ofConstituent ?s2 .\r
-  FILTER NOT EXISTS {\r
-    ?m1 s223:composedOf/s223:ofConstituent ?s11 .\r
-    ?m2 s223:composedOf/s223:ofConstituent ?s12 .\r
-    FILTER (?s11 = ?s12) .\r
-  }\r
-  FILTER NOT EXISTS {\r
-    ?m1 s223:composedOf/s223:ofConstituent ?s21 .\r
-    ?m2 s223:composedOf/s223:ofConstituent ?s22 .\r
-    {?s22 rdfs:subClassOf* ?s21} UNION {?s21 rdfs:subClassOf* ?s22} .\r
-  }\r
-}\r
-""" ] ] ;
-    sh:rule [ a sh:SPARQLRule ;
-            rdfs:comment "Add an rdfs:label if it is missing." ;
-            sh:construct """\r
-CONSTRUCT {$this rdfs:label ?newLabel .}\r
-WHERE {\r
-FILTER (NOT EXISTS {$this rdfs:label ?something}) .\r
-BIND(REPLACE(STR($this), "^.*/([^/]*)$", "$1") AS ?localNameWithoutHash)\r
-BIND(REPLACE(?localNameWithoutHash, "^.*#(.*)$", "$1") AS ?localName)\r
-BIND(REPLACE(?localName, "-", " ", "i") AS ?newLabel)\r
-}\r
-""" ;
-            sh:name "AddLabelFromLocalName" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] .
-
 s223:Electricity-DC a s223:Class,
         s223:Electricity-DC,
         sh:NodeShape ;
@@ -71105,19 +71043,6 @@ s223:Electricity-DC a s223:Class,
             sh:minCount 1 ;
             sh:or ( [ sh:class s223:Numerical-DCVoltage ] [ sh:class s223:Numerical-Voltage ] ) ;
             sh:path s223:hasVoltage ] .
-
-s223:ObservableProperty a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Observable Property" ;
-    rdfs:comment """The term "observable" implies that reading the Property value will return the result of a physical observation, usually by a Sensor.  \r
-  In contrast, the term "actuatable" (see `s223:ActuatableProperty`) implies that writing to the Property value will directly trigger a physical actuation.""" ;
-    rdfs:subClassOf s223:Property ;
-    sh:property [ rdfs:comment "An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
-            sh:class s223:Sensor ;
-            sh:message "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
-            sh:minCount 1 ;
-            sh:path [ sh:inversePath s223:observes ] ;
-            sh:severity sh:Warning ] .
 
 s223:QuantifiableObservableProperty a s223:Class,
         sh:NodeShape ;
@@ -71390,6 +71315,19 @@ s223:Numerical-LineLineVoltage a s223:Class,
             sh:class s223:Numerical-Voltage ;
             sh:minCount 1 ;
             sh:path s223:hasVoltage ] .
+
+s223:ObservableProperty a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Observable Property" ;
+    rdfs:comment """The term "observable" implies that reading the Property value will return the result of a physical observation, usually by a Sensor.  \r
+  In contrast, the term "actuatable" (see `s223:ActuatableProperty`) implies that writing to the Property value will directly trigger a physical actuation.""" ;
+    rdfs:subClassOf s223:Property ;
+    sh:property [ rdfs:comment "An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:class s223:Sensor ;
+            sh:message "s223: An ObservableProperty normally is referred to by a Sensor using the relation s223:observes." ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath s223:observes ] ;
+            sh:severity sh:Warning ] .
 
 s223:observes a rdf:Property ;
     rdfs:label "observes" ;
@@ -71677,25 +71615,25 @@ s223:EnumerationKind-Substance a s223:Class,
     rdfs:label "Substance" ;
     rdfs:comment "This class has enumerated subclasses of the substances that are consumed, produced, transported, sensed, controlled or otherwise interacted with (e.g. water, air, etc.)." ;
     rdfs:subClassOf s223:EnumerationKind ;
-    sh:property [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also composed ofs." ;
+    sh:property [ rdfs:comment """If the relation composedOf is present, it must associate an EnumerationKind-Substance with one or more Properties that \r
+identify and characterize its constituents. The Property identifies the constituent using the relation ofConstituent. If appropriate, a \r
+QuantifiableProperty may be used to also specify the amount of the constituent using the relations qudt:hasQuantityKind, qudt:hasUnit, and s223:hasValue.  \r
+For example, see `s223:GlycolSolution-15Percent`.""" ;
+            sh:class s223:Property ;
+            sh:path s223:composedOf ],
+        [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also composed ofs." ;
             sh:path s223:composedOf ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
                     sh:message "s223: This substance {$this} has a constituent {?constituent} that itself composed ofs {?nextConstituent}. Create new substance with only atomic constituents." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?constituent ?nextConstituent\r
 WHERE {\r
 $this s223:composedOf ?constituent .\r
 ?constituent s223:ofConstituent/s223:composedOf ?nextConstituent .\r
 }\r
-""" ] ],
-        [ rdfs:comment """If the relation composedOf is present, it must associate an EnumerationKind-Substance with one or more Properties that \r
-identify and characterize its constituents. The Property identifies the constituent using the relation ofConstituent. If appropriate, a \r
-QuantifiableProperty may be used to also specify the amount of the constituent using the relations qudt:hasQuantityKind, qudt:hasUnit, and s223:hasValue.  \r
-For example, see `s223:GlycolSolution-15Percent`.""" ;
-            sh:class s223:Property ;
-            sh:path s223:composedOf ] .
+""" ] ] .
 
 qudtqk:MassPerEnergy a qudt:QuantityKind ;
     rdfs:label "Mass per Energy"@en ;
@@ -72206,7 +72144,7 @@ s223:Connectable a s223:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a Connectable has s223:connected or s223:connectedTo (i.e. high-level connection specification), it must also have the supporting cnx relations (low-level connection specification)." ;
                     sh:message "s223: {$this} is s223:connected (high-level) to {?otherC} but not connected at the cnx-level." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?otherC\r
 WHERE {\r
@@ -72250,7 +72188,7 @@ FILTER NOT EXISTS {?d2 s223:contains* $this} .\r
 }\r
 """ ;
             sh:name "InferredEquipmentToDownstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ],
         [ a sh:SPARQLRule ;
             rdfs:comment "Infer the connectedFrom relations using connectsThrough and connectsFrom." ;
             sh:construct """\r
@@ -72262,7 +72200,7 @@ $this s223:hasConnectionPoint ?cp .\r
 }\r
 """ ;
             sh:name "InferredEquipmentToUpstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ],
         [ a sh:SPARQLRule ;
             rdfs:comment "Infer the connectedTo relation using connectsThrough and connectsTo." ;
             sh:construct """\r
@@ -72274,7 +72212,7 @@ $this s223:hasConnectionPoint ?cp .\r
 }\r
 """ ;
             sh:name "InferredEquipmentToDownstreamEquipmentProperty" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ],
         [ a sh:TripleRule ;
             rdfs:comment "Infer the cnx relation using isConnectionPointOf." ;
             sh:name "InferredEquipmentToConnectionPointCnxPropertyFromInverse" ;
@@ -73285,22 +73223,6 @@ qudtqk:MassPerArea a qudt:QuantityKind ;
     qudt:latexSymbol "$\\rho_A $"^^qudt:LatexString ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
-qudtqk:Temperature a qudt:QuantityKind ;
-    rdfs:label "Temperature"@en ;
-    dcterms:description "Temperature is a physical property of matter that quantitatively expresses the common notions of hot and cold. Objects of low temperature are cold, while various degrees of higher temperatures are referred to as warm or hot. Heat spontaneously flows from bodies of a higher temperature to bodies of lower temperature, at a rate that increases with the temperature difference and the thermal conductivity."^^rdf:HTML ;
-    qudt:applicableUnit unit:DEG_C,
-        unit:DEG_F,
-        unit:DEG_R,
-        unit:K,
-        unit:MilliDEG_C,
-        unit:PlanckTemperature ;
-    qudt:dbpediaMatch "http://dbpedia.org/resource/Temperature"^^xsd:anyURI ;
-    qudt:hasDimensionVector <http://qudt.org/vocab/dimensionvector/A0E0L0I0M0H1T0D0> ;
-    qudt:iec61360Code "0112/2///62720#UAD374" ;
-    qudt:plainTextDescription "Temperature is a physical property of matter that quantitatively expresses the common notions of hot and cold. Objects of low temperature are cold, while various degrees of higher temperatures are referred to as warm or hot. Heat spontaneously flows from bodies of a higher temperature to bodies of lower temperature, at a rate that increases with the temperature difference and the thermal conductivity." ;
-    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
-    rdfs:seeAlso qudtqk:ThermodynamicTemperature .
-
 unit:ATM a qudt:Unit ;
     rdfs:label "Standard Atmosphere"@en ;
     dcterms:description """\r
@@ -73983,6 +73905,22 @@ s223:EnumerationKind-Role a s223:Class,
   is active at a particular time is not determinable within the scope of 223, but rather through a Property with \r
   an ExternalReference to telemetry or control data.""" ;
     rdfs:subClassOf s223:EnumerationKind .
+
+qudtqk:Temperature a qudt:QuantityKind ;
+    rdfs:label "Temperature"@en ;
+    dcterms:description "Temperature is a physical property of matter that quantitatively expresses the common notions of hot and cold. Objects of low temperature are cold, while various degrees of higher temperatures are referred to as warm or hot. Heat spontaneously flows from bodies of a higher temperature to bodies of lower temperature, at a rate that increases with the temperature difference and the thermal conductivity."^^rdf:HTML ;
+    qudt:applicableUnit unit:DEG_C,
+        unit:DEG_F,
+        unit:DEG_R,
+        unit:K,
+        unit:MilliDEG_C,
+        unit:PlanckTemperature ;
+    qudt:dbpediaMatch "http://dbpedia.org/resource/Temperature"^^xsd:anyURI ;
+    qudt:hasDimensionVector <http://qudt.org/vocab/dimensionvector/A0E0L0I0M0H1T0D0> ;
+    qudt:iec61360Code "0112/2///62720#UAD374" ;
+    qudt:plainTextDescription "Temperature is a physical property of matter that quantitatively expresses the common notions of hot and cold. Objects of low temperature are cold, while various degrees of higher temperatures are referred to as warm or hot. Heat spontaneously flows from bodies of a higher temperature to bodies of lower temperature, at a rate that increases with the temperature difference and the thermal conductivity." ;
+    rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> ;
+    rdfs:seeAlso qudtqk:ThermodynamicTemperature .
 
 qudtqk:VolumeFraction a qudt:QuantityKind ;
     rdfs:label "Volume Fraction"@en ;
@@ -75799,11 +75737,6 @@ ConnectionPoints are represented graphically in this standard by a triangle with
             sh:minCount 1 ;
             sh:name "ConnectionPointToEquipmentShape" ;
             sh:path s223:isConnectionPointOf ],
-        [ rdfs:comment "A ConnectionPoint can be associated with one System using the relation isBoundaryConnectionPointOf." ;
-            sh:class s223:System ;
-            sh:message "s223: A ConnectionPoint can be associated with one System using the relation isBoundaryConnectionPointOf." ;
-            sh:name "ConnectionPointToSystemShape" ;
-            sh:path s223:isBoundaryConnectionPointOf ],
         [ rdfs:comment "A ConnectionPoint can be associated with at most one other ConnectionPoint using the relation mapsTo" ;
             sh:class s223:ConnectionPoint ;
             sh:maxCount 1 ;
@@ -75820,7 +75753,7 @@ ConnectionPoints are represented graphically in this standard by a triangle with
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a ConnectionPoint lacks a connectsThrough and mapsTo relation, and is not associated with a Junction or Equipment that is contained by an Equipment, then suggest that the ConnectionPoint probably needs an association with a Connection." ;
                     sh:message "s223: ConnectionPoint {$this} probably needs an association with a Connection, or use of hasOptionalConnectionPoint or hasBoundaryConnectionPoint qualifiers." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
     SELECT $this \r
     WHERE {\r
@@ -75838,7 +75771,7 @@ ConnectionPoints are represented graphically in this standard by a triangle with
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure that the Medium identified by a ConnectionPoint via the s223:hasMedium relation is compatible with the Medium identified by the entity identified by the mapsTo+ relation." ;
                     sh:message "s223: {$this} declares a Medium of {?a}, but the Medium of {?b} is declared by {?target} pointed to by the mapsTo+ relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT DISTINCT $this ?a ?b ?target\r
 WHERE {\r
@@ -75857,7 +75790,7 @@ FILTER (NOT EXISTS {?a a/rdfs:subClassOf* ?b}) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A ConnectionPoint must not have both a mapsTo and a connectsThrough relation." ;
                     sh:message "s223: {$this} cannot have both a mapsTo {?uppercp} and a connectsThrough {?connection}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?uppercp ?connection\r
 WHERE {\r
@@ -75872,7 +75805,7 @@ $this s223:connectsThrough ?connection .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a ConnectionPoint lacks a connectsThrough and mapsTo relation, but is associated with a Junction or Equipment that is contained by an Equipment, then suggest that the ConnectionPoint might need a mapsTo relation to a ConnectionPoint of the containing Equipment." ;
                     sh:message "s223: ConnectionPoint {$this} could be missing a mapsTo relation to a ConnectionPoint of {?containerEquipment} because it is associated with a Junction or Equipment that is contained by {?containerEquipment}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
     SELECT $this ?containerEquipment\r
     WHERE {\r
@@ -75888,7 +75821,7 @@ $this s223:connectsThrough ?connection .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a ConnectionPoint mapsTo another ConnectionPoint, the respective Equipment should have a contains relation." ;
                     sh:message "s223: {?otherEquipment} should contain {?equipment} because ConnectionPoint {$this} has a mapsTo relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?equipment ?otherEquipment\r
 WHERE {\r
@@ -77037,7 +76970,7 @@ qudt:quantityValue. This allows the qudt:QuantityValue to express multiple equiv
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
                     sh:message "s223: {$this} referenced by {?subject} has a value of {?v} but does not specify a Unit." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?v ?subject\r
 WHERE {\r
@@ -77051,7 +76984,7 @@ FILTER NOT EXISTS {$this qudt:hasUnit ?u} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty cannot have a value without a Unit." ;
                     sh:message "s223: {$this} referenced by {?subject} has a value of {?v} but does not specify a Unit." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?v ?subject\r
 WHERE {\r
@@ -77065,7 +76998,7 @@ FILTER NOT EXISTS {$this qudt:hasUnit ?u} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty uses hasSetpoint to reference a Property that lacks an Aspect of Aspect-Setpoint." ;
                     sh:message "s223: {$this} uses hasSetpoint to reference {?setpoint} that lacks an Aspect of Aspect-Setpoint." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?setpoint\r
 WHERE {\r
@@ -77078,7 +77011,7 @@ FILTER NOT EXISTS {?setpoint s223:hasAspect s223:Aspect-Setpoint} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty and the Setpoint associated with it have non-commensurate QuantityKinds." ;
                     sh:message "s223: {$this} uses QuantityKind {?pqk} with DimensionVector {?pdv}, while Setpoint {?setpoint} uses QuantityKind {?sqk} with DimensionVector {?sdv}. These are non-commensurate" ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?setpoint ?pqk ?sqk ?pdv ?sdv\r
 WHERE {\r
@@ -77097,7 +77030,7 @@ FILTER (?pdv != ?sdv) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty with Aspect-Setpoint is not referenced by any Property using hasSetpoint." ;
                     sh:message "s223: {$this} has Aspect-Setpoint but is not referenced by any Property using hasSetpoint." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this \r
 WHERE {\r
@@ -77110,7 +77043,7 @@ FILTER NOT EXISTS {?anything s223:hasSetpoint $this} .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty and the associated Setpoint use non-commensurate Units." ;
                     sh:message "s223: {$this} uses Unit {?punit}, while Setpoint {?setpoint} uses Unit {?sunit}. These are non-commensurate." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?setpoint ?punit ?sunit\r
 WHERE {\r
@@ -77129,7 +77062,7 @@ FILTER (?pdv != ?sdv) .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This QuantifiableProperty uses a different Unit than the Setpoint associated with it." ;
                     sh:message "s223: {$this} uses Unit {?punit}, while Setpoint {?setpoint} uses Unit {?sunit}. Be careful." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?setpoint ?punit ?sunit\r
 WHERE {\r
@@ -77169,11 +77102,11 @@ FILTER (?count = 1)\r
 $this qudt:hasUnit/qudt:hasQuantityKind ?uniqueqk .\r
 }\r
 """ ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ] ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "Checks for consistent dimension vectors for a QuantityKind and the Unit" ;
             sh:message "s223: Inconsistent dimensionalities among the Property's Unit and Property's Quantity Kind" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this\r
    WHERE \r
@@ -77345,10 +77278,6 @@ with respect to its value.\r
             sh:class s223:Property ;
             sh:message "s223: If the relation hasInternalReference is present it must associate the Property with another Property." ;
             sh:path s223:hasInternalReference ],
-        [ rdfs:comment "If the relation isInternalReferenceOf is present it must associate the Property with another Property." ;
-            sh:class s223:Property ;
-            sh:message "s223: If the relation isInternalReferenceOf is present it must associate the Property with another Property." ;
-            sh:path s223:isInternalReferenceOf ],
         [ rdfs:comment "A Property can use at most one relation hasValue if it is required to provide a static value in the model. It is not meant for real-time value (see `s223:hasExternalReference`)." ;
             sh:maxCount 1 ;
             sh:message "s223: A Property can use at most one relation hasValue if it is required to provide a static value in the model. It is not meant for real-time value (see `s223:hasExternalReference`)." ;
@@ -77363,10 +77292,6 @@ with respect to its value.\r
             sh:maxCount 1 ;
             sh:message "s223: A Property can be associated with at most one EnumerationKind-Substance using the relation ofSubstance." ;
             sh:path s223:ofSubstance ],
-        [ rdfs:comment "A Property can be associated with Concept using the relation isPropertyOf." ;
-            sh:class s223:Concept ;
-            sh:message "s223: A Property can be associated with Concept using the relation isPropertyOf." ;
-            sh:path s223:isPropertyOf ],
         [ rdfs:comment "A Property can be associated with at most one Function using the inverse relation hasOutput." ;
             sh:class s223:Function ;
             sh:maxCount 1 ;
@@ -77377,7 +77302,7 @@ with respect to its value.\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A Property must not have both a hasInternalReference and a hasExternalReference relation." ;
                     sh:message "s223: {$this} cannot have both a hasInternalReference and a hasExternalReference relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -77390,7 +77315,7 @@ $this s223:hasExternalReference ?ext .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A Property must not have both a hasInternalReference and a hasValue relation." ;
                     sh:message "s223: {$this} cannot have both a hasInternalReference and a hasValue relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -77403,7 +77328,7 @@ $this s223:hasValue ?val .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A Property must not have both a hasExternalReference and a hasValue relation." ;
                     sh:message "s223: {$this} cannot have both a hasExternalReference and a hasValue relation." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -77416,7 +77341,7 @@ $this s223:hasValue ?val .\r
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If an incoming relation composedOf exists, then the Property must have a declared substance using the relation ofConstituent." ;
                     sh:message "s223: Property {$this} is referred to by {?something} with s223:composedOf, but the Property has no value for s223:ofConstituent." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?something\r
 WHERE {\r
@@ -77431,7 +77356,7 @@ FILTER NOT EXISTS {$this s223:ofConstituent ?someSubstance} .\r
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "A Property instance cannot be declared an instance of both an ActuatableProperty and an ObservableProperty." ;
             sh:message "s223: {$this} cannot be declared an instance of both an ActuatableProperty and an ObservableProperty." ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
             sh:select """\r
 SELECT $this\r
 WHERE {\r
@@ -77559,6 +77484,135 @@ s223:Numerical-Voltage a s223:Class,
         [ rdfs:comment "A Numerical-Voltage must have a unit of Volts" ;
             sh:hasValue unit:V ;
             sh:path qudt:hasUnit ] .
+
+s223:Equipment a s223:Class,
+        sh:NodeShape ;
+    rdfs:label "Equipment" ;
+    rdfs:comment """\r
+Equipment is the modeling construct used to represent a device designed to accomplish a specific task, \r
+or a complex device that contains component pieces of Equipment. This is distinct from a System, which is a logical grouping or collection of Equipment. \r
+Equipment can have ConnectionPoints and participate \r
+in the flow of one or more kinds of Medium. Examples of possible equipment include a Pump, Fan, HeatExchanger, Luminaire, \r
+TemperatureSensor, or FlowSensor.\r
+\r
+In common usage terms like equipment and system have a variety of ambituous and possibly conflicting interpretations. A semantic model\r
+is an attempt to eliminate such ambiguities and conflicts. If the thing being modeled has a need for ConnectionPoints it must be modeled as Equipment and not a System.\r
+Thus, a complex example like a chlled water plant is modeled as Equipment because it has connection points for distributing chilled water. The same chilled water plant \r
+may be part of a logical grouping of pumps, valves, filters, and other things modeled as a chilled water System.\r
+\r
+The graphical depiction of Equipment used in this standard is a rounded cornered rectangle as show in Figure 5-1.\r
+\r
+![Graphical Depiction of Equipment.](figures/Figure_5-1Graphical_Depiciton_of_Equipment.svg)\r
+  """ ;
+    rdfs:subClassOf s223:Connectable ;
+    sh:property [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
+            sh:path s223:connectedFrom ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "Disallow contained equipment from having external incoming connections." ;
+                    sh:message "s223: {$this} should not have a connection from external equipment {?otherDev} because {?container} contains {$this}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this ?container ?otherDev\r
+WHERE {\r
+$this s223:connectedFrom ?otherDev .\r
+$this ^s223:contains ?container .\r
+?container a/rdfs:subClassOf* s223:Equipment .\r
+FILTER NOT EXISTS {?container s223:contains ?otherDev .}\r
+}\r
+""" ] ],
+        [ rdfs:comment "Disallow contained equipment from having external outgoing connections." ;
+            sh:path s223:connectedTo ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "Disallow contained equipment from having external outgoing connections." ;
+                    sh:message "s223: {$this} should not have a connection to external equipment {?otherDev} because {?container} contains {$this}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this ?container ?otherDev\r
+WHERE {\r
+$this s223:connectedTo ?otherDev .\r
+$this ^s223:contains ?container .\r
+?container a/rdfs:subClassOf* s223:Equipment .\r
+FILTER NOT EXISTS {?container s223:contains ?otherDev .}\r
+}\r
+""" ] ],
+        [ rdfs:comment "Warning about a subClass of Equipment of type A containing something that is in the same subClass branch." ;
+            sh:path s223:contains ;
+            sh:severity sh:Warning ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "Warning about a subClass of Equipment of type A containing something that is in the same subClass branch." ;
+                    sh:message "s223: {$this}, of type {?type1}, contains {?subEquip} of type {?type2}, that could result in double-counting items in the class hierarchy of {?type1}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this ?subEquip ?type1 ?type2\r
+WHERE {\r
+  FILTER NOT EXISTS {$this a s223:Equipment} .\r
+$this s223:contains+ ?subEquip .\r
+  FILTER NOT EXISTS {?subEquip a s223:Equipment} .\r
+$this a ?type1 .\r
+?subEquip a ?type2 .\r
+{\r
+?type2 rdfs:subClassOf* ?type1 .\r
+}\r
+UNION\r
+{\r
+?type1 rdfs:subClassOf* ?type2 .\r
+}\r
+}\r
+""" ] ],
+        [ a sh:PropertyShape ;
+            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:message "s223: If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:name "device contains shape" ;
+            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
+            sh:path s223:contains ],
+        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
+Note that any Equipment may use this relation, not just Actuator.""" ;
+            sh:class s223:ActuatableProperty ;
+            sh:message """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
+Note that any Equipment may use this relation, not just Actuator.""" ;
+            sh:path s223:actuatedByProperty ],
+        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a Function." ;
+            sh:class s223:Function ;
+            sh:message "s223: If the relation executes is present it must associate the Equipment with a Function." ;
+            sh:path s223:executes ],
+        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
+            sh:class s223:PhysicalSpace ;
+            sh:message "s223: If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
+            sh:path s223:hasPhysicalLocation ],
+        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:message "s223: If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
+            sh:path s223:hasRole ] ;
+    sh:rule [ a sh:SPARQLRule ;
+            rdfs:comment "For equipment contained within another piece of equipment use the mapsTo relation to infer a Medium from the containing equipment." ;
+            sh:construct """\r
+CONSTRUCT {\r
+    ?childCp s223:hasMedium ?medium .\r
+}\r
+WHERE {\r
+  $this s223:hasConnectionPoint ?cp .\r
+  ?childCp s223:mapsTo ?cp .\r
+  ?cp s223:connectsThrough ?connection .\r
+  ?cp s223:hasMedium ?medium .\r
+  FILTER NOT EXISTS {?childCp s223:hasMedium ?something} .\r
+}\r
+""" ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ],
+        [ a sh:SPARQLRule ;
+            rdfs:comment "For equipment containing another piece of equipment, use the mapsTo relation to infer a Medium from the contained equipment." ;
+            sh:construct """\r
+CONSTRUCT {\r
+    ?parentCp s223:hasMedium ?medium .\r
+}\r
+WHERE {\r
+  $this s223:hasConnectionPoint ?cp .\r
+  ?cp s223:mapsTo ?parentCp .\r
+  ?cp s223:connectsThrough ?connection .\r
+  ?cp s223:hasMedium ?medium .\r
+  FILTER NOT EXISTS {?parentCp s223:hasMedium ?something} .\r
+}\r
+""" ;
+            sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ] .
 
 s223:NumberOfElectricalPhases-SinglePhase a s223:Class,
         s223:NumberOfElectricalPhases-SinglePhase,
@@ -77703,143 +77757,6 @@ qudtqk:Volume a qudt:QuantityKind ;
     qudt:siExactMatch <https://si-digital-framework.org/SI/quantities/VOLU> ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
 
-s223:Equipment a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "Equipment" ;
-    rdfs:comment """\r
-Equipment is the modeling construct used to represent a device designed to accomplish a specific task, \r
-or a complex device that contains component pieces of Equipment. This is distinct from a System, which is a logical grouping or collection of Equipment. \r
-Equipment can have ConnectionPoints and participate \r
-in the flow of one or more kinds of Medium. Examples of possible equipment include a Pump, Fan, HeatExchanger, Luminaire, \r
-TemperatureSensor, or FlowSensor.\r
-\r
-In common usage terms like equipment and system have a variety of ambituous and possibly conflicting interpretations. A semantic model\r
-is an attempt to eliminate such ambiguities and conflicts. If the thing being modeled has a need for ConnectionPoints it must be modeled as Equipment and not a System.\r
-Thus, a complex example like a chlled water plant is modeled as Equipment because it has connection points for distributing chilled water. The same chilled water plant \r
-may be part of a logical grouping of pumps, valves, filters, and other things modeled as a chilled water System.\r
-\r
-The graphical depiction of Equipment used in this standard is a rounded cornered rectangle as show in Figure 5-1.\r
-\r
-![Graphical Depiction of Equipment.](figures/Figure_5-1Graphical_Depiciton_of_Equipment.svg)\r
-  """ ;
-    rdfs:subClassOf s223:Connectable ;
-    sh:property [ a sh:PropertyShape ;
-            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:message "s223: If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:name "device contains shape" ;
-            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
-            sh:path s223:contains ],
-        [ rdfs:comment "If the relation isContainedIn is present it must associate the Equipment with another Equipment or Physical Space." ;
-            sh:message "s223: If the relation isContainedIn is present it must associate the Equipment with another Equipment or Physical Space." ;
-            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:PhysicalSpace ] ) ;
-            sh:path s223:isContainedIn ],
-        [ rdfs:comment "If the relation isMemberOf is present it must associate the Equipment with a System." ;
-            sh:class s223:System ;
-            sh:message "s223: If the relation isMemberOf is present it must associate the Equipment with a System." ;
-            sh:path s223:isMemberOf ],
-        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
-Note that any Equipment may use this relation, not just Actuator.""" ;
-            sh:class s223:ActuatableProperty ;
-            sh:message """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
-Note that any Equipment may use this relation, not just Actuator.""" ;
-            sh:path s223:actuatedByProperty ],
-        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a Function." ;
-            sh:class s223:Function ;
-            sh:message "s223: If the relation executes is present it must associate the Equipment with a Function." ;
-            sh:path s223:executes ],
-        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
-            sh:class s223:PhysicalSpace ;
-            sh:message "s223: If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
-            sh:path s223:hasPhysicalLocation ],
-        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:message "s223: If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
-            sh:path s223:hasRole ],
-        [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
-            sh:path s223:connectedFrom ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "Disallow contained equipment from having external incoming connections." ;
-                    sh:message "s223: {$this} should not have a connection from external equipment {?otherDev} because {?container} contains {$this}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this ?container ?otherDev\r
-WHERE {\r
-$this s223:connectedFrom ?otherDev .\r
-$this ^s223:contains ?container .\r
-?container a/rdfs:subClassOf* s223:Equipment .\r
-FILTER NOT EXISTS {?container s223:contains ?otherDev .}\r
-}\r
-""" ] ],
-        [ rdfs:comment "Disallow contained equipment from having external outgoing connections." ;
-            sh:path s223:connectedTo ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "Disallow contained equipment from having external outgoing connections." ;
-                    sh:message "s223: {$this} should not have a connection to external equipment {?otherDev} because {?container} contains {$this}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this ?container ?otherDev\r
-WHERE {\r
-$this s223:connectedTo ?otherDev .\r
-$this ^s223:contains ?container .\r
-?container a/rdfs:subClassOf* s223:Equipment .\r
-FILTER NOT EXISTS {?container s223:contains ?otherDev .}\r
-}\r
-""" ] ],
-        [ rdfs:comment "Warning about a subClass of Equipment of type A containing something that is in the same subClass branch." ;
-            sh:path s223:contains ;
-            sh:severity sh:Warning ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "Warning about a subClass of Equipment of type A containing something that is in the same subClass branch." ;
-                    sh:message "s223: {$this}, of type {?type1}, contains {?subEquip} of type {?type2}, that could result in double-counting items in the class hierarchy of {?type1}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this ?subEquip ?type1 ?type2\r
-WHERE {\r
-  FILTER NOT EXISTS {$this a s223:Equipment} .\r
-$this s223:contains+ ?subEquip .\r
-  FILTER NOT EXISTS {?subEquip a s223:Equipment} .\r
-$this a ?type1 .\r
-?subEquip a ?type2 .\r
-{\r
-?type2 rdfs:subClassOf* ?type1 .\r
-}\r
-UNION\r
-{\r
-?type1 rdfs:subClassOf* ?type2 .\r
-}\r
-}\r
-""" ] ] ;
-    sh:rule [ a sh:SPARQLRule ;
-            rdfs:comment "For equipment contained within another piece of equipment use the mapsTo relation to infer a Medium from the containing equipment." ;
-            sh:construct """\r
-CONSTRUCT {\r
-    ?childCp s223:hasMedium ?medium .\r
-}\r
-WHERE {\r
-  $this s223:hasConnectionPoint ?cp .\r
-  ?childCp s223:mapsTo ?cp .\r
-  ?cp s223:connectsThrough ?connection .\r
-  ?cp s223:hasMedium ?medium .\r
-  FILTER NOT EXISTS {?childCp s223:hasMedium ?something} .\r
-}\r
-""" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ],
-        [ a sh:SPARQLRule ;
-            rdfs:comment "For equipment containing another piece of equipment, use the mapsTo relation to infer a Medium from the contained equipment." ;
-            sh:construct """\r
-CONSTRUCT {\r
-    ?parentCp s223:hasMedium ?medium .\r
-}\r
-WHERE {\r
-  $this s223:hasConnectionPoint ?cp .\r
-  ?cp s223:mapsTo ?parentCp .\r
-  ?cp s223:connectsThrough ?connection .\r
-  ?cp s223:hasMedium ?medium .\r
-  FILTER NOT EXISTS {?parentCp s223:hasMedium ?something} .\r
-}\r
-""" ;
-            sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ] .
-
 s223:OutletConnectionPoint a s223:Class,
         sh:NodeShape ;
     rdfs:label "Outlet Connection Point" ;
@@ -77858,7 +77775,7 @@ s223:OutletConnectionPoint a s223:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure an OutletConnectionPoint has a mapsTo relation to its containing Equipment if it has an external Connection" ;
                     sh:message "s223: {$this} must have a mapsTo an OutletConnectionPoint of {?parentEquipment} and not an external Connection to {?destinationEquipment}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?parentEquipment ?destinationEquipment\r
 WHERE {\r
@@ -78746,7 +78663,7 @@ s223:InletConnectionPoint a s223:Class,
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure an InletConnectionPoint has a mapsTo relation to its containing Equipment if it has an external Connection" ;
                     sh:message "s223: {$this} must have a mapsTo an InletConnectionPoint of {?parentEquipment} and not an external Connection from {?sourceEquipment}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
                     sh:select """\r
 SELECT $this ?parentEquipment ?sourceEquipment\r
 WHERE {\r
@@ -79098,8 +79015,11 @@ qudtqk:Power a qudt:QuantityKind ;
         "flux energetic"@ro,
         "ısı akış oranı"@tr .
 
-<http://data.ashrae.org/standard223/1.0/model/core> a owl:Ontology ;
-    owl:versionInfo "Created with TopBraid Composer" ;
+<http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> a owl:Ontology ;
+    rdfs:label "sample_hotwater_heater-data",
+        "sample_hotwater_heater-schema" ;
+    rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_hotwater_heater-data>,
+        <http://data.ashrae.org/standard223/1.0/sample/sample_hotwater_heater-schema> ;
     sh:declare [ sh:namespace "http://data.ashrae.org/standard223#"^^xsd:anyURI ;
             sh:prefix "s223" ],
         [ sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ;
@@ -79338,6 +79258,34 @@ s223:Electricity-AC a s223:Class,
             sh:or ( [ sh:class s223:Numerical-LineLineVoltage ] [ sh:class s223:Numerical-LineNeutralVoltage ] [ sh:class s223:Numerical-Voltage ] ) ;
             sh:path s223:hasVoltage ] .
 
+rdf:Property a sh:NodeShape ;
+    sh:property [ rdfs:comment "This Property must have a comment" ;
+            sh:path rdfs:comment ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    sh:message "s223: {$this} must have an rdfs:comment" ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this\r
+WHERE {\r
+BIND(REPLACE(STR($this), "^(.*)(/|#)([^#/]*)$", "$1") AS ?prop) .\r
+FILTER (?prop = "http://data.ashrae.org/standard223") .\r
+FILTER (NOT EXISTS {$this rdfs:comment ?something}) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "This Property must have a label" ;
+            sh:path rdfs:label ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    sh:message "s223: {$this} must have an rdfs:label" ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater> ;
+                    sh:select """\r
+SELECT $this\r
+WHERE {\r
+BIND(REPLACE(STR($this), "^(.*)(/|#)([^#/]*)$", "$1") AS ?prop) .\r
+FILTER (?prop = "http://data.ashrae.org/standard223") .\r
+FILTER (NOT EXISTS {$this rdfs:label ?something}) .\r
+}\r
+""" ] ] .
+
 qudtqk:Length a qudt:QuantityKind ;
     rdfs:label "طول"@ar,
         "Дължина"@bg,
@@ -79410,34 +79358,6 @@ qudtqk:Length a qudt:QuantityKind ;
     qudt:siExactMatch <https://si-digital-framework.org/SI/quantities/LENG> ;
     qudt:symbol "l" ;
     rdfs:isDefinedBy <http://qudt.org/2.1/vocab/quantitykind> .
-
-rdf:Property a sh:NodeShape ;
-    sh:property [ rdfs:comment "This Property must have a comment" ;
-            sh:path rdfs:comment ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    sh:message "s223: {$this} must have an rdfs:comment" ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this\r
-WHERE {\r
-BIND(REPLACE(STR($this), "^(.*)(/|#)([^#/]*)$", "$1") AS ?prop) .\r
-FILTER (?prop = "http://data.ashrae.org/standard223") .\r
-FILTER (NOT EXISTS {$this rdfs:comment ?something}) .\r
-}\r
-""" ] ],
-        [ rdfs:comment "This Property must have a label" ;
-            sh:path rdfs:label ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    sh:message "s223: {$this} must have an rdfs:label" ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/model/core> ;
-                    sh:select """\r
-SELECT $this\r
-WHERE {\r
-BIND(REPLACE(STR($this), "^(.*)(/|#)([^#/]*)$", "$1") AS ?prop) .\r
-FILTER (?prop = "http://data.ashrae.org/standard223") .\r
-FILTER (NOT EXISTS {$this rdfs:label ?something}) .\r
-}\r
-""" ] ] .
 
 qudtqk:VolumePerUnitTime a qudt:QuantityKind ;
     rdfs:label "Volume per Unit Time"@en ;
@@ -79843,8 +79763,7 @@ s223:hasMedium a rdf:Property ;
 
 s223:hasConnectionPoint a rdf:Property ;
     rdfs:label "has connection point" ;
-    s223:inverseOf s223:isConnectionPointOf ;
-    rdfs:comment "The relation hasConnectionPoint is part of a pair of relations that bind a Connectable thing to a ConnectionPoint. It is the inverse of the relation isConnectionPointOf (see `s223:isConnectionPointOf`)." .
+    rdfs:comment "The relation hasConnectionPoint is part of a pair of relations that bind a Connectable thing to a ConnectionPoint." .
 
 s223:EnumerationKind a s223:Class,
         s223:EnumerationKind,

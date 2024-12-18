@@ -105,7 +105,6 @@ test_scratch_ahu:00008 a s223:Connectable,
         s223:TemperatureSensor,
         bob:AirTemperatureSensor ;
     rdfs:label "OA-T" ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00009 ;
     rdfs:comment "Oudoor air temperature" .
 
@@ -129,7 +128,6 @@ test_scratch_ahu:00010 a s223:Connectable,
     s223:hasProperty test_scratch_ahu:00011,
         test_scratch_ahu:00012,
         test_scratch_ahu:00013 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00011 ;
     bob:contains test_scratch_ahu:00014,
         test_scratch_ahu:00022 ;
@@ -144,7 +142,6 @@ test_scratch_ahu:00011 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "TPD1.DifferentialStaticPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00010 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:ForcePerArea ;
     qudt:hasUnit unit:PA ;
@@ -156,7 +153,6 @@ test_scratch_ahu:00012 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "TPD1.ObservationPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00010 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
@@ -167,7 +163,6 @@ test_scratch_ahu:00013 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "TPD1.ReferencePressure" ;
-    s223:isPropertyOf test_scratch_ahu:00010 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
@@ -180,7 +175,6 @@ test_scratch_ahu:00014 a p223:Producer,
     s223:hasOutput test_scratch_ahu:00017 ;
     bob:differential_output test_scratch_ahu:00017 ;
     bob:high_input test_scratch_ahu:00015 ;
-    bob:isContainedIn test_scratch_ahu:00010 ;
     bob:low_input test_scratch_ahu:00016 ;
     rdfs:comment "Will output High minus Low" .
 
@@ -202,7 +196,6 @@ test_scratch_ahu:00018 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "highPort" ;
     s223:hasObservationLocation test_scratch_ahu:00152 ;
-    s223:isContainedIn test_scratch_ahu:00010 ;
     s223:observes test_scratch_ahu:00019 .
 
 test_scratch_ahu:00019 a s223:ObservableProperty,
@@ -221,7 +214,6 @@ test_scratch_ahu:00020 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "lowPort" ;
     s223:hasObservationLocation test_scratch_ahu:00153 ;
-    s223:isContainedIn test_scratch_ahu:00010 ;
     s223:observes test_scratch_ahu:00021 .
 
 test_scratch_ahu:00021 a s223:ObservableProperty,
@@ -242,7 +234,6 @@ test_scratch_ahu:00022 a p223:Producer,
     s223:hasOutput test_scratch_ahu:00025 ;
     bob:differential_output test_scratch_ahu:00025 ;
     bob:high_input test_scratch_ahu:00023 ;
-    bob:isContainedIn test_scratch_ahu:00010 ;
     bob:low_input test_scratch_ahu:00024 ;
     rdfs:comment "Will output High minus Low" .
 
@@ -262,7 +253,6 @@ test_scratch_ahu:00026 a s223:Connectable,
         bob:AirTemperatureSensor ;
     rdfs:label "HC-T" ;
     s223:hasObservationLocation test_scratch_ahu:00145 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00027 ;
     rdfs:comment "Air temperature after heating coil" .
 
@@ -283,7 +273,6 @@ test_scratch_ahu:00028 a s223:Connectable,
         bob:AirTemperatureSensor ;
     rdfs:label "MA-T" ;
     s223:hasObservationLocation test_scratch_ahu:00152 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00029 ;
     rdfs:comment "Return Air temperature" .
 
@@ -304,7 +293,6 @@ test_scratch_ahu:00030 a s223:Connectable,
         bob:AirTemperatureSensor ;
     rdfs:label "DA-T" ;
     s223:hasObservationLocation test_scratch_ahu:00108 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00031 ;
     rdfs:comment "Discharge Air temperature after cooling coil" .
 
@@ -325,7 +313,6 @@ test_scratch_ahu:00032 a s223:Connectable,
         bob:AirTemperatureSensor ;
     rdfs:label "RA-T" ;
     s223:hasObservationLocation test_scratch_ahu:00195 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00033 ;
     rdfs:comment "Return Air temperature" .
 
@@ -349,7 +336,6 @@ test_scratch_ahu:00034 a s223:Connectable,
     s223:hasProperty test_scratch_ahu:00035,
         test_scratch_ahu:00036,
         test_scratch_ahu:00037 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00035 ;
     bob:contains test_scratch_ahu:00038,
         test_scratch_ahu:00046 ;
@@ -364,7 +350,6 @@ test_scratch_ahu:00035 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "TPD2.DifferentialStaticPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00034 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:ForcePerArea ;
     qudt:hasUnit unit:PA ;
@@ -376,7 +361,6 @@ test_scratch_ahu:00036 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "TPD2.ObservationPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00034 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
@@ -387,7 +371,6 @@ test_scratch_ahu:00037 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "TPD2.ReferencePressure" ;
-    s223:isPropertyOf test_scratch_ahu:00034 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
@@ -400,7 +383,6 @@ test_scratch_ahu:00038 a p223:Producer,
     s223:hasOutput test_scratch_ahu:00041 ;
     bob:differential_output test_scratch_ahu:00041 ;
     bob:high_input test_scratch_ahu:00039 ;
-    bob:isContainedIn test_scratch_ahu:00034 ;
     bob:low_input test_scratch_ahu:00040 ;
     rdfs:comment "Will output High minus Low" .
 
@@ -422,7 +404,6 @@ test_scratch_ahu:00042 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "highPort" ;
     s223:hasObservationLocation test_scratch_ahu:00108 ;
-    s223:isContainedIn test_scratch_ahu:00034 ;
     s223:observes test_scratch_ahu:00043 .
 
 test_scratch_ahu:00043 a s223:ObservableProperty,
@@ -440,7 +421,6 @@ test_scratch_ahu:00044 a s223:Connectable,
         s223:PressureSensor,
         s223:Sensor ;
     rdfs:label "lowPort" ;
-    s223:isContainedIn test_scratch_ahu:00034 ;
     s223:observes test_scratch_ahu:00045 .
 
 test_scratch_ahu:00045 a s223:ObservableProperty,
@@ -461,7 +441,6 @@ test_scratch_ahu:00046 a p223:Producer,
     s223:hasOutput test_scratch_ahu:00049 ;
     bob:differential_output test_scratch_ahu:00049 ;
     bob:high_input test_scratch_ahu:00047 ;
-    bob:isContainedIn test_scratch_ahu:00034 ;
     bob:low_input test_scratch_ahu:00048 ;
     rdfs:comment "Will output High minus Low" .
 
@@ -484,7 +463,6 @@ test_scratch_ahu:00050 a s223:Connectable,
     s223:hasProperty test_scratch_ahu:00051,
         test_scratch_ahu:00052,
         test_scratch_ahu:00053 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     s223:observes test_scratch_ahu:00051 ;
     bob:contains test_scratch_ahu:00054,
         test_scratch_ahu:00062 ;
@@ -499,7 +477,6 @@ test_scratch_ahu:00051 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:DifferentialStaticPressure ;
     rdfs:label "TPD3.DifferentialStaticPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00050 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:ForcePerArea ;
     qudt:hasUnit unit:PA ;
@@ -511,7 +488,6 @@ test_scratch_ahu:00052 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "TPD3.ObservationPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00050 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
@@ -522,7 +498,6 @@ test_scratch_ahu:00053 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "TPD3.ReferencePressure" ;
-    s223:isPropertyOf test_scratch_ahu:00050 ;
     s223:ofMedium s223:Fluid-Air ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
@@ -535,7 +510,6 @@ test_scratch_ahu:00054 a p223:Producer,
     s223:hasOutput test_scratch_ahu:00057 ;
     bob:differential_output test_scratch_ahu:00057 ;
     bob:high_input test_scratch_ahu:00055 ;
-    bob:isContainedIn test_scratch_ahu:00050 ;
     bob:low_input test_scratch_ahu:00056 ;
     rdfs:comment "Will output High minus Low" .
 
@@ -557,7 +531,6 @@ test_scratch_ahu:00058 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "highPort" ;
     s223:hasObservationLocation test_scratch_ahu:00068 ;
-    s223:isContainedIn test_scratch_ahu:00050 ;
     s223:observes test_scratch_ahu:00059 .
 
 test_scratch_ahu:00059 a s223:ObservableProperty,
@@ -575,7 +548,6 @@ test_scratch_ahu:00060 a s223:Connectable,
         s223:PressureSensor,
         s223:Sensor ;
     rdfs:label "lowPort" ;
-    s223:isContainedIn test_scratch_ahu:00050 ;
     s223:observes test_scratch_ahu:00061 .
 
 test_scratch_ahu:00061 a s223:ObservableProperty,
@@ -596,7 +568,6 @@ test_scratch_ahu:00062 a p223:Producer,
     s223:hasOutput test_scratch_ahu:00065 ;
     bob:differential_output test_scratch_ahu:00065 ;
     bob:high_input test_scratch_ahu:00063 ;
-    bob:isContainedIn test_scratch_ahu:00050 ;
     bob:low_input test_scratch_ahu:00064 ;
     rdfs:comment "Will output High minus Low" .
 
@@ -632,7 +603,6 @@ test_scratch_ahu:00066 a s223:Connectable,
         test_scratch_ahu:00076,
         test_scratch_ahu:00077,
         test_scratch_ahu:00078 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     bob:airInlet test_scratch_ahu:00067 ;
     bob:airOutlet test_scratch_ahu:00068 ;
     rdfs:comment "Return Air Fan" .
@@ -673,7 +643,6 @@ test_scratch_ahu:00070 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speedRatio" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -683,7 +652,6 @@ test_scratch_ahu:00071 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "staticPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
 
@@ -693,7 +661,6 @@ test_scratch_ahu:00072 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -703,7 +670,6 @@ test_scratch_ahu:00073 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
@@ -713,7 +679,6 @@ test_scratch_ahu:00074 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "cfm" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:VolumeFlowRate ;
     qudt:hasUnit unit:FT3-PER-MIN .
 
@@ -723,7 +688,6 @@ test_scratch_ahu:00075 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:Power ;
     qudt:hasUnit unit:HP .
 
@@ -734,7 +698,6 @@ test_scratch_ahu:00076 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -744,7 +707,6 @@ test_scratch_ahu:00077 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:PowerFactor ;
     rdfs:label "powerFactor" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:PowerFactor ;
     qudt:hasUnit unit:UNITLESS .
 
@@ -754,7 +716,6 @@ test_scratch_ahu:00078 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "efficiency" ;
-    s223:isPropertyOf test_scratch_ahu:00066 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -793,7 +754,6 @@ test_scratch_ahu:00079 a s223:Connectable,
         test_scratch_ahu:00094,
         test_scratch_ahu:00095 ;
     s223:hasRole s223:Role-Controller ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     bob:contains test_scratch_ahu:00096 ;
     scratch:amps test_scratch_ahu:00100 ;
     scratch:volts test_scratch_ahu:00102 ;
@@ -865,7 +825,6 @@ test_scratch_ahu:00087 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf test_scratch_ahu:00079 ;
     qudt:hasQuantityKind qudtqk:Power ;
     qudt:hasUnit unit:HP .
 
@@ -876,7 +835,6 @@ test_scratch_ahu:00088 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf test_scratch_ahu:00079 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -886,7 +844,6 @@ test_scratch_ahu:00089 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Frequency ;
     rdfs:label "frequency" ;
-    s223:isPropertyOf test_scratch_ahu:00079 ;
     qudt:hasQuantityKind qudtqk:Frequency ;
     qudt:hasUnit unit:HZ .
 
@@ -896,7 +853,6 @@ test_scratch_ahu:00090 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speed_reference" ;
-    s223:isPropertyOf test_scratch_ahu:00079 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -906,7 +862,6 @@ test_scratch_ahu:00091 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf test_scratch_ahu:00079 ;
     qudt:hasQuantityKind qudtqk:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
@@ -916,7 +871,6 @@ test_scratch_ahu:00092 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "motor_temp" ;
-    s223:isPropertyOf test_scratch_ahu:00079 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 test_scratch_ahu:00093 a s223:EnumerableProperty,
@@ -924,24 +878,21 @@ test_scratch_ahu:00093 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00079 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00094 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00079 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00095 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "alarm_status" ;
-    s223:hasEnumerationKind p223:EnumerationKind-NormalAlarm ;
-    s223:isPropertyOf test_scratch_ahu:00079 .
+    s223:hasEnumerationKind p223:EnumerationKind-NormalAlarm .
 
 test_scratch_ahu:00096 a p223:Producer,
         bob:Causality ;
@@ -949,8 +900,7 @@ test_scratch_ahu:00096 a p223:Producer,
     s223:hasInput test_scratch_ahu:00097 ;
     s223:hasOutput test_scratch_ahu:00098 ;
     bob:cause_input test_scratch_ahu:00097 ;
-    bob:effect_output test_scratch_ahu:00098 ;
-    bob:isContainedIn test_scratch_ahu:00079 .
+    bob:effect_output test_scratch_ahu:00098 .
 
 test_scratch_ahu:00097 a p223:ProducerInput ;
     rdfs:label "motor_temp_effect.cause_input" ;
@@ -965,7 +915,6 @@ test_scratch_ahu:00099 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "current_sensor" ;
     s223:hasObservationLocation test_scratch_ahu:00081 ;
-    s223:isContainedIn test_scratch_ahu:00079 ;
     s223:observes test_scratch_ahu:00100 .
 
 test_scratch_ahu:00100 a s223:ObservableProperty,
@@ -983,7 +932,6 @@ test_scratch_ahu:00101 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "voltage_sensor" ;
     s223:hasObservationLocation test_scratch_ahu:00081 ;
-    s223:isContainedIn test_scratch_ahu:00079 ;
     s223:observes test_scratch_ahu:00102 .
 
 test_scratch_ahu:00102 a s223:ObservableProperty,
@@ -1001,7 +949,6 @@ test_scratch_ahu:00103 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "speed_ref_voltage_sensor" ;
     s223:hasObservationLocation test_scratch_ahu:00084 ;
-    s223:isContainedIn test_scratch_ahu:00079 ;
     s223:observes test_scratch_ahu:00104 .
 
 test_scratch_ahu:00104 a s223:ObservableProperty,
@@ -1063,7 +1010,6 @@ test_scratch_ahu:00106 a s223:Connectable,
         test_scratch_ahu:00116,
         test_scratch_ahu:00117,
         test_scratch_ahu:00118 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     bob:airInlet test_scratch_ahu:00107 ;
     bob:airOutlet test_scratch_ahu:00108 ;
     rdfs:comment "Supply Air Fan" .
@@ -1104,7 +1050,6 @@ test_scratch_ahu:00110 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "speedRatio" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -1114,7 +1059,6 @@ test_scratch_ahu:00111 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "staticPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:Pressure ;
     qudt:hasUnit unit:PA .
 
@@ -1124,7 +1068,6 @@ test_scratch_ahu:00112 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -1134,7 +1077,6 @@ test_scratch_ahu:00113 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:RPM ;
     rdfs:label "rpm" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:AngularVelocity ;
     qudt:hasUnit unit:REV-PER-MIN .
 
@@ -1144,7 +1086,6 @@ test_scratch_ahu:00114 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Flow ;
     rdfs:label "cfm" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:VolumeFlowRate ;
     qudt:hasUnit unit:FT3-PER-MIN .
 
@@ -1154,7 +1095,6 @@ test_scratch_ahu:00115 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:HP ;
     rdfs:label "hp" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:Power ;
     qudt:hasUnit unit:HP .
 
@@ -1165,7 +1105,6 @@ test_scratch_ahu:00116 a s223:ObservableProperty,
         bob:ElectricPower,
         bob:ElectricPowerkW ;
     rdfs:label "kW" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:KiloW .
 
@@ -1175,7 +1114,6 @@ test_scratch_ahu:00117 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:PowerFactor ;
     rdfs:label "powerFactor" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:PowerFactor ;
     qudt:hasUnit unit:UNITLESS .
 
@@ -1185,7 +1123,6 @@ test_scratch_ahu:00118 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "efficiency" ;
-    s223:isPropertyOf test_scratch_ahu:00106 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -1206,7 +1143,6 @@ test_scratch_ahu:00119 a p223:MotorStarter,
         test_scratch_ahu:00123 ;
     s223:hasProperty test_scratch_ahu:00124,
         test_scratch_ahu:00125 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     scratch:inputSignal test_scratch_ahu:00121 ;
     scratch:onOffStatus test_scratch_ahu:00129 ;
     scratch:outputSignal test_scratch_ahu:00120 ;
@@ -1253,8 +1189,7 @@ test_scratch_ahu:00124 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00119 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00125 a s223:ObservableProperty,
         s223:Property,
@@ -1262,7 +1197,6 @@ test_scratch_ahu:00125 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:ElectricPower ;
     rdfs:label "powerRating" ;
-    s223:isPropertyOf test_scratch_ahu:00119 ;
     qudt:hasQuantityKind qudtqk:ElectricPower ;
     qudt:hasUnit unit:HP_Electric .
 
@@ -1275,7 +1209,6 @@ test_scratch_ahu:00126 a p223:CurrentRelay,
     s223:hasConnectionPoint test_scratch_ahu:00127 ;
     s223:hasProperty test_scratch_ahu:00128,
         test_scratch_ahu:00129 ;
-    s223:isContainedIn test_scratch_ahu:00119 ;
     bob:contains test_scratch_ahu:00132 .
 
 test_scratch_ahu:00127 a p223:BinaryOutput,
@@ -1292,7 +1225,6 @@ test_scratch_ahu:00128 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Amps ;
     rdfs:label "amps_rating" ;
-    s223:isPropertyOf test_scratch_ahu:00126 ;
     qudt:hasQuantityKind qudtqk:ElectricCurrent ;
     qudt:hasUnit unit:A .
 
@@ -1301,15 +1233,13 @@ test_scratch_ahu:00129 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00126 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00130 a s223:Connectable,
         s223:Equipment,
         s223:Sensor ;
     rdfs:label "currentSensor" ;
     s223:hasObservationLocation test_scratch_ahu:00123 ;
-    s223:isContainedIn test_scratch_ahu:00126 ;
     s223:observes test_scratch_ahu:00131 .
 
 test_scratch_ahu:00131 a s223:ObservableProperty,
@@ -1328,8 +1258,7 @@ test_scratch_ahu:00132 a p223:Producer,
     s223:hasInput test_scratch_ahu:00133 ;
     s223:hasOutput test_scratch_ahu:00134 ;
     bob:cause_input test_scratch_ahu:00133 ;
-    bob:effect_output test_scratch_ahu:00134 ;
-    bob:isContainedIn test_scratch_ahu:00126 .
+    bob:effect_output test_scratch_ahu:00134 .
 
 test_scratch_ahu:00133 a p223:ProducerInput ;
     rdfs:label "statusProducer.cause_input" ;
@@ -1360,7 +1289,6 @@ test_scratch_ahu:00135 a s223:Coil,
         test_scratch_ahu:00141,
         test_scratch_ahu:00142 ;
     s223:hasRole s223:Role-Cooling ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     bob:airInlet test_scratch_ahu:00136 ;
     bob:airOutlet test_scratch_ahu:00137 ;
     bob:chilledWaterInlet test_scratch_ahu:00138 ;
@@ -1410,7 +1338,6 @@ test_scratch_ahu:00140 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "averageSurfaceTemperature" ;
-    s223:isPropertyOf test_scratch_ahu:00135 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 test_scratch_ahu:00141 a s223:ObservableProperty,
@@ -1419,7 +1346,6 @@ test_scratch_ahu:00141 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "internalPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00135 ;
     qudt:hasQuantityKind qudtqk:Pressure .
 
 test_scratch_ahu:00142 a s223:ObservableProperty,
@@ -1428,7 +1354,6 @@ test_scratch_ahu:00142 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "internalTemperature" ;
-    s223:isPropertyOf test_scratch_ahu:00135 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 test_scratch_ahu:00143 a s223:Coil,
@@ -1450,7 +1375,6 @@ test_scratch_ahu:00143 a s223:Coil,
         test_scratch_ahu:00149,
         test_scratch_ahu:00150 ;
     s223:hasRole s223:Role-Heating ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     bob:airInlet test_scratch_ahu:00144 ;
     bob:airOutlet test_scratch_ahu:00145 ;
     bob:hotWaterInlet test_scratch_ahu:00146 ;
@@ -1500,7 +1424,6 @@ test_scratch_ahu:00148 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "averageSurfaceTemperature" ;
-    s223:isPropertyOf test_scratch_ahu:00143 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 test_scratch_ahu:00149 a s223:ObservableProperty,
@@ -1509,7 +1432,6 @@ test_scratch_ahu:00149 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Pressure ;
     rdfs:label "internalPressure" ;
-    s223:isPropertyOf test_scratch_ahu:00143 ;
     qudt:hasQuantityKind qudtqk:Pressure .
 
 test_scratch_ahu:00150 a s223:ObservableProperty,
@@ -1518,7 +1440,6 @@ test_scratch_ahu:00150 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Temperature ;
     rdfs:label "internalTemperature" ;
-    s223:isPropertyOf test_scratch_ahu:00143 ;
     qudt:hasQuantityKind qudtqk:Temperature .
 
 test_scratch_ahu:00151 a s223:Connectable,
@@ -1532,7 +1453,6 @@ test_scratch_ahu:00151 a s223:Connectable,
     s223:connectedTo test_scratch_ahu:00135 ;
     s223:hasConnectionPoint test_scratch_ahu:00152,
         test_scratch_ahu:00153 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     bob:airInlet test_scratch_ahu:00152 ;
     bob:airOutlet test_scratch_ahu:00153 ;
     rdfs:comment "Filter" .
@@ -1573,7 +1493,6 @@ test_scratch_ahu:00154 a s223:Connectable,
     s223:hasProperty test_scratch_ahu:00189,
         test_scratch_ahu:00190,
         test_scratch_ahu:00191 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     scratch:airInlet test_scratch_ahu:00156 ;
     scratch:airOutlet test_scratch_ahu:00157 ;
     scratch:linkageInlet test_scratch_ahu:00155 ;
@@ -1630,7 +1549,6 @@ test_scratch_ahu:00158 a s223:Actuator,
         test_scratch_ahu:00167,
         test_scratch_ahu:00168,
         test_scratch_ahu:00169 ;
-    s223:isContainedIn test_scratch_ahu:00154 ;
     bob:contains test_scratch_ahu:00170,
         test_scratch_ahu:00173,
         test_scratch_ahu:00176,
@@ -1694,7 +1612,6 @@ test_scratch_ahu:00165 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
-    s223:isPropertyOf test_scratch_ahu:00158 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -1703,16 +1620,14 @@ test_scratch_ahu:00166 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00158 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00167 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00158 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00168 a s223:ActuatableProperty,
         s223:Property,
@@ -1720,8 +1635,6 @@ test_scratch_ahu:00168 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "command" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00190 ;
-    s223:isPropertyOf test_scratch_ahu:00158 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -1731,7 +1644,6 @@ test_scratch_ahu:00169 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Nm ;
     rdfs:label "torque" ;
-    s223:isPropertyOf test_scratch_ahu:00158 ;
     qudt:hasQuantityKind qudtqk:Torque ;
     qudt:hasUnit unit:N-M .
 
@@ -1741,8 +1653,7 @@ test_scratch_ahu:00170 a p223:Producer,
     s223:hasInput test_scratch_ahu:00171 ;
     s223:hasOutput test_scratch_ahu:00172 ;
     bob:cause_input test_scratch_ahu:00171 ;
-    bob:effect_output test_scratch_ahu:00172 ;
-    bob:isContainedIn test_scratch_ahu:00158 .
+    bob:effect_output test_scratch_ahu:00172 .
 
 test_scratch_ahu:00171 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
@@ -1760,8 +1671,7 @@ test_scratch_ahu:00173 a p223:Producer,
     s223:hasInput test_scratch_ahu:00174 ;
     s223:hasOutput test_scratch_ahu:00175 ;
     bob:cause_input test_scratch_ahu:00174 ;
-    bob:effect_output test_scratch_ahu:00175 ;
-    bob:isContainedIn test_scratch_ahu:00158 .
+    bob:effect_output test_scratch_ahu:00175 .
 
 test_scratch_ahu:00174 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
@@ -1778,8 +1688,7 @@ test_scratch_ahu:00176 a p223:Producer,
     s223:hasInput test_scratch_ahu:00177 ;
     s223:hasOutput test_scratch_ahu:00178 ;
     bob:cause_input test_scratch_ahu:00177 ;
-    bob:effect_output test_scratch_ahu:00178 ;
-    bob:isContainedIn test_scratch_ahu:00158 .
+    bob:effect_output test_scratch_ahu:00178 .
 
 test_scratch_ahu:00177 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
@@ -1796,8 +1705,7 @@ test_scratch_ahu:00179 a p223:Producer,
     s223:hasInput test_scratch_ahu:00180 ;
     s223:hasOutput test_scratch_ahu:00181 ;
     bob:cause_input test_scratch_ahu:00180 ;
-    bob:effect_output test_scratch_ahu:00181 ;
-    bob:isContainedIn test_scratch_ahu:00158 .
+    bob:effect_output test_scratch_ahu:00181 .
 
 test_scratch_ahu:00180 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
@@ -1813,7 +1721,6 @@ test_scratch_ahu:00182 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation test_scratch_ahu:00159 ;
-    s223:isContainedIn test_scratch_ahu:00158 ;
     s223:observes test_scratch_ahu:00183 .
 
 test_scratch_ahu:00183 a s223:ObservableProperty,
@@ -1822,7 +1729,6 @@ test_scratch_ahu:00183 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_sensor.Position" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00191 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -1838,7 +1744,6 @@ test_scratch_ahu:00184 a s223:Connectable,
         test_scratch_ahu:00186,
         test_scratch_ahu:00187 ;
     s223:hasProperty test_scratch_ahu:00188 ;
-    s223:isContainedIn test_scratch_ahu:00154 ;
     scratch:airInlet test_scratch_ahu:00186 ;
     scratch:airOutlet test_scratch_ahu:00187 ;
     scratch:linkageInlet test_scratch_ahu:00185 .
@@ -1875,8 +1780,6 @@ test_scratch_ahu:00188 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00189 ;
-    s223:isPropertyOf test_scratch_ahu:00184 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Effective Position" .
@@ -1888,7 +1791,6 @@ test_scratch_ahu:00189 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "position" ;
     s223:hasInternalReference test_scratch_ahu:00188 ;
-    s223:isPropertyOf test_scratch_ahu:00154 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Effective Position" .
@@ -1900,7 +1802,6 @@ test_scratch_ahu:00190 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "command" ;
     s223:hasInternalReference test_scratch_ahu:00168 ;
-    s223:isPropertyOf test_scratch_ahu:00154 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Position command" .
@@ -1912,7 +1813,6 @@ test_scratch_ahu:00191 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
     s223:hasInternalReference test_scratch_ahu:00183 ;
-    s223:isPropertyOf test_scratch_ahu:00154 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Position feedback" .
@@ -1942,7 +1842,6 @@ test_scratch_ahu:00193 a s223:Connectable,
     s223:hasProperty test_scratch_ahu:00228,
         test_scratch_ahu:00229,
         test_scratch_ahu:00230 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     scratch:airInlet test_scratch_ahu:00195 ;
     scratch:airOutlet test_scratch_ahu:00196 ;
     scratch:linkageInlet test_scratch_ahu:00194 ;
@@ -2000,7 +1899,6 @@ test_scratch_ahu:00197 a s223:Actuator,
         test_scratch_ahu:00206,
         test_scratch_ahu:00207,
         test_scratch_ahu:00208 ;
-    s223:isContainedIn test_scratch_ahu:00193 ;
     bob:contains test_scratch_ahu:00209,
         test_scratch_ahu:00212,
         test_scratch_ahu:00215,
@@ -2064,7 +1962,6 @@ test_scratch_ahu:00204 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
-    s223:isPropertyOf test_scratch_ahu:00197 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -2073,16 +1970,14 @@ test_scratch_ahu:00205 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00197 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00206 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00197 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00207 a s223:ActuatableProperty,
         s223:Property,
@@ -2090,8 +1985,6 @@ test_scratch_ahu:00207 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "command" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00229 ;
-    s223:isPropertyOf test_scratch_ahu:00197 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -2101,7 +1994,6 @@ test_scratch_ahu:00208 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Nm ;
     rdfs:label "torque" ;
-    s223:isPropertyOf test_scratch_ahu:00197 ;
     qudt:hasQuantityKind qudtqk:Torque ;
     qudt:hasUnit unit:N-M .
 
@@ -2111,8 +2003,7 @@ test_scratch_ahu:00209 a p223:Producer,
     s223:hasInput test_scratch_ahu:00210 ;
     s223:hasOutput test_scratch_ahu:00211 ;
     bob:cause_input test_scratch_ahu:00210 ;
-    bob:effect_output test_scratch_ahu:00211 ;
-    bob:isContainedIn test_scratch_ahu:00197 .
+    bob:effect_output test_scratch_ahu:00211 .
 
 test_scratch_ahu:00210 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
@@ -2130,8 +2021,7 @@ test_scratch_ahu:00212 a p223:Producer,
     s223:hasInput test_scratch_ahu:00213 ;
     s223:hasOutput test_scratch_ahu:00214 ;
     bob:cause_input test_scratch_ahu:00213 ;
-    bob:effect_output test_scratch_ahu:00214 ;
-    bob:isContainedIn test_scratch_ahu:00197 .
+    bob:effect_output test_scratch_ahu:00214 .
 
 test_scratch_ahu:00213 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
@@ -2148,8 +2038,7 @@ test_scratch_ahu:00215 a p223:Producer,
     s223:hasInput test_scratch_ahu:00216 ;
     s223:hasOutput test_scratch_ahu:00217 ;
     bob:cause_input test_scratch_ahu:00216 ;
-    bob:effect_output test_scratch_ahu:00217 ;
-    bob:isContainedIn test_scratch_ahu:00197 .
+    bob:effect_output test_scratch_ahu:00217 .
 
 test_scratch_ahu:00216 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
@@ -2166,8 +2055,7 @@ test_scratch_ahu:00218 a p223:Producer,
     s223:hasInput test_scratch_ahu:00219 ;
     s223:hasOutput test_scratch_ahu:00220 ;
     bob:cause_input test_scratch_ahu:00219 ;
-    bob:effect_output test_scratch_ahu:00220 ;
-    bob:isContainedIn test_scratch_ahu:00197 .
+    bob:effect_output test_scratch_ahu:00220 .
 
 test_scratch_ahu:00219 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
@@ -2183,7 +2071,6 @@ test_scratch_ahu:00221 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation test_scratch_ahu:00198 ;
-    s223:isContainedIn test_scratch_ahu:00197 ;
     s223:observes test_scratch_ahu:00222 .
 
 test_scratch_ahu:00222 a s223:ObservableProperty,
@@ -2192,7 +2079,6 @@ test_scratch_ahu:00222 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_sensor.Position" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00230 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -2208,7 +2094,6 @@ test_scratch_ahu:00223 a s223:Connectable,
         test_scratch_ahu:00225,
         test_scratch_ahu:00226 ;
     s223:hasProperty test_scratch_ahu:00227 ;
-    s223:isContainedIn test_scratch_ahu:00193 ;
     scratch:airInlet test_scratch_ahu:00225 ;
     scratch:airOutlet test_scratch_ahu:00226 ;
     scratch:linkageInlet test_scratch_ahu:00224 .
@@ -2245,8 +2130,6 @@ test_scratch_ahu:00227 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00228 ;
-    s223:isPropertyOf test_scratch_ahu:00223 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Effective Position" .
@@ -2258,7 +2141,6 @@ test_scratch_ahu:00228 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "position" ;
     s223:hasInternalReference test_scratch_ahu:00227 ;
-    s223:isPropertyOf test_scratch_ahu:00193 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Effective Position" .
@@ -2270,7 +2152,6 @@ test_scratch_ahu:00229 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "command" ;
     s223:hasInternalReference test_scratch_ahu:00207 ;
-    s223:isPropertyOf test_scratch_ahu:00193 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Position command" .
@@ -2282,7 +2163,6 @@ test_scratch_ahu:00230 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
     s223:hasInternalReference test_scratch_ahu:00222 ;
-    s223:isPropertyOf test_scratch_ahu:00193 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Position feedback" .
@@ -2311,7 +2191,6 @@ test_scratch_ahu:00232 a s223:Connectable,
     s223:hasProperty test_scratch_ahu:00267,
         test_scratch_ahu:00268,
         test_scratch_ahu:00269 ;
-    s223:isMemberOf test_scratch_ahu:00007 ;
     scratch:airInlet test_scratch_ahu:00234 ;
     scratch:airOutlet test_scratch_ahu:00235 ;
     scratch:linkageInlet test_scratch_ahu:00233 ;
@@ -2367,7 +2246,6 @@ test_scratch_ahu:00236 a s223:Actuator,
         test_scratch_ahu:00245,
         test_scratch_ahu:00246,
         test_scratch_ahu:00247 ;
-    s223:isContainedIn test_scratch_ahu:00232 ;
     bob:contains test_scratch_ahu:00248,
         test_scratch_ahu:00251,
         test_scratch_ahu:00254,
@@ -2431,7 +2309,6 @@ test_scratch_ahu:00243 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
-    s223:isPropertyOf test_scratch_ahu:00236 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -2440,16 +2317,14 @@ test_scratch_ahu:00244 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00236 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00245 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
-    s223:isPropertyOf test_scratch_ahu:00236 .
+    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
 
 test_scratch_ahu:00246 a s223:ActuatableProperty,
         s223:Property,
@@ -2457,8 +2332,6 @@ test_scratch_ahu:00246 a s223:ActuatableProperty,
         s223:QuantifiableProperty,
         bob:PercentCommand ;
     rdfs:label "command" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00268 ;
-    s223:isPropertyOf test_scratch_ahu:00236 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -2468,7 +2341,6 @@ test_scratch_ahu:00247 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Nm ;
     rdfs:label "torque" ;
-    s223:isPropertyOf test_scratch_ahu:00236 ;
     qudt:hasQuantityKind qudtqk:Torque ;
     qudt:hasUnit unit:N-M .
 
@@ -2478,8 +2350,7 @@ test_scratch_ahu:00248 a p223:Producer,
     s223:hasInput test_scratch_ahu:00249 ;
     s223:hasOutput test_scratch_ahu:00250 ;
     bob:cause_input test_scratch_ahu:00249 ;
-    bob:effect_output test_scratch_ahu:00250 ;
-    bob:isContainedIn test_scratch_ahu:00236 .
+    bob:effect_output test_scratch_ahu:00250 .
 
 test_scratch_ahu:00249 a p223:ProducerInput ;
     rdfs:label "positionProducer.cause_input" ;
@@ -2497,8 +2368,7 @@ test_scratch_ahu:00251 a p223:Producer,
     s223:hasInput test_scratch_ahu:00252 ;
     s223:hasOutput test_scratch_ahu:00253 ;
     bob:cause_input test_scratch_ahu:00252 ;
-    bob:effect_output test_scratch_ahu:00253 ;
-    bob:isContainedIn test_scratch_ahu:00236 .
+    bob:effect_output test_scratch_ahu:00253 .
 
 test_scratch_ahu:00252 a p223:ProducerInput ;
     rdfs:label "feedbackProducer.cause_input" ;
@@ -2515,8 +2385,7 @@ test_scratch_ahu:00254 a p223:Producer,
     s223:hasInput test_scratch_ahu:00255 ;
     s223:hasOutput test_scratch_ahu:00256 ;
     bob:cause_input test_scratch_ahu:00255 ;
-    bob:effect_output test_scratch_ahu:00256 ;
-    bob:isContainedIn test_scratch_ahu:00236 .
+    bob:effect_output test_scratch_ahu:00256 .
 
 test_scratch_ahu:00255 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_open_producer.cause_input" ;
@@ -2533,8 +2402,7 @@ test_scratch_ahu:00257 a p223:Producer,
     s223:hasInput test_scratch_ahu:00258 ;
     s223:hasOutput test_scratch_ahu:00259 ;
     bob:cause_input test_scratch_ahu:00258 ;
-    bob:effect_output test_scratch_ahu:00259 ;
-    bob:isContainedIn test_scratch_ahu:00236 .
+    bob:effect_output test_scratch_ahu:00259 .
 
 test_scratch_ahu:00258 a p223:ProducerInput ;
     rdfs:label "auxiliary_switch_close_producer.cause_input" ;
@@ -2550,7 +2418,6 @@ test_scratch_ahu:00260 a s223:Connectable,
         s223:Sensor ;
     rdfs:label "position_sensor" ;
     s223:hasObservationLocation test_scratch_ahu:00237 ;
-    s223:isContainedIn test_scratch_ahu:00236 ;
     s223:observes test_scratch_ahu:00261 .
 
 test_scratch_ahu:00261 a s223:ObservableProperty,
@@ -2559,7 +2426,6 @@ test_scratch_ahu:00261 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position_sensor.Position" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00269 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT .
 
@@ -2575,7 +2441,6 @@ test_scratch_ahu:00262 a s223:Connectable,
         test_scratch_ahu:00264,
         test_scratch_ahu:00265 ;
     s223:hasProperty test_scratch_ahu:00266 ;
-    s223:isContainedIn test_scratch_ahu:00232 ;
     scratch:airInlet test_scratch_ahu:00264 ;
     scratch:airOutlet test_scratch_ahu:00265 ;
     scratch:linkageInlet test_scratch_ahu:00263 .
@@ -2612,8 +2477,6 @@ test_scratch_ahu:00266 a s223:ObservableProperty,
         s223:QuantifiableProperty,
         bob:Percent ;
     rdfs:label "position" ;
-    s223:isInternalReferenceOf test_scratch_ahu:00267 ;
-    s223:isPropertyOf test_scratch_ahu:00262 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Effective Position" .
@@ -2625,7 +2488,6 @@ test_scratch_ahu:00267 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "position" ;
     s223:hasInternalReference test_scratch_ahu:00266 ;
-    s223:isPropertyOf test_scratch_ahu:00232 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Effective Position" .
@@ -2637,7 +2499,6 @@ test_scratch_ahu:00268 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "command" ;
     s223:hasInternalReference test_scratch_ahu:00246 ;
-    s223:isPropertyOf test_scratch_ahu:00232 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Position command" .
@@ -2649,7 +2510,6 @@ test_scratch_ahu:00269 a s223:ObservableProperty,
         bob:Percent ;
     rdfs:label "position_feedback" ;
     s223:hasInternalReference test_scratch_ahu:00261 ;
-    s223:isPropertyOf test_scratch_ahu:00232 ;
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PERCENT ;
     rdfs:comment "Damper Position feedback" .
