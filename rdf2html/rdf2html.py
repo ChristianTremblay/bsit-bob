@@ -283,7 +283,7 @@ def prefix(full):
         ("ex1", "urn:ex/sample_highLegDelta_electrical_entry/"),
         ("owl", "http://www.w3.org/2002/07/owl#"),
         ("p223", "http://data.ashrae.org/proposal-to-standard223#"),
-        ("quantitykind", "http://qudt.org/vocab/quantitykind/"),
+        ("qudtqk", "http://qudt.org/vocab/quantitykind/"),
         ("qudt", "http://qudt.org/schema/qudt/"),
         ("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
         ("rdfs", "http://www.w3.org/2000/01/rdf-schema#"),
