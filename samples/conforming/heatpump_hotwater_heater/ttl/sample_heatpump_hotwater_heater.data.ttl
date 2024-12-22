@@ -24,9 +24,9 @@
   rdfs:label "sample_heatpump_hotwater_heater-data" ;
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
-sample_heatpump_hotwater_heater:00001 a s223:System,
-        s223:System-HeatPump,
-        s223:System-HotWaterHeater,
+sample_heatpump_hotwater_heater:00001 a p223:System-HeatPump,
+        p223:System-HotWaterHeater,
+        s223:System,
         scratch:DomesticHotWaterHeater,
         ex:SystemFromTemplate ;
     rdfs:label "hp_waterheater" ;
@@ -40,10 +40,10 @@ sample_heatpump_hotwater_heater:00001 a s223:System,
     scratch:fluidOutlet sample_heatpump_hotwater_heater:00005 ;
     rdfs:comment "Hot Water Heater" .
 
-sample_heatpump_hotwater_heater:00002 a s223:Connectable,
+sample_heatpump_hotwater_heater:00002 a p223:System-HeatPump,
+        p223:System-HotWaterHeater,
+        s223:Connectable,
         s223:Equipment,
-        s223:System-HeatPump,
-        s223:System-HotWaterHeater,
         scratch:DomesticHeatPumpWaterHeater ;
     rdfs:label "DomesticHPWaterHeater" ;
     s223:contains sample_heatpump_hotwater_heater:00011,
@@ -243,7 +243,7 @@ sample_heatpump_hotwater_heater:00022 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 sample_heatpump_hotwater_heater:00023 a s223:Connectable,
         s223:ElectricResistanceElement,
@@ -309,7 +309,7 @@ sample_heatpump_hotwater_heater:00029 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 sample_heatpump_hotwater_heater:00030 a s223:Connectable,
         s223:Equipment,

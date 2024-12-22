@@ -1,12 +1,11 @@
 import logging
 import os
 import sys
-
+from bob.core import clear
 import pytest
 
 print("======================", sys.path)
 
-from bob.core import clear
 
 _log = logging.getLogger(__name__)
 

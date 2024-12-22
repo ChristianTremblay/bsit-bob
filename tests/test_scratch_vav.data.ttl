@@ -741,7 +741,6 @@ test_scratch_ahu:00079 a s223:Connectable,
         test_scratch_ahu:00093,
         test_scratch_ahu:00094,
         test_scratch_ahu:00095 ;
-    s223:hasRole s223:Role-Controller ;
     bob:contains test_scratch_ahu:00096 ;
     scratch:amps test_scratch_ahu:00100 ;
     scratch:volts test_scratch_ahu:00102 ;
@@ -861,14 +860,14 @@ test_scratch_ahu:00093 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00094 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00095 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
@@ -1163,7 +1162,7 @@ test_scratch_ahu:00124 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00125 a s223:ObservableProperty,
         s223:Property,
@@ -1206,7 +1205,7 @@ test_scratch_ahu:00129 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00130 a s223:Connectable,
         s223:Equipment,
@@ -1569,14 +1568,14 @@ test_scratch_ahu:00166 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00167 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00168 a s223:ActuatableProperty,
         s223:Property,
@@ -1904,14 +1903,14 @@ test_scratch_ahu:00205 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00206 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00207 a s223:ActuatableProperty,
         s223:Property,
@@ -2237,14 +2236,14 @@ test_scratch_ahu:00244 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00245 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_ahu:00246 a s223:ActuatableProperty,
         s223:Property,
@@ -2474,7 +2473,7 @@ test_scratch_ahu:00275 a s223:Connection ;
     s223:hasMedium s223:Fluid-Air .
 
 test_scratch_vav:00001 a p223:System-TerminalUnit,
-        p223:TerminalUnit-SingleDuctTerminal,
+        p223:TerminalUnitSystem-SingleDuctTerminal,
         s223:System,
         scratch:SingleDuctTerminal,
         ex:SystemFromTemplate ;
@@ -2717,14 +2716,14 @@ test_scratch_vav:00023 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_vav:00024 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_vav:00025 a s223:ActuatableProperty,
         s223:Property,
@@ -2924,7 +2923,6 @@ test_scratch_vav:00050 a s223:Connectable,
     rdfs:label "VAVController" ;
     s223:hasProperty test_scratch_vav:00051,
         test_scratch_vav:00052 ;
-    s223:hasRole s223:Role-Controller ;
     rdfs:comment "VAV Controller with damper" .
 
 test_scratch_vav:00051 a s223:ActuatableProperty,
@@ -3024,7 +3022,7 @@ test_scratch_vav:00060 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 test_scratch_vav:00061 a s223:Connection ;
     s223:connectsAt test_scratch_vav:00014,

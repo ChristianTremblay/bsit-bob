@@ -935,7 +935,7 @@ p223:System-AirHandlingUnit a rdfs:Class ;
 p223:System-TerminalUnit a rdfs:Class ;
     rdfs:label "bob.concept.TerminalUnit" .
 
-p223:TerminalUnit-SingleDuctTerminal a rdfs:Class ;
+p223:TerminalUnitSystem-SingleDuctTerminal a rdfs:Class ;
     rdfs:label "bob.concept.SingleDuctTerminal" ;
     rdfs:subClassOf p223:System-TerminalUnit .
 
@@ -1151,11 +1151,11 @@ bob:Differential a rdfs:Class,
     """ ;
     rdfs:subClassOf p223:Producer ;
     sh:property [ a sh:PropertyShape ;
+            sh:path bob:differential_output ],
+        [ a sh:PropertyShape ;
             sh:path bob:low_input ],
         [ a sh:PropertyShape ;
-            sh:path bob:high_input ],
-        [ a sh:PropertyShape ;
-            sh:path bob:differential_output ] .
+            sh:path bob:high_input ] .
 
 bob:DifferentialStaticPressure a rdfs:Class,
         sh:NodeShape ;
@@ -1205,12 +1205,12 @@ bob:EthernetConnectionPoint a rdfs:Class,
     rdfs:label "bob.connections.network.EthernetConnectionPoint" ;
     rdfs:subClassOf s223:ConnectionPoint ;
     sh:property [ a sh:PropertyShape ;
+            sh:path p223:data_rate ],
+        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path p223:hasProtocol ],
         [ a sh:PropertyShape ;
-            sh:path p223:VLAN ],
-        [ a sh:PropertyShape ;
-            sh:path p223:data_rate ] .
+            sh:path p223:VLAN ] .
 
 bob:Flow a rdfs:Class,
         sh:NodeShape ;
@@ -1221,10 +1221,10 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path bob:measuresMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:path qudt:hasUnit ] .
 
@@ -1343,9 +1343,9 @@ scratch:Actuator a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:command ],
+            sh:path scratch:position ],
         [ a sh:PropertyShape ;
-            sh:path scratch:position ] .
+            sh:path scratch:command ] .
 
 scratch:AirHandlingUnit a rdfs:Class,
         sh:NodeShape ;
@@ -1364,11 +1364,11 @@ scratch:Damper a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:airOutlet ],
+            sh:path scratch:airInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:linkageInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:airInlet ] .
+            sh:path scratch:airOutlet ] .
 
 scratch:DamperAndActuator a rdfs:Class ;
     rdfs:label "bob.scratch.hvac.damper.DamperAndActuator" ;
@@ -1427,13 +1427,13 @@ scratch:Fan a rdfs:Class,
         s223:Equipment,
         s223:Fan ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ],
-        [ a sh:PropertyShape ;
             sh:path scratch:onOffCommand ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ] .
+            sh:path bob:airOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:airInlet ] .
 
 scratch:MotorStarter_600VLL_3Ph_60Hz a rdfs:Class,
         sh:NodeShape ;
@@ -1452,9 +1452,9 @@ scratch:MotorStarter_600VLL_3Ph_60Hz a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:onOffStatus ],
-        [ a sh:PropertyShape ;
             sh:path scratch:inputSignal ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
             sh:path scratch:outputSignal ] .
 
@@ -1477,36 +1477,36 @@ scratch:SingleDuctTerminal a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.scratch.hvac.vav.VAV" ;
     rdfs:subClassOf p223:System-TerminalUnit,
-        p223:TerminalUnit-SingleDuctTerminal,
+        p223:TerminalUnitSystem-SingleDuctTerminal,
         s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:airInlet ],
+            sh:path scratch:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:airOutlet ] .
+            sh:path scratch:airInlet ] .
 
 scratch:VFDFunction a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.scratch.electricity.vfd.VFD_FB" ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:rpm ],
-        [ a sh:PropertyShape ;
             sh:path scratch:alarm ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:drive_running ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:speed_ref_percent ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:amps_load ],
         [ a sh:PropertyShape ;
             sh:path scratch:frequency_load ],
         [ a sh:PropertyShape ;
+            sh:path scratch:kW_load ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:speed_ref_percent ],
+        [ a sh:PropertyShape ;
             sh:path scratch:volts_load ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:amps_load ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:rpm ],
         [ a sh:PropertyShape ;
             sh:path scratch:speed_ref ],
         [ a sh:PropertyShape ;
-            sh:path scratch:kW_load ] .
+            sh:path scratch:drive_running ] .
 
 scratch:VariableFrequencyDrive a rdfs:Class,
         sh:NodeShape ;

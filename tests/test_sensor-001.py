@@ -24,7 +24,7 @@ def test_create_sensor(bob_fixture):
         label="ats1",
         comment="Supply Air Temperature Sensor",
         hasUnit=UNIT.DEG_C,
-        ofMedium=Air
+        ofMedium=Air,
         # hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
     )
 

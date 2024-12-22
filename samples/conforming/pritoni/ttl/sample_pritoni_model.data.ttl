@@ -48,7 +48,6 @@ bacnet_references:00001 a bacnet:Device,
         bacnet_references:00012,
         bacnet_references:00013,
         bacnet_references:00014 ;
-    s223:hasRole s223:Role-Controller ;
     rdfs:comment "AHU Controller" .
 
 bacnet_references:00002 a bacnet:DeviceObject,
@@ -68,7 +67,6 @@ bacnet_references:00003 a bacnet:Device,
     bacnet:deviceInstance 5205 ;
     bacnet:hasObject bacnet_references:00004,
         bacnet_references:00010 ;
-    s223:hasRole s223:Role-Controller ;
     rdfs:comment "VAV for Zone 1" .
 
 bacnet_references:00004 a bacnet:DeviceObject,
@@ -88,7 +86,6 @@ bacnet_references:00005 a bacnet:Device,
     bacnet:deviceInstance 5206 ;
     bacnet:hasObject bacnet_references:00006,
         bacnet_references:00011 ;
-    s223:hasRole s223:Role-Controller ;
     rdfs:comment "VAV for Zone 2" .
 
 bacnet_references:00006 a bacnet:DeviceObject,
@@ -1410,7 +1407,7 @@ electrical_devices:00111 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 electrical_devices:00112 a s223:ObservableProperty,
         s223:Property,
@@ -1491,7 +1488,7 @@ electrical_devices:00119 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 electrical_devices:00120 a s223:ActuatableProperty,
         s223:Property,
@@ -3498,14 +3495,14 @@ hvac:00009 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "VFD DriveRunning" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac:00010 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "Run Command" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac:00011 a s223:Connection ;
     s223:connectsAt hvac_devices:00381,
@@ -3626,8 +3623,8 @@ hvac_devices:00004 a s223:Connection ;
     s223:hasMedium s223:Fluid-Air ;
     rdfs:comment "Return Air Duct extracting air from open office" .
 
-hvac_devices:00005 a s223:System,
-        s223:System-AirHandlingUnit,
+hvac_devices:00005 a p223:System-AirHandlingUnit,
+        s223:System,
         scratch:AirHandlingUnit,
         ex:SystemFromTemplate ;
     rdfs:label "AHU" ;
@@ -4313,7 +4310,6 @@ hvac_devices:00077 a s223:Connectable,
         hvac_devices:00091,
         hvac_devices:00092,
         hvac_devices:00093 ;
-    s223:hasRole s223:Role-Controller ;
     bob:contains hvac_devices:00094 ;
     scratch:amps hvac_devices:00098 ;
     scratch:volts hvac_devices:00100 ;
@@ -4435,7 +4431,7 @@ hvac_devices:00091 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "drive_running" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasExternalReference bacnet_references:00017 .
 
 hvac_devices:00092 a s223:ActuatableProperty,
@@ -4443,7 +4439,7 @@ hvac_devices:00092 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "run_command" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasExternalReference bacnet_references:00018 .
 
 hvac_devices:00093 a s223:EnumerableProperty,
@@ -4743,7 +4739,7 @@ hvac_devices:00122 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00123 a s223:ObservableProperty,
         s223:Property,
@@ -4786,7 +4782,7 @@ hvac_devices:00127 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00128 a s223:Connectable,
         s223:Equipment,
@@ -5169,14 +5165,14 @@ hvac_devices:00164 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00165 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00166 a s223:ActuatableProperty,
         s223:Property,
@@ -5504,14 +5500,14 @@ hvac_devices:00203 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00204 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00205 a s223:ActuatableProperty,
         s223:Property,
@@ -5841,14 +5837,14 @@ hvac_devices:00242 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00243 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00244 a s223:ActuatableProperty,
         s223:Property,
@@ -6180,14 +6176,14 @@ hvac_devices:00283 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00284 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00285 a s223:ActuatableProperty,
         s223:Property,
@@ -6450,14 +6446,14 @@ hvac_devices:00315 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00316 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00317 a s223:ActuatableProperty,
         s223:Property,
@@ -6673,10 +6669,10 @@ hvac_devices:00342 a s223:ConnectionPoint,
     s223:isConnectionPointOf hvac_devices:00338 ;
     s223:pairedConnectionPoint hvac_devices:00341 .
 
-hvac_devices:00343 a s223:Chiller,
+hvac_devices:00343 a p223:System-Chiller,
+        s223:Chiller,
         s223:Connectable,
-        s223:Equipment,
-        s223:System-Chiller ;
+        s223:Equipment ;
     rdfs:label "Chiller" ;
     s223:connected electrical_devices:00032,
         hvac_devices:00301,
@@ -6949,7 +6945,7 @@ hvac_devices:00368 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00369 a s223:ObservableProperty,
         s223:Property,
@@ -6992,7 +6988,7 @@ hvac_devices:00373 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00374 a s223:Connectable,
         s223:Equipment,
@@ -7034,10 +7030,10 @@ hvac_devices:00379 a s223:Connection ;
     s223:connectsTo hvac_devices:00353 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz .
 
-hvac_devices:00380 a s223:Boiler,
+hvac_devices:00380 a p223:System-Boiler,
+        s223:Boiler,
         s223:Connectable,
-        s223:Equipment,
-        s223:System-Boiler ;
+        s223:Equipment ;
     rdfs:label "Boiler" ;
     s223:connected electrical_devices:00036,
         hvac_devices:00333,
@@ -7280,7 +7276,7 @@ hvac_devices:00403 a s223:ActuatableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
     rdfs:label "onOffCommand" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00404 a s223:ObservableProperty,
         s223:Property,
@@ -7323,7 +7319,7 @@ hvac_devices:00408 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "onOffStatus" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00409 a s223:Connectable,
         s223:Equipment,
@@ -7606,9 +7602,9 @@ hvac_devices:00437 a s223:ConnectionPoint,
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf hvac_devices:00433 .
 
-hvac_devices:00438 a s223:System,
-        s223:System-TerminalUnit,
-        s223:TerminalUnit-SingleDuctTerminal,
+hvac_devices:00438 a p223:System-TerminalUnit,
+        p223:TerminalUnitSystem-SingleDuctTerminal,
+        s223:System,
         scratch:SingleDuctTerminal,
         ex:SystemFromTemplate ;
     rdfs:label "VAV" ;
@@ -7856,14 +7852,14 @@ hvac_devices:00460 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00461 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00462 a s223:ActuatableProperty,
         s223:Property,
@@ -8063,7 +8059,6 @@ hvac_devices:00487 a s223:Connectable,
     rdfs:label "VAVController" ;
     s223:hasProperty hvac_devices:00488,
         hvac_devices:00489 ;
-    s223:hasRole s223:Role-Controller ;
     rdfs:comment "VAV Controller with damper" .
 
 hvac_devices:00488 a s223:ActuatableProperty,
@@ -8176,9 +8171,9 @@ hvac_devices:00498 a s223:Connection ;
     s223:connectsTo hvac_devices:00490 ;
     s223:hasMedium s223:Fluid-Air .
 
-hvac_devices:00499 a s223:System,
-        s223:System-TerminalUnit,
-        s223:TerminalUnit-SingleDuctTerminal,
+hvac_devices:00499 a p223:System-TerminalUnit,
+        p223:TerminalUnitSystem-SingleDuctTerminal,
+        s223:System,
         scratch:SingleDuctTerminal,
         ex:SystemFromTemplate ;
     rdfs:label "VAV" ;
@@ -8426,14 +8421,14 @@ hvac_devices:00521 a s223:EnumerableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_open" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00522 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
     rdfs:label "is_closed" ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 hvac_devices:00523 a s223:ActuatableProperty,
         s223:Property,
@@ -8633,7 +8628,6 @@ hvac_devices:00548 a s223:Connectable,
     rdfs:label "VAVController" ;
     s223:hasProperty hvac_devices:00549,
         hvac_devices:00550 ;
-    s223:hasRole s223:Role-Controller ;
     rdfs:comment "VAV Controller with damper" .
 
 hvac_devices:00549 a s223:ActuatableProperty,
@@ -9337,14 +9331,14 @@ lighting_devices:00002 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00003 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00004 a s223:Connectable,
@@ -9395,14 +9389,14 @@ lighting_devices:00008 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00009 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00010 a s223:Connectable,
@@ -9473,13 +9467,13 @@ lighting_devices:00016 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 lighting_devices:00017 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff .
+    s223:hasEnumerationKind s223:Binary-OnOff .
 
 lighting_devices:00018 a s223:ObservableProperty,
         s223:Property,
@@ -9529,14 +9523,14 @@ lighting_devices:00022 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00023 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00024 a s223:ObservableProperty,
@@ -9616,14 +9610,14 @@ lighting_devices:00031 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00032 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00033 a s223:ObservableProperty,
@@ -9674,14 +9668,14 @@ lighting_devices:00037 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00038 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00039 a s223:ObservableProperty,
@@ -9761,14 +9755,14 @@ lighting_devices:00046 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00047 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00048 a s223:ObservableProperty,
@@ -9819,14 +9813,14 @@ lighting_devices:00052 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00053 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00054 a s223:ObservableProperty,
@@ -9915,14 +9909,14 @@ lighting_devices:00062 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasExternalReference bacnet_references:00020 .
 
 lighting_devices:00063 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00064 a s223:ObservableProperty,
@@ -9977,14 +9971,14 @@ lighting_devices:00068 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00069 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00070 a s223:ObservableProperty,
@@ -10035,14 +10029,14 @@ lighting_devices:00074 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00075 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00076 a s223:ObservableProperty,
@@ -10093,14 +10087,14 @@ lighting_devices:00080 a s223:EnumerableProperty,
         s223:EnumeratedObservableProperty,
         s223:ObservableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00081 a s223:ActuatableProperty,
         s223:EnumerableProperty,
         s223:EnumeratedActuatableProperty,
         s223:Property ;
-    s223:hasEnumerationKind s223:EnumerationKind-OnOff ;
+    s223:hasEnumerationKind s223:Binary-OnOff ;
     s223:hasValue s223:OnOff-Off .
 
 lighting_devices:00082 a s223:ObservableProperty,

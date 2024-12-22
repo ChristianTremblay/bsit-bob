@@ -49,15 +49,15 @@ bob:Amps a rdfs:Class ;
 bob:DomesticHotWaterHeater a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.equipment.hvac.boiler.DomesticHotWaterHeater" ;
-    rdfs:subClassOf s223:System,
-        s223:System-HotWaterHeater,
+    rdfs:subClassOf p223:System-HotWaterHeater,
+        s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
+            sh:path bob:electricalInlet ],
         [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:electricalInlet ] .
+            sh:path bob:enteringFluid ] .
 
 bob:ElectricPower a rdfs:Class,
         sh:NodeShape ;
@@ -94,13 +94,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
+            sh:class s223:EnumerationKind ;
+            sh:path bob:measuresMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ] .
+            sh:path qudt:hasUnit ] .
 
 bob:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -133,10 +133,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:WaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -969,21 +969,24 @@ p223:Signal-WiFi a p223:Signal-WiFi,
         s223:Medium-Constituent,
         s223:Substance-Medium .
 
+p223:System-HotWaterHeater a rdfs:Class ;
+    rdfs:label "bob.concept.HotWaterHeater" .
+
 p223:Tank a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.equipment.hvac.tank.Tank" ;
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidOutlet ],
-        [ a sh:PropertyShape ;
             sh:path bob:containedFluid ],
-        [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:internalPressure ] .
+            sh:path bob:fluidOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path bob:internalPressure ],
+        [ a sh:PropertyShape ;
+            sh:path bob:fluidTemperature ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
@@ -1115,24 +1118,24 @@ scratch:DomesticElectricalWaterHeater a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidOutlet ],
+            sh:path scratch:fluidTemperature ],
         [ a sh:PropertyShape ;
             sh:path scratch:fluidInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:fluidTemperature ] .
+            sh:path scratch:fluidOutlet ] .
 
 scratch:DomesticHotWaterHeater a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.scratch.hvac.boiler.DomesticHotWaterHeater" ;
-    rdfs:subClassOf s223:System,
-        s223:System-HotWaterHeater,
+    rdfs:subClassOf p223:System-HotWaterHeater,
+        s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:fluidInlet ],
+            sh:path scratch:electricalInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:electricalInlet ] .
+            sh:path scratch:fluidInlet ] .
 
 scratch:InsideTankHeatTransfer a rdfs:Class,
         sh:NodeShape ;
@@ -1140,25 +1143,25 @@ scratch:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterCommand2 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterCommand1 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterPower2 ],
-        [ a sh:PropertyShape ;
             sh:path scratch:waterFlow ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
-            sh:path scratch:leavingWaterTemp ],
+            sh:path scratch:resistanceHeaterModulation2 ],
         [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation1 ],
+            sh:path scratch:resistanceHeaterCommand1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
             sh:path scratch:fluidTemp ],
         [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation2 ] .
+            sh:path scratch:resistanceHeaterPower2 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:leavingWaterTemp ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterCommand2 ] .
 
 scratch:averageSurfaceTemperature a rdf:Property .
 
