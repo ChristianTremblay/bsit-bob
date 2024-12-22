@@ -78,19 +78,19 @@ class TerminalUnit(Node):
 
 
 class FanCoilUnit(TerminalUnit):
-    _class_iri: URIRef = P223["TerminalUnit-FanCoilUnit"]
+    _class_iri: URIRef = P223["TerminalUnitSystem-FanCoilUnit"]
 
 
 class FanPoweredTerminal(TerminalUnit):
-    _class_iri: URIRef = P223["TerminalUnit-FanPoweredTerminal"]
+    _class_iri: URIRef = P223["TerminalUnitSystem-FanPoweredTerminal"]
 
 
 class SingleDuctTerminal(TerminalUnit):
-    _class_iri: URIRef = P223["TerminalUnit-SingleDuctTerminal"]
+    _class_iri: URIRef = P223["TerminalUnitSystem-SingleDuctTerminal"]
 
 
 class DualDuctTerminal(TerminalUnit):
-    _class_iri: URIRef = P223["TerminalUnit-DualDuctTerminal"]
+    _class_iri: URIRef = P223["TerminalUnitSystem-DualDuctTerminal"]
 
 
 class ElectricalDistribution(Node):
