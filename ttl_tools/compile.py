@@ -23,15 +23,11 @@ def compile(base_folder: Path = None):
     other_ttl_files = []
     other_ttl_files.extend(
         glob.glob(
-            os.path.join(
-                S223_FOLDER, "imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL-v2.1.ttl"
-            )
+            os.path.join(S223_FOLDER, "imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL.ttl")
         )
     )
     other_ttl_files.extend(
-        glob.glob(
-            os.path.join(S223_FOLDER, "imports/qudt/VOCAB_QUDT-UNITS-ALL-v2.1.ttl")
-        )
+        glob.glob(os.path.join(S223_FOLDER, "imports/qudt/VOCAB_QUDT-UNITS-ALL.ttl"))
     )
     other_ttl_files.extend(glob.glob(os.path.join(S223_FOLDER, "models/*.ttl")))
     other_ttl_files.extend(glob.glob(os.path.join(S223_FOLDER, "vocab/*.ttl")))

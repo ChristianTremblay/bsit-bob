@@ -124,10 +124,8 @@ def main():
         *glob.glob(str(S223_FOLDER / "vocab" / "*.ttl")),
         *glob.glob(str(S223_FOLDER / "validation" / "*.ttl")),
         str(S223_FOLDER / "inference" / "model-rules.shapes.ttl"),
-        str(
-            S223_FOLDER / "imports" / "qudt" / "VOCAB_QUDT-QUANTITY-KINDS-ALL-v2.1.ttl"
-        ),
-        str(S223_FOLDER / "imports" / "qudt" / "VOCAB_QUDT-UNITS-ALL-v2.1.ttl"),
+        str(S223_FOLDER / "imports" / "qudt" / "VOCAB_QUDT-QUANTITY-KINDS-ALL.ttl"),
+        str(S223_FOLDER / "imports" / "qudt" / "VOCAB_QUDT-UNITS-ALL.ttl"),
     ]
 
     # load the data graph(s)

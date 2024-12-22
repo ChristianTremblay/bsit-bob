@@ -9,8 +9,8 @@ python3 merge-graphs.py --no-imports \
     ../../223standard/vocab/*.ttl \
     ../../223standard/validation/*.ttl \
     ../../223standard/inference/*.shapes.ttl \
-    ../../223standard/imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL-v2.1.ttl \
-    ../../223standard/imports/qudt/VOCAB_QUDT-UNITS-ALL-v2.1.ttl \
+    ../../223standard/imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL.ttl \
+    ../../223standard/imports/qudt/VOCAB_QUDT-UNITS-ALL.ttl \
     223standard.ttl
 
 # build the image passing in the file name
