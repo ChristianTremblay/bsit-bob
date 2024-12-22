@@ -70,7 +70,6 @@ class Controller(Equipment):
         _log.debug(f"Controller.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
-        self += Role.Controller
 
     def executes(self, function_block: Function):
         _log.debug(f"Controller {self._node_iri} executes  {function_block._node_iri}")

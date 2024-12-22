@@ -270,7 +270,6 @@ Domain.Refrigeration = Refrigeration = Domain("Refrigeration")
 # ===================
 # ===================
 Role.Condenser = Condenser = Role("Condenser")
-Role.Controller = Controller = Role("Controller")
 Role.Cooling = Cooling = Role("Cooling")
 Role.Discharge = Discharge = Role("Discharge")
 Role.Economizer = Economizer = Role("Economizer")
@@ -303,8 +302,11 @@ BinarySignalTypeEnum = EnumerationKind("BinarySignalType", _alt_namespace=P223)
 Binary = EnumerationKind("Binary")
 Binary.false = Binary("False")
 Binary.true = Binary("True")
-Binary.Unknown = Binary("Unknown")
-
+#
+OnOff = Binary("OnOff")
+OnOff.On = OnOff("On")
+OnOff.Off = OnOff("Off")
+OnOff.Unknown = OnOff("Unknown")
 
 G36AlarmLevel = EnumerationKind("G36AlarmLevels", _alt_namespace=G36)
 HandOffAutoEnum = EnumerationKind("HandOffAuto", _alt_namespace=P223)
@@ -316,7 +318,6 @@ NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE
 NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
 NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
 Occupancy = EnumerationKind("Occupancy")
-OnOff = EnumerationKind("OnOff")
 Phase = EnumerationKind("Phase")
 Position = EnumerationKind("Position")
 
@@ -444,12 +445,6 @@ Occupancy.Unoccupied = Occupancy("Unoccupied")
 #
 Motion.true = Motion("True")
 Motion.false = Motion("False")
-
-
-#
-OnOff.On = OnOff("On")
-OnOff.Off = OnOff("Off")
-OnOff.Unknown = OnOff("Unknown")
 
 #
 Phase.Gas = Phase("Gas")
