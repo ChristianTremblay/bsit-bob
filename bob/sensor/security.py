@@ -16,6 +16,7 @@ from ..core import (
 from ..properties import Count, Motion
 from .sensor import Sensor, split_kwargs
 from ..enum import Occupant
+
 _namespace = S223
 
 

@@ -19,6 +19,7 @@ from ..core import (
 )
 from .sensor import Sensor, split_kwargs
 from ..enum import Light
+
 _namespace = BOB
 
 

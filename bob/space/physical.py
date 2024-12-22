@@ -1,6 +1,7 @@
 """
 Physical Space subclasses, see also Real Estate Core.
 """
+
 from rdflib import URIRef
 
 from ..core import BOB, QUANTITYKIND, S223, UNIT, PhysicalSpace, bind_namespace
