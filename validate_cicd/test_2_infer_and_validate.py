@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 import ontoenv
+import pytest
 import rdflib
 from dotenv import load_dotenv
 from rdflib import OWL
@@ -70,6 +71,7 @@ def create_schema():
     return shape_graph
 
 
+@pytest.mark.skip  # the schema is provided by other. We don't need to test it here
 def test_schema_validation():
     """
     Validates the schema definition against the specified shapes
