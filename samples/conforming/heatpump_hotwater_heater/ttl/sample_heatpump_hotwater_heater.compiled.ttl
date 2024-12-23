@@ -812,15 +812,15 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidOutlet ],
+            sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
-        [ a sh:PropertyShape ;
             sh:path bob:internalPressure ],
         [ a sh:PropertyShape ;
-            sh:path bob:containedFluid ] .
+            sh:path bob:fluidTemperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:fluidOutlet ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
@@ -1115,13 +1115,13 @@ scratch:DomesticHeatPumpWaterHeater a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidInlet ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:airOutlet ],
+            sh:path scratch:airInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:airInlet ] .
+            sh:path scratch:fluidInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:airOutlet ] .
 
 scratch:DomesticHotWaterHeater a rdfs:Class,
         sh:NodeShape ;
@@ -1131,9 +1131,9 @@ scratch:DomesticHotWaterHeater a rdfs:Class,
         s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidOutlet ],
-        [ a sh:PropertyShape ;
             sh:path scratch:fluidInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:electricalInlet ] .
 
@@ -1143,25 +1143,25 @@ scratch:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidTemp ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:leavingWaterTemp ],
-        [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterPower1 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation1 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
             sh:path scratch:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterModulation2 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:waterFlow ],
+        [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterCommand1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:leavingWaterTemp ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation2 ],
+            sh:path scratch:fluidTemp ],
         [ a sh:PropertyShape ;
-            sh:path scratch:waterFlow ] .
+            sh:path scratch:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterCommand2 ] .
 
 ex:SystemFromTemplate a rdfs:Class ;
     rdfs:label "bob.template.SystemFromTemplate" ;
@@ -2176,7 +2176,28 @@ s223:Pump a s223:Class,
     rdfs:label "Pump" ;
     rdfs:comment "A machine for imparting energy to a fluid, drawing a fluid into itself through an entrance port, and forcing the fluid out through an exhaust port." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
+    sh:property [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+            sh:path s223:hasConnectionPoint ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
+                    sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
+WHERE {\r
+  $this s223:hasConnectionPoint ?cpa .\r
+  $this s223:hasConnectionPoint ?cpb .\r
+  FILTER (?cpa != ?cpb) .\r
+  ?cpa s223:hasMedium ?mediuma .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  ?cpb s223:hasMedium ?mediumb .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  FILTER (?mediuma != ?mediumb) .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:message "s223: A Pump shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
@@ -2201,28 +2222,7 @@ s223:Pump a s223:Class,
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Refrigerant ;
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Oil ;
                                                 sh:path s223:hasMedium ] ] ) ;
-                            sh:severity sh:Warning ] ] ],
-        [ rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
-            sh:path s223:hasConnectionPoint ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "The non-electrical ConnectionPoints of a Pump must have compatible Media." ;
-                    sh:message "s223: {?cpa} and {?cpb} on the Pump {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
-WHERE {\r
-  $this s223:hasConnectionPoint ?cpa .\r
-  $this s223:hasConnectionPoint ?cpb .\r
-  FILTER (?cpa != ?cpb) .\r
-  ?cpa s223:hasMedium ?mediuma .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  ?cpb s223:hasMedium ?mediumb .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  FILTER (?mediuma != ?mediumb) .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
-}\r
-""" ] ] .
+                            sh:severity sh:Warning ] ] ] .
 
 s223:RadiantHeaterInletShape a sh:NodeShape ;
     rdfs:label "Radiant heater inlet shape" ;
@@ -2632,6 +2632,38 @@ s223:WaterToAirHeatPump a s223:Class,
             sh:message "s223: A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Water." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
+            sh:property [ rdfs:comment "A WaterToAirHeatPump shall have at least one outlet using the medium Fluid-Air." ;
+                    sh:message "s223: A WaterToAirHeatPump shall have at least one outlet using the medium Fluid-Air." ;
+                    sh:minCount 1 ;
+                    sh:path s223:hasConnectionPoint ;
+                    sh:qualifiedMinCount 1 ;
+                    sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
+                            sh:node [ sh:property [ sh:class s223:Fluid-Air ;
+                                            sh:path s223:hasMedium ] ] ] ],
+                [ rdfs:comment "A WaterToAirHeatPump shall have at least one outlet using the medium Fluid-Water" ;
+                    sh:message "s223: A WaterToAirHeatPump shall have at least one outlet using the medium Fluid-Water." ;
+                    sh:minCount 1 ;
+                    sh:path s223:hasConnectionPoint ;
+                    sh:qualifiedMinCount 1 ;
+                    sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
+                            sh:node [ sh:property [ sh:class s223:Fluid-Water ;
+                                            sh:path s223:hasMedium ] ] ] ] ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
+                    sh:node [ sh:property [ sh:qualifiedValueShape [ sh:class s223:Fluid-Water ;
+                                            sh:path s223:hasMedium ] ] ] ] ],
+        [ rdfs:comment "A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Air." ;
+            sh:message "s223: A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Air." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
+                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
+                                    sh:path s223:hasMedium ] ] ] ],
+        [ rdfs:comment "A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Water." ;
+            sh:message "s223: A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Water." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
             sh:qualifiedMinCount 1 ;
             sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
                     sh:node [ sh:property [ sh:class s223:Fluid-Water ;
@@ -2661,39 +2693,7 @@ s223:WaterToAirHeatPump a s223:Class,
             sh:qualifiedMinCount 1 ;
             sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
                     sh:node [ sh:property [ sh:class s223:Fluid-Water ;
-                                    sh:path s223:hasMedium ] ] ] ],
-        [ rdfs:comment "A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Air." ;
-            sh:message "s223: A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Air." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
-                    sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                    sh:path s223:hasMedium ] ] ] ],
-        [ rdfs:comment "A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Water." ;
-            sh:message "s223: A WaterToAirHeatPump shall have at least one inlet using the medium Fluid-Water." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:property [ rdfs:comment "A WaterToAirHeatPump shall have at least one outlet using the medium Fluid-Air." ;
-                    sh:message "s223: A WaterToAirHeatPump shall have at least one outlet using the medium Fluid-Air." ;
-                    sh:minCount 1 ;
-                    sh:path s223:hasConnectionPoint ;
-                    sh:qualifiedMinCount 1 ;
-                    sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
-                            sh:node [ sh:property [ sh:class s223:Fluid-Air ;
-                                            sh:path s223:hasMedium ] ] ] ],
-                [ rdfs:comment "A WaterToAirHeatPump shall have at least one outlet using the medium Fluid-Water" ;
-                    sh:message "s223: A WaterToAirHeatPump shall have at least one outlet using the medium Fluid-Water." ;
-                    sh:minCount 1 ;
-                    sh:path s223:hasConnectionPoint ;
-                    sh:qualifiedMinCount 1 ;
-                    sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ;
-                            sh:node [ sh:property [ sh:class s223:Fluid-Water ;
-                                            sh:path s223:hasMedium ] ] ] ] ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ;
-                    sh:node [ sh:property [ sh:qualifiedValueShape [ sh:class s223:Fluid-Water ;
-                                            sh:path s223:hasMedium ] ] ] ] ] .
+                                    sh:path s223:hasMedium ] ] ] ] .
 
 s223:WaterToWaterHeatPump a s223:Class,
         sh:NodeShape ;
@@ -20212,19 +20212,7 @@ s223:Filter a s223:Class,
     rdfs:label "Filter" ;
     rdfs:comment "A device that removes contaminants from gases or liquids." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
-            sh:message "s223: A Filter shall have at least one inlet ConnectionPoint." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
-        [ rdfs:comment "A Filter shall have at least one outlet." ;
-            sh:message "s223: A Filter shall have at least one outlet." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ],
-        [ rdfs:comment "Incompatible Medium. Case 1: Associated ConnectionPoints with two pure mediums." ;
+    sh:property [ rdfs:comment "Incompatible Medium. Case 1: Associated ConnectionPoints with two pure mediums." ;
             sh:path s223:hasConnectionPoint ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 1: Two pure mediums." ;
@@ -20296,7 +20284,19 @@ WHERE {\r
     {?s22 rdfs:subClassOf* ?s21} UNION {?s21 rdfs:subClassOf* ?s22} .\r
   }\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "A Filter shall have at least one inlet ConnectionPoint." ;
+            sh:message "s223: A Filter shall have at least one inlet ConnectionPoint." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
+        [ rdfs:comment "A Filter shall have at least one outlet." ;
+            sh:message "s223: A Filter shall have at least one outlet." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ] .
 
 s223:Gas-SuperHeated a s223:Class,
         s223:Gas-SuperHeated,
@@ -69815,26 +69815,7 @@ s223:Sensor a s223:Class,
     rdfs:label "Sensor" ;
     rdfs:comment "A Sensor observes an ObservableProperty (see `s223:ObservableProperty`) which may be quantifiable (see `s223:QuantifiableObservableProperty`), such as a temperature, flowrate, or concentration, or Enumerable (see `s223:EnumeratedObservableProperty`), such as an alarm state or occupancy state." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
-            sh:class s223:QuantifiableProperty ;
-            sh:message "s223: If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
-            sh:path s223:hasMeasurementResolution ],
-        [ rdfs:comment "A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
-            sh:maxCount 1 ;
-            sh:message "s223: A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
-            sh:minCount 1 ;
-            sh:path s223:hasObservationLocation ],
-        [ rdfs:comment "If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
-            sh:maxCount 1 ;
-            sh:message "s223: If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
-            sh:path s223:hasReferenceLocation ],
-        [ rdfs:comment "A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
-            sh:class s223:ObservableProperty ;
-            sh:maxCount 1 ;
-            sh:message "s223: A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
-            sh:minCount 1 ;
-            sh:path s223:observes ],
-        [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
+    sh:property [ rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
             sh:path s223:observes ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "s223: If the hasReferenceLocation relation exists, the observed Property must have isDeltaQuantity true." ;
@@ -69863,7 +69844,26 @@ $this s223:observes ?x .\r
 ?x a/rdfs:subClassOf* s223:QuantifiableProperty .\r
 FILTER NOT EXISTS {$this s223:hasReferenceLocation ?y}\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ rdfs:comment "If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
+            sh:class s223:QuantifiableProperty ;
+            sh:message "s223: If the relation hasMeasurementResolution is present it must associate a Sensor with a QuantifiableProperty." ;
+            sh:path s223:hasMeasurementResolution ],
+        [ rdfs:comment "A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
+            sh:maxCount 1 ;
+            sh:message "s223: A Sensor must be associated with exactly one location using the relation hasObservationLocation." ;
+            sh:minCount 1 ;
+            sh:path s223:hasObservationLocation ],
+        [ rdfs:comment "If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
+            sh:maxCount 1 ;
+            sh:message "s223: If a Sensor measures a differential property, it must be associated with exactly 1 of Connectable, Connection, or ConnectionPoint using the relation hasReferenceLocation." ;
+            sh:path s223:hasReferenceLocation ],
+        [ rdfs:comment "A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
+            sh:class s223:ObservableProperty ;
+            sh:maxCount 1 ;
+            sh:message "s223: A Sensor must be associated with exactly one ObservableProperty using the relation observes." ;
+            sh:minCount 1 ;
+            sh:path s223:observes ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "Infer the hasObservationLocation relation for a Sensor from the Property that it is observing, only if that property is associated with a single entity." ;
             sh:construct """\r
@@ -81404,31 +81404,7 @@ The graphical depiction of Equipment used in this standard is a rounded cornered
 ![Graphical Depiction of Equipment.](figures/Figure_5-1Graphical_Depiciton_of_Equipment.svg)\r
   """ ;
     rdfs:subClassOf s223:Connectable ;
-    sh:property [ a sh:PropertyShape ;
-            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:message "s223: If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
-            sh:name "device contains shape" ;
-            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
-            sh:path s223:contains ],
-        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
-Note that any Equipment may use this relation, not just Actuator.""" ;
-            sh:class s223:ActuatableProperty ;
-            sh:message """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
-Note that any Equipment may use this relation, not just Actuator.""" ;
-            sh:path s223:actuatedByProperty ],
-        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a Function." ;
-            sh:class s223:Function ;
-            sh:message "s223: If the relation executes is present it must associate the Equipment with a Function." ;
-            sh:path s223:executes ],
-        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
-            sh:class s223:PhysicalSpace ;
-            sh:message "s223: If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
-            sh:path s223:hasPhysicalLocation ],
-        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:message "s223: If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
-            sh:path s223:hasRole ],
-        [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
+    sh:property [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
             sh:path s223:connectedFrom ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Disallow contained equipment from having external incoming connections." ;
@@ -81481,7 +81457,31 @@ UNION\r
 ?type1 rdfs:subClassOf* ?type2 .\r
 }\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ a sh:PropertyShape ;
+            rdfs:comment "If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:message "s223: If the relation contains is present it must associate the Equipment with either Equipment or Junction." ;
+            sh:name "device contains shape" ;
+            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
+            sh:path s223:contains ],
+        [ rdfs:comment """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
+Note that any Equipment may use this relation, not just Actuator.""" ;
+            sh:class s223:ActuatableProperty ;
+            sh:message """If the relation actuatedByProperty is present it must associate the Equipment with a ActuatableProperty.\r
+Note that any Equipment may use this relation, not just Actuator.""" ;
+            sh:path s223:actuatedByProperty ],
+        [ rdfs:comment "If the relation executes is present it must associate the Equipment with a Function." ;
+            sh:class s223:Function ;
+            sh:message "s223: If the relation executes is present it must associate the Equipment with a Function." ;
+            sh:path s223:executes ],
+        [ rdfs:comment "If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
+            sh:class s223:PhysicalSpace ;
+            sh:message "s223: If the relation hasPhysicalLocation is present it must associate the Equipment with a PhysicalSpace." ;
+            sh:path s223:hasPhysicalLocation ],
+        [ rdfs:comment "If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:message "s223: If the relation hasRole is present it must associate the Equipment with a EnumerationKind-Role." ;
+            sh:path s223:hasRole ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "For equipment contained within another piece of equipment use the mapsTo relation to infer a Medium from the containing equipment." ;
             sh:construct """\r

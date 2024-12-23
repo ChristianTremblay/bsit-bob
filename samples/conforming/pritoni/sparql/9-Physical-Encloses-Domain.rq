@@ -1,3 +1,6 @@
+prefix s223: <http://data.ashrae.org/standard223#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
 select ?node (GROUP_CONCAT(?ds; separator="; ") as ?dss) where {
     ?node a s223:PhysicalSpace ; s223:encloses ?ds .
     ?ds a s223:DomainSpace .

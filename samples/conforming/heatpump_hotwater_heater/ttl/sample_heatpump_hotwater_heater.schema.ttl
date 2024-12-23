@@ -1040,15 +1040,15 @@ p223:Tank a rdfs:Class,
     rdfs:subClassOf s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:fluidOutlet ],
+            sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ],
-        [ a sh:PropertyShape ;
             sh:path bob:internalPressure ],
         [ a sh:PropertyShape ;
-            sh:path bob:containedFluid ] .
+            sh:path bob:fluidTemperature ],
+        [ a sh:PropertyShape ;
+            sh:path bob:fluidOutlet ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
@@ -1182,13 +1182,13 @@ scratch:DomesticHeatPumpWaterHeater a rdfs:Class,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidInlet ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:airOutlet ],
+            sh:path scratch:airInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:airInlet ] .
+            sh:path scratch:fluidInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:airOutlet ] .
 
 scratch:DomesticHotWaterHeater a rdfs:Class,
         sh:NodeShape ;
@@ -1198,9 +1198,9 @@ scratch:DomesticHotWaterHeater a rdfs:Class,
         s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidOutlet ],
-        [ a sh:PropertyShape ;
             sh:path scratch:fluidInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:electricalInlet ] .
 
@@ -1210,25 +1210,25 @@ scratch:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidTemp ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:leavingWaterTemp ],
-        [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterPower1 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation1 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
             sh:path scratch:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterModulation2 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:waterFlow ],
+        [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterCommand1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:leavingWaterTemp ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation2 ],
+            sh:path scratch:fluidTemp ],
         [ a sh:PropertyShape ;
-            sh:path scratch:waterFlow ] .
+            sh:path scratch:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterCommand2 ] .
 
 scratch:airInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .

@@ -1039,13 +1039,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ] .
+            sh:path bob:measuresMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:HP a rdfs:Class ;
     rdfs:label "bob.properties.force.HP" ;
@@ -1105,10 +1105,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
 
 scratch:AirSourceHeatPump a rdfs:Class,
         sh:NodeShape ;
@@ -1120,11 +1120,11 @@ scratch:AirSourceHeatPump a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:indoorAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:outdoorAirOutlet ],
+            sh:path scratch:outdoorAirInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:indoorAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:outdoorAirInlet ] .
+            sh:path scratch:outdoorAirOutlet ] .
 
 scratch:AirToAirHeatPump a rdfs:Class,
         sh:NodeShape ;
@@ -1140,11 +1140,11 @@ scratch:AirToAirHeatPump a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:indoorAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:electricalInlet ],
+            sh:path scratch:indoorAirInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:outdoorAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:indoorAirInlet ],
+            sh:path scratch:electricalInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:outdoorAirInlet ] .
 
@@ -1181,9 +1181,9 @@ scratch:Fan a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ] .
+            sh:path bob:airInlet ] .
 
 ex:SystemFromTemplate a rdfs:Class ;
     rdfs:label "bob.template.SystemFromTemplate" ;
@@ -74423,7 +74423,13 @@ s223:EnumerationKind-Substance a s223:Class,
     rdfs:label "Substance" ;
     rdfs:comment "This class has enumerated subclasses of the substances that are consumed, produced, transported, sensed, controlled or otherwise interacted with (e.g. water, air, etc.)." ;
     rdfs:subClassOf s223:EnumerationKind ;
-    sh:property [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also composed ofs." ;
+    sh:property [ rdfs:comment """If the relation composedOf is present, it must associate an EnumerationKind-Substance with one or more Properties that \r
+identify and characterize its constituents. The Property identifies the constituent using the relation ofConstituent. If appropriate, a \r
+QuantifiableProperty may be used to also specify the amount of the constituent using the relations qudt:hasQuantityKind, qudt:hasUnit, and s223:hasValue.  \r
+For example, see `s223:GlycolSolution-15Percent`.""" ;
+            sh:class s223:Property ;
+            sh:path s223:composedOf ],
+        [ rdfs:comment "A substance may only have atomic constituents, it may not have a constituent that also composed ofs." ;
             sh:path s223:composedOf ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
@@ -74435,13 +74441,7 @@ WHERE {\r
 $this s223:composedOf ?constituent .\r
 ?constituent s223:ofConstituent/s223:composedOf ?nextConstituent .\r
 }\r
-""" ] ],
-        [ rdfs:comment """If the relation composedOf is present, it must associate an EnumerationKind-Substance with one or more Properties that \r
-identify and characterize its constituents. The Property identifies the constituent using the relation ofConstituent. If appropriate, a \r
-QuantifiableProperty may be used to also specify the amount of the constituent using the relations qudt:hasQuantityKind, qudt:hasUnit, and s223:hasValue.  \r
-For example, see `s223:GlycolSolution-15Percent`.""" ;
-            sh:class s223:Property ;
-            sh:path s223:composedOf ] .
+""" ] ] .
 
 qudtqk:MassPerEnergy a qudt:QuantityKind ;
     rdfs:label "Mass per Energy"@en ;

@@ -101,13 +101,13 @@ bob:Flow a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
             sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ] .
+            sh:path bob:measuresMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:HP a rdfs:Class ;
     rdfs:label "bob.properties.force.HP" ;
@@ -167,10 +167,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ],
-        [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path s223:ofMedium ],
+        [ a sh:PropertyShape ;
+            sh:path qudt:hasUnit ] .
 
 bob:airInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -1182,11 +1182,11 @@ scratch:AirSourceHeatPump a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:indoorAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:outdoorAirOutlet ],
+            sh:path scratch:outdoorAirInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:indoorAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:outdoorAirInlet ] .
+            sh:path scratch:outdoorAirOutlet ] .
 
 scratch:AirToAirHeatPump a rdfs:Class,
         sh:NodeShape ;
@@ -1202,11 +1202,11 @@ scratch:AirToAirHeatPump a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:indoorAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:electricalInlet ],
+            sh:path scratch:indoorAirInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:outdoorAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:indoorAirInlet ],
+            sh:path scratch:electricalInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:outdoorAirInlet ] .
 
@@ -1243,9 +1243,9 @@ scratch:Fan a rdfs:Class,
         [ a sh:PropertyShape ;
             sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
-            sh:path bob:airInlet ],
+            sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ] .
+            sh:path bob:airInlet ] .
 
 scratch:electricalInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
