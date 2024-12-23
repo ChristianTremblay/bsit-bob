@@ -88,6 +88,28 @@ _log = logging.getLogger(__name__)
 if _dotenv_import_error:
     _log.warning("install python-dotenv to use your .env file")
 
+
+prefixes = {
+    "s223": "http://data.ashrae.org/standard223#",
+    "p223": "http://data.ashrae.org/proposal-to-standard223#",
+    "scratch": "http://data.ashrae.org/standard223/si-builder/prototype#",
+    "bob": "http://data.ashrae.org/standard223/si-builder#",
+    "ex": "http://example/",
+    "g36": "http://data.ashrae.org/standard223/1.0/extension/g36#",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "qudtqk": "http://qudt.org/vocab/quantitykind/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "brick": "https://brickschema.org/schema/Brick#",
+    "bacnet": "http://data.ashrae.org/bacnet/2020#",
+    "rec": "https://w3id.org/rec/core/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "ref": "https://brickschema.org/schema/Brick/ref#",
+}
+
+
 # options
 MANDITORY_LABEL = os.getenv("MANDITORY_LABEL", "True") == "True"
 
@@ -195,37 +217,35 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 # or in the _namespace special global for the module of the class, or the
 # parent module, or it is inherited from a superclass that is defined in the
 # same module
-S223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
+S223 = bind_namespace("s223", prefixes["s223"])
 
 # This namespace is added so in the development of Bob, when new cases occurs
 # we can clearly establish that a new class is not yet part of the standard
-P223 = bind_namespace("p223", "http://data.ashrae.org/proposal-to-standard223#")
+P223 = bind_namespace("p223", prefixes["p223"])
 
 # This namespace is added so si-builder/scratch (aka Scratch), can provide its own schema
 # of classes which are opiniated examples assemblage of S223 classes
-SCRATCH = bind_namespace(
-    "scratch", "http://data.ashrae.org/standard223/si-builder/prototype#"
-)
+SCRATCH = bind_namespace("scratch", prefixes["scratch"])
 
 # This namespace is added so si-builder (aka Bob), can provide its own schema
 # of classes which are assemblage of S223 classes
-BOB = bind_namespace("bob", "http://data.ashrae.org/standard223/si-builder#")
+BOB = bind_namespace("bob", prefixes["bob"])
 
 # This namespace is used when the module does not have a namespace provided
 # which makes short examples easier to create
-EX = bind_namespace("ex", os.getenv("BOB_EX", "http://example/"))
+EX = bind_namespace("ex", os.getenv("BOB_EX", prefixes["ex"]))
 
 # This namespace is used for all related logics in Guideline 36
-G36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
+G36 = bind_namespace("g36", prefixes["g36"])
 
 # everything in this module belongs in the standard
 _namespace = S223
 
 # common namespaces
-QUDT = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
-QUANTITYKIND = bind_namespace("qudtqk", "http://qudt.org/vocab/quantitykind/")
-UNIT = bind_namespace("unit", "http://qudt.org/vocab/unit/")
-BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")
+QUDT = bind_namespace("qudt", prefixes["qudt"])
+QUANTITYKIND = bind_namespace("qudtqk", prefixes["qudtqk"])
+UNIT = bind_namespace("unit", prefixes["unit"])
+BRICK = bind_namespace("brick", prefixes["brick"])
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file

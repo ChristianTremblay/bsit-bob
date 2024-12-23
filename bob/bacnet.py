@@ -19,6 +19,7 @@ from .core import (
     ExternalReference,
     Node,
     bind_namespace,
+    prefixes,
 )
 from .equipment.control.controller import Controller
 from .externalreference.bacnet import BACnetExternalReference
@@ -28,7 +29,7 @@ from .multimethods import multimethod, new_class
 _log = logging.getLogger(__name__)
 
 # namespace
-BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
+BACNET = bind_namespace("bacnet", prefixes["bacnet"])
 _namespace = BACNET
 
 

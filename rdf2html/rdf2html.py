@@ -18,6 +18,8 @@ from .rdf2html_classification import (
     skip_edges,
 )
 
+from bob.core import prefixes
+
 g = Graph()
 nodes = {}
 
@@ -277,29 +279,9 @@ def make_legend(g):
 
 
 def prefix(full):
-    _prefixes = [
-        ("bob", "http://data.ashrae.org/standard223/si-builder#"),
-        ("scratch", "http://data.ashrae.org/standard223/si-builder/prototype#"),
-        ("ex1", "urn:ex/sample_highLegDelta_electrical_entry/"),
-        ("owl", "http://www.w3.org/2002/07/owl#"),
-        ("p223", "http://data.ashrae.org/proposal-to-standard223#"),
-        ("qudtqk", "http://qudt.org/vocab/quantitykind/"),
-        ("qudt", "http://qudt.org/schema/qudt/"),
-        ("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
-        ("rdfs", "http://www.w3.org/2000/01/rdf-schema#"),
-        ("s223", "http://data.ashrae.org/standard223#"),
-        ("unit", "http://qudt.org/vocab/unit/"),
-        ("xsd", "http://www.w3.org/2001/XMLSchema#"),
-        ("rec", "https://w3id.org/rec/core/"),
-        ("bacnet", "http://data.ashrae.org/bacnet/2020#"),
-        ("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#"),
-        ("ref", "https://brickschema.org/schema/Brick/ref#"),
-        ("brick", "https://brickschema.org/schema/Brick#"),
-    ]
-    for each in _prefixes:
-        _p, _f = each
-        if _f in full:
-            return (_p, full.replace(_f, f"{_p}:"))
+    for prefix, namespace in prefixes.items():
+        if namespace in full:
+            return (prefix, full.replace(namespace, f"{prefix}:"))
     return (full, full)
 
 
