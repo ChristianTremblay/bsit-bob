@@ -4,22 +4,24 @@
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
 @prefix ex: <http://example/> .
 @prefix g36: <http://data.ashrae.org/standard223/1.0/extension/g36#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix owl: http://www.w3.org/2002/07/owl# .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix qudtqk: <http://qudt.org/vocab/quantitykind/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdfs: http://www.w3.org/2000/01/rdf-schema# .
 @prefix s223: <http://data.ashrae.org/standard223#> .
 @prefix scratch: <http://data.ashrae.org/standard223/si-builder/prototype#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xsd: http://www.w3.org/2001/XMLSchema# .
 
 
 
 
-<http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater>
+<http://data.ashrae.org/standard223/1.0/data/sample_hotwater_heater-schema>
   a owl:Ontology ;
   rdfs:isDefinedBy <http://data.ashrae.org/standard223/1.0/sample/sample_hotwater_heater-schema> ;
   rdfs:label "sample_hotwater_heater-schema" ;
@@ -97,10 +99,10 @@ bob:Flow a rdfs:Class,
             sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ],
+            sh:path s223:ofMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ] .
+            sh:path bob:measuresMedium ] .
 
 bob:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -1120,9 +1122,9 @@ scratch:DomesticElectricalWaterHeater a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:fluidTemperature ],
         [ a sh:PropertyShape ;
-            sh:path scratch:fluidInlet ],
+            sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:fluidOutlet ] .
+            sh:path scratch:fluidInlet ] .
 
 scratch:DomesticHotWaterHeater a rdfs:Class,
         sh:NodeShape ;
@@ -1131,9 +1133,9 @@ scratch:DomesticHotWaterHeater a rdfs:Class,
         s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidInlet ],
-        [ a sh:PropertyShape ;
             sh:path scratch:electricalInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:fluidInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:fluidOutlet ] .
 
@@ -1143,23 +1145,23 @@ scratch:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterCommand2 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:waterFlow ],
+            sh:path scratch:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterPower1 ],
         [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation2 ],
+            sh:path scratch:fluidTemp ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:waterFlow ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterModulation1 ],
         [ a sh:PropertyShape ;
-            sh:path scratch:averageSurfaceTemperature ],
+            sh:path scratch:resistanceHeaterCommand1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterCommand2 ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterPower2 ],
         [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterCommand1 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:fluidTemp ],
+            sh:path scratch:resistanceHeaterModulation2 ],
         [ a sh:PropertyShape ;
             sh:path scratch:leavingWaterTemp ] .
 
