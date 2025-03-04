@@ -8,8 +8,8 @@ python3 pyshacl-validate.py $1.data.ttl $1.schema.ttl \
     ../223standard/vocab/*.ttl \
     ../223standard/validation/*.ttl \
     ../223standard/inference/model-rules.shapes.ttl \
-    ../223standard/imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL-v2.1.ttl \
-    ../223standard/imports/qudt/VOCAB_QUDT-UNITS-ALL-v2.1.ttl \
+    ../223standard/imports/qudt/VOCAB_QUDT-QUANTITY-KINDS-ALL.ttl \
+    ../223standard/imports/qudt/VOCAB_QUDT-UNITS-ALL.ttl \
     --info \
     --report $1.report.ttl \
     --compiled $1.compiled.ttl
