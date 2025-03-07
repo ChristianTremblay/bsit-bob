@@ -1,15 +1,18 @@
 <html><body>
 <h1>SPARQL Query</h1>
 <h2>8-List-Physical-Spaces</h2>
-<p>Created on 2024-11-21 23:56:41</p>
-<pre>select ?node ?label ?comment where {
+<p>Created on 2025-03-07 13:35:52</p>
+<pre>prefix s223: &lt;http://data.ashrae.org/standard223#&gt;
+prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+select ?node ?label ?comment where {
     ?node a s223:PhysicalSpace .
     optional { ?node rdfs:label ?label } .
     optional { ?node rdfs:comment ?comment } .
     }</pre>
 <h1>Results</h1>
 <h2>Number of triples in original model</h2>
-<p>87862</p>
+<p>91437</p>
 <h2>Number of triples in query result</h2>
 <p>8</p>
 <h2>Query result</h2>
@@ -18,9 +21,9 @@
 <tr>
 <td>&lt;urn:pritoni:physical_spaces/00003&gt;</td><td>Roof of building</td><td>(n/a)</td></tr>
 <tr>
-<td>&lt;urn:pritoni:physical_spaces/00002&gt;</td><td>Pritoni Building</td><td>(n/a)</td></tr>
-<tr>
 <td>&lt;urn:pritoni:physical_spaces/00004&gt;</td><td>Floor1</td><td>(n/a)</td></tr>
+<tr>
+<td>&lt;urn:pritoni:physical_spaces/00002&gt;</td><td>Pritoni Building</td><td>(n/a)</td></tr>
 <tr>
 <td>&lt;urn:pritoni:physical_spaces/00010&gt;</td><td>Private office</td><td>(n/a)</td></tr>
 <tr>

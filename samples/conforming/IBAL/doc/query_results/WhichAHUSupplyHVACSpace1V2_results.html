@@ -1,8 +1,11 @@
 <html><body>
 <h1>SPARQL Query</h1>
 <h2>WhichAHUSupplyHVACSpace1V2</h2>
-<p>Created on 2024-11-21 23:56:25</p>
-<pre>SELECT ?eq ?ahu ?shortestPathLength ?space1
+<p>Created on 2025-03-07 13:35:41</p>
+<pre>prefix s223: &lt;http://data.ashrae.org/standard223#&gt;
+prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?eq ?ahu ?shortestPathLength ?space1
 WHERE {
     BIND(&lt;urn:src:hvac_spaces/00003&gt; AS ?space1)
     ?ahu a s223:AirHandlingUnit .
@@ -40,17 +43,11 @@ WHERE {
 </pre>
 <h1>Results</h1>
 <h2>Number of triples in original model</h2>
-<p>89523</p>
+<p>92737</p>
 <h2>Number of triples in query result</h2>
-<p>3</p>
+<p>0</p>
 <h2>Query result</h2>
 <table border='1'>
 <tr><th>eq</th><th>ahu</th><th>shortestPathLength</th><th>space1</th></tr>
-<tr>
-<td>&lt;urn:src:hvac_devices/00462&gt;</td><td>&lt;urn:src:hvac_devices/00371&gt;</td><td>0</td><td>&lt;urn:src:hvac_spaces/00003&gt;</td></tr>
-<tr>
-<td>&lt;urn:src:hvac_devices/00107&gt;</td><td>&lt;urn:src:hvac_devices/00001&gt;</td><td>0</td><td>&lt;urn:src:hvac_spaces/00003&gt;</td></tr>
-<tr>
-<td>&lt;urn:src:hvac_devices/00292&gt;</td><td>&lt;urn:src:hvac_devices/00186&gt;</td><td>0</td><td>&lt;urn:src:hvac_spaces/00003&gt;</td></tr>
 </table>
 </body></html>
