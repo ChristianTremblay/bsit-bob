@@ -28,7 +28,7 @@ from ...core import (
     System,
 )
 from ...enum import DomesticHotWater, DomesticWater, Fluid, Role, Water
-from ... import concept
+from ... import application
 from ...properties.flow import Flow
 from ...properties.temperature import Temperature
 from ...template import SystemFromTemplate, template_update
@@ -69,7 +69,7 @@ basic_hotwaterheater_template = {
 
 
 # 223 Standard Systems
-class DomesticHotWaterHeater(SystemFromTemplate, concept.HotWaterHeater):
+class DomesticHotWaterHeater(SystemFromTemplate, application.HotWaterHeater):
     # _class_iri = S223.DomesticHotWaterHeater
     leavingFluid: BoundaryConnectionPoint
     enteringFluid: BoundaryConnectionPoint
@@ -84,7 +84,7 @@ class DomesticHotWaterHeater(SystemFromTemplate, concept.HotWaterHeater):
 
 
 # 223 Standard Equipment
-class HotWaterBoiler(Equipment, concept.Boiler):
+class HotWaterBoiler(Equipment, application.Boiler):
     _class_iri = S223.Boiler
     hotWaterLeaving: HotWaterOutletConnectionPoint
     hotWaterEntering: HotWaterInletConnectionPoint
@@ -97,12 +97,12 @@ class HotWaterBoiler(Equipment, concept.Boiler):
         self.hotWaterLeaving.paired_to(self.hotWaterEntering)
 
 
-class ElectricalHotWaterBoiler(HotWaterBoiler, concept.Boiler):
+class ElectricalHotWaterBoiler(HotWaterBoiler, application.Boiler):
     _class_iri = S223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
 
 
-class NaturalGasHotWaterBoiler(HotWaterBoiler, concept.Boiler):
+class NaturalGasHotWaterBoiler(HotWaterBoiler, application.Boiler):
     _class_iri = S223.Boiler
     electricalInlet: ElectricalInletConnectionPoint
     naturalGasInlet: NaturalGasInletConnectionPoint

@@ -22,7 +22,7 @@ from ...connections.liquid import (
     WaterOutletConnectionPoint,
 )
 from ...core import BOB, P223, S223, Equipment
-from ... import concept
+from ... import application
 from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
 
 _namespace = BOB
@@ -35,7 +35,7 @@ chiller_template = {
 }
 
 
-class Chiller(Equipment, concept.Chiller):
+class Chiller(Equipment, application.Chiller):
     _class_iri = S223.Chiller
     chilledWaterEntering: ChilledWaterInletConnectionPoint
     chilledWaterLeaving: ChilledWaterOutletConnectionPoint
@@ -62,7 +62,7 @@ class Chiller(Equipment, concept.Chiller):
         self.condenserLeaving.paired_to(self.condenserEntering)
 
 
-class AgnosticChiller(Equipment, concept.Chiller):
+class AgnosticChiller(Equipment, application.Chiller):
     _class_iri = S223.Chiller
     chilledWaterLeaving: WaterOutletConnectionPoint
     chilledWaterEntering: WaterInletConnectionPoint
