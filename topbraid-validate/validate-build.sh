@@ -3,8 +3,11 @@
 # the script needs to be run from its directory
 pushd `dirname $0`
 
+python3 -m venv venv
+venv/bin/python -m pip install rdflib html5lib
+
 # merge all of the TTL files into one and remove the owl:imports
-python3 merge-graphs.py --no-imports \
+venv/bin/python merge-graphs.py --no-imports \
     ../../223standard/models/*.ttl \
     ../../223standard/vocab/*.ttl \
     ../../223standard/validation/*.ttl \
