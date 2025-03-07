@@ -167,10 +167,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
 
 bob:airInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .
@@ -387,6 +387,9 @@ p223:Analog-Unknown a p223:Analog-Unknown,
     rdfs:label "Unknown" ;
     rdfs:subClassOf p223:EnumerationKind-Analog,
         s223:EnumerationKind .
+
+p223:Application-HeatPump a rdfs:Class ;
+    rdfs:label "bob.application.HeatPump" .
 
 p223:BinarySignalType-DryContact a p223:BinarySignalType-DryContact,
         s223:EnumerationKind,
@@ -714,8 +717,8 @@ p223:HandOffAuto-Off a p223:HandOffAuto-Off,
         s223:EnumerationKind .
 
 p223:HeatPump-AirToAirHeatPump a rdfs:Class ;
-    rdfs:label "bob.concept.AirToAirHeatPump" ;
-    rdfs:subClassOf p223:System-HeatPump .
+    rdfs:label "bob.application.AirToAirHeatPump" ;
+    rdfs:subClassOf p223:Application-HeatPump .
 
 p223:LeftRight-Left a p223:LeftRight-Left,
         s223:EnumerationKind,
@@ -902,11 +905,11 @@ p223:PowerAndSignal-PoE a p223:PowerAndSignal-PoE,
         sh:NodeShape ;
     rdfs:label "PoE" ;
     s223:composedOf [ a s223:Property ;
-            rdfs:label "PoE.Constituent-Ethernet" ;
-            s223:ofConstituent s223:Signal-Ethernet ],
-        [ a s223:Property ;
             rdfs:label "PoE.Constituent-48V" ;
-            s223:ofConstituent s223:DC-48V ] ;
+            s223:ofConstituent s223:DC-48V ],
+        [ a s223:Property ;
+            rdfs:label "PoE.Constituent-Ethernet" ;
+            s223:ofConstituent s223:Signal-Ethernet ] ;
     rdfs:subClassOf p223:Mix-PowerAndSignal,
         s223:EnumerationKind,
         s223:EnumerationKind-Substance,
@@ -1045,9 +1048,6 @@ p223:Signal-WiFi a p223:Signal-WiFi,
         s223:Medium-Constituent,
         s223:Substance-Medium .
 
-p223:System-HeatPump a rdfs:Class ;
-    rdfs:label "bob.concept.HeatPump" .
-
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
         rdfs:Class,
@@ -1175,18 +1175,18 @@ qudt:hasUnit a rdf:Property .
 scratch:AirSourceHeatPump a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.scratch.hvac.heatpump.AirToAirHeatPump" ;
-    rdfs:subClassOf p223:HeatPump-AirToAirHeatPump,
-        p223:System-HeatPump,
+    rdfs:subClassOf p223:Application-HeatPump,
+        p223:HeatPump-AirToAirHeatPump,
         s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:outdoorAirOutlet ],
+            sh:path scratch:indoorAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:indoorAirInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:outdoorAirInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:indoorAirOutlet ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:indoorAirInlet ] .
+            sh:path scratch:outdoorAirOutlet ] .
 
 scratch:AirToAirHeatPump a rdfs:Class,
         sh:NodeShape ;
@@ -1195,20 +1195,20 @@ scratch:AirToAirHeatPump a rdfs:Class,
     A heatpump with refrigeration cycle
     Created as an s223:Equipment member of a s223:HeatPump system
     """ ;
-    rdfs:subClassOf p223:HeatPump-AirToAirHeatPump,
-        p223:System-HeatPump,
+    rdfs:subClassOf p223:Application-HeatPump,
+        p223:HeatPump-AirToAirHeatPump,
         s223:Connectable,
         s223:Equipment ;
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:indoorAirOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:indoorAirInlet ],
-        [ a sh:PropertyShape ;
             sh:path scratch:outdoorAirInlet ],
         [ a sh:PropertyShape ;
             sh:path scratch:electricalInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:outdoorAirOutlet ] .
+            sh:path scratch:outdoorAirOutlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:indoorAirInlet ] .
 
 scratch:Fan a rdfs:Class,
         sh:NodeShape ;
@@ -1241,11 +1241,11 @@ scratch:Fan a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:onOffStatus ],
         [ a sh:PropertyShape ;
-            sh:path scratch:onOffCommand ],
+            sh:path bob:airOutlet ],
         [ a sh:PropertyShape ;
             sh:path bob:airInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:airOutlet ] .
+            sh:path scratch:onOffCommand ] .
 
 scratch:electricalInlet a rdf:Property ;
     rdfs:subPropertyOf s223:hasConnectionPoint .

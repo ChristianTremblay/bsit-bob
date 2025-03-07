@@ -136,6 +136,15 @@ p223:Analog-Unknown a p223:Analog-Unknown,
     rdfs:subClassOf p223:EnumerationKind-Analog,
         s223:EnumerationKind .
 
+p223:Application-HotWaterHeater a s223:Class,
+        rdfs:Class,
+        sh:NodeShape ;
+    rdfs:label "System-HotWaterHeater",
+        "bob.application.HotWaterHeater" ;
+    s223:abstract true ;
+    rdfs:comment "HotWaterHeater System Type" ;
+    rdfs:subClassOf p223:Application .
+
 p223:BinarySignalType-DryContact a p223:BinarySignalType-DryContact,
         s223:EnumerationKind,
         rdfs:Class,
@@ -781,9 +790,6 @@ p223:Signal-WiFi a p223:Signal-WiFi,
         s223:Medium-Constituent,
         s223:Substance-Medium .
 
-p223:System-HotWaterHeater a rdfs:Class ;
-    rdfs:label "bob.concept.HotWaterHeater" .
-
 p223:Tank a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.equipment.hvac.tank.Tank" ;
@@ -792,13 +798,13 @@ p223:Tank a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path bob:fluidOutlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:internalPressure ],
+            sh:path bob:containedFluid ],
         [ a sh:PropertyShape ;
             sh:path bob:fluidInlet ],
         [ a sh:PropertyShape ;
-            sh:path bob:containedFluid ],
+            sh:path bob:fluidTemperature ],
         [ a sh:PropertyShape ;
-            sh:path bob:fluidTemperature ] .
+            sh:path bob:internalPressure ] .
 
 p223:TopBottom-Bottom a p223:TopBottom-Bottom,
         s223:EnumerationKind,
@@ -981,15 +987,15 @@ bob:Amps a rdfs:Class ;
 bob:DomesticHotWaterHeater a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.equipment.hvac.boiler.DomesticHotWaterHeater" ;
-    rdfs:subClassOf p223:System-HotWaterHeater,
+    rdfs:subClassOf p223:Application-HotWaterHeater,
         s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path bob:enteringFluid ],
+            sh:path bob:electricalInlet ],
         [ a sh:PropertyShape ;
             sh:path bob:leavingFluid ],
         [ a sh:PropertyShape ;
-            sh:path bob:electricalInlet ] .
+            sh:path bob:enteringFluid ] .
 
 bob:ElectricPower a rdfs:Class,
         sh:NodeShape ;
@@ -1029,10 +1035,10 @@ bob:Flow a rdfs:Class,
             sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path bob:measuresMedium ],
         [ a sh:PropertyShape ;
             sh:class s223:EnumerationKind ;
-            sh:path bob:measuresMedium ] .
+            sh:path s223:ofMedium ] .
 
 bob:FluidConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -1065,10 +1071,10 @@ bob:Temperature a rdfs:Class,
         s223:QuantifiableObservableProperty,
         s223:QuantifiableProperty ;
     sh:property [ a sh:PropertyShape ;
-            sh:class s223:EnumerationKind ;
-            sh:path s223:ofMedium ],
+            sh:path qudt:hasUnit ],
         [ a sh:PropertyShape ;
-            sh:path qudt:hasUnit ] .
+            sh:class s223:EnumerationKind ;
+            sh:path s223:ofMedium ] .
 
 bob:WaterConnectionPoint a rdfs:Class,
         sh:NodeShape ;
@@ -1086,22 +1092,22 @@ scratch:DomesticElectricalWaterHeater a rdfs:Class,
     sh:property [ a sh:PropertyShape ;
             sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:fluidTemperature ],
+            sh:path scratch:fluidInlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:fluidInlet ] .
+            sh:path scratch:fluidTemperature ] .
 
 scratch:DomesticHotWaterHeater a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "bob.scratch.hvac.boiler.DomesticHotWaterHeater" ;
-    rdfs:subClassOf p223:System-HotWaterHeater,
+    rdfs:subClassOf p223:Application-HotWaterHeater,
         s223:System,
         ex:SystemFromTemplate ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:fluidInlet ],
-        [ a sh:PropertyShape ;
             sh:path scratch:fluidOutlet ],
         [ a sh:PropertyShape ;
-            sh:path scratch:electricalInlet ] .
+            sh:path scratch:electricalInlet ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:fluidInlet ] .
 
 scratch:InsideTankHeatTransfer a rdfs:Class,
         sh:NodeShape ;
@@ -1109,25 +1115,25 @@ scratch:InsideTankHeatTransfer a rdfs:Class,
     rdfs:comment " " ;
     rdfs:subClassOf s223:Function ;
     sh:property [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterCommand2 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:waterFlow ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation1 ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:fluidTemp ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterModulation2 ],
+            sh:path scratch:averageSurfaceTemperature ],
         [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterCommand1 ],
         [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterModulation1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:waterFlow ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterPower2 ],
+        [ a sh:PropertyShape ;
             sh:path scratch:resistanceHeaterPower1 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterCommand2 ],
+        [ a sh:PropertyShape ;
+            sh:path scratch:resistanceHeaterModulation2 ],
         [ a sh:PropertyShape ;
             sh:path scratch:leavingWaterTemp ],
         [ a sh:PropertyShape ;
-            sh:path scratch:averageSurfaceTemperature ],
-        [ a sh:PropertyShape ;
-            sh:path scratch:resistanceHeaterPower2 ] .
+            sh:path scratch:fluidTemp ] .
 
 ex:SystemFromTemplate a rdfs:Class ;
     rdfs:label "bob.template.SystemFromTemplate" ;
@@ -1138,13 +1144,6 @@ p223:Application-ChilledWater a s223:Class,
     rdfs:label "System-ChilledWater" ;
     s223:abstract true ;
     rdfs:comment "Chilled Water System Type" ;
-    rdfs:subClassOf p223:Application .
-
-p223:Application-HotWaterHeater a s223:Class,
-        sh:NodeShape ;
-    rdfs:label "System-HotWaterHeater" ;
-    s223:abstract true ;
-    rdfs:comment "HotWaterHeater System Type" ;
     rdfs:subClassOf p223:Application .
 
 p223:Application-VRF a s223:Class,
@@ -1464,18 +1463,7 @@ s223:Conductor a s223:Class,
     rdfs:comment """A `Conductor` is a subclass of `Connection`. It is an abstraction that represents one or more wires used to convey electricity, \r
   with the electricity conceptualized as flowing through a `Conductor` like water through a pipe. Each instance of `Conductor` applies to no more than one circuit.""" ;
     rdfs:subClassOf s223:Connection ;
-    sh:property [ rdfs:comment "A `Conductor` must be associated with exactly one `Constituent-Electricity` using the relation `hasMedium`." ;
-            sh:class s223:Constituent-Electricity ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Conductor` must be associated with exactly one `Constituent-Electricity` using the relation `hasMedium`." ;
-            sh:minCount 1 ;
-            sh:path s223:hasMedium ],
-        [ rdfs:comment "If the relation `hasElectricalPhase` is present it must associate the `Conductor` with a single ElectricalPhaseIdentifier or ElectricalVoltagePhases value." ;
-            sh:maxCount 1 ;
-            sh:message "s223: If the relation `hasElectricalPhase` is present it must associate the `Conductor` with a single ElectricalPhaseIdentifier or ElectricalVoltagePhases value." ;
-            sh:or ( [ sh:class s223:EnumerationKind-ElectricalPhaseIdentifier ] [ sh:class s223:EnumerationKind-ElectricalVoltagePhases ] ) ;
-            sh:path s223:hasElectricalPhase ],
-        [ rdfs:comment "Ensure the electrical phase is the same as all connected `ConnectionPoint`s" ;
+    sh:property [ rdfs:comment "Ensure the electrical phase is the same as all connected `ConnectionPoint`s" ;
             sh:path s223:hasElectricalPhase ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure the electrical phase is the same as all connected `ConnectionPoint`s" ;
@@ -1489,7 +1477,18 @@ s223:Conductor a s223:Class,
         ?cp s223:hasElectricalPhase ?cpPhase .\r
         FILTER (?myphase != ?cpPhase) .\r
         }\r
-        """ ] ] ;
+        """ ] ],
+        [ rdfs:comment "A `Conductor` must be associated with exactly one `Constituent-Electricity` using the relation `hasMedium`." ;
+            sh:class s223:Constituent-Electricity ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Conductor` must be associated with exactly one `Constituent-Electricity` using the relation `hasMedium`." ;
+            sh:minCount 1 ;
+            sh:path s223:hasMedium ],
+        [ rdfs:comment "If the relation `hasElectricalPhase` is present it must associate the `Conductor` with a single ElectricalPhaseIdentifier or ElectricalVoltagePhases value." ;
+            sh:maxCount 1 ;
+            sh:message "s223: If the relation `hasElectricalPhase` is present it must associate the `Conductor` with a single ElectricalPhaseIdentifier or ElectricalVoltagePhases value." ;
+            sh:or ( [ sh:class s223:EnumerationKind-ElectricalPhaseIdentifier ] [ sh:class s223:EnumerationKind-ElectricalVoltagePhases ] ) ;
+            sh:path s223:hasElectricalPhase ] ;
     sh:rule [ a sh:TripleRule ;
             rdfs:comment "Infer the `hasElectricalPhase` value from any connected `ConnectionPoint`s." ;
             sh:object [ sh:path ( s223:cnx s223:hasElectricalPhase ) ] ;
@@ -1808,19 +1807,7 @@ s223:Filter a s223:Class,
     rdfs:comment """A device that removes contaminants from gases or liquids. See {s223:Substance-Medium} for\r
 more details on validating compatible mediums upstream and downstream of a `Filter`.""" ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A `Filter` shall have at least one inlet `ConnectionPoint`." ;
-            sh:message "s223: A `Filter` shall have at least one inlet `ConnectionPoint`." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
-        [ rdfs:comment "A `Filter` shall have at least one outlet." ;
-            sh:message "s223: A `Filter` shall have at least one outlet." ;
-            sh:minCount 1 ;
-            sh:path s223:hasConnectionPoint ;
-            sh:qualifiedMinCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ],
-        [ rdfs:comment "Incompatible Medium. Case 1: Associated `ConnectionPoint`s with two pure mediums." ;
+    sh:property [ rdfs:comment "Incompatible Medium. Case 1: Associated `ConnectionPoint`s with two pure mediums." ;
             sh:path s223:hasConnectionPoint ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Incompatible Medium. Case 1: Two pure mediums." ;
@@ -1892,7 +1879,19 @@ WHERE {\r
     {?s22 rdfs:subClassOf* ?s21} UNION {?s21 rdfs:subClassOf* ?s22} .\r
   }\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "A `Filter` shall have at least one inlet `ConnectionPoint`." ;
+            sh:message "s223: A `Filter` shall have at least one inlet `ConnectionPoint`." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:InletConnectionPoint ] ],
+        [ rdfs:comment "A `Filter` shall have at least one outlet." ;
+            sh:message "s223: A `Filter` shall have at least one outlet." ;
+            sh:minCount 1 ;
+            sh:path s223:hasConnectionPoint ;
+            sh:qualifiedMinCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:OutletConnectionPoint ] ] .
 
 s223:FlowSensor a s223:Class,
         sh:NodeShape ;
@@ -2314,7 +2313,28 @@ s223:Pump a s223:Class,
     rdfs:label "Pump" ;
     rdfs:comment "A machine for imparting energy to a fluid, drawing a fluid into itself through an entrance port, and forcing the fluid out through an exhaust port." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "A `Pump` shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
+    sh:property [ rdfs:comment "The non-electrical `ConnectionPoint`s of a `Pump` must have compatible Media." ;
+            sh:path s223:hasConnectionPoint ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "The non-electrical `ConnectionPoint`s of a `Pump` must have compatible Media." ;
+                    sh:message "s223: {?cpa} and {?cpb} on the `Pump` {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
+WHERE {\r
+  $this s223:hasConnectionPoint ?cpa .\r
+  $this s223:hasConnectionPoint ?cpb .\r
+  FILTER (?cpa != ?cpb) .\r
+  ?cpa s223:hasMedium ?mediuma .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  ?cpb s223:hasMedium ?mediumb .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
+  FILTER (?mediuma != ?mediumb) .\r
+  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
+  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
+}\r
+""" ] ],
+        [ rdfs:comment "A `Pump` shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:message "s223: A `Pump` shall have at least one inlet using the medium Water, Oil or Refrigerant." ;
             sh:minCount 1 ;
             sh:path s223:hasConnectionPoint ;
@@ -2339,28 +2359,7 @@ s223:Pump a s223:Class,
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Refrigerant ;
                                                 sh:path s223:hasMedium ] ] [ sh:property [ sh:class s223:Fluid-Oil ;
                                                 sh:path s223:hasMedium ] ] ) ;
-                            sh:severity sh:Warning ] ] ],
-        [ rdfs:comment "The non-electrical `ConnectionPoint`s of a `Pump` must have compatible Media." ;
-            sh:path s223:hasConnectionPoint ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "The non-electrical `ConnectionPoint`s of a `Pump` must have compatible Media." ;
-                    sh:message "s223: {?cpa} and {?cpb} on the `Pump` {$this} have incompatible Media {$mediuma} and {$mediumb}." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?cpa ?cpb ?mediuma ?mediumb\r
-WHERE {\r
-  $this s223:hasConnectionPoint ?cpa .\r
-  $this s223:hasConnectionPoint ?cpb .\r
-  FILTER (?cpa != ?cpb) .\r
-  ?cpa s223:hasMedium ?mediuma .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  ?cpb s223:hasMedium ?mediumb .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* s223:Constituent-Electricity}) .\r
-  FILTER (?mediuma != ?mediumb) .\r
-  FILTER (NOT EXISTS {?mediumb a/rdfs:subClassOf* ?mediuma}) .\r
-  FILTER (NOT EXISTS {?mediuma a/rdfs:subClassOf* ?mediumb}) .\r
-}\r
-""" ] ] .
+                            sh:severity sh:Warning ] ] ] .
 
 s223:RadiatorInletShape a sh:NodeShape ;
     rdfs:label "Radiator" ;
@@ -17863,7 +17862,7 @@ voag:QUDT-UNITS-VocabCatalogEntry a vaem:CatalogEntry ;
     rdfs:label "QUDT UNITS Vocab Catalog Entry" ;
     rdfs:isDefinedBy <http://qudt.org/3.0.0/vocab/unit> .
 
-sample_hotwater_heater:00001 a p223:System-HotWaterHeater,
+sample_hotwater_heater:00001 a p223:Application-HotWaterHeater,
         s223:System,
         scratch:DomesticHotWaterHeater,
         ex:SystemFromTemplate ;
@@ -17900,7 +17899,7 @@ sample_hotwater_heater:00029 a s223:Function,
     scratch:resistanceHeaterPower2 sample_hotwater_heater:00025 ;
     scratch:waterFlow sample_hotwater_heater:00008 .
 
-sample_hotwater_heater:00030 a p223:System-HotWaterHeater,
+sample_hotwater_heater:00030 a p223:Application-HotWaterHeater,
         s223:System,
         bob:DomesticHotWaterHeater,
         ex:SystemFromTemplate ;
@@ -20380,18 +20379,7 @@ s223:Zone a s223:Class,
     rdfs:label "Zone" ;
     rdfs:comment "A `Zone` is a logical grouping of one or more DomainSpaces for a specific domain for some building service or control-related purpose. Zones may be grouped into ZoneGroups (see {s223:ZoneGroup})." ;
     rdfs:subClassOf s223:Concept ;
-    sh:property [ rdfs:comment "A `Zone` must be associated with exactly one `EnumerationKind-Domain` using the relation `hasDomain`." ;
-            sh:class s223:EnumerationKind-Domain ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Zone` must be associated with exactly one `EnumerationKind-Domain` using the relation `hasDomain`." ;
-            sh:minCount 1 ;
-            sh:path s223:hasDomain ],
-        [ rdfs:comment "A `Zone` must be associated with at least one `DomainSpace` using the relation `hasDomainSpace`." ;
-            sh:class s223:DomainSpace ;
-            sh:message "s223: A `Zone` must be associated with at least one `DomainSpace` using the relation `hasDomainSpace`." ;
-            sh:minCount 1 ;
-            sh:path s223:hasDomainSpace ],
-        [ rdfs:comment "The associated Domain of a `Zone` and the Domain of the DomainSpaces it `contains` must be the same." ;
+    sh:property [ rdfs:comment "The associated Domain of a `Zone` and the Domain of the DomainSpaces it `contains` must be the same." ;
             sh:path s223:hasDomain ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "The associated Domain of a `Zone` and the Domain of the DomainSpaces it contains must be the same." ;
@@ -20406,7 +20394,18 @@ $this s223:contains ?ds .\r
 ?ds s223:hasDomain ?dsdomain .\r
 FILTER (?domain != ?dsdomain)\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ rdfs:comment "A `Zone` must be associated with exactly one `EnumerationKind-Domain` using the relation `hasDomain`." ;
+            sh:class s223:EnumerationKind-Domain ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Zone` must be associated with exactly one `EnumerationKind-Domain` using the relation `hasDomain`." ;
+            sh:minCount 1 ;
+            sh:path s223:hasDomain ],
+        [ rdfs:comment "A `Zone` must be associated with at least one `DomainSpace` using the relation `hasDomainSpace`." ;
+            sh:class s223:DomainSpace ;
+            sh:message "s223: A `Zone` must be associated with at least one `DomainSpace` using the relation `hasDomainSpace`." ;
+            sh:minCount 1 ;
+            sh:path s223:hasDomainSpace ] ;
     sh:rule [ a sh:TripleRule ;
             rdfs:comment "Infer a `hasDomain` relation by checking any enclosed DomainSpaces to determine the domain." ;
             sh:object [ sh:path ( s223:hasDomainSpace s223:hasDomain ) ] ;
@@ -43054,17 +43053,17 @@ s223:DomainSpace a s223:Class,
     rdfs:label "Domain Space" ;
     rdfs:comment "A `DomainSpace` represents some portion of a `PhysicalSpace` that is affected by a building service associated with a Domain. DomainSpaces may represent an entire `PhysicalSpace` or any portion of a `PhysicalSpace`. Multiple DomainSpaces of the same Domain may overlap, and DomainSpaces of different Domains may also overlap. DomainSpaces may be grouped into Zones using the relation `hasDomainSpace` (see {s223:hasDomainSpace})." ;
     rdfs:subClassOf s223:Connectable ;
-    sh:property [ rdfs:comment "A `DomainSpace` must be associated with exactly one `EnumerationKind-Domain` using the relation `hasDomain`." ;
+    sh:property [ rdfs:comment "A `DomainSpace` must be enclosed by a `PhysicalSpace`." ;
+            sh:message "s223: A `DomainSpace` must be enclosed by a `PhysicalSpace`." ;
+            sh:minCount 1 ;
+            sh:path [ sh:inversePath s223:encloses ] ;
+            sh:severity sh:Info ],
+        [ rdfs:comment "A `DomainSpace` must be associated with exactly one `EnumerationKind-Domain` using the relation `hasDomain`." ;
             sh:class s223:EnumerationKind-Domain ;
             sh:maxCount 1 ;
             sh:message "s223: A `DomainSpace` must be associated with exactly one `EnumerationKind-Domain` using the relation `hasDomain`." ;
             sh:minCount 1 ;
-            sh:path s223:hasDomain ],
-        [ rdfs:comment "A `DomainSpace` must be enclosed by a `PhysicalSpace`." ;
-            sh:message "s223: A `DomainSpace` must be enclosed by a `PhysicalSpace`." ;
-            sh:minCount 1 ;
-            sh:path [ sh:inversePath s223:encloses ] ;
-            sh:severity sh:Info ] ;
+            sh:path s223:hasDomain ] ;
     sh:rule [ a sh:TripleRule ;
             rdfs:comment "Infer a `hasDomain` relation by checking any enclosing `Zone` to determine the domain." ;
             sh:object [ sh:path ( [ sh:inversePath s223:hasDomainSpace ] s223:hasDomain ) ] ;
@@ -50815,13 +50814,7 @@ validation test cases, where the specified medium might be a pure medium, or a m
 more details.\r
 """ ;
     rdfs:subClassOf s223:Connectable ;
-    sh:property [ rdfs:comment "A `Junction` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
-            sh:class s223:Substance-Medium ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Junction` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
-            sh:minCount 1 ;
-            sh:path s223:hasMedium ],
-        [ rdfs:comment "Incompatible Medium. Case 3: `Junction` with a pure medium and an associated `ConnectionPoint` with constituents" ;
+    sh:property [ rdfs:comment "Incompatible Medium. Case 3: `Junction` with a pure medium and an associated `ConnectionPoint` with constituents" ;
             sh:name "Test for compatible declared Medium" ;
             sh:path s223:hasMedium ;
             sh:sparql [ a sh:SPARQLConstraint ;
@@ -50991,7 +50984,13 @@ FILTER NOT EXISTS {?m2 s223:composedOf ?c2}\r
 FILTER (NOT EXISTS {?m2 rdfs:subClassOf* ?m1}) .\r
 FILTER (NOT EXISTS {?m1 rdfs:subClassOf* ?m2}) .\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "A `Junction` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
+            sh:class s223:Substance-Medium ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Junction` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
+            sh:minCount 1 ;
+            sh:path s223:hasMedium ] .
 
 s223:LightSensor a s223:Class,
         sh:NodeShape ;
@@ -58447,13 +58446,7 @@ s223:EnumerableProperty a s223:Class,
     rdfs:label "Enumerable Property" ;
     rdfs:comment "An `EnumerableProperty` is a `Property` with an enumerated (fixed) set of possible values." ;
     rdfs:subClassOf s223:Property ;
-    sh:property [ rdfs:comment "An `EnumerableProperty` must be associated with exactly one `EnumerationKind` using the relation `hasEnumerationKind`." ;
-            sh:class s223:EnumerationKind ;
-            sh:maxCount 1 ;
-            sh:message "s223: An `EnumerableProperty` must be associated with exactly one `EnumerationKind` using the relation `hasEnumerationKind`." ;
-            sh:minCount 1 ;
-            sh:path s223:hasEnumerationKind ],
-        [ rdfs:comment "Checks for valid enumeration value consistent with the stated `EnumerationKind`." ;
+    sh:property [ rdfs:comment "Checks for valid enumeration value consistent with the stated `EnumerationKind`." ;
             sh:path s223:hasValue ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Checks for valid enumeration value consistent with the stated `EnumerationKind`." ;
@@ -58466,7 +58459,13 @@ $this s223:hasValue ?value .\r
 $this s223:hasEnumerationKind ?kind .\r
 FILTER (NOT EXISTS {?value a/rdfs:subClassOf* ?kind}) .\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "An `EnumerableProperty` must be associated with exactly one `EnumerationKind` using the relation `hasEnumerationKind`." ;
+            sh:class s223:EnumerationKind ;
+            sh:maxCount 1 ;
+            sh:message "s223: An `EnumerableProperty` must be associated with exactly one `EnumerationKind` using the relation `hasEnumerationKind`." ;
+            sh:minCount 1 ;
+            sh:path s223:hasEnumerationKind ] .
 
 s223:EnumerationKind-Binary a s223:Class,
         s223:EnumerationKind-Binary,
@@ -70740,43 +70739,7 @@ more details.\r
 ![Graphical Depiction of Connection.](figures/Figure_5-3_Connection.svg)\r
 """ ;
     rdfs:subClassOf s223:Concept ;
-    sh:property [ rdfs:comment "A `Connection` must have two or more `cnx` relations to connection points" ;
-            sh:class s223:ConnectionPoint ;
-            sh:message "s223: A `Connection` must have two or more `cnx` relations to connection points" ;
-            sh:path s223:cnx ],
-        [ rdfs:comment "A `Connection` must have two or more `connectsAt` relations to connection points" ;
-            sh:class s223:ConnectionPoint ;
-            sh:message "s223: A `Connection` must have two or more `connectsAt` relations to connection points" ;
-            sh:minCount 2 ;
-            sh:path s223:connectsAt ;
-            sh:severity sh:Warning ],
-        [ rdfs:comment "If the relation `connectsFrom` is present it must associate the `Connection` with a `Connectable`." ;
-            sh:class s223:Connectable ;
-            sh:message "s223: If the relation `connectsFrom` is present it must associate the `Connection` with a `Connectable`." ;
-            sh:name "ConnectionToUpstreamConnectableShape" ;
-            sh:path s223:connectsFrom ],
-        [ rdfs:comment "If the relation `connectsTo` is present it must associate the `Connection` with a `Connectable`." ;
-            sh:class s223:Connectable ;
-            sh:message "s223: If the relation `connectsTo` is present it must associate the `Connection` with a `Connectable`." ;
-            sh:name "ConnectionToDownstreamConnectableShape" ;
-            sh:path s223:connectsTo ],
-        [ rdfs:comment "A `Connection` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
-            sh:class s223:Substance-Medium ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Connection` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
-            sh:minCount 1 ;
-            sh:name "Connection medium" ;
-            sh:path s223:hasMedium ],
-        [ rdfs:comment "If the relation `hasRole` is present it must associate the `Connection` with an `EnumerationKind-Role`." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:message "s223: If the relation `hasRole` is present it must associate the `Connection` with an `EnumerationKind-Role`." ;
-            sh:path s223:hasRole ],
-        [ rdfs:comment "If the relation `hasThermodynamicPhase` is present it must associate the `Connection` with at most one `EnumerationKind-ThermodynamicPhase`." ;
-            sh:class s223:EnumerationKind-ThermodynamicPhase ;
-            sh:maxCount 1 ;
-            sh:message "s223: If the relation `hasThermodynamicPhase` is present it must associate the `Connection` with at most one `EnumerationKind-ThermodynamicPhase`." ;
-            sh:path s223:hasThermodynamicPhase ],
-        [ rdfs:comment "A `Connection` must only have a `cnx` relation with a `ConnectionPoint`" ;
+    sh:property [ rdfs:comment "A `Connection` must only have a `cnx` relation with a `ConnectionPoint`" ;
             sh:path s223:cnx ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A `Connection` must only have a `cnx` relation with a `ConnectionPoint`" ;
@@ -70958,7 +70921,43 @@ FILTER (?cp1 != ?cp2 ) .\r
     {?s22 rdfs:subClassOf* ?s21} UNION {?s21 rdfs:subClassOf* ?s22} .\r
   }\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ rdfs:comment "A `Connection` must have two or more `cnx` relations to connection points" ;
+            sh:class s223:ConnectionPoint ;
+            sh:message "s223: A `Connection` must have two or more `cnx` relations to connection points" ;
+            sh:path s223:cnx ],
+        [ rdfs:comment "A `Connection` must have two or more `connectsAt` relations to connection points" ;
+            sh:class s223:ConnectionPoint ;
+            sh:message "s223: A `Connection` must have two or more `connectsAt` relations to connection points" ;
+            sh:minCount 2 ;
+            sh:path s223:connectsAt ;
+            sh:severity sh:Warning ],
+        [ rdfs:comment "If the relation `connectsFrom` is present it must associate the `Connection` with a `Connectable`." ;
+            sh:class s223:Connectable ;
+            sh:message "s223: If the relation `connectsFrom` is present it must associate the `Connection` with a `Connectable`." ;
+            sh:name "ConnectionToUpstreamConnectableShape" ;
+            sh:path s223:connectsFrom ],
+        [ rdfs:comment "If the relation `connectsTo` is present it must associate the `Connection` with a `Connectable`." ;
+            sh:class s223:Connectable ;
+            sh:message "s223: If the relation `connectsTo` is present it must associate the `Connection` with a `Connectable`." ;
+            sh:name "ConnectionToDownstreamConnectableShape" ;
+            sh:path s223:connectsTo ],
+        [ rdfs:comment "A `Connection` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
+            sh:class s223:Substance-Medium ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Connection` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
+            sh:minCount 1 ;
+            sh:name "Connection medium" ;
+            sh:path s223:hasMedium ],
+        [ rdfs:comment "If the relation `hasRole` is present it must associate the `Connection` with an `EnumerationKind-Role`." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:message "s223: If the relation `hasRole` is present it must associate the `Connection` with an `EnumerationKind-Role`." ;
+            sh:path s223:hasRole ],
+        [ rdfs:comment "If the relation `hasThermodynamicPhase` is present it must associate the `Connection` with at most one `EnumerationKind-ThermodynamicPhase`." ;
+            sh:class s223:EnumerationKind-ThermodynamicPhase ;
+            sh:maxCount 1 ;
+            sh:message "s223: If the relation `hasThermodynamicPhase` is present it must associate the `Connection` with at most one `EnumerationKind-ThermodynamicPhase`." ;
+            sh:path s223:hasThermodynamicPhase ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "Infer the `connectsFrom` relation using `connectsAt`" ;
             sh:construct """\r
@@ -72352,26 +72351,7 @@ s223:Sensor a s223:Class,
     rdfs:label "Sensor" ;
     rdfs:comment "A `Sensor` observes an `ObservableProperty` (see {s223:ObservableProperty}) which may be quantifiable (see {s223:QuantifiableObservableProperty}), such as a temperature, flowrate, or concentration, or enumerable (see {s223:EnumeratedObservableProperty}), such as an alarm state or occupancy state." ;
     rdfs:subClassOf s223:Equipment ;
-    sh:property [ rdfs:comment "If the relation `hasMeasurementResolution` is present it must associate a `Sensor` with a `QuantifiableProperty`." ;
-            sh:class s223:QuantifiableProperty ;
-            sh:message "s223: If the relation `hasMeasurementResolution` is present it must associate a `Sensor` with a `QuantifiableProperty`." ;
-            sh:path s223:hasMeasurementResolution ],
-        [ rdfs:comment "A `Sensor` must be associated with exactly one location using the relation `hasObservationLocation`." ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Sensor` must be associated with exactly one location using the relation `hasObservationLocation`." ;
-            sh:minCount 1 ;
-            sh:path s223:hasObservationLocation ],
-        [ rdfs:comment "If a `Sensor` measures a differential property, it must be associated with exactly 1 of `Connectable`, `Connection`, or `ConnectionPoint` using the relation `hasReferenceLocation`." ;
-            sh:maxCount 1 ;
-            sh:message "s223: If a `Sensor` measures a differential property, it must be associated with exactly 1 of `Connectable`, `Connection`, or `ConnectionPoint` using the relation `hasReferenceLocation`." ;
-            sh:path s223:hasReferenceLocation ],
-        [ rdfs:comment "A `Sensor` must be associated with exactly one `ObservableProperty` using the relation `observes`." ;
-            sh:class s223:ObservableProperty ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Sensor` must be associated with exactly one `ObservableProperty` using the relation `observes`." ;
-            sh:minCount 1 ;
-            sh:path s223:observes ],
-        [ rdfs:comment "s223: If the `hasReferenceLocation` relation exists, the observed `Property` must have isDeltaQuantity true." ;
+    sh:property [ rdfs:comment "s223: If the `hasReferenceLocation` relation exists, the observed `Property` must have isDeltaQuantity true." ;
             sh:path s223:observes ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "s223: If the `hasReferenceLocation` relation exists, the observed `Property` must have isDeltaQuantity true." ;
@@ -72400,7 +72380,26 @@ $this s223:observes ?x .\r
 ?x a/rdfs:subClassOf* s223:QuantifiableProperty .\r
 FILTER NOT EXISTS {$this s223:hasReferenceLocation ?y}\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ rdfs:comment "If the relation `hasMeasurementResolution` is present it must associate a `Sensor` with a `QuantifiableProperty`." ;
+            sh:class s223:QuantifiableProperty ;
+            sh:message "s223: If the relation `hasMeasurementResolution` is present it must associate a `Sensor` with a `QuantifiableProperty`." ;
+            sh:path s223:hasMeasurementResolution ],
+        [ rdfs:comment "A `Sensor` must be associated with exactly one location using the relation `hasObservationLocation`." ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Sensor` must be associated with exactly one location using the relation `hasObservationLocation`." ;
+            sh:minCount 1 ;
+            sh:path s223:hasObservationLocation ],
+        [ rdfs:comment "If a `Sensor` measures a differential property, it must be associated with exactly 1 of `Connectable`, `Connection`, or `ConnectionPoint` using the relation `hasReferenceLocation`." ;
+            sh:maxCount 1 ;
+            sh:message "s223: If a `Sensor` measures a differential property, it must be associated with exactly 1 of `Connectable`, `Connection`, or `ConnectionPoint` using the relation `hasReferenceLocation`." ;
+            sh:path s223:hasReferenceLocation ],
+        [ rdfs:comment "A `Sensor` must be associated with exactly one `ObservableProperty` using the relation `observes`." ;
+            sh:class s223:ObservableProperty ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Sensor` must be associated with exactly one `ObservableProperty` using the relation `observes`." ;
+            sh:minCount 1 ;
+            sh:path s223:observes ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "Infer the `hasObservationLocation` relation for a `Sensor` from the `Property` that it is observing, only if that `Property` is associated with a single entity." ;
             sh:construct """\r
@@ -74279,16 +74278,7 @@ s223:Concept a s223:Class,
   constraint table.  \r
   """ ;
     rdfs:subClassOf rdfs:Resource ;
-    sh:property [ rdfs:comment "If the relation `hasProperty` is present, it must associate the concept with a `Property`." ;
-            sh:class s223:Property ;
-            sh:message "s223: If the relation `hasProperty` is present, it must associate the concept with a `Property`." ;
-            sh:path s223:hasProperty ],
-        [ rdfs:comment "A `Concept` must be associated with at least one label using the relation label." ;
-            sh:message "s223: A `Concept` must be associated with at least one label using the relation label." ;
-            sh:minCount 1 ;
-            sh:path rdfs:label ;
-            sh:severity sh:Warning ],
-        [ rdfs:comment "Ensure that any instance that is declared to be an instance of an abstract class must also be declared an instance of at least one subClass of that abstract class." ;
+    sh:property [ rdfs:comment "Ensure that any instance that is declared to be an instance of an abstract class must also be declared an instance of at least one subClass of that abstract class." ;
             sh:path s223:abstract ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure that any instance that is declared to be an instance of an abstract class must also be declared an instance of at least one subClass of that abstract class" ;
@@ -74399,7 +74389,16 @@ $this ?p ?prop .\r
     {?s22 rdfs:subClassOf* ?s21} UNION {?s21 rdfs:subClassOf* ?s22} .\r
   }\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ rdfs:comment "If the relation `hasProperty` is present, it must associate the concept with a `Property`." ;
+            sh:class s223:Property ;
+            sh:message "s223: If the relation `hasProperty` is present, it must associate the concept with a `Property`." ;
+            sh:path s223:hasProperty ],
+        [ rdfs:comment "A `Concept` must be associated with at least one label using the relation label." ;
+            sh:message "s223: A `Concept` must be associated with at least one label using the relation label." ;
+            sh:minCount 1 ;
+            sh:path rdfs:label ;
+            sh:severity sh:Warning ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "Add an rdfs:label if it is missing." ;
             sh:construct """\r
@@ -76279,13 +76278,7 @@ and signaling, particulates, and fluids such as water and oil.\r
 | `Substance-Particulate` (see {s223:Substance-Particulate}) |\r
 """ ;
     rdfs:subClassOf s223:EnumerationKind ;
-    sh:property [ rdfs:comment """If the relation `composedOf` is present, it must associate an `EnumerationKind-Substance` with one or more Properties that \r
-identify and characterize its constituents. The `Property` identifies the constituent using the relation `ofConstituent`. If appropriate, a \r
-`QuantifiableProperty` may be used to also specify the amount of the constituent using the relations `qudt:hasQuantityKind`, `qudt:hasUnit`, and `qudt:hasValue`.  \r
-For example, see {s223:Water-GlycolSolution}.""" ;
-            sh:class s223:Property ;
-            sh:path s223:composedOf ],
-        [ rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
+    sh:property [ rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
             sh:path s223:composedOf ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "If a substance has a constituent, that constituent may not itself have constituents." ;
@@ -76297,7 +76290,13 @@ WHERE {\r
 $this s223:composedOf ?constituent .\r
 ?constituent s223:ofConstituent/s223:composedOf ?nextConstituent .\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment """If the relation `composedOf` is present, it must associate an `EnumerationKind-Substance` with one or more Properties that \r
+identify and characterize its constituents. The `Property` identifies the constituent using the relation `ofConstituent`. If appropriate, a \r
+`QuantifiableProperty` may be used to also specify the amount of the constituent using the relations `qudt:hasQuantityKind`, `qudt:hasUnit`, and `qudt:hasValue`.  \r
+For example, see {s223:Water-GlycolSolution}.""" ;
+            sh:class s223:Property ;
+            sh:path s223:composedOf ] .
 
 s223:Numerical-LineLineVoltage a s223:Class,
         s223:Numerical-LineLineVoltage,
@@ -76534,7 +76533,21 @@ s223:Connectable a s223:Class,
     s223:abstract true ;
     rdfs:comment "`Connectable` is an abstract class representing a thing such as, `Equipment` (see {s223:Equipment}), `DomainSpace` (see {s223:DomainSpace}), or `Junction` (see {s223:Junction}) that can be `connected` via connection points and connections." ;
     rdfs:subClassOf s223:Concept ;
-    sh:property [ rdfs:comment "If the relation `cnx` is present it must associate the `Connectable` with a `ConnectionPoint`." ;
+    sh:property [ rdfs:comment "If a `Connectable` has s223:connected or s223:connectedTo (i.e. high-level connection specification), it must also have the supporting `cnx` relations (low-level connection specification)." ;
+            sh:path s223:cnx ;
+            sh:severity sh:Warning ;
+            sh:sparql [ a sh:SPARQLConstraint ;
+                    rdfs:comment "If a `Connectable` has s223:connected or s223:connectedTo (i.e. high-level connection specification), it must also have the supporting `cnx` relations (low-level connection specification)." ;
+                    sh:message "s223: {$this} is s223:connected (high-level) to {?otherC} but not connected at the cnx-level." ;
+                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
+                    sh:select """\r
+SELECT $this ?otherC\r
+WHERE {\r
+$this s223:connected ?otherC .\r
+FILTER NOT EXISTS {$this s223:cnx+ ?otherC}\r
+}\r
+""" ] ],
+        [ rdfs:comment "If the relation `cnx` is present it must associate the `Connectable` with a `ConnectionPoint`." ;
             sh:class s223:ConnectionPoint ;
             sh:message "s223: If the relation `cnx` is present it must associate the `Connectable` with a `ConnectionPoint`." ;
             sh:path s223:cnx ],
@@ -76561,21 +76574,7 @@ s223:Connectable a s223:Class,
             sh:class s223:ConnectionPoint ;
             sh:message "s223: If the relation `hasConnectionPoint` is present it must associate the `Connectable` with a `ConnectionPoint`." ;
             sh:name "EquipmentToConnectionPointShape" ;
-            sh:path s223:hasConnectionPoint ],
-        [ rdfs:comment "If a `Connectable` has s223:connected or s223:connectedTo (i.e. high-level connection specification), it must also have the supporting `cnx` relations (low-level connection specification)." ;
-            sh:path s223:cnx ;
-            sh:severity sh:Warning ;
-            sh:sparql [ a sh:SPARQLConstraint ;
-                    rdfs:comment "If a `Connectable` has s223:connected or s223:connectedTo (i.e. high-level connection specification), it must also have the supporting `cnx` relations (low-level connection specification)." ;
-                    sh:message "s223: {$this} is s223:connected (high-level) to {?otherC} but not connected at the cnx-level." ;
-                    sh:prefixes <http://data.ashrae.org/standard223/1.0/validation/model> ;
-                    sh:select """\r
-SELECT $this ?otherC\r
-WHERE {\r
-$this s223:connected ?otherC .\r
-FILTER NOT EXISTS {$this s223:cnx+ ?otherC}\r
-}\r
-""" ] ] ;
+            sh:path s223:hasConnectionPoint ] ;
     sh:rule [ a sh:TripleRule ;
             rdfs:comment "Infer the `cnx` relation using `isConnectionPointOf`." ;
             sh:name "InferredEquipmentToConnectionPointCnxPropertyFromInverse" ;
@@ -81871,58 +81870,7 @@ Connection points are represented graphically in this standard by a triangle wit
 \r
  """ ;
     rdfs:subClassOf s223:Concept ;
-    sh:property [ rdfs:comment "A `ConnectionPoint` must be associated with at most one `Connectable` using the `cnx` relation." ;
-            sh:message "s223: A `ConnectionPoint` must be associated with at most one `Connectable` using the `cnx` relation." ;
-            sh:path s223:cnx ;
-            sh:qualifiedMaxCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:Connectable ] ;
-            sh:qualifiedValueShapesDisjoint true ],
-        [ rdfs:comment "A `ConnectionPoint` must be associated with at most one `Connection` using the `cnx` relation" ;
-            sh:message "s223: A `ConnectionPoint` must be associated with at most one `Connection` using the `cnx` relation" ;
-            sh:path s223:cnx ;
-            sh:qualifiedMaxCount 1 ;
-            sh:qualifiedValueShape [ sh:class s223:Connection ] ;
-            sh:qualifiedValueShapesDisjoint true ],
-        [ rdfs:comment "A `ConnectionPoint` must be associated with at most one `Connection` using the relation `connectsThrough`." ;
-            sh:class s223:Connection ;
-            sh:maxCount 1 ;
-            sh:message "s223: This `ConnectionPoint` must be associated with at most one `Connection`." ;
-            sh:name "ConnectionPointToConnectionShape" ;
-            sh:path s223:connectsThrough ;
-            sh:severity sh:Info ],
-        [ rdfs:comment "If the relation `hasElectricalPhase` is present it must associate the `ConnectionPoint` with an ElectricalPhaseIdentifier or ElectricalVoltagePhases." ;
-            sh:message "s223: If the relation `hasElectricalPhase` is present it must associate the `ConnectionPoint` with an ElectricalPhaseIdentifier or ElectricalVoltagePhases." ;
-            sh:or ( [ sh:class s223:EnumerationKind-ElectricalPhaseIdentifier ] [ sh:class s223:EnumerationKind-ElectricalVoltagePhases ] ) ;
-            sh:path s223:hasElectricalPhase ],
-        [ rdfs:comment "A `ConnectionPoint` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
-            sh:class s223:Substance-Medium ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `ConnectionPoint` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
-            sh:minCount 1 ;
-            sh:name "ConnectionPoint medium" ;
-            sh:path s223:hasMedium ],
-        [ rdfs:comment "If the relation `hasRole` is present it must associate the `ConnectionPoint` with an `EnumerationKind-Role`." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:message "s223: If the relation `hasRole` is present it must associate the `ConnectionPoint` with an `EnumerationKind-Role`." ;
-            sh:path s223:hasRole ],
-        [ rdfs:comment "A `ConnectionPoint` must be associated with exactly one `Connectable` using the relation `isConnectionPointOf`." ;
-            sh:class s223:Connectable ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `ConnectionPoint` must be associated with exactly one `Connectable` using the relation `isConnectionPointOf`." ;
-            sh:minCount 1 ;
-            sh:name "ConnectionPointToEquipmentShape" ;
-            sh:path s223:isConnectionPointOf ],
-        [ rdfs:comment "A `ConnectionPoint` can be associated with at most one other `ConnectionPoint` using the relation `mapsTo`" ;
-            sh:class s223:ConnectionPoint ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `ConnectionPoint` can be associated with at most one other `ConnectionPoint` using the relation `mapsTo`" ;
-            sh:path s223:mapsTo ],
-        [ rdfs:comment "A `ConnectionPoint` can be associated with at most one other `ConnectionPoint` using the inverse of relation `mapsTo`" ;
-            sh:class s223:ConnectionPoint ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `ConnectionPoint` can be associated with at most one other `ConnectionPoint` using the inverse of relation `mapsTo`" ;
-            sh:path [ sh:inversePath s223:mapsTo ] ],
-        [ rdfs:comment "If a `ConnectionPoint` lacks a `connectsThrough` and `mapsTo` relation, and is not associated with a `Junction` or `Equipment` that is contained by an `Equipment`, then suggest that the `ConnectionPoint` probably needs an association with a `Connection`." ;
+    sh:property [ rdfs:comment "If a `ConnectionPoint` lacks a `connectsThrough` and `mapsTo` relation, and is not associated with a `Junction` or `Equipment` that is contained by an `Equipment`, then suggest that the `ConnectionPoint` probably needs an association with a `Connection`." ;
             sh:path s223:connectsThrough ;
             sh:severity sh:Info ;
             sh:sparql [ a sh:SPARQLConstraint ;
@@ -82005,7 +81953,58 @@ FILTER NOT EXISTS {?otherEquipment s223:contains ?equipment}\r
         $this s223:isConnectionPointOf ?equipment .\r
         ?containerEquipment s223:contains ?equipment .\r
         }\r
-        """ ] ] ;
+        """ ] ],
+        [ rdfs:comment "A `ConnectionPoint` must be associated with at most one `Connectable` using the `cnx` relation." ;
+            sh:message "s223: A `ConnectionPoint` must be associated with at most one `Connectable` using the `cnx` relation." ;
+            sh:path s223:cnx ;
+            sh:qualifiedMaxCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:Connectable ] ;
+            sh:qualifiedValueShapesDisjoint true ],
+        [ rdfs:comment "A `ConnectionPoint` must be associated with at most one `Connection` using the `cnx` relation" ;
+            sh:message "s223: A `ConnectionPoint` must be associated with at most one `Connection` using the `cnx` relation" ;
+            sh:path s223:cnx ;
+            sh:qualifiedMaxCount 1 ;
+            sh:qualifiedValueShape [ sh:class s223:Connection ] ;
+            sh:qualifiedValueShapesDisjoint true ],
+        [ rdfs:comment "A `ConnectionPoint` must be associated with at most one `Connection` using the relation `connectsThrough`." ;
+            sh:class s223:Connection ;
+            sh:maxCount 1 ;
+            sh:message "s223: This `ConnectionPoint` must be associated with at most one `Connection`." ;
+            sh:name "ConnectionPointToConnectionShape" ;
+            sh:path s223:connectsThrough ;
+            sh:severity sh:Info ],
+        [ rdfs:comment "If the relation `hasElectricalPhase` is present it must associate the `ConnectionPoint` with an ElectricalPhaseIdentifier or ElectricalVoltagePhases." ;
+            sh:message "s223: If the relation `hasElectricalPhase` is present it must associate the `ConnectionPoint` with an ElectricalPhaseIdentifier or ElectricalVoltagePhases." ;
+            sh:or ( [ sh:class s223:EnumerationKind-ElectricalPhaseIdentifier ] [ sh:class s223:EnumerationKind-ElectricalVoltagePhases ] ) ;
+            sh:path s223:hasElectricalPhase ],
+        [ rdfs:comment "A `ConnectionPoint` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
+            sh:class s223:Substance-Medium ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `ConnectionPoint` must be associated with exactly one `Substance-Medium` using the relation `hasMedium`." ;
+            sh:minCount 1 ;
+            sh:name "ConnectionPoint medium" ;
+            sh:path s223:hasMedium ],
+        [ rdfs:comment "If the relation `hasRole` is present it must associate the `ConnectionPoint` with an `EnumerationKind-Role`." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:message "s223: If the relation `hasRole` is present it must associate the `ConnectionPoint` with an `EnumerationKind-Role`." ;
+            sh:path s223:hasRole ],
+        [ rdfs:comment "A `ConnectionPoint` must be associated with exactly one `Connectable` using the relation `isConnectionPointOf`." ;
+            sh:class s223:Connectable ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `ConnectionPoint` must be associated with exactly one `Connectable` using the relation `isConnectionPointOf`." ;
+            sh:minCount 1 ;
+            sh:name "ConnectionPointToEquipmentShape" ;
+            sh:path s223:isConnectionPointOf ],
+        [ rdfs:comment "A `ConnectionPoint` can be associated with at most one other `ConnectionPoint` using the relation `mapsTo`" ;
+            sh:class s223:ConnectionPoint ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `ConnectionPoint` can be associated with at most one other `ConnectionPoint` using the relation `mapsTo`" ;
+            sh:path s223:mapsTo ],
+        [ rdfs:comment "A `ConnectionPoint` can be associated with at most one other `ConnectionPoint` using the inverse of relation `mapsTo`" ;
+            sh:class s223:ConnectionPoint ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `ConnectionPoint` can be associated with at most one other `ConnectionPoint` using the inverse of relation `mapsTo`" ;
+            sh:path [ sh:inversePath s223:mapsTo ] ] ;
     sh:rule [ a sh:TripleRule ;
             rdfs:comment "Infer the `hasElectricalPhase` value from any connected `Conductor`." ;
             sh:object [ sh:path ( s223:connectsThrough s223:hasElectricalPhase ) ] ;
@@ -82363,38 +82362,7 @@ A `Property` instance that is not an instance of one of the subclasses is uncons
 with respect to its value.\r
 """ ;
     rdfs:subClassOf s223:Concept ;
-    sh:property [ rdfs:comment "If the relation `hasAspect` is present, it must associate the `Property` with an `EnumerationKind`." ;
-            sh:class s223:EnumerationKind ;
-            sh:message "s223: If the relation `hasAspect` is present, it must associate the `Property` with an `EnumerationKind`." ;
-            sh:path s223:hasAspect ],
-        [ rdfs:comment "If the relation `hasExternalReference` is present it must associate the `Property` with an `ExternalReference`." ;
-            sh:class s223:ExternalReference ;
-            sh:message "s223: If the relation `hasExternalReference` is present it must associate the `Property` with an `ExternalReference`." ;
-            sh:path s223:hasExternalReference ],
-        [ rdfs:comment "If the relation `hasInternalReference` is present it must associate the `Property` with another `Property`." ;
-            sh:class s223:Property ;
-            sh:message "s223: If the relation `hasInternalReference` is present it must associate the `Property` with another `Property`." ;
-            sh:path s223:hasInternalReference ],
-        [ rdfs:comment "A `Property` can use at most one relation `hasValue` if it is required to provide a static value in the model. It is not meant for real-time value (see {s223:hasExternalReference})." ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Property` can use at most one relation `hasValue` if it is required to provide a static value in the model. It is not meant for real-time value (see {s223:hasExternalReference})." ;
-            sh:path s223:hasValue ],
-        [ rdfs:comment "A `Property` can be associated with at most one `Substance-Medium` using the relation `ofMedium`." ;
-            sh:class s223:Substance-Medium ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Property` can be associated with at most one `Substance-Medium` using the relation `ofMedium`." ;
-            sh:path s223:ofMedium ],
-        [ rdfs:comment "A `Property` can be associated with at most one `EnumerationKind-Substance` using the relation `ofSubstance`." ;
-            sh:class s223:EnumerationKind-Substance ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Property` can be associated with at most one `EnumerationKind-Substance` using the relation `ofSubstance`." ;
-            sh:path s223:ofSubstance ],
-        [ rdfs:comment "A `Property` can be associated with at most one `Function` using the inverse relation `hasOutput`." ;
-            sh:class s223:Function ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `Property` can be associated with at most one `Function` using the inverse relation `hasOutput`." ;
-            sh:path [ sh:inversePath s223:hasOutput ] ],
-        [ rdfs:comment "A `Property` must not have both a `hasInternalReference` and a `hasExternalReference` relation." ;
+    sh:property [ rdfs:comment "A `Property` must not have both a `hasInternalReference` and a `hasExternalReference` relation." ;
             sh:path s223:hasInternalReference ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "A `Property` must not have both a `hasInternalReference` and a `hasExternalReference` relation." ;
@@ -82462,7 +82430,38 @@ FILTER NOT EXISTS {$this s223:ofMedium ?medium} .\r
         [ rdfs:comment "A `Property` must not be observed (set) by more than one entity." ;
             sh:maxCount 1 ;
             sh:message "s223: A `Property` must not be observed (set) by more than one entity." ;
-            sh:path [ sh:inversePath s223:observes ] ] ;
+            sh:path [ sh:inversePath s223:observes ] ],
+        [ rdfs:comment "If the relation `hasAspect` is present, it must associate the `Property` with an `EnumerationKind`." ;
+            sh:class s223:EnumerationKind ;
+            sh:message "s223: If the relation `hasAspect` is present, it must associate the `Property` with an `EnumerationKind`." ;
+            sh:path s223:hasAspect ],
+        [ rdfs:comment "If the relation `hasExternalReference` is present it must associate the `Property` with an `ExternalReference`." ;
+            sh:class s223:ExternalReference ;
+            sh:message "s223: If the relation `hasExternalReference` is present it must associate the `Property` with an `ExternalReference`." ;
+            sh:path s223:hasExternalReference ],
+        [ rdfs:comment "If the relation `hasInternalReference` is present it must associate the `Property` with another `Property`." ;
+            sh:class s223:Property ;
+            sh:message "s223: If the relation `hasInternalReference` is present it must associate the `Property` with another `Property`." ;
+            sh:path s223:hasInternalReference ],
+        [ rdfs:comment "A `Property` can use at most one relation `hasValue` if it is required to provide a static value in the model. It is not meant for real-time value (see {s223:hasExternalReference})." ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Property` can use at most one relation `hasValue` if it is required to provide a static value in the model. It is not meant for real-time value (see {s223:hasExternalReference})." ;
+            sh:path s223:hasValue ],
+        [ rdfs:comment "A `Property` can be associated with at most one `Substance-Medium` using the relation `ofMedium`." ;
+            sh:class s223:Substance-Medium ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Property` can be associated with at most one `Substance-Medium` using the relation `ofMedium`." ;
+            sh:path s223:ofMedium ],
+        [ rdfs:comment "A `Property` can be associated with at most one `EnumerationKind-Substance` using the relation `ofSubstance`." ;
+            sh:class s223:EnumerationKind-Substance ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Property` can be associated with at most one `EnumerationKind-Substance` using the relation `ofSubstance`." ;
+            sh:path s223:ofSubstance ],
+        [ rdfs:comment "A `Property` can be associated with at most one `Function` using the inverse relation `hasOutput`." ;
+            sh:class s223:Function ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `Property` can be associated with at most one `Function` using the inverse relation `hasOutput`." ;
+            sh:path [ sh:inversePath s223:hasOutput ] ] ;
     sh:sparql [ a sh:SPARQLConstraint ;
             rdfs:comment "A `Property` cannot be declared an instance of both an `ActuatableProperty` and an `ObservableProperty`." ;
             sh:message "s223: {$this} cannot be declared an instance of both an `ActuatableProperty` and an `ObservableProperty`." ;
@@ -82700,15 +82699,7 @@ s223:OutletConnectionPoint a s223:Class,
     rdfs:label "Outlet Connection Point" ;
     rdfs:comment "An `OutletConnectionPoint` is a `ConnectionPoint` for which a Medium is expected to flow out of the associated `Connectable`." ;
     rdfs:subClassOf s223:ConnectionPoint ;
-    sh:property [ rdfs:comment "If the relation `mapsTo` is present it must associate the `OutletConnectionPoint` with an `OutletConnectionPoint`." ;
-            sh:class s223:OutletConnectionPoint ;
-            sh:message "s223: If the relation `mapsTo` is present it must associate the `OutletConnectionPoint` with an `OutletConnectionPoint`." ;
-            sh:path s223:mapsTo ],
-        [ rdfs:comment "If the relation `pairedConnectionPoint` is present it must associate the `OutletConnectionPoint` with an `InletConnectionPoint` or `BidirectionalConnectionPoint`." ;
-            sh:message "s223: If the relation `pairedConnectionPoint` is present it must associate the `OutletConnectionPoint` with an `InletConnectionPoint` or `BidirectionalConnectionPoint`." ;
-            sh:or ( [ sh:class s223:InletConnectionPoint ] [ sh:class s223:BidirectionalConnectionPoint ] ) ;
-            sh:path s223:pairedConnectionPoint ],
-        [ rdfs:comment "Ensure an `OutletConnectionPoint` has a `mapsTo` relation to its containing `Equipment` if it has an external `Connection`" ;
+    sh:property [ rdfs:comment "Ensure an `OutletConnectionPoint` has a `mapsTo` relation to its containing `Equipment` if it has an external `Connection`" ;
             sh:path s223:mapsTo ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure an `OutletConnectionPoint` has a `mapsTo` relation to its containing `Equipment` if it has an external `Connection`" ;
@@ -82723,7 +82714,15 @@ $this s223:connectsThrough/s223:connectsTo ?destinationEquipment .\r
 FILTER NOT EXISTS {?parentEquipment s223:contains ?destinationEquipment} .\r
 FILTER NOT EXISTS {$this s223:mapsTo ?anything} .\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "If the relation `mapsTo` is present it must associate the `OutletConnectionPoint` with an `OutletConnectionPoint`." ;
+            sh:class s223:OutletConnectionPoint ;
+            sh:message "s223: If the relation `mapsTo` is present it must associate the `OutletConnectionPoint` with an `OutletConnectionPoint`." ;
+            sh:path s223:mapsTo ],
+        [ rdfs:comment "If the relation `pairedConnectionPoint` is present it must associate the `OutletConnectionPoint` with an `InletConnectionPoint` or `BidirectionalConnectionPoint`." ;
+            sh:message "s223: If the relation `pairedConnectionPoint` is present it must associate the `OutletConnectionPoint` with an `InletConnectionPoint` or `BidirectionalConnectionPoint`." ;
+            sh:or ( [ sh:class s223:InletConnectionPoint ] [ sh:class s223:BidirectionalConnectionPoint ] ) ;
+            sh:path s223:pairedConnectionPoint ] .
 
 s223:NumberOfElectricalPhases-SinglePhase a s223:Class,
         s223:NumberOfElectricalPhases-SinglePhase,
@@ -82815,31 +82814,7 @@ The graphical depiction of Equipment used in this standard is a rounded cornered
 ![Graphical Depiction of Equipment.](figures/Figure_5-1Graphical_Depiciton_of_Equipment.svg)\r
   """ ;
     rdfs:subClassOf s223:Connectable ;
-    sh:property [ a sh:PropertyShape ;
-            rdfs:comment "If the relation `contains` is present it must associate the `Equipment` with either `Equipment` or `Junction`." ;
-            sh:message "s223: If the relation `contains` is present it must associate the `Equipment` with either `Equipment` or `Junction`." ;
-            sh:name "device contains shape" ;
-            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
-            sh:path s223:contains ],
-        [ rdfs:comment """If the relation `actuatedByProperty` is present it must associate the `Equipment` with a `ActuatableProperty`.\r
-Note that any `Equipment` may use this relation, not just `Actuator`.""" ;
-            sh:class s223:ActuatableProperty ;
-            sh:message """If the relation `actuatedByProperty` is present it must associate the `Equipment` with a `ActuatableProperty`.\r
-Note that any `Equipment` may use this relation, not just `Actuator`.""" ;
-            sh:path s223:actuatedByProperty ],
-        [ rdfs:comment "If the relation `executes` is present it must associate the `Equipment` with a `Function`." ;
-            sh:class s223:Function ;
-            sh:message "s223: If the relation `executes` is present it must associate the `Equipment` with a `Function`." ;
-            sh:path s223:executes ],
-        [ rdfs:comment "If the relation `hasPhysicalLocation` is present it must associate the `Equipment` with a `PhysicalSpace`." ;
-            sh:class s223:PhysicalSpace ;
-            sh:message "s223: If the relation `hasPhysicalLocation` is present it must associate the `Equipment` with a `PhysicalSpace`." ;
-            sh:path s223:hasPhysicalLocation ],
-        [ rdfs:comment "If the relation `hasRole` is present it must associate the `Equipment` with a `EnumerationKind-Role`." ;
-            sh:class s223:EnumerationKind-Role ;
-            sh:message "s223: If the relation `hasRole` is present it must associate the `Equipment` with a `EnumerationKind-Role`." ;
-            sh:path s223:hasRole ],
-        [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
+    sh:property [ rdfs:comment "Disallow contained equipment from having external incoming connections." ;
             sh:path s223:connectedFrom ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Disallow contained equipment from having external incoming connections." ;
@@ -82892,7 +82867,31 @@ UNION\r
 ?type1 rdfs:subClassOf* ?type2 .\r
 }\r
 }\r
-""" ] ] ;
+""" ] ],
+        [ a sh:PropertyShape ;
+            rdfs:comment "If the relation `contains` is present it must associate the `Equipment` with either `Equipment` or `Junction`." ;
+            sh:message "s223: If the relation `contains` is present it must associate the `Equipment` with either `Equipment` or `Junction`." ;
+            sh:name "device contains shape" ;
+            sh:or ( [ sh:class s223:Equipment ] [ sh:class s223:Junction ] ) ;
+            sh:path s223:contains ],
+        [ rdfs:comment """If the relation `actuatedByProperty` is present it must associate the `Equipment` with a `ActuatableProperty`.\r
+Note that any `Equipment` may use this relation, not just `Actuator`.""" ;
+            sh:class s223:ActuatableProperty ;
+            sh:message """If the relation `actuatedByProperty` is present it must associate the `Equipment` with a `ActuatableProperty`.\r
+Note that any `Equipment` may use this relation, not just `Actuator`.""" ;
+            sh:path s223:actuatedByProperty ],
+        [ rdfs:comment "If the relation `executes` is present it must associate the `Equipment` with a `Function`." ;
+            sh:class s223:Function ;
+            sh:message "s223: If the relation `executes` is present it must associate the `Equipment` with a `Function`." ;
+            sh:path s223:executes ],
+        [ rdfs:comment "If the relation `hasPhysicalLocation` is present it must associate the `Equipment` with a `PhysicalSpace`." ;
+            sh:class s223:PhysicalSpace ;
+            sh:message "s223: If the relation `hasPhysicalLocation` is present it must associate the `Equipment` with a `PhysicalSpace`." ;
+            sh:path s223:hasPhysicalLocation ],
+        [ rdfs:comment "If the relation `hasRole` is present it must associate the `Equipment` with a `EnumerationKind-Role`." ;
+            sh:class s223:EnumerationKind-Role ;
+            sh:message "s223: If the relation `hasRole` is present it must associate the `Equipment` with a `EnumerationKind-Role`." ;
+            sh:path s223:hasRole ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "For equipment contained within another piece of equipment use the `mapsTo` relation to infer a Medium from the containing equipment." ;
             sh:construct """\r
@@ -82990,49 +82989,7 @@ s223:QuantifiableProperty a s223:Class,
     rdfs:label "Quantifiable Property" ;
     rdfs:comment "This class is for quantifiable values that describe an object (`System`, `Equipment`, etc.) that are typically static (`hasValue`). That is, they are neither measured nor specified in the course of operations." ;
     rdfs:subClassOf s223:Property ;
-    sh:property [ rdfs:comment "A `QuantifiableProperty` can be associated with a `QuantifiableProperty` using the relation `hasDeadband`." ;
-            sh:class s223:QuantifiableProperty ;
-            sh:message "s223: A `QuantifiableProperty` can be associated with a `QuantifiableProperty` using the relation `hasDeadband`." ;
-            sh:path s223:hasDeadband ],
-        [ rdfs:comment "A `QuantifiableProperty` can be associated with a `QuantifiableProperty` using the relation `hasSetpoint`." ;
-            sh:class s223:QuantifiableProperty ;
-            sh:message "s223: A `QuantifiableProperty` can be associated with a `QuantifiableProperty` using the relation `hasSetpoint`." ;
-            sh:path s223:hasSetpoint ],
-        [ rdfs:comment "A `QuantifiableProperty` can be associated with a`QuantifiableProperty` using the relation `hasThreshold`." ;
-            sh:class s223:QuantifiableProperty ;
-            sh:message "s223: A `QuantifiableProperty` can be associated with a`QuantifiableProperty` using the relation `hasThreshold`." ;
-            sh:path s223:hasThreshold ],
-        [ rdfs:comment "A `QuantifiableProperty` must be associated with a `QuantityKind` using the relation `hasQuantityKind`." ;
-            sh:class qudt:QuantityKind ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `QuantifiableProperty` must be associated with a `QuantityKind` using the relation `hasQuantityKind`." ;
-            sh:minCount 1 ;
-            sh:path qudt:hasQuantityKind ],
-        [ rdfs:comment "A `QuantifiableProperty` can be associated with at most one `Unit` using the relation `hasUnit`." ;
-            sh:class qudt:Unit ;
-            sh:maxCount 1 ;
-            sh:message "s223: A `QuantifiableProperty` can be associated with at most one `Unit` using the relation `hasUnit`." ;
-            sh:path qudt:hasUnit ],
-        [ rdfs:comment """A `QuantifiableProperty` can be associated with an optional Boolean flag using the relation isDeltaQuantity. \r
-If the relation isDeltaQuantity has a value of true, the associated value should be interpreted as a difference reading, such as a \r
-temperature difference. This is needed to distinguish between a temperature reading and a temperature difference reading, which\r
-affects unit conversion calculations.""" ;
-            sh:datatype xsd:boolean ;
-            sh:maxCount 1 ;
-            sh:message """A `QuantifiableProperty` can be associated with an optional Boolean flag using the relation isDeltaQuantity. \r
-If the relation isDeltaQuantity has a value of true, the associated value should be interpreted as a difference reading, such as a \r
-temperature difference. This is needed to distinguish between a temperature reading and a temperature difference reading, which\r
-affects unit conversion calculations.""" ;
-            sh:path qudt:isDeltaQuantity ],
-        [ rdfs:comment """Normally, a `QuantifiableProperty` is associated with a static decimal value using `hasValue`, along with a single \r
-`Unit` and `QuantityKind`. However, in some cases, a `QuantifiableProperty` may instead be associated with a `QuantityValue` using the relation \r
-`quantityValue`. This allows the `QuantityValue` to express multiple equivalent combinations of `Unit` and value.""" ;
-            sh:class qudt:QuantityValue ;
-            sh:message """Normally, a `QuantifiableProperty` is associated with a static decimal value using `hasValue`, along with a single \r
-`Unit` and `QuantityKind`. However, in some cases, a `QuantifiableProperty` may instead be associated with a `QuantityValue` using the relation \r
-`quantityValue`. This allows the `QuantityValue` to express multiple equivalent combinations of `Unit` and value.""" ;
-            sh:path qudt:quantityValue ],
-        [ rdfs:comment "This `QuantifiableProperty` cannot have a value without a `Unit`." ;
+    sh:property [ rdfs:comment "This `QuantifiableProperty` cannot have a value without a `Unit`." ;
             sh:path s223:hasValue ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "This `QuantifiableProperty` cannot have a value without a `Unit`." ;
@@ -83218,7 +83175,49 @@ FILTER (?pdv = ?tdv) .\r
         [ rdfs:comment "A `QuantifiableProperty` should use `s223:hasValue` instead of `qudt:value`." ;
             sh:maxCount 0 ;
             sh:message "s223: A `QuantifiableProperty` should use `s223:hasValue` instead of `qudt:value`." ;
-            sh:path qudt:value ] ;
+            sh:path qudt:value ],
+        [ rdfs:comment "A `QuantifiableProperty` can be associated with a `QuantifiableProperty` using the relation `hasDeadband`." ;
+            sh:class s223:QuantifiableProperty ;
+            sh:message "s223: A `QuantifiableProperty` can be associated with a `QuantifiableProperty` using the relation `hasDeadband`." ;
+            sh:path s223:hasDeadband ],
+        [ rdfs:comment "A `QuantifiableProperty` can be associated with a `QuantifiableProperty` using the relation `hasSetpoint`." ;
+            sh:class s223:QuantifiableProperty ;
+            sh:message "s223: A `QuantifiableProperty` can be associated with a `QuantifiableProperty` using the relation `hasSetpoint`." ;
+            sh:path s223:hasSetpoint ],
+        [ rdfs:comment "A `QuantifiableProperty` can be associated with a`QuantifiableProperty` using the relation `hasThreshold`." ;
+            sh:class s223:QuantifiableProperty ;
+            sh:message "s223: A `QuantifiableProperty` can be associated with a`QuantifiableProperty` using the relation `hasThreshold`." ;
+            sh:path s223:hasThreshold ],
+        [ rdfs:comment "A `QuantifiableProperty` must be associated with a `QuantityKind` using the relation `hasQuantityKind`." ;
+            sh:class qudt:QuantityKind ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `QuantifiableProperty` must be associated with a `QuantityKind` using the relation `hasQuantityKind`." ;
+            sh:minCount 1 ;
+            sh:path qudt:hasQuantityKind ],
+        [ rdfs:comment "A `QuantifiableProperty` can be associated with at most one `Unit` using the relation `hasUnit`." ;
+            sh:class qudt:Unit ;
+            sh:maxCount 1 ;
+            sh:message "s223: A `QuantifiableProperty` can be associated with at most one `Unit` using the relation `hasUnit`." ;
+            sh:path qudt:hasUnit ],
+        [ rdfs:comment """A `QuantifiableProperty` can be associated with an optional Boolean flag using the relation isDeltaQuantity. \r
+If the relation isDeltaQuantity has a value of true, the associated value should be interpreted as a difference reading, such as a \r
+temperature difference. This is needed to distinguish between a temperature reading and a temperature difference reading, which\r
+affects unit conversion calculations.""" ;
+            sh:datatype xsd:boolean ;
+            sh:maxCount 1 ;
+            sh:message """A `QuantifiableProperty` can be associated with an optional Boolean flag using the relation isDeltaQuantity. \r
+If the relation isDeltaQuantity has a value of true, the associated value should be interpreted as a difference reading, such as a \r
+temperature difference. This is needed to distinguish between a temperature reading and a temperature difference reading, which\r
+affects unit conversion calculations.""" ;
+            sh:path qudt:isDeltaQuantity ],
+        [ rdfs:comment """Normally, a `QuantifiableProperty` is associated with a static decimal value using `hasValue`, along with a single \r
+`Unit` and `QuantityKind`. However, in some cases, a `QuantifiableProperty` may instead be associated with a `QuantityValue` using the relation \r
+`quantityValue`. This allows the `QuantityValue` to express multiple equivalent combinations of `Unit` and value.""" ;
+            sh:class qudt:QuantityValue ;
+            sh:message """Normally, a `QuantifiableProperty` is associated with a static decimal value using `hasValue`, along with a single \r
+`Unit` and `QuantityKind`. However, in some cases, a `QuantifiableProperty` may instead be associated with a `QuantityValue` using the relation \r
+`quantityValue`. This allows the `QuantityValue` to express multiple equivalent combinations of `Unit` and value.""" ;
+            sh:path qudt:quantityValue ] ;
     sh:rule [ a sh:SPARQLRule ;
             rdfs:comment "Infer the `hasQuantityKind` relation if it is unambiguous." ;
             sh:construct """\r
@@ -83258,15 +83257,7 @@ s223:InletConnectionPoint a s223:Class,
     rdfs:label "Inlet Connection Point" ;
     rdfs:comment "An `InletConnectionPoint` is a `ConnectionPoint` for which a Medium is expected to flow into the associated `Connectable`." ;
     rdfs:subClassOf s223:ConnectionPoint ;
-    sh:property [ rdfs:comment "If the relation `mapsTo` is present it must associate the `InletConnectionPoint` with an `InletConnectionPoint`." ;
-            sh:class s223:InletConnectionPoint ;
-            sh:message "s223: If the relation `mapsTo` is present it must associate the `InletConnectionPoint` with an `InletConnectionPoint`." ;
-            sh:path s223:mapsTo ],
-        [ rdfs:comment "If the relation `pairedConnectionPoint` is present it must associate the `InletConnectionPoint` with an `OutletConnectionPoint` or `BidirectionalConnectionPoint`." ;
-            sh:message "s223: If the relation `pairedConnectionPoint` is present it must associate the `InletConnectionPoint` with an `OutletConnectionPoint` or `BidirectionalConnectionPoint`." ;
-            sh:or ( [ sh:class s223:OutletConnectionPoint ] [ sh:class s223:BidirectionalConnectionPoint ] ) ;
-            sh:path s223:pairedConnectionPoint ],
-        [ rdfs:comment "Ensure an `InletConnectionPoint` has a `mapsTo` relation to its containing `Equipment` if it has an external `Connection`" ;
+    sh:property [ rdfs:comment "Ensure an `InletConnectionPoint` has a `mapsTo` relation to its containing `Equipment` if it has an external `Connection`" ;
             sh:path s223:mapsTo ;
             sh:sparql [ a sh:SPARQLConstraint ;
                     rdfs:comment "Ensure an `InletConnectionPoint` has a `mapsTo` relation to its containing `Equipment` if it has an external `Connection`" ;
@@ -83281,7 +83272,15 @@ $this s223:connectsThrough/s223:connectsFrom ?sourceEquipment .\r
 FILTER NOT EXISTS {?parentEquipment s223:contains ?sourceEquipment} .\r
 FILTER NOT EXISTS {$this s223:mapsTo ?anything} .\r
 }\r
-""" ] ] .
+""" ] ],
+        [ rdfs:comment "If the relation `mapsTo` is present it must associate the `InletConnectionPoint` with an `InletConnectionPoint`." ;
+            sh:class s223:InletConnectionPoint ;
+            sh:message "s223: If the relation `mapsTo` is present it must associate the `InletConnectionPoint` with an `InletConnectionPoint`." ;
+            sh:path s223:mapsTo ],
+        [ rdfs:comment "If the relation `pairedConnectionPoint` is present it must associate the `InletConnectionPoint` with an `OutletConnectionPoint` or `BidirectionalConnectionPoint`." ;
+            sh:message "s223: If the relation `pairedConnectionPoint` is present it must associate the `InletConnectionPoint` with an `OutletConnectionPoint` or `BidirectionalConnectionPoint`." ;
+            sh:or ( [ sh:class s223:OutletConnectionPoint ] [ sh:class s223:BidirectionalConnectionPoint ] ) ;
+            sh:path s223:pairedConnectionPoint ] .
 
 qudtqk:Time a qudt:QuantityKind ;
     rdfs:label "زمن"@ar,
