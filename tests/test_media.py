@@ -3,26 +3,10 @@ from pathlib import Path
 from header import ttl_test_header
 from rdflib import Literal
 from bob import core
-from bob.connections.electricity import (
-    Electricity_600VLL_3Ph_60HzInletConnectionPoint,
-    Electricity_600VLL_3Ph_60HzOutletConnectionPoint,
-)
 from bob.core import bind_model_namespace, dump, data_graph, schema_graph
-from bob.equipment.electricity.vfd import VFD
-from bob.properties import (
-    HP,
-    RPM,
-    Amps,
-    ElectricPowerkW,
-    OnOffCommand,
-    OnOffStatus,
-    Percent,
-    PercentCommand,
-    Temperature,
-)
 
 
-from bob.core import Substance, Medium, EnumerationKind
+from bob.core import Substance, Medium
 from bob.enum import Constituent, Air, Fluid, Argon, CO2, Nitrogen, O2
 from bob.sensor.gas import CO2Sensor
 

@@ -2,7 +2,7 @@ from pathlib import Path
 
 from header import ttl_test_header
 
-from bob.core import Equipment, Property, bind_model_namespace, dump
+from bob.core import bind_model_namespace, dump
 from bob.equipment.hvac.damper import Damper
 
 model_name = Path(__file__).stem

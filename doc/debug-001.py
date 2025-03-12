@@ -13,7 +13,6 @@ y = logging.getLogger("bob.core")
 print(f"{y} level={y.level} handlers={y.handlers}")
 print()
 
-import bob
 
 print(f"{x} level={x.level} handlers={x.handlers}")
 print(f"{y} level={y.level} handlers={y.handlers}")
