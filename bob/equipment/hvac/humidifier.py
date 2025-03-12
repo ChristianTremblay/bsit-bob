@@ -1,9 +1,5 @@
-from typing import Any
-
-from rdflib import URIRef
-
 from bob.connections.naturalgas import NaturalGasInletConnectionPoint
-from bob.properties import Percent, PercentCommand
+from bob.properties import PercentCommand
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import ElectricalInletConnectionPoint
@@ -12,7 +8,7 @@ from ...connections.liquid import (
     SteamOutletConnectionPoint,
     WaterInletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment
+from ...core import BOB, S223, Equipment
 
 _namespace = BOB
 

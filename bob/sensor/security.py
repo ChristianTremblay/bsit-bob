@@ -3,19 +3,10 @@ from typing import Any
 from bob.properties.states import OnOffStatus
 
 from ..core import (
-    BOB,
-    P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    Equipment,
-    ExternalReference,
-    Medium,
     PropertyReference,
 )
-from ..properties import Count, Motion
 from .sensor import Sensor, split_kwargs
-from ..enum import Occupant
 
 _namespace = S223
 

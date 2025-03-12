@@ -1,8 +1,7 @@
-from rdflib import XSD, Literal, URIRef
+from rdflib import XSD, Literal
 
 from ..core import (
     BOB,
-    P223,
     QUANTITYKIND,
     QUDT,
     UNIT,

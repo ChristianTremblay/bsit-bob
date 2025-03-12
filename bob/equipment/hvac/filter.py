@@ -1,9 +1,8 @@
 from typing import Dict
 
-from rdflib import URIRef
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
-from ...core import BOB, P223, S223, Equipment, PropertyReference
+from ...core import BOB, S223, Equipment, PropertyReference
 from ...template import configure_relations, template_update
 
 _namespace = BOB

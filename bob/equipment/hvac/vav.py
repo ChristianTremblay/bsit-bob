@@ -1,13 +1,11 @@
 import logging
 from typing import Dict
 
-from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
+from ...connections.air import AirInletConnectionPoint
 from ...core import BOB, S223, BoundaryConnectionPoint, Equipment, System
 from ... import application
-from ...enum import TerminalUnit
 from ...equipment.hvac.damper import Damper
-from ...sensor.flow import AirFlowSensor
-from ...template import configure_relations, template_update
+from ...template import template_update
 
 # logging
 _log = logging.getLogger(__name__)

@@ -1,11 +1,9 @@
 import logging
 from typing import Dict
 
-from rdflib import URIRef
 
 from bob.properties.network import Mbit_per_seconds
 
-from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import Electricity_120VLN_1Ph_60HzInletConnectionPoint
 from ...connections.network import (
     EthernetBidirectionalConnectionPoint,
@@ -14,16 +12,8 @@ from ...connections.network import (
 from ...core import (
     BOB,
     P223,
-    QUANTITYKIND,
-    S223,
-    UNIT,
-    ConnectionPoint,
     Equipment,
-    PropertyReference,
-    QuantifiableObservableProperty,
 )
-from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
-from ...properties.states import OnOffCommand, OnOffStatus
 from ...template import template_update
 
 # logging

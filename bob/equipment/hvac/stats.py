@@ -2,7 +2,7 @@ from typing import Dict
 
 from rdflib import URIRef
 
-from bob.core import BOB, P223, S223, UNIT, Equipment, Property, PropertyReference
+from bob.core import BOB, P223, S223, UNIT, Equipment, PropertyReference
 from bob.properties.states import OnOffStatus
 
 from ...connections.controlsignal import (

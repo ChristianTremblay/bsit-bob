@@ -1,7 +1,7 @@
 import logging
 from typing import Dict
 
-from ...core import BOB, S223, Equipment, Property, PropertyReference
+from ...core import BOB, S223, Equipment, Property
 from ...template import configure_relations, template_update
 
 # logging

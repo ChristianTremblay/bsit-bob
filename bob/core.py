@@ -2685,7 +2685,7 @@ class BoundaryConnectionPoint:
         return connection_point
 
     def __init__(self) -> None:
-        _log.debug(f"BoundaryConnectionPoint.__init__")
+        _log.debug("BoundaryConnectionPoint.__init__")
         raise RuntimeError("BoundaryConnectionPoint heirarchy are abstract classes")
 
 

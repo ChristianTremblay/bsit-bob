@@ -19,10 +19,7 @@ from ...connections.refrigerant import (
 )
 from ...core import BOB, S223, Equipment, PropertyReference, logging
 from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
-    R22,
-    R32,
     Fluid,
-    R410a,
     Refrigerant,
 )
 from ...properties import Gallons

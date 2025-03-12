@@ -1,10 +1,9 @@
 from bob.connections.air import AirBidirectionalConnectionPoint
-from bob.connections.controlsignal import OnOffSignalOutletConnectionPoint
 from bob.connections.light import (
     LightVisibleInletConnectionPoint,
     LightVisibleOutletConnectionPoint,
 )
-from bob.core import BOB, P223, S223, Equipment, PropertyReference
+from bob.core import BOB, S223, Equipment, PropertyReference
 
 _namespace = BOB
 

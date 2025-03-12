@@ -1,10 +1,9 @@
-from typing import Any, Dict
+from typing import Dict
 
-from rdflib import URIRef
 
-from bob.properties import Percent, PercentCommand
+from bob.properties import PercentCommand
 from bob.properties.electricity import Amps, ElectricPowerkW
-from bob.properties.states import OnOffCommand, OnOffStatus
+from bob.properties.states import OnOffCommand
 
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
@@ -12,8 +11,6 @@ from ...connections.air import (
     AirOutletConnectionPoint,
 )
 from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    ElectricalOutletConnectionPoint,
     Electricity_240VLL_1Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
@@ -31,11 +28,8 @@ from ...connections.refrigerant import (
     RefrigerantInletConnectionPoint,
     RefrigerantOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment, PropertyReference
+from ...core import BOB, S223, Equipment, PropertyReference
 from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
-    R22,
-    R32,
-    R410a,
     Refrigerant,
     Role,
 )

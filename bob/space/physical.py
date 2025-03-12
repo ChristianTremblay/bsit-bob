@@ -2,10 +2,8 @@
 Physical Space subclasses, see also Real Estate Core.
 """
 
-from rdflib import URIRef
-
-from ..core import BOB, QUANTITYKIND, S223, UNIT, PhysicalSpace, bind_namespace
-from ..properties.physical import Area, Length
+from ..core import BOB, PhysicalSpace
+from ..properties.physical import Area
 
 _namespace = BOB
 

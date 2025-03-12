@@ -2,16 +2,11 @@ from typing import Any
 
 from rdflib import URIRef
 
-from bob import core
 
 from ..core import (
     BOB,
-    P223,
     QUANTITYKIND,
     S223,
-    UNIT,
-    Equipment,
-    Medium,
     PropertyReference,
     Setpoint,
 )

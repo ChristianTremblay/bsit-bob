@@ -1,20 +1,11 @@
 from typing import Any
 
-from rdflib import URIRef
 
-from bob import core
-from bob.connections.controlsignal import OnOffSignalOutletConnectionPoint
-from bob.properties.states import DaylightDetected, OnOffStatus
+from bob.properties.states import DaylightDetected
 
 from ..core import (
     BOB,
-    P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    Equipment,
-    ExternalReference,
-    Medium,
     PropertyReference,
 )
 from .sensor import Sensor, split_kwargs

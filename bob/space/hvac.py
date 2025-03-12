@@ -1,8 +1,5 @@
-from rdflib import URIRef
-
 from bob.connections.air import (
     AirBidirectionalConnectionPoint,
-    AirConnection,
     AirInletConnectionPoint,
     AirInletZoneConnectionPoint,
     AirOutletConnectionPoint,
@@ -16,7 +13,7 @@ from bob.properties import (
     Temperature,
 )
 
-from ..core import BOB, P223, S223, Domain, DomainSpace, Medium, Zone, Setpoint
+from ..core import BOB, Domain, DomainSpace, Setpoint, Zone
 
 _namespace = BOB
 

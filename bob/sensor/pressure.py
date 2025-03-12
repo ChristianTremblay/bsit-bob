@@ -1,25 +1,15 @@
-from typing import Any, List, Tuple
+from typing import Any, Tuple
 
-from rdflib import URIRef
 
-from bob import core
-from bob.connections.controlsignal import OnOffSignalOutletConnectionPoint
 from bob.producer.causality import Differential
 from bob.properties.force import DifferentialStaticPressure, Pressure
 
 from ..core import (
     BOB,
     INCLUDE_INVERSE,
-    P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    ExternalReference,
-    LocationReference,
-    Medium,
     Node,
     PropertyReference,
-    Setpoint,
 )
 from ..enum import Air, Water
 from ..properties import DifferentialStaticPressure
@@ -123,8 +113,8 @@ class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
         self > Differential(
             label="diff_causality", comment="Will output High minus Low"
         )
-        self > PressureSensor(label=f"highPort", ofMedium=Water, **_property_kwargs)
-        self > PressureSensor(label=f"lowPort", ofMedium=Water, **_property_kwargs)
+        self > PressureSensor(label="highPort", ofMedium=Water, **_property_kwargs)
+        self > PressureSensor(label="lowPort", ofMedium=Water, **_property_kwargs)
         self > Differential(label="output", comment="Will output High minus Low")
         # self["highPort"].observes >> self.observation_pressure
         # self["lowPort"].observes >> self.reference_pressure

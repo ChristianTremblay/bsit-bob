@@ -11,7 +11,7 @@ import inspect
 import itertools
 import logging
 from collections import Counter
-from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union, get_origin
+from typing import Any, Callable, Dict, List, Set, Tuple, Union, get_origin
 
 __all__ = ["multimethod"]
 

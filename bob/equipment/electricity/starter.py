@@ -1,29 +1,15 @@
 from typing import Dict
 
-from ...enum import HandOffAutoEnum
 from ...equipment.electricity import _MotorStarter
-from ...properties.electricity import ElectricPower
-from ...properties.ratio import Percent, PercentCommand
-from ...properties.states import OnOffCommand, OnOffStatus
+from ...properties.states import OnOffCommand
 
 from ...connections import electricity as elec_cnx
-from ...connections.controlsignal import (
-    OnOffSignalInletConnectionPoint,
-    OnOffSignalOutletConnectionPoint,
-)
 from ...core import (
     BOB,
     P223,
-    S223,
-    UNIT,
-    Equipment,
-    Node,
-    Property,
-    PropertyReference,
     logging,
 )
 from ...template import template_update, configure_relations
-from .switch import CurrentRelay
 
 # logging
 _log = logging.getLogger(__name__)

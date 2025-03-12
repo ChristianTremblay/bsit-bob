@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Dict
 
 from rdflib import URIRef
 
@@ -12,7 +12,7 @@ from ...connections.electricity import (
 from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment
+from ...core import BOB, P223, Equipment
 
 _namespace = BOB
 

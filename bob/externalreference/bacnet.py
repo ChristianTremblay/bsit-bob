@@ -1,12 +1,9 @@
 import logging
 import re
-from typing import Any
 
-from rdflib import XSD, Literal, URIRef
+from rdflib import XSD, Literal
 
-from ..core import S223, Equipment, ExternalReference, Node, bind_namespace, prefixes
-from ..equipment.control.controller import Controller
-from . import NetworkProfile
+from ..core import S223, ExternalReference, bind_namespace, prefixes
 
 # logging
 _log = logging.getLogger(__name__)

@@ -1,22 +1,6 @@
-from rdflib import Graph, URIRef
+from rdflib import URIRef
 
-from .core import (
-    BOB,
-    G36,
-    P223,
-    QUANTITYKIND,
-    QUDT,
-    S223,
-    UNIT,
-    Constituent,
-    Domain,
-    EnumerationKind,
-    Medium,
-    Mix,
-    Node,
-    Role,
-    Substance,
-)
+from .core import P223, Node
 
 _namespace = P223
 

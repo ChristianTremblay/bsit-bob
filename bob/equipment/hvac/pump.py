@@ -17,7 +17,6 @@ from ...properties import (
     RPM,
     Amps,
     ElectricPowerkW,
-    OnOffStatus,
     PowerFactor,
     Pressure,
 )

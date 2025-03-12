@@ -1,43 +1,24 @@
-from typing import Any, Dict
+from typing import Dict
 
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
     ElectricalInletConnectionPoint,
-    Electricity_240VLL_1Ph_60HzInletConnectionPoint,
 )
 from ...connections.liquid import (
-    FluidBidirectionalConnectionPoint,
-    FluidInletConnectionPoint,
-    FluidOutletConnectionPoint,
     HotWaterInletConnectionPoint,
     HotWaterOutletConnectionPoint,
-    WaterBidirectionalConnectionPoint,
-    WaterConnection,
-    WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
 from ...connections.naturalgas import NaturalGasInletConnectionPoint
 from ...core import (
     BOB,
-    P223,
     S223,
-    UNIT,
     BoundaryConnectionPoint,
     Equipment,
-    PropertyReference,
-    System,
 )
-from ...enum import DomesticHotWater, DomesticWater, Fluid, Role, Water
+from ...enum import Role
 from ... import application
-from ...properties.flow import Flow
-from ...properties.temperature import Temperature
 from ...template import SystemFromTemplate, template_update
-from .coil import HeatpumpCoil, ImmersedResistanceHeaterElement
-from .compressor import RefrigerationGasCompressor
-from .fan import Fan
-from .filter import Filter
-from .tank import Tank
-from .valve import ExpansionValve, ReversingValve
 
 _namespace = BOB
 

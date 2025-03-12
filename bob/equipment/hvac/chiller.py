@@ -1,18 +1,15 @@
-from typing import Any, Dict
+from typing import Dict
 
 from bob.properties.electricity import ElectricPowerkW
 from bob.properties.states import NormalAlarmStatus
 
-from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
 from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
 from ...connections.controlsignal import (
     ModulationSignalInletConnectionPoint,
     OnOffSignalOutletConnectionPoint,
 )
-from ...connections.naturalgas import NaturalGasInletConnectionPoint
 from ...connections.liquid import (
     ChilledWaterInletConnectionPoint,
     ChilledWaterOutletConnectionPoint,
@@ -21,9 +18,9 @@ from ...connections.liquid import (
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment
+from ...core import BOB, S223, Equipment
 from ... import application
-from ...properties import OnOffCommand, OnOffStatus, Percent, Temperature
+from ...properties import OnOffCommand, OnOffStatus, Percent
 
 _namespace = BOB
 

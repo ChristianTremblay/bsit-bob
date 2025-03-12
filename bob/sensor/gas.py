@@ -6,14 +6,10 @@ from rdflib import URIRef
 
 from ..core import (
     BOB,
-    P223,
     QUANTITYKIND,
     S223,
     UNIT,
-    EnumerationKind,
-    Equipment,
     Constituent,
-    Node,
     PropertyReference,
     Setpoint,
 )

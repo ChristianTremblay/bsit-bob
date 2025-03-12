@@ -7,23 +7,20 @@ beyond the scope of this project.
 from __future__ import annotations
 
 import logging
-import re
-from typing import Any, List
+from typing import List
 
 from rdflib import XSD, Literal, URIRef
 
 from .core import (
     INCLUDE_INVERSE,
     ConnectionPoint,
-    Equipment,
-    ExternalReference,
     Node,
     bind_namespace,
     prefixes,
 )
 from .equipment.control.controller import Controller
 from .externalreference.bacnet import BACnetExternalReference
-from .multimethods import multimethod, new_class
+from .multimethods import multimethod
 
 # logging
 _log = logging.getLogger(__name__)

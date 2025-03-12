@@ -1,20 +1,12 @@
-from rdflib import Graph, URIRef
+from rdflib import URIRef
 
 from ..core import (
     BOB,
-    P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    ActuatableProperty,
     EnumerableProperty,
     EnumeratedActuatableProperty,
     EnumeratedObservableProperty,
-    EnumerationKind,
-    ExternalReference,
     Medium,
-    ObservableProperty,
-    SchemaGraph,
     Substance,
 )
 from ..enum import (

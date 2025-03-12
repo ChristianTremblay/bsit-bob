@@ -1,5 +1,3 @@
-from rdflib import Literal
-
 from ..core import (
     BOB,
     S223,

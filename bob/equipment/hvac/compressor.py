@@ -7,19 +7,14 @@ from bob.properties.states import NormalAlarmStatus, OnOffCommand, OnOffStatus
 
 from ...connections.air import CompressedAirOutletConnectionPoint
 from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    ElectricalOutletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
 from ...connections.refrigerant import (
     RefrigerantInletConnectionPoint,
     RefrigerantOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment, PropertyReference
+from ...core import BOB, S223, Equipment, PropertyReference
 from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
-    R22,
-    R32,
-    R410a,
     Refrigerant,
 )
 

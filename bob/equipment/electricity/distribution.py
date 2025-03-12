@@ -1,8 +1,7 @@
 from typing import Dict
 
-from rdflib import Literal
 
-from bob.enum import ElectricalPhaseIdentifier, Numerical, Aspect
+from bob.enum import ElectricalPhaseIdentifier, Aspect
 from bob.properties import ElectricPowerkW
 from bob.properties.electricity import Amps
 
@@ -10,9 +9,7 @@ from ...connections import electricity as elec_cnx
 from ...core import (
     BOB,
     P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
     Equipment,
     System,
     QuantifiableObservableProperty,

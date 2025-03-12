@@ -279,7 +279,7 @@ class Producer(_Producer):
         # resolve annotations if necessary
         if not self._resolved:
             self._resolve_annotations()
-        _log.debug(f"    - continue Producer.__init__")
+        _log.debug("    - continue Producer.__init__")
 
         # pull out the inputs and outputs
         connector_inits: Dict[str, Any] = {}

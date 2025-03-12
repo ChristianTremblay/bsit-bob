@@ -1,10 +1,9 @@
 import logging
-from typing import Any, Dict
+from typing import Dict
 
-from rdflib import URIRef
 
 from ... import application
-from ...core import BOB, P223, S223, BoundaryConnectionPoint, Equipment, System
+from ...core import BOB, BoundaryConnectionPoint, System
 from ...template import SystemFromTemplate, template_update
 
 # logging

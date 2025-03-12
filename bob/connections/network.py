@@ -10,7 +10,7 @@ from ..core import (
 )
 from bob.enum import ProtocolEnum
 from bob.properties.network import Mbit_per_seconds
-from ..enum import PowerAndSignal, Electricity, Signal
+from ..enum import PowerAndSignal, Signal
 
 _namespace = BOB
 

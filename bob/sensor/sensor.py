@@ -1,30 +1,19 @@
 from __future__ import annotations
 
-from typing import Any, List, Union
+from typing import Any
 
-from rdflib import RDF, RDFS, XSD, BNode, Graph, Literal, Namespace, URIRef
+from rdflib import URIRef
 
 from ..core import (
-    BOB,
     INCLUDE_INVERSE,
-    P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    Connection,
-    ConnectionPoint,
-    DomainSpace,
-    Equipment,
-    ExternalReference,
     LocationReference,
     Node,
-    Property,
     PropertyReference,
     QuantifiableProperty,
     _Sensor,
     logging,
 )
-from ..multimethods import multimethod
 
 # logging
 _log = logging.getLogger(__name__)

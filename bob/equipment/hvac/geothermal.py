@@ -1,25 +1,12 @@
-from typing import Any, Dict
+from typing import Dict
 
 from rdflib import URIRef
 
-from ...connections.air import (
-    AirBidirectionalConnectionPoint,
-    AirInletConnectionPoint,
-    AirOutletConnectionPoint,
-)
-from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    ElectricalOutletConnectionPoint,
-)
 from ...connections.liquid import (
-    ChilledWaterInletConnectionPoint,
-    ChilledWaterOutletConnectionPoint,
-    HotWaterInletConnectionPoint,
-    HotWaterOutletConnectionPoint,
     WaterInletConnectionPoint,
     WaterOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment, enum
+from ...core import BOB, P223, Equipment
 from ...template import configure_relations, template_update
 
 _namespace = BOB

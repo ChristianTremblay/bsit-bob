@@ -1,10 +1,7 @@
-from rdflib import Graph, URIRef
-
 from .core import (
     G36,
     P223,
     QUANTITYKIND,
-    QUDT,
     S223,
     UNIT,
     Constituent,
