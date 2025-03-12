@@ -1,8 +1,12 @@
 import copy
 import re
 import typing as t
+from pathlib import Path
 
-from bob.core import Connection, Equipment, System
+import yaml
+
+from .core import Connection, Equipment, System
+from .introspection import get_class_from_name
 
 
 def template_update(base: t.Dict = {}, config: t.Dict = None, bases: t.List = None):
@@ -146,3 +150,53 @@ class SystemFromTemplate(System):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
+
+
+def config_from_yaml(yaml_file: t.Union[str, Path] = None):
+    if yaml_file is None:
+        raise FileNotFoundError("No YAML file provided")
+    else:
+        yaml_file = Path(yaml_file)
+    with open(yaml_file, "r") as file:
+        yaml_content = yaml.safe_load(file)
+    _text_values = ["label", "comment"]
+    _dict = {}
+    name = yaml_content["name"]
+    params = yaml_content["params"]
+    label = params.get("label", name)
+    comment = params.get("comment", "")
+    sensors = yaml_content.get("sensors", None)
+    equipment = yaml_content.get("equipment", None)
+
+    _dict["params"] = {"label": label, "comment": comment}
+
+    def define_entities(entities: dict = None, entities_category: str = None):
+        if entities is None:
+            return
+        _dict[entities_category] = {}
+        for entity_name, entity_params in entities.items():
+            # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
+            entity_label = entity_params.pop("label", entity_name)
+            # print(entity_label, entity_params, f"Looking for {entity_params['class']}")
+            entity_class = get_class_from_name(entity_params.pop("class"))
+            # print('Found class', entity_class)
+            # entity_comment = entity_params.pop('comment', '')
+            _dict[entities_category][(entity_label, entity_class)] = {}
+            for _name, _class_or_value in entity_params.items():
+                _value = (
+                    _class_or_value
+                    if _name in _text_values
+                    else get_class_from_name(_class_or_value)
+                )
+                _dict[entities_category][(entity_label, entity_class)][_name] = _value
+
+    # print('Defining entities')
+    define_entities(equipment, "equipment")
+    define_entities(sensors, "sensors")
+    _dict["relations"] = []
+    _relations = yaml_content.get("relations", [])
+    for _relation in _relations:
+        _relation = _relation.replace("(", "").replace(")", "").strip()
+        _a, _b, _c = _relation.split(",")
+        _dict["relations"].append((_a.strip(), _b.strip(), _c.strip()))
+    return _dict
