@@ -1,15 +1,10 @@
 from typing import Dict
 
-from rdflib import URIRef
 
 from bob.properties.electricity import ElectricPower
 
-from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    Electricity_120VLN_1Ph_60HzInletConnectionPoint,
-)
 from ...connections.light import LightVisibleOutletConnectionPoint
-from ...core import BOB, P223, S223, Equipment
+from ...core import BOB, S223, Equipment
 from ...properties.light import RelativeLuminousFlux
 from ...properties.ratio import PercentCommand
 from ...properties.states import OnOffCommand, OnOffStatus

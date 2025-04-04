@@ -1,10 +1,9 @@
-from typing import Any, Dict
+from typing import Dict
 
-from rdflib import URIRef
 
-from bob.properties import Percent, PercentCommand
+from bob.properties import PercentCommand
 from bob.properties.electricity import Amps, ElectricPowerkW
-from bob.properties.states import OnOffCommand, OnOffStatus
+from bob.properties.states import OnOffCommand
 
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
@@ -12,8 +11,6 @@ from ...connections.air import (
     AirOutletConnectionPoint,
 )
 from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    ElectricalOutletConnectionPoint,
     Electricity_240VLL_1Ph_60HzInletConnectionPoint,
     Electricity_600VLL_3Ph_60HzInletConnectionPoint,
 )
@@ -31,12 +28,10 @@ from ...connections.refrigerant import (
     RefrigerantInletConnectionPoint,
     RefrigerantOutletConnectionPoint,
 )
-from ...core import BOB, P223, S223, Equipment, PropertyReference
+from ...core import BOB, S223, Equipment, PropertyReference
 from ...enum import (  # , R134a, R404a, R407c, R448a, R449a, R452a, R454b, R507a
-    R22,
-    R32,
-    R410a,
     Refrigerant,
+    Role,
 )
 from ...properties.force import Pressure
 from ...properties.temperature import Temperature
@@ -66,6 +61,7 @@ class Coil(Equipment):
         config["properties"] = config.get("properties", coil_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+        self.airOutlet.paired_to(self.airInlet)
 
 
 class WaterCoil(Coil):
@@ -77,6 +73,20 @@ class WaterCoil(Coil):
         config["properties"] = config.get("properties", coil_template["properties"])
         kwargs = {**config.get("params", {}), **kwargs}
         super().__init__(config, **kwargs)
+        self.waterOutlet.paired_to(self.waterInlet)
+
+
+class DXCoolingCoil(Coil):
+    _class_iri = S223.CoolingCoil
+    refrigerantInlet: RefrigerantInletConnectionPoint
+    refrigerantOutlet: RefrigerantOutletConnectionPoint
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        super().__init__(_config, **kwargs)
+        self += Role.Cooling
+        self.refrigerantOutlet.paired_to(self.refrigerantInlet)
 
 
 class ChilledWaterCoil(Coil):
@@ -88,6 +98,8 @@ class ChilledWaterCoil(Coil):
         _config = template_update({}, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Cooling
+        self.chilledWaterOutlet.paired_to(self.chilledWaterInlet)
 
 
 class HotWaterCoil(Coil):
@@ -99,6 +111,8 @@ class HotWaterCoil(Coil):
         _config = template_update({}, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating
+        self.hotWaterOutlet.paired_to(self.hotWaterInlet)
 
 
 class HeatpumpCoil(Coil):
@@ -112,6 +126,9 @@ class HeatpumpCoil(Coil):
         _config = template_update(coil_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating
+        self += Role.Cooling
+        self.gasPortB.paired_to(self.gasPortA)
 
     def set_gas_type(self, gas: Refrigerant):
         self.set_medium(["gasPortA", "gasPortB"], gas)
@@ -129,13 +146,20 @@ electricalheating_template = {
 }
 
 
-class ElectricalHeatingCoil(Coil):
+class ElectricalHeatingCoil(Equipment):
     _class_iri = S223.ElectricResistanceElement
+    airInlet: AirInletConnectionPoint
+    airOutlet: AirOutletConnectionPoint
+    # Those could come from a valve, SCR, Triac, etc...
+    modulation: PropertyReference
+    onOffCommand: PropertyReference
 
     def __init__(self, config: Dict = None, **kwargs):
         _config = template_update(electricalheating_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating
+        self.airOutlet.paired_to(self.airInlet)
 
 
 # Electrical Coil
@@ -157,6 +181,7 @@ class ElectricalRadiantHeatingCoil(Equipment):
         _config = template_update(electricalradiant_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating
 
 
 # Water heaters
@@ -179,3 +204,4 @@ class ImmersedResistanceHeaterElement(Equipment):
         _config = template_update(element_template, config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         super().__init__(_config, **kwargs)
+        self += Role.Heating

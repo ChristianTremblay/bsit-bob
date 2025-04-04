@@ -1,25 +1,15 @@
 from typing import Any
 
-from rdflib import URIRef
 
-from bob import core
-from bob.connections.controlsignal import OnOffSignalOutletConnectionPoint
 from bob.producer.causality import Causality
 from bob.properties.ratio import Percent
-from bob.properties.states import DaylightDetected, OnOffStatus
+from bob.properties.states import OnOffStatus
 
 from ..core import (
-    BOB,
-    P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    Equipment,
-    ExternalReference,
-    Medium,
     PropertyReference,
 )
-from ..enum import Light, Occupant
+from ..enum import Light
 from ..properties import Count, Motion
 from .sensor import Sensor, split_kwargs
 

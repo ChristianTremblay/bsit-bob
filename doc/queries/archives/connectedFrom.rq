@@ -1,0 +1,37 @@
+#PREFIX s223: <http://data.ashrae.org/standard223#>
+#PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX ns1: <http://qudt.org/schema/qudt/>
+PREFIX ns2: <http://data.ashrae.org/bacnet/2020#>
+PREFIX ns3: <http://data.ashrae.org/standard223#>
+PREFIX ns4: <http://data.ashrae.org/standard223/si-builder/prototype#>
+PREFIX ns5: <http://data.ashrae.org/standard223/si-builder#>
+PREFIX ns6: <http://www.linkedmodel.org/schema/vaem#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?vavLabel
+WHERE {
+    BIND(<urn:src:hvac_spaces/00003> AS ?space1)
+    ?space1 ns3:connectedFrom ?eq1 .
+    ?eq1 ns3:connectedFrom+ ?eq .
+    ?eq ns3:connectedThrough ?c . 
+    ?eq1 ns3:connectedThrough ?c1 .
+    FILTER(?c = ?c1) 
+    ?c ns3:hasMedium ns3:Fluid-Air .
+    
+    ?vav a ?vavType .
+    ?vavType rdfs:subClassOf ns3:TerminalUnit .
+    ?vav ns3:hasMember ?eq .
+    OPTIONAL { ?vav rdfs:label ?vavLabel} .
+}
+
+
+

@@ -1,18 +1,15 @@
 import logging
 import re
-from typing import Any
 
-from rdflib import XSD, Literal, URIRef
+from rdflib import XSD, Literal
 
-from ..core import S223, Equipment, ExternalReference, Node, bind_namespace
-from ..equipment.control.controller import Controller
-from . import NetworkProfile
+from ..core import S223, ExternalReference, bind_namespace, prefixes
 
 # logging
 _log = logging.getLogger(__name__)
 
 # namespace
-BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
+BACNET = bind_namespace("bacnet", prefixes["bacnet"])
 
 url_pattern = re.compile(
     "^bacnet:[/][/]([0-9]+)?[/]([A-Za-z0-9-]+),([1-9][0-9]*)(?:[/]([A-Za-z0-9-]+)(?:[/]([1-9][0-9]*))?)?$"

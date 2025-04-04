@@ -1,0 +1,19 @@
+PREFIX s223: <http://data.ashrae.org/standard223#>
+CONSTRUCT {
+    ?from s223:cnx ?to . 
+    ?flabel rdfs:label ?flabel .
+    ?to rdfs:label ?tlabel .
+    ?from a ?from_type .
+    ?to a ?to_type .
+    ?to rdfs:comment ?tcomment .
+    ?from rdfs:comment ?fcomment .
+    }
+WHERE {
+    ?from s223:connectsTo ?to .
+    optional { ?from rdfs:label ?flabel } .
+    ?from a ?from_type .
+    ?to a ?to_type .
+    optional { ?to rdfs:label ?tlabel } .
+    optional { ?to rdfs:comment ?tcomment } .
+    optional { ?from rdfs:comment ?fcomment } .
+    }

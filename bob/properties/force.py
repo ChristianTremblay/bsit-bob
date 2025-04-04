@@ -1,6 +1,13 @@
-from rdflib import URIRef
+from rdflib import XSD, Literal
 
-from ..core import BOB, P223, QUANTITYKIND, UNIT, Medium, QuantifiableObservableProperty
+from ..core import (
+    BOB,
+    QUANTITYKIND,
+    QUDT,
+    UNIT,
+    Medium,
+    QuantifiableObservableProperty,
+)
 
 _namespace = BOB
 
@@ -24,3 +31,9 @@ class Pressure(QuantifiableObservableProperty):
 class DifferentialStaticPressure(QuantifiableObservableProperty):
     hasQuantityKind = QUANTITYKIND.ForcePerArea
     ofMedium: Medium  # set from the sensor
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._data_graph.add(
+            (self._node_iri, QUDT.isDeltaQuantity, Literal(True, datatype=XSD.boolean))
+        )

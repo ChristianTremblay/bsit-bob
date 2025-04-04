@@ -3,15 +3,6 @@ from pathlib import Path
 import pytest
 from header import ttl_test_header
 
-from bob.bacnet import (
-    AnalogInputObject,
-    AnalogValueObject,
-    BinaryInputObject,
-    BinaryOutputObject,
-    Device,
-    DeviceObject,
-    ScheduleObject,
-)
 from bob.core import UNIT, Property, bind_model_namespace, dump
 from bob.externalreference.bacnet import BACnetExternalReference
 from bob.properties.temperature import Temperature

@@ -1,8 +1,7 @@
-from rdflib import XSD, Literal, URIRef
+from rdflib import Literal, URIRef
 
 from ..core import (
     BOB,
-    P223,
     S223,
     EnumerationKind,
     QuantifiableProperty,

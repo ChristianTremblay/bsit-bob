@@ -10,10 +10,6 @@ from bob.bacnet import (
     Device,
     DeviceObject,
     AnalogInputObject,
-    AnalogValueObject,
-    BinaryInputObject,
-    BinaryOutputObject,
-    ScheduleObject,
 )
 
 model_name = Path(__file__).stem

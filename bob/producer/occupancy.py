@@ -1,4 +1,4 @@
-from ..core import BOB, P223, S223, PropertyReference
+from ..core import BOB, P223
 from ..producer import Function, FunctionInput, FunctionOutput
 
 _namespace = BOB

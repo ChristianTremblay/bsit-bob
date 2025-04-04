@@ -12,17 +12,9 @@ from ...connections.network import (
 )
 from ...core import (
     BOB,
-    P223,
-    QUANTITYKIND,
     S223,
-    UNIT,
-    ConnectionPoint,
     Equipment,
-    PropertyReference,
-    QuantifiableObservableProperty,
 )
-from ...properties import HP, RPM, Amps, ElectricPowerkW, PowerFactor, Pressure
-from ...properties.states import OnOffCommand, OnOffStatus
 from ...template import template_update
 
 # logging

@@ -1,0 +1,34 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+CONSTRUCT {
+    ?eq1 s223:connectedTo ?eq2 .
+    ?eq1 rdfs:label ?eq1Label .
+    ?eq2 rdfs:label ?eq2Label .
+    ?eq1 rdfs:comment ?eq1Comment .
+    ?eq2 rdfs:comment ?eq2Comment .
+    ?eq1 a ?eq1Type .
+    ?eq2 a ?eq2Type .
+    ?system rdfs:label ?systemLabel .
+    ?system rdfs:comment ?systemComment .
+    ?system a ?systemType .
+}
+WHERE {
+    ?eq1 a s223:Equipment .
+    ?eq2 a s223:Equipment .
+    ?eq1 (s223:hasConnectionPoint/s223:ConnectionPoint/s223:cnx/s223:Connection/s223:connectsFrom)+ ?eq2 .
+    #?system a s223:System .
+    #?system s223:hasMember ?eq2 .
+    
+    OPTIONAL { ?eq1 rdfs:label ?eq1Label } .
+    OPTIONAL { ?eq2 rdfs:label ?eq2Label } .
+    OPTIONAL { ?eq1 rdfs:comment ?eq1Comment } .
+    OPTIONAL { ?eq2 rdfs:comment ?eq2Comment } .
+    OPTIONAL { ?eq1 a ?eq1Type } .
+    OPTIONAL { ?eq2 a ?eq2Type } .
+    OPTIONAL { ?system rdfs:label ?systemLabel } .
+    OPTIONAL { ?system rdfs:comment ?systemComment } .
+    OPTIONAL { ?system a ?systemType } .
+}

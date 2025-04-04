@@ -8,9 +8,8 @@ optionally remove OWL import statements, and save the results as a Turtle file.
 """
 
 import argparse
-import sys
 
-from rdflib import OWL, RDF, RDFS, Graph, URIRef
+from rdflib import OWL, RDF, RDFS, Graph
 
 try:
     import owlrl

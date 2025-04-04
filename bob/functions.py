@@ -9,23 +9,16 @@ import logging
 from datetime import datetime
 from typing import Any, AnyStr, Dict
 
-from rdflib import RDF, Literal, URIRef  # type: ignore
+from rdflib import URIRef  # type: ignore
 
 from .core import (
-    BOB,
     G36,
-    INCLUDE_INVERSE,
-    P223,
     S223,
-    Container,
-    LocationReference,
     Node,
     Property,
     PropertyReference,
     data_graph,
 )
-from .equipment.control import AnalogInput, AnalogOutput, BinaryInput, BinaryOutput
-from .multimethods import multimethod
 from .template import template_update
 
 # logging

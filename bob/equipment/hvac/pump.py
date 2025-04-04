@@ -17,7 +17,6 @@ from ...properties import (
     RPM,
     Amps,
     ElectricPowerkW,
-    OnOffStatus,
     PowerFactor,
     Pressure,
 )
@@ -44,8 +43,8 @@ pump_template = {
 
 class Pump(Equipment):
     _class_iri = S223.Pump
-    waterInlet: WaterInletConnectionPoint
-    waterOutlet: WaterOutletConnectionPoint
+    fluidInlet: WaterInletConnectionPoint
+    fluidOutlet: WaterOutletConnectionPoint
     onOffStatus: PropertyReference
     onOffCommand: PropertyReference
 
@@ -55,6 +54,7 @@ class Pump(Equipment):
         _log.debug(f"Fan.__init__ {_config} {kwargs}")
 
         super().__init__(_config, **kwargs)
+        self.fluidOutlet.paired_to(self.fluidInlet)
 
 
 starter_addon_template = {

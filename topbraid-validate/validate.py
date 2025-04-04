@@ -3,11 +3,9 @@ Performs validation of the model/schema and data files in the 223P repository
 """
 
 import argparse
-import glob
 import logging
 import os
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 from typing import Optional

@@ -1,26 +1,14 @@
 import logging
-from typing import Any, Dict
+from typing import Dict
 
 from rdflib import URIRef
 
 from ...connections.air import (
     AirBidirectionalConnectionPoint,
-    AirConnection,
     AirInletConnectionPoint,
     AirOutletConnectionPoint,
-    CompressedAirInletConnectionPoint,
 )
-from ...connections.electricity import (
-    ElectricalInletConnectionPoint,
-    ElectricalOutletConnectionPoint,
-)
-from ...connections.liquid import (
-    ChilledWaterInletConnectionPoint,
-    ChilledWaterOutletConnectionPoint,
-    HotWaterInletConnectionPoint,
-    HotWaterOutletConnectionPoint,
-)
-from ...core import BOB, P223, S223, Equipment
+from ...core import BOB, S223, Equipment
 from ...template import configure_relations, template_update  # logging
 
 _namespace = BOB
@@ -55,8 +43,8 @@ class AirHeatExchanger(Equipment):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        self.supplyAirInlet.paired_to(self.supplyAirOutlet)
-        self.exhaustAirInlet.paired_to(self.exhaustAirOutlet)
+        self.supplyAirOutlet.paired_to(self.supplyAirInlet)
+        self.exhaustAirOutlet.paired_to(self.exhaustAirInlet)
 
 
 class Accumulator(Equipment):

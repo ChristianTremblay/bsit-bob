@@ -7,28 +7,26 @@ beyond the scope of this project.
 from __future__ import annotations
 
 import logging
-import re
-from typing import Any, List
+from typing import List
 
 from rdflib import XSD, Literal, URIRef
 
 from .core import (
     INCLUDE_INVERSE,
     ConnectionPoint,
-    Equipment,
-    ExternalReference,
     Node,
     bind_namespace,
+    prefixes,
 )
 from .equipment.control.controller import Controller
 from .externalreference.bacnet import BACnetExternalReference
-from .multimethods import multimethod, new_class
+from .multimethods import multimethod
 
 # logging
 _log = logging.getLogger(__name__)
 
 # namespace
-BACNET = bind_namespace("bacnet", "http://data.ashrae.org/bacnet/2020#")
+BACNET = bind_namespace("bacnet", prefixes["bacnet"])
 _namespace = BACNET
 
 
@@ -166,10 +164,12 @@ class DeviceObject(Object):
         "systemStatus": BACNET["system-status"],
         "vendorName": BACNET["vendor-name"],
         "vendorIdentifier": BACNET["vendor-identifier"],
+        "modelName": BACNET["model-name"],
     }
     systemStatus: URIRef  # one of bacnet:DeviceStatus
     vendorName: Literal
     vendorIdentifier: XSD.nonNegativeInteger
+    modelName: Literal
 
 
 class AnalogInputObject(Object):

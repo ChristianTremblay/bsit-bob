@@ -7,8 +7,6 @@ from bob.connections.air import AirInletConnectionPoint, AirOutletConnectionPoin
 from bob.core import (
     BoundaryConnectionPoint,
     Equipment,
-    InletConnectionPoint,
-    OutletConnectionPoint,
     System,
     bind_model_namespace,
     dump,

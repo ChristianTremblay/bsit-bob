@@ -1,14 +1,9 @@
-from rdflib import URIRef
-from typing import Union
 from ..core import (
-    BOB,
     P223,
     QUANTITYKIND,
-    S223,
     UNIT,
     Medium,
     Substance,
-    Constituent,
     QuantifiableObservableProperty,
 )
 

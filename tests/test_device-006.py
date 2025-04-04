@@ -10,15 +10,7 @@ from bob.connections.electricity import (
 from bob.core import bind_model_namespace, dump
 from bob.equipment.electricity.vfd import VFD
 from bob.properties import (
-    HP,
     RPM,
-    Amps,
-    ElectricPowerkW,
-    OnOffCommand,
-    OnOffStatus,
-    Percent,
-    PercentCommand,
-    Temperature,
 )
 from bob.properties.states import NormalAlarmStatus
 

@@ -1,0 +1,30 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+
+SELECT ?otherCP ?otherCPLabel
+WHERE {
+    ?hvacspace1 rdfs:label "HVACSpace1" .
+    ?hvacspace1 a s223:DomainSpace .
+    ?hvacspace1 s223:hasDomain s223:Domain-HVAC .
+    ?hvacspace1 s223:cnx ?spaceInletCP .
+    ?spaceInletCP a s223:InletConnectionPoint .
+    ?spaceInletCP s223:hasMedium s223:Fluid-Air .
+    ?spaceInletCP s223:cnx+ ?otherCP .
+    ?otherCP s223:hasMedium s223:Fluid-Air .
+    #?spaceInletCP s223:cnx ?spaceInletC .
+    #?spaceInletC s223:cnx ?fromthis .
+    #?fromthis a s223:OutletConnectionPoint .
+    #?fromthis s223:cnx ?firstEquipment .
+    OPTIONAL { ?spaceInletCP rdfs:label ?spaceInletCPLabel } .
+    OPTIONAL { ?otherCP rdfs:label ?otherCPLabel } .
+    #OPTIONAL { ?firstEquipment rdfs:comment ?firstEquipmentComment } .
+    OPTIONAL { ?hvacspace1 rdfs:comment ?hvacspace1Comment } .
+    #OPTIONAL { ?firstEquipment a ?firstEquipmentType } .
+
+}
+
+# Pattern : (s223:connectsFrom/s223:connectsTo)*

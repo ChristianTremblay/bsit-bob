@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 from header import ttl_test_header
 
-from bob.core import UNIT, Medium, bind_model_namespace, dump
+from bob.core import UNIT, bind_model_namespace, dump
 from bob.enum import Air
 from bob.sensor.humidity import AirHumiditySensor
 from bob.sensor.temperature import AirTemperatureSensor, TemperatureSensor
@@ -24,7 +24,7 @@ def test_create_sensor(bob_fixture):
         label="ats1",
         comment="Supply Air Temperature Sensor",
         hasUnit=UNIT.DEG_C,
-        ofMedium=Air
+        ofMedium=Air,
         # hasExternalReference=["bacnet://570005/analog-input,10084/present-value"],
     )
 

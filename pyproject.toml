@@ -1,29 +1,37 @@
 [project]
 name = "bob"
-version = "0.99"
+version = "0.99.6"
 authors = [
     {name="Joel Bender", email="jjb5@cornell.edu"},
     {name="Christian Tremblay", email="christian.tremblay@servisys.com"},
 ]
+requires-python = ">=3.11"
 description = "Bob the SI-WG Builder. Tool for building RDF graphs of HVAC systems"
 readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
     "rdflib",
+    "python-dotenv",
+    "click>=8.1.8",
+    "flake8>=7.1.2",
+    "isort>=6.0.1",
+    "ontoenv>=0.3.9",
+    "pyshacl>=0.30.0",
+    "pytest-cov>=6.0.0",
+    "pytest>=4.6.11",
+    "pyvis>=0.3.2",
+    "pyyaml>=5.4.1",
 ]
 
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
 [tool.setuptools.packages.find]
-include = ["bob*", "rdf2html"]
+include = ["bob*"]
 namespaces = false
 
-[project.optional-dependencies]
-test = ["pytest", "pyshacl", "ontoenv", "pyvis", "click"]
-lint = ["black", "flake8", "isort"]
-cov = ["pytest < 5.0.0", "pytest-cov[all]"]
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "session"
 
-[project.scripts]
-rdf2html = "rdf2html.rdf2html:process"
+[tool.uv]
+dev-dependencies = [
+    "black>=25.1.0",
+    "flake8>=7.1.2",
+]

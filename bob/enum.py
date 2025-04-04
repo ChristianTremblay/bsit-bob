@@ -1,10 +1,7 @@
-from rdflib import Graph, URIRef
-
 from .core import (
     G36,
     P223,
     QUANTITYKIND,
-    QUDT,
     S223,
     UNIT,
     Constituent,
@@ -270,7 +267,6 @@ Domain.Refrigeration = Refrigeration = Domain("Refrigeration")
 # ===================
 # ===================
 Role.Condenser = Condenser = Role("Condenser")
-Role.Controller = Controller = Role("Controller")
 Role.Cooling = Cooling = Role("Cooling")
 Role.Discharge = Discharge = Role("Discharge")
 Role.Economizer = Economizer = Role("Economizer")
@@ -303,8 +299,11 @@ BinarySignalTypeEnum = EnumerationKind("BinarySignalType", _alt_namespace=P223)
 Binary = EnumerationKind("Binary")
 Binary.false = Binary("False")
 Binary.true = Binary("True")
-Binary.Unknown = Binary("Unknown")
-
+#
+OnOff = Binary("OnOff")
+OnOff.On = OnOff("On")
+OnOff.Off = OnOff("Off")
+OnOff.Unknown = OnOff("Unknown")
 
 G36AlarmLevel = EnumerationKind("G36AlarmLevels", _alt_namespace=G36)
 HandOffAutoEnum = EnumerationKind("HandOffAuto", _alt_namespace=P223)
@@ -316,7 +315,6 @@ NiagaraStatusEnum = EnumerationKind("NiagaraStatus", _alt_namespace=P223)  # SEE
 NormalAlarmEnum = EnumerationKind("NormalAlarm", _alt_namespace=P223)
 NormalFaultEnum = EnumerationKind("NormalFault", _alt_namespace=P223)
 Occupancy = EnumerationKind("Occupancy")
-OnOff = EnumerationKind("OnOff")
 Phase = EnumerationKind("Phase")
 Position = EnumerationKind("Position")
 
@@ -444,12 +442,6 @@ Occupancy.Unoccupied = Occupancy("Unoccupied")
 #
 Motion.true = Motion("True")
 Motion.false = Motion("False")
-
-
-#
-OnOff.On = OnOff("On")
-OnOff.Off = OnOff("Off")
-OnOff.Unknown = OnOff("Unknown")
 
 #
 Phase.Gas = Phase("Gas")
@@ -629,3 +621,32 @@ ElectricalVoltagePhases.BNLineNeutralVoltage = ElectricalVoltagePhases(
 ElectricalVoltagePhases.CNLineNeutralVoltage = ElectricalVoltagePhases(
     "CNLineNeutralVoltage"
 )
+
+
+## System Types
+# SystemType.AirHandlingUnit = AirHandlingUnit = SystemType("AirHandlingUnit")
+# SystemType.AirHeatExchanger = AirHeatExchanger = SystemType("AirHeatExchanger")##
+
+# SystemType.Chiller = Chiller = SystemType("Chiller")
+# SystemType.CoolingTower = CoolingTower = SystemType("CoolingTower")
+# SystemType.FumeHood = FumeHood = SystemType("FumeHood")
+# SystemType.Furnace = Furnace = SystemType("Furnace")
+# SystemType.HeatExchanger = HeatExchanger = SystemType("HeatExchanger")
+
+# SystemType.HeatPump = HeatPump = SystemType("HeatPump")
+# HeatPump.AirToAirHeatPump = AirToAirHeatPump = HeatPump("AirToAirHeatPump")
+# HeatPump.GroundToAirHeatPump = GroundToAirHeatPump = HeatPump("GroundToAirHeatPump")
+# HeatPump.WaterToAirHeatPump = WaterToAirHeatPump = HeatPump("WaterToAirHeatPump")
+# HeatPump.WaterToWaterHeatPump = WaterToWaterHeatPump = HeatPump("WaterToWaterHeatPump")
+
+# SystemType.TerminalUnit = TerminalUnit = SystemType("TerminalUnit")
+# TerminalUnit.FanCoilUnit = FanCoilUnit = TerminalUnit("FanCoilUnit")
+# TerminalUnit.FanPoweredTerminal = FanPoweredTerminal = TerminalUnit(
+#    "FanPoweredTerminal"
+# )
+# TerminalUnit.SingleDuctTerminal = SingleDuctTerminal = TerminalUnit(
+#    "SingleDuctTerminal"
+# )
+# TerminalUnit.DualDuctTerminal = DualDuctTerminal = TerminalUnit("DualDuctTerminal")
+
+# SystemType.WaterHeater = WaterHeater = SystemType("WaterHeater")

@@ -1,0 +1,53 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX s223: <http://data.ashrae.org/standard223#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+
+CONSTRUCT {
+    ?sys s223:hasMember ?node .
+    ?node s223:cnx ?cp .
+    ?cp s223:cnx ?c .
+    ?node rdfs:label ?nodeLabel .
+    ?cp rdfs:label ?cpLabel .
+    ?c rdfs:label ?cLabel .
+    ?sys rdfs:label ?sysLabel .
+    ?node rdfs:comment ?nodeComment .
+    ?cp rdfs:comment ?cpComment .
+    ?c rdfs:comment ?cComment .
+    ?sys rdfs:comment ?sysComment .
+    ?node a ?nodeType .
+    ?cp a ?cpType .
+    ?c a ?cType .
+    ?sys a ?sysType .
+}
+WHERE {
+    {
+        ?node a s223:Equipment .
+    } UNION {
+        ?node a s223:DomainSpace .
+        ?node s223:hasDomain s223:Domain-HVAC .
+    }
+    ?node s223:hasConnectionPoint ?cp .
+    ?cp s223:cnx ?c .
+    ?c s223:hasMedium s223:Fluid-Air .
+    ?sys a s223:System .
+    ?sys s223:hasMember ?node .
+    ?hvacspace1 rdfs:label "HVACSpace1" .
+    ?hvacspace1 a s223:DomainSpace .
+    ?hvacspace1 s223:hasDomain s223:Domain-HVAC .
+    
+    OPTIONAL { ?node rdfs:label ?nodeLabel } .
+    OPTIONAL { ?cp rdfs:label ?cpLabel } .
+    OPTIONAL { ?c rdfs:label ?cLabel } .
+    OPTIONAL { ?sys rdfs:label ?sysLabel } .
+    OPTIONAL { ?node rdfs:comment ?nodeComment } .
+    OPTIONAL { ?cp rdfs:comment ?cpComment } .
+    OPTIONAL { ?c rdfs:comment ?cComment } .
+    OPTIONAL { ?sys rdfs:comment ?sysComment } .
+    OPTIONAL { ?node a ?nodeType } .
+    OPTIONAL { ?cp a ?cpType } .
+    OPTIONAL { ?c a ?cType } .
+    OPTIONAL { ?sys a ?sysType } .
+}

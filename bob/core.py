@@ -88,6 +88,28 @@ _log = logging.getLogger(__name__)
 if _dotenv_import_error:
     _log.warning("install python-dotenv to use your .env file")
 
+
+prefixes = {
+    "s223": "http://data.ashrae.org/standard223#",
+    "p223": "http://data.ashrae.org/proposal-to-standard223#",
+    "scratch": "http://data.ashrae.org/standard223/si-builder/prototype#",
+    "bob": "http://data.ashrae.org/standard223/si-builder#",
+    "ex": "http://example/",
+    "g36": "http://data.ashrae.org/standard223/1.0/extension/g36#",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "qudtqk": "http://qudt.org/vocab/quantitykind/",
+    "unit": "http://qudt.org/vocab/unit/",
+    "brick": "https://brickschema.org/schema/Brick#",
+    "bacnet": "http://data.ashrae.org/bacnet/2020#",
+    "rec": "https://w3id.org/rec/core/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "ref": "https://brickschema.org/schema/Brick/ref#",
+}
+
+
 # options
 MANDITORY_LABEL = os.getenv("MANDITORY_LABEL", "True") == "True"
 
@@ -195,37 +217,35 @@ def bind_namespace(prefix: str, uri: str) -> Namespace:
 # or in the _namespace special global for the module of the class, or the
 # parent module, or it is inherited from a superclass that is defined in the
 # same module
-S223 = bind_namespace("s223", "http://data.ashrae.org/standard223#")
+S223 = bind_namespace("s223", prefixes["s223"])
 
 # This namespace is added so in the development of Bob, when new cases occurs
 # we can clearly establish that a new class is not yet part of the standard
-P223 = bind_namespace("p223", "http://data.ashrae.org/proposal-to-standard223#")
+P223 = bind_namespace("p223", prefixes["p223"])
 
 # This namespace is added so si-builder/scratch (aka Scratch), can provide its own schema
 # of classes which are opiniated examples assemblage of S223 classes
-SCRATCH = bind_namespace(
-    "scratch", "http://data.ashrae.org/standard223/si-builder/prototype#"
-)
+SCRATCH = bind_namespace("scratch", prefixes["scratch"])
 
 # This namespace is added so si-builder (aka Bob), can provide its own schema
 # of classes which are assemblage of S223 classes
-BOB = bind_namespace("bob", "http://data.ashrae.org/standard223/si-builder#")
+BOB = bind_namespace("bob", prefixes["bob"])
 
 # This namespace is used when the module does not have a namespace provided
 # which makes short examples easier to create
-EX = bind_namespace("ex", os.getenv("BOB_EX", "http://example/"))
+EX = bind_namespace("ex", os.getenv("BOB_EX", prefixes["ex"]))
 
 # This namespace is used for all related logics in Guideline 36
-G36 = bind_namespace("g36", "http://data.ashrae.org/standard223/1.0/extension/g36#")
+G36 = bind_namespace("g36", prefixes["g36"])
 
 # everything in this module belongs in the standard
 _namespace = S223
 
 # common namespaces
-QUDT = bind_namespace("qudt", "http://qudt.org/schema/qudt/")
-QUANTITYKIND = bind_namespace("qudtqk", "http://qudt.org/vocab/quantitykind/")
-UNIT = bind_namespace("unit", "http://qudt.org/vocab/unit/")
-BRICK = bind_namespace("brick", "https://brickschema.org/schema/Brick#")
+QUDT = bind_namespace("qudt", prefixes["qudt"])
+QUANTITYKIND = bind_namespace("qudtqk", prefixes["qudtqk"])
+UNIT = bind_namespace("unit", prefixes["unit"])
+BRICK = bind_namespace("brick", prefixes["brick"])
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file
@@ -902,8 +922,6 @@ class Node(metaclass=NodeMetaclass):
 
         # link the two together
         self._data_graph.add((self._node_iri, S223.hasProperty, prop._node_iri))
-        if INCLUDE_INVERSE:
-            self._data_graph.add((prop._node_iri, S223.isPropertyOf, self._node_iri))
 
         return prop
 
@@ -1095,14 +1113,6 @@ class Property(Node):
         self._data_graph.add(
             (self._node_iri, S223.hasInternalReference, internal_reference._node_iri)
         )
-        if INCLUDE_INVERSE:
-            self._data_graph.add(
-                (
-                    internal_reference._node_iri,
-                    S223.isInternalReferenceOf,
-                    self._node_iri,
-                )
-            )
         self.hasInternalReference.add(internal_reference)
 
 
@@ -1597,6 +1607,7 @@ class System(Container):
         #     kwargs = {**config["params"], **kwargs}
 
         super().__init__(*args, **kwargs)
+        self.hasRole = set()
 
         if config:
             for group_name, group_items in config.items():
@@ -1650,14 +1661,6 @@ class System(Container):
                 connection_point._node_iri,
             )
         )
-        if INCLUDE_INVERSE:
-            self._data_graph.add(
-                (
-                    connection_point._node_iri,
-                    S223.isBoundaryConnectionPointOf,
-                    self._node_iri,
-                )
-            )
 
         return connection_point
 
@@ -1668,8 +1671,6 @@ def contains_mm(system: System, equipment: Equipment) -> None:
     _log.info(f"system {system} hasMember Equipment {equipment}")
 
     system._data_graph.add((system._node_iri, S223.hasMember, equipment._node_iri))
-    if INCLUDE_INVERSE:
-        system._data_graph.add((equipment._node_iri, S223.isMemberOf, system._node_iri))
 
 
 @multimethod
@@ -1678,8 +1679,6 @@ def contains_mm(system: System, subsystem: System) -> None:
     _log.info(f"system {system} hasMember subsystem {subsystem}")
 
     system._data_graph.add((system._node_iri, S223.hasMember, subsystem._node_iri))
-    if INCLUDE_INVERSE:
-        system._data_graph.add((subsystem._node_iri, S223.isMemberOf, system._node_iri))
 
 
 @multimethod
@@ -1693,6 +1692,20 @@ def contains_mm(system: System, thing_list: List[Node]) -> None:
         if not isinstance(thing, (Equipment, System)):
             raise TypeError(f"Equipment or system expected: {thing}")
         contains_mm(system, thing)
+
+
+@multimethod
+def add_mm(system: System, info: EnumerationKind) -> None:
+    if info in Role._children:
+        """
+        Add a role to a system
+        """
+        role = info
+        _log.info(f"add role {role} to {system}")
+        system.hasRole.add(role)
+        system._data_graph.add((system._node_iri, S223.hasRole, role._node_iri))
+        if INCLUDE_INVERSE:
+            role.isRoleOf = system
 
 
 class ConnectionMetaclass(NodeMetaclass):
@@ -1932,8 +1945,15 @@ class ConnectionPoint(Node):
 
         self._data_graph.add((thing._node_iri, S223.hasConnectionPoint, self._node_iri))
         if INCLUDE_CNX:
-            self._data_graph.add((thing._node_iri, S223.cnx, self._node_iri))
-            self._data_graph.add((self._node_iri, S223.cnx, thing._node_iri))
+            if isinstance(self, InletConnectionPoint) or isinstance(
+                self, BidirectionalConnectionPoint
+            ):
+                self._data_graph.add((self._node_iri, S223.cnx, thing._node_iri))
+
+            if isinstance(self, OutletConnectionPoint) or isinstance(
+                self, BidirectionalConnectionPoint
+            ):
+                self._data_graph.add((thing._node_iri, S223.cnx, self._node_iri))
 
         self.isConnectionPointOf = thing
 
@@ -1976,6 +1996,11 @@ class ConnectionPoint(Node):
             self._data_graph.add(
                 (other._node_iri, S223.pairedConnectionPoint, self._node_iri)
             )
+
+    def __ipow__(self, other: Any) -> None:
+        """Use **= to pair the connection point with another connection point."""
+        self.paired_to(other)
+        # return self
 
 
 @multimethod
@@ -2110,12 +2135,18 @@ def connect_mm(connection_point: ConnectionPoint, connection: Connection) -> Non
         (connection._node_iri, S223.connectsAt, connection_point._node_iri)
     )
     if INCLUDE_CNX:
-        connection_point._data_graph.add(
-            (connection._node_iri, S223.cnx, connection_point._node_iri)
-        )
-        connection_point._data_graph.add(
-            (connection_point._node_iri, S223.cnx, connection._node_iri)
-        )
+        if isinstance(connection_point, InletConnectionPoint) or isinstance(
+            connection_point, BidirectionalConnectionPoint
+        ):
+            connection_point._data_graph.add(
+                (connection._node_iri, S223.cnx, connection_point._node_iri)
+            )
+        if isinstance(connection_point, OutletConnectionPoint) or isinstance(
+            connection_point, BidirectionalConnectionPoint
+        ):
+            connection_point._data_graph.add(
+                (connection_point._node_iri, S223.cnx, connection._node_iri)
+            )
 
     connection_point._data_graph.add(
         (
@@ -2182,12 +2213,18 @@ def connect_mm(connection: Connection, connection_point: ConnectionPoint) -> Non
         (connection._node_iri, S223.connectsAt, connection_point._node_iri)
     )
     if INCLUDE_CNX:
-        connection._data_graph.add(
-            (connection._node_iri, S223.cnx, connection_point._node_iri)
-        )
-        connection._data_graph.add(
-            (connection_point._node_iri, S223.cnx, connection._node_iri)
-        )
+        if isinstance(connection_point, InletConnectionPoint) or isinstance(
+            connection_point, BidirectionalConnectionPoint
+        ):
+            connection._data_graph.add(
+                (connection._node_iri, S223.cnx, connection_point._node_iri)
+            )
+        if isinstance(connection_point, OutletConnectionPoint) or isinstance(
+            connection_point, BidirectionalConnectionPoint
+        ):
+            connection._data_graph.add(
+                (connection_point._node_iri, S223.cnx, connection._node_iri)
+            )
 
     connection._data_graph.add(
         (
@@ -2648,7 +2685,7 @@ class BoundaryConnectionPoint:
         return connection_point
 
     def __init__(self) -> None:
-        _log.debug(f"BoundaryConnectionPoint.__init__")
+        _log.debug("BoundaryConnectionPoint.__init__")
         raise RuntimeError("BoundaryConnectionPoint heirarchy are abstract classes")
 
 
@@ -3021,10 +3058,6 @@ def contains_mm(parent_space: PhysicalSpace, child_space: PhysicalSpace) -> None
     parent_space._data_graph.add(
         (parent_space._node_iri, S223.contains, child_space._node_iri)
     )
-    if INCLUDE_INVERSE:
-        parent_space._data_graph.add(
-            (child_space._node_iri, S223.isContainedIn, parent_space._node_iri)
-        )
 
 
 @multimethod
@@ -3035,10 +3068,6 @@ def contains_mm(physical_space: PhysicalSpace, domain_space: DomainSpace) -> Non
     physical_space._data_graph.add(
         (physical_space._node_iri, S223.encloses, domain_space._node_iri)
     )
-    if INCLUDE_INVERSE:
-        physical_space._data_graph.add(
-            (domain_space._node_iri, S223.isEnclosedIn, physical_space._node_iri)
-        )
 
 
 @multimethod
@@ -3552,6 +3581,7 @@ class Equipment(Container, Connectable):
         super().__init__(*args, **kwargs)
 
         self.hasRole = set()
+        self.hasSystemType = set()
         if _role:
             self += _role
 
@@ -3610,15 +3640,17 @@ class Equipment(Container, Connectable):
 
 
 @multimethod
-def add_mm(equipment: Equipment, role: EnumerationKind) -> None:
+def add_mm(equipment: Equipment, info: EnumerationKind) -> None:
     """
     Add a role to an equipment
     """
-    _log.info(f"add role {role} to {equipment}")
-    equipment.hasRole.add(role)
-    equipment._data_graph.add((equipment._node_iri, S223.hasRole, role._node_iri))
-    if INCLUDE_INVERSE:
-        role.isRoleOf = equipment
+    if info in Role._children:
+        role = info
+        _log.info(f"add role {role} to {equipment}")
+        equipment.hasRole.add(role)
+        equipment._data_graph.add((equipment._node_iri, S223.hasRole, role._node_iri))
+        if INCLUDE_INVERSE:
+            role.isRoleOf = equipment
 
 
 @multimethod
@@ -3629,10 +3661,6 @@ def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None
     parent_equipment._data_graph.add(
         (parent_equipment._node_iri, S223.contains, child_equipment._node_iri)
     )
-    if INCLUDE_INVERSE:
-        parent_equipment._data_graph.add(
-            (child_equipment._node_iri, S223.isContainedIn, parent_equipment._node_iri)
-        )
 
 
 @multimethod
@@ -3654,10 +3682,6 @@ def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None:
     parent_equipment._data_graph.add(
         (parent_equipment._node_iri, S223.contains, child_junction._node_iri)
     )
-    if INCLUDE_INVERSE:
-        parent_equipment._data_graph.add(
-            (child_junction._node_iri, S223.isContainedIn, parent_equipment._node_iri)
-        )
 
 
 class _Sensor(Equipment):
@@ -3677,10 +3701,6 @@ def contains_mm(equipment: Equipment, sensor: _Sensor) -> None:
     _log.info(f"equipment {equipment} contains sensor {sensor}")
 
     equipment._data_graph.add((equipment._node_iri, S223.contains, sensor._node_iri))
-    if INCLUDE_INVERSE:
-        equipment._data_graph.add(
-            (sensor._node_iri, S223.isContainedIn, equipment._node_iri)
-        )
 
 
 class _Producer(Container, Node):
@@ -3700,10 +3720,6 @@ def contains_mm(parent_equipment: Equipment, child_producer: _Producer) -> None:
     parent_equipment._data_graph.add(
         (parent_equipment._node_iri, BOB.contains, child_producer._node_iri)
     )
-    if INCLUDE_INVERSE:
-        parent_equipment._data_graph.add(
-            (child_producer._node_iri, BOB.isContainedIn, parent_equipment._node_iri)
-        )
 
 
 class DomainSpace(Connectable):
@@ -3727,10 +3743,6 @@ def contains_mm(zone: Zone, domain_space: DomainSpace) -> None:
     _log.info(f"zone {zone} contains domain space {domain_space}")
 
     zone._data_graph.add((zone._node_iri, S223.hasDomainSpace, domain_space._node_iri))
-    if INCLUDE_INVERSE:
-        zone._data_graph.add(
-            (domain_space._node_iri, S223.isContainedIn, zone._node_iri)
-        )
 
 
 @multimethod

@@ -1,7 +1,6 @@
 from typing import Dict
 
 from bob.enum import Numerical, ElectricalPhaseIdentifier
-from bob.properties import electricity
 from bob.properties.electricity import (
     ElectricApparentEnergy,
     ElectricApparentPower,
@@ -15,7 +14,7 @@ from bob.properties.electricity import (
 )
 from bob.sensor.electricity import CurrentSensor, VoltageSensor
 
-from ...core import BOB, P223, S223, UNIT, Equipment, Node, URIRef
+from ...core import BOB, S223, UNIT, Equipment, Node, URIRef
 from ...template import template_update
 
 _namespace = BOB

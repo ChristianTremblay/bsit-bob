@@ -1,6 +1,6 @@
-from ..core import BOB, P223, S223, PropertyReference
+from ..core import BOB, PropertyReference
 from ..producer import Function
-from ..properties import PercentCommand, Schedule, Temperature
+from ..properties import PercentCommand, Temperature
 
 _namespace = BOB
 

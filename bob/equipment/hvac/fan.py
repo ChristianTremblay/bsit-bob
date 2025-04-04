@@ -42,3 +42,4 @@ class Fan(Equipment):
         _relations = _config.pop("relations", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
+        self.airOutlet.paired_to(self.airInlet)
