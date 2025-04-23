@@ -190,7 +190,7 @@ def test_data_validation(data_file_name: str, schema_file_name: Optional[str] = 
             color = color_map[resultSeverity]
             report_lines.append(f"\x1b[{color}m{resultMessage}\x1b[0m")
             prev = sourceShape
-        report_lines.append(f"    {focusNode}{' ' + str(value) if value else ''}")
+        report_lines.append(f"    {report_graph.qname(focusNode)}{' ' + str(value) if value else ''}")
 
     # save the report as text
     with open(data_file_root + ".report.txt", "w") as report_file:
