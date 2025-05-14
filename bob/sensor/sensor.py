@@ -104,6 +104,7 @@ class Sensor(_Sensor):
         )
         if INCLUDE_INVERSE:
             node.isObservationLocationOf = self
+        self.hasObservationLocation = node
 
     def __mod__(self, other: Node) -> Node:
         """This sensor measurementLocation taken from some other node."""
