@@ -1,0 +1,78 @@
+name: ahu_template
+params: 
+    label: AHU
+    comment: AHU delivering air to 2 VAV boxes
+connections:
+    mixedAir: 
+        class: AirConnection
+        comment: Mix between return air and outdoor air
+    returnExhaust:
+        class: AirConnection
+        comment: Paths for return or exhaust
+    supplyAir:
+        class: AirConnection
+        comment: Supply Air Duct 
+    returnAir:
+        class: AirConnection
+        comment: Return Air Duct extracting air from open office
+sensors:
+    SA-T:
+        class: AirTemperatureSensor
+        comment: Supply Air Temperature Sensor
+        hasUnit: UNIT.DEG_C
+equipment: 
+    RF:
+        class: scratch|Fan
+        comment: Return Air Fan
+        electricalInlet: Electricity_600VLL_3Ph_60HzInletConnectionPoint
+        hasRole: Role.Return
+    RF_VFD:
+        class: VFD
+        comment: Return Air Fan VFD
+    SF:
+        class: scratch|Fan
+        comment: Supply Air Fan
+        electricalInlet: Electricity_600VLL_3Ph_60HzInletConnectionPoint
+        hasRole: Role.Supply
+    SF_Starter:
+        class: scratch|MotorStarter
+        comment: Supply Air Fan Starter
+    CLGCOIL:
+        class: ChilledWaterCoil
+        comment: Cooling Coil
+    HTGCOIL:
+        class: HotWaterCoil
+        comment: Heating coil
+    FILTER:
+        class: Filter
+        comment: Filter
+    OADPR:
+        class: scratch|ElectricalActuatedProportionalDamper
+        comment: Outdoor air damper
+    MADPR:
+        class: scratch|ElectricalActuatedProportionalDamper
+        comment: Mixed Air Damper
+    EADPR:
+        class: scratch|ElectricalActuatedProportionalDamper
+        comment: Exhaust Air Damper
+air_connections:
+    - OADPR -> mixedAir
+    - MADPR -> mixedAir
+    - mixedAir -> FILTER
+    - FILTER -> CLGCOIL
+    - CLGCOIL -> SF
+    - SF -> HTGCOIL
+    - HTGCOIL -> supplyAir
+    - returnAir -> RF
+    - RF -> returnExhaust
+    - returnExhaust -> EADPR
+    - returnExhaust -> MADPR
+
+electrical_connections:
+    - SF_Starter -> SF
+    - RF_VFD -> RF
+
+sensors_observation_location:
+    - SA-T -> supplyAir
+
+bacnet_references:

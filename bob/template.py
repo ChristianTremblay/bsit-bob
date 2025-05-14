@@ -167,6 +167,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
     comment = params.get("comment", "")
     sensors = yaml_content.get("sensors", None)
     equipment = yaml_content.get("equipment", None)
+    connections = yaml_content.get("connections", None)
 
     _dict["params"] = {"label": label, "comment": comment}
 
@@ -193,10 +194,30 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
     # print('Defining entities')
     define_entities(equipment, "equipment")
     define_entities(sensors, "sensors")
+    define_entities(connections, "connections")
     _dict["relations"] = []
+
+    def add_to_relation_dict(line, operator, separator=","):
+        line = line.replace("(", "").replace(")", "").strip()
+        _a, _b = line.split(separator)
+        _dict["relations"].append(
+            (f"self['{_a.strip()}']", operator, f"self['{_b.strip()}']")
+        )
+
+    # Explicit relations with operator in the yaml file
     _relations = yaml_content.get("relations", [])
     for _relation in _relations:
-        _relation = _relation.replace("(", "").replace(")", "").strip()
-        _a, _b, _c = _relation.split(",")
-        _dict["relations"].append((_a.strip(), _b.strip(), _c.strip()))
+        add_to_relation_dict(_relation, ">>", separator=",")
+
+    # Relations using label, no self, no operator (implicit >>)
+    _air_connections = yaml_content.get("air_connections", [])
+    _electrical_connections = yaml_content.get("electrical_connections", [])
+    for stuff in [_electrical_connections, _air_connections]:
+        for _connection in stuff:
+            add_to_relation_dict(_connection, ">>", separator=" -> ")
+
+    # observation location
+    observation_location = yaml_content.get("sensors_observation_location", [])
+    for _observations in observation_location:
+        add_to_relation_dict(_observations, "%", separator=" -> ")
     return _dict
