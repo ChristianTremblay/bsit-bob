@@ -1625,6 +1625,13 @@ class System(Container):
 
                     if isinstance(thing, (Equipment, System)):
                         self > thing
+                    if isinstance(thing, Connection):
+                        # For reachability, we need to add the connection to the system
+                        # this is purely in python and no RDF relation is created
+                        # When creating equipment or system using template, the internale
+                        # relationships can be created from the template and having the connection
+                        # sqyuare bracket reachable make that possible
+                        self[thing_name] = thing
                     if isinstance(thing, Property):
                         # thing @ self
                         self[thing_name] = thing
