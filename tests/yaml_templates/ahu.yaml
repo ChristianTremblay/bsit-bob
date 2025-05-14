@@ -18,11 +18,11 @@ connections:
 sensors:
     SA-T:
         class: AirTemperatureSensor
-        comment: Supply Air Temperature Sensor
+        comment: Supply Air Temperature Sensor<
         hasUnit: UNIT.DEG_C
 equipment: 
     RF:
-        class: scratch|Fan
+        class: Fan
         comment: Return Air Fan
         electricalInlet: Electricity_600VLL_3Ph_60HzInletConnectionPoint
         hasRole: Role.Return
@@ -30,12 +30,14 @@ equipment:
         class: VFD
         comment: Return Air Fan VFD
     SF:
-        class: scratch|Fan
+        class: Fan
         comment: Supply Air Fan
         electricalInlet: Electricity_600VLL_3Ph_60HzInletConnectionPoint
         hasRole: Role.Supply
     SF_Starter:
-        class: scratch|MotorStarter
+        class: MotorStarter
+        electricalInlet: Electricity_600VLL_3Ph_60HzInletConnectionPoint
+        electricalOutlet: Electricity_600VLL_3Ph_60HzOutletConnectionPoint
         comment: Supply Air Fan Starter
     CLGCOIL:
         class: ChilledWaterCoil
@@ -47,13 +49,13 @@ equipment:
         class: Filter
         comment: Filter
     OADPR:
-        class: scratch|ElectricalActuatedProportionalDamper
+        class: Damper
         comment: Outdoor air damper
     MADPR:
-        class: scratch|ElectricalActuatedProportionalDamper
+        class: Damper
         comment: Mixed Air Damper
     EADPR:
-        class: scratch|ElectricalActuatedProportionalDamper
+        class: Damper
         comment: Exhaust Air Damper
 air_connections:
     - OADPR -> mixedAir
