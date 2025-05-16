@@ -210,12 +210,12 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
         add_to_relation_dict(_relation, ">>", separator=",")
 
     # Relations using label, no self, no operator (implicit >>)
-    _air_connections = yaml_content.get("air_connections", [])
-    _electrical_connections = yaml_content.get("electrical_connections", [])
-    for stuff in [_electrical_connections, _air_connections]:
-        for _connection in stuff:
-            add_to_relation_dict(_connection, ">>", separator=" -> ")
-
+    # Generalize handling of all *_connections sections
+    for key, value in yaml_content.items():
+        if re.match(r".*_connections$", key) and isinstance(value, list):
+            for _connection in value:
+                add_to_relation_dict(_connection, ">>", separator=" -> ")
+                
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])
     for _observations in observation_location:
