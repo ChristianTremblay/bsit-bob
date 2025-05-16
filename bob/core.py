@@ -107,6 +107,7 @@ prefixes = {
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "ref": "https://brickschema.org/schema/Brick/ref#",
+    "influxdb": "https://brickschema.org/schema/Brick/ref/influxdb#",
 }
 
 
