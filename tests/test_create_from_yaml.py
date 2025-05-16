@@ -22,10 +22,12 @@ def test_create_system_from_yaml(bob_fixture):
     c = config_from_yaml(str(yaml_path))
     
     ahu = SystemFromTemplate(config=c)
-    assert ahu['SA-T'].hasObservationLocation == ahu['supplyAir']
+    
     assert len(ahu._connections) == 4
     assert len(ahu._equipment) == 10
     assert len(ahu._sensors) == 1
+
+    assert ahu['SA-T'].hasObservationLocation == ahu['supplyAir']
 
 
 
