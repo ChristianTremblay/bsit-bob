@@ -1624,7 +1624,7 @@ class System(Container):
                         raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
-                    if isinstance(thing, (Equipment, System)):
+                    if isinstance(thing, (Equipment, System, Junction)):
                         self > thing
                     if isinstance(thing, Connection):
                         # For reachability, we need to add the connection to the system
@@ -1680,6 +1680,12 @@ def contains_mm(system: System, equipment: Equipment) -> None:
 
     system._data_graph.add((system._node_iri, S223.hasMember, equipment._node_iri))
 
+@multimethod
+def contains_mm(system: System, junction: Junction) -> None:
+    """System > Junction"""
+    _log.info(f"system {system} hasMember Junction {junction}")
+
+    system._data_graph.add((system._node_iri, S223.hasMember, junction._node_iri))
 
 @multimethod
 def contains_mm(system: System, subsystem: System) -> None:
@@ -1691,13 +1697,13 @@ def contains_mm(system: System, subsystem: System) -> None:
 
 @multimethod
 def contains_mm(system: System, thing_list: List[Node]) -> None:
-    """System > List[Union[Equipment,System]]"""
+    """System > List[Union[Equipment,System, Junction]]"""
     _log.info(f"system {system} hasMember list of things {thing_list}")
 
     ###TODO: the signature should be thing_list: List[Union[Equipment,System]]
 
     for thing in thing_list:
-        if not isinstance(thing, (Equipment, System)):
+        if not isinstance(thing, (Equipment, System, Junction)):
             raise TypeError(f"Equipment or system expected: {thing}")
         contains_mm(system, thing)
 
