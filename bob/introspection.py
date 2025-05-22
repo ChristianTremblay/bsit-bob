@@ -4,12 +4,19 @@ import pkgutil
 import typing as t
 
 import bob
-from .core import UNIT
+from .core import UNIT, Substance
+from .enum import Medium, Particulate, Constituent
 
 class_cache = {}
 module_cache = {}
 enum_cache = {}
-
+XREF_CACHE = {
+    "UNIT": UNIT,
+    "Medium": Medium,
+    "Substance": Substance,
+    "Particulate": Particulate,
+    "Constituent": Constituent,
+}
 
 def look_in_cache(name: str = None, cache: dict = None):
     return cache[name] if name in cache else None
@@ -46,8 +53,17 @@ def get_class_from_name(classname: str = None, module: t.Type = bob) -> t.Type:
 
     if "." in classname:
         _super, classname = classname.split(".")
+
         if _super == "UNIT":
             return UNIT[classname]
+        if _super == "Medium":
+            return getattr(Medium,classname)
+        if _super == "Substance":
+            return getattr(Substance,classname)
+        if _super == "Particulate":
+            return getattr(Particulate,classname)
+        if _super == "Constituent":
+            return getattr(Constituent,classname)
 
     if "|" in classname:
         _module, classname = classname.split("|")
