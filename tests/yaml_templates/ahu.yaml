@@ -81,10 +81,10 @@ air_connections:
     - CLGCOIL -> SF
     - SF -> HTGCOIL
     - HTGCOIL -> SupplyAirDuct.fromAHU
-    - ReturnAirDuct -> RF #check
+    - ReturnAirDuct -> RF 
     - RF -> ReturnExhaustDuct.fromReturn
-    - ReturnExhaustDuct -> EADPR #check
-    - ReturnExhaustDuct -> MADPR #check
+    - ReturnExhaustDuct -> EADPR 
+    - ReturnExhaustDuct -> MADPR
 
 electrical_connections:
     - SF_Starter -> SF
@@ -93,9 +93,8 @@ electrical_connections:
 sensors_observation_location:
     - SA-T -> SupplyAirDuct.supplyAir
 
-#Future
-#boundaries:
-#    - OADPR.airInlet
-#    - ReturnAirDuct.returnAir
-#    - SupplyAirDuct.supplyAir
-#    - EADPR.airOutlet
+boundaries:
+    - OADPR.airInlet
+    - ReturnAirDuct.returnAir
+    - SupplyAirDuct.supplyAir
+    - EADPR.airOutlet
