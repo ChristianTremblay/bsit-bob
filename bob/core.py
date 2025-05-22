@@ -1540,6 +1540,20 @@ class EnumerationKind(Node):
         prop._schema_graph.add((self._node_iri, S223.composedOf, prop._node_iri))
         self.composedOf.add(prop)
 
+    def __eq__(self, other: Any) -> bool:
+        # Compare by _node_iri if both are instances
+        if isinstance(other, Node):
+            return getattr(self, "_node_iri", None) == getattr(other, "_node_iri", None)
+        # Compare class objects by identity
+        if isinstance(other, type) and issubclass(other, EnumerationKind):
+            return self is other
+        return False
+
+    def __hash__(self) -> int:
+        # If instance, hash by _node_iri; if class, hash by id(self)
+        if hasattr(self, "_node_iri"):
+            return hash(self._node_iri)
+        return hash(id(self))
 
 #
 #   Top Level EnumerationKind Instances
