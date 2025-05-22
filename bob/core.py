@@ -1555,6 +1555,7 @@ class EnumerationKind(Node):
             return hash(self._node_iri)
         return hash(id(self))
 
+
 #
 #   Top Level EnumerationKind Instances
 #
@@ -1686,6 +1687,15 @@ class System(Container):
 
         return connection_point
 
+    def __or__(self, other: ConnectionPoint) -> Any:
+        """System.BoundaryConnectionPoint | ConnectionPoint"""
+        _log.debug(f"System.__or__ {self} | {other}")
+
+        if isinstance(other, ConnectionPoint):
+            self.add_boundary_connection_point(other)
+            return self
+        raise TypeError(f"ConnectionPoint expected: {other}")
+
 
 @multimethod
 def contains_mm(system: System, equipment: Equipment) -> None:
@@ -1694,12 +1704,14 @@ def contains_mm(system: System, equipment: Equipment) -> None:
 
     system._data_graph.add((system._node_iri, S223.hasMember, equipment._node_iri))
 
+
 @multimethod
 def contains_mm(system: System, junction: Junction) -> None:
     """System > Junction"""
     _log.info(f"system {system} hasMember Junction {junction}")
 
     system._data_graph.add((system._node_iri, S223.hasMember, junction._node_iri))
+
 
 @multimethod
 def contains_mm(system: System, subsystem: System) -> None:
@@ -2714,7 +2726,7 @@ class BoundaryConnectionPoint:
 
     def __init__(self) -> None:
         _log.debug("BoundaryConnectionPoint.__init__")
-        raise RuntimeError("BoundaryConnectionPoint heirarchy are abstract classes")
+        raise RuntimeError("BoundaryConnectionPoint hierarchy are abstract classes")
 
 
 class OptionalConnectionPoint(BoundaryConnectionPoint):
