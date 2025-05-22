@@ -5,7 +5,13 @@ from pathlib import Path
 
 import yaml
 
-from .core import Connection, Equipment, System
+from .core import (
+    BoundaryConnectionPoint,
+    Connection,
+    ConnectionPoint,
+    Equipment,
+    System,
+)
 from .introspection import get_class_from_name
 
 
@@ -77,6 +83,23 @@ def get_instance(container: t.Union[Equipment, System], blob: str):
         return (thing, _key)  # in case thing is None
 
 
+def configure_boundaries(container: System, boundaries: t.List[t.Tuple[str, str]]):
+    for _target in boundaries:
+        target_element, target_key = get_instance(container, _target)
+
+        if target_key is None:
+            target = target_element
+        else:
+            target = getattr(target_element, target_key, None)
+
+        if target is None and isinstance(target_element, ConnectionPoint):
+            target = target_element
+        elif target is None:
+            raise AttributeError(f"Target {target_key} not found in {target_element}")
+
+        container | target
+
+
 def configure_relations(
     container: t.Union[Equipment, System], relations: t.List[t.Tuple[str, str, str]]
 ):
@@ -140,6 +163,8 @@ def configure_relations(
             source.mapsTo = target
         elif operator == "@":
             source @ target
+        elif operator == "|":
+            source | target
         # no @ here as we are creating relation "inside" the equipment or system
 
 
@@ -148,8 +173,10 @@ class SystemFromTemplate(System):
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _relations = _config.pop("relations", [])
+        _boundaries = _config.pop("boundaries", [])
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
+        configure_boundaries(self, _boundaries)
 
 
 def config_from_yaml(yaml_file: t.Union[str, Path] = None):
@@ -169,6 +196,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
     equipment = yaml_content.get("equipment", None)
     connections = yaml_content.get("connections", None)
     junctions = yaml_content.get("junctions", None)
+    # boundaries = yaml_content.get("boundaries", None)
 
     _dict["params"] = {"label": label, "comment": comment}
 
@@ -197,22 +225,23 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
     define_entities(sensors, "sensors")
     define_entities(connections, "connections")
     define_entities(junctions, "junctions")
+    # define_entities(boundaries, "boundaries")
     _dict["relations"] = []
+    _dict["boundaries"] = []
+
+    def parse_sub(a):
+        if "." in a:
+            main, sub = a.split(".")
+            return f"self['{main.strip()}'].{sub.strip()}"
+        else:
+            return f"self['{a.strip()}']"
 
     def add_to_relation_dict(line, operator, separator=","):
         line = line.replace("(", "").replace(")", "").strip()
-     
         _a, _b = line.split(separator)
-        def parse_sub(a):
-            if '.' in a:
-                main, sub = a.split('.')
-                return f"self['{main.strip()}'].{sub.strip()}"
-            else:
-                return f"self['{a.strip()}']"
-        _dict["relations"].append(
-            (parse_sub(_a), operator, parse_sub(_b))
-        )
+        _dict["relations"].append((parse_sub(_a), operator, parse_sub(_b)))
         print(parse_sub(_a), operator, parse_sub(_b))
+
     # Explicit relations with operator in the yaml file
     _relations = yaml_content.get("relations", [])
     for _relation in _relations:
@@ -224,9 +253,13 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
         if re.match(r".*_connections$", key) and isinstance(value, list):
             for _connection in value:
                 add_to_relation_dict(_connection, ">>", separator=" -> ")
-                
+
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])
     for _observations in observation_location:
         add_to_relation_dict(_observations, "%", separator=" -> ")
+    boundaries = yaml_content.get("boundaries", [])
+    for _boundary in boundaries:
+        # add_to_relation_dict(_boundary, "|", separator=" -> ")
+        _dict["boundaries"].append(f"self | {parse_sub(_boundary)}")
     return _dict
