@@ -3105,9 +3105,31 @@ class Junction(Connectable):
     _class_iri: URIRef = S223.Junction
     hasMedium: Medium
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, config: Dict[str, Any] = {}, **kwargs: Any) -> None:
         _log.debug(f"Junction.__init__ {kwargs}")
+        _config = dict(config.items())
+        for attr_name, attr_value in kwargs.copy().items():
+            if inspect.isclass(attr_value):
+                if issubclass(attr_value, ConnectionPoint):
+                    _config["cp"] = (
+                        {**_config["cp"], **{attr_name: kwargs.pop(attr_name)}}
+                        if "cp" in _config.keys()
+                        else {attr_name: kwargs.pop(attr_name)}
+                    )
+
         super().__init__(**kwargs)
+        if _config:
+            for group_name, group_items in _config.items():
+                if group_name in ("params", "relations"):
+                    continue
+                if group_name == "cp":
+                    for thing_name, thing_class in group_items.items():
+                        setattr(
+                            self,
+                            thing_name,
+                            thing_class(self, label=f"{self.label}.{thing_name}"),
+                        )
+                    continue
 
     def maps_to(self, other: ConnectionPoint) -> None:
         """
