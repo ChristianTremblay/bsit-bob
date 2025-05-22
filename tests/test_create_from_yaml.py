@@ -27,7 +27,7 @@ def test_create_system_from_yaml(bob_fixture):
     assert len(ahu._equipment) == 10
     assert len(ahu._sensors) == 1
 
-    assert ahu['SA-T'].hasObservationLocation == ahu['supplyAir']
+    assert ahu['SA-T'].hasObservationLocation == ahu['SupplyAirDuct'].supplyAir
 
     dump(filename=f"tests/ttl/{model_name}.ttl", header=ttl_test_header(model_name))
 
