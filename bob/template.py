@@ -168,6 +168,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
     sensors = yaml_content.get("sensors", None)
     equipment = yaml_content.get("equipment", None)
     connections = yaml_content.get("connections", None)
+    junctions = yaml_content.get("junctions", None)
 
     _dict["params"] = {"label": label, "comment": comment}
 
@@ -195,15 +196,23 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
     define_entities(equipment, "equipment")
     define_entities(sensors, "sensors")
     define_entities(connections, "connections")
+    define_entities(junctions, "junctions")
     _dict["relations"] = []
 
     def add_to_relation_dict(line, operator, separator=","):
         line = line.replace("(", "").replace(")", "").strip()
+     
         _a, _b = line.split(separator)
+        def parse_sub(a):
+            if '.' in a:
+                main, sub = a.split('.')
+                return f"self['{main.strip()}'].{sub.strip()}"
+            else:
+                return f"self['{a.strip()}']"
         _dict["relations"].append(
-            (f"self['{_a.strip()}']", operator, f"self['{_b.strip()}']")
+            (parse_sub(_a), operator, parse_sub(_b))
         )
-
+        print(parse_sub(_a), operator, parse_sub(_b))
     # Explicit relations with operator in the yaml file
     _relations = yaml_content.get("relations", [])
     for _relation in _relations:
