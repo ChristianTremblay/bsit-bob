@@ -179,13 +179,18 @@ class SystemFromTemplate(System):
         configure_boundaries(self, _boundaries)
 
 
-def config_from_yaml(yaml_file: t.Union[str, Path] = None):
+def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     if yaml_file is None:
         raise FileNotFoundError("No YAML file provided")
     else:
-        yaml_file = Path(yaml_file)
-    with open(yaml_file, "r") as file:
-        yaml_content = yaml.safe_load(file)
+        if isinstance(yaml_file, dict):
+            yaml_content = yaml_file
+        else:
+            yaml_file = Path(yaml_file)
+            if not yaml_file.is_file():
+                raise FileNotFoundError(f"YAML file {yaml_file} not found")
+            with open(yaml_file, "r") as file:
+                yaml_content = yaml.safe_load(file)
     _text_values = ["label", "comment"]
     _dict = {}
     name = yaml_content["name"]
@@ -208,7 +213,12 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
             # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
             entity_label = entity_params.pop("label", entity_name)
             # print(entity_label, entity_params, f"Looking for {entity_params['class']}")
-            entity_class = get_class_from_name(entity_params.pop("class"))
+            try:
+                entity_class = get_class_from_name(entity_params.pop("class"))
+            except KeyError:
+                raise KeyError(
+                    f"Entity {entity_name} in {entities_category} does not have a 'class' key"
+                )
             # print('Found class', entity_class)
             # entity_comment = entity_params.pop('comment', '')
             _dict[entities_category][(entity_label, entity_class)] = {}
@@ -240,7 +250,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path] = None):
         line = line.replace("(", "").replace(")", "").strip()
         _a, _b = line.split(separator)
         _dict["relations"].append((parse_sub(_a), operator, parse_sub(_b)))
-        print(parse_sub(_a), operator, parse_sub(_b))
+        # print(parse_sub(_a), operator, parse_sub(_b))
 
     # Explicit relations with operator in the yaml file
     _relations = yaml_content.get("relations", [])
