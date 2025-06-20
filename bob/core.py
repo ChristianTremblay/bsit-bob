@@ -108,6 +108,7 @@ prefixes = {
     "owl": "http://www.w3.org/2002/07/owl#",
     "ref": "https://brickschema.org/schema/Brick/ref#",
     "influxdb": "https://brickschema.org/schema/Brick/ref/influxdb#",
+    "schema": "http://schema.org/",
 }
 
 
@@ -247,6 +248,7 @@ QUDT = bind_namespace("qudt", prefixes["qudt"])
 QUANTITYKIND = bind_namespace("qudtqk", prefixes["qudtqk"])
 UNIT = bind_namespace("unit", prefixes["unit"])
 BRICK = bind_namespace("brick", prefixes["brick"])
+SCHEMAORG = bind_namespace("schema", prefixes["schema"])
 
 # the model_namespace is used to create "blank" node identifiers, a serial
 # number to make it easier to debug a constructed file

@@ -3,14 +3,13 @@ Schema Org for the Bob Ontology
 """
 
 import re
-from typing import Union, get_type_hints
+from typing import Union, get_args, get_origin, get_type_hints
 
 from rdflib import Literal, URIRef
 from rdflib.namespace import XSD
 
 from bob.core import QUDT, SCHEMAORG
 from bob.core import Node as _Node
-from bob.core import URIRef
 
 _namespace = SCHEMAORG
 
@@ -18,6 +17,11 @@ _namespace = SCHEMAORG
 Schema.org is a collaborative, community-driven project that provides a collection of schemas for structured data on the internet. It is used to mark up web pages with metadata that can be understood by search engines and other applications, enabling better indexing and understanding of the content.
 
 This implementation defines a minimal set of classes and properties based on the Schema.org vocabulary, focusing on the core concepts and types that are commonly used in the creation of models following 223P.
+
+Class definitions have been simplified by using Literal instead of schema.org classes as
+rdflib does not support the full range of schema.org types. Instead, we use Literal with appropriate datatypes to represent common values such as dates, times, URIs, and booleans.
+This opens the door to possible violation of the schema that will be seen in the validation process
+
 """
 
 
@@ -84,7 +88,22 @@ class Thing(_Node):
             if key.startswith("_"):
                 # Skip private attributes
                 continue
+
             if key in kwargs:
+                if get_origin(expected_type) is Union:
+                    union_types = get_args(expected_type)
+                    if Literal in union_types:
+                        # If Literal is part of the union, we can use it directly
+                        # by default, when no explicit type is provided, we assume Literal
+                        expected_type = Literal
+                    elif URIRef in union_types:
+                        # If URIRef is part of the union, we can use it directly
+                        expected_type = URIRef
+                    else:
+                        # If the expected type is not a Union, we can use it directly
+                        raise ValueError(
+                            f"You must provide an explicit type for {key} in {self.__class__.__name__}. Expected one of: {union_types}"
+                        )
                 value = kwargs[key]
                 # Intercept and convert str to URIRef if needed
                 if expected_type is URIRef and isinstance(value, str):
