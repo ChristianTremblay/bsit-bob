@@ -5,6 +5,7 @@ from pathlib import Path
 
 import yaml
 
+from . import schemaorg
 from .core import (
     BoundaryConnectionPoint,
     Connection,
@@ -179,7 +180,7 @@ class SystemFromTemplate(System):
         configure_boundaries(self, _boundaries)
 
 
-def ProductGroupFromTemplate(SystemFromTemplate):
+class ProductGroupFromTemplate(System, schemaorg.ProductGroup):
     """
     A class to create a product group from a template.
     It inherits from SystemFromTemplate and allows to create a Schema.org
@@ -187,7 +188,13 @@ def ProductGroupFromTemplate(SystemFromTemplate):
     """
 
     def __init__(self, config: t.Dict = None, **kwargs):
-        super().__init__(config, **kwargs)
+        _config = template_update(config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        _boundaries = _config.pop("boundaries", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
+        configure_boundaries(self, _boundaries)
 
 
 def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
