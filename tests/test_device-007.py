@@ -2,10 +2,10 @@ from pathlib import Path
 
 from header import ttl_test_header
 
+from bob import schemaorg
 from bob.connections.electricity import ElectricalInletConnectionPoint
 from bob.core import Equipment, bind_model_namespace, dump
 from bob.equipment.hvac.fan import Fan
-from bob import schemaorg
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
@@ -13,6 +13,7 @@ _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
 class MyFan(Fan, schemaorg.Product):
     pass
+
 
 def test_create_fan_as_schemaor_product(bob_fixture):
     _config = {
@@ -26,12 +27,12 @@ def test_create_fan_as_schemaor_product(bob_fixture):
     }
     fan1 = MyFan(
         config=_config,
-        model='BALDOR 5KCF8',
+        model="BALDOR 5KCF8",
     )
 
     fan2 = MyFan(
         label="VA-2",
-        model='BALDOR 5KCF8',
+        model="BALDOR 5KCF8",
         electricalInlet=ElectricalInletConnectionPoint,
     )
 
