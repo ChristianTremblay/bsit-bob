@@ -179,6 +179,17 @@ class SystemFromTemplate(System):
         configure_boundaries(self, _boundaries)
 
 
+def ProductGroupFromTemplate(SystemFromTemplate):
+    """
+    A class to create a product group from a template.
+    It inherits from SystemFromTemplate and allows to create a Schema.org
+    product group with the same configuration as the system.
+    """
+
+    def __init__(self, config: t.Dict = None, **kwargs):
+        super().__init__(config, **kwargs)
+
+
 def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     if yaml_file is None:
         raise FileNotFoundError("No YAML file provided")
