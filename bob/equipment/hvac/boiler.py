@@ -17,7 +17,6 @@ from ...core import (
     Equipment,
 )
 from ...enum import Role
-from ... import application
 from ...template import template_update, configure_relations
 
 _namespace = BOB

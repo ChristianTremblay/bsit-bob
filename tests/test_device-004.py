@@ -1,23 +1,47 @@
 from pathlib import Path
-
+from typing import Dict
 from header import ttl_test_header
-
+from rdflib import URIRef
 from bob.core import (
     QUANTITYKIND,
     UNIT,
     bind_model_namespace,
     dump,
     QuantifiableObservableProperty,
+    Equipment
 )
-from bob.equipment.hvac.gas import GasMonitor
 from bob.sensor.gas import CO2Sensor, COSensor, NO2Sensor
 from bob.sensor.temperature import AirTemperatureSensor
 from bob.space.hvac import HVACSpace
 from bob.space.physical import Floor
+from bob.connections.air import (
+    AirInletConnectionPoint,   
+    AirOutletConnectionPoint
+)
+from bob.core import PropertyReference, SCRATCH
+from bob.template import template_update, configure_relations
 
 model_name = Path(__file__).stem
 _namespace = bind_model_namespace("ex", f"urn:ex/{model_name}/")
 
+class GasMonitor(Equipment):
+    """
+    Gas monitor that contains 1 or more gas sensors
+    It comes from si-modeler and is presetned here for testing purposes.
+    """
+
+    _class_iri: URIRef = SCRATCH.GasMonitor
+    airInletSupply: AirInletConnectionPoint
+    airOutletExhaust: AirOutletConnectionPoint
+
+    alarmStatus: PropertyReference
+
+    def __init__(self, config: Dict = None, **kwargs):
+        _config = template_update({}, config=config)
+        kwargs = {**_config.pop("params", {}), **kwargs}
+        _relations = _config.pop("relations", [])
+        super().__init__(_config, **kwargs)
+        configure_relations(self, _relations)
 
 def test_create_gas_monitor(bob_fixture):
     _co2_and_temp = {
