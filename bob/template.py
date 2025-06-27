@@ -180,7 +180,7 @@ class SystemFromTemplate(System):
         configure_boundaries(self, _boundaries)
 
 
-class ProductGroupFromTemplate(System, schemaorg.ProductGroup):
+class ProductGroupFromTemplate(SystemFromTemplate, schemaorg.ProductGroup):
     """
     A class to create a product group from a template.
     It inherits from SystemFromTemplate and allows to create a Schema.org
@@ -188,13 +188,23 @@ class ProductGroupFromTemplate(System, schemaorg.ProductGroup):
     """
 
     def __init__(self, config: t.Dict = None, **kwargs):
+        super().__init__(config, **kwargs)
+
+
+class EquipmentFromTemplate(Equipment):
+    def __init__(self, config: t.Dict = None, **kwargs):
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _relations = _config.pop("relations", [])
-        _boundaries = _config.pop("boundaries", [])
+        # _mapsTo = _config.pop('mapsTo', {})
         super().__init__(_config, **kwargs)
         configure_relations(self, _relations)
-        configure_boundaries(self, _boundaries)
+        # configure_mapsTo(self, _mapsTo)
+
+
+class ProductFromTemplate(EquipmentFromTemplate, schemaorg.Product):
+    def __init__(self, config: t.Dict = None, **kwargs):
+        super().__init__(config, **kwargs)
 
 
 def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
@@ -213,49 +223,71 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     _dict = {}
     name = yaml_content["name"]
     params = yaml_content["params"]
+    template_type = (
+        yaml_content["template_type"] if "template_type" in yaml_content else "system"
+    )
     label = params.get("label", name)
     comment = params.get("comment", "")
     sensors = yaml_content.get("sensors", None)
     equipment = yaml_content.get("equipment", None)
     connections = yaml_content.get("connections", None)
     junctions = yaml_content.get("junctions", None)
+    connection_points = yaml_content.get("cp", None)
+
     # boundaries = yaml_content.get("boundaries", None)
 
     _dict["params"] = {"label": label, "comment": comment}
+    # Schema.org parameters treated as kwargs
+    _dict["params"].update(yaml_content.get("schemaorg", None))
 
     def define_entities(entities: dict = None, entities_category: str = None):
         if entities is None:
             return
         _dict[entities_category] = {}
-        for entity_name, entity_params in entities.items():
-            # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
-            entity_label = entity_params.pop("label", entity_name)
-            # print(entity_label, entity_params, f"Looking for {entity_params['class']}")
-            try:
-                entity_class = get_class_from_name(entity_params.pop("class"))
-            except KeyError:
-                raise KeyError(
-                    f"Entity {entity_name} in {entities_category} does not have a 'class' key"
-                )
-            # print('Found class', entity_class)
-            # entity_comment = entity_params.pop('comment', '')
-            _dict[entities_category][(entity_label, entity_class)] = {}
-            for _name, _class_or_value in entity_params.items():
-                _value = (
-                    _class_or_value
-                    if _name in _text_values
-                    else get_class_from_name(_class_or_value)
-                )
-                _dict[entities_category][(entity_label, entity_class)][_name] = _value
+        if entities_category == "cp":
+            for entity_name, _entity_class in entities.items():
+                # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
+                entity_class = get_class_from_name(_entity_class)
+                entity_label = entity_name
+                # ConnectionPoint
+                _dict[entities_category][entity_label] = entity_class
+        else:
+            for entity_name, entity_params in entities.items():
+                # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
+                entity_label = entity_params.pop("label", entity_name)
+                # print(entity_label, entity_params, f"Looking for {entity_params['class']}")
+                try:
+                    entity_class = get_class_from_name(entity_params.pop("class"))
+                except KeyError:
+                    raise KeyError(
+                        f"Entity {entity_name} in {entities_category} does not have a 'class' key"
+                    )
+                # print('Found class', entity_class)
+                # entity_comment = entity_params.pop('comment', '')
+
+                else:
+                    _dict[entities_category][(entity_label, entity_class)] = {}
+                    for _name, _class_or_value in entity_params.items():
+                        _value = (
+                            _class_or_value
+                            if _name in _text_values
+                            else get_class_from_name(_class_or_value)
+                        )
+                        _dict[entities_category][(entity_label, entity_class)][
+                            _name
+                        ] = _value
 
     # print('Defining entities')
     define_entities(equipment, "equipment")
     define_entities(sensors, "sensors")
     define_entities(connections, "connections")
     define_entities(junctions, "junctions")
+    if connection_points is not None:
+        define_entities(connection_points, "cp")
     # define_entities(boundaries, "boundaries")
-    _dict["relations"] = []
-    _dict["boundaries"] = []
+    if template_type == "system":
+        _dict["relations"] = []
+        _dict["boundaries"] = []
 
     def parse_sub(a):
         if "." in a:
