@@ -1,4 +1,6 @@
-from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum
+from typing import Union
+
+from bob.enum import AnalogSignalTypeEnum, BinarySignalTypeEnum, UniversalSignalTypeEnum
 
 from ..core import (
     BOB,
@@ -25,7 +27,7 @@ class OnOffSignalConnectionPoint(ConnectionPoint):
     _attr_uriref = {"hasSignalType": P223.hasSignalType}
 
     hasMedium = Electricity.OnOffSignal
-    hasSignalType: BinarySignalTypeEnum
+    hasSignalType = BinarySignalTypeEnum
 
 
 class OnOffSignalInletConnectionPoint(InletConnectionPoint, OnOffSignalConnectionPoint):
@@ -51,7 +53,7 @@ class ModulationSignalConnectionPoint(ConnectionPoint):
     _attr_uriref = {"hasSignalType": P223.hasSignalType}
 
     hasMedium = ModulatedSignal
-    hasSignalType: AnalogSignalTypeEnum
+    hasSignalType = AnalogSignalTypeEnum
 
 
 class ModulationSignalInletConnectionPoint(
@@ -64,3 +66,23 @@ class ModulationSignalOutletConnectionPoint(
     OutletConnectionPoint, ModulationSignalConnectionPoint
 ):
     _class_iri = P223.AnalogOutput
+
+
+class UniversalConnectionPoint(ConnectionPoint):
+    """
+    Represents a universal input connection point that can handle both binary and analog signals.
+    This is useful for devices that can accept multiple types of signals on the same input.
+    """
+
+    _attr_uriref = {"hasSignalType": P223.hasSignalType}
+    _volatile = ("hasMedium",)
+    # hasMedium: Union[Electricity.OnOffSignal, ModulatedSignal]  # Can be either type
+    hasSignalType = UniversalSignalTypeEnum  # Can be either type
+
+
+class UniversalInletConnectionPoint(InletConnectionPoint, UniversalConnectionPoint):
+    _class_iri = P223.UniversalInput
+
+
+class UniversalOutletConnectionPoint(OutletConnectionPoint, UniversalConnectionPoint):
+    _class_iri = P223.UniversalOutput
