@@ -293,8 +293,9 @@ Role.Storage = Storage = Role("Storage", _alt_namespace=P223)
 # ===================
 # Enumeration kinds to create hasValue
 ActiveInactiveEnum = EnumerationKind("ActiveInactive", _alt_namespace=P223)
-AnalogSignalTypeEnum = EnumerationKind("Analog", _alt_namespace=P223)
+AnalogSignalTypeEnum = EnumerationKind("AnalogSignalType", _alt_namespace=P223)
 BinarySignalTypeEnum = EnumerationKind("BinarySignalType", _alt_namespace=P223)
+UniversalSignalTypeEnum = EnumerationKind("UniversalSignalType", _alt_namespace=P223)
 
 Binary = EnumerationKind("Binary")
 Binary.false = Binary("False")
@@ -362,6 +363,42 @@ BinarySignalTypeEnum.DryContact = BinarySignalTypeEnum(
 BinarySignalTypeEnum.Pulse = BinarySignalTypeEnum("Pulse", _alt_namespace=P223)
 BinarySignalTypeEnum.StartStop = BinarySignalTypeEnum("StartStop", _alt_namespace=P223)
 BinarySignalTypeEnum.Incremental = BinarySignalTypeEnum(
+    "Incremental", _alt_namespace=P223
+)
+
+
+UniversalSignalTypeEnum.Unknown = AnalogSignalTypeEnum("Unknown", _alt_namespace=P223)
+UniversalSignalTypeEnum.RTD = AnalogSignalTypeEnum("RTD", _alt_namespace=P223)
+UniversalSignalTypeEnum.Nickel1kRTD = AnalogSignalTypeEnum(
+    "Nickel1kRTD", _alt_namespace=P223
+)
+UniversalSignalTypeEnum.Platinum1kRTD = AnalogSignalTypeEnum(
+    "Platinum1kRTD", _alt_namespace=P223
+)
+UniversalSignalTypeEnum.VDC_0_10 = AnalogSignalTypeEnum("0-10VDC", _alt_namespace=P223)
+UniversalSignalTypeEnum.mA_4_20 = AnalogSignalTypeEnum("4-20mA", _alt_namespace=P223)
+UniversalSignalTypeEnum.NTC10kType3 = AnalogSignalTypeEnum(
+    "NTC10kType3", _alt_namespace=P223
+)
+UniversalSignalTypeEnum.NTC10kType2 = AnalogSignalTypeEnum(
+    "NTC10kType2", _alt_namespace=P223
+)
+UniversalSignalTypeEnum.NTC2250Type2 = AnalogSignalTypeEnum(
+    "NTC2250Type2", _alt_namespace=P223
+)
+UniversalSignalTypeEnum.Resistive = AnalogSignalTypeEnum(
+    "Resistive", _alt_namespace=P223
+)
+
+#
+UniversalSignalTypeEnum.DryContact = BinarySignalTypeEnum(
+    "DryContact", _alt_namespace=P223
+)
+UniversalSignalTypeEnum.Pulse = BinarySignalTypeEnum("Pulse", _alt_namespace=P223)
+UniversalSignalTypeEnum.StartStop = BinarySignalTypeEnum(
+    "StartStop", _alt_namespace=P223
+)
+UniversalSignalTypeEnum.Incremental = BinarySignalTypeEnum(
     "Incremental", _alt_namespace=P223
 )
 
