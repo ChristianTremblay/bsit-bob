@@ -3,7 +3,7 @@ Schema Org for the Bob Ontology
 """
 
 import re
-from typing import Union, get_args, get_origin, get_type_hints
+from typing import List, Union, get_args, get_origin, get_type_hints
 
 from rdflib import Literal, URIRef
 from rdflib.namespace import XSD
@@ -90,15 +90,20 @@ class Thing(_Node):
                 continue
 
             if key in kwargs:
+                given_type = type(kwargs[key])
                 if get_origin(expected_type) is Union:
                     union_types = get_args(expected_type)
-                    if Literal in union_types:
-                        # If Literal is part of the union, we can use it directly
-                        # by default, when no explicit type is provided, we assume Literal
-                        expected_type = Literal
-                    elif URIRef in union_types:
-                        # If URIRef is part of the union, we can use it directly
-                        expected_type = URIRef
+                    if given_type is str:
+                        if Literal in union_types:
+                            # If Literal is part of the union, we can use it directly
+                            # by default, when no explicit type is provided, we assume Literal
+                            expected_type = Literal
+                        elif URIRef in union_types:
+                            # If URIRef is part of the union, we can use it directly
+                            expected_type = URIRef
+                    elif given_type in union_types:
+                        # If the given type is part of the union, we can use it directly
+                        continue
                     else:
                         # If the expected type is not a Union, we can use it directly
                         raise ValueError(
@@ -807,6 +812,31 @@ class Organization(Thing):
         Literal  # The Value Added Tax (VAT) identification number of the organization
     )
 
+    def __init__(self, *args, **kwargs):
+        self._brands = set()
+        if "brand" in kwargs:
+            brand_value = kwargs.pop("brand")
+
+            if isinstance(brand_value, list):
+                for element in brand_value:
+                    self.add_brand(element)
+            else:
+                self.add_brand(brand_value)
+        super().__init__(*args, **kwargs)
+
+    def add_brand(self, brand: Union[List, Brand, "Organization"]) -> None:
+        if isinstance(brand, (Brand, Organization)):
+            self._brands.add(brand)
+            self._data_graph.add((self._node_iri, SCHEMAORG.brand, brand._node_iri))
+        elif isinstance(brand, list):
+            for element in brand:
+                self.add_brand(element)
+
+        else:
+            raise ValueError(
+                f"Invalid type for brand: {type(brand)}. Expected Brand or Organization."
+            )
+
 
 class Person(Thing):
     """
@@ -843,7 +873,9 @@ class Product(Thing):
     ]  # The Amazon Standard Identification Number (ASIN) of the product
     # audience: Audience
     award: Literal  # An award won by the product
-    brand: Union[Brand, Organization]  # The brand of the product
+    brand: Union[
+        Brand, Organization, URIRef
+    ]  # The brand of the product, to accomodate templates, needed to add URIRef
     category: Union["CategoryCode", Literal, Thing, URIRef, "PhysicalActivityCategory"]
     color: Literal  # The color of the product
     colorSwatch: Union[URIRef, ImageObject]  # A color swatch image of the product
