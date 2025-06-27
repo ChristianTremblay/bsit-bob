@@ -19,7 +19,6 @@ from ...connections.liquid import (
     WaterOutletConnectionPoint,
 )
 from ...core import BOB, S223, Equipment
-from ... import application
 from ...properties import OnOffCommand, OnOffStatus, Percent
 from ...template import template_update, configure_relations
 

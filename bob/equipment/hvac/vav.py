@@ -3,7 +3,6 @@ from typing import Dict
 
 from ...connections.air import AirInletConnectionPoint
 from ...core import BOB, S223, BoundaryConnectionPoint, Equipment, System
-from ... import application
 from ...equipment.hvac.damper import Damper
 from ...template import template_update
 

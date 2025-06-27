@@ -2,7 +2,6 @@ import logging
 from typing import Dict
 
 
-from ... import application
 from ...core import BOB, BoundaryConnectionPoint, System, S223, Equipment
 from ...template import SystemFromTemplate, template_update
 from ...connections.air import AirInletConnectionPoint, AirOutletConnectionPoint
