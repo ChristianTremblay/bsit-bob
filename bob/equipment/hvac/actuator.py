@@ -13,7 +13,7 @@ _namespace = BOB
  
 __|___|__|___|___|__                                                                                  
 |     Actuator     |------------s223:hasProperty--------(actuates) -> A                                   
-|  s223:Equipment  |------------s223:hasProperty--------(commandedByProperty) -> B
+|  s223:Equipment  |------------s223:hasProperty--------(actuatedByProperty) -> B
 |                  |
 |                  |
 |__________________|

@@ -2,6 +2,7 @@
 # imports: http://data.ashrae.org/standard223/1.0/model/all
 
 @prefix bob: <http://data.ashrae.org/standard223/si-builder#> .
+@prefix ex15: <urn:ex/test_device-004/> .
 @prefix ex35: <urn:ex/test_system-007/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix p223: <http://data.ashrae.org/proposal-to-standard223#> .
@@ -58,18 +59,18 @@ ex35:00004 a s223:ObservableProperty,
     qudt:hasQuantityKind qudtqk:Temperature ;
     qudt:hasUnit unit:DEG_C .
 
-ex35:00005 a p223:GasMonitor,
-        s223:Connectable,
-        s223:Equipment ;
+ex35:00005 a s223:Connectable,
+        s223:Equipment,
+        ex15:GasMonitor ;
     rdfs:label "CO2-2" ;
     s223:contains ex35:00008,
         ex35:00010 ;
     s223:hasConnectionPoint ex35:00006,
         ex35:00007 ;
     s223:hasPhysicalLocation ex35:00035 ;
-    bob:airInletSupply ex35:00006 ;
-    bob:airOutletExhaust ex35:00007 ;
-    rdfs:comment "CO2 Monitor with temperature reading" .
+    rdfs:comment "CO2 Monitor with temperature reading" ;
+    ex15:airInletSupply ex35:00006 ;
+    ex15:airOutletExhaust ex35:00007 .
 
 ex35:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
@@ -165,17 +166,17 @@ ex35:00015 a s223:ObservableProperty,
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
-ex35:00016 a p223:GasMonitor,
-        s223:Connectable,
-        s223:Equipment ;
+ex35:00016 a s223:Connectable,
+        s223:Equipment,
+        ex15:GasMonitor ;
     rdfs:label "GM-1" ;
     s223:contains ex35:00019,
         ex35:00021 ;
     s223:hasConnectionPoint ex35:00017,
         ex35:00018 ;
-    bob:airInletSupply ex35:00017 ;
-    bob:airOutletExhaust ex35:00018 ;
-    rdfs:comment "Dual Gas Monitoring Equipment that measure NO2 and CO. Usually used in underground parking lot" .
+    rdfs:comment "Dual Gas Monitoring Equipment that measure NO2 and CO. Usually used in underground parking lot" ;
+    ex15:airInletSupply ex35:00017 ;
+    ex15:airOutletExhaust ex35:00018 .
 
 ex35:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
@@ -247,16 +248,16 @@ ex35:00024 a s223:ObservableProperty,
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
-ex35:00025 a p223:GasMonitor,
-        s223:Connectable,
-        s223:Equipment ;
+ex35:00025 a s223:Connectable,
+        s223:Equipment,
+        ex15:GasMonitor ;
     rdfs:label "CO2-1" ;
     s223:contains ex35:00028 ;
     s223:hasConnectionPoint ex35:00026,
         ex35:00027 ;
-    bob:airInletSupply ex35:00026 ;
-    bob:airOutletExhaust ex35:00027 ;
-    rdfs:comment "CO2 Monitor" .
+    rdfs:comment "CO2 Monitor" ;
+    ex15:airInletSupply ex35:00026 ;
+    ex15:airOutletExhaust ex35:00027 .
 
 ex35:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
@@ -291,16 +292,16 @@ ex35:00029 a s223:ObservableProperty,
     qudt:hasQuantityKind qudtqk:DimensionlessRatio ;
     qudt:hasUnit unit:PPM .
 
-ex35:00030 a p223:GasMonitor,
-        s223:Connectable,
-        s223:Equipment ;
+ex35:00030 a s223:Connectable,
+        s223:Equipment,
+        ex15:GasMonitor ;
     rdfs:label "CO2-4" ;
     s223:contains ex35:00033 ;
     s223:hasConnectionPoint ex35:00031,
         ex35:00032 ;
-    bob:airInletSupply ex35:00031 ;
-    bob:airOutletExhaust ex35:00032 ;
-    rdfs:comment "CO2 Monitor" .
+    rdfs:comment "CO2 Monitor" ;
+    ex15:airInletSupply ex35:00031 ;
+    ex15:airOutletExhaust ex35:00032 .
 
 ex35:00031 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
