@@ -458,7 +458,13 @@ class Node(metaclass=NodeMetaclass):
 
         if _node_iri is not None:
             if not isinstance(_node_iri, URIRef):
-                raise TypeError(f"URIRef expected: {_node_iri}")
+                # it _node_iri comes from a template, it might be a string
+                if isinstance(_node_iri, str) and _node_iri.startswith(
+                    ("http", "urn:")
+                ):
+                    _node_iri = URIRef(_node_iri)
+                else:
+                    raise TypeError(f"URIRef expected: {_node_iri}")
         elif model_namespace:
             _next_node[model_namespace] += 1
             _node_iri = model_namespace[f"{_next_node[model_namespace]:05d}"]
