@@ -314,6 +314,11 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
             for _connection in value:
                 add_to_relation_dict(_connection, ">>", separator=" -> ")
 
+    for key, value in yaml_content.items():
+        if re.match(r".*mapsTo$", key) and isinstance(value, list):
+            for _connection in value:
+                add_to_relation_dict(_connection, "mapsTo", separator=" -> ")
+
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])
     for _observations in observation_location:
