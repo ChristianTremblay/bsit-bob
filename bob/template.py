@@ -170,7 +170,7 @@ def configure_relations(
 
 class SystemFromTemplate(System):
     def __init__(self, config: t.Dict = None, **kwargs):
-        required_class = config.pop("template_class")
+        required_class = config.pop("template_class") if "template_class" in config else System
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         if not issubclass(required_class, System):
@@ -186,7 +186,7 @@ class SystemFromTemplate(System):
 
 class EquipmentFromTemplate(Equipment):
     def __init__(self, config: t.Dict = None, **kwargs):
-        required_class = config.pop("template_class")
+        required_class = config.pop("template_class") if "template_class" in config else Equipment
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _relations = _config.pop("relations", [])
