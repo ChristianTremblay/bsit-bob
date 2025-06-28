@@ -185,24 +185,13 @@ class SystemFromTemplate(System):
         configure_boundaries(self, _boundaries)
 
 
-class ProductGroupFromTemplate(SystemFromTemplate, schemaorg.ProductGroup):
-    """
-    A class to create a product group from a template.
-    It inherits from SystemFromTemplate and allows to create a Schema.org
-    product group with the same configuration as the system.
-    """
-
-    def __init__(self, config: t.Dict = None, **kwargs):
-        super().__init__(config, **kwargs)
-
-
 class EquipmentFromTemplate(Equipment):
     def __init__(self, config: t.Dict = None, **kwargs):
         required_class = config.pop("template_class")
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _relations = _config.pop("relations", [])
-        
+
         if required_class is System:
             raise TypeError(
                 "EquipmentFromTemplate should not be used with System as template_class. Use SystemFromTemplate instead."
@@ -216,11 +205,6 @@ class EquipmentFromTemplate(Equipment):
         required_class.__init__(self, _config, **kwargs)
         configure_relations(self, _relations)
         # configure_mapsTo(self, _mapsTo)
-
-
-class ProductFromTemplate(EquipmentFromTemplate, schemaorg.Product):
-    def __init__(self, config: t.Dict = None, **kwargs):
-        super().__init__(config, **kwargs)
 
 
 def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
@@ -240,9 +224,11 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     name = yaml_content["name"]
     params = yaml_content["params"]
     template_class = (
-        get_class_from_name(yaml_content["template_class"]) if "template_class" in yaml_content else System
+        get_class_from_name(yaml_content["template_class"])
+        if "template_class" in yaml_content
+        else System
     )
-    _dict['template_class'] = template_class
+    _dict["template_class"] = template_class
 
     label = params.get("label", name)
     comment = params.get("comment", "")
@@ -256,7 +242,14 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
 
     _dict["params"] = {"label": label, "comment": comment}
     # Schema.org parameters treated as kwargs
-    _dict["params"].update(yaml_content.get("schemaorg", {}))
+    for key, value in yaml_content.items():
+        if key.startswith("params_"):
+            class_name = key.split("params_")
+            try:
+                get_class_from_name(class_name)
+            except TypeError:
+                raise TypeError(f"Unknown class for params: {class_name}, your template cannot be imported.")
+            _dict["params"].update(value)
 
     def define_entities(entities: dict = None, entities_category: str = None):
         if entities is None:

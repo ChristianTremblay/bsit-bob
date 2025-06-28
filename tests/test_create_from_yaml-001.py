@@ -5,7 +5,6 @@ from header import ttl_test_header
 from bob.core import bind_model_namespace, dump
 from bob.equipment.hvac.damper import Damper
 from bob.template import (
-    ProductGroupFromTemplate,
     EquipmentFromTemplate,
     config_from_yaml,
     template_update,
