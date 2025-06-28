@@ -171,8 +171,13 @@ def configure_relations(
 
 class SystemFromTemplate(System):
     def __init__(self, config: t.Dict = None, **kwargs):
+        required_class = config.pop("template_class")
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
+        if not issubclass(required_class, System):
+            raise TypeError(
+                f"template_class {required_class} must be a subclass of System"
+            )
         _relations = _config.pop("relations", [])
         _boundaries = _config.pop("boundaries", [])
         super().__init__(_config, **kwargs)
@@ -193,11 +198,22 @@ class ProductGroupFromTemplate(SystemFromTemplate, schemaorg.ProductGroup):
 
 class EquipmentFromTemplate(Equipment):
     def __init__(self, config: t.Dict = None, **kwargs):
+        required_class = config.pop("template_class")
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _relations = _config.pop("relations", [])
-        # _mapsTo = _config.pop('mapsTo', {})
-        super().__init__(_config, **kwargs)
+        
+        if required_class is System:
+            raise TypeError(
+                "EquipmentFromTemplate should not be used with System as template_class. Use SystemFromTemplate instead."
+            )
+        elif not issubclass(required_class, Equipment):
+            raise TypeError(
+                f"template_class {required_class} must be a subclass of Equipment"
+            )
+        # Class mutation
+        self.__class__ = required_class
+        required_class.__init__(self, _config, **kwargs)
         configure_relations(self, _relations)
         # configure_mapsTo(self, _mapsTo)
 
@@ -223,9 +239,11 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     _dict = {}
     name = yaml_content["name"]
     params = yaml_content["params"]
-    template_type = (
-        yaml_content["template_type"] if "template_type" in yaml_content else "system"
+    template_class = (
+        get_class_from_name(yaml_content["template_class"]) if "template_class" in yaml_content else System
     )
+    _dict['template_class'] = template_class
+
     label = params.get("label", name)
     comment = params.get("comment", "")
     sensors = yaml_content.get("sensors", None)
@@ -286,7 +304,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
         define_entities(connection_points, "cp")
     # define_entities(boundaries, "boundaries")
     _dict["relations"] = []
-    if template_type == "system":
+    if template_class is System:
         _dict["boundaries"] = []
 
     def parse_sub(a):

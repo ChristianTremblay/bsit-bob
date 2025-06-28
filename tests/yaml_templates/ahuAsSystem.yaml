@@ -1,15 +1,8 @@
 name: ahu_template
-template_class: AirHandlingUnit
-params:
+template_class: System
+params: 
     label: AHU
     comment: AHU delivering air to 2 VAV boxes
-cp:
-    outdoorAirIn:  AirInletConnectionPoint
-    returnAirIn: AirInletConnectionPoint
-    dischargeAirOut: AirOutletConnectionPoint
-    exhaustAirOut: AirOutletConnectionPoint
-    electricityIn: Electricity_600VLL_3Ph_60HzInletConnectionPoint
-    
 junctions:
     MixedAirDuct: 
         class: Junction
@@ -37,13 +30,6 @@ junctions:
         hasMedium: Fluid.Air
         returnAir: AirInletConnectionPoint
         toReturnFan: AirOutletConnectionPoint
-    ElectricalBox:
-        class: Junction
-        comment: Electrical Box for AHU equipment
-        hasMedium: Electricity.AC
-        electricalInlet: Electricity_600VLL_3Ph_60HzInletConnectionPoint
-        sfOutlet: Electricity_600VLL_3Ph_60HzOutletConnectionPoint
-        rfVfdOutlet: Electricity_600VLL_3Ph_60HzOutletConnectionPoint
 sensors:
     SA-T:
         class: AirTemperatureSensor
@@ -98,15 +84,12 @@ air_connections:
 
 electrical_connections:
     - RF_VFD -> RF
-    - ElectricalBox.sfOutlet -> SF.electricalInlet
-    - ElectricalBox.rfVfdOutlet -> RF_VFD.electricalInlet
 
 sensors_observation_location:
     - SA-T -> SupplyAirDuct.supplyAir
 
-mapsTo:
-    - OADPR.airInlet -> outdoorAirIn
-    - ReturnAirDuct.returnAir -> returnAirIn
-    - SupplyAirDuct.supplyAir -> dischargeAirOut
-    - EADPR.airOutlet -> exhaustAirOut
-    - ElectricalBox.electricalInlet -> electricityIn
+boundaries:
+    - OADPR.airInlet
+    - ReturnAirDuct.returnAir
+    - SupplyAirDuct.supplyAir
+    - EADPR.airOutlet
