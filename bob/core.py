@@ -3673,7 +3673,7 @@ class Equipment(Container, Connectable):
                         raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
-                    if isinstance(thing, (Equipment, System, _Sensor, _Producer)):
+                    if isinstance(thing, (Equipment, System, _Sensor, _Producer, Junction)):
                         self > thing
                     if isinstance(thing, Property):
                         self[thing_name] = thing
