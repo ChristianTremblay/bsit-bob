@@ -238,7 +238,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
 
     _dict["params"] = {"label": label, "comment": comment}
     # Schema.org parameters treated as kwargs
-    _dict["params"].update(yaml_content.get("schemaorg", None))
+    _dict["params"].update(yaml_content.get("schemaorg", {}))
 
     def define_entities(entities: dict = None, entities_category: str = None):
         if entities is None:
@@ -285,8 +285,8 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     if connection_points is not None:
         define_entities(connection_points, "cp")
     # define_entities(boundaries, "boundaries")
+    _dict["relations"] = []
     if template_type == "system":
-        _dict["relations"] = []
         _dict["boundaries"] = []
 
     def parse_sub(a):
