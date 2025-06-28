@@ -44,10 +44,4 @@ class CircuitBreaker(Equipment):
 
     def __init__(self, config: Dict = {}, **kwargs):
         kwargs = {**config.get("params", {}), **kwargs}
-        amps = kwargs.pop("amps")
-
         super().__init__(config, **kwargs)
-
-        self.currentRating = Amps(
-            amps, label="Current rating of breaker", hasAspect=Aspect.Nominal
-        )
