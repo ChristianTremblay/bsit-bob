@@ -5,7 +5,6 @@ from pathlib import Path
 
 import yaml
 
-from . import schemaorg
 from .core import (
     BoundaryConnectionPoint,
     Connection,
