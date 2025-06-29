@@ -2,6 +2,8 @@ import copy
 import re
 import typing as t
 from pathlib import Path
+import importlib
+import warnings
 
 import yaml
 
@@ -170,7 +172,9 @@ def configure_relations(
 
 class SystemFromTemplate(System):
     def __init__(self, config: t.Dict = None, **kwargs):
-        required_class = config.pop("template_class") if "template_class" in config else System
+        required_class = (
+            config.pop("template_class") if "template_class" in config else System
+        )
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         if not issubclass(required_class, System):
@@ -186,24 +190,24 @@ class SystemFromTemplate(System):
 
 class EquipmentFromTemplate(Equipment):
     def __init__(self, config: t.Dict = None, **kwargs):
-        required_class = config.pop("template_class") if "template_class" in config else Equipment
+        required_class = (
+            config.pop("template_class") if "template_class" in config else Equipment
+        )
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _relations = _config.pop("relations", [])
 
-        if required_class is System:
-            raise TypeError(
-                "EquipmentFromTemplate should not be used with System as template_class. Use SystemFromTemplate instead."
-            )
-        elif not issubclass(required_class, Equipment):
-            raise TypeError(
-                f"template_class {required_class} must be a subclass of Equipment"
-            )
-        # Class mutation
-        self.__class__ = required_class
-        required_class.__init__(self, _config, **kwargs)
+        # Class mutation, we want a more explicit Equipment maybe... 
+        DynamicClass = type(
+            f"Dynamic{'_'.join(cls.__name__ for cls in required_class)}",
+            tuple(required_class) + (Equipment,),
+            {},
+        )
+        self.__class__ = DynamicClass
+
+        DynamicClass.__init__(self, _config, **kwargs)
+
         configure_relations(self, _relations)
-        # configure_mapsTo(self, _mapsTo)
 
 
 def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
@@ -222,11 +226,13 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     _dict = {}
     name = yaml_content["name"]
     params = yaml_content["params"]
-    template_class = (
-        get_class_from_name(yaml_content["template_class"])
-        if "template_class" in yaml_content
-        else System
-    )
+    _template_class = yaml_content["template_class"]
+    template_class = []
+    if isinstance(_template_class, list):
+        for each in _template_class:
+            template_class.append(get_class_from_name(each))
+    else:
+        template_class.append(get_class_from_name(_template_class))
     _dict["template_class"] = template_class
 
     label = params.get("label", name)
@@ -241,14 +247,27 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
 
     _dict["params"] = {"label": label, "comment": comment}
     # Schema.org parameters treated as kwargs
-    for key, value in yaml_content.items():
-        if key.startswith("params_"):
-            class_name = key.split("params_")
-            try:
-                get_class_from_name(class_name)
-            except TypeError:
-                raise TypeError(f"Unknown class for params: {class_name}, your template cannot be imported.")
-            _dict["params"].update(value)
+    try:
+        for key, value in yaml_content.items():
+            if key.startswith("params_"):
+                class_name = key.split("params_")[-1]
+                package = value.pop("package", None)
+                if package is None:
+                    raise KeyError(
+                        f"params_{class_name} must have a 'package' key to be imported"
+                    )
+                try:
+                    module = importlib.import_module(package)
+                    cls = getattr(module, class_name)
+                except ImportError as e:
+                    raise ImportError(
+                        f"Could not import package '{package}' for params_{class_name}: {e}, parameters not supported."
+                    )
+                _dict["params"].update(value)
+    except ImportError as e:
+        warnings.warn(
+            f"Could not import parameters from YAML file: {e}. Parameters will not be applied."
+        )
 
     def define_entities(entities: dict = None, entities_category: str = None):
         if entities is None:
@@ -296,7 +315,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
         define_entities(connection_points, "cp")
     # define_entities(boundaries, "boundaries")
     _dict["relations"] = []
-    if template_class is System:
+    if template_class[0] is System:
         _dict["boundaries"] = []
 
     def parse_sub(a):
