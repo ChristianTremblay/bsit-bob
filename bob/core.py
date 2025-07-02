@@ -3675,6 +3675,13 @@ class Equipment(Container, Connectable):
 
                     if isinstance(thing, (Equipment, System, _Sensor, _Producer, Junction)):
                         self > thing
+                    if thing.__class__.__name__ == 'Function':
+                        # For reachability, we need to add the fucntion to the equipment
+                        # this is purely in python and no RDF relation is created
+                        # When creating equipmentusing template, the internal
+                        # relationships can be created from the template and having the connection
+                        # square bracket reachable make that possible
+                        self[thing_name] = thing
                     if isinstance(thing, Property):
                         self[thing_name] = thing
                         self.add_property(thing)
