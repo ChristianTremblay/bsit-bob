@@ -15,6 +15,7 @@ from ..core import (
 )
 from ..properties import GasConcentration
 from .sensor import Sensor, split_kwargs
+from ..enum import NOx
 
 _namespace = BOB
 
@@ -85,7 +86,7 @@ class NO2Sensor(GasConcentrationSensor):
 
     def __init__(self, **kwargs):
         # _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
-        super().__init__(ofSubstance=Constituent.NO2, **kwargs)
+        super().__init__(ofSubstance=NOx.NO2, **kwargs)
 
 
 class CH4Sensor(GasConcentrationSensor):
