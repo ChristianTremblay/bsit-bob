@@ -184,10 +184,7 @@ class SystemFromTemplate(System):
 
         _config = template_update(config)
         kwargs = {**_config.pop("params", {}), **kwargs}
-        if System not in required_class:
-            raise TypeError(
-                f"template_class {required_class} must be a subclass of System"
-            )
+
         _relations = _config.pop("relations", [])
         _boundaries = _config.pop("boundaries", [])
         
