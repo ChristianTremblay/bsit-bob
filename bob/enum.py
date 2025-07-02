@@ -38,16 +38,17 @@ Constituent.Smoke = Smoke = Constituent("Smoke", label="Smoke", _alt_namespace=P
 Constituent.Ar = Argon = Constituent("Ar", label="Argon", _alt_namespace=P223)
 Constituent.CO = CO = Constituent("CO", label="Carbon monoxyde")
 Constituent.CO2 = CO2 = Constituent("CO2", label="Carbon dioxyde")
-Constituent.NO2 = NO2 = Constituent("NO2", label="NO2", _alt_namespace=P223)
-Constituent.CH4 = CH4 = Constituent("CH4", label="CH4", _alt_namespace=P223)
+Constituent.NOX = NOx = Constituent("NOX", label="Nitrogen oxides")
+NOx.NO2 = NO2 = NOx("NO2", label="Nitrogen dioxide (NO2)")
+Constituent.CH4 = CH4 = Constituent("CH4", label="CH4")
 Constituent.NH3 = NH3 = Constituent("NH3", label="NH3", _alt_namespace=P223)
-Constituent.H2S = H2S = Constituent("H2S", label="H2S", _alt_namespace=P223)
+Constituent.H2S = H2S = Constituent("H2S", label="H2S")
 Constituent.O2 = O2 = Constituent("O2", label="O2", _alt_namespace=P223)
-Constituent.O3 = O3 = Constituent("O3", label="O3", _alt_namespace=P223)
-Constituent.SO2 = SO2 = Constituent("SO2", label="SO2", _alt_namespace=P223)
+Constituent.O3 = O3 = Constituent("O3", label="O3")
+Constituent.SO2 = SO2 = Constituent("SO2", label="SO2")
 Constituent.N = Nitrogen = Constituent("N", label="Nitrogen", _alt_namespace=P223)
-Constituent.VOC = VOC = Constituent("VOC", label="VOC", _alt_namespace=P223)
-Constituent.Radon = Radon = Constituent("Radon", label="Radon", _alt_namespace=P223)
+Constituent.VOC = VOC = Constituent("VolatileOrganicCompounds", label="VolatileOrganicCompounds")
+Constituent.Radon = Radon = Constituent("Radon", label="Radon")
 Constituent.R22 = const_R22 = Constituent("R-22", label="R-22", _alt_namespace=P223)
 Constituent.R134A = const_R134A = Constituent(
     "R-134A", label="R-134A", _alt_namespace=P223
@@ -614,7 +615,7 @@ DCVoltage.DCNegativeVoltage = DCVoltage("DCNegativeVoltage")
 # s223:DCNegativeVoltage-48.0V
 # s223:DCNegativeVoltage-190.0V
 # s223:DCNegativeVoltage-380.0V
-DCVoltage.DCPositiveVoltage = DCVoltage("DCPositiveVoltage")
+DCVoltage.DCPositiveVoltage = DCPositiveVoltage = DCVoltage("DCPositiveVoltage")
 # see also negative voltages above
 DCVoltage.DCZeroVoltage = DCVoltage("DCZeroVoltage")
 
