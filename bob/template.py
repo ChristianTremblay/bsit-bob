@@ -167,6 +167,12 @@ def configure_relations(
             source @ target
         elif operator == "|":
             source | target
+        elif operator == "executes":
+            source.executes(target)
+        elif operator == "uses":
+            source.uses(target)
+        elif operator == "produces":
+            source.produces(target)
         # no @ here as we are creating relation "inside" the equipment or system
 
 
@@ -237,7 +243,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                 raise FileNotFoundError(f"YAML file {yaml_file} not found")
             with open(yaml_file, "r") as file:
                 yaml_content = yaml.safe_load(file)
-    _text_values = ["label", "comment"]
+    _text_values = ["label", "comment", "hasValue", "config"]
     _dict = {}
     name = yaml_content["name"]
     params = yaml_content["params"]
@@ -252,11 +258,13 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
 
     label = params.get("label", name)
     comment = params.get("comment", "")
-    sensors = yaml_content.get("sensors", None)
-    equipment = yaml_content.get("equipment", None)
-    connections = yaml_content.get("connections", None)
-    junctions = yaml_content.get("junctions", None)
-    connection_points = yaml_content.get("cp", None)
+    sensors = yaml_content.get("sensors", {})
+    equipment = yaml_content.get("equipment", {})
+    properties = yaml_content.get("properties", {})
+    functions = yaml_content.get("functions", {})
+    connections = yaml_content.get("connections", {})
+    junctions = yaml_content.get("junctions", {})
+    connection_points = yaml_content.get("cp", {})
 
 
     # boundaries = yaml_content.get("boundaries", None)
@@ -324,24 +332,29 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
 
     # print('Defining entities')
     define_entities(equipment, "equipment")
+    define_entities(properties, "properties")
+    define_entities(functions, "functions")
     define_entities(sensors, "sensors")
     define_entities(connections, "connections")
     define_entities(junctions, "junctions")
     if connection_points is not None:
         define_entities(connection_points, "cp")
     # define_entities(boundaries, "boundaries")
-    equipment_from_catalog = yaml_content.get("equipment_from_catalog", None)
-    if equipment_from_catalog is not None:
+    from_catalog = yaml_content.get("from_catalog", None)
+    if from_catalog is not None:
         catalog_module, catalog_lookup_function = yaml_content.get("catalog_source", "").split("|")
         importlib.import_module(catalog_module)
         get_template = getattr(importlib.import_module(catalog_module), catalog_lookup_function)
-        for entity_name, entity_params in equipment_from_catalog.items():
+        for entity_name, entity_params in from_catalog.items():
             # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
             entity_label = entity_params.pop("label", entity_name)
             # print(entity_label, entity_params, f"Looking for {entity_params['template']}")
             try:
-                _config = config_from_yaml(get_template(entity_params.pop("template")))
-                _dict["equipment"][(entity_label, EquipmentFromTemplate)] = {"config": _config}
+                _template_config = config_from_yaml(get_template(entity_params.pop("template")))
+                if "System" in _template_config['template_class']:
+                    _dict["equipment"][(entity_label, SystemFromTemplate)] = {"config": _template_config}
+                else:
+                    _dict["equipment"][(entity_label, EquipmentFromTemplate)] = {"config": _template_config}
 
             except KeyError:
                 raise KeyError(
@@ -382,6 +395,22 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
         if re.match(r".*mapsTo$", key) and isinstance(value, list):
             for _connection in value:
                 add_to_relation_dict(_connection, "mapsTo", separator=" -> ")
+
+    for key, value in yaml_content.items():
+        if re.match(r".*_executes$", key) and isinstance(value, list):
+            for _connection in value:
+                add_to_relation_dict(_connection, "executes", separator=" -> ")
+
+    for key, value in yaml_content.items():
+        if re.match(r".*_uses$", key) and isinstance(value, list):
+            for _connection in value:
+                add_to_relation_dict(_connection, "uses", separator=" -> ")
+
+    for key, value in yaml_content.items():
+        if re.match(r".*_produces$", key) and isinstance(value, list):
+            for _connection in value:
+                add_to_relation_dict(_connection, "produces", separator=" -> ")
+
 
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])
