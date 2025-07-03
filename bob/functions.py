@@ -7,7 +7,7 @@ from __future__ import annotations
 import inspect
 import logging
 from datetime import datetime
-from typing import Any, AnyStr, Dict
+from typing import Any, AnyStr, Dict, Union
 
 from rdflib import URIRef  # type: ignore
 
@@ -32,26 +32,31 @@ class FunctionInput(PropertyReference):
     def __new__(cls, arg: Any = None, **kwargs) -> Any:
         _log.debug(f"FunctionInput.__new__ {cls} {arg} {kwargs}")
         if (arg is None) or (arg == ()):
-            return Property(**kwargs)
-        if isinstance(arg, Property):
-            return arg
-        if isinstance(arg, (int, float, str, datetime)):
-            return Property(arg, **kwargs)
+            obj = Property(**kwargs)
+        elif isinstance(arg, Property):
+            obj = arg
+        elif isinstance(arg, (int, float, str, datetime)):
+            obj = Property(arg, **kwargs)
 
-        raise TypeError(f"property expected: {arg}")
+        else:
+            raise TypeError(f"property expected: {arg}")
+
+        return obj
 
 
 class FunctionOutput(PropertyReference):
     def __new__(cls, arg: Any = None, **kwargs) -> Any:
         _log.debug(f"FunctionOutput.__new__ {cls} {arg} {kwargs}")
         if (arg is None) or (arg == ()):
-            return Property(**kwargs)
-        if isinstance(arg, Property):
-            return arg
-        if isinstance(arg, (int, float, str, datetime)):
-            return Property(arg, **kwargs)
+            obj = Property(**kwargs)
+        elif isinstance(arg, Property):
+            obj = arg
+        elif isinstance(arg, (int, float, str, datetime)):
+            obj = Property(arg, **kwargs)
+        else:
+            raise TypeError(f"property expected: {arg}")
 
-        raise TypeError(f"property expected: {arg}")
+        return obj
 
 
 #
@@ -89,6 +94,8 @@ class Function(Node):
         _config = template_update({}, config=config)
         kwargs = {**_config.pop("params", {}), **kwargs}
         _log.debug(f"Function.__init__ {kwargs}")
+        self.inputs = {}
+        self.outputs = {}
 
         if not self._resolved:
             self._resolve_annotations()
@@ -97,79 +104,55 @@ class Function(Node):
         # super().__init__(_config, **kwargs)
         super().__init__(**kwargs)
 
-        # instantiate and associate all of the inputs and outputs
-        for attr_name, attr_type in self._nodes.items():
-            if not inspect.isclass(attr_type):
-                continue
-            if not issubclass(attr_type, (FunctionInput, FunctionOutput)):
-                continue
-
-            # check if an instance was passed as a kwarg, if it was then
-            # the attribute element will be a node and has its _node_iri
-            attr_element = getattr(self, attr_name, None)
-            if attr_element is None:
-                continue
-
-            # if this is used as a function input/output, make it so
-            if issubclass(attr_type, FunctionInput):
-                data_graph.add((self._node_iri, S223.hasInput, attr_element._node_iri))
-                # data_graph.add(
-                #     (attr_element._node_iri, RDF.type, S223.FunctionInput)
-                # )
-            elif issubclass(attr_type, FunctionOutput):
-                data_graph.add((self._node_iri, S223.hasOutput, attr_element._node_iri))
-                # data_graph.add(
-                #     (attr_element._node_iri, RDF.type, S223.FunctionOutput)
-                # )
-
-    def __setattr__(self, attr: str, value: Any) -> None:
+    def __setattr__(
+        self, attr: str, value: Any, klass: Union[FunctionInput, FunctionOutput] = None
+    ) -> None:
         """
         .
         """
-        # do the normal things
         super().__setattr__(attr, value)
+        # A property can be use as a function input on multiple functions, so we
+        # need to keep track of the functions that use this property as an input.
+        if klass is None:
+            klass = self.__annotations__.get(attr)
+        if klass == FunctionInput:
+            if not hasattr(value, "_is_function_input_of"):
+                value._is_function_input_of = set()
+            self.inputs[attr] = value
+            data_graph.add((self._node_iri, S223.hasInput, value._node_iri))
+        elif klass == FunctionOutput:
+            if not hasattr(value, "_is_function_output_of"):
+                value._is_function_output_of = set()
+            self.outputs[attr] = value
+            data_graph.add((self._node_iri, S223.hasOutput, value._node_iri))
 
-        # if this is a node, double check the type
-        attr_type = self._nodes.get(attr, None)
-        _log.debug("    - attr_type: %r", attr_type)
-        if not attr_type:
-            return
 
-        _log.debug(f"Function.__setattr__ {attr} {value}")
 
-        # get the element after it has been set, it will be an instance of
-        # attr_type which might not be the value
-        attr_element = vars(self).get(attr)
-        _log.debug("    - attr_element: %r", attr_element)
 
-        # if this is used as a function input/output, make it so
-        if issubclass(attr_type, FunctionInput):
-            data_graph.add((self._node_iri, S223.hasInput, attr_element._node_iri))
-            # data_graph.add(
-            #     (attr_element._node_iri, RDF.type, S223.FunctionInput)
-            # )
-        elif issubclass(attr_type, FunctionOutput):
-            data_graph.add((self._node_iri, S223.hasOutput, attr_element._node_iri))
-            # data_graph.add(
-            #     (attr_element._node_iri, RDF.type, S223.FunctionOutput)
-            # )
-
-    def uses(
+    def hasInput(
         self,
         prop: Property,
+        attr: AnyStr = None, 
         klass: FunctionInput = FunctionInput,
-        label: AnyStr = "input",
     ) -> None:
-        connector = klass(self, label=f"{self.label}.{label}")
-        setattr(self, label, connector)
-        prop >> connector
+        label = f"{prop.label}" if attr is None else attr
+        function_input_ref = klass(prop, function=self, label=label)
+        self.__setattr__(label, function_input_ref, klass=klass)
 
-    def produces(
+    def hasOutput(
         self,
         prop: Property,
+        attr: AnyStr = None, 
         klass: FunctionOutput = FunctionOutput,
-        label: AnyStr = "output",
     ) -> None:
-        connector = klass(self, label=f"{self.label}.{label}")
-        setattr(self, label, connector)
-        connector >> prop
+        label = f"{prop.label}" if attr is None else attr
+        function_output_ref = klass(prop, function=self, label=label)
+        self.__setattr__(label, function_output_ref, klass=klass)
+
+    #   Convenience methods for hasInput and hasOutput for retro-compatibility
+    #   with the old FunctionInput and FunctionOutput classes
+    def uses(self, *args, **kwargs) -> FunctionInput:
+        self.hasInput(*args, **kwargs)
+
+    def produces(self, *args, **kwargs) -> FunctionOutput:
+        self.hasOutput(*args, **kwargs)
