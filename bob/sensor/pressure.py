@@ -63,17 +63,11 @@ class DifferentialStaticPressureSensor(Sensor):
         super().__init__(**_sensor_kwargs)
 
     def add_hasObservationLocation(self, node: Tuple[Node, Node]) -> None:
-        # For now, make that a secret, or we end up with s223.hasObservationLocation
-        # self._hasObservationLocation = node
-
         # link the two together
         observation_location, reference_location = node
         self._data_graph.add(
             (self._node_iri, S223.hasReferenceLocation, reference_location._node_iri)
         )
-        if INCLUDE_INVERSE:
-            reference_location.isReferenceLocation = self
-
         self._data_graph.add(
             (
                 self._node_iri,
@@ -81,9 +75,6 @@ class DifferentialStaticPressureSensor(Sensor):
                 observation_location._node_iri,
             )
         )
-        if INCLUDE_INVERSE:
-            observation_location.isReferenceLocation = self
-
         self["highPort"] % observation_location
         self["lowPort"] % reference_location
 
@@ -113,8 +104,8 @@ class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
         self > Differential(
             label="diff_causality", comment="Will output High minus Low"
         )
-        self > PressureSensor(label="highPort", ofMedium=Water, **_property_kwargs)
-        self > PressureSensor(label="lowPort", ofMedium=Water, **_property_kwargs)
+        self > PressureSensor(label="highPort", ofMedium=Air, **_property_kwargs)
+        self > PressureSensor(label="lowPort", ofMedium=Air, **_property_kwargs)
         self > Differential(label="output", comment="Will output High minus Low")
         # self["highPort"].observes >> self.observation_pressure
         # self["lowPort"].observes >> self.reference_pressure
