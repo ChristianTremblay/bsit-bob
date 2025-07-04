@@ -116,7 +116,7 @@ class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
 
 
 class WaterDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
-    _class_iri = S223.DifferentialSensor
+    _class_iri = S223.PressureSensor
 
     def __init__(self, **kwargs):
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
