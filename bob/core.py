@@ -3682,6 +3682,7 @@ class Equipment(Container, Connectable):
                         # relationships can be created from the template and having the connection
                         # square bracket reachable make that possible
                         self[thing_name] = thing
+                        self.executes(thing)
                     if isinstance(thing, Property):
                         self[thing_name] = thing
                         self.add_property(thing)
