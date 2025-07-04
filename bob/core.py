@@ -3673,7 +3673,7 @@ class Equipment(Container, Connectable):
                         raise ValueError(f"label already used: {self[thing_name]}")
                     thing = thing_class(label=thing_name, **thing_kwargs)
 
-                    if isinstance(thing, (Equipment, System, _Sensor, _Producer, Junction)):
+                    if isinstance(thing, (Equipment, System, _Sensor, Junction)):
                         self > thing
                     if thing.__class__.__name__ == 'Function':
                         # For reachability, we need to add the fucntion to the equipment
@@ -3682,7 +3682,10 @@ class Equipment(Container, Connectable):
                         # relationships can be created from the template and having the connection
                         # square bracket reachable make that possible
                         self[thing_name] = thing
-                        self.executes(thing)
+                        try:
+                            self.executes(thing)
+                        except AttributeError:
+                            pass # not a controller
                     if isinstance(thing, Property):
                         self[thing_name] = thing
                         self.add_property(thing)
@@ -3779,25 +3782,6 @@ def contains_mm(equipment: Equipment, sensor: _Sensor) -> None:
     _log.info(f"equipment {equipment} contains sensor {sensor}")
 
     equipment._data_graph.add((equipment._node_iri, S223.contains, sensor._node_iri))
-
-
-class _Producer(Container, Node):
-    """
-    Placeholder to prevent circular reference, actual class definition in
-    the bob.producer module.
-    """
-
-    _class_iri: URIRef = None
-
-
-@multimethod
-def contains_mm(parent_equipment: Equipment, child_producer: _Producer) -> None:
-    """Equipment > Producer"""
-    _log.info(f"Equipment {parent_equipment} contains Producer {child_producer}")
-
-    parent_equipment._data_graph.add(
-        (parent_equipment._node_iri, BOB.contains, child_producer._node_iri)
-    )
 
 
 class DomainSpace(Connectable):

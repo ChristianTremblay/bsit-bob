@@ -86,6 +86,11 @@ class Function(Node):
     algorithm. Function blocks use inputs and produce outputs that are
     related to observable and actuatable properties.
     Functions are executed by a s223:Contoller.
+
+    config accept a dictionary with the following keys
+    - inputs: a list of Property or dict with 'property' and 'attr' keys
+    - outputs: a list of Property or dict with 'property' and 'attr' keys
+
     """
 
     _class_iri: URIRef = S223.Function
@@ -103,6 +108,28 @@ class Function(Node):
 
         # super().__init__(_config, **kwargs)
         super().__init__(**kwargs)
+        if _config:
+            for group_name, group_items in _config.items():
+                if group_name == "inputs":
+                    for each in group_items:
+                        if isinstance(each, Property):
+                            self.hasInput(each)
+                        elif isinstance(each, dict):
+                            # each is a dict with 'property' and 'attr' keys
+                            prop = each.get("property")
+                            attr = each.get("attr")
+                            if prop is not None:
+                                self.hasInput(prop, attr=attr)
+                elif group_name == "outputs":
+                    for each in group_items:
+                        if isinstance(each, Property):
+                            self.hasOutput(each)
+                        elif isinstance(each, dict):
+                            # each is a dict with 'property' and 'attr' keys
+                            prop = each.get("property")
+                            attr = each.get("attr")
+                            if prop is not None:
+                                self.hasOutput(prop, attr=attr)
 
     def __setattr__(
         self, attr: str, value: Any, klass: Union[FunctionInput, FunctionOutput] = None

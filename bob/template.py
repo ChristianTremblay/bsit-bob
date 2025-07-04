@@ -187,9 +187,13 @@ class SystemFromTemplate(System):
 
         _relations = _config.pop("relations", [])
         _boundaries = _config.pop("boundaries", [])
-        
-        # Class mutation, we want a more explicit System maybe (ex. schema.org ProductGroup)... 
-        _tuple = tuple(required_class) + (System,) if System not in required_class else tuple(required_class)
+
+        # Class mutation, we want a more explicit System maybe (ex. schema.org ProductGroup)...
+        _tuple = (
+            tuple(required_class) + (System,)
+            if System not in required_class
+            else tuple(required_class)
+        )
         DynamicClass = type(
             f"Dynamic{'_'.join(cls.__name__ for cls in required_class)}",
             _tuple,
@@ -198,8 +202,6 @@ class SystemFromTemplate(System):
         self.__class__ = DynamicClass
 
         DynamicClass.__init__(self, _config, **kwargs)
-
-
 
         configure_relations(self, _relations)
         configure_boundaries(self, _boundaries)
@@ -214,8 +216,12 @@ class EquipmentFromTemplate(Equipment):
         kwargs = {**_config.pop("params", {}), **kwargs}
         _relations = _config.pop("relations", [])
 
-        # Class mutation, we want a more explicit Equipment maybe... 
-        _tuple = tuple(required_class) + (Equipment,) if Equipment not in required_class else tuple(required_class)
+        # Class mutation, we want a more explicit Equipment maybe...
+        _tuple = (
+            tuple(required_class) + (Equipment,)
+            if Equipment not in required_class
+            else tuple(required_class)
+        )
         DynamicClass = type(
             f"Dynamic{'_'.join(cls.__name__ for cls in required_class)}",
             _tuple,
@@ -262,7 +268,6 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     connections = yaml_content.get("connections", {})
     junctions = yaml_content.get("junctions", {})
     connection_points = yaml_content.get("cp", {})
-
 
     # boundaries = yaml_content.get("boundaries", None)
 
@@ -330,7 +335,6 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     # print('Defining entities')
     define_entities(equipment, "equipment")
     define_entities(properties, "properties")
-    define_entities(functions, "functions")
     define_entities(sensors, "sensors")
     define_entities(connections, "connections")
     define_entities(junctions, "junctions")
@@ -338,26 +342,38 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
         define_entities(connection_points, "cp")
     # define_entities(boundaries, "boundaries")
     from_catalog = yaml_content.get("from_catalog", None)
+
     if from_catalog is not None:
-        catalog_module, catalog_lookup_function = yaml_content.get("catalog_source", "").split("|")
+        catalog_module, catalog_lookup_function = yaml_content.get(
+            "catalog_source", ""
+        ).split("|")
         importlib.import_module(catalog_module)
-        get_template = getattr(importlib.import_module(catalog_module), catalog_lookup_function)
+        get_template = getattr(
+            importlib.import_module(catalog_module), catalog_lookup_function
+        )
         for entity_name, entity_params in from_catalog.items():
             # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
             entity_label = entity_params.pop("label", entity_name)
             # print(entity_label, entity_params, f"Looking for {entity_params['template']}")
             try:
-                _template_config = config_from_yaml(get_template(entity_params.pop("template")))
-                if "System" in _template_config['template_class']:
-                    _dict["equipment"][(entity_label, SystemFromTemplate)] = {"config": _template_config}
+                _template_config = config_from_yaml(
+                    get_template(entity_params.pop("template"))
+                )
+                if "System" in _template_config["template_class"]:
+                    _dict["equipment"][(entity_label, SystemFromTemplate)] = {
+                        "config": _template_config
+                    }
                 else:
-                    _dict["equipment"][(entity_label, EquipmentFromTemplate)] = {"config": _template_config}
+                    _dict["equipment"][(entity_label, EquipmentFromTemplate)] = {
+                        "config": _template_config
+                    }
 
             except KeyError:
                 raise KeyError(
                     f"Entity {entity_name} in equipment_from_catalog does not have a 'template' key"
                 )
 
+    define_entities(functions, "functions")
 
     _dict["relations"] = []
     if template_class[0] is System:
@@ -407,7 +423,6 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
         if re.match(r".*_produces$", key) and isinstance(value, list):
             for _connection in value:
                 add_to_relation_dict(_connection, "produces", separator=" -> ")
-
 
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])

@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from rdflib import URIRef
 
-from ...producer import Function
+from ...functions import Function
 
 from ...core import (
     INCLUDE_INVERSE,

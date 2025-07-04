@@ -1,7 +1,7 @@
 from typing import Any, Tuple
 
 
-from bob.producer.causality import Differential
+from bob.functions import Function
 from bob.properties.force import DifferentialStaticPressure, Pressure
 
 from ..core import (
@@ -101,17 +101,15 @@ class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
             label=f"{self.label}.ReferencePressure",
             **_property_kwargs,
         )
-        self > Differential(
-            label="diff_causality", comment="Will output High minus Low"
+
+        diff_function = Function(
+            label="differential calculation", comment="Will output High minus Low"
         )
-        self > PressureSensor(label="highPort", ofMedium=Air, **_property_kwargs)
-        self > PressureSensor(label="lowPort", ofMedium=Air, **_property_kwargs)
-        self > Differential(label="output", comment="Will output High minus Low")
-        # self["highPort"].observes >> self.observation_pressure
-        # self["lowPort"].observes >> self.reference_pressure
-        self.observation_pressure >> self["diff_causality"].high_input
-        self.reference_pressure >> self["diff_causality"].low_input
-        self["diff_causality"].differential_output >> self.differential_static_pressure
+        #self > diff_function
+        diff_function.hasInput(self.observation_pressure)
+        diff_function.hasInput(self.reference_pressure)
+        diff_function.hasOutput(self.differential_static_pressure)
+
         self.observes = self.differential_static_pressure
 
 
@@ -136,15 +134,13 @@ class WaterDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
             label=f"{self.label}.ReferencePressure",
             **_property_kwargs,
         )
-        self > Differential(
-            label="diff_causality", comment="Will output High minus Low"
+
+        diff_function = Function(
+        label="differential calculation", comment="Will output High minus Low"
         )
-        self > PressureSensor(label="highPort", ofMedium=Water, **_property_kwargs)
-        self > PressureSensor(label="lowPort", ofMedium=Water, **_property_kwargs)
-        self > Differential(label="output", comment="Will output High minus Low")
-        # self["highPort"].observes >> self.observation_pressure
-        # self["lowPort"].observes >> self.reference_pressure
-        self.observation_pressure >> self["diff_causality"].high_input
-        self.reference_pressure >> self["diff_causality"].low_input
-        self["diff_causality"].differential_output >> self.differential_static_pressure
+        #self > diff_function
+        diff_function.hasInput(self.observation_pressure)
+        diff_function.hasInput(self.reference_pressure)
+        diff_function.hasOutput(self.differential_static_pressure)
+
         self.observes = self.differential_static_pressure
