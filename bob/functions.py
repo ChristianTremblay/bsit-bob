@@ -18,6 +18,7 @@ from .core import (
     Property,
     PropertyReference,
     data_graph,
+    _Function,
 )
 from .template import template_update
 
@@ -80,7 +81,7 @@ class G36DigitalOutput(FunctionOutput):
     _class_iri: URIRef = G36.DigitalOutput
 
 
-class Function(Node):
+class Function(_Function):
     """
     Function blocks are black boxes representing a sequence or an
     algorithm. Function blocks use inputs and produce outputs that are

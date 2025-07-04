@@ -3719,6 +3719,15 @@ class Equipment(Container, Connectable):
             else:
                 raise ValueError(f"Incompatible medium {medium} for {each}")
 
+class _Function(Node):
+    """
+    Placeholder to prevent circular reference, actual class definition in
+    the bob.functions module.
+
+    Required so thing > function works, otherwise it would be
+    """
+
+    _class_iri: URIRef = None
 
 @multimethod
 def add_mm(equipment: Equipment, info: EnumerationKind) -> None:
@@ -3743,7 +3752,6 @@ def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None
         (parent_equipment._node_iri, S223.contains, child_equipment._node_iri)
     )
 
-
 @multimethod
 def contains_mm(parent_equipment: Equipment, equipment_list: List[Equipment]) -> None:
     """Equipment > List[Equipment]"""
@@ -3764,6 +3772,14 @@ def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None:
         (parent_equipment._node_iri, S223.contains, child_junction._node_iri)
     )
 
+@multimethod
+def contains_mm(parent_equipment: Equipment, child_function: _Function) -> None:
+    """Equipment > Equipment"""
+    _log.info(f"equipment {parent_equipment} bob:contains function {child_function}")
+
+    parent_equipment[child_function.label] = child_function
+    # No Graph relation is created, this is purely in python as a function cannot be contained
+    # by an equipment, only executed by a controller
 
 class _Sensor(Equipment):
     """

@@ -4,18 +4,12 @@ from typing import Any, Tuple
 from bob.functions import Function
 from bob.properties.force import DifferentialStaticPressure, Pressure
 
-from ..core import (
-    BOB,
-    INCLUDE_INVERSE,
-    S223,
-    Node,
-    PropertyReference,
-)
+from ..core import BOB, INCLUDE_INVERSE, S223, Node, PropertyReference, Connectable
 from ..enum import Air, Water
 from ..properties import DifferentialStaticPressure
 from .sensor import Sensor, split_kwargs
 
-_namespace = BOB  #
+_namespace = BOB
 
 
 class PressureSensor(Sensor):
@@ -42,20 +36,14 @@ class PressureSensor(Sensor):
         )
 
 
-# class DifferentialStaticPressureSetpoint(Setpoint):
-#    _class_iri = S223.Sensor
-#    hasQuantityKind: URIRef = QUANTITYKIND.ForcePerArea
-#    hasUnit: URIRef
-
-
 class DifferentialStaticPressureSensor(Sensor):
     _class_iri = S223.PressureSensor
     observes: PropertyReference
     observation_pressure: Pressure
     reference_pressure: Pressure
     differential_static_pressure: DifferentialStaticPressure
-    highPort: PressureSensor
-    lowPort: PressureSensor
+    hasObservationLocation: Connectable
+    hasReferenceLocation: Connectable
 
     def __init__(self, **kwargs: Any) -> None:
         _sensor_kwargs, _property_kwargs = split_kwargs(kwargs)
@@ -75,8 +63,8 @@ class DifferentialStaticPressureSensor(Sensor):
                 observation_location._node_iri,
             )
         )
-        self["highPort"] % observation_location
-        self["lowPort"] % reference_location
+        self.hasObservationLocation = observation_location
+        self.hasReferenceLocation = reference_location
 
 
 class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
@@ -105,7 +93,7 @@ class AirDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
         diff_function = Function(
             label="differential calculation", comment="Will output High minus Low"
         )
-        #self > diff_function
+        self > diff_function
         diff_function.hasInput(self.observation_pressure)
         diff_function.hasInput(self.reference_pressure)
         diff_function.hasOutput(self.differential_static_pressure)
@@ -136,9 +124,9 @@ class WaterDifferentialStaticPressureSensor(DifferentialStaticPressureSensor):
         )
 
         diff_function = Function(
-        label="differential calculation", comment="Will output High minus Low"
+            label="differential calculation", comment="Will output High minus Low"
         )
-        #self > diff_function
+        self > diff_function
         diff_function.hasInput(self.observation_pressure)
         diff_function.hasInput(self.reference_pressure)
         diff_function.hasOutput(self.differential_static_pressure)
