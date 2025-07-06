@@ -3675,7 +3675,9 @@ class Equipment(Container, Connectable):
 
                     if isinstance(thing, (Equipment, System, _Sensor, Junction)):
                         self > thing
-                    if thing.__class__.__name__ == 'Function':
+                    elif hasattr(thing, "objectIdentifier"): # it's a BACnet object, must be contained, will fail if Equipment is not BACnet Device
+                        self > thing
+                    elif thing.__class__.__name__ == 'Function':
                         # For reachability, we need to add the fucntion to the equipment
                         # this is purely in python and no RDF relation is created
                         # When creating equipmentusing template, the internal
@@ -3686,7 +3688,7 @@ class Equipment(Container, Connectable):
                             self.executes(thing)
                         except AttributeError:
                             pass # not a controller
-                    if isinstance(thing, Property):
+                    elif isinstance(thing, Property):
                         self[thing_name] = thing
                         self.add_property(thing)
 

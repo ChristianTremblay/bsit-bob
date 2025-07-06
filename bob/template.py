@@ -117,19 +117,6 @@ def configure_relations(
         if source is None and isinstance(source_element, Connection):
             source = source_element
 
-        # if source_element is None:
-        #    source_element = container
-
-        # if source_key is None:
-        #    source = source_element
-        # else:
-        #    source = getattr(source_element, source_key, None)
-
-        # if source is None and isinstance(source_element, Connection):
-        #    source = source_element
-        # elif source is None:
-        #    raise AttributeError(f"Source {source_key} not found in {source_element} | container {container} | relation {relation}")
-
         if target_key is None:
             target = target_element
         else:
@@ -169,11 +156,10 @@ def configure_relations(
             source | target
         elif operator == "executes":
             source.executes(target)
-        elif operator == "uses":
-            source.uses(target)
-        elif operator == "produces":
-            source.produces(target)
-        # no @ here as we are creating relation "inside" the equipment or system
+        elif operator == "hasInput":
+            source.hasInput(target)
+        elif operator == "hasOutput":
+            source.hasOutput(target)
 
 
 class SystemFromTemplate(System):
@@ -246,7 +232,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                 raise FileNotFoundError(f"YAML file {yaml_file} not found")
             with open(yaml_file, "r") as file:
                 yaml_content = yaml.safe_load(file)
-    _text_values = ["label", "comment", "hasValue", "config"]
+    _text_values = ["label", "comment", "hasValue", "config", "vendorIdentifier", "objectIdentifier", "objectName", "description"]
     _dict = {}
     name = yaml_content["name"]
     params = yaml_content["params"]
@@ -268,6 +254,8 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     connections = yaml_content.get("connections", {})
     junctions = yaml_content.get("junctions", {})
     connection_points = yaml_content.get("cp", {})
+    bacnet = yaml_content.get("bacnet", {})
+    influxdb = yaml_content.get("influxdb", {})
 
     # boundaries = yaml_content.get("boundaries", None)
 
@@ -305,7 +293,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                 entity_class = get_class_from_name(_entity_class)
                 entity_label = entity_name
                 # ConnectionPoint
-                _dict[entities_category][entity_label] = entity_class
+                _dict[entities_category][entity_label] = entity_class  
         else:
             for entity_name, entity_params in entities.items():
                 # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
@@ -328,6 +316,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                             if _name in _text_values
                             else get_class_from_name(_class_or_value)
                         )
+                        # Here maybe I could look for hasattr in the class to check if the attribute exists and use its value
                         _dict[entities_category][(entity_label, entity_class)][
                             _name
                         ] = _value
@@ -372,19 +361,22 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                 raise KeyError(
                     f"Entity {entity_name} in equipment_from_catalog does not have a 'template' key"
                 )
-
+    define_entities(bacnet, "bacnet")
     define_entities(functions, "functions")
+    
 
     _dict["relations"] = []
     if template_class[0] is System:
         _dict["boundaries"] = []
 
     def parse_sub(a):
-        if "." in a:
-            main, sub = a.split(".")
-            return f"self['{main.strip()}'].{sub.strip()}"
-        else:
-            return f"self['{a.strip()}']"
+        parts = [p.strip() for p in a.split(".")]
+        if not parts:
+            f"self['{a.strip()}']"
+        expr = f"self['{parts[0]}']"
+        for part in parts[1:]:
+            expr += f".{part}"
+        return expr
 
     def add_to_relation_dict(line, operator, separator=","):
         line = line.replace("(", "").replace(")", "").strip()
@@ -404,25 +396,25 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
             for _connection in value:
                 add_to_relation_dict(_connection, ">>", separator=" -> ")
 
-    for key, value in yaml_content.items():
         if re.match(r".*mapsTo$", key) and isinstance(value, list):
             for _connection in value:
                 add_to_relation_dict(_connection, "mapsTo", separator=" -> ")
 
-    for key, value in yaml_content.items():
         if re.match(r".*_executes$", key) and isinstance(value, list):
             for _connection in value:
                 add_to_relation_dict(_connection, "executes", separator=" -> ")
-
-    for key, value in yaml_content.items():
-        if re.match(r".*_uses$", key) and isinstance(value, list):
+        if re.match(r".*functions_inputs$", key) and isinstance(value, list):
             for _connection in value:
-                add_to_relation_dict(_connection, "uses", separator=" -> ")
+                add_to_relation_dict(_connection, "hasInput", separator=" -> ")
 
-    for key, value in yaml_content.items():
-        if re.match(r".*_produces$", key) and isinstance(value, list):
+        if re.match(r".*functions_outputs$", key) and isinstance(value, list):
             for _connection in value:
-                add_to_relation_dict(_connection, "produces", separator=" -> ")
+                add_to_relation_dict(_connection, "hasOutput", separator=" -> ")
+        if re.match(r".*_references$", key) and isinstance(value, list):
+            for _connection in value:
+                add_to_relation_dict(
+                    _connection, "@", separator=" -> "
+                )
 
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])
