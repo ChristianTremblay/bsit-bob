@@ -3675,9 +3675,11 @@ class Equipment(Container, Connectable):
 
                     if isinstance(thing, (Equipment, System, _Sensor, Junction)):
                         self > thing
-                    elif hasattr(thing, "objectIdentifier"): # it's a BACnet object, must be contained, will fail if Equipment is not BACnet Device
+                    elif hasattr(
+                        thing, "objectIdentifier"
+                    ):  # it's a BACnet object, must be contained, will fail if Equipment is not BACnet Device
                         self > thing
-                    elif thing.__class__.__name__ == 'Function':
+                    elif thing.__class__.__name__ == "Function":
                         # For reachability, we need to add the fucntion to the equipment
                         # this is purely in python and no RDF relation is created
                         # When creating equipmentusing template, the internal
@@ -3687,7 +3689,7 @@ class Equipment(Container, Connectable):
                         try:
                             self.executes(thing)
                         except AttributeError:
-                            pass # not a controller
+                            pass  # not a controller
                     elif isinstance(thing, Property):
                         self[thing_name] = thing
                         self.add_property(thing)
@@ -3721,6 +3723,7 @@ class Equipment(Container, Connectable):
             else:
                 raise ValueError(f"Incompatible medium {medium} for {each}")
 
+
 class _Function(Node):
     """
     Placeholder to prevent circular reference, actual class definition in
@@ -3730,6 +3733,7 @@ class _Function(Node):
     """
 
     _class_iri: URIRef = None
+
 
 @multimethod
 def add_mm(equipment: Equipment, info: EnumerationKind) -> None:
@@ -3754,6 +3758,7 @@ def contains_mm(parent_equipment: Equipment, child_equipment: Equipment) -> None
         (parent_equipment._node_iri, S223.contains, child_equipment._node_iri)
     )
 
+
 @multimethod
 def contains_mm(parent_equipment: Equipment, equipment_list: List[Equipment]) -> None:
     """Equipment > List[Equipment]"""
@@ -3774,6 +3779,7 @@ def contains_mm(parent_equipment: Equipment, child_junction: Junction) -> None:
         (parent_equipment._node_iri, S223.contains, child_junction._node_iri)
     )
 
+
 @multimethod
 def contains_mm(parent_equipment: Equipment, child_function: _Function) -> None:
     """Equipment > Equipment"""
@@ -3782,6 +3788,7 @@ def contains_mm(parent_equipment: Equipment, child_function: _Function) -> None:
     parent_equipment[child_function.label] = child_function
     # No Graph relation is created, this is purely in python as a function cannot be contained
     # by an equipment, only executed by a controller
+
 
 class _Sensor(Equipment):
     """

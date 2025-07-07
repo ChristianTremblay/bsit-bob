@@ -80,7 +80,10 @@ def get_instance(container: t.Union[Equipment, System], blob: str):
         return (thing, None)
     else:
         _key = blob.split(".")[1]
+        #try:
         thing = getattr(container, _key)
+        #except AttributeError:
+        #    thing = container[_key]
         # print(thing, _key)
         return (thing, _key)  # in case thing is None
 
@@ -116,6 +119,11 @@ def configure_relations(
             source = getattr(source_element, source_key, None)
         if source is None and isinstance(source_element, Connection):
             source = source_element
+        elif source is None:
+            try:
+                source = source_element[source_key]
+            except KeyError:
+                raise AttributeError(f"Source {source_key} not found in {source_element}")
 
         if target_key is None:
             target = target_element
@@ -125,7 +133,13 @@ def configure_relations(
         if target is None and isinstance(target_element, Connection):
             target = target_element
         elif target is None:
-            raise AttributeError(f"Target {target_key} not found in {target_element}")
+            try:
+                target = target_element[target_key]
+            except KeyError:
+                raise AttributeError(f"Target {target_key} not found in {target_element}")
+
+        print(f"Configuring relation: {source} {operator} {target}")
+
 
         if operator == "=":
             if source is None:
@@ -340,14 +354,36 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
         get_template = getattr(
             importlib.import_module(catalog_module), catalog_lookup_function
         )
+
+
+
         for entity_name, entity_params in from_catalog.items():
             # entity_label = entity_params['label'] if 'label' in entity_params else entity_name
             entity_label = entity_params.pop("label", entity_name)
             # print(entity_label, entity_params, f"Looking for {entity_params['template']}")
+            _template = entity_params.pop("template")
+            _addon = entity_params.pop("addon", None)
             try:
+                template = get_template(_template)
+            except FileNotFoundError:
+                # maybe it's a file
+                if not Path(_template).is_file():
+                    raise FileNotFoundError(
+                        f"Template {entity_name} not found in catalog {catalog_module}"
+                    )
+                else:
+                    template = _template
+
+            try:
+                if _addon is not None:
+                    with open(Path(_addon)) as _addon_file:
+                        _addon_dict = yaml.safe_load(_addon_file)
+                    template = template_update(template, _addon_dict)
+                    
                 _template_config = config_from_yaml(
-                    get_template(entity_params.pop("template"))
+                    template
                 )
+
                 if "System" in _template_config["template_class"]:
                     _dict["equipment"][(entity_label, SystemFromTemplate)] = {
                         "config": _template_config
@@ -369,19 +405,41 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     if template_class[0] is System:
         _dict["boundaries"] = []
 
-    def parse_sub(a):
+    def parse_sub(a, include_self=True):
         parts = [p.strip() for p in a.split(".")]
-        if not parts:
-            f"self['{a.strip()}']"
-        expr = f"self['{parts[0]}']"
+        if not include_self:
+            expr = f"[{parts[0]}]"
+        else:
+            expr = f"self['{parts[0]}']"
         for part in parts[1:]:
             expr += f".{part}"
+        return expr
+
+    def parse_sub_properties(a):
+        parts = [p.strip() for p in a.split(" / ")]
+        expr = f"self['{parts[0]}']"
+        for part in parts[1:]:
+            expr += f"{parse_sub(part, include_self=False)}"
         return expr
 
     def add_to_relation_dict(line, operator, separator=","):
         line = line.replace("(", "").replace(")", "").strip()
         _a, _b = line.split(separator)
         _dict["relations"].append((parse_sub(_a), operator, parse_sub(_b)))
+        # print(parse_sub(_a), operator, parse_sub(_b))
+
+    def add_reference_to_relation_dict(line, operator, separator=","):
+        """
+        References are using properties which are accessed using the square brackets
+        instead of the dot notation.
+        In the template, we are using " / " to separate the property name
+        from the object name.
+        Keeping the parse_sub option for the last part as we can have the need to 
+        access a property of the property, like the bacnet presentValue.
+        """
+        line = line.replace("(", "").replace(")", "").strip()
+        _a, _b = line.split(separator)
+        _dict["relations"].append((parse_sub_properties(_a), operator, parse_sub_properties(_b)))
         # print(parse_sub(_a), operator, parse_sub(_b))
 
     # Explicit relations with operator in the yaml file
@@ -412,6 +470,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
                 add_to_relation_dict(_connection, "hasOutput", separator=" -> ")
         if re.match(r".*_references$", key) and isinstance(value, list):
             for _connection in value:
+                print(f"Adding reference to relation dict: {_connection}")
                 add_to_relation_dict(
                     _connection, "@", separator=" -> "
                 )
