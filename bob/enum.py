@@ -47,7 +47,9 @@ Constituent.O2 = O2 = Constituent("O2", label="O2", _alt_namespace=P223)
 Constituent.O3 = O3 = Constituent("O3", label="O3")
 Constituent.SO2 = SO2 = Constituent("SO2", label="SO2")
 Constituent.N = Nitrogen = Constituent("N", label="Nitrogen", _alt_namespace=P223)
-Constituent.VOC = VOC = Constituent("VolatileOrganicCompounds", label="VolatileOrganicCompounds")
+Constituent.VOC = VOC = Constituent(
+    "VolatileOrganicCompounds", label="VolatileOrganicCompounds"
+)
 Constituent.Radon = Radon = Constituent("Radon", label="Radon")
 Constituent.R22 = const_R22 = Constituent("R-22", label="R-22", _alt_namespace=P223)
 Constituent.R134A = const_R134A = Constituent(
@@ -178,6 +180,7 @@ Signal.WiFi = Signal("WiFi", _alt_namespace=P223)
 Signal.ModulatedSignal = ModulatedSignal = Signal("Modulated")
 ModulatedSignal.DC0_10 = ModulatedSignal("0-10VDC")
 ModulatedSignal.MA4_20 = ModulatedSignal("4-20mA")
+ModulatedSignal.Resistive = ModulatedSignal("Resistive", _alt_namespace=P223)
 
 
 Mix.PowerAndSignal = PowerAndSignal = Mix("PowerAndSignal", _alt_namespace=P223)

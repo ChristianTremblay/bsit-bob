@@ -68,21 +68,73 @@ class ModulationSignalOutletConnectionPoint(
     _class_iri = P223.AnalogOutput
 
 
-class UniversalConnectionPoint(ConnectionPoint):
-    """
-    Represents a universal input connection point that can handle both binary and analog signals.
-    This is useful for devices that can accept multiple types of signals on the same input.
-    """
+class Modulated_0_10V_Connection(Connection):
+    hasMedium = ModulatedSignal.DC0_10
+    _class_iri = S223.Connection
 
+
+class Modulated_0_10V_ConnectionPoint(ConnectionPoint):
     _attr_uriref = {"hasSignalType": P223.hasSignalType}
-    _volatile = ("hasMedium",)
-    # hasMedium: Union[Electricity.OnOffSignal, ModulatedSignal]  # Can be either type
-    hasSignalType = UniversalSignalTypeEnum  # Can be either type
+
+    hasMedium = ModulatedSignal.DC0_10
+    hasSignalType = AnalogSignalTypeEnum
 
 
-class UniversalInletConnectionPoint(InletConnectionPoint, UniversalConnectionPoint):
-    _class_iri = P223.UniversalInput
+class Modulated_0_10V_InletConnectionPoint(
+    InletConnectionPoint, ModulationSignalConnectionPoint
+):
+    _class_iri = P223.AnalogInput
 
 
-class UniversalOutletConnectionPoint(OutletConnectionPoint, UniversalConnectionPoint):
-    _class_iri = P223.UniversalOutput
+class Modulated_0_10V_OutletConnectionPoint(
+    OutletConnectionPoint, ModulationSignalConnectionPoint
+):
+    _class_iri = P223.AnalogOutput
+
+
+class Modulated_4_20mA_Connection(Connection):
+    hasMedium = ModulatedSignal.DC0_10
+    _class_iri = S223.Connection
+
+
+class Modulated_4_20mA_ConnectionPoint(ConnectionPoint):
+    _attr_uriref = {"hasSignalType": P223.hasSignalType}
+
+    hasMedium = ModulatedSignal.DC0_10
+    hasSignalType = AnalogSignalTypeEnum
+
+
+class Modulated_4_20mA_InletConnectionPoint(
+    InletConnectionPoint, ModulationSignalConnectionPoint
+):
+    _class_iri = P223.AnalogInput
+
+
+class Modulated_4_20mA_OutletConnectionPoint(
+    OutletConnectionPoint, ModulationSignalConnectionPoint
+):
+    _class_iri = P223.AnalogOutput
+
+
+class ResistiveSignalConnection(Connection):
+    hasMedium = ModulatedSignal.Resistive
+    _class_iri = S223.Connection
+
+
+class ResistiveSignalConnectionPoint(ConnectionPoint):
+    _attr_uriref = {"hasSignalType": P223.hasSignalType}
+
+    hasMedium = ModulatedSignal.Resistive
+    hasSignalType = AnalogSignalTypeEnum
+
+
+class ResistiveSignalInletConnectionPoint(
+    InletConnectionPoint, ResistiveSignalConnectionPoint
+):
+    _class_iri = P223.ResistiveInput
+
+
+class ResistiveSignalOutletConnectionPoint(
+    OutletConnectionPoint, ResistiveSignalConnectionPoint
+):
+    _class_iri = P223.ResistiveOutput
