@@ -63,19 +63,21 @@ ex42:00005 a s223:Connectable,
         s223:Equipment,
         scratch:GasMonitor ;
     rdfs:label "CO2-2" ;
-    s223:contains ex42:00008,
-        ex42:00010 ;
-    s223:hasConnectionPoint ex42:00006,
-        ex42:00007 ;
-    s223:hasPhysicalLocation ex42:00035 ;
-    rdfs:comment "CO2 Monitor with temperature reading" ;
-    ex19:airInletSupply ex42:00006 ;
-    ex19:airOutletExhaust ex42:00007 .
+    s223:cnx ex35:00007 ;
+    s223:contains ex35:00008,
+        ex35:00010 ;
+    s223:hasConnectionPoint ex35:00006,
+        ex35:00007 ;
+    s223:hasPhysicalLocation ex35:00035 ;
+    bob:airInletSupply ex35:00006 ;
+    bob:airOutletExhaust ex35:00007 ;
+    rdfs:comment "CO2 Monitor with temperature reading" .
 
 ex42:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CO2-2.airInletSupply" ;
+    s223:cnx ex35:00005 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00005 .
 
@@ -170,18 +172,20 @@ ex42:00016 a s223:Connectable,
         s223:Equipment,
         scratch:GasMonitor ;
     rdfs:label "GM-1" ;
-    s223:contains ex42:00019,
-        ex42:00021 ;
-    s223:hasConnectionPoint ex42:00017,
-        ex42:00018 ;
-    rdfs:comment "Dual Gas Monitoring Equipment that measure NO2 and CO. Usually used in underground parking lot" ;
-    ex19:airInletSupply ex42:00017 ;
-    ex19:airOutletExhaust ex42:00018 .
+    s223:cnx ex35:00018 ;
+    s223:contains ex35:00019,
+        ex35:00021 ;
+    s223:hasConnectionPoint ex35:00017,
+        ex35:00018 ;
+    bob:airInletSupply ex35:00017 ;
+    bob:airOutletExhaust ex35:00018 ;
+    rdfs:comment "Dual Gas Monitoring Equipment that measure NO2 and CO. Usually used in underground parking lot" .
 
 ex42:00017 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "GM-1.airInletSupply" ;
+    s223:cnx ex35:00016 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00016 .
 
@@ -252,17 +256,19 @@ ex42:00025 a s223:Connectable,
         s223:Equipment,
         scratch:GasMonitor ;
     rdfs:label "CO2-1" ;
-    s223:contains ex42:00028 ;
-    s223:hasConnectionPoint ex42:00026,
-        ex42:00027 ;
-    rdfs:comment "CO2 Monitor" ;
-    ex19:airInletSupply ex42:00026 ;
-    ex19:airOutletExhaust ex42:00027 .
+    s223:cnx ex35:00027 ;
+    s223:contains ex35:00028 ;
+    s223:hasConnectionPoint ex35:00026,
+        ex35:00027 ;
+    bob:airInletSupply ex35:00026 ;
+    bob:airOutletExhaust ex35:00027 ;
+    rdfs:comment "CO2 Monitor" .
 
 ex42:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CO2-1.airInletSupply" ;
+    s223:cnx ex35:00025 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00025 .
 
@@ -296,17 +302,19 @@ ex42:00030 a s223:Connectable,
         s223:Equipment,
         scratch:GasMonitor ;
     rdfs:label "CO2-4" ;
-    s223:contains ex42:00033 ;
-    s223:hasConnectionPoint ex42:00031,
-        ex42:00032 ;
-    rdfs:comment "CO2 Monitor" ;
-    ex19:airInletSupply ex42:00031 ;
-    ex19:airOutletExhaust ex42:00032 .
+    s223:cnx ex35:00032 ;
+    s223:contains ex35:00033 ;
+    s223:hasConnectionPoint ex35:00031,
+        ex35:00032 ;
+    bob:airInletSupply ex35:00031 ;
+    bob:airOutletExhaust ex35:00032 ;
+    rdfs:comment "CO2 Monitor" .
 
 ex42:00031 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CO2-4.airInletSupply" ;
+    s223:cnx ex35:00030 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00030 .
 
@@ -344,13 +352,19 @@ ex42:00036 a s223:Connectable,
         s223:DomainSpace,
         bob:HVACSpace ;
     rdfs:label "Basement HVAC Space" ;
-    s223:hasConnectionPoint ex42:00037,
-        ex42:00038,
-        ex42:00039,
-        ex42:00040,
-        ex42:00041,
-        ex42:00042,
-        ex42:00043 ;
+    s223:cnx ex35:00038,
+        ex35:00039,
+        ex35:00040,
+        ex35:00041,
+        ex35:00042,
+        ex35:00043 ;
+    s223:hasConnectionPoint ex35:00037,
+        ex35:00038,
+        ex35:00039,
+        ex35:00040,
+        ex35:00041,
+        ex35:00042,
+        ex35:00043 ;
     s223:hasDomain s223:Domain-HVAC ;
     bob:airTransfer ex42:00039 ;
     bob:doors ex42:00040 ;
@@ -364,6 +378,7 @@ ex42:00037 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.ductAirInlet" ;
+    s223:cnx ex35:00036 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00036 .
 
@@ -378,6 +393,7 @@ ex42:00039 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.airTransfer" ;
+    s223:cnx ex35:00036 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00036 .
 
@@ -385,6 +401,7 @@ ex42:00040 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.doors" ;
+    s223:cnx ex35:00036 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00036 .
 
@@ -392,6 +409,7 @@ ex42:00041 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.windows" ;
+    s223:cnx ex35:00036 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00036 .
 
@@ -399,6 +417,7 @@ ex42:00042 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.radiantHeating" ;
+    s223:cnx ex35:00036 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00036 .
 
@@ -406,6 +425,7 @@ ex42:00043 a s223:BidirectionalConnectionPoint,
         s223:ConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Basement HVAC Space.radiantCooling" ;
+    s223:cnx ex35:00036 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00036 .
 
