@@ -30,19 +30,17 @@ ex42:00002 a p223:Light,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "WL" ;
-    s223:cnx ex35:00003 ;
-    s223:connectedThrough ex35:00001 ;
-    s223:hasConnectionPoint ex35:00003,
-        ex35:00004 ;
-    ex8:electricalInlet ex35:00004 ;
-    ex8:lightOutlet ex35:00003 .
+    s223:connectedThrough ex42:00001 ;
+    s223:hasConnectionPoint ex42:00003,
+        ex42:00004 ;
+    ex8:electricalInlet ex42:00004 ;
+    ex8:lightOutlet ex42:00003 .
 
 ex42:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:LightVisibleConnectionPoint ;
     rdfs:label "WL.lightOutlet" ;
-    s223:cnx ex35:00001 ;
-    s223:connectsThrough ex35:00001 ;
+    s223:connectsThrough ex42:00001 ;
     s223:hasMedium s223:Light-Visible ;
     s223:isConnectionPointOf ex42:00002 .
 
@@ -50,7 +48,6 @@ ex42:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "WL.electricalInlet" ;
-    s223:cnx ex35:00002 ;
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex42:00002 .
 

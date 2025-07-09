@@ -33,7 +33,6 @@ ex42:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "x.airInlet" ;
-    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00001 .
 
@@ -49,8 +48,7 @@ ex42:00004 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "y.airInlet" ;
-    s223:cnx ex35:00003 ;
-    s223:connectsThrough ex35:00009 ;
+    s223:connectsThrough ex42:00009 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00003 .
 
@@ -66,42 +64,36 @@ ex42:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "z.airInlet" ;
-    s223:cnx ex35:00005 ;
-    s223:connectsThrough ex35:00009 ;
+    s223:connectsThrough ex42:00009 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00005 .
 
 ex42:00007 a s223:Connectable,
         s223:Junction ;
     rdfs:label "j" ;
-    s223:cnx ex35:00008 ;
-    s223:connectedThrough ex35:00009 ;
-    s223:hasConnectionPoint ex35:00008,
-        ex35:00010 ;
+    s223:connectedThrough ex42:00009 ;
+    s223:hasConnectionPoint ex42:00008,
+        ex42:00010 ;
     s223:hasMedium s223:Fluid-Air .
 
 ex42:00008 a s223:ConnectionPoint,
         s223:OutletConnectionPoint ;
-    s223:cnx ex35:00009 ;
-    s223:connectsThrough ex35:00009 ;
+    s223:connectsThrough ex42:00009 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00007 .
 
-ex35:00009 a s223:Connection ;
-    s223:cnx ex35:00004,
-        ex35:00006 ;
-    s223:connectsAt ex35:00004,
-        ex35:00006,
-        ex35:00008 ;
-    s223:connectsFrom ex35:00007 ;
-    s223:connectsTo ex35:00003,
-        ex35:00005 ;
+ex42:00009 a s223:Connection ;
+    s223:connectsAt ex42:00004,
+        ex42:00006,
+        ex42:00008 ;
+    s223:connectsFrom ex42:00007 ;
+    s223:connectsTo ex42:00003,
+        ex42:00005 ;
     s223:hasMedium s223:Fluid-Air .
 
 ex42:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
-    s223:cnx ex35:00007 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex42:00007 ;
     s223:mapsTo ex42:00002 .
