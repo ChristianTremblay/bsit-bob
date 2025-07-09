@@ -25,6 +25,7 @@ ex35:00001 a s223:Connectable,
         s223:Equipment,
         s223:Pump ;
     rdfs:label "WaterPump" ;
+    s223:cnx ex35:00003 ;
     s223:connected ex35:00011 ;
     s223:connectedThrough ex35:00014 ;
     s223:connectedTo ex35:00011 ;
@@ -44,6 +45,7 @@ ex35:00002 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "WaterPump.fluidInlet" ;
+    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Fluid-Water ;
     s223:isConnectionPointOf ex35:00001 ;
     s223:pairedConnectionPoint ex35:00003 .
@@ -52,6 +54,7 @@ ex35:00003 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:WaterConnectionPoint ;
     rdfs:label "WaterPump.fluidOutlet" ;
+    s223:cnx ex35:00014 ;
     s223:connectsThrough ex35:00014 ;
     s223:hasMedium s223:Fluid-Water ;
     s223:isConnectionPointOf ex35:00001 ;
@@ -62,6 +65,7 @@ ex35:00004 a s223:ConnectionPoint,
         bob:ElectricalConnectionPoint,
         bob:Electricity_600VLL_3Ph_60HzConnectionPoint ;
     rdfs:label "WaterPump.electricalInlet" ;
+    s223:cnx ex35:00001 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex35:00001 .
 
@@ -123,6 +127,7 @@ ex35:00010 a s223:ObservableProperty,
 ex35:00011 a s223:Connectable,
         s223:Equipment ;
     rdfs:label "Glycol Valve" ;
+    s223:cnx ex35:00013 ;
     s223:connected ex35:00001 ;
     s223:connectedFrom ex35:00001 ;
     s223:connectedThrough ex35:00014 ;
@@ -133,6 +138,7 @@ ex35:00012 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:Glycol15PercentConnectionPoint ;
     rdfs:label "Glycol Valve.waterInlet" ;
+    s223:cnx ex35:00011 ;
     s223:connectsThrough ex35:00014 ;
     s223:hasMedium s223:GlycolSolution-GlycolSolution-15Percent ;
     s223:isConnectionPointOf ex35:00011 .
@@ -145,6 +151,7 @@ ex35:00013 a s223:ConnectionPoint,
     s223:isConnectionPointOf ex35:00011 .
 
 ex35:00014 a s223:Connection ;
+    s223:cnx ex35:00012 ;
     s223:connectsAt ex35:00003,
         ex35:00012 ;
     s223:connectsFrom ex35:00001 ;

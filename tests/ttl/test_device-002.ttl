@@ -27,6 +27,7 @@ ex35:00001 a p223:Application-Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "HWB-1" ;
+    s223:cnx ex35:00002 ;
     s223:contains ex35:00004 ;
     s223:hasConnectionPoint ex35:00002,
         ex35:00003 ;
@@ -47,6 +48,7 @@ ex35:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-1.hotWaterEntering" ;
+    s223:cnx ex35:00001 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex35:00001 ;
     s223:pairedConnectionPoint ex35:00002 .
@@ -54,6 +56,7 @@ ex35:00003 a s223:ConnectionPoint,
 ex35:00004 a s223:Connectable,
         s223:Equipment ;
     rdfs:label "hw_heater" ;
+    s223:cnx ex35:00005 ;
     s223:hasConnectionPoint ex35:00005,
         ex35:00006,
         ex35:00007 .
@@ -69,6 +72,7 @@ ex35:00006 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "hw_heater.hotWaterEntering" ;
+    s223:cnx ex35:00004 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex35:00004 .
 
@@ -76,6 +80,7 @@ ex35:00007 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "hw_heater.electricalInlet" ;
+    s223:cnx ex35:00004 ;
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex35:00004 .
 
@@ -84,6 +89,7 @@ ex35:00008 a p223:Application-Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "Electrical Hot Water Boiler" ;
+    s223:cnx ex35:00009 ;
     s223:contains ex35:00012 ;
     s223:hasConnectionPoint ex35:00009,
         ex35:00010,
@@ -106,6 +112,7 @@ ex35:00010 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.hotWaterEntering" ;
+    s223:cnx ex35:00008 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex35:00008 ;
     s223:pairedConnectionPoint ex35:00009 .
@@ -114,12 +121,14 @@ ex35:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "Electrical Hot Water Boiler.electricalInlet" ;
+    s223:cnx ex35:00008 ;
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex35:00008 .
 
 ex35:00012 a s223:Connectable,
         s223:Equipment ;
     rdfs:label "hw_heater" ;
+    s223:cnx ex35:00013 ;
     s223:hasConnectionPoint ex35:00013,
         ex35:00014,
         ex35:00015 .
@@ -135,6 +144,7 @@ ex35:00014 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "hw_heater.hotWaterEntering" ;
+    s223:cnx ex35:00012 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex35:00012 .
 
@@ -142,6 +152,7 @@ ex35:00015 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "hw_heater.electricalInlet" ;
+    s223:cnx ex35:00012 ;
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex35:00012 .
 
@@ -150,6 +161,9 @@ ex35:00016 a p223:Application-Boiler,
         s223:Connectable,
         s223:Equipment ;
     rdfs:label "HWB-2" ;
+    s223:cnx ex35:00017,
+        ex35:00022,
+        ex35:00023 ;
     s223:contains ex35:00024 ;
     s223:hasConnectionPoint ex35:00017,
         ex35:00018,
@@ -180,6 +194,7 @@ ex35:00018 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "HWB-2.hotWaterEntering" ;
+    s223:cnx ex35:00016 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex35:00016 ;
     s223:pairedConnectionPoint ex35:00017 .
@@ -188,6 +203,7 @@ ex35:00019 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "HWB-2.electricalInlet" ;
+    s223:cnx ex35:00016 ;
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex35:00016 .
 
@@ -195,6 +211,7 @@ ex35:00020 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:NaturalGasConnectionPoint ;
     rdfs:label "HWB-2.naturalGasInlet" ;
+    s223:cnx ex35:00016 ;
     s223:hasMedium s223:Fluid-NaturalGas ;
     s223:isConnectionPointOf ex35:00016 .
 
@@ -202,6 +219,7 @@ ex35:00021 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "HWB-2.combustionAirInlet" ;
+    s223:cnx ex35:00016 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex35:00016 .
 
@@ -222,6 +240,7 @@ ex35:00023 a s223:ConnectionPoint,
 ex35:00024 a s223:Connectable,
         s223:Equipment ;
     rdfs:label "hw_heater" ;
+    s223:cnx ex35:00025 ;
     s223:hasConnectionPoint ex35:00025,
         ex35:00026,
         ex35:00027 .
@@ -237,6 +256,7 @@ ex35:00026 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "hw_heater.hotWaterEntering" ;
+    s223:cnx ex35:00024 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex35:00024 .
 
@@ -244,6 +264,7 @@ ex35:00027 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "hw_heater.electricalInlet" ;
+    s223:cnx ex35:00024 ;
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex35:00024 .
 
@@ -252,6 +273,8 @@ ex35:00028 a s223:Coil,
         s223:Equipment,
         s223:HeatingCoil ;
     rdfs:label "Hot Water Coil" ;
+    s223:cnx ex35:00030,
+        ex35:00032 ;
     s223:hasConnectionPoint ex35:00029,
         ex35:00030,
         ex35:00031,
@@ -269,6 +292,7 @@ ex35:00029 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Hot Water Coil.airInlet" ;
+    s223:cnx ex35:00028 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex35:00028 ;
     s223:pairedConnectionPoint ex35:00030 .
@@ -285,6 +309,7 @@ ex35:00031 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:HotWaterConnectionPoint ;
     rdfs:label "Hot Water Coil.hotWaterInlet" ;
+    s223:cnx ex35:00028 ;
     s223:hasMedium s223:Water-HotWater ;
     s223:isConnectionPointOf ex35:00028 ;
     s223:pairedConnectionPoint ex35:00032 .
@@ -326,6 +351,8 @@ ex35:00036 a s223:Coil,
         s223:CoolingCoil,
         s223:Equipment ;
     rdfs:label "Chilled Water Coil" ;
+    s223:cnx ex35:00038,
+        ex35:00040 ;
     s223:hasConnectionPoint ex35:00037,
         ex35:00038,
         ex35:00039,
@@ -343,6 +370,7 @@ ex35:00037 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Chilled Water Coil.airInlet" ;
+    s223:cnx ex35:00036 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex35:00036 ;
     s223:pairedConnectionPoint ex35:00038 .
@@ -359,6 +387,7 @@ ex35:00039 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "Chilled Water Coil.chilledWaterInlet" ;
+    s223:cnx ex35:00036 ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex35:00036 ;
     s223:pairedConnectionPoint ex35:00040 .
@@ -399,6 +428,7 @@ ex35:00044 a s223:Connectable,
         s223:ElectricResistanceElement,
         s223:Equipment ;
     rdfs:label "Electrical Heating Coil" ;
+    s223:cnx ex35:00046 ;
     s223:hasConnectionPoint ex35:00045,
         ex35:00046,
         ex35:00047 ;
@@ -414,6 +444,7 @@ ex35:00045 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "Electrical Heating Coil.airInlet" ;
+    s223:cnx ex35:00044 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex35:00044 ;
     s223:pairedConnectionPoint ex35:00046 .
@@ -431,6 +462,7 @@ ex35:00047 a s223:ConnectionPoint,
         bob:ElectricalConnectionPoint,
         bob:Electricity_600VLL_3Ph_60HzConnectionPoint ;
     rdfs:label "Electrical Heating Coil.electricalInlet" ;
+    s223:cnx ex35:00044 ;
     s223:hasMedium s223:AC-600VLL-3Ph-60Hz ;
     s223:isConnectionPointOf ex35:00044 .
 

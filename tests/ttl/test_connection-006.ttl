@@ -21,6 +21,7 @@
   owl:imports <http://data.ashrae.org/standard223/1.0/model/all> .
 
 ex35:00001 a s223:Connection ;
+    s223:cnx ex35:00005 ;
     s223:connectsAt ex35:00005 ;
     s223:connectsTo ex35:00002 ;
     s223:hasMedium s223:Water-ChilledWater .
@@ -30,6 +31,8 @@ ex35:00002 a s223:Coil,
         s223:CoolingCoil,
         s223:Equipment ;
     rdfs:label "CW-Coil-1" ;
+    s223:cnx ex35:00004,
+        ex35:00006 ;
     s223:connected ex35:00010 ;
     s223:connectedFrom ex35:00010 ;
     s223:connectedThrough ex35:00001,
@@ -51,6 +54,7 @@ ex35:00003 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "CW-Coil-1.airInlet" ;
+    s223:cnx ex35:00002 ;
     s223:connectsThrough ex35:00014 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex35:00002 ;
@@ -68,6 +72,7 @@ ex35:00005 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ChilledWaterConnectionPoint ;
     rdfs:label "CW-Coil-1.chilledWaterInlet" ;
+    s223:cnx ex35:00002 ;
     s223:connectsThrough ex35:00001 ;
     s223:hasMedium s223:Water-ChilledWater ;
     s223:isConnectionPointOf ex35:00002 ;
@@ -109,6 +114,7 @@ ex35:00010 a s223:Connectable,
         s223:Equipment,
         s223:Fan ;
     rdfs:label "F" ;
+    s223:cnx ex35:00012 ;
     s223:connected ex35:00002 ;
     s223:connectedThrough ex35:00014 ;
     s223:connectedTo ex35:00002 ;
@@ -122,6 +128,7 @@ ex35:00011 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "F.airInlet" ;
+    s223:cnx ex35:00010 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex35:00010 ;
     s223:pairedConnectionPoint ex35:00012 .
@@ -130,6 +137,7 @@ ex35:00012 a s223:ConnectionPoint,
         s223:OutletConnectionPoint,
         bob:AirConnectionPoint ;
     rdfs:label "F.airOutlet" ;
+    s223:cnx ex35:00014 ;
     s223:connectsThrough ex35:00014 ;
     s223:hasMedium s223:Fluid-Air ;
     s223:isConnectionPointOf ex35:00010 ;
@@ -139,10 +147,12 @@ ex35:00013 a s223:ConnectionPoint,
         s223:InletConnectionPoint,
         bob:ElectricalConnectionPoint ;
     rdfs:label "F.electricalInlet" ;
+    s223:cnx ex35:00010 ;
     s223:hasMedium s223:Constituent-Electricity ;
     s223:isConnectionPointOf ex35:00010 .
 
 ex35:00014 a s223:Connection ;
+    s223:cnx ex35:00003 ;
     s223:connectsAt ex35:00003,
         ex35:00012 ;
     s223:connectsFrom ex35:00010 ;
