@@ -1,4 +1,4 @@
-from typing import Any, Tuple
+from typing import Any, Tuple, Union
 
 
 from bob.functions import Function
@@ -58,13 +58,20 @@ class DifferentialStaticPressureSensor(Sensor):
         )
         self.hasReferenceLocation = reference_location
 
-    def add_hasObservationLocation(self, node: Node) -> None:
+    def add_hasObservationLocation(self, node: Union[Tuple[Node, Node], Node]) -> None:
         """
         When defining the observation localtion and the reference location with a template
         we can use the same function twice. First run will set the observation location, 
         second run will set the reference location.
         """ 
-        if self.hasObservationLocation is not None:
+        if isinstance(node, tuple):
+            observation_location, reference_location = node
+            self._data_graph.add(
+                (self._node_iri, S223.hasObservationLocation, observation_location._node_iri)
+            )
+            self.hasObservationLocation = observation_location
+            self.add_hasReferenceLocation(reference_location)
+        elif self.hasObservationLocation is not None:
             self.add_hasReferenceLocation(node)
 
         else:
