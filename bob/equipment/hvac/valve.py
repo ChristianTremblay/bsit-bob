@@ -7,7 +7,6 @@ from ...connections.air import (
     CompressedAirOutletConnectionPoint,
 )
 from ...connections.liquid import WaterInletConnectionPoint, WaterOutletConnectionPoint
-from ...connections.mechanical import MechanicalInletConnectionPoint
 from ...connections.naturalgas import (
     NaturalGasInletConnectionPoint,
     NaturalGasOutletConnectionPoint,
@@ -39,7 +38,6 @@ class Valve(Equipment):
     """
 
     _class_iri: URIRef = S223.Valve
-    linkageInlet: MechanicalInletConnectionPoint
     position: PropertyReference
     command: PropertyReference
     position_feedback: PropertyReference
