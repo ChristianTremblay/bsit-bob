@@ -12,8 +12,8 @@ _namespace = S223
 """
  
 __|___|__|___|___|__                                                                                  
-|     Actuator     |------------s223:hasProperty--------(actuates) -> A                                   
-|  s223:Equipment  |------------s223:hasProperty--------(actuatedByProperty) -> B
+|     Actuator     |------------s223:actuates-------------------> A (s223:Equipment)                                   
+|  s223:Equipment  |------------s223:actuatedByProperty---------> B (s223:Property)
 |                  |
 |                  |
 |__________________|
