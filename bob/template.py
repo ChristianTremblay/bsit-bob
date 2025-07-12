@@ -163,7 +163,7 @@ def configure_relations(
         elif operator == "%":
             source % target
         elif operator == "mapsTo":
-            source.mapsTo = target
+            source.maps_to(target)
         elif operator == "@":
             source @ target
         elif operator == "|":
@@ -478,7 +478,7 @@ def config_from_yaml(yaml_file: t.Union[str, Path, t.Dict] = None):
     # observation location
     observation_location = yaml_content.get("sensors_observation_location", [])
     for _observations in observation_location:
-        add_to_relation_dict(_observations, "%", separator=" -> ")
+        add_to_relation_dict(f"{_observations}", "%", separator=" -> ")
     boundaries = yaml_content.get("boundaries", [])
     for _boundary in boundaries:
         # add_to_relation_dict(_boundary, "|", separator=" -> ")
